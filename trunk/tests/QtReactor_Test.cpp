@@ -10,32 +10,32 @@
 //    QtReactor_Test.cpp
 //
 // = DESCRIPTION
-//    Simple test of QtReactor. Test is intended to verify if QtReactor 
-//    correctly cooperates with Qt event loop in typical application. Test 
-//    creates a number of timers which send datagrams. These datagrams are 
-//    expected by datagram_handlers registered in reactor. Test asynchronously 
-//    establishes also a number of loopback tcp connections using ACE_Acceptors 
-//    and ACE_Connectors. Socket activities are handled asynchronously to ensure 
-//    that reactor does not lose events in traffic transmission. Moreover, test 
-//    registers and removes handlers frequently to cover register/remove_handler 
+//    Simple test of QtReactor. Test is intended to verify if QtReactor
+//    correctly cooperates with Qt event loop in typical application. Test
+//    creates a number of timers which send datagrams. These datagrams are
+//    expected by datagram_handlers registered in reactor. Test asynchronously
+//    establishes also a number of loopback tcp connections using ACE_Acceptors
+//    and ACE_Connectors. Socket activities are handled asynchronously to ensure
+//    that reactor does not lose events in traffic transmission. Moreover, test
+//    registers and removes handlers frequently to cover register/remove_handler
 //    method of QtReactor which are known (10/07/2004) to be buggy.
 //
 //    Classes:
-//      QTestApplication     - main qt application running event loop for a 
+//      QTestApplication     - main qt application running event loop for a
 //                             finite time
 //      Dgram_Handler        - responsible for sending and receiving datagrams as
-//                             well as handling timeouts. Datagrams are sent in 
+//                             well as handling timeouts. Datagrams are sent in
 //                             handle_timeout method.
-//      TCPConnectionHandler - connection handler responsible for sending and 
+//      TCPConnectionHandler - connection handler responsible for sending and
 //                             receiving data using tcp streams.
-//      TCPAcceptorHandler   - acceptor responsible for acceptance and 
-//                             registration of connections in HandlersRegister 
+//      TCPAcceptorHandler   - acceptor responsible for acceptance and
+//                             registration of connections in HandlersRegister
 //                             class.
-//      HandlersRegister     - register of event_handlers, responsible also for 
+//      HandlersRegister     - register of event_handlers, responsible also for
 //                             the analysis of test results.
-//      
+//
 // = AUTHOR
-//    Marek Brudka, mbrudka@elka.pw.edu.pl      
+//    Marek Brudka, mbrudka@elka.pw.edu.pl
 //
 // ============================================================================
 
@@ -45,7 +45,7 @@ ACE_RCSID (tests,
 	QtReactor_Test,
 	"$Id$" )
 
-#include <assert.h> 
+#include <assert.h>
 #include <qapplication.h>
 #include <qtimer.h>
 
@@ -63,7 +63,7 @@ ACE_RCSID (tests,
 // Qt specific code
 #include "QtReactor_Test.h"
 
-/* 
+/*
    QTestApplication class implementation
 */
 
@@ -81,7 +81,7 @@ void QTestApplication::finishTest()
 void QTestApplication::exec( int msec )
 {
 	finishTimer_.stop();
-	if ( 0 < msec  ) 
+	if ( 0 < msec  )
 		finishTimer_.start( msec, TRUE );
 	inherited::exec();
 }
@@ -89,13 +89,13 @@ void QTestApplication::exec( int msec )
 #endif /* ACE_HAS_QT */
 
 // maximum time for testing QtReactor (msec)
-const int TotalTestTime = 8000; 
+const int TotalTestTime = 8000;
 
 // how many handlers for each event handler class should be started ?
 #ifndef __QNXNTO__
-const int HandlersNo = 8 ; 
+const int HandlersNo = 8 ;
 #else /* __QNXNTO__ */
-// it seems that Qt 3.1 for NTO 6.2 is compiled with rather small FD_SETSIZE 
+// it seems that Qt 3.1 for NTO 6.2 is compiled with rather small FD_SETSIZE
 // Nevertheless, test works fine with native select reactor
 const int HandlersNo = 4;
 #endif
@@ -117,9 +117,9 @@ const int TCPClientPings = 16;
 // total number of bytes in TCP transmission
 const int TCPTotalBytesToSend = TCPClientPings * TCPBytesToSend;
 
-/** 
+/**
 	\class DgramHandler
-	\brief Simple event handler that receives and counts datagrams 
+	\brief Simple event handler that receives and counts datagrams
 	as well as sends dgrams using timeouts.
 */
 class DgramHandler: public ACE_Event_Handler
@@ -128,9 +128,9 @@ public:
     DgramHandler( ACE_Reactor *p_reactor = 0 );
 	virtual ~DgramHandler( );
 
-	int  open (const ACE_INET_Addr &local, 
-		int protocol_family=ACE_PROTOCOL_FAMILY_INET, 
-		int protocol=0, 
+	int  open (const ACE_INET_Addr &local,
+		int protocol_family=ACE_PROTOCOL_FAMILY_INET,
+		int protocol=0,
 		int reuse_addr=0);
 	virtual ACE_HANDLE get_handle() const;
 	virtual int handle_input ( ACE_HANDLE handle );
@@ -149,7 +149,7 @@ private:
 	ACE_SOCK_Dgram peer_; //!< datagram socket we listen to
 };
 
-/** 
+/**
 	\class TCPConnectionHandler
 	\brief TCP stream handler for both sides of connection.
 */
@@ -198,18 +198,18 @@ public:
 	int analyzeTCP(  ) const; //!< analyze TCP transmission
 	int registerTCPServer( TCPConnectionHandler * );
 	int TCPServersNo() const; //!< return the number of accepted connections
-	
+
 private:
 	ACE_Reactor          *reactor_; //!< reactor for this application
 	DgramHandler         *DgramHandlers_[ HandlersNo] ;//!< dgram input handlers
 	int                  TCPServersNo_; //!< number of accepted connections
-	TCPConnectionHandler *TCPServers_[ HandlersNo ]; 
-	TCPConnectionHandler *TCPClients_[ HandlersNo ]; 
+	TCPConnectionHandler *TCPServers_[ HandlersNo ];
+	TCPConnectionHandler *TCPClients_[ HandlersNo ];
 	TCPAcceptorHandler   *acceptor_;
 	TCPConnectorHandler  *connectors_[ HandlersNo ];
 };
 
-class TCPAcceptorHandler : public ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_ACCEPTOR > 
+class TCPAcceptorHandler : public ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_ACCEPTOR >
 {
 public:
 	typedef ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_ACCEPTOR > inherited;
@@ -222,11 +222,11 @@ private:
 	HandlersRegister *handlersRegister_;
 };
 
-/* 
+/*
    DgramHandler class implementation
 */
 
-DgramHandler::DgramHandler( ACE_Reactor *p_reactor ): 
+DgramHandler::DgramHandler( ACE_Reactor *p_reactor ):
 	ACE_Event_Handler( p_reactor ),
 	dgramsSent_( 0 ),
 	dgramsReceived_( 0 ),
@@ -238,22 +238,21 @@ DgramHandler::DgramHandler( ACE_Reactor *p_reactor ):
 
 DgramHandler::~DgramHandler( )
 {
-	ACE_TRACE( ( LM_TRACE,
-		ACE_TEXT( "virtual DgramHandler::~DgramHandler( )\n" ) ) );
+  ACE_TRACE ("DgramHandler::~DgramHandler");
 }
 
-int  DgramHandler::open (const ACE_INET_Addr &local, 
-	int protocol_family, 
-	int protocol, 
+int  DgramHandler::open (const ACE_INET_Addr &local,
+	int protocol_family,
+	int protocol,
 	int reuse_addr )
 {
-	if ( 0 > peer_.open( local, 		
-			 protocol_family, 
-			 protocol, 
+	if ( 0 > peer_.open( local,
+			 protocol_family,
+			 protocol,
 			 reuse_addr ) )
-		ACE_ERROR_RETURN ( ( LM_ERROR,
-							  ACE_TEXT( "(%P) %p \n" ),
-							  ACE_TEXT( "Cannot oper dgram socket" ) ), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                ACE_TEXT ("(%P) %p \n"),
+                ACE_TEXT ("Cannot oper dgram socket")),
 			-1);
 
 	return 0;
@@ -274,18 +273,18 @@ int DgramHandler::handle_input( ACE_HANDLE handle )
 	result = peer_.recv( &recvBuffer, sizeof( recvBuffer) , peerAddress );
 
 	if (  0 >= result )
-		ACE_ERROR_RETURN ( ( LM_ERROR,
-							  ACE_TEXT( "(%P) %p \n" ),
-							  ACE_TEXT( "While reading datagram from socket" ) )
+    ACE_ERROR_RETURN ((LM_ERROR,
+                ACE_TEXT ("(%P) %p \n"),
+                ACE_TEXT ("While reading datagram from socket"))
             , -1 );
 	else
 		++dgramsReceived_;
 
-	return 0;		
+	return 0;
 }
 
 int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void *act )
-{	
+{
 	ACE_UNUSED_ARG( current_time );
 	ACE_UNUSED_ARG( act );
 	int sendBuffer = 0;
@@ -293,23 +292,23 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
 	if ( ++timeoutsTriggered_ >= expectedTriggers_ )
 		reactor()->cancel_timer( this, 1 );
 
-	ACE_SOCK_Dgram socket;	
-	if ( -1 == socket.open( 
-			 ACE_INET_Addr( static_cast< u_short >( 0 ), 
-				 static_cast< ACE_UINT32 >( INADDR_ANY ) ), 
+	ACE_SOCK_Dgram socket;
+	if ( -1 == socket.open(
+			 ACE_INET_Addr( static_cast< u_short >( 0 ),
+				 static_cast< ACE_UINT32 >( INADDR_ANY ) ),
 			 ACE_PROTOCOL_FAMILY_INET, 0, 1 ) )
-		ACE_ERROR ( ( LM_ERROR,
-					   ACE_TEXT( "(%P) %p \n" ),
-					   ACE_TEXT( "Cannot open socket for sending Qt dgrams" ) ) );
+    ACE_ERROR ((LM_ERROR,
+             ACE_TEXT ("(%P) %p \n"),
+             ACE_TEXT ("Cannot open socket for sending Qt dgrams")));
 
 	ACE_INET_Addr peerAddr;
 	peer_.get_local_addr( peerAddr);
-	
-	if ( sizeof( sendBuffer ) != socket.send (&sendBuffer, 
+
+	if ( sizeof( sendBuffer ) != socket.send (&sendBuffer,
 			 sizeof( sendBuffer ), peerAddr ) )
-		ACE_ERROR ( ( LM_ERROR,
-					   ACE_TEXT( "(%P) %p \n" ),
-					   ACE_TEXT( "Cannot send dgram" ) ) );
+    ACE_ERROR (( LM_ERROR,
+             ACE_TEXT ("(%P) %p \n"),
+             ACE_TEXT ("Cannot send dgram")));
 	else
 		++dgramsSent_;
 
@@ -321,13 +320,13 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
 int DgramHandler::handle_close( ACE_HANDLE handle, ACE_Reactor_Mask close_mask )
 {
 	if ( peer_.get_handle() != handle  )
-        ACE_ERROR( ( LM_ERROR, 
-                       ACE_TEXT( "Unknown handle %d DgramHandler::handle_close "
-                       "with mask %x. My handle is %d\n" ), 
-                       handle, 
+        ACE_ERROR ((LM_ERROR,
+                       ACE_TEXT ("Unknown handle %d DgramHandler::handle_close "
+                       "with mask %x. My handle is %d\n"),
+                       handle,
                        close_mask,
-                       peer_.get_handle() ) );
-    else        
+                       peer_.get_handle()));
+    else
         peer_.close();
 
 	return 0;
@@ -344,11 +343,11 @@ int DgramHandler::dgramsReceived() const
 }
 
 int DgramHandler::timeoutsTriggered( ) const
-{ 
-	return timeoutsTriggered_; 
+{
+	return timeoutsTriggered_;
 }
 
-void DgramHandler::expectedTriggers( int triggers ) 
+void DgramHandler::expectedTriggers( int triggers )
 {
 	expectedTriggers_ = triggers;
 }
@@ -358,7 +357,7 @@ int DgramHandler::expectedTriggers( ) const
 	return expectedTriggers_;
 }
 
-/* 
+/*
    TCPConnectionHandler class implementation
 */
 
@@ -374,8 +373,7 @@ TCPConnectionHandler::TCPConnectionHandler( bool p_serverSide ):
 
 TCPConnectionHandler::~TCPConnectionHandler( )
 {
-	ACE_TRACE( (LM_TRACe, 
-			ACE_TEXT( "TCPConnectionHandler::~TCPConnectionHandler( )\n" ) ) );
+  ACE_TRACE ("TCPConnectionHandler::~TCPConnectionHandler");
 }
 
 int TCPConnectionHandler::handle_input( ACE_HANDLE handle)
@@ -392,9 +390,9 @@ int TCPConnectionHandler::handle_input( ACE_HANDLE handle)
 			buffer->wr_ptr( bytesReceived );
 			int result = scheduleSend( buffer );
 			if (0 > result )
-				ACE_ERROR_RETURN ( ( LM_ERROR,
-									  ACE_TEXT( "(%P) %p \n" ),
-									  ACE_TEXT( "Cannot schedule TCP reply" ) ), 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                    ACE_TEXT ("(%P) %p \n"),
+                    ACE_TEXT ("Cannot schedule TCP reply")),
 					-1);
 		}
 		else
@@ -402,15 +400,15 @@ int TCPConnectionHandler::handle_input( ACE_HANDLE handle)
 
 		return 0;
 	}
-		
+
 	if ( errno != EWOULDBLOCK )
 	   ACE_ERROR_RETURN( ( LM_ERROR,
-			ACE_TEXT( "(%P:%p (%d)\n" ), 
+			ACE_TEXT( "(%P:%p (%d)\n" ),
 			ACE_TEXT( "TCPConnectionHandler::handle_input call with no data on handle " ), handle ),
 			-1 );
 
-	ACE_ERROR( (LM_WARNING, 
-		ACE_TEXT( "(%P:%p (%d)\n" ), 
+	ACE_ERROR( (LM_WARNING,
+		ACE_TEXT( "(%P:%p (%d)\n" ),
 		ACE_TEXT( "TCPConnectionHandler::handle_input call with no data on handle " ), handle ) );
 
 	return 0;
@@ -420,20 +418,20 @@ int TCPConnectionHandler::handle_output( ACE_HANDLE handle )
 {
 	ACE_UNUSED_ARG( handle );
 	if ( !buffers_ )
-		ACE_ERROR( (LM_ERROR, 
+		ACE_ERROR( (LM_ERROR,
 			ACE_TEXT( "TCPConnectionHandler::handle_output call for empty buffers (%d)\n" ), handle ) );
 	if ( 0 > sendBuffers() ) // socket broken, kill yourself
 		return -1;
 
-	if ( !buffers_ ) // everything already send, unregister 
+	if ( !buffers_ ) // everything already send, unregister
 	{
-		reactor()->cancel_wakeup( this,  
+		reactor()->cancel_wakeup( this,
             ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::DONT_CALL);
-		reactor()->remove_handler( this, 
+		reactor()->remove_handler( this,
             ACE_Event_Handler::WRITE_MASK  | ACE_Event_Handler::DONT_CALL );
 	}
 
-	return 0;		
+	return 0;
 }
 
 int TCPConnectionHandler::open( void *  )
@@ -474,20 +472,20 @@ int TCPConnectionHandler::scheduleSend( ACE_Message_Block * buffer)
 	if ( 0 > sendBuffers() )
 		ACE_ERROR_RETURN ( ( LM_ERROR,
 							  ACE_TEXT( "(%P) %p \n" ),
-							  ACE_TEXT( "Cannot schedule TCP send." ) ), 
+							  ACE_TEXT( "Cannot schedule TCP send." ) ),
 			-1);
 	return 0;
 }
 
 int TCPConnectionHandler::sendBuffers( )
-{ 
+{
 	int result = 0;
 
 	if ( buffers_ )
 		if ( 0 < ( result = peer_.send_n( buffers_ ) ) ) // remove sent blocks
-		{	
+		{
 			totalSent_ += result;
-			while( buffers_ && 
+			while( buffers_ &&
                 static_cast< size_t >( result ) >= buffers_->length() )
 			{
 				ACE_Message_Block *buffer = buffers_;
@@ -507,13 +505,13 @@ int TCPConnectionHandler::sendBuffers( )
 int TCPConnectionHandler::handle_close( ACE_HANDLE handle,ACE_Reactor_Mask close_mask )
 {
 	if ( peer_.get_handle() != handle  )
-        ACE_ERROR( ( LM_ERROR, 
+        ACE_ERROR( ( LM_ERROR,
                        ACE_TEXT( "Unknown handle %d TCPConnectionHandler::handle_close "
-                       "with mask %x. My handle is %d\n" ), 
-                       handle, 
+                       "with mask %x. My handle is %d\n" ),
+                       handle,
                        close_mask,
                        peer_.get_handle() ) );
-    else        
+    else
         peer_.close();
 
 	return 0;
@@ -530,18 +528,18 @@ int TCPConnectionHandler::totalSent() const
 }
 
 
-/* 
+/*
    HandlersRegister class implementation
 */
 
-HandlersRegister::HandlersRegister( ACE_Reactor *p_reactor ): 
+HandlersRegister::HandlersRegister( ACE_Reactor *p_reactor ):
 	reactor_( p_reactor ),
 	TCPServersNo_( 0 )
 {
 	int i;
 
 	for( i = 0; i < HandlersNo; ++i )
-	{	
+	{
 		// create dgram input handler
 		DgramHandlers_[ i ] = new DgramHandler( p_reactor );
 
@@ -550,11 +548,11 @@ HandlersRegister::HandlersRegister( ACE_Reactor *p_reactor ):
 		TCPClients_[ i ] = new TCPConnectionHandler( false );
 
 		connectors_[ i ] =new TCPConnectorHandler( p_reactor, ACE_NONBLOCK );
-		connectors_[ i ]->reference_counting_policy().value( 
+		connectors_[ i ]->reference_counting_policy().value(
             ACE_Event_Handler::Reference_Counting_Policy::ENABLED ) ;
 	}
 
-	acceptor_ = new TCPAcceptorHandler( this );	
+	acceptor_ = new TCPAcceptorHandler( this );
 	acceptor_->reactor( p_reactor );
 }
 
@@ -563,7 +561,7 @@ HandlersRegister::~HandlersRegister( )
 	int i;
 	if ( acceptor_ )
 	{
-		reactor_->remove_handler( acceptor_, ACE_Event_Handler::ALL_EVENTS_MASK ); 
+		reactor_->remove_handler( acceptor_, ACE_Event_Handler::ALL_EVENTS_MASK );
 		acceptor_->close();
 		acceptor_->remove_reference();
 	}
@@ -571,25 +569,25 @@ HandlersRegister::~HandlersRegister( )
 	for( i = 0; i < HandlersNo; ++i )
 	{
 		reactor_->cancel_timer( DgramHandlers_[ i ], 1 );
-		reactor_->remove_handler( DgramHandlers_[ i ], 
+		reactor_->remove_handler( DgramHandlers_[ i ],
             ACE_Event_Handler::ALL_EVENTS_MASK );
 		DgramHandlers_[ i ]->remove_reference();
 
 		if ( TCPServers_[ i ] )
 		{
-			reactor_->remove_handler( TCPServers_[ i ], 
+			reactor_->remove_handler( TCPServers_[ i ],
                 ACE_Event_Handler::ALL_EVENTS_MASK );
 			TCPServers_[ i ]->remove_reference();
 		}
 
-		reactor_->remove_handler( connectors_[ i ], 
-            ACE_Event_Handler::ALL_EVENTS_MASK ); 
+		reactor_->remove_handler( connectors_[ i ],
+            ACE_Event_Handler::ALL_EVENTS_MASK );
 		connectors_[ i ]->close();
 		connectors_[ i ]->remove_reference();
 
 		if ( TCPClients_[ i ] )
 		{
-			reactor_->remove_handler( TCPClients_[ i ], 
+			reactor_->remove_handler( TCPClients_[ i ],
                 ACE_Event_Handler::ALL_EVENTS_MASK );
 			TCPClients_[ i ]->remove_reference();
 		}
@@ -607,13 +605,13 @@ int HandlersRegister::scheduleTimers( const ACE_Time_Value &p_TestTime )
 
 	for( i = 0; i < HandlersNo; ++i )
 	{
-		if ( -1 == reactor_->schedule_timer ( DgramHandlers_[ i ], 
-				 (const void *) 0, 
-				 ACE_Time_Value::zero, 
+		if ( -1 == reactor_->schedule_timer ( DgramHandlers_[ i ],
+				 (const void *) 0,
+				 ACE_Time_Value::zero,
 				 p_TestTime * ( 0.5 / DgramsToSend ) ) )
 			ACE_ERROR_RETURN ( ( LM_ERROR,
 								  ACE_TEXT( "(%P) %p \n" ),
-								  ACE_TEXT( "Cannot schedule ACE timer" ) ), 
+								  ACE_TEXT( "Cannot schedule ACE timer" ) ),
 				-1);
 
 		DgramHandlers_[ i ] ->expectedTriggers( DgramsToSend );
@@ -629,22 +627,22 @@ int HandlersRegister::registerDgramHandlers()
 
 	// open dgram handlers for all ports
 	for( i = 0; i < HandlersNo; ++i )
-		if ( -1 == DgramHandlers_[ i ]->open( 
-				 ACE_INET_Addr ( i + BaseDgramPort, 
-                     ACE_TEXT( "127.0.0.1" ), 
+		if ( -1 == DgramHandlers_[ i ]->open(
+				 ACE_INET_Addr ( i + BaseDgramPort,
+                     ACE_TEXT( "127.0.0.1" ),
                      ACE_PROTOCOL_FAMILY_INET ) ) )
 			ACE_ERROR_RETURN ( ( LM_ERROR,
 								  ACE_TEXT( "(%P) %p \n" ),
 								  ACE_TEXT( "Cannot open dgram handler" ) ),
 								  -1 );
 
-	// register dgram handlers 
+	// register dgram handlers
 	for( i = 0; i < HandlersNo; ++i )
-		if ( -1 == reactor_->register_handler( DgramHandlers_[ i ], 
+		if ( -1 == reactor_->register_handler( DgramHandlers_[ i ],
 				 ACE_Event_Handler::READ_MASK ) )
 			ACE_ERROR_RETURN ( ( LM_ERROR,
 								  ACE_TEXT( "(%P) %p \n" ),
-								  ACE_TEXT( "Cannot register dgram handler" ) ), 
+								  ACE_TEXT( "Cannot register dgram handler" ) ),
 				-1);
 	return 0;
 }
@@ -656,23 +654,23 @@ int HandlersRegister::registerTCPHandlers()
 	if ( -1 == acceptor_->open( addr, reactor_, 1 ) )
 		ACE_ERROR_RETURN ( ( LM_ERROR,
 							  ACE_TEXT( "(%P) %p \n" ),
-							  ACE_TEXT( "Cannot open acceptor port" ) ), 
-			-1);	
+							  ACE_TEXT( "Cannot open acceptor port" ) ),
+			-1);
 
 	int i;
 	addr.set( BaseTCPPort, ACE_TEXT( "127.0.0.1" ) );
 
 	for( i = 0; i < HandlersNo; ++i )
 	{
-		if ( -1 == connectors_[ i ]->connect( 
-                 TCPClients_[ i ], 
-                 addr, 
+		if ( -1 == connectors_[ i ]->connect(
+                 TCPClients_[ i ],
+                 addr,
                  ACE_Synch_Options::asynch ) )
  			if ( errno != EWOULDBLOCK  )
  				ACE_ERROR_RETURN ( ( LM_ERROR,
 									  ACE_TEXT( "(%P) %p (%d)\n" ),
-									  ACE_TEXT( "Cannot connect connector" ), 
-                                      i ), 
+									  ACE_TEXT( "Cannot connect connector" ),
+                                      i ),
 					-1);
 	}
 
@@ -687,12 +685,12 @@ int HandlersRegister::registerTCPServer( TCPConnectionHandler *handler )
 		return 0;
 	}
 	ACE_ERROR( ( LM_ERROR,
-		ACE_TEXT( "Too many servers registered (%d). ACE_Reactor or ACE_Acceptor broken?\n" ), 
+		ACE_TEXT( "Too many servers registered (%d). ACE_Reactor or ACE_Acceptor broken?\n" ),
 		handler->get_handle() ) );
 	return -1;
 }
 
-int HandlersRegister::analyze( ) const 
+int HandlersRegister::analyze( ) const
 {
 	int result = 0;
 
@@ -714,13 +712,13 @@ int HandlersRegister::analyzeTimeouts( ) const
 	int result = 0;
 
 	for( i = 0; i < HandlersNo; ++i )
-		if ( DgramHandlers_[ i ]->expectedTriggers() != 
+		if ( DgramHandlers_[ i ]->expectedTriggers() !=
             DgramHandlers_[ i ]->timeoutsTriggered( ) )
 		{
-			ACE_ERROR( ( LM_ERROR, 
+			ACE_ERROR( ( LM_ERROR,
                            ACE_TEXT( "Dgram_Handlers(%d) expected %d timeouts"
                            " but triggered only %d.\n" ),
-						   i, 
+						   i,
 						   DgramHandlers_[ i ]->expectedTriggers( ),
 						   DgramHandlers_[ i ]->timeoutsTriggered( ) ) );
             result = -1;
@@ -735,13 +733,13 @@ int HandlersRegister::analyzeDgrams(  ) const
 	int i;
 
 	for( i = 0; i < HandlersNo; ++i )
-		if ( DgramHandlers_[ i ]->dgramsSent() != 
+		if ( DgramHandlers_[ i ]->dgramsSent() !=
             DgramHandlers_[ i ]->dgramsReceived() )
 		{
-			ACE_ERROR( ( LM_ERROR, 
+			ACE_ERROR( ( LM_ERROR,
                            ACE_TEXT( "DgramsHandler(%d) sent  %d dgrams but received only %d."
 						   "Either reactor failed or system lost local dgrams..\n" ),
-						   DgramHandlers_[ i ]->dgramsSent(), 
+						   DgramHandlers_[ i ]->dgramsSent(),
 						   DgramHandlers_[ i ]->dgramsReceived() ) );
 			result = -1 ;
 		}
@@ -756,45 +754,45 @@ int HandlersRegister::analyzeTCP(  ) const
 
 	for( i = 0; i < HandlersNo; ++i )
 	{
-		if ( TCPClients_[ i ]->totalSent() != TCPTotalBytesToSend  ) 
+		if ( TCPClients_[ i ]->totalSent() != TCPTotalBytesToSend  )
 		{
-			ACE_ERROR( (LM_ERROR, 
-						  ACE_TEXT( "TCPClient(%d): wanted to send  %d  but sent only (%d).\n" ), 
-						  i, 
-						  TCPTotalBytesToSend, 
+			ACE_ERROR( (LM_ERROR,
+						  ACE_TEXT( "TCPClient(%d): wanted to send  %d  but sent only (%d).\n" ),
+						  i,
+						  TCPTotalBytesToSend,
 						  TCPClients_[ i ]->totalSent() ) );
 			result = -1;
 		}
 
-		if ( TCPClients_[ i ]->totalReceived() != TCPTotalBytesToSend  ) 
+		if ( TCPClients_[ i ]->totalReceived() != TCPTotalBytesToSend  )
 		{
-			ACE_ERROR( (LM_ERROR, 
-						  ACE_TEXT( "TCPClient(%d): expected %d bytes but received only (%d).\n" ), 
-						  i, 
-						  TCPTotalBytesToSend, 
+			ACE_ERROR( (LM_ERROR,
+						  ACE_TEXT( "TCPClient(%d): expected %d bytes but received only (%d).\n" ),
+						  i,
+						  TCPTotalBytesToSend,
 						  TCPClients_[ i ]->totalReceived() ) );
 			result = -1;
 		}
 
 		if ( TCPServers_[ i ] )
 		{
-			if ( TCPServers_[ i ]->totalSent() != TCPTotalBytesToSend  ) 
+			if ( TCPServers_[ i ]->totalSent() != TCPTotalBytesToSend  )
 			{
-				ACE_ERROR( (LM_ERROR, 
+				ACE_ERROR( (LM_ERROR,
 							  ACE_TEXT( "TCPServer(%d): wanted to send %d bytes "
-                              "but sent only (%d).\n" ), 
-							  i, 
-							  TCPTotalBytesToSend, 
+                              "but sent only (%d).\n" ),
+							  i,
+							  TCPTotalBytesToSend,
 							  TCPServers_[ i ]->totalSent() ) );
 				result = -1;
 			}
-			
-			if ( TCPServers_[ i ]->totalReceived() != TCPTotalBytesToSend  ) 
+
+			if ( TCPServers_[ i ]->totalReceived() != TCPTotalBytesToSend  )
 			{
-				ACE_ERROR( (LM_ERROR, 
-							  ACE_TEXT( "TCPServer(%d): expected %d bytes but received only (%d).\n" ), 
-							  i, 
-							  TCPTotalBytesToSend, 
+				ACE_ERROR( (LM_ERROR,
+							  ACE_TEXT( "TCPServer(%d): expected %d bytes but received only (%d).\n" ),
+							  i,
+							  TCPTotalBytesToSend,
 							  TCPServers_[ i ]->totalReceived() ) );
 				result = -1;
 			}
@@ -802,8 +800,8 @@ int HandlersRegister::analyzeTCP(  ) const
 		}
 		else
 		{
-			ACE_ERROR( (LM_ERROR, 
-						  ACE_TEXT( "TCPServer(%d): not connected.\n" ), 
+			ACE_ERROR( (LM_ERROR,
+						  ACE_TEXT( "TCPServer(%d): not connected.\n" ),
 						  i ) );
 			result = -1;
 		}
@@ -813,12 +811,12 @@ int HandlersRegister::analyzeTCP(  ) const
 }
 
 
-/* 
+/*
    TCPAcceptorHandler class implementation
 */
 
-TCPAcceptorHandler::TCPAcceptorHandler( HandlersRegister *p_handlersRegister): 
-	handlersRegister_( p_handlersRegister ) 
+TCPAcceptorHandler::TCPAcceptorHandler( HandlersRegister *p_handlersRegister):
+	handlersRegister_( p_handlersRegister )
 {
 	reference_counting_policy().value( Reference_Counting_Policy::ENABLED );
 }
@@ -828,33 +826,33 @@ int TCPAcceptorHandler::make_svc_handler( TCPConnectionHandler *& sh )
 	sh = new TCPConnectionHandler( true );
 	sh->reactor( reactor() );
 	if ( handlersRegister_->TCPServersNo() >= HandlersNo )
-		ACE_ERROR( ( LM_ERROR, 
-			ACE_TEXT( "TCPAcceptorHandler::make_svc_handler called to many times!\n" ) ) );
+    ACE_ERROR ((LM_ERROR,
+      ACE_TEXT ("TCPAcceptorHandler::make_svc_handler called to many times!\n")));
 	else
-		ACE_TRACE( ( LM_TRACE, 
-		ACE_TEXT( "TCPAcceptorHandler::make_svc_handler new TCP server created\n" ) ) );
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("TCPAcceptorHandler::make_svc_handler new TCP server created\n")));
 
 	return 0;
 }
 
 int TCPAcceptorHandler::activate_svc_handler( TCPConnectionHandler * sh )
 {
-	if ( 0 == inherited::activate_svc_handler( sh )  ) 
+	if ( 0 == inherited::activate_svc_handler( sh )  )
 	{
 		if ( 0 != handlersRegister_->registerTCPServer( sh ) )  // for analysis
 		{
-			// release event handler		
+			// release event handler
 			reactor()->remove_handler( sh, ACE_Event_Handler::ALL_EVENTS_MASK );
 			sh->remove_reference();
 			// report error
-			ACE_ERROR_RETURN( ( LM_ERROR, 
+			ACE_ERROR_RETURN( ( LM_ERROR,
 								  ACE_TEXT( "Cannot register server TCPConnectionHandler\n" ) ),
-				-1 ); 
+				-1 );
 		}
 
 	}
 	else
-		ACE_ERROR_RETURN( ( LM_ERROR, 
+		ACE_ERROR_RETURN( ( LM_ERROR,
 							  ACE_TEXT( "Failed to create server TCPConnectionHandler\n" ) ),
 			-1 );
 
@@ -863,8 +861,7 @@ int TCPAcceptorHandler::activate_svc_handler( TCPConnectionHandler * sh )
 
 TCPAcceptorHandler::~TCPAcceptorHandler( )
 {
-	ACE_TRACE( ( LM_TRACE,
-		ACE_TEXT( "TCPAcceptorHandler::~TCPAcceptorHandler( )\n" ) ) );
+  ACE_TRACE ("TCPAcceptorHandler::~TCPAcceptorHandler");
 }
 
 void testNativeReactor( int argc, ACE_TCHAR *argv[] )
@@ -872,12 +869,12 @@ void testNativeReactor( int argc, ACE_TCHAR *argv[] )
 	ACE_UNUSED_ARG (argc);
 	ACE_UNUSED_ARG (argv);
 
-	ACE_DEBUG( ( LM_INFO, ACE_TEXT( "Testing autotest using native reactor\n" ) ) );
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Testing autotest using native reactor\n")));
 
 	ACE_Reactor      reactor;
 	HandlersRegister handlersRegister( &reactor );
 	ACE_Time_Value   testTime( TotalTestTime / 1000,  ( TotalTestTime % 1000 ) * 1000 );
-	
+
 	if (0 <= handlersRegister.scheduleTimers( testTime )  &&
 		0 <= handlersRegister.registerDgramHandlers( ) &&
 		0 <= handlersRegister.registerTCPHandlers() )
@@ -885,7 +882,7 @@ void testNativeReactor( int argc, ACE_TCHAR *argv[] )
 		reactor.run_reactor_event_loop( testTime );
 
 		if ( 0  != handlersRegister.analyze( ) )
-			ACE_ERROR( ( LM_ERROR, 
+			ACE_ERROR( ( LM_ERROR,
                            ACE_TEXT( "Test failed for native reactor. "
                            "Fix QtReactor_Test or ACE_Reactor.\n" ) ) );
 		else
@@ -897,25 +894,25 @@ void testQtReactor( int argc, ACE_TCHAR *argv[] )
 {
 #if defined (ACE_HAS_QT)
 	// Qt specific code
-	ACE_DEBUG( ( LM_INFO, ACE_TEXT( "Testing QtReactor\n" ) ) );
-	
+  ACE_DEBUG ((LM_INFO, ACE_TEXT( "Testing QtReactor\n")));
+
 	QTestApplication app (argc, argv);
 	ACE_QtReactor    qtReactor ( &app );
 	ACE_Reactor      reactor( &qtReactor );
     HandlersRegister handlersRegister( &reactor );
     ACE_Time_Value   testTime( TotalTestTime / 1000,  ( TotalTestTime % 1000 ) * 1000 );
-        
+
     if (0 <= handlersRegister.scheduleTimers( testTime )  &&
         0 <= handlersRegister.registerDgramHandlers( ) &&
         0 <= handlersRegister.registerTCPHandlers() )
     {
-            
+
         app.exec( TotalTestTime );
-            
+
         if ( 0  != handlersRegister.analyze( ) )
-            ACE_ERROR( ( LM_ERROR, ACE_TEXT( "QtReactor_Test failed.\n" ) ) );
+            ACE_ERROR ((LM_ERROR, ACE_TEXT( "QtReactor_Test failed.\n")));
         else
-            ACE_ERROR( ( LM_INFO, ACE_TEXT( "QtReactor_Test passed.\n" ) ) );
+            ACE_ERROR ((LM_INFO, ACE_TEXT( "QtReactor_Test passed.\n")));
     }
 #endif /* ACE_HAS_QT */
 }
