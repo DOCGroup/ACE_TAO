@@ -632,6 +632,8 @@ ACE_Process_Manager::terminate (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::terminate");
 
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
   // Check for duplicates and bail out if they're already
   // registered...
   ssize_t i = this->find_proc (pid);
@@ -646,7 +648,7 @@ ACE_Process_Manager::terminate (pid_t pid)
     {
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
-      this->remove (i);
+      this->remove_proc (i);
       return 0;
     }
   else
@@ -658,6 +660,8 @@ ACE_Process_Manager::terminate (pid_t pid,
                                 int sig)
 {
   ACE_TRACE ("ACE_Process_Manager::terminate");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if they're already
   // registered...

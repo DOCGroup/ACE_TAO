@@ -1,4 +1,19 @@
-Thu Jun 15 12:41:05 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+Thu Jun 15 10:28:05 2000  Martin Stack <mstack@cambertx.com>
+
+	* ace/TTY_IO.cpp (control): Added
+  
+          dcb.fDtrControl = DTR_CONTROL_ENABLE;
+	  
+	  for Win32 so that it will have the same default semantics as
+ 	  Linux.
+
+Thu Jun 15 07:35:57 2000  Roger Larsson <larssoro@hotmail.com> 
+
+	* ace/Process_Manager.cpp: Make sure to grab the lock inside the
+	  terminate() methods and also call remove_proc() rather than
+ 	  remove().
+
+Thu Jun 15 12:41:05 2000  yamuna  <yamuna@cs.wustl.edu>
 
         * ACE version 5.1.4 released.
 
