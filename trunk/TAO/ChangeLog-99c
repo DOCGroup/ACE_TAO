@@ -1,3 +1,16 @@
+Wed Jun  2 10:51:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Stub.cpp:
+	  Removed an "optimization" I had made to DII the other
+	  day (it was broken). I suspected it might be too 
+	  good to be true.
+
+	* TAO/tests/DynAny_Test/da_tests.idl:
+	* TAO/tests/DynAny_Test/test_dynunion.cpp:
+	  Put the typecode member back into the union in the
+	  IDL file, now that that stuff works, and modified the
+	  test to check that member.
+
 Tue Jun 01 21:40:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Request_Mux_Strategy.h:
