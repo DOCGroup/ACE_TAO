@@ -1,3 +1,8 @@
+Thu Jul 11 11:55:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.IFRService:
+	  Updated the dependencies.
+
 Thu Jul 11 13:29:57 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
