@@ -2438,23 +2438,23 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
   PortableServer::ObjectId_var system_id;
   PortableServer::Servant servant;
   CORBA::Short priority;
+
   if (this->active_object_map ().find_servant_and_system_id_using_user_id (
         id,
-        servant,
-        system_id.out (),
-        priority) == 0)
+	servant,
+	system_id.out (),
+	priority) == 0)
     {
-      // Ask the ORT to create a reference
-      PortableInterceptor::ObjectId oid (id.length (),
-                                         id.length (),
-                                         ACE_const_cast (CORBA::Octet *,
-                                                         id.get_buffer ()),
-                                         0);
-      return
-        this->obj_ref_factory_->make_object(
-          servant->_interface_repository_id (),
-          oid
-          ACE_ENV_ARG_PARAMETER);
+      // Create object key.
+      TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
+
+      // Ask the ORB to create you a reference
+      return this->key_to_object (key.in (),
+                                  servant->_interface_repository_id (),
+                                  servant,
+                                  1,
+                                  priority
+                                  ACE_ENV_ARG_PARAMETER);
     }
   else
     // If the Object Id value is not active in the POA, an
@@ -3640,9 +3640,6 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
 
   PortableInterceptor::IORInfo_var info = tao_info;
 
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-  ACE_UNUSED_ARG (non_servant_upcall);
-
   for (size_t i = 0; i < interceptor_count; ++i)
     {
       ACE_TRY
@@ -3995,7 +3992,7 @@ void
 TAO_POA::imr_notify_shutdown (void)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifing ImR of Shutdown\n"));
+    ACE_DEBUG ((LM_DEBUG, "Notifying ImR of Shutdown\n"));
 
   // Notify the Implementation Repository about shutting down.
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
