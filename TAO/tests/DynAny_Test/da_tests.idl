@@ -19,7 +19,7 @@ module DynAnyTests
     enclosed_struct es;
   };
 
-  typedef sequence<string> test_seq;
+  typedef sequence<string<8> > test_seq;
 
   const unsigned long DIM = 2;
   typedef long test_array [DIM];
