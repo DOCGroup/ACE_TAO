@@ -1,3 +1,18 @@
+Mon Apr 28 15:15:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * tests/Makefile.am
+        * tests/Makefile.bor
+        * tests/Multihomed_INET_Addr_Test.icc
+        * tests/tests.icp
+        * tests/tests.mpc
+
+        We finally followed the README instructions for added a new
+        test.  Hopefully test errors for a missing Multihomed_INET_Addr_Test
+        on many platforms will go away.
+
 Mon Apr 28 15:06:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/g++_metrics.sh:

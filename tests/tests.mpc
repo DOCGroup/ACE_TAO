@@ -523,6 +523,15 @@ project(Multicast Test) : aceexe {
   }
 }
 
+project(Multihomed INET Addr Test) : aceexe {
+  exename = Multihomed_INET_Addr_Test
+  Source_Files {
+    Multihomed_INET_Addr_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(New Fail Test) : aceexe {
   exename = New_Fail_Test
   Source_Files {
