@@ -352,17 +352,14 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char *protocol[] = { "iiop", "iioploc" };
-  // This is valid for any protocol beginning with `iiop' or `iioploc'.
+  const char protocol[] = "iiop";
+  // This is valid for any protocol beginning with `iiop'.
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
   if (ACE_OS::strncasecmp (endpoint,
-                           protocol[0],
-                           ACE_OS::strlen (protocol[0])) == 0 ||
-      ACE_OS::strncasecmp (endpoint,
-                           protocol[1],
-                           ACE_OS::strlen (protocol[1])) == 0)
+                           protocol,
+                           ACE_OS::strlen (protocol)) == 0)
     {
       return 0;  // Success
     }
