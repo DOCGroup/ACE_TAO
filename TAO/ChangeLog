@@ -1,3 +1,11 @@
+Tue Jul 23 12:47:45 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tests/AMH_Exceptions/client.cpp (main):
+	  Changed an 'long long unsigned int time' to 'int time'.  The BCB
+	  compiler was complaining about this data-type (no 64-bit
+	  support?).  Hopefully, the compilers will cast the int to the
+	  appropriate type when 'time' is used.
+
 Tue Jul 23 12:28:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvsc/LoadBalancing/LB_LeastLoaded.h:
