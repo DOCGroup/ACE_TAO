@@ -1,0 +1,22 @@
+A place holder for CIAO's CIDL (CCIDL) compiler.
+
+* Executor mapping can be found at:  Chapter 3.3 of formal/02-06-65
+
+  <filename>E.*
+
+* Templates for generic servants (container glue code) will be
+  available from $CIAO_ROOT/docs/templates/
+
+  These classes should be put into CIAO_GLUE namespace.
+
+  <filename>G.*
+
+* Component descriptors: Chapter 6.4 of formal/02-06-65
+
+  <flatname>.ccd
+
+* I think it may be a good thing to do to be able to represent IDL
+  definition in XML format and be able to exchange (import/export) IDL
+  definitions via XML documents.
+
+* Need to fix the collocated valuetype passed by reference bug.
