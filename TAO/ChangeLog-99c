@@ -4,6 +4,10 @@ Thu Jul 29 22:11:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Adjusted time out values, the new test takes longer to run than
 	  expected.
 
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	  If the server or the client return with an error we print out
+	  which one.
+
 Thu Jul 29 22:00:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/ORB_Core.h:
