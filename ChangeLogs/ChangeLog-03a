@@ -1,7 +1,14 @@
+Tue Aug 21 08:26:30 2001  David L. Levine <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: changed the example referenced
+          in:
+          Sun Aug 19 08:17:14 2001  David L. Levine <levine@cs.wustl.edu>
+          to be a bit more realistic.
+
 Tue Aug 21 06:58:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp: Fixed problematic uses of strncpy. Thanks to
-	  Alain Decamps <Alain.Decamps@advalvas.be> for giving this patch.
+        * ace/Log_Msg.cpp: Fixed problematic uses of strncpy. Thanks to
+          Alain Decamps <Alain.Decamps@advalvas.be> for giving this patch.
 
 Tue Aug 21 10:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -19,9 +26,9 @@ Mon Aug 20 18:20:51 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Aug 20 15:54:46 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SUN_Proactor.cpp: Removed the instantiation of
-	  ACE_Condition<ACE_Thread_Mutex>.  Thanks to David Trusty
- 	  <david.trusty@westwave.com> for reporting this.
+        * ace/SUN_Proactor.cpp: Removed the instantiation of
+          ACE_Condition<ACE_Thread_Mutex>.  Thanks to David Trusty
+          <david.trusty@westwave.com> for reporting this.
 
 Mon Aug 20 15:48:30 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
