@@ -17,385 +17,300 @@
 <HR WIDTH="100%">
 
 <P>Ok, so the last time around, we learned how to create a simple client
-that can send a chunk of data.&nbsp; A cooler thing to do is to overload
-the C++&nbsp;put operator (&lt;&lt;) to put some data for us.&nbsp; That's
-what we're going to do this time.&nbsp; (This tutorial is actually where
-ACE_IOStream was born.)
+that can send a chunk of data.  A cooler thing to do is to overload
+the C++ put operator (&lt;&lt;) to put some data for us.  That's what
+we're going to do this time.  (This tutorial is actually where ACE_IOStream
+was born.)
 
 <P>
 <HR WIDTH="100%">
+<PRE>/*
+  We need the connector object &amp; we also bring in a simple string class.
+ */
+#include "ace/SOCK_Connector.h"
+#include "ace/SString.h"
 
-<P>The code:
-<UL>
-<PRE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #include "ace/SOCK_Connector.h"
-2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #include "ace/SString.h"
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; class Client : public ACE_SOCK_Stream
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public:
-4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Client(void);
-5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Client( const char * server, u_short port );
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int open( const char * server, u_short port );
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inline int initialized(void) { return mInitialized; }
-8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inline int error(void)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { return mError; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Client &amp; operator&lt;&lt;( ACE_SString &amp; str );
-10.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Client &amp; operator&lt;&lt;( char * str );
-11.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Client &amp; operator&lt;&lt;( int&nbsp; n );
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; protected:
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; private:
-12.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unsigned char mInitialized;
-13.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unsigned char mError;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-14.&nbsp;&nbsp;&nbsp;&nbsp; Client::Client(void)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-15.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mInitialized = 0;
-16.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mError = 0;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-17.&nbsp;&nbsp;&nbsp;&nbsp; Client::Client( const char * server, u_short port )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-18.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mInitialized = 0;
-19.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mError = 0;
-20.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (void)open(server,port);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-21.&nbsp;&nbsp;&nbsp;&nbsp; int Client::open( const char * server, u_short port )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-22.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_SOCK_Connector connector;
-23.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_INET_Addr addr (port, server);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-24.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (connector.connect (*this, addr) == -1)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-25.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-26.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mInitialized = 1;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-27.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return(0);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-28.&nbsp;&nbsp;&nbsp;&nbsp; Client &amp; Client::operator&lt;&lt;( ACE_SString &amp; str )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-29.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if( initialized() &amp;&amp; ! error() )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-30.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; char * cp = str.rep();
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-31.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mError = 0;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-32.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if( this->send_n(cp,strlen(cp)) == -1 )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-33.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mError = 1;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-34.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-35.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mError = 1;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-36.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return *this ;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-37.&nbsp;&nbsp;&nbsp;&nbsp; Client &amp; Client::operator&lt;&lt; ( char * str )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-38.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_SString newStr(str);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-39.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *this &lt;&lt; newStr;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-40.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return *this ;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-41.&nbsp;&nbsp;&nbsp;&nbsp; Client &amp; Client::operator&lt;&lt; ( int n )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ACE_SString newStr;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // newStr = n;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-42.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; char buf[1024];
-43.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sprintf(buf,"(%d)\n",n);
-44.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_SString newStr(buf);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-45.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *this &lt;&lt; newStr;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-46.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return *this;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-47.&nbsp;&nbsp;&nbsp;&nbsp; int main (int argc, char *argv[])
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-48.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const char *server_host = argc > 1 ? argv[1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : ACE_DEFAULT_SERVER_HOST;
-49.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; u_short server_port&nbsp;&nbsp;&nbsp;&nbsp; = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
-50.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int max_iterations&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-51.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Client server(server_host,server_port);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-52.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if( ! server.initialized() )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-53.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "intialization"), -1);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-54.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (int i = 0; i &lt; max_iterations; i++)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-55.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; server &lt;&lt; "message = " &lt;&lt; i+1;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-56.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( server.error() )
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-57.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-58.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-59.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_OS::sleep (1);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-60.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (server.close () == -1)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
-61.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-62.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</PRE>
-</UL>
+/*
+  In this tutorial, we extend SOCK_Stream by adding a few wrappers
+  around the send_n() method.
+ */
+class Client : public ACE_SOCK_Stream
+{
+
+public:
+  // Basic constructor
+  Client(void);
+
+  /*
+    Construct and open() in one call.  This isn't generally a good
+    idea because you don't have a clean way to inform the caller
+    when open() fails.  (Unless you use C++ exceptions.)
+   */
+  Client( const char * server, u_short port );
+
+  /*
+    Open the connection to the server.  Notice that this mirrors
+    the use of ACE_SOCK_Connector.  By providing our own open(),
+    we can hide the connector from our caller &amp; make it's interaction
+    easier.
+   */
+  int open( const char * server, u_short port );
+
+  /*
+    These are necessary if you're going to use the constructor that
+    invokes open().
+   */
+  inline int initialized(void) { return initialized_; }
+  inline int error(void)       { return error_; }
+
+  /*
+    This is where the coolness lies.  Most C++ folks are familiar
+    with "cout &lt;&lt; some-data".  It's a very handy and easy way to
+    toss data around.  By adding these method calls, we're able
+    to do the same thing with a socket connection.
+   */
+  Client &amp; operator&lt;&lt;( ACE_SString &amp; str );
+  Client &amp; operator&lt;&lt;( char * str );
+  Client &amp; operator&lt;&lt;( int  n );
+
+protected:
+  unsigned char initialized_;
+  unsigned char error_;
+
+};
+
+/*
+  The basic constructor just sets our flags to reasonable values.
+ */
+Client::Client(void)
+{
+  initialized_ = 0;
+  error_ = 0;
+}
+
+/*
+  This constructor also sets the flags but then calls open().  If the
+  open() fails, the flags will be set appropriately.  Use the two inline
+  method calls initialized() and error() to check the object state after
+  using this constructor.
+ */
+Client::Client( const char * server, u_short port )
+{
+  initialized_ = 0;
+  error_ = 0;
+  (void)open(server,port);
+}
+
+/*
+  Open a connection to the server.  This hides the use of ACE_SOCK_Connector
+  from our caller.  Since our caller probably doesn't care *how* we connect,
+  this is a good thing.
+ */
+int Client::open( const char * server, u_short port )
+{
+  /*
+    This is right out of Tutorial 3.  The only thing we've added is to set
+    the initialized_ member variable on success.
+   */
+
+  ACE_SOCK_Connector connector;
+  ACE_INET_Addr addr (port, server);
+
+  if (connector.connect (*this, addr) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  }
+
+  initialized_ = 1;
+
+  return(0);
+}
+
+/*
+  The first of our put operators sends a simple string object to the peer.
+*/
+Client &amp; Client::operator&lt;&lt;( ACE_SString &amp; str )
+{
+  /*
+    We have to be able to allow:
+      server &lt;&lt; foo &lt;&lt; bar &lt;&lt; stuff;
+
+    To accomplish that, every &lt;&lt; operator must check that the object is
+    in a valid state before doing work.
+   */
+
+  if( initialized() &amp;&amp; ! error() )
+  {
+      /*
+        Get the actual data held in the string object
+       */
+      char * cp = str.rep();
+
+      /*
+        Send that data to the peer using send_n() as before.  If we have
+        a problem, we'll set error_ so that subsequent &lt;&lt; operations won't
+        try to use a broken stream.
+       */
+      if( this->send_n(cp,strlen(cp)) == -1 )
+      {
+          error_ = 1;
+      }
+  }
+  else
+  {
+      /*
+        Be sure that error_ is set if somebody tries to use us when
+        we're not initialized.
+       */
+      error_ = 1;
+  }
+
+  /*
+    We have to return a reference to ourselves to allow chaining of
+    put operations (eg -- "server &lt;&lt; foo &lt;&lt; bar").  Without the reference,
+    you would have to do each put operation as a statement.  That's OK
+    but doesn't have the same feel as standard C++ iostreams.
+   */
+  return *this ;
+}
+
+/*
+How do you put a char*?  We'll take an easy way out and construct an ACE_SString
+from the char* and then put that.  It would have been more efficient to implement
+this with the body of the operator&lt;&lt;(ACE_SString&amp;) method and then express that
+method in terms of this one.  There's always more than one way to do things!
+ */
+Client &amp; Client::operator&lt;&lt; ( char * str )
+{
+  ACE_SString newStr(str);
+
+  *this &lt;&lt; newStr;
+
+  return *this ;
+
+  /*
+    Notice that we could have been really clever and done:
+
+      return *this &lt;&lt; ACE_SString(str);
+
+    That kind of thing just makes debugging a pain though!
+   */
+}
+
+/*
+  ACE_SString and char* are both about the same thing.  What do you do about
+  different datatypes though?
+
+  Do the same thing we did with char* and convert it to ACE_SString where we
+  already have a &lt;&lt; operator defined.
+ */
+Client &amp; Client::operator&lt;&lt; ( int n )
+{
+  /*
+    Create a character buffer large enough for the largest number.  That's
+    a tough call but 1024 should be quite enough.
+  */
+  char buf[1024];
+
+  /*
+    Put the number into our buffer...
+  */
+  ACE_OS::sprintf(buf,"(%d)\n",n);
+
+  /*
+    And create the ACE_SString that we know how to put.
+  */
+  ACE_SString newStr(buf);
+
+  /*
+    Send it and...
+  */
+  *this &lt;&lt; newStr;
+
+  /*
+    return ourselves as usual.
+  */
+  return *this;
+}
+
+
+/*
+  Now we pull it all together.  Like Tutorial 3, we'll allow command line options.
+ */
+int main (int argc, char *argv[])
+{
+  const char *server_host = argc > 1 ? argv[1]        : ACE_DEFAULT_SERVER_HOST;
+  u_short server_port     = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
+  int max_iterations      = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
+
+  /*
+    Use the basic constructor since the other isn't really very safe.
+   */
+  Client server;
+  
+  /*
+    Open the server connection.  Notice how this is simpler than Tutorial 3
+    since we only have to provide a host name and port value.
+   */
+  if( server.open(server_host,server_port) == -1 )
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  }
+  
+  for (int i = 0; i &lt; max_iterations; i++)
+  {
+    /*
+      Tell the server which iteration we're on.  No more mucking aroudn with
+      sprintf at this level!  It's all hidden from us.
+     */
+    server &lt;&lt; "message = " &lt;&lt; i+1;
+
+    /*
+      Everything OK?
+     */
+    if ( server.error() )
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+    }
+    else
+    {
+      ACE_OS::sleep (1);
+    }
+  }
+
+  if (server.close () == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+  }
+
+  return 0;
+}</PRE>
 
 <HR WIDTH="100%">
 
-<P>Now, the code description:
-<BR>&nbsp;
-<OL>
-<LI>
-Get the SOCK&nbsp;Connector header</LI>
-
-<LI>
-and pickup a simple string class while we're at it.</LI>
-
-<LI>
-Create a simple derivative of ACE_SOCK_Stream.&nbsp; This is where we'll
-add our put methods for sending the data to our server.&nbsp; Another approach
-would have been to simply have an ACE_SOCK_Stream as a member variable.</LI>
-
-<LI>
-Boring constructor.</LI>
-
-<LI>
-Construct and open()&nbsp;all at once.</LI>
-
-<LI>
-Open the connection to the server.</LI>
-
-<LI>
-Are we connected to the server?</LI>
-
-<LI>
-Have we had an error?</LI>
-
-<LI>
-Send a string object to the server</LI>
-
-<LI>
-Send a "C" string to the server</LI>
-
-<LI>
-Send an integer to the server</LI>
-
-<LI>
-Intialization flag</LI>
-
-<LI>
-Error flag</LI>
-
-<LI>
-The boring constructor</LI>
-
-<LI>
-sets the initialization flag</LI>
-
-<LI>
-and the error flag to "false".</LI>
-
-<LI>
-The more exciting constructor</LI>
-
-<LI>
-sets the initialization flag</LI>
-
-<LI>
-and the error flag to false.</LI>
-
-<LI>
-But then it invokes open()&nbsp;to get us to the server.</LI>
-
-<LI>
-The open() method will connect us across the wire.</LI>
-
-<LI>
-First we need an ACE_SOCK_Connector (since we like sockets)</LI>
-
-<LI>
-And then we need an address which we can connect to.&nbsp; I suppose I
-should have made the args to open()&nbsp;match those of the ACE_INET_Addr
-constructor...</LI>
-
-<LI>
-Attempt to connect ourselves to the server.&nbsp; Since we're a derivative
-of ACE_SOCK_Connector, it's legal to pass <I>this</I> to the connect()
-method.</LI>
-
-<LI>
-As usual, failure results in a message and a bad return code.&nbsp; Rememer
-that <I>mInitialized</I> will still be set to false indicating that we're
-not connected.&nbsp; We should proabably also set <I>mError</I> to true.</LI>
-
-<LI>
-All is well, mark our selves as ready to go!</LI>
-
-<LI>
-Return our typical success value.&nbsp; (Unix folks will recognize this
-as fairly standard behavior:&nbsp; 0 indicates success, anything else is
-an error code.)</LI>
-
-<LI>
-Now we start to have some fun!&nbsp; Lets figure out how to "stream" a
-string object.</LI>
-
-<LI>
-First we have to make sure that we're connected and in good health.</LI>
-
-<LI>
-Next, we get a character pointer to the string we want to send.</LI>
-
-<LI>
-No errors so far...</LI>
-
-<LI>
-Use our old friend <I>send_n()</I> to send the data at the pointer.&nbsp;
-Use strlen() to figure out how many bytes to send.</LI>
-
-<LI>
-Oops!</LI>
-
-<LI>
-Ok, ok... if we're incapable of sending data</LI>
-
-<LI>
-then this must be an error.</LI>
-
-<LI>
-The put operator has to return a reference to itself so that we can string
-them together:&nbsp; foobar &lt;&lt;&nbsp;this &lt;&lt;&nbsp;that</LI>
-
-<LI>
-Now, how about sending a character pointer?</LI>
-
-<LI>
-We're going to cheat and use the method we just wrote.&nbsp; The more sensible
-thing would have been to write it in terms of <I>this</I> method.</LI>
-
-<LI>
-Send the string we just created.</LI>
-
-<LI>
-And again return ourselves.</LI>
-
-<LI>
-Sending the <I>char *</I> was easy since it's really just a block of contiguous
-data.&nbsp; But how do we send an integer?&nbsp; Part of the point in using
-the put operator is to convert the stuff to text instead of binary.</LI>
-
-<LI>
-So... create a temporary data buffer</LI>
-
-<LI>
-stuff our number into it</LI>
-
-<LI>
-and then create yet another string object.</LI>
-
-<LI>
-Now, we already know how to send those.</LI>
-
-<LI>
-And we're done!</LI>
-
-<LI>
-Finally, we get to the program entry point.</LI>
-
-<LI>
-Set the hostname we'll talk to</LI>
-
-<LI>
-and then choose the port</LI>
-
-<LI>
-and then decide how noisy to be.</LI>
-
-<LI>
-Use the do-it-all constructor to go ahead and setup our connection.</LI>
-
-<LI>
-Of course, it might have failed</LI>
-
-<LI>
-and we have to complain and exit.</LI>
-
-<LI>
-But if it worked, we start our <I>for</I> loop.</LI>
-
-<LI>
-See how easy &amp;&nbsp;intuitive it is to send stuff now?&nbsp; Just like
-using <I>cerr</I> and <I>cout</I>!</LI>
-
-<LI>
-Make sure everything is OK.</LI>
-
-<LI>
-Sometimes it isn't.</LI>
-
-<LI>
-But...</LI>
-
-<LI>
-sometimes we can take a nap.</LI>
-
-<LI>
-Shut it all down.</LI>
-
-<LI>
-I&nbsp;guess it can fail too.</LI>
-
-<LI>
-But now we're done.</LI>
-</OL>
-
-<HR WIDTH="100%">
-
-<P>Ok, now we're done with that.&nbsp; As you can see, it really isn't
-so hard to create an object that makes sending data much more "natural"&nbsp;than
-the typical send() invocation.&nbsp; You can even build up arbitrary objects
-&amp; do some neat tricks with C++&nbsp;templates to stream their data
-out as well.&nbsp; (We may go into that a little later.)&nbsp; Of course,
-writting the full implementation such that these streams are interchangable
-with the standard C++&nbsp;ostreams is quite a bit more difficult.
-
-<P>As an exercise to the reader (don't you hate those!) I&nbsp;challenge
-you to write the server side of this.&nbsp; You can take a&nbsp; look at
-IOStream_Test in the ACE distribution if you get stuck...
+<P>Ok, now we're done with that.  As you can see, it really isn't
+so hard to create an object that makes sending data much more "natural"
+than the typical send() or send_n() invocation.  You can even build
+up arbitrary objects &amp; do some neat tricks with C++ templates to stream
+their data out as well.  (We may go into that a little later.) 
+Of course, writting the full implementation such that these streams are
+interchangable with the standard C++ ostreams is quite a bit more difficult. 
+In addition, there are a lot of optimizations that this client would benefit
+from!
+
+<P>As an exercise to the reader (don't you hate those!) I challenge you
+to write the server side of this.  You can take a  look at IOStream_Test
+in the ACE distribution if you get stuck...
 
 <P>If you want to compile it yourself, here's the <A HREF="client.cpp">source</A>,
-the <A HREF="Makefile">Makefile</A>, and <A HREF="00SetEnv">Environment
+the <A HREF="Makefile">Makefile</A>,
+and <A HREF="00SetEnv">Environment
 settings</A>.
 
 <P>
 <HR WIDTH="100%">
-<CENTER></CENTER>
-
-<CENTER>[<A HREF="../../tutorials">Tutorial Index</A>]</CENTER>
+<CENTER>[<A HREF="..">Tutorial
+Index</A>]</CENTER>
 
 </BODY>
 </HTML>
