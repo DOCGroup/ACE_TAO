@@ -31,6 +31,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (__APPLE_CC__)
+# include "ace/streams.h"
+#endif
+
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY)  && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
