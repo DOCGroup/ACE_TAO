@@ -1753,6 +1753,8 @@ Key_List::output (void)
 		  /* NOTREACHED */
 		}
 	    }
+          else
+            output_lookup_function ();
 	}
 
       if (additional_code)
