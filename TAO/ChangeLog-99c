@@ -29,9 +29,9 @@ Sun Dec 12 15:32:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Changed underlying TAO_Acceptor and TAO_Connector container from
 	  an ACE_Unbounded_Set to a simple array.  These changes reduce
-	  the pluggable protocol framework footprint because three
-	  container related template instantiations were removed in the
-	  process.
+	  the pluggable protocol framework footprint because a total of
+	  six container related template instantiations were removed in
+	  the process.
 
 	  Removed included headers that weren't needed for anything.
 
