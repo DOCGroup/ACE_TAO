@@ -1,3 +1,12 @@
+Sun May 23 18:06:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Basic/Observer.h:
+	* orbsvcs/tests/Event/Basic/Observer.cpp:
+	  Fixed memory leak in the test
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	  Initialize fields to avoid UMR problems in purify.
+
 Sun May 23 16:37:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/lib/Driver.cpp:

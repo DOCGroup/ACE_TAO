@@ -214,6 +214,12 @@ EC_Observer::EC_Observer (EC_Master *master,
   this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
 }
 
+EC_Observer::~EC_Observer (void)
+{
+  if (this->gwys_ != 0)
+    delete[] this->gwys_;
+}
+
 void
 EC_Observer::initialize_orb_and_poa (int&, char*[],
                                      CORBA::Environment&)

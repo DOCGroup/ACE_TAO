@@ -85,6 +85,9 @@ public:
                int id);
   // Constructor
 
+  ~EC_Observer (void);
+  // Destructor
+
   // = The EC_Driver methods
   virtual void initialize_orb_and_poa (int& argc, char* argv[],
                                        CORBA::Environment& env);
