@@ -1,3 +1,12 @@
+Sun Sep 23 15:01:08 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Invocation.cpp (location_forward):
+
+	  Use the "CORBA::Object_var::out()" method instead of the
+	  "inout()" method to make sure the previous forward object
+	  reference is released before assigning another object reference
+	  Thanks to Gergely Timar <timarok@elender.hu> for the fix.
+
 Sun Sep 23 14:13:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
