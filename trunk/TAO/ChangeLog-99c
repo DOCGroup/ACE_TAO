@@ -1,3 +1,15 @@
+Fri Jul 23 15:03:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	  Fixed shutdown problems when there is a client thread still
+	  running. This fixed the problems with the Faults, Timeout,
+	  EC_Throughput and EC_Custom_Marshal tests.
+
 Fri Jul 23 14:53:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
