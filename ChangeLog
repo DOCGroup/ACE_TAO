@@ -1,3 +1,8 @@
+Thu Jun 10 10:07:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Makefile.am: Added Functor_String.{h inl cpp}. Thanks to
+	  J.T. Conklin for reporting this.
+
 Wed Jun  9 09:36:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Select_Reactor_Base.cpp:
