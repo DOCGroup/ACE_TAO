@@ -1,3 +1,15 @@
+Wed Nov  3 11:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.{h,cpp}:
+          New servant dispatcher to create a GOA on demand
+
+        * tao/orbsvcs/orbsvcs/PortableGroup/GOA.{h,cpp}:
+        * tao/orbsvcs/orbsvcs/PortableGroup/MIOP.cpp:
+        * tao/orbsvcs/orbsvcs/PortableGroup/PG_Object_Adapter_Factory.cpp:
+        * tao/orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.cpp:
+        * tao/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+          Several changes to be able to load and create the GOA when needed
+
 Tue Nov  2 15:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServerC.h:
