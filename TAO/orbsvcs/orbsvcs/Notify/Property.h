@@ -39,4 +39,5 @@ typedef TAO_NS_Property_T<TimeBase::TimeT> TAO_NS_Property_Time;
 typedef TAO_NS_StructProperty_T<NotifyExt::ThreadPoolParams> TAO_NS_Property_ThreadPool;
 typedef TAO_NS_StructProperty_T<NotifyExt::ThreadPoolLanesParams> TAO_NS_Property_ThreadPoolLanes;
 
-#endif /* TAO_NS_PROPERTY_H */
+#include "ace/post.h"#
+endif /* TAO_NS_PROPERTY_H */
