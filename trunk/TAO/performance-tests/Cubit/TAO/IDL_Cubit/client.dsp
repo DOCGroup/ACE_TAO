@@ -7,16 +7,16 @@
 CFG=IDL_Cubit Client - Win32 static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "client.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "client.mak" CFG="IDL_Cubit Client - Win32 static Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "IDL_Cubit Client - Win32 Release" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "IDL_Cubit Client - Win32 Debug" (based on\
@@ -25,7 +25,7 @@ CFG=IDL_Cubit Client - Win32 static Debug
  "Win32 (x86) Console Application")
 !MESSAGE "IDL_Cubit Client - Win32 static Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP Scc_ProjName ""
@@ -99,7 +99,7 @@ LINK32=link.exe
 # PROP Target_Dir "client"
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -137,7 +137,7 @@ LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 # ADD LINK32 aces.lib TAOs.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -195,7 +195,7 @@ SOURCE=.\cubit.idl
 !IF  "$(CFG)" == "IDL_Cubit Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
@@ -233,7 +233,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 Debug"
 
-USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
@@ -271,7 +271,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "IDL_Cubit Client - Win32 static Debug"
 
-USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
@@ -311,7 +311,7 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
-USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
@@ -347,7 +347,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
