@@ -43,7 +43,6 @@
 
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
-d
 
 #include "ace/Pipe.h"
 #include "ace/Lock_Adapter_T.h"
