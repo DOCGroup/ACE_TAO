@@ -279,7 +279,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
   return 0;
 }
 
-static int
+/*static int
 is_empty (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
@@ -295,7 +295,7 @@ is_line (const ACE_TCHAR *line)
     line++;
 
   return *line != ACE_TEXT ('\0');
-}
+}*/
 
 int
 ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
