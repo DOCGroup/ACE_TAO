@@ -15,12 +15,13 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDLFILES = testC testS
-BIN = client server
+BIN_UNCHECKED = client server
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
 CLIENT_OBJS = client.o testC.o
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
+BUILD=$(BIN)
 
 TAO_IDLFLAGS += -Ge 0
 
@@ -29,16 +30,16 @@ TAO_IDLFLAGS += -Ge 0
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(exceptions),1)
-  BUILD = $(VBIN)
+  BIN=$(BIN_UNCHECKED)
 else
 default:
 	@echo This directory only compiles if native exceptions are enabled!
 endif # exceptions
 
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

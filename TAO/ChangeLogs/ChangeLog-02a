@@ -1,3 +1,13 @@
+Tue Apr 25 12:39:41 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+          More stuff that should not build when minimum corba is enabled.
+
+        * tests/Native_Exceptions/Makefile:
+          The magic to disable the build when native exceptions where
+          disabled was not working.  I changed it to use something similar
+          to all the other makfiles and now it seems to work ok.
+
 Tue Apr 25 12:08:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/RtEC/MCast/MCast.cpp:
