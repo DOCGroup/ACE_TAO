@@ -89,7 +89,8 @@ AST_Type::AST_Type (void)
     ifr_fwd_added_ (0),
     size_type_ (AST_Type::SIZE_UNKNOWN),
     has_constructor_ (0),
-    nested_type_name_ (0)
+    nested_type_name_ (0),
+    in_recursion_ (-1)
 {
 }
 
@@ -102,7 +103,8 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
     ifr_fwd_added_ (0),
     size_type_ (AST_Type::SIZE_UNKNOWN),
     has_constructor_ (0),
-    nested_type_name_ (0)
+    nested_type_name_ (0),
+    in_recursion_ (-1)
 {
 }
 
@@ -154,7 +156,7 @@ AST_Type::compute_size_type (void)
 }
 
 idl_bool
-AST_Type::in_recursion (AST_Type *)
+AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> &)
 {
   // By default we are not involved in recursion.
   return 0;
@@ -522,6 +524,28 @@ AST_Type::nested_name (const char* local_name,
     }
 
   return this->nested_type_name_;
+}
+
+idl_bool
+AST_Type::match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list)
+{
+  for (ACE_Unbounded_Queue_Iterator<AST_Type *> iter (list);
+       !iter.done ();
+       (void) iter.advance ())
+    {
+      // Queue element.
+      AST_Type **temp;
+
+      (void) iter.next (temp);
+
+      if (!ACE_OS::strcmp (t->full_name (),
+                           (*temp)->full_name ()))
+        {
+          return I_TRUE;
+        }
+    }
+    
+  return I_FALSE;
 }
 
 int
