@@ -18,7 +18,7 @@ CosEvent_Service::~CosEvent_Service (void)
 }
 
 void
-CosEvent_Service::init_ORB  (int argc, char *argv [],
+CosEvent_Service::init_ORB  (int& argc, char *argv [],
                              CORBA::Environment &ACE_TRY_ENV)
 {
   this->orb_ = CORBA::ORB_init (argc,
@@ -109,6 +109,9 @@ CosEvent_Service::startup (int argc, char *argv[],
   this->init_ORB (argc, argv,
                   ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (this->parse_args (argc, argv) == -1)
+    ACE_THROW (CORBA::BAD_PARAM ());
 
   this->resolve_naming_service (ACE_TRY_ENV);
   ACE_CHECK;
@@ -268,10 +271,6 @@ main (int argc, char *argv[])
   TAO_EC_Default_Factory::init_svcs ();
 
   CosEvent_Service service;
-
-  // check command line args.
-  if (service.parse_args (argc, argv) == -1)
-    return 1;
 
   ACE_TRY_NEW_ENV
     {

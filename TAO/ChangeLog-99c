@@ -1,3 +1,10 @@
+Mon Jul 19 15:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	  Fixed command-line argument parsing, thanks to Knut-Havard
+	  Aksnes <knut@orion.no> for reporting this problem.
+
 Mon Jul 19 14:55:42 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/corba.h:
