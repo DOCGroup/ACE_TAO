@@ -1072,7 +1072,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-protected:
+  // protected:
   ACE_thread_mutex_t lock_;
   // Mutex type that supports single-process locking efficiently.
 
