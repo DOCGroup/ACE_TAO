@@ -17,6 +17,8 @@
 #if !defined (ACE_MANAGED_OBJECT_H)
 #define ACE_MANAGED_OBJECT_H
 
+#include "ace/OS.h"
+
 template <class TYPE>
 class ACE_Managed_Cleanup : public ACE_Cleanup
 {
