@@ -1,13 +1,14 @@
-// Another test of UNIX domain IPC-SAP abstraction.  This one opens 2
 // $Id$
 
+// Another test of UNIX domain IPC-SAP abstraction.  This one opens 2
 // pipes and then ships certain ends over to the server to act as a
 // filter!
 
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"
-
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, local_pipe_client_test, "$Id$")
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 /* Name of the program. */

@@ -6,6 +6,8 @@
 #include "ace/Get_Opt.h"
 #include "Log_Wrapper.h"
 
+ACE_RCSID(Multicast, client, "$Id$")
+
 // Multi-cast address.
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 

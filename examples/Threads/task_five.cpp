@@ -9,6 +9,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
 
+ACE_RCSID(Threads, task_five, "$Id$")
+
 static const int DEFAULT_TASKS = 1000;
 static size_t default_stack_size =      // Default stack size
 #if defined (ACE_WIN32)

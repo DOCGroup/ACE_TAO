@@ -22,6 +22,8 @@
 #include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
+ACE_RCSID(ReactorEx, test_abandoned, "$Id$")
+
 static int abandon = 1;
 
 void *worker (void *);

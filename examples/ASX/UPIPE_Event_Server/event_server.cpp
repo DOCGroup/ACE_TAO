@@ -1,15 +1,18 @@
-// Test the event server.
 // $Id$
+
+// Test the event server.
 
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
+#include "ace/UPIPE_Acceptor.h"
+#include "ace/UPIPE_Connector.h"
+#include "ace/streams.h"
 #include "Options.h"
 #include "Consumer_Router.h"
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"
-#include "ace/UPIPE_Acceptor.h"
-#include "ace/UPIPE_Connector.h"
-#include "ace/streams.h"
+
+ACE_RCSID(UPIPE_Event_Server, event_server, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

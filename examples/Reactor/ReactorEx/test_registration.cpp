@@ -35,6 +35,8 @@
 
 #include "ace/Reactor.h"
 
+ACE_RCSID(ReactorEx, test_registration, "$Id$")
+
 // Globals for this test
 int stop_test = 0;
 ACE_Reactor reactor;

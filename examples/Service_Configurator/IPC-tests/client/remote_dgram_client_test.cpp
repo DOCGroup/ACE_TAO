@@ -1,12 +1,13 @@
-/* Tests out the Internet domain IPC-SAP dgram abstraction. */
 // $Id$
 
+// Tests out the Internet domain IPC-SAP dgram abstraction.
 
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Dgram.h"
-
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, remote_dgram_client_test, "$Id$")
 
 /* Name of the program. */
 static char *program_name;

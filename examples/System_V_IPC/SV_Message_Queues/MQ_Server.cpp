@@ -1,10 +1,11 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ace/Signal.h"
 #include "ace/SV_Message_Queue.h"
 #include "ace/streams.h"
 #include "test.h"
+
+ACE_RCSID(SV_Message_Queues, MQ_Server, "$Id$")
 
 // Must be global for signal Message...
 static ACE_SV_Message_Queue ace_sv_message_queue (SRV_KEY,

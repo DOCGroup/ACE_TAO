@@ -8,6 +8,8 @@
 #include "ace/TLI_Acceptor.h"
 #include "Handle_Thr_Stream.h"
 
+ACE_RCSID(server, Handle_Thr_Stream, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)

@@ -9,6 +9,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Profile_Timer.h"
 
+ACE_RCSID(SOCK_SAP, CPP_inserver_fancy, "$Id$")
+
 // Forward declaration.
 class Handler;
 

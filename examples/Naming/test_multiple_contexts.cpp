@@ -2,6 +2,8 @@
 
 #include "ace/Naming_Context.h"
 
+ACE_RCSID(Naming, test_multiple_contexts, "$Id$")
+
 int main (int, char *[])
 {
 

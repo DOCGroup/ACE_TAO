@@ -1,6 +1,6 @@
-// This test program illustrates how the ACE task synchronization
 // $Id$
 
+// This test program illustrates how the ACE task synchronization
 // mechanisms work in conjunction with the ACE_Task and the
 // ACE_Thread_Manager.  If the manual flag is not set input comes from
 // stdin until the user enters a return only.  This stops all workers
@@ -14,6 +14,8 @@
 #include "ace/Service_Config.h"
 
 #include "ace/Task.h"
+
+ACE_RCSID(Threads, thread_pool, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

@@ -4,6 +4,8 @@
 #include "ace/Mem_Map.h"
 #include "IO_Test.h"
 
+ACE_RCSID(IO_tests, IO_Test, "$Id$")
+
 IO_Test::IO_Test (const char *name, ACE_Profile_Timer &tm)
   : name_ (name), tm_ (tm)
 {

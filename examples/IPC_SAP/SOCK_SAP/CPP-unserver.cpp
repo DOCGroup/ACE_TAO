@@ -7,6 +7,8 @@
 #include "ace/LSOCK_Acceptor.h"                             
 #include "ace/Thread_Manager.h"
 
+ACE_RCSID(SOCK_SAP, CPP_unserver, "$Id$")
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Are we running verbosely?

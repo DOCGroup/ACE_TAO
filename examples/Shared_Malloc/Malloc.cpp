@@ -1,7 +1,9 @@
-#include "Options.h"
 // $Id$
 
+#include "Options.h"
 #include "Malloc.h"
+
+ACE_RCSID(Shared_Malloc, Malloc, "$Id$")
 
 // Strategic typedefs for memory allocation.
 

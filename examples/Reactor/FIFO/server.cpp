@@ -3,6 +3,8 @@
 #include "ace/Service_Config.h"
 #include "ace/FIFO_Recv_Msg.h"
 
+ACE_RCSID(FIFO, server, "$Id$")
+
 class FIFO_Recv_Handler : public ACE_Event_Handler
 {
 public:

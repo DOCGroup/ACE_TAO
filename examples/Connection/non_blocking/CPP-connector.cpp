@@ -5,6 +5,8 @@
 
 #include "CPP-connector.h"
                                                         
+ACE_RCSID(non_blocking, CPP_connector, "$Id$")
+
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 #define PR_CO_1 ACE_PEER_CONNECTOR_1

@@ -11,6 +11,8 @@
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Addr.h"
 
+ACE_RCSID(misc, test_upipe, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Svc_Handler <ACE_UPIPE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;

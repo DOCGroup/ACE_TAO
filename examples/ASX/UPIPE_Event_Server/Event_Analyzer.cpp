@@ -1,6 +1,8 @@
-#include "Event_Analyzer.h"
 // $Id$
 
+#include "Event_Analyzer.h"
+
+ACE_RCSID(UPIPE_Event_Server, Event_Analyzer, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

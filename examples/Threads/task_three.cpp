@@ -17,6 +17,8 @@
 #include "ace/Task.h"
 #include "ace/streams.h"
 
+ACE_RCSID(Threads, task_three, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 static ofstream *out_stream = 0;

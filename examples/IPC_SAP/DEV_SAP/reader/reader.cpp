@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "ace/OS.h"
@@ -6,6 +5,8 @@
 #include "ace/DEV_Connector.h"
 #include "ace/DEV_IO.h"
 #include "ace/TTY_IO.h"
+
+ACE_RCSID(reader, reader, "$Id$")
 
 int 
 main (int argc, char *argv[])

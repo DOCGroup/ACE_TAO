@@ -14,6 +14,8 @@
 #include "ace/Module.h"
 #include "ace/Task.h"
 
+ACE_RCSID(Message_Queue, buffer_stream, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;

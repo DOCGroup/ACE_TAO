@@ -23,6 +23,8 @@
 
 #include "Thread_Timer_Queue_Test.h"
 
+ACE_RCSID(Timer_Queue, Thread_Timer_Queue_Test, "$Id$")
+
 // Administrivia methods...
 Handler::Handler(const ACE_Time_Value &expiration_time)
   :  expires_ (expiration_time),

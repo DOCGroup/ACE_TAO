@@ -1,8 +1,9 @@
-
 // $Id$
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
+
+ACE_RCSID(SPIPE_SAP, producer_msg, "$Id$")
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

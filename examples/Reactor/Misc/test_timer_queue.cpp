@@ -4,6 +4,8 @@
 #include "ace/Timer_List.h"
 #include "ace/Timer_Queue.h"
 
+ACE_RCSID(Misc, test_timer_queue, "$Id$")
+
 class Example_Handler : public ACE_Event_Handler
 {
 public:

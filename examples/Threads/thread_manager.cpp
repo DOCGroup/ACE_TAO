@@ -8,6 +8,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 
+ACE_RCSID(Threads, thread_manager, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 extern "C" void

@@ -9,6 +9,8 @@
 #include "ace/Get_Opt.h"
 #include "SPIPE-acceptor.h"
 
+ACE_RCSID(blocking, SPIPE_acceptor, "$Id$")
+
 Svc_Handler::Svc_Handler (void)
   : mb_ (BUFSIZ + 1)
 {

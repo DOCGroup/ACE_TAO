@@ -1,12 +1,13 @@
-/* Tests out the broadcast service of the
 // $Id$
 
-   Internet domain IPC-SAP dgram abstraction. */
+// Tests out the broadcast service of the
+// Internet domain IPC-SAP dgram abstraction.
 
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Bcast.h"
-
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, broadcast_client_test, "$Id$")
 
 /* Name of the program. */
 static char *program_name;

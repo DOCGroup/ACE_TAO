@@ -1,13 +1,14 @@
-/* Test program for the INET IPC-SAPs... */
 // $Id$
 
+// Test program for the INET IPC-SAPs...
 
 #include "ace/Mem_Map.h"
-
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(client, remote_stream_client_test, "$Id$")
 
 /* Name of the program. */
 static char *program_name;

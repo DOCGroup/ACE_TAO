@@ -21,6 +21,8 @@
 
 #include "ace/Reactor.h"
 
+ACE_RCSID(ReactorEx, test_apc, "$Id$")
+
 void queue_apc (void);
 
 class Event_Handler : public ACE_Event_Handler

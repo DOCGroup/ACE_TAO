@@ -1,10 +1,12 @@
-// Enable tracing
 // $Id$
 
+// Enable tracing
 #define ACE_NTRACE 0
 
 #include "ace/Thread.h"
 #include "ace/Signal.h"
+
+ACE_RCSID(Misc, test_trace, "$Id$")
 
 static void
 foo (int max_depth)

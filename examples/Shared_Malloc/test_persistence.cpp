@@ -5,6 +5,8 @@
 #include "ace/Malloc.h"
 #include "ace/streams.h"
 
+ACE_RCSID(Shared_Malloc, test_persistence, "$Id$")
+
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
 typedef ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_ITERATOR;
 

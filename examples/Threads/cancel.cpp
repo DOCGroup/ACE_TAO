@@ -1,10 +1,12 @@
-// Test out the cooperative thread cancellation mechanisms provided by
 // $Id$
 
+// Test out the cooperative thread cancellation mechanisms provided by
 // the ACE_Thread_Manager.
 
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
+
+ACE_RCSID(Threads, cancel, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

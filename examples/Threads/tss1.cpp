@@ -25,6 +25,8 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
+ACE_RCSID(Threads, tss1, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #include "thread_specific.h"

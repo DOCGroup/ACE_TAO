@@ -6,6 +6,8 @@
 #include "ace/Synch.h"
 #include "ace/Signal.h"
 
+ACE_RCSID(Threads, process_semaphore, "$Id$")
+
 static sig_atomic_t done;
 
 extern "C" void

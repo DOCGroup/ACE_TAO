@@ -2,6 +2,8 @@
 
 #include "ace/Event_Handler_T.h"
 
+ACE_RCSID(Misc, test_event_handler_t, "$Id$")
+
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
 class ACE_Test_Sig_Handler

@@ -8,6 +8,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 
+ACE_RCSID(Misc, test_reactors, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 static const int NUM_INVOCATIONS = 10;
