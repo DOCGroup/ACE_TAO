@@ -30,7 +30,7 @@
   int __ace_error = ACE_OS::last_error (); \
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
   ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
-  ace___->log (LM_ERROR, ASYS_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), #X, -1); \
+  ace___->log (LM_ERROR, ASYS_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), ASYS_WIDE_STRING (#X), -1); \
   } } while (0)
 #endif	/* ACE_NDEBUG */
 
