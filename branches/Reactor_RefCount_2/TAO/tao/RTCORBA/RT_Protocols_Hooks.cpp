@@ -42,7 +42,7 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
   // Save a reference to the priority mapping manager.
   CORBA::Object_var obj =
     orb_core->object_ref_table ().resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER
-							      ACE_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->mapping_manager_ =
@@ -58,18 +58,18 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
 
   this->network_mapping_manager_ =
     TAO_Network_Priority_Mapping_Manager::_narrow (object.in ()
-						   ACE_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   object =
     this->orb_core_->object_ref_table ().resolve_initial_references (
-								     "RTCurrent"
-								     ACE_ENV_ARG_PARAMETER);
+                                                                     "RTCurrent"
+                                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->current_ =
     RTCORBA::Current::_narrow (object.in ()
-			       ACE_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
@@ -78,7 +78,7 @@ int
 TAO_RT_Protocols_Hooks::call_client_protocols_hook (int &send_buffer_size,
                                                     int &recv_buffer_size,
                                                     int &no_delay,
-						    int &enable_network_priority,
+                                                    int &enable_network_priority,
                                                     const char *protocol_type)
 {
   if (TAO_RT_Protocols_Hooks::client_protocols_hook_ == 0)
@@ -88,7 +88,7 @@ TAO_RT_Protocols_Hooks::call_client_protocols_hook (int &send_buffer_size,
                                                      send_buffer_size,
                                                      recv_buffer_size,
                                                      no_delay,
-						     enable_network_priority,
+                                                     enable_network_priority,
                                                      protocol_type);
 
   return 0;
@@ -105,7 +105,7 @@ int
 TAO_RT_Protocols_Hooks::call_server_protocols_hook (int &send_buffer_size,
                                                     int &recv_buffer_size,
                                                     int &no_delay,
-						    int &enable_network_priority,
+                                                    int &enable_network_priority,
                                                     const char *protocol_type)
 {
   if (TAO_RT_Protocols_Hooks::server_protocols_hook_ == 0)
@@ -116,7 +116,7 @@ TAO_RT_Protocols_Hooks::call_server_protocols_hook (int &send_buffer_size,
                                                        send_buffer_size,
                                                        recv_buffer_size,
                                                        no_delay,
-						       enable_network_priority,
+                                                       enable_network_priority,
                                                        protocol_type);
 
   if (result_value != 0)
@@ -134,20 +134,20 @@ TAO_RT_Protocols_Hooks::set_server_protocols_hook (Server_Protocols_Hook hook)
 
 int
 TAO_RT_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *stub,
-							   TAO_Connection_Handler *connection_handler,
-							   const char *protocol_type)
+                                                           TAO_Connection_Handler *connection_handler,
+                                                           const char *protocol_type)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"TAO_RT_Protocols_Hooks::get_effective_client_protocol_properties\n"));
+                "TAO_RT_Protocols_Hooks::get_effective_client_protocol_properties\n"));
 
   ACE_TRY_NEW_ENV
     {
       RTCORBA::ProtocolProperties_var properties =
-	RTCORBA::ProtocolProperties::_nil ();
+        RTCORBA::ProtocolProperties::_nil ();
 
       TAO_RT_Stub *rt_stub = ACE_dynamic_cast (TAO_RT_Stub *,
-					       stub);
+                                               stub);
 
       CORBA::Policy* policy = rt_stub->client_protocol ();
 
@@ -156,7 +156,7 @@ TAO_RT_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *stub,
 
       if (!CORBA::is_nil (policy))
         {
-	  client_protocols_policy =
+          client_protocols_policy =
             RTCORBA::ClientProtocolPolicy::_narrow (policy
                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -176,49 +176,48 @@ TAO_RT_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *stub,
                   if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
                     {
                       properties =
-                        RTCORBA::ProtocolProperties::_narrow (
-							      protocols[j].transport_protocol_properties.in ()
-							      ACE_ENV_ARG_PARAMETER);
+                        RTCORBA::ProtocolProperties::_narrow (protocols[j].transport_protocol_properties.in ()
+                                                              ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
                       if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
                         break;
                     }
-		}
-	    }
+                }
+            }
 
-	  if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-	    {
-	      if (!CORBA::is_nil (properties.in ()))
-		{
-		  RTCORBA::TCPProtocolProperties_var tcp_properties =
-		    RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
-							     ACE_ENV_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
+          if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+            {
+              if (!CORBA::is_nil (properties.in ()))
+                {
+                  RTCORBA::TCPProtocolProperties_var tcp_properties =
+                    RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
+                                                             ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
 
-		  int send_buffer_size =
-		    tcp_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
-		  int recv_buffer_size =
-		    tcp_properties->recv_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
-		  int no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
-		  int enable_network_priority =
-		    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
+                  int send_buffer_size =
+                    tcp_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                  int recv_buffer_size =
+                    tcp_properties->recv_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                  int no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                  int enable_network_priority =
+                    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
 
-		  TAO_IIOP_Connection_Handler *iiop_handler =
-		    ACE_dynamic_cast (TAO_IIOP_Connection_Handler *,
-				      connection_handler);
+                  TAO_IIOP_Connection_Handler *iiop_handler =
+                    ACE_dynamic_cast (TAO_IIOP_Connection_Handler *,
+                                      connection_handler);
 
-		  iiop_handler->update_protocol_properties (send_buffer_size,
-							    recv_buffer_size,
-							    no_delay,
-							    enable_network_priority);
-		}
-	    }
-	}
+                  iiop_handler->update_protocol_properties (send_buffer_size,
+                                                            recv_buffer_size,
+                                                            no_delay,
+                                                            enable_network_priority);
+                }
+            }
+        }
     }
   ACE_CATCHANY
     {
@@ -235,25 +234,25 @@ TAO_RT_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *stub,
 
 int
 TAO_RT_Protocols_Hooks::update_server_protocol_properties (CORBA::Policy *policy,
-							   TAO_Connection_Handler *connection_handler,
-							   const char *protocol_type)
+                                                           TAO_Connection_Handler *connection_handler,
+                                                           const char *protocol_type)
 {
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"TAO_RT_Protocols_Hooks::get_effective_server_protocol_properties\n"));
+                "TAO_RT_Protocols_Hooks::get_effective_server_protocol_properties\n"));
 
   ACE_TRY_NEW_ENV
     {
       RTCORBA::ProtocolProperties_var properties =
-	RTCORBA::ProtocolProperties::_nil ();
+        RTCORBA::ProtocolProperties::_nil ();
 
       RTCORBA::ServerProtocolPolicy_var server_protocols_policy;
       TAO_ServerProtocolPolicy *server_protocols = 0;
 
       if (!CORBA::is_nil (policy))
         {
-	  server_protocols_policy =
+          server_protocols_policy =
             RTCORBA::ServerProtocolPolicy::_narrow (policy
                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -281,41 +280,41 @@ TAO_RT_Protocols_Hooks::update_server_protocol_properties (CORBA::Policy *policy
                       if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
                         break;
                     }
-		}
-	    }
+                }
+            }
 
-	  if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-	    {
-	      if (!CORBA::is_nil (properties.in ()))
-		{
-		  RTCORBA::TCPProtocolProperties_var tcp_properties =
-		    RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
-							     ACE_ENV_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
+          if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+            {
+              if (!CORBA::is_nil (properties.in ()))
+                {
+                  RTCORBA::TCPProtocolProperties_var tcp_properties =
+                    RTCORBA::TCPProtocolProperties::_narrow (properties.in ()
+                                                             ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
 
-		  int send_buffer_size =
-		    tcp_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
-		  int recv_buffer_size =
-		    tcp_properties->recv_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
-		  int no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
-		  int enable_network_priority =
-		    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
+                  int send_buffer_size =
+                    tcp_properties->send_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                  int recv_buffer_size =
+                    tcp_properties->recv_buffer_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                  int no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                  int enable_network_priority =
+                    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
 
-		  TAO_IIOP_Connection_Handler *iiop_handler =
-		    ACE_dynamic_cast (TAO_IIOP_Connection_Handler *,
-				      connection_handler);
+                  TAO_IIOP_Connection_Handler *iiop_handler =
+                    ACE_dynamic_cast (TAO_IIOP_Connection_Handler *,
+                                      connection_handler);
 
-		  iiop_handler->update_protocol_properties (send_buffer_size,
-							    recv_buffer_size,
-							    no_delay,
-							    enable_network_priority);
-		}
-	    }
-	}
+                  iiop_handler->update_protocol_properties (send_buffer_size,
+                                                            recv_buffer_size,
+                                                            no_delay,
+                                                            enable_network_priority);
+                }
+            }
+        }
     }
   ACE_CATCHANY
     {
@@ -335,7 +334,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"TAO_RT_Protocols_Hooks::get_dscp_codepoint\n"));
+                "TAO_RT_Protocols_Hooks::get_dscp_codepoint\n"));
 
   CORBA::Long codepoint = 0;
 
@@ -346,10 +345,10 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
       // for each.
 
       RTCORBA::NetworkPriorityMapping *pm =
-	this->network_mapping_manager_->mapping ();
+        this->network_mapping_manager_->mapping ();
 
       CORBA::Short priority =
-	this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (pm->to_network (priority, codepoint) == 0)
@@ -597,7 +596,7 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (CORBA::Short native_priority
   ACE_Thread::self (current);
 
   if (ACE_Thread::setprio (current, native_priority) == -1) {
-    ACE_ERROR_RETURN((LM_ERROR, ACE_LIB_TEXT("(%N,%l) Error setting thread priority to %d, errno %d %m\n"), native_priority, errno ), -1); 
+    ACE_ERROR_RETURN((LM_ERROR, ACE_LIB_TEXT("(%N,%l) Error setting thread priority to %d, errno %d %m\n"), native_priority, errno ), -1);
   }
 
   return 0;
@@ -639,14 +638,14 @@ TAO_RT_Protocols_Hooks::set_default_policies (ACE_ENV_SINGLE_ARG_DECL)
   // Set ServerProtocolPolicy.
   TAO_ServerProtocolPolicy *server_protocol_policy = 0;
   ACE_NEW_RETURN (server_protocol_policy,
-		  TAO_ServerProtocolPolicy (protocols),
+                  TAO_ServerProtocolPolicy (protocols),
                   -1);
 
   RTCORBA::ServerProtocolPolicy_var safe_server_protocol_policy =
     server_protocol_policy;
 
   this->orb_core_->get_default_policies ()->set_policy (server_protocol_policy
-							ACE_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Set ClientProtocolPolicy.

@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="MProfile Client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="MProfile_Connection_Timeout Client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=MProfile Client - Win32 Debug
+CFG=MProfile_Connection_Timeout Client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=MProfile Client - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="MProfile Client - Win32 Debug"
+!MESSAGE NMAKE /f "client.mak" CFG="MProfile_Connection_Timeout Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "MProfile Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "MProfile Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "MProfile_Connection_Timeout Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "MProfile_Connection_Timeout Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=MProfile Client - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "MProfile Client - Win32 Release"
+!IF  "$(CFG)" == "MProfile_Connection_Timeout Client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 ace.lib TAO.lib TAO_IORManip.lib TAO_Messaging.lib /nologo /subsystem:console /debug /machine:I386 /out:"Release/client.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\tao\Messaging"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "MProfile Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MProfile_Connection_Timeout Client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -84,8 +84,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "MProfile Client - Win32 Release"
-# Name "MProfile Client - Win32 Debug"
+# Name "MProfile_Connection_Timeout Client - Win32 Release"
+# Name "MProfile_Connection_Timeout Client - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -114,7 +114,7 @@ SOURCE=.\testC.h
 
 SOURCE=.\test.idl
 
-!IF  "$(CFG)" == "MProfile Client - Win32 Release"
+!IF  "$(CFG)" == "MProfile_Connection_Timeout Client - Win32 Release"
 
 USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
@@ -152,7 +152,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "MProfile Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MProfile_Connection_Timeout Client - Win32 Debug"
 
 USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)

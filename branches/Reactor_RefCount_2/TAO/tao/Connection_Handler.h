@@ -17,11 +17,11 @@
 #include "ace/pre.h"
 
 #include "LF_CH_Event.h"
+#include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
@@ -51,6 +51,9 @@ public:
   /// Constructor
   TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
+  /// Destructor
+  virtual ~TAO_Connection_Handler (void);
+
   /// Return the underlying transport object
   TAO_Transport *transport (void);
 
@@ -59,15 +62,6 @@ public:
 
   /// Is the state final?
   int is_finalized (void);
-
-  /// Increment and decrement the refcount. The object is deleted when
-  /// the refcount reaches zero.
-  long incr_refcount (void);
-  long decr_refcount (void);
-
-  /// Set the handler in <CODE>LF_EVENT_CONNECTION_CLOSE_WAIT </CODE>
-  /// state
-  void connection_close_wait (void);
 
   /// Close the underlying connection.
   /**
@@ -96,13 +90,6 @@ public:
 
 protected:
 
-  /// Destructor
-  /**
-   * Protected destructor to enforce proper memory management through
-   * the reference counting mechanism.
-   */
-  virtual ~TAO_Connection_Handler (void);
-
   /// Return our TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
 
@@ -125,11 +112,6 @@ protected:
    * place.
    */
 
-  /// Implement the handle_close() callback
-  virtual int handle_close_eh (ACE_HANDLE h,
-                               unsigned long reactor_mask,
-                               ACE_Event_Handler * eh);
-
   /// Implement the handle_output() callback
   int handle_output_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
 
@@ -140,8 +122,7 @@ protected:
   /// also Event_Handlers.
   int close_connection_eh (ACE_Event_Handler * eh);
 
-  /// Release the OS resources related to this handler, used in
-  /// handle_close_eh()
+  /// Release the OS resources related to this handler.
   virtual int release_os_resources (void);
 
   /// Pre-invocation hook for I/O operations (handle_input() &
@@ -169,12 +150,6 @@ private:
 
   /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;
-
-  /// Pretty obvious
-  long reference_count_;
-
-  /// Lock for the reference count
-  ACE_Lock *refcount_lock_;
 
   /// Internal state lock, needs to be separate from the reference
   /// count / pending upcalls lock because they interleave.

@@ -147,7 +147,8 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
   /// Ossama remove this when you are done..
   if (this->profile_)
     this->profile_->_decr_refcnt ();
-  TAO_Transport::release (this->transport_);
+  if (this->transport_)
+    this->transport_->remove_reference ();
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -236,12 +237,9 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
   if (this->transport_ != 0)
     {
       this->transport_->make_idle ();
+      this->transport_->remove_reference ();
+      this->transport_ = 0;
     }
-
-  // Release the transport prior to connecting.
-  // In most cases the transport_ will already be zero.
-  TAO_Transport::release (this->transport_);
-  this->transport_ = 0;
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
@@ -496,8 +494,7 @@ TAO_GIOP_Invocation::close_connection (void)
   // false error reports to applications.
 
   this->transport_->close_connection ();
-  // this->transport_->idle ();
-  TAO_Transport::release (this->transport_);
+  this->transport_->remove_reference ();
   this->transport_ = 0;
 
   this->endpoint_->reset_hint ();

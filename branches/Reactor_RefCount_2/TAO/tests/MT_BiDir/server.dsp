@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="BiDir Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="MT_BiDir Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=BiDir Server - Win32 Debug
+CFG=MT_BiDir Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=BiDir Server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="BiDir Server - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="MT_BiDir Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "BiDir Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "BiDir Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "MT_BiDir Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "MT_BiDir Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=BiDir Server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "BiDir Server - Win32 Release"
+!IF  "$(CFG)" == "MT_BiDir Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib TAO_BiDirGIOP.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\BiDir_GIOP"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "BiDir Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MT_BiDir Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -84,8 +84,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "BiDir Server - Win32 Release"
-# Name "BiDir Server - Win32 Debug"
+# Name "MT_BiDir Server - Win32 Release"
+# Name "MT_BiDir Server - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -151,7 +151,7 @@ SOURCE=.\Server_Task.h
 
 SOURCE=.\Receiver.idl
 
-!IF  "$(CFG)" == "BiDir Server - Win32 Release"
+!IF  "$(CFG)" == "MT_BiDir Server - Win32 Release"
 
 # Begin Custom Build
 InputPath=.\Receiver.idl
@@ -188,7 +188,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "BiDir Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MT_BiDir Server - Win32 Debug"
 
 # Begin Custom Build
 InputPath=.\Receiver.idl
@@ -232,7 +232,7 @@ BuildCmds= \
 
 SOURCE=.\Sender.idl
 
-!IF  "$(CFG)" == "BiDir Server - Win32 Release"
+!IF  "$(CFG)" == "MT_BiDir Server - Win32 Release"
 
 # Begin Custom Build
 InputPath=.\Sender.idl
@@ -269,7 +269,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "BiDir Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "MT_BiDir Server - Win32 Debug"
 
 # Begin Custom Build
 InputPath=.\Sender.idl

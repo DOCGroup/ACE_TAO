@@ -48,22 +48,12 @@ TAO_LF_CH_Event::state_changed_i (int new_state)
     }
   else if (this->state_ == TAO_LF_Event::LFS_SUCCESS)
     {
-      if (new_state == TAO_LF_Event::LFS_CONNECTION_CLOSE_WAIT
-          || new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
+      if (new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
         {
           this->prev_state_ = this->state_;
           this->state_ = new_state;
         }
       return;
-    }
-  else if (this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSE_WAIT)
-    {
-      if (new_state == TAO_LF_Event::LFS_CONNECTION_CLOSED)
-        {
-          // Dont reset the previous state. We could have come only
-          // from SUCESS. Let that state be preserved.
-          this->state_ = new_state;
-        }
     }
   else if (this->state_ == TAO_LF_Event::LFS_TIMEOUT)
     {
@@ -91,8 +81,6 @@ TAO_LF_CH_Event::error_detected (void) const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
-  else if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_CLOSE_WAIT)
-    return (this->state_ != TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
   return 0;
 }

@@ -60,7 +60,6 @@ OBJFILES = \
 	$(OBJDIR)\Default_Collocation_Resolver.obj \
 	$(OBJDIR)\Connection_Purging_Strategy.obj \
 	$(OBJDIR)\Connection_Handler.obj \
-	$(OBJDIR)\Notify_Handler.obj \
 	$(OBJDIR)\Thread_Per_Connection_Handler.obj \
 	$(OBJDIR)\Connector_Impl.obj \
 	$(OBJDIR)\Connector_Registry.obj \

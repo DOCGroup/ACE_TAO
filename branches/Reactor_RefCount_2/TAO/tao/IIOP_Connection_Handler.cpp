@@ -54,7 +54,6 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
-  TAO_Transport::release (specific_transport);
 }
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
@@ -67,11 +66,10 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 {
 }
 
-
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
+  delete this->transport ();
 }
-
 
 int
 TAO_IIOP_Connection_Handler::open_handler (void *v)
@@ -134,7 +132,6 @@ TAO_IIOP_Connection_Handler::open (void*)
       return -1;
     }
 
-
   if (TAO_debug_level > 0)
     {
       ACE_TCHAR client[MAXHOSTNAMELEN + 16];
@@ -158,10 +155,6 @@ TAO_IIOP_Connection_Handler::open (void*)
   return 0;
 }
 
-
-
-
-
 int
 TAO_IIOP_Connection_Handler::resume_handler (void)
 {
@@ -177,26 +170,63 @@ TAO_IIOP_Connection_Handler::close_connection (void)
 int
 TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_eh (h, this);
+  int result =
+    this->handle_input_eh (h, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
 TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  return this->handle_output_eh (handle, this);
+  int result =
+    this->handle_output_eh (handle, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
+}
+
+int
+TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+                                             const void *)
+{
+  // We don't use this upcall from the Reactor.  However, we should
+  // override this since the base class returns -1 which will result
+  // in handle_close() getting called.
+  return 0;
 }
 
 int
 TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                            ACE_Reactor_Mask rm)
 {
-  return this->handle_close_eh (handle, rm, this);
+  ACE_ASSERT (0);
+  return 0;
+}
+
+int
+TAO_IIOP_Connection_Handler::close (u_long)
+{
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->transport ()->remove_reference ();
+  return 0;
 }
 
 int
 TAO_IIOP_Connection_Handler::release_os_resources (void)
 {
-  return this->peer().close ();
+  return this->peer ().close ();
 }
 
 int

@@ -36,9 +36,9 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
   while (1)
     {
       retval =
-        this->transport_->handle_input_i (rh,
-                                          max_wait_time,
-                                          1);
+        this->transport_->handle_input (rh,
+                                        max_wait_time,
+                                        1);
 
       // If we got our reply, no need to run the loop any
       // further.
