@@ -276,7 +276,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
 
   $status = &create_kit ();
 
-  unless ($status) {
+  if (! $status  &&  $install) {
     if ("$ace_tag") {
       my $major_v = 0;
       my $minor_v = 0;
