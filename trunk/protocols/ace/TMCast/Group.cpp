@@ -78,9 +78,11 @@ namespace ACE_TMCast
       in_link_data_.subscribe (cond_);
       in_control_.subscribe (cond_);
 
+      ACE_thread_t unused;
       if (ACE_OS::thr_create (&thread_thunk,
                               this,
                               THR_JOINABLE,
+                              &unused,
                               &thread_) != 0) ::abort ();
     }
 
@@ -290,7 +292,7 @@ namespace ACE_TMCast
     }
 
   private:
-    ACE_thread_t thread_;
+    ACE_hthread_t thread_;
 
     ACE_Thread_Mutex mutex_;
     ACE_Condition<ACE_Thread_Mutex> cond_;
@@ -488,13 +490,13 @@ namespace ACE_TMCast
   {
   }
 
-  void 
+  void
   Group::send (void const* msg, size_t size) throw (Group::InvalidArg, Group::Failed, Group::Aborted)
   {
     pimpl_->send (msg, size);
   }
 
-  size_t 
+  size_t
   Group::recv (void* msg, size_t size) throw (Group::Failed, Group::InsufficienSpace)
   {
     return pimpl_->recv (msg, size);

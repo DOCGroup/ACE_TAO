@@ -1,3 +1,9 @@
+Thu Jan 13 11:29:35 2005  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* ace/TMCast/Group.cpp:
+	* ace/TMCast/LinkListener.hpp: Use ACE_hthread_t instead of
+	  ACE_thread_t to join threads.
+
 Wed Jan 12 22:52:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdio.h (gets):
