@@ -1,3 +1,15 @@
+Mon Aug 18 12:28:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added the ability to exclude directories when using the -recurse
+          option.  See USAGE or mwc.pl -h for details.
+
 Mon Aug 18 15:22:02 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * bin/tao_other_tests.lst:
@@ -7,36 +19,36 @@ Mon Aug 18 15:22:02 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Sun Aug 17 16:35:01 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/RB_Tree.i (dump_i):
-	* ace/RB_Tree.cpp (dump_i):
+        * ace/RB_Tree.i (dump_i):
+        * ace/RB_Tree.cpp (dump_i):
 
-	  Uninlined this method to avoid adding an inter-header dependency
-	  on "ace/Log_Msg.h".  Also fixes some explicit template
-	  instantiation builds.
+          Uninlined this method to avoid adding an inter-header dependency
+          on "ace/Log_Msg.h".  Also fixes some explicit template
+          instantiation builds.
 
-	* tests/Collection_Test.cpp:
+        * tests/Collection_Test.cpp:
 
-	  Removed duplicate template instantiation.
+          Removed duplicate template instantiation.
 
 Sun Aug 17 16:06:20 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Shared_Object.h:
+        * ace/Shared_Object.h:
 
-	  Include "ace/os_includes/sys/os_types.h" to pull in size_t
-	  typedef instead of "ace/OS.h".  The latter is overkill.
+          Include "ace/os_includes/sys/os_types.h" to pull in size_t
+          typedef instead of "ace/OS.h".  The latter is overkill.
 
-	* ace/Shared_Object.cpp:
+        * ace/Shared_Object.cpp:
 
-	  Include "ace/Global_Macros.h" to pull in ACE_TRACE macro
-	  definition.
+          Include "ace/Global_Macros.h" to pull in ACE_TRACE macro
+          definition.
 
 Sun Aug 17 15:31:29 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS.h (ACE_CLEANUP_FUNC):
-	* ace/config-all.h
+        * ace/OS.h (ACE_CLEANUP_FUNC):
+        * ace/config-all.h
 
-	  Moved this typedef to config-all.h.  Allows sources to use this
-	  typedef without including the compile-time expensive OS.h.
+          Moved this typedef to config-all.h.  Allows sources to use this
+          typedef without including the compile-time expensive OS.h.
 
 Fri Aug 15 14:02:22 2003  Chad Elliott  <elliott_c@ociweb.com>
 

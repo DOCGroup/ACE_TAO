@@ -2339,7 +2339,9 @@ sub get_verbatim {
 sub generate_recursive_input_list {
   my($self) = shift;
   my($dir)  = shift;
+  my($exc)  = shift;
   return $self->extension_recursive_input_list($dir,
+                                               $exc,
                                                $ProjectCreatorExtension);
 }
 
