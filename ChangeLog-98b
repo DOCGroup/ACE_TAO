@@ -1,18 +1,24 @@
+Wed Nov 25 12:01:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Misc/context_switch_time.cpp (main): fixed
+          printouts by performing floating point division, instead of
+          converted integer division to double.
+
 Wed Nov 25 10:48:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task.cpp: Fixed a bug whereby we weren't inheriting the
- 	  group id correctly when joining a group of existing threads.
-  	  Thanks to Valery Arkhangorodsky <avalery@balisoft.com> for
- 	  pointing this out.
+        * ace/Task.cpp: Fixed a bug whereby we weren't inheriting the
+          group id correctly when joining a group of existing threads.
+          Thanks to Valery Arkhangorodsky <avalery@balisoft.com> for
+          pointing this out.
 
 Tue Nov 24 03:50:09 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp: Renamed DLL_Wrapper_Test.cpp to
-	  DLL_Test.cpp. Also, added ACE_OBJ_SUFFIX which takes care of the
-	  object code convention on NT and UNIX platforms. Changed the
-	  messages in ACE_ERROR to come from ACE_DLL::error().
-	  This is a running version tested using CC compiler too.
-			
+        * tests/DLL_Test.cpp: Renamed DLL_Wrapper_Test.cpp to
+          DLL_Test.cpp. Also, added ACE_OBJ_SUFFIX which takes care of the
+          object code convention on NT and UNIX platforms. Changed the
+          messages in ACE_ERROR to come from ACE_DLL::error().
+          This is a running version tested using CC compiler too.
+
 Tue Nov 24 17:45:26 1998  Steve Huston  <shuston@riverace.com>
 
         * netsvcs/clients/Naming/Dump_Restore/Makefile: Added a LIBS +=
