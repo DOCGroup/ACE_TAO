@@ -404,6 +404,12 @@ public:
   virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
 
+  /// Does the reactor allow the application to resume the handle on
+  /// its own ie. can it pass on the control of handle resumption to
+  /// the application.  The select reactor has no handlers that can be
+  /// resumed by the  application. So return 0;
+  virtual int resumable_handler (void);
+
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.
   virtual int bit_ops (ACE_HANDLE handle,
