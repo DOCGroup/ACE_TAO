@@ -22,20 +22,12 @@
 // ============================================================================
 
 #include "test_config.h"
-#include <ace/Unbounded_Set_Ex.h>
-#include <ace/Auto_Ptr.h>
-#include <ace/SString.h>
+#include "Unbounded_Set_Test_Ex.h"
+#include "ace/Unbounded_Set_Ex.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
 ACE_RCSID(tests, Unbounded_Set_Test_Ex, "$Id$")
-
-struct MyNode
-{
-  unsigned k;
-  MyNode () : k (0) {}
-  MyNode (int pk) : k (pk) {}
-  MyNode (const MyNode& o) : k (o.k) {}
-  bool operator== (const MyNode& o) { return (k == o.k); }
-};
 
 size_t count_const_set (const ACE_Unbounded_Set_Ex<MyNode>& cubs)
 {
@@ -52,7 +44,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   unsigned k;
   MyNode node (1);
 
-  ACE_START_TEST (ACE_TEXT ("Unbounded_Set_Test"));
+  ACE_START_TEST (ACE_TEXT ("Unbounded_Set_Test_Ex"));
 
   ACE_Unbounded_Set_Ex<MyNode> ubs;
   ACE_ASSERT (ubs.size () == 0);

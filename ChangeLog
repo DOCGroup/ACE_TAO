@@ -1,3 +1,14 @@
+Mon Apr  7 17:04:20 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/Unbounded_Set_Test_Ex.cpp: Moved the definition of MyNode
+	  to its own file, Unbounded_Set_Test_Ex.h to allow the
+	  ever-cooperative AIX Visual Age C++ compiler to find the definition
+	  when instantiating templates. Also changed the name of the
+	  recorded log file to match the test name so the autobuild
+	  log analysis can find it.
+
+	* tests/run_test.lst: Added Unbounded_Set_Test_Ex.
+
 Mon Apr  7 12:27:25 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
