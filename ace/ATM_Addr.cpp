@@ -96,6 +96,7 @@ ACE_ATM_Addr::init (unsigned char selector)
                   BHLI_MAGIC,
                   sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #else
+  ACE_UNUSED_ARG (selector);
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
