@@ -13,6 +13,7 @@
 #include "ace/Array.h"
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
+#include "ace/Signal.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Object_Manager.i"
@@ -40,6 +41,7 @@ ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
 int ACE_Object_Manager::starting_up_ = 1;
 int ACE_Object_Manager::shutting_down_ = 0;
+ACE_Sig_Set *ACE_Object_Manager::default_mask_p_ = 0;
 
 void *ACE_Object_Manager::managed_object[ACE_MAX_MANAGED_OBJECTS] = { 0 };
 
@@ -212,6 +214,9 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   // Finally, indicate that the ACE_Object_Manager instance has been
   // constructed.
   ACE_Object_Manager::starting_up_ = 0;
+
+  ACE_NEW (ACE_Object_Manager::default_mask_p_,
+           ACE_Sig_Set(1));
 }
 
 ACE_Object_Manager *
@@ -714,6 +719,9 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 #if defined (ACE_HAS_THREADS)
   ACE_Static_Object_Lock::cleanup_lock ();
 #endif /* ACE_HAS_THREADS */
+
+  delete default_mask_p_;
+  default_mask_p_ = 0;
 }
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)

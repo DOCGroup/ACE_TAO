@@ -26,6 +26,7 @@
   class ACE_Recursive_Thread_Mutex;
   class ACE_RW_Thread_Mutex;
 #endif /* ACE_MT_SAFE */
+class ACE_Sig_Set;
 
 // Forward declaration.
 template <class T> class ACE_Unbounded_Queue;
@@ -275,6 +276,9 @@ public:
   // construction of <ACE_Singletons>.  Returns 0, and the lock in the
   // argument, on success; returns -1 on failure.
 
+  static ACE_Sig_Set &default_mask (void);
+  // Accesses a default signal set used in ACE_Sig_Guard methods.
+
 private:
 
 #endif /* ACE_MT_SAFE */
@@ -294,6 +298,9 @@ private:
 
   static int shutting_down_;
   // Flag indicating whether the program is shutting down.
+
+  static ACE_Sig_Set *default_mask_p_;
+  // Default signal set used in ACE_Sig_Guard.
 
 public:
   // For internal use only by ACE_Managed_Objects.
