@@ -48,11 +48,11 @@ void
 TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
+  if (CORBA::is_nil (this->sep_a_.in ()))
     return;
 
   // Make the upcall into the application
-  this->stream_endpoint_a_->stop (the_spec, ACE_TRY_ENV);
+  this->sep_a_->stop (the_spec, ACE_TRY_ENV);
 }
 
 // Start the transfer of data in the stream.
@@ -61,11 +61,11 @@ void
 TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
+  if (CORBA::is_nil (this->sep_a_.in ()))
     return;
 
   // Make the upcall into the application
-  this->stream_endpoint_a_->start (flow_spec, ACE_TRY_ENV);
+  this->sep_a_->start (flow_spec, ACE_TRY_ENV);
 }
 
 // Tears down the stream. This will close the connection, and delete
@@ -75,11 +75,11 @@ void
 TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &the_spec,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
+  if (CORBA::is_nil (this->sep_a_.in ()))
     return;
 
   // Make the upcall into the application
-  this->stream_endpoint_a_->destroy (the_spec, ACE_TRY_ENV);
+  this->sep_a_->destroy (the_spec, ACE_TRY_ENV);
 }
 
 // Changes the QoS associated with the stream
@@ -163,6 +163,8 @@ TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr remote_negotiator,
 // ----------------------------------------------------------------------
 
 TAO_StreamCtrl::TAO_StreamCtrl (void)
+  :mcastconfigif_ (0),
+   mcastconfigif_ptr_ (0)
 {
 }
 
@@ -184,13 +186,15 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   // do a Qos Translation from application level Qos to Network level Qos??
   ACE_TRY
     {
+      if (CORBA::is_nil (a_party) && CORBA::is_nil (b_party))
+        ACE_ERROR_RETURN ((LM_ERROR,"Both parties are nil\n"),0);
       // Check to see if we have non-nil parties to bind!
       if (CORBA::is_nil (a_party) ||
           CORBA::is_nil (b_party))
         ACE_DEBUG ((LM_DEBUG,
-                           "(%P|%t) TAO_StreamCtrl::bind_devs: "
-                           "a_party or b_party is null"
-                           "Multicast mode\n"));
+                    "(%P|%t) TAO_StreamCtrl::bind_devs: "
+                    "a_party or b_party is null"
+                    "Multicast mode\n"));
 
       // Request a_party to create the endpoint and vdev
       CORBA::Boolean met_qos;
@@ -198,7 +202,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
       if (!CORBA::is_nil (a_party))
         {
-          this->stream_endpoint_a_ =
+          this->sep_a_ =
             a_party-> create_A (this->_this (ACE_TRY_ENV),
                                 this->vdev_a_.out (),
                                 the_qos,
@@ -216,7 +220,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
       
       if (!CORBA::is_nil (b_party))
         {
-          this->stream_endpoint_b_ =
+          this->sep_b_ =
             b_party-> create_B (this->_this (ACE_TRY_ENV),
                                 this->vdev_b_.out (),
                                 the_qos,
@@ -228,38 +232,79 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) TAO_StreamCtrl::create_B: succeeded\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n(%P|%t)stream_endpoint_b_ = %s",
+                      TAO_ORB_Core_instance ()->orb ()->object_to_string (this->sep_b_.in (),
+                                                                          ACE_TRY_ENV)));
+          ACE_TRY_CHECK;
         }
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n(%P|%t)stream_endpoint_b_ = %s",
-                  TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_.in (),
-                                                                      ACE_TRY_ENV)));
-      ACE_TRY_CHECK;
 
-      // Tell the 2 VDev's about one another
-      this->vdev_a_->set_peer (this->_this (ACE_TRY_ENV),
-                               this->vdev_b_.in (),
-                               the_qos,
-                               the_flows,
-                               ACE_TRY_ENV);
+      if (CORBA::is_nil (b_party))
+        {
+          if (this->mcastconfigif_ != 0)
+            {
+              ACE_NEW_RETURN (this->mcastconfigif_,
+                              TAO_MCastConfigIf,
+                              0);
+              this->mcastconfigif_ptr_ = this->mcastconfigif_->_this (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          // Multicast source being added.
+          CORBA::Boolean result = this->vdev_a_->set_Mcast_peer (this->_this (ACE_TRY_ENV),
+                                                                 this->mcastconfigif_ptr_,
+                                                                 the_qos,
+                                                                 the_flows,
+                                                                 ACE_TRY_ENV);
+          if (!result)
+            ACE_ERROR_RETURN ((LM_ERROR,"set_Mcast_peer failed\n"),-1);
+        }
 
-      ACE_TRY_CHECK;
+      if (CORBA::is_nil (a_party))
+        {
+          // Multicast sink being added.
+          if (this->mcastconfigif_ != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,"first add a source and then a sink\n"),0);
+          this->mcastconfigif_->set_peer (this->vdev_b_.in (),
+                                          the_qos,
+                                          the_flows,
+                                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-      this->vdev_b_->set_peer (this->_this (ACE_TRY_ENV),
-                               this->vdev_a_.in (),
-                               the_qos,
-                               the_flows,
-                               ACE_TRY_ENV);
+          this->sep_a_->connect_leaf (this->sep_b_.in (),
+                                      the_qos,
+                                      the_flows,
+                                      ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      
+      if (!CORBA::is_nil (a_party) && !CORBA::is_nil (b_party))
+        {
+          // Tell the 2 VDev's about one another
+          this->vdev_a_->set_peer (this->_this (ACE_TRY_ENV),
+                                   this->vdev_b_.in (),
+                                   the_qos,
+                                   the_flows,
+                                   ACE_TRY_ENV);
 
-      ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
+
+          this->vdev_b_->set_peer (this->_this (ACE_TRY_ENV),
+                                   this->vdev_a_.in (),
+                                   the_qos,
+                                   the_flows,
+                                   ACE_TRY_ENV);
+
+          ACE_TRY_CHECK;
 
 
-  // Now connect the streams together. This will
-  // establish the connection
-      this->stream_endpoint_a_->connect (this->stream_endpoint_b_.in (),
-                                         the_qos,
-                                         the_flows,
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+          // Now connect the streams together. This will
+          // establish the connection
+          this->sep_a_->connect (this->sep_b_.in (),
+                                             the_qos,
+                                             the_flows,
+                                             ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
@@ -280,8 +325,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       const AVStreams::flowSpec &the_flows,
                       CORBA::Environment &ACE_TRY_ENV)
 {
-  this->stream_endpoint_a_ = sep_a;
-  this->stream_endpoint_b_ = sep_b;
+  this->sep_a_ = sep_a;
+  this->sep_b_ = sep_b;
 
   ACE_TRY
     {
@@ -396,7 +441,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
     {
       // error was thrown because one of the streamendpoints is light profile.
       // Now connect the streams together
-      this->stream_endpoint_a_->connect (this->stream_endpoint_b_.in (),
+      this->sep_a_->connect (this->sep_b_.in (),
                                          the_qos,
                                          the_flows,
                                          ACE_TRY_ENV);
