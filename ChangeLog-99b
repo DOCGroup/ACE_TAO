@@ -1,3 +1,9 @@
+Fri Dec 17 21:32:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-common.h: added support for Compaq
+          (Digital Unix) cxx.  Currently, that just means allowing
+          compilation to succeed.
+
 Fri Dec 17 21:29:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: use __DECCXX instead of DEC_CXX to detect that
