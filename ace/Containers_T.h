@@ -38,7 +38,7 @@ template <class T>
 class ACE_Bounded_Stack
 {
 public:
-  // = Initialization, assignemnt, and termination methods.
+  // = Initialization, assignment, and termination methods.
 
   /// Initialize a new stack so that it is empty.
   /// The copy constructor (performs initialization).
@@ -116,7 +116,7 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Stack
 {
 public:
-  // = Initialization, assignemnt, and termination methods.
+  // = Initialization, assignment, and termination methods.
   /// Initialize a new stack so that it is empty.
   ACE_Fixed_Stack (void);
 
@@ -280,7 +280,7 @@ public:
   // Trait definition.
   typedef ACE_Unbounded_Stack_Iterator<T> ITERATOR;
 
-  // = Initialization, assignemnt, and termination methods.
+  // = Initialization, assignment, and termination methods.
   /// Initialize a new stack so that it is empty.  Use user defined
   /// allocation strategy if specified.
   ACE_Unbounded_Stack (ACE_Allocator *alloc = 0);
@@ -1672,7 +1672,7 @@ public:
 
   /**
    * Insert <new_item> into the ordered multiset, starting its search at
-   * the node pointed to by the iterator, and if insetion was successful,
+   * the node pointed to by the iterator, and if insertion was successful,
    * updates the iterator to point to the newly inserted node.
    * Returns -1 if failures occur, else 0.
    */
