@@ -2,16 +2,14 @@
 // $Id$
 
 #include "tao/Pluggable.h"
-#include "tao/Stub.h"
+#include "tao/MProfile.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Transport_Mux_Strategy.h"
-#include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
 
-#include "ace/ACE.h"
 #include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)
@@ -142,12 +140,14 @@ TAO_Transport::reset_message (ACE_Message_Block *message_block,
       while (current_message_block != 0 &&
              bytes_delivered != 0)
         {
-          size_t current_message_block_length = current_message_block->length ();
+          size_t current_message_block_length =
+            current_message_block->length ();
 
           int completely_delivered_current_message_block =
             bytes_delivered >= current_message_block_length;
 
-          size_t adjustment_size = ACE_MIN (current_message_block_length, bytes_delivered);
+          size_t adjustment_size =
+            ACE_MIN (current_message_block_length, bytes_delivered);
 
           // Reset according to send size.
           current_message_block->rd_ptr (adjustment_size);
@@ -155,7 +155,8 @@ TAO_Transport::reset_message (ACE_Message_Block *message_block,
           // If queued message, adjust the queue.
           if (queued_message)
             // Hand adjust <message_length>.
-            this->buffering_queue_->message_length (this->buffering_queue_->message_length () - adjustment_size);
+            this->buffering_queue_->message_length (
+              this->buffering_queue_->message_length () - adjustment_size);
 
           // Adjust <bytes_delivered>.
           bytes_delivered -= adjustment_size;
