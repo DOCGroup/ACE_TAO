@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_REACTOR_H
 #define ACE_REACTOR_H
 #include "ace/pre.h"

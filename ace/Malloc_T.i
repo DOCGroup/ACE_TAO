@@ -36,6 +36,29 @@ ACE_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
   return this->free_list_.remove ()->addr ();
 }
 
+template <class T, class ACE_LOCK> ACE_INLINE void *
+ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
+                                           char initial_value)
+{
+  // Check if size requested fits within pre-determined size.
+  if (nbytes > sizeof (T))
+    return NULL;
+
+  // addr() call is really not absolutely necessary because of the way
+  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
+  void *ptr = this->free_list_.remove ()->addr ();
+  ACE_OS::memset (ptr, initial_value, sizeof (T));
+  return ptr;
+}
+
+template <class T, class ACE_LOCK> ACE_INLINE void *
+ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t,
+                                           size_t,
+                                           char)
+{
+  ACE_NOTSUP_RETURN (0);
+}
+
 template <class T, class ACE_LOCK> ACE_INLINE void
 ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
 {
