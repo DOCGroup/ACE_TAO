@@ -73,20 +73,23 @@ public class SOCKConnectorTest
       SOCKConnectorTest client = new SOCKConnectorTest ();
 
       // check arg count 
-      if (args.length < 2 || args.length > 2) 
+      if (args.length == 0 || args.length > 2) 
          print_usage_and_die(); 
 
       if (args.length == 2)
- {
-   try
-     {
-       port = Integer.parseInt (args[1]);
-     }
-   catch (NumberFormatException e)
-     {
-       client.print_usage_and_die ();
-     }
-          client.init (args[0], port);
- }
+	{
+	  try
+	    {
+	      port = Integer.parseInt (args[1]);
+	    }
+	  catch (NumberFormatException e)
+	    {
+	      client.print_usage_and_die ();
+	    }
+	}
+      client.init (args[0], port);
+	
+
     }
 }
+
