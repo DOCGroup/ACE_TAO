@@ -1,3 +1,9 @@
+Sun Dec 28 11:38:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Message_Queue.h:
+	  Use doxygen style of comments for deprecated enum members so that
+	  they appear on the doxygen deprecated page.
+
 Sun Dec 28 10:44:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp:
