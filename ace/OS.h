@@ -20,10 +20,8 @@
 
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
-#if !defined (ACE_USER_CONFIG_H)
-#define ACE_USER_CONFIG_H
-#include "ace/config.h"
-#endif /* ACE_USER_CONFIG_H */
+#include "ace/inc_user_config.h"
+
 
 #if defined (ACE_HAS_ANSI_CASTS)
 # define ACE_static_cast(TYPE, EXPR)       static_cast<TYPE> (EXPR)
