@@ -595,7 +595,7 @@ Echo_Server_Request_Interceptor::send_exception (
 void
 Echo_Server_Request_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr ri
-             ACE_ENV_ARG_DECL_NOT_USED)
+             ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
