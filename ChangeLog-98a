@@ -1,3 +1,9 @@
+Sat Dec 27 18:03:52 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (dump): Sould test if we have a valid thr_desc
+	  before dumping the information of it.  Thanks to Luca Priorelli
+	  <lucapri@mbox.vol.it> for pointing this out.
+
 Sat Dec 27 16:13:59 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/{OS.i,config-linux-common.h,README} (getrusage,{get,set}rlimit):
