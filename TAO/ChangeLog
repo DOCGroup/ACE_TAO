@@ -1,3 +1,9 @@
+Wed Aug  6 10:23:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/IDL_Test/Makefile:
+
+          Fixed mistakes and updated dependencies.
+
 Wed Aug  6 15:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ec_options.html:
