@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 
 NAME = peerd
 OBJFILES = \
