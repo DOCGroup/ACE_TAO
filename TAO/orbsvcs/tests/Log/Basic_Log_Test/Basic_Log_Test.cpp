@@ -37,7 +37,8 @@ BasicLog_Test::init (int argc, char *argv[])
     {
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
-                              argv
+                              argv,
+                              "internet"
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
