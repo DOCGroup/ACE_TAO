@@ -1,3 +1,7 @@
+Sun Oct 20 08:10:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Recursive_Condition_Test.cpp: Fixed a unused variable warning.
+
 Sun Oct 20 00:27:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Recursive_Condition_Test.cpp: Fixed a fuzz error.
