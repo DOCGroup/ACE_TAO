@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
-BIN = client server
+BIN_UNCHECKED = client server
 
 SRC = $(addsuffix .cpp, $(BIN) McastHello) $(IDL_SRC)
 
@@ -29,6 +29,14 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+
+ifeq ($(minimum_corba),0)
+  BIN = $(BIN_UNCHECKED)
+endif  # minimum_corba == 0
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
