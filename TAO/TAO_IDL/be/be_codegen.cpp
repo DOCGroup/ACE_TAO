@@ -1273,6 +1273,8 @@ TAO_CodeGen::end_anyop_header (void)
 int
 TAO_CodeGen::end_anyop_source (void)
 {
+  *this->anyop_source_ << "\n\n";
+
   return 0;
 }
 
