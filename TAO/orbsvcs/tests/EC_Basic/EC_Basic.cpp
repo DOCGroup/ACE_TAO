@@ -191,7 +191,9 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
                           RtecScheduler::Scheduler_ptr scheduler,
                           CORBA::Environment& _env)
 {
-  for (int i = 0; i < ECB_SupplierID_Test::PHASE_END; ++i)
+  int i;
+
+  for (i = 0; i < ECB_SupplierID_Test::PHASE_END; ++i)
     {
       this->event_count_[i] = 0;
       this->error_count_[i] = 0;
@@ -471,14 +473,14 @@ ECB_SupplierID_Test::Consumer::open (const char* name,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (this->rt_info_,
-		  RtecScheduler::VERY_HIGH_CRITICALITY,
-		  time, time, time,
-		  0,
-		  RtecScheduler::VERY_LOW_IMPORTANCE,
-		  time,
-		  0,
-		  RtecScheduler::OPERATION,
-		  _env);
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // = Connect as a consumer.
@@ -491,7 +493,7 @@ ECB_SupplierID_Test::Consumer::connect (CORBA::Environment& _env)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
-  
+
   this->supplier_proxy_ =
     this->consumer_admin_->obtain_push_supplier (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
@@ -527,7 +529,7 @@ void
 ECB_SupplierID_Test::Consumer::close (CORBA::Environment &_env)
 {
   this->disconnect (_env);
-  this->consumer_admin_ = 
+  this->consumer_admin_ =
     RtecEventChannelAdmin::ConsumerAdmin::_nil ();
 }
 
@@ -593,7 +595,7 @@ ECB_SupplierID_Test::Supplier::connect (CORBA::Environment& _env)
 {
   if (CORBA::is_nil (this->supplier_admin_.in ()))
     return;
-  
+
   this->consumer_proxy_ =
     this->supplier_admin_->obtain_push_consumer (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
@@ -630,7 +632,7 @@ void
 ECB_SupplierID_Test::Supplier::close (CORBA::Environment &_env)
 {
   this->disconnect (_env);
-  this->supplier_admin_ = 
+  this->supplier_admin_ =
     RtecEventChannelAdmin::SupplierAdmin::_nil ();
 }
 
