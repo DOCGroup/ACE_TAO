@@ -1,3 +1,8 @@
+Sat Feb 19 15:32:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Any.cpp:
+	  Reverted accidental commit.
+
 Sat Feb 19 17:07:24 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
 	* docs/releasenotes/index.html (CosEC_Multiple): 
