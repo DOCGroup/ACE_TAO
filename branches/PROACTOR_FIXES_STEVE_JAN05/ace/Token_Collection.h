@@ -33,7 +33,6 @@
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Local_Tokens.h"
-#include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 
 /**

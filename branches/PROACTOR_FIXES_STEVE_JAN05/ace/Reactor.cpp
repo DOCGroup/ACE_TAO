@@ -11,11 +11,16 @@
 #if !defined (ACE_WIN32) \
       || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) \
       || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) \
-      || defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
+      || defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL) \
+      || defined (ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL)
 #  if defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
 #    include "ace/TP_Reactor.h"
 #  else
-#    include "ace/Select_Reactor.h"
+#    if defined (ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL)
+#      include "ace/Dev_Poll_Reactor.h"
+#    else
+#      include "ace/Select_Reactor.h"
+#    endif /* ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL */
 #  endif /* ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL */
 #else /* We are on Win32 and we have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
 #  if defined (ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL)
@@ -50,14 +55,20 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
 #if !defined (ACE_WIN32) \
       || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) \
       || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) \
-      || defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
-  #if defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
+      || defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL) \
+      || defined (ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL)
+#  if defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
       ACE_NEW (impl,
                ACE_TP_Reactor);
-  #else
+#  else
+#    if defined (ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL)
+      ACE_NEW (impl,
+               ACE_Dev_Poll_Reactor);
+#    else
       ACE_NEW (impl,
                ACE_Select_Reactor);
-  #endif /* ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL */
+#    endif /* ACE_USE_DEV_POLL_REACTOR_FOR_REACTOR_IMPL */
+#  endif /* ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL */
 #else /* We are on Win32 and we have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
   #if defined (ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL)
       ACE_NEW (impl,

@@ -863,6 +863,9 @@ public:
   /// new request. Returns 0 on success, 1 if the key was not reserved.
   static int release_key (ACE_thread_key_t key);
 
+  /// Check a key for validity.
+  static int is_key (ACE_thread_key_t key);
+
   /// Returns the exit hook associated with the key.  Does _not_ check
   /// for a valid key.
   static ACE_TSS_DESTRUCTOR tss_destructor (const ACE_thread_key_t key);

@@ -184,8 +184,6 @@ ACE_OS::rmdir (const char *path)
 
   return (int) result;
 
-#elif defined (ACE_HAS_NONCONST_RMDIR)
-  ACE_OSCALL_RETURN (::rmdir (const_cast <char *> (path)), int, -1);
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
@@ -522,7 +520,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
 #  elif defined (ACE_WIN32)
-  return ::_wgetcwd (buf, ACE_static_cast (int, size));
+  return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
   char *narrow_buf = new char[size];
   char *result = 0;

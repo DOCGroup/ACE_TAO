@@ -264,6 +264,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_OpenFileMapping                 ::OpenFileMappingW
 #define ACE_TEXT_OpenSCManager                   ::OpenSCManagerW
 #define ACE_TEXT_OpenService                     ::OpenServiceW
+#define ACE_TEXT_OutputDebugString               ::OutputDebugStringW
 #define ACE_TEXT_RegisterEventSource             ::RegisterEventSourceW
 #define ACE_TEXT_RegisterServiceCtrlHandler      ::RegisterServiceCtrlHandlerW
 #define ACE_TEXT_RegConnectRegistry              ::RegConnectRegistryW
@@ -312,6 +313,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #define ACE_TEXT_OpenFileMapping                 ::OpenFileMappingA
 #define ACE_TEXT_OpenSCManager                   ::OpenSCManagerA
 #define ACE_TEXT_OpenService                     ::OpenServiceA
+#define ACE_TEXT_OutputDebugString               ::OutputDebugStringA
 #define ACE_TEXT_RegisterEventSource             ::RegisterEventSourceA
 #define ACE_TEXT_RegisterServiceCtrlHandler      ::RegisterServiceCtrlHandlerA
 #define ACE_TEXT_RegConnectRegistry              ::RegConnectRegistryA

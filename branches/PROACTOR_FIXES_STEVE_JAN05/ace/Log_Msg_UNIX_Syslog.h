@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
+#if !defined (ACE_LACKS_UNIX_SYSLOG)
 
 #include "ace/Log_Msg_Backend.h"
 
@@ -43,7 +43,7 @@ public:
   /**
    * Initialize the event logging facility.
    * @param logger_key The name of the calling program. This name is
-   *                   used as the @arg ident in the syslog entries. If
+   *                   used as the @c ident in the syslog entries. If
    *                   it is 0 (no name), the application name as
    *                   returned from ACE_Log_Msg::program_name() is used.
    */
@@ -66,7 +66,7 @@ private:
   int convert_log_mask (int lm_mask);
 };
 
-#endif /* !ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* !ACE_LACKS_UNIX_SYSLOG */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_UNIX_SYSLOG_H */

@@ -377,7 +377,7 @@ namespace ACE
   /**
    * Reset the limit on the number of open handles.  If @a new_limit
    * == -1 set the limit to the maximum allowable.  Otherwise, set
-   * the limit value to @a new_limit.  If @a increase_limit_only is 
+   * the limit value to @a new_limit.  If @a increase_limit_only is
    * non-0 then only allow increases to the limit.
    */
   extern ACE_Export int set_handle_limit (int new_limit = -1,
@@ -598,7 +598,7 @@ namespace ACE
   extern ACE_Export int process_active (pid_t pid);
 
   /**
-   * Terminate the process abruptly with id <pid>.  On Win32 platforms
+   * Terminate the process abruptly with id @a pid.  On Win32 platforms
    * this uses <TerminateProcess> and on POSIX platforms is uses
    * <kill> with the -9 (SIGKILL) signal, which cannot be caught or
    * ignored.  Note that this call is potentially dangerous to use

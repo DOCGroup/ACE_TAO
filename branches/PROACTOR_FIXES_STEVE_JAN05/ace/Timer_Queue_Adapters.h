@@ -45,14 +45,14 @@ public:
 
   /// Constructor
   /**
-   * Register the SIGALRM handler.  If <mask> == 0 then block all
+   * Register the SIGALRM handler.  If @a mask == 0 then block all
    * signals when <SIGALRM> is run.  Otherwise, just block the signals
-   * indicated in <mask>.
+   * indicated in @a mask.
    */
   ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *mask = 0);
 
   /// Schedule the timer according to the semantics of the
-  /// <ACE_Timer_List>.
+  /// ACE_Timer_List.
   /**
    * This timer gets dispatched via a signal, rather than by a user
    * calling expire().  Note that interval timers are not implemented
@@ -138,7 +138,7 @@ public:
                  const ACE_Time_Value &future_time,
                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
-  /// Cancel the <timer_id> and return the <act> parameter if an
+  /// Cancel the @a timer_id and return the @a act parameter if an
   /// address is passed in. Also wakes up the dispatching thread.
   int cancel (long timer_id, const void **act = 0);
 

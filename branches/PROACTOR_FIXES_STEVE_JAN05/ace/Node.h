@@ -25,9 +25,6 @@
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
 template <class T> class ACE_Unbounded_Set_Const_Iterator;
-template <class T> class ACE_Unbounded_Set_Ex;
-template <class T> class ACE_Unbounded_Set_Ex_Iterator;
-template <class T> class ACE_Unbounded_Set_Ex_Const_Iterator;
 template <class T> class ACE_Unbounded_Queue;
 template <class T> class ACE_Unbounded_Queue_Iterator;
 template <class T> class ACE_Unbounded_Queue_Const_Iterator;
@@ -49,9 +46,6 @@ public:
   friend class ACE_Unbounded_Set<T>;
   friend class ACE_Unbounded_Set_Iterator<T>;
   friend class ACE_Unbounded_Set_Const_Iterator<T>;
-  friend class ACE_Unbounded_Set_Ex<T>;
-  friend class ACE_Unbounded_Set_Ex_Iterator<T>;
-  friend class ACE_Unbounded_Set_Ex_Const_Iterator<T>;
   friend class ACE_Unbounded_Stack<T>;
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
@@ -71,9 +65,6 @@ private:
 
   /// Current value of the item in this node.
   T item_;
-
-  /// Flag that indicates whether this node is deleted.
-  int deleted_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

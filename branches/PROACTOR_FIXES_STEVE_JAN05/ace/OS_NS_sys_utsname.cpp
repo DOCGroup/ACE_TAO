@@ -45,7 +45,7 @@ ACE_OS::uname (ACE_utsname *name)
   EK_KERNELINFO ets_kern;
   EK_SYSTEMINFO ets_sys;
   EtsGetSystemInfo (&ets_kern, &ets_sys);
-  sinfo.wProcessorLevel = ACE_static_cast (WORD, ets_kern.CpuType);
+  sinfo.wProcessorLevel = static_cast<WORD> (ets_kern.CpuType);
   sinfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_INTEL;
   sinfo.dwProcessorType = ets_kern.CpuType * 100 + 86;
 #   else

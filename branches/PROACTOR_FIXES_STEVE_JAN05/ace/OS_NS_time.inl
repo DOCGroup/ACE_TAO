@@ -132,12 +132,12 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   bufp = buf;
 #   endif /* ACE_USES_WCHAR */
 
-#   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
       return 0;
     }
+#   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
 #      if defined (DIGITAL_UNIX)
   ACE_OSCALL (::_Pctime_r (t, bufp), ACE_TCHAR *, 0, bufp);
 #      else /* DIGITAL_UNIX */
@@ -222,7 +222,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_gethrtime ();
-#elif (defined(__KCC) || defined (__GNUG__)) && !defined (__MINGW32__) && defined (ACE_HAS_PENTIUM)
+#elif (defined(__KCC) || defined (__GNUG__)) && !defined (__MINGW32__) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
 
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -326,7 +326,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   do {
     asm volatile ("mftbu %0\n"
 		  "mftb  %1\n"
-		  "mftbu %2" 
+		  "mftbu %2"
 		  : "=r" (most), "=r" (least), "=r" (scratch));
   } while (most != scratch);
 #endif
