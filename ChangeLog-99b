@@ -2,11 +2,11 @@ Fri Dec 10 15:55:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Configuration.cpp:
 
-	  Changed ACE_Thread_Mutex template instantiation arguments to
-	  ACE_SYNCH_MUTEX.  This matches the typedef declaration in
-	  ace/Configuration.h, and allows us to remove the "#ifdef
-	  ACE_HAS_THREADS" conditional in the template instantiations.
-
+	  Added a comment stating that ACE_SYNCH_MUTEX should not be used
+	  in the template instantiations because the resulting template
+	  instantiation for the single-threaded case already exists in
+	  ACE.  Thanks to Doug for letting me know about this.
+	
 	* m4/compiler.m4 (CXXFLAGS):
 
 	  Added missing flags that fix Sun C++ 5.0 weirdness on Solaris.
