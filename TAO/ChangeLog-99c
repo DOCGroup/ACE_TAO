@@ -1,3 +1,8 @@
+Thu Jan 14 15:39:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connect.cpp (check_unexpected_data): Only print the closing
+ 	  connection message when TAO_orbdebug is on.
+
 Thu Jan 14 15:52:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/README
