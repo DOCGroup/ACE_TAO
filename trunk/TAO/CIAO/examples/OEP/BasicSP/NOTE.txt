@@ -67,6 +67,16 @@ Step 1:
   Note that the environment variable CIAO_ROOT must be set 
   (to TAO_ROOT/CIAO).
 
+  If you are using BasicSP-rt.cad, which contains declarative
+  specifications for RTCORBA policies, start the RTComponentServer as
+  follows -
+
+    ${CIAO_ROOT}/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/RTComponentServer/RTComponentServer -m svcmap.dat
+
+  and on Windows
+
+    %CIAO_ROOT%\tools\Daemon\CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/RTComponentServer/RTComponentServer -m svcmap.dat
+
 Step 2:
 =======
 
@@ -86,11 +96,11 @@ Step 3:
   You then need to instruct the Assembly_Manager to deploy a specific
   component assembly descriptor.  For example:
 
-    ${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a BasicSP.cad
+    ${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a BasicSP.cad -o msg.txt
 
   or
 
-    %CIAO_ROOT%\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a BasicSP.cad
+    %CIAO_ROOT%\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a BasicSP.cad -o msg.txt
 
 Step 4:
 =======
