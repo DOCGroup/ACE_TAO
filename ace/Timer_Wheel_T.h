@@ -75,7 +75,7 @@ public:
   typedef ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR> WHEEL_ITERATOR;
   // Type of iterator
 
-  friend WHEEL_ITERATOR;
+  friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR>;
   // Iterator is a friend.
 
   typedef ACE_Timer_Queue_T<TYPE, FUNCTOR> INHERITED;

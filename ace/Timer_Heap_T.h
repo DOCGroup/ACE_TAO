@@ -67,7 +67,7 @@ class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR>
 {
 public:
   typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR> HEAP_ITERATOR;
-  friend HEAP_ITERATOR;
+  friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR>;
 
   typedef ACE_Timer_Queue_T<TYPE, FUNCTOR> INHERITED;
 
