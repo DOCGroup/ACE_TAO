@@ -1,3 +1,8 @@
+Sat Oct 12 23:01:29 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ACEXML/apps/svcconf/Svcconf.h (ACEXML_Svcconf_Parser): Removed
+          the unused member env_.
+
 Sat Oct 12 22:50:02 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * ACEXML/common/XML_Macros.h:

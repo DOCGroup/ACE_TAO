@@ -40,7 +40,6 @@ protected:
   ACEXML_Parser parser_;
   ACEXML_Svcconf_Handler svcconf_handler_;
   ACEXML_InputSource input_stream_;
-  // ACEXML_Env env_;
 };
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
