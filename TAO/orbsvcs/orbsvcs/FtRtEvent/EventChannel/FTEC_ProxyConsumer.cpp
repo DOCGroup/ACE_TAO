@@ -106,7 +106,15 @@ void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DE
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
   ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
-  svc->replicate_request(update, 0 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY {
+    svc->replicate_request(update, 0 ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHALL {
+    /// we do not propagate the exception of unsubscription messages because client
+    /// can do nothing about it.
+  }
+  ACE_ENDTRY;
   ACE_CHECK;
 }
 
