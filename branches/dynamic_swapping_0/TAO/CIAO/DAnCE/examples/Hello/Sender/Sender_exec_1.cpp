@@ -110,6 +110,8 @@ Sender_Impl::Sender_exec_1_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     sender->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
+  ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", cons_desc->length ()));
+
   this->base_exec_->consumers (cons_desc._retn ());
 }
 
