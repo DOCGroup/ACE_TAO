@@ -226,7 +226,7 @@ FtEventServiceInterceptor::receive_request_service_contexts (
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(block1);
 
-    ACE_OS::snprintf(msg_buf, 512, " Client_Id = %d, retension_id = %d " 
+    ACE_OS::snprintf(msg_buf, 512, " Client_Id = %s, retension_id = %d " 
                    , ft_request_service_context.client_id.in()
                    , ft_request_service_context.retention_id);
     time_logger.set_message(msg_buf);
