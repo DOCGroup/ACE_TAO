@@ -162,7 +162,7 @@ namespace ACE_Utils
         }
     }
 
-    this->timeLow_ = ACE_static_cast (ACE_UINT64, timeLow);
+    this->timeLow_ = ACE_static_cast (ACE_UINT32, timeLow);
     this->timeMid_ = ACE_static_cast (ACE_UINT16, timeMid);
     this->timeHiAndVersion_ = ACE_static_cast (ACE_UINT16, timeHiAndVersion);
     this->clockSeqHiAndReserved_ = ACE_static_cast (u_char, clockSeqHiAndReserved);
