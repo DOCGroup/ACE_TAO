@@ -34,10 +34,11 @@ ROA::init (CORBA_ORB_ptr parent,
 	   CORBA_Environment& env)
 {
   env.clear ();
+  ROA_Parameters* p = ROA_PARAMS::instance();
 
   //    ACE_MT(ACE_GUARD(ACE_Thread_Mutex, roa_mon, lock_));
 
-  if (ROA_Parameters::instance()->oa())
+  if (p->oa())
     {
       env.exception (new CORBA_INITIALIZE (COMPLETED_NO));
       return 0;
@@ -50,7 +51,7 @@ ROA::init (CORBA_ORB_ptr parent,
   // Don't know if this is right for what was originally being done.  Looks like
   // what was set in thread_attr were flags given to pthread_create().  However,
   // thread creation (when necessary) is now performed by the Svc_Handler::create().
-  //(void) ROA_Parameters::instance()->thread_flags(ROA_DEFAULT_THREADFLAGS);
+  //(void) p->thread_flags(ROA_DEFAULT_THREADFLAGS);
 #if 0
 
   //
@@ -73,7 +74,7 @@ ROA::init (CORBA_ORB_ptr parent,
 
   ROA_ptr rp;
   ACE_NEW_RETURN (rp, ROA(parent, rendezvous, env), 0);
-  ROA_Parameters::instance()->oa(rp);
+  p->oa(rp);
 
   return rp;
 }
@@ -87,8 +88,8 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
     call_count(0),
     skeleton(0)
 {
-  ROA_Parameters* p = ROA_Parameters::instance();
-  ROA_Factory* f = ROA_Factory::instance();
+  ROA_Parameters* p = ROA_PARAMS::instance();
+  ROA_Factory* f = ROA_FACTORY::instance();
 
   ACE_ASSERT(p->oa() == 0);
 
@@ -611,7 +612,7 @@ request_dispatcher (GIOP::RequestHeader& req,
 		    Dispatch_Context* helper,
 		    CORBA_Environment& env)
 {
-  ROA_Parameters* p = ROA_Parameters::instance();
+  ROA_Parameters* p = ROA_PARAMS::instance();
   IIOP_ServerRequest svr_req (&request_body,
 			      p->oa()->orb (),
 			      p->oa());
