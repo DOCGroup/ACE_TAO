@@ -4,34 +4,40 @@
 #include "ORB_Holder.h"
 #include "Servant_var.h"
 #include "RIR_Narrow.h"
+#include "RTEC_Initializer.h"
 #include "RTServer_Setup.h"
-#include "Send_Task.h"
-#include "Client_Group.h"
-#include "ORB_Task.h"
-#include "ORB_Task_Activator.h"
 #include "Low_Priority_Setup.h"
 #include "EC_Destroyer.h"
+#include "Auto_Disconnect.h"
+#include "ORB_Task.h"
+#include "ORB_Task_Activator.h"
+#include "Client_Group.h"
 #include "Client_Options.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "tao/Messaging/Messaging.h"
-#include "tao/Strategies/advanced_resource.h"
-#include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "tao/Strategies/advanced_resource.h"
+#include "tao/Messaging/Messaging.h"
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
-#include "ace/Stats.h"
-#include "ace/Sched_Params.h"
 
-ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
+ACE_RCSID(TAO_PERF_RTEC_Colocated_Roundtrip, driver, "$Id$")
 
 int main (int argc, char *argv[])
 {
   const CORBA::Long experiment_id = 1;
 
+  TAO_EC_Default_Factory::init_svcs ();
+
+  /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
 
   ACE_TRY_NEW_ENV
@@ -62,7 +68,7 @@ int main (int argc, char *argv[])
       RTServer_Setup rtserver_setup (options.use_rt_corba,
                                      orb,
                                      rt_class,
-                                     options.nthreads
+                                     1 // options.nthreads
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -79,10 +85,7 @@ int main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var supplier_poa (rtserver_setup.poa ());
-      PortableServer::POA_var consumer_poa (rtserver_setup.poa ());
-
-      ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
+      PortableServer::POA_var ec_poa (rtserver_setup.poa ());
 
       ACE_Thread_Manager my_thread_manager;
 
@@ -93,23 +96,34 @@ int main (int argc, char *argv[])
                                              1,
                                              &orb_task);
 
-      ACE_DEBUG ((LM_DEBUG, "ORB is active\n"));
+      ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
-      CORBA::Object_var object =
-        orb->string_to_object (options.ior ACE_ENV_ARG_PARAMETER);
+      Servant_var<TAO_EC_Event_Channel> ec_impl (
+              RTEC_Initializer::create (ec_poa.in (),
+                                        ec_poa.in (),
+                                        rtserver_setup.rtcorba_setup ()
+                                        ACE_ENV_ARG_PARAMETER)
+              );
+      ACE_TRY_CHECK;
+
+      ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      PortableServer::ObjectId_var ec_id =
+        ec_poa->activate_object (ec_impl.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CORBA::Object_var ec_object =
+        ec_poa->id_to_reference (ec_id.in ()
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (object.in ()
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       EC_Destroyer ec_destroyer (ec.in ());
-
-      CORBA::PolicyList_var inconsistent_policies;
-      (void) ec->_validate_connection (inconsistent_policies
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Finished EC configuration and activation\n"));
 
@@ -123,9 +137,38 @@ int main (int argc, char *argv[])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
+      CORBA::Long event_range = 1;
+      if (options.funky_supplier_publication)
+        {
+          if (options.unique_low_priority_event)
+            event_range = 1 + options.low_priority_consumers;
+          else
+            event_range = 2;
+        }
+
+      Client_Group high_priority_group;
+      high_priority_group.init (experiment_id,
+                                ACE_ES_EVENT_UNDEFINED,
+                                event_range,
+                                options.iterations,
+                                options.high_priority_workload,
+                                gsf,
+                                ec_poa.in (),
+                                ec_poa.in ());
+
+      Auto_Disconnect<Client_Group> high_priority_disconnect;
+
+      if (!options.high_priority_is_last)
+        {
+          high_priority_group.connect (ec.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          high_priority_disconnect = &high_priority_group;
+        }
+
       int per_thread_period = options.low_priority_period;
       if (options.global_low_priority_rate)
-        per_thread_period = options.low_priority_period * options.low_priority_consumers;
+        per_thread_period = options.low_priority_period * options.nthreads;
 
       Low_Priority_Setup<Client_Group> low_priority_setup (
           options.low_priority_consumers,
@@ -139,31 +182,25 @@ int main (int argc, char *argv[])
           rt_class.priority_low (),
           rt_class.thr_sched_class (),
           per_thread_period,
-          supplier_poa.in (),
-          consumer_poa.in (),
+          ec_poa.in (),
+          ec_poa.in (),
           ec.in (),
           &barrier
           ACE_ENV_ARG_PARAMETER);
 
-      Client_Group high_priority_group;
-      high_priority_group.init (experiment_id,
-                                ACE_ES_EVENT_UNDEFINED,
-                                options.iterations,
-                                options.high_priority_workload,
-                                gsf,
-                                supplier_poa.in (),
-                                consumer_poa.in ());
-      high_priority_group.connect (ec.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      Auto_Disconnect<Client_Group> high_priority_disconnect (&high_priority_group);
-
+      if (options.high_priority_is_last)
+        {
+          high_priority_group.connect (ec.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          high_priority_disconnect = &high_priority_group;
+        }
       Send_Task high_priority_task;
       high_priority_task.init (options.iterations,
                                options.high_priority_period,
                                0,
                                ACE_ES_EVENT_UNDEFINED,
-                               1,
+                               experiment_id,
                                high_priority_group.supplier (),
                                &barrier);
       high_priority_task.thr_mgr (&my_thread_manager);
@@ -210,19 +247,5 @@ int main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class Servant_var<Supplier>;
-template class Servant_var<Consumer>;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >;
-template class ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >;
-template class ACE_Auto_Basic_Array_Ptr<Send_Task>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate Servant_var<Supplier>
-#pragma instantiate Servant_var<Consumer>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Supplier> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Servant_var<Consumer> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<Send_Task>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

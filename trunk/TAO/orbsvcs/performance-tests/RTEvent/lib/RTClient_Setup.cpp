@@ -37,10 +37,12 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
                                                     ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;
 
+#if 0
       this->priorityband_setup_ =
         auto_ptr<PriorityBand_Setup> (new PriorityBand_Setup (orb,
                                                               *this->rtcorba_setup_
                                                               ACE_ENV_ARG_PARAMETER));
       ACE_CHECK;
+#endif /* 0 */
     }
 }

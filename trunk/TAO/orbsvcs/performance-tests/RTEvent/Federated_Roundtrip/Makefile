@@ -59,7 +59,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -387,7 +387,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
+.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp ../lib/RT_Class.h ../lib/rtec_perf_export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -589,16 +589,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
-  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl ../lib/Send_Task.h \
-  ../lib/Supplier.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS_T.h \
-  $(TAO_ROOT)/tao/TimeBaseS_T.i \
-  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+  ../lib/RTPOA_Setup.inl ../lib/RTServer_Setup.inl ../lib/Peer_Base.h \
+  ../lib/Federated_TestS.h ../lib/Federated_TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -627,8 +619,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  ../lib/Federated_TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -640,28 +631,43 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+  ../lib/Federated_TestS_T.h ../lib/Federated_TestS_T.i \
+  ../lib/Federated_TestS_T.cpp ../lib/Federated_TestS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+  ../lib/Auto_Disconnect.h ../lib/Auto_Functor.h ../lib/Auto_Functor.inl \
+  ../lib/Auto_Functor.cpp ../lib/Auto_Disconnect.inl \
+  ../lib/Auto_Disconnect.cpp ../lib/Send_Task.h ../lib/Supplier.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+  $(TAO_ROOT)/tao/TimeBaseS.h \
+  $(TAO_ROOT)/tao/TimeBaseS_T.h \
+  $(TAO_ROOT)/tao/TimeBaseS_T.i \
+  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -697,21 +703,13 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Module.cpp \
   $(ACE_ROOT)/ace/Stream_Modules.h \
   $(ACE_ROOT)/ace/Stream_Modules.cpp \
+  ../lib/Task_Activator.h \
+  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  ../lib/Task_Activator.inl ../lib/Task_Activator.cpp \
   ../lib/Client_Pair.h ../lib/Consumer.h \
   $(ACE_ROOT)/ace/Sample_History.h \
   $(ACE_ROOT)/ace/Sample_History.inl \
-  ../lib/Client_Pair.inl ../lib/ORB_Task.h ../lib/ORB_Task.inl \
-  ../lib/ORB_Task_Activator.h ../lib/Task_Activator.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
-  ../lib/Task_Activator.inl ../lib/Task_Activator.cpp \
-  ../lib/ORB_Task_Activator.inl ../lib/Auto_Disconnect.h \
-  ../lib/Auto_Functor.h ../lib/Auto_Functor.inl ../lib/Auto_Functor.cpp \
-  ../lib/Auto_Disconnect.inl ../lib/Auto_Disconnect.cpp \
-  ../lib/Low_Priority_Setup.h ../lib/Send_Task_Stopper.h \
-  ../lib/Send_Task_Stopper.inl ../lib/Low_Priority_Setup.cpp \
-  $(ACE_ROOT)/ace/Basic_Stats.h \
-  $(ACE_ROOT)/ace/Basic_Stats.inl \
-  ../lib/EC_Destroyer.h ../lib/EC_Destroyer.inl \
+  ../lib/Client_Pair.inl \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
@@ -783,6 +781,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
+  $(ACE_ROOT)/ace/Basic_Stats.h \
+  $(ACE_ROOT)/ace/Basic_Stats.inl \
   $(ACE_ROOT)/ace/Stats.h \
   $(ACE_ROOT)/ace/Stats.i
 
