@@ -1,3 +1,10 @@
+Fri Jan 25 19:05:24 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Forward/server.dsp:
+
+	  Added missing IDL custom build step for the "Release"
+	  configuration.
+
 Fri Jan 25 20:14:19 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/PortableServer/Makefile:
