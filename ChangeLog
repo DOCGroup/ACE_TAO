@@ -1,3 +1,25 @@
+Wed Mar 19 11:10:50 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  If reentrant functions are enabled by the user and detected by
+	  the `configure' script, make sure "_REENTRANT" is added to the
+	  preprocessor flags.  [Bug 411]
+
+	  Added test for ACE_HAS_POSIX_GETPWNAM_R macro.  Fixes problems
+	  on Linux when threading is disabled.  [Bug 914]
+
+	  The restartable system calls test was re-enabled in earlier
+	  commits.  [Bug 275]
+
+	* m4/compiler.m4 (OCXXFLAGS):
+
+	  Added missing HP-UX aCC compiler optimization flag.
+
+	* m4/config_h.m4 (ACE_HAS_POSIX_GETPWNAM_R):
+
+	  Added autoheader template for this macro.
+
 Fri Mar 14 11:38:56 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Dirent_Test.cpp (TEST_ENTRY):

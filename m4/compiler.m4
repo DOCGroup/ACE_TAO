@@ -181,6 +181,19 @@ changequote([, ])dnl
      esac
      ;;
    *hpux*)
+     # HP-UX OS version specific settings.
+     case "$host" in
+       *hpux11*)
+# aCC's "-mt" flag detected by the configure script should already set
+# the appropriate preprocessor, compiler and linker flags.
+#       if test "$ace_user_enable_threads" = yes; then
+#         # Prefer kernel threads over CMA (user) threads.
+#         ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_C_SOURCE=199506L"
+#       fi
+       ;;
+     esac
+
+     # HP-UX compiler specific settings.
      case "$CXX" in
        CC)
          CXXFLAGS="$CXXFLAGS -pta -ti,/bin/true -tr,/bin/true"
@@ -190,11 +203,33 @@ changequote([, ])dnl
          ;;
        aCC)
          CXXFLAGS="$CXXFLAGS"
-         ACE_CXXFLAGS="$ACE_CXXFLAGS +W302,495,667,829"
+         # Warning 930 is spurious when new(std::nothrow) is
+         # used. Reported to HP as support call 3201224717. (Steve
+         # Huston, 23-Nov-2002)
+         #
+         # Suppress warning 302 ((...) parameter list is a
+         # non-portable feature)
+         #
+         # Additionally, on HP-UX 10.20, suppress 495 to shut up the
+         # warnings from the system header files.  667 is also
+         # suppressed, but the compiler still tells you there was a
+         # future error, but at least you can pick out any real errors
+         # by quickly scanning the output. 829 is suppressed because
+         # the system headers have offending string literals assigned
+         # to char *.
+         ACE_CXXFLAGS="$ACE_CXXFLAGS +W302,495,667,829,908,930"
          DCXXFLAGS="-g"
-         OCXXFLAGS=""
+         OCXXFLAGS="-O"
+         # Warning 67: Invalid pragma name -- needed for
+         # ACE_LACKS_PRAGMA_ONCE
          WERROR="+We67"
-         # Warning 67: Invalid pragma name -- needed for ACE_LACKS_PRAGMA_ONCE
+
+         # If exception support is explicitly disabled, tell the
+         # compiler.  This is not recommended since the run-time
+         # library can throw exceptions. 
+         if test "$ace_user_enable_exceptions" != yes; then
+           ACE_CXXFLAGS="$ACE_CXXFLAGS +noeh"
+         fi
          ;;
        *)
          if test -n "$GXX"; then
