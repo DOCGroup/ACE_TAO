@@ -18,7 +18,6 @@
 Cubit_i::Cubit_i(const char* obj_name)
 : _skel_Cubit(obj_name)
 {
-   cout << "Cubit_i ident: " << this << endl;
 }
 
 Cubit_i::~Cubit_i()

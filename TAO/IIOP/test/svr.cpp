@@ -22,6 +22,49 @@
 extern void
 print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
 
+// Global Variables
+CORBA_String key = (CORBA_String)"key0";
+int num_of_objs = 1;
+
+// = TITLE
+//     Parses the command line arguments and returns an error status
+//
+// = DESCRIPTION
+//     This method parses the command line arguments
+int parse_args(int argc, char *argv[])
+{
+   ACE_Get_Opt opts (argc, argv, "dk:n:");
+   int			c;
+   
+   while ((c = opts ()) != -1)
+      switch (c) {
+ 
+      case 'd':  // debug flag
+         TAO_debug_level++;
+         continue;
+   
+      case 'k':			// key (str)
+         key = (CORBA_String) opts.optarg;
+         continue;
+   
+      case 'n':			// idle seconds b4 exit
+         num_of_objs = ACE_OS::atoi(opts.optarg);
+         continue;
+
+      case '?':
+      default:
+         ACE_OS::fprintf (stderr, "usage:  %s"
+            " [-d]"
+            " [-k {object_key}]"
+            "\n", argv [0]
+            );
+         return 1;
+      }
+   
+   return 0;  // Indicates successful parsing of command line
+}
+
+
 //
 // Standard command line parsing utilities used.
 //
@@ -32,10 +75,8 @@ main (int    argc, char   *argv[])
   CORBA_Object_ptr obj = 0;
   CORBA_ORB_ptr	orb_ptr;
   CORBA_BOA_ptr   oa_ptr;
-  CORBA_String	key = (CORBA_String) "key0";
   char		*orb_name = "internet";
   int			idle = -1;
-  int			debug_level = 1;
 
   orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
   if (env.exception () != 0) {
@@ -49,10 +90,57 @@ main (int    argc, char   *argv[])
     ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to initialize the BOA.\n"), 1);
   
 
+  //
+  // Parse remaining command line and verify parameters.
+  //
+  parse_args(argc, argv);
+  
   // Create implementation object with user specified key
-  Cubit_i_ptr  my_cubit = new Cubit_i(key);
+  Cubit_i_ptr  *my_cubit = new Cubit_i_ptr[num_of_objs];
+  for (int ndx = 0; ndx < num_of_objs; ndx++)
+  {
+     CORBA_String obj_str = CORBA_string_alloc(ACE_OS::strlen ((char *)key)+2);
+     sprintf(obj_str, "%s%d", (char*)key, ndx);
+     my_cubit[ndx] = new Cubit_i(obj_str);
+     if (my_cubit[ndx] == 0)
+        ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to create implementation object&d\n", ndx), 2);
 
-  if (debug_level >= 1)
+     if (TAO_debug_level >= 1)
+     {
+         // Why are we getting the BOA_ptr from here when we've already
+         // got it above?
+         CORBA_OctetSeq	obj_key;
+         obj_key.buffer = (CORBA_Octet *) obj_str;
+         obj_key.length = obj_key.maximum = ACE_OS::strlen (obj_str);
+     
+         if (oa_ptr->find(obj_key, obj) == -1)
+           ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to locate object with key '%s', %p\n", key), 3);
+     
+         //
+         // Stringify the objref we'll be implementing, and
+         // print it to stdout.  Someone will take that string
+         // and give it to some client.  Then release the object.
+         //
+         CORBA_String	str;
+         
+         str = orb_ptr->object_to_string (obj, env);
+         if (env.exception () != 0) {
+            print_exception (env.exception (), "object2string");
+            return 1;
+         }
+         ACE_OS::puts ((char *)str);
+         ACE_OS::fflush (stdout);
+         dmsg1 ("Object Created at: '%ul'", obj);
+         dmsg1 ("listening as object '%s'", str);
+         
+     }
+     CORBA_string_free(obj_str);  
+  }
+//  Cubit_i_ptr  my_cubit = new Cubit_i(key);
+//  if (my_cubit1 == 0)
+//    ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to create implementation object\n"), 2);
+
+/*  if (TAO_debug_level >= 1)
     {
       // Why are we getting the BOA_ptr from here when we've already
       // got it above?
@@ -61,7 +149,7 @@ main (int    argc, char   *argv[])
       obj_key.length = obj_key.maximum = ACE_OS::strlen ((char *)key);
      
       if (oa_ptr->find(obj_key, obj) == -1)
-        ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to locate object with key '%s', %p\n", key), 2);
+        ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to locate object with key '%s', %p\n", key), 3);
      
       //
       // Stringify the objref we'll be implementing, and
@@ -78,15 +166,27 @@ main (int    argc, char   *argv[])
       ACE_OS::puts ((char *)str);
       ACE_OS::fflush (stdout);
       dmsg1 ("listening as object '%s'", str);
-    }
 
+      obj_key.buffer = (CORBA_Octet *)"key1";
+      obj_key.length = obj_key.maximum = 4;
+      if (oa_ptr->find(obj_key, obj) == -1)
+        ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to locate object with key '%s', %p\n", key), 3);
+
+      str = orb_ptr->object_to_string (obj, env);
+      if (env.exception () != 0) {
+        print_exception (env.exception (), "object2string");
+        return 1;
+      }
+      ACE_OS::puts ((char *)str);
+      ACE_OS::fflush (stdout);
+      dmsg1 ("listening as object '%s'", str);
+    }
+*/
   // Handle requests for this object until we're killed, or one of
   // the methods asks us to exit.
   //
   int terminationStatus = 0;
 
-  // Insert Object Key into context
-  //  params->context(&obj_key);
 
 #if !defined(USE_HOMEBREW_EVENT_LOOP)
   ACE_Service_Config::run_reactor_event_loop();
