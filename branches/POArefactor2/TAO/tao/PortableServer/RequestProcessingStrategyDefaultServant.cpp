@@ -174,8 +174,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::reference_to_servant (
-      CORBA::Object_ptr /*reference*/,
+    Default_Servant_Request_Processing_Strategy::system_id_to_servant (
       PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
     {

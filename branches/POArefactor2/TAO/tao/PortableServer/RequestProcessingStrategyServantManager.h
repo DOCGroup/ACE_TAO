@@ -53,8 +53,7 @@ namespace TAO
         PortableServer::ServantManager_ptr servant_manager
         ACE_ENV_ARG_DECL);
 
-      virtual PortableServer::Servant reference_to_servant (
-        CORBA::Object_ptr reference,
+      virtual PortableServer::Servant system_id_to_servant (
         PortableServer::ObjectId system_id
         ACE_ENV_ARG_DECL);
 

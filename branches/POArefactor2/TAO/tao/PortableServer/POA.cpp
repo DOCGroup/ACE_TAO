@@ -1493,7 +1493,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
     }
 
   return this->active_policy_strategies_.request_processing_strategy()->
-    reference_to_servant (reference, system_id ACE_ENV_ARG_PARAMETER);
+    system_id_to_servant (system_id ACE_ENV_ARG_PARAMETER);
 }
 
 bool
