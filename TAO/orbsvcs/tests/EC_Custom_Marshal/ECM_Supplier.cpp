@@ -221,7 +221,7 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
       // The typecode name standard, the encode method is not (in
       // general the CDR interface is not specified).
       if (!(cdr << info))
-        ACE_THROW (CORBA::MARSHAL (), 0);
+        ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
       // Here we marshall a non-IDL type.
       cdr << other;
