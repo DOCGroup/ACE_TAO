@@ -1,3 +1,8 @@
+Tue Apr 13 10:08:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+          Fixed error in dependencies
+
 Tue Apr 13 10:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Default_ORT.pidl:
