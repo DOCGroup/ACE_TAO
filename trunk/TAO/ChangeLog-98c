@@ -1,3 +1,8 @@
+Tue Mar 10 13:22:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Event_Latency/Makefile: removed -pedantic from
+          g++ CCFLAGS because prevented use of native long long (Linux/i386).
+
 Mon Mar 09 22:27:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/POA/Generic_Servant/client.cpp: Added code to time calls
