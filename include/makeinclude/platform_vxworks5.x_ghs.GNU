@@ -61,9 +61,6 @@ ifeq ($(CPU),86)
 
   #### For GHS 1.8.8:
   #### LIBS += $(GHS)/libedgnoe.a
-
-  #### For GHS 1.8.9:
-  LIBS += $(GHS)/libscnoe.a $(GHS)/libsedgnoe.a $(GHS)/liblockinit_sc.o
 else
 ifeq ($(CPU),ppc)
   ifndef GHS
@@ -71,10 +68,14 @@ ifeq ($(CPU),ppc)
   endif # GHS
   AR = ax
   ARFLAGS  = cr
-  LIBS += $(GHS)/ghsbltin.o $(GHS)/ghsmath.o
+
+  #### For GHS 1.8.8:
+  #### LIBS += $(GHS)/ghsbltin.o $(GHS)/ghsmath.o
 endif # ppc
 endif # CPU
 
+#### For GHS 1.8.9:
+LIBS += $(GHS)/libscnoe.a $(GHS)/libsedgnoe.a $(GHS)/liblockinit_sc.o
 
 CC       = cxvx$(CPU)
 CXX      = $(CC)
