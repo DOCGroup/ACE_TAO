@@ -21,6 +21,9 @@ LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB)
 
+IDLFILES = \
+        $(IDLDIR)\Diamond.idl
+
 CPPDIR = .
 
 IDLDIR = .

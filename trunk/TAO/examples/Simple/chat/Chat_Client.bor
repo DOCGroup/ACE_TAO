@@ -1,7 +1,7 @@
 
 #
 # Makefile for building the Chat example
-# 
+#
 
 NAME = Chat_Client
 
@@ -14,12 +14,16 @@ OBJFILES = \
 	$(OBJDIR)\Client_i.obj \
 	$(OBJDIR)\client.obj
 
+IDLFILES = \
+        $(IDLDIR)\Broadcaster.idl \
+        $(IDLDIR)\Receiver.idl
+
 CPPDIR = .
 
 IDLDIR = .
 
 !include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
-  
+
 #
 # IDL Build rules
 #
