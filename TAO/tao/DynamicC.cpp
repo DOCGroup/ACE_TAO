@@ -45,9 +45,9 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_DYNAMIC_PARAMETERLIST_CS_)
@@ -107,20 +107,20 @@ static const CORBA::Long _oc_Dynamic_ParameterList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d69632f), 
-  ACE_NTOHL (0x50617261), 
-  ACE_NTOHL (0x6d657465), 
-  ACE_NTOHL (0x724c6973), 
-  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x44796e61),
+  ACE_NTOHL (0x6d69632f),
+  ACE_NTOHL (0x50617261),
+  ACE_NTOHL (0x6d657465),
+  ACE_NTOHL (0x724c6973),
+  ACE_NTOHL (0x743a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Dynamic/ParameterList:1.0
     14,
-  ACE_NTOHL (0x50617261), 
-  ACE_NTOHL (0x6d657465), 
-  ACE_NTOHL (0x724c6973), 
+  ACE_NTOHL (0x50617261),
+  ACE_NTOHL (0x6d657465),
+  ACE_NTOHL (0x724c6973),
   ACE_NTOHL (0x74000000),  // name = ParameterList
     CORBA::tk_sequence, // typecode kind
   236, // encapsulation length
@@ -129,61 +129,61 @@ static const CORBA::Long _oc_Dynamic_ParameterList[] =
     220, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       34,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x44796e61), 
-      ACE_NTOHL (0x6d69632f), 
-      ACE_NTOHL (0x50617261), 
-      ACE_NTOHL (0x6d657465), 
-      ACE_NTOHL (0x723a312e), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x44796e61),
+      ACE_NTOHL (0x6d69632f),
+      ACE_NTOHL (0x50617261),
+      ACE_NTOHL (0x6d657465),
+      ACE_NTOHL (0x723a312e),
       ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Dynamic/Parameter:1.0
             10,
-      ACE_NTOHL (0x50617261), 
-      ACE_NTOHL (0x6d657465), 
+      ACE_NTOHL (0x50617261),
+      ACE_NTOHL (0x6d657465),
       ACE_NTOHL (0x72000000),  // name = Parameter
       2, // member count
             9,
-      ACE_NTOHL (0x61726775), 
-      ACE_NTOHL (0x6d656e74), 
+      ACE_NTOHL (0x61726775),
+      ACE_NTOHL (0x6d656e74),
       ACE_NTOHL (0x0),  // name = argument
             CORBA::tk_any,
 
       5,
-      ACE_NTOHL (0x6d6f6465), 
+      ACE_NTOHL (0x6d6f6465),
       ACE_NTOHL (0x0),  // name = mode
             CORBA::tk_enum, // typecode kind
       116, // encapsulation length
 TAO_ENCAP_BYTE_ORDER, // byte order
         36,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f5061), 
-        ACE_NTOHL (0x72616d65), 
-        ACE_NTOHL (0x7465724d), 
-        ACE_NTOHL (0x6f64653a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+        ACE_NTOHL (0x412f5061),
+        ACE_NTOHL (0x72616d65),
+        ACE_NTOHL (0x7465724d),
+        ACE_NTOHL (0x6f64653a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParameterMode:1.0
         14,
-        ACE_NTOHL (0x50617261), 
-        ACE_NTOHL (0x6d657465), 
-        ACE_NTOHL (0x724d6f64), 
+        ACE_NTOHL (0x50617261),
+        ACE_NTOHL (0x6d657465),
+        ACE_NTOHL (0x724d6f64),
         ACE_NTOHL (0x65000000),  // name = ParameterMode
         3, // member count
         9,
-        ACE_NTOHL (0x50415241), 
-        ACE_NTOHL (0x4d5f494e), 
+        ACE_NTOHL (0x50415241),
+        ACE_NTOHL (0x4d5f494e),
         ACE_NTOHL (0x0),  // name = PARAM_IN
         10,
-        ACE_NTOHL (0x50415241), 
-        ACE_NTOHL (0x4d5f4f55), 
+        ACE_NTOHL (0x50415241),
+        ACE_NTOHL (0x4d5f4f55),
         ACE_NTOHL (0x54000000),  // name = PARAM_OUT
         12,
-        ACE_NTOHL (0x50415241), 
-        ACE_NTOHL (0x4d5f494e), 
+        ACE_NTOHL (0x50415241),
+        ACE_NTOHL (0x4d5f494e),
         ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
-        
+
 
     0U,
 

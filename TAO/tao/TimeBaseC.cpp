@@ -47,7 +47,7 @@
 // Arg traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -56,16 +56,16 @@ static const CORBA::Long _oc_TimeBase_TimeT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f54696d), 
-  ACE_NTOHL (0x65543a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f54696d),
+  ACE_NTOHL (0x65543a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
     6,
-  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x54696d65),
   ACE_NTOHL (0x54000000),  // name = TimeT
     CORBA::tk_ulonglong,
 
@@ -92,34 +92,34 @@ static const CORBA::Long _oc_TimeBase_InaccuracyT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f496e61), 
-  ACE_NTOHL (0x63637572), 
-  ACE_NTOHL (0x61637954), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f496e61),
+  ACE_NTOHL (0x63637572),
+  ACE_NTOHL (0x61637954),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/TimeBase/InaccuracyT:1.0
     12,
-  ACE_NTOHL (0x496e6163), 
-  ACE_NTOHL (0x63757261), 
+  ACE_NTOHL (0x496e6163),
+  ACE_NTOHL (0x63757261),
   ACE_NTOHL (0x63795400),  // name = InaccuracyT
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
@@ -147,16 +147,16 @@ static const CORBA::Long _oc_TimeBase_TdfT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f546466), 
-  ACE_NTOHL (0x543a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f546466),
+  ACE_NTOHL (0x543a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/TdfT:1.0
     5,
-  ACE_NTOHL (0x54646654), 
+  ACE_NTOHL (0x54646654),
   ACE_NTOHL (0x0),  // name = TdfT
     CORBA::tk_short,
 
@@ -183,20 +183,20 @@ static const CORBA::Long _oc_TimeBase_UtcT[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x54696d65), 
-  ACE_NTOHL (0x42617365), 
-  ACE_NTOHL (0x2f557463), 
-  ACE_NTOHL (0x543a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x42617365),
+  ACE_NTOHL (0x2f557463),
+  ACE_NTOHL (0x543a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TimeBase/UtcT:1.0
     5,
-  ACE_NTOHL (0x55746354), 
+  ACE_NTOHL (0x55746354),
   ACE_NTOHL (0x0),  // name = UtcT
   4, // member count
     5,
-  ACE_NTOHL (0x74696d65), 
+  ACE_NTOHL (0x74696d65),
   ACE_NTOHL (0x0),  // name = time
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length

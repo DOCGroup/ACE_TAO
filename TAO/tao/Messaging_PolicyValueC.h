@@ -234,7 +234,7 @@ namespace Messaging
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52

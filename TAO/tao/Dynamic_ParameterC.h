@@ -71,40 +71,40 @@
 
 namespace Dynamic
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:258
-  
+
   struct Parameter;
-  
+
   typedef
     TAO_Var_Var_T<
         Parameter
       >
     Parameter_var;
-  
+
   typedef
     TAO_Out_T<
         Parameter,
         Parameter_var
       >
     Parameter_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-  
+
   struct TAO_Export Parameter
   {
     typedef Parameter_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CORBA::Any argument;
     CORBA::ParameterMode mode;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Parameter;
 
 // TAO_IDL - Generated from
@@ -118,7 +118,7 @@ namespace Dynamic
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_ch.cpp:52

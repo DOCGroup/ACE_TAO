@@ -70,22 +70,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_STRINGSEQ_CH_)
 #define _CORBA_STRINGSEQ_CH_
-  
+
   class StringSeq;
-  
+
   typedef
     TAO_MngSeq_Var_T<
         StringSeq,
         TAO_SeqElem_String_Manager
       >
     StringSeq_var;
-  
+
   typedef
     TAO_MngSeq_Out_T<
         StringSeq,
@@ -93,7 +93,7 @@ namespace CORBA
         TAO_SeqElem_String_Manager
       >
     StringSeq_out;
-  
+
   class TAO_Export StringSeq
     : public
         TAO_Unbounded_String_Sequence
@@ -104,39 +104,39 @@ namespace CORBA
     StringSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        char ** buffer, 
+        char ** buffer,
         CORBA::Boolean release = 0
       );
     StringSeq (const StringSeq &);
     ~StringSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef StringSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_StringSeq;
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_WSTRINGSEQ_CH_)
 #define _CORBA_WSTRINGSEQ_CH_
-  
+
   class WStringSeq;
-  
+
   typedef
     TAO_MngSeq_Var_T<
         WStringSeq,
         TAO_SeqElem_WString_Manager
       >
     WStringSeq_var;
-  
+
   typedef
     TAO_MngSeq_Out_T<
         WStringSeq,
@@ -144,7 +144,7 @@ namespace CORBA
         TAO_SeqElem_WString_Manager
       >
     WStringSeq_out;
-  
+
   class TAO_Export WStringSeq
     : public
         TAO_Unbounded_WString_Sequence
@@ -155,22 +155,22 @@ namespace CORBA
     WStringSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::WChar ** buffer, 
+        CORBA::WChar ** buffer,
         CORBA::Boolean release = 0
       );
     WStringSeq (const WStringSeq &);
     ~WStringSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef WStringSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_WStringSeq;
 
 // TAO_IDL - Generated from
@@ -184,7 +184,7 @@ namespace CORBA
 // Traits specializations.
 namespace TAO
 {
-};
+}
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/cdr_op.cpp:48
