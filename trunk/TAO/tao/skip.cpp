@@ -425,16 +425,16 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
 
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
+
   for (CORBA::ULong i = 0;
        i != member_count && current_member == null_member;
        ++i)
     {
-      CORBA::Any *any =
-        tc->member_label (i, ACE_TRY_ENV);
+      CORBA::Any_var any = tc->member_label (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
       CORBA::Octet o;
-      if ((*any >>= CORBA::Any::to_octet (o)) && o == 0)
+      if ((any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
           CORBA::ULong default_index =
             tc->default_index (ACE_TRY_ENV);
@@ -454,7 +454,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_short:
           {
             CORBA::Short d;
-            if ((*any >>= d) && d == short_v)
+            if ((any >>= d) && d == short_v)
               current_member = i;
           }
           break;
@@ -462,7 +462,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_ushort:
           {
             CORBA::UShort d;
-            if ((*any >>= d) && d == ushort_v)
+            if ((any >>= d) && d == ushort_v)
               current_member = i;
           }
           break;
@@ -470,7 +470,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_long:
           {
             CORBA::Long d;
-            if ((*any >>= d) && d == long_v)
+            if ((any >>= d) && d == long_v)
               current_member = i;
           }
           break;
@@ -478,7 +478,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_ulong:
           {
             CORBA::ULong d;
-            if ((*any >>= d) && d == ulong_v)
+            if ((any >>= d) && d == ulong_v)
               current_member = i;
           }
           break;
@@ -500,7 +500,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_char:
           {
             CORBA::Char d;
-            if ((*any >>= CORBA::Any::to_char (d)) && d == char_v)
+            if ((any >>= CORBA::Any::to_char (d)) && d == char_v)
               current_member = i;
           }
           break;
@@ -508,7 +508,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_wchar:
           {
             CORBA::WChar d;
-            if ((*any >>= CORBA::Any::to_wchar (d)) && d == wchar_v)
+            if ((any >>= CORBA::Any::to_wchar (d)) && d == wchar_v)
               current_member = i;
           }
           break;
@@ -516,7 +516,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
         case CORBA::tk_boolean:
           {
             CORBA::Boolean d;
-            if ((*any >>= CORBA::Any::to_boolean (d)) && d == boolean_v)
+            if ((any >>= CORBA::Any::to_boolean (d)) && d == boolean_v)
               current_member = i;
           }
           break;

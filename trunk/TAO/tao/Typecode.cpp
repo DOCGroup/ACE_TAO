@@ -294,12 +294,20 @@ CORBA_TypeCode::member_name (CORBA::ULong slot,
       && this->private_state_->tc_member_name_list_known_)
     {
       if (slot < this->private_state_->tc_member_count_)
-        return this->private_state_->tc_member_name_list_[slot];
+        {
+          return this->private_state_->tc_member_name_list_[slot];
+        }
       else
-        ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+        {
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+                            0);
+        }
     }
   else
-    return this->private_member_name (slot, ACE_TRY_ENV);
+    {
+      return this->private_member_name (slot, 
+                                        ACE_TRY_ENV);
+    }
 }
 
 // Return the label of the i-th member.  Applicable only to CORBA::tk_union
@@ -307,16 +315,37 @@ CORBA::Any_ptr
 CORBA_TypeCode::member_label (CORBA::ULong slot,
                               CORBA::Environment &ACE_TRY_ENV) const
 {
+  CORBA::Any_ptr retval = 0;
+
   if (this->private_state_->tc_member_count_known_
       && this->private_state_->tc_member_label_list_known_)
     {
       if (slot < this->private_state_->tc_member_count_)
-        return this->private_state_->tc_member_label_list_[slot];
+        {
+          ACE_NEW_RETURN (
+              retval,
+              CORBA::Any (*this->private_state_->tc_member_label_list_[slot]),
+              0
+            );
+        }
       else
-        ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+        {
+          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+                            0);
+        }
     }
   else
-    return this->private_member_label (slot, ACE_TRY_ENV);
+    {
+      CORBA::Any_ptr label = this->private_member_label (slot, 
+                                                         ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      ACE_NEW_RETURN (retval,
+                      CORBA::Any (*label),
+                      0);
+    }
+
+  return retval;
 }
 
 // only applicable to CORBA::tk_unions
