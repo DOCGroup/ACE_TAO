@@ -38,17 +38,24 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    class IdAssignmentStrategy;
+    class IdUniquenessStrategy;
+    class RequestProcessingStrategy;
+
     class TAO_PortableServer_Export ServantRetentionStrategy :
        public virtual Policy_Strategy
     {
     public:
-      ServantRetentionStrategy (void);
-
       virtual ~ServantRetentionStrategy (void);
 
       virtual CORBA::ULong waiting_servant_deactivation (void) const = 0;
 
-      virtual void strategy_init (TAO_POA *poa);
+      virtual
+      void strategy_init (
+        TAO_POA *poa,
+        IdUniquenessStrategy* unique_strategy,
+        IdAssignmentStrategy* id_assignment_strategy,
+        RequestProcessingStrategy* request_processing_strategy) = 0;
 
       virtual TAO_Active_Object_Map* get_aom() const = 0;
 
@@ -172,8 +179,13 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy)) = 0;
 
-    protected:
-      TAO_POA* poa_;
+      virtual
+      int rebind_using_user_id_and_system_id (
+        PortableServer::Servant servant,
+        const PortableServer::ObjectId &user_id,
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall) = 0;
+
     };
   }
 }

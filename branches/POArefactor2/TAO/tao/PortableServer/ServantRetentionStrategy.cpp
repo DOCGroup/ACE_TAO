@@ -21,20 +21,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionStrategy::ServantRetentionStrategy (void) :
-      poa_ (0)
-    {
-    }
-
     ServantRetentionStrategy::~ServantRetentionStrategy (void)
     {
-    }
-
-    void
-    ServantRetentionStrategy::strategy_init (
-      TAO_POA *poa)
-    {
-      poa_ = poa;
     }
   }
 }

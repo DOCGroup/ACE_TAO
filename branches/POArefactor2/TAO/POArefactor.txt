@@ -1,3 +1,9 @@
+Wed Nov 10 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategy*.*:
+          Added rebind_using_user_id_and_system_id to make the request
+          processing strategy much simpler, use this in the servant activator
+          request processing strategy.
 
         * tao/PortableServer/IdUniquenessStrategy*.{h,cpp}:
         * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:

@@ -17,9 +17,9 @@ namespace TAO
     }
 
     void
-    ThreadStrategy::strategy_init (TAO_POA *)
+    ThreadStrategy::strategy_init ()
     {
-      // dependent on type create the correct strategy.
+      // Noop at this moment
     }
   }
 }

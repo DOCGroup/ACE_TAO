@@ -42,7 +42,12 @@ namespace TAO
 
       CORBA::ULong waiting_servant_deactivation (void) const;
 
-      virtual void strategy_init (TAO_POA *poa);
+      virtual
+      void strategy_init (
+        TAO_POA *poa,
+        IdUniquenessStrategy* unique_strategy,
+        IdAssignmentStrategy* id_assignment_strategy,
+        RequestProcessingStrategy* request_processing_strategy);
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      int &wait_occurred_restart_call);
@@ -185,10 +190,19 @@ namespace TAO
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy));
 
+      virtual
+      int rebind_using_user_id_and_system_id (
+        PortableServer::Servant servant,
+        const PortableServer::ObjectId &user_id,
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
     private:
       TAO_Active_Object_Map *active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;
       CORBA::Boolean etherealize_objects_;
+      RequestProcessingStrategy *request_processing_strategy_;
+      TAO_POA* poa_;
     };
   }
 }

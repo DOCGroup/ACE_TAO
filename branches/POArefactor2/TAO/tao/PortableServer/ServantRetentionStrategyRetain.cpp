@@ -35,7 +35,8 @@ namespace TAO
     Retain_Servant_Retention_Strategy::Retain_Servant_Retention_Strategy (void) :
       active_object_map_ (0),
       waiting_servant_deactivation_ (0),
-      etherealize_objects_ (1)
+      etherealize_objects_ (1),
+      poa_ (0)
     {
     }
 
@@ -48,9 +49,13 @@ namespace TAO
 
     void
     Retain_Servant_Retention_Strategy::strategy_init (
-      TAO_POA *poa)
+      TAO_POA *poa,
+      IdUniquenessStrategy* unique_strategy,
+      IdAssignmentStrategy* id_assignment_strategy,
+      RequestProcessingStrategy* request_processing_strategy)
     {
-      ServantRetentionStrategy::strategy_init (poa);
+      poa_ = poa;
+      request_processing_strategy_ = request_processing_strategy;
 
       // Create the active object map to be used
       TAO_Active_Object_Map *active_object_map = 0;
@@ -265,7 +270,8 @@ namespace TAO
       if (servant == 0)
         {
           // No servant found, try the request_processing strategy
-          servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+          servant =
+            this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
 
@@ -348,7 +354,8 @@ namespace TAO
 
       if (servant == 0)
         {
-          servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+          servant =
+            this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
 
@@ -455,7 +462,8 @@ namespace TAO
         }
       else
         {
-          return this->poa_->active_policy_strategies().request_processing_strategy()->locate_servant (system_id, servant);
+          return
+            this->request_processing_strategy_->locate_servant (system_id, servant);
         }
     }
 
@@ -507,7 +515,12 @@ namespace TAO
         }
 
       // Not found a servant, try the request processing strategy
-      servant = this->poa_->active_policy_strategies().request_processing_strategy()->locate_servant (operation, system_id, servant_upcall, poa_current_impl, wait_occurred_restart_call);
+      servant =
+        this->request_processing_strategy_->locate_servant (operation,
+                                                            system_id,
+                                                            servant_upcall,
+                                                            poa_current_impl,
+                                                            wait_occurred_restart_call);
 
       if (servant == 0)
         {
@@ -754,7 +767,8 @@ namespace TAO
       if (this->poa_->cached_policies().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
       {
         PortableServer::Servant default_servant = 0;
-        default_servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+        default_servant =
+          this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         if (default_servant != 0)
@@ -911,20 +925,22 @@ namespace TAO
         }
 
       // Remember params for potentially invoking <key_to_object> later.
-      this->poa_->key_to_object_params_.set (system_id,
-                                       servant->_interface_repository_id (),
-                                       servant,
-                                       1,
-                                       priority);
+      this->poa_->key_to_object_params_.set (
+        system_id,
+        servant->_interface_repository_id (),
+        servant,
+        1,
+        priority);
 
       // Ask the ORT to create the object.
       // @@NOTE:There is a possible deadlock lurking here. We held the
       // lock, and we are possibly trying to make a call into the
       // application code. Think what would happen if the app calls us
       // back. We need to get to this at some point.
-      return this->poa_->invoke_key_to_object_helper_i (servant->_interface_repository_id (),
-                                                  user_id
-                                                  ACE_ENV_ARG_PARAMETER);
+      return this->poa_->invoke_key_to_object_helper_i (
+              servant->_interface_repository_id (),
+              user_id
+              ACE_ENV_ARG_PARAMETER);
     }
 
     PortableServer::ObjectId *
@@ -958,8 +974,8 @@ namespace TAO
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map_->
           bind_using_system_id_returning_user_id (servant,
-                                              priority,
-                                              user_id.out ()) != 0)
+                                                  priority,
+                                                  user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -1192,6 +1208,23 @@ namespace TAO
                                                   ACE_ENV_ARG_PARAMETER);
     }
 
+    int
+    Retain_Servant_Retention_Strategy::rebind_using_user_id_and_system_id (
+      PortableServer::Servant servant,
+      const PortableServer::ObjectId &user_id,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall)
+    {
+      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      int result = this->active_object_map_->
+        rebind_using_user_id_and_system_id (servant,
+                                            user_id,
+                                            system_id,
+                                            entry);
+      servant_upcall.active_object_map_entry(entry);
+
+      return result;
+    }
   }
 }
 

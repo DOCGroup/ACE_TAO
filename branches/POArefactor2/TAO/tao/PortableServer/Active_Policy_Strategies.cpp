@@ -70,8 +70,37 @@ namespace TAO
       if (thread_strategy_factory != 0)
         thread_strategy_ = thread_strategy_factory->create (policies.thread());
 
-      if (thread_strategy_ != 0)
-        thread_strategy_->strategy_init (poa);
+      /**/
+
+      IdAssignmentStrategyFactory *id_assignment_strategy_factory =
+        ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
+
+      if (id_assignment_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic IdAssignmentStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_IdAssignmentStrategyFactoryImpl()"));
+          id_assignment_strategy_factory =
+            ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
+        }
+
+      if (id_assignment_strategy_factory != 0)
+        id_assignment_strategy_ = id_assignment_strategy_factory->create (policies.id_assignment());
+
+      /**/
+
+      IdUniquenessStrategyFactory *id_uniqueness_strategy_factory =
+        ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
+
+      if (id_uniqueness_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic IdUniquenessStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_IdUniquenessStrategyFactoryImpl()"));
+          id_uniqueness_strategy_factory =
+            ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
+        }
+
+      if (id_uniqueness_strategy_factory != 0)
+        id_uniqueness_strategy_ = id_uniqueness_strategy_factory->create (policies.id_uniqueness());
 
       /**/
 
@@ -91,9 +120,6 @@ namespace TAO
         servant_retention_strategy_ =
           servant_retention_strategy_factory->create (policies.servant_retention());
 
-      if (servant_retention_strategy_ != 0)
-      servant_retention_strategy_->strategy_init (poa);
-
       /**/
 
       RequestProcessingStrategyFactory *request_processing_strategy_factory =
@@ -109,47 +135,6 @@ namespace TAO
 
       if (request_processing_strategy_factory != 0)
         request_processing_strategy_ = request_processing_strategy_factory->create (policies.request_processing(), policies.servant_retention());
-
-      if (thread_strategy_ != 0)
-        request_processing_strategy_->strategy_init (poa, servant_retention_strategy_->get_aom(), servant_retention_strategy_);
-
-      /**/
-
-      IdAssignmentStrategyFactory *id_assignment_strategy_factory =
-        ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
-
-      if (id_assignment_strategy_factory == 0)
-        {
-          ACE_Service_Config::process_directive (ACE_TEXT("dynamic IdAssignmentStrategyFactory Service_Object *")
-                                                 ACE_TEXT("TAO_PortableServer:_make_IdAssignmentStrategyFactoryImpl()"));
-          id_assignment_strategy_factory =
-            ACE_Dynamic_Service<IdAssignmentStrategyFactory>::instance ("IdAssignmentStrategyFactory");
-        }
-
-      if (id_assignment_strategy_factory != 0)
-        id_assignment_strategy_ = id_assignment_strategy_factory->create (policies.id_assignment());
-
-      if (id_assignment_strategy_ != 0)
-        id_assignment_strategy_->strategy_init (poa);
-
-      /**/
-
-      IdUniquenessStrategyFactory *id_uniqueness_strategy_factory =
-        ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
-
-      if (id_uniqueness_strategy_factory == 0)
-        {
-          ACE_Service_Config::process_directive (ACE_TEXT("dynamic IdUniquenessStrategyFactory Service_Object *")
-                                                 ACE_TEXT("TAO_PortableServer:_make_IdUniquenessStrategyFactoryImpl()"));
-          id_uniqueness_strategy_factory =
-            ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyFactory");
-        }
-
-      if (id_uniqueness_strategy_factory != 0)
-        id_uniqueness_strategy_ = id_uniqueness_strategy_factory->create (policies.id_uniqueness());
-
-      if (id_uniqueness_strategy_ != 0)
-        id_uniqueness_strategy_->strategy_init (servant_retention_strategy_);
 
       /**/
 
@@ -167,9 +152,6 @@ namespace TAO
       if (lifespan_strategy_factory != 0)
         lifespan_strategy_ = lifespan_strategy_factory->create (policies.lifespan());
 
-      if (lifespan_strategy_ != 0)
-        lifespan_strategy_->strategy_init (poa);
-
       /**/
 
       ImplicitActivationStrategyFactory *implicit_activation_strategy_factory =
@@ -186,8 +168,30 @@ namespace TAO
       if (implicit_activation_strategy_factory != 0)
         implicit_activation_strategy_ = implicit_activation_strategy_factory->create (policies.implicit_activation());
 
+      /**/
+
+// @todo, check if all pointers are != 0
+
+      if (lifespan_strategy_ != 0)
+        lifespan_strategy_->strategy_init (poa);
+
+      if (thread_strategy_ != 0)
+        request_processing_strategy_->strategy_init (poa, servant_retention_strategy_->get_aom(), servant_retention_strategy_);
+
+      if (id_uniqueness_strategy_ != 0)
+        id_uniqueness_strategy_->strategy_init (servant_retention_strategy_);
+
       if (implicit_activation_strategy_ != 0)
         implicit_activation_strategy_->strategy_init (poa);
+
+      if (thread_strategy_ != 0)
+        thread_strategy_->strategy_init ();
+
+      if (servant_retention_strategy_ != 0)
+        servant_retention_strategy_->strategy_init (poa, id_uniqueness_strategy_, id_assignment_strategy_, request_processing_strategy_);
+
+      if (id_assignment_strategy_ != 0)
+        id_assignment_strategy_->strategy_init (poa);
 
     }
   }

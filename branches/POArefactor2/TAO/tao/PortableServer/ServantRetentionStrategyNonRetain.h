@@ -35,7 +35,16 @@ namespace TAO
        public virtual ServantRetentionStrategy
     {
     public:
+      Non_Retain_Servant_Retention_Strategy (void);
+
       virtual ~Non_Retain_Servant_Retention_Strategy (void);
+
+      virtual
+      void strategy_init (
+        TAO_POA *poa,
+        IdUniquenessStrategy* unique_strategy,
+        IdAssignmentStrategy* id_assignment_strategy,
+        RequestProcessingStrategy* request_processing_strategy);
 
       virtual TAO_Active_Object_Map* get_aom() const;
 
@@ -159,6 +168,16 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy));
 
+      virtual
+      int rebind_using_user_id_and_system_id (
+        PortableServer::Servant servant,
+        const PortableServer::ObjectId &user_id,
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
+    private:
+      TAO_POA *poa_;
+      RequestProcessingStrategy *request_processing_strategy_;
     };
   }
 }

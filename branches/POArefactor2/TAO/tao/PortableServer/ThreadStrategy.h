@@ -40,9 +40,7 @@ namespace TAO
 
       virtual int exit () = 0;
 
-      // @@ Johnny, its not clear what initialization this is going to
-      // do. My $0.02
-      void strategy_init (TAO_POA *poa);
+      void strategy_init ();
     };
   }
 }

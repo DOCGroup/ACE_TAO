@@ -30,8 +30,27 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    Non_Retain_Servant_Retention_Strategy::Non_Retain_Servant_Retention_Strategy (void) :
+      poa_ (0),
+      request_processing_strategy_ (0)
+    {
+    }
+
     Non_Retain_Servant_Retention_Strategy::~Non_Retain_Servant_Retention_Strategy (void)
     {
+    }
+
+    void
+    Non_Retain_Servant_Retention_Strategy::strategy_init (
+      TAO_POA *poa,
+      IdUniquenessStrategy* unique_strategy,
+      IdAssignmentStrategy* id_assignment_strategy,
+      RequestProcessingStrategy* request_processing_strategy)
+    {
+      ACE_UNUSED_ARG (unique_strategy);
+      ACE_UNUSED_ARG (id_assignment_strategy);
+      poa_ = poa;
+      request_processing_strategy_ = request_processing_strategy;
     }
 
     void
@@ -61,11 +80,10 @@ namespace TAO
       ACE_UNUSED_ARG (reference);
       ACE_UNUSED_ARG (system_id);
 
-      // @Johnny, shouldn't we check here whether reference belongs to this POA?
-
-     // Always try the request processing strategy
-     PortableServer::Servant servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_CHECK_RETURN (0);
+      // Always try the request processing strategy
+      PortableServer::Servant servant =
+        this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       if (servant != 0)
         {
@@ -136,7 +154,8 @@ namespace TAO
       // Get the default servant, in case we have a not correct request_processing
       // strategy we will get an exception
       PortableServer::Servant servant = 0;
-      servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      servant =
+        this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (servant != 0)
@@ -196,7 +215,7 @@ namespace TAO
       PortableServer::Servant &servant
       ACE_ENV_ARG_DECL)
     {
-      return this->poa_->active_policy_strategies().request_processing_strategy()->locate_servant (system_id, servant);
+      return this->request_processing_strategy_->locate_servant (system_id, servant);
     }
 
     PortableServer::Servant
@@ -219,7 +238,12 @@ namespace TAO
       PortableServer::Servant servant = 0;
 
       // Not found a servant, try the request processing strategy
-      servant = this->poa_->active_policy_strategies().request_processing_strategy()->locate_servant (operation, system_id, servant_upcall, poa_current_impl, wait_occurred_restart_call);
+      servant = this->
+        request_processing_strategy_->locate_servant (operation,
+                                                      system_id,
+                                                      servant_upcall,
+                                                      poa_current_impl,
+                                                      wait_occurred_restart_call);
 
       if (servant == 0)
       {
@@ -282,7 +306,8 @@ namespace TAO
        */
 
       PortableServer::Servant default_servant = 0;
-      default_servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      default_servant =
+        this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (default_servant != 0 &&
@@ -451,6 +476,20 @@ namespace TAO
                                                   ACE_ENV_ARG_PARAMETER);
     }
 
+    int
+    Non_Retain_Servant_Retention_Strategy::rebind_using_user_id_and_system_id (
+      PortableServer::Servant servant,
+      const PortableServer::ObjectId &user_id,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall)
+    {
+      ACE_UNUSED_ARG (servant);
+      ACE_UNUSED_ARG (user_id);
+      ACE_UNUSED_ARG (system_id);
+      ACE_UNUSED_ARG (servant_upcall);
+
+      return -1;
+    }
   }
 }
 
