@@ -48,7 +48,7 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = TAO/tao
-FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl
+FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt
 RECURSIVE             =
 EXCLUDE               = 
 EXCLUDE_PATTERNS      = InterfaceC.cpp Services.h

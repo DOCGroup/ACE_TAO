@@ -1,27 +1,33 @@
+Sun Mar 04 13:19:35 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * etc/tao.doxygen:
+          Add .txt files, so we can add web pages to the basic TAO
+          documentation.
+
 Sun Mar 04 10:58:08 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added Log_Msg_NT_Event_Log.{h,cpp} to NT
-	  project files.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added Log_Msg_NT_Event_Log.{h,cpp} to NT
+          project files.
 
 Sun Mar  4 10:41:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Log_Msg.cpp,
           ace/Log_Msg.h,
-	  ace/Logging_Strategy.cpp,
-	  ace/Makefile.bor,
-	  ace/OS.cpp,
-	  ace/OS.h,
-	  ace/OS.i,
-	  ace/ace.rc: Added support for the new NT event logging capability.
-	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing this.
+          ace/Logging_Strategy.cpp,
+          ace/Makefile.bor,
+          ace/OS.cpp,
+          ace/OS.h,
+          ace/OS.i,
+          ace/ace.rc: Added support for the new NT event logging capability.
+          Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing this.
 
         * ace/Log_Msg_NT_Event_Log.cpp
-	  ace/Log_Msg_NT_Event_Log.h
-	  ace/ace_message_table.bin:  Added these files to support the new
- 	  NT event logging capability.
- 	  Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing
- 	  this.
+          ace/Log_Msg_NT_Event_Log.h
+          ace/ace_message_table.bin:  Added these files to support the new
+          NT event logging capability.
+          Thanks to Chris Kohlhoff <chris@kohlhoff.com> for contributing
+          this.
 
 Sun Mar  4 04:46:44 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -31,29 +37,29 @@ Sun Mar  4 04:46:44 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Mar 04 03:12:17 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/generate_export_file.pl: ACE_AS_STATIC_LIBS was incorrectly
-	  typed in as ACE_STATIC_LIBS.
+        * bin/generate_export_file.pl: ACE_AS_STATIC_LIBS was incorrectly
+          typed in as ACE_STATIC_LIBS.
 
-	* ace/svc_export.h:
-	* ace/RMCast/RMCast_Export.h:
-	* ace/SSL/SSL_Export.h:
-	* websvcs/lib/websvcs_export.h: These files didn't check for
-	  ACE_AS_STATIC_LIBS to determine if they should define their
-	  export macros for static build.  Thanks to Chris Kohlhoff
-	  <chris@kohlhoff.com> for reporting this.       [Bug 813]
+        * ace/svc_export.h:
+        * ace/RMCast/RMCast_Export.h:
+        * ace/SSL/SSL_Export.h:
+        * websvcs/lib/websvcs_export.h: These files didn't check for
+          ACE_AS_STATIC_LIBS to determine if they should define their
+          export macros for static build.  Thanks to Chris Kohlhoff
+          <chris@kohlhoff.com> for reporting this.       [Bug 813]
 
 Sat Mar  3 19:07:31 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* ace/QoS/QoS_Session_Impl.cpp:
-	* ace/QoS/QoS_Session_Impl.i:
-	* examples/QOS/Fill_ACE_QoS.cpp:
-	* examples/QOS/Fill_ACE_QoS.h:
-	* examples/QOS/Makefile:
-	* examples/QOS/QoS_Util.cpp:
-	* examples/QOS/Receiver_QoS_Event_Handler.cpp:
-	* examples/QOS/Sender_QoS_Event_Handler.cpp:
-	  Fixed various compile warnings when compiling with rapi=1 on
-	  Redhat Linux 6.2
+        * ace/QoS/QoS_Session_Impl.cpp:
+        * ace/QoS/QoS_Session_Impl.i:
+        * examples/QOS/Fill_ACE_QoS.cpp:
+        * examples/QOS/Fill_ACE_QoS.h:
+        * examples/QOS/Makefile:
+        * examples/QOS/QoS_Util.cpp:
+        * examples/QOS/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Sender_QoS_Event_Handler.cpp:
+          Fixed various compile warnings when compiling with rapi=1 on
+          Redhat Linux 6.2
 
 Sat Mar  3 16:47:53 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -142,9 +148,9 @@ Sat Mar  3 16:47:53 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Mar 2 20:08  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
-	  Added macros tha expand to multiple libraries
-	  on QNX RTP to fix most of the link problems.
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          Added macros tha expand to multiple libraries
+          on QNX RTP to fix most of the link problems.
 
 Fri Mar  2 16:35:58 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -157,9 +163,9 @@ Fri Mar 02 19:36:22 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i (ACE_OS::send): (only non-Win32), if call fails and
           errno is EAGAIN, change it to EWOULDBLOCK. Improve portability
- 	  for platforms where EAGAIN and EWOULDBLOCK are different values
- 	  and both used, like HP-UX.  Thanks to Mike Snowy
- 	  <snowymike@aol.com> for reporting this problem.
+          for platforms where EAGAIN and EWOULDBLOCK are different values
+          and both used, like HP-UX.  Thanks to Mike Snowy
+          <snowymike@aol.com> for reporting this problem.
 
         * ace/ACE.i (send_i): Call ACE_OS::send, not ACE_OS::write, on HP-UX.
           This makes it pick up the EAGAIN->EWOULDBLOCK change.
@@ -178,19 +184,19 @@ Fri Mar 02 17:50:40 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 Fri Mar 02 15:35:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_Acceptor.cpp:
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Addr.cpp:
-	* ace/MEM_Addr.h:
-	* ace/MEM_Connector.cpp:
-	* ace/MEM_Connector.h:
-	* ace/MEM_IO.cpp:
-	* ace/MEM_IO.h:
-	* ace/MEM_SAP.cpp:
-	* ace/MEM_SAP.h:
-	* ace/MEM_Stream.cpp:
-	* ace/MEM_Stream.h: Disabled MEM_Stream support if one chooses
-	  not to support position independent pointers.
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Addr.cpp:
+        * ace/MEM_Addr.h:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_Connector.h:
+        * ace/MEM_IO.cpp:
+        * ace/MEM_IO.h:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Stream.cpp:
+        * ace/MEM_Stream.h: Disabled MEM_Stream support if one chooses
+          not to support position independent pointers.
 
 Fri Mar 02 13:17:36 2001  Steve Huston  <shuston@riverace.com>
 
@@ -293,17 +299,17 @@ Thu Mar  1 13:18:07 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Mar  1 10:54:23 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added the TAO Codec to the list of tests to run.
+          Added the TAO Codec to the list of tests to run.
 
-	* include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
 
-	  Fixed all incorrect uses of CFLAGS and CCFLAGS where
-	  preprocessor macros were defined.  Preprocessor macros should be
-	  defined in the CPPFLAGS variable.
+          Fixed all incorrect uses of CFLAGS and CCFLAGS where
+          preprocessor macros were defined.  Preprocessor macros should be
+          defined in the CPPFLAGS variable.
 
-	  Define ACE_USE_RCSID in non-debug builds (i.e. debug=0).
+          Define ACE_USE_RCSID in non-debug builds (i.e. debug=0).
 
 Thu Mar 01 07:29:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
