@@ -15,6 +15,33 @@ static size_t ftp_size = sizeof(ftp)/sizeof(ftp[0]) - 1;
 static ASYS_TCHAR mailto[] = ASYS_TEXT ("mailto:");
 static size_t mailto_size = sizeof(mailto)/sizeof(mailto[0]) - 1;
 
+
+static ASYS_TCHAR file[] = ASYS_TEXT ("file:");
+static size_t file_size = sizeof(file)/sizeof(file[0]) - 1;
+static ASYS_TCHAR afs[] = ASYS_TEXT ("afs:");
+static size_t afs_size = sizeof(afs)/sizeof(afs[0]) - 1;
+static ASYS_TCHAR news[] = ASYS_TEXT ("news:");
+static size_t news_size = sizeof(news)/sizeof(news[0]) - 1;
+static ASYS_TCHAR nntp[] = ASYS_TEXT ("nntp:");
+static size_t nntp_size = sizeof(nntp)/sizeof(nntp[0]) - 1;
+static ASYS_TCHAR cid[] = ASYS_TEXT ("cid:");
+static size_t cid_size = sizeof(cid)/sizeof(cid[0]) - 1;
+static ASYS_TCHAR mid[] = ASYS_TEXT ("mid:");
+static size_t mid_size = sizeof(mid)/sizeof(mid[0]) - 1;
+static ASYS_TCHAR wais[] = ASYS_TEXT ("wais:");
+static size_t wais_size = sizeof(wais)/sizeof(wais[0]) - 1;
+static ASYS_TCHAR prospero[] = ASYS_TEXT ("prospero:");
+static size_t prospero_size = sizeof(prospero)/sizeof(prospero[0]) - 1;
+static ASYS_TCHAR telnet[] = ASYS_TEXT ("telnet:");
+static size_t telnet_size = sizeof(telnet)/sizeof(telnet[0]) - 1;
+static ASYS_TCHAR rlogin[] = ASYS_TEXT ("rlogin:");
+static size_t rlogin_size = sizeof(rlogin)/sizeof(rlogin[0]) - 1;
+static ASYS_TCHAR tn3270[] = ASYS_TEXT ("tn3270:");
+static size_t tn3270_size = sizeof(tn3270)/sizeof(tn3270[0]) - 1;
+static ASYS_TCHAR gopher[] = ASYS_TEXT ("gopher:");
+static size_t gopher_size = sizeof(gopher)/sizeof(gopher[0]) - 1;
+
+
 ACE_URL_Addr::ACE_URL_Addr (void)
   : url_ (0)
 {
@@ -80,6 +107,43 @@ ACE_URL_Addr::create_address (LPCTSTR url)
       addr = 0;
     }
   return addr;
+}
+
+int
+ACE_URL_Addr::known_scheme (LPCTSTR url)
+{
+  if (ACE_OS::strncmp (http, url, http_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (ftp, url, ftp_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (mailto, url, mailto_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (file, url, file_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (afs, url, afs_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (news, url, news_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (nntp, url, nntp_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (cid, url, cid_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (mid, url, mid_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (wais, url, wais_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (prospero, url, prospero_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (telnet, url, telnet_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (rlogin, url, rlogin_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (tn3270, url, tn3270_size) == 0)
+    return 1;
+  else if (ACE_OS::strncmp (gopher, url, gopher_size) == 0)
+    return 1;
+
+  return 0;
 }
 
 // ****************************************************************
@@ -240,6 +304,45 @@ ACE_HTTP_Addr::url_size (int flags) const
   size += chars * sizeof(ASYS_TCHAR);
 
   return size;
+}
+
+ACE_URL_Addr*
+ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
+{
+  if (ACE_URL_Addr::known_scheme (url))
+    return ACE_URL_Addr::create_address (url);
+
+  ACE_HTTP_Addr* addr = 0;
+  if (url[0] == '/')
+    {
+      ACE_NEW_RETURN (addr, ACE_HTTP_Addr (this->get_hostname (),
+                                           url,
+                                           0,
+                                           this->get_port_number ()),
+                      0);
+    }
+  else
+    {
+      LPTSTR buf;
+      ACE_NEW_RETURN (buf,
+                      ASYS_TCHAR [ACE_OS::strlen (url)
+                                 + ACE_OS::strlen (this->get_path ())
+                                 + 2],
+                      0);
+      LPCTSTR path = this->get_path ();
+      int l = ACE_OS::strlen (path);
+      if (path[l-1] == '/')
+        ACE_OS::sprintf (buf, "%s%s", path, url);
+      else
+        ACE_OS::sprintf (buf, "%s/%s", path, url);
+      ACE_NEW_RETURN (addr, ACE_HTTP_Addr (this->get_hostname (),
+                                           buf,
+                                           0,
+                                           this->get_port_number ()),
+                      0);
+      delete[] buf;
+    }
+  return addr;
 }
 
 int
