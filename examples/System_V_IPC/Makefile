@@ -19,13 +19,22 @@ DIRS  = SV_Message_Queues \
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 
 ifdef VXWORKS
-  DIRS = .
-  nobuild:
+  all.nested: any
+  debug.nested: any
+  profile.nested: any
+  install.nested: any
+  deinstall.nested: any
+  clean.nested: any
+  realclean.nested: any
+  clobber.nested: any
+  depend.nested: any
+  rcs_info.nested: any
+  any:
 	@echo These examples won\'t run or build for VxWorks.
 else
-  include	$(ACE_ROOT)/include/makeinclude/macros.GNU
   include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
   include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
   include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
