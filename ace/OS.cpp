@@ -3091,20 +3091,18 @@ ACE_OS::thr_exit (void *status)
 int
 ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
 {
-# if defined (ACE_HAS_STHREADS) || defined (sun)
+# if defined (ACE_HAS_STHREADS) || (defined (sun) && (ACE_MT_SAFE != 0))
   // Get the class TS and RT class IDs.
   ACE_id_t rt_id;
   ACE_id_t ts_id;
-  if (ACE_OS::scheduling_class ("RT", rt_id) == -1  ||
-     (ACE_OS::scheduling_class ("TS", ts_id) == -1))
-    {
-      return -1;
-    }
+  if (ACE_OS::scheduling_class ("RT", rt_id) == -1  
+      || ACE_OS::scheduling_class ("TS", ts_id) == -1)
+    return -1;
 
   // Get this LWP's scheduling parameters.
   pcparms_t pcparms;
-  /* The following is just to avoid Purify warnings about unitialized
-     memory reads. */
+  // The following is just to avoid Purify warnings about unitialized
+  // memory reads.
   ACE_OS::memset (&pcparms, 0, sizeof pcparms);
   pcparms.pc_cid = PC_CLNULL;
 
@@ -3112,42 +3110,36 @@ ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
                                 P_MYID,
                                 PC_GETPARMS,
                                 (char *) &pcparms) == -1)
+    return -1;
+  else if (pcparms.pc_cid == rt_id)
     {
-      return -1;
+      // RT class.
+      rtparms_t rtparms;
+      ACE_OS::memcpy (&rtparms, pcparms.pc_clparms, sizeof rtparms);
+
+      sched_params.policy (ACE_SCHED_FIFO);
+      sched_params.priority (rtparms.rt_pri);
+      sched_params.scope (ACE_SCOPE_THREAD);
+      ACE_Time_Value quantum (rtparms.rt_tqsecs,
+                              rtparms.rt_tqnsecs == RT_TQINF  
+                              ? 0 : rtparms.rt_tqnsecs * 1000);
+      sched_params.quantum (quantum);
+      return 0;
+    }
+  else if (pcparms.pc_cid == ts_id)
+    {
+      /* TS class */
+      tsparms_t tsparms;
+      ACE_OS::memcpy (&tsparms, pcparms.pc_clparms, sizeof tsparms);
+
+      sched_params.policy (ACE_SCHED_RR);
+      sched_params.priority (tsparms.ts_upri);
+      sched_params.scope (ACE_SCOPE_THREAD);
+      return 0;
     }
   else
-    {
-      if (pcparms.pc_cid == rt_id)
-        {
-          /* RT class */
-          rtparms_t rtparms;
-          ACE_OS::memcpy (&rtparms, pcparms.pc_clparms, sizeof rtparms);
+    return -1;
 
-          sched_params.policy (ACE_SCHED_FIFO);
-          sched_params.priority (rtparms.rt_pri);
-          sched_params.scope (ACE_SCOPE_THREAD);
-          ACE_Time_Value quantum (rtparms.rt_tqsecs,
-                                  rtparms.rt_tqnsecs == RT_TQINF  ?  0
-                                    :  rtparms.rt_tqnsecs * 1000);
-          sched_params.quantum (quantum);
-        }
-      else if (pcparms.pc_cid == ts_id)
-        {
-          /* TS class */
-          tsparms_t tsparms;
-          ACE_OS::memcpy (&tsparms, pcparms.pc_clparms, sizeof tsparms);
-
-          sched_params.policy (ACE_SCHED_RR);
-          sched_params.priority (tsparms.ts_upri);
-          sched_params.scope (ACE_SCOPE_THREAD);
-        }
-      else
-        {
-          return -1;
-        }
-    }
-
-  return 0;
 # else  /* ! ACE_HAS_STHREADS && ! sun */
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
