@@ -408,8 +408,9 @@ be_operation::gen_server_header (void)
   sh->indent ();
 
   // generate the static method corresponding to this method
-  *sh << "static void " << this->local_name () << "_skel (CORBA::ServerRequest &req,"
-      << " CORBA::Object_ptr obj, CORBA::Environment &env);\n\n";
+  *sh << "static void " << this->local_name () <<
+    "_skel (CORBA::ServerRequest &req, void *obj,"
+      << " void *context, CORBA::Environment &env);\n\n";
   cg->pop (); // restore previous state
   return 0;
 }
@@ -446,14 +447,18 @@ be_operation::gen_server_skeletons (void)
   *ss << "void " << intf->full_skel_name () << "::"
       << this->local_name () << "_skel ("
       << "CORBA::ServerRequest &_tao_server_request, "
-      << "CORBA::Object_ptr _tao_object_reference, "
+    //@@XXASG      << "CORBA::Object_ptr _tao_object_reference, "
+      << "void *_tao_object_reference, "
+      << "void *context, "
       << "CORBA::Environment &_tao_environment)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
+  *ss << "ACE_UNUSED_ARG (context);" << nl;
   // define an NVList to hold arguments
   *ss << "CORBA::NVList_ptr \t nvlist;" << nl;
   // define a variable that will eventually point to our implementation object
-  *ss << intf->full_skel_name () << "_ptr \t impl;" << nl;
+  *ss << intf->full_skel_name () << "_ptr \t impl = (" << intf->full_skel_name
+    () << "_ptr) _tao_object_reference;" << nl;
 
   // verify if we need to define a variable intended to hold the operation
   // return type. We do not need one if the return type is void
@@ -564,8 +569,8 @@ be_operation::gen_server_skeletons (void)
   cg->pop ();
 
   // make the upcall
-  *ss << "impl = (" << intf->full_skel_name () << "_ptr) _tao_object_reference->get_subclass ();"
-      << nl;
+  //  *ss << "impl = (" << intf->full_skel_name () << "_ptr) _tao_object_reference->get_subclass ();"
+  //  << nl;
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
       cg->push (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);

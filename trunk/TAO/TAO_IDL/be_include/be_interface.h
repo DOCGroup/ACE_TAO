@@ -21,6 +21,8 @@
 #if !defined (TAO_BE_INTERFACE_H)
 #define TAO_BE_INTERFACE_H
 
+class TAO_OutStream;
+
 /*
  * BE_Interface
  */
@@ -34,6 +36,10 @@ class be_interface : public virtual AST_Interface,
   // = DESCRIPTION
   //
 public:
+
+  // used to pass functions to the template method
+  typedef int (*tao_code_emitter) (be_interface *, be_interface *, TAO_OutStream *);
+
   // Operations
   be_interface (void);
   // Default constructor
@@ -88,6 +94,10 @@ public:
   virtual long tc_encap_len (void);
   // return length of encapsulation
 
+  virtual int traverse_inheritance_graph (tao_code_emitter gen,
+                                          TAO_OutStream *os);
+  // template method using breadth first traversal of inheritance graph
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_interface);
@@ -97,10 +107,28 @@ private:
   void compute_fullskelname (void);
   // compute the fully scoped skel class name
 
-  // helper methods for the C++ mapping process
   int gen_operation_table (void);
+  // generate the operation table including entries for inherited interfaces
+
+  int gen_optable_entries (be_interface *);
+  // generate the operation table entries
+
+  static int is_a_helper (be_interface *, be_interface *, TAO_OutStream *os);
+  // helper method passed to the template method
+
+  static int gen_optable_helper (be_interface *,
+                                 be_interface *,
+                                 TAO_OutStream *os);
+  // helper method passed to the template method
+
+  static int gen_skel_helper (be_interface *,
+                              be_interface *,
+                              TAO_OutStream *os);
+  // helper method passed to the template method
 
   char *full_skel_name_;  // fully scoped skeleton name
+
+  int skel_count_; // number of static skeletons in the operation table
 };
 
 #endif  // if !defined

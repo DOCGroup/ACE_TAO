@@ -1,6 +1,25 @@
 //
 // $Id$
 //
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_exception.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Exception that provides additional means for C++
+//    mapping of an interface.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
 
 #include	"idl.h"
 #include	"idl_extern.h"
@@ -26,7 +45,6 @@ int
 be_exception::compute_member_count (void)
 {
   UTL_ScopeActiveIterator *si;  // iterator
-  AST_Decl *d;  // temp node
 
   this->member_count_ = 0;
 
@@ -37,13 +55,9 @@ be_exception::compute_member_count (void)
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
 
       while (!(si->is_done ()))
-	{
-	  // get the next AST decl node
-	  d = si->item ();
-	  if (!d->imported ())
-	    {
-              this->member_count_++;
-            }
+        {
+          // get the next AST decl node
+          this->member_count_++;
           si->next ();
         } // end of while
       delete si; // free the iterator object
@@ -218,7 +232,7 @@ be_exception::gen_typecode (void)
   cs = cg->client_stubs ();
   cs->indent (); // start from whatever indentation level we were at
 
-  *cs << "CORBA::tk_struct, // typecode kind" << nl;
+  *cs << "CORBA::tk_except, // typecode kind" << nl;
   *cs << this->tc_size () << ", // encapsulation length\n";
   // now emit the encapsulation
   return this->gen_encapsulation ();
