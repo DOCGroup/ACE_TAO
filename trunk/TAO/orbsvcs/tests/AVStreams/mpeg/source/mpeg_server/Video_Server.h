@@ -31,6 +31,9 @@
 
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
+
+#include "tao/TAO.h"
+
 #include "Globals.h"
 #include "../mpeg_shared/fileio.h"
 #include "../mpeg_shared/com.h"
