@@ -414,7 +414,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_Invocation_INVOKE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
   int retval = this->invoke_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
