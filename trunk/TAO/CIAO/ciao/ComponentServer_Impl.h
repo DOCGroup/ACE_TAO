@@ -29,6 +29,7 @@
 
 namespace CIAO
 {
+  struct Static_Config_EntryPoints_Maps;
   /**
    * @class ComponentServer_Impl
    *
@@ -46,7 +47,10 @@ namespace CIAO
   public:
     /// Constructor
     ComponentServer_Impl (CORBA::ORB_ptr o,
-                          PortableServer::POA_ptr p);
+                          PortableServer::POA_ptr p,
+                          int static_config_flag = 0,
+                          const Static_Config_EntryPoints_Maps* static_entrypts_maps = 0
+                          );
 
     /// Destructor
     virtual ~ComponentServer_Impl (void);
@@ -132,6 +136,12 @@ protected:
 
     /// Keep a list of managed Container objects.
     Object_Set<Components::Deployment::Container, ::Components::Deployment::Container_var> container_set_;
+
+    /// Flag to indicate static configuration.
+    int static_config_flag_;
+
+    /// Reference to CIAO static config entry points map.
+    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }
 
