@@ -28,6 +28,7 @@
 class TAO_Operation_Details;
 class TAO_Pluggable_Reply_Params;
 class TAO_GIOP_Locate_Request_Header;
+class TAO_Queued_Data;
 
 /**
  * @class TAO_GIOP_Message_Lite
@@ -53,7 +54,7 @@ public:
   virtual void init (CORBA::Octet, CORBA::Octet);
 
   /// Reset the messaging the object
-  virtual void reset (int reset_flag = 1);
+  virtual void reset (void);
 
   /// Write the RequestHeader in to the <cdr> stream. The underlying
   /// implementation of the mesaging should do the right thing.
@@ -73,13 +74,7 @@ public:
       TAO_Pluggable_Reply_Params_Base &params
     );
 
-  /// This method reads the message on the connection. Returns 0 when
-  /// there is short read on the connection. Returns 1 when the full
-  /// message is read and handled. Returns -1 on errors. If <block> is
-  /// 1, then reply is read in a blocking manner. <bytes> indicates the
-  /// number of bytes that needs to be read from the connection.
-  /// GIOP uses this read to unmarshall the message details that appear
-  /// on the connection.
+  /// Dummy method to ..
   virtual int read_message (TAO_Transport *transport,
                             int block = 0,
                             ACE_Time_Value *max_wait_time = 0);
@@ -90,6 +85,8 @@ public:
   /// the message.
   virtual int format_message (TAO_OutputCDR &cdr);
 
+  /// Parse the incoming messages..
+  virtual int parse_incoming_messages (ACE_Message_Block &message_block);
 
   /// Get the message type. The return value would be one of the
   /// following:
@@ -97,14 +94,35 @@ public:
   /// TAO_PLUGGABLE_MESSAGE_REPLY,
   /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  virtual TAO_Pluggable_Message_Type message_type (void);
+  TAO_Pluggable_Message_Type message_type (void);
 
 
+  /// Calculate the amount of data that is missing in the <incoming>
+  /// message block.
+  virtual ssize_t missing_data (ACE_Message_Block &message_block);
+
+  /* Extract the details of the next message from the <incoming>
+   * through <qd>. Returns 1 if there are more messages and returns a
+   * 0 if there are no more messages in <incoming>.
+   */
+  virtual int extract_next_message (ACE_Message_Block &incoming,
+                                    TAO_Queued_Data *&qd);
+
+  /// Check whether the node <qd> needs consolidation from <incoming>
+  virtual int consolidate_node (TAO_Queued_Data *qd,
+                                ACE_Message_Block &incoming);
+
+  /// Get the details of the message parsed through the <qd>.
+  virtual void get_message_data (TAO_Queued_Data *qd);
+
+  /// @@Bala: Docu???
+  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
+                                     const TAO_Queued_Data *sqd);
 
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_ORB_Core *orb_core);
+                                       TAO_Queued_Data *qd);
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
@@ -129,40 +147,25 @@ private:
 
   /// Processes the <GIOP_REQUEST> messages
   int process_request (TAO_Transport *transport,
-                       TAO_ORB_Core *orb_core,
-                       TAO_InputCDR &input);
+                       TAO_InputCDR &input,
+                       TAO_OutputCDR &output);
 
   /// Processes the <GIOP_LOCATE_REQUEST> messages
   int process_locate_request (TAO_Transport *transport,
-                              TAO_ORB_Core *orb_core,
-                              TAO_InputCDR &input);
+                              TAO_InputCDR &input,
+                              TAO_OutputCDR &output);
 
   /// Make a <GIOP_LOCATEREPLY> and hand that over to the transport so
   /// that it can be sent over the connection.
   /// NOTE:As on date 1.1 & 1.2 seem to have similar headers. Till an
   /// unmanageable difference comes let them be implemented here.
   int make_send_locate_reply (TAO_Transport *transport,
+                              TAO_OutputCDR &output,
                               TAO_GIOP_Locate_Request_Header &request,
                               TAO_GIOP_Locate_Status_Msg &status);
 
   /// Send error messages
   int  send_error (TAO_Transport *transport);
-
-  /// Parses the header of the GIOP messages for validity
-  int parse_header (void);
-
-  /// Validates the first 4 bytes that contain the magic word
-  /// "GIOP". Also calls the validate_version () on the incoming
-  /// stream.
-  int parse_magic_bytes (void);
-
-  /// This will do a validation of the stream that arrive in the
-  /// transport.
-  int validate_version (void);
-
-  /// Set the state
-  void set_state (CORBA::Octet major,
-                  CORBA::Octet minor);
 
   /// Close a connection, first sending GIOP::CloseConnection.
   void send_close_connection (const TAO_GIOP_Message_Version &version,
@@ -181,6 +184,8 @@ private:
   void dump_msg (const char *label,
                  const u_char *ptr,
                  size_t len);
+
+  TAO_Queued_Data *make_queued_data (size_t sz);
 
   /// Write the locate reply header
   virtual int generate_locate_reply_header (
@@ -238,33 +243,18 @@ private:
 
 private:
 
-  /// The message state. It represents the status of the messages that
-  /// have been read from the connection.
-  TAO_GIOP_Message_State message_state_;
+  /// Our copy of the ORB core...
+  TAO_ORB_Core *orb_core_;
 
-  /// Output CDR
-  TAO_OutputCDR *output_;
+  /// The message type that we are going to process..
+  CORBA::Octet  message_type_;
 
-  /// Allocators for the output CDR that we hold. As we cannot rely on
-  /// the resources from ORB Core we reserve our own resources. The
-  /// reason that we cannot believe the ORB core is that, for a
-  /// multi-threaded servers it dishes out resources cached in
-  /// TSS. This would be dangerous as TSS gets destroyed before we
-  /// would. So we have our own memory that we can rely on.
-  /// Implementations of GIOP that we have
-  ACE_Allocator *cdr_buffer_alloc_;
-  ACE_Allocator *cdr_dblock_alloc_;
-  ACE_Allocator *cdr_msgblock_alloc_;
+  /// The pay load size
+  CORBA::ULong message_size_;
 
-  /// A buffer that we will use to initialise the CDR stream
-  char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
-
-  /// The InputCDR stream in which the incoming messages are
-  /// read. This will be used to decode the messages.
-  TAO_InputCDR input_cdr_;
-
-  /// The offset of the write pointer of the input cdr stream
-  size_t current_offset_;
+  // The byte order..
+  // NOTE: GIOP lite cannot work between heterogenous platforms..
+  CORBA::Octet byte_order_;
 };
 
 

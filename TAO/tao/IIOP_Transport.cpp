@@ -16,7 +16,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-//#include "tao/GIOP_Message_Lite.h"
+#include "tao/GIOP_Message_Lite.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Transport.i"
@@ -26,13 +26,12 @@ ACE_RCSID (tao, IIOP_Transport, "$Id$")
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean /*flag*/)
+                                        CORBA::Boolean flag)
   : TAO_Transport (TAO_TAG_IIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-#if 0
   if (flag)
     {
       // Use the lite version of the protocol
@@ -40,7 +39,6 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                TAO_GIOP_Message_Lite (orb_core));
     }
   else
-#endif
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,

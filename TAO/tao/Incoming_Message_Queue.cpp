@@ -134,6 +134,7 @@ TAO_Queued_Data::TAO_Queued_Data (void)
     byte_order_ (0),
     major_version_ (0),
     minor_version_ (0),
+    more_fragments_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
     next_ (0)
 {
@@ -145,7 +146,20 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb)
     byte_order_ (0),
     major_version_ (0),
     minor_version_ (0),
+    more_fragments_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
+    next_ (0)
+{
+}
+
+TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
+  : msg_block_ (qd.msg_block_->duplicate ()),
+    missing_data_ (qd.missing_data_),
+    byte_order_ (qd.byte_order_),
+    major_version_ (qd.major_version_),
+    minor_version_ (qd.minor_version_),
+    more_fragments_ (qd.more_fragments_),
+    msg_type_ (qd.msg_type_),
     next_ (0)
 {
 }

@@ -636,6 +636,12 @@ protected:
                                    TAO_Resume_Handle &rh,
                                    ACE_Time_Value *max_wait_time);
 
+  /// @@Bala: Docu???
+  int consolidate_fragments (TAO_Queued_Data *qd,
+                             TAO_Resume_Handle &rh);
+
+
+
   /// First consolidate the message queue.  If the message is still not
   /// complete, try to read from the handle again to make it
   /// complete. If these dont help put the message back in the queue
