@@ -1,3 +1,10 @@
+Wed Feb 18 10:51:03 MST 2004  Scott Harris  <harris_s@ociweb.com>
+
+        * utils/wxNamingViewer/README:
+        * utils/utils.mwc:
+          Change comments to reflect that the feature name, wxWindows,
+          is mixed case.
+
 Wed Feb 18 10:55:36 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h:
