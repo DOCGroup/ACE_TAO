@@ -1,3 +1,36 @@
+Mon Feb 16 20:01:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/CIDLC.mwc:
+
+	  Added the mpc files from CCF in there. This will make it easier
+	  for the users. Users just need to go to $CIAO_ROOT/CIDLC and
+	  type mwc.pl CIDLC.mwc and then a make. They need not go to go
+	  and build CCF specifically. But this has a hitch that Tao needs
+	  to fix. The CCF libraries should be installed in $CIAO_ROOT/lib
+	  for this to work fine. Tao has accepted to fix this.
+	
+	* CIDLC/Literals.cpp:
+	* CIDLC/Literals.hpp:
+	* CIDLC/ServantHeaderGenerator.cpp:
+	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Bunch of wrong environment macro usage. This should fix the
+	  problems that Brian Mendel reported. Thanks to Brian for
+	  reporting this. 
+
+	  These fixes wouldn't have taken so long. The CIDLC linking takes
+	  a really really long time!
+	
+	* examples/Hello/Receiver/Receiver_exec.cpp:
+	* examples/Hello/Sender/Sender_exec.cpp:
+	* examples/Hello/Sender/starter.cpp:
+	* examples/OEP/BasicSP/EC/EC_exec.cpp:
+	* examples/OEP/BasicSP/EC/client.cpp:
+	* examples/OEP/BasicSP/EC/controller.cpp:
+
+	  Fixes to the executor code to get it compiling on platforms with
+	  exceptions disabled. 
+
 Mon Feb 16 16:32:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CCF/CCF/CCF.mwc:

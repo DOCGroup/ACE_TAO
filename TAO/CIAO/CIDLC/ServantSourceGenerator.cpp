@@ -562,7 +562,7 @@ namespace
         os << "_ptr" << endl
            << u.scoped_name ().scope_name ().simple_name () << "_Context::get_connection_"
            << u.name () << " (" << endl
-           << STRS[ENV_SNGL_SRC] << ")" << endl
+           << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "return ";
@@ -897,7 +897,7 @@ namespace
       os << "::Components::CCMHome_ptr" << endl
          << t.name () << "_Context::"
          << "get_CCM_home (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "return ::Components::CCMHome::_duplicate (this->home_.in ());"
@@ -1615,7 +1615,7 @@ namespace
 
         os << " (" << endl
            << "ev_type.in ()" << endl
-           << STRS[ENV_SNGL_ARG] << ");" << endl
+           << STRS[ENV_ARG] << ");" << endl
            << "return;" << endl
            << "}" << endl
            << "ACE_THROW (" << STRS[EXCP_BET] << " ());" << endl
@@ -2015,7 +2015,7 @@ namespace
          << t.name () << "_Servant::connect_consumer ("
          << endl
          << "const char * /* emitter_name */," << endl
-         << STRS[COMP_ECB] << "_ptr consumer" << endl
+         << STRS[COMP_ECB] << "_ptr /*consumer*/" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
@@ -2071,6 +2071,8 @@ namespace
          << STRS[EXCP_IC] << "," << endl
          << STRS[EXCP_ECL] << "))" << endl
          << "{"
+	 << "// Just in case there are no if blocks" << endl
+	 << "ACE_UNUSED_ARG (subscribe);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << STRS[EXCP_IN] << " (), 0);"
@@ -2100,6 +2102,8 @@ namespace
          << STRS[EXCP_IN] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
          << "{"
+	 << "// Just in case there are no if blocks" << endl
+	 << "ACE_UNUSED_ARG (ck);" << endl
          << "if (publisher_name == 0)" << endl
          << "{"
          << "ACE_THROW_RETURN (" << endl
@@ -2188,7 +2192,7 @@ namespace
       os << "void" << endl
          << t.name ()
          << "_Servant::configuration_complete (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_ICF] << "))" << endl
@@ -2198,7 +2202,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_Servant::remove (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_RF] << "))" << endl
@@ -2430,7 +2434,7 @@ namespace
       receives_none (SemanticGraph::HomeFactory&)
       {
         os << " (" << endl
-           << STRS[ENV_SNGL_HDR] << ")" << endl;
+           << STRS[ENV_SNGL_SRC] << ")" << endl;
       }
 
       virtual void
@@ -2442,7 +2446,7 @@ namespace
       virtual void
       receives_post (SemanticGraph::HomeFactory&)
       {
-        os << endl << STRS[ENV_HDR] << ")" << endl;
+        os << endl << STRS[ENV_SRC] << ")" << endl;
       }
 
       virtual void
@@ -2543,6 +2547,18 @@ namespace
         os << "::_narrow (" << endl
            << "_ciao_ec.in ()" << endl
            << STRS[ENV_ARG] << ");" << endl;
+
+        os << "ACE_CHECK_RETURN (";
+
+        {
+          TypeNameEmitter manages_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (manages_emitter);
+
+          manages (scope_, manages_);
+        }
+
+        os << "::_nil ());" << endl;
 
         os << "return this->_ciao_activate_component (" << endl
            << "_ciao_comp.in ()" << endl
@@ -2808,7 +2824,7 @@ namespace
          << "{"
          << "ACE_THROW (CORBA::INTERNAL ());" << endl
          << "}" << endl
-         << "_ciao_comp->remove (" << STRS[ENV_ARG] << ");"
+         << "_ciao_comp->remove (" << STRS[ENV_SNGL_ARG] << ");"
          << "ACE_CHECK;" << endl
          << "this->_ciao_passivate_component (" << endl
          << "_ciao_comp.in ()" << endl
@@ -2994,7 +3010,7 @@ namespace
       }
 
       os << "_ptr comp" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
          << "PortableServer::ObjectId_var oid;" << endl
