@@ -15,7 +15,8 @@ class TT_Info
 public:
 
   static void dump_properties (const CosTrading::PropertySeq& prop_seq,
-                               CORBA::Boolean print_dynamic = 1);
+                               CORBA::Boolean print_dynamic = 1,
+                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Dump the contents of this property sequence.
 
   enum INTERFACES

@@ -28,9 +28,9 @@ public:
   Criteria_Evaluator (const CosLifeCycle::Criteria &criteria);
   ~Criteria_Evaluator (void);
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (CORBA::Environment &_tao_environment);
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (CORBA::Environment &);
 
-  char * getFilter (CORBA::Environment &_tao_environment);
+  char * getFilter (CORBA::Environment &);
 
   LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getLogicalLocation (CORBA::Environment &)
     {

@@ -27,7 +27,7 @@ Criteria_Evaluator::~Criteria_Evaluator ()
 }
 
 LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
-Criteria_Evaluator::getInitialization (CORBA::Environment &env)
+Criteria_Evaluator::getInitialization (CORBA::Environment &ACE_TRY_ENV)
 {
   LifeCycleService::Criteria_Evaluator::SeqNamedValuePair_ptr sequence_ptr = 0;
 
@@ -35,10 +35,9 @@ Criteria_Evaluator::getInitialization (CORBA::Environment &env)
     this->getCriteriaMember ("initialization");
 
   if (any_ptr == 0)
-    {
-      env.exception (new LifeCycleService::Criteria_Evaluator::NotAvailable ("No initialization member found.\n"));
-      return 0;
-    }
+    ACE_THROW_RETURN (LifeCycleService::Criteria_Evaluator::NotAvailable
+                         ("No initialization member found.\n"),
+                      0);
 
   *any_ptr >>= sequence_ptr;  
 
@@ -46,17 +45,16 @@ Criteria_Evaluator::getInitialization (CORBA::Environment &env)
 }
 
 char *
-Criteria_Evaluator::getFilter (CORBA::Environment &env)
+Criteria_Evaluator::getFilter (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::String string;
   CORBA::Any value;
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
   if (any_ptr == 0)
-    {
-      env.exception (new LifeCycleService::Criteria_Evaluator::NotAvailable ("No filter member found.\n"));
-      return 0;
-    }
+    ACE_THROW_RETURN (LifeCycleService::Criteria_Evaluator::NotAvailable
+                        ("No filter member found.\n"),
+                      0);
   *any_ptr >>= string;
   return string;
 }
@@ -77,6 +75,8 @@ Criteria_Evaluator::getCriteriaMember (const char *member_name)
                         criteria_[i].name) == 0)
       {
         CORBA::Any_ptr value_ptr;
+
+        // @@ We should use ACE_NEW_THROW_EX + ACE_CHECK_RETURN here.
         ACE_NEW_RETURN (value_ptr,
                         CORBA::Any(criteria_[i].value),
                         0);

@@ -32,7 +32,7 @@ public:
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose = 1);
 
-  void perform_queries (CORBA::Environment& _env)
+  void perform_queries (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -46,7 +46,7 @@ public:
                      CosTrading::DuplicatePolicyName));
   // Barrage the bootstrapped-to trader with queries.
 
-  void perform_directed_queries (CORBA::Environment& _env)
+  void perform_directed_queries (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -64,7 +64,7 @@ public:
 private:
 
   void perform_queries_with_policies (const TAO_Policy_Creator& policy_manager,
-                                      CORBA::Environment& _env)
+                                      CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -81,7 +81,7 @@ private:
 
   void display_results (const CosTrading::OfferSeq& offer_seq,
                         CosTrading::OfferIterator_ptr offer_iterator,
-                        CORBA::Environment& _env) const
+                        CORBA::Environment& ACE_TRY_ENV) const
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Display the results of the query to the screen.
 
