@@ -1,3 +1,7 @@
+Thu Aug 07 03:52:31 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.8, released Thu Aug 07 03:52:31 1997.
+
 Thu Aug  7 00:43:14 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/typecode.cpp: A couple of errors involving TAO_CONST crept
