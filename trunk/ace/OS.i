@@ -6747,6 +6747,20 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
 #elif defined (__hpux)
+  // HP-UX 10.x and 32-bit 11.00 do not pay attention to the ref count when
+  // unloading a dynamic lib.  So, if the ref count is more than 1, do not
+  // unload the lib.  This will cause a library loaded more than once to
+  // not be unloaded until the process runs down, but that's life.  It's
+  // better than unloading a library that's in use.
+  // So far as I know, there's no way to decrement the refcnt that the kernel
+  // is looking at - the shl_descriptor is a copy of what the kernel has, not
+  // the actual struct.
+  // On 64-bit HP-UX using dlopen, this problem has been fixed.
+  struct shl_descriptor  desc;
+  if (shl_gethandle_r(handle, &desc) == -1)
+    return -1;
+  if (desc.ref_count > 1)
+    return 0;
 # if defined(__GNUC__) || __cplusplus >= 199707L
   ACE_OSCALL_RETURN (::shl_unload(handle), int, -1);
 # else
