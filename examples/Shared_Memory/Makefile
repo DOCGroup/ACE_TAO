@@ -47,10 +47,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_MM.o .obj/test_MM.so .shobj/test_MM.o .shobj/test_MM.so: test_MM.cpp \
  $(ACE_ROOT)/ace/Shared_Memory_MM.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Shared_Memory.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -68,10 +71,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_SV.o .obj/test_SV.so .shobj/test_SV.o .shobj/test_SV.so: test_SV.cpp \
  $(ACE_ROOT)/ace/Shared_Memory_SV.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Shared_Memory.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

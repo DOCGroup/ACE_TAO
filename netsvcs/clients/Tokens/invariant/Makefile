@@ -50,7 +50,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/invariant.o .obj/invariant.so .shobj/invariant.o .shobj/invariant.so: invariant.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

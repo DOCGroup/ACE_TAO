@@ -42,9 +42,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/ex1.o .obj/ex1.so .shobj/ex1.o .shobj/ex1.so: ex1.cpp \
  $(ACE_ROOT)/ace/Stream.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -191,11 +194,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/ex2.o .obj/ex2.so .shobj/ex2.o .shobj/ex2.so: ex2.cpp \
  $(ACE_ROOT)/ace/UPIPE_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/UPIPE_Stream.h \
  $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -343,11 +349,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/ex3.o .obj/ex3.so .shobj/ex3.o .shobj/ex3.so: ex3.cpp \
  $(ACE_ROOT)/ace/UPIPE_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/UPIPE_Stream.h \
  $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

@@ -42,9 +42,12 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Semaphores_1.o .obj/Semaphores_1.so .shobj/Semaphores_1.o .shobj/Semaphores_1.so: Semaphores_1.cpp \
  $(ACE_ROOT)/ace/SV_Shared_Memory.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -106,9 +109,12 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Semaphores_2.o .obj/Semaphores_2.so .shobj/Semaphores_2.o .shobj/Semaphores_2.so: Semaphores_2.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
