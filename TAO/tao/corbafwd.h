@@ -177,6 +177,11 @@ class CORBA_Context_var;
 class CORBA_Context_out;
 typedef class CORBA_Context *CORBA_Context_ptr;
 
+class CORBA_ContextList;
+class CORBA_ContextList_var;
+class CORBA_ContextList_out;
+typedef class CORBA_ContextList *CORBA_ContextList_ptr;
+
 class CORBA_Current;
 class CORBA_Current_var;
 class CORBA_Current_out;
@@ -382,6 +387,11 @@ public:
   typedef CORBA_Context_var Context_var;
   typedef CORBA_Context_out Context_out;
 
+  typedef CORBA_ContextList ContextList;
+  typedef CORBA_ContextList *ContextList_ptr;
+  typedef CORBA_ContextList_var ContextList_var;
+  typedef CORBA_ContextList_out ContextList_out;
+
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
 
@@ -400,7 +410,7 @@ public:
   typedef CORBA_TypeCode_out TypeCode_out;
 
   typedef CORBA_ExceptionList ExceptionList;
-  typedef CORBA_ExceptionList_var ExdeptionList_var;
+  typedef CORBA_ExceptionList_var ExceptionList_var;
   typedef CORBA_ExceptionList *ExceptionList_ptr;
 
   typedef CORBA_ImplementationDef *ImplementationDef_ptr;
