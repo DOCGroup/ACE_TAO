@@ -1,3 +1,14 @@
+Thu Jul 29 19:04:12 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Atomic_Op.i:
+	* ace/Filecache.cpp:
+
+	  Replaced raw ACE_*_Guards with their corresponding
+ 	  ACE_GUARD_RETURN macros.  This corrects "unused variable"
+ 	  warnings when building ACE without thread support.  See David's
+ 	  ChangeLog entry from Fri May 14 16:10:29 1999 for a better
+ 	  description of why this was necessary.
+
 Thu Jul 29 18:29:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/run_all_list.pm: Moved the RUN_LIST definition from
