@@ -47,21 +47,30 @@ be_visitor_exception_ctor::post_process (be_decl *bd)
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
   if (!this->last_node (bd))
-    *os << ",\n";
+    {
+      *os << "," << be_nl;
+    }
+
   return 0;
 }
 
 int be_visitor_exception_ctor::visit_exception (be_exception *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  this->ctx_->node (node); // save the argument node
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
   os->indent ();
+
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << node->local_name ();
+    {
+      *os << node->local_name ();
+    }
   else
-    *os << node->name () << "::" << node->local_name ();
-  *os << " (" << be_idt << "\n";
+    {
+      *os << node->name () << "::" << node->local_name ();
+    }
+
+  *os << " (" << be_idt << be_idt_nl;
 
   if (this->visit_scope (node) == -1)
     {
@@ -73,9 +82,13 @@ int be_visitor_exception_ctor::visit_exception (be_exception *node)
     }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << be_uidt_nl << ");\n";
+    {
+      *os << be_uidt_nl << ");" << be_uidt_nl;
+    }
   else
-    *os << be_uidt_nl << ")\n";
+    {
+      *os << be_uidt_nl << ")" << be_uidt_nl;
+    }
 
   return 0;
 }
@@ -84,8 +97,9 @@ int be_visitor_exception_ctor::visit_field (be_field *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  // retrieve the type
+  // Retrieve the type.
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -95,7 +109,6 @@ int be_visitor_exception_ctor::visit_field (be_field *node)
                         -1);
     }
 
-  os->indent ();
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
