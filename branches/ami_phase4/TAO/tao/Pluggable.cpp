@@ -215,9 +215,11 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
 }
 
 int
-TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time)
+TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time,
+                               int &reply_received)
 {
-  return this->ws_->wait (max_wait_time);
+  return this->ws_->wait (max_wait_time,
+                          reply_received);
 }
 
 // Read and handle the reply. Returns 0 when there is Short Read on

@@ -167,7 +167,8 @@ public:
                              TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the TMS object.
 
-  virtual int wait_for_reply (ACE_Time_Value *max_wait_time);
+  virtual int wait_for_reply (ACE_Time_Value *max_wait_time,
+                              int &reply_received);
   // Wait for the reply depending on the strategy.
 
   virtual int handle_client_input (int block = 0,
