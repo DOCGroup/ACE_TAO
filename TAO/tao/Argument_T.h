@@ -28,9 +28,47 @@ namespace TAO
   /**
    * @class Const_Argument_T
    *
-   * @brief
+   * @brief Type-specific base class subclassed by stub and skeleton
+   *        and argument class templates.
    *
+   * The purpose of this class is to make it possible to
+   * polymorphically retrieve an argument from either stub or skeleton
+   * argument class template.  Both the corresponding stub and
+   * skeleton argument class templates must of course have the same
+   * template parameter type in order for the polymorphism to work.
+   * Use of polymorphism in this manner allows us to avoid having to
+   * convert between client and server side arguments, which can be
+   * tedious, and ultimately allows the server side thru-POA
+   * collocated and uncollocated code paths to share the same single
+   * set of skeleton code.
    *
+   * This abstract base class requires that subclasses define @c const
+   * @c arg() method for the sake of const-correctness.  The template
+   * parameter @c T corresponds to the type of argument passed to an
+   * IDL-defined operation according to the C++ mapping.  For example,
+   * given the following IDL:
+   *
+   * @code
+   *   typedef sequence<short> ShortSeq;
+   *
+   *   interface Foo {
+   *     void op (in ShortSeq s);
+   *   };
+   * @endcode
+   *
+   * the @c Const_Argument_T template parameter @c T would be:
+   *
+   * @code
+   *   ShortSeq const &
+   * @endcode
+   *
+   * since that would be parameter type for the corresponding C++
+   * @c Foo::op() function.
+   *
+   * @note This class template is generally only suitable for IDL "in"
+   *       parameters since they are read-only.
+   *
+   * @see Mutable_Argument_T
    */
   template <typename T>
   class Const_Argument_T : public Argument
