@@ -2,6 +2,17 @@
 
 // ****************************************************************
 
+ACE_INLINE
+CORBA::Object::Object (int)
+  : servant_ (0),
+    is_collocated_ (0),
+    is_local_ (1),
+    protocol_proxy_ (0),
+    refcount_ (1),
+    refcount_lock_ ()
+{
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_Object::_incr_refcnt (void)
 {
@@ -42,13 +53,27 @@ CORBA_Object::_nil (void)
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
 {
-  return CORBA_Object::_duplicate (obj);
+  if (obj->is_local_)
+    return
+      ACE_reinterpret_cast (CORBA::Object_ptr,
+                            obj->_tao_QueryInterface
+                            (ACE_reinterpret_cast (ptr_arith_t,
+                                                   &CORBA::Object::_narrow)));
+  else
+    return CORBA_Object::_duplicate (obj);
 }
 
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
 {
-  return CORBA_Object::_duplicate (obj);
+  if (obj->is_local_)
+    return
+      ACE_reinterpret_cast (CORBA::Object_ptr,
+                            obj->_tao_QueryInterface
+                            (ACE_reinterpret_cast (ptr_arith_t,
+                                                   &CORBA::Object::_narrow)));
+  else
+    return CORBA_Object::_duplicate (obj);
 }
 
 ACE_INLINE TAO_Stub *
