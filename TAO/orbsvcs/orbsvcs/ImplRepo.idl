@@ -1,98 +1,171 @@
 // $Id$
 
-#include "Ping.idl"
-
-interface Implementation_Repository
-  // = TITLE
-  //    Interface for communicating with the Implementation Repository
-  //
-  // = DESCRIPTION
-  //    This interface exports all the administration functionality of
-  //    the Implementation Repository.
+module ImplementationRepository
 {
-  exception Already_Registered {};
-  // Object already bound in the Implementation Repository
-
-  exception Cannot_Activate
+  interface ServerObject
+    // = TITLE
+    //    Server Side IR Object
+    //
+    // = DESCRIPTION
+    //    This object, which exists on the servers that use the 
+    //    Implementation Repository (IR), is used to control or check the 
+    //    status of the server by the IR.
   {
-    string reason_;
+    void ping ();
+    // Check the liveness of a server.
+
+    void shutdown ();
+    // Try to shutdown the server gracefully.
   };
 
-  exception Not_Found {};
-  // Object not found in the Implementation Repository
-
-  struct INET_Addr
+  struct EnvironmentVariable
   {
-    string host_;
-    unsigned short port_;
+    string name;
+    string value;
   };
-  // The location of a server
+  // One environment variable/value pair.
 
-  struct Process_Options
+  struct Address
   {
-    string command_line_;
-    // Command line options
-    string environment_;
-    // Environment
-    string working_directory_;
-    // Working directory
-    unsigned long creation_flags_;
-    // Creation flags
+    string host;
+    unsigned short port;
+  };
+  // Specifies the location of the server.
+
+  typedef sequence<EnvironmentVariable> Environment;
+  // Complete Environment.
+
+  struct StartupOptions
+  {
+    string command_line;
+    // Startup command (program name and arguments).
+    
+    Environment environment;
+    // Environment Variables.
+    
+    string working_directory;
+    // Working directory.
+  };
+  // Options used to start up the server.
+
+  struct ServerInformation
+  {
+    string logical_server;
+    // The logical server this server is part of.
+
+    StartupOptions startup;
+    // How to start up the server.
+
+    Address location;
+    // Where the server is located currently.
+  };
+  // All the information 
+
+  typedef sequence <ServerInformation> ServerInformationList;
+
+  interface ServerInformationIterator;
+  // Forward declaration.
+
+  interface Administration
+    // = TITLE
+    //    The Implementation Repository Administration Interface
+    //
+    // = DESCRIPTION
+    //    This interface exports all the administration functionality of
+    //    the Implementation Repository.
+  {
+    // = Exceptions
+
+    exception AlreadyRegistered {};
+    // Object already bound in the Implementation Repository
+
+    exception CannotActivate
+    {
+      string reason;
+    };
+    // The server could not be restarted.
+
+    exception NotFound {};
+    // Object not found in the Implementation Repository
+
+    void activate_server (in string server)
+      raises (NotFound,
+              CannotActivate);
+    // Activate server that is named <server>.
+    //
+    // The <NotFound> exception is raised when <server> is not found
+    // in the Implementation Repository.  The <CannotActivate> exception
+    // is raised when <server> is found in the Repository but could not be
+    // activated.
+
+    void register_server (in string server,
+                          in StartupOptions options)
+      raises (AlreadyRegistered);
+    // Register the <options> to specify how the <server> should be
+    // restarted when a client asks for it.  
+    //
+    // The <AlreadyRegistered> exception is raised when <server> has
+    // already been registered with the Implementation Repository.
+
+    void reregister_server (in string server,
+                            in StartupOptions options);
+    // Update the <options> to specify how the <server> should be
+    // restarted when a client asks for it.  Will register the server
+    // if not already registered.
+
+    void remove_server (in string server)
+      raises (NotFound);
+    // Remove <server> from the Implementation Repository.
+    //
+    // The <NotFound> exception is raised when <server> is not found
+    // in the Implementation Repository.
+
+    void shutdown_server (in string server)
+      raises (NotFound);
+    // Tries to shutdown the server, first gracefully, then ungracefully.
+    //
+    // The <NotFound> exception is raised when <server> is not found
+    // in the Implementation Repository.
+
+    Address server_is_running (in string server,
+                               in Address addr,
+                               in ServerObject server_object)
+      raises (NotFound);
+    // Used to notify the Implementation Repository that <server> is alive 
+    // and well at <addr>.
+    //
+    // The <NotFound> exception is raised when <server> is not found
+    // in the Implementation Repository.
+
+    void server_is_shutting_down (in string server)
+      raises (NotFound);
+    // Used to tell the Implementation Repository that <server> is shutting
+    // down.
+    //
+    // The <NotFound> exception is raised when <server> is not found
+    // in the Implementation Repository.
+
+    void list (in unsigned long how_many,
+	       out ServerInformationList server_list,
+               out ServerInformationIterator server_iterator);
+    // Returns at most <how_many> servers in <server_list>.  If there
+    // are additional servers, they can be received through the
+    // <server_iterator>.  If there are no more servers, then
+    // <server_iterator> is null.
   };
 
-  Object activate_object (in Object obj)
-    raises (Not_Found,
-            Cannot_Activate);
-  // Restart server that will contain this persistent object and return the
-  // new Object reference.
-  //
-  // The <Not_Found> exception is raised when <obj> is not found
-  // in the Implementation Repository.  The <Cannot_Activate> exception
-  // is raised when <obj> is found in the Repository but could not be
-  // activated.
+  interface ServerInformationIterator
+  {
+    // = TITLE
+    // Interface for iterating over servers returned with
+    // Administration::list ().
 
-  INET_Addr activate_server (in string server)
-    raises (Not_Found,
-            Cannot_Activate);
-  // Restart server that is named <server> and return the host/port
-  //
-  // The <Not_Found> exception is raised when <server> is not found
-  // in the Implementation Repository.  The <Cannot_Activate> exception
-  // is raised when <server> is found in the Repository but could not be
-  // activated.
+    boolean next_n (in unsigned long how_many,
+		    out ServerInformationList server_list);
+    // This operation returns at most the requested number of
+    // servers.
 
-
-  void register_server (in string server,
-                        in Process_Options options)
-    raises (Already_Registered);
-  // Register the <options> to specify how the <server> should be
-  // restarted when a client asks for it.  
-  //
-  // The <Already_Registered> exception is raised when <server> has
-  // already been registered with the Implementation Repository.
-
-  void reregister_server (in string server,
-                          in Process_Options options);
-  // Update the <options> to specify how the <server> should be
-  // restarted when a client asks for it.  Will register the server
-  // if not already registered.
-
-  void remove_server (in string server)
-    raises (Not_Found);
-  // Remove <server> from the Implementation Repository.
-  //
-  // The <Not_Found> exception is raised when <server> is not found
-  // in the Implementation Repository.
-
-  INET_Addr server_is_running (in string server,
-                               in INET_Addr addr,
-                               in Object ping)
-    raises (Not_Found);
-  // Used to notify the Implementation Repository that <server> is alive and
-  // well at <addr>.
-
-  void server_is_shutting_down (in string server)
-    raises (Not_Found);
-  // Used to tell the Implementation Repository that <server> is shutting
-  // down.
+    void destroy ();
+    // This operation destroys the iterator.
+  };
 };
