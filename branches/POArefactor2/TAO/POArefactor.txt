@@ -1,3 +1,17 @@
+Thu Nov 25 12:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*Strategy*.{h,cpp}:
+          Added environment variable to strategy_init and added a
+          strategy_cleanup that will be called to let all the strategies
+          cleanup their stuff. Removed TAO::Portable_Server:: before
+          Non_Servant_Upcall, this is not needed.
+
+        * tao/PortableServer/Active_Policy_Strategies.{h,cpp}:
+          Initialize and cleanup all strategies
+
+        * tao/PortableServer/POA.cpp:
+          Call cleanup on strategies
+
 Thu Nov 25 11:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Sequence.h:
