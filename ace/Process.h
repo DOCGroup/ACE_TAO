@@ -120,7 +120,7 @@ public:
   // path to run a process, this method *must* be called!  Returns 0
   // on success, -1 on failure.
 
-  int command_line (LPCTSTR argv[]);
+  int command_line (LPCTSTR const argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
 
   u_long creation_flags (void) const;

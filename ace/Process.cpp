@@ -522,7 +522,7 @@ ACE_Process_Options::~ACE_Process_Options (void)
 }
 
 int
-ACE_Process_Options::command_line (LPCTSTR argv[])
+ACE_Process_Options::command_line (LPCTSTR const argv[])
 {
   // @@ Factor out the code between this
   int i = 0;
