@@ -1,3 +1,7 @@
+Mon Dec 16 23:31:25 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* THANKS: Added Guan Joe to the hall of fame.
+
 Mon Dec 16 18:11:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/CDR_Stream.h: Moved the destructor of
