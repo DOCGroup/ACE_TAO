@@ -140,7 +140,7 @@ releasetao:
 ####      The make then recursively invokes make releasetao in this
 ####      directory to create the combined ACE-TAO kit.
 releaseall: release
-	@cd TAO && make release REL=$(REL)
+	@cd TAO  &&  $(MAKE) release REL=$(REL)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
