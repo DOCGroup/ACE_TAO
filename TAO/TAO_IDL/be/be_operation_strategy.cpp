@@ -161,6 +161,8 @@ be_operation_ami_exception_holder_raise_strategy::next_state (TAO_CodeGen::CG_ST
         return current_state;
         }
     }
+  else
+    return current_state;
 }
 
 
