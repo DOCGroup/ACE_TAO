@@ -213,17 +213,19 @@ TCP_OA::TCP_OA (CORBA_ORB_ptr owning_orb,
     _orb(owning_orb), call_count(0), skeleton(0)
 {
   assert (the_oa == 0); 
+  
+  ROA_Parameters* p = ROA_Parameters::instance();
 
   //
   // Initialize the endpoint ... or try!
   //
-  if (clientAcceptor_.open(rendesvous, ACE_ROA::reactor()) == -1)
+  if (clientAcceptor_.open(rendesvous, p->reactor()) == -1)
     {
       // XXXCJC Need to return an error somehow!!
     }
 
-  else if (ACE_ROA::reactor()->register_handler(&clientAcceptor_,
-					    ACE_Event_Handler::ACCEPT_MASK) == -1)
+  else if (p->reactor()->register_handler(&clientAcceptor_,
+					  ACE_Event_Handler::ACCEPT_MASK) == -1)
     {
       // XXXCJC Need to return an error somehow!!
     }

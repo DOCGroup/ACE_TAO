@@ -1,19 +1,24 @@
-ACE_INLINE ACE_Reactor* ACE_ROA::reactor() {  return &theReactor; }
+ACE_INLINE void ROA_Parameters::reactor(ACE_Reactor* i) { reactor_ = i; }
+ACE_INLINE ACE_Reactor*  ROA_Parameters::reactor()
+{
+  if (reactor_ == 0) reactor_ = ACE_Service_Config::reactor();
+  return reactor_;
+}
 
-ACE_INLINE int  ACE_ROA::usingThreads()      { return usingThreads_; }
-ACE_INLINE void ACE_ROA::usingThreads(int i) { usingThreads_ = i; }
+ACE_INLINE int  ROA_Parameters::usingThreads()      { return usingThreads_; }
+ACE_INLINE void ROA_Parameters::usingThreads(int i) { usingThreads_ = i; }
 
-ACE_INLINE void* ACE_ROA::context()        { return context_p; }
-ACE_INLINE void  ACE_ROA::context(void* p) { context_p = p; }
+ACE_INLINE void* ROA_Parameters::context()        { return context_p_; }
+ACE_INLINE void  ROA_Parameters::context(void* p) { context_p_ = p; }
 
-ACE_INLINE ACE_ROA::UpcallFunc ACE_ROA::upcall() { return theUpcall; }
-ACE_INLINE void ACE_ROA::upcall(ACE_ROA::UpcallFunc f) { theUpcall = f; }
+ACE_INLINE ROA_Parameters::UpcallFunc ROA_Parameters::upcall() { return upcall_; }
+ACE_INLINE void ROA_Parameters::upcall(ROA_Parameters::UpcallFunc f) { upcall_ = f; }
 
-ACE_INLINE ACE_ROA::ForwardFunc ACE_ROA::forwarder() { return theForwarder; }
-ACE_INLINE void ACE_ROA::forwarder(ACE_ROA::ForwardFunc f) { theForwarder = f; }
+ACE_INLINE ROA_Parameters::ForwardFunc ROA_Parameters::forwarder() { return forwarder_; }
+ACE_INLINE void ROA_Parameters::forwarder(ROA_Parameters::ForwardFunc f) { forwarder_ = f; }
 
-ACE_INLINE TCP_OA_ptr ACE_ROA::oa() { return theOA; }
-ACE_INLINE void ACE_ROA::oa(TCP_OA_ptr anOA) { theOA = anOA; }
+ACE_INLINE TCP_OA_ptr ROA_Parameters::oa() { return oa_; }
+ACE_INLINE void ROA_Parameters::oa(TCP_OA_ptr anOA) { oa_ = anOA; }
 
-ACE_INLINE unsigned int ACE_ROA::threadFlags() { return theThreadFlags; }
-ACE_INLINE void ACE_ROA::threadFlags(unsigned int f) { theThreadFlags = f; }
+ACE_INLINE unsigned int ROA_Parameters::threadFlags() { return threadFlags_; }
+ACE_INLINE void ROA_Parameters::threadFlags(unsigned int f) { threadFlags_ = f; }

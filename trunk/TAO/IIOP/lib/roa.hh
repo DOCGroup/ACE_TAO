@@ -20,49 +20,55 @@ typedef TCP_OA* TCP_OA_ptr;
 
 // Provide a namespace/scope for singletons and other things
 // WARNING!  Not thread-safe yet!
-class ACE_ROA
+class ROA_Parameters
 {
 public:
   typedef TOA::dsi_handler UpcallFunc;
   typedef void (*ForwardFunc)(CORBA_OctetSeq&, CORBA_Object_ptr&, void*, CORBA_Environment&);
 
-  static ACE_Reactor* reactor();
+  static ROA_Parameters* instance();
 
-  static int usingThreads();
-  static void usingThreads(int i);
+  ACE_Reactor* reactor();
+  void reactor(ACE_Reactor* r);
+
+  int usingThreads();
+  void usingThreads(int i);
 
   // This should probably be replaced with fields that are a bit more
   // meaningful, but I need to dig through the code to find out what
   // "more meaningful" really means first.
-  static void* context();
-  static void context(void* p);
+  void* context();
+  void context(void* p);
 
   // In our first test case, this will always be set to tcp_oa_dispatcher
-  static UpcallFunc upcall();
-  static void upcall(UpcallFunc f);
+  UpcallFunc upcall();
+  void upcall(UpcallFunc f);
 
   // In our first test case, this will always be set to
   // tcp_oa_forwarder (even though we don't understand what the hell
   // it does!)
-  static ForwardFunc forwarder();
-  static void forwarder(ForwardFunc f);
+  ForwardFunc forwarder();
+  void forwarder(ForwardFunc f);
 
-  static TCP_OA_ptr oa();
-  static void oa(TCP_OA_ptr anOA);
+  TCP_OA_ptr oa();
+  void oa(TCP_OA_ptr anOA);
 
-  static unsigned int threadFlags();
-  static void threadFlags(unsigned int f);
+  unsigned int threadFlags();
+  void threadFlags(unsigned int f);
 
-  static int end_reactor_event_loop_;
+protected:
+  ROA_Parameters();
 
 private:
-  static ACE_Reactor theReactor;
-  static int usingThreads_;
-  static void* context_p;
-  static UpcallFunc theUpcall;
-  static ForwardFunc theForwarder;
-  static TCP_OA_ptr theOA;
-  static unsigned int theThreadFlags;
+  static ROA_Parameters* _instance;
+
+  ACE_Reactor* reactor_;
+  int usingThreads_;
+  void* context_p_;
+  UpcallFunc upcall_;
+  ForwardFunc forwarder_;
+  TCP_OA_ptr oa_;
+  unsigned int threadFlags_;
 };
 
 class ROA_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -71,9 +77,15 @@ public:
   ROA_Handler();
   virtual int open(void*);
   virtual int svc(void);
+
+  ROA_Parameters* params();
+  void params(ROA_Parameters* p);
+
 protected:
   virtual int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_close(ACE_HANDLE, ACE_Reactor_Mask);
+
+  ROA_Parameters* params_;
 };
 
 typedef ACE_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR> ROA_Acceptor;
