@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "be_include" /I "..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -87,7 +87,7 @@ LINK32=link.exe
 # Name "TAO_IDL Compiler Static - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter ".cpp"
 # Begin Source File
 
 SOURCE=.\ast\ast_argument.cpp
@@ -346,6 +346,14 @@ SOURCE=.\be\be_union_label.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_valuetype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_valuetype_fwd.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor.cpp
 # End Source File
 # Begin Source File
@@ -435,6 +443,14 @@ SOURCE=.\be\be_visitor_union.cpp
 # Begin Source File
 
 SOURCE=.\be\be_visitor_union_branch.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_valuetype.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_valuetype_fwd.cpp
 # End Source File
 # Begin Source File
 
@@ -563,7 +579,7 @@ SOURCE=.\fe\y.tab.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter ".h"
 # Begin Source File
 
 SOURCE=.\include\ast.h
@@ -818,6 +834,14 @@ SOURCE=.\be_include\be_union_label.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_valuetype_fwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_visitor.h
 # End Source File
 # Begin Source File
@@ -907,6 +931,14 @@ SOURCE=.\be_include\be_visitor_union.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_valuetype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_valuetype_fwd.h
 # End Source File
 # Begin Source File
 
@@ -1045,37 +1077,5 @@ SOURCE=.\include\utl_strlist.h
 SOURCE=.\fe\y.tab.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\be\be_valuetype.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be_include\be_valuetype.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_valuetype_fwd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be_include\be_valuetype_fwd.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_visitor_valuetype.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be_include\be_visitor_valuetype.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\be\be_visitor_valuetype_fwd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\be_include\be_visitor_valuetype_fwd.h
-# End Source File
 # End Target
 # End Project

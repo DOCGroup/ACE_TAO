@@ -123,7 +123,7 @@ Nestea_Client_i::init (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Nestea_Client_i::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Nestea_Client_i::init");
       return -1;
     }
   ACE_ENDTRY;

@@ -1,11 +1,11 @@
-# Microsoft Developer Studio Project File - Name="ACE dynamic library" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="ACE DLL" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 # TARGTYPE "Win32 (ALPHA) Dynamic-Link Library" 0x0602
 
-CFG=ACE dynamic library - Win32 Debug
+CFG=ACE DLL - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -14,31 +14,30 @@ CFG=ACE dynamic library - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace_dll.mak" CFG="ACE dynamic library - Win32 Debug"
+!MESSAGE NMAKE /f "ace_dll.mak" CFG="ACE DLL - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE dynamic library - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Unicode Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Unicode Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir ".\DLL\Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -48,7 +47,7 @@ CFG=ACE dynamic library - Win32 Debug
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
@@ -64,7 +63,7 @@ LINK32=link.exe
 # ADD LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:I386 /out:"..\bin\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -79,7 +78,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "..\\" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
@@ -95,7 +94,7 @@ LINK32=link.exe
 # ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\ace-r.pdb" /machine:I386 /out:"..\bin\ace.dll"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -110,7 +109,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
@@ -126,7 +125,7 @@ LINK32=link.exe
 # ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\aceu.pdb" /debug /machine:I386 /out:"..\bin\aceud.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -141,7 +140,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "..\\" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
@@ -157,26 +156,26 @@ LINK32=link.exe
 # ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\aceu-r.pdb" /machine:I386 /out:"..\bin\aceu.dll"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir ""
-# PROP BASE Intermediate_Dir "DLL\Debug"
+# PROP BASE Intermediate_Dir ".\DLL\Debug"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\Debug"
+# PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 FD MTd c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /MDd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -189,7 +188,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:ALPHA /out:"..\bin\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -203,12 +202,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /D " WIN32" D "NDEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 FD c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -221,7 +220,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\ace-r.pdb" /machine:ALPHA /out:"..\bin\ace.dll"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -235,12 +234,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\\ /D " WIN32" D "_DEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 D "UNICODE" FD MTd c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D " WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -253,7 +252,7 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\aceu.pdb" /debug /machine:ALPHA /out:"..\bin\aceud.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -267,12 +266,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /D " WIN32" D "NDEBUG" D "_WINDOWS" D ACE_HAS_DLL=1 D "UNICODE" FD c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "..\\ /D " WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -289,3735 +288,660 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "ACE dynamic library - Win32 Debug"
-# Name "ACE dynamic library - Win32 Release"
-# Name "ACE dynamic library - Win32 Unicode Debug"
-# Name "ACE dynamic library - Win32 Unicode Release"
-# Name "ACE dynamic library - Win32 Alpha Debug"
-# Name "ACE dynamic library - Win32 Alpha Release"
-# Name "ACE dynamic library - Win32 Alpha Unicode Debug"
-# Name "ACE dynamic library - Win32 Alpha Unicode Release"
+# Name "ACE DLL - Win32 Debug"
+# Name "ACE DLL - Win32 Release"
+# Name "ACE DLL - Win32 Unicode Debug"
+# Name "ACE DLL - Win32 Unicode Release"
+# Name "ACE DLL - Win32 Alpha Debug"
+# Name "ACE DLL - Win32 Alpha Release"
+# Name "ACE DLL - Win32 Alpha Unicode Debug"
+# Name "ACE DLL - Win32 Alpha Unicode Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\ACE.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Activation_Queue.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Active_Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Addr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Arg_Shifter.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ARGV.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_IO_Impl.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Basic_Types.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\CDR_Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Containers.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\CORBA_Handler.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\CORBA_Ref.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Date_Time.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV_Addr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV_Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DEV_IO.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dirent.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\DLL.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dump.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic_Service.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event_Handler.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event_Handler_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Recv.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Recv_Msg.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Send.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FIFO_Send_Msg.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE_Addr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE_Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\FILE_IO.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Filecache.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Functor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Get_Opt.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Handle_Set.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\High_Res_Timer.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\INET_Addr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IO_Cntl_Msg.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IO_SAP.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOStream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IPC_SAP.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Tokens.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Log_Msg.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Log_Record.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_CODgram.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Dgram.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\LSOCK_Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Map.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Mem_Map.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Memory_Pool.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Block.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Method_Request.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Msg_WFMO_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Multiplexor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Name_Proxy.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Name_Request_Reply.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming_Context.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\NT_Service.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Object_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Obstack.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\OS.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Pair.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Parse_Node.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Pipe.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Priority_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Proactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Process.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Process_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Profile_Timer.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Reactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Read_Buffer.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Registry.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Registry_Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Remote_Name_Space.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Remote_Tokens.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sched_Params.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Select_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Select_Reactor_Base.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Config.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Object.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Repository.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Service_Types.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Memory.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Memory_MM.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Memory_SV.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Shared_Object.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Signal.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_CODgram.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Dgram.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Dgram_Bcast.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Dgram_Mcast.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_IO.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SOCK_Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Addr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SPIPE_Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SString.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stats.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Strategies.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Message.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Semaphore_Complex.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Semaphore_Simple.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\SV_Shared_Memory.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Svc_Conf_l.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Svc_Conf_y.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Svc_Handler.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch_Options.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\System_Time.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Task.cpp
+# End Source File
+# Begin Source File
 
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
+SOURCE=.\Template_Instantiations.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Thread_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Time_Request_Reply.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timeprobe.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Hash.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Heap.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_List.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue_Adapters.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Wheel.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI_Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TLI_Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Collection.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Invariants.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Manager.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Token_Request_Reply.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TP_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Trace.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\TTY_IO.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Typed_SV_Message.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Typed_SV_Message_Queue.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UNIX_Addr.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UPIPE_Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UPIPE_Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\WFMO_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\WIN32_Asynch_IO.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\WIN32_Proactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\XtReactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -4065,6 +989,10 @@ SOURCE=.\Asynch_IO.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_IO_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Auto_Ptr.h
 # End Source File
 # Begin Source File
@@ -4097,7 +1025,15 @@ SOURCE=.\Cleanup_Strategies_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=".\config-win32-borland.h"
+# End Source File
+# Begin Source File
+
 SOURCE=".\config-win32-common.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\config-win32.h"
 # End Source File
 # Begin Source File
 
@@ -4110,6 +1046,10 @@ SOURCE=.\Connector.h
 # Begin Source File
 
 SOURCE=.\Containers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Containers_T.h
 # End Source File
 # Begin Source File
 
@@ -4373,6 +1313,10 @@ SOURCE=.\Message_Block.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Message_Block_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Message_Queue.h
 # End Source File
 # Begin Source File
@@ -4450,6 +1394,10 @@ SOURCE=.\Priority_Reactor.h
 # Begin Source File
 
 SOURCE=.\Proactor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Proactor_Impl.h
 # End Source File
 # Begin Source File
 
@@ -4721,6 +1669,10 @@ SOURCE=.\Time_Value.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Timeprobe.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timer_Hash.h
 # End Source File
 # Begin Source File
@@ -4801,6 +1753,10 @@ SOURCE=.\Token_Request_Reply.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TP_Reactor.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Trace.h
 # End Source File
 # Begin Source File
@@ -4842,6 +1798,14 @@ SOURCE=.\Version.h
 # Begin Source File
 
 SOURCE=.\WFMO_Reactor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\WIN32_Asynch_IO.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\WIN32_Proactor.h
 # End Source File
 # Begin Source File
 
@@ -4893,6 +1857,10 @@ SOURCE=.\Asynch_IO.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_IO_Impl.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Atomic_Op.i
 # End Source File
 # Begin Source File
@@ -4934,6 +1902,10 @@ SOURCE=.\Connector.i
 # Begin Source File
 
 SOURCE=.\Containers.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Containers_T.i
 # End Source File
 # Begin Source File
 
@@ -5014,6 +1986,14 @@ SOURCE=.\FILE_IO.i
 # Begin Source File
 
 SOURCE=.\Free_List.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Functor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Functor_T.i
 # End Source File
 # Begin Source File
 
@@ -5126,6 +2106,10 @@ SOURCE=.\Memory_Pool.i
 # Begin Source File
 
 SOURCE=.\Message_Block.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Block_T.i
 # End Source File
 # Begin Source File
 
@@ -5449,6 +2433,10 @@ SOURCE=.\Token_Request_Reply.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\TP_Reactor.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Trace.i
 # End Source File
 # Begin Source File
@@ -5479,6 +2467,14 @@ SOURCE=.\UPIPE_Stream.i
 
 SOURCE=.\WFMO_Reactor.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\WIN32_Asynch_IO.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\WIN32_Proactor.i
+# End Source File
 # End Group
 # Begin Group "Template Files"
 
@@ -5486,45 +2482,7 @@ SOURCE=.\WFMO_Reactor.i
 # Begin Source File
 
 SOURCE=.\Acceptor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -5539,311 +2497,67 @@ SOURCE=.\Asynch_Acceptor.cpp
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cache_Map_Manager_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cached_Connect_Strategy_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Caching_Strategies_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Caching_Utility_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cleanup_Strategies_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Connector.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
+SOURCE=.\Containers_T.cpp
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dump_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Free_List.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Functor_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Future.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Hash_Cache_Map_Manager_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -5853,93 +2567,31 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 # Begin Source File
 
 SOURCE=.\Hash_Map_With_Allocator_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\IOStream_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Local_Name_Space_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Malloc_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Managed_Object.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Map_Manager.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -5949,51 +2601,17 @@ SOURCE=.\Map_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Message_Block_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Message_Queue_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Module.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -6009,110 +2627,61 @@ SOURCE=.\RB_Tree.cpp
 # Begin Source File
 
 SOURCE=.\Select_Reactor_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Singleton.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Strategies_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Stream_Modules.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Synch_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Task_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Hash_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Heap_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_List_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Queue_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
 SOURCE=.\Timer_Wheel_T.cpp
-# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group

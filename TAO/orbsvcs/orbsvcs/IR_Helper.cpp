@@ -41,7 +41,7 @@ private:
   int debug_;
 };
 
-IR_Helper::IR_Helper (char *server_name,
+IR_Helper::IR_Helper (const char *server_name,
                       PortableServer::POA_ptr poa,
                       CORBA::ORB_ptr orb,
                       int debug)
