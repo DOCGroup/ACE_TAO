@@ -429,7 +429,7 @@ string_emulation_test (void)
     // Test strncpy (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strncpy (wchar_t version)\n")));
 
-    wchar_t *strncpy1 = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
+    wchar_t strncpy1[] = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
     wchar_t strncpy2[27];
 
     ACE_ASSERT 
