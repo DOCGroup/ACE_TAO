@@ -1,3 +1,9 @@
+Fri Apr 21 20:33:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+          Add dependencies for the runtest rule, otherwise parallel builds
+          fail.
+
 Thu Apr 20 09:04:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
