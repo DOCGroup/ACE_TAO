@@ -365,7 +365,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "// stub->_incr_refcnt ();" << be_nl
       << "CORBA::Object_var obj = new CORBA::Object (stub);" << be_nl
-      << "return " << node->name () << "::_unchecked_narrow (obj);" << be_uidt_nl
+      << "return " << node->name () << "::_unchecked_narrow (obj.in ());" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}\n\n";
 
