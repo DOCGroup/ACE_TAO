@@ -5,7 +5,7 @@
 #define COMPASS_ASSEMBLY_H
 
 #include "ace/pre.h"
-#include "ACEXML/common/Compass_Export.h"
+#include "ACEXML/compass/Compass_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -16,7 +16,7 @@
 
 namespace Deployment
 {
-  class Assembly
+  class Compass_Export Assembly
   {
   public:
     Assembly(void);
@@ -35,7 +35,12 @@ namespace Deployment
     AssemblyState state_;
     ACEXML_CharStream* stream_;
   };
-};
+}
 
+#if defined (__ACE_INLINE__)
+#include "Assembly.inl"
+#endif /* __ACE_INLINE__ */
+
+#include "ace/post.h"
 
 #endif /* COMPASS_ASSEMBLY_H */

@@ -1,5 +1,10 @@
 // $Id$
 
+
+#if defined (__ACE_INLINE__)
+#include "Assembly.inl"
+#endif /* __ACE_INLINE__ */
+
 #include "ACEXML/compass/Assembly.h"
 
 using namespace Deployment;
@@ -20,12 +25,13 @@ Assembly::~Assembly()
   delete this->stream;
 }
 
-AssemblyState
-Assembly::get_state()
-{
-  return this->state_;
-}
 
 void
 Assembly::build (void)
+  ACE_THROW_SPEC ((CreateFailure))
+{}
+
+void
+Assembly::tear_down(void)
+  ACE_THROW_SPEC ((RemoveFailure))
 {}

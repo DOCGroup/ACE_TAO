@@ -3,15 +3,22 @@
 #ifndef COMPASS_CONTAINER_H
 #define COMPASS_CONTAINER_H
 
+#include "ace/pre.h"
+#include "ACEXML/compass/Compass_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/compass/CompassTypes.h"
 #include "ACEXML/compass/CCMHome.h"
 
 namespace Deployment
 {
-  class Container
+  class Compass_Export Container
   {
   public:
-    Container(ConfigValues* config = 0);
+    Container(const ComponentServer* server);
     ~Container();
 
     ComponentServer* get_component_server ();
@@ -29,16 +36,22 @@ namespace Deployment
     void remove ()
       ACE_THROW_SPEC ((RemoveFailure));
 
-    ConfigValues* get_configuration (void);
+    ConfigValues get_configuration (void);
 
     void set_configuration (const ConfigValues* config);
 
   private:
     ConfigValues*   config_;
     CCMHomes*       homes_;
-    ComponentServer* comp_server_;
+    ComponentServer* parent_;
   };
 
-};
+}
+
+#if defined (__ACE_INLINE__)
+#include "Container.inl"
+#endif /* __ACE_INLINE__ */
+
+#include "ace/post.h"
 
 #endif /* COMPASS_CONTAINER_H */
