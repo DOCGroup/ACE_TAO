@@ -19,7 +19,7 @@
 // default CTOR initializes to empty string
 ACE_INLINE
 TAO_String_Manager::TAO_String_Manager (void)
-  :  ptr_ (0) // @@ CORBA::string_dup (L""))
+  :  ptr_ (CORBA::string_dup (""))
 {
 }
 
@@ -197,7 +197,7 @@ TAO_SeqElem_String_Manager::_retn (void)
 // default CTOR initializes to empty string
 ACE_INLINE
 TAO_WString_Manager::TAO_WString_Manager (void)
-  :  ptr_ (0) // @@ TODO CORBA::wstring_dup (""))
+  :  ptr_ (0) // @@ CORBA::wstring_dup (""))
 {
 }
 
