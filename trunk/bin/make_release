@@ -478,7 +478,13 @@ sub get_versions () {
     ++$major_version;
   }
 
-  $version = "$major_version.$minor_version.$beta_version";
+  # How much of redundancy in code thinking that we will do ACE+TAO
+  # releases seperately!
+  if ($release_type eq 'beta') {
+    $version = "$major_version.$minor_version.$beta_version";
+  } elsif ($release_type eq 'minor' ) {
+    $version = "$major_version.$minor_version";
+  }	
 
   print "new $KIT version: $version\n";
 
@@ -504,8 +510,13 @@ sub get_versions () {
       }
     }
     close ACE_VERSION;
+    
+  if ($release_type eq 'beta') {
+    $ace_version = "$ace_major_version.$ace_minor_version.$ace_beta_version";       
+  } elsif ($release_type eq 'minor' ) {
+    $ace_version = "$ace_major_version.$ace_minor_version";       
+  }	
 
-    $ace_version = "$ace_major_version.$ace_minor_version.$ace_beta_version";
   }
 
   0;
@@ -610,7 +621,7 @@ sub update_changelog () {
   rename "ChangeLog.bak", "ChangeLog"
     || return 1;
 
-  my $version_h = $kit =~ /^ace/  ?  'ace/Version.h'  :  'tao/Version.h';
+  my $version_h = $kit =~ /^ace/  ?  'ace/Version.h'  :  'TAO/tao/Version.h';
   my $version_mpb = $kit =~ /^ace/  ?  'bin/MakeProjectCreator/config/aceversion.mpb'  :  'bin/MakeProjectCreator/config/taoversion.mpb';
 
 # Incase you are wondering what is all this about. We are trying to
@@ -763,17 +774,17 @@ sub create_kit () {
           "zip ACE-lib.zip -q9@ &&" .
         "$find $release_lib_files $release_filter | $egrep -v $bin_files | " .
           "zip ACE-lib.zip -qlg9@ &&" .
-        "$find $release_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$gzip -9 > ACE.tar.gz && " .
-        "$find $release_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$bzip2 > ACE.tar.bz2 && " .
-        "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_lib_files $release_filter | $cpio -o -H ustar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
-        "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_lib_files $release_filter | $cpio -o -H ustar | " .
           "$bzip2 > ACE-lib.tar.bz2 && " .
-	"$find ACE_wrappers/html $release_filter | $cpio -o -H tar | " .
+	"$find ACE_wrappers/html $release_filter | $cpio -o -H ustar | " .
 	  "$gzip -9 > ACE-html.tar.gz && ".
-	"$find ACE_wrappers/html $release_filter | $cpio -o -H tar | " .
+	"$find ACE_wrappers/html $release_filter | $cpio -o -H ustar | " .
 	  "$bzip2 -9 > ACE-html.tar.bz2 && ".
 	"$find ACE_wrappers/html $release_filter | $egrep $bin_files | " .
 	  "zip ACE-html.zip -q9@ &&" .
@@ -798,9 +809,9 @@ sub create_kit () {
 	          "ACE.zip ACE-lib.zip ACE-html.zip ACE.tar.bz2 ACE-lib.tar.bz2 ACE-html.tar.bz2 ";
     } else {
       $build_command =
-        "$find $release_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$gzip -9 > ACE.tar.gz && " .
-        "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_lib_files $release_filter | $cpio -o -H ustar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
 	"$find ACE_wrappers/html $release_filter | $cpio -o -H tar | " .
 	  "$gzip -9 > ACE-html.tar.gz && ".
@@ -827,30 +838,30 @@ sub create_kit () {
           "zip ACE+TAO.zip -q9@ &&" .
         "$find $release_files $release_filter | $egrep -v $bin_files | " .
           "zip ACE+TAO.zip -qlg9@ &&" .
-        "$find $release_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
-        "$find $release_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$bzip2 > ACE+TAO.tar.bz2 && " .
         "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
         "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
         "$dispose ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 $dest &&" .
-        "$cp $dest/ACE+TAO.zip $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.zip &&".
-        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.gz &&".
-        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.bz2; ";
+        "$cp $dest/ACE+TAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag.zip &&".
+        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.gz &&".
+        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.bz2; ";
       $archives .= " ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 ";
     } else {
       $build_command .=
-        "$find $release_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
-        "$find $release_files $release_filter | $cpio -o -H tar | " .
+        "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$bzip2 > ACE+TAO.tar.bz2 && " .
         "$chmod 664 ACE+TAO.tar.gz && " .
         "$chmod 664 ACE+TAO.tar.bz2 && " .
         "$chgrp doc ACE+TAO.tar.gz && " .
         "$chgrp doc ACE+TAO.tar.bz2 && " .
         "$dispose ACE+TAO.tar.gz ACE+TAO.tar.bz2 $dest &&" .
-        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.gz &&" .
-        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/ACE+TAO-$local_ace_tag+$local_tao_tag.tar.bz2; ";
+        "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.gz &&" .
+        "$cp $dest/ACE+TAO.tar.bz2 $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.bz2; ";
       $archives .= " ACE+TAO.tar.gz ACE+TAO.tar.bz2 ";
     }
   }

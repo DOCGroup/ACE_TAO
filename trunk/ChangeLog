@@ -1,3 +1,23 @@
+Wed Jan 15 10:48:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/make_release: Did the following enhancements 
+
+	  - If it is a minor release do not append the beta version. Looks
+	    like somone broke this and the script started writing out
+	    things as x.3.0, whcih is bad BTW.
+
+	  - We now POSIX.1 tar, instead of old tar format with the -H
+	    option in cpio. This helps to tar files deep in the hierarchy
+	    tree to be properly zipped. We were loosing this in many
+	    betas. 
+	    
+	  - Fixes for the generated filenames copied into the
+	    previous_versions directory.
+
+	  - Fix to get the right Version.h file in TAO.
+
+	  - 
+
 Tue Jan 14 18:51:49 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/Auto_Ptr.h: Added pragma to disable warning 4284 for Microsoft
