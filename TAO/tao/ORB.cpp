@@ -47,6 +47,14 @@ ACE_RCSID (tao,
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
 
+#if defined (ACE_HAS_EXCEPTIONS)
+void TAO_unexpected_exception_handler (void)
+{
+  throw CORBA::UNKNOWN ();
+}
+#endif  /* ACE_HAS_EXCEPTIONS */
+
+
 static const char ior_prefix[] = "IOR:";
 
 // = Static initialization.
@@ -1298,20 +1306,31 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+#if defined (ACE_HAS_EXCEPTIONS)
+  // This must be done after the system TypeCodes and Exceptions have
+  // been initialized.  An unexpected exception will cause TAO's
+  // unexpected exception handler to be called.  That handler
+  // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
+  // course requires the TypeCode constants and system exceptions to
+  // have been initialized.
+  TAO_Singleton_Manager::instance ()->_set_unexpected (
+    ::TAO_unexpected_exception_handler);
+#endif /* ACE_HAS_EXCEPTIONS */
+
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
   // routine does).
   //
   // NOTE:  we still "just" assume that native floating point is IEEE.
-  if (sizeof (CORBA::Boolean) != 1
-      || sizeof (CORBA::Short) != 2
-      || sizeof (CORBA::Long) != 4
-      || sizeof (CORBA::LongLong) != 8
-      || sizeof (CORBA::Float) != 4
-      || sizeof (CORBA::Double) != 8
+  if (   sizeof (CORBA::Boolean)    != 1
+      || sizeof (CORBA::Short)      != 2
+      || sizeof (CORBA::Long)       != 4
+      || sizeof (CORBA::LongLong)   != 8
+      || sizeof (CORBA::Float)      != 4
+      || sizeof (CORBA::Double)     != 8
       || sizeof (CORBA::LongDouble) != 16
-      || sizeof (CORBA::WChar) < 2
-      || sizeof (void *) != ACE_SIZEOF_VOID_P)
+      || sizeof (CORBA::WChar)      < 2
+      || sizeof (void *)            != ACE_SIZEOF_VOID_P)
     {
       ACE_ERROR ((LM_ERROR,
                   "%N; ERROR: unexpected basic type size; "
