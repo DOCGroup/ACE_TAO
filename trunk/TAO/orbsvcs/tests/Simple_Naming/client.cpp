@@ -1004,7 +1004,7 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
 int
 Iterator_Test::execute (TAO_Naming_Client &root_context)
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Instantiate four dummy objects.
