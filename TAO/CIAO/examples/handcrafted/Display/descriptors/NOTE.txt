@@ -104,8 +104,9 @@ Step 4:
   All the .cad files instruct the Assembly_Manager to write the IOR of
   the RateGen component to a file called "rategen.ior" in this
   directory.  You will then need to use a controller program in a
-  separate shell window to start up the Rate Generator.  Start the
-  controller with:
+  separate shell window to switch on/off the Rate Generator.
+
+  Start the controller with:
 
     ../RateGen/controller
 
