@@ -51,7 +51,7 @@ public:
   };
 
   ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1
-			ACE_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return CORBA::wstring_dup (s1);

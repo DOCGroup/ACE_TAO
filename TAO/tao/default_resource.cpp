@@ -178,75 +178,75 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           {
             char **endPtr =0;
             ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-					 endPtr, 0);
-	  }
-	// Validate the CodesetId
-	if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
-	  {
-	    if (TAO_debug_level > 0)
-	      ACE_ERROR((LM_ERROR,
-			 ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
-			 ncs));
-	    return -1;
-	  }
-	TAO_Codeset_Manager *csm = this->get_codeset_manager();
-	if (csm)
-	  csm->set_ncs_c(ncs);
+                                         endPtr, 0);
+  }
+        // Validate the CodesetId
+        if (ACE_Codeset_Registry::get_max_bytes(ncs) == 0)
+          {
+            if (TAO_debug_level > 0)
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Invalid NativeCharCodeSet, %x\n"),
+                         ncs));
+            return -1;
+          }
+        TAO_Codeset_Manager *csm = this->get_codeset_manager();
+        if (csm)
+          csm->set_ncs_c(ncs);
     }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBNativeWCharCodeSet")) == 0)
-    {
+      {
         curarg++;
         CONV_FRAME::CodeSetId ncs;
         if (ACE_Codeset_Registry::locale_to_registry( argv[curarg],
-                                                       ncs) == 0)
+                                                      ncs) == 0)
           {
             char **endPtr = 0;
             ncs = ACE_OS_String::strtoul(ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
-					 endPtr, 0);
-	  }
-	// Validate the CodesetId
-	int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
-	if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
-	  {
-	    if (TAO_debug_level > 0)
-	      ACE_ERROR((LM_ERROR,
-			 ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
-			 ncs));
-	    return -1;
-	  }
-	TAO_Codeset_Manager *csm = this->get_codeset_manager();
-	if (csm)
-	  csm->set_ncs_w(ncs,mb);
-    }
+                                         endPtr, 0);
+          }
+        // Validate the CodesetId
+        int mb = ACE_Codeset_Registry::get_max_bytes(ncs);
+        if (mb == 0 || ACE_static_cast(size_t,mb) > sizeof (ACE_CDR::WChar))
+          {
+            if (TAO_debug_level > 0)
+              ACE_ERROR((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Invalid NativeWCharCodeSet, %x\n"),
+                         ncs));
+            return -1;
+          }
+        TAO_Codeset_Manager *csm = this->get_codeset_manager();
+        if (csm)
+          csm->set_ncs_w(ncs,mb);
+      }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBCharCodesetTranslator")) == 0)
-    {
-      curarg++;
-      if (curarg < argc)
-        {
-          TAO_Codeset_Manager *csm = this->get_codeset_manager();
-          if (csm)
-            if (csm->add_char_translator(argv[curarg]) == -1)
-              return -1;
-        }
-    }
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            TAO_Codeset_Manager *csm = this->get_codeset_manager();
+            if (csm)
+              if (csm->add_char_translator(argv[curarg]) == -1)
+                return -1;
+          }
+      }
 
-    /// CodeSet Translators
+  /// CodeSet Translators
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBWCharCodesetTranslator")) == 0)
-    {
-      curarg++;
-      if (curarg < argc)
-        {
-          TAO_Codeset_Manager *csm = this->get_codeset_manager();
-          if (csm)
-            if (csm->add_wchar_translator(argv[curarg]) == -1)
-              return -1;
-        }
-    }
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            TAO_Codeset_Manager *csm = this->get_codeset_manager();
+            if (csm)
+              if (csm->add_wchar_translator(argv[curarg]) == -1)
+                return -1;
+          }
+      }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_LIB_TEXT("-ORBConnectionCachingStrategy")) == 0)
