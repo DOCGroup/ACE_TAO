@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : aceexe, mfc {
+project : aceexe, ace_mfc {
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp
 }
