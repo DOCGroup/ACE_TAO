@@ -95,15 +95,6 @@ ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *&svc_handler,
 				   perms);
 }
 
-#if 0
-template <class SH, PR_CO_1> ACE_PEER_CONNECTOR &
-ACE_Connector<SH, PR_CO_2>::connector (void) const
-{
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connector");
-  return (ACE_PEER_CONNECTOR &) this->connector_;
-}
-#endif /* 0 */
-
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::open (ACE_Reactor *r, int flags)
 {
@@ -119,17 +110,6 @@ ACE_Connector<SH, PR_CO_2>::ACE_Connector (ACE_Reactor *r, int flags)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
   (void) this->open (r, flags);
-}
-
-// Register the SVC_HANDLER with the map of pending connections so
-// that it can be activated when the connection completes.
-
-template <class SH, PR_CO_1> ACE_HANDLE
-ACE_Connector<SH, PR_CO_2>::get_handle (void) const
-{
-  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::get_handle");
-  ACE_ASSERT (!"this function shouldn't be called\n");
-  return this->connector_.get_handle ();
 }
 
 template <class SH>
@@ -630,6 +610,13 @@ ACE_Connector<SH, PR_CO_2>::~ACE_Connector (void)
   // We will call our handle_close(), not a subclass's, due to the way
   // that C++ destructors work.
   this->handle_close ();
+}
+
+template <class SH, PR_CO_1> int
+ACE_Strategy_Connector<SH, PR_CO_2>::open (ACE_Reactor *r, int flags)
+{
+  ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::open");
+  return this->open (r, 0, 0, 0, flags);
 }
 
 template <class SH, PR_CO_1> int
