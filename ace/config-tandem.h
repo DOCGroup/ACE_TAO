@@ -280,7 +280,6 @@
 //<time.h> doesn't automatically #include /**/ <sys/time.h>
 #define ACE_NEEDS_SYSTIME_H
 
-//ACE_HAS_64BIT_LONGS	Platform has 64bit longs and 32bit ints...
 //ACE_HAS_AIX_BROKEN_SOCKET_HEADER	Platform, such as AIX4, needs to wrap
 //                #include of sys/socket.h with #undef/#define of __cplusplus.
 //ACE_HAS_AIX_HI_RES_TIMER		Platform has AIX4 ::read_real_time ()
