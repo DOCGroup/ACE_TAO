@@ -1,3 +1,43 @@
+Sun Mar 19 20:01:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/AMI/Makefile:
+	* tests/CDR/Makefile:
+	* tests/Collocation/Makefile:
+	* tests/Connection_Purging/Makefile:
+	* tests/DSI_Gateway/Makefile:
+	* tests/DynAny_Test/Makefile:
+	* tests/Endpoint_Per_Priority/Makefile:
+	* tests/Explicit_Event_Loop/Makefile:
+	* tests/FL_Cube/Makefile:
+	* tests/Faults/Makefile:
+	* tests/IDL_Test/Makefile:
+	* tests/IORManipulation/Makefile:
+	* tests/InterOp-Naming/Makefile:
+	* tests/Interceptors/Makefile:
+	* tests/Leader_Followers/Makefile:
+	* tests/MProfile/Makefile:
+	* tests/MProfile_Forwarding/Makefile:
+	* tests/MT_Client/Makefile:
+	* tests/MT_Server/Makefile:
+	* tests/Multiple_Inheritance/Makefile:
+	* tests/Native_Exceptions/Makefile:
+	* tests/NestedUpcall/Makefile:
+	* tests/Nested_Event_Loop/Makefile:
+	* tests/ORB_init/Makefile:
+	* tests/OctetSeq/Makefile:
+	* tests/POA/Destruction/Makefile:
+	* tests/POA/Decativation/Makefile:
+	* tests/POA/Identity/Makefile:
+	* tests/Param_Test/Makefile:
+	* tests/QtTests/Makefile:
+	* tests/Smart_Proxies/Makefile:
+	* tests/Timed_Buffered_Oneways/Makefile:
+	* tests/Timeout/Makefile:
+	* tests/Xt_Stopwatch/Makefile:
+	  Updated the following Makefiles depedencies. The need arose as I
+	  retired some files from the repository and added new files in
+	  their place. Please see the change below.
+		
 Sun Mar 19 19:22:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Accept_State.cpp:
@@ -35,6 +75,17 @@ Sun Mar 19 19:22:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/target_identifier.cpp:
 	* tao/target_identifier.i: 
 	  Files retired from the repository.
+
+	* tao/GIOP_Message_Headers.h:
+	* tao/GIOP_Message_Headers.i:
+	* tao/GIOP_Message_Headers.cpp:
+	  Added these files in to the repository in place of the
+	  following.
+
+	* tao/GIOP_Assorted_Headers.h:
+	* tao/GIOP_Assorted_Headers.cpp:
+	* tao/GIOP_Assorted_Headers.i: 
+	  Retired these files from the repository. 
 	 
 	* tao/GIOP_Message_State.h:
 	* tao/GIOP_Message_State.cpp:
@@ -55,7 +106,8 @@ Sun Mar 19 19:22:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/SHMIOP_Transport.h:
 	* tao/Transport_Mux_Strategy.h:
 	* tao/UIOP_Acceptor.h:
-	* tao/UIOP_Connect.cpp:	
+	* tao/UIOP_Connect.cpp:
+	* tao/Pluggable.cpp:
 	  Changes that had to be done because of the above. The changes
 	  include change of method names, reducing unnecessary header file
 	  inclusions. 
