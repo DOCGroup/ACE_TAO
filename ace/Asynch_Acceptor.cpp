@@ -408,6 +408,12 @@ ACE_Asynch_Acceptor<HANDLER>::handle (void) const
   return this->listen_handle_;
 }
 
+template <class HANDLER> void
+ACE_Asynch_Acceptor<HANDLER>::handle (ACE_HANDLE h)
+{
+  ACE_Handler::handle (h);
+}
+
 template <class HANDLER> HANDLER *
 ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
 {
