@@ -21,6 +21,8 @@
 #ifndef ACE_TESTS_MALLOC_TEST_H
 #define ACE_TESTS_MALLOC_TEST_H
 
+#include "ace/Based_Pointer_T.h"
+
 // Some test data.
 struct Long_Test
 {
