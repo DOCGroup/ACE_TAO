@@ -1,3 +1,10 @@
+Tue Mar 28 12:06:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Array.h: Simply include "ace/Containers_T.h" would work.
+	  Removed all other template kludge since they should be handled
+	  in Containers_T.h.  Thanks to Airat A. Sadreev
+	  <airat@hq.tatenergo.ru> for report this problem.
+
 Tue Mar 28 11:56:56 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Dirent.h"
@@ -23,7 +30,6 @@ Tue Mar 28 06:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  ACE_LACKS_TELLDIR, ACE_LACKS_SEEKDIR, ACE_LACKS_REWINDDIR and
 	  ACE_LACKS_READDIR_R.
 	  This was necessary to enable the above mentioned <dirent> emulation.
-
 
 Mon Mar 27 16:58:03 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
