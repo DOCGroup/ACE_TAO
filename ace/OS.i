@@ -1198,6 +1198,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m, int &abandoned)
   /* NOTREACHED */
 #else 		     
   ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (abandoned);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS and ACE_HAS_WTHREADS */ 
 }
