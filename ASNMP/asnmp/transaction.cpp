@@ -57,11 +57,11 @@ int transaction::run()
   int rc, done = 0;
   int retry_counter = 0;
   ACE_Time_Value to(params_.get_timeout(), 0); // seconds
-  ACE_Reactor reactor;
+  ACE_Reactor *reactor = ACE_Reactor::instance ();
 
   // 1. register io port for read access
-  if (reactor.register_handler(session_.get_handle(), this,
-                               ACE_Event_Handler::READ_MASK) == -1)
+  if (reactor->register_handler(session_.get_handle(), this,
+                                ACE_Event_Handler::READ_MASK) == -1)
     return SNMP_CLASS_INTERNAL_ERROR;
 
   // register a time handler and a socket with this
@@ -76,7 +76,7 @@ int transaction::run()
     }
 
     // 2. wait for events (timeout, returned msg)
-    if (( rc = reactor.handle_events (to)) == 1) // one handler registered
+    if (( rc = reactor->handle_events (to)) == 1) // one handler registered
       return 0;
     else {
       if (rc == 0) {

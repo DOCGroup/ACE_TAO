@@ -1,3 +1,16 @@
+Fri Feb  8 14:54:21 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* apps/JAWS2/Makefile (LDFLAGS): 
+	* apps/JAWS2/HTTPU/Makefile (LDFLAGS): Fixed some makefile bugs so
+	  that this stuff compiles on AIX.  Thanks to Steve Ige
+ 	  <steve.ige@reuters.com> for reporting this.
+
+Thu Feb  7 18:13:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/ACE_Init_Test.cpp (wait_and_kill_dialog): Replaced the call
+	  to EndDialog() with EndModalLoop() to fix a race condition.
+  	  Thanks to Petru Marginean <petrum@ilx.com> for reporting this.
+
 Fri Feb  8 14:02:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Marco Kranawetter

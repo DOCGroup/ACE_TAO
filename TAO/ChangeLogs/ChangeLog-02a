@@ -1,3 +1,11 @@
+Fri Feb  8 14:12:54 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* docs/tutorials/Quoter/index.html: Updated the tutorial to make
+	  it clear that the files shouldn't be obtained individually, but
+ 	  instead used from the version of ACE+TAO downloaded wholesale
+ 	  from the web.  Thanks to Donna Maskell <Donna.Maskell@udlp.com>
+ 	  for this suggestion.
+
 Fri Feb  8 12:33:29 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/DLL_ORB.cpp:
@@ -67,7 +75,6 @@ Thu Feb 08 12:08:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  broken. 
 
 	  The above fixes should fix the annoying warnings in Win32 builds.
-
 
 Thu Feb 07 22:52:07 2002  Carlos O'Ryan  <coryan@uci.edu>
 

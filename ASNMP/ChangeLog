@@ -1,3 +1,9 @@
+Fri Feb  8 04:42:21 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* asnmp/transaction.cpp (run): Changed the code to use ACE_Reactor::instance ()
+	  rather than a local ACE_Reactor on the stack.  Thanks to Paresh
+ 	  Raote <p_raote@yahoo.com> for reporting this.
+
 Thu Jan 25 12:48:33 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 	* agent/Makefile.orig    
