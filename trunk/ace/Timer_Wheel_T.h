@@ -28,30 +28,35 @@ class ACE_Timer_Wheel_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNC
   //     Iterates over an <ACE_Timer_Wheel>.
   //
   // = DESCRIPTION
-  //     This is a special type of iterator that "advances" by moving
-  //     the head of the timer queue up by one every time.
+  //     This is a generic iterator that can be used to visit every
+  //     node of a timer queue.  Be aware that it doesn't transverse
+  //     in the order of timeout values.  
 {
 public:
   ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &);
-  // Constructor.
+  // Constructor
 
-  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *&timer_node, 
-                    const ACE_Time_Value &cur_time);
-  // Pass back the next <timer_node> that hasn't been seen yet, if its
-  // <time_value_> <= <cur_time>.  In addition, moves the timer queue
-  // forward by one node.  Returns 0 when all <timer_nodes> have been
-  // seen, else 1.
+  virtual void first (void);
+  // Positions the iterator at the earliest node in the Timer Queue
 
-  void reset (void);
-  // Resets the iterator
+  virtual void next (void);
+  // Positions the iterator at the next node in the Timer Queue
+
+  virtual int isdone (void);
+  // Returns true when there are no more nodes in the sequence
+
+  virtual ACE_Timer_Node_T<TYPE> *item (void);
+  // Returns the node at the current position in the sequence
 
 protected:
   ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &timer_wheel_;
   // Pointer to the <ACE_Timer_List> that we are iterating over.
 
-private:
-  size_t pos_;  // Current position in the timing wheel
-  ACE_Time_Value time_; // Corresponding time of <pos_>
+  size_t pos_;  
+  // Current position in the timing wheel
+  
+  ACE_Timer_Node_T<TYPE> *list_item_; 
+  // Pointer to the position in the the <pos_>th list
 };
 
 template <class TYPE, class FUNCTOR, class LOCK>
@@ -76,19 +81,34 @@ public:
   // Type of iterator
 
   friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK>;
-  // Iterator is a friend.
+  // Iterator is a friend
 
   typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> INHERITED;
-  // Type inherited from.
+  // Type inherited from
 
-  // = Initialization and termination methods.
-  ACE_Timer_Wheel_T (size_t wheelsize = ACE_DEFAULT_TIMER_WHEEL_SIZE, 
-                     size_t resolution = ACE_DEFAULT_TIMER_WHEEL_RESOLUTION, 
+  // = Initialization and termination methods
+
+  ACE_Timer_Wheel_T (size_t wheelsize, 
+                     size_t resolution, 
                      size_t prealloc = 0,
-                     FUNCTOR *upcall_functor = 0);
-  // Constructor that takes in a size for the timing wheel and a
-  // resolution for placement in the timing wheel lists (in
-  // microseconds).
+                     FUNCTOR *upcall_functor = 0,
+                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+  // Constructor that takes in <wheelsize> - size of the timing wheel, 
+  // <resolution> - resolution of time values the hashing function uses,
+  // and <upcall_functor> - a functor that will be used instead of creating
+  // a default functor.  Also, when the freelist is created, <prealloc> nodes
+  // will be allocated. This can also take in a upcall functor and freelist 
+  // (if 0, then defaults will be created)
+
+  ACE_Timer_Wheel_T (FUNCTOR *upcall_functor = 0, 
+                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+  // Default constructor. <upcall_functor> is the instance of the
+  // FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
+  // Queue will create a default FUNCTOR.  <freelist> the freelist of
+  // timer nodes.  If 0, then a default freelist will be created.  The
+  // defaults will be used for size and resolution and no preallocation
+  // (ACE_DEFAULT_TIMER_WHEEL_SIZE, ACE_DEFAULT_TIMER_WHEEL_RESOLUTION)
+
 
   virtual ~ACE_Timer_Wheel_T (void);
   // Destructor
@@ -107,14 +127,9 @@ public:
   // If it expires then <act> is passed in as the value to the
   // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
   // is used to reschedule the <type> automatically.  This method
-  // returns a <timer_id> that uniquely identifies the the <type>
-  // entry in an internal list.  This <timer_id> can be used to cancel
-  // the timer before it expires.  The cancellation ensures that
-  // <timer_ids> are unique up to values of greater than 2 billion
-  // timers.  As long as timers don't stay around longer than this
-  // there should be no problems with accidentally deleting the wrong
-  // timer.  Returns -1 on failure (which is guaranteed never to be a
-  // valid <timer_id>).
+  // returns a <timer_id> that uniquely identifies the the timer.
+  // This <timer_id> can be used to cancel the timer before it expires.  
+  // Returns -1 on failure.
 
   virtual int cancel (const TYPE &type,
 		      int dont_call_handle_close = 1);
@@ -133,28 +148,25 @@ public:
   // 0 then the <functor> will be invoked.  Returns 1 if cancellation
   // succeeded and 0 if the <timer_id> wasn't found.
 
-  virtual void dump (void) const;
-  // Dump the state of an object.
-
-protected:
-  virtual ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *alloc_node (void);
-  // Factory method that allocates a new node (uses operator new).
-
-  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
-  // Factory method that frees a previously allocated node (uses
-  // operator delete).
-
-private:
-  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *remove (void);
-  // Removes the earliest node and returns a pointer to it.
-
-  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
-  // Reschedule an "interval" node
+  virtual int expire (const ACE_Time_Value &current_time);
+  // Run the <functor> for all timers whose values are <= <cur_time>.
+  // This does not account for <timer_skew>.  Returns the number of
+  // timers canceled.
 
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> **wheel_;
+  virtual ACE_Timer_Node_T<TYPE> *remove_first (void);
+  // Removes the earliest node from the queue and returns it
+
+  virtual void dump (void) const;
+  // Dump the state of an object.
+
+private:
+  virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
+  // Reschedule an "interval" node
+
+  ACE_Timer_Node_T<TYPE> **wheel_;
   // Timing Wheel.
 
   size_t wheel_size_;
@@ -163,11 +175,8 @@ private:
   size_t resolution_;
   // Resolution (in microsoconds) of the timing wheel.
 
-  size_t current_pos_;
-  // Current position in the timing wheel.
-
-  ACE_Time_Value current_time_;
-  // Keeps track of the previous time <current_pos_> was updated.
+  size_t earliest_pos_;
+  // Index of the list with the earliest time
 
   long size_;
   // Keeps track of the size of the queue
@@ -175,8 +184,8 @@ private:
   ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK> iterator_;
   // Iterator used to expire timers.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *freelist_;
-  // Pointer to the freelist of <ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK>>.
+  ACE_Timer_Node_T<TYPE> *freelist_;
+  // Pointer to the freelist of <ACE_Timer_Node_T<TYPE>>.
 
   // = Don't allow these operations for now.
   ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &);

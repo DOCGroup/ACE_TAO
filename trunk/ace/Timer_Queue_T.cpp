@@ -1,6 +1,3 @@
-// Timer_Queue_T.cpp
-// $Id$
-
 #if !defined (ACE_TIMER_QUEUE_T_C)
 #define ACE_TIMER_QUEUE_T_C
 
@@ -12,12 +9,10 @@
 #include "ace/Timer_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Timer_Node_T)
-
-template <class TYPE, class FUNCTOR, class LOCK> void
-ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK>::dump (void) const
+template <class TYPE> void
+ACE_Timer_Node_T<TYPE>::dump (void) const
 {
-  ACE_TRACE ("ACE_Timer_Node::dump");
+  ACE_TRACE ("ACE_Timer_Node_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   // ACE_DEBUG ((LM_DEBUG, "\type_ = %x", this->type_));
   ACE_DEBUG ((LM_DEBUG, "\nact_ = %x", this->act_));
@@ -29,49 +24,11 @@ ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Node_T (void)
+template <class TYPE> 
+ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
 {
-  ACE_TRACE ("ACE_Timer_Node::ACE_Timer_Node");
+  ACE_TRACE ("ACE_Timer_Node_T::ACE_Timer_Node_T");
 }
-
-template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Node_T (const TYPE &type, 
-							 const void *a, 
-							 const ACE_Time_Value &t, 
-							 const ACE_Time_Value &i, 
-							 ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *n,
-							 long timer_id)
-  : type_ (type), 
-    act_ (a), 
-    timer_value_ (t), 
-    interval_ (i), 
-    prev_ (0),
-    next_ (n),
-    timer_id_ (timer_id)
-{
-  ACE_TRACE ("ACE_Timer_Node::ACE_Timer_Node");
-}
-
-template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Node_T (const TYPE &type, 
-							 const void *a, 
-							 const ACE_Time_Value &t, 
-							 const ACE_Time_Value &i, 
-							 ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *p,
-							 ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *n,
-							 long timer_id)
-  : type_ (type), 
-    act_ (a), 
-    timer_value_ (t), 
-    interval_ (i), 
-    prev_ (p),
-    next_ (n),
-    timer_id_ (timer_id)
-{
-  ACE_TRACE ("ACE_Timer_Node::ACE_Timer_Node");
-}
-
 
 template <class TYPE, class FUNCTOR, class LOCK> 
 ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Queue_Iterator_T (void)
@@ -94,7 +51,7 @@ ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Queue_Iterator_T (vo
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Time_Value *
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time)
 {
-  ACE_TRACE ("ACE_Timer_List::calculate_timeout");
+  ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
   ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, max_wait_time));
   
   if (this->is_empty ())
@@ -131,7 +88,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_w
 template <class TYPE, class FUNCTOR, class LOCK> void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::dump (void) const
 {
-  ACE_TRACE ("ACE_Timer_Queue::dump");
+  ACE_TRACE ("ACE_Timer_Queue_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->timeout_.dump ();
   this->timer_skew_.dump ();
@@ -139,23 +96,41 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::dump (void) const
 }
 
 template <class TYPE, class FUNCTOR, class LOCK> 
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor, 
+                                                           ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : gettimeofday_ (ACE_OS::gettimeofday),
-    upcall_functor_ (upcall_functor == 0 ? *(new FUNCTOR) : *upcall_functor),
+    upcall_functor_ (upcall_functor == 0 ? new FUNCTOR : upcall_functor),
     delete_upcall_functor_ (upcall_functor == 0),
-    timer_skew_ (0, ACE_TIMER_SKEW)
+    timer_skew_ (0, ACE_TIMER_SKEW),
+    free_list_ (freelist == 0 ? new ACE_Locked_Free_List<ACE_Timer_Node_T <TYPE>, ACE_Null_Mutex> : freelist),
+    delete_free_list_ (freelist == 0)
 {
-  ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
+  ACE_TRACE ("ACE_Timer_Queue_T::ACE_Timer_Queue_T");
 }
 
 template <class TYPE, class FUNCTOR, class LOCK> 
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Queue_T (void)
 {
-  // Cleanup the functor on the way out
-  if (delete_upcall_functor_)
-    delete &this->upcall_functor_;
+  ACE_TRACE ("ACE_Timer_Queue_T::~ACE_Timer_Queue_T");
 
-  ACE_TRACE ("ACE_Timer_Queue::~ACE_Timer_Queue");
+  // Cleanup the functor and free_list on the way out
+  if (this->delete_upcall_functor_)
+    delete this->upcall_functor_;
+
+  if (this->delete_free_list_)
+    delete this->free_list_;
+}
+
+template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Node_T<TYPE> *
+ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::alloc_node (void)
+{
+  return this->free_list_->remove ();
+}
+
+template <class TYPE, class FUNCTOR, class LOCK> void 
+ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::free_node (ACE_Timer_Node_T<TYPE> *node)
+{
+  this->free_list_->add (node);
 }
 
 // Run the <handle_timeout> method for all Timers whose values are <=
@@ -164,32 +139,31 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Queue_T (void)
 template <class TYPE, class FUNCTOR, class LOCK> int
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
 {
-  ACE_TRACE ("ACE_Timer_List::expire");
+  ACE_TRACE ("ACE_Timer_Queue_T::expire");
   ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_timers_expired = 0;
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *expired;
+  ACE_Timer_Node_T<TYPE> *expired;
 
   // Keep looping while there are timers remaining and the earliest
   // timer is <= the <cur_time> passed in to the method.
 
-  for (ITERATOR &iter = this->iter ();
-       iter.next (expired, cur_time) != 0;
-       )
+  while (this->earliest_time () <= cur_time)
     {
-      TYPE &type = expired->type_;
-      const void *act = expired->act_;
+      expired = this->remove_first ();
+      TYPE &type = expired->get_type ();
+      const void *act = expired->get_act ();
       int reclaim = 1;
       
       // Check if this is an interval timer.
-      if (expired->interval_ > ACE_Time_Value::zero)
+      if (expired->get_interval () > ACE_Time_Value::zero)
 	{
 	  // Make sure that we skip past values that have already
 	  // "expired".
 	  do
-	    expired->timer_value_ += expired->interval_;
-	  while (expired->timer_value_ <= cur_time);
+	    expired->set_timer_value (expired->get_timer_value () + expired->get_interval ());
+	  while (expired->get_timer_value () <= cur_time);
 
 	  // Since this is an interval timer, we need to reschedule
 	  // it.
@@ -205,15 +179,12 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
 	this->free_node (expired);
       
       number_of_timers_expired++;
+
+      if (this->is_empty ())
+        break;
     }
 
   return number_of_timers_expired;
-}
-
-template <class TYPE, class FUNCTOR, class LOCK> LOCK &
-ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::mutex (void)
-{
-  return this->mutex_;
 }
 
 #endif /* ACE_TIMER_QUEUE_T_C*/

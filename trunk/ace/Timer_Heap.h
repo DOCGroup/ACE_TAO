@@ -23,12 +23,12 @@
 // compatibility.
 
 typedef ACE_Timer_Heap_T<ACE_Event_Handler *, 
-                         ACE_Event_Handler_Handle_Timeout_Upcall, 
+                         ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, 
                          ACE_SYNCH_RECURSIVE_MUTEX>  
 	ACE_Timer_Heap;
 
 typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, 
-                                  ACE_Event_Handler_Handle_Timeout_Upcall, 
+                                  ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, 
                                   ACE_SYNCH_RECURSIVE_MUTEX>   
 	ACE_Timer_Heap_Iterator;
 
