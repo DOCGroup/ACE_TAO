@@ -1,3 +1,8 @@
+Sun Mar 21 14:47:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): Used 
+	#ifdef (ACE_LACKS_U_LONGLONG_T) instead of #ifdef (VXWORKS)||(CHORUS)
+
 Sat Mar 20 23:38:39 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
@@ -297,7 +302,6 @@ Wed Mar 17 22:53:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/POA.cpp: Phase one of the new POA design is complete.
 
-<<<<<<< ChangeLog
 	  - We now have support for active demuxing of user defined
 	    ids. This is achieved by using a active demux hint field in
 	    the object key.
@@ -381,7 +385,7 @@ Wed Mar 17 22:53:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* examples/POA/Loader/run_test.pl:
 	* examples/POA/On_Demand_Loading/run_test.pl:
 	* examples/POA/On_Demand_Activation/run_test.pl:
-=======
+
           - We now have support for active demuxing of user defined
             ids. This is achieved by using a active demux hint field in
             the object key.
@@ -465,7 +469,6 @@ Wed Mar 17 22:53:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
         * examples/POA/Loader/run_test.pl:
         * examples/POA/On_Demand_Loading/run_test.pl:
         * examples/POA/On_Demand_Activation/run_test.pl:
->>>>>>> 1.524
 
           Fixed the above scripts to pass the extra parameters along to
           the client and the server.
