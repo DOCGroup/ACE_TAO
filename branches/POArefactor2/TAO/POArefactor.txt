@@ -1,3 +1,16 @@
+Thu Feb  3 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Lifespan*.*:
+          Added last factories for creating this strategy
+
+Wed Feb  2 12:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.{h,cpp}:
+          New factory to create instances of the unique iduniqueness strategy
+
+        * tao/PortableServer/IdUniqueness*.*:
+          Updated for new strategy
+
 Mon Jan 31 11:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*:
