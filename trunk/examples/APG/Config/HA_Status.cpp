@@ -76,7 +76,8 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   HA_Status status;
   status.init (argc, argv);
