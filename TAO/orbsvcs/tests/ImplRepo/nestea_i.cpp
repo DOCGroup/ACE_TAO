@@ -2,7 +2,9 @@
 
 #include "nestea_i.h"
 #include "tao/corba.h"
+#include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
+#include "ace/FILE_IO.h"
 
 const size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 is 8589934591 + NUL is 11 characters
 
@@ -111,7 +113,17 @@ int
 Nestea_i::save_data (void)
 {
   ACE_FILE_IO file;
-  ACE_FILE_Addr filename (this->data_filename_);
+  ACE_FILE_Connector connector;
+
+  if (connector.connect (file,
+                         ACE_FILE_Addr (this->data_filename_),
+                         0,
+                         ACE_Addr::sap_any) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n to %s", 
+                       "connect", 
+                       this->data_filename_), 
+                      -1);
 
   char str[MAX_UINT32_STR_LEN];
 
@@ -127,11 +139,21 @@ int
 Nestea_i::load_data (void)
 {
   ACE_FILE_IO file;
-  ACE_FILE_Addr filename ("nestea.dat");
+  ACE_FILE_Connector connector;
 
-  char str[12];
+  if (connector.connect (file,
+                         ACE_FILE_Addr (this->data_filename_),
+                         0,
+                         ACE_Addr::sap_any) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n to %s", 
+                       "connect", 
+                       this->data_filename_), 
+                      -1);
 
-  int len = file.recv (str, ACE_OS::strlen (str) + 1);
+  char str[MAX_UINT32_STR_LEN];
+
+  int len = file.recv (str, MAX_UINT32_STR_LEN);
   str[len] = 0;
 
   if (len > 0)
