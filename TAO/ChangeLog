@@ -1,9 +1,15 @@
+Tue Mar 15 16:20:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerate.
+
 Tue Mar 15 11:25:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Time_Server/Clerk_i.cpp:
 	* orbsvcs/Time_Server/Server_i.cpp:
 
-	  Change ACE_TRY/ACE_TRY_CHECK to ACE_TRY_EX/ACE_TRY_CHECK_EX 
+	  Change ACE_TRY/ACE_TRY_CHECK to ACE_TRY_EX/ACE_TRY_CHECK_EX
 	  to handle nested emulated exceptions.
 
 Tue Mar 15 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
