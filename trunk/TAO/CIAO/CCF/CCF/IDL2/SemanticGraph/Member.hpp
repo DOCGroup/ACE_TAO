@@ -13,8 +13,7 @@ namespace CCF
   {
     namespace SemanticGraph
     {
-      class Member : public virtual Nameable,
-                     public virtual Instance
+      class Member : public virtual Nameable, public virtual Instance
       {
       public:
         static Introspection::TypeInfo const&

@@ -305,6 +305,7 @@ namespace CCF
       KeywordParser ABSTRACT;
       KeywordParser ATTRIBUTE;
       KeywordParser CONST;
+      KeywordParser ENUM;
       KeywordParser EXCEPTION;
       KeywordParser FACTORY;
       KeywordParser IN;
@@ -375,6 +376,9 @@ namespace CCF
 
       Rule const_decl;
       Rule const_expr;
+
+      Rule enum_decl;
+      Rule enumerator_decl;
 
       Rule boolean_const_expr;
       Rule character_const_expr;
@@ -457,6 +461,15 @@ namespace CCF
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
       act_attribute_name;
+
+      // Enum
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Enum>
+      act_enum_begin, act_enum_enumerator;
+
+      NoArgAction<SemanticAction::Enum>
+      act_enum_end;
 
       // Exception
       //

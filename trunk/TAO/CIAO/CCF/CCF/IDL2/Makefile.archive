@@ -16,6 +16,7 @@ cxx_translation_units := LexicalAnalyzer.cpp Parser.cpp
 
 translated_units := SemanticGraph/Attribute.o    \
                     SemanticGraph/Elements.o     \
+                    SemanticGraph/Enum.o         \
                     SemanticGraph/Exception.o    \
                     SemanticGraph/Fundamental.o  \
                     SemanticGraph/Interface.o    \
@@ -33,6 +34,7 @@ translated_units := SemanticGraph/Attribute.o    \
 
 translated_units += Traversal/Attribute.o    \
                     Traversal/Elements.o     \
+                    Traversal/Enum.o         \
                     Traversal/Exception.o    \
                     Traversal/Fundamental.o  \
                     Traversal/Interface.o    \
@@ -49,6 +51,7 @@ translated_units += SemanticAction/Operation.o
 
 translated_units += SemanticAction/Impl/Attribute.o  \
                     SemanticAction/Impl/Elements.o   \
+                    SemanticAction/Impl/Enum.o       \
                     SemanticAction/Impl/Exception.o  \
                     SemanticAction/Impl/Factory.o    \
                     SemanticAction/Impl/Include.o    \

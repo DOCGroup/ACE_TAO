@@ -12,6 +12,7 @@ namespace CCF
     namespace SemanticAction
     {
       class Attribute;
+      class Enum;
       class Exception;
       class Include;
       class Interface;
@@ -35,6 +36,9 @@ namespace CCF
 
         virtual Attribute&
         attribute () = 0;
+
+        virtual SemanticAction::Enum&
+        enum_ () = 0;
 
         virtual SemanticAction::Exception&
         exception () = 0;

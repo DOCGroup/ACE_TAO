@@ -8,6 +8,7 @@
 #include "CCF/IDL2/SemanticAction/Elements.hpp"
 
 #include "CCF/IDL2/SemanticAction/Attribute.hpp"
+#include "CCF/IDL2/SemanticAction/Enum.hpp"
 #include "CCF/IDL2/SemanticAction/Exception.hpp"
 #include "CCF/IDL2/SemanticAction/Include.hpp"
 #include "CCF/IDL2/SemanticAction/Interface.hpp"

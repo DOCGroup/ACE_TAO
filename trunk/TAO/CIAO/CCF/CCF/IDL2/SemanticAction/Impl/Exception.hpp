@@ -23,7 +23,7 @@ namespace CCF
         public:
           virtual
           ~Exception () throw ();
-          
+
           Exception (Context& c);
 
           virtual void
