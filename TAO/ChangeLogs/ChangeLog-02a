@@ -1,3 +1,9 @@
+Fri Aug 17 14:57:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/fe_init.cpp:
+
+          Removed code that had been commented out.
+
 Fri Aug 17 14:14:21 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * docs/Options.html:
