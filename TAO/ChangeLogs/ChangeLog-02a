@@ -1,3 +1,7 @@
+Tue Apr  4 10:45:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Makefile: added Sched directory
+
 Mon Apr  3 23:19:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Makefile.bor (MAKEFILES): Include

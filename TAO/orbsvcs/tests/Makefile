@@ -18,6 +18,7 @@ DIRS  = Simple_Naming \
         Property \
         CosEC_Basic \
         CosEC_Multiple \
+        Sched \
         Sched_Conf \
         Time \
         Event \
