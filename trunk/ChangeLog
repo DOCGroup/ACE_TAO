@@ -1,3 +1,16 @@
+Thu Jun  5 03:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Set shared_libs_only or static_libs_only if appropriate,
+          even if only shared_libs and static_libs were passed, since
+          many Makefiles use these variables to determine what gets built.
+
+        * netsvcs/clients/Naming/Client/Makefile:
+          Fixed problem that prevented static libraries from being built
+          by adding a LIB variable and moving these declarations to before
+          including wrapper_macros.GNU.  Thanks to Olli Savia <ops@iki.fi>
+          for reporting the problem.
+
 Wed Jun  4 19:42:33 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/g++_metrics.sh:
