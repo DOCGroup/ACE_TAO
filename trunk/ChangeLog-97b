@@ -38,6 +38,10 @@ Thu Oct 16 08:43:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/run_tests.vxworks: updated VxWorks tests status.
 
+	* ace/OS.cpp,Token_Invariants.{h,cpp},Object_Manager.{h,cpp}:
+	  moved ace_os_monitor_lock and ACE_Token_Invariants_Creation_Lock
+ 	  to Object_Manager.
+
 Thu Oct 16 02:26:12 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.19, released Thu Oct 16 02:26:12 1997.
