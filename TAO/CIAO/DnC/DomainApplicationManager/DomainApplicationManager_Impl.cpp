@@ -43,6 +43,7 @@ init (int num_child_plans, const ACE_CString * node_manager_names)
 
 bool check_validity ()
 {
+  //@@ Not implemented yet.
   return true;
 }
 
@@ -208,4 +209,25 @@ destroyApplication (Deployment::Application_ptr app
   //if (this->cs_set_.remove (app) == -1)
   //  ACE_THROW (Deployment::StopError ());
   return;
+}
+
+
+
+::Deployment::Applications *
+CIAO::DomainApplicationManager_Impl::
+getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  //@@ Not implemented yet.
+  return 0;
+}
+
+/// Returns the DeploymentPlan associated with this ApplicationManager.
+::Deployment::DeploymentPlan *
+CIAO::DomainApplicationManager_Impl::
+getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  //@@ Not implemented yet.
+  return 0;
 }
