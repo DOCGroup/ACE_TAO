@@ -1,10 +1,15 @@
 // IOStream.cpp
 // $Id$
-#if !defined (ACE_IOSTREAM_C)
+
+#ifndef ACE_IOSTREAM_C
 #define ACE_IOSTREAM_C
 
 #define ACE_BUILD_DLL
 #include "ace/IOStream.h"
+#include "ace/Thread.h"
+#include "ace/Handle_Set.h"
+
+///////////////////////////////////////////////////////////////////////////
 
 /* Here's a simple example of how iostream's non-virtual operators can
    get you in a mess:
@@ -79,8 +84,28 @@
   // function will be invoked by the first >>.  Since it returns
   // a myiostream&, the second >> will be invoked as desired.  */
 
-template <class STREAM> int
-ACE_Streambuf<STREAM>::underflow (void)
+
+///////////////////////////////////////////////////////////////////////////
+
+#if ! defined( ACE_IOSTREAM_BUILDING_TEMPLATE )
+
+ACE_Time_Value * 
+ACE_Streambuf_T::recv_timeout( ACE_Time_Value * tv )
+{
+	ACE_Time_Value * rval = recv_timeout_;
+	if( tv )
+	{
+		recv_timeout_value_ = *tv;
+		recv_timeout_ = &recv_timeout_value_;
+	}
+	else
+		recv_timeout_ = NULL;
+
+	return rval;
+}
+
+int
+ACE_Streambuf_T::underflow (void)
 {
   // If input mode is not set, any attempt to read from the stream is
   // a failure.
@@ -102,7 +127,7 @@ ACE_Streambuf<STREAM>::underflow (void)
       // explicitly handle deletion of the TWO buffers at destruction.
       //
       setb (this->eback_saved_,
-            this->eback_saved_ + ACE_STREAMBUF_SIZE, 0);
+            this->eback_saved_ + streambuf_size_, 0);
 
       // Using the new values for base (), initialize the get area.
       // This simply sets eback (), gptr () and egptr () described
@@ -151,7 +176,7 @@ ACE_Streambuf<STREAM>::underflow (void)
           // to use our private get buffer.
 
           setb (this->eback_saved_,
-                this->eback_saved_ + ACE_STREAMBUF_SIZE, 0);
+                this->eback_saved_ + streambuf_size_, 0);
 
           // And restore the previous state of the get pointers.
 
@@ -198,8 +223,8 @@ ACE_Streambuf<STREAM>::underflow (void)
 // Much of this is similar to underflow.  I'll just hit the highlights
 // rather than repeating a lot of what you've already seen.
 
-template <class STREAM> int
-ACE_Streambuf<STREAM>::overflow (int c)
+int
+ACE_Streambuf_T::overflow (int c)
 {
   // Check to see if output is allowed at all.
   if (!(mode_ & ios::out))
@@ -211,7 +236,7 @@ ACE_Streambuf<STREAM>::overflow (int c)
       // Set base () to use put's private buffer.
       //
       setb (this->pbase_saved_,
-            this->pbase_saved_ + ACE_STREAMBUF_SIZE, 0);
+            this->pbase_saved_ + streambuf_size_, 0);
 
       // Set the put area using the new base () values.
       setp (base (), ebuf ());
@@ -236,7 +261,7 @@ ACE_Streambuf<STREAM>::overflow (int c)
           setg (0, 0, 0);
 
           // Reconfigure base () and restore the put pointers.
-          setb (pbase_saved_, pbase_saved_ + ACE_STREAMBUF_SIZE, 0);
+          setb (pbase_saved_, pbase_saved_ + streambuf_size_, 0);
           setp (base (), ebuf ());
 
           // Save the new mode.
@@ -246,8 +271,7 @@ ACE_Streambuf<STREAM>::overflow (int c)
       // If there is output to be flushed, do so now.  We shouldn't
       // get here unless this is the case...
 
-      if (out_waiting ()
-          && EOF == syncout ())
+      if (out_waiting () && EOF == syncout ())
         return EOF;
     }
 
@@ -269,8 +293,8 @@ ACE_Streambuf<STREAM>::overflow (int c)
 
 // syncin
 
-template <class STREAM> int
-ACE_Streambuf<STREAM>::syncin (void)
+int
+ACE_Streambuf_T::syncin (void)
 {
   // As discussed, there really isn't any way to sync input from a socket-like
   // device.  We specifially override this base-class function so that it won't
@@ -278,12 +302,10 @@ ACE_Streambuf<STREAM>::syncin (void)
   return 0;
 }
 
-///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
-
 // syncout
 
-template <class STREAM> int
-ACE_Streambuf<STREAM>::syncout (void)
+int
+ACE_Streambuf_T::syncout (void)
 {
   // Unlike syncin, syncout is a doable thing.  All we have to do is
   // write whatever is in the output buffer to the peer.  flushbuf ()
@@ -295,8 +317,8 @@ ACE_Streambuf<STREAM>::syncout (void)
     return 0;
 }
 
-template <class STREAM> int
-ACE_Streambuf<STREAM>::sync (void)
+int
+ACE_Streambuf_T::sync (void)
 {
   // sync () is fairly traditional in that it syncs both input and output.
   // We could have omitted the call to syncin () but someday, we may want it
@@ -314,23 +336,59 @@ ACE_Streambuf<STREAM>::sync (void)
 
 // flushbuf
 
-template <class STREAM> int
-ACE_Streambuf<STREAM>::flushbuf (void)
+int
+ACE_Streambuf_T::flushbuf (void)
 {
   // pptr() is one character beyond the last character put
   // into the buffer.  pbase() points to the beginning of
   // the put buffer.  Unless pptr() is greater than pbase()
-  // there is nothing to be sent to the peer_.
+  // there is nothing to be sent to the peer.
   //
   if( pptr() <= pbase() )
 	return 0;
 
+  // 4/12/97 -- JCEJ
+  // Kludge!!!
+  // If the remote side shuts down the connection, an attempt to
+  // send() to the remote will result in the message 'Broken Pipe'
+  // I think this is an OS message, I've tracked it down to the
+  // ACE_OS::write () function.  That's the last one to be called
+  // before the message.  I can only test this on Linux though, so
+  // I don't know how other systems will react.
+  //
+  // To get around this gracefully, I do a PEEK recv() with an
+  // immediate (nearly) timeout.  recv() is much more graceful
+  // on it's failure.  If we get -1 from recv() not due to timeout
+  // then we know we're SOL.
+  //
+  // Q:  Is 'errno' threadsafe?  Should the section below be a
+  //     critical section?
+  //
+  //
+  // char tbuf[1];
+  // ACE_Time_Value to(0,1);
+  // if( this->recv( tbuf, 1, MSG_PEEK, &to ) == -1 )
+  // {
+  // 	if( errno != ETIME )
+  //	{
+  //		perror("OOPS preparing to send to peer");
+  // 		return EOF;
+  //	}
+  // }
+  //
+  // The correct way to handle this is for the application to
+  // trap (and ignore?) SIGPIPE.  Thanks to Amos Shapira
+  // for reminding me of this.
+  //
+
   // Starting at the beginning of the buffer, send as much
-  // data as there is waiting.  send_n guarantees that all
+  // data as there is waiting.  send guarantees that all
   // of the data will be sent or an error will be returned.
   //
-  if( peer_->send_n( pbase(), pptr() - pbase() ) == -1 )
+  if( this->send( pbase(), pptr() - pbase() ) == -1 )
+  {
 	return EOF;
+  }
 
   // Now that we've sent everything in the output buffer, we reset the
   // buffer pointers to appear empty.
@@ -340,86 +398,104 @@ ACE_Streambuf<STREAM>::flushbuf (void)
   return 0;
 }
 
-template <class STREAM> int 
-ACE_Streambuf<STREAM>::get_one_byte (void)
+int 
+ACE_Streambuf_T::get_one_byte ( void )
 {
-  char * p = base ();
-  ssize_t i = peer_->recv_n (p, 1);
-
   // The recv function will return immediately if there is no data
   // waiting.  So, we use recv_n to wait for exactly one byte to come
   // from the peer.  Later, we can use recv to see if there is
   // anything else in the buffer.  (Ok, we could use flags to tell it
   // to block but I like this better.)
 
-  if (i != 1)
+  if( this->recv_n( base(), 1, MSG_PEEK, recv_timeout_ ) != 1 )
     return EOF;
-
-  // Set the get pointers to indicate that we've got new data.
-  setg (base (), base (), base () + 1);
 
   return 1;
 }
 
-template <class STREAM> int
-ACE_Streambuf<STREAM>::fillbuf (void)
+int
+ACE_Streambuf_T::fillbuf (void)
+  // This will be called when the read (get) buffer has been
+  // exhausted (ie -- gptr == egptr)
 {
-  char *p;
-
-  // Invoke recv_n to get at least one byte from the remote.  This
+  // Invoke recv_n to get exactly one byte from the remote.  This
   // will block until something shows up.
-
-  if (this->get_one_byte () == EOF)
+  //
+  if( get_one_byte() == EOF )
     return EOF;
 
   // Now, get whatever else may be in the buffer.  This will return if
-  // there is nothing in the buffer.  Notice that we can only read
-  // blen ()-1 bytes since we've already read one via <get_one_byte>
+  // there is nothing in the buffer. 
 
-  p = base () + 1;
-  ssize_t t = peer_->recv (p, blen () - 1);
+  int bc = this->recv ( base(), blen(), recv_timeout_ );
 
   // recv will give us -1 if there was a problem.  If there was
   // nothing waiting to be read, it will give us 0.  That isn't an
   // error.
 
-  if (t++ < 0)
+  if (bc < 0)
     return EOF;
 
   // Move the get pointer to reflect the number of bytes we just read.
 
-  setg (base (), base (), base () + t);
+  setg (base (), base (), base () + bc );
 
   // Return the byte-read-count including the one from <get_one_byte>
-  return t;
+  return bc;
 }
 
-// We will be given a STREAM by the iostream object which creates us.
-// See the ACE_IOStream template for how that works.  Like other
-// streambuf objects, we can be input-only, output-only or both.
-
-template <class STREAM>
-ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, int io_mode)
-  : peer_ (peer),
-    get_mode_ (1),
+ACE_Streambuf_T::ACE_Streambuf_T (u_int streambuf_size, int io_mode)
+  : get_mode_ (1),
     put_mode_ (2),
-    mode_ (io_mode)
+    mode_ (io_mode),
+    streambuf_size_ (streambuf_size),
+    recv_timeout_(NULL)
 {
-  // A streambuf allows for unbuffered IO where every character is
-  // read as requested and written as provided.  To me, this seems
-  // terribly inefficient for socket-type operations, so I've disabled
-  // it.  All of the work would be done by the underflow/overflow
-  // functions anyway and I haven't implemented anything there to
-  // support unbuffered IO.
+  (void)reset_get_buffer();
+  (void)reset_put_buffer();
+}
 
-  this->unbuffered (0);
+u_int ACE_Streambuf_T::streambuf_size(void)
+{
+  return streambuf_size_;
+}
 
-  // Linebuffered is similar to unbuffered.  Again, I don't have any
-  // need for this and I don't see the advantage.  I believe this
-  // would have to be supported by underflow/overflow to be effective.
-#if !defined (ACE_LACKS_LINEBUFFERED_STREAMBUF)
-  this->linebuffered (0);
-#endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
+u_int ACE_Streambuf_T::get_waiting(void)
+  // Return the number of bytes not yet gotten.
+  //	eback + get_waiting = gptr
+{
+	return this->gptr_saved_ - this->eback_saved_;
+}
+
+u_int ACE_Streambuf_T::get_avail(void)
+  // Return the number of bytes in the get area (includes some already gotten);
+  //	eback + get_avail = egptr
+{
+	return this->egptr_saved_ - this->eback_saved_;
+}
+
+u_int ACE_Streambuf_T::put_avail(void)
+  // Return the number of bytes to be 'put' onto the stream media.
+  //	pbase + put_avail = pptr
+{
+	return this->pptr_saved_ - this->pbase_saved_;
+}
+
+char *
+ACE_Streambuf_T::reset_get_buffer(char * newBuffer, u_int _streambuf_size, u_int _gptr, u_int _egptr )
+//
+// Typical usage:
+//
+//	u_int  newGptr  = otherStream->get_waiting();
+//	u_int  newEgptr = otherStream->get_avail();
+//	char * newBuf   = otherStream->reset_get_buffer();
+//	char * oldgetbuf = myStream->reset_get_buffer( newBuf, otherStream->streambuf_size(), newGptr, newEgptr );
+//
+//	'myStream' now has the get buffer of 'otherStream' and can use it in any way.
+//	'otherStream' now has a new, empty get buffer.
+//
+{
+  char * rval = this->eback_saved_;
 
   // The get area is where the iostrem will get data from.  This is
   // our read buffer.  There are three pointers which describe the
@@ -437,9 +513,40 @@ ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, int io_mode)
   // the variables below.  Initially, they all point to the beginning
   // of our read-dedicated buffer.
   //
-  ACE_NEW (this->eback_saved_, char[ACE_STREAMBUF_SIZE]);
-  this->gptr_saved_ = this->eback_saved_;
-  this->egptr_saved_ = this->eback_saved_;
+  if( newBuffer )
+  {
+	if( streambuf_size_ != _streambuf_size )
+		return NULL;
+	this->eback_saved_ = newBuffer;
+  }
+  else
+  {
+  	ACE_NEW_RETURN (this->eback_saved_, char[streambuf_size_], 0);
+  }
+
+  this->gptr_saved_ = this->eback_saved_ + _gptr;
+  this->egptr_saved_ = this->eback_saved_ + _egptr;
+
+  // Disable the get area initially.  This will cause underflow to be
+  // invoked on the first get operation.
+  setg (0, 0, 0);
+
+  reset_base();
+
+  return rval;
+}
+
+char *
+ACE_Streambuf_T::reset_put_buffer(char * newBuffer, u_int _streambuf_size, u_int _pptr )
+//
+// Typical usage:
+//
+//	u_int  newPptr = otherStream->put_avail();
+//	char * newBuf  = otherStream->reset_put_buffer();
+//	char * oldputbuf = otherStream->reset_put_buffer( newBuf, otherStream->streambuf_size(), newPptr );
+//
+{
+  char * rval = this->pbase_saved_;
 
   // The put area is where the iostream will put data that needs to be
   // sent to the peer.  This becomes our write buffer.  The three
@@ -454,18 +561,32 @@ ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, int io_mode)
   // Again to switch quickly between modes, we keep copies of
   // these three pointers.
   //
-  ACE_NEW (this->pbase_saved_, char[ACE_STREAMBUF_SIZE]);
-  this->pptr_saved_ = this->pbase_saved_;
-  this->epptr_saved_ = this->pbase_saved_ + ACE_STREAMBUF_SIZE;
+  if( newBuffer )
+  {
+	if( streambuf_size_ != _streambuf_size )
+		return NULL;
+	this->pbase_saved_ = newBuffer;
+  }
+  else
+  {
+  	ACE_NEW_RETURN (this->pbase_saved_, char[streambuf_size_], 0);
+  }
 
-  // Disable the get area initially.  This will cause underflow to be
-  // invoked on the first get operation.
-  setg (0, 0, 0);
+  this->pptr_saved_ = this->pbase_saved_ + _pptr;
+  this->epptr_saved_ = this->pbase_saved_ + streambuf_size_;
 
   // Disable the put area.  Overflow will be called by the first call
   // to any put operator.
   setp (0, 0);
 
+  reset_base();
+
+  return rval;
+}
+
+void
+ACE_Streambuf_T::reset_base(void)
+{
   // Until we experience the first get or put operation, we do not
   // know what our current IO mode is.
   this->cur_mode_ = 0;
@@ -482,20 +603,61 @@ ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, int io_mode)
 // would be deleted when the object destructs.  Since we are providing
 // separate read/write buffers, it is up to us to manage their memory.
 
-template <class STREAM>
-ACE_Streambuf<STREAM>::~ACE_Streambuf (void)
+ACE_Streambuf_T::~ACE_Streambuf_T (void)
 {
   delete [] this->eback_saved_;
   delete [] this->pbase_saved_;
 }
+
+#endif	// ACE_IOSTREAM_BUILDING_TEMPLATE
+
+///////////////////////////////////////////////////////////////////////////
+
+
+// We will be given a STREAM by the iostream object which creates us.
+// See the ACE_IOStream template for how that works.  Like other
+// streambuf objects, we can be input-only, output-only or both.
+
+template <class STREAM>
+ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, u_int streambuf_size, int io_mode )
+  : ACE_Streambuf_T( streambuf_size, io_mode ), peer_ (peer)
+{
+  // A streambuf allows for unbuffered IO where every character is
+  // read as requested and written as provided.  To me, this seems
+  // terribly inefficient for socket-type operations, so I've disabled
+  // it.  All of the work would be done by the underflow/overflow
+  // functions anyway and I haven't implemented anything there to
+  // support unbuffered IO.
+
+  this->unbuffered (0);
+
+  // Linebuffered is similar to unbuffered.  Again, I don't have any
+  // need for this and I don't see the advantage.  I believe this
+  // would have to be supported by underflow/overflow to be effective.
+#if !defined (ACE_LACKS_LINEBUFFERED_STREAMBUF)
+  this->linebuffered (0);
+#endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+
 
 // The typical constructor.  This will initiailze your STREAM and then
 // setup the iostream baseclass to use a custom streambuf based on
 // STREAM.
 
 template <class STREAM>
-ACE_IOStream<STREAM>::ACE_IOStream (void)
-  : iostream (streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this))
+ACE_IOStream<STREAM>::ACE_IOStream ( STREAM & stream, u_int streambuf_size )
+  : iostream(streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size)),
+    STREAM(stream)
+{
+}
+
+template <class STREAM>
+ACE_IOStream<STREAM>::ACE_IOStream ( u_int streambuf_size )
+  : iostream(streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size))
 {
 }
 
@@ -517,19 +679,54 @@ ACE_IOStream<STREAM>::close (void)
   return STREAM::close ();
 }
 
-#if defined (__GNUC__) && !defined (CHORUS)
+template <class STREAM> ACE_IOStream<STREAM> &
+ACE_IOStream<STREAM>::operator>>(ACE_Time_Value *& tv )
+{
+	ACE_Time_Value * old_tv = this->streambuf_->recv_timeout(tv);
+	tv = old_tv;
+	return *this;
+}
+
+#if (defined(__GNUC__) && !defined (CHORUS)) || defined(ACE_WIN32)
+
 // A simple string operator.  The base iostream has 'em for char* but
 // that isn't always the best thing for a String.  If we don't provide
 // our own here, we may not get what we want.
 
 template <class STREAM> ACE_IOStream<STREAM> &
-ACE_IOStream<STREAM>::operator>> (String & v)
+ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String & v)
 {
-  char c;
-  iostream::operator>> (c);
+  if( ipfx0() )
+  {
+    char c;
+    iostream::operator>> (c);
 
-  for (v = c ; this->get (c) && !isspace (c) ; v += c)
-    continue;
+    for (v = c ; this->get (c) && !isspace (c) ; v += c)
+      continue;
+  }
+
+  isfx();
+
+  return *this;
+}
+
+
+template <class STREAM> ACE_IOStream<STREAM> &
+ACE_IOStream<STREAM>::operator<< (ACE_IOStream_String & v)
+{
+  if( opfx() )
+  {
+#if defined (ACE_WIN32)
+	for( int i = 0 ; i < v.GetLength() ; ++i )
+#else
+	for( u_int i = 0 ; i < (u_int)v.length() ; ++i )
+#endif
+	{
+		this->put( v[i] );
+	}
+  }
+
+  osfx();
 
   return *this;
 }
@@ -542,6 +739,8 @@ ACE_IOStream<STREAM>::operator>> (String & v)
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator>> (QuotedString & str)
 {
+  if( ipfx0() )
+  {
 	char c;
 
 	if( !(*this >> c) ) // eat space up to the first char
@@ -569,18 +768,37 @@ ACE_IOStream<STREAM>::operator>> (QuotedString & str)
 			}
 		}
 	}
+  }
+
+  isfx();
 	
-	return *this;
+  return *this;
 }
 
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator<< (QuotedString & str)
 {
-	*this << '"';
-	*this << (String&)str;
-	*this << '"';
-	return *this;
+  if( opfx() )
+  {
+	this->put('"');
+	for( u_int i = 0 ; i < str.length() ; ++i )
+	{
+		if( str[i] == '"' )
+			this->put('\\');
+		this->put( str[i] );
+	}
+	this->put('"');
+  }
+
+  osfx();
+
+  return *this;
 }
 
-#endif /* __GNUG__ */
+
+///////////////////////////////////////////////////////////////////////////
+
+
+#endif /* (__GNUC__ && ! CHORUS) || ACE_WIN32 */
 #endif /* ACE_IOSTREAM_C */
+
