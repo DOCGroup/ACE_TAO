@@ -1357,7 +1357,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "};" << be_nl;
   *os << "static const TAO_Call_Data_Skel " << node->flatname ()
       << "_is_a_calldata = " << be_nl;
-  *os << "{\"_is_a\", 1, 2, " << node->flatname () << "_is_a_paramdata};" << be_nl;
+  *os << "{\"_is_a\", 1, 2, " << node->flatname () << "_is_a_paramdata};"
+      << be_nl;
+  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
   *os << node->full_skel_name () << "_ptr  _tao_impl = ("
       << node->full_skel_name () << "_ptr) _tao_object_reference;"
       << be_nl;
@@ -1370,10 +1372,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "&_tao_value" << be_uidt_nl
       << ");" << be_nl;
   *os << "if (_tao_environment.exception () != 0) return;" << be_nl;
-  *os << "_tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);"
+  *os << "_tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);"
       << be_nl;
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
+      << "_tao_skel_environment," << be_nl
       << "&" << node->flatname () << "_is_a_calldata, " << be_nl
       << "&_tao_retval, " << be_nl
       << "&_tao_value" << be_uidt_nl

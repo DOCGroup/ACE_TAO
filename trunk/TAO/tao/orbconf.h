@@ -42,19 +42,19 @@
 #define TAO_SOCK_CONNECTOR ACE_SOCK_CONNECTOR
 #endif /* TAO_SOCK_CONNECTOR */
 
-// The default arguments of the resource factory for the fake service 
+// The default arguments of the resource factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)
 #define TAO_DEFAULT_RESOURCE_FACTORY_ARGS { "-ORBresources", "tss" }
 #endif /* TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
 
-// The default arguments of the client strategy factory for the fake service 
+// The default arguments of the client strategy factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS)
 #define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS { 0 }
 #endif /* TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS */
 
-// The default arguments of the server strategy factory for the fake service 
+// The default arguments of the server strategy factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS)
 #define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS { "-ORBconcurrency", "reactive", \
@@ -112,6 +112,13 @@
 #if !defined (TAO_MAXIMUM_NATIVE_TYPE_SIZE)
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
+
+// This deals with platforms that support namespaces vs platforms that don't.
+#if defined (ACE_HAS_USING_KEYWORD)
+#define TAO_NAMESPACE namespace
+#else
+#define TAO_NAMESPACE struct
+#endif
 
 //
 // In some environments it is useful to swap the bytes on write, for

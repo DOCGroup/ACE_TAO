@@ -32,9 +32,10 @@ void POA_PortableServer::CurrentBase::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_CurrentBase_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -46,15 +47,16 @@ void POA_PortableServer::CurrentBase::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_CurrentBase_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_CurrentBase_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -64,12 +66,12 @@ void POA_PortableServer::CurrentBase::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::CurrentBase::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/CurrentBase:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -122,12 +124,12 @@ POA_PortableServer::CurrentBase_ptr POA_PortableServer::_tao_collocated_CurrentB
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_CurrentBase::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
@@ -164,9 +166,10 @@ void POA_PortableServer::ThreadPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
     )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_PortableServer_ThreadPolicy_value_paramdata [] =
   {
     {PortableServer::_tc_ThreadPolicyValue, 0, 0}
@@ -178,16 +181,17 @@ void POA_PortableServer::ThreadPolicy::_get_value_skel (
   POA_PortableServer::ThreadPolicy *_tao_impl = (POA_PortableServer::ThreadPolicy *)_tao_object_reference;
   PortableServer::ThreadPolicyValue _tao_retval;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &_get_PortableServer_ThreadPolicy_value_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->value (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &_get_PortableServer_ThreadPolicy_value_calldata,
     &_tao_retval
   );
@@ -197,9 +201,10 @@ void POA_PortableServer::ThreadPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
     )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_ThreadPolicy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -211,15 +216,16 @@ void POA_PortableServer::ThreadPolicy::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_ThreadPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_ThreadPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -229,13 +235,13 @@ void POA_PortableServer::ThreadPolicy::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::ThreadPolicy::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ThreadPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -291,47 +297,47 @@ POA_PortableServer::ThreadPolicy_ptr POA_PortableServer::_tao_collocated_ThreadP
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_ThreadPolicy::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 
 CORBA::Policy_ptr POA_PortableServer::_tao_collocated_ThreadPolicy::copy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->copy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_ThreadPolicy::destroy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::PolicyType POA_PortableServer::_tao_collocated_ThreadPolicy::policy_type (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->policy_type (_tao_environment);
+  return this->servant_->policy_type (_tao_orb_environment);
 }
 
 PortableServer::ThreadPolicyValue
 POA_PortableServer::_tao_collocated_ThreadPolicy::value (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->value(_tao_environment);
+  return this->servant_->value(_tao_orb_environment);
 }
 
 PortableServer::ThreadPolicy*
@@ -366,9 +372,10 @@ void POA_PortableServer::LifespanPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
 )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_PortableServer_LifespanPolicy_value_paramdata [] =
   {
     {PortableServer::_tc_LifespanPolicyValue, 0, 0}
@@ -380,16 +387,17 @@ void POA_PortableServer::LifespanPolicy::_get_value_skel (
   POA_PortableServer::LifespanPolicy *_tao_impl = (POA_PortableServer::LifespanPolicy *)_tao_object_reference;
   PortableServer::LifespanPolicyValue _tao_retval;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &_get_PortableServer_LifespanPolicy_value_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->value (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &_get_PortableServer_LifespanPolicy_value_calldata,
     &_tao_retval
   );
@@ -399,9 +407,10 @@ void POA_PortableServer::LifespanPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_LifespanPolicy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -413,15 +422,16 @@ void POA_PortableServer::LifespanPolicy::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_LifespanPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_LifespanPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -431,13 +441,13 @@ void POA_PortableServer::LifespanPolicy::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::LifespanPolicy::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/LifespanPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -493,46 +503,46 @@ POA_PortableServer::LifespanPolicy_ptr POA_PortableServer::_tao_collocated_Lifes
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_LifespanPolicy::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 CORBA::Policy_ptr POA_PortableServer::_tao_collocated_LifespanPolicy::copy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->copy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_LifespanPolicy::destroy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::PolicyType POA_PortableServer::_tao_collocated_LifespanPolicy::policy_type (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->policy_type (_tao_environment);
+  return this->servant_->policy_type (_tao_orb_environment);
 }
 
 PortableServer::LifespanPolicyValue
 POA_PortableServer::_tao_collocated_LifespanPolicy::value (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->value(_tao_environment);
+  return this->servant_->value(_tao_orb_environment);
 }
 
 PortableServer::LifespanPolicy*
@@ -567,9 +577,10 @@ void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
 )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_PortableServer_IdUniquenessPolicy_value_paramdata [] =
   {
     {PortableServer::_tc_IdUniquenessPolicyValue, 0, 0}
@@ -581,16 +592,17 @@ void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
   POA_PortableServer::IdUniquenessPolicy *_tao_impl = (POA_PortableServer::IdUniquenessPolicy *)_tao_object_reference;
   PortableServer::IdUniquenessPolicyValue _tao_retval;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &_get_PortableServer_IdUniquenessPolicy_value_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->value (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &_get_PortableServer_IdUniquenessPolicy_value_calldata,
     &_tao_retval
   );
@@ -600,9 +612,10 @@ void POA_PortableServer::IdUniquenessPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_IdUniquenessPolicy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -614,15 +627,16 @@ void POA_PortableServer::IdUniquenessPolicy::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_IdUniquenessPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_IdUniquenessPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -632,13 +646,13 @@ void POA_PortableServer::IdUniquenessPolicy::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::IdUniquenessPolicy::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/IdUniquenessPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -694,46 +708,46 @@ POA_PortableServer::IdUniquenessPolicy_ptr POA_PortableServer::_tao_collocated_I
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_IdUniquenessPolicy::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 CORBA::Policy_ptr POA_PortableServer::_tao_collocated_IdUniquenessPolicy::copy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->copy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_IdUniquenessPolicy::destroy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::PolicyType POA_PortableServer::_tao_collocated_IdUniquenessPolicy::policy_type (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->policy_type (_tao_environment);
+  return this->servant_->policy_type (_tao_orb_environment);
 }
 
 PortableServer::IdUniquenessPolicyValue
 POA_PortableServer::_tao_collocated_IdUniquenessPolicy::value (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->value(_tao_environment);
+  return this->servant_->value(_tao_orb_environment);
 }
 
 PortableServer::IdUniquenessPolicy*
@@ -768,9 +782,10 @@ void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
 )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_PortableServer_IdAssignmentPolicy_value_paramdata [] =
   {
     {PortableServer::_tc_IdAssignmentPolicyValue, 0, 0}
@@ -782,16 +797,17 @@ void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
   POA_PortableServer::IdAssignmentPolicy *_tao_impl = (POA_PortableServer::IdAssignmentPolicy *)_tao_object_reference;
   PortableServer::IdAssignmentPolicyValue _tao_retval;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &_get_PortableServer_IdAssignmentPolicy_value_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->value (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &_get_PortableServer_IdAssignmentPolicy_value_calldata,
     &_tao_retval
   );
@@ -801,9 +817,10 @@ void POA_PortableServer::IdAssignmentPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_IdAssignmentPolicy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -815,15 +832,16 @@ void POA_PortableServer::IdAssignmentPolicy::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_IdAssignmentPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_IdAssignmentPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -833,13 +851,13 @@ void POA_PortableServer::IdAssignmentPolicy::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::IdAssignmentPolicy::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/IdAssignmentPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -895,46 +913,46 @@ POA_PortableServer::IdAssignmentPolicy_ptr POA_PortableServer::_tao_collocated_I
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_IdAssignmentPolicy::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 CORBA::Policy_ptr POA_PortableServer::_tao_collocated_IdAssignmentPolicy::copy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->copy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_IdAssignmentPolicy::destroy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::PolicyType POA_PortableServer::_tao_collocated_IdAssignmentPolicy::policy_type (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->policy_type (_tao_environment);
+  return this->servant_->policy_type (_tao_orb_environment);
 }
 
 PortableServer::IdAssignmentPolicyValue
 POA_PortableServer::_tao_collocated_IdAssignmentPolicy::value (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->value(_tao_environment);
+  return this->servant_->value(_tao_orb_environment);
 }
 
 PortableServer::IdAssignmentPolicy*
@@ -969,9 +987,10 @@ void POA_PortableServer::ImplicitActivationPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
     )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_PortableServer_ImplicitActivationPolicy_value_paramdata [] =
   {
     {PortableServer::_tc_ImplicitActivationPolicyValue, 0, 0}
@@ -983,16 +1002,17 @@ void POA_PortableServer::ImplicitActivationPolicy::_get_value_skel (
   POA_PortableServer::ImplicitActivationPolicy *_tao_impl = (POA_PortableServer::ImplicitActivationPolicy *)_tao_object_reference;
   PortableServer::ImplicitActivationPolicyValue _tao_retval;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &_get_PortableServer_ImplicitActivationPolicy_value_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->value (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &_get_PortableServer_ImplicitActivationPolicy_value_calldata,
     &_tao_retval
   );
@@ -1002,9 +1022,10 @@ void POA_PortableServer::ImplicitActivationPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_ImplicitActivationPolicy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -1016,15 +1037,16 @@ void POA_PortableServer::ImplicitActivationPolicy::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_ImplicitActivationPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_ImplicitActivationPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -1034,13 +1056,13 @@ void POA_PortableServer::ImplicitActivationPolicy::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::ImplicitActivationPolicy::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ImplicitActivationPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -1096,46 +1118,46 @@ POA_PortableServer::ImplicitActivationPolicy_ptr POA_PortableServer::_tao_colloc
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 CORBA::Policy_ptr POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::copy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->copy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::destroy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::PolicyType POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::policy_type (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->policy_type (_tao_environment);
+  return this->servant_->policy_type (_tao_orb_environment);
 }
 
 PortableServer::ImplicitActivationPolicyValue
 POA_PortableServer::_tao_collocated_ImplicitActivationPolicy::value (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->value(_tao_environment);
+  return this->servant_->value(_tao_orb_environment);
 }
 
 PortableServer::ImplicitActivationPolicy*
@@ -1170,9 +1192,10 @@ void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
 )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_PortableServer_ServantRetentionPolicy_value_paramdata [] =
   {
     {PortableServer::_tc_ServantRetentionPolicyValue, 0, 0}
@@ -1184,16 +1207,17 @@ void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
   POA_PortableServer::ServantRetentionPolicy *_tao_impl = (POA_PortableServer::ServantRetentionPolicy *)_tao_object_reference;
   PortableServer::ServantRetentionPolicyValue _tao_retval;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &_get_PortableServer_ServantRetentionPolicy_value_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->value (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &_get_PortableServer_ServantRetentionPolicy_value_calldata,
     &_tao_retval
   );
@@ -1203,9 +1227,10 @@ void POA_PortableServer::ServantRetentionPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_ServantRetentionPolicy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -1217,15 +1242,16 @@ void POA_PortableServer::ServantRetentionPolicy::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_ServantRetentionPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_ServantRetentionPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -1235,13 +1261,13 @@ void POA_PortableServer::ServantRetentionPolicy::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::ServantRetentionPolicy::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantRetentionPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -1297,46 +1323,46 @@ POA_PortableServer::ServantRetentionPolicy_ptr POA_PortableServer::_tao_collocat
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_ServantRetentionPolicy::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 CORBA::Policy_ptr POA_PortableServer::_tao_collocated_ServantRetentionPolicy::copy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->copy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_ServantRetentionPolicy::destroy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::PolicyType POA_PortableServer::_tao_collocated_ServantRetentionPolicy::policy_type (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->policy_type (_tao_environment);
+  return this->servant_->policy_type (_tao_orb_environment);
 }
 
 PortableServer::ServantRetentionPolicyValue
 POA_PortableServer::_tao_collocated_ServantRetentionPolicy::value (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->value(_tao_environment);
+  return this->servant_->value(_tao_orb_environment);
 }
 
 PortableServer::ServantRetentionPolicy*
@@ -1371,9 +1397,10 @@ void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
 )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel _get_PortableServer_RequestProcessingPolicy_value_paramdata [] =
   {
     {PortableServer::_tc_RequestProcessingPolicyValue, 0, 0}
@@ -1385,16 +1412,17 @@ void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
   POA_PortableServer::RequestProcessingPolicy *_tao_impl = (POA_PortableServer::RequestProcessingPolicy *)_tao_object_reference;
   PortableServer::RequestProcessingPolicyValue _tao_retval;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &_get_PortableServer_RequestProcessingPolicy_value_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->value (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &_get_PortableServer_RequestProcessingPolicy_value_calldata,
     &_tao_retval
   );
@@ -1404,9 +1432,10 @@ void POA_PortableServer::RequestProcessingPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_RequestProcessingPolicy_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -1418,15 +1447,16 @@ void POA_PortableServer::RequestProcessingPolicy::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_RequestProcessingPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_RequestProcessingPolicy_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -1436,13 +1466,13 @@ void POA_PortableServer::RequestProcessingPolicy::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::RequestProcessingPolicy::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/RequestProcessingPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -1498,46 +1528,46 @@ POA_PortableServer::RequestProcessingPolicy_ptr POA_PortableServer::_tao_colloca
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_RequestProcessingPolicy::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 CORBA::Policy_ptr POA_PortableServer::_tao_collocated_RequestProcessingPolicy::copy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->copy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_RequestProcessingPolicy::destroy (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::PolicyType POA_PortableServer::_tao_collocated_RequestProcessingPolicy::policy_type (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->policy_type (_tao_environment);
+  return this->servant_->policy_type (_tao_orb_environment);
 }
 
 PortableServer::RequestProcessingPolicyValue
 POA_PortableServer::_tao_collocated_RequestProcessingPolicy::value (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->value(_tao_environment);
+  return this->servant_->value(_tao_orb_environment);
 }
 
 PortableServer::RequestProcessingPolicy*
@@ -1568,9 +1598,10 @@ void POA_PortableServer::POAManager::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_POAManager_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -1582,15 +1613,16 @@ void POA_PortableServer::POAManager::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_POAManager_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_POAManager_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -1600,12 +1632,12 @@ void POA_PortableServer::POAManager::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::POAManager::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/POAManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -1658,56 +1690,56 @@ POA_PortableServer::POAManager_ptr POA_PortableServer::_tao_collocated_POAManage
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_POAManager::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POAManager::activate (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->activate (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POAManager::hold_requests (
     CORBA::Boolean wait_for_completion,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->hold_requests (
       wait_for_completion,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POAManager::discard_requests (
     CORBA::Boolean wait_for_completion,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->discard_requests (
       wait_for_completion,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POAManager::deactivate (
     CORBA::Boolean etherealize_objects,
     CORBA::Boolean wait_for_completion,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->deactivate (
       etherealize_objects,
       wait_for_completion,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
@@ -1740,9 +1772,10 @@ void POA_PortableServer::AdapterActivator::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_AdapterActivator_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -1754,15 +1787,16 @@ void POA_PortableServer::AdapterActivator::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_AdapterActivator_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_AdapterActivator_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -1772,12 +1806,12 @@ void POA_PortableServer::AdapterActivator::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::AdapterActivator::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/AdapterActivator:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -1830,25 +1864,25 @@ POA_PortableServer::AdapterActivator_ptr POA_PortableServer::_tao_collocated_Ada
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_AdapterActivator::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_AdapterActivator::unknown_adapter (
     PortableServer::POA_ptr  parent,
     const char* name,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->unknown_adapter (
       parent,
       name,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
@@ -1881,9 +1915,10 @@ void POA_PortableServer::ServantManager::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_ServantManager_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -1895,15 +1930,16 @@ void POA_PortableServer::ServantManager::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_ServantManager_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_ServantManager_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -1913,12 +1949,12 @@ void POA_PortableServer::ServantManager::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::ServantManager::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -1971,12 +2007,12 @@ POA_PortableServer::ServantManager_ptr POA_PortableServer::_tao_collocated_Serva
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_ServantManager::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
@@ -2009,9 +2045,10 @@ void POA_PortableServer::ServantActivator::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_ServantActivator_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -2023,15 +2060,16 @@ void POA_PortableServer::ServantActivator::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_ServantActivator_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_ServantActivator_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -2041,13 +2079,13 @@ void POA_PortableServer::ServantActivator::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::ServantActivator::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantActivator:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -2103,25 +2141,25 @@ POA_PortableServer::ServantActivator_ptr POA_PortableServer::_tao_collocated_Ser
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_ServantActivator::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 PortableServer::Servant POA_PortableServer::_tao_collocated_ServantActivator::incarnate (
     const PortableServer::ObjectId & oid,
     PortableServer::POA_ptr  adapter,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->incarnate (
       oid,
       adapter,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
@@ -2131,7 +2169,7 @@ void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
     PortableServer::Servant serv,
     CORBA::Boolean cleanup_in_progress,
     CORBA::Boolean remaining_activations,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->etherealize (
@@ -2140,7 +2178,7 @@ void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
       serv,
       cleanup_in_progress,
       remaining_activations,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
@@ -2173,9 +2211,10 @@ void POA_PortableServer::ServantLocator::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_ServantLocator_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -2187,15 +2226,16 @@ void POA_PortableServer::ServantLocator::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_ServantLocator_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_ServantLocator_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -2205,13 +2245,13 @@ void POA_PortableServer::ServantLocator::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::ServantLocator::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantLocator:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/ServantManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -2267,12 +2307,12 @@ POA_PortableServer::ServantLocator_ptr POA_PortableServer::_tao_collocated_Serva
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_ServantLocator::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
@@ -2281,7 +2321,7 @@ PortableServer::Servant POA_PortableServer::_tao_collocated_ServantLocator::prei
     PortableServer::POA_ptr  adapter,
     const char * operation,
     PortableServer::ServantLocator::Cookie & the_cookie,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->preinvoke (
@@ -2289,7 +2329,7 @@ PortableServer::Servant POA_PortableServer::_tao_collocated_ServantLocator::prei
       adapter,
       operation,
       the_cookie,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
@@ -2299,7 +2339,7 @@ void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
     const char * operation,
     PortableServer::ServantLocator::Cookie the_cookie,
     PortableServer::Servant the_servant,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->postinvoke (
@@ -2308,7 +2348,7 @@ void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
       operation,
       the_cookie,
       the_servant,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
@@ -2341,9 +2381,10 @@ void POA_PortableServer::POA::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_POA_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -2355,15 +2396,16 @@ void POA_PortableServer::POA::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_POA_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_POA_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -2373,12 +2415,12 @@ void POA_PortableServer::POA::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::POA::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/POA:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -2431,12 +2473,12 @@ POA_PortableServer::POA_ptr POA_PortableServer::_tao_collocated_POA::_get_servan
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_POA::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
@@ -2444,322 +2486,322 @@ PortableServer::POA_ptr POA_PortableServer::_tao_collocated_POA::create_POA (
     const char* adapter_name,
     PortableServer::POAManager_ptr  a_POAManager,
     const CORBA::PolicyList & policies,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_POA (
       adapter_name,
       a_POAManager,
       policies,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::POA_ptr POA_PortableServer::_tao_collocated_POA::find_POA (
     const char* adapter_name,
     CORBA::Boolean activate_it,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->find_POA (
       adapter_name,
       activate_it,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POA::destroy (
     CORBA::Boolean etherealize_objects,
     CORBA::Boolean wait_for_completion,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->destroy (
       etherealize_objects,
       wait_for_completion,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::ThreadPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_thread_policy (
     PortableServer::ThreadPolicyValue value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_thread_policy (
       value,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::LifespanPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_lifespan_policy (
     PortableServer::LifespanPolicyValue value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_lifespan_policy (
       value,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::IdUniquenessPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_id_uniqueness_policy (
     PortableServer::IdUniquenessPolicyValue value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_id_uniqueness_policy (
       value,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::IdAssignmentPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_id_assignment_policy (
     PortableServer::IdAssignmentPolicyValue value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_id_assignment_policy (
       value,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::ImplicitActivationPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_implicit_activation_policy (
     PortableServer::ImplicitActivationPolicyValue value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_implicit_activation_policy (
       value,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::ServantRetentionPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_servant_retention_policy (
     PortableServer::ServantRetentionPolicyValue value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_servant_retention_policy (
       value,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::RequestProcessingPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_request_processing_policy (
     PortableServer::RequestProcessingPolicyValue value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_request_processing_policy (
       value,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 char*
 POA_PortableServer::_tao_collocated_POA::the_name (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->the_name(_tao_environment);
+  return this->servant_->the_name(_tao_orb_environment);
 }
 PortableServer::POA_ptr
 POA_PortableServer::_tao_collocated_POA::the_parent (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->the_parent(_tao_environment);
+  return this->servant_->the_parent(_tao_orb_environment);
 }
 PortableServer::POAManager_ptr
 POA_PortableServer::_tao_collocated_POA::the_POAManager (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->the_POAManager(_tao_environment);
+  return this->servant_->the_POAManager(_tao_orb_environment);
 }
 PortableServer::AdapterActivator_ptr
 POA_PortableServer::_tao_collocated_POA::the_activator (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
-  return this->servant_->the_activator(_tao_environment);
+  return this->servant_->the_activator(_tao_orb_environment);
 }
 
 void POA_PortableServer::_tao_collocated_POA::the_activator (
     PortableServer::AdapterActivator_ptr _tao_value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->the_activator (
       _tao_value,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 PortableServer::ServantManager_ptr POA_PortableServer::_tao_collocated_POA::get_servant_manager (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->get_servant_manager (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POA::set_servant_manager (
     PortableServer::ServantManager_ptr  imgr,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->set_servant_manager (
       imgr,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::Servant POA_PortableServer::_tao_collocated_POA::get_servant (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->get_servant (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POA::set_servant (
     PortableServer::Servant p_servant,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->set_servant (
       p_servant,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::ObjectId * POA_PortableServer::_tao_collocated_POA::activate_object (
     PortableServer::Servant p_servant,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->activate_object (
       p_servant,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POA::activate_object_with_id (
     const PortableServer::ObjectId & id,
     PortableServer::Servant p_servant,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->activate_object_with_id (
       id,
       p_servant,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 void POA_PortableServer::_tao_collocated_POA::deactivate_object (
     const PortableServer::ObjectId & oid,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   this->servant_->deactivate_object (
       oid,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::create_reference (
     const char *intf,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_reference (
       intf,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::create_reference_with_id (
     const PortableServer::ObjectId & oid,
     const char *intf,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->create_reference_with_id (
       oid,
       intf,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::ObjectId * POA_PortableServer::_tao_collocated_POA::servant_to_id (
     PortableServer::Servant p_servant,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->servant_to_id (
       p_servant,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::servant_to_reference (
     PortableServer::Servant p_servant,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->servant_to_reference (
       p_servant,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::Servant POA_PortableServer::_tao_collocated_POA::reference_to_servant (
     CORBA::Object_ptr  reference,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->reference_to_servant (
       reference,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::ObjectId * POA_PortableServer::_tao_collocated_POA::reference_to_id (
     CORBA::Object_ptr  reference,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->reference_to_id (
       reference,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::Servant POA_PortableServer::_tao_collocated_POA::id_to_servant (
     const PortableServer::ObjectId & oid,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->id_to_servant (
       oid,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 CORBA::Object_ptr POA_PortableServer::_tao_collocated_POA::id_to_reference (
     const PortableServer::ObjectId & oid,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->id_to_reference (
       oid,
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
@@ -2794,9 +2836,10 @@ void POA_PortableServer::Current::get_POA_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
 )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_Current_get_POA_paramdata [] =
   {
     {PortableServer::_tc_POA, 0, 0}
@@ -2808,16 +2851,17 @@ void POA_PortableServer::Current::get_POA_skel (
   POA_PortableServer::Current *_tao_impl = (POA_PortableServer::Current *)_tao_object_reference;
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_Current_get_POA_calldata,
     &_tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->get_POA (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_Current_get_POA_calldata,
     &_tao_retval
   );
@@ -2827,9 +2871,10 @@ void POA_PortableServer::Current::get_object_id_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
 )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_Current_get_object_id_paramdata [] =
   {
     {PortableServer::_tc_ObjectId, 0, 0}
@@ -2841,16 +2886,17 @@ void POA_PortableServer::Current::get_object_id_skel (
   POA_PortableServer::Current *_tao_impl = (POA_PortableServer::Current *)_tao_object_reference;
   PortableServer::ObjectId *_tao_retval = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_Current_get_object_id_calldata,
     _tao_retval
   );
-  if (_tao_environment.exception ()) return;
+  if (_tao_orb_environment.exception ()) return;
   _tao_retval = _tao_impl->get_object_id (
-    _tao_environment
+    _tao_skel_environment
   );
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_Current_get_object_id_calldata,
     _tao_retval
   );
@@ -2860,9 +2906,10 @@ void POA_PortableServer::Current::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
+  CORBA::Environment _tao_skel_environment;
   static const TAO_Param_Data_Skel PortableServer_Current_is_a_paramdata [] =
   {
     {CORBA::_tc_boolean, 0, 0},
@@ -2874,15 +2921,16 @@ void POA_PortableServer::Current::_is_a_skel (
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
   _tao_server_request.demarshal (
-    _tao_environment,
+    _tao_orb_environment,
     &PortableServer_Current_is_a_calldata,
     &_tao_retval,
     &_tao_value
   );
-  if (_tao_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);
+  if (_tao_orb_environment.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
   _tao_server_request.marshal (
-    _tao_environment,
+    _tao_orb_environment,
+    _tao_skel_environment,
     &PortableServer_Current_is_a_calldata,
     &_tao_retval,
     &_tao_value
@@ -2892,13 +2940,13 @@ void POA_PortableServer::Current::_is_a_skel (
 
 CORBA::Boolean POA_PortableServer::Current::_is_a (
     const char* value,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Current:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/CurrentBase:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
       return CORBA::B_FALSE;
@@ -2954,30 +3002,30 @@ POA_PortableServer::Current_ptr POA_PortableServer::_tao_collocated_Current::_ge
 
 CORBA::Boolean POA_PortableServer::_tao_collocated_Current::_is_a (
     const char* logical_type_id,
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->_is_a (
       logical_type_id,
-      _tao_environment
+      _tao_orb_environment
     );
 }
 
 PortableServer::POA_ptr POA_PortableServer::_tao_collocated_Current::get_POA (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->get_POA (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
 PortableServer::ObjectId * POA_PortableServer::_tao_collocated_Current::get_object_id (
-    CORBA::Environment &_tao_environment
+    CORBA::Environment &_tao_orb_environment
   )
 {
   return this->servant_->get_object_id (
-       _tao_environment
+       _tao_orb_environment
     );
 }
 
