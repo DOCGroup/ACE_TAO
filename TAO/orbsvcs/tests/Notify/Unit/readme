@@ -1,0 +1,40 @@
+$Id$
+README for the Notification Service Unit Tests
+----------------------------------------------
+
+This directory contains unit tests for the Notification Service.
+
+A lightweight unit test framework is used, and could later be 
+extended and used for other tests.
+
+Files in this directory
+-----------------------
+  main.cpp            -- runs tests, catches and prints exceptions
+  UnitTester.h        -- declare test exception, assert functions, etc.
+  Test*.h, Test*.cpp  -- the actual tests
+  Notify_Unit.mpc     -- mpc to generate build files
+  readme              -- this file
+  run_test.pl         -- run tests automatically
+  start_ns.pl         -- start naming service/notification service to 
+                         allow manual testing.
+
+The Tests and Subtests
+----------------------
+TestBasicTypes      -- tests for underlying data structures
+    testNVP             -- name value pair to support properties
+    testQoSBasic        -- QoS properties test
+
+TestBasic           -- test basic channel and admin creation
+    testChannelCreate   -- tests the creation of a channel
+    testAdminCreate     -- tests creation of an admin in the channel.
+
+TestBuilder         -- tests topology objects and "builder" operation
+    testBuildECF              -- event channel factory
+    testBuildEC               -- event channel
+    testTopologyPersist       -- save / load persistent topology information
+    testSubscriptionTopology  -- basic subcription operation.
+
+TestQoS             -- test Quality of Service parameters
+    testQoSChannel        -- sets QoS parameters at the channel level
+
+ 

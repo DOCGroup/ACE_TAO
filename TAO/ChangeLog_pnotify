@@ -1,3 +1,20 @@
+Mon Oct 11 14:39:15 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/Notify/Unit/Notify_Unit.mpc:
+        * orbsvcs/tests/Notify/Unit/TestBasic.h:
+        * orbsvcs/tests/Notify/Unit/TestBasic.cpp:
+        * orbsvcs/tests/Notify/Unit/TestBasicTypes.h:
+        * orbsvcs/tests/Notify/Unit/TestBasicTypes.cpp:
+        * orbsvcs/tests/Notify/Unit/TestBuilder.h:
+        * orbsvcs/tests/Notify/Unit/TestBuilder.cpp:
+        * orbsvcs/tests/Notify/Unit/TestQoS.h:
+        * orbsvcs/tests/Notify/Unit/TestQoS.cpp:
+        * orbsvcs/tests/Notify/Unit/UnitTester.h:
+        * orbsvcs/tests/Notify/Unit/main.cpp:
+        * orbsvcs/tests/Notify/Unit/readme:
+        * orbsvcs/tests/Notify/Unit/run_test.pl:
+        * orbsvcs/tests/Notify/Unit/start_ns.pl:
+          Copy Unit test from OCI branch.  Needs work.
 Thu Oct  7 09:40:51 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ChangeLog_pnotify:

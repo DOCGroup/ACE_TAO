@@ -1,0 +1,3 @@
+project : orbsvcsexe, notify {
+  requires += exceptions
+}
