@@ -1,6 +1,15 @@
 //$Id$
 
 #include "Thread_Task.h"
+#include "ace/Atomic_Op.h"
+
+ACE_Atomic_Op<ACE_Thread_Mutex, long> index = 0;
+
+RTScheduling::Current::IdType*
+Thread_Task::guids (void)
+{
+  return *(this->guid_);
+}
 
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb)
@@ -10,7 +19,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
   CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
   
   this->current_ = RTScheduling::Current::_narrow (current_obj
-												   ACE_ENV_ARG_PARAMETER);
+						   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
   long flags = THR_NEW_LWP | THR_JOINABLE;
@@ -48,6 +57,8 @@ Thread_Task::svc (void)
 						implicit_sched_param
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      this->guid_[index++] = this->current_->id ();
       
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",

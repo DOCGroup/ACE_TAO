@@ -8,9 +8,16 @@
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
 
-TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
+u_long
+TAO_DTId_Hash::operator () (const IdType &id) const
 {
-  this->orb_ = orb;
+  return ACE::hash_pjw ((const char *) id.get_buffer (),
+                        id.length ());
+}
+
+TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
+  : orb_ (orb)
+{
 }
 
 TAO_ORB_Core* 
@@ -223,7 +230,8 @@ TAO_RTScheduler_Current::implementation (void)
   if (impl == 0)
     {
       ACE_NEW_THROW_EX (impl,
-			TAO_RTScheduler_Current_i (this->orb_),
+			TAO_RTScheduler_Current_i (this->orb_,
+						   &this->dt_hash_),
 			CORBA::NO_MEMORY (
 					  CORBA::SystemException::_tao_minor_code (
 					  TAO_DEFAULT_MINOR_CODE,
@@ -238,10 +246,12 @@ TAO_RTScheduler_Current::implementation (void)
 
 }
 
-TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb)
+TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
+						      DT_Hash_Map* dt_hash)
   :orb_ (orb),
    dt_ (RTScheduling::DistributableThread::_nil ()),
-   previous_current_ (0)
+   previous_current_ (0),
+   dt_hash_ (dt_hash)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
@@ -258,13 +268,15 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb)
 }
 
 TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
-			   RTScheduling::Current::IdType guid,
-			   const char * name,
-			   CORBA::Policy_ptr sched_param,
-			   CORBA::Policy_ptr implicit_sched_param,
-			   RTScheduling::DistributableThread_ptr dt,
-			   TAO_RTScheduler_Current_i* prev_current)
+						      DT_Hash_Map* dt_hash,
+						      RTScheduling::Current::IdType guid,
+						      const char * name,
+						      CORBA::Policy_ptr sched_param,
+						      CORBA::Policy_ptr implicit_sched_param,
+						      RTScheduling::DistributableThread_ptr dt,
+						      TAO_RTScheduler_Current_i* prev_current)
   : orb_ (orb),
+    dt_hash_ (dt_hash),
     guid_ (guid),
     name_ (name),
     sched_param_ (sched_param),
@@ -324,8 +336,8 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
       this->dt_ = TAO_DistributableThread_Factory::create_DT ();
       
       //Add new DT to map
-      int result = this->orb_->dt_hash ()->bind (this->guid_,
-						 this->dt_);
+      int result = this->dt_hash_->bind (this->guid_,
+					 this->dt_);
 
       if (result != 0)
 	{
@@ -367,6 +379,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(const char * name,
       TAO_RTScheduler_Current_i* new_current;
 	ACE_NEW_THROW_EX (new_current,
 			  TAO_RTScheduler_Current_i (this->orb_,
+						     this->dt_hash_,
 						     this->guid_,
 						     name,
 						     sched_param,
@@ -468,8 +481,8 @@ TAO_RTScheduler_Current_i::lookup(const RTScheduling::Current::IdType & id
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Object_ptr DT_obj;
-  this->orb_->dt_hash ()->find (id,
-				DT_obj);
+  this->dt_hash_->find (id,
+			DT_obj);
   
   RTScheduling::DistributableThread_var DT = RTScheduling::DistributableThread::_narrow (DT_obj
 											 ACE_ENV_ARG_PARAMETER);
@@ -525,8 +538,8 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
       
       // Add new DT to map.
       int result =
-	this->orb_->dt_hash ()->bind (this->guid_, 
-				      dt);
+	this->dt_hash_->bind (this->guid_, 
+			      dt);
       
       if (result == 0)
 	{
@@ -536,6 +549,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
 	  ACE_NEW_RETURN (dttask,
 			  DTTask (//thread_manager_,
 				  this->orb_,
+				  this->dt_hash_, 	
 				  start,
 				  data,
 				  guid,
@@ -590,6 +604,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
 
 DTTask::DTTask (//ACE_Thread_Manager* manager,
 		TAO_ORB_Core* orb,
+		DT_Hash_Map* dt_hash,
 		RTScheduling::ThreadAction_ptr start,
 		CORBA::VoidData data,
 		RTScheduling::Current::IdType guid,
@@ -599,6 +614,7 @@ DTTask::DTTask (//ACE_Thread_Manager* manager,
 		RTScheduling::DistributableThread_ptr dt)
   ://manager_ (manager),
    orb_ (orb),
+   dt_hash_ (dt_hash),
    start_ (RTScheduling::ThreadAction::_duplicate (start)),
    data_ (data),
    guid_ (guid),
@@ -620,6 +636,7 @@ DTTask::svc (void)
       TAO_RTScheduler_Current_i* new_current;
       ACE_NEW_THROW_EX (new_current,
 			TAO_RTScheduler_Current_i (this->orb_,
+						   this->dt_hash_,
 						   this->guid_,
 						   this->name_,
 						   this->sched_param_,
@@ -751,7 +768,7 @@ void
 TAO_RTScheduler_Current_i::cleanup_DT (void)
 {
   // Remove DT from map.
-  this->orb_->dt_hash ()->unbind (this->guid_);
+  this->dt_hash_->unbind (this->guid_);
 }
 
 void
@@ -784,3 +801,21 @@ TAO_RTScheduler_Current_i::scheduler (void)
 {
   return this->scheduler_.in ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Entry<IdType, CORBA::Object_ptr>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Entry<IdType, CORBA::Object_ptr>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Thread_Mutex>;
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

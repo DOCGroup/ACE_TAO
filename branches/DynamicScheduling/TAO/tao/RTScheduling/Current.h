@@ -3,6 +3,7 @@
 #define TAO_RTSCHEDULER_CURRENT_H
 
 
+#include "ace/Hash_Map_Manager_T.h"
 #include "rtscheduler_export.h"
 #include "RTSchedulerC.h"
 #include "ace/Task.h"
@@ -14,13 +15,37 @@
 class TAO_RTScheduler_Current_i;
 class TAO_TSS_Resources;
 
+/**
+ * @class TAO_DTId_Hash
+ *
+ * @brief Hashing class for Distributable Thread Ids.
+ *
+ * Define the hash() method for Object Ids.
+ */
+
+typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
+
+class TAO_RTScheduler_Export TAO_DTId_Hash
+{
+public:
+
+  /// Returns hash value.
+  u_long operator () (const IdType &id) const;
+};
+
+
+typedef ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map;
+typedef ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Thread_Mutex> DT_Hash_Map_Iterator;
+typedef ACE_Hash_Map_Entry <IdType,CORBA::Object_ptr> DT_Hash_Map_Entry;
+
+
 class TAO_RTScheduler_Export TAO_RTScheduler_Current: 
 public RTScheduling::Current,
   public TAO_Local_RefCounted_Object
 {
  public:
   
-  TAO_RTScheduler_Current (TAO_ORB_Core* orb);
+  TAO_RTScheduler_Current (TAO_ORB_Core*);
   
   
   virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -96,6 +121,7 @@ public RTScheduling::Current,
  private:
   RTCORBA::Current_var rt_current_;
   TAO_ORB_Core* orb_;
+  DT_Hash_Map dt_hash_;
   
 };
 
@@ -104,9 +130,11 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 {
  public:
 
-  TAO_RTScheduler_Current_i (TAO_ORB_Core* orb);
+  TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
+			     DT_Hash_Map* dt_hash);
 
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
+			     DT_Hash_Map* dt_hash,
 			     RTScheduling::Current::IdType guid,
 			     const char * name,
 			     CORBA::Policy_ptr sched_param,
@@ -196,6 +224,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   CORBA::Policy_ptr implicit_sched_param_;
   RTScheduling::DistributableThread_var dt_;
   TAO_RTScheduler_Current_i* previous_current_;
+  DT_Hash_Map* dt_hash_;
 };
 
 // This class provides an entry point for the
@@ -205,6 +234,7 @@ class DTTask : public ACE_Task <ACE_SYNCH>
 public:
   DTTask (//ACE_Thread_Manager manager,
 	  TAO_ORB_Core* orb,
+	  DT_Hash_Map* dt_hash,
 	  RTScheduling::ThreadAction_ptr start,
 	  CORBA::VoidData data,
 	  RTScheduling::Current::IdType guid,
@@ -221,6 +251,7 @@ public:
  private:
   //ACE_Thread_Manager* manager_;
   TAO_ORB_Core* orb_;
+  DT_Hash_Map* dt_hash_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_;
   RTScheduling::Current::IdType guid_;
