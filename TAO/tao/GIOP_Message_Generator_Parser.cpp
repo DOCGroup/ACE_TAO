@@ -23,11 +23,10 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
   // Read the request id
   if (!stream.read_ulong (params.request_id_))
     {
-      if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, \n ")
-                           ACE_TEXT ("extracting request id")),
-                          -1);
+      if (TAO_debug_level)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, \n ")
+                    ACE_TEXT ("extracting request id")));
     }
 
   // and the reply status type.  status can be NO_EXCEPTION,
@@ -38,10 +37,9 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
   if (!stream.read_ulong (rep_stat))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, \n ")
-                           ACE_TEXT ("extracting reply status")),
-                          -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, \n ")
+                    ACE_TEXT ("extracting reply status")));
       return -1;
     }
 
@@ -103,10 +101,11 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
   if (!cdr.read_ulong (params.request_id_))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t|%N|%l):parse_locate_reply, ")
-                           ACE_TEXT ("extracting request id \n")),
-                          -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t|%N|%l):parse_locate_reply, ")
+                    ACE_TEXT ("extracting request id \n")));
+
+      return -1;
     }
 
   // and the reply status type.  status can be NO_EXCEPTION,
@@ -120,10 +119,11 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
   if (!cdr.read_ulong (params.reply_status_))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO N|(%P|%t|l) parse_locate_reply, ")
-                           ACE_TEXT ("extracting reply  status\n")),
-                          -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO N|(%P|%t|l) parse_locate_reply, ")
+                    ACE_TEXT ("extracting reply  status\n")));
+
+      return -1;
     }
 
   return 0;
@@ -163,4 +163,3 @@ TAO_GIOP_Message_Generator_Parser::marshal_reply_status (
       break;
     }
 }
-
