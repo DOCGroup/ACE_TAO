@@ -112,13 +112,13 @@ public:
   TAO_Target_Address specifier (void);
 
 private:
+  /// The union of all the possibilities
   union
   {
     TAO::ObjectKey *object_key_;
     IOP::TaggedProfile *profile_;
     IOP::IOR *ior_;
   } u_;
-  // The union of all the possibilities
 
   /// The enum identifier
   TAO_Target_Address specifier_;

@@ -267,7 +267,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
       Special_Basic_Arguments.cpp
     }
   }
-  
+
   Header_Files {
     Arg_Traits_T.h
     CONV_FRAMES.h
@@ -285,5 +285,12 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
     TimeBaseS.h
     UShortSeqS.h
     ULongSeqS.h
+  }
+
+  Template_Files {
+      TAO_Singleton.cpp
+      Condition.cpp
+      orb.idl
+      Auto_Functor.cpp
   }
 }
