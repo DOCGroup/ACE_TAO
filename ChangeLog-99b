@@ -1,3 +1,9 @@
+Fri Feb 12 17:16:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.vxworks: commented out Message_Queue_Test and
+          Timeprobe_Test, because they lockup the machine.  And,
+          fixed string length of DLL_Test printout.
+
 Fri Feb 12 17:06:30 1999  Arturo Montes <mitosys@colomsat.com.co>
 
         * ace/config-sco-5.0.0-CC-fsu-pthread.h: removed this config
