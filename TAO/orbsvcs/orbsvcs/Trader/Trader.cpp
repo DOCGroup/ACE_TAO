@@ -936,9 +936,13 @@ template class TAO_Register<ACE_Null_Mutex, ACE_Null_Mutex>;
 template class TAO_Admin<ACE_Null_Mutex, ACE_Null_Mutex>;
 template class TAO_Link<ACE_Null_Mutex, ACE_Null_Mutex>;
 template class TAO_Proxy<ACE_Null_Mutex, ACE_Null_Mutex>;
-template class ACE_Node<char*>;
-template class ACE_Unbounded_Queue<char*>;
-template class ACE_Unbounded_Queue_Iterator<char*>;
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+    // These aren't needed unless ACE_HAS_MOSTLY_UNICODE_APIS.
+    // Otherwise, they're in ace/ARGV.cpp.
+    template class ACE_Node<char*>;
+    template class ACE_Unbounded_Queue<char*>;
+    template class ACE_Unbounded_Queue_Iterator<char*>;
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 template class ACE_Node<CosTrading::Admin::OctetSeq *>;
 template class ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq *>;
 template class ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq *>;
@@ -1015,9 +1019,13 @@ template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database
 #pragma instantiate TAO_Admin<ACE_Null_Mutex, ACE_Null_Mutex>
 #pragma instantiate TAO_Link<ACE_Null_Mutex, ACE_Null_Mutex>
 #pragma instantiate TAO_Proxy<ACE_Null_Mutex, ACE_Null_Mutex>
-#pragma instantiate ACE_Node<char*>
-#pragma instantiate ACE_Unbounded_Queue<char*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<char*>
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+    // These aren't needed unless ACE_HAS_MOSTLY_UNICODE_APIS.
+    // Otherwise, they're in ace/ARGV.cpp.
+#   pragma instantiate ACE_Node<char*>
+#   pragma instantiate ACE_Unbounded_Queue<char*>
+#   pragma instantiate ACE_Unbounded_Queue_Iterator<char*>
+# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 #pragma instantiate ACE_Node<CosTrading::Admin::OctetSeq *>
 #pragma instantiate ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq *>
