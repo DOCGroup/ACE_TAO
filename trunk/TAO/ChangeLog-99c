@@ -1,3 +1,26 @@
+Thu May 20 18:46:44 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEC_Utility_Methods_T.{h,cpp}:
+	  Removed this file. templates seem to be an overkill here.
+
+	* orbsvcs/orbsvcs/CosEvent_Utilities.h:
+	  added TAO_ORBSVCS_Export.
+	  added a #pragma for msvc warning 4250
+
+	* orbsvcs/orbsvcs/Makefile:
+   	  removed CosEC_Utility_Methods_T
+
+	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	  removed CosEC_Utility_Methods usage.
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h
+	  added a <locate_rtec> method.
+
+	* orbsvcs/CosEvent_Service/README
+	  modified the README to reflect the change in parameter options.
+
 Thu May 20 17:39:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/tao/TAO.dsp:
