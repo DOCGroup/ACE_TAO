@@ -235,6 +235,19 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       << "{" << be_nl
       << "}\n\n";
 
+  os->indent ();
+  *os << scope->full_name ();
+
+  // Only if there exists any nesting "::" is needed!
+  if (node->is_nested ())
+    *os << "::";  
+ 
+  *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
+  *os << "~TAO_" 
+      <<  node->flat_name () << "_Smart_Proxy_Base (void)" <<be_nl
+      << "{" << be_nl
+      << "}\n\n";
+
     if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
