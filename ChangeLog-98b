@@ -1,3 +1,12 @@
+Tue Dec 08 15:03:25 1998  Steve Huston  <shuston@riverace.com>
+
+        * ace/NT_Service.{h cpp i}: Added a number of methods which can be
+          used to register, remove, and control an NT service.  Also,
+          another macro, ACE_NT_SERVICE_RUN, which simplifies the setting up
+          and running the most common case, a single service.  Huge thanks
+          to Gonzalo Diethelm <Gonzalo.Diethelm@jda.cl> for contributing
+          the bulk of this code!
+
 Tue Dec 08 11:22:56 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ACE version 4.6.6 released.
