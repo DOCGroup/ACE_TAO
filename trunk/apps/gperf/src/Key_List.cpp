@@ -957,7 +957,7 @@ Key_List::output_binary_search_function (void)
   printf ("\t}\n");
   printf ("if (last<first) base = 0;\n");
   printf ("else base = &wordlist[index];\n");
-  printf ("\nreturn base;\n}");
+  printf ("\nreturn base;\n}\n");
 
   if (additional_code)
     {
