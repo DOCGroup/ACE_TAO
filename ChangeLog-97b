@@ -1,18 +1,18 @@
 Sat Oct 25 17:41:57 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
-	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp: 
-	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp: 
-	* examples/Timer_Queue/main_async.cpp: 
-	* examples/Timer_Queue/main_reactor.cpp: 
-	* examples/Timer_Queue/main_thread.cpp: 
-	Added "#pragma instantiate" for template instantiations on 
-	platforms that use pragmas instead, like SGI.
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp: 
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp: 
+        * examples/Timer_Queue/main_async.cpp: 
+        * examples/Timer_Queue/main_reactor.cpp: 
+        * examples/Timer_Queue/main_thread.cpp: 
+          Added "#pragma instantiate" for template instantiations on 
+          platforms that use pragmas instead, like SGI.
 
 Sat Oct 25 15:18:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO/tests/IDL_Cubit/Makefile: Enhanced the "realclean" target to
- 	  remove the generated IDL stubs and skeletons.
+        * TAO/tests/IDL_Cubit/Makefile: Enhanced the "realclean" target to
+          remove the generated IDL stubs and skeletons.
 
         * ace/OS.cpp (ace_sysconf_dump): Made a minor change to OS.cpp
           to fix some typos.  Thanks to Wei Chiang <chiang@tele.nokia.fi>
@@ -21,9 +21,10 @@ Sat Oct 25 15:18:34 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Sat Oct 25 4:44:00 1997  Carlos O'Ryan <coryan@cs.wustl.edu>
 
         * Today at 06:44 hours (Santiago, 04:44 St. Louis) Fernanda O'Ryan
- 	  has joined the ACE family.  She has absolutely no experience in
- 	  CORBA, C++ or programming in general.  She was born 3040 gr in
- 	  weight and 50 cm length.
+          has joined the ACE family.  She was born 3040 gr in weight and
+          50 cm length.  She has absolutely no experience in CORBA, C++ or
+          programming in general.  Therefore, she is the ultimate Java
+          programmer.
 
 Sat Oct 25 10:13:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
