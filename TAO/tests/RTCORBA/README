@@ -31,3 +31,12 @@ on the corresponding test.  List of tests:
 
                 Tests various settings of
                 RTCORBA::ClientProtocolPolicy.
+
+              . MT_Client_Protocol_Priority
+
+                Multithreaded test with two client threads [with
+                different priorities and different
+                ClientProtocolPolicy Current-level overrides]
+                concurrently making invocations on one object
+                reference, which has a CLIENT_PROPAGATED priority
+                model.
