@@ -153,8 +153,12 @@ interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
       wsListI[i].st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       ref_.assign_warray (key, wsListI[i].st_array);
-      // the cast is to keep the TRUE64 Cxx compiler happy.
-      wsListI[i].st_any <<= CORBA::wstring_dup(static_cast<const CORBA::WChar *>(L""));
+      // this is to keep Cxx on TRUE64 happy
+      // it won't cast a wide character literal (i.e. L"")
+      // to a CORBA::WChar *.  +
+      // {I wonder if sizeof(wchar_t) != sizeof (CORBA::WChar)?}
+      const CORBA::WChar empty_wstring[] = {0};
+      wsListI[i].st_any <<= CORBA::wstring_dup(empty_wstring);
     }
   return wsListI._retn();
 }
