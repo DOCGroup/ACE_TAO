@@ -13,6 +13,8 @@ NAME = LoadMonitor
 OBJFILES = \
 	$(OBJDIR)\Push_Handler.obj \
 	$(OBJDIR)\LoadMonitor.obj
+	$(OBJDIR)\Signal_Handler.obj \
+	$(OBJDIR)\Monitor_Signal_Handler.obj
 
 
 CFLAGS = \
