@@ -1,3 +1,30 @@
+Wed Oct 27 14:33:42 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/HTBP/HTBP_Addr.cpp:
+        * ace/HTBP/HTBP_Filter_Factory.cpp:
+        * ace/HTBP/HTBP_ID_Requestor.cpp:
+        * ace/HTBP/HTBP_Outside_Squid_Filter.h:
+          Addressing errors raised by AIX 64 compiler.
+
+Wed Oct 27 12:11:11 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/HTBP/HTBP_Addr.cpp:
+        * ace/HTBP/HTBP_Environment.cpp:
+        * ace/HTBP/HTBP_Environment.h:
+        * ace/HTBP/HTBP_Filter.cpp:
+        * ace/HTBP/HTBP_Filter.h:
+        * ace/HTBP/HTBP_ID_Requestor.cpp:
+        * ace/HTBP/HTBP_ID_Requestor.h:
+        * ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+        * ace/HTBP/HTBP_Session.cpp:
+        * tests/HTBP/Reactor_Tests/client.cpp:
+        * tests/HTBP/Send_Large_Msg/client.cpp:
+        * tests/HTBP/Send_Large_Msg/run_test.pl:
+        * tests/HTBP/Send_Large_Msg/server.cpp:
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.cpp:
+        * tests/HTBP/ping/client.cpp:
+          Numerous fixes to make support for wchar builds correct.
+
 Wed Oct 27 10:33:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/HTBP/HTBP.mpc:

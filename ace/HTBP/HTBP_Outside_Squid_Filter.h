@@ -21,13 +21,13 @@
 #include "HTBP_Export.h"
 #include "HTBP_Filter.h"
 
-// Forward declarations.
-class ACE::HTBP::Channel;
-
 namespace ACE
 {
   namespace HTBP
   {
+    // Forward declarations
+    class Channel;
+
     /**
      * @class Outside_Squid_Filter
      *
