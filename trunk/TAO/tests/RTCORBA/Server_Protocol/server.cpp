@@ -121,7 +121,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb
         protocols[i].transport_protocol_properties;
 
       // Print properties.
-      if (protocol_type == TAO_TAG_IIOP_PROFILE)
+      if (protocol_type == IOP::TAG_INTERNET_IOP)
         {
           RTCORBA::TCPProtocolProperties_var tcp_properties =
             RTCORBA::TCPProtocolProperties::_narrow (properties.in
