@@ -36,6 +36,13 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+  if (connection_handler_ != 0)
+    {
+      // REFCNT: Matches one of
+      // TAO_Transport::connection_handler_close() or
+      // TAO_Transport::close_connection_shared.
+      this->connection_handler_->incr_refcount();
+    }
   // @@ Michael: Set the input CDR size to ACE_MAX_DGRAM_SIZE so that
   //             we read the whole UDP packet on a single read.
   if (flag)
@@ -56,6 +63,7 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
 
 TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
 {
+  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
@@ -470,10 +478,10 @@ TAO_DIOP_Transport::get_listen_point (
 }
 */
 
-ACE_Event_Handler *
+TAO_Connection_Handler *
 TAO_DIOP_Transport::invalidate_event_handler_i (void)
 {
-  ACE_Event_Handler * eh = this->connection_handler_;
+  TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
   return eh;
 }

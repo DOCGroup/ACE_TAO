@@ -196,6 +196,12 @@ TAO_IIOP_Connection_Handler::resume_handler (void)
 }
 
 int
+TAO_IIOP_Connection_Handler::close_connection (void)
+{
+  return this->close_connection_eh (this);
+}
+
+int
 TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
   return this->handle_input_eh (h, this);
@@ -212,12 +218,6 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                            ACE_Reactor_Mask rm)
 {
   return this->handle_close_eh (handle, rm, this);
-}
-
-void
-TAO_IIOP_Connection_Handler::handle_close_i (void)
-{
-  this->handle_close_i_eh (this);
 }
 
 int

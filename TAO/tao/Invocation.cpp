@@ -99,6 +99,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (void)
     received_location_forward_ (0),
     profile_index_ (0)
 {
+#if defined (ACE_HAS_PURIFY)
+  ACE_OS::memset(buffer_, 0, sizeof(buffer_));
+#endif /* ACE_HAS_PURIFY */
 }
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
@@ -134,6 +137,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     received_location_forward_ (0),
     profile_index_ (0)
 {
+#if defined (ACE_HAS_PURIFY)
+  ACE_OS::memset(buffer_, 0, sizeof(buffer_));
+#endif /* ACE_HAS_PURIFY */
 }
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)

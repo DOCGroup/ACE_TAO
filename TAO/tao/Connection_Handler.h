@@ -69,8 +69,19 @@ public:
 
   /// Increment and decrement the refcount. The object is deleted when
   /// the refcount reaches zero.
-  int incr_refcount (void);
-  void decr_refcount (void);
+  long incr_refcount (void);
+  long decr_refcount (void);
+
+  /// Close the underlying connection.
+  /**
+   * Used by the ORB to actively close connections that are idle,
+   * stale or somehow are determined to be broken before the Reactor
+   * does.
+   *
+   * @return Return 0 if the connection was already closed, non-zero
+   * otherwise.
+   */
+  virtual int close_connection (void) = 0;
 
   /// The event handler calls, here so that other objects who hold a
   /// reference to this object can call the event handler methods.
@@ -103,9 +114,6 @@ protected:
   /// Query the upcall count
   int pending_upcalls (void) const;
 
-  /// Shutdown the object
-  virtual void handle_close_i (void) = 0;
-
   //@{
   /**
    * @name Helper methods for Event_Handler-based derived classes.
@@ -122,16 +130,18 @@ protected:
                                unsigned long reactor_mask,
                                ACE_Event_Handler * eh);
 
-  /// Implement the handle_close_i() template method.
-  void handle_close_i_eh (ACE_Event_Handler * eh);
-
   /// Implement the handle_output() callback
   int handle_output_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
 
   /// Implement the handle_input() callback
   int handle_input_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
 
-  /// Release the OS resources related to this handler, used in handle_close_eh()
+  /// Implement close_connection() for Connection_Handlers that are
+  /// also Event_Handlers.
+  int close_connection_eh (ACE_Event_Handler * eh);
+
+  /// Release the OS resources related to this handler, used in
+  /// handle_close_eh()
   virtual int release_os_resources (void);
 
   /// Pre-invocation hook for I/O operations (handle_input() &
@@ -159,25 +169,15 @@ private:
   /// Cached tss resources of the ORB that activated this object.
   TAO_ORB_Core_TSS_Resources *tss_resources_;
 
-  /// Count nested upcalls on this
-  /// svc_handler i.e., the connection can close during nested upcalls,
-  /// you should not delete the svc_handler until the stack unwinds
-  /// from the nested upcalls.
-  long pending_upcalls_;
-
-  /* Have a count of the number of references to the
-   * handler. Theoretically this should be in the reactor. As we dont
-   * have this in the reactor we are providing it here.
-   *
-   * NOTE: Please dont try to combine this with the pending
-   * upcalls. They are for two completely different things.
-   * @@todo: Need to be moved into the reactor at a later date
-   */
+  /// Pretty obvious
   long reference_count_;
 
-  /// Lock for the <pending_upcalls_>. We can have more than one
-  /// thread trying to access.
-  ACE_Lock *pending_upcall_lock_;
+  /// Lock for the reference count
+  ACE_Lock *refcount_lock_;
+
+  /// Internal state lock, needs to be separate from the reference
+  /// count / pending upcalls lock because they interleave.
+  ACE_Lock * lock_;
 };
 
 #if defined (__ACE_INLINE__)

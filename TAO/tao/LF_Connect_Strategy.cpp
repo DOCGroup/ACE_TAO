@@ -45,15 +45,26 @@ int
 TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                                ACE_Time_Value *max_wait_time)
 {
-  TAO_Transport *transport =
-    ch->transport ();
+  ACE_ASSERT(ch != 0);
+
+  // @@todo We need to use a auto_ptr<>-like object here!
+  // TAO_Transport * transport = ch->get_transport_locked();
+  TAO_Transport *transport = ch->transport ();
+
+  // Basically the connection was EINPROGRESS, but before we could
+  // wait for it some other thread detected a failure and cleaned up
+  // the connection handler.
+  if(transport == 0)
+    {
+      return -1;
+    }
 
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - LF_Connect_Strategy::wait, "
                   "waiting for Transport[%d]\n",
-                  transport->id()));
+                  transport->id ()));
     }
 
   TAO_Leader_Follower &leader_follower =
@@ -75,6 +86,9 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                   "wait done for Transport[%d], result = %d\n",
                   transport->id(), result));
     }
+
+  // @@todo We need to use a auto_ptr<>-like object here!
+  // TAO_Transport::release(transport);
 
   return result;
 }
