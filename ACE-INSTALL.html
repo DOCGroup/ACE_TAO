@@ -92,6 +92,9 @@ try to help you fix the problems.
       dynamic library, using the Win32 installation process described
       below.<P>
 
+      Please see the <A HREF="#Non-static Object Manager">Non-static
+      ACE_Object_Manager</A> discussion below.<p>
+
   <li><b>Windows CE</b><p>
 
       Most of ACE has been ported to Windows CE using Visual C++ 5.0 with CE
@@ -746,8 +749,8 @@ the STL fixes.
   <LI>Create a directory, e.g., C:\ACE, and copy all of the ACE
       distribution into it.  This directory will be referred to as
       ACE_ROOT in the rest of this discussion.<BR><BR>
-  <LI>Create a file called config.h in the ACE_ROOT\ace directory
-      that contains: <BR>
+  <LI>Create a file called <code>config.h</code> in the ACE_ROOT\ace
+      directory that contains: <BR>
       <BR>
       <CODE>#include "ace/config-win32.h"</CODE><BR>
       <BR>
@@ -916,9 +919,9 @@ for these notes):<p>
       and g++&lt;target&gt;; for example, ccppc and g++cpp for PowerPC targets.
 </UL>
 
-You'll have to let ACE know the target type at compile time.
-There are several ways to do this; please see the
-$ACE_ROOT/include/makeinclude/platform_vxworks5.x_g++.GNU
+You'll have to let ACE know the target type at compile time.  There
+are several ways to do this; please see the
+<code>$ACE_ROOT/include/makeinclude/platform_vxworks5.x_g++.GNU</code>
 platform file for detailed information.<P>
 
 The VxWorks platform_vxworks*.GNU files are set up so that shared
@@ -994,29 +997,9 @@ Please note that the <code>main</code> entry point is renamed to
 to comply with its restriction against using <code>main</code>.
 In addition, ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled by default
 to cleanly support construction and destruction of static objects.
-This requires that <code>main</code> be declared with its arguments
-even if they're not used, and with <code>int</code> return type:
-
-<pre><code>
-int
-main (int, char *[])
-</code></pre>
-
-Alternatively, this feature can be disabled by commenting out the
-#define ACE_HAS_NONSTATIC_OBJECT_MANAGER in your ace/config.h.
-But, that will make repeated testing more difficult on VxWorks.
-You'd either have to call static constructors and destructors
-manually or unload/load the program between runs.<p>
-
-<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-ACE on VxWorks assumes that your <code>main</code> function is named
-<code>main</code> when using ACE_HAS_NONSTATIC_OBJECT_MANAGER.  Any
-violation of this assumption is at your peril.  If you really need to
-call your entry point something other than <code>main</code>, you'll
-need to construct an ACE_Object_Manager.  Please see the
-<code>#define</code> of <code>main (int, char *[])</code> in
-<code>ace/OS.h</code> to see how ACE does that for entry points named
-<code>main</code>.<p>
+Please see the <A HREF="#Non-static Object Manager">Non-static
+ACE_Object_Manager</A> discussion for the important implication
+of this feature.<p>
 
 ACE threads (VxWorks tasks) can be named, for example, by supplying a
 non-null argument to the Thread_Manager spawn routines.  However,
@@ -1304,6 +1287,7 @@ in your PATH.<P>
 <UL>
   <LI><A
       HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</A>
+  <LI><A HREF="#Non-static Object Manager">Non-static ACE_Object_Manager</A>
   <LI><A HREF="#cloning">Cloning the Source Tree</A>
   <LI><A HREF="#corba">Building CORBA Versions of ACE</A>
   <LI><A HREF="#mvs">Additional Build Tips for MVS</A>
@@ -1311,6 +1295,59 @@ in your PATH.<P>
   <LI><A HREF="http://www.cs.wustl.edu/~levine/CVS.html">Version Control</A>
   <LI><A HREF="http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html">ACE Makefile hints</a>
 </UL>
+
+<H4><A NAME="Non-static Object Manager">Non-static
+ACE_Object_Manager</A></H4> The ACE_Object_Manager can be instantiated
+as a static object, can be instantiated on the stack of the main
+program thread, or can be explicitly instantiated and destroyed by the
+application with <code>ACE::init ()</code> and <code>ACE::fini
+()</code>.  The comments in the <a href="ace/Object_Manager.h">header
+file, <code>ace/Object_Manager.h</code></a> provide more detail.<P>
+
+<strong><blink><font color="#ff0000">NOTE:</font></blink></strong>
+Special requirements are imposed on applications if the
+ACE_Object_Manager is instantiated, by ACE, on the stack of the main
+thread.  This behavior is selected by defining
+<code>ACE_HAS_NONSTATIC_OBJECT_MANAGER</code> in
+<code>ace/config.h</code>.  Again, see the ACE Object_Manager <a
+href="ace/Object_Manager.h">header file,
+<code>ace/Object_Manager.h</code></a> for more information.  One of
+these requirements is discussed here, because it is so important.
+Please note that <code>ACE_HAS_NONSTATIC_OBJECT_MANAGER</code> is
+defined in the distributed ACE <code>config.h</code> headers for
+VxWorks and Win32.<p>
+
+The important requirement is that the program <strong>must</strong>
+declare its <code>main</code> function with two arguments, even if
+they're not used, and with <code>int</code> return type:
+
+<pre><code>
+int
+main (int, char *[])
+</code></pre>
+
+If you don't declare <code>main</code> <strong>exactly</strong> that
+way, then you'll see a link error about <code>ace_main_i</code> being
+undefined.<p>
+
+Alternatively, this feature can be disabled by commenting out the
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER in the
+<code>ace/config.h</code>.  But, that will make repeated testing more
+difficult on VxWorks.  And, you'd either have to call static
+constructors and destructors manually or unload/load the program
+between runs.  On Win32, disabling the feature can possibly lead to
+shutdown difficulties.<p>
+
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+<code>ACE_HAS_NONSTATIC_OBJECT_MANAGER</code> assumes that your
+<code>main</code> function is named <code>main</code>.  Any violation
+of this assumption is at your peril.  If you really need to call your
+entry point something other than <code>main</code>, you'll need to
+construct and destroy the ACE_Object_Manager.  The best way to do that
+is to call <code>ACE::init ()</code> and <code>ACE::fini ()</code>.
+Or, see the <code>#define</code> of <code>main (int, char *[])</code>
+in <a href="ace/OS.h"><code>ace/OS.h</code></a> to see how ACE does
+that for entry points named <code>main</code>.<p>
 
 <H4><A NAME="cloning">Cloning the Source Tree</A></H4>
 
