@@ -7,9 +7,11 @@ Mon Dec 15 18:51:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec 15 11:09:45 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/POSIX_CB_Proactor.cpp (ACE_POSIX_CB_Proactor): Added a
+	* tests/Proactor_Test.cpp (ACE_MT_SYNCH>): 
+	* ace/POSIX_CB_Proactor.cpp (ACE_POSIX_CB_Proactor): Added a 
 	  cast to (unsigned int) so things will work properly for the
- 	  ACE_Thread_Semaphore.
+ 	  ACE_Thread_Semaphore.  Thanks to Bala and Don Hinton for
+ 	  reporting these problems.
 
 Mon Dec 15 10:11:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
