@@ -1,3 +1,10 @@
+Sun Jan 26 17:29:34 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Leader_Follower.cpp (wait_for_event): Set LFS_TIMEOUT on the
+	  LF_Event only if the follower timesout. The follower could
+	  return with a -1 from wait () even if errors other than timeout
+	  occurs, like connection closure and such. 
+
 Sun Jan 26 17:23:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
  	* tao/Notify_Handler.cpp (TAO_Notify_Handler): 
