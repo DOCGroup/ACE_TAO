@@ -1,3 +1,8 @@
+Fri May 30 13:54:57 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * parser/parser/Parser.dsp: Removed this erroneous dsp file left
+          over from the merge.
+
 Fri May 30 13:50:11 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
         * common/ZipCharStream.h: Removed broken logic to undefine macro
@@ -40,7 +45,6 @@ Thu May 29 23:00:24 2003  Krishnakumar B  <kitty@spam.invalid.domain>
         * tests/Makefile:
 
           This file got left out by mistake during the big merge.
-
 
 Thu May 29 22:03:40 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
