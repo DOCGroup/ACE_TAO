@@ -10,6 +10,9 @@
 // Do we really need this #define here?
 #define LINUX 1.2.10
 
+#define ACE_HAS_PENTIUM
+#define ACE_HAS_LONGLONG
+
 // Fixes a problem with new versions of Linux...
 #ifndef msg_accrights
 #undef msg_control

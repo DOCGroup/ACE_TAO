@@ -7,6 +7,9 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_PENTIUM
+#define ACE_HAS_LONGLONG
+
 // Fixes a problem with new versions of Linux...
 #ifndef msg_accrights
 #undef msg_control
