@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Dougls C. Schmidt <schmidt@cs.wustl.edu> and Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Dougls C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -64,7 +65,7 @@ public:
                               size_t &rounded_bytes,
                               int &first_time);
 
-  /// Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
+  /// Acquire at least @a nbytes from the memory pool. @a rounded_bytes is
   /// the actual number of bytes allocated.
   virtual void *acquire (size_t nbytes,
                          size_t &rounded_bytes);
@@ -73,25 +74,25 @@ public:
   virtual int release (int destroy = 1);
 
   /**
-   * Sync <len> bytes of the memory region to the backing store
-   * starting at <this->base_addr_>.  If <len> == -1 then sync the
+   * Sync @a len bytes of the memory region to the backing store
+   * starting at <this->base_addr_>.  If @a len == -1 then sync the
    * whole region.
    */
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
-  /// Sync <len> bytes of the memory region to the backing store
-  /// starting at <addr_>.
+  /// Sync @a len bytes of the memory region to the backing store
+  /// starting at @a addr.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
    * Change the protection of the pages of the mapped region to <prot>
-   * starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
+   * starting at <this->base_addr_> up to @a len bytes.  If @a len == -1
    * then change protection of all pages in the mapped region.
    */
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
 
-  /// Change the protection of the pages of the mapped region to <prot>
-  /// starting at <addr> up to <len> bytes.
+  /// Change the protection of the pages of the mapped region to @a prot
+  /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /// Dump the state of an object.
@@ -154,8 +155,8 @@ public:
  * (shmget(2) etc.).  This implementation allows memory to be
  * shared between processes.  If your platform doesn't support
  * System V shared memory (e.g., Win32 and many RTOS platforms
- * do not) then you should use <ACE_MMAP_Memory_Pool> instead of this
- * class.  In fact, you should probably use <ACE_MMAP_Memory_Pool> on
+ * do not) then you should use ACE_MMAP_Memory_Pool instead of this
+ * class.  In fact, you should probably use ACE_MMAP_Memory_Pool on
  * platforms that *do* support System V shared memory since it
  * provides more powerful features, such as persistent backing store
  * and greatly scalability.
@@ -177,7 +178,7 @@ public:
                               int &first_time);
 
   /**
-   * Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
+   * Acquire at least @a nbytes from the memory pool. @a rounded_byes is
    * the actual number of bytes allocated.  Also acquires an internal
    * semaphore that ensures proper serialization of Memory_Pool
    * initialization across processes.
@@ -192,7 +193,7 @@ public:
   /// <this->base_addr_>.
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
 
-  /// Sync the memory region to the backing store starting at <addr_>.
+  /// Sync the memory region to the backing store starting at @a addr.
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 
   /**
@@ -318,7 +319,7 @@ public:
                               size_t &rounded_bytes,
                               int &first_time);
 
-  /// Acquire at least NBYTES from the memory pool.  ROUNDED_BYTES is
+  /// Acquire at least @a nbytes from the memory pool. @a rounded_bytes is
   /// the actual number of bytes allocated.
   virtual void *acquire (size_t nbytes,
                          size_t &rounded_bytes);
