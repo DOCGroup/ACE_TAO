@@ -14,6 +14,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Limit.h"
+#include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
@@ -32,7 +33,7 @@ namespace
   ACE_CString sched_type ="rms";
   FILE * ior_output_file;
 }
-
+/*
 class Once_Handler: public Service_Handler
 {
 public:
@@ -75,27 +76,6 @@ public:
         ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_start() START\n"));
         this->handled_start_++; //set to true
 
-        // Uncommenting this causes the Supplier_EC event type 18 to never be pushed again (despite the timeout happening)
-        //trigger Task 3!
-        /*
-        kokyu_ec_->add_timeout_consumer(
-                                       supplier_impl_,
-                                       timeout_handler_impl_,
-                                       timeout_entry_point_,
-                                       period_,
-                                       crit_,
-                                       imp_
-                                       ACE_ENV_ARG_PARAMETER
-                                       );
-        ACE_CHECK;
-
-        //should be able to just call Kokyu_EC::start() to recompute schedule
-        //BEWARE if kokyu_ec_ overrides start() to do stuff we don't want to redo!
-        //which is why we specify the Kokyu_EC version of the function!
-        kokyu_ec_->Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
-        */
-
         //WARNING: depending on Reactor, might not be a RT solution!
 
         this->timer_handle_ = this->reactor_->schedule_timer(this->timeout_handler_impl_,
@@ -128,16 +108,15 @@ private:
   ACE_Time_Value period_;
   long timer_handle_;
 
-  /*
-  Timeout_Consumer * timeout_consumer_impl_;
-  Supplier * supplier_impl_;
-  const char * timeout_entry_point_;
-  RtecScheduler::Criticality_t crit_;
-  RtecScheduler::Importance_t imp_;
-  Kokyu_EC * kokyu_ec_;
-  */
-};
+//   Timeout_Consumer * timeout_consumer_impl_;
+//   Supplier * supplier_impl_;
+//   const char * timeout_entry_point_;
+//   RtecScheduler::Criticality_t crit_;
+//   RtecScheduler::Importance_t imp_;
+//   Kokyu_EC * kokyu_ec_;
 
+};
+*/
 class Consumer_EC : public Kokyu_EC
 {
 public:
@@ -150,7 +129,7 @@ public:
   {
   } //~Consumer_EC()
 
-  void set_up_supp_and_cons(CORBA::ORB_var orb
+  void set_up_supp_and_cons(CORBA::ORB_var
                             ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -288,9 +267,9 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
 #ifdef ACE_HAS_DSUI
-      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
+      EC_Event_Limit* e_limit = new EC_Event_Limit (orb, ds_cntl); //will delete ds_cntl
 #else
-      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
+      EC_Event_Limit* e_limit = new EC_Event_Limit (orb);
 #endif //ACE_HAS_DSUI
       ACE_Time_Value ticker (300);
       long timer_id = rt.reactor()->schedule_timer(e_limit,0, ticker);
@@ -316,6 +295,14 @@ main (int argc, char* argv[])
       return 1;
     }
   ACE_ENDTRY;
+  /*
+  //@BT
+  //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+  ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
+  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+
+  delete ds_cntl;
+  */
   return 0;
 }
 

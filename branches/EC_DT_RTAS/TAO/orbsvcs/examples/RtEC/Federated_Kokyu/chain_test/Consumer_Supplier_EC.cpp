@@ -13,6 +13,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Limit.h"
+#include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
@@ -241,9 +242,9 @@ main (int argc, char* argv[])
       DSTRM_EVENT (WORKER_GROUP_FAM, WORKER_STARTED, 0, 0, NULL);
 
 #ifdef ACE_HAS_DSUI
-      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
+      EC_Event_Limit* e_limit = new EC_Event_Limit (orb, ds_cntl); //will delete ds_cntl
 #else
-      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
+      EC_Event_Limit* e_limit = new EC_Event_Limit (orb);
 #endif //ACE_HAS_DSUI
       ACE_Time_Value ticker (305);
       //orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
@@ -261,13 +262,13 @@ main (int argc, char* argv[])
 
       //@BT: ORB shutting down; currently, this isn't expected to happen
       //DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t CALL_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
+      //ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t CALL_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
+      //DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
 
       //@BT: Scheduler shuts down with the EC and ORB
       //DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t SCHEDULER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
+      //ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t SCHEDULER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
+      //DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
 
       // We should do a lot of cleanup (disconnect from the EC,
       // deactivate all the objects with the POA, etc.) but this is
@@ -275,8 +276,8 @@ main (int argc, char* argv[])
 
       //@BT: Done clean up
       //DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
-      ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t AFTER_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
-      DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
+      //ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t AFTER_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
+      //DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
 
     }
   ACE_CATCHANY
@@ -285,12 +286,14 @@ main (int argc, char* argv[])
       return 1;
     }
   ACE_ENDTRY;
-
+  /*
   //@BT
   //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
   ACE_DEBUG((LM_DEBUG,"Consumer_Supplier_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 
+  delete ds_cntl;
+  */
   return 0;
 }
 
