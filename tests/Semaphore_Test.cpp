@@ -117,8 +117,6 @@ test_timeout (void)
     ACE_ASSERT (errno == ETIME);
 
   ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
-  // Also be sure the time was reset to when acquired.
-  ACE_Time_Value reset_check = ACE_OS::gettimeofday () - wait;
 
   msecs_waited = wait_diff.msec();
   msecs_expected = wait_secs * 1000;
