@@ -218,6 +218,16 @@ public:
   int &opt_ind (void);
 
   /// Adds a long option with no corresponding short option.
+  /**
+   * If the @a name option is seen, @c operator() returns 0.
+   *
+   * @param name          The long option to add.
+   * @param has_arg       Defines the argument requirements for
+   *                      the new option.
+   *
+   * @retval 0  Success
+   * @retval -1 The long option can not be added.
+   */
   int long_option (const ACE_TCHAR *name,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
@@ -230,7 +240,7 @@ public:
    *                      the new option.  If the short option has already
    *                      been supplied in the @a optstring, @a has_arg
    *                      must match or an error is returned; otherwise, the
-   *                      new short option it is added to the @a optstring.
+   *                      new short option is added to the @a optstring.
    *
    * @retval 0  Success
    * @retval -1 The long option can not be added.
