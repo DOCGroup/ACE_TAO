@@ -1,0 +1,18 @@
+project(Bug_1551_Server): taoserver, iortable, portableserver {
+  exename = server
+  Source_Files {
+    Hello.cpp
+    Server_Task.cpp
+    Test_i.cpp
+    server.cpp
+  }
+}
+
+project(Bug_1551_Client): taoserver {
+  exename = client
+  Source_Files {
+    Client_Task.cpp
+    Reply_Handler.cpp
+    client.cpp
+  }
+}
