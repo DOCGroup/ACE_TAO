@@ -398,6 +398,10 @@ protected:
   /// Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
   ACE_TCHAR *command_line_buf_;
 
+  /// Pointer to copy of command-line arguments, which is needed when
+  /// converting a command-line string into a command-line argv.
+  ACE_TCHAR *command_line_copy_;
+
   /// Max length of command_line_buf_
   int command_line_buf_len_;
 

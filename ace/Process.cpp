@@ -469,7 +469,6 @@ ACE_Process::close_passed_handles (void)
   return;
 }
 
-
 ACE_Process_Options::ACE_Process_Options (int ie,
                                           int cobl,
                                           int ebl,
@@ -505,6 +504,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (0),
     command_line_buf_ (0),
+    command_line_copy_ (0),
     command_line_buf_len_ (cobl),
     process_group_ (ACE_INVALID_PID)
 {
@@ -774,6 +774,7 @@ ACE_Process_Options::~ACE_Process_Options (void)
   delete [] environment_argv_;
 #endif /* !ACE_HAS_WINCE */
   delete [] command_line_buf_;
+  ACE::strdelete (command_line_copy_);
 }
 
 int
@@ -872,9 +873,15 @@ ACE_Process_Options::command_line_argv (void)
     {
       command_line_argv_calculated_ = 1;
 
+      // We need to free up any previous allocated memory first.
+      ACE::strdelete (command_line_copy_);
+
+      // We need to make a dynamically allocated copy here since
+      // ACE_Tokenizer modifies its arguments.
+      command_line_copy_ = ACE::strnew (command_line_buf_);
       // This tokenizer will replace all spaces with end-of-string
       // characters and will preserve text between "" and '' pairs.
-      ACE_Tokenizer parser (command_line_buf_);
+      ACE_Tokenizer parser (command_line_copy_);
       parser.delimiter_replace (' ', '\0');
       parser.preserve_designators ('\"', '\"'); // "
       parser.preserve_designators ('\'', '\'');
@@ -891,7 +898,6 @@ ACE_Process_Options::command_line_argv (void)
 
   return command_line_argv_;
 }
-
 
 // Cause the specified handle to be passed to a child process
 // when it's spawned.
