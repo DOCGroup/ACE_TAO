@@ -38,12 +38,12 @@ main (int argc, LPTSTR [], LPTSTR envp[])
       ACE_Process_Options options (1);
       options.setenv (envp);
 
-      options.command_line (TEXT ("Env_Value_Test run_as_test"));
+      options.command_line (ASYS_TEXT ("Env_Value_Test run_as_test"));
 
-      options.setenv(TEXT ("TEST_VALUE_POSITIVE"), TEXT ("%s"), 
-                     TEXT ("10.2"));
-      options.setenv(TEXT ("TEST_VALUE_NEGATIVE"), TEXT ("%s"), 
-                     TEXT ("-10.2"));
+      options.setenv(ASYS_TEXT ("TEST_VALUE_POSITIVE"), ASYS_TEXT ("%s"), 
+                     ASYS_TEXT ("10.2"));
+      options.setenv(ASYS_TEXT ("TEST_VALUE_NEGATIVE"), ASYS_TEXT ("%s"), 
+                     ASYS_TEXT ("-10.2"));
 
       ACE_Process p;
       pid_t result = p.spawn (options);
