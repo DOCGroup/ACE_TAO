@@ -23,7 +23,7 @@ unlink $iorfile2;
 # Arguments are platform-dependent (UIOP not available on Windows).
 $server_args =
     "-s $iorfile1 -c $iorfile2 -p 1413566208 "
-    ."-ORBSvcconf svc_unix.conf -ORBendpoint iiop://  -ORBendpoint shmiop:// -ORBEndpoint uiop://";
+    ."-ORBSvcconf svc_unix.conf -ORBendpoint iiop:// -ORBendpoint shmiop:// -ORBEndpoint uiop:// ";
 $client_args =
     "-s file://$iorfile1 -c file://$iorfile2 -p 1413566210 -ORBdebuglevel 1 -ORBSvcconf svc_unix.conf ";
 

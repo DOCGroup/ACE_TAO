@@ -4,8 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBAC.h"
 
-#include "ace/Service_Config.h"
-#include "tao/Strategies/TAO_Strategies_Internal.h"
+#include "tao/Strategies/advanced_resource.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
 

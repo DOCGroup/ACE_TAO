@@ -73,6 +73,10 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
                       "The server has been contacted !!\n",
                       0));
         }
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "The server has not been contacted. Error!!\n",
+                    0));
     }
   ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
     {

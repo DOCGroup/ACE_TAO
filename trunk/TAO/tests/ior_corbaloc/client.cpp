@@ -46,6 +46,3 @@ int main (int argc, char *argv [])
   ACE_ENDTRY;
   return 0;
 }
-
-
-  

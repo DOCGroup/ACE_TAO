@@ -3,6 +3,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 const char *ior = "file://test.ior";

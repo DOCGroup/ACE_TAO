@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Latency, st_server, "$Id$")
 
 const char *ior_output_file = "test.ior";

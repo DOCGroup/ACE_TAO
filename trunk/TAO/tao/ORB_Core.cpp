@@ -64,6 +64,7 @@ TAO_default_environment ()
 
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
+const char * TAO_ORB_Core::resource_factory_name_ = "Resource_Factory";
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : lock_ (),
@@ -497,7 +498,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Multiple sets of endpoint may be seperated by a semi-colon `;'.
           // For example:
           //
-          //   iioploc://space:2001,1.2@odyssey:2010;uiop://foo,bar
+          //   corbaloc:space:2001,1.2@odyssey:2010;uiop://foo,bar
           //
           // All preconnect or endpoint strings should be of the above form(s).
 
@@ -1299,6 +1300,12 @@ TAO_ORB_Core::fini (void)
   return 0;
 }
 
+void
+TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
+{
+  TAO_ORB_Core::resource_factory_name_ = resource_factory_name;
+}
+
 TAO_Resource_Factory *
 TAO_ORB_Core::resource_factory (void)
 {
@@ -1306,8 +1313,8 @@ TAO_ORB_Core::resource_factory (void)
     {
       // Look in the service repository for an instance.
       this->resource_factory_ =
-        ACE_Dynamic_Service<TAO_Resource_Factory>::instance (
-                                                             "Resource_Factory");
+        ACE_Dynamic_Service<TAO_Resource_Factory>::instance
+        (TAO_ORB_Core::resource_factory_name_);
       // @@ Not needed!
       this->resource_factory_from_service_config_ = 1;
     }
@@ -1862,17 +1869,18 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   // the server strategy factory.
   // We don't need to do this because we use the Reactor
   // mechanisms to shutdown in a thread-safe way.
+
   while (this->has_shutdown () == 0)
     {
       // Every time we perform an interation we have to become the
       // leader again, because it is possible that a client has
       // acquired the leader role...
-
       TAO_Leader_Follower &leader_follower =
         this->leader_follower ();
       TAO_LF_Event_Loop_Thread_Helper helper (leader_follower);
 
       result = helper.set_event_loop_thread (tv);
+
       if (result != 0)
         {
           if (errno == ETIME)
@@ -1889,7 +1897,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // We need to do this on every iteration because the reactor may be
       // acquired by one of the client threads in the LF waiting
       // strategy
-
       r->owner (ACE_Thread::self ());
 
       if (TAO_debug_level >= 3)

@@ -11,7 +11,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
+
+#include "tao/ORB_Core.h"
+
+class TAO_Strategies_Export TAO_Resource_Factory_Changer
+{
+public:
+  TAO_Resource_Factory_Changer (void);
+};
 
 class TAO_Strategies_Export TAO_Advanced_Resource_Factory : public TAO_Default_Resource_Factory
 {
@@ -110,9 +117,11 @@ protected:
 #include "advanced_resource.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE (TAO_Advanced_Resource_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_Advanced_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_Advanced_Resource_Factory)
 ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)
+
+static TAO_Resource_Factory_Changer TAO_changer;
 
 #include "ace/post.h"
 #endif /* TAO_ADVANCED_RESOURCE_H */

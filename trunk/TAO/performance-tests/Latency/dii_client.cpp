@@ -7,6 +7,9 @@
 #include "testC.h"
 #include "tao/DynamicInterface/Request.h"
 
+
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Latency, dii_client, "$Id$")
 
 const char *ior = "file://test.ior";
@@ -325,4 +328,3 @@ DII_Client::other_stats (ACE_UINT32 gsf)
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
