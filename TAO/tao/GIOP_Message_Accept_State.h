@@ -91,10 +91,6 @@ public:
   // Our versions
 
 protected:
-  CORBA::Boolean marshal_svc_ctx (TAO_OutputCDR &output,
-                                  TAO_Pluggable_Reply_Params &reply);
-  // Marshalls the service context
-
   void marshal_reply_status (TAO_OutputCDR &output,
                              TAO_Pluggable_Reply_Params &reply);
   // Marshall the reply status

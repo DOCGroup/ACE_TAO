@@ -19,52 +19,6 @@ ACE_RCSID(tao, GIOP_Message_Accept_State, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 
-CORBA::Boolean 
-TAO_GIOP_Message_Accept_State::marshal_svc_ctx (TAO_OutputCDR &output,
-                                                TAO_Pluggable_Reply_Params &reply)
-{
-  // Write the service context list
-#if (TAO_HAS_MINIMUM_CORBA == 1)
-  output << reply.service_context_notowned ();
-#else
-  if (reply.params_ == 0)
-    {
-      output << reply.service_context_notowned ();
-    }
-  else
-    {
-      // If lazy evaluation is enabled then we are going to insert an
-      // extra node at the end of the service context list, just to
-      // force the appropiate padding.
-      // But first we take it out any of them..
-      CORBA::ULong count = 0;
-      IOP::ServiceContextList &svc_ctx =
-        reply.service_context_notowned ();
-      CORBA::ULong l = svc_ctx.length ();
-      CORBA::ULong i;
-      for (i = 0; i != l; ++i)
-        {
-          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
-          count++;
-        }
-      // Now increment it to account for the last dummy one...
-      count++;
-      
-      // Now marshal the rest of the service context objects
-      output << count;
-      for (i = 0; i != l; ++i)
-        {
-          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
-            continue;
-          output << svc_ctx[i];
-        }
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
-  return 1;
-}
-
-
 void
 TAO_GIOP_Message_Accept_State::marshal_reply_status (TAO_OutputCDR &output,
                                                      TAO_Pluggable_Reply_Params &reply)
@@ -237,10 +191,44 @@ TAO_GIOP_Message_Accept_State_10::
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  this->marshal_svc_ctx (output,
-                         reply);
+  // Write the service context list
+#if (TAO_HAS_MINIMUM_CORBA == 1)
+  output << reply.service_context_notowned ();
+#else
+  if (reply.params_ == 0)
+    {
+      output << reply.service_context_notowned ();
+    }
+  else
+    {
+      // If lazy evaluation is enabled then we are going to insert an
+      // extra node at the end of the service context list, just to
+      // force the appropiate padding.
+      // But first we take it out any of them..
+      CORBA::ULong count = 0;
+      IOP::ServiceContextList &svc_ctx =
+        reply.service_context_notowned ();
+      CORBA::ULong l = svc_ctx.length ();
+      CORBA::ULong i;
+      for (i = 0; i != l; ++i)
+        {
+          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
+            continue;
+          count++;
+        }
+      // Now increment it to account for the last dummy one...
+      count++;
+      
+      // Now marshal the rest of the service context objects
+      output << count;
+      for (i = 0; i != l; ++i)
+        {
+          if (svc_ctx[i].context_id == TAO_SVC_CONTEXT_ALIGN)
+            continue;
+          output << svc_ctx[i];
+        }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)  
+    }
   if (reply.params_ != 0)
     {
       // @@ Much of this code is GIOP 1.1 specific and should be
@@ -634,9 +622,28 @@ write_reply_header (TAO_OutputCDR & output,
                                   reply);
     }
 
-  // Service context list
-  this->marshal_svc_ctx (output,
-                         reply);
+#if (TAO_HAS_MINIMUM_CORBA == 1)
+  output << reply.service_context_notowned ();
+#else
+  if (reply.params_ == 0)
+    {
+      output << reply.service_context_notowned ();
+    }
+  else
+    {
+      IOP::ServiceContextList &svc_ctx =
+        reply.service_context_notowned ();
+      CORBA::ULong l = svc_ctx.length ();
+      
+      // Now marshal the rest of the service context objects
+      output << l;
+      for (CORBA::ULong i = 0; i != l; ++i)
+        {
+          output << svc_ctx[i];
+        }
+
+    }
+#endif /*TAO_HAS_MINIMUM_CORBA */
   
   if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
     return 0;
