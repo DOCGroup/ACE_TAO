@@ -15,6 +15,9 @@
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # include "ace/Containers.h"
+# if defined (ACE_WIN32)
+#   include "ace/Thread_Manager.h"
+# endif /* ACE_WIN32 */
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 ACE_RCSID(ace, OS, "$Id$")
