@@ -75,7 +75,7 @@ AST_Home::supports (void) const
 long 
 AST_Home::n_supports (void) const
 {
-  return this->pd_base_home ? this->n_inherits () - 1 : this->n_inherits ();
+  return this->n_inherits ();
 }
 
 AST_Component *

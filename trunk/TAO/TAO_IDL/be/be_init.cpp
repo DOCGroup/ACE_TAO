@@ -22,7 +22,7 @@ BE_init (int &, char *[])
 }
 
 TAO_IDL_BE_Export void
-BE_post_init (void)
+BE_post_init (const char *[], long)
 {
   Identifier id ("void");
   UTL_ScopedName n (&id,
