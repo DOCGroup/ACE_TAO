@@ -1,3 +1,10 @@
+Tue Jul 29 09:04:08 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/ORBEndpoint.html: Updated this document so that the DIOP
+	  section points to the examples/PluggableUDP/DIOP/README file,
+ 	  which describes the limitations with DIOP.  Thanks to
+	  Michael Kircher for motivating this!
+ 
 Tue Jul 29 10:08:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Metrics/Metrics.dsp:
@@ -9,9 +16,9 @@ Tue Jul 29 09:24:16 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 	* tao/Muxed_TMS.cpp
 
 	  Reverted the changes to the file to version 1.23, since the
-	  changes might cause applications to crash, because in the 
-	  clear_cache () function the unbind () function call will make
-	  the iterator to be invalid.
+ 	  changes might cause applications to crash, because in the
+ 	  clear_cache () function the unbind () function call will make
+ 	  the iterator to be invalid.
 
 Tue Jul 29 01:08:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
 
