@@ -16,6 +16,8 @@ Tue Jan 27 06:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.vxworks: enabled Priority_Reactor_Test and
           Message_Queue_Test, because they appear to run successfully now.
+          Most of the time, anyways.  Message_Queue_Test occasionally
+          pages faults; there appears to be a memory management problem.
 
 Tue Jan 27 02:38:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
