@@ -34,25 +34,6 @@ ACE_RCSID(Bounded_Packet_Relay, BPR_Drivers_T, "$Id$")
 
 // Constructor.
 
-template <class RECEIVER, class ACTION>
-Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
-                                    ACTION action)
-  : receiver_ (recvr),
-    action_ (action)
-{
-}
-
-// Invokes an operation.
-
-template <class RECEIVER, class ACTION> int
-Command<RECEIVER, ACTION>::execute (void *arg)
-{
-  return (receiver_.*action_) (arg);
-}
-
-
-// Constructor.
-
 template <class TQ>
 Bounded_Packet_Relay_Driver<TQ>::Bounded_Packet_Relay_Driver (void)
   : packet_count_cmd_ (0),
@@ -177,7 +158,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
 
           // We just reread the option, this simplies parsing (since
           // sscanf can do it for us).
-          if ((::sscanf (buf, "%d %d", &option, &level) < 2) || 
+          if ((::sscanf (buf, "%d %d", &option, &level) < 2) ||
               (level < 0) || (level > 7))
             {
               // If there was not enough information on the line, or the
@@ -260,7 +241,7 @@ Bounded_Packet_Relay_Driver<TQ>::read_input (char *buf, size_t bufsiz)
 
 // Get count of packets to send in a transmission.
 
-template <class TQ> u_long 
+template <class TQ> u_long
 Bounded_Packet_Relay_Driver<TQ>::packet_count (void)
 {
   return packet_count_;
@@ -268,7 +249,7 @@ Bounded_Packet_Relay_Driver<TQ>::packet_count (void)
 
 // Set count of packets to send in a transmission.
 
-template <class TQ> void 
+template <class TQ> void
 Bounded_Packet_Relay_Driver<TQ>::packet_count (u_long pc)
 {
   packet_count_ = pc;
@@ -276,7 +257,7 @@ Bounded_Packet_Relay_Driver<TQ>::packet_count (u_long pc)
 
 // Get rate at which input packets are to arrive.
 
-template <class TQ> u_long 
+template <class TQ> u_long
 Bounded_Packet_Relay_Driver<TQ>::arrival_period (void)
 {
   return arrival_period_;
@@ -284,7 +265,7 @@ Bounded_Packet_Relay_Driver<TQ>::arrival_period (void)
 
 // Set rate at which input packets are to arrive.
 
-template <class TQ> void 
+template <class TQ> void
 Bounded_Packet_Relay_Driver<TQ>::arrival_period (u_long ap)
 {
   arrival_period_ = ap;
@@ -292,7 +273,7 @@ Bounded_Packet_Relay_Driver<TQ>::arrival_period (u_long ap)
 
 // Get rate at which packets are to be relayed (usec).
 
-template <class TQ> u_long 
+template <class TQ> u_long
 Bounded_Packet_Relay_Driver<TQ>::send_period (void)
 {
   return send_period_;
@@ -300,7 +281,7 @@ Bounded_Packet_Relay_Driver<TQ>::send_period (void)
 
 // Set rate at which packets are to be relayed (usec).
 
-template <class TQ> void 
+template <class TQ> void
 Bounded_Packet_Relay_Driver<TQ>::send_period (u_long sp)
 {
   send_period_ = sp;
@@ -308,7 +289,7 @@ Bounded_Packet_Relay_Driver<TQ>::send_period (u_long sp)
 
 // Get limit on the duration of the transmission (usec).
 
-template <class TQ> u_long 
+template <class TQ> u_long
 Bounded_Packet_Relay_Driver<TQ>::duration_limit (void)
 {
   return duration_limit_;
@@ -316,7 +297,7 @@ Bounded_Packet_Relay_Driver<TQ>::duration_limit (void)
 
 // Set limit on the duration of the transmission (usec).
 
-template <class TQ> void 
+template <class TQ> void
 Bounded_Packet_Relay_Driver<TQ>::duration_limit (u_long dl)
 {
   duration_limit_ = dl;
@@ -331,11 +312,9 @@ Bounded_Packet_Relay_Driver<TQ>::logging_level (void)
 
 // Set logging level.
 
-template <class TQ> void 
+template <class TQ> void
 Bounded_Packet_Relay_Driver<TQ>::logging_level (int ll)
 {
   logging_level_ = ll;
 }
 #endif /* _BPR_DRIVER_T_CPP_ */
-
-
