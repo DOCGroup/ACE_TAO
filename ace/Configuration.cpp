@@ -1517,10 +1517,11 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
   if (validate_name (sub_section, true))
     return -1;
 
-  const ACE_TCHAR* separator;
   result = base;
 
-  while (separator = ACE_OS_String::strchr (sub_section, ACE_TEXT ('\\')))
+  for (const ACE_TCHAR* separator; 
+       (separator = ACE_OS_String::strchr (sub_section, ACE_TEXT ('\\'))) != 0;
+       )
     {
       ACE_TString simple_section (sub_section, separator - sub_section);
       int ret_val =

@@ -1,3 +1,12 @@
+Wed Jun 12 11:25:22 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Config_Test.cpp (test): Removed what appeared to be
+	  an unnecessary and unused called to 
+	  const ACE_Configuration_Section_Key &root = config->root_section ();
+
+	* ace/Configuration.cpp (open_section): Fixed a warning in the
+	  loop expression.
+
 Wed Jun 12 11:49:33 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Changed to
