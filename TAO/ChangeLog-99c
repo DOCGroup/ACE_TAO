@@ -1,3 +1,19 @@
+Wed Jun 16 16:05:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/POA/Identity/run_test.pl:
+	* examples/POA/RootPOA/run_test.pl:
+	  Added scripts to timeout the test in case of failure
+
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	  New test for the collocated and remote event channel
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  Fixed event channel shutdown
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	* orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+	  Fixed multi-threaded dispatching strategy.
+
 Wed Jun 16 15:59:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/client.dsp:
