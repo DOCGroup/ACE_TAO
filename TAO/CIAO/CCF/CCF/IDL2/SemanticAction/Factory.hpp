@@ -18,6 +18,7 @@ namespace CCF
       class Module;
       class Operation;
       class Struct;
+      class SystemInclude;
       class Typedef;
       class TypeId;
       class TypePrefix;
@@ -51,6 +52,9 @@ namespace CCF
 
         virtual Struct&
         struct_ () = 0;
+
+        virtual SystemInclude&
+        system_include () = 0;
 
         virtual Typedef&
         typedef_ () = 0;

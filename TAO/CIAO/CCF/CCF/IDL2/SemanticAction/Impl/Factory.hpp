@@ -43,12 +43,13 @@ namespace CCF
                 scope_ (r->scope ()),
 
                 attribute_ (trace_, scope_),
-                include_ (trace_, *this, r, scope_),
+                include_ (trace_),
                 interface_ (trace_, scope_),
                 member_ (trace_, scope_),
                 module_ (trace_, scope_),
                 operation_ (trace_, scope_),
                 struct__ (trace_, scope_),
+                system_include_ (trace_),
                 typedef__ (trace_, scope_),
                 type_id_ (trace_, scope_),
                 type_prefix_ (trace_, scope_)
@@ -97,6 +98,12 @@ namespace CCF
             return struct__;
           }
 
+          virtual SemanticAction::SystemInclude&
+          system_include ()
+          {
+            return system_include_;
+          }
+
           virtual SemanticAction::Typedef&
           typedef_ ()
           {
@@ -128,6 +135,7 @@ namespace CCF
           Module module_;
           Operation operation_;
           Struct struct__;
+          SystemInclude system_include_;
           Typedef typedef__;
           TypeId type_id_;
           TypePrefix type_prefix_;

@@ -77,6 +77,11 @@ namespace CCF
           act_include_begin (f.include (), &SemanticAction::Include::begin),
           act_include_end (f.include (), &SemanticAction::Include::end),
 
+          act_system_include_begin (
+            f.system_include (), &SemanticAction::SystemInclude::begin),
+
+          act_system_include_end (
+            f.system_include (), &SemanticAction::SystemInclude::end),
 
           // Interface
           //
@@ -207,8 +212,8 @@ namespace CCF
 
       system_include_decl =
            SINCLUDE
-        >> string_literal
-        >> SEMI[act_include_end]
+        >> string_literal[act_system_include_begin]
+        >> SEMI[act_system_include_end]
         ;
 
       declaration =
