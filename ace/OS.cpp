@@ -87,7 +87,7 @@ ACE_Time_Value::operator FILETIME () const
 ACE_Cleanup_Info::ACE_Cleanup_Info (void)
   : object_ (0),
     cleanup_hook_ (0),
-    param_ (0) 
+    param_ (0)
 {
 }
 
@@ -257,7 +257,7 @@ ACE_OS::uname (struct utsname *name)
 
 #if defined (__BORLANDC__)
     // Some changes should be made in winbase.h...
-    switch (sinfo.s.wProcessorArchitecture) 
+    switch (sinfo.s.wProcessorArchitecture)
 #else
       switch (sinfo.wProcessorArchitecture)
 #endif /* __BORLAND__ */
@@ -357,6 +357,7 @@ ACE_OS::gethostbyname (const char *name)
   static hostent ret;
   static int first_addr;
   static char *hostaddr[2];
+  static char *aliases[1];
 
   ACE_OSCALL (::hostGetByName ((char *) name), int, -1, first_addr);
   if (first_addr == -1)
@@ -364,12 +365,14 @@ ACE_OS::gethostbyname (const char *name)
 
   hostaddr[0] = (char *) &first_addr;
   hostaddr[1] = 0;
+  aliases[0] = 0;
 
   // Might not be official: just echo input arg.
   ret.h_name = (char *) name;
   ret.h_addrtype = AF_INET;
   ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
   ret.h_addr_list = hostaddr;
+  ret.h_aliases = aliases;
 
   return &ret;
 }
@@ -389,8 +392,9 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   static hostent ret;
   static char name [MAXNAMELEN + 1];
   static char *hostaddr[2];
+  static char *aliases[1];
 
-  if (::hostGetByAddr (htonl (*(unsigned long int *) addr), name) != 0)
+  if (::hostGetByAddr (*(int *) addr, name) != 0)
     {
       // errno will have been set to S_hostLib_UNKNOWN_HOST.
       return 0;
@@ -399,11 +403,13 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   // Might not be official: just echo input arg.
   hostaddr[0] = (char *) addr;
   hostaddr[1] = 0;
+  aliases[0] = 0;
 
   ret.h_name = name;
   ret.h_addrtype = AF_INET;
   ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
   ret.h_addr_list = hostaddr;
+  ret.h_aliases = aliases;
 
   return &ret;
 }
@@ -431,7 +437,7 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
 
       // Call ::hostGetByAddr (), which puts the (one) hostname into
       // buffer.
-      if (::hostGetByAddr (htonl (*(u_long *) addr), &buffer[8]) == 0)
+      if (::hostGetByAddr (*(int *) addr, &buffer[8]) == 0)
         {
           // Store the return values in result.
           result->h_name = &buffer[8];  // null-terminated host name
@@ -493,7 +499,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
           result->h_addr_list = (char **) buffer;
           // Store the actual address _after_ the address list.
           result->h_addr_list[0] = (char *) &result->h_addr_list[2];
-          result->h_addr_list[2] = (char *) htonl (addr);
+          result->h_addr_list[2] = (char *) addr;
           // Null-terminate the list of addresses.
           result->h_addr_list[1] = 0;
           // And no aliases, so null-terminate h_aliases.
@@ -3002,6 +3008,9 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs)
 int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
+#if defined (CHORUS)
+  return ::inet_aton(host_name, addr);
+#else
   ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
   if (ip_addr == (ACE_UINT32) htonl ((ACE_UINT32) ~0)
       // Broadcast addresses are weird...
@@ -3014,6 +3023,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     }
   else
     return 1;
+#endif /* CHORUS */
 }
 
 ssize_t
