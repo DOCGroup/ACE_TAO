@@ -181,6 +181,7 @@ OBJFILES = \
    $(OBJDIR)\ParameterMode.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\PICurrent.obj \
+	$(OBJDIR)\PICurrent_Copy_Callback.obj \
 	$(OBJDIR)\PICurrent_ORBInitializer.obj \
 	$(OBJDIR)\PI_ForwardC.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \

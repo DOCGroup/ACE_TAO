@@ -1614,7 +1614,7 @@ TAO_CodeGen::gen_skel_src_includes (void)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/RequestInfo_Util.h");
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/PICurrent.h");
+                              "tao/PortableServer/PICurrent_Guard.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ServerRequestInfo.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1623,7 +1623,7 @@ TAO_CodeGen::gen_skel_src_includes (void)
 
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
-  
+
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Malloc_Allocator.h");

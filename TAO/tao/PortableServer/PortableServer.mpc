@@ -22,6 +22,7 @@ project : taolib, core, objreftemplate, iorinterceptor {
     ObjectReferenceTemplate.cpp
     Operation_Table.cpp
     ORB_Manager.cpp
+    PICurrent_Guard.cpp
     POA.cpp
     POA_Cached_Policies.cpp
     POA_Policies.cpp
