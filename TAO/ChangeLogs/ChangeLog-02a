@@ -1,44 +1,55 @@
+Sun Nov 19 12:42:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          Destroy all components in the destroy() call, delaying until the
+          destructor is invoked does not work well.
+
+        * tests/DSI_Gateway/client.cpp:
+        * tests/DSI_Gateway/gateway.cpp:
+        * tests/DSI_Gateway/server.cpp:
+          Fixed spelling errors in the error messages.
+
 Sun Nov 19 14:15:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/DynamicInterface/DII_Invocation.h:
-	* tao/DynamicInterface/DII_Invocation.inl: Inherited
-	  TAO_GIOP_DII_Deferred_Invocation from TAO_GIOP_Asynch_Invocation
-	  instead of TAO_GIOP_Invocation. 
-	
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.cpp: Added a method start () in
-	  TAO_GIOP_Asynch_Invocation. Thanks to Jeff for helping me with
-	  this. This should fix the DII test failures that we have been
-	  experiencing lately on many platforms.
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation.inl: Inherited
+          TAO_GIOP_DII_Deferred_Invocation from TAO_GIOP_Asynch_Invocation
+          instead of TAO_GIOP_Invocation.
+
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.cpp: Added a method start () in
+          TAO_GIOP_Asynch_Invocation. Thanks to Jeff for helping me with
+          this. This should fix the DII test failures that we have been
+          experiencing lately on many platforms.
 
 Sun Nov 19 11:02:17 2000  DOC Group CVS Access  <doccvs@ace.cs.wustl.edu>
 
-	* tests/RTCORBA/Client_Propagated/Makefile: 
+        * tests/RTCORBA/Client_Propagated/Makefile:
         * tests/RTCORBA/Client_Protocol/Makefile:
         * tests/RTCORBA/Server_Declared/Makefile:
         * tests/RTCORBA/Server_Protocol/Makefile:
-	  Updated dependencies. (Priyanka)
-	
+          Updated dependencies. (Priyanka)
+
 Sun Nov 19 07:54:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/*/Makefile:
-	* performance-tests/*/Makefile:
-	* examples/*/Makefile: Updated dependencies.
+        * tests/*/Makefile:
+        * performance-tests/*/Makefile:
+        * examples/*/Makefile: Updated dependencies.
 
 Sun Nov 19 07:06:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Cache_Entries.inl: Added checks for allocation failures.
+        * tao/Cache_Entries.inl: Added checks for allocation failures.
 
 Sun Nov 19 00:03:21 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Makefile.bor
+        * tao/Makefile.bor
 
 Sat Nov 18 23:30:00 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed compile errors
-	  that came up because of the changes
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed compile errors
+          that came up because of the changes
           Sat Nov 18 18:11:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 Sat Nov 18 19:50:21 2000  Carlos O'Ryan  <coryan@uci.edu>
