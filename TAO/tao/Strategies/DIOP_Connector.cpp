@@ -86,8 +86,7 @@ TAO_DIOP_Connector::close (void)
 
   while (!iter.done ())
     {
-      // Delete the connection handler
-      delete (*iter).int_id_;
+      (*iter).int_id_->decr_refcount();
       iter++;
     }
 
