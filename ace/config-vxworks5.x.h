@@ -137,6 +137,7 @@
 #endif /* ACE_NTRACE */
 
 #define ACE_HAS_STRDUP_EMULATION
+#define ACE_LACKS_MKFIFO
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
