@@ -1,3 +1,12 @@
+Wed Jun  4 07:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.h:
+          Doxygen improvements
+
+        * tao/Invocation.cpp:
+          Added explicit template instantiations in case the ACE autoptr
+          is used. This fixes unresolved externals with VxWorks 5.5
+
 Tue Jun  3 15:28:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/Options.cpp (init): Use a single
@@ -7,7 +16,7 @@ Tue Jun  3 15:28:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  a signal handler with the reactor. The registration would fail,
 	  causing ImR_Activators to be unusable. Hence this fix to use the
 	  single threaded reactor.
-	
+
 	* orbsvcs/ImplRepo_Service/Makefile: Added TAO_Strategies to the
 	  link line.
 
@@ -17,8 +26,8 @@ Tue Jun 03 07:52:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Mon Jun  2 00:44:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Fixed 
-	  a stupid typo. Actually caught this a half an hour back but 
+	* orbsvcs/orbsvcs/LifeCycleService.idl (LifeCycleService): Fixed
+	  a stupid typo. Actually caught this a half an hour back but
 	  couldnt  get this into the repository.
 
 Mon Jun  2 00:25:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -28,7 +37,7 @@ Mon Jun  2 00:25:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  very good reasons) to get it right with explicit template
 	  instantiations. It is easy to fix the problem by changing the
 	  way the IDL's are specified. But we dont want to loose the
-	  structure of the exisiting IDL files in our test directories. 
+	  structure of the exisiting IDL files in our test directories.
 
 	  Once we have a nice way to handle these cases with explicit
 	  templates we can revert this. We will open up a bugzilla entry
@@ -57,8 +66,8 @@ Sun Jun 01 19:34:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sun Jun  1 10:08:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Simulator/Event_Supplier/Makefile: Updated 
-	  dependencies. 
+	* examples/Simulator/Event_Supplier/Makefile: Updated
+	  dependencies.
 
 Sat May 31 23:57:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -93,15 +102,15 @@ Fri May 30 13:56:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* Makefile: Added a new target 'releaseall'. Please see
 	  the entry "Fri May 30 13:52:49 2003  Balachandran Natarajan
 	  <bala@dre.vanderbilt.edu>" in $ACE_ROOT/ChangeLog  for the
-	  motivation. 
+	  motivation.
 
 Fri May 30 13:06:02 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/RT_Notify_Service.h:
 	* orbsvcs/orbsvcs/Notify/RT_Notify_Service.cpp:
-	
+
 	  Overloaded base virtual <init> method to silence HPUX11 build warning.
-	
+
 Thu May 29 22:24:02 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 
         * TAOACE.dsw:
