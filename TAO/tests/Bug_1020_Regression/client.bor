@@ -18,7 +18,7 @@ CFLAGS = \
         $(TAO_CFLAGS) \
         $(TAO_PORTABLESERVER_CFLAGS) \
         $(TAO_MESSAGING_CFLAGS) \
-        $(TAO_SVC_UTILS_CFLAGS).\
+        $(TAO_SVC_UTILS_CFLAGS) \
         $(TAO_VALUETYPE_CFLAGS)
 
 LIBFILES = \
@@ -26,7 +26,7 @@ LIBFILES = \
 	$(TAO_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
         $(TAO_MESSAGING_LIB) \
-        $(TAO_SVC_UTILS_LIB).\
+        $(TAO_SVC_UTILS_LIB) \
         $(TAO_VALUETYPE_LIB)
 
 IDLFILES = \
