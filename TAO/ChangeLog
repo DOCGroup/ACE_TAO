@@ -1,3 +1,12 @@
+Tue Feb 24 19:15:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+	  Removed empty IDL_Files and after from the client project. Let MPC
+	  just do its job and then it works without problems. Because of this
+	  we had a build order dependency between client and server and this
+	  caused problems in our static builds. Thanks to Chad Elliott with
+	  helping solve this.
+
 Tue Feb 24 19:07:17 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/Trading/TT_Info.h:
