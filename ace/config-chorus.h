@@ -1,20 +1,39 @@
 /* -*- C++ -*- */
-// $Id:
+// $Id$
 
-// The following configuration file is designed to work for chorus
-// platforms using GNU C++ and the MIT threads package.
+// The following configuration file is designed to work for Chorus
+// platforms using the MIT threads package and one of these compilers:
+// * GNU g++
+// * GreenHills
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
 #if !defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+# define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 #define CHORUS 3.1b
 #if defined (linux)
-#undef linux
-#endif
+  // This shouldn't be necessary.
+# undef linux
+#endif /* linux */
+
+// Compiler-specific configuration.
+
+#if defined (__GNUG__)
+# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+# define ACE_TEMPLATES_REQUIRE_SOURCE
+#elif defined (ghs)
+# define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+# define ACE_HAS_WCHAR_TYPEDEFS_CHAR
+# define ACE_LACKS_UNISTD_H
+#else  /* ! __GNUG__ && ! ghs */
+# error unsupported compiler on VxWorks
+#endif /* ! __GNUG__ && ! ghs */
+
+// OS-specific configuration
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -75,23 +94,13 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
-
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
+# define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
 // Chorus defines struct msghdr in posix/sys/socket.h
 #define ACE_HAS_MSG
-
-// TDN - adapted from file for SunOS4 platforms using the GNU g++ compiler
-// Compiler's template mechanism must see source code (i.e., .C files).
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
-// Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
@@ -99,7 +108,7 @@
 #define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 // And they're even POSIX pthreads
 #define ACE_HAS_PTHREADS
