@@ -1,3 +1,10 @@
+Tue Jul  9 07:46:57 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Fix up the relative value matching code to work correctly
+          on Windows.
+
 Tue Jul  9 07:31:48 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:
