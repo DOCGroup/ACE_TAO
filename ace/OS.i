@@ -628,12 +628,12 @@ ACE_OS::isatty (ACE_HANDLE fd)
 # if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE int
 ACE_OS::mkfifo (const char *file, mode_t mode)
-{ 
-  // ACE_TRACE ("ACE_OS::mkfifo"); 
+{
+  // ACE_TRACE ("ACE_OS::mkfifo");
 #if defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
-  ACE_UNUSED_ARG (file); 
-  ACE_UNUSED_ARG (mode); 
-  ACE_NOTSUP_RETURN (-1); 
+  ACE_UNUSED_ARG (file);
+  ACE_UNUSED_ARG (mode);
+  ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::mkfifo (file, mode), int, -1);
 #   endif /* VXWORKS */
@@ -3405,7 +3405,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
           break;
         }
       result = -1;
-    }  
+    }
 #     elif defined (VXWORKS)
   if (result == ERROR)
     {
@@ -4506,7 +4506,7 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 #if defined (ACE_PSOS)
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
-                       int, -1); 
+                       int, -1);
 #else
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
@@ -5469,7 +5469,7 @@ ACE_TSS_Emulation::tss_base ()
 #elif defined (ACE_PSOS)
   // not supported
   long x=0;   //JINLU
-  return (void **&) x;    
+  return (void **&) x;
 # else
   return tss_collection_ [ACE_OS::thr_self ()];
 # endif /* VXWORKS */
@@ -5536,7 +5536,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
   return ((void **) tss_base)[key_index];
 #else
   return tss_base ()[key_index];
-#endif defined (ACE_PSOS)
+#endif /* defined (ACE_PSOS) */
 }
 
 #endif /* ACE_HAS_TSS_EMULATION */
@@ -8972,7 +8972,7 @@ ACE_OS::getcwd (char *buf, size_t size)
     XDIR xdir;
     result = ::open_dir (cur_dir_name, &xdir);
     if (result != 0)
-    { 
+    {
       return 0;
     }
 
@@ -8983,10 +8983,10 @@ ACE_OS::getcwd (char *buf, size_t size)
       // get the next directory entry
       result = ::read_dir (&xdir, &dir_entry);
       if (result != 0)
-      { 
+      {
         return 0;
       }
-      
+
       // check for a match
       if (dir_entry.d_filno == cur_dir)
       {
@@ -8998,7 +8998,7 @@ ACE_OS::getcwd (char *buf, size_t size)
           break;
         }
         else
-        { 
+        {
           // we're out of room in the buffer
           return 0;
         }
@@ -9008,7 +9008,7 @@ ACE_OS::getcwd (char *buf, size_t size)
     // close the parent directory
     result = ::close_dir (&xdir);
     if (result != 0)
-    { 
+    {
       return 0;
     }
 
@@ -9017,7 +9017,7 @@ ACE_OS::getcwd (char *buf, size_t size)
   }
 
   // return the path, if there is one
-  return (ACE_OS::strlen (pathbuf) > 0) ? pathbuf : (char *) 0; 
+  return (ACE_OS::strlen (pathbuf) > 0) ? pathbuf : (char *) 0;
 
 # else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
