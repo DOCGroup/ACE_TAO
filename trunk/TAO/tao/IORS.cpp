@@ -36,7 +36,7 @@ CORBA::Boolean POA_TAO_IOP::TAO_IOR_Manipulation::_is_a (
   )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
       return 1;
     else
@@ -47,16 +47,16 @@ void* POA_TAO_IOP::TAO_IOR_Manipulation::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0") == 0)
     return ACE_static_cast (POA_TAO_IOP::TAO_IOR_Manipulation_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
 }
 
 const char* POA_TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0";
+  return "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0";
 }
 
 
