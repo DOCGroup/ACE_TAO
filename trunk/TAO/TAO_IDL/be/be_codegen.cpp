@@ -69,6 +69,9 @@ TAO_CodeGen::make_state (void)
       return TAO_BE_STATE_UNION_PUBLIC_CH::instance ();
     case TAO_UNION_PUBLIC_CI:
       return TAO_BE_STATE_UNION_PUBLIC_CI::instance ();
+    case TAO_UNION_PUBLIC_CS:
+    case TAO_UNION_PUBLIC_ASSIGN_CS:
+      return TAO_BE_STATE_UNION_PUBLIC_CS::instance ();
     case TAO_UNION_PRIVATE_CH:
       return TAO_BE_STATE_UNION_PRIVATE_CH::instance ();
     case TAO_OPERATION_CH:
@@ -132,7 +135,10 @@ TAO_CodeGen::make_state (void)
     case TAO_ATTRIBUTE_POST_UPCALL_SS:
       return TAO_BE_STATE_ATTRIBUTE::instance ();
     case TAO_EXCEPTION_CH:
+    case TAO_EXCEPTION_CTOR_CH:
     case TAO_EXCEPTION_CS:
+    case TAO_EXCEPTION_CTOR_CS:
+    case TAO_EXCEPTION_CTOR_ASSIGN_CS:
     case TAO_EXCEPTION_CI:
       return TAO_BE_STATE_EXCEPTION::instance ();
     default:

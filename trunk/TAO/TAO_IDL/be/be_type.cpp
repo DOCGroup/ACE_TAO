@@ -117,7 +117,7 @@ be_type::nested_type_name (be_decl *d, char *suffix)
   if (this->is_nested ()) // if we are nested
     {
 	  // get our enclosing scope
-	  t = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
+	  t = be_scope::narrow_from_scope (this->defined_in ())->decl ();
 
 	  // now check if the scope in which we were defined is the same
 	  // as the current scope in which we are used or one of its ancestors
@@ -140,7 +140,7 @@ be_type::nested_type_name (be_decl *d, char *suffix)
 			  ACE_OS::strcat (macro, ")");
 			  return macro;
 			}
-		  d = be_decl::narrow_from_decl (ScopeAsDecl (d->defined_in ()));
+		  d = be_scope::narrow_from_scope (d->defined_in ())->decl ();
 		} // end of while
 	} // end of if is_nested
 

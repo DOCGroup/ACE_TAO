@@ -108,21 +108,26 @@ public:
   virtual MANAGED_TYPE managed_type (void);
   // return the managed type
 
+  // =Scope management functions
+  be_sequence *fe_add_sequence (be_sequence *);
+
+  virtual be_decl *decl (void);
+  // overridden method on the be_scope class
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_sequence);
 
-private:
-  void compute_scoped_name (void);
-  // for anonymous sequences, we compute our scoped name
+protected:
+  virtual const char *gen_name (void);
+  // helper to create_name
 
+private:
   idl_bool unbounded_;
   // whether we are bounded or unbounded
 
-  be_sequence *seq_node_;
-  // if we enclose a sequence node
-
   MANAGED_TYPE mt_;
+  // our managed type
 };
 
 #endif

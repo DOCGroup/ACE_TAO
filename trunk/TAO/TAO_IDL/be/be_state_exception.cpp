@@ -27,21 +27,28 @@ int
 be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
 {
   TAO_OutStream *os; // output stream
-  TAO_NL nl; // end of line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_field *f;       // field node
   be_exception *bexcp;  // enclosing exception node
 
   switch (cg->state ())
     {
-    case TAO_CodeGen::TAO_EXCEPTION_CH:
+    case TAO_CodeGen::TAO_EXCEPTION_CH: // used for defining members
+    case TAO_CodeGen::TAO_EXCEPTION_CTOR_CH: // used for defining the
+                                             // parameters to the special
+                                             // constructor
       os = cg->client_header ();
       break;
-    case TAO_CodeGen::TAO_EXCEPTION_CS:
-      os = cg->client_stubs ();
-      break;
-    case TAO_CodeGen::TAO_EXCEPTION_CI:
+    case TAO_CodeGen::TAO_EXCEPTION_CI: // for generating inline functions for
+                                        // specific anonymous types
       os = cg->client_inline ();
+      break;
+    case TAO_CodeGen::TAO_EXCEPTION_CS: // for copy ctor and assignment op
+    case TAO_CodeGen::TAO_EXCEPTION_CTOR_CS: // for the parameters of the
+                                             // special constructor
+    case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS: // for assigning to members
+                                                    // inside the special ctor
+      os = cg->client_stubs ();
       break;
     }
 
@@ -54,6 +61,7 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
                         -1);
     }
 
+  // retrieve the exception node
   bexcp = be_exception::narrow_from_scope (f->defined_in ());
   if (!bexcp)
     {
@@ -83,28 +91,8 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_EXCEPTION_CH:
             {
               os->indent (); // start from current indentation
-              // constructor taking this type
-              *os << bexcp->local_name () << "(const " << bt->nested_type_name
-                (bexcp, "_ptr") << "&); // constructor" << nl;
               *os << bt->nested_type_name (bexcp, "_var") << " " << f->local_name
                 () << ";\n";
-            }
-            break;
-          case TAO_CodeGen::TAO_EXCEPTION_CI:
-            {
-              os->indent (); // start from current indentation
-              // constructor per member
-              *os << "ACE_INLINE" << nl;
-              *os << bexcp->name () << "::" << bexcp->local_name () <<
-                "(const " << bt->name () << "_ptr &_tao_param)" << nl;
-              *os << "\t:ACE_CORBA_1 (UserException) (" <<
-                "ACE_CORBA_3 (TypeCode, _duplicate) (" << bexcp->tc_name () <<
-                "))" << nl;
-              *os << "{\n";
-              os->incr_indent ();
-              *os << "this->" << f->local_name () << " = _tao_param;\n";
-              os->decr_indent ();
-              *os << "}\n\n";
             }
             break;
           case TAO_CodeGen::TAO_EXCEPTION_CS:
@@ -114,6 +102,27 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "this->" << f->local_name () << " = _tao_excp." <<
                 f->local_name () << ";\n";
             }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CH:
+            {
+              *os << "const " << bt->nested_type_name (bexcp, "_ptr") << "&";
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CS:
+            {
+              *os << "const " << bt->name () << "_ptr &_tao_" << f->local_name
+                ();
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS:
+            {
+              // assign
+              os->indent (); // start with current indentation
+              *os << "this->" << f->local_name () << " = _tao_" <<
+                f->local_name () << ";\n";
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CI:
             break;
           default:
             {
@@ -138,70 +147,20 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               switch (bpd->pt ())
                 {
-                case AST_PredefinedType::PT_any:
                 case AST_PredefinedType::PT_pseudo:
                   {
                     os->indent (); // start from current indentation
-                    // constructor taking this type
-                    *os << bexcp->local_name () << "(const " <<
-                      bt->nested_type_name (bexcp, "_ptr") <<
-                      "&); // constructor" << nl;
-                    *os << bt->nested_type_name (bexcp) << "_var " <<
+                    *os << bt->nested_type_name (bexcp, "_var") << " " <<
                       f->local_name () << ";\n";
                   }
                   break;
                 default:
                   {
                     os->indent (); // start from current indentation
-                    // constructor taking this type
-                    *os << bexcp->local_name () << "(const " <<
-                      bt->nested_type_name (bexcp) <<
-                      "); // constructor" << nl;
                     *os << bt->nested_type_name (bexcp) << " " << f->local_name
                       () << ";\n";
                   }
-                }
-            }
-            break;
-          case TAO_CodeGen::TAO_EXCEPTION_CI:
-            {
-              switch (bpd->pt ())
-                {
-                case AST_PredefinedType::PT_any:
-                case AST_PredefinedType::PT_pseudo:
-                  {
-                    os->indent (); // start from current indentation
-                    // constructor per member
-                    *os << "ACE_INLINE" << nl;
-                    *os << bexcp->name () << "::" << bexcp->local_name () <<
-                      "(const " << bt->name () << "_ptr &_tao_param)" << nl;
-                    *os << "\t:ACE_CORBA_1 (UserException) (" <<
-                      "ACE_CORBA_3 (TypeCode, _duplicate) (" << bexcp->tc_name
-                      () << "))" << nl;
-                    *os << "{\n";
-                    os->incr_indent ();
-                    *os << "this->" << f->local_name () << " = _tao_param;\n";
-                    os->decr_indent ();
-                    *os << "}\n\n";
-                  }
-                  break;
-                default:
-                  {
-                    os->indent (); // start from current indentation
-                    // constructor per member
-                    *os << "ACE_INLINE" << nl;
-                    *os << bexcp->name () << "::" << bexcp->local_name () <<
-                      "(const " << bt->name () << " _tao_param)" << nl;
-                    *os << "\t:ACE_CORBA_1 (UserException) (" <<
-                      "ACE_CORBA_3 (TypeCode, _duplicate) (" << bexcp->tc_name
-                      () << "))" << nl;
-                    *os << "{\n";
-                    os->incr_indent ();
-                    *os << "this->" << f->local_name () << " = _tao_param;\n";
-                    os->decr_indent ();
-                    *os << "}\n\n";
-                  }
-                }
+                } // end of switch state
             }
             break;
           case TAO_CodeGen::TAO_EXCEPTION_CS:
@@ -211,6 +170,51 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "this->" << f->local_name () << " = _tao_excp." <<
                 f->local_name () << ";\n";
             }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CH:
+            {
+              switch (bpd->pt ())
+                {
+                case AST_PredefinedType::PT_pseudo:
+                  {
+                    *os << "const " << bt->nested_type_name (bexcp, "_ptr") <<
+                      "&";
+                  }
+                  break;
+                default:
+                  {
+                    *os << "const " << bt->nested_type_name (bexcp);
+                  }
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CS:
+            {
+              switch (bpd->pt ())
+                {
+                case AST_PredefinedType::PT_pseudo:
+                  {
+                    *os << "const " << bt->name () << "_ptr &_tao_" <<
+                      f->local_name ();
+                  }
+                  break;
+                default:
+                  {
+                    *os << "const " << bt->name () << " _tao_" <<
+                      f->local_name ();
+                  }
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS:
+            {
+              // assign
+              os->indent (); // start with current indentation
+              *os << "this->" << f->local_name () << " = _tao_" <<
+                f->local_name () << ";\n";
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CI:
             break;
           default:
             {
@@ -229,56 +233,12 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
               os->indent (); // start from current indentation
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
-                  // constructor taking this type
-                  *os << bexcp->local_name () << "(const " <<
-                    bt->nested_type_name (bexcp) <<
-                    "); // constructor" << nl;
                   *os << bt->nested_type_name (bexcp, "_var") << " " <<
                     f->local_name () << ";\n";
                 }
               else
                 {
-                  // constructor taking this type
-                  *os << bexcp->local_name () <<
-                    "(const char *); //constructor" << nl;
                   *os << "CORBA::String_var " << f->local_name () << ";\n";
-                }
-            }
-            break;
-          case TAO_CodeGen::TAO_EXCEPTION_CI:
-            {
-              os->indent (); // start from current indentation
-              if (bt->node_type () == AST_Decl::NT_typedef)
-                {
-                  os->indent (); // start from current indentation
-                    // constructor per member
-                  *os << "ACE_INLINE" << nl;
-                  *os << bexcp->name () << "::" << bexcp->local_name () <<
-                    "(const " << bt->name () << " _tao_param)" << nl;
-                  *os << "\t:ACE_CORBA_1 (UserException) (" <<
-                    "ACE_CORBA_3 (TypeCode, _duplicate) (" << bexcp->tc_name
-                    () << "))" << nl;
-                  *os << "{\n";
-                  os->incr_indent ();
-                  *os << "this->" << f->local_name () << " = _tao_param;\n";
-                  os->decr_indent ();
-                  *os << "}\n\n";
-                }
-              else
-                {
-                  os->indent (); // start from current indentation
-                    // constructor per member
-                  *os << "ACE_INLINE" << nl;
-                  *os << bexcp->name () << "::" << bexcp->local_name () <<
-                    "(const char *_tao_param)" << nl;
-                  *os << "\t:ACE_CORBA_1 (UserException) (" <<
-                    "ACE_CORBA_3 (TypeCode, _duplicate) (" << bexcp->tc_name
-                    () << "))" << nl;
-                  *os << "{\n";
-                  os->incr_indent ();
-                  *os << "this->" << f->local_name () << " = _tao_param;\n";
-                  os->decr_indent ();
-                  *os << "}\n\n";
                 }
             }
             break;
@@ -289,6 +249,41 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
               *os << "this->" << f->local_name () << " = _tao_excp." <<
                 f->local_name () << ";\n";
             }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CH:
+            {
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                {
+                  *os << "const " << bt->nested_type_name (bexcp);
+                }
+              else
+                {
+                  *os << "const char*";
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CS:
+            {
+              if (bt->node_type () == AST_Decl::NT_typedef)
+                {
+                  *os << "const " << bt->name () << " _tao_" << f->local_name
+                    ();
+                }
+              else
+                {
+                  *os << "const char* _tao_" << f->local_name ();
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS:
+            {
+              // assign
+              os->indent (); // start with current indentation
+              *os << "this->" << f->local_name () << " = _tao_" <<
+                f->local_name () << ";\n";
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CI:
             break;
           default:
             {
@@ -320,9 +315,6 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
                                       -1);
                   }
               os->indent ();
-              // constructor taking this type
-              *os << bexcp->local_name () << "(const " << bt->nested_type_name
-                (bexcp) << "&); // constructor" << nl;
               *os << bt->nested_type_name (bexcp) << " " << f->local_name () <<
                 ";\n";
             }
@@ -340,19 +332,6 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
                                        "error generating code for type\n"),
                                       -1);
                   }
-              os->indent (); // start from current indentation
-              // constructor per member
-              *os << "ACE_INLINE" << nl;
-              *os << bexcp->name () << "::" << bexcp->local_name () <<
-                "(const " << bt->name () << " &_tao_param)" << nl;
-              *os << "\t:ACE_CORBA_1 (UserException) (" <<
-                "ACE_CORBA_3 (TypeCode, _duplicate) (" << bexcp->tc_name () <<
-                "))" << nl;
-              *os << "{\n";
-              os->incr_indent ();
-              *os << "this->" << f->local_name () << " = _tao_param;\n";
-              os->decr_indent ();
-              *os << "}\n\n";
             }
             break;
           case TAO_CodeGen::TAO_EXCEPTION_CS:
@@ -371,6 +350,24 @@ be_state_exception ::gen_code (be_type *bt, be_decl *d, be_type *type)
               // assign
               os->indent (); // start with current indentation
               *os << "this->" << f->local_name () << " = _tao_excp." <<
+                f->local_name () << ";\n";
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CH:
+            {
+              *os << "const " << bt->nested_type_name (bexcp) << "&";
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_CS:
+            {
+              *os << "const " << bt->name () << "&_tao_" << f->local_name ();
+            }
+            break;
+          case TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS:
+            {
+              // assign
+              os->indent (); // start with current indentation
+              *os << "this->" << f->local_name () << " = _tao_" <<
                 f->local_name () << ";\n";
             }
             break;

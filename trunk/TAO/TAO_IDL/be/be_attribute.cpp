@@ -155,7 +155,35 @@ be_attribute::gen_client_stubs (void)
   cs->incr_indent ();
 
   // entry for the return type
-  *cs << "{" << bt->tc_name () << ", PARAM_RETURN, 0}";
+  *cs << "{" << bt->tc_name () << ", PARAM_RETURN, ";
+  // Are we returning a pointer to value? i.e., is the type variable? If it is,
+  // we must tell the stub what is the size of the top level structure
+  if (bt->size_type () == be_decl::VARIABLE)
+    {
+      switch (bt->node_type ())
+        {
+        case AST_Decl::NT_interface:
+        case AST_Decl::NT_interface_fwd:
+          // no need of size here
+          *cs << "0}";
+          break;
+        case AST_Decl::NT_pre_defined:
+          {
+            be_predefined_type *bpd = be_predefined_type::narrow_from_decl
+              (bt);
+            if (bpd->pt () == AST_PredefinedType::PT_pseudo)
+              // no need of size here
+              *cs << "0}";
+            else
+              *cs << "sizeof (" << bt->name () << ")}";
+          }
+          break;
+        default:
+          *cs << "sizeof (" << bt->name () << ")}";
+        }
+    }
+  else
+    *cs << "0}";
   cs->decr_indent ();
   *cs << "};\n\n";
 

@@ -341,11 +341,14 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
                   0, // this is IIOP residue
                   env);
 
-  svr_req.release ();
+  //  svr_req.release ();
 
   // If no reply is necessary (i.e., oneway), then return!
   if (hdr.response_expected == 0)
-    return;
+    {
+      svr_req.release ();
+      return;
+    }
 
   // Otherwise check for correct parameter handling, and reply as
   // appropriate.
@@ -437,6 +440,7 @@ CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
           (void) response.encode (tc, value, 0, env);
         }
     }
+  svr_req.release ();
 }
 
 // IUnknown calls

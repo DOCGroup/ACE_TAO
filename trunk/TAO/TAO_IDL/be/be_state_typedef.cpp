@@ -53,14 +53,12 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
   if (!tdef)
     return -1;
 
-  // pass the typedef node, just in case it is needed
-  cg->node (tdef);
-
-  scope = be_decl::narrow_from_decl (ScopeAsDecl (tdef->defined_in ()));
+  scope = be_scope::narrow_from_scope (tdef->defined_in ())->decl ();
 
   if (!type) // not a recursive call
     type = bt;
-  else // recursively called thru a typedef. "type" will have the most primitive
+  else // recursively called thru a typedef. "type" will have the most
+       // primitive
     // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
@@ -199,34 +197,83 @@ be_state_typedef::gen_code (be_type *bt, be_decl *d, be_type *type)
           case TAO_CodeGen::TAO_TYPEDEF_CH:
             {
               // if we are not here recursively, then we need to generate the
-              // definition first
+              // definition first i.e., this typedef had its immediate base
+              // class that was an array declaration. The code for arrays will
+              // handle all the code generation. We just prepend the word
+              // "typedef".
               if (bt->node_type () != AST_Decl::NT_typedef)
                 {
+                  os->indent ();
+                  *os << "typedef ";
                   if (bt->gen_client_header () == -1)
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
                            "be_state_typedef - array gen failed\n"), -1);
                     }
                 }
-              os->indent ();
-              *os << "typedef " << bt->name () << " " << d->local_name () <<
-                ";" << nl;
-              *os << "typedef " << bt->name () << "_forany " << d->local_name
-                () << "_forany;" << nl;
-              // typedefs for the auxiliary methods. If we are nested inside
-              // some scope, these methods become static to the enclosing scope
-              if (d->is_nested ())
-                *os << "static ";
-              *os << d->name () << "_slice* " << d->local_name () <<
-                "_alloc (void);" << nl;
-              if (d->is_nested ())
-                *os << "static ";
-              *os << d->name () << "_slice* " << d->local_name () << "_dup ("
-                  << d->name () << "_slice* " << ");" << nl;
-              if (d->is_nested ())
-                *os << "static ";
-              *os << "void " << d->name () << "_free (" << d->name () <<
-                "_slice *);\n\n";
+              else
+                {
+                  // we are a typedef node whose immediate base class is also a
+                  // typedefed node to some array node. We simply output a
+                  // number of typedef statements
+                  os->indent ();
+                  *os << "typedef " << bt->nested_type_name (scope) << " " <<
+                    d->local_name () << ";" << nl;
+                  *os << "typedef " << bt->nested_type_name (scope, "_slice") <<
+                    " " << d->local_name () << "_slice;" << nl;
+                  *os << "typedef " << bt->nested_type_name (scope, "_var") << " "
+                      << d->local_name () << "_var;" << nl;
+                  *os << "typedef " << bt->nested_type_name (scope, "_out") << " "
+                      << d->local_name () << "_out;" << nl;
+                  *os << "typedef " << bt->nested_type_name (scope, "_forany") << " "
+                      << d->local_name () << "_forany;" << nl;
+
+                  // typedefs for the auxiliary methods. If we are nested inside
+                  // some scope, these methods become static to the enclosing scope
+                  if (d->is_nested ())
+                    *os << "static ";
+                  *os << bt->nested_type_name (scope) << "_slice* " << d->local_name () <<
+                    "_alloc (void);" << nl;
+                  if (d->is_nested ())
+                    *os << "static ";
+                  *os << bt->nested_type_name (scope, "_slice") << " *" <<
+                    d->local_name () << "_dup ("
+                      << bt->nested_type_name (scope) << "_slice* " << ");" << nl;
+                  if (d->is_nested ())
+                    *os << "static ";
+                  *os << "void " << bt->nested_type_name (scope) << "_free (" <<
+                    d->name () << "_slice *);\n\n";
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_TYPEDEF_CI:
+            {
+              // if we are not here recursively, then we need to generate the
+              // definition first
+              if (bt->node_type () != AST_Decl::NT_typedef)
+                {
+                  if (bt->gen_client_inline () == -1)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                          "be_state_typedef - struct/union/seq gen failed\n"),
+                                        -1);
+                    }
+                }
+            }
+            break;
+          case TAO_CodeGen::TAO_TYPEDEF_CS:
+            {
+              // if we are not here recursively, then we need to generate the
+              // definition first
+              if (bt->node_type () != AST_Decl::NT_typedef)
+                {
+                  if (bt->gen_client_stubs () == -1)
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                          "be_state_typedef - struct/union/seq gen failed\n"),
+                                        -1);
+                    }
+                }
             }
             break;
           default:

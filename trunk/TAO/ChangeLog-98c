@@ -1,10 +1,73 @@
+Thu Dec 18 15:06:23 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+	Thanks to Keith Nicewarner <knicewar@sanders.com>, Tom Richards
+	<tomr@mcmenterprise.com>, and Carlos O'Ryan <coryan@cs.wustl.edu>
+	for reporting bugs which led to  some of the changes below.
+
+	* TAO_IDL/be/be_array.cpp: Preliminary support for arrays. Not
+	complete.
+
+	* TAO_IDL/be/{be_operation, be_attribute}.cpp: The ParamData
+	structure *must* hold the "size" of the outermost level of the
+	return values and out parameters because the ORB has to allocate
+	memory for it and hence needs to know the size. We had a 0 in it
+	which crashed any return types that were variable in size.
+
+	* TAO_IDL/be/be_codegen.cpp: Added a new state for
+	unions. Corresponding change to the *.h file.
+
+	* TAO_IDL/be/be_decl.cpp: Added a method called "scope" that
+	returns the corresponding scope defined by this node (if one
+	exists). Added method to the *.h file also.
+
+	* TAO_IDL/be/be_scope.cpp: Added a method called "decl" that
+	returns the be_decl method corresponding to this scope. The header
+	file was also updated.
+
+	* TAO_IDL/be/{be_exception, be_state_exception}.cpp: I was making
+	the most stupid mistake of generating constructors per member
+	rather than one constructor that takes all the members as a
+	parameter.
+
+	* TAO_IDL/be/{be_sequence, be_state_sequence}.cpp: Changed the
+	naming scheme for anonymous sequences to avoid code bloat.
+
+	* TAO_IDL/be/be_state.cpp: Added template instantiation for
+	additional state to deal with code generation of members of
+	unions.
+
+	* TAO_IDL/be/be_state_structure.cpp: Made some changes so that
+	spurious code for array members doesn't get generated.
+
+	* TAO_IDL/be/{be_union, be_state_union}.cpp: Added a new state
+	because we were not generating code for union members that were
+	sequences or structs.
+
+	* TAO_IDL/be/be_type.cpp: Modified netsed_type_name to use the new
+	methods on class be_decl/be_scope.
+
+	* TAO_IDL/be/be_union_branch.cpp: gen_client_stubs uses the same
+	strategy as the other gen_client methods.
+
+	* TAO/tao/deep_free.cpp: In deep_free of structures, instead of
+	passing the address of a string member to be freed, we were simply
+	passing the string that led to a segmentation fault. A careful
+	code review is necessary.
+
+	* TAO/tao/orb_core.cpp: Made "use_ior" as default as ooposed to
+	using the URL based scheme for IORs. This was necessary to have
+	interoperability with other ORBs.
+
+	* TAO/tao/poa.cpp: The server request was being released
+	immediately after returning from the dispatch method. This should
+	be done after all return/inout/out parameters are marshaled.
+
 Tue Dec 17 12:53:01 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/encode.cpp: Additional changes for wchar's
 
 Tue Dec 17 10:37:45 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
-        * tao/TAO.dsp: Removed obsolete files from the VC++ project.  
+        * tao/TAO.dsp: Removed obsolete files from the VC++ project.
           Changed name of folder from Include Files to Inline Files.
           Inserted new header files for classview.
 
@@ -16,11 +79,11 @@ Tue Dec 17 10:37:45 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/encode.cpp: Inserted wslen and wscpy back to handle wchar
           problems with VxWOrks and GHS.
-       
+
 Tue Dec 16 18:29:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/README: 
-	* docs/orbsvcs.html: 
+	* orbsvcs/README:
+	* docs/orbsvcs.html:
 	  Started up the documentation for TAO services, at this point
 	  only the directory hierarchy is explained.
 
