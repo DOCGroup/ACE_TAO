@@ -171,7 +171,9 @@ std::cout << "Found a FactoryRegistry DBA ReplicationManager" << std::endl;
     }
     ACE_CATCHANY
     {
-      std::cerr << "Creator: Exception resolving ReplicationManager, and no -f option was given." << std::endl;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Creator: Exception resolving ReplicationManager, and no -f option was given.\n");
+
       result = 1;
     }
     ACE_ENDTRY;
@@ -228,7 +230,7 @@ int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
     // Begin with an empty IOGR
     ::PortableGroup::GenericFactory::FactoryCreationId_var creation_id;
     CORBA::Object_var iogr;
-    if (this->have_replication_manager_)
+    if (0 && this->have_replication_manager_)
     {
       PortableGroup::Criteria criteria;
       iogr = this->replication_manager_->create_object(
@@ -299,7 +301,7 @@ int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
           std::cerr << "Creator: Error writing ior [" << replica_ior << "] to " << replica_ior_filename << std::endl;
         }
 
-        if (this->have_replication_manager_)
+        if (0 && this->have_replication_manager_)
         {
           iogr = this->replication_manager_->add_member (iogr,
                             info.the_location,
@@ -321,7 +323,7 @@ int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
 
     std::cout << "Creator:  Successfully created group of " << type << std::endl;
 
-    if( have_replication_manager_)
+    if(0 && have_replication_manager_)
     {
       const char * replica_iogr = orb_->object_to_string (iogr ACE_ENV_ARG_PARAMETER );
       ACE_CHECK;

@@ -60,6 +60,8 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   , test_output_file_(0)
   , empty_slots_(0)
   , quit_requested_(0)
+  , have_replication_manager_(0)
+  , replication_manager_(0)
 {
 }
 
@@ -377,55 +379,13 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
                                   ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-
-  if (factory_registry_ior_ != 0)
+  if (this->factory_registry_ior_ != 0)
   {
     CORBA::Object_var reg_obj = this->orb_->string_to_object(factory_registry_ior_
                                   ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj);
-    if (! CORBA::is_nil(factory_registry_))
-    {
-      ::PortableGroup::GenericFactory_var this_var = ::PortableGroup::GenericFactory::_narrow(this_obj);
-      if (! CORBA::is_nil(this_var))
-      {
-
-        size_t typeCount = types_.size();
-        for (size_t nType = 0; nType < typeCount; ++nType)
-        {
-          const char * typeId = this->types_[nType].c_str();
-
-          PortableGroup::FactoryInfo info;
-          info.the_factory = this_var;
-          info.the_location.length(1);
-          info.the_location[0].id = CORBA::string_dup(location_);
-          info.the_criteria.length(1);
-          info.the_criteria[0].nam.length(1);
-          info.the_criteria[0].nam[0].id = CORBA::string_dup(type_property);
-          info.the_criteria[0].val <<= CORBA::string_dup(typeId);
-
-          ACE_ERROR (( LM_INFO,
-             "Factory: %s@%s registering with factory registry\n",
-             typeId,
-             location_
-             ));
-
-          factory_registry_->register_factory(
-            typeId,
-            info
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-        this->registered_ = 1;
-      }
-      else
-      {
-        ACE_ERROR (( LM_ERROR,
-           "Unexpected error: object reference should be a ReplicaFactory?\n"
-           ));
-      }
-    }
-    else
+    if (CORBA::is_nil(this->factory_registry_))
     {
       ACE_ERROR (( LM_ERROR,
          "Can't resolve Factory Registry IOR %s\n",
@@ -434,6 +394,98 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
       result = -1;
     }
   }
+  else // no -f option.  Try RIR(RM)
+  {
+    ///////////////////////////////
+    // Find the ReplicationManager
+    ACE_TRY_NEW_ENV
+    {
+ACE_ERROR ((LM_DEBUG,"RIR(ReplicationManager)\n" ));
+      CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (replication_manager_))
+      {
+ACE_ERROR ((LM_DEBUG, "Found a _real_ ReplicationManager.  Ask it for a factory registry.\n"));
+        have_replication_manager_ = 1;
+        // empty criteria
+        ::PortableGroup::Criteria criteria;
+        this->factory_registry_ = this->replication_manager_->get_factory_registry(criteria  ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (CORBA::is_nil (this->factory_registry_))
+        {
+          result = -1;
+          ACE_ERROR ((LM_ERROR,"ReplicaFactory: ReplicationManager failed to return FactoryRegistry.\n" ));
+        }
+      }
+      else
+      {
+ACE_ERROR ((LM_DEBUG,"did we get a FactoryRegistry instead?\n" ));
+        this->factory_registry_ =  ::PortableGroup::FactoryRegistry::_narrow(rm_obj.in()  ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (!CORBA::is_nil(this->factory_registry_))
+        {
+ACE_ERROR ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
+          result = 0; // success
+        }
+        else
+        {
+          ACE_ERROR ((LM_ERROR,"ReplicaFactory: Can't resolve ReplicationManager, and no -f option was given.\n" ));
+        }
+      }
+    }
+    ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.\n" );
+      result = 1;
+    }
+    ACE_ENDTRY;
+
+  }
+
+  if ( ! CORBA::is_nil (this->factory_registry_))
+  {
+    ::PortableGroup::GenericFactory_var this_var = ::PortableGroup::GenericFactory::_narrow(this_obj);
+    if (! CORBA::is_nil(this_var))
+    {
+      size_t typeCount = types_.size();
+      for (size_t nType = 0; nType < typeCount; ++nType)
+      {
+        const char * typeId = this->types_[nType].c_str();
+
+        PortableGroup::FactoryInfo info;
+        info.the_factory = this_var;
+        info.the_location.length(1);
+        info.the_location[0].id = CORBA::string_dup(location_);
+        info.the_criteria.length(1);
+        info.the_criteria[0].nam.length(1);
+        info.the_criteria[0].nam[0].id = CORBA::string_dup(type_property);
+        info.the_criteria[0].val <<= CORBA::string_dup(typeId);
+
+        ACE_ERROR (( LM_INFO,
+           "Factory: %s@%s registering with factory registry\n",
+           typeId,
+           location_
+           ));
+
+        this->factory_registry_->register_factory(
+          typeId,
+          info
+          ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+      this->registered_ = 1;
+    }
+    else
+    {
+      ACE_ERROR (( LM_ERROR,
+         "Unexpected error: object reference should be a ReplicaFactory?\n"
+         ));
+    }
+  }
+
   int identified = 0; // bool
 
   if (this->types_.size() > 0)

@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#include "FactoryRegistry_i.h"
+#include "PG_FactoryRegistry.h"
 
 #include <ace/Get_Opt.h>
 #include <ace/Vector_T.h>
@@ -11,9 +11,10 @@
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
-#define METHOD_ENTRY(name)    \
-    ACE_DEBUG (( LM_DEBUG,    \
-    "Enter %s\n", #name       \
+#define METHOD_ENTRY(name)            \
+  if (TAO_debug_level <= 6){} else    \
+    ACE_DEBUG (( LM_DEBUG,            \
+    "Enter %s\n", #name               \
       ))
 
 // Use this macro to return from CORBA methods
@@ -27,31 +28,34 @@
 // will not do what you want it to:
 //  if (cave_is_closing) METHOD_RETURN(Plugh::pirate) aarrggh;
 // Moral:  Always use braces.
-#define METHOD_RETURN(name)   \
-    ACE_DEBUG (( LM_DEBUG,    \
-      "Leave %s\n", #name     \
-      ));                     \
-    return /* value goes here */
+#define METHOD_RETURN(name)           \
+  if (TAO_debug_level <= 6){} else    \
+    ACE_DEBUG (( LM_DEBUG,            \
+      "Leave %s\n", #name             \
+      ));                             \
+  return /* value goes here */
 
-FactoryRegistry_i::FactoryRegistry_i ()
-  : ior_output_file_(0)
+TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
+  : identity_(name)
+  , ior_output_file_(0)
   , ns_name_(0)
   , quit_on_idle_(0)
   , quit_state_(LIVE)
   , linger_(0)
+  , this_obj_(0)
 {
 }
 
-FactoryRegistry_i::~FactoryRegistry_i (void)
+TAO::PG_FactoryRegistry::~PG_FactoryRegistry (void)
 {
 }
 
 //////////////////////////////////////////////////////
 // FactoryRegistry_i public, non-CORBA methods
 
-int FactoryRegistry_i::parse_args (int argc, char * argv[])
+int TAO::PG_FactoryRegistry::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:q");
+  ACE_Get_Opt get_opts (argc, argv, "o:n:q");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -61,6 +65,11 @@ int FactoryRegistry_i::parse_args (int argc, char * argv[])
       case 'o':
       {
         this->ior_output_file_ = get_opts.opt_arg ();
+        break;
+      }
+      case 'n':
+      {
+        this->ns_name_ = get_opts.opt_arg();
         break;
       }
       case 'q':
@@ -74,7 +83,8 @@ int FactoryRegistry_i::parse_args (int argc, char * argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " -o <factory ior file>"
+                           " -o <registry ior file>"
+                           " -n <name to use to register with name service>"
                            " -q{uit on idle}"
                            "\n",
                            argv [0]),
@@ -86,18 +96,18 @@ int FactoryRegistry_i::parse_args (int argc, char * argv[])
   return 0;
 }
 
-const char * FactoryRegistry_i::identity () const
+const char * TAO::PG_FactoryRegistry::identity () const
 {
   return this->identity_.c_str();
 }
 
 
-void FactoryRegistry_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+void TAO::PG_FactoryRegistry::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->quit_state_ = GONE;
 }
 
-int FactoryRegistry_i::idle (int & result)
+int TAO::PG_FactoryRegistry::idle (int & result)
 {
   result = 0;
   int quit = 0;
@@ -116,7 +126,7 @@ int FactoryRegistry_i::idle (int & result)
 }
 
 
-int FactoryRegistry_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+int TAO::PG_FactoryRegistry::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->ior_output_file_ != 0)
   {
@@ -132,7 +142,7 @@ int FactoryRegistry_i::fini (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
+int TAO::PG_FactoryRegistry::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
@@ -175,13 +185,14 @@ int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
   ACE_TRY_CHECK;
 
   // find my identity as a corba object
-  CORBA::Object_var this_obj =
+  this->this_obj_ =
     this->poa_->id_to_reference (object_id_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
+
   // and create a ior string
-  this->ior_ = this->orb_->object_to_string (this_obj.in ()
+  this->ior_ = this->orb_->object_to_string (this->this_obj_.in ()
                                   ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
@@ -191,12 +202,6 @@ int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
     this->identity_ = "file:";
     this->identity_ += this->ior_output_file_;
     result = write_ior_file (this->ior_output_file_, this->ior_);
-  }
-  else
-  {
-    // if no IOR file specified,
-    // then always try to register with name service
-    this->ns_name_ = "FactoryRegistry";
   }
 
   if (this->ns_name_ != 0)
@@ -221,12 +226,19 @@ int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-    this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
+    this->naming_context_->rebind (this->this_name_, this->this_obj_.in()  //CORBA::Object::_duplicate(this_obj)
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
 
   return result;
+}
+
+
+::PortableGroup::FactoryRegistry_ptr TAO::PG_FactoryRegistry::reference()
+{
+  // narrow and duplicate
+  return ::PortableGroup::FactoryRegistry::_narrow(this->this_obj_);
 }
 
 //////////////////////////////////////////
@@ -244,14 +256,14 @@ int FactoryRegistry_i::init (CORBA::ORB_var & orb  ACE_ENV_ARG_DECL)
 */
 
 
-void FactoryRegistry_i::register_factory (
+void TAO::PG_FactoryRegistry::register_factory (
     const char * type_id,
     const PortableGroup::FactoryInfo & factory_info
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberAlreadyPresent))
 {
-  METHOD_ENTRY(FactoryRegistry_i::register_factory);
+  METHOD_ENTRY(TAO::PG_FactoryRegistry::register_factory);
 
   PortableGroup::FactoryInfos * infos;
   if (this->registry_.find(type_id, infos) != 0)
@@ -292,17 +304,17 @@ void FactoryRegistry_i::register_factory (
       ACE_static_cast(const char *, factory_info.the_location[0].id)
     ));
 
-  METHOD_RETURN(FactoryRegistry_i::register_factory);
+  METHOD_RETURN(TAO::PG_FactoryRegistry::register_factory);
 }
 
-void FactoryRegistry_i::unregister_factory (
+void TAO::PG_FactoryRegistry::unregister_factory (
     const char * type_id,
     const PortableGroup::Location & location
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberNotFound))
 {
-  METHOD_ENTRY(FactoryRegistry_i::unregister_factory);
+  METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory);
 
   PortableGroup::FactoryInfos * infos;
   if (this->registry_.find(type_id, infos) == 0)
@@ -381,16 +393,16 @@ void FactoryRegistry_i::unregister_factory (
     }
   }
 
-  METHOD_RETURN(FactoryRegistry_i::unregister_factory);
+  METHOD_RETURN(TAO::PG_FactoryRegistry::unregister_factory);
 }
 
-void FactoryRegistry_i::unregister_factory_by_type (
+void TAO::PG_FactoryRegistry::unregister_factory_by_type (
     const char * type_id
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FactoryRegistry_i::unregister_factory_by_type);
+  METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_type);
   PortableGroup::FactoryInfos * infos;
   if (this->registry_.unbind(type_id, infos) == 0)
   {
@@ -421,16 +433,16 @@ void FactoryRegistry_i::unregister_factory_by_type (
     }
   }
 
-  METHOD_RETURN(FactoryRegistry_i::unregister_factory_by_type);
+  METHOD_RETURN(TAO::PG_FactoryRegistry::unregister_factory_by_type);
 }
 
-void FactoryRegistry_i::unregister_factory_by_location (
+void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     const PortableGroup::Location & location
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FactoryRegistry_i::unregister_factory_by_location);
+  METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_location);
 
   ACE_Vector<ACE_CString> hitList;
 
@@ -524,16 +536,16 @@ void FactoryRegistry_i::unregister_factory_by_location (
     }
   }
 
-  METHOD_RETURN(FactoryRegistry_i::unregister_factory_by_location);
+  METHOD_RETURN(TAO::PG_FactoryRegistry::unregister_factory_by_location);
 }
 
-::PortableGroup::FactoryInfos * FactoryRegistry_i::list_factories_by_type (
+::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_type (
     const char * type_id
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FactoryRegistry_i::list_factories_by_type);
+  METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_type);
 
   PortableGroup::FactoryInfos_var infos;
   ACE_NEW_THROW_EX (infos, ::PortableGroup::FactoryInfos(),
@@ -550,16 +562,16 @@ void FactoryRegistry_i::unregister_factory_by_location (
       "Info: list_factories_by_type: unknown type %s\n", type_id
       ));
   }
-  METHOD_RETURN(FactoryRegistry_i::list_factories_by_type) infos._retn();
+  METHOD_RETURN(TAO::PG_FactoryRegistry::list_factories_by_type) infos._retn();
 }
 
-::PortableGroup::FactoryInfos * FactoryRegistry_i::list_factories_by_location (
+::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_location (
     const PortableGroup::Location & location
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  METHOD_ENTRY(FactoryRegistry_i::list_factories_by_location);
+  METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_location);
   ::PortableGroup::FactoryInfos_var infos;
   ACE_NEW_THROW_EX (infos, ::PortableGroup::FactoryInfos(this->registry_.current_size()),
     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
@@ -590,13 +602,13 @@ void FactoryRegistry_i::unregister_factory_by_location (
     }
   }
 
-  METHOD_RETURN(FactoryRegistry_i::list_factories_by_location) infos._retn();
+  METHOD_RETURN(TAO::PG_FactoryRegistry::list_factories_by_location) infos._retn();
 }
 
 //////////////////////////////
 // Implementation methods
 
-int FactoryRegistry_i::write_ior_file(const char * outputFile, const char * ior)
+int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char * ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");

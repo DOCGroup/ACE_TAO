@@ -13,11 +13,11 @@
 //=============================================================================
 
 #include <tao/Utils/Server_Main.h>
-#include "FactoryRegistry_i.h"
+#include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TAO::Utils::Server_Main<FactoryRegistry_i> server_main("FactoryRegistry");
+  TAO::Utils::Server_Main<TAO::PG_FactoryRegistry> server_main("FactoryRegistry");
   return server_main.run(argc, argv);
 }
 
