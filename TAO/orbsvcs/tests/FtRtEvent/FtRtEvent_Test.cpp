@@ -59,6 +59,7 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
         break;
       case 'f':
         timer_interval_.set(1.0/ACE_OS::atoi(get_opt.opt_arg ()));
+        break;
       case 'h':
       case '?':
         ACE_DEBUG((LM_DEBUG,
