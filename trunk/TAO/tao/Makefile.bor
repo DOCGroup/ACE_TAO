@@ -6,6 +6,7 @@ NAME = TAO
 
 DIRS = \
 	PortableServer \
+        Messaging \
 	DynamicAny \
 	DynamicInterface \
 	BiDir_GIOP \
@@ -27,8 +28,6 @@ OBJFILES = \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Queued_Message.obj \
-	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
-	$(OBJDIR)\Asynch_Timeout_Handler.obj \
 	$(OBJDIR)\Base_Transport_Property.obj \
 	$(OBJDIR)\BiDir_Adapter.obj \
 	$(OBJDIR)\Bind_Dispatcher_Guard.obj \
@@ -119,11 +118,8 @@ OBJFILES = \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\MCAST_Parser.obj \
-	$(OBJDIR)\Messaging.obj \
-	$(OBJDIR)\MessagingC.obj \
-	$(OBJDIR)\Messaging_ORBInitializer.obj \
-	$(OBJDIR)\Messaging_PolicyFactory.obj \
-	$(OBJDIR)\Messaging_Policy_i.obj \
+        $(OBJDIR)\Messaging_PolicyValueC.obj \
+        $(OBJDIR)\Messaging_SyncScopeC.obj \
 	$(OBJDIR)\Muxed_TMS.obj \
 	$(OBJDIR)\NVList.obj \
 	$(OBJDIR)\ORB.obj \
