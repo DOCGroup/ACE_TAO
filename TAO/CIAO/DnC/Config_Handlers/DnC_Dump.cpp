@@ -253,11 +253,11 @@ namespace Deployment
     Dump_Obj dump_obj("ComponentPackageDescription", comppkgdesc);
     dump ("label", comppkgdesc.label);
     dump ("UUID", comppkgdesc.UUID);
+    ACE_DEBUG ((LM_DEBUG, "  realizes: \n"));
+    DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
     dump_sequence ("configProperty", comppkgdesc.configProperty);
     dump_sequence ("infoProperty", comppkgdesc.infoProperty);
     dump_sequence ("implementation", comppkgdesc.implementation);
-    ACE_DEBUG ((LM_DEBUG, "  realizes: \n"));
-    DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
   }
 
   // ComponentPortDescription
