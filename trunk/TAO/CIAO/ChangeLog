@@ -1,3 +1,12 @@
+Thu Apr 29 18:46:51 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Config_Error_Handler.h:
+        * DnC/Config_Handlers/Config_Error_Handler.cpp:
+
+          Generic Error Handler class for the main functions
+          which we will be writing to dump out the IDL
+          data structures populated by the XML handlers.
+
 Thu Apr 29 18:09:41 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.xsd:
