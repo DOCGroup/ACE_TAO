@@ -1,3 +1,9 @@
+Tue Apr 18 21:29:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+          Update all the dependencies, or at least the ones reachable from
+          a top-level make depend.
+
 Tue Apr 18 21:14:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
@@ -13,8 +19,8 @@ Tue Apr 18 21:14:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Apr 18 22:43:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Leader_Followers/run_test.pl:
-	  Add a missing -ORBSvcConf option.
+        * tests/Leader_Followers/run_test.pl:
+          Add a missing -ORBSvcConf option.
 
 Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -27,18 +33,18 @@ Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Apr 18 16:56:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp:
-	  Added a line to open_services() (suggested by Carlos)
-	  that enables dynamic loading of the TypeCodeFactory
-	  DLL.
+        * tao/TAO_Internal.cpp:
+          Added a line to open_services() (suggested by Carlos)
+          that enables dynamic loading of the TypeCodeFactory
+          DLL.
 
 Tue Apr 18 15:37:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	  Removed generation of ACE_ERROR message in the
-	  _dispatch() method. There is already code in place
-	  to throw an exception if the operation lookup fails.
-	  Thanks to Carlos for suggesting this fix.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+          Removed generation of ACE_ERROR message in the
+          _dispatch() method. There is already code in place
+          to throw an exception if the operation lookup fails.
+          Thanks to Carlos for suggesting this fix.
 
 Tue Apr 18 13:34:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
