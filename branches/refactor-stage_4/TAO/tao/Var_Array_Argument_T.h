@@ -72,7 +72,11 @@ namespace TAO
    * @brief OUT stub argument of variable size element array.
    *
    */
-  template<typename S, typename S_var, typename S_out, typename S_forany>
+  template<typename S, 
+           typename S_slice, 
+           typename S_var, 
+           typename S_out, 
+           typename S_forany>
   class Out_Var_Array_Argument_T : public Argument
   {
   public:
