@@ -185,5 +185,62 @@ if ($OSNAME ne "MSWin32")
   }
 }
 
+# Run the SHMIOP test.
+
+Process::Wait();
+
+# No need to unlink the iorfile again.
+# unlink $iorfile;
+
+sleep 2;
+
+print stderr "\nRunning IDL_Cubit with the SHMIOP protocol.\n\n";
+
+# Save the original server flags.
+$save_svflags = $svflags;
+
+$svflags .= " -ORBEndpoint shmiop://";
+
+$SV = Process::Create ($exepref."server".$EXE_EXT,
+                       $svflags.
+                       $svnsflags);
+
+if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
+  print STDERR "ERROR: cannot find file <$iorfile>\n";
+  $SV->Kill (); $SV->TimedWait (1);
+  exit 1;
+}
+
+$CL = Process::Create ($exepref . "client".$EXE_EXT,
+                       " $clflags $clnsflags -x");
+
+$client = $CL->TimedWait (120);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+$server = $SV->TimedWait (30);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $SV->Kill (); $SV->TimedWait (1);
+}
+
+# Restore the original server flags
+$svflags = $save_svflags;
+
+unlink $iorfile;
+
+if ($server != 0) {
+  print STDERR "ERROR: server error status $server\n";
+}
+
+if ($client != 0) {
+  print STDERR "ERROR: client error status $client\n";
+}
+
+if ($server != 0 || $client != 0) {
+  exit 1;
+}
 
 exit 0;
