@@ -131,12 +131,3 @@ ACE_ODB::remove_object (const void *this_ptr)
 }
 
 ACE_ODB *ACE_ODB::instance_ = 0;
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-ACE_MT (template class ACE_Guard<ACE_Thread_Mutex>);
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#pragma instantiate ACE_Guard<ACE_Thread_Mutex>
-#endif /* ACE_MT_SAFE */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
