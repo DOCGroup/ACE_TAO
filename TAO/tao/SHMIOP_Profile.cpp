@@ -24,7 +24,7 @@ static const char prefix_[] = "shmiop";
 
 const char TAO_SHMIOP_Profile::object_key_delimiter = '/';
 
-TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_INET_Addr &addr,
+TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
                                         const TAO_ObjectKey &object_key,
                                         const TAO_GIOP_Version &version,
                                         TAO_ORB_Core *orb_core)
@@ -33,11 +33,11 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_INET_Addr &addr,
     port_ (0),
     version_ (version),
     object_key_ (object_key),
-    object_addr_ (addr),
+    object_addr_ (addr.get_remote_addr ()),
     hint_ (0),
     orb_core_ (orb_core)
 {
-  this->set (addr);
+  this->set (addr.get_remote_addr ());
 }
 
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char* host,
@@ -201,7 +201,7 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
 
 int
 TAO_SHMIOP_Profile::parse_string (const char *string,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
     {
@@ -318,7 +318,7 @@ TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
 CORBA::ULong
 TAO_SHMIOP_Profile::hash (CORBA::ULong max,
-                        CORBA::Environment &)
+                          CORBA::Environment &)
 {
   CORBA::ULong hashval;
 

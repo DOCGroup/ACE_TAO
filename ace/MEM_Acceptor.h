@@ -23,6 +23,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/MEM_Stream.h"
+#include "ace/MEM_Addr.h"
 
 // Forward decl.
 class ACE_Reactor;
@@ -47,13 +48,13 @@ public:
   ~ACE_MEM_Acceptor (void);
   // destructor.
 
-  ACE_MEM_Acceptor (const u_short local_port,
+  ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                     int reuse_addr = 0,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     int protocol = 0);
   // Initiate a passive mode socket.
 
-  int open (const u_short local_port,
+  int open (const ACE_MEM_Addr &local_sap,
             int reuse_addr = 0,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
@@ -64,7 +65,7 @@ public:
   // -1 on failure.
 
   int accept (ACE_MEM_Stream &new_ipc_sap,
-              u_short * = 0,
+              ACE_MEM_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
               int restart = 1,
               int reset_new_handle = 0);
@@ -86,11 +87,15 @@ public:
   // within the same host can located the mmap file.
   // Example:  /tmp/mmapfile
 
+  int get_local_addr (ACE_MEM_Addr &) const;
+  // Return the local endpoint address in the referenced <ACE_Addr>.
+  // Returns 0 if successful, else -1.
+
   ACE_MEM_SAP::MALLOC_OPTIONS& malloc_options (void);
   // Accessor to the mmap options.
 
   // = Meta-type info
-  typedef u_short PEER_ADDR;
+  typedef ACE_MEM_Addr PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;
 
   void dump (void) const;

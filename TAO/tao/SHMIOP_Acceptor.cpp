@@ -51,7 +51,9 @@ TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (void)
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
-    accept_strategy_ (0)
+    accept_strategy_ (0),
+    mmap_file_prefix_ (0),
+    mmap_size_ (1024 * 1024)
 {
 }
 
@@ -83,7 +85,7 @@ TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                   TAO_SHMIOP_Profile (this->host_.c_str (),
                                       this->address_.get_port_number (),
                                       object_key,
-                                      this->address_,
+                                      this->address_.get_remote_addr (),
                                       this->version_,
                                       this->orb_core_),
                   -1);
@@ -120,7 +122,7 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
                      pfile);
 
   // compare the port and sin_addr (numeric host address)
-  return profile->object_addr () == this->address_;
+  return this->address_.same_host (profile->object_addr ());
 }
 
 int
@@ -133,12 +135,9 @@ int
 TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            int major,
                            int minor,
-                           const char *address,
+                           const char *port,
                            const char *options)
 {
-  if (address == 0)
-    return -1;
-
   if (major >=0 && minor >= 0)
     this->version_.set_version (ACE_static_cast (CORBA::Octet,
                                                  major),
@@ -148,40 +147,13 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  ACE_INET_Addr addr;
+  this->base_acceptor_.acceptor().malloc_options ().minimum_bytes_
+    = this->mmap_size_;
 
-  if (ACE_OS::strchr (address, ':') == address)
-    {
-      // The address is a port number or port name, and obtain the
-      // fully qualified domain name.  No hostname was specified.
+  if (port)
+    this->address_.set (port);
 
-      char buffer[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (buffer,
-                              sizeof (buffer)) != 0)
-        return -1;
-
-      // First convert the port into a usable form.
-      if (addr.set (address + sizeof (':')) != 0)
-        return -1;
-
-      // Now reset the port and set the host.
-      if (addr.set (addr.get_port_number (),
-                    buffer,
-                    1) != 0)
-        return -1;
-    }
-  else if (ACE_OS::strchr (address, ':') == 0)
-    {
-      // The address is a hostname.  No port was specified, so assume
-      // port zero (port will be chosen for us).
-      if (addr.set ((unsigned short) 0, address) != 0)
-        return -1;
-    }
-  else if (addr.set (address) != 0)
-    // Host and port were specified.
-    return -1;
-
-  return this->open_i (orb_core, addr);
+  return this->open_i (orb_core);
 }
 
 int
@@ -196,26 +168,13 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   //    pick the "default interface" and only listen on that IP
   //    address.
 
-  ACE_INET_Addr addr;
-  char buffer[MAXHOSTNAMELEN + 1];
-  if (addr.get_host_name (buffer,
-                          sizeof (buffer)) != 0)
-    return -1;
+  this->host_ = this->address_.get_host_name ();
 
-  if (addr.set (u_short(0),
-                buffer,
-                1) != 0)
-    return -1;
-
-  this->host_ = buffer;
-
-  return this->open_i (orb_core,
-                       addr);
+  return this->open_i (orb_core);
 }
 
 int
-TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
-                             const ACE_INET_Addr& addr)
+TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
 {
   this->orb_core_ = orb_core;
 
@@ -233,7 +192,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 
   // We only accept connection on localhost.
   //  ACE_INET_Addr local_addr (addr.get_port_number (), ASYS_TEXT ("localhost"));
-  if (this->base_acceptor_.open (addr,
+  if (this->base_acceptor_.open (this->address_,
                                  this->orb_core_->reactor (this),
                                  this->creation_strategy_,
                                  this->accept_strategy_,
@@ -258,8 +217,8 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 
   // This will be the actualy host name of the original endpoint.
   char tmp_host[MAXHOSTNAMELEN+1];
-  if (addr.get_host_name (tmp_host,
-                          sizeof tmp_host) != 0)
+  if (this->address_.get_host_name (tmp_host,
+                                    sizeof tmp_host) != 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
