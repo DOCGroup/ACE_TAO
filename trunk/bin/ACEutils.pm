@@ -1,7 +1,8 @@
 # $Id$
-package ACE;
 
 require Process;
+
+package ACE;
 
 # Returns a unique id, uid for unix, last digit of IP for NT
 sub uniqueid
