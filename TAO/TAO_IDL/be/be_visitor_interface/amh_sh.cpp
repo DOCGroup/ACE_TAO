@@ -4,7 +4,7 @@
 *
 *  $Id$
 *
-*  Specialized interface visitor for AMH generates code that is 
+*  Specialized interface visitor for AMH generates code that is
 *  specific to AMH interfaces.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
@@ -16,6 +16,7 @@
 #include        "be.h"
 
 #include "be_visitor_interface.h"
+#include "be_visitor_operation.h"
 
 be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (be_visitor_context *ctx)
   : be_visitor_interface_sh (ctx)
@@ -149,12 +150,12 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "(void) const;\n\n";
 
   // Generate code for elements in the scope (e.g., operations).
-  // We have to generate AMH-operations here.  Here is how we go 
+  // We have to generate AMH-operations here.  Here is how we go
   // about it:
   // We create a new node 'on the fly' and for each corresponding
   // operation in the original node, we add a new AMH-operation
   // into the node and then call visit_scope on the new node.
-  
+
   // Step 1: Create the new AMH-node
   be_interface *amh_node = this->create_amh_class (class_name);
 
@@ -190,9 +191,25 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 
 }
 
-int 
-be_visitor_amh_interface_sh::add_original_members (be_interface *node, 
-                                                   be_interface *amh_node 
+int
+be_visitor_amh_interface_sh::visit_operation (be_operation *node)
+{
+  be_visitor_amh_operation_sh visitor (this->ctx_);
+  return visitor.visit_operation (node);
+}
+
+int
+be_visitor_amh_interface_sh::visit_attribute (be_attribute *)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "be_visitor_amh_interface_ss::visit_attribute - "
+              "ignoring attribute, must generate code later\n"));
+  return 0;
+}
+
+int
+be_visitor_amh_interface_sh::add_original_members (be_interface *node,
+                                                   be_interface *amh_node
                                                    )
 {
   if (!node || !amh_node)
@@ -206,7 +223,7 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
                       UTL_ScopeActiveIterator (node, UTL_Scope::IK_decls),
                       0);
       this->elem_number_ = 0;
-      
+
       // continue until each element is visited
       while (!si->is_done ())
         {
@@ -218,13 +235,13 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
                                  "(%N:%l) be_visitor_amh_pre_proc::visit_interface - "
                                  "bad node in this scope\n"),
                                 0);
-              
+
             }
-          
+
           if (d->node_type () == AST_Decl::NT_attr)
             {
               be_attribute *attribute = be_attribute::narrow_from_decl (d);
-              
+
               if (!attribute)
                 return 0;
             }

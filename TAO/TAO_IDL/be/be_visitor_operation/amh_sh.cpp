@@ -45,27 +45,47 @@ be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh (void)
 int
 be_visitor_amh_operation_sh::visit_operation (be_operation *node)
 {
-  // Nothing to be done for oneway operations.
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      return 0;
-    }
+  // If there is an argument of type "native", return immediately.
+  if (node->has_native ())
+    return 0;
 
   // Output stream.
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << "\n// \t *** AMH operation declaration starts here ***\n";
+  *os << be_nl << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl;
 
-  be_interface *intf;
-  intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  *os << "static void ";
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "_set_";
+      else
+        *os << "_get_";
+    }
+  *os << node->local_name ()
+      << "_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &_tao_req," << be_nl
+      << "void *_tao_obj," << be_nl
+      << "void *_tao_servant_upcall" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << ");" << be_uidt << "\n\n";
+  
 
-  if (!intf)
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context
+  be_interface *intf =
+    be_interface::narrow_from_scope (node->defined_in ());
+  if (this->ctx_->attribute () != 0)
+    intf = be_interface::narrow_from_scope (this->ctx_->attribute()->defined_in ());
+
+  if (intf == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
+                         "(%N:%l) be_visitor_amh_operation_sh::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -74,8 +94,6 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   // Step 1 : Generate return type: always void
   os->indent ();
   *os << "virtual void ";
-  // only for source: *os << intf->full_skel_name () << "::";
-
 
   // Step 2: Generate the method name
   // Check if we are an attribute node in disguise.
@@ -91,61 +109,35 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
           *os << "get_";
         }
     }
-  *os << node->local_name();
 
-  /*
   // STEP 3: Generate the argument list with the appropriate
   //         mapping. For these we grab a visitor that generates the
   //         parameter listing. We also generate the ResponseHandler
   //         argument 'on the fly' and add it to the argument list
+  *os << node->local_name() << " (" << be_idt << be_idt_nl;
 
-  //ACE_CString rh_name;
-  //ACE_OSTREAM temp;
-  AST_Decl *parent = ScopeAsDecl (intf->defined_in ());
-  if (parent)
-  {
-  *os << parent->name ();
-  }
-  *os << intf->local_name () ;
-  //<< "ResponseHandler *response_handler, ";
-  AST_Type *rh_field_type = new AST_Type;
+  char *buf;
+  // @@ TODO this must be kept consistent with the code in
+  //    be_visitor_interface/amh_sh.cpp
+  intf->compute_full_name ("", "ResponseHandler_ptr", buf);
 
-  // Create the argument
-  Identifier *id = new Identifier ("ResponseHandler");
-  UTL_IdList *list = new UTL_IdList (id, 0);
-  be_argument *rh_arg = new be_argument (AST_Argument::dir_IN,
-  rh_field_type,
-  list,
-  0);
-  node->add_argument_to_scope (rh_arg);
-  */
+  *os << buf << " _tao_rh";
+  delete[] buf;
 
-  be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_SH);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
+  if (node->argument_count () > 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_amh_sh::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
+      *os << ",";
     }
 
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
-                         "visit_operation - "
-                         "codegen for argument list failed\n"),
-                        -1);
-    }
-
-  delete visitor;
-
-  *os << be_nl;
+  be_visitor_operation_arglist arglist_visitor (this->ctx_);
+  if (arglist_visitor.visit_scope (node) == -1)
+    return -1;
+  if (arglist_visitor.gen_environment_decl (1, node) == -1)
+    return -1;
+  *os << be_uidt_nl << ")" << be_uidt;
+  if (arglist_visitor.gen_throw_spec (node) == -1)
+    return -1;
+  *os << " = 0;\n" << be_nl;
 
   return 0;
 }
