@@ -63,7 +63,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   TAO_GIOP_ServiceContext* context_list = reply_ctx.get_buffer (1);
   this->reply_ctx_.replace (max, len, context_list, 1);
 
-  return 0;
+  return 1;
 }
 
 TAO_GIOP_Message_State *

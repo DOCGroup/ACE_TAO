@@ -119,7 +119,7 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n",
                     this->request_id_, request_id));
-      return -1;
+      return 0;
     }
 
   TAO_Reply_Dispatcher *rd = this->rd_;

@@ -351,6 +351,15 @@ CORBA_SystemException::_info (void) const
         case TAO_MPROFILE_CREATION_ERROR:
           location = "error during MProfile creation";
           break;
+        case TAO_TIMEOUT_CONNECT_MINOR_CODE:
+          location = "timeout during connect";
+          break;
+        case TAO_TIMEOUT_SEND_MINOR_CODE:
+          location = "timeout during send";
+          break;
+        case TAO_TIMEOUT_RECV_MINOR_CODE:
+          location = "timeout during recv";
+          break;
         default:
           location = "unknown location";
         }

@@ -47,7 +47,7 @@ public:
   // variables because the reply may arrive *before* the user calls
   // wait.
 
-  virtual int wait (void) = 0;
+  virtual int wait (ACE_Time_Value *max_wait_time) = 0;
   // Base class virtual method.
 
   virtual int handle_input (void) = 0;
@@ -83,15 +83,11 @@ public:
   virtual ~TAO_Wait_On_Reactor (void);
   // Destructor.
 
-  virtual int wait (void);
-  // Do the event loop of the Reactor.
+  // = Documented in TAO_Wait_Strategy.
 
+  virtual int wait (ACE_Time_Value *max_wait_time);
   virtual int handle_input (void);
-  // Handle the input. Delegate this job to Transport object. Before
-  // that suspend the handler in the Reactor.
-
   virtual int register_handler (void);
-  // Register the handler with the Reactor.
 
 private:
   int reply_received_;
@@ -121,11 +117,8 @@ public:
 
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
-
-  virtual int wait (void);
-
+  virtual int wait (ACE_Time_Value *max_wait_time);
   virtual int handle_input (void);
-
   virtual int register_handler (void);
 
 protected:
@@ -157,9 +150,8 @@ class TAO_Export TAO_Wait_On_Read :  public TAO_Wait_Strategy
 {
   // = TITLE
   //
-  //    Wait on receiving the reply.
-  //
   // = DESCRIPTION
+  //   Simply block on read() to wait for the reply.
   //
 
 public:
@@ -169,14 +161,9 @@ public:
   virtual ~TAO_Wait_On_Read (void);
   // Destructor.
 
-  virtual int wait (void);
-  // Wait on the read operation.
-
+  virtual int wait (ACE_Time_Value *max_wait_time);
   virtual int handle_input (void);
-  // Handle the input. Delegate this job to Transport object.
-
   virtual int register_handler (void);
-  // No-op. Return 0.
 };
 
 #endif /* TAO_WAIT_STRATEGY_H */

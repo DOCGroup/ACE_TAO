@@ -22,7 +22,8 @@ DIRS  = CDR \
 	FL_Cube \
 	POA \
 	Faults \
-	IORManipulation
+	IORManipulation \
+	Timeout
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

@@ -109,7 +109,8 @@ TAO_UIOP_Connector::close (void)
 
 int
 TAO_UIOP_Connector::connect (TAO_Profile *profile,
-                             TAO_Transport *& transport)
+                             TAO_Transport *& transport,
+                             ACE_Time_Value *max_wait_time)
 {
   if (profile->tag () != TAO_IOP_TAG_UNIX_IOP)
     return -1;
@@ -122,6 +123,13 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
 
   const ACE_UNIX_Addr &oa = uiop_profile->object_addr ();
 
+  ACE_Synch_Options synch_options;
+  if (max_wait_time != 0)
+    {
+      synch_options.set (ACE_Synch_Options::USE_TIMEOUT,
+                         *max_wait_time);
+    }
+
   TAO_UIOP_Client_Connection_Handler* result;
 
   // the connect call will set the hint () stored in the Profile
@@ -130,7 +138,8 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
   // affected.
   if (this->base_connector_.connect (uiop_profile->hint (),
                                      result,
-                                     oa) == -1)
+                                     oa,
+                                     synch_options) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
         {

@@ -40,7 +40,7 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 }
 
 int
-TAO_Wait_On_Reactor::wait (void)
+TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time)
 {
   // Reactor does not change inside the loop.
   ACE_Reactor* reactor =
@@ -58,15 +58,32 @@ TAO_Wait_On_Reactor::wait (void)
 
   int result = 0;
   this->reply_received_ = 0;
-  while (this->reply_received_ == 0 && result >= 0)
+  while (this->reply_received_ == 0 && result > 0)
     {
-      result = reactor->handle_events (/* timeout */);
+      result = reactor->handle_events (max_wait_time);
     }
 
   if (result == -1 || this->reply_received_ == -1)
     return -1;
 
-  return 0;
+  // Return an error if there was a problem receiving the reply...
+  if (max_wait_time != 0)
+    {
+      if (this->reply_received_ != 1
+          && *max_wait_time == ACE_Time_Value::zero)
+        {
+          result = -1;
+          errno = ETIME;
+        }
+    }
+  else
+    {
+      result = 0;
+      if (this->reply_received_ == -1)
+        result = -1;
+    }
+
+  return result;
 }
 
 int
@@ -173,7 +190,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_Wait_On_Leader_Follower::wait (void)
+TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
 {
   // Cache the ORB core, it won't change and is used multiple times
   // below:
@@ -188,6 +205,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
                     leader_follower.lock (), -1);
 
   leader_follower.set_client_thread ();
+
+  ACE_Countdown_Time countdown (max_wait_time);
 
   // Check if there is a leader, but the leader is not us
   if (leader_follower.leader_available ()
@@ -217,10 +236,22 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
       while (!this->reply_received_ && leader_follower.leader_available ())
         {
-          if (cond == 0 || cond->wait () == -1)
-            return -1;
+          if (max_wait_time == 0)
+            {
+              if (cond == 0 || cond->wait () == -1)
+                return -1;
+            }
+          else
+            {
+              countdown.update ();
+              ACE_Time_Value tv = ACE_OS::gettimeofday ();
+              tv += *max_wait_time;
+              if (cond == 0 || cond->wait (&tv) == -1)
+                return -1;
+            }
         }
 
+      countdown.update ();
       if (leader_follower.remove_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
@@ -266,7 +297,7 @@ TAO_Wait_On_Leader_Follower::wait (void)
   // This might increase the refcount of the leader.
   leader_follower.set_leader_thread ();
 
-  int result = 0;
+  int result = 1;
 
   {
     ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>, rev_mon,
@@ -281,8 +312,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
     //this->transport_));
 
-    while (result >= 0 && this->reply_received_ == 0)
-      result = orb_core->reactor ()->handle_events ();
+    while (result > 0 && this->reply_received_ == 0)
+      result = orb_core->reactor ()->handle_events (max_wait_time);
 
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
     //this->transport_));
@@ -311,10 +342,22 @@ TAO_Wait_On_Leader_Follower::wait (void)
                       -1);
 
   // Return an error if there was a problem receiving the reply...
-  result = 0;
-  if (this->reply_received_ == -1)
+  if (max_wait_time != 0)
     {
-      result = -1;
+      if (this->reply_received_ != 1
+          && *max_wait_time == ACE_Time_Value::zero)
+        {
+          result = -1;
+          errno = ETIME;
+        }
+    }
+  else
+    {
+      result = 0;
+      if (this->reply_received_ == -1)
+        {
+          result = -1;
+        }
     }
 
   // Make us reusable
@@ -449,7 +492,7 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 
 // Wait on the read operation.
 int
-TAO_Wait_On_Read::wait (void)
+TAO_Wait_On_Read::wait (ACE_Time_Value * /* max_wait_time */)
 {
   int received_reply = 0;
   while (received_reply == 0)
