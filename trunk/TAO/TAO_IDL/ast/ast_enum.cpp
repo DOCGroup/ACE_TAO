@@ -328,6 +328,12 @@ AST_Enum::dump (ostream &o)
   o << "}";
 }
 
+int
+AST_Enum::accept (ast_visitor *visitor)
+{
+  return visitor->visit_enum (this);
+}
+
 void
 AST_Enum::destroy (void)
 {

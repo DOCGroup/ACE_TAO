@@ -1178,6 +1178,19 @@ AST_Interface::destroy (void)
 {
 }
 
+int
+AST_Interface::accept (ast_visitor *visitor)
+{
+  if (this->is_valuetype_)
+    {
+      return visitor->visit_valuetype (this);
+    }
+  else
+    {
+      return visitor->visit_interface (this);
+    }
+}
+
 // Narrowing methods.
 IMPL_NARROW_METHODS2(AST_Interface, AST_Type, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Interface)

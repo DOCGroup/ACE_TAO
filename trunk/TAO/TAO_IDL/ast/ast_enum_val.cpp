@@ -105,6 +105,12 @@ AST_EnumVal::dump (ostream &o)
   AST_Constant::dump (o);
 }
 
+int
+AST_EnumVal::accept (ast_visitor *visitor)
+{
+  return visitor->visit_enum_val (this);
+}
+
 // Narrowing methods.
 IMPL_NARROW_METHODS1(AST_EnumVal, AST_Constant)
 IMPL_NARROW_FROM_DECL(AST_EnumVal)

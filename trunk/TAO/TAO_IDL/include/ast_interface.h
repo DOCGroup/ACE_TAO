@@ -157,6 +157,9 @@ public:
   // AST Dumping.
   virtual void dump (ostream &o);
 
+  // Visiting.
+  virtual int accept (ast_visitor *visitor);
+
 protected:
 
   idl_bool is_valuetype_;

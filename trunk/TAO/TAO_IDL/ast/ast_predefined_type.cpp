@@ -105,6 +105,12 @@ AST_PredefinedType::dump (ostream &o)
   AST_Decl::dump (o);
 }
 
+int
+AST_PredefinedType::accept (ast_visitor *visitor)
+{
+  return visitor->visit_predefined_type (this);
+}
+
 // Data accessors.
 
 AST_PredefinedType::PredefinedType

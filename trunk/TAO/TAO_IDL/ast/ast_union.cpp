@@ -729,6 +729,12 @@ AST_Union::dump (ostream &o)
   o << "}";
 }
 
+int
+AST_Union::accept (ast_visitor *visitor)
+{
+  return visitor->visit_union (this);
+}
+
 // Data accessors.
 
 AST_ConcreteType *

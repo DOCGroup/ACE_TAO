@@ -70,7 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Representation of array declaration:
 // An array is a combination of a list of dimensions and a base type
 
-class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType {
+class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType 
+{
 public:
   // Operations.
 
@@ -105,6 +106,9 @@ public:
 
   // AST Dumping.
   virtual void dump (ostream &o);
+
+  // Visiting.
+  virtual int accept (ast_visitor *visitor);
 
 private:
   // Data.

@@ -116,6 +116,12 @@ AST_UnionBranch::dump (ostream &o)
   AST_Field::dump (o);
 }
 
+int
+AST_UnionBranch::accept (ast_visitor *visitor)
+{
+  return visitor->visit_union_branch (this);
+}
+
 // Data accessors.
 
 AST_UnionLabel *

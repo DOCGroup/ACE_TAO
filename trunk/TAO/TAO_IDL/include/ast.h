@@ -86,6 +86,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
+#include        "ast_visitor.h"         // abstract class ast_visitor
+
 #include        "utl_scoped_name.h"     // Define UTL_ScopedName
 
 #include        "ast_decl.h"            // class AST_Decl

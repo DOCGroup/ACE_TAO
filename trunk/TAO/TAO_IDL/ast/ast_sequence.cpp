@@ -166,6 +166,12 @@ AST_Sequence::dump (ostream &o)
   o << ">";
 }
 
+int
+AST_Sequence::accept (ast_visitor *visitor)
+{
+  return visitor->visit_sequence (this);
+}
+
 // Data accessors.
 
 AST_Expression *

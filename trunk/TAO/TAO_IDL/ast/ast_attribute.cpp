@@ -115,6 +115,12 @@ AST_Attribute::dump (ostream &o)
   AST_Field::dump (o);
 }
 
+int
+AST_Attribute::accept (ast_visitor *visitor)
+{
+  return visitor->visit_attribute (this);
+}
+
 // Data accessors.
 
 idl_bool

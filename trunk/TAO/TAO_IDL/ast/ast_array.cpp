@@ -157,6 +157,12 @@ AST_Array::dump (ostream &o)
     }
 }
 
+int
+AST_Array::accept (ast_visitor *visitor)
+{
+  return visitor->visit_array (this);
+}
+
 // Data accessors.
 unsigned long
 AST_Array::n_dims (void)
