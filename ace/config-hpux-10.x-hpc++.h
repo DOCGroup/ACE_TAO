@@ -48,6 +48,8 @@
 // The HP/UX compiler doesn't support volatile!!!!
 #  define volatile
 
+#  define ACE_LACKS_SIGNED_CHAR
+
 #else  // aC++ definitions
 
 // Compiler can't handle calls like foo->operator T *()

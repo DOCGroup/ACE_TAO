@@ -1,3 +1,25 @@
+Fri Sep 19 18:49:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/config-irix6.x-g++.h: 
+	* include/makeinclude/platform_irix6.x_g++.GNU: 
+	  Added support for IRIX 6.x w/gcc, thanks to Celeste E. Copeland
+	  (celeste@altaira.com) for this.
+
+Thu Sep 18 19:33:02 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* Douglas added the following changes while going through the
+	  Async_Timer_Queue.
+
+	* ace/Timer_Queue_T.h: Factored out the code for handling
+	  ualarm().
+
+	* ace/Timer_Queue_T.cpp (handle_signal): Cleanedup the logic
+	  for rescheduling a ualarm() after expiring a timer.
+
+	* tests/Async_Timer_Queue_Test.cpp (signal_handler): Changed the
+ 	  use of ACE_DEBUG to ACE_ERROR to ensure that the call doesn't
+ 	  magically disappear if ACE_NDEBUG is enabled.
+
 Fri Sep 19 18:05:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Changed the send() to a send_n() so that
