@@ -161,6 +161,7 @@ DRV_cpp_init (void)
       if (cpp_path != 0)
         {
           ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s",
                       ACE_TEXT ("Warning: The environment variable ")
                       ACE_TEXT ("CPP_LOCATION has been deprecated.\n")
                       ACE_TEXT ("         Please use TAO_IDL_PREPROCESSOR ")
@@ -207,6 +208,7 @@ DRV_cpp_init (void)
       if (args2 != 0)
         {
           ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s%s",
                       ACE_TEXT ("Warning: The environment variable ")
                       ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS has been ")
                       ACE_TEXT ("deprecated.\n")
@@ -258,6 +260,7 @@ DRV_cpp_init (void)
                 {
                   ACE_ERROR ((
                       LM_ERROR,
+                      "%s%s%s%s",
                       ACE_TEXT ("Note: The environment variables ")
                       ACE_TEXT ("TAO_ROOT and ACE_ROOT are not defined.\n")
                       ACE_TEXT ("      TAO_IDL may not be able to ")
@@ -341,6 +344,7 @@ DRV_copy_input (FILE *fin,
   if (f == NULL)
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s%s%s",
                   ACE_TEXT (idl_global->prog_name ()),
                   ACE_TEXT (": cannot open temp file "),
                   ACE_TEXT (fn),
@@ -352,6 +356,7 @@ DRV_copy_input (FILE *fin,
   if (fin == NULL)
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s",
                   ACE_TEXT (idl_global->prog_name ()),
                   ACE_TEXT (": cannot open input file\n")));
 
@@ -537,6 +542,7 @@ DRV_pre_proc (const char *myfile)
       if (fd == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s",
                       ACE_TEXT (idl_global->prog_name ()),
                       ACE_TEXT (": cannot open temp file "),
                       ACE_TEXT (tmp_file),
@@ -551,6 +557,7 @@ DRV_pre_proc (const char *myfile)
   if (process.spawn (cpp_options) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s%s%s",
                   ACE_TEXT (idl_global->prog_name ()),
                   ACE_TEXT (": spawn of "),
                   ACE_TEXT (arglist[0]),
@@ -565,6 +572,7 @@ DRV_pre_proc (const char *myfile)
       if (ACE_OS::close (fd) == -1)
         {
           ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s",
                       ACE_TEXT (idl_global->prog_name ()),
                       ACE_TEXT (": cannot close temp file"),
                       ACE_TEXT (tmp_file),
@@ -582,6 +590,7 @@ DRV_pre_proc (const char *myfile)
   if (process.wait (&status) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
+                  "%s%s",
                   ACE_TEXT (idl_global->prog_name ()),
                   ACE_TEXT (": wait for child process failed\n")));
 
@@ -596,6 +605,7 @@ DRV_pre_proc (const char *myfile)
           errno = WEXITSTATUS ((status));
 
           ACE_ERROR ((LM_ERROR,
+                      "%s%s%s%s",
                       ACE_TEXT (idl_global->prog_name ()),
                       ACE_TEXT (": preprocessor "),
                       ACE_TEXT (arglist[0]),
@@ -610,6 +620,7 @@ DRV_pre_proc (const char *myfile)
       errno = EINTR;
 
       ACE_ERROR ((LM_ERROR,
+                  "%s%s%s%s",
                   ACE_TEXT (idl_global->prog_name ()),
                   ACE_TEXT (": preprocessor "),
                   ACE_TEXT (arglist[0]),
