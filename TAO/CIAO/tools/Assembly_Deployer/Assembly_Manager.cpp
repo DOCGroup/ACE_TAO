@@ -15,6 +15,7 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 char *config_filename_ = 0;
 char *output_ior_filename_ = 0;

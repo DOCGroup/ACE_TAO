@@ -16,6 +16,7 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 char *ior_file_name_ = 0;
 const char *comserv_path_ = "../ComponentServer/ComponentServer";
