@@ -26,4 +26,8 @@ project : taolib, core, rtcorba, portableserver {
   PIDL_Files {
     RTPortableServer
   }
+
+  Pkgconfig_Files {
+    RTPortableServer/TAO_RTPortableServer.pc.in
+  }
 }

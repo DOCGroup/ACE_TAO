@@ -1,3 +1,32 @@
+Thu Jan 20 06:42:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerate.
+
+	* tao/BiDir_GIOP.mpc:
+	* tao/Domain.mpc:
+	* tao/DynamicAny.mpc:
+	* tao/DynamicInterface.mpc:
+	* tao/IFR_Client.mpc:
+	* tao/IORInterceptor.mpc:
+	* tao/IORManipulation.mpc:
+	* tao/IORTable.mpc:
+	* tao/Messaging.mpc:
+	* tao/ObjRefTemplate.mpc:
+	* tao/PortableServer.mpc:
+	* tao/RTCORBA.mpc:
+	* tao/RTPortableServer.mpc:
+	* tao/RTScheduler.mpc:
+	* tao/SmartProxies.mpc:
+	* tao/Strategies.mpc:
+	* tao/TypeCodeFactory.mpc:
+	* tao/Utils.mpc:
+	* tao/Valuetype.mpc:
+	* tao/tao.mpc:
+
+	  Added Pkgconfig_Files definition.
+
 Thu Jan 20 07:53:44 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/ImR/Combined_Service/run_test.pl:

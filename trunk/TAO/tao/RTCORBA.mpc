@@ -28,4 +28,8 @@ project : taolib, core {
   PIDL_Files {
     RTCORBA
   }
+
+  Pkgconfig_Files {
+    RTCORBA/TAO_RTCORBA.pc.in
+  }
 }
