@@ -1,3 +1,9 @@
+Sat Mar 23 10:42:42 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	  Fix case where exception list is not generated if
+	  operation is part of a valuetype.
+
 Fri Mar 22 19:19:18 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CDR_Encaps_Codec.cpp (encode_value):
