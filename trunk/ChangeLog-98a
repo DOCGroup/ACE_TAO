@@ -14,6 +14,10 @@ Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
           warning about integer overflow.  Thanks to Frederic Andres
           <andres@rd.nacsis.ac.jp> for reporting this.
 
+        * ace/config-osf1-4.0.h: added ACE_HAS_EXCEPTIONS, etc., with
+          CXX 6.0.  Thanks to Torbjorn Lindgren <tl@funcom.com> for
+          the patch.
+
 Thu Jan 22 16:34:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
