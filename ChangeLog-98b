@@ -1,5 +1,9 @@
 Thu Jan 07 04:01:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Containers_T.cpp (max_size): No need to reallocate if the
+ 	  new size is the same.  Thanks to Mike Goldman <whig@by.net> for
+ 	  pointing this out.
+
 	* ace/Strategies_T.cpp (check_hint_i and cleanup_hint_i):
  	  purge_i() should be called after the entry is closed.
 

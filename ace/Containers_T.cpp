@@ -2329,7 +2329,7 @@ ACE_Array_Base<T>::get (T &item, size_t index) const
 template<class T> int
 ACE_Array_Base<T>::max_size (size_t new_size)
 {
-  if (new_size >= this->max_size_)
+  if (new_size > this->max_size_)
     {
       // @@ We should use auto_ptr<>!
       T* tmp;
