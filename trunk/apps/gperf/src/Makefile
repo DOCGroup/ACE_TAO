@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 BIN     = gperf
-INSBIN  = $ACE_ROOT/bin/gperf
+INSBIN  = $(ACE_ROOT)/bin/gperf
 
 FILES   = Options \
           Iterator \
@@ -22,7 +22,7 @@ OBJ	= $(addsuffix .o,$(FILES))
 
 BUILD   = $(VBIN)
 
-INSTALL = $(VBIN:%=$(INSBIN)/%)
+INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

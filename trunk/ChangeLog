@@ -1,3 +1,73 @@
+Sat Jun  2 13:05:20 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Timer_Wheel_T.cpp: Since we removed the call to
+	  is_empty() from earliest_time() we need to modify the code in
+ 	  reschedule() to test for is_empty.
+
+	* tests/Cached_Accept_Conn_Test.cpp (accept_svc_handler): Use the
+	  ACE_Accept_Strategy::acceptor() accessor method rather than
+ 	  accessing the acceptor_ directly.
+
+	* TAO/rules.tao.GNU (TAO_IDL_DEP),
+	* include/makeinclude/rules.local.GNU: Added support for the new EXEEXT
+	  Makefile macro.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* include/makeinclude/platform_gnuwin32_common.GNU: Added a number of
+	  fixes for the mingw platform.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* ace/Configuration.{h,cpp}: "Un-inlined" the == and != operators for 
+	  the ACE_Configuration_Win32Registry class.
+	
+	* ace/Configuration.cpp (get_binary_value): Changed the type of "data"
+	  from "unsigned char" to "BYTE".  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* ace/config-win32-mingw.h: Removed the #define ACE_AS_STATIC_LIBS
+	  macro.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* ace/config-win32-common.h: Protect certain DLL export macros with
+	  #if !defined (__MINGW32__).  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+	
+	* ace/ACE.cpp (handle_timed_complete): Added an ACE_UNUSED_ARG 
+	  for the is_tli flag for ACE_WIN32 to keep the compiler happy.
+  	  Thanks to Cristian Ferretti <cristian_ferretti@yahoo.com> for
+ 	  pointing this out.
+	
+	* ace/Acceptor.cpp: Fixed the comment and logic in
+	  accept_svc_handler() so that it now cleans up the svc handler
+ 	  whenever accept() returns -1.  Thanks to Boris Temkin
+ 	  <borist@allcharge.com> for suggesting this and to Irfan for
+ 	  helping clarify what needed to be done.
+
+	* ace/Strategies_T.cpp:   When the number of clients
+          connecting to a server exceeds the process handle limit the
+ 	  server would busy loop.  The ACE_Accept_Strategy
+ 	  accept_svc_handler() method is called which (1) constructs a
+ 	  handler and (2) attempts to accept the connection, which fails
+ 	  (because there is no available handle).  The handler is
+ 	  destructed, but the connect request is still queued and so the
+ 	  acceptor gets called back again.... and so on until one of the
+ 	  client which is already connected disconnects and frees up a
+ 	  descriptor.  Changed the accept_svc_handler() method in
+ 	  ACE_Accept_Strategy to close and reopen the connection when
+ 	  accept() fails.  A check is done to make sure address reuse is
+ 	  set. So this fix will only work in case where it is set.  Thanks
+ 	  to Dominic Hughes <dominic@aersoft.ie> for this fix and to Irfan
+ 	  for recognizing that it ought to be added to ACE_Accpt_Strategy.
+	
+        * ace/Strategies_T.cpp (open): Fixed the strategy acceptor so that it
+	  uses non-blocking semantics to handle certain failure cases
+ 	  correctly.  This is a safe-guard against the race condition that
+ 	  can otherwise occur between the time when <select> indicates
+ 	  that a passive-mode socket handle is "ready" and when we call
+ 	  <accept>.  During this interval, the client can shutdown the
+ 	  connection, in which case, the <accept> call can hang!  Thanks
+ 	  to Irfan for pointing this out.
+
 Fri Jun  1 13:04:31 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
         * ace/Makefile:

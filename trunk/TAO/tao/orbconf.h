@@ -317,10 +317,10 @@
 
 // Assume DOS/Windows if "configure" didn't get run.
 
-#if defined (_WIN32)
+#if defined (_MSC_VER)
 // "C4355: 'this' : used in base member initializer list"
 #  pragma warning (disable:4355) /* disable C4355 warning */
-#endif /* defined (_WIN32) */
+#endif /* defined (_MSC_VER) */
 
 // The IDL compiler can generate the classes corresponding to IDL
 // sequences in two ways:

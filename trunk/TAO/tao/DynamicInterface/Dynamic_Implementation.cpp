@@ -68,25 +68,21 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::POA_var poa = poa_current_impl->get_POA (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::RepositoryId interface =
+  CORBA::RepositoryId pinterface =
     this->_primary_interface (poa_current_impl->object_id (),
                               poa.in (),
                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   CORBA::PolicyList_var client_exposed_policies =
-    poa_current_impl->poa ()->client_exposed_policies (
-                                  poa_current_impl->priority (),
-                                  ACE_TRY_ENV
-                                );
+    poa_current_impl->poa ()->client_exposed_policies 
+      (poa_current_impl->priority (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  return poa_current_impl->poa ()->key_to_stub (
-                                       poa_current_impl->object_key (),
-                                       interface,
-                                       poa_current_impl->priority (),
-                                       ACE_TRY_ENV
-                                     );
+  return poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
+                                                pinterface,
+                                                poa_current_impl->priority (),
+                                                ACE_TRY_ENV);
 }
 
 void

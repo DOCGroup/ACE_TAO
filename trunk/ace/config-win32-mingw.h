@@ -27,8 +27,6 @@
 #  error You do not seem to be using mingw32
 #endif
 
-#define ACE_AS_STATIC_LIBS
-
 #include "ace/config-g++-common.h"
 
 #include /**/ <_mingw.h>

@@ -100,12 +100,12 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // associations.
   int reset_new_handle = this->reactor_->uses_event_associations ();
 
-  int result = this->acceptor_.accept (svc_handler->peer (), // stream
-                                   0, // remote address
-                                   0, // timeout
-                                   1, // restart
-                                   reset_new_handle  // reset new handler
-                                   );
+  int result = this->acceptor ().accept (svc_handler->peer (), // stream
+                                         0, // remote address
+                                         0, // timeout
+                                         1, // restart
+                                         reset_new_handle  // reset new handler
+                                         );
   if (result == 0)
     {
       if (debug)

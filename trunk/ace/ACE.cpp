@@ -2580,6 +2580,8 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // any platform where we can't tell just from select() (e.g. AIX),
   // we also need to check for success/fail.
 #if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (is_tli);
+
   // On Win32, ex_handle set indicates a failure. We'll do the check
   // to try and get an errno value, but the connect failed regardless of
   // what getsockopt says about the error.

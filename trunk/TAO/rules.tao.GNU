@@ -2,7 +2,7 @@
 #
 #       $Id$
 #
-#       Common rules for all of TAO
+#       Common Makefile rules for all of TAO
 #
 #----------------------------------------------------------------------------
 
@@ -17,6 +17,8 @@ ifndef TAO_IDL
   TAO_IDL = $(TAO_ROOT)/TAO_IDL/tao_idl
 endif
 
+TAO_IDL_DEP = $(TAO_IDL)$(EXEEXT)
+
 ifndef COMSPEC
   ifdef ComSpec
     #### ACE+TAO use COMSPEC, but ComSpec is defined.
@@ -30,7 +32,12 @@ ifdef COMSPEC
     #### Assume we have Bourne shell and sed.  Otherwise, the user
     #### should find out here that the TAO_IDL_PREPROCESSOR environment
     #### variable must be set explicitly!
-    TAO_IDL_PREPROCESSOR := $(shell type $(CXX) | sed 's/.* is //')
+    ifneq ($(mingw32),1)
+      TAO_IDL_PREPROCESSOR := $(shell type $(CXX) | sed 's/.* is //')
+    else
+      TAO_IDL_PREPROCESSOR := \
+        $(shell cygpath -w $(shell type $(CXX) | sed 's/.* is //'))
+    endif # !mingw32
   endif # ! TAO_IDL_PREPROCESSOR
 endif # COMSPEC
 
@@ -188,7 +195,7 @@ $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
 	@
 
 ifneq ($(tao_dont_use_idl_make_rule),1)
-%C.h: %.idl $(TAO_IDL)
+%C.h: %.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
 
@@ -196,7 +203,7 @@ $(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
 	@
 
 ifneq ($(tao_dont_use_idl_make_rule),1)
-%Cli.h: %.idl $(TAO_IDL)
+%Cli.h: %.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
 

@@ -241,16 +241,36 @@ ACE_Thread_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handler
                                   this->n_threads_);
 }
 
+template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
+ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
+  (const ACE_PEER_ACCEPTOR_ADDR &local_addr, int reuse_addr)
+{
+  this->reuse_addr_ = reuse_addr;
+  this->peer_acceptor_addr_ = local_addr;
+  if (this->peer_acceptor_.open (local_addr,
+                                 reuse_addr) == -1)
+    return -1;
+
+  // Set the peer acceptor's handle into non-blocking mode.  This is a
+  // safe-guard against the race condition that can otherwise occur
+  // between the time when <select> indicates that a passive-mode
+  // socket handle is "ready" and when we call <accept>.  During this
+  // interval, the client can shutdown the connection, in which case,
+  // the <accept> call can hang!
+  this->peer_acceptor_.enable (ACE_NONBLOCK);
+  return 0;
+}
+
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-   int restart,
+   int reuse_addr,
    ACE_Reactor *reactor)
     : reactor_ (reactor)
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
 
-  if (this->open (local_addr, restart) == -1)
+  if (this->open (local_addr, reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("open")));
@@ -258,7 +278,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
-(SVC_HANDLER *svc_handler)
+  (SVC_HANDLER *svc_handler)
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler");
 
@@ -269,15 +289,25 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   // associations.
   int reset_new_handle = this->reactor_->uses_event_associations ();
 
-  if (this->acceptor_.accept (svc_handler->peer (), // stream
-                              0, // remote address
-                              0, // timeout
-                              1, // restart
-                              reset_new_handle  // reset new handler
-                              ) == -1)
+  if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
+                                   0, // remote address
+                                   0, // timeout
+                                   1, // restart
+                                   reset_new_handle  // reset new handler
+                                   ) == -1)
     {
       // Close down handler to avoid memory leaks.
       svc_handler->close (0);
+
+      // If <reuse_addr_> is true then we will close the socket and
+      // open it again...
+      if (this->reuse_addr_)
+        {
+          this->peer_acceptor_.close ();
+          this->peer_acceptor_.open (this->peer_acceptor_addr_,
+                                     this->reuse_addr_);
+        }
+
       return -1;
     }
   else
