@@ -1,3 +1,21 @@
+Tue Oct 12 07:07:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy: Changed the "definition" of definitions:
+	  to be left recursive (i.e., "definitions definition") rather
+ 	  than right recursive (i.e., "definition definitions") to prevent
+ 	  a stack overflow from yacc.  Thanks to Brian Wallis
+ 	  <Brian.Wallis@sr.com.au> for reporting the original problem and
+ 	  Raymond Wiker <raymond@orion.no> for suggesting the solution.
+
+	* TAO_IDL/be/be_interface.cpp(): Reworked the code so that it
+	  will cleanup the handles even if an error occurs.
+	
+	* TAO_IDL/be/be_interface.cpp(): Make 
+	  sure to close down the temporary file handles at the end of the
+ 	  gen_gperf_lookup_methods() function to avoid handle leaks.
+  	  Thanks to Brian Wallis <Brian.Wallis@sr.com.au> for reporting
+ 	  this.
+
 Mon Oct 11 21:39:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/DSI_Gateway/test_dsi.cpp:
