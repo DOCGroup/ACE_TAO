@@ -9,6 +9,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+LIBS   += $(ACELIB) -lACEXML_Parser -lACEXML
+
 BIN     = SC_Client \
 	  SC_Server
 
@@ -30,11 +32,25 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+
+ifdef shared_libs
+  ifndef VXWORKS
+    #### Build libCCM_App library first,
+    #### so that they don't see the template instantiations from all
+    #### of the tests.
+    BUILD := \
+      libCCM_App.$(SOEXT) \
+      $(BUILD)
+  endif # ! VXWORKS
+endif # shared_libs
+
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
+libCCM_App.$(SOEXT): CCM_App.cpp
+	@$(MAKE) -f Makefile.CCM_App
 
 #----------------------------------------------------------------------------
 #	Dependencies

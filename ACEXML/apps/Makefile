@@ -4,11 +4,7 @@
 #       Makefile for the client programs that test the ACE network services
 #----------------------------------------------------------------------------
 
-DIRS  = common \
-	parser \
-	apps \
-	tests \
-	examples
+DIRS  = svcconf
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

@@ -13,6 +13,7 @@
 #ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H
 #include "ace/pre.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -188,6 +188,7 @@ SVCCONF_FILES = \
   Service_Types \
   Service_Templates \
   Shared_Object \
+  XML_Svc_Conf \
   Svc_Conf_l \
   Svc_Conf_y \
   Svc_Conf_Lexer_Guard

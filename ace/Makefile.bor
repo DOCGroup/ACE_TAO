@@ -232,6 +232,7 @@ OBJFILES = \
 	$(OBJDIR)\WFMO_Reactor.obj \
 	$(OBJDIR)\WIN32_Asynch_IO.obj \
 	$(OBJDIR)\WIN32_Proactor.obj \
+	$(OBJDIR)\XML_Svc_Conf.obj \
 	$(OBJDIR)\XtReactor.obj
 
 RESOURCE = $(OBJDIR)\ace.res

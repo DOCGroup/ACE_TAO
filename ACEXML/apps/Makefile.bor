@@ -3,8 +3,6 @@
 #
 
 DIRS = \
-        common \
-        parser \
-        apps
+        svcconf
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
