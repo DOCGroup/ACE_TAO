@@ -1,3 +1,330 @@
+Thu May 24 17:21:02 2001  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_codegen.cpp
+	  (start_client_stubs, start_server_skeletons):
+
+	  Moved some interceptor-specific #includes within the generated
+	  "#if TAO_HAS_INTERCEPTORS" block.
+
+	  Include "tao/PortableInterceptor.h" in the generated stub and
+	  skeleton source files (not the headers).  It is no longer needed
+	  outside of the stub/skeleton sources so just include it there.
+
+	* TAO_IDL/be/be_visitor_argument/paramlist.cpp (visit_argument):
+
+	  Updated generated code for the
+	  PortableInterceptor::RequestInfo::arguments() method to agree
+	  with the corrections to the "Dynamic" IDL module, and the new
+	  optimization for the case where more than one IDL parameter is
+	  used in a given IDL method.
+	
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+	  (visit_interface):
+
+	  Removed default argument "TAO_default_environment()" from the
+	  generated skeleton, i.e. "_skel" methods.  They are only meant
+	  to be called by TAO, not the application.  As such, a default
+	  CORBA::Environment argument should not be used.
+
+	  The "context" argument is now called "servant_upcall."  A
+	  pointer to the Servant_Upcall object associated with the current
+	  request is now passed through this argument.
+	
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface):
+
+	  The unused "context" argument to the "_skel" methods and the
+	  "synchronous_upcall_dispatch()" is now a pointer to the
+	  Servant_Upcall object.  Adjust the generated code accordingly.
+	
+	  Improved exception-safety of the generated "_this()" method.
+
+	* TAO_IDL/be/be_visitor_interface/remote_proxy_broker_ch.cpp
+	  (visit_interface):
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp
+	  (visit_interface):
+
+	  Removed default CORBA::Environment() argument from the generated
+	  "select_proxy()" method.  It is a method that is used internally
+	  by TAO.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  (generate_class_definition):
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
+	  (generate_class_definition):
+
+	  Precompute the length of the Dynamic::ParameterList.  This is	a
+	  nice optimization since it reduces the number of additional
+	  allocations to one, instead of one for each argument, in
+	  addition to remove all copying that occured when growing the
+	  sequence for each parameter.
+
+	  For the skeleton, pass the pointer to the Servant_Upcall object
+	  to the per-operation ServerRequestInfo classes.  It is used to
+	  implement the ServerRequestInfo::object_id() method. 
+
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp
+	  (count_non_out_parameters):
+
+	  New helper method that counts in/inout parameters.  Used in the
+	  above precomputation optimization.
+
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp
+	  (visit_operation):
+
+	  Renamed the "context" argument to "servant_upcall."  The latter
+	  reflects its contents.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+	  (visit_operation):
+	
+	  Removed catch block for the PortableInterceptor::ForwardRequest
+	  exception.  That exception is now handled within the
+	  "{Client,Server}InterceptorAdapter" classes that implements the
+	  request interceptor interception points.  This change makes it
+	  impossible for application code to throw a
+	  PortableInterceptor::ForwardRequest exception with the 
+	  expectation that it will be processed as a LOCATION_FORWARD.
+	  Only interception points are supposed to throw that exception.
+	  Furthermore, this reduces the footprint.
+
+	* tao/Abstract_Servant_Base.h:
+
+	  Removed unneccessary default CORBA::Environment arguments.
+
+	  (_dispatch, synchronous_upcall_dispatch):
+
+	  Added a pointer to the Servant_Upcall object as an additional
+	  argument to these methods.
+
+	* tao/Adapter.h (dispatch):
+	* tao/Adapter.cpp (dispatch):
+
+	  Removed the "context" argument.  It wasn't used.
+
+	* tao/CDR.h (operator<<, operator>>):
+	* tao/CDR.i (operator<<, operator>>):
+
+	  Added missing CDR stream insertion and extraction operators for
+	  the CORBA::ParameterMode type.
+
+	* tao/ClientInterceptorAdapter.cpp:
+	* tao/ClientInterceptorAdapter.h:
+	* tao/ClientInterceptorAdapter.inl:
+	* tao/PortableServer/ServerInterceptorAdapter.cpp:
+	* tao/PortableServer/ServerInterceptorAdapter.h:
+	* tao/PortableServer/ServerInterceptorAdapter.inl:
+
+	  Moved the {Client,Server}InterceptorAdapter classes from the
+	  PortableInterceptor.* files to these new files.  The client side
+	  and server side classes have been separated.
+
+	  The PortableInterceptor::ForwardRequest exception is now handled
+	  within the adapter classes.  This prevents (non-interceptor)
+	  application code from	illegaly throwing a
+	  PortableInterceptor::ForwardRequest exception with the expectation
+	  a LOCATION_FORWARD will occur.  Only interceptors are allowed to
+	  throw this exception.
+
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/MessagingC.cpp:
+	* tao/MessagingC.h:
+	* tao/MessagingC.i:
+	* tao/Domain/DomainS.cpp:
+	* tao/Domain/DomainS.h:
+	* tao/Domain/DomainS.i:
+	* tao/Domain/DomainS_T.cpp:
+	* tao/Domain/DomainS_T.h:
+	* tao/Domain/DomainS_T.i:
+	* tao/PortableServer/MessagingS.cpp:
+	* tao/PortableServer/MessagingS.h:
+	* tao/PortableServer/MessagingS.i:
+	* tao/PortableServer/MessagingS_T.cpp:
+	* tao/PortableServer/MessagingS_T.h:
+	* tao/PortableServer/MessagingS_T.i:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/PolicyS.h:
+	* tao/PortableServer/PolicyS.i:
+	* tao/PortableServer/PolicyS_T.cpp:
+	* tao/PortableServer/PolicyS_T.h:
+	* tao/PortableServer/PolicyS_T.i:
+
+	  Regenerated these files to pull in updates made to the generated
+	  code in the TAO_IDL compiler.
+	
+	* tao/Dynamic.pidl:
+
+	  Removed "Dynamic::ParameterMode" type.  The proper type is
+	  "CORBA::ParameterMode."
+
+	* tao/DynamicC.h:
+	* tao/DynamicC.i:
+	* tao/DynamicC.cpp:
+
+	  Regenerated these files so that they contain updates
+	  corresponding to the above change.
+
+	* tao/GIOP_Message_Base.cpp
+	  (process_request, process_locate_request):
+	* tao/GIOP_Message_Lite.cpp
+	  (process_request, process_locate_request):
+
+	  Removed the unused "context" argument from the "dispatch()"
+	  call.
+
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyC.i:
+
+	  Regnerated from the correct IDL to fix busted TypeCodes.
+
+	* tao/PortableInterceptor.h:
+
+	  This header now only contains the macros neccessary to support
+	  interceptors in the generated stubs and skeletons.  The adapter
+	  classes have been moved to client side and server side -specific
+	  files.
+
+	* tao/PortableInterceptor.cpp:
+	* tao/PortableInterceptor.i:
+
+	  These files have been removed since the adapter classes have
+	  been moved to client side and server side -specific files.
+
+	* tao/corba.h:
+
+	  No longer need to include "tao/PortableInterceptor.h".  It is
+	  now included directly in the stub and skeleton source (*.cpp)
+	  files.  This saves us an unnecessary header inclusion.
+
+	* tao/Invocation.h (is_selector_initialized_):
+
+	  Removed this unnecessary flag.  If the pointer to the selector
+	  is non-zero than it has been initialized, since it is
+	  initialized to zero by the constructor.
+
+	* tao/Invocation.cpp (start):
+
+	  If the pointer to the selector is zero, then initialize it.  No
+	  need to use a separate flag variable.
+
+	* tao/Invocation.i (location_forward_i):
+
+	  Make sure the endpoint selector is initialized before attempting
+	  to use it.  This is necessary since a connection may not have
+	  been established prior to a LOCATION_FORWARD issued in the
+	  PortableInterceptor::ClientRequestInterceptor::send_request()
+	  interception point.
+
+	  Moved this method to the `.cpp' file to avoid increasing
+	  inter-header dependencies.
+
+	* tao/PortableServer/Default_Servant_Dispatcher.h
+	* tao/PortableServer/Default_Servant_Dispatcher.cpp:
+	* tao/PortableServer/RT_Servant_Dispatcher.h:
+	* tao/PortableServer/RT_Servant_Dispatcher.cpp:
+	  (dispatch):
+
+	  The "context" argument is no longer used.  Pass a pointer to the
+	  Servant_Upcall object instead.
+
+	* tao/PortableServer/RT_Servant_Dispatcher.cpp
+	  (~RT_Priority_Model_Processing):
+
+	  Wrap the code within an ACE_TRY/CATCH block so that it is
+	  possible to figure out exactly which exception was thrown.
+	  Don't just ignore the exception.
+
+	  (pre_invoke, post_invoke):
+
+	  Fixed broken code that ignored the ACE_TRY_ENV passed to a given
+	  method invocation, i.e. added missing ACE_CHECKs.
+	
+	* tao/PortableServer/Object_Adapter.cpp:
+
+	  Include the new `ServerInterceptorAdapter.h' header to pull in
+	  the server side interceptor adapter class declarations.
+
+	  (dispatch_servant):
+
+	  Removed unused "context" argument from the parameter list.
+
+	  Pass a pointer to the Servant_Upcall object to the
+	  ServantBase::_dispatch() call.  That pointer will be propagated
+	  to the generated skeleton.
+
+	  (dispatch):
+
+	  Removed unused "context" argument from the parameter list.
+
+	  Updated code to no longer catch the
+	  PortableInterceptor::ForwardRequest exception.  It is now
+	  handled in the ServerInterceptorAdapter class.
+
+	  Fixed a problem where the caught exception was not set in the
+	  ServerRequestInfo object.
+	
+	  Only re-throw the caught exception if the send_exception()
+	  interception point hasn't transformed it to a LOCATION_FORWARD
+	  reply.
+
+	* tao/PortableServer/Object_Adapter.h (dispatch_servant,
+	  dispatch):
+
+	  Removed unused "context" argument from the parameter list.
+
+	* tao/PortableServer/Servant_Base.cpp
+	  (synchronous_upcall_dispatch):
+
+	  The "context" argument is now a pointer to the Servant_Upcall
+	  object.  Pass the pointer to the Servant_Upcall object to the
+	  skeleton function.  It will be used to implement the
+	  PortableInterceptor::RequestInfo::object_id() method.  It was
+	  done this way to avoid adding any TSS accesses.
+
+	* tao/PortableServer/Servant_Base.h (_create_stub):
+
+	  Removed unnecessary default CORBA::Environment argument.
+
+	* tao/PortableServer/ServerRequestInfo.cpp:
+
+	  Updated all OMG assigned exception minor codes.
+
+	  (TAO_ServerRequestInfo):
+
+	  A pointer to the Servant_Upcall object is now passed to this
+	  constructor.  It is used to implement the
+	  ServerRequestInfo::object_id() described below.
+
+	  (object_id):
+
+	  Implemented this method.  The ObjectId is now obtained directly
+	  from the Servant_Upcall object.  This avoids any TSS accesses.
+
+	  (adapter_id):
+
+	  Implemented this method.  The POA ID is obtained from the POA
+	  reference stored in the Servant_Upcall object.  No TSS accesses
+	  are involved.
+
+	  (forward_reference):
+
+	  Obtain the forward reference from the TAO_ServerRequest object.
+
+	* tao/PortableServer/ServerRequestInfo.h:
+
+	  The "forward_reference_" member is no longer needed.  The
+	  forward reference is now stored in the TAO_ServerRequest object.
+
+	* tao/PortableServer/ServerRequestInfo.inl (forward_reference):
+
+	  Store the forward reference in the TAO_ServerRequest object.
+
 Wed May 30 12:06:21 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton.cpp:
