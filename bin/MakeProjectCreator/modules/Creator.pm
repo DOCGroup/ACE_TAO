@@ -104,10 +104,13 @@ sub preprocess_line {
 
 
 sub generate_default_input {
-  my($self)   = shift;
+  my($self)  = shift;
+  my($status,
+     $error) = $self->parse_line(undef, "$self->{'grammar_type'} {");
 
-  $self->parse_line(undef, "$self->{'grammar_type'} {");
-  my($status, $error) = $self->parse_line(undef, '}');
+  if ($status) {
+    ($status, $error) = $self->parse_line(undef, '}');
+  }
 
   if (!$status) {
     $self->error($error);
@@ -127,7 +130,6 @@ sub parse_file {
 
   if (!$status) {
     $self->error($errorString,
-                 (basename($input) eq $input ? $self->getcwd() . '/' : '') .
                  "$input: line " . $self->get_line_number() . ':');
   }
   elsif ($status && $self->{$self->{'type_check'}}) {
@@ -135,8 +137,7 @@ sub parse_file {
     ## is still defined, then we have an error
     $self->error("Did not " .
                  "find the end of the $self->{'grammar_type'}",
-                 $self->getcwd() .
-                 "/$input: line " . $self->get_line_number() . ':');
+                 "$input: line " . $self->get_line_number() . ':');
     $status = 0;
   }
   $self->set_line_number($oline);
@@ -363,8 +364,7 @@ sub parse_scope {
         }
       }
       else {
-        ($status, $errorString) = $self->handle_scoped_unknown($fh,
-                                                               $type,
+        ($status, $errorString) = $self->handle_scoped_unknown($type,
                                                                $flags,
                                                                $line);
         if (!$status) {
@@ -864,7 +864,6 @@ sub handle_scoped_end {
 
 sub handle_scoped_unknown {
   my($self)  = shift;
-  my($fh)    = shift;
   my($type)  = shift;
   my($flags) = shift;
   my($line)  = shift;

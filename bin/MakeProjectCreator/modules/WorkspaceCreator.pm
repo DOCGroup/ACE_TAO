@@ -41,6 +41,9 @@ my(%allprojects) = ();
 ## Global previous workspace names
 my(%previous_workspace_name) = ();
 
+## Constant aggregated workspace type name
+my($aggregated) = 'aggregated_workspace';
+
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -72,10 +75,9 @@ sub new {
                                 $progress, $toplevel, $baseprojs,
                                 $feature, $hierarchy, $nmod, $applypj,
                                 'workspace');
-  my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'}      = undef;
-  $self->{$typecheck}            = 0;
+  $self->{$self->{'type_check'}} = 0;
   $self->{'projects'}            = [];
   $self->{'project_info'}        = {};
   $self->{'reading_parent'}      = [];
@@ -89,6 +91,7 @@ sub new {
   $self->{'coexistence'}         = $makeco;
   $self->{'project_file_list'}   = {};
   $self->{'ordering_cache'}      = {};
+  $self->{'handled_scopes'}      = {};
 
   if (defined $$exclude[0]) {
     my($type) = $self->{'wctype'};
@@ -120,18 +123,14 @@ sub parse_line {
   my($self)   = shift;
   my($ih)     = shift;
   my($line)   = shift;
-  my($status,
-     $errorString,
-     @values) = $self->parse_known($line);
+  my($status, $error, @values) = $self->parse_known($line);
 
   ## Was the line recognized?
   if ($status && defined $values[0]) {
     if ($values[0] eq $self->{'grammar_type'}) {
-      my($name)      = $values[1];
-      my($typecheck) = $self->{'type_check'};
+      my($name) = $values[1];
       if (defined $name && $name eq '}') {
-        my($rp) = $self->{'reading_parent'};
-        if (!defined $$rp[0]) {
+        if (!defined $self->{'reading_parent'}->[0]) {
           ## Fill in all the default values
           $self->generate_defaults();
 
@@ -139,11 +138,11 @@ sub parse_line {
           ## Generate the project files
           my($gstat, $creator) = $self->generate_project_files();
           if ($gstat) {
-            ($status, $errorString) = $self->write_workspace($creator, 1);
+            ($status, $error) = $self->write_workspace($creator, 1);
             $self->{'assign'} = {};
           }
           else {
-            $errorString = 'Unable to generate all of the project files';
+            $error = 'Unable to generate all of the project files';
             $status = 0;
           }
 
@@ -153,14 +152,13 @@ sub parse_line {
           $self->{'project_info'}   = {};
           $self->{'project_files'}  = [];
         }
-        $self->{$typecheck} = 0;
+        $self->{$self->{'type_check'}} = 0;
       }
       else {
-        ## Project Beginning
+        ## Workspace Beginning
         ## Deal with the inheritance hiearchy first
-        my($parents) = $values[2];
-        if (defined $parents) {
-          foreach my $parent (@$parents) {
+        if (defined $values[2]) {
+          foreach my $parent (@{$values[2]}) {
             ## Read in the parent onto ourself
             my($file) = $self->search_include_path("$parent.$wsbase");
             if (!defined $file) {
@@ -168,18 +166,17 @@ sub parse_line {
             }
 
             if (defined $file) {
-              my($rp) = $self->{'reading_parent'};
-              push(@$rp, 1);
+              push(@{$self->{'reading_parent'}}, 1);
               $status = $self->parse_file($file);
-              pop(@$rp);
+              pop(@{$self->{'reading_parent'}});
 
               if (!$status) {
-                $errorString = "Invalid parent: $parent";
+                $error = "Invalid parent: $parent";
               }
             }
             else {
               $status = 0;
-              $errorString = "Unable to locate parent: $parent";
+              $error = "Unable to locate parent: $parent";
             }
           }
         }
@@ -188,8 +185,8 @@ sub parse_line {
         if (defined $name) {
           if ($name =~ /[\/\\]/) {
             $status = 0;
-            $errorString = 'Workspaces can not have a slash ' .
-                           'or a back slash in the name';
+            $error = 'Workspaces can not have a slash ' .
+                     'or a back slash in the name';
           }
           else {
             $name =~ s/^\(\s*//;
@@ -202,7 +199,7 @@ sub parse_line {
             $self->{'workspace_name'} = $name;
           }
         }
-        $self->{$typecheck} = 1;
+        $self->{$self->{'type_check'}} = 1;
       }
     }
     elsif ($values[0] eq 'assignment') {
@@ -210,7 +207,7 @@ sub parse_line {
         $self->process_assignment($values[1], $values[2]);
       }
       else {
-        $errorString = "Invalid assignment name: $values[1]";
+        $error = "Invalid assignment name: $values[1]";
         $status = 0;
       }
     }
@@ -219,7 +216,7 @@ sub parse_line {
         $self->process_assignment_add($values[1], $values[2]);
       }
       else {
-        $errorString = "Invalid addition name: $values[1]";
+        $error = "Invalid addition name: $values[1]";
         $status = 0;
       }
     }
@@ -228,33 +225,101 @@ sub parse_line {
         $self->process_assignment_sub($values[1], $values[2]);
       }
       else {
-        $errorString = "Invalid subtraction name: $values[1]";
+        $error = "Invalid subtraction name: $values[1]";
         $status = 0;
       }
     }
     elsif ($values[0] eq 'component') {
       if ($values[1] eq 'exclude') {
-        ($status, $errorString) = $self->parse_exclude($ih,
-                                                       $values[2]);
+        ($status, $error) = $self->parse_exclude($ih, $values[2]);
       }
       else {
-        ($status, $errorString) = $self->parse_scope($ih,
-                                                     $values[1],
-                                                     $values[2],
-                                                     \%validNames);
+        ($status, $error) = $self->parse_scope($ih,
+                                               $values[1],
+                                               $values[2],
+                                               \%validNames);
       }
     }
     else {
-      $errorString = "Unrecognized line: $line";
+      $error = "Unrecognized line: $line";
       $status = 0;
     }
   }
   elsif ($status == -1) {
-    push(@{$self->{'project_files'}}, $line);
-    $status = 1;
+    if ($line =~ /\.$wsext$/) {
+      ($status, $error) = $self->aggregated_workspace($line);
+    }
+    else {
+      push(@{$self->{'project_files'}}, $line);
+      $status = 1;
+    }
   }
 
-  return $status, $errorString;
+  return $status, $error;
+}
+
+
+sub aggregated_workspace {
+  my($self) = shift;
+  my($file) = shift;
+  my($fh)   = new FileHandle();
+
+  if (open($fh, $file)) {
+    my($oline) = $self->get_line_number();
+    my($tc)    = $self->{$self->{'type_check'}};
+    my($ag)    = $self->{'handled_scopes'}->{$aggregated};
+    my($psbd)  = $self->{'scoped_basedir'};
+    my($status, $error, @values) = (0, 'No recognizable lines');
+
+    $self->{'handled_scopes'}->{$aggregated} = undef;
+    $self->set_line_number(0);
+    $self->{$self->{'type_check'}} = 0;
+    $self->{'scoped_basedir'} = dirname($file);
+
+    while(<$fh>) {
+      my($line) = $self->preprocess_line($fh, $_);
+      ($status, $error, @values) = $self->parse_known($line);
+
+      ## Was the line recognized?
+      if ($status) {
+        if (defined $values[0]) {
+          if ($values[0] eq $self->{'grammar_type'}) {
+            if (defined $values[2]) {
+              my($name) = basename($file);
+              $name =~ s/\.[^\.]+$//;
+              $status = 0;
+              $error  = 'Aggregated workspace (' . $name .
+                        ') can not inherit from another workspace';
+            }
+            else {
+              ($status, $error) = $self->parse_scope($fh,
+                                                     '',
+                                                     $aggregated,
+                                                     \%validNames);
+            }
+          }
+          else {
+            $status = 0;
+            $error = 'Unable to aggregate ' . $file;
+          }
+          last;
+        }
+      }
+      else {
+        last;
+      }
+    }
+    close($fh);
+
+    $self->{'scoped_basedir'} = $psbd;
+    $self->{'handled_scopes'}->{$aggregated} = $ag;
+    $self->{$self->{'type_check'}} = $tc;
+    $self->set_line_number($oline);
+
+    return $status, $error;
+  }
+
+  return 0, 'Unable to open ' . $file;
 }
 
 
@@ -312,12 +377,44 @@ sub excluded {
 }
 
 
+sub handle_scoped_end {
+  my($self)   = shift;
+  my($type)   = shift;
+  my($flags)  = shift;
+  my($status) = 1;
+  my($error)  = undef;
+
+  if ($type eq $aggregated &&
+      !defined $self->{'handled_scopes'}->{$type}) {
+    ## Replace instances of $PWD with the current directory plus the
+    ## scoped_basedir.  We have to do it now otherwise, $PWD will be the
+    ## wrong directory if it's done later.
+    if (defined $$flags{'cmdline'}) {
+      my($dir) = $self->getcwd() . '/' . $self->{'scoped_basedir'};
+      $$flags{'cmdline'} =~ s/\$PWD(\W)/$dir$1/g;
+      $$flags{'cmdline'} =~ s/\$PWD$/$dir/;
+    }
+
+    ## Go back to the previous directory and add the directory contents
+    ($status, $error) = $self->handle_scoped_unknown($type, $flags, '.');
+  }
+
+  $self->{'handled_scopes'}->{$type} = undef;
+  return $status, $error;
+}
+
+
 sub handle_scoped_unknown {
-  my($self)  = shift;
-  my($fh)    = shift;
-  my($type)  = shift;
-  my($flags) = shift;
-  my($line)  = shift;
+  my($self)   = shift;
+  my($type)   = shift;
+  my($flags)  = shift;
+  my($line)   = shift;
+  my($status) = 1;
+  my($error)  = undef;
+
+  if ($type eq $aggregated) {
+    $line = $self->{'scoped_basedir'} . ($line ne '.' ? "/$line" : '');
+  }
 
   if (-d $line) {
     my(@files) = ();
@@ -335,7 +432,7 @@ sub handle_scoped_unknown {
           do {
             $exc = dirname($exc);
             $remove{$exc} = 1;
-          } while($exc ne '.');
+          } while($exc ne '.' && $exc !~ /[a-z]:[\/\\]/i);
         }
       }
 
@@ -354,11 +451,18 @@ sub handle_scoped_unknown {
     }
   }
   else {
-    $self->{'scoped_assign'}->{$line} = $flags;
-    push(@{$self->{'project_files'}}, $line);
+    if ($line =~ /\.$wsext$/) {
+      ## An aggregated workspace within an aggregated workspace.
+      ($status, $error) = $self->aggregated_workspace($line);
+    }
+    else {
+      $self->{'scoped_assign'}->{$line} = $flags;
+      push(@{$self->{'project_files'}}, $line);
+    }
   }
+  $self->{'handled_scopes'}->{$type} = 1;
 
-  return 1, '';
+  return $status, $error;
 }
 
 
