@@ -4,6 +4,9 @@ Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
           Reactors_Test.cpp,Thread_Mutex_Test.cpp: (main): changed some local
           variables from int to size_t to avoid signed/unsigned comparison.
 
+        * ace/OS.i,config-linux-common.h,README: aded ACE_HAS_SOCKLEN_T
+          support for Linux/glibc2, which has a socklen_t type.
+
 Thu Jan 15 00:00:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Message_Queue.cpp (open): The fix from Slawomir Kuzniar was
