@@ -931,7 +931,7 @@ project(FIFO Test) : acetest {
   }
 }
 
-project(WFMO Reactor Test) : aceexe {
+project(WFMO Reactor Test) : acetest {
   exename = WFMO_Reactor_Test
   Source_Files {
     WFMO_Reactor_Test.cpp
@@ -940,7 +940,7 @@ project(WFMO Reactor Test) : aceexe {
   }
 }
 
-project(NonBlocking Conn Test) : aceexe {
+project(NonBlocking Conn Test) : acetest {
   exename = NonBlocking_Conn_Test
   Source_Files {
     NonBlocking_Conn_Test.cpp
@@ -949,7 +949,7 @@ project(NonBlocking Conn Test) : aceexe {
   }
 }
 
-project(Reference Counted Event Handler Test) : aceexe {
+project(Reference Counted Event Handler Test) : acetest {
   exename = Reference_Counted_Event_Handler_Test
   Source_Files {
     Reference_Counted_Event_Handler_Test.cpp
@@ -958,7 +958,7 @@ project(Reference Counted Event Handler Test) : aceexe {
   }
 }
 
-project(MT Reference Counted Event Handler Test) : aceexe {
+project(MT Reference Counted Event Handler Test) : acetest {
   exename = MT_Reference_Counted_Event_Handler_Test
   Source_Files {
     MT_Reference_Counted_Event_Handler_Test.cpp
@@ -967,7 +967,7 @@ project(MT Reference Counted Event Handler Test) : aceexe {
   }
 }
 
-project(MT Reference Counted Notify Test) : aceexe {
+project(MT Reference Counted Notify Test) : acetest {
   exename = MT_Reference_Counted_Notify_Test
   Source_Files {
     MT_Reference_Counted_Notify_Test.cpp
@@ -976,7 +976,7 @@ project(MT Reference Counted Notify Test) : aceexe {
   }
 }
 
-project(Timer Cancellation Test) : aceexe {
+project(Timer Cancellation Test) : acetest {
   exename = Timer_Cancellation_Test
   Source_Files {
     Timer_Cancellation_Test.cpp
@@ -985,7 +985,7 @@ project(Timer Cancellation Test) : aceexe {
   }
 }
 
-project(Timer Queue Reference Counting Test) : aceexe {
+project(Timer Queue Reference Counting Test) : acetest {
   exename = Timer_Queue_Reference_Counting_Test
   Source_Files {
     Timer_Queue_Reference_Counting_Test.cpp
@@ -994,7 +994,7 @@ project(Timer Queue Reference Counting Test) : aceexe {
   }
 }
 
-project(Reactor Registration Test) : aceexe {
+project(Reactor Registration Test) : acetest {
   exename = Reactor_Registration_Test
   Source_Files {
     Reactor_Registration_Test.cpp
