@@ -1,3 +1,24 @@
+Sun Jun 29 10:06:50 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* marshal.*: Added CORBA_Environment as a parameter to
+	make_marshal_object factory method. The reason for doing this was
+	to enable inlining of the CDR::encode and CDR::decode methods.
+
+	* typecode.*: Changed the way typecodes get deleted. Constant
+	typecodes are now owned by the ORB and their private state freed
+	when the ORB dies. IDL generated typecodes are not owned by the
+	ORB and are the only ones whose refcount matters. Typecodes
+	belonging to the IDL generated typecodes are also not owned by the
+	ORB and there is no effect on their refcount. They get freed only
+	if the parent is destroying itself.
+
+	In typecode.i, methods such as length and content_type were not
+	getting inlined due to presence of switch statements. Converted to
+	if/else.
+
+	* interp.cpp: Bug fix: Had previously forgotten to update the
+	size/alignment of the private state of the typecode.
+
 Fri Jun 27 14:27:49 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* any.cpp: The deep_copy and deep_free optimizations applied. In
