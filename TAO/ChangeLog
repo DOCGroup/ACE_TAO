@@ -1,3 +1,10 @@
+Wed Aug 28 16:50:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Svc_Utils.dsp:
+
+          Changed IDL compiler options for RtecBase.idl and
+          TimeBase.idl to match those of Makefile.Svc_Utils.
+
 Wed Aug 28 16:27:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
