@@ -1,8 +1,8 @@
 Wed May 12 16:04:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added Bala's new files (below) to the MSVC projects.
+	* tao/TAO_Static.dsp: Added Bala's new files (below) to the MSVC
+ 	  projects.
 
 Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -16,29 +16,26 @@ Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Services.cpp
 	* tao/Pluggable.h
 	* tao/corbafwd.cpp (New file)
-	* tao/corbafwd.i (New file)
-	Adde a new method get_service_information in to ORB.h. This added
-	a few circular dependencies which was resolved by Carlos by adding
-	new files viz. corbafwd.cpp & corbafwd.i. Updated the Services.*
-	files with some new headers and removed the "tao/corba.h" file
-	inclusion from them as this would add a high dependency on these
-	files. Managed_Types.h included ORB.h for just a few operations
-	which has now been moved to corbafwd.i
+	* tao/corbafwd.i (New file) Added a new method
+ 	  get_service_information in to ORB.h. This added a few circular
+ 	  dependencies which was resolved by Carlos by adding new files
+ 	  viz. corbafwd.cpp & corbafwd.i. Updated the Services.* files
+ 	  with some new headers and removed the "tao/corba.h" file
+ 	  inclusion from them as this would add a high dependency on these
+ 	  files. Managed_Types.h included ORB.h for just a few operations
+ 	  which has now been moved to corbafwd.i
 	
-
 Wed May 12 15:41:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
 	* tao/Context.i:
-	* tao/Environment.{h,i,cpp}:
-	  Added CORBA::is_nil() for Contexts, and both
-	  CORBA::release() and CORBA::is_nil() for 
-	  Environment. In implementing the release()
-	  method, also added refcount_, refcount_lock_,
-	  incr_refcount() and decr_refcount() to 
-	  Environment. All the above methods were declared
-	  in corbafwd.h (CORBA::is_nil (Context_ptr) was
-	  commented out), but not implemented.
+	* tao/Environment.{h,i,cpp}: Added CORBA::is_nil() for Contexts,
+ 	  and both CORBA::release() and CORBA::is_nil() for
+ 	  Environment. In implementing the release() method, also added
+ 	  refcount_, refcount_lock_, incr_refcount() and decr_refcount()
+ 	  to Environment. All the above methods were declared in
+ 	  corbafwd.h (CORBA::is_nil (Context_ptr) was commented out), but
+ 	  not implemented.
 
 Wed May 12 14:47:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
