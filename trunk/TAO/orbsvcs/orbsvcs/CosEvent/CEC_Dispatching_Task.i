@@ -50,4 +50,6 @@ TAO_CEC_Push_Command::TAO_CEC_Push_Command (TAO_CEC_ProxyPushSupplier* proxy,
   //
   // @@ TODO
   this->event_ = event;
+
+  this->proxy_->_incr_refcnt ();
 }

@@ -54,7 +54,8 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     {
       worker->work (*i, ACE_TRY_ENV);
       ACE_CHECK;
-    }
+
+  }
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int

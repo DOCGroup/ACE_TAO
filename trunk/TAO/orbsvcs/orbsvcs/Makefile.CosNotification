@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Notify
 
-ACE_SHLIBS = -lTAO_CosEvent -lTAO_CosTrading -lTAO_Svc_Utils -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

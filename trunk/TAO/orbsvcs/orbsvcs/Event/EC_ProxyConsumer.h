@@ -147,8 +147,14 @@ protected:
   // Set the supplier, used by some implementations to change the
   // policies used when invoking operations on the supplier.
 
+  friend class TAO_EC_ProxyPushConsumer_Guard;
+  // The guard needs access to the following protected methods.
+
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
+
+  TAO_EC_Supplier_Filter *filter_i (void) const;
+  // Return the current filter, assumes the locks are held.
 
   void cleanup_i (void);
   // Release the filter and the supplier
@@ -174,6 +180,52 @@ private:
 
   TAO_EC_Supplier_Filter* filter_;
   // The strategy to do filtering close to the supplier
+};
+
+// ****************************************************************
+
+class TAO_RTEvent_Export TAO_EC_ProxyPushConsumer_Guard
+{
+  // = TITLE
+  //   A Guard for the ProxyPushConsumer reference count
+  //
+  // = DESCRIPTION
+  //   This is a helper class used in the implementation of
+  //   ProxyPushConumer.  It provides a Guard mechanism to increment
+  //   the reference count on the proxy and its filter, eliminating
+  //   the need to hold mutexes during long operations.
+  //
+public:
+  TAO_EC_ProxyPushConsumer_Guard (ACE_Lock *lock,
+                                  CORBA::ULong &refcount,
+                                  TAO_EC_Event_Channel *ec,
+                                  TAO_EC_ProxyPushConsumer *proxy);
+  // Constructor
+
+  ~TAO_EC_ProxyPushConsumer_Guard (void);
+  // Destructor
+
+  int locked (void) const;
+  // Returns 1 if the reference count successfully acquired
+  
+  TAO_EC_Supplier_Filter *filter;
+
+private:
+  ACE_Lock *lock_;
+  // The lock used to protect the reference count
+
+  CORBA::ULong &refcount_;
+  // The reference count
+
+  TAO_EC_Event_Channel *event_channel_;
+  // The event channel used to destroy the proxy
+
+  TAO_EC_ProxyPushConsumer *proxy_;
+  // The proxy whose lifetime is controlled by the reference count
+
+  int locked_;
+  // This flag is set to 1 if the reference count was successfully
+  // acquired.
 };
 
 #if defined (__ACE_INLINE__)

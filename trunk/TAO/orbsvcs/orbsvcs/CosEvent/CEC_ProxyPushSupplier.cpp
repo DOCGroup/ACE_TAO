@@ -4,6 +4,8 @@
 #include "CEC_Dispatching.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerControl.h"
+#include "orbsvcs/ESF/ESF_RefCount_Guard.h"
+#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "CEC_ProxyPushSupplier.i"
@@ -86,16 +88,14 @@ TAO_CEC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    if (this->is_connected_i () == 0)
-      return;
-
     consumer = this->consumer_._retn ();
-
-    this->cleanup_i ();
   }
 
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (CORBA::is_nil (consumer.in ()))
+    return;
 
   ACE_TRY
     {
@@ -110,28 +110,62 @@ TAO_CEC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_ENDTRY;
 }
 
+typedef TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier> Destroy_Guard;
+
 void
 TAO_CEC_ProxyPushSupplier::push (const CORBA::Any &event,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  Destroy_Guard auto_destroy (this->refcount_,
+                              this->event_channel_,
+                              this);
 
-  this->refcount_++;
-  this->event_channel_->dispatching ()->push (this,
-                                              event,
-                                              ACE_TRY_ENV);
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+
+    if (this->is_connected_i () == 0)
+      return;
+
+    TAO_ESF_RefCount_Guard<CORBA::ULong> cnt_mon (this->refcount_);
+
+    {
+      TAO_CEC_Unlock reverse_lock (*this->lock_);
+
+      ACE_GUARD (TAO_CEC_Unlock, ace_mon, reverse_lock);
+      this->event_channel_->dispatching ()->push (this,
+                                                  event,
+                                                  ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  }
 }
 
 void
 TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  Destroy_Guard auto_destroy (this->refcount_,
+                              this->event_channel_,
+                              this);
 
-  this->refcount_++;
-  this->event_channel_->dispatching ()->push_nocopy (this,
-                                                     event,
-                                                     ACE_TRY_ENV);
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+
+    if (this->is_connected_i () == 0)
+      return;
+
+    TAO_ESF_RefCount_Guard<CORBA::ULong> cnt_mon (this->refcount_);
+
+    {
+      TAO_CEC_Unlock reverse_lock (*this->lock_);
+
+      ACE_GUARD (TAO_CEC_Unlock, ace_mon, reverse_lock);
+      this->event_channel_->dispatching ()->push_nocopy (this,
+                                                         event,
+                                                         ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  }
 }
 
 void
@@ -271,26 +305,11 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event,
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    // The reference count was increased just before pushing to the
-    // dispatching module, we must decrease here.  But if we get
-    // removed then we abort.  We don't want to call _decr_refcnt()
-    // because that will require two locks.
-    this->refcount_--;
-    if (this->refcount_ == 0)
-      {
-        ace_mon.release ();
-        this->event_channel_->destroy_proxy (this);
-        return;
-      }
-
     if (this->is_connected_i () == 0)
       return; // ACE_THROW (CosEventComm::Disconnected ());????
 
     consumer =
       CosEventComm::PushConsumer::_duplicate (this->consumer_.in ());
-
-    // The refcount cannot be zero, because we have at least two
-    // references,
   }
 
   ACE_TRY
@@ -328,54 +347,44 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
     const CORBA::Any& event,
     CORBA::Environment& ACE_TRY_ENV)
 {
-  if (this->is_connected_i () == 0)
-    return; // TAO_THROW (CosEventComm::Disconnected ());????
-
-  CosEventComm::PushConsumer_var consumer =
-    CosEventComm::PushConsumer::_duplicate (this->consumer_.in ());
-
+  CosEventComm::PushConsumer_var consumer;
   {
-    TAO_CEC_Unlock reverse_lock (*this->lock_);
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    if (this->is_connected_i () == 0)
+      return; // TAO_THROW (CosEventComm::Disconnected ());????
 
-    ACE_GUARD_THROW_EX (TAO_CEC_Unlock, ace_mon, reverse_lock,
-                        CORBA::INTERNAL ());
-    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    ACE_TRY
-      {
-        consumer->push (event, ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
-      {
-        TAO_CEC_ConsumerControl *control =
-          this->event_channel_->consumer_control ();
-
-        control->consumer_not_exist (this, ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCH (CORBA::SystemException, sysex)
-      {
-        TAO_CEC_ConsumerControl *control =
-          this->event_channel_->consumer_control ();
-
-        control->system_exception (this,
-                                   sysex,
-                                   ACE_TRY_ENV);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCHANY
-      {
-        // Shouldn't happen, but does not hurt
-      }
-    ACE_ENDTRY;
+    consumer =
+      CosEventComm::PushConsumer::_duplicate (this->consumer_.in ());
   }
 
-  // The reference count was incremented just before delegating on the
-  // dispatching strategy, in this can we need to decrement it *now*.
-  this->refcount_--;
-  // @@ What if it reaches 0???
+  ACE_TRY
+    {
+      consumer->push (event, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
+    {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
+      control->consumer_not_exist (this, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      TAO_CEC_ConsumerControl *control =
+        this->event_channel_->consumer_control ();
+
+      control->system_exception (this,
+                                 sysex,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Shouldn't happen, but does not hurt
+    }
+  ACE_ENDTRY;
 }
 
 CORBA::Boolean
@@ -423,6 +432,10 @@ TAO_CEC_ProxyPushSupplier::_remove_ref (CORBA::Environment &)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -108,6 +108,9 @@ protected:
   // Set the supplier, used by some implementations to change the
   // policies used when invoking operations on the supplier.
 
+  friend class TAO_CEC_ProxyPushConsumer_Guard;
+  // The guard needs access to the following protected methods.
+
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
 
@@ -129,6 +132,50 @@ private:
 
   PortableServer::POA_var default_POA_;
   // Store the default POA.
+};
+
+// ****************************************************************
+
+class TAO_Event_Export TAO_CEC_ProxyPushConsumer_Guard
+{
+  // = TITLE
+  //   A Guard for the ProxyPushConsumer reference count
+  //
+  // = DESCRIPTION
+  //   This is a helper class used in the implementation of
+  //   ProxyPushConumer.  It provides a Guard mechanism to increment
+  //   the reference count on the proxy, eliminating the need to hold
+  //   mutexes during long operations.
+  //
+public:
+  TAO_CEC_ProxyPushConsumer_Guard (ACE_Lock *lock,
+                                   CORBA::ULong &refcount,
+                                   TAO_CEC_EventChannel *ec,
+                                   TAO_CEC_ProxyPushConsumer *proxy);
+  // Constructor
+
+  ~TAO_CEC_ProxyPushConsumer_Guard (void);
+  // Destructor
+
+  int locked (void) const;
+  // Returns 1 if the reference count successfully acquired
+  
+private:
+  ACE_Lock *lock_;
+  // The lock used to protect the reference count
+
+  CORBA::ULong &refcount_;
+  // The reference count
+
+  TAO_CEC_EventChannel *event_channel_;
+  // The event channel used to destroy the proxy
+
+  TAO_CEC_ProxyPushConsumer *proxy_;
+  // The proxy whose lifetime is controlled by the reference count
+
+  int locked_;
+  // This flag is set to 1 if the reference count was successfully
+  // acquired.
 };
 
 #if defined (__ACE_INLINE__)

@@ -7,6 +7,8 @@
 #include "EC_Event_Channel.h"
 #include "EC_Scheduling_Strategy.h"
 #include "EC_ConsumerControl.h"
+#include "orbsvcs/ESF/ESF_RefCount_Guard.h"
+#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ProxySupplier.i"
@@ -32,6 +34,7 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* ec)
 TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
 {
   this->event_channel_->destroy_supplier_lock (this->lock_);
+  this->cleanup_i ();
 }
 
 void
@@ -95,16 +98,19 @@ TAO_EC_ProxyPushSupplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    if (this->is_connected_i () == 0)
-      return;
+    int connected = this->is_connected_i ();
 
     consumer = this->consumer_._retn ();
 
-    this->cleanup_i ();
+    if (connected)
+      this->cleanup_i ();
   }
 
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (CORBA::is_nil (consumer.in ()))
+    return;
 
   ACE_TRY
     {
@@ -293,9 +299,6 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
       this->cleanup_i ();
   }
 
-  this->deactivate (ACE_TRY_ENV);
-  ACE_CHECK;
-
   // Notify the event channel....
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
   ACE_CHECK;
@@ -349,13 +352,18 @@ TAO_EC_ProxyPushSupplier::resume_connection (CORBA::Environment &ACE_TRY_ENV)
   this->suspended_ = 0;
 }
 
+typedef TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel,TAO_EC_ProxyPushSupplier> Destroy_Guard;
+
 int
 TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
                                   TAO_EC_QOS_Info& qos_info,
                                   CORBA::Environment& ACE_TRY_ENV)
 {
-  int result = 0;
+  Destroy_Guard auto_destroy (this->refcount_,
+                              this->event_channel_,
+                              this);
 
+  int result = 0;
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -367,11 +375,8 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
 
     result =
       this->child_->filter (event, qos_info, ACE_TRY_ENV);
-    if (this->refcount_ > 0)
-      return result;
+    ACE_CHECK_RETURN (0);
   }
-
-  this->event_channel_->destroy_proxy (this);
   return result;
 }
 
@@ -380,8 +385,11 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
                                          TAO_EC_QOS_Info& qos_info,
                                          CORBA::Environment& ACE_TRY_ENV)
 {
-  int result = 0;
+  Destroy_Guard auto_destroy (this->refcount_,
+                              this->event_channel_,
+                              this);
 
+  int result = 0;
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -393,11 +401,8 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
 
     result =
       this->child_->filter_nocopy (event, qos_info, ACE_TRY_ENV);
-    if (this->refcount_ > 0)
-      return result;
+    ACE_CHECK_RETURN (0);
   }
-
-  this->event_channel_->destroy_proxy (this);
   return result;
 }
 
@@ -406,20 +411,30 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                                 TAO_EC_QOS_Info& qos_info,
                                 CORBA::Environment& ACE_TRY_ENV)
 {
-  // No need to grab the lock, it is beign held already by the
-  // filter() method
-  this->refcount_++;
-
+  // The mutex is already held by the caller (usually the filter()
+  // method)
   if (this->is_connected_i () == 0)
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
 
   if (this->suspended_ != 0)
     return;
 
+  TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
+  // The guard will decrement the reference count, notice that the
+  // reference count can become 0, but this is not the right spot to
+  // check for that and destroy the object.
+  // If we did so then we would destroy the object, and consequently
+  // the mutex, but the mutex is used later when the stack unwinds and
+  // the filter() method tries to destroy the mutex (that originally
+  // acquired the mutex in the first place).
+  // So the correct thing to do is to just decrement the reference
+  // count and let the filter() method do the destruction.
+
   RtecEventComm::PushConsumer_var consumer =
     RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
 
   {
+    // We have to release the lock to avoid dead-locks.
     TAO_EC_Unlock reverse_lock (*this->lock_);
 
     ACE_GUARD_THROW_EX (TAO_EC_Unlock, ace_mon, reverse_lock,
@@ -431,19 +446,11 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                                                 event,
                                                 qos_info,
                                                 ACE_TRY_ENV);
+    ACE_CHECK;
   }
+
   if (this->child_ != 0)
     this->child_->clear ();
-
-  // The reference count was incremented just before delegating on the
-  // dispatching strategy, in this can we need to decrement it *now*.
-  this->refcount_--;
-  // @@ What if it reaches 0???
-  if (this->refcount_ == 0)
-    {
-      this->lock_->release ();
-      this->event_channel_->destroy_proxy (this);
-    }
 }
 
 void
@@ -451,15 +458,24 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info,
                                        CORBA::Environment& ACE_TRY_ENV)
 {
-  // No need to grab the lock, it is beign held already by the
-  // filter() method
-  this->refcount_++;
-
+  // The mutex is already held by the caller (usually the filter()
+  // method)
   if (this->is_connected_i () == 0)
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
 
   if (this->suspended_ != 0)
     return;
+
+  TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
+  // The guard will decrement the reference count, notice that the
+  // reference count can become 0, but this is not the right spot to
+  // check for that and destroy the object.
+  // If we did so then we would destroy the object, and consequently
+  // the mutex, but the mutex is used later when the stack unwinds and
+  // the filter() method tries to destroy the mutex (that originally
+  // acquired the mutex in the first place).
+  // So the correct thing to do is to just decrement the reference
+  // count and let the filter() method do the destruction.
 
   RtecEventComm::PushConsumer_var consumer =
     RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
@@ -476,19 +492,11 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                                                        event,
                                                        qos_info,
                                                        ACE_TRY_ENV);
+    ACE_CHECK;
   }
+
   if (this->child_ != 0)
     this->child_->clear ();
-
-  // The reference count was incremented just before delegating on the
-  // dispatching strategy, in this can we need to decrement it *now*.
-  this->refcount_--;
-  // @@ What if it reaches 0???
-  if (this->refcount_ == 0)
-    {
-      this->lock_->release ();
-      this->event_channel_->destroy_proxy (this);
-    }
 }
 
 void
@@ -681,6 +689,12 @@ TAO_EC_ProxyPushSupplier::_remove_ref (CORBA::Environment &)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO_ESF_RefCount_Guard<CORBA::ULong>;
+template class TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel,TAO_EC_ProxyPushSupplier>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_ESF_RefCount_Guard<CORBA::ULong>
+#pragma instantiate TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel,TAO_EC_ProxyPushSupplier>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

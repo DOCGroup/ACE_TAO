@@ -62,7 +62,7 @@ class TAO_ESF_Copy_On_Write_Read_Guard
 public:
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
   TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &mutex,
-                                   Collection*& collection);
+                                    Collection *&collection);
   // Constructor
 
   ~TAO_ESF_Copy_On_Write_Read_Guard (void);
@@ -92,9 +92,10 @@ class TAO_ESF_Copy_On_Write_Write_Guard
 public:
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
   TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &mutex,
-                                    ACE_SYNCH_CONDITION_T &cond,
-                                    int &writing_flag,
-                                    Collection*& collection);
+                                     ACE_SYNCH_CONDITION_T &cond,
+                                     int &pending_writes,
+                                     int &writing_flag,
+                                     Collection*& collection);
   // Constructor
 
   ~TAO_ESF_Copy_On_Write_Write_Guard (void);
@@ -105,6 +106,7 @@ public:
 private:
   ACE_SYNCH_MUTEX_T &mutex;
   ACE_SYNCH_CONDITION_T &cond;
+  int &pending_writes;
   int &writing_flag;
   Collection *&collection;
 };
@@ -149,6 +151,9 @@ private:
 
   ACE_SYNCH_MUTEX_T mutex_;
   // A mutex to serialize access to the collection pointer.
+
+  int pending_writes_;
+  // Number of pending writes
 
   int writing_;
   // If non-zero then a thread is changing the collection.  Many
