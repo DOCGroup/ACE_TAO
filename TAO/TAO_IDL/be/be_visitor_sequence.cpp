@@ -71,17 +71,23 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   switch (node->managed_type ())
     {
     case be_sequence::MNG_OBJREF: // sequence of objrefs
-    case be_sequence::MNG_STRING: // sequence of objrefs
       if (node->unbounded ())
-        os << "TAO_Unbounded_Managed_Sequence<";
+        os << "TAO_Unbounded_Object_Sequence<";
       else
-        os << "TAO_Bounded_Managed_Sequence<";
+        os << "TAO_Bounded_Object_Sequence<";
+      break;
+    case be_sequence::MNG_STRING: // sequence of strings
+      if (node->unbounded ())
+	os << "TAO_Unbounded_String_Sequence";
+      else
+	os << "TAO_Bounded_String_Sequence<";
       break;
     default: // not a managed type
       if (node->unbounded ())
         os << "TAO_Unbounded_Sequence<";
       else
         os << "TAO_Bounded_Sequence<";
+      break;
     }
 
   
@@ -94,13 +100,23 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  if (node->unbounded ())
+  if (node->managed_type () == be_sequence::MNG_STRING)
     {
-      os << " >";
+      if (!node->unbounded ())
+	{
+	  os << "<" << node->max_size () << ">";
+	}
     }
   else
     {
-      os << ", " << node->max_size () << " >";
+      if (node->unbounded ())
+	{
+	  os << " >";
+	}
+      else
+	{
+	  os << ", " << node->max_size () << " >";
+	}
     }
 
   os << " " << node->local_name () << ";" << nl;
@@ -196,7 +212,7 @@ be_visitor_sequence_base_ch::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      os << "CORBA::Object, TAO_Object_Manager<CORBA::Object> ";
+      os << "CORBA::Object";
     default:
       os << node->name ();
     }
@@ -223,10 +239,6 @@ be_visitor_sequence_base_ch::visit_interface (be_interface * /* node */)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
-  os << ", ";
-  os << "TAO_Object_Manager<"
-     << this->current_type_->nested_type_name (this->seq_scope ())
-     << "> ";
   return 0;
 }
 
@@ -235,21 +247,15 @@ be_visitor_sequence_base_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream &os = this->stream ();
   os << this->current_type_->nested_type_name (this->seq_scope ());
-  os << ", ";
-  os << "TAO_Object_Manager<"
-     <<  this->current_type_->nested_type_name (this->seq_scope ())
-     << "> ";
   return 0;
 }
 
 int
 be_visitor_sequence_base_ch::visit_string (be_string * /* node */)
 {
-  TAO_OutStream &os = this->stream ();
-  os << "char*, TAO_String_Manager ";
+  // NO-OP, we have ad-hoc classes from strings.
   return 0;
 }
-
 
 int
 be_visitor_sequence_base_ch::visit_structure (be_structure *node)
