@@ -8,6 +8,10 @@ Fri Oct 24 09:24:14 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Select_Reactor.cpp (open): cast return value of
 	  ACE_::max_handles () to size_t to avoid signed/unsigned comparison.
 
+	* ace/Singleton.cpp,Object_Manager.{h,cpp}: (get_singleton_lock):
+	  dynamically allocate ACE_Thread_Mutex and ACE_RW_Thread_Mutex locks,
+	  so we end up with one lock per ACE_Singleton instantiation.
+
 Fri Oct 24 01:53:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.26, released Fri Oct 24 01:53:58 1997.
