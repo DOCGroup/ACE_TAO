@@ -1,3 +1,10 @@
+Sun Apr 18 12:32:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Added check of
+	  validity of temp directory.  If tao_idl can't access the temp
+	  directory, spit out some warning and switch to use current
+	  directory.
+
 Sun Apr 18 09:08:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.cpp: removed ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int>
