@@ -4,6 +4,10 @@
 #if !defined(AFX_LOG_MSG_MFC_H__03FA2C60_71EA_44F9_AC4C_2F19168B4755__INCLUDED_)
 #define AFX_LOG_MSG_MFC_H__03FA2C60_71EA_44F9_AC4C_2F19168B4755__INCLUDED_
 
+#include "ace/config-all.h"
+
+#if defined (ACE_WIN32)
+
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
@@ -53,5 +57,7 @@ public:
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+#endif /* ACE_WIN32 */
 
 #endif // !defined(AFX_LOG_MSG_MFC_H__03FA2C60_71EA_44F9_AC4C_2F19168B4755__INCLUDED_)

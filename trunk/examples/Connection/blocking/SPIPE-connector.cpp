@@ -201,7 +201,7 @@ IPC_Client::parse_args (int argc, char *argv[])
         case 'r':
           ACE_OS::strncpy (rendezvous_,
                            ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
-                           sizeof rendezvous_ / sizeof ACE_TCHAR);
+                           sizeof (rendezvous_) / sizeof (ACE_TCHAR));
           break;
         case 'i':
           iterations_ = ACE_OS::atoi (get_opt.opt_arg ());
