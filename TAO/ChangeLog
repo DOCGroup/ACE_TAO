@@ -1,3 +1,11 @@
+Sun Dec  7 20:36:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.h:
+	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+
+	  Fixed fuzz errors.
+
 Sun Dec  7 18:44:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
