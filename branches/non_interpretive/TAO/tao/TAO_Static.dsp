@@ -106,6 +106,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BoundsC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Buffering_Constraint_Policy.cpp
 # End Source File
 # Begin Source File
@@ -155,10 +159,6 @@ SOURCE=.\CurrentS.cpp
 # Begin Source File
 
 SOURCE=.\debug.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\decode.cpp
 # End Source File
 # Begin Source File
 
@@ -219,10 +219,6 @@ SOURCE=.\DynStruct_i.cpp
 # Begin Source File
 
 SOURCE=.\DynUnion_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\encode.cpp
 # End Source File
 # Begin Source File
 
@@ -663,6 +659,10 @@ SOURCE=.\arg_shifter.h
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
 
@@ -1207,6 +1207,10 @@ SOURCE=.\any.i
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\BoundsC.i
 # End Source File
 # Begin Source File
 
