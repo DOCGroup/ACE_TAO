@@ -143,6 +143,14 @@
         #define ACE_HAS_ANSI_CASTS 0
 #endif
 
+// By default, we use non-static object manager on Win32.  That is,
+// the object manager is allocated in main's stack memory.
+#if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+# define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#elif (ACE_HAS_NONSTATIC_OBJECT_MANAGER == 0)
+# undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
 // ----------------------- platform specific defines --------------------
 
 #include <ace/config-win32-common.h>
