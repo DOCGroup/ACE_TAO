@@ -885,6 +885,12 @@ TAO_CodeGen::start_implementation_header (const char *fname)
     << "#pragma once\n"
     << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.local_iface_seen_))
+    {
+      *this->implementation_header_ << "#include \"tao/LocalObject.h\"\n\n";
+    }
+    
   return 0;
 }
 
@@ -936,7 +942,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
 
   this->implementation_skeleton_->print ("#include \"%s\"\n\n",
                                          impl_hdr);
-
+                                         
   return 0;
 }
 
