@@ -20,8 +20,18 @@ class FilePanel extends Panel
     this.add (this.saveButton_);
 
     // Disable the save button for now
-    this.saveButton_.disable ();
+    this.disableSaveButton ();
     this.resize (400, 400);
+  }
+
+  public void enableSaveButton ()
+  {
+    this.saveButton_.enable ();
+  }
+
+  public void disableSaveButton ()
+  {
+    this.saveButton_.disable ();
   }
 
   // All the created buttons
