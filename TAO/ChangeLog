@@ -1,99 +1,128 @@
+Tue Jul 22 16:48:48 2003  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Map.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Map.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Struct.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Struct.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.dsw:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile.bor:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Simple.h:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Simple.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Test.idl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/client.bor:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/client.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.bor:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
+
+          Added New directory to test the infrastructure controlled membership of the Load
+          balancer
+
 Tue Jul 22 17:36:29 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\Object_Adapter (get_collocated_servant): 
+        * tao\PortableServer\Object_Adapter (get_collocated_servant):
 
-	  Stub parameter no longer needed.
+          Stub parameter no longer needed.
 
 Tue Jul 22 16:57:06 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\Object_Adapter.cpp: 
+        * tao\PortableServer\Object_Adapter.cpp:
 
-	  - create_collocated_object() and initialize_collocated_object():
-	  These methods should create a collocated object irrespective of
-	  whether the servant is found or not.  The servant pointer is
-	  needed only with the DIRECT collocation option.  Otherwise, as
-	  long as we have an endpoint match, we should create a collocated
-	  object.  
+          - create_collocated_object() and initialize_collocated_object():
+          These methods should create a collocated object irrespective of
+          whether the servant is found or not.  The servant pointer is
+          needed only with the DIRECT collocation option.  Otherwise, as
+          long as we have an endpoint match, we should create a collocated
+          object.
 
-	  This change is necessary since servants may show up after the
-	  object was created.  There is no point is making a remote object
-	  that will make a connection to the same process.  If the servant
-	  is truely not available, the POA will finally generate an
-	  OBJECT_NOT_FOUND exception when handling an upcall.
+          This change is necessary since servants may show up after the
+          object was created.  There is no point is making a remote object
+          that will make a connection to the same process.  If the servant
+          is truely not available, the POA will finally generate an
+          OBJECT_NOT_FOUND exception when handling an upcall.
 
-	  - get_collocated_servant(): The servant ORB was only getting set
-	  when the servant was found.  We need to set it even when servant
-	  is not found.  Now this is done in create_collocated_object()
-	  and initialize_collocated_object().
+          - get_collocated_servant(): The servant ORB was only getting set
+          when the servant was found.  We need to set it even when servant
+          is not found.  Now this is done in create_collocated_object()
+          and initialize_collocated_object().
 
-	* tao\ORB_Core.cpp (create_object): 
+        * tao\ORB_Core.cpp (create_object):
 
-	  Result from create_collocated_object() can be returned directly.
+          Result from create_collocated_object() can be returned directly.
 
-	* tao\PortableServer\Object_Adapter.cpp (previous): 
+        * tao\PortableServer\Object_Adapter.cpp (previous):
 
-	  Returns the previous POA current implementation.
-	
-	* tests\Collocation_Opportunities: 
+          Returns the previous POA current implementation.
 
-	  A test for making sure the ORB avails all collocation
-	  opportunities it is presented with.  
+        * tests\Collocation_Opportunities:
 
-	  This test has three collocated objects.  The first object is
-	  collocated since the POA created this object and marked it
-	  collocated. In addition, endpoints in the object reference match
-	  the local endpoints and the servant is be available.  
+          A test for making sure the ORB avails all collocation
+          opportunities it is presented with.
 
-	  The second object is collocated since the POA created this
-	  object and marked it collocated. In addition, endpoints in the
-	  object reference match the local endpoints even though the
-	  servant is not available at the time the object was created.
+          This test has three collocated objects.  The first object is
+          collocated since the POA created this object and marked it
+          collocated. In addition, endpoints in the object reference match
+          the local endpoints and the servant is be available.
 
-	  The third object is collocated even though the collocated flag
-	  set by the POA was lost when the second object was converted
-	  into a string and then back. Endpoints in the object reference
-	  match the local endpoints even though the servant is not
-	  available at the time the object was created.  
+          The second object is collocated since the POA created this
+          object and marked it collocated. In addition, endpoints in the
+          object reference match the local endpoints even though the
+          servant is not available at the time the object was created.
 
-	  This test checks for POA currents to see if an upcall was
-	  collocated or remote.  If remote, there will be only one POA
-	  current since the upcall will be handled by ORB Task thread.  We
-	  ensure that the main thread does not handle the upcall by
-	  setting the ORBClientConnectionHandler option to RW. If
-	  collocated, there will be a <previous> POA current since the
-	  first POA current would be setup with a call to the <base>
-	  servant.
+          The third object is collocated even though the collocated flag
+          set by the POA was lost when the second object was converted
+          into a string and then back. Endpoints in the object reference
+          match the local endpoints even though the servant is not
+          available at the time the object was created.
 
-	  The following files were added:
-	
-	  - tests\Collocation_Opportunities\Collocation_Opportunities.cpp
-	  - tests\Collocation_Opportunities\Collocation_Opportunities.dsp
-	  - tests\Collocation_Opportunities\Collocation_Opportunities.dsw
-	  - tests\Collocation_Opportunities\Collocation_Opportunities.mpc
-	  - tests\Collocation_Opportunities\Makefile
-	  - tests\Collocation_Opportunities\Makefile.bor
-	  - tests\Collocation_Opportunities\README
-	  - tests\Collocation_Opportunities\run_test.pl
-	  - tests\Collocation_Opportunities\svc.conf
-	  - tests\Collocation_Opportunities\test.idl
+          This test checks for POA currents to see if an upcall was
+          collocated or remote.  If remote, there will be only one POA
+          current since the upcall will be handled by ORB Task thread.  We
+          ensure that the main thread does not handle the upcall by
+          setting the ORBClientConnectionHandler option to RW. If
+          collocated, there will be a <previous> POA current since the
+          first POA current would be setup with a call to the <base>
+          servant.
 
-	  The following files were modified:
+          The following files were added:
 
-	  - tests\TAO_Tests.dsw
-	  - tests\Makefile
-	  - tests\Makefile.bor
+          - tests\Collocation_Opportunities\Collocation_Opportunities.cpp
+          - tests\Collocation_Opportunities\Collocation_Opportunities.dsp
+          - tests\Collocation_Opportunities\Collocation_Opportunities.dsw
+          - tests\Collocation_Opportunities\Collocation_Opportunities.mpc
+          - tests\Collocation_Opportunities\Makefile
+          - tests\Collocation_Opportunities\Makefile.bor
+          - tests\Collocation_Opportunities\README
+          - tests\Collocation_Opportunities\run_test.pl
+          - tests\Collocation_Opportunities\svc.conf
+          - tests\Collocation_Opportunities\test.idl
+
+          The following files were modified:
+
+          - tests\TAO_Tests.dsw
+          - tests\Makefile
+          - tests\Makefile.bor
           - tests\README
-	  - $ACE_ROOT\bin\tao_orb_tests.lst
-	  
-	  These changes fix bug 1535.  Thanks to Carlos for reporting this
-	  bug.
+          - $ACE_ROOT\bin\tao_orb_tests.lst
+
+          These changes fix bug 1535.  Thanks to Carlos for reporting this
+          bug.
 
 Tue Jul 22 16:57:06 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\POA.cpp (locate_servant_i): Initialize <cookie>
-	  to zero to avoid uninitialized memory read warnings.  Thanks to
-	  Martin Habets <mhabets@il0015mhabets1.ih.lucent.com> for
-	  pointing this out.
+        * tao\PortableServer\POA.cpp (locate_servant_i): Initialize <cookie>
+          to zero to avoid uninitialized memory read warnings.  Thanks to
+          Martin Habets <mhabets@il0015mhabets1.ih.lucent.com> for
+          pointing this out.
 
 Tue Jul 22 14:07:36 2003  Bryan Thrall  <thrall@cs.wustl.edu>
 
@@ -109,45 +138,45 @@ Tue Jul 22 14:07:36 2003  Bryan Thrall  <thrall@cs.wustl.edu>
         * orbsvcs/examples/RtEC/Kokyu/svc.conf:
         * orbsvcs/examples/RtEC/Kokyu/svc.conf.xml:
 
-	Example to test new Event Channel with Kokyu dispatching.
-	Merged orbsvcs/examples/RtEC/Kokyu/* from EC_Kokyu_0 branch. 
-	These files were reported merged earlier, but apparently the 
-	merge didn't stick. See ChangeLogs/ChangeLog-03b line 4873 for
-	the original report:
-	Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-	
+        Example to test new Event Channel with Kokyu dispatching.
+        Merged orbsvcs/examples/RtEC/Kokyu/* from EC_Kokyu_0 branch.
+        These files were reported merged earlier, but apparently the
+        merge didn't stick. See ChangeLogs/ChangeLog-03b line 4873 for
+        the original report:
+        Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
 Tue Jul 22 11:24:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Strategies/SHMIOP_Profile.cpp (parse_string_i): Fixed a cut
-	  an paste error that threw up undefined variable errors. 
+        * tao/Strategies/SHMIOP_Profile.cpp (parse_string_i): Fixed a cut
+          an paste error that threw up undefined variable errors.
 
 Tue Jul 22 11:29:47 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/RT_Builder.cpp: 
+        * orbsvcs/orbsvcs/Notify/RT_Builder.cpp:
 
-	  Added include for Object.h.
+          Added include for Object.h.
 
 Tue Jul 22 09:31:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.cpp (parse_string_i):  This
-	  methoid assumed that the port part of the ior is always an integer
-	  even though the comments suggested otherwise. This made it
-	  difficult to corbaloc in the following format 
+        * tao/IIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp (parse_string_i):  This
+          methoid assumed that the port part of the ior is always an integer
+          even though the comments suggested otherwise. This made it
+          difficult to corbaloc in the following format
 
-	  -ORBInitRef NameService=corbaloc:iiop:NameService/NameService
+          -ORBInitRef NameService=corbaloc:iiop:NameService/NameService
 
-	  but the following worked 
+          but the following worked
 
-	   -ORBEndPoint iiop://localhost:NameService 
+           -ORBEndPoint iiop://localhost:NameService
 
-	  if there is an entry for NameService in the network service
-	  database. Thanks to Charlie Spawar  Frasch
-	  <charlie.frasch@navy.mil> for detecting the problem and
-	  providing the patches. 
-	
-	  It would be really helpful if the port could be specified using
-	  a name in the network services database
+          if there is an entry for NameService in the network service
+          database. Thanks to Charlie Spawar  Frasch
+          <charlie.frasch@navy.mil> for detecting the problem and
+          providing the patches.
+
+          It would be really helpful if the port could be specified using
+          a name in the network services database
 
 Tue Jul 22 06:11:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -317,94 +346,94 @@ Mon Jul 21 22:57:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Jul 21 15:41:09 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	Added an example to show how to use ThreadPools with
-	RT-Notification.
+        Added an example to show how to use ThreadPools with
+        RT-Notification.
 
-	* orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
-	* orbsvcs/examples/Notify/ThreadPool/Consumer.dsp:
-	* orbsvcs/examples/Notify/ThreadPool/Consumer.h:
-	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
-	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
-	* orbsvcs/examples/Notify/ThreadPool/Makefile:
-	* orbsvcs/examples/Notify/ThreadPool/ORB_Objects.cpp:
-	* orbsvcs/examples/Notify/ThreadPool/ORB_Objects.h:
-	* orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.cpp:
-	* orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h:
-	* orbsvcs/examples/Notify/ThreadPool/README:
-	* orbsvcs/examples/Notify/ThreadPool/Supplier.cpp:
-	* orbsvcs/examples/Notify/ThreadPool/Supplier.dsp:
-	* orbsvcs/examples/Notify/ThreadPool/Supplier.h:
-	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
-	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
-	* orbsvcs/examples/Notify/ThreadPool/ThreadPool.dsp:
-	* orbsvcs/examples/Notify/ThreadPool/ThreadPool.mpc:
-	* orbsvcs/examples/Notify/ThreadPool/client.conf:
-	* orbsvcs/examples/Notify/ThreadPool/notify.conf:
-	* orbsvcs/examples/Notify/ThreadPool/run_test.pl:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.dsp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.h:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
+        * orbsvcs/examples/Notify/ThreadPool/Makefile:
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Objects.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Objects.h:
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h:
+        * orbsvcs/examples/Notify/ThreadPool/README:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.dsp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.h:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
+        * orbsvcs/examples/Notify/ThreadPool/ThreadPool.dsp:
+        * orbsvcs/examples/Notify/ThreadPool/ThreadPool.mpc:
+        * orbsvcs/examples/Notify/ThreadPool/client.conf:
+        * orbsvcs/examples/Notify/ThreadPool/notify.conf:
+        * orbsvcs/examples/Notify/ThreadPool/run_test.pl:
 
-	  Added. See README for details.
+          Added. See README for details.
 
-	* orbsvcs/examples/Notify/Notify_Examples.dsw:
-	* orbsvcs/examples/Notify/Makefile:
+        * orbsvcs/examples/Notify/Notify_Examples.dsw:
+        * orbsvcs/examples/Notify/Makefile:
 
-	  Added ThreadPool example
+          Added ThreadPool example
 
-	* orbsvcs/orbsvcs/Event_Forwarder.idl:
+        * orbsvcs/orbsvcs/Event_Forwarder.idl:
 
-  	  Make all the forwarding methods as oneways.
-	  This change is due to the following reason:
-	  When the event receiving thread makes a two-way invocation to
-	  transfer the event propagation to the dispatching thread, the
-	  receving thread gets blocked waiting for the 2-way to complete,
-	  essentially making the event propagation synchronous. By making
-	  this method a oneway, the receving thread can make progress on
-	  other events entering the system while the dispatching thread
-	  continues with its dispatching efforts.
+          Make all the forwarding methods as oneways.
+          This change is due to the following reason:
+          When the event receiving thread makes a two-way invocation to
+          transfer the event propagation to the dispatching thread, the
+          receving thread gets blocked waiting for the 2-way to complete,
+          essentially making the event propagation synchronous. By making
+          this method a oneway, the receving thread can make progress on
+          other events entering the system while the dispatching thread
+          continues with its dispatching efforts.
 
- 	* orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
- 	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
 
-	  Moved the <id_factory_> helper member to the
-	  TAO_Notify_POA_Helper::activate method scope as a static
-	  variable. This change allows a Notification wide unique ID to be
-	  assigned to each object created. This solves the pesky problem
-	  of say e.g. 2 different POA's in the Notification generating the same
-	  ID for its Proxy Objects. Though this is consistent with the
-	  spec., in practice it is more convinient for each and every object
-	  to have a unique id.
+          Moved the <id_factory_> helper member to the
+          TAO_Notify_POA_Helper::activate method scope as a static
+          variable. This change allows a Notification wide unique ID to be
+          assigned to each object created. This solves the pesky problem
+          of say e.g. 2 different POA's in the Notification generating the same
+          ID for its Proxy Objects. Though this is consistent with the
+          spec., in practice it is more convinient for each and every object
+          to have a unique id.
 
-	* orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
-	  Include "Object.h"
+        * orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
+          Include "Object.h"
 
 Mon Jul 21 16:28:46 2003 Stephen Torri  <storri@cs.wustl.edu>
 
-	* TAO/TAOACE.dsw:
+        * TAO/TAOACE.dsw:
 
-	  Added Metrics.dsp to workspace.
+          Added Metrics.dsp to workspace.
 
-	* TAO/orbsvcs/orbsvcs/Metrics.dsp:
-	* TAO/orbsvcs/orbsvcs/Metrics/Metrics.dsp:
-	  Moved project file from Metrics subdirectory to match
-	  orbsvcs file convention in TAO/orbsvcs/orbsvcs
+        * TAO/orbsvcs/orbsvcs/Metrics.dsp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics.dsp:
+          Moved project file from Metrics subdirectory to match
+          orbsvcs file convention in TAO/orbsvcs/orbsvcs
 
-	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
-	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
-	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
-	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
-	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+        * TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
 
-	  Hide class behind #ifdef statements if the configuration for
-	  ACE lacks ACE_METRICS_COLLECTION and ACE_COMPILE_TIMEPORBES
+          Hide class behind #ifdef statements if the configuration for
+          ACE lacks ACE_METRICS_COLLECTION and ACE_COMPILE_TIMEPORBES
 
 
 Mon Jul 21 16:24:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/append.cpp:
 
-	  Applied a fix for unions with an enum discriminator similar to
-	  what is used for the same case in skip.cpp. Thanks to
-	  Sunil Rottoo <srottoo@adacelcanada.com> for pointing out the
-	  problem and suggesting the fix.
+          Applied a fix for unions with an enum discriminator similar to
+          what is used for the same case in skip.cpp. Thanks to
+          Sunil Rottoo <srottoo@adacelcanada.com> for pointing out the
+          problem and suggesting the fix.
 
 Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -422,10 +451,10 @@ Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_expression.h:
         * TAO_IDL/include/ast_generator.h:
 
-	  Fixed a bug where unsigned long long constants were
-	  truncated if the literal rhs was greater than
-`	  ULONG_MAX. Thanks to Scott Clarke <sclarke@ideorlando.org>
-	  for reporting the bug.
+          Fixed a bug where unsigned long long constants were
+          truncated if the literal rhs was greater than
+`         ULONG_MAX. Thanks to Scott Clarke <sclarke@ideorlando.org>
+          for reporting the bug.
 
 
 Mon Jul 21 19:33:24 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -473,12 +502,12 @@ Mon Jul 21 14:09:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/PortableServer/ImplRepoS.cpp:
         * tao/PortableServer/PolicyS.cpp:
 
-	  Modified these files by hand to reflect recent changes to gperf
-	  and to skeleton side class inheritance generation for gcc 3.3.
+          Modified these files by hand to reflect recent changes to gperf
+          and to skeleton side class inheritance generation for gcc 3.3.
 
 Mon Jul 21 14:07:09 2003  Aniruddha Gokhale  <gokhale@doc.dre.vanderbilt.edu>
 
-	* tao/Makefile.tao:
+        * tao/Makefile.tao:
           tao/BiDir_GIOP/Makefile:
           tao/Domain/Makefile:
           tao/DynamicAny/Makefile:
@@ -499,7 +528,7 @@ Mon Jul 21 14:07:09 2003  Aniruddha Gokhale  <gokhale@doc.dre.vanderbilt.edu>
           tao/Utils/Makefile:
           tao/Valuetype/Makefile:
 
-	  Updated dependencies
+          Updated dependencies
 
 Mon Jul 21 13:41:54 2003  George Edwards <g.edwards@vanderbilt.edu>
 
