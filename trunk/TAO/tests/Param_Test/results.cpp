@@ -16,8 +16,9 @@
 //
 // ============================================================================
 
-#include "ace/Log_Msg.h"
 #include "results.h"
+#include "tao/debug.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Param_Test, results, "results.cpp,v 1.8 1999/06/23 14:50:14 parsons Exp")
 

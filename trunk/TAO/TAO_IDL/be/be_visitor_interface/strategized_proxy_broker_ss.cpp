@@ -46,7 +46,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
   *os << node->full_strategized_proxy_broker_name () << "::"
       << node->strategized_proxy_broker_name () << " (void)" << be_nl
       << "{" << be_idt_nl // idt = 1
-      << "for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)"
+      << "for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)"
       << be_idt_nl // idt = 2
       << "this->proxy_cache_[i] = 0;"
       << be_uidt_nl // idt = 1
@@ -57,7 +57,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
   *os << node->full_strategized_proxy_broker_name () << "::~"
       << node->strategized_proxy_broker_name () << " (void)" << be_nl
       << "{" << be_idt_nl // idt = 1
-      << "for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)"
+      << "for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)"
       << be_idt_nl // idt = 2
       << "delete this->proxy_cache_[i];"
       << be_uidt_nl // idt = 1
@@ -76,7 +76,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << be_uidt_nl // idt = 0
       << "{"
       << be_idt_nl // idt = 1
-      << "TAO_ORB_Core::TAO_Collocation_Strategies strategy ="
+      << "int strategy ="
       << be_idt_nl // idt = 2
       << "TAO_ORB_Core::collocation_strategy (object);"
       << be_uidt_nl << be_nl // idt = 1
@@ -97,7 +97,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       <<node->full_strategized_proxy_broker_name () << "::"
       << "create_proxy ("
       << be_idt << be_idt_nl // idt = 2
-      << "TAO_ORB_Core::TAO_Collocation_Strategies strategy,"
+      << "int strategy,"
       << be_nl
       << "CORBA::Environment &ACE_TRY_ENV"
       << be_uidt_nl // idt = 1
@@ -116,7 +116,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
       << "{" << be_nl;
       if (be_global->gen_thru_poa_collocation ())
         {
-        *os << "case TAO_ORB_Core::THRU_POA_STRATEGY:"
+        *os << "case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:"
             << be_idt_nl // idt = 5
             << "ACE_NEW_THROW_EX ("
             << be_idt << be_idt_nl //idt = 7
@@ -132,7 +132,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
 
       if (be_global->gen_direct_collocation ())
         {
-          *os << "case TAO_ORB_Core::DIRECT_STRATEGY:"
+          *os << "case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:"
               << be_idt_nl // idt = 5
               << "ACE_NEW_THROW_EX ("
               << be_idt << be_idt_nl //idt = 7
@@ -146,7 +146,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (be_interface 
               << be_nl << be_uidt_nl; // idt = 4
             }
 
-      *os << "case TAO_ORB_Core::REMOTE_STRATEGY:" << be_nl
+      *os << "case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:" << be_nl
           << "default:"
           << be_idt_nl // idt = 5
           << "ACE_NEW_THROW_EX ("

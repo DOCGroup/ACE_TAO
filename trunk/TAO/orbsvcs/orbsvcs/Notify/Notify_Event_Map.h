@@ -19,17 +19,19 @@
 
 #ifndef TAO_NOTIFY_Event_Map_HEADER_H
 #define TAO_NOTIFY_Event_Map_HEADER_H
-
 #include "ace/pre.h"
+
 #include "orbsvcs/CosNotificationC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
 #include "Notify_Collection.h"
 #include "notify_export.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
+
+#include "ace/Hash_Map_Manager.h"
 
 class TAO_Notify_EventListener;
 class TAO_Notify_UpdateListener;

@@ -21,8 +21,13 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "DualEC_Sup.h"
+#include "NavWeapC.h"
+
 #include "tao/PortableServer/ORB_Manager.h"
+#include "tao/corba.h"
+#include "tao/ORB_Core.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 //#include "ace/Profile_Timer.h"
@@ -32,8 +37,6 @@
 #include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "DualEC_Sup.h"
-#include "NavWeapC.h"
 
 #include <limits.h>
 

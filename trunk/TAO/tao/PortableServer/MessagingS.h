@@ -123,7 +123,7 @@ TAO_NAMESPACE  POA_Messaging
   // Helper methods that takes care to create the proxy
   // as soon as their use is necessary.
     void create_proxy (
-      TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+      int collocation_strategy,
       CORBA::Environment &ACE_TRY_ENV
     );
 
@@ -133,7 +133,7 @@ TAO_NAMESPACE  POA_Messaging
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Messaging::_TAO_ReplyHandler_Proxy_Impl
-     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
+     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
 
     TAO_SYNCH_MUTEX mutex_;
 

@@ -17,6 +17,8 @@
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
+#include "tao/ORB_Core.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "EC_Null_Factory.i"
 #endif /* __ACE_INLINE__ */

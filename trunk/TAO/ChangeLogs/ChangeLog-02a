@@ -1,27 +1,313 @@
+Mon Mar 26 13:06:10 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/corba.h:
+        * tao/corbafwd.h:
+          Do not include "tao/ORB_Core.h", "tao/Stub.h" nor "tao/debug.h"
+          from corba.h, this eliminates coupling between the library and
+          the application, and improves compilation time by, according to
+          my local tests, a good 10-20%.
+
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/include/ast_structure.h:
+          Generate more #includes in the FooC.cpp and FooS.cpp files, so
+          the application does not get a bunch of ACE code just for
+          #including TAO.
+
+        * tao/Acceptor_Impl.cpp:
+        * tao/BiDir_Policy_i.cpp:
+        * tao/Cleanup_Func_Registry.h:
+        * tao/ClientRequestInfo.cpp:
+        * tao/ClientRequestInfo.h:
+        * tao/ClientRequestInfo.inl:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/Interceptor_List.h:
+        * tao/Leader_Follower.h:
+        * tao/LocalObject.cpp:
+        * tao/NVList.h:
+        * tao/ORBInitializer_Registry.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/Object.h:
+        * tao/Pluggable_Messaging.cpp:
+        * tao/Protocols_Hooks.h:
+        * tao/RT_ORB_Loader.cpp:
+        * tao/RT_ORB_Loader.h:
+        * tao/Resource_Factory.h:
+        * tao/debug.cpp:
+        * tao/default_resource.cpp:
+        * tao/params.h:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/ExceptionList.h:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/PortableServer/MessagingS.cpp:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Strategized_Object_Proxy_Broker.h:
+        * tao/SmartProxies/Smart_Proxies.h:
+        * tao/Strategies/Direct_Priority_Mapping.cpp:
+        * tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+        * examples/AMI/FL_Callback/Makefile:
+        * examples/Buffered_Oneways/client.cpp:
+        * examples/Callback_Quoter/Consumer_Handler.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * examples/Callback_Quoter/Notifier_i.h:
+        * examples/Callback_Quoter/Supplier_i.cpp:
+        * examples/Event_Comm/Consumer_Handler.cpp:
+        * examples/Event_Comm/Consumer_Input_Handler.cpp:
+        * examples/Event_Comm/Notifier_Handler.cpp:
+        * examples/Event_Comm/Notifier_Server.cpp:
+        * examples/Event_Comm/Supplier_Input_Handler.cpp:
+        * examples/Load_Balancing/Identity_Client.cpp:
+        * examples/Load_Balancing/Identity_Server.cpp:
+        * examples/Load_Balancing/Load_Balancing_Service.cpp:
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancing_Service.cpp:
+        * examples/Logging/Logger_i.cpp:
+        * examples/Logging/Logger_i.h:
+        * examples/Logging/Logging_Service.cpp:
+        * examples/Logging/Logging_Service_i.cpp:
+        * examples/Logging/Logging_Test_i.cpp:
+        * examples/OBV/Typed_Events/Client_i.cpp:
+        * examples/OBV/Typed_Events/Server_i.cpp:
+        * examples/POA/DSI/Database_i.h:
+        * examples/POA/Default_Servant/client.cpp:
+        * examples/POA/Default_Servant/server.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+        * examples/PluggableUDP/tests/UDP_i.h:
+        * examples/PluggableUDP/tests/client.cpp:
+        * examples/PluggableUDP/tests/server.cpp:
+        * examples/Quoter/Factory_Finder_i.cpp:
+        * examples/Quoter/Generic_Factory_i.cpp:
+        * examples/Quoter/Quoter_i.cpp:
+        * examples/Quoter/server.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * examples/Simple/bank/AccountManager_i.cpp:
+        * examples/Simple/bank/AccountManager_i.h:
+        * examples/Simple/chat/Client_i.cpp:
+        * examples/Simple/time-date/Time_Date.cpp:
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * examples/Simulator/Event_Supplier/Event_Con.h:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp:
+        * orbsvcs/examples/Log/test/BasicLog_Test.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+        * orbsvcs/examples/Security/Send_File/test_i.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/AV/Flows_T.cpp:
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+        * orbsvcs/orbsvcs/AV/Policy.cpp:
+        * orbsvcs/orbsvcs/AV/Policy.h:
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Map.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.h:
+        * orbsvcs/orbsvcs/Security/Security_Current.cpp:
+        * orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Simple/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/Concurrency/NS_client.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Supplier.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.cpp:
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        * orbsvcs/tests/Time/Client_i.cpp:
+        * performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * performance-tests/Latency/ami-latency-client.cpp:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+        * performance-tests/Latency/client.cpp:
+        * performance-tests/Latency/st_client.cpp:
+        * performance-tests/POA/Demux/client.cpp:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/POA/Demux/demux_test_i.cpp:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/POA/Demux/server.cpp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * performance-tests/Pluggable/PP_Test_Client.cpp:
+        * performance-tests/Pluggable/PP_Test_Server.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/test_i.cpp:
+        * performance-tests/Thruput/TAO/client.cpp:
+        * performance-tests/Thruput/TAO/server.cpp:
+        * tests/AMI/server.cpp:
+        * tests/AMI_Timeouts/client.cpp:
+        * tests/AMI_Timeouts/server.cpp:
+        * tests/BiDirectional/test_i.cpp:
+        * tests/BiDirectional_NestedUpcall/test_i.cpp:
+        * tests/CDR/allocator.cpp:
+        * tests/CDR/basic_types.cpp:
+        * tests/CDR/tc.cpp:
+        * tests/DSI_Gateway/client.cpp:
+        * tests/DSI_Gateway/test_dsi.cpp:
+        * tests/DSI_Gateway/test_i.cpp:
+        * tests/Endpoint_Per_Priority/client.cpp:
+        * tests/Faults/pong.cpp:
+        * tests/InterOp-Naming/Server_i.cpp:
+        * tests/MProfile/test_i.cpp:
+        * tests/MProfile_Forwarding/test_i.cpp:
+        * tests/MT_Client/client.cpp:
+        * tests/MT_Client/orb_creation.cpp:
+        * tests/MT_Server/test_i.cpp:
+        * tests/Native_Exceptions/test_i.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+        * tests/NestedUpcall/MT_Client_Test/server.cpp:
+        * tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
+        * tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_A.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_B.cpp:
+        * tests/OctetSeq/OctetSeq.cpp:
+        * tests/POA/Identity/Identity.cpp:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/anyop.cpp:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/helper.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/results.cpp:
+        * tests/Param_Test/server.cpp:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Policies/Manipulation.cpp:
+        * tests/Portable_Interceptors/Benchmark/client.cpp:
+        * tests/QtTests/client.cpp:
+        * tests/QtTests/client.h:
+        * tests/QtTests/server.cpp:
+        * tests/QtTests/test_i.h:
+        * tests/RTCORBA/Client_Propagated/client.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/Private_Connection/client.cpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/On_Demand/Smart_Test_Factory.h:
+        * tests/Timed_Buffered_Oneways/client.cpp:
+          Add include for "tao/ORB_Core.h" or "tao/debug.h" when needed.
+
 Mon Mar 26 14:32:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_structure.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interfaceFwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interfaceFwd_ch.cpp:
 
-	  Cosmetic changes to source code.
+          Cosmetic changes to source code.
 
-	* TAO_IDL/be/be_visitor_operations/interceptors_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_operations/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
 
-	  Cosmetic changes to generated code, mostly fixes to
-	  indentation problems.
+          Cosmetic changes to generated code, mostly fixes to
+          indentation problems.
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
 
-	  Changed generated code for the
-	  static const CORBA::Long _oc_*[] array to put each member
-	  on a new line, eliminating the extremely long line lengths
-	  that were generated previously. This will also enable the
-	  generated comments that describe the various typecode
-	  components (name, repo id, member count, etc.) to be
-	  easily visible and readable in the text editor of your
-	  choice.
+          Changed generated code for the
+          static const CORBA::Long _oc_*[] array to put each member
+          on a new line, eliminating the extremely long line lengths
+          that were generated previously. This will also enable the
+          generated comments that describe the various typecode
+          components (name, repo id, member count, etc.) to be
+          easily visible and readable in the text editor of your
+          choice.
 
 Mon Mar 26 14:01:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -38,60 +324,60 @@ Mon Mar 26 11:05:40 2001  Balachandran  <bala@cs.wustl.edu>
 
 Mon Mar 26 09:10:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Fixed
-	  compilation problem with VXWORKS GCC.  
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Fixed
+          compilation problem with VXWORKS GCC.
 
 Mon Mar 26 07:56:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Removed redundant
-	  guards for g++ 2.7. This should fix problems in LYNX_I386.
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp: Removed redundant
+          guards for g++ 2.7. This should fix problems in LYNX_I386.
 
 Mon Mar 26 06:38:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp: 
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp: Fixed a
-	  compilation error in Borland C++. Converting a void * to in with
-	  a static cast does not go well in Borland. Changed all the
-	  static_cast to reinterpret_cast. Thanks to Chris K for
-	  reporting this problem and suggesting a fix.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp: Fixed a
+          compilation error in Borland C++. Converting a void * to in with
+          a static cast does not go well in Borland. Changed all the
+          static_cast to reinterpret_cast. Thanks to Chris K for
+          reporting this problem and suggesting a fix.
 
 Sun Mar 25 20:18:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp: 
-	  Fixed a warning with KCC builds. The ACE_ASSERTs dissappear in
-	  non-debug builds. Added ACE_UNUSED_ARG to prevent the compiler
-	  from complaining about unused variables.
+        * tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp:
+          Fixed a warning with KCC builds. The ACE_ASSERTs dissappear in
+          non-debug builds. Added ACE_UNUSED_ARG to prevent the compiler
+          from complaining about unused variables.
 
 Sun Mar 25 18:15:39 2001  Angelo Corsaro  <corsaro@danzon.cs.wustl.edu>
 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl: 
-	  Modified confition in the script that was leading to a false 
-	  detected error. See comment in the script.
+        * tests/RTCORBA/MT_Client_Protocol_Priority/process-output.pl:
+          Modified confition in the script that was leading to a false
+          detected error. See comment in the script.
 
 Sun Mar 25 17:14:31 2001  Angelo Corsaro  <corsaro@danzon.cs.wustl.edu>
 
-	* tao/orbconf.h: 
-	  Updated the number associated to the RTCORBA macros to reflect
-	  the changes made by Frank in:
-       	  Sun Mar  4 13:29:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
-	  This fix remove the inconsistencies that were currently present 
-	  in the constant associated to RTCORBA policies.
-	
-	* tao/Stub.cpp (relative_roundtrip_timeout): 
-	  Removed a line of code that was erroneously, setting 
-	  the policies holded by the stub to zero. This subtle bug
-	  a very weird behavior in certain cases because a call to this
-	  method would have wiped out totally the policies associated to 
-	  the Stub.
+        * tao/orbconf.h:
+          Updated the number associated to the RTCORBA macros to reflect
+          the changes made by Frank in:
+          Sun Mar  4 13:29:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+          This fix remove the inconsistencies that were currently present
+          in the constant associated to RTCORBA policies.
 
-	* tests/RTCORBA/Banded_Connections/run_test.pl: 
-	  Changed some of paramether passed by the script to the
-	  tests.
+        * tao/Stub.cpp (relative_roundtrip_timeout):
+          Removed a line of code that was erroneously, setting
+          the policies holded by the stub to zero. This subtle bug
+          a very weird behavior in certain cases because a call to this
+          method would have wiped out totally the policies associated to
+          the Stub.
+
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+          Changed some of paramether passed by the script to the
+          tests.
 
 
 Sun Mar 25 09:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>

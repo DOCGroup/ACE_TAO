@@ -16,6 +16,8 @@
 #include "Quoter_i.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/corba.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(Quoter, Quoter_i, "$Id$")
 

@@ -21,14 +21,15 @@
 #define NOTIFIER_I_H
 
 #include "NotifierS.h"
-#include "ConsumerC.h"
-#include "tao/PortableServer/ORB_Manager.h"
-#include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ConsumerC.h"
+#include "tao/PortableServer/ORB_Manager.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Containers.h"
 #include "ace/SString.h"
 
 class Notifier_i : public POA_Notifier

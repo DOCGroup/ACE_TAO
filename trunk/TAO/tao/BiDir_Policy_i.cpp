@@ -2,7 +2,6 @@
 
 #include "tao/BiDir_Policy_i.h"
 #include "tao/Stub.h"
-#include "tao/debug.h"
 
 ACE_RCSID(TAO, BiDir_Policy_i, "$Id$")
 

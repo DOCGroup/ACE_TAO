@@ -12,10 +12,13 @@
 //
 // ============================================================================
 
-#include "ace/Get_Opt.h"
 #include "Identity_Client.h"
 #include "IdentityC.h"
 #include "Load_BalancerC.h"
+
+#include "tao/debug.h"
+
+#include "ace/Get_Opt.h"
 
 Identity_Client::Identity_Client (void)
   : group_factory_ior_ (0),

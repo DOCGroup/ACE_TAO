@@ -4,8 +4,10 @@
 #include "EC_Dispatching_Task.h"
 #include "EC_Event_Channel.h"
 #include "EC_QOS_Info.h"
+
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/RtecSchedulerC.h"
+
 #include "ace/Sched_Params.h"
 
 #if ! defined (__ACE_INLINE__)

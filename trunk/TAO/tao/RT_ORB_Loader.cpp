@@ -4,7 +4,7 @@
 #include "RT_ORB.h"
 #include "RT_Current.h"
 
-#include "tao/ORB_Core.h"
+#include "ORB_Core.h"
 
 ACE_RCSID (TAO, RT_ORB_Loader, "$Id$")
 

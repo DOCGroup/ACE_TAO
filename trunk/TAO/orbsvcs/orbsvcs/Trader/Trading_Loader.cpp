@@ -15,8 +15,10 @@
 //===========================================================================
 
 #include "Trading_Loader.h"
-#include "ace/Dynamic_Service.h"
 
+#include "tao/ORB_Core.h"
+
+#include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 
 ACE_RCSID (Trader, Trading_Loader, "$Id$")

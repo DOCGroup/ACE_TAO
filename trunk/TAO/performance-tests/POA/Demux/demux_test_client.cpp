@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "demux_test_client.h"
+#include "tao/debug.h"
 
 // Constructor
 Demux_Test_Client::Demux_Test_Client (void)

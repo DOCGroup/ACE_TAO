@@ -17,6 +17,7 @@
 
 
 #include "demux_test_client.h"
+#include "tao/debug.h"
 
 ACE_RCSID(CodeGen, client, "$Id$")
 

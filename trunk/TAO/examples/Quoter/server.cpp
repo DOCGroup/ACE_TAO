@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "server.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(Quoter, server, "$Id$")
 
@@ -89,7 +90,7 @@ Quoter_Server::init (int argc,
       this->parse_args ();
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj = 
+      CORBA::Object_var obj =
         this->orb_manager_.orb()->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

@@ -2,7 +2,7 @@
 
 #include "Server_i.h"
 #include "Event_Types_impl.h"
-
+#include "tao/ORB_Core.h"
 
 Event_List_var alarms;
 // The list of events which caused an alarm. ('Singleton')

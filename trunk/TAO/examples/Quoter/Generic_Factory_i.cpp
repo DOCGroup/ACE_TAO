@@ -13,10 +13,11 @@
 //    Michael Kircher (mk1@cs.wustl.edu)
 // ============================================================================
 
-#include "ace/Get_Opt.h"
-#include "tao/corba.h"
 #include "Generic_Factory_i.h"
 #include "QuoterC.h"
+#include "tao/corba.h"
+#include "tao/ORB_Core.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID(Quoter, Generic_Factory_i, "$Id$")
 
@@ -51,7 +52,7 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
       // @@ FIXME Get a reference to the ORB.
       CORBA::ORB_ptr orb_ptr =
         TAO_ORB_Core_instance ()->orb ();
- 
+
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
         orb_ptr->resolve_initial_references ("NameService", ACE_TRY_ENV);

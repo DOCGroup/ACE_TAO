@@ -3,6 +3,7 @@
 #include "MCast.h"
 #include "Nil.h"
 #include "AVStreams_i.h"
+#include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "MCast.i"

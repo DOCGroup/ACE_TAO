@@ -1,10 +1,12 @@
 // $Id$
 
+#include "Client_i.h"
+
+#include "tao/debug.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS.h"
-
-#include "Client_i.h"
 
 ACE_RCSID(Time_Service, Client_i, "$Id$")
 

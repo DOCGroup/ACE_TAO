@@ -1,6 +1,8 @@
 // $Id$
 #include "Notify_Event.h"
 
+#include "tao/debug.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "Notify_Event.i"
 #endif /* __ACE_INLINE__ */

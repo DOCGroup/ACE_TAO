@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRUCTURE_AST_STRUCTURE_HH
 #define _AST_STRUCTURE_AST_STRUCTURE_HH
 
+#include "ace/Unbounded_Queue.h"
+
 // Representation of structure:
 //
 // NOTE: add (AST_ConcreteType *) is defined here because a structure

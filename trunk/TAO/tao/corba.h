@@ -33,51 +33,44 @@
 
 #include "tao/corbafwd.h"
 
-#include "tao/Environment.h"
-#include "tao/ORB.h"
-#include "tao/Exception.h"
-#include "tao/Any.h"
-#include "tao/NVList.h"
-#include "tao/Principal.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/Object.h"
-#include "tao/Remote_Object_Proxy_Impl.h"
-#include "tao/LocalObject.h"
+// The definitions are included in the same order as they are declared
+// in corbafwd.h
 #include "tao/Typecode.h"
+#include "tao/Any.h"
 
-#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Exception.h"
 
-#include "tao/PolicyC.h"
+#include "tao/NVList.h"
+
+#include "tao/Object.h"
+#include "tao/LocalObject.h"
+#include "tao/Principal.h"
+#include "tao/ORB.h"
+
 #include "tao/CurrentC.h"
-
-// TAO specific files, avoid them as much as possible.
-
-#include "tao/Stub.h"
-#include "tao/params.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/Invocation.h"
-
-#include "tao/Managed_Types.h"
-#include "tao/Sequence.h"
-#include "tao/Object_KeyC.h"
+#include "tao/BoundsC.h"
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
+#include "tao/PolicyC.h"
 #include "tao/Services.h"
-#include "tao/ObjectIDList.h"
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
 
-#include "tao/BoundsC.h"
-#include "tao/TAOC.h"
-#include "tao/MessagingC.h"
-#include "tao/StringSeqC.h"
-#include "tao/OctetSeqC.h"
+// TAO specific files, avoid them as much as possible.
+
+#include "tao/CDR.h"
+
+#include "tao/Sequence.h"
+#include "tao/Managed_Types.h"
+#include "tao/Object_KeyC.h"
+#include "tao/ObjectIDList.h"
+
+#include "tao/Remote_Object_Proxy_Impl.h"
 
 #include "tao/PortableInterceptor.h" /* This needs to remain visible. */
+#include "tao/StringSeqC.h"
+#include "tao/OctetSeqC.h"
 
 #include "tao/ClientRequestInfo.h"
 #include "tao/BiDirPolicyC.h"

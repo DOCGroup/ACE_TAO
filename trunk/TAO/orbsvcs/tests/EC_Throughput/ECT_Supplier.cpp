@@ -5,7 +5,9 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
+
 #include "tao/Timeprobe.h"
+#include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"

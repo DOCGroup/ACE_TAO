@@ -16,9 +16,12 @@
 //
 // ============================================================================
 
-#include "ace/Get_Opt.h"
-#include "tao/corba.h"
 #include "UDP_i.h"
+
+#include "tao/corba.h"
+#include "tao/debug.h"
+
+#include "ace/Get_Opt.h"
 
 ACE_RCSID(AMI, server, "$Id$")
 
@@ -173,7 +176,7 @@ main (int argc, char *argv[])
 
       client->activate ();
       */
-      
+
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

@@ -1,8 +1,9 @@
 // $Id$
 
+#include "testC.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "testC.h"
 
 ACE_RCSID(DSI_Gateway, client, "$Id$")
 

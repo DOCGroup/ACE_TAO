@@ -2,6 +2,7 @@
 
 
 #include "Protocol_Factory.h"
+#include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 
 // TAO_AV_Flow_Protocol_Factory

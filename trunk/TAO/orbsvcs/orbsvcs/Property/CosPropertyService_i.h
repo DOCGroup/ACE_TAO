@@ -27,6 +27,8 @@
 #include "orbsvcs/Property/property_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 
+#include "ace/Hash_Map_Manager.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined (_MSC_VER)

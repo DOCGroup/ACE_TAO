@@ -1,7 +1,8 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
 #include "ping_i.h"
+#include "tao/debug.h"
+#include "ace/Get_Opt.h"
 
 ACE_RCSID(Faults, server, "$Id$")
 

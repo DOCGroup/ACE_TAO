@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/Auto_Ptr.h"
 #include "Notify_SupplierAdmin_i.h"
 #include "Notify_ProxyPushConsumer_i.h"
 #include "Notify_StructuredProxyPushConsumer_i.h"
@@ -10,6 +9,10 @@
 #include "Notify_POA_Factory.h"
 #include "Notify_Factory.h"
 #include "Notify_Event_Manager.h"
+
+#include "tao/debug.h"
+
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Notify, Notify_SupplierAdmin_i, "$Id$")
 

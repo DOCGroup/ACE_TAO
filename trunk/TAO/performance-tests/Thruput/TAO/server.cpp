@@ -14,10 +14,12 @@
 //
 // ============================================================================
 
+#include "ttcp_i.h"
+
+#include "tao/debug.h"
+
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
-
-#include "ttcp_i.h"
 
 ACE_RCSID(TAO, server, "$Id$")
 

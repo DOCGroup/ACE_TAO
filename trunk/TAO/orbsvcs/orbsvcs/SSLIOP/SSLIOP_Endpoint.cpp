@@ -5,7 +5,6 @@
 #include "SSLIOP_Endpoint.h"
 #include "SSLIOP_Connection_Handler.h"
 #include "tao/IIOP_Endpoint.h"
-#include "tao/debug.h"
 
 ACE_RCSID(tao, SSLIOP_Endpoint, "$Id$")
 

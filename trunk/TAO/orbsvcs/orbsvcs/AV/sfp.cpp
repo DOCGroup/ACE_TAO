@@ -3,6 +3,8 @@
 #include "sfp.h"
 #include "ace/ARGV.h"
 
+#include "tao/debug.h"
+
 // default arguments to pass to use for the ORB
 const char *TAO_SFP_Base::TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
 
@@ -639,8 +641,8 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
   // EOF.
   if (n == 0)
     {
-      if (TAO_orbdebug)
-        if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
                     "TAO: (%P|%t) GIOP::send_request () "
                     "EOF, closing conn:\n"));
       return -1;

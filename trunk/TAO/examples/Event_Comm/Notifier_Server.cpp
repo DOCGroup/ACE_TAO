@@ -1,5 +1,9 @@
+// $Id$
+
 #include "Notifier_Server.h"
 #include "Event_CommC.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(Echo, Server_i, "$Id$")
 

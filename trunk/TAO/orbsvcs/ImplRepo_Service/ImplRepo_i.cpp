@@ -6,8 +6,12 @@
 #include "Locator.h"
 #include "Iterator.h"
 #include "Options.h"
+
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/ORB_Core.h"
+#include "tao/MProfile.h"
+
 #include "ace/Auto_Ptr.h"
 
 const char *
@@ -189,7 +193,7 @@ ImplRepo_i::activate_server_i (const char *server,
       // Make sure the activation allows us to start it up.
       if (activation == ImplementationRepository::MANUAL && check_startup)
         ACE_THROW_RETURN (CORBA::TRANSIENT (
-            CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 
+            CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE,
                                                     0),
             CORBA::COMPLETED_NO),
           "");
@@ -679,7 +683,7 @@ ImplRepo_i::server_is_running (const char *server,
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
 
-  if (profile) 
+  if (profile)
     {
       new_location = profile->to_string (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
@@ -886,7 +890,7 @@ ImplRepo_i::init (CORBA::Environment &ACE_TRY_ENV)
 
 /**
  * First, figure out if we should set up a multicast handler (based on command
- * line settings) and which port to set it up (based on the environment, 
+ * line settings) and which port to set it up (based on the environment,
  * command line, or the default IMPLREPOSERVICE port).  Then register the
  * handler with the @param reactor.
  *
@@ -898,7 +902,7 @@ ImplRepo_i::setup_multicast (ACE_Reactor *reactor)
 {
   ACE_ASSERT (reactor);
 #if defined (ACE_HAS_IP_MULTICAST)
-  if (!OPTIONS::instance ()->multicast ()) 
+  if (!OPTIONS::instance ()->multicast ())
     {
       if (OPTIONS::instance ()->debug () > 0)
         ACE_DEBUG ((LM_DEBUG,

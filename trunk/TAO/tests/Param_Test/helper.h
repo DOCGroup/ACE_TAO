@@ -22,6 +22,7 @@
 
 #include "param_testCli.h"
 #include "tao/DynamicInterface/Request.h"
+#include "ace/Singleton.h"
 
 class Generator
 {
@@ -46,4 +47,5 @@ public:
 };
 
 typedef ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX> GENERATOR;
+
 #endif /* HELPER_H */

@@ -1,5 +1,5 @@
 // $Id$
-#include "ace/Dynamic_Service.h"
+
 #include "AVStreams_i.h"
 #include "sfp.h"
 #include "MCast.h"
@@ -10,6 +10,10 @@
 #include "TCP.h"
 #include "FlowSpec_Entry.h"
 #include "AV_Core.h"
+
+#include "tao/debug.h"
+
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Transport.i"
@@ -58,10 +62,10 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       ACE_Addr *address = entry->address ();
       const char *flow_protocol = entry->flow_protocol_str ();
       const char *transport_protocol = entry->carrier_protocol_str ();
-  
+
       if (ACE_OS::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
-      
+
       if (address == 0)
         {
           // Protocol was specified without an endpoint.  According to
@@ -73,7 +77,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Protocol was specified without an endpoint\n"),
                             -1);
-        
+
         }
       else
         {
@@ -91,13 +95,13 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                   // for this transport already and hence we can reuse it.
                   TAO_AV_TransportFactorySetItor transport_factory_end =
                     av_core->transport_factories ()->end ();
-                  
+
                   for (TAO_AV_TransportFactorySetItor transport_factory =
                          av_core->transport_factories ()->begin ();
                        transport_factory != transport_factory_end;
                        ++transport_factory)
                     {
-                      
+
                       if ((*transport_factory)->factory ()->match_protocol (transport_protocol))
                         {
                           TAO_AV_Connector *connector =
@@ -134,7 +138,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
                   if (control_factory_name != 0)
                     {
-                    
+
                       TAO_AV_Flow_ProtocolFactorySetItor control_factory_end =
                         av_core->flow_protocol_factories ()->end ();
 
@@ -265,13 +269,13 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                 TAO_AV_Core *av_core,
                                 TAO_AV_FlowSpecSet &flow_spec_set)
 {
-  if (TAO_debug_level > 0) 
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_AV_Acceptor_Registry::open"));
 
-  TAO_AV_FlowSpecSetItor last_flowspec 
+  TAO_AV_FlowSpecSetItor last_flowspec
     = flow_spec_set.end ();
-  
+
   for (TAO_AV_FlowSpecSetItor flow_spec = flow_spec_set.begin ();
        flow_spec != last_flowspec;
        ++flow_spec)
@@ -280,15 +284,15 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       ACE_Addr *address = entry->address ();
       const char *flow_protocol = entry->flow_protocol_str ();
       const char *transport_protocol = entry->carrier_protocol_str ();
-  
+
       if (ACE_OS::strcmp (flow_protocol,"") == 0)
         flow_protocol = transport_protocol;
-      
+
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
                                            "TAO_AV_Acceptor_Registry::protocol for flow %s is %d",
                                            entry->flowname (),
                                            transport_protocol));
-      
+
       if (address == 0)
         {
           this->open_default (endpoint,av_core, entry);
@@ -435,7 +439,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                         TAO_AV_Core *av_core,
                                         TAO_FlowSpec_Entry *entry)
 {
-  if (TAO_debug_level > 0) 
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_AV_Acceptor_Registry::open_default "));
 
@@ -452,12 +456,12 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
     flow_protocol = transport_protocol;
 
   // loop through loaded protocols looking for protocol_prefix
-  TAO_AV_Flow_ProtocolFactorySetItor flow_factory 
+  TAO_AV_Flow_ProtocolFactorySetItor flow_factory
     = av_core->flow_protocol_factories ()->begin ();
-  
-  TAO_AV_TransportFactorySetItor transport_factory 
+
+  TAO_AV_TransportFactorySetItor transport_factory
     = av_core->transport_factories ()->begin ();
-  
+
   for (;
        flow_factory != flow_factory_end;
        ++flow_factory)
@@ -467,7 +471,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
           // If we have no matching protocol then keep searching
           // for one until the entire list of protocols has been
           // searched.
-          
+
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
                         "TAO (%P|%t) Unable to match protocol prefix "
@@ -487,7 +491,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                   // If we have no matching protocol then keep searching
                   // for one until the entire list of protocols has been
                   // searched.
-                  
+
                   if (TAO_debug_level > 0)
                     ACE_ERROR ((LM_ERROR,
                                 "TAO (%P|%t) Unable to match protocol prefix "
@@ -495,13 +499,13 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                 flow_protocol));
                   continue;
                 }
-              
-              
-              
+
+
+
               // got it, make an acceptor
               TAO_AV_Acceptor *acceptor =
                 (*transport_factory)->factory ()->make_acceptor ();
-              
+
               if (acceptor == 0)
                 {
                   if (TAO_debug_level > 0)
@@ -511,7 +515,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                 transport_protocol));
                   continue;
                 }
-              
+
               if (acceptor->open_default (endpoint,
                                           av_core,
                                           entry,
@@ -524,7 +528,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                                 (*transport_factory)->name ().c_str (), ""));
                   continue;
                 }
-              
+
               this->acceptors_.insert (acceptor);
             }
         }
@@ -536,7 +540,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                     "TAO (%P%t) cannot create any default acceptor\n"));
       return -1;
     }
-  
+
   return 0;
 }
 

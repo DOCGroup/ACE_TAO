@@ -18,8 +18,11 @@
 //
 // ============================================================================
 
-#include "ace/Read_Buffer.h"
 #include "CC_client.h"
+
+#include "tao/debug.h"
+
+#include "ace/Read_Buffer.h"
 
 ACE_RCSID(Concurrency, CC_client, "$Id$")
 

@@ -2,6 +2,7 @@
 
 #include "Policy.h"
 #include "FlowSpec_Entry.h"
+#include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "Policy.i"

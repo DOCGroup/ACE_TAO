@@ -23,7 +23,7 @@
 
 #include "PortableInterceptorC.h"
 #include "TAO_Singleton.h"
-#include "ace/Containers_T.h"
+#include "ace/Array_Base.h"
 
 /**
  * @class TAO_ORBInitializer_Registry

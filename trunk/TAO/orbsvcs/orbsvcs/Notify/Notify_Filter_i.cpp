@@ -1,8 +1,11 @@
 /* -*- C++ -*- $Id$ */
 
-#include "ace/Auto_Ptr.h"
 #include "Notify_Filter_i.h"
 #include "Notify_Constraint_Visitors.h"
+
+#include "tao/debug.h"
+
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Notify, Notify_Filter_i, "$Id$")
 

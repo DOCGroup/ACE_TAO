@@ -5,6 +5,8 @@
 #include "TAO_TIO.h"
 #include "TAO_UTO.h"
 
+#include "tao/ORB_Core.h"
+
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
                                                 int timer_value_usecs,

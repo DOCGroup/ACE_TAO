@@ -1,6 +1,7 @@
 // $Id$
 
 #include "client.h"
+#include "tao/debug.h"
 
 
 
@@ -91,7 +92,7 @@ CORBA::Boolean
 ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &/*the_spec*/)
 {
   ACE_INET_Addr addr (GLOBALS::instance ()->port_, GLOBALS::instance ()->hostname_);
-  
+
   if (this->acceptor_.open (addr,
                             TAO_ORB_Core_instance ()->reactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -231,18 +232,18 @@ Client::svc (void)
                           -1);
           break;
         }
-      
+
       // activate the client MMDevice with the ORB
       this->poa_->activate_object (this->client_mmdevice_,
                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       //Activate POA Manager
       PortableServer::POAManager_var mgr
         = this->poa_->the_POAManager ();
-      
+
       mgr->activate ();
-      
+
       if (this->bind_to_server () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -258,10 +259,10 @@ Client::svc (void)
       ACE_TRY_CHECK;
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
-      
-      ACE_DEBUG ((LM_DEBUG, 
-                  "Host %d ,Port %s\n", 
-                  GLOBALS::instance ()->port_, GLOBALS::instance ()->hostname_)); 
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Host %d ,Port %s\n",
+                  GLOBALS::instance ()->port_, GLOBALS::instance ()->hostname_));
 
       ACE_INET_Addr addr (GLOBALS::instance ()->port_,
                           GLOBALS::instance ()->hostname_);
@@ -269,12 +270,12 @@ Client::svc (void)
       char buf [BUFSIZ];
       addr.addr_to_string (buf, BUFSIZ);
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Client Svc %s\n",
                   buf));
-      
+
       AVStreams::flowSpec flow_spec (0);
-      
+
       timer.start ();
       this->streamctrl_.bind_devs (this->client_mmdevice_->_this (),
                                    this->server_mmdevice_.in (),
@@ -287,10 +288,10 @@ Client::svc (void)
 
       long time_taken = tv1.sec () + tv1.usec () /1000000;
       tv1.dump ();
-      
+
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)time taken for stream setup is %ld \n",
                   time_taken ));
-      
+
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
       int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
       int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
@@ -369,11 +370,11 @@ Client::bind_to_server (void)
 
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
-      CORBA::Object_var server_mmdevice_obj 
+      CORBA::Object_var server_mmdevice_obj
         = my_name_client_->resolve (server_mmdevice_name,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       this->server_mmdevice_ =
         AVStreams::MMDevice::_narrow (server_mmdevice_obj.in (),
                                       ACE_TRY_ENV);
@@ -456,13 +457,13 @@ main (int argc, char **argv)
 {
 
   //TAO_debug_level++;
-  
+
    if (GLOBALS::instance ()->parse_args (argc, argv) == -1)
     return -1;
-  
+
   GLOBALS::instance ()->thread_count_ = 1;
-  
-  // Preliminary argument processing. 
+
+  // Preliminary argument processing.
   int i;
   for (i=0;i< argc;i++)
     {
@@ -472,21 +473,21 @@ main (int argc, char **argv)
           ACE_OS::atoi (argv[i+1]);
     }
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
-  
+
   CORBA::Object_var obj
     = orb->resolve_initial_references ("RootPOA");
-  
+
   PortableServer::POA_var poa
     = PortableServer::POA::_narrow (obj.in ());
-  
+
   //Activate POA Manager
   PortableServer::POAManager_var mgr
     = poa->the_POAManager ();
-  
+
   mgr->activate ();
-  
+
   for (i = 0; i < GLOBALS::instance ()->thread_count_; i++)
     {
       Client* client;
@@ -495,7 +496,7 @@ main (int argc, char **argv)
                               poa.in (),
                               i),
                       -1);
-      
+
       if (client->activate (THR_BOUND) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error in activate: %p",
@@ -520,5 +521,5 @@ template class ACE_Singleton<Globals,TAO_SYNCH_MUTEX>;
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Singleton <Globals,TAO_SYNCH_MUTEX> 
+#pragma instantiate ACE_Singleton <Globals,TAO_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

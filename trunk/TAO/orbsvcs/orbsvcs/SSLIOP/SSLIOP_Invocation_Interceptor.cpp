@@ -4,6 +4,8 @@
 
 #include "SSLIOP_Invocation_Interceptor.h"
 
+#include "tao/debug.h"
+
 // #include <openssl/x509.h>   // @@ For debugging code below
 
 ACE_RCSID (TAO_SSLIOP, SSLIOP_Invocation_Interceptor, "$Id$")

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers_T.h"
+#include "ace/Unbounded_Queue.h"
 #include "tao/Any.h"
 
 class TAO_InputCDR;

@@ -5,8 +5,8 @@
 /**
  *  @file    FlowSpec_Entry.h
  *
- *  $Id$ 
- *  
+ *  $Id$
+ *
  *  @author  Nagarajan Surendran <naga@cs.wustl.edu>
  *
  */
@@ -19,6 +19,7 @@
 #include "orbsvcs/AV/AV_export.h"
 #include "AV_Core.h"
 #include "ace/Addr.h"
+#include "ace/Containers.h"
 
 /**
  * @class TAO_Tokenizer
@@ -58,7 +59,7 @@ class TAO_AV_Protocol_Object;
 
 /**
  * @class TAO_FlowSpec_Entry
- * @brief  A helper entry class in the flow spec sequence passed to 
+ * @brief  A helper entry class in the flow spec sequence passed to
  *         bind_devs.
  */
 class TAO_AV_Export TAO_FlowSpec_Entry

@@ -16,6 +16,8 @@
 // ==================================================
 
 #include "testS.h"
+#include "tao/ORB_Core.h"
+#include "tao/Server_Strategy_Factory.h"
 
 ACE_RCSID(Identity, Identity, "$Id$")
 

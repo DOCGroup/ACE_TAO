@@ -1,6 +1,7 @@
 // $Id$
 
 #include "nestea_client_i.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
@@ -54,9 +55,9 @@ Nestea_Client_i::run ()
 {
   this->server_->drink (40);
   this->server_->drink (100);
-  
+
   ACE_DEBUG ((LM_DEBUG, "Cans: %d\n"
-                        "Praise: %s\n", 
+                        "Praise: %s\n",
                         this->server_->bookshelf_size (),
                         this->server_->get_praise ()));
 
@@ -64,7 +65,7 @@ Nestea_Client_i::run ()
   this->server_->crush (200);
 
   ACE_DEBUG ((LM_DEBUG, "Cans: %d\n"
-                        "Praise: %s\n", 
+                        "Praise: %s\n",
                         this->server_->bookshelf_size (),
                         this->server_->get_praise ()));
 

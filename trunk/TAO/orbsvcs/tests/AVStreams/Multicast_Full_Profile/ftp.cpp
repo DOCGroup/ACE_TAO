@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ftp.h"
+#include "tao/debug.h"
 
 FTP_Client_Callback::FTP_Client_Callback (void)
   :count_ (0)
@@ -251,7 +252,7 @@ Client::init (int argc,char **argv)
       this->parse_args (this->argc_, this->argv_);
 
       ACE_DEBUG ((LM_DEBUG, "Parsed Address TWO%s\n", this->address_));
-      
+
       ACE_NEW_RETURN (this->fdev_,
                       FTP_Client_FDev,
                       -1);
@@ -337,7 +338,7 @@ Client::run (void)
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Suuceessful TWO\n"));
-      
+
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs for mmdevice 1 failed\n"),-1);
       ACE_TRY_CHECK;

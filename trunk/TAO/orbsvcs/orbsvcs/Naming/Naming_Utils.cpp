@@ -4,7 +4,12 @@
 #include "Transient_Naming_Context.h"
 #include "Persistent_Context_Index.h"
 #include "orbsvcs/CosNamingC.h"
+
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+
 #include "tao/IORTable/IORTable.h"
+
 #include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"

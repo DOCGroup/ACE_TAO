@@ -270,24 +270,6 @@ public:
     DIRECT
   };
 
-  enum TAO_Collocation_Strategies
-  {
-    /// i.e no collocation.
-    REMOTE_STRATEGY,
-
-    /// Calls to the collocated object are forwarded by the POA.
-    THRU_POA_STRATEGY,
-
-    /// Calls to the collocated object are made directly to its
-    /// servant.
-    DIRECT_STRATEGY,
-
-    /// This value should always be the last value in the enumeration.
-    /// It provides the count for the number of collocation
-    /// strategies.
-    COLLOCATION_STRATEGIES_NUM
-  };
-
   /**
    * This method returns the right collocation strategy, if any,
    * to be used to perform a method invocation on the given object.
@@ -295,7 +277,7 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
-  static TAO_Collocation_Strategies collocation_strategy (
+  static int collocation_strategy (
     CORBA::Object_ptr object);
   //@}
 

@@ -2,6 +2,7 @@
 
 #include "airplane_i.h"
 #include "tao/corba.h"
+#include "tao/debug.h"
 
 ACE_RCSID(ImplRepo, airplane_i, "$Id$")
 
@@ -30,7 +31,7 @@ Airplane_i::get_plane (CORBA::Environment &)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Airplane_i::get_plane\n"));
-  
+
   switch (ACE_OS::rand () % 24)
     {
     case 0:
@@ -82,6 +83,6 @@ Airplane_i::get_plane (CORBA::Environment &)
     case 23:
       return CORBA::string_dup ("Tumbler, page 138");
     }
-  
+
   return 0;
 }

@@ -5,6 +5,8 @@
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 
+#include "tao/debug.h"
+
 #define QUERY_LANG_SUPPORTED_BY_LOG "TCL"
 
 Log_i::Log_i (DsLogAdmin::LogMgr_ptr factory,

@@ -20,11 +20,14 @@
 
 
 #if defined(ACE_HAS_QT)
+
+#include "tao/qt_resource.h"
 #include <qapplication.h>
 #include <qobject.h>
+
 class LCD_Display_imp : public QObject,
                         public POA_LCD_Display
-                        
+
 {
   Q_OBJECT
   // = TITLE
@@ -41,7 +44,7 @@ public:
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void send_val (CORBA::Long val, 
+  void send_val (CORBA::Long val,
                  CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

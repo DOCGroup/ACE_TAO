@@ -2,6 +2,7 @@
 
 #include "server.h"
 #include "tao/Timeprobe.h"
+#include "tao/debug.h"
 
 ACE_RCSID(benchmark, server, "$Id$")
 
