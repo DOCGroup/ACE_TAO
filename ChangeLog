@@ -1,7 +1,15 @@
+Thu Jun 27 16:50:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.i: Moved common code in get_socket_event_info ()
+	  to a new method clear_handle_read_set () and simplified the code
+	  in get_notify_handle () so that it improves readability.
+
 Thu Jun 27 20:26:33 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* tests/DLL_Test.cpp: Define retval before preprocessor checks to fix
-	  Lynx build problem.
+	* tests/DLL_Test.cpp: Define retval before preprocessor checks to
+	  fix Lynx build problem.
 
 Thu Jun 27 14:32:50 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 

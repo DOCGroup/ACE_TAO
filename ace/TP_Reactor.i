@@ -91,3 +91,11 @@ ACE_INLINE void
 ACE_TP_Reactor::no_op_sleep_hook (void *)
 {
 }
+
+ACE_INLINE void
+ACE_TP_Reactor::clear_handle_read_set (ACE_HANDLE handle)
+{
+  this->ready_set_.wr_mask_.clr_bit (handle);
+  this->ready_set_.ex_mask_.clr_bit (handle);
+  this->ready_set_.rd_mask_.clr_bit (handle);
+}
