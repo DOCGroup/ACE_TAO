@@ -73,6 +73,7 @@ project (NodeAppTest_client) : ciao_server_dnc {
  after += NodeAppTest_RoundTrip_exec
  libs += NodeAppTest_RoundTrip_stub
  exename += client
+ requires += dnc
 
  IDL_Files {
  }
