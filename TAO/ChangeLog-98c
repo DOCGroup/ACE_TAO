@@ -1,3 +1,11 @@
+Fri Apr  3 18:40:49 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Minor changes for
+ 	Chorus.  Cleanup code.
+
 Fri Apr  3 18:39:21 1998  Steve Huston  <shuston@riverace.com>
 
 	* tests/POA/On_Demand_Activation/Makefile: Changed LSRC to SRC to
