@@ -25,11 +25,11 @@ $ES = Process::Create ("..".$DIR_SEPARATOR.
 
 sleep $sleeptime;
 
-$C = Process::Create ("ECT_Consumer".$Process::EXE_EXT);
+$C = Process::Create ($EXEPREFIX."ECT_Consumer".$Process::EXE_EXT);
 
 sleep $sleeptime;
 
-$S = Process::Create ("ECT_Supplier".$Process::EXE_EXT);
+$S = Process::Create ($EXEPREFIX."ECT_Supplier".$Process::EXE_EXT);
 
 $C->Wait ();
 $S->Wait ();

@@ -16,7 +16,7 @@ $sleeptime = 3;
 sub service
 {
   my $args = "";
-  my $prog = "$tao_root/orbsvcs/Logging_Service/Logging_Service"
+  my $prog = $EXEPREFIX."$tao_root/orbsvcs/Logging_Service/Logging_Service"
       .$Process::EXE_EXT;    
   $SV = Process::Create ($prog, $args);
 }
@@ -25,7 +25,7 @@ sub service
 sub test
 {
   my $args = "";
-  my $prog = "Logging_Test".$Process::EXE_EXT;
+  my $prog = $EXEPREFIX."Logging_Test".$Process::EXE_EXT;
     
   system ("$prog $args");
 }

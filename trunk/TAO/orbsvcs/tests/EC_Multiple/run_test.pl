@@ -16,7 +16,7 @@ $NS = Process::Create ("../../Naming_Service/Naming_Service".
 sleep $sleeptime;
 
 # This is a very simple test, no multiple consumers and no gateways.
-$status = system ("EC_Multiple".$Process::EXE_EXT.
+$status = system ($EXEPREFIX."EC_Multiple".$Process::EXE_EXT.
 		  " -s local");
 
 $NS->Kill ();
