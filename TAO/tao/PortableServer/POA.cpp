@@ -3420,7 +3420,7 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
 #else
 
   ACE_UNUSED_ARG (orb_core);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

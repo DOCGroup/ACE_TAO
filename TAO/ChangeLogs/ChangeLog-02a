@@ -1,3 +1,9 @@
+Wed Apr 04 07:38:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Disable bogus Fuzz errors.
+
 Wed Apr  4 07:18:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Messaging.pidl:
