@@ -39,14 +39,15 @@ $client_args =
 if ($^O eq "MSWin32")
 {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf server.conf "
-            ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
+        "-n $iorfile1 -o $iorfile2 -b bands.nt -ORBSvcConf server.conf "
+            ."-ORBdebuglevel 1 -p 1 -w 3 "
+            ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=2 "
                 ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
-                    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
+                    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=6 ";
 
     $client_args =
         "-n file://$iorfile1 -o file://$iorfile2 -ORBSvcConf client.conf "
-            ."-a 76 -b 80 -c 64";
+            ."-a 4 -b 6 -c 3";
 }
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
