@@ -167,7 +167,8 @@ main (int argc, char *argv[])
       Client_Timer * task = new Client_Timer (orb->orb_core()->reactor());
       task->activate ();
 
-      orb->run (ACE_ENV_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       worker.wait ();
 
