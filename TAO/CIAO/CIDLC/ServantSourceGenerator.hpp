@@ -18,6 +18,7 @@ public:
                         string export_macro,
                         fs::path const& file);
 
+  virtual ~ServantSourceEmitter () {}
 
   virtual void
   pre (CCF::CIDL::SemanticGraph::TranslationUnit& u);

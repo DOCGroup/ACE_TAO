@@ -17,7 +17,8 @@ public:
                         CommandLine const& cl,
                         string export_macro,
                         fs::path const& file);
-
+                        
+  virtual ~ServantHeaderEmitter () {}
 
   virtual void
   pre (CCF::CIDL::SemanticGraph::TranslationUnit& u);
