@@ -44,14 +44,18 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Throw an overload exception
 
   ACE_DECLARE_NEW_CORBA_ENV;
-  // Throw an overload exception
-  Test::ServerOverload ts;
-  Test::AMH_RoundtripExceptionHolder holder (&ts);
+
+  Test::ServerOverload *ts = new Test::ServerOverload;
+
+  // Calee owns the memory now.  Need not delete 'ts'
+  Test::AMH_RoundtripExceptionHolder holder (ts);
 
   ACE_TRY
     {
+      ACE_DEBUG ((LM_DEBUG, "Throwing exception\n"));
       _tao_rh->test_method_excep (&holder ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
