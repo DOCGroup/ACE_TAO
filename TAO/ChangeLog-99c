@@ -1,181 +1,188 @@
+Mon Jun 07 11:51:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp
+          (svc,cube_octet,do_test): added timestamps and an
+          errno printout, for debugging purposes.  The errno
+          printout should be removed later.
+
 Mon Jun 07 10:43:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/default_resource.cpp (TAO_Allocated_Resources): Moved the
-	  destruction of the Reactor before the destruction of the
-	  allocators.  The handlers deleted when the Reactors die access
-	  these allocators.  Thanks to Carlos for helping with this.
+        * tao/default_resource.cpp (TAO_Allocated_Resources): Moved the
+          destruction of the Reactor before the destruction of the
+          allocators.  The handlers deleted when the Reactors die access
+          these allocators.  Thanks to Carlos for helping with this.
 
 Mon Jun  7 01:11:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/POA/DSI/client.cpp (main): Corrected an overly
- 	  aggresive removal of "const char *".  Thanks to David for
- 	  reporting this.
+        * examples/POA/DSI/client.cpp (main): Corrected an overly
+          aggresive removal of "const char *".  Thanks to David for
+          reporting this.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Context.h: Added default
- 	  CORBA::Environment & = TAO_default_environment() calls.  Thanks
- 	  to Frank Buschmann for reporting this.
+        * orbsvcs/orbsvcs/Naming/Naming_Context.h: Added default
+          CORBA::Environment & = TAO_default_environment() calls.  Thanks
+          to Frank Buschmann for reporting this.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h,
- 	  orbsvcs/orbsvcs/Event/EC_Event_Channel.h: Added default
- 	  CORBA::Environment & = TAO_default_environment() calls.  Thanks
- 	  to J. Russell Noseworthy <rnosewor@objectsciences.com> for
- 	  catching this.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h,
+          orbsvcs/orbsvcs/Event/EC_Event_Channel.h: Added default
+          CORBA::Environment & = TAO_default_environment() calls.  Thanks
+          to J. Russell Noseworthy <rnosewor@objectsciences.com> for
+          catching this.
 
 Sun Jun 06 23:17:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POAC: Changed <InvalidPolicy::slot> back to
-	  <InvalidPolicy::index>.  We can't rename this since it is
-	  specified in the CORBA spec.
+        * tao/POAC: Changed <InvalidPolicy::slot> back to
+          <InvalidPolicy::index>.  We can't rename this since it is
+          specified in the CORBA spec.
 
-	* tao/GIOP.cpp (process_server_locate): Initialized <status> to
-	  TAO_GIOP_UNKNOWN_OBJECT. This is a safe initial value and will
-	  prevent the "might be used uninitialized in this function"
-	  warning.
+        * tao/GIOP.cpp (process_server_locate): Initialized <status> to
+          TAO_GIOP_UNKNOWN_OBJECT. This is a safe initial value and will
+          prevent the "might be used uninitialized in this function"
+          warning.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed the method
-	  such that when we are not looking for an existing Naming Service
-	  and we are simply become one, we don't print extra erroneous
-	  debug messages.  Thanks to Gul Onural <Gul_Onural@Mitel.COM> for
-	  pointing this out.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed the method
+          such that when we are not looking for an existing Naming Service
+          and we are simply become one, we don't print extra erroneous
+          debug messages.  Thanks to Gul Onural <Gul_Onural@Mitel.COM> for
+          pointing this out.
 
 Sun Jun  6 22:09:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	  Fixed duplicate template instantiations, IRIX does not like
-	  that.
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+          Fixed duplicate template instantiations, IRIX does not like
+          that.
 
 Sun Jun 06 21:42:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  A couple of .idl file where not re-compiled when the DIL
-	  compiler changed, fixed the dependencies.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          A couple of .idl file where not re-compiled when the DIL
+          compiler changed, fixed the dependencies.
 
 Sun Jun  6 20:25:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/ast/ast_generator.cpp:
-	* TAO_IDL/ast/ast_operation.cpp:
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_expression.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/be_include/be_expression.h:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/driver/drv_preproc.cpp:
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/include/ast_decl.h:
-	* TAO_IDL/include/ast_expression.h:
-	* TAO_IDL/include/ast_generator.h:
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/include/utl_error.h:
-	* TAO_IDL/include/utl_string.h:
-	* TAO_IDL/include/utl_strlist.h:
-	* TAO_IDL/util/utl_error.cpp:
-	* TAO_IDL/util/utl_global.cpp:
-	* TAO_IDL/util/utl_string.cpp:
-	* TAO_IDL/util/utl_strlist.cpp:
-	  Obliterated any references to 'String' this was just a macro
-	  that expanded to the UTL_String class, but was an endless sort
-	  of confusion with just a typedef for 'char*'
-	  Also cleaned up the use of UTL_Strings in the idl_global
-	  interface.
-	  This seems to have put the IDL compiler into usable state
-	  again.
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_error.h:
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/include/utl_strlist.h:
+        * TAO_IDL/util/utl_error.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+        * TAO_IDL/util/utl_strlist.cpp:
+          Obliterated any references to 'String' this was just a macro
+          that expanded to the UTL_String class, but was an endless sort
+          of confusion with just a typedef for 'char*'
+          Also cleaned up the use of UTL_Strings in the idl_global
+          interface.
+          This seems to have put the IDL compiler into usable state
+          again.
 
 Sun Jun  6 18:55:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp:
-	  Fixed several memory managment problems
+        * TAO_IDL/util/utl_global.cpp:
+          Fixed several memory managment problems
 
 Sun Jun  6 18:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/include/drv_extern.h:
-	* TAO_IDL/driver/drv_preproc.cpp:
-	  More constness fixes
+        * TAO_IDL/include/drv_extern.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+          More constness fixes
 
 Sun Jun  6 17:42:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.cpp:
-	  Fixed DRV_drive() it is taking a const char* now
+        * TAO_IDL/tao_idl.cpp:
+          Fixed DRV_drive() it is taking a const char* now
 
 Sun Jun  6 15:14:13 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* TAO_IDL/fe/keywords.dat: The type of keyword_ in
- 	  TAO_IDL_CPP_Keyword_Entry should be const char *.
+        * TAO_IDL/fe/keywords.dat: The type of keyword_ in
+          TAO_IDL_CPP_Keyword_Entry should be const char *.
 
-	* TAO_IDL: Fixed zillions of improper uses of non-const char *'s
- 	  that were reported by the new SunC++ 5.0 compiler.  Everything
- 	  should be "const-correct" now.  BTW, whoever wrote the Sun IDL
- 	  compiler clearly didn't understand the C++ const rules...
+        * TAO_IDL: Fixed zillions of improper uses of non-const char *'s
+          that were reported by the new SunC++ 5.0 compiler.  Everything
+          should be "const-correct" now.  BTW, whoever wrote the Sun IDL
+          compiler clearly didn't understand the C++ const rules...
 
 Sun Jun  6 17:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/GIOP.cpp:
-	  More @@ comments addressed.
+        * tao/GIOP.cpp:
+          More @@ comments addressed.
 
 Sun Jun  6 16:14:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/performance-tests/Pluggable/PP_Test_Client.h:
-	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp: Moved member
- 	  CORBA::ORB_var orb_ ahead of the other _vars in the
- 	  declaration/initialization order.
+        * TAO/performance-tests/Pluggable/PP_Test_Client.h:
+        * TAO/performance-tests/Pluggable/PP_Test_Client.cpp: Moved member
+          CORBA::ORB_var orb_ ahead of the other _vars in the
+          declaration/initialization order.
 
 Sun Jun  6 15:41:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h: Added comment for Any_var operator= (CORBA::Any_var).
+        * tao/Any.h: Added comment for Any_var operator= (CORBA::Any_var).
 
-	* tao/Any.cpp: Added checks for failure of memory allocation at
- 	  several places in the insertion and extraction operators.
+        * tao/Any.cpp: Added checks for failure of memory allocation at
+          several places in the insertion and extraction operators.
 
-	* tao/Context.h: Added comment to some member functions.
+        * tao/Context.h: Added comment to some member functions.
 
-	* tao/Stub.h: Cosmetic changes.
+        * tao/Stub.h: Cosmetic changes.
 
 Sun Jun  6 14:07:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/DynAny_Test/data.h:
-	* TAO/tests/DynAny_Test/data.cpp:
-	* TAO/tests/DynAny_Test/driver.h:
-	* TAO/tests/DynAny_Test/test_dynany.h:
-	* TAO/tests/DynAny_Test/test_dynany.cpp:
-	* TAO/tests/DynAny_Test/test_dynarray.h:
-	* TAO/tests/DynAny_Test/test_dynarray.cpp:
-	* TAO/tests/DynAny_Test/test_dynenum.h:
-	* TAO/tests/DynAny_Test/test_dynenum.cpp:
-	* TAO/tests/DynAny_Test/test_dynsequence.h:
-	* TAO/tests/DynAny_Test/test_dynsequence.cpp:
-	* TAO/tests/DynAny_Test/test_dynstruct.h:
-	* TAO/tests/DynAny_Test/test_dynstruct.cpp:
-	* TAO/tests/DynAny_Test/test_dynunion.h:
-	* TAO/tests/DynAny_Test/test_dynunion.cpp:
-	* TAO/tests/DynAny_Test/test_wrapper.h:
-	* TAO/tests/DynAny_Test/test_wrapper.cpp: Made CORBA::ORB_var the
- 	  first private member (declared and initialized) of any class
- 	  where it appears, and also other cosmetic changes.
+        * TAO/tests/DynAny_Test/data.h:
+        * TAO/tests/DynAny_Test/data.cpp:
+        * TAO/tests/DynAny_Test/driver.h:
+        * TAO/tests/DynAny_Test/test_dynany.h:
+        * TAO/tests/DynAny_Test/test_dynany.cpp:
+        * TAO/tests/DynAny_Test/test_dynarray.h:
+        * TAO/tests/DynAny_Test/test_dynarray.cpp:
+        * TAO/tests/DynAny_Test/test_dynenum.h:
+        * TAO/tests/DynAny_Test/test_dynenum.cpp:
+        * TAO/tests/DynAny_Test/test_dynsequence.h:
+        * TAO/tests/DynAny_Test/test_dynsequence.cpp:
+        * TAO/tests/DynAny_Test/test_dynstruct.h:
+        * TAO/tests/DynAny_Test/test_dynstruct.cpp:
+        * TAO/tests/DynAny_Test/test_dynunion.h:
+        * TAO/tests/DynAny_Test/test_dynunion.cpp:
+        * TAO/tests/DynAny_Test/test_wrapper.h:
+        * TAO/tests/DynAny_Test/test_wrapper.cpp: Made CORBA::ORB_var the
+          first private member (declared and initialized) of any class
+          where it appears, and also other cosmetic changes.
 
 Sun Jun  6 14:04:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Acceptor_Impl.h:
-	* tao/Environment.cpp:
-	* tao/GIOP.cpp:
-	* tao/Wait_Strategy.cpp:
-	* tao/GIOP.cpp: Addesses the @@ Carlos comments.
+        * tao/Acceptor_Impl.h:
+        * tao/Environment.cpp:
+        * tao/GIOP.cpp:
+        * tao/Wait_Strategy.cpp:
+        * tao/GIOP.cpp: Addesses the @@ Carlos comments.
 
-	* tao/IOP.pidl: Completed the IOP module definition
+        * tao/IOP.pidl: Completed the IOP module definition
 
 Sun Jun  6 13:32:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/GIOP.cpp: Fixed a typo in read_header.  Thanks to Jeff for
- 	  reporting this.
+        * tao/GIOP.cpp: Fixed a typo in read_header.  Thanks to Jeff for
+          reporting this.
 
-	* tao/GIOP.cpp (process_server_message): Fixed what appeared to be
- 	  an unbalanced '}' in the TAO_HAS_EXCEPTIONS block.
+        * tao/GIOP.cpp (process_server_message): Fixed what appeared to be
+          an unbalanced '}' in the TAO_HAS_EXCEPTIONS block.
 
 Sun Jun 06 12:54:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
