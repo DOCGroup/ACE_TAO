@@ -86,6 +86,11 @@ protected:
 
   /// Keeps track of whether we need to delete the queue.
   int delete_queue_;
+
+private:
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Activation_Queue &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
 };
 
 #if defined (__ACE_INLINE__)
