@@ -44,7 +44,6 @@ Globals::parse_args (int argc, char *argv[])
 
   while ((c = opts ()) != -1)
     {
-      //      ACE_DEBUG ((LM_DEBUG,"parse_args:%c ,",c));
       switch (c)
       {
       case 'm':
@@ -58,12 +57,14 @@ Globals::parse_args (int argc, char *argv[])
         break;
       case 'f':
         ACE_NEW_RETURN (ior_file,
-                        char[BUFSIZ],-1);
+                        char[BUFSIZ],
+                        -1);
         ACE_OS::strcpy (ior_file,
                         opts.optarg);
         break;
       case 'h':
-        ACE_OS::strcpy (hostname, opts.optarg);
+        ACE_OS::strcpy (hostname,
+                        opts.optarg);
         break;
       case 'p':
         base_port = ACE_OS::atoi (opts.optarg);
@@ -87,9 +88,11 @@ Globals::parse_args (int argc, char *argv[])
     }
 
   if (thread_per_rate == 1)
+    // @@ Naga, can you please make this a symbolic constant rather
+    // than the magic number "4"?!
     num_of_objs = 4;
 
-  // Indicates successful parsing of command line.
+  // Indicates successful parsing of the command-line.
   return 0;
 }
 
@@ -103,6 +106,7 @@ ACE_Sched_Priority
 MT_Priority::get_high_priority (void)
 {
   ACE_Sched_Priority high_priority;
+
 #if defined (VXWORKS)
   high_priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
@@ -123,18 +127,21 @@ MT_Priority::get_low_priority (u_int num_low_priority,
                                u_int use_multiple_priority)
 {
   ACE_Sched_Priority low_priority;
-  // Drop the priority
+
+  // Drop the priority.
   if (use_multiple_priority)
     {
       this->num_priorities_ = 0;
 
-      for (ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-                                                          ACE_SCOPE_THREAD);
+      for (ACE_Sched_Priority_Iterator priority_iterator 
+             (ACE_SCHED_FIFO, ACE_SCOPE_THREAD);
            priority_iterator.more ();
-          priority_iterator.next ())
+           priority_iterator.next ())
         this->num_priorities_ ++;
+
       // 1 priority is exclusive for the high priority client.
       this->num_priorities_ --;
+
       // Drop the priority, so that the priority of clients will
       // increase with increasing client number.
       for (u_int j = 0;
@@ -152,8 +159,8 @@ MT_Priority::get_low_priority (u_int num_low_priority,
       // test, so with this mechanism we assign priorities to groups
       // of threads when there are more threads than priorities.
       this->grain_ = num_low_priority / this->num_priorities_;
-      if (this->grain_ <= 0)
 
+      if (this->grain_ <= 0)
         this->grain_ = 1;
     }
   else

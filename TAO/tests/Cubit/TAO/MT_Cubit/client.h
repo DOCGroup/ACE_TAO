@@ -34,8 +34,7 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* defined (VME_DRIVER) */
 
-class Client_i
-  :public virtual MT_Priority
+class Client_i : public virtual MT_Priority
 {
 public:
   Client_i (void);

@@ -60,6 +60,9 @@ public:
 
 typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
 
+// @@ Naga, can you please split this class into a separate file
+// called Cubit_Task.h?  It looks odd in a file called server.h!
+
 class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
 {
   // = TITLE
