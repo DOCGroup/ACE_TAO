@@ -117,22 +117,9 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& TAO_IN_ENV)
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
 
-          CosTrading::TypeRepository_var remote_repos;
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-          CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
-          CORBA::Object_var obj = orb->string_to_object (link_info->target, TAO_TRY_ENV);
+          CosTrading::TypeRepository_var remote_repos = 
+            link_info->target->type_repos (TAO_TRY_ENV);
           TAO_CHECK_ENV;
-
-          CosTrading::Lookup_ptr remote_lookup =
-            CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          remote_repos = remote_lookup->type_repos (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-#else
-          remote_repos = link_info->target->type_repos (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
           CosTradingRepos::ServiceTypeRepository_ptr str =
             CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in (), TAO_TRY_ENV);
