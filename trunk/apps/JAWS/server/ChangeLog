@@ -1,3 +1,12 @@
+Sat May 31 13:34:14 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* *.h, *.cpp: Changed include lines from "JAWS/server/..." to
+	  "apps/JAWS/server/..." to fix an error reported by Rob Payne
+	  <repayne@jeeves.net>.  This was really due to a bug in the
+	  platform_macros.GNU file not adding INCLDIRS to the CCFLAGS
+	  during compilation, but in the case other platforms have the
+	  same problem, changing the source is a better fix.
+
 Fri May 30 23:19:03 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* README: updated to better reflect the status of JAWS.
