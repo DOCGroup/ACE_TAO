@@ -23,9 +23,12 @@ TAO_NS_Batch_Buffering_Strategy::dequeue_batch (CosNotification::EventBatch& eve
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
   // if batch_size is infinite, simply dequeue everything available.
+
+  int pending = 0; // not used.
+
   if (this->batch_size_ == 0)
     {
-      return this->dequeue_available (event_batch);
+      return this->dequeue_available (event_batch, pending);
     }
   else
     {
@@ -43,7 +46,7 @@ TAO_NS_Batch_Buffering_Strategy::dequeue_batch (CosNotification::EventBatch& eve
 }
 
 int
-TAO_NS_Batch_Buffering_Strategy::dequeue_available (CosNotification::EventBatch& event_batch)
+TAO_NS_Batch_Buffering_Strategy::dequeue_available (CosNotification::EventBatch& event_batch, int &pending)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -51,6 +54,8 @@ TAO_NS_Batch_Buffering_Strategy::dequeue_available (CosNotification::EventBatch&
 
   if (this->batch_size_ != 0 && deq_count > this->batch_size_) // Restrict upto batch size.
     deq_count = this->batch_size_;
+
+  pending = this->msg_queue_.message_count () - deq_count;
 
   return this->dequeue_i (deq_count, event_batch);
 }

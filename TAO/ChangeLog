@@ -1,3 +1,56 @@
+Fri Jan 03 14:22:14 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/Notify_Service/Notify_Server.cpp:
+	  Moved the call to <init> to catch any resulting exceptions and
+	  exit gracefully.
+
+	The following changes are made to fix the crashes observed on the
+	scoreboard in the $TAO_ROOT/orbsvcs/tests/Notify/Sequence_Multi_Test.
+	Thanks to Irfan and Bala for helping to fix this problem.
+
+	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
+	  Changed the order of destruction of the Notify objects. The tree
+	  is destroyed bottom up. This ensures that proxy objects that
+	  refer to a valid parent during shutdown. 
+
+	* orbsvcs/orbsvcs/Notify/Method_Request.h:
+	* orbsvcs/orbsvcs/Notify/Method_Request.inl:
+	* orbsvcs/orbsvcs/Notify/Refcountable.h:
+	* orbsvcs/orbsvcs/Notify/Refcountable.inl:
+	  Moved the TAO_NS_Refcountable_Guard class from Method_Request.*
+	  files into Refcountable.* files.   
+
+	* orbsvcs/orbsvcs/Notify/Object.cpp:
+	  Moved the <worker_task_> and <proxy_poa_> data member shutdown
+	  from the destructor to the <shutdown> method.
+	
+	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
+	  Replaced the TAO_NS_Object_RefCount_Guard with
+	  TAO_NS_Refcountable_Guard.
+	
+	* orbsvcs/orbsvcs/Notify/Peer.cpp:
+	  Protect the Peer from being destroyed while it is dispatching
+	  updates by using a TAO_NS_Refcountable_Guard.
+	
+	* orbsvcs/orbsvcs/Notify/Types.h:
+	  Removed the TAO_NS_Object_RefCount_Guard class. We use
+	  TAO_NS_Refcountable_Guard instead.
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
+	  Modified the <dequeue_available> method to return the number of
+	  pending events.
+	
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+	  + Protect the call to the event batch <push> method with
+	  TAO_NS_Refcountable_Guard so that the proxy (and hence this
+	  peer) is not destroyed while the push is in progress.
+	  + Reset the pacing error on dispatch error so that we don't
+	  schedule a timer on an object that is about to be destroyed.
+	  + Schedule a timer in the <handle_timeout> method only if there
+	  are pending events.
+	
 Fri Jan  3 07:48:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/DynamicAny/DynamicAnyC.h:
