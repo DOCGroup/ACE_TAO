@@ -7,6 +7,9 @@ Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
 
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
+	* config-win32-common.h (ACE_HAS_TEMPLATE_SPECIALIZATION): Win32
+	  supports this option. Added to config file.
+
 	* ace: Removed tracing for the following to make things work with
  	  tracing on:
 	  
