@@ -34,7 +34,11 @@
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
@@ -191,71 +195,9 @@ CORBA::PolicyError::PolicyError (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr CORBA::PolicyError::_type (void) const
+CORBA::TypeCode_ptr CORBA::PolicyError::_tao_type (void) const
 {
   return ::CORBA::_tc_PolicyError;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_CORBA_PolicyError[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x4572726f), 
-  ACE_NTOHL (0x723a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/PolicyError:1.0
-    12,
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63794572), 
-  ACE_NTOHL (0x726f7200),  // name = PolicyError
-  1, // member count
-    7,
-  ACE_NTOHL (0x72656173), 
-  ACE_NTOHL (0x6f6e0000),  // name = reason
-    CORBA::tk_alias, // typecode kind for typedefs
-  72, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    38,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f506f), 
-    ACE_NTOHL (0x6c696379), 
-    ACE_NTOHL (0x4572726f), 
-    ACE_NTOHL (0x72436f64), 
-    ACE_NTOHL (0x653a312e), 
-    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/PolicyErrorCode:1.0
-        16,
-    ACE_NTOHL (0x506f6c69), 
-    ACE_NTOHL (0x63794572), 
-    ACE_NTOHL (0x726f7243), 
-    ACE_NTOHL (0x6f646500),  // name = PolicyErrorCode
-        CORBA::tk_short,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyError (
-    CORBA::tk_except,
-    sizeof (_oc_CORBA_PolicyError),
-    (char *) &_oc_CORBA_PolicyError,
-    0,
-    0
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_PolicyError =
-    &_tc_TAO_tc_CORBA_PolicyError;
 }
 
 // TAO_IDL - Generated from 
@@ -376,75 +318,9 @@ CORBA::InvalidPolicies::InvalidPolicies (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr CORBA::InvalidPolicies::_type (void) const
+CORBA::TypeCode_ptr CORBA::InvalidPolicies::_tao_type (void) const
 {
   return ::CORBA::_tc_InvalidPolicies;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_CORBA_InvalidPolicies[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f496e), 
-  ACE_NTOHL (0x76616c69), 
-  ACE_NTOHL (0x64506f6c), 
-  ACE_NTOHL (0x69636965), 
-  ACE_NTOHL (0x733a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/InvalidPolicies:1.0
-    16,
-  ACE_NTOHL (0x496e7661), 
-  ACE_NTOHL (0x6c696450), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x69657300),  // name = InvalidPolicies
-  1, // member count
-    8,
-  ACE_NTOHL (0x696e6469), 
-  ACE_NTOHL (0x63657300),  // name = indices
-    CORBA::tk_alias, // typecode kind for typedefs
-  76, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5553), 
-    ACE_NTOHL (0x686f7274), 
-    ACE_NTOHL (0x5365713a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/UShortSeq:1.0
-        10,
-    ACE_NTOHL (0x5553686f), 
-    ACE_NTOHL (0x72745365), 
-    ACE_NTOHL (0x71000000),  // name = UShortSeq
-        CORBA::tk_sequence, // typecode kind
-    12, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_ushort,
-
-      0U,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_InvalidPolicies (
-    CORBA::tk_except,
-    sizeof (_oc_CORBA_InvalidPolicies),
-    (char *) &_oc_CORBA_InvalidPolicies,
-    0,
-    0
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr const _tc_InvalidPolicies =
-    &_tc_TAO_tc_CORBA_InvalidPolicies;
 }
 
 // TAO_IDL - Generated from
@@ -1147,7 +1023,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

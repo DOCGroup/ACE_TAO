@@ -103,7 +103,7 @@ void CONV_FRAME::CodeSetIdSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 CONV_FRAME::CodeSetComponent::_tao_any_destructor (
@@ -116,7 +116,7 @@ CONV_FRAME::CodeSetComponent::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
@@ -129,7 +129,7 @@ CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 CONV_FRAME::CodeSetContext::_tao_any_destructor (
@@ -269,7 +269,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

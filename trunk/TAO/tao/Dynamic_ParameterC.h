@@ -43,6 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
+#include "tao/TypeCode_Constants.h"
 #include "tao/Any.h"
 #include "tao/VarOut_T.h"
 
@@ -138,7 +139,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter 
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "Dynamic_ParameterC.inl"

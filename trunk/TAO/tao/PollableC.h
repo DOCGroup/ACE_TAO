@@ -438,7 +438,7 @@ namespace CORBA
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual ::CORBA::Pollable_ptr poll (
+    virtual ::CORBA::Pollable_ptr get_ready_pollable (
         ::CORBA::ULong timeout
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
@@ -572,7 +572,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "PollableC.inl"

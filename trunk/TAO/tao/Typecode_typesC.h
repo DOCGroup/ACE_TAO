@@ -142,11 +142,11 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_ch.cpp:50
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, CORBA::TCKind);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TCKind &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "Typecode_typesC.inl"
