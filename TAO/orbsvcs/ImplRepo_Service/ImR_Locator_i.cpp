@@ -591,27 +591,45 @@ ImR_Locator_i::reregister_server (
       ACE_ENV_ARG_DECL )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+   ImplementationRepository::Administration_var admin_ref = 0;
+
   if (this->table_.current_size () != 1)
     {
-      // name of the activator that will do this activation.
-      ImplementationRepository::Administration_var admin_ref =
-        this->choose_activator_using_location (options.location
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      Table_Entry *next_entry = 0;
 
-      if (admin_ref.in () != 0)
+      for (Table_Iterator iterator (this->table_);
+           iterator.next (next_entry) != 0;
+           iterator.advance ())
         {
-          // Invoke the required operation on that reference.
-          admin_ref->reregister_server (server,
-                                        options
-                                        ACE_ENV_ARG_PARAMETER);
+          // name of the activator that will do this activation.
+          admin_ref =
+            this->helper_for_choosing_activators (server,
+                                                  next_entry->ext_id_.c_str ()
+                                                  ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          if (admin_ref.in () != 0)
+            {
+              // Invoke the required operation on that
+              admin_ref->reregister_server (server,
+                                            options
+                                            ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
         }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Couldnt get a reference to an activator during reregistering a server\n"));
-        }
+      ACE_ERROR ((LM_ERROR,
+                  "Couldnt get a reference to an activator at %s\n",
+                  next_entry->ext_id_.c_str ()));
+
+      ACE_THROW (ImplementationRepository::NotFound ());
+    }
+  else
+    {
+      // There is only one activator known to this locator.
+      this->default_admin_ref_->reregister_server (server,
+                                                   options
+                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 

@@ -661,7 +661,6 @@ TAO_IMR_Op_Activate::run (void)
     }
   ACE_CATCH (ImplementationRepository::CannotActivate, ex)
     {
-      cout << __FILE__ << __LINE__ << endl;
       ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n",
                             this->server_name_.c_str (),
                             ex.reason.in ()));
