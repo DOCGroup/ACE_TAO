@@ -16,7 +16,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
 #if (defined (ACE_WIN32) || defined (ACE_HAS_POWERPC_TIMER) || \
-     defined (ACE_HAS_ALPHA_TIMER)) && \
+     defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER)
 
 # include "ace/Synch.h"
@@ -29,14 +29,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1u;
   
 #else  /* ! (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
-             ACE_HAS_ALPHA_TIMER)  ||
+             ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
   // A scale_factor of 1000 converts nanosecond ticks to microseconds.
   // That is, on these platforms, 1 tick == 1 nanosecond.
   /* static */
   ACE_UINT32 ACE_High_Res_Timer::global_scale_factor_ = 1000u;
 #endif /* ! (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
-             ACE_HAS_ALPHA_TIMER)  ||
+             ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER)  ||
           ACE_HAS_HI_RES_TIMER */
 
 // This is used to tell if the global_scale_factor_ has been
@@ -151,7 +151,7 @@ ACE_UINT32
 ACE_High_Res_Timer::global_scale_factor (void)
 {
 #if (defined (ACE_WIN32) || defined (ACE_HAS_POWERPC_TIMER) || \
-     defined (ACE_HAS_ALPHA_TIMER)) && \
+     defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
     ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      defined (ghs) || defined (__GNUG__) || defined (__KCC))
@@ -195,7 +195,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
 
   ACE_High_Res_Timer::global_scale_factor_status_ = 1;
 #endif /* (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
-           ACE_HAS_ALPHA_TIMER) && \
+           ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER) && \
           ! ACE_HAS_HIGH_RES_TIMER &&
           ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
