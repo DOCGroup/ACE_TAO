@@ -4,8 +4,8 @@ Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_LACKS_MUTEXATTR_PSHARED.  Thanks to Chuck Gehr
           <GehrCR@LOUISVILLE.STORTEK.COM> for advising on this.
 
-        * ace/config-linux-lxpthreads.h: removed commented-out
-          ACE_LACKS_{COND,MUTEX}ATTR_PSHARED #defines.
+        * ace/config-linux-lxpthreads.h,config-lynxos.h: removed
+          commented-out ACE_LACKS_{COND,MUTEX}ATTR_PSHARED #defines.
 
         * ace/config-sunos5.5-{sunc++-4.x,g++}.h: removed
           commented-out ACE_LACKS_{COND,MUTEX}ATTR_PSHARED.  Enabled
