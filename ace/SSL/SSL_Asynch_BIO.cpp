@@ -1,5 +1,6 @@
 // -*- C++ -*-
 
+#include "ace/OS_NS_string.h"
 #include "SSL_Asynch_BIO.h"
 #include "SSL_Asynch_Stream.h"
 
