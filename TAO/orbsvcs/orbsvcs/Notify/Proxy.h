@@ -75,14 +75,6 @@ public:
       ACE_ENV_ARG_DECL
     );
 
-  /// Check if this event passes the admin and proxy filters.
-  CORBA::Boolean check_filters (
-      const TAO_Notify_Event_var &event,
-      TAO_Notify_FilterAdmin& parent_filter_admin,
-      CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
-      ACE_ENV_ARG_DECL
-    );
-
   /// Inform this proxy that the following types are being advertised.
   void types_changed (const TAO_Notify_EventTypeSeq& added,
                       const TAO_Notify_EventTypeSeq& removed

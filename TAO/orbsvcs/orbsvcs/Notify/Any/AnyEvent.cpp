@@ -22,18 +22,6 @@ TAO_Notify_AnyEvent_No_Copy::~TAO_Notify_AnyEvent_No_Copy ()
 {
 }
 
-TAO_Notify_Event*
-TAO_Notify_AnyEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
-{
-  TAO_Notify_Event* copy;
-
-  ACE_NEW_THROW_EX (copy,
-                    TAO_Notify_AnyEvent (*this->event_),
-                    CORBA::NO_MEMORY ());
-
-  return copy;
-}
-
 const TAO_Notify_EventType&
 TAO_Notify_AnyEvent_No_Copy::type (void) const
 {
@@ -98,6 +86,40 @@ TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSuppli
   forwarder->forward_any_no_filtering (*this->event_ ACE_ENV_ARG_PARAMETER);
 }
 
+void
+TAO_Notify_AnyEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
+{
+  static const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
+  cdr.write_octet (ANY_CODE);
+  cdr << (*this->event_);
+}
+
+//static
+TAO_Notify_AnyEvent *
+TAO_Notify_AnyEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
+{
+  TAO_Notify_AnyEvent * event = 0;
+  CORBA::Any body;
+  if (cdr >> body)
+  {
+    event = new TAO_Notify_AnyEvent (body);
+  }
+  return event;
+}
+
+const TAO_Notify_Event *
+TAO_Notify_AnyEvent_No_Copy::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER) const
+{
+  TAO_Notify_Event* copy;
+
+  ACE_NEW_THROW_EX (copy,
+                    TAO_Notify_AnyEvent (*this->event_),
+                    CORBA::NO_MEMORY ());
+
+  return copy;
+}
+
+
 /*****************************************************************************************************/
 
 TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
@@ -110,3 +132,10 @@ TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
 TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
 {
 }
+
+const TAO_Notify_Event *
+TAO_Notify_AnyEvent::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER) const
+{
+  return this;
+}
+

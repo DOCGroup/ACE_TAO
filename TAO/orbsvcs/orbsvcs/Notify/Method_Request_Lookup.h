@@ -23,14 +23,16 @@
 #include "Method_Request.h"
 #include "ProxyConsumer.h"
 #include "Consumer_Map.h"
-#include "Method_Request_Lookup_T.h"
+//#include "Method_Request_Lookup_T.h"
+#include "Method_Request_Lookup_Base.h"
 
 class TAO_Notify_ProxyConsumer;
-
+#if 0
 typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event_var
                                        , TAO_Notify_ProxyConsumer_Guard
                                        , const TAO_Notify_Event_var&
                                        , TAO_Notify_ProxyConsumer*>  TAO_Notify_Method_Request_Lookup_Base;
+#endif
 
 /**
  * @class TAO_Notify_Method_Request_Lookup
@@ -38,26 +40,35 @@ typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event_var
  * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup : public TAO_Notify_Method_Request_Lookup_Base
-                                                       , public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
+  : public TAO_Notify_Method_Request_Lookup_Base
+  , public TAO_Notify_Method_Request
 {
 public:
   /// Constuctor
-  TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event_var& event, TAO_Notify_ProxyConsumer* proxy_consumer);
+  TAO_Notify_Method_Request_Lookup (
+    const TAO_Notify_Event_var& event,
+    TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Destructor
   ~TAO_Notify_Method_Request_Lookup ();
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+
+private:
+  const TAO_Notify_Event_var event_var_;
+  TAO_Notify_ProxyConsumer_Guard proxy_guard_;
 };
 
 /*****************************************************************************************************************************/
 
+#if 0
 typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event*
                                        , TAO_Notify_ProxyConsumer*
                                        , const TAO_Notify_Event*
                                        , TAO_Notify_ProxyConsumer*>  TAO_Notify_Method_Request_Lookup_No_Copy_Base;
+#endif
 
 /**
  * @class TAO_Notify_Method_Request_Lookup_No_Copy
@@ -65,12 +76,15 @@ typedef TAO_Notify_Method_Request_Lookup_T<const TAO_Notify_Event*
  * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy : public TAO_Notify_Method_Request_Lookup_No_Copy_Base
-                                                               , public TAO_Notify_Method_Request_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy
+  : public TAO_Notify_Method_Request_Lookup_Base
+  , public TAO_Notify_Method_Request_No_Copy
 {
 public:
   /// Constuctor
-  TAO_Notify_Method_Request_Lookup_No_Copy (const TAO_Notify_Event* event, TAO_Notify_ProxyConsumer* proxy_consumer);
+  TAO_Notify_Method_Request_Lookup_No_Copy (
+    const TAO_Notify_Event* event,
+    TAO_Notify_ProxyConsumer* proxy_consumer);
 
   /// Destructor
   ~TAO_Notify_Method_Request_Lookup_No_Copy ();

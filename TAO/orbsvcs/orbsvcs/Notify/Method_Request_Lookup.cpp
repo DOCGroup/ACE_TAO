@@ -16,8 +16,12 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 #include "Admin.h"
 #include "SupplierAdmin.h"
 
-TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event_var& event, TAO_Notify_ProxyConsumer* proxy_consumer)
-  : TAO_Notify_Method_Request_Lookup_Base (event, proxy_consumer)
+TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
+      const TAO_Notify_Event_var& event,
+      TAO_Notify_ProxyConsumer* proxy_consumer)
+  : TAO_Notify_Method_Request_Lookup_Base (event.get (), proxy_consumer)
+  , event_var_ (event)
+  , proxy_guard_ (proxy_consumer)
 {
   this->init (event);
 }
@@ -34,8 +38,10 @@ TAO_Notify_Method_Request_Lookup::execute (ACE_ENV_SINGLE_ARG_DECL)
 
 /******************************************************************************************************/
 
-TAO_Notify_Method_Request_Lookup_No_Copy::TAO_Notify_Method_Request_Lookup_No_Copy (const TAO_Notify_Event* event, TAO_Notify_ProxyConsumer* proxy_consumer)
-  : TAO_Notify_Method_Request_Lookup_No_Copy_Base (event, proxy_consumer)
+TAO_Notify_Method_Request_Lookup_No_Copy::TAO_Notify_Method_Request_Lookup_No_Copy (
+        const TAO_Notify_Event* event,
+        TAO_Notify_ProxyConsumer* proxy_consumer)
+  : TAO_Notify_Method_Request_Lookup_Base (event, proxy_consumer)
 {
 }
 
@@ -54,7 +60,7 @@ TAO_Notify_Method_Request_Lookup_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_Method_Request* request;
 
-  TAO_Notify_Event* event_copy = this->event_->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const TAO_Notify_Event* event_copy = this->event_->copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_Notify_Event_Copy_var event_var (event_copy);

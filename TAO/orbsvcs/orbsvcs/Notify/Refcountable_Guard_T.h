@@ -31,10 +31,13 @@ class TAO_Notify_Refcountable_Guard_T
 {
 public:
   /// Constuctor
-  TAO_Notify_Refcountable_Guard_T (T* t);
+  TAO_Notify_Refcountable_Guard_T (T* t = 0);
 
   /// Destructor
   ~TAO_Notify_Refcountable_Guard_T ();
+
+  /// Redirection operator
+  T * get (void) const;
 
   /// Redirection operator
   T *operator-> (void) const;

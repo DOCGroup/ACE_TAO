@@ -43,12 +43,6 @@ TAO_Notify_StructuredPushConsumer::push_i (const TAO_Notify_Event* event ACE_ENV
 }
 
 void
-TAO_Notify_StructuredPushConsumer::push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL)
-{
-  event->push (this ACE_ENV_ARG_PARAMETER);
-}
-
-void
 TAO_Notify_StructuredPushConsumer::push (const CORBA::Any& event ACE_ENV_ARG_DECL)
 {
   CosNotification::StructuredEvent notification;
