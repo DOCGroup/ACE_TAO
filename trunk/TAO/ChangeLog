@@ -1,3 +1,9 @@
+Tue Aug 13 14:03:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/README:
+
+	  Descriptions of the "LoadManager" and "LoadMonitor" binaries.
+
 Tue Aug 13 13:52:15 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.cpp (ACE_TMAIN):
