@@ -556,7 +556,7 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown (void)
 
   this->flags_ |= SF_SHUTDOWN_DONE;
 
-  return -1;
+  return retval;
 }
 
 // ************************************************************
