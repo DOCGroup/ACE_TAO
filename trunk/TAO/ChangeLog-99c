@@ -1,3 +1,8 @@
+Thu Aug 12 20:50:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Makefile:
+	  Added missing '\'
+
 Thu Aug 12 19:54:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: set CONTROLLED_FILES to be the entire TAO
