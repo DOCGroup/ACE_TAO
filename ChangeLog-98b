@@ -1,7 +1,7 @@
 Sun Oct 25 14:13:31 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ace/OS.i: Changed ACE_OS::sigaction to work with a null value 
-          for <nsa> on Windows.  
+        * ace/OS.i: Changed ACE_OS::sigaction to work with a null value
+          for <nsa> on Windows.
 
         * examples/Reactor/Misc/reactors.dsp:
         * examples/Reactor/Misc/signals_1.dsp:
