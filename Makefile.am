@@ -24,15 +24,9 @@ SUBDIRS += \
         performance-tests \
         protocols \
         tests \
-        websvcs
-
-if BUILD_KOKYU
-SUBDIRS += Kokyu
-endif
-
-if BUILD_TAO
-SUBDIRS += TAO
-endif
+        websvcs \
+	@KOKYU@ \
+	@TAO@
 
 man_MANS = ace-config.1
 
