@@ -15,6 +15,7 @@
 // by uname -a.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #if !defined (__ACE_INLINE__)
@@ -179,4 +180,5 @@
 // TK, 05 Feb 97
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE (1024 * 1024)
 #define ACE_HAS_IDTYPE_T
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

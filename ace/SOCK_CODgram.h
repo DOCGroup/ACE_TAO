@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SOCK_CODGRAM_H
+#include "ace/pre.h"
 #define ACE_SOCK_CODGRAM_H
 
 #include "ace/SOCK_IO.h"
@@ -64,4 +65,5 @@ public:
 #include "ace/SOCK_CODgram.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_CODGRAM_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_STRATEGIES_T_H
+#include "ace/pre.h"
 #define ACE_STRATEGIES_T_H
 
 #include "ace/Strategies.h"
@@ -909,4 +910,5 @@ protected:
 #pragma implementation ("Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_STRATEGIES_T_H */

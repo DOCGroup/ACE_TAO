@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_FILE_IO_H
+#include "ace/pre.h"
 #define ACE_FILE_IO_H
 
 #include "ace/FILE.h"
@@ -137,4 +138,5 @@ public:
 #include "ace/FILE_IO.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_FILE_IO_H */

@@ -22,6 +22,7 @@
 //
 
 #ifndef ACE_KCC_COMMON_H
+#include "ace/pre.h"
 #define ACE_KCC_COMMON_H
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
@@ -70,4 +71,5 @@
 
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
+#include "ace/post.h"
 #endif /* ACE_KCC_COMMON_H */

@@ -11,6 +11,7 @@
 // processes
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)
@@ -169,4 +170,5 @@ extern "C"
   int putenv (const char *);
 }
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

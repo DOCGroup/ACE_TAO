@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_SPIPE_ACCEPTOR_H
+#include "ace/pre.h"
 #define ACE_SPIPE_ACCEPTOR_H
 
 #include "ace/SPIPE_Stream.h"
@@ -85,4 +86,5 @@ private:
 
 };
 
+#include "ace/post.h"
 #endif /* ACE_SPIPE_ACCEPTOR_H */

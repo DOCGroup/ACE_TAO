@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_PRIORITY_REACTOR_H
+#include "ace/pre.h"
 #define ACE_PRIORITY_REACTOR_H
 
 #include "ace/Containers.h"
@@ -90,4 +91,5 @@ private:
 #include "ace/Priority_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_PRIORITY_REACTOR_H */

@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef ACE_TKREACTOR_H
+#include "ace/pre.h"
 #define ACE_TKREACTOR_H
 
 #include "ace/Select_Reactor.h"
@@ -122,4 +123,5 @@ private:
 };
 
 #endif /* ACE_HAS_TK */
+#include "ace/post.h"
 #endif /* ACE_TK_REACTOR_H */

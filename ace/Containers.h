@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_CONTAINERS_H
+#include "ace/pre.h"
 #define ACE_CONTAINERS_H
 
 #include "ace/OS.h"
@@ -68,4 +69,5 @@ protected:
 
 #include "ace/Containers_T.h"
 
+#include "ace/post.h"
 #endif /* ACE_CONTAINERS_H */

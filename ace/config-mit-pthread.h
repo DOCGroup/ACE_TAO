@@ -1,6 +1,7 @@
 // $Id$
 
 #ifndef ACE_CONFIG_MIT_PTHREAD_H
+#include "ace/pre.h"
 #define ACE_CONFIG_MIT_PTHREAD_H
 
 // Platform uses int for select() rather than fd_set.
@@ -48,4 +49,5 @@
 #define ACE_HAS_WRITE_TIMEDWAIT
 #define ACE_HAS_WRITEV_TIMEDWAIT
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_MIT_PTHREAD_H */

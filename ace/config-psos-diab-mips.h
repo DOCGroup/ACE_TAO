@@ -5,6 +5,7 @@
 // using the Diab Data D-C++ 4.2 p3 compiler (or a later version)
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 // #if ! defined (__ACE_INLINE__)
@@ -241,4 +242,5 @@
 
 #define ACE_PSOS_DIAB_MIPS
 #define ACE_MALLOC_ALIGN 8
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

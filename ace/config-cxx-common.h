@@ -1,6 +1,7 @@
 // $Id$
 
 #ifndef ACE_CXX_COMMON_H
+#include "ace/pre.h"
 #define ACE_CXX_COMMON_H
 
 #if !defined (ACE_CONFIG_INCLUDE_CXX_COMMON)
@@ -77,4 +78,5 @@
 # error ace/config-cxx-common.h can only be used with Compaq CXX!
 #endif /* ! __DECCXX */
 
+#include "ace/post.h"
 #endif /* ACE_CXX_COMMON_H */

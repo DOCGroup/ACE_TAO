@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_SHARED_OBJECT_H
+#include "ace/pre.h"
 #define ACE_SHARED_OBJECT_H
 
 #include "ace/ACE.h"
@@ -48,4 +49,5 @@ public:
 #include "ace/Shared_Object.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_SHARED_OBJECT_H */

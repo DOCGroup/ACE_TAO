@@ -28,6 +28,7 @@
 // ============================================================================
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
+#include "ace/pre.h"
 #define ACE_WIN32_ASYNCH_IO_H
 
 #include "ace/OS.h"
@@ -1209,4 +1210,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#include "ace/post.h"
 #endif /* ACE_WIN32_ASYNCH_IO_H */

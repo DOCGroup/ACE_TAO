@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEM_IO_H
+#include "ace/pre.h"
 #define ACE_MEM_IO_H
 
 #include "ace/SOCK.h"
@@ -158,4 +159,5 @@ private:
 #include "ace/MEM_IO.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_IO_H */

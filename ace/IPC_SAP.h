@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_IPC_SAP_H
+#include "ace/pre.h"
 #define ACE_IPC_SAP_H
 
 #include "ace/ACE.h"
@@ -76,4 +77,5 @@ private:
 #include "ace/IPC_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_IPC_SAP_H */

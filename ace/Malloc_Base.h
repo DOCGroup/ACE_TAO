@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MALLOC_BASE_H
+#include "ace/pre.h"
 #define ACE_MALLOC_BASE_H
 
 // The definition of this class is located in Malloc.cpp.
@@ -131,4 +132,5 @@ private:
   // Must delete the <allocator_> if non-0.
 };
 
+#include "ace/post.h"
 #endif /* ACE_MALLOC_BASE_H */

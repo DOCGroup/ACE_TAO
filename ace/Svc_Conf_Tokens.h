@@ -1,6 +1,7 @@
 // $Id$
 
 #ifndef SVC_CONF_TOKENS_H
+#include "ace/pre.h"
 #define SVC_CONF_TOKENS_H
 
 #define ACE_DYNAMIC 257
@@ -24,4 +25,5 @@
 #define ACE_STAR 275
 #define ACE_COLON 276
 
+#include "ace/post.h"
 #endif //SVC_CONF_TOKENS_H

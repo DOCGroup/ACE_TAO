@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef CACHED_CONNECT_STRATEGY_T_H
+#include "ace/pre.h"
 #define CACHED_CONNECT_STRATEGY_T_H
 
 #include "ace/OS.h"
@@ -189,4 +190,5 @@ protected:
 #pragma implementation ("Cached_Connect_Strategy_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* CACHED_CONNECT_STRATEGY_T_H */

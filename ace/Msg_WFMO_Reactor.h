@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_MSG_WFMO_REACTOR_H
+#include "ace/pre.h"
 #define ACE_MSG_WFMO_REACTOR_H
 
 #include "ace/WFMO_Reactor.h"
@@ -104,4 +105,5 @@ protected:
 #include "ace/Msg_WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_MSG_WFMO_REACTOR_H */

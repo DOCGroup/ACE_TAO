@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_EVENT_HANDLER_H
+#include "ace/pre.h"
 #define ACE_EVENT_HANDLER_H
 
 #include "ace/ACE.h"
@@ -193,4 +194,5 @@ public:
 #include "ace/Event_Handler.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_EVENT_HANDLER_H */

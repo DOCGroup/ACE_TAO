@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef ACE_TIME_REQUEST_REPLY_H
+#include "ace/pre.h"
 #define ACE_TIME_REQUEST_REPLY_H
 
 #include "ace/Time_Value.h"
@@ -120,4 +121,5 @@ private:
 };
 
 
+#include "ace/post.h"
 #endif /* ACE_TIME_REQUEST_REPLY_H */

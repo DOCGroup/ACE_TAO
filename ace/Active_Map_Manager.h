@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_ACTIVE_MAP_MANAGER_H
+#include "ace/pre.h"
 #define ACE_ACTIVE_MAP_MANAGER_H
 
 #include "ace/OS.h"
@@ -100,4 +101,5 @@ private:
 // Include the templates here.
 #include "ace/Active_Map_Manager_T.h"
 
+#include "ace/post.h"
 #endif /* ACE_ACTIVE_MAP_MANAGER_H */

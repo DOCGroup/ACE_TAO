@@ -8,6 +8,7 @@
 // It uses the Chorus POSIX threads interface.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #define CHORUS 3.1b
@@ -135,4 +136,5 @@
 // Needed to wait for "processes" to exit.
 #include <am/await.h>
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

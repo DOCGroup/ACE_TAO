@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_TOKEN_H
+#include "ace/pre.h"
 #define ACE_TOKEN_H
 
 #include "ace/Synch.h"
@@ -286,4 +287,5 @@ public:
   int release (void) { ACE_NOTSUP_RETURN (-1); }
 };
 #endif /* ACE_HAS_THREADS */
+#include "ace/post.h"
 #endif /* ACE_TOKEN_H */

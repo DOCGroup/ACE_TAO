@@ -5,6 +5,7 @@
 // version 5.0 with MIT pthreads.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #if !defined (__ACE_INLINE__)
@@ -173,4 +174,5 @@
 #define ACE_HAS_WRITEV_TIMEDWAIT
 #define ACE_HAS_DIRENT
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_TIMER_HASH_T_H
+#include "ace/pre.h"
 #define ACE_TIMER_HASH_T_H
 
 #include "ace/Timer_Queue_T.h"
@@ -259,4 +260,5 @@ private:
 #pragma implementation ("Timer_Hash_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_TIMER_HASH_T_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_LOG_PRIORITY_H
+#include "ace/pre.h"
 #define ACE_LOG_PRIORITY_H
 
 enum ACE_Log_Priority
@@ -74,4 +75,5 @@ enum ACE_Log_Priority
   LM_ENSURE_32_BITS = 0x7FFFFFFF
 };
 
+#include "ace/post.h"
 #endif /* ACE_LOG_PRIORITY_H */

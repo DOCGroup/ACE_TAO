@@ -15,6 +15,7 @@
 // ========================================================================
 
 #ifndef ACE_ARG_SHIFTER_H
+#include "ace/pre.h"
 #define ACE_ARG_SHIFTER_H
 
 #include "ace/OS.h"
@@ -162,4 +163,5 @@ private:
   // argument.
 };
 
+#include "ace/post.h"
 #endif /* ACE_ARG_SHIFTER_H */

@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef ACE_SERVICE_MANAGER_H
+#include "ace/pre.h"
 #define ACE_SERVICE_MANAGER_H
 
 #include "ace/SOCK_Stream.h"
@@ -103,4 +104,5 @@ private:
 #include "ace/Service_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* _SERVICE_MANAGER_H */

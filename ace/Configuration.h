@@ -31,6 +31,7 @@
 // ============================================================================
 
 #ifndef ACE_CONFIGURATION_H
+#include "ace/pre.h"
 #define ACE_CONFIGURATION_H
 
 #include "ace/ACE.h"
@@ -674,4 +675,5 @@ private:
 #include "ace/Configuration.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_CONFIGURATION_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef ACE_AUTO_PTR_H
+#include "ace/pre.h"
 #define ACE_AUTO_PTR_H
 
 #include "ace/ACE.h"
@@ -156,4 +157,5 @@ public:
 #pragma implementation ("Auto_Ptr.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_AUTO_PTR_H */

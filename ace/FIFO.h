@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_FIFO_H
+#include "ace/pre.h"
 #define ACE_FIFO_H
 
 #include "ace/IPC_SAP.h"
@@ -74,4 +75,5 @@ private:
 #include "ace/FIFO.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_FIFO_H */

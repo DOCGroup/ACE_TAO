@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_MEM_SAP_H
+#include "ace/pre.h"
 #define ACE_MEM_SAP_H
 
 #include "ace/Malloc.h"
@@ -96,4 +97,5 @@ protected:
 #include "ace/MEM_SAP.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/post.h"
 #endif /* ACE_SOCK_IO_H */

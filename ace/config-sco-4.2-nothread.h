@@ -5,6 +5,7 @@
 // version 4.2 without threads.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #if defined (__GNUG__)
@@ -111,4 +112,5 @@
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 #define ACE_HAS_DIRENT
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

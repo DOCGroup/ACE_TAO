@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef ACE_POSIX_PROACTOR_H
+#include "ace/pre.h"
 #define ACE_POSIX_PROACTOR_H
 
 #include "ace/Proactor_Impl.h"
@@ -428,4 +429,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS */
+#include "ace/post.h"
 #endif /* ACE_POSIX_PROACTOR_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_EVENT_HANDLER_T_H
+#include "ace/pre.h"
 #define ACE_EVENT_HANDLER_T_H
 
 #include "ace/Event_Handler.h"
@@ -186,4 +187,5 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+#include "ace/post.h"
 #endif /* ACE_EVENT_HANDLER_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_ATM_CONNECTOR_H
+#include "ace/pre.h"
 #define ACE_ATM_CONNECTOR_H
 
 #include "ace/ATM_Stream.h"
@@ -138,5 +139,6 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
+#include "ace/post.h"
 #endif /* ACE_ATM_CONNECTOR_H */
 

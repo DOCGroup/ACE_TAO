@@ -5,6 +5,7 @@
 // ACE_OS adaptation layer.
 
 #ifndef ACE_CONFIG_MINIMAL_H
+#include "ace/pre.h"
 #define ACE_CONFIG_MINIMAL_H
 
 #define ACE_HAS_MINIMAL_ACE_OS
@@ -34,4 +35,5 @@
 #endif /* ACE_ERROR */
 #define ACE_ERROR(x)
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_MINIMAL_H */

@@ -21,6 +21,7 @@
 #include "ace/Log_Priority.h"
 
 #ifndef ACE_LOG_RECORD_H
+#include "ace/pre.h"
 #define ACE_LOG_RECORD_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -189,4 +190,5 @@ private:
 #include "ace/Log_Record.i"
 #endif
 
+#include "ace/post.h"
 #endif /* ACE_LOG_RECORD_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_THREAD_H
+#include "ace/pre.h"
 #define ACE_THREAD_H
 
 #include "ace/ACE.h"
@@ -223,4 +224,5 @@ private:
 #if defined (__ACE_INLINE__)
 #include "ace/Thread.i"
 #endif /* __ACE_INLINE__ */
+#include "ace/post.h"
 #endif /* ACE_THREAD_H */

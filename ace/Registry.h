@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_REGISTRY_H
+#include "ace/pre.h"
 #define ACE_REGISTRY_H
 
 #include "ace/OS.h"
@@ -525,4 +526,5 @@ private:
 #endif /* ACE_HAS_BROKEN_NESTED_TEMPLATES */
 
 #endif /* ACE_WIN32 */
+#include "ace/post.h"
 #endif /* ACE_REGISTRY_H */

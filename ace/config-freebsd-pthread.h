@@ -7,6 +7,7 @@
 // Notice that the threaded version of ACE is only supported for -current.
 
 #ifndef ACE_CONFIG_H
+#include "ace/pre.h"
 #define ACE_CONFIG_H
 
 #include <osreldate.h>
@@ -187,4 +188,5 @@ extern "C" { char * cuserid (char *s); }
 #define TCGETS TIOCGETA
 #define TCSETS TIOCSETA
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

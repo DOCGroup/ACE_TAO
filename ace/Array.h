@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef ACE_ARRAY_H
+#include "ace/pre.h"
 #define ACE_ARRAY_H
 
 #include "ace/Containers.h"
@@ -39,4 +40,5 @@
 #pragma implementation ("Containers.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* ACE_ARRAY_H */

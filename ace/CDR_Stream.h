@@ -34,6 +34,7 @@
 // ============================================================================
 
 #ifndef ACE_CDR_H
+#include "ace/pre.h"
 #define ACE_CDR_H
 
 #include "ace/Message_Block.h"
@@ -1145,4 +1146,5 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 
 #endif /* __ACE_INLINE */
 
+#include "ace/post.h"
 #endif /* ACE_CDR_H */

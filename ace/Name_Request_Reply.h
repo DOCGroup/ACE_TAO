@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef ACE_NAME_REQUEST_REPLY_H
+#include "ace/pre.h"
 #define ACE_NAME_REQUEST_REPLY_H
 
 #include "ace/Time_Value.h"
@@ -250,4 +251,5 @@ private:
   // Transfer buffer.
 };
 
+#include "ace/post.h"
 #endif /* ACE_NAME_REQUEST_REPLY_H */

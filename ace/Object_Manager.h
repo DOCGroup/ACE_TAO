@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_OBJECT_MANAGER_H
+#include "ace/pre.h"
 #define ACE_OBJECT_MANAGER_H
 
 #include "ace/OS.h"
@@ -431,4 +432,5 @@ public:
 
 #include "ace/Managed_Object.h"
 
+#include "ace/post.h"
 #endif /* ACE_OBJECT_MANAGER_H */

@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef ACE_ATM_PARAMS_H
+#include "ace/pre.h"
 #define ACE_ATM_PARAMS_H
 
 #include "ace/ACE.h"
@@ -165,5 +166,6 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
+#include "ace/post.h"
 #endif /* ACE_ATM_PARAMS_H */
 

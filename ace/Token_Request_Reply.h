@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef ACE_TOKEN_REQUEST_REPLY_H
+#include "ace/pre.h"
 #define ACE_TOKEN_REQUEST_REPLY_H
 
 #include "ace/Local_Tokens.h"
@@ -230,4 +231,5 @@ private:
 #include "ace/Token_Request_Reply.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_TOKEN_REQUEST_REPLY_H */

@@ -2,6 +2,7 @@
 // $Id$
 
 #ifndef ACE_CONFIG_SCO_5_0_0_H
+#include "ace/pre.h"
 #define ACE_CONFIG_SCO_5_0_0_H
 
 // Compiling for SCO.
@@ -105,4 +106,5 @@
 #define ACE_LACKS_READDIR_R
 #define ACE_HAS_GPERF
 
+#include "ace/post.h"
 #endif /* ACE_CONFIG_SCO_5_0_0_H */
