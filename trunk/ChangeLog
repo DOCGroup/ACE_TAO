@@ -1,3 +1,14 @@
+Sun Mar 28 12:16:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ACEXML/common/NamespaceSupport.i:
+	 
+	  Removed functors that were there in this file. 
+
+	* ACEXML/common/XML_Types.h:
+
+	  Forcibly include Functor_String.h to get the functors for
+	  ACE_CString and ACE_WString.
+
 Sun Mar 28 12:14:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Functor_String.cpp:
