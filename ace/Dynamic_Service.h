@@ -19,6 +19,8 @@
 
 #include "ace/Dynamic_Service_Base.h"
 
+class ACE_Service_Object;
+
 /**
  * @class ACE_Dynamic_Service
  *
