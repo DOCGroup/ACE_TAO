@@ -413,6 +413,8 @@ sub check_workspace () {
   while (<CVS>) {
     next if m%^U %;    #### Allow others to update the repository.
     next if m%^cvs server: New directory `.*' -- ignored$%;  #### empty dirs.
+    next if m%^\? ACE_wrappers/include/makeinclude/platform_macros.GNU$%;
+    next if m%^\? ACE_wrappers/ace/config.h$%;
 
     push (@out_of_date, $_) if "$_";
   }
