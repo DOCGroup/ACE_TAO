@@ -1,3 +1,12 @@
+Fri Mar 19 09:57:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        
+          Set the conditions at the time of node creation for the implied 
+          home implicit, explicit, and equivalent interfaces, so that the
+          repository ids, which are, from a recent change, all computed at
+          construction time, will be correct.
+
 Thu Mar 18 22:52:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Thread_Per_Connection_Handler.cpp:
