@@ -215,7 +215,7 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
                                smaller_length);
 
   if (!result)
-    result = this->len_ - s.len_;
+    result = ACE_static_cast (int, (this->len_ - s.len_));
   return result;
 }
 
