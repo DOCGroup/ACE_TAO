@@ -264,6 +264,64 @@ TAO_Object_Manager<T,T_var>::operator=(T_var &p)
 }
 
 // *************************************************************
+// class TAO_Pseudo_Object_Manager
+// *************************************************************
+
+template <class T, class T_var> TAO_Pseudo_Object_Manager<T,T_var>&
+TAO_Pseudo_Object_Manager<T,T_var>::
+    operator= (const TAO_Pseudo_Object_Manager<T,T_var> &rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  if (this->release_)
+    {
+      CORBA::release (*this->ptr_);
+      *this->ptr_ = T::_duplicate (*rhs.ptr_);
+    }
+  else
+    *this->ptr_ = *rhs.ptr_;
+
+  return *this;
+}
+
+template <class T, class T_var> TAO_Pseudo_Object_Manager<T,T_var> &
+TAO_Pseudo_Object_Manager<T,T_var>::operator=(T* p)
+{
+  if (this->release_)
+    {
+      // The semantics of the elements of a sequence are the same as
+      // that of a var variable.  Therefore we will not duplicate the
+      // user provided pointer before assigning it to the internal
+      // variable.  However, we will release it.
+      CORBA::release (*this->ptr_);
+      *this->ptr_ = p;
+    }
+  else
+    *this->ptr_ = p;
+
+  return *this;
+}
+
+template <class T, class T_var> TAO_Pseudo_Object_Manager<T,T_var> &
+TAO_Pseudo_Object_Manager<T,T_var>::operator=(T_var &p)
+{
+  if (this->release_)
+    {
+      // The semantics of the elements of a sequence are the same as
+      // that of a var variable.  Therefore we will not duplicate the
+      // user provided pointer before assigning it to the internal
+      // variable.  However, we will release it.
+      CORBA::release (*this->ptr_);
+      *this->ptr_ = T::_duplicate (p.in ());
+    }
+  else
+    *this->ptr_ = p.in ();
+
+  return *this;
+}
+
+// *************************************************************
 // Operations for class TAO_Unbounded_Object_Sequence
 // *************************************************************
 

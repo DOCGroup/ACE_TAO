@@ -1,3 +1,35 @@
+Thu Jul  8 16:30:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Sequence_T.h:
+	* tao/Sequence_T.i:
+	* tao/Sequence_T.cpp:
+	  Sequences of pseudo objects require a different Object_Manager
+	  class
+
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+	  Fixed to generate the new Pseudo_Object_Manager<> class
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	  The T::_nil() method is defined in the header file to work
+	  around g++ problems.
+
+	* tao/DomainC.cpp:
+	* tao/DomainC.i:
+	* tao/DynAnyC.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/MessagingC.cpp:
+	* tao/PollableC.cpp:
+	* tao/Request.cpp:
+	  Added missing template instantiations
+
+	* orbsvcs/orbsvcs/Channel_Clients_T.h:
+	  Added missing default parameters
+
 Thu Jul 08 15:55:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Invocation.cpp (start): changed a couple of constants

@@ -321,6 +321,78 @@ private:
   // release flag based on parent's flag
 };
 
+template<class T, class T_var>
+class TAO_Pseudo_Object_Manager
+{
+  // = TITLE
+  //   Manager for Pseudo Objects.
+  //
+  // = DESCRIPTION
+  //
+  friend class TAO_Unbounded_Pseudo_Object_Sequence<T,T_var>;
+public:
+  // @@ Use partial template specialization here to give access only
+  // to the right kind of sequence.
+  // friend template<CORBA::ULong MAX>
+  //    class TAO_Bounded_Object_Sequence<T,MAX>;
+
+  // = Initialization and termination methods.
+  TAO_Pseudo_Object_Manager (const TAO_Pseudo_Object_Manager<T,T_var> &rhs);
+  // Copy constructor, the semantics are non-trivial:
+  //   + The referenced element is duplicated or not according to the
+  //   release value on the <rhs>.
+  //   + In any case a new reference to the same object is created.
+
+  TAO_Pseudo_Object_Manager (T **, CORBA::Boolean release);
+  // Constructor from address of an element, it should be private and
+  // only TAO_*_Object_Sequence would use it, but we have some
+  // problems with friendship and templates.
+
+  ~TAO_Pseudo_Object_Manager (void);
+  // Destructor, only releases the object if <release_> is true.
+
+  TAO_Pseudo_Object_Manager<T,T_var> &operator= (const TAO_Pseudo_Object_Manager<T,T_var> &rhs);
+  // Assignment from another managed type, only release if
+  // <this->release_> is true.
+  // @@ TODO what happens if rhs.release_ is true an this->relase_ is
+  // false?
+
+  TAO_Pseudo_Object_Manager<T,T_var> &operator= (T *);
+  // Assignment from T *.
+
+  TAO_Pseudo_Object_Manager<T,T_var> &operator= (T_var &);
+  // Assignment from T *.
+
+  T * operator-> (void) const;
+  // Return pointer.
+
+  operator const T *() const;
+  // Cast (read-only).
+
+  operator T *&();
+  // Cast.
+
+  T *in (void) const;
+  // for in parameter.
+
+  T *&inout (void);
+  // for inout parameter.
+
+  T *&out (void);
+  // for out parameter.
+
+  T *_retn (void);
+  // for return type
+
+private:
+  T **ptr_;
+  // data member, notice that it is a pointer, to implement the
+  // reference behavior for assignment.
+
+  CORBA::Boolean release_;
+  // release flag based on parent's flag
+};
+
 // *************************************************************
 
 template<class T,class T_var>
@@ -547,7 +619,7 @@ public:
   // members and frees all string members, and then performs a
   // deepcopy to create a new structure.
 
-  TAO_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Pseudo_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
   // read-write accessor
 
   static T **allocbuf (CORBA::ULong);
@@ -570,7 +642,7 @@ template<class T, class T_var, size_t MAX>
 class TAO_Bounded_Pseudo_Sequence : public TAO_Bounded_Base_Sequence
 {
   // = TITLE
-  //   Bounded version of TAO_Unbounded_Psuedo_Sequence.
+  //   Bounded version of TAO_Unbounded_Pseudo_Sequence.
   //
   // = DESCRIPTION
   //   Please see the documentation for the unbounded case.
@@ -595,7 +667,7 @@ public:
   TAO_Bounded_Pseudo_Sequence &operator= (const TAO_Bounded_Pseudo_Sequence<T,T_var,MAX> &);
   // Assignment from another Bounded sequence.
 
-  TAO_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
+  TAO_Pseudo_Object_Manager<T,T_var> operator[] (CORBA::ULong slot) const;
   // Read-write accessor.
 
   static T **allocbuf (CORBA::ULong length);
