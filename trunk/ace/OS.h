@@ -93,6 +93,9 @@
 // (does anyone know how to figure out the right values?!)
 #define ACE_DEFAULT_MAX_SEGMENTS 6
 
+// Maximum number of <ACE_Event_Handler>s supported by <ACE_Timer_Heap>.
+#define ACE_DEFAULT_MAX_TIMERS 20000
+
 // Used by the FIFO tests.
 #define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
 

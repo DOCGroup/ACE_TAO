@@ -3,11 +3,10 @@
 // This server daemon collects, formats, and displays logging
 // information forwarded from client daemons running on other hosts in
 // the network.  In addition, this example illustrates how to use the
-// ACE_Reactor, ACE_Acceptor, ACE_Singleton, and ACE_Test_and_Set
+// ACE_Reactor, ACE_Acceptor, ACE_Singleton, and the ACE_Test_and_Set
 // components.
 
 #include "ace/Get_Opt.h"
-
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"
@@ -237,8 +236,12 @@ main (int argc, char *argv[])
 
   OPTIONS::instance ()->parse_args (argc, argv);
 
+  // We need to pass in REACTOR::instance() here so that we don't use
+  // the default ACE_Service_Config::reactor().
+
   if (peer_acceptor.open 
-      (ACE_INET_Addr (OPTIONS::instance ()->port ())) == -1)
+      (ACE_INET_Addr (OPTIONS::instance ()->port ()),
+       REACTOR::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   else if (REACTOR::instance ()->register_handler 

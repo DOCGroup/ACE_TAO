@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/ReactorEx.h"
+#include "ace/Timer_List.h"
 
 #if defined (ACE_WIN32)
 
@@ -197,7 +198,7 @@ ACE_ReactorEx::open (size_t size,
 
   if (this->timer_queue_ == 0)
     {
-      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Queue, -1);
+      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_List, -1);
       this->delete_timer_queue_ = 1;
     }
 
