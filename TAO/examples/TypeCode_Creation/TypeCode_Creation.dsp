@@ -111,6 +111,16 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "TypeCode_Creation - Win32 Release"
 
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\test.idl
+InputName=test
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "TypeCode_Creation - Win32 Debug"
 
 USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
