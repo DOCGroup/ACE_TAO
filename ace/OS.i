@@ -4422,7 +4422,7 @@ ACE_Connect_QoS_Params::ACE_Connect_QoS_Params (iovec *caller_data,
 }
 
 ACE_INLINE iovec *
-ACE_Connect_QoS_Params::caller_data (void)
+ACE_Connect_QoS_Params::caller_data (void) const
 {
   return this->caller_data_;
 }
@@ -4434,7 +4434,7 @@ ACE_Connect_QoS_Params::caller_data (iovec *cd)
 }
 
 ACE_INLINE iovec *
-ACE_Connect_QoS_Params::callee_data (void)
+ACE_Connect_QoS_Params::callee_data (void) const
 {
   return this->callee_data_;  
 }
@@ -4446,7 +4446,7 @@ ACE_Connect_QoS_Params::callee_data (iovec *cd)
 }
 
 ACE_INLINE ACE_QoS *
-ACE_Connect_QoS_Params::socket_qos (void)
+ACE_Connect_QoS_Params::socket_qos (void) const
 {
   return this->socket_qos_;
 }
@@ -4458,7 +4458,7 @@ ACE_Connect_QoS_Params::socket_qos (ACE_QoS *sq)
 }
 
 ACE_INLINE ACE_QoS *
-ACE_Connect_QoS_Params::group_socket_qos (void)
+ACE_Connect_QoS_Params::group_socket_qos (void) const
 {
   return this->group_socket_qos_;
 }
@@ -4470,7 +4470,7 @@ ACE_Connect_QoS_Params::group_socket_qos (ACE_QoS *gsq)
 }
 
 ACE_INLINE u_long 
-ACE_Connect_QoS_Params::flags (void)
+ACE_Connect_QoS_Params::flags (void) const
 {
   return this->flags_;
 }
@@ -4490,9 +4490,9 @@ ACE_Accept_QoS_Params::ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_conditi
 }
 
 ACE_INLINE ACE_QOS_CONDITION_FUNC
-ACE_Accept_QoS_Params::qos_condition_callback (void)
+ACE_Accept_QoS_Params::qos_condition_callback (void) const
 {
-  return this->qos_condition_callback_;
+  return this->qos_condition_callback_; 
 }
 
 ACE_INLINE void 
@@ -4502,7 +4502,7 @@ ACE_Accept_QoS_Params::qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc)
 }
 
 ACE_INLINE u_long
-ACE_Accept_QoS_Params::callback_data (void)
+ACE_Accept_QoS_Params::callback_data (void) const
 {
   return this->callback_data_;
 }
@@ -4566,7 +4566,7 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,
 		struct sockaddr *addr,
                 int *addrlen,
-		ACE_Accept_QoS_Params qos_params)
+		const ACE_Accept_QoS_Params &qos_params)
 {
 #if defined (ACE_HAS_WINSOCK2)
   ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
@@ -4588,7 +4588,7 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::join_leaf (ACE_HANDLE socket,
 		   const sockaddr *name,
 		   int namelen,
-		   ACE_Connect_QoS_Params qos_params)
+		   const ACE_Connect_QoS_Params &qos_params)
 {
 #if defined (ACE_HAS_WINSOCK2)
   ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
@@ -4679,7 +4679,7 @@ ACE_INLINE int
 ACE_OS::connect (ACE_HANDLE handle,
 		 const sockaddr *addr,
 		 int addrlen,
-		 ACE_Connect_QoS_Params qos_params)
+		 const ACE_Connect_QoS_Params &qos_params)
 {
   ACE_TRACE ("ACE_OS::connect");
 #if defined (ACE_HAS_WINSOCK2)
