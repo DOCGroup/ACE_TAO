@@ -1,0 +1,78 @@
+// @(#)test1.idl	1.1 95/09/11
+// Copyright 1994-1995 by Sun Microsystems, Inc.
+//
+// TEST		basic marshaling tests for all IDL primitive types, modes
+//
+// This test omits constructed types (struct, union, enum, sequence, and
+// array types), and only tests very simple user defined exceptions.
+//
+// Values returned are well defined functions of the input values:
+//
+//	* For numeric types (octet, short, long, longlong, float, double,
+//	  longdouble, and unsigned variants) the value is cubed.
+//	* For Boolean, it's the negation.
+//	* For Any, TypeCode, Principal, Object, char and wchar,
+//	  string and wstring, it's the input value.
+//
+// The "return" and "out" parameter is the function of the "in" parameter;
+// the "inout" parameter is the function of its original value.
+//
+// The "echo" test has all output values be the input values, with no
+// changes to the bit patterns originally transmitted.  While easier to
+// use to identify some kinds of problem, it is not as complete a test.
+//
+
+#define	DECL_TEST(type) \
+    type test_ ## type ( in type a1, out type a2, inout type a3)
+
+#pragma	prefix	"Eng.SUN.COM"	// only for Sun-defined interfaces
+
+interface test1 {
+    void	test_void ();
+
+    typedef unsigned short ushort;
+    typedef unsigned long ulong;
+
+    typedef long long longlong;
+    typedef unsigned long long ulonglong;
+    typedef long double longdouble;
+
+    DECL_TEST (short);
+    DECL_TEST (long);
+    DECL_TEST (ushort);
+    DECL_TEST (ulong);
+    DECL_TEST (float);
+    DECL_TEST (double);
+    DECL_TEST (boolean);
+    DECL_TEST (char);
+    DECL_TEST (octet);
+    DECL_TEST (any);
+    DECL_TEST (TypeCode);
+    DECL_TEST (Principal);
+    DECL_TEST (Object);		// CORBA::Object
+    DECL_TEST (string);		// unbounded string
+
+    DECL_TEST (longlong);
+    DECL_TEST (ulonglong);
+    DECL_TEST (wchar);
+    DECL_TEST (wstring);	// unbounded wstring
+    DECL_TEST (longdouble);
+
+    //
+    // All cases, "case_num" in the exception is the same as the 'in' param
+    //	* negative or zero, throws x1
+    //	* positive even cases, throws x2 with obj = null objref
+    //	* positive odd cases, throws x2 with obj = target objref
+    //
+    exception x1 { long case_num; };
+    exception x2 { Object obj; long case_num; };
+
+    void test_throw (in long case_num) raises (x1, x2);
+
+    //
+    // Aid for test cleanup in case server's not told to quit after
+    // being idle for some time period
+    //
+    oneway void please_exit ();
+};
+

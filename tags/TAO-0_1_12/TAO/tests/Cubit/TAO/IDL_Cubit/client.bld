@@ -1,0 +1,10 @@
+#!build
+default:
+	program
+	:debuglevel=multi
+cubitC.cpp
+	C++
+clnt.cpp
+	C++
+sockem.c
+	C
