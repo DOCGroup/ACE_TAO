@@ -1,3 +1,27 @@
+Wed Sep 29 14:39:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	  The dump function was too complicated not compiling on many
+	  platforms cleanly. This effort is to simplify the dump functions
+	  so that we can compile on many platforms. 
+	
+	* DAnCE/Config_Handlers/DnC_Dump.cpp:
+	* DAnCE/Config_Handlers/DnC_Dump.h:
+	  
+	  Moved template functions out of the class. 
+	
+	* DAnCE/Config_Handlers/DnC_Dump_T.cpp:
+	* DAnCE/Config_Handlers/DnC_Dump_T.h:
+
+	  New files for the template functions. 
+	
+	* DAnCE/Config_Handlers/Dump_Obj.cpp:
+	* DAnCE/Config_Handlers/Dump_Obj.h:
+
+	  Utility functions have been moved here.
+	
+ 	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	  New files added to the build.
+
 Wed Sep 29 07:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Servant_Activator.h:
