@@ -137,7 +137,7 @@ Client_i::withdraw (Bank::Account_ptr server,
         (TAO_TRY_ENV.exception ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "[CLIENT] Process/Thread Id : (%P/%t) %s",
+                  "[CLIENT] Process/Thread Id : (%P/%t): %s",
                   except->reason.in ()));
     }
   TAO_ENDTRY;
