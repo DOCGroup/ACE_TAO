@@ -2,9 +2,10 @@ Fri Jan 16 12:29:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac (AC_CONFIG_AUX_DIR):
 
-	  Changed auxiliary directory filename from "aux" to "autotools".
-	  The former is not an allowed/valid name on Windows.  Thanks to
-	  Greg Mulyar <greg_mu@yahoo.com> for pointing out the problem.
+	  Changed auxiliary directory filename from "aux" to
+	  "aux_config".  The former is not an allowed/valid name on
+	  Windows.  Thanks to Greg Mulyar <greg_mu@yahoo.com> for pointing
+	  out the problem.
 
 Fri Jan 16 14:19:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
