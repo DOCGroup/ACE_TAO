@@ -1,3 +1,15 @@
+Mon Jul 10 13:10:21 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input):
+
+	  Updated this method to match the corresponding one in TAO's
+	  other pluggable protocols.  This fixes a compile-time error.
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/Makefile.Security:
+
+	  Updated dependencies.
+
 Mon Jul 10 12:01:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Makefile.bor: Removed IORS.obj from the makefile.
