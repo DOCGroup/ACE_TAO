@@ -1,3 +1,11 @@
+Fri Apr 26 13:22:18 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Svc_Handler.{h,cpp}: Applied the Thread-safe Interface pattern
+	  by factoring out the flush logic into a flush_i() method (that
+ 	  doesn't hold a lock) and call this method from the put() and
+ 	  flush() methods (that do hold locks).  Thanks to Boris Temkin
+ 	  <borist@allcharge.com> for reporting this problem.
+
 Fri Apr 26 14:45:28 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Replace CALLBACK with CB. Apparantly,

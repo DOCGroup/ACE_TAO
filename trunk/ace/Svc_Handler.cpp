@@ -436,7 +436,7 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
       if (this->current_buffer_size_ >= this->maximum_buffer_size_
           || (this->timeoutp_ != 0
               && this->next_timeout_ <= ACE_OS::gettimeofday ()))
-        return this->flush ();
+        return this->flush_i ();
       else
         return 0;
     }
@@ -449,6 +449,12 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->msg_queue ()->lock (), -1);
 
+  return this->flush_i ();
+}
+
+template <PR_ST_1, ACE_SYNCH_DECL> int
+ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush_i (void)
+{
   ACE_Message_Queue_Iterator<ACE_SYNCH_USE> iterator (*this->msg_queue ());
   ACE_Message_Block *mblk;
   int result = 0;
