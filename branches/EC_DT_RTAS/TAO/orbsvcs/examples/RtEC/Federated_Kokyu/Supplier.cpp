@@ -32,8 +32,8 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   event[0].header.ttl    = 1;
 
   EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
-  event[0].header.id_tag.id = eid.id;
-  event[0].header.id_tag.tid = eid.tid;
+  event[0].header.eid.id = eid.id;
+  event[0].header.eid.tid = eid.tid;
 
   if (id_ != 1)
     {
@@ -80,8 +80,8 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   //scheduling segments started for each one-way call of the DTs.
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
   EC_Event_Counter::event_id eid;
-  eid.id = events[0].header.id_tag.id;
-  eid.tid = events[0].header.id_tag.tid;
+  eid.id = events[0].header.eid.id;
+  eid.tid = events[0].header.eid.tid;
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
 
   supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
