@@ -110,11 +110,15 @@ public:
                                           long nih,
                                           AST_Interface **ih_flat,
                                           long nih_flat,
-                                          UTL_StrList *p);
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
 
   // Create a node representing a forward declaration of an interface
   virtual AST_InterfaceFwd *create_interface_fwd(UTL_ScopedName *n,
-                                                 UTL_StrList *p);
+                                                 UTL_StrList *p,
+                                                 idl_bool local,
+                                                 idl_bool abstract);
 
   // Create a node representing an valuetype
   virtual AST_Interface *create_valuetype(UTL_ScopedName *n,

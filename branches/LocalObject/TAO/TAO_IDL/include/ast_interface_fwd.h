@@ -83,8 +83,8 @@ public:
 
   // Constructor(s)
   AST_InterfaceFwd ();
-  AST_InterfaceFwd (AST_Interface *dummy, 
-                    UTL_ScopedName *n, 
+  AST_InterfaceFwd (AST_Interface *dummy,
+                    UTL_ScopedName *n,
                     UTL_StrList *p);
 
   virtual ~AST_InterfaceFwd (void);
@@ -94,6 +94,7 @@ public:
   void set_full_definition(AST_Interface *nfd);
 
   virtual idl_bool is_abstract_interface ();
+  virtual idl_bool is_local_interface ();
   virtual idl_bool is_valuetype ();
   virtual idl_bool is_abstract_valuetype ();
   virtual void set_abstract_valuetype ();

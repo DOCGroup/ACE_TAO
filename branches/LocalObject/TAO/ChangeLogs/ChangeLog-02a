@@ -1,3 +1,60 @@
+Mon Apr 17 20:48:42 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff: Added a new token IDL_LOCAL.
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.cpp: Added rules for local and abstract
+	  interfaces.  Currently, however, abstract interface is still not
+	  supported.
+
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/be/be_generator.cpp: Modified the
+	  {be_ast}_generate::create_{interface|interface_fwd} to create
+	  different interface type based on the information passed in from
+	  FE_InterfaceHeader.
+
+	* TAO_IDL/include/fe_interface_header.h:
+	* TAO_IDL/fe/fe_interface_header.cpp: Added new methods, is_local
+	  and is_abstract to differentiate the type of interface being
+	  parsed.
+
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/include/ast_interface_fwd.h: Extended
+	  {be|ast}_interface and ast_interface_fwd to represent
+	  "local" and "abstract" interfaces other than regular CORBA
+	  interface.  Two new methods, is_local_interface and
+	  is_abstract_interface, are added to differentiate the interface
+	  type.
+
+	  I didn't create new visitor classes for either local or abstract
+	  interfaces because they more or less generate subset of regular
+	  interface and it's esier to simply "turn off" some feature of
+	  regular interface depend on the type of interfaces we are
+	  generating.
+
+	TO-DO: Modify code generation for local interface.  Abstract
+	  interface will come later.
+
+	  Need to add syntax/semantic check for local/abstract interfaces
+	  as defined in CCM.  (E.g., a local object can not be the
+	  argument of a remote operation.)
+
+Mon Apr 17 13:18:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff: Added the "local" keyword.
+
 Thu Apr 13 02:00:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object.h:

@@ -94,16 +94,20 @@ public:
                             UTL_StrList *p);
 
   virtual AST_Module    *create_module(UTL_Scope *s,
-                                       UTL_ScopedName *n, 
+                                       UTL_ScopedName *n,
                                        UTL_StrList *p);
   virtual AST_Interface *create_interface(UTL_ScopedName *n,
                                           AST_Interface **ih,
                                           long nih,
                                           AST_Interface **ih_flat,
                                           long nih_flat,
-                                          UTL_StrList *p);
+                                          UTL_StrList *p,
+                                          idl_bool local,
+                                          idl_bool abstract);
   virtual AST_InterfaceFwd *create_interface_fwd(UTL_ScopedName *n,
-                                                 UTL_StrList *p);
+                                                 UTL_StrList *p,
+                                                 idl_bool local,
+                                                 idl_bool abstract);
   virtual AST_Interface *create_valuetype(UTL_ScopedName *n,
                                           AST_Interface **ih,
                                           long nih,

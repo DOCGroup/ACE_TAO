@@ -83,7 +83,7 @@ ACE_RCSID(fe, fe_interface_header, "$Id$")
  * Constructor(s) and destructor
  */
 
-FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n, 
+FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
                                         UTL_NameList *nl,
                                         UTL_NameList *supports,
                                         idl_bool compile_now)
@@ -91,7 +91,7 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
 {
   if (compile_now)
     {
-      compile_inheritance (nl, 
+      compile_inheritance (nl,
                            supports);
     }
 }
@@ -135,14 +135,14 @@ add_inheritance (AST_Interface *i)
   /*
    * Make sure there's space for one more
    */
-  if (iallocated == iused) 
+  if (iallocated == iused)
     {
-      if (iallocated == 0) 
+      if (iallocated == 0)
         {
           iallocated = INCREMENT;
           iseen = new AST_Interface *[iallocated];
-        } 
-      else 
+        }
+      else
         {
           oiseen = iseen;
           iallocated += INCREMENT;
@@ -171,14 +171,14 @@ add_inheritance_flat (AST_Interface *i)
   /*
    * Make sure there's space for one more
    */
-  if (iallocated_flat == iused_flat) 
+  if (iallocated_flat == iused_flat)
     {
-      if (iallocated_flat == 0) 
+      if (iallocated_flat == 0)
         {
           iallocated_flat = INCREMENT;
           iseen_flat = new AST_Interface *[iallocated_flat];
-        } 
-      else 
+        }
+      else
         {
           oiseen_flat = iseen_flat;
           iallocated_flat += INCREMENT;
@@ -205,7 +205,7 @@ already_seen (AST_Interface *ip)
 {
   long  i;
 
-  for (i = 0; i < iused; i++) 
+  for (i = 0; i < iused; i++)
     {
       if (iseen[i] == ip)
         return I_TRUE;
@@ -220,13 +220,25 @@ already_seen_flat (AST_Interface *ip)
 {
   long  i;
 
-  for (i = 0; i < iused_flat; i++) 
+  for (i = 0; i < iused_flat; i++)
     {
       if (iseen_flat[i] == ip)
         return I_TRUE;
     }
 
   return I_FALSE;
+}
+
+idl_bool
+FE_InterfaceHeader::is_local (void)
+{
+  return 0;
+}
+
+idl_bool
+FE_InterfaceHeader::is_abstract (void)
+{
+  return 0;
 }
 
 /*
@@ -294,18 +306,18 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
    */
   nl = ifaces;
   // loop twice if nl and supports are nonempty
-  for (loops = 0; loops < 2; ++loops) 
+  for (loops = 0; loops < 2; ++loops)
     {
-      if (nl != NULL) 
+      if (nl != NULL)
         {
           l = new UTL_NamelistActiveIterator  (nl);
 
-          while (!(l->is_done ())) 
+          while (!(l->is_done ()))
             {
               /*
                * Check that scope stack is valid
                */
-              if (idl_global->scopes  ()->top () == NULL) 
+              if (idl_global->scopes  ()->top () == NULL)
                 {
                   idl_global->err ()->lookup_error (l->item ());
                   return;
@@ -313,12 +325,12 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
               /*
                * Look it up
                */
-              d = idl_global->scopes  ()->top ()->lookup_by_name  (l->item (), 
+              d = idl_global->scopes  ()->top ()->lookup_by_name  (l->item (),
                                                                    I_TRUE);
               /*
                * Not found?
                */
-              if (d == NULL) 
+              if (d == NULL)
                 {
                   idl_global->err ()->lookup_error (l->item ());
                   return;
@@ -355,7 +367,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
               if (inh_err)
                 {
-                  idl_global->err ()->inheritance_error (pd_interface_name, 
+                  idl_global->err ()->inheritance_error (pd_interface_name,
                                                          d);
                   return;  //%! really ? inh_err=0; and test the remaining...?
                 }
@@ -363,9 +375,9 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
               /*
                * Forward declared interface?
                */
-              if (!i->is_defined ()) 
+              if (!i->is_defined ())
                 {
-                  idl_global->err ()->inheritance_fwd_error (pd_interface_name, 
+                  idl_global->err ()->inheritance_fwd_error (pd_interface_name,
                                                              i);
                   return;
                 }
@@ -477,18 +489,46 @@ FE_InterfaceHeader::n_inherits_flat (void)
   return pd_n_inherits_flat;
 }
 
+FE_Local_InterfaceHeader::FE_Local_InterfaceHeader (UTL_ScopedName *n,
+                                                    UTL_NameList *nl,
+                                                    UTL_NameList *supports,
+                                                    idl_bool compile_now)
+  : FE_InterfaceHeader (n, nl, supports, compile_now)
+{
+}
+
+idl_bool
+FE_Local_InterfaceHeader::is_local (void)
+{
+  return 1;
+}
+
+FE_Abstract_InterfaceHeader::FE_Abstract_InterfaceHeader (UTL_ScopedName *n,
+                                                          UTL_NameList *nl,
+                                                          UTL_NameList *supports,
+                                                          idl_bool compile_now)
+  : FE_InterfaceHeader (n, nl, supports, compile_now)
+{
+}
+
+idl_bool
+FE_Abstract_InterfaceHeader::is_abstract (void)
+{
+  return 1;
+}
+
 // #ifdef IDL_HAS_VALUETYPE
 
 // FE_obv_header
 
-FE_obv_header::FE_obv_header (UTL_ScopedName *n, 
-                              UTL_NameList *nl, 
+FE_obv_header::FE_obv_header (UTL_ScopedName *n,
+                              UTL_NameList *nl,
                               UTL_NameList *supports)
   : FE_InterfaceHeader (n, nl, supports,0),
     truncatable_ (0),
     n_concrete_ (0)
 {
-  compile_inheritance (nl, 
+  compile_inheritance (nl,
                        supports);
 }
 

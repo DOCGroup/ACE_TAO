@@ -167,6 +167,7 @@ extern int yyleng;
 %token		IDL_RAISES
 %token		IDL_CONTEXT
 %token          IDL_NATIVE
+%token          IDL_LOCAL
                  /* OBV tokens  see OMG ptc/98-10-04 3.2.4 */
 %token          IDL_ABSTRACT
 %token          IDL_CUSTOM
@@ -206,7 +207,7 @@ extern int yyleng;
 %type <slval>	string_literals
 
 %type <nlval>	at_least_one_scoped_name scoped_names inheritance_spec
-%type <nlval>	opt_raises supports_spec 
+%type <nlval>	opt_raises supports_spec
 
 %type <elval>	at_least_one_array_dim array_dims
 
@@ -387,7 +388,9 @@ interface :
                                        $1->n_inherits (),
                                        $1->inherits_flat (),
                                        $1->n_inherits_flat (),
-                                       p
+                                       p,
+                                       $1->is_local (),
+                                       $1->is_abstract ()
                                      );
             AST_Interface::fwd_redefinition_helper (i,s,p);
 	    /*
@@ -453,6 +456,36 @@ interface_header :
 	   * recursively
 	   */
 	  $$ = new FE_InterfaceHeader(new UTL_ScopedName($1, NULL), $2);
+	}
+        |
+	IDL_LOCAL interface_decl inheritance_spec
+	{
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InheritSpecSeen);
+	  /*
+	   * Create an AST representation of the information in the header
+	   * part of an interface - this representation contains a computed
+	   * list of all interfaces which this interface inherits from,
+	   * recursively
+	   */
+	  $$ = new FE_Local_InterfaceHeader(new UTL_ScopedName($2, NULL), $3);
+	}
+        |
+	IDL_ABSTRACT interface_decl inheritance_spec
+	{
+           cerr << "error in " << idl_global->filename()->get_string()
+		<< " line " << idl_global->lineno() << ":\n" ;
+           cerr << "Sorry, I (TAO_IDL) can't handle abstract interface yet\n";
+            /* (if not truncatable) */
+#if 0
+	  idl_global->set_parse_state(IDL_GlobalData::PS_InheritSpecSeen);
+	  /*
+	   * Create an AST representation of the information in the header
+	   * part of an interface - this representation contains a computed
+	   * list of all interfaces which this interface inherits from,
+	   * recursively
+	   */
+	  $$ = new FE_Abstract_InterfaceHeader(new UTL_ScopedName($2, NULL), $3);
+#endif
 	}
 	;
 
@@ -591,8 +624,8 @@ value_abs_decl :
 
         ;
 
-value_header : 
-        value_decl 
+value_header :
+        value_decl
         opt_truncatable
         inheritance_spec
         supports_spec
@@ -614,7 +647,7 @@ value_decl
         ;
 
 opt_truncatable :
-          IDL_TRUNCATABLE 
+          IDL_TRUNCATABLE
  	  {
             cerr << "warning in " << idl_global->filename()->get_string()
 	         << " line " << idl_global->lineno() << ":\n" ;
@@ -629,14 +662,14 @@ opt_truncatable :
 	;
 
 supports_spec :
-            IDL_SUPPORTS 
-            scoped_name 
-            { 
-              $$ = new UTL_NameList($2, NULL); 
+            IDL_SUPPORTS
+            scoped_name
+            {
+              $$ = new UTL_NameList($2, NULL);
             }
-        |   /* empty */     
-            { 
-              $$ = NULL; 
+        |   /* empty */
+            {
+              $$ = NULL;
             }
         ;
 
@@ -683,7 +716,7 @@ value_forward_decl :
 	}
 	;
 
-      
+
 value_box_decl
         : value_decl type_spec /* in this order %!?*/
         {
@@ -717,7 +750,7 @@ state_member
             $<vival>$ = AST_Field::vis_PRIVATE;
           }
           member_i
-        ; 
+        ;
 
 exports
 	: exports export
@@ -858,7 +891,45 @@ forward :
 	   * interface. Store it in the enclosing scope
 	   */
 	  if (s != NULL) {
-	    f = idl_global->gen()->create_interface_fwd(n, p);
+	    f = idl_global->gen()->create_interface_fwd(n, p, 0, 0);
+	    (void) s->fe_add_interface_fwd(f);
+	  }
+          idl_global->set_pragmas (p);
+	}
+        |
+	IDL_LOCAL interface_decl
+	{
+	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
+	  UTL_ScopedName	*n = new UTL_ScopedName($2, NULL);
+	  AST_InterfaceFwd	*f = NULL;
+	  UTL_StrList		*p = idl_global->pragmas();
+
+	  idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+	  /*
+	   * Create a node representing a forward declaration of an
+	   * interface. Store it in the enclosing scope
+	   */
+	  if (s != NULL) {
+	    f = idl_global->gen()->create_interface_fwd(n, p, 1, 0);
+	    (void) s->fe_add_interface_fwd(f);
+	  }
+          idl_global->set_pragmas (p);
+	}
+        |
+	IDL_ABSTRACT interface_decl
+	{
+	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
+	  UTL_ScopedName	*n = new UTL_ScopedName($2, NULL);
+	  AST_InterfaceFwd	*f = NULL;
+	  UTL_StrList		*p = idl_global->pragmas();
+
+	  idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+	  /*
+	   * Create a node representing a forward declaration of an
+	   * interface. Store it in the enclosing scope
+	   */
+	  if (s != NULL) {
+	    f = idl_global->gen()->create_interface_fwd(n, p, 0, 1);
 	    (void) s->fe_add_interface_fwd(f);
 	  }
           idl_global->set_pragmas (p);
@@ -959,7 +1030,7 @@ const_type
                 $$ = AST_Expression::EV_string;
             } else if (d->node_type () == AST_Decl::NT_wstring) {
 		$$ = AST_Expression::EV_wstring;
-            } else            
+            } else
 	      $$ = AST_Expression::EV_any;
 	  } else
 	    $$ = AST_Expression::EV_any;
@@ -1375,7 +1446,7 @@ floating_pt_type
 
 fixed_type
 	: IDL_FIXED
-	{	  
+	{
            cerr << "error in " << idl_global->filename()->get_string()
 		<< " line " << idl_global->lineno() << ":\n" ;
            cerr << "Sorry, I (TAO_IDL) can't handle fixed types yet\n";
@@ -1468,8 +1539,8 @@ struct_type :
 	}
 	;
 
-at_least_one_member 
-	: member members 
+at_least_one_member
+	: member members
 	| /* EMPTY */
 	{
 	  idl_global->err()->syntax_error(idl_global->parse_state());
@@ -1501,8 +1572,8 @@ members
 	}
 	;
 
-member  : 
-        { 
+member  :
+        {
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_NA;
         }
@@ -2322,7 +2393,7 @@ exception :
 	  /*
 	   * Done with this exception. Pop its scope from the scope stack
 	   */
-          AST_Exception *ex = 
+          AST_Exception *ex =
             AST_Exception::narrow_from_scope (idl_global->scopes ()->top_non_null ());
           UTL_StrList *p = ex->pragmas ();
 	  idl_global->scopes()->pop();

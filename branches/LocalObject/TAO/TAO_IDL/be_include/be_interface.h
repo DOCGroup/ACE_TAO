@@ -226,7 +226,7 @@ public:
 
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
-  // find the next state, used to hide differences between variants of 
+  // find the next state, used to hide differences between variants of
   // interfaces.
 
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
@@ -235,11 +235,11 @@ public:
 
   void original_interface (be_interface *original_interface);
   // Sets the original interface from which this one was created,
-  // applies only to implied IDL 
+  // applies only to implied IDL
 
   be_interface *original_interface ();
   // Returns the original interface from which this one was created,
-  // applies only to implied IDL 
+  // applies only to implied IDL
 
   be_interface *replacement ();
   // Returns an interface, which can be used instead.
@@ -293,5 +293,34 @@ private:
   be_interface *original_interface_;
 };
 
-#endif  // if !defined
+class be_local_interface : public be_interface
+{
+public:
+  be_local_interface (UTL_ScopedName *n,
+                      AST_Interface **ih,
+                      long nih,
+                      AST_Interface **ih_flat,
+                      long nih_flat,
+                      UTL_StrList *p);
+  // Constructor that sets its scoped name <n>, a list of inherited interfaces
+  // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
 
+  virtual idl_bool is_local_interface ();
+};
+
+class be_abstract_interface : public be_interface
+{
+public:
+  be_abstract_interface (UTL_ScopedName *n,
+                         AST_Interface **ih,
+                         long nih,
+                         AST_Interface **ih_flat,
+                         long nih_flat,
+                         UTL_StrList *p);
+  // Constructor that sets its scoped name <n>, a list of inherited interfaces
+  // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
+
+  virtual idl_bool is_abstract_interface ();
+};
+
+#endif  // if !defined

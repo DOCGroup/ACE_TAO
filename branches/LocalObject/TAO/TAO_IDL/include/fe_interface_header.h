@@ -88,7 +88,7 @@ public:
   // Operations
 
   // Constructor(s)
-  FE_InterfaceHeader (UTL_ScopedName *n, 
+  FE_InterfaceHeader (UTL_ScopedName *n,
                       UTL_NameList *l,
                       UTL_NameList *supports = 0,
                       idl_bool compile_now = 1);
@@ -101,6 +101,12 @@ public:
   long n_inherits (void);
   AST_Interface **inherits_flat (void);
   long n_inherits_flat (void);
+
+  virtual idl_bool is_local (void);
+  // See if we are a local interface.
+
+  virtual idl_bool is_abstract (void);
+  // See if we are an abstract interface.
 
   // Data
 protected:
@@ -131,7 +137,29 @@ private:
 };
 
 
-class FE_obv_header;
+class FE_Local_InterfaceHeader : public FE_InterfaceHeader
+{
+public:
+  FE_Local_InterfaceHeader (UTL_ScopedName *n,
+                            UTL_NameList *l,
+                            UTL_NameList *supports = 0,
+                            idl_bool compile_now = 1);
+
+  virtual idl_bool is_local (void);
+  // See if we are a local interface.
+};
+
+class FE_Abstract_InterfaceHeader : public FE_InterfaceHeader
+{
+public:
+  FE_Abstract_InterfaceHeader (UTL_ScopedName *n,
+                               UTL_NameList *l,
+                               UTL_NameList *supports = 0,
+                               idl_bool compile_now = 1);
+
+  virtual idl_bool is_abstract (void);
+  // See if we are a local interface.
+};
 
 // #ifdef IDL_HAS_VALUETYPE
 
