@@ -52,6 +52,8 @@ else
   LIBS          += -lsocket -ldl -lnsl -lgen
 endif # orbix
 
+LDFLAGS         += -xildoff
+
 OCFLAGS         += -O
 PIC             = -PIC
 AR              = CC
