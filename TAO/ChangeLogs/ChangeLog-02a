@@ -1,3 +1,8 @@
+Thu Jan 17 19:06:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
+	  Fixed unused parameter warnings.
+
 Thu Jan 17 18:59:14 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/IORInfo.cpp : 
