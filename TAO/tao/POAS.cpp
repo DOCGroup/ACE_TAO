@@ -2358,38 +2358,49 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantActivator::_is_a (
                                 );
 }
 
-PortableServer::Servant POA_PortableServer::_tao_collocated_ServantActivator::incarnate (
-                                                                                         const PortableServer::ObjectId & oid,
-                                                                                         PortableServer::POA_ptr  adapter,
-                                                                                         CORBA::Environment &ACE_TRY_ENV
-                                                                                         )
+PortableServer::Servant
+POA_PortableServer::_tao_collocated_ServantActivator::incarnate (
+    const PortableServer::ObjectId & oid,
+    PortableServer::POA_ptr  adapter,
+    CORBA::Environment &ACE_TRY_ENV
+    )
 {
+#if defined(TAO_HAS_EXCEPTIONS)
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* TAO_HAS_EXCEPTIONS */
   return this->servant_->incarnate (
-                                    oid,
-                                    adapter,
-                                    ACE_TRY_ENV
-                                    );
+      oid,
+      adapter
+#if !defined(TAO_HAS_EXCEPTIONS)
+      , ACE_TRY_ENV
+#endif /* TAO_HAS_EXCEPTIONS */
+      );
 }
 
-void POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
-                                                                        const PortableServer::ObjectId & oid,
-                                                                        PortableServer::POA_ptr  adapter,
-                                                                        PortableServer::Servant serv,
-                                                                        CORBA::Boolean cleanup_in_progress,
-                                                                        CORBA::Boolean remaining_activations,
-                                                                        CORBA::Environment &ACE_TRY_ENV
-                                                                        )
+void
+POA_PortableServer::_tao_collocated_ServantActivator::etherealize (
+    const PortableServer::ObjectId & oid,
+    PortableServer::POA_ptr  adapter,
+    PortableServer::Servant serv,
+    CORBA::Boolean cleanup_in_progress,
+    CORBA::Boolean remaining_activations,
+    CORBA::Environment &ACE_TRY_ENV
+    )
 {
+#if defined(TAO_HAS_EXCEPTIONS)
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* TAO_HAS_EXCEPTIONS */
   this->servant_->etherealize (
-                               oid,
-                               adapter,
-                               serv,
-                               cleanup_in_progress,
-                               remaining_activations,
-                               ACE_TRY_ENV
-                               );
+      oid,
+      adapter,
+      serv,
+      cleanup_in_progress,
+      remaining_activations
+#if !defined(TAO_HAS_EXCEPTIONS)
+      , ACE_TRY_ENV
+#endif /* TAO_HAS_EXCEPTIONS */
+      );
 }
-
 
 PortableServer::ServantActivator*
 POA_PortableServer::ServantActivator::_this (CORBA_Environment &)
@@ -2470,40 +2481,52 @@ CORBA::Boolean POA_PortableServer::_tao_collocated_ServantLocator::_is_a (
                                 );
 }
 
-PortableServer::Servant POA_PortableServer::_tao_collocated_ServantLocator::preinvoke (
-                                                                                       const PortableServer::ObjectId & oid,
-                                                                                       PortableServer::POA_ptr  adapter,
-                                                                                       const char * operation,
-                                                                                       PortableServer::ServantLocator::Cookie & the_cookie,
-                                                                                       CORBA::Environment &ACE_TRY_ENV
-                                                                                       )
+PortableServer::Servant
+POA_PortableServer::_tao_collocated_ServantLocator::preinvoke (
+        const PortableServer::ObjectId & oid,
+        PortableServer::POA_ptr  adapter,
+        const char * operation,
+        PortableServer::ServantLocator::Cookie & the_cookie,
+        CORBA::Environment &ACE_TRY_ENV
+        )
 {
+#if defined(TAO_HAS_EXCEPTIONS)
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* TAO_HAS_EXCEPTIONS */
   return this->servant_->preinvoke (
-                                    oid,
-                                    adapter,
-                                    operation,
-                                    the_cookie,
-                                    ACE_TRY_ENV
-                                    );
+      oid,
+      adapter,
+      operation,
+      the_cookie
+#if !defined(TAO_HAS_EXCEPTIONS)
+      , ACE_TRY_ENV
+#endif /* TAO_HAS_EXCEPTIONS */
+      );
 }
 
-void POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
-                                                                     const PortableServer::ObjectId & oid,
-                                                                     PortableServer::POA_ptr  adapter,
-                                                                     const char * operation,
-                                                                     PortableServer::ServantLocator::Cookie the_cookie,
-                                                                     PortableServer::Servant the_servant,
-                                                                     CORBA::Environment &ACE_TRY_ENV
-                                                                     )
+void
+POA_PortableServer::_tao_collocated_ServantLocator::postinvoke (
+        const PortableServer::ObjectId & oid,
+        PortableServer::POA_ptr  adapter,
+        const char * operation,
+        PortableServer::ServantLocator::Cookie the_cookie,
+        PortableServer::Servant the_servant,
+        CORBA::Environment &ACE_TRY_ENV
+        )
 {
+#if defined(TAO_HAS_EXCEPTIONS)
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+#endif /* TAO_HAS_EXCEPTIONS */
   this->servant_->postinvoke (
-                              oid,
-                              adapter,
-                              operation,
-                              the_cookie,
-                              the_servant,
-                              ACE_TRY_ENV
-                              );
+      oid,
+      adapter,
+      operation,
+      the_cookie,
+      the_servant
+#if !defined(TAO_HAS_EXCEPTIONS)
+      , ACE_TRY_ENV
+#endif /* TAO_HAS_EXCEPTIONS */
+      );
 }
 
 

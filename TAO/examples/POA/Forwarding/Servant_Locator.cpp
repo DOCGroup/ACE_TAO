@@ -43,9 +43,11 @@ PortableServer::Servant
 MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr /* poa_ptr */,
                                 const char * /*operation*/,
-                                PortableServer::ServantLocator::Cookie & /* cookie */,
-                                CORBA::Environment &ACE_TRY_ENV)
+                                PortableServer::ServantLocator::Cookie & /* cookie */
+                                TAO_ENV_ARG_DECL)
 {
+  TAO_ENV_ARG_DEFN;
+
   //  ACE_UNUSED_ARG (operation);
 
   if (this->forwarding_ == 0) // do not forward
@@ -94,8 +96,8 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId &,
                                  PortableServer::POA_ptr ,
                                  const char *,
                                  PortableServer::ServantLocator::Cookie ,
-                                 PortableServer::Servant ,
-                                 CORBA::Environment &)
+                                 PortableServer::Servant
+                                 TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 

@@ -1,19 +1,51 @@
+Sat Apr 29 12:54:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/orbconf.h:
+          Define macros to transparently remove the extra
+          CORBA::Environment argument in platforms with exceptions
+          enabled.  This macros (ACE_ENV_ARG_DECL, ENV_ARG_DECL_NOT_USED,
+          ENV_ARG_DECL_DEFN) are intended for declarations of operations
+          that the user derives from, for example, the ServantManagers.
+
+        * tao/POAS.h:
+        * tao/POAS.cpp:
+          Use the new ACE_ENV_ARG_* macros in the declaration of
+          ServantManagers.  This solves [BUGID:41]
+
+        * examples/POA/Forwarding/Servant_Locator.h:
+        * examples/POA/Forwarding/Servant_Locator.cpp:
+        * examples/POA/Loader/Servant_Activator.h:
+        * examples/POA/Loader/Servant_Activator.cpp:
+        * examples/POA/Loader/Servant_Locator.h:
+        * examples/POA/Loader/Servant_Locator.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Activator.h:
+        * examples/POA/On_Demand_Activation/Servant_Activator.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Locator.h:
+        * examples/POA/On_Demand_Activation/Servant_Locator.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Activator.h:
+        * examples/POA/On_Demand_Loading/Servant_Activator.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Locator.h:
+        * examples/POA/On_Demand_Loading/Servant_Locator.cpp:
+          Updated the test to use the new macros.  Normally the
+          applications will not use the macros, but our tests must compile
+          and run correctly with a without native C++ exception support.
+
 Sat Apr 29 14:51:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	  For the generated GIOP request header response flag
-	  value for twoway requests, changed the hard-coded
-	  '131' value to the constant TAO_TWOWAY_RESPONSE_FLAG
-	  defined in corbafwd.h by Bala.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          For the generated GIOP request header response flag
+          value for twoway requests, changed the hard-coded
+          '131' value to the constant TAO_TWOWAY_RESPONSE_FLAG
+          defined in corbafwd.h by Bala.
 
 Sat Apr 29 14:16:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp:
-	* tao/GIOP_Message_Connectors.cpp: Removed support for reliable
-	  oneways from GIOP 1.1 implementation. This means that there are
-	  only two types of calls ie. oneway and two ways. All the
-	  policy settings for reliable oneways will not be considered at
-	  all. They will be mapped to a simple oneway.
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Connectors.cpp: Removed support for reliable
+          oneways from GIOP 1.1 implementation. This means that there are
+          only two types of calls ie. oneway and two ways. All the
+          policy settings for reliable oneways will not be considered at
+          all. They will be mapped to a simple oneway.
 
 Sat Apr 29 11:49:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -24,7 +24,7 @@ ACE_RCSID(On_Demand_Activation, Servant_Locator, "$Id$")
 // Initialization.
 
 ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)
-  : servant_manager_ (orb) 
+  : servant_manager_ (orb)
 {
 }
 
@@ -34,12 +34,14 @@ PortableServer::Servant
 ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr poa,
                              const char * /* operation */,
-                             PortableServer::ServantLocator::Cookie &cookie,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             PortableServer::ServantLocator::Cookie &cookie
+                             TAO_ENV_ARG_DECL)
 {
+  TAO_ENV_ARG_DEFN;
+
   // Convert ObjectID to String.
 
-  CORBA::String_var s = 
+  CORBA::String_var s =
     PortableServer::ObjectId_to_string (oid);
 
   // If ObjectID string has a Foo Substring create and return a
@@ -53,7 +55,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
     {
       // Return the servant as the cookie , used as a check when
       // postinvoke is called on this ServantLocator_i.
-      
+
       cookie = servant;
       return servant;
     }
@@ -71,18 +73,18 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
                               PortableServer::POA_ptr /* poa */,
                               const char * /* operation */,
                               PortableServer::ServantLocator::Cookie cookie,
-                              PortableServer::Servant servant,
-                              CORBA::Environment &/* ACE_TRY_ENV */)
+                              PortableServer::Servant servant
+                              TAO_ENV_ARG_DECL_NOT_USED)
 {
   // Check the passed servant with the cookie.
 
   PortableServer::Servant my_servant =
     ACE_reinterpret_cast (PortableServer::Servant,
                           cookie);
-  
+
   ACE_ASSERT (servant == my_servant);
 
-  this->servant_manager_.destroy_servant (servant, 
+  this->servant_manager_.destroy_servant (servant,
                                           oid);
   // To avoid warning about unused variable with ACE_NDEBUG.
   ACE_UNUSED_ARG (my_servant);
