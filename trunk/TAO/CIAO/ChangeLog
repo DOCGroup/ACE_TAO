@@ -1,7 +1,9 @@
 Tue Aug 12 21:56:42 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+  
         * tools/XML_Helper/Assembly_Spec.h:
           Fixed compilation error from a missing 
           #include "ace/Null_Mutex.h". 
+  
 2003-08-12  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CIAO.mwc: Removed CCF MPC files as they still not work.
