@@ -25,7 +25,9 @@
 #include "be_visitor_operation.h"
 #include "be_visitor_argument.h"
 
-ACE_RCSID(be_visitor_operation, operation_ss, "$Id$")
+ACE_RCSID (be_visitor_operation,
+           operation_ss,
+           "$Id$")
 
 
 // ************************************************************
@@ -123,8 +125,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl
-      << "void *_tao_object_reference, " << be_nl
-      << "void * /* context */, " << be_nl
+      << "void *_tao_object_reference," << be_nl
+      << "void *_tao_servant_upcall," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl;
 
@@ -144,10 +146,19 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   os->indent ();
+
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " *_tao_impl = ("
-      << intf->full_skel_name () << " *)_tao_object_reference;"
-      << be_nl << be_nl;
+  *os << intf->full_skel_name () << " *_tao_impl =" << be_idt_nl
+      << "ACE_static_cast ("
+      << intf->full_skel_name () << " *, _tao_object_reference);"
+      << be_uidt_nl << be_nl;
+
+  // Cast the Servant_Upcall pointer.
+  *os << "TAO_Object_Adapter::Servant_Upcall *_tao_upcall =" << be_idt_nl
+      << "ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, "
+      << "_tao_servant_upcall);"
+      << be_uidt_nl << be_nl;
+
 
   // Declare a return type variable.
   be_visitor_context ctx = *this->ctx_;
@@ -262,6 +273,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   *os << " ri (" << be_idt << be_idt_nl
       << "_tao_server_request," << be_nl
+      << "_tao_upcall," << be_nl
       << "_tao_impl";
 
   // Generate the formal argument fields which are passed to the
@@ -399,25 +411,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
           << "ACE_TRY_CHECK;" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
-      << "ACE_CATCH (PortableInterceptor::ForwardRequest, exc)"
-      << be_idt_nl << "{" << be_idt_nl
-      << "ri.forward_reference (exc); " << be_nl
-      << "_tao_vfr.send_other (" << be_idt_nl
-      << "&ri," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_nl
-      << "ACE_TRY_CHECK;" << be_nl
-    // Unlike the ClientRequestInfo counterpart, we set the forward
-    // location in the TAO_ServerRequest object after we're sure no
-    // other interceptors thrown an exception in the send_other()
-    // interception point.  This is okay since the ServerRequestInfo
-    // makes a copy of the forward reference (ClientRequestInfo
-    // doesn't).  Used as a simple optimization.
-      << "_tao_server_request.forward_location (exc.forward.in ());"
-      << be_uidt_nl
-      << "}" << be_uidt_nl;
-
-  *os << "ACE_CATCHANY" << be_idt_nl
+      << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl;
   // Update the ServerRequestInfo exception attribute.
   *os << "ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl
@@ -427,14 +421,23 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
+  // The send_exception() interception point may have transformed the
+  // caught exception.  In that event, we must not re-throw the caught
+  // exception.
+  *os << be_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "ri.reply_status (ACE_TRY_ENV);" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  *os << be_nl
+      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
+      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"
+      << be_idt_nl;
+
   if (be_global->use_raw_throw ())
-    {
-      *os << "throw;" << be_uidt_nl;
-    }
+    *os << "throw;" << be_uidt << be_uidt_nl;
   else
-    {
-      *os << "ACE_RE_THROW;" << be_uidt_nl;
-    }
+    *os << "ACE_RE_THROW;" << be_uidt << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
       << "ACE_ENDTRY;" << be_nl;

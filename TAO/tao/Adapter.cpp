@@ -11,7 +11,9 @@
 # include "Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Adapter, "$Id$")
+ACE_RCSID (tao,
+           Adapter,
+           "$Id$")
 
 TAO_Adapter::~TAO_Adapter (void)
 {
@@ -102,7 +104,6 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter,
 void
 TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
                                 TAO_ServerRequest &request,
-                                void *context, /* unused? */
                                 CORBA::Object_out forward_to,
                                 CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -111,7 +112,6 @@ TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
     {
       int r = this->adapters_[i]->dispatch (key,
                                             request,
-                                            context,
                                             forward_to,
                                             ACE_TRY_ENV);
       ACE_CHECK;

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_MESSAGINGC_H_
-#define _TAO_IDL_ORIG_MESSAGINGC_H_
+#ifndef _TAO_IDL_MESSAGINGC_H_
+#define _TAO_IDL_MESSAGINGC_H_
 
 #include "ace/pre.h"
 #include "orbconf.h"
@@ -178,7 +178,7 @@ TAO_NAMESPACE  Messaging
     static RebindPolicy_ptr nil (void);
     static RebindPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RebindPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -217,7 +217,7 @@ TAO_NAMESPACE  Messaging
 #if !defined (_MESSAGING_REBINDPOLICY_CH_)
 #define _MESSAGING_REBINDPOLICY_CH_
 
-class TAO_Export RebindPolicy: public virtual CORBA::Policy
+  class TAO_Export RebindPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -313,7 +313,7 @@ class TAO_Export RebindPolicy: public virtual CORBA::Policy
     static SyncScopePolicy_ptr nil (void);
     static SyncScopePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     SyncScopePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -352,7 +352,7 @@ class TAO_Export RebindPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY_CH_
 
-class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
+  class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -498,7 +498,7 @@ class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
     static RequestPriorityPolicy_ptr nil (void);
     static RequestPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RequestPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -537,7 +537,7 @@ class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY_CH_
 
-class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
+  class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -629,7 +629,7 @@ class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
     static ReplyPriorityPolicy_ptr nil (void);
     static ReplyPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -668,7 +668,7 @@ class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY_CH_
 
-class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
+  class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -764,7 +764,7 @@ class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
     static RequestStartTimePolicy_ptr nil (void);
     static RequestStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RequestStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -803,7 +803,7 @@ class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY_CH_
 
-class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
+  class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -899,7 +899,7 @@ class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
     static RequestEndTimePolicy_ptr nil (void);
     static RequestEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RequestEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -938,7 +938,7 @@ class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY_CH_
 
-class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
+  class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1034,7 +1034,7 @@ class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
     static ReplyStartTimePolicy_ptr nil (void);
     static ReplyStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1073,7 +1073,7 @@ class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY_CH_
 
-class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
+  class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1169,7 +1169,7 @@ class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
     static ReplyEndTimePolicy_ptr nil (void);
     static ReplyEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1208,7 +1208,7 @@ class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY_CH_
 
-class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
+  class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1304,7 +1304,7 @@ class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
     static RelativeRequestTimeoutPolicy_ptr nil (void);
     static RelativeRequestTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RelativeRequestTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1343,7 +1343,7 @@ class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_
 
-class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
+  class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1439,7 +1439,7 @@ class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
     static RelativeRoundtripTimeoutPolicy_ptr nil (void);
     static RelativeRoundtripTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RelativeRoundtripTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1478,7 +1478,7 @@ class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_
 
-class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
+  class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1624,7 +1624,7 @@ class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
     static RoutingPolicy_ptr nil (void);
     static RoutingPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     RoutingPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1663,7 +1663,7 @@ class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_ROUTINGPOLICY_CH_)
 #define _MESSAGING_ROUTINGPOLICY_CH_
 
-class TAO_Export RoutingPolicy: public virtual CORBA::Policy
+  class TAO_Export RoutingPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1759,7 +1759,7 @@ class TAO_Export RoutingPolicy: public virtual CORBA::Policy
     static MaxHopsPolicy_ptr nil (void);
     static MaxHopsPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     MaxHopsPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1798,7 +1798,7 @@ class TAO_Export RoutingPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_MAXHOPSPOLICY_CH_)
 #define _MESSAGING_MAXHOPSPOLICY_CH_
 
-class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
+  class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1894,7 +1894,7 @@ class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
     static QueueOrderPolicy_ptr nil (void);
     static QueueOrderPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     QueueOrderPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1933,7 +1933,7 @@ class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_QUEUEORDERPOLICY_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY_CH_
 
-class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
+  class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2480,7 +2480,7 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
     static ReplyHandler_ptr nil (void);
     static ReplyHandler_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ReplyHandler_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2519,13 +2519,13 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 #if !defined (_MESSAGING_REPLYHANDLER_CH_)
 #define _MESSAGING_REPLYHANDLER_CH_
 
-// Forward Classes Declaration
+  // Forward Classes Declaration
   class _TAO_ReplyHandler_Proxy_Impl;
   class _TAO_ReplyHandler_Remote_Proxy_Impl;
   class _TAO_ReplyHandler_Proxy_Broker;
   class _TAO_ReplyHandler_Remote_Proxy_Broker;
 
-  class TAO_Export ReplyHandler : public virtual CORBA_Object
+  class TAO_Export ReplyHandler : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2553,35 +2553,35 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
     static void _tao_any_destructor (void*);
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &ACE_TRY_ENV = 
+        const CORBA::Char *type_id,
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   private:
     _TAO_ReplyHandler_Proxy_Broker *the_TAO_ReplyHandler_Proxy_Broker_;
-    
+
   protected:
     ReplyHandler (int collocated = 0);
-    
+
     protected:
       // This methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode
       virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
-      
+
       ReplyHandler (
-        TAO_Stub *objref, 
+        TAO_Stub *objref,
         CORBA::Boolean _tao_collocated = 0,
         TAO_Abstract_ServantBase *servant = 0
         );
-      
+
       friend class _TAO_ReplyHandler_Remote_Proxy_Impl;
       friend class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
       friend class _TAO_ReplyHandler_Direct_Proxy_Impl;
-    
+
     virtual ~ReplyHandler (void);
   private:
     ReplyHandler (const ReplyHandler &);
@@ -2675,7 +2675,7 @@ public:
 
   virtual _TAO_ReplyHandler_Proxy_Impl &select_proxy (
     ReplyHandler *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:

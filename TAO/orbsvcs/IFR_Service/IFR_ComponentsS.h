@@ -55,7 +55,7 @@ TAO_NAMESPACE  POA_IR
   class _TAO_ComponentRepository_ThruPOA_Proxy_Impl;
   class _TAO_ComponentRepository_Strategized_Proxy_Broker;
   
-  class  ComponentRepository : public virtual POA_CORBA_Repository
+  class TAO_IFR_Client_Export ComponentRepository : public virtual POA_CORBA_Repository
   {
   protected:
     ComponentRepository (void);
@@ -78,32 +78,28 @@ TAO_NAMESPACE  POA_IR
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
       );
 
     virtual void _dispatch (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
       );
 
     ::IR::ComponentRepository *_this (
@@ -125,13 +121,12 @@ TAO_NAMESPACE  POA_IR
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    static void create_component_skel (
-        TAO_ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+    
+        static void create_component_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
       );
 
     virtual IR::HomeDef_ptr create_home (
@@ -147,13 +142,12 @@ TAO_NAMESPACE  POA_IR
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-    static void create_home_skel (
-        TAO_ServerRequest &_tao_req, 
-        void *_tao_obj, 
-        void *_tao_context, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+    
+        static void create_home_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
       );
 
     static void lookup_id_skel (
@@ -380,7 +374,7 @@ TAO_NAMESPACE  POA_IR
   //               Strategized Proxy Broker Declaration 
   //
   
-  class  _TAO_ComponentRepository_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentRepository_Proxy_Broker
+  class TAO_IFR_Client_Export _TAO_ComponentRepository_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentRepository_Proxy_Broker
   {
   public: 
     _TAO_ComponentRepository_Strategized_Proxy_Broker (void);
@@ -389,30 +383,30 @@ TAO_NAMESPACE  POA_IR
     
     virtual ::IR::_TAO_ComponentRepository_Proxy_Impl &select_proxy (
       ::IR::ComponentRepository *object,
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      CORBA_Environment &ACE_TRY_ENV
     );
   
   private:
   
-  // Helper methods that takes care to create the proxy
-  // as soon as their use is necessary.
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
     void create_proxy (
       int collocation_strategy,
       CORBA::Environment &ACE_TRY_ENV
     );
-  
+    
   private:
     
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::IR::_TAO_ComponentRepository_Proxy_Impl
-     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
     
     TAO_SYNCH_MUTEX mutex_;
-  // This funxtion is used to get an handle to the unique instance
-  // of the Strategized Proxy Broker that is available for a given
-  // interface.
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
   public:
     static _TAO_ComponentRepository_Strategized_Proxy_Broker *the_TAO_ComponentRepository_Strategized_Proxy_Broker (void);
@@ -424,4135 +418,4061 @@ TAO_NAMESPACE  POA_IR
   ///////////////////////////////////////////////////////////////////////
   
   
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_ComponentRepository_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_ComponentRepository_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_Repository_ThruPOA_Proxy_Impl
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
   
-{
-public:
-  _TAO_ComponentRepository_ThruPOA_Proxy_Impl (void);
-  
-  virtual ~_TAO_ComponentRepository_ThruPOA_Proxy_Impl (void) { }
-  
+  class TAO_IFR_Client_Export _TAO_ComponentRepository_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_ComponentRepository_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_Repository_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_ComponentRepository_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_ComponentRepository_ThruPOA_Proxy_Impl (void) { }
+    
     virtual IR::ComponentDef_ptr create_component (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      IR::ComponentDef_ptr base_component,
-      const CORBA_InterfaceDefSeq & supports_interfaces,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::HomeDef_ptr create_home (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      IR::HomeDef_ptr base_home,
-      IR::ComponentDef_ptr managed_component,
-      CORBA_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-};
-
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class ProvidesDef;
-typedef ProvidesDef *ProvidesDef_ptr;
-// Forward Classes Declaration
-class _TAO_ProvidesDef_ThruPOA_Proxy_Impl;
-class _TAO_ProvidesDef_Strategized_Proxy_Broker;
-
-class  ProvidesDef : public virtual POA_CORBA_Contained
-{
-protected:
-  ProvidesDef (void);
-
-public:
-  ProvidesDef (const ProvidesDef& rhs);
-  virtual ~ProvidesDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::ProvidesDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  virtual CORBA_InterfaceDef_ptr interface_type (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_interface_type_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_ProvidesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ProvidesDef_Proxy_Broker
-{
-public: 
-  _TAO_ProvidesDef_Strategized_Proxy_Broker (void);
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR::ComponentDef_ptr base_component,
+        const CORBA_InterfaceDefSeq & supports_interfaces,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::HomeDef_ptr create_home (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR::HomeDef_ptr base_home,
+        IR::ComponentDef_ptr managed_component,
+        CORBA_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    
+  };
   
-  virtual ~_TAO_ProvidesDef_Strategized_Proxy_Broker (void);
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
   
-  virtual ::IR::_TAO_ProvidesDef_Proxy_Impl &select_proxy (
-    ::IR::ProvidesDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
-
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
-private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_ProvidesDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+  class ProvidesDef;
+  typedef ProvidesDef *ProvidesDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_ProvidesDef_ThruPOA_Proxy_Impl;
+  class _TAO_ProvidesDef_Strategized_Proxy_Broker;
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
+  class TAO_IFR_Client_Export ProvidesDef : public virtual POA_CORBA_Contained
+  {
+  protected:
+    ProvidesDef (void);
 
-public:
-  static _TAO_ProvidesDef_Strategized_Proxy_Broker *the_TAO_ProvidesDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
+  public:
+    ProvidesDef (const ProvidesDef& rhs);
+    virtual ~ProvidesDef (void);
 
 
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
 
-class  _TAO_ProvidesDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_ProvidesDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
-  
-{
-public:
-  _TAO_ProvidesDef_ThruPOA_Proxy_Impl (void);
-  
-  virtual ~_TAO_ProvidesDef_ThruPOA_Proxy_Impl (void) { }
-  
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::ProvidesDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
     virtual CORBA_InterfaceDef_ptr interface_type (
-      CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_interface_type_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
+  };
+
+  
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
+  
+  class TAO_IFR_Client_Export _TAO_ProvidesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ProvidesDef_Proxy_Broker
+  {
+  public: 
+    _TAO_ProvidesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_ProvidesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_ProvidesDef_Proxy_Impl &select_proxy (
+      ::IR::ProvidesDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
+
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
       CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-};
-
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class UsesDef;
-typedef UsesDef *UsesDef_ptr;
-// Forward Classes Declaration
-class _TAO_UsesDef_ThruPOA_Proxy_Impl;
-class _TAO_UsesDef_Strategized_Proxy_Broker;
-
-class  UsesDef : public virtual POA_CORBA_Contained
-{
-protected:
-  UsesDef (void);
-
-public:
-  UsesDef (const UsesDef& rhs);
-  virtual ~UsesDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
     );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::UsesDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  virtual CORBA_InterfaceDef_ptr interface_type (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_interface_type_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual CORBA::Boolean is_multiple (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_is_multiple_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_UsesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_UsesDef_Proxy_Broker
-{
-public: 
-  _TAO_UsesDef_Strategized_Proxy_Broker (void);
-  
-  virtual ~_TAO_UsesDef_Strategized_Proxy_Broker (void);
-  
-  virtual ::IR::_TAO_UsesDef_Proxy_Impl &select_proxy (
-    ::IR::UsesDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
-
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
+    
 private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_UsesDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_ProvidesDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_UsesDef_Strategized_Proxy_Broker *the_TAO_UsesDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_UsesDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_UsesDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
+  public:
+    static _TAO_ProvidesDef_Strategized_Proxy_Broker *the_TAO_ProvidesDef_Strategized_Proxy_Broker (void);
+  };
   
-{
-public:
-  _TAO_UsesDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_UsesDef_ThruPOA_Proxy_Impl (void) { }
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_ProvidesDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_ProvidesDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_ProvidesDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_ProvidesDef_ThruPOA_Proxy_Impl (void) { }
+    
     virtual CORBA_InterfaceDef_ptr interface_type (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual CORBA::Boolean is_multiple (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-};
-
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class EventDef;
-typedef EventDef *EventDef_ptr;
-// Forward Classes Declaration
-class _TAO_EventDef_ThruPOA_Proxy_Impl;
-class _TAO_EventDef_Strategized_Proxy_Broker;
-
-class  EventDef : public virtual POA_CORBA_Contained
-{
-protected:
-  EventDef (void);
-
-public:
-  EventDef (const EventDef& rhs);
-  virtual ~EventDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::EventDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  virtual CORBA::Boolean is_a (
-      const char * event_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void is_a_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual CORBA_ValueDef_ptr event (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_event_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_EventDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EventDef_Proxy_Broker
-{
-public: 
-  _TAO_EventDef_Strategized_Proxy_Broker (void);
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    
+  };
   
-  virtual ~_TAO_EventDef_Strategized_Proxy_Broker (void);
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
   
-  virtual ::IR::_TAO_EventDef_Proxy_Impl &select_proxy (
-    ::IR::EventDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
+  
+  class UsesDef;
+  typedef UsesDef *UsesDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_UsesDef_ThruPOA_Proxy_Impl;
+  class _TAO_UsesDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export UsesDef : public virtual POA_CORBA_Contained
+  {
+  protected:
+    UsesDef (void);
 
-private:
+  public:
+    UsesDef (const UsesDef& rhs);
+    virtual ~UsesDef (void);
 
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
 
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::UsesDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    virtual CORBA_InterfaceDef_ptr interface_type (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_interface_type_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual CORBA::Boolean is_multiple (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_is_multiple_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
+  };
+
+  
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
+  
+  class TAO_IFR_Client_Export _TAO_UsesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_UsesDef_Proxy_Broker
+  {
+  public: 
+    _TAO_UsesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_UsesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_UsesDef_Proxy_Impl &select_proxy (
+      ::IR::UsesDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
+
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+    
 private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_EventDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_UsesDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_EventDef_Strategized_Proxy_Broker *the_TAO_EventDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_EventDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_EventDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
+  public:
+    static _TAO_UsesDef_Strategized_Proxy_Broker *the_TAO_UsesDef_Strategized_Proxy_Broker (void);
+  };
   
-{
-public:
-  _TAO_EventDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_EventDef_ThruPOA_Proxy_Impl (void) { }
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_UsesDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_UsesDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_UsesDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_UsesDef_ThruPOA_Proxy_Impl (void) { }
+    
+    virtual CORBA_InterfaceDef_ptr interface_type (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual CORBA::Boolean is_multiple (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    
+  };
+  
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class EventDef;
+  typedef EventDef *EventDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_EventDef_ThruPOA_Proxy_Impl;
+  class _TAO_EventDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export EventDef : public virtual POA_CORBA_Contained
+  {
+  protected:
+    EventDef (void);
+
+  public:
+    EventDef (const EventDef& rhs);
+    virtual ~EventDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::EventDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
     virtual CORBA::Boolean is_a (
-      CORBA_Object *_collocated_tao_target_,
-      const char * event_id,
+        const char * event_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void is_a_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual CORBA_ValueDef_ptr event (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_event_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
+  };
+
+  
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
+  
+  class TAO_IFR_Client_Export _TAO_EventDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EventDef_Proxy_Broker
+  {
+  public: 
+    _TAO_EventDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_EventDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_EventDef_Proxy_Impl &select_proxy (
+      ::IR::EventDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
+
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
       CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    );
+    
+private:
+  
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_EventDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
+  
+  public:
+    static _TAO_EventDef_Strategized_Proxy_Broker *the_TAO_EventDef_Strategized_Proxy_Broker (void);
+  };
+  
+  
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_EventDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_EventDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_EventDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_EventDef_ThruPOA_Proxy_Impl (void) { }
+    
+    virtual CORBA::Boolean is_a (
+        CORBA_Object *_collocated_tao_target_,
+        const char * event_id,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual CORBA_ValueDef_ptr event (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    
+  };
+  
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class EmitsDef;
+  typedef EmitsDef *EmitsDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_EmitsDef_ThruPOA_Proxy_Impl;
+  class _TAO_EmitsDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export EmitsDef : public virtual EventDef
+  {
+  protected:
+    EmitsDef (void);
 
-  virtual CORBA_ValueDef_ptr event (
-      CORBA_Object *_collocated_tao_target_,
+  public:
+    EmitsDef (const EmitsDef& rhs);
+    virtual ~EmitsDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::EmitsDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    static void is_a_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_event_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
+  };
+
+  
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
+  
+  class TAO_IFR_Client_Export _TAO_EmitsDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EmitsDef_Proxy_Broker
+  {
+  public: 
+    _TAO_EmitsDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_EmitsDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_EmitsDef_Proxy_Impl &select_proxy (
+      ::IR::EmitsDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
+
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
       CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-};
-
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class EmitsDef;
-typedef EmitsDef *EmitsDef_ptr;
-// Forward Classes Declaration
-class _TAO_EmitsDef_ThruPOA_Proxy_Impl;
-class _TAO_EmitsDef_Strategized_Proxy_Broker;
-
-class  EmitsDef : public virtual EventDef
-{
-protected:
-  EmitsDef (void);
-
-public:
-  EmitsDef (const EmitsDef& rhs);
-  virtual ~EmitsDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
     );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::EmitsDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  static void is_a_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_event_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_EmitsDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EmitsDef_Proxy_Broker
-{
-public: 
-  _TAO_EmitsDef_Strategized_Proxy_Broker (void);
-  
-  virtual ~_TAO_EmitsDef_Strategized_Proxy_Broker (void);
-  
-  virtual ::IR::_TAO_EmitsDef_Proxy_Impl &select_proxy (
-    ::IR::EmitsDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
-
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
+    
 private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_EmitsDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_EmitsDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_EmitsDef_Strategized_Proxy_Broker *the_TAO_EmitsDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_EmitsDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_EmitsDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
+  public:
+    static _TAO_EmitsDef_Strategized_Proxy_Broker *the_TAO_EmitsDef_Strategized_Proxy_Broker (void);
+  };
   
-{
-public:
-  _TAO_EmitsDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_EmitsDef_ThruPOA_Proxy_Impl (void) { }
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_EmitsDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_EmitsDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_EmitsDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_EmitsDef_ThruPOA_Proxy_Impl (void) { }
+    
+  };
+  
+
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class PublishesDef;
+  typedef PublishesDef *PublishesDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_PublishesDef_ThruPOA_Proxy_Impl;
+  class _TAO_PublishesDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export PublishesDef : public virtual EventDef
+  {
+  protected:
+    PublishesDef (void);
+
+  public:
+    PublishesDef (const PublishesDef& rhs);
+    virtual ~PublishesDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::PublishesDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    static void is_a_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_event_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
   };
 
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class PublishesDef;
-typedef PublishesDef *PublishesDef_ptr;
-// Forward Classes Declaration
-class _TAO_PublishesDef_ThruPOA_Proxy_Impl;
-class _TAO_PublishesDef_Strategized_Proxy_Broker;
-
-class  PublishesDef : public virtual EventDef
-{
-protected:
-  PublishesDef (void);
-
-public:
-  PublishesDef (const PublishesDef& rhs);
-  virtual ~PublishesDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::PublishesDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  static void is_a_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_event_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_PublishesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PublishesDef_Proxy_Broker
-{
-public: 
-  _TAO_PublishesDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_PublishesDef_Strategized_Proxy_Broker (void);
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
   
-  virtual ::IR::_TAO_PublishesDef_Proxy_Impl &select_proxy (
-    ::IR::PublishesDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
+  class TAO_IFR_Client_Export _TAO_PublishesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PublishesDef_Proxy_Broker
+  {
+  public: 
+    _TAO_PublishesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_PublishesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_PublishesDef_Proxy_Impl &select_proxy (
+      ::IR::PublishesDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
 
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+    
 private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_PublishesDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_PublishesDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_PublishesDef_Strategized_Proxy_Broker *the_TAO_PublishesDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_PublishesDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_PublishesDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
+  public:
+    static _TAO_PublishesDef_Strategized_Proxy_Broker *the_TAO_PublishesDef_Strategized_Proxy_Broker (void);
+  };
   
-{
-public:
-  _TAO_PublishesDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_PublishesDef_ThruPOA_Proxy_Impl (void) { }
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_PublishesDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_PublishesDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_PublishesDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_PublishesDef_ThruPOA_Proxy_Impl (void) { }
+    
+  };
+  
+
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class ConsumesDef;
+  typedef ConsumesDef *ConsumesDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_ConsumesDef_ThruPOA_Proxy_Impl;
+  class _TAO_ConsumesDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export ConsumesDef : public virtual EventDef
+  {
+  protected:
+    ConsumesDef (void);
+
+  public:
+    ConsumesDef (const ConsumesDef& rhs);
+    virtual ~ConsumesDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::ConsumesDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    static void is_a_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_event_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
   };
 
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class ConsumesDef;
-typedef ConsumesDef *ConsumesDef_ptr;
-// Forward Classes Declaration
-class _TAO_ConsumesDef_ThruPOA_Proxy_Impl;
-class _TAO_ConsumesDef_Strategized_Proxy_Broker;
-
-class  ConsumesDef : public virtual EventDef
-{
-protected:
-  ConsumesDef (void);
-
-public:
-  ConsumesDef (const ConsumesDef& rhs);
-  virtual ~ConsumesDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::ConsumesDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  static void is_a_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_event_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_ConsumesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ConsumesDef_Proxy_Broker
-{
-public: 
-  _TAO_ConsumesDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_ConsumesDef_Strategized_Proxy_Broker (void);
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
   
-  virtual ::IR::_TAO_ConsumesDef_Proxy_Impl &select_proxy (
-    ::IR::ConsumesDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
+  class TAO_IFR_Client_Export _TAO_ConsumesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ConsumesDef_Proxy_Broker
+  {
+  public: 
+    _TAO_ConsumesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_ConsumesDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_ConsumesDef_Proxy_Impl &select_proxy (
+      ::IR::ConsumesDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
 
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+    
 private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_ConsumesDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_ConsumesDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_ConsumesDef_Strategized_Proxy_Broker *the_TAO_ConsumesDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_ConsumesDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_ConsumesDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
-  
-{
-public:
-  _TAO_ConsumesDef_ThruPOA_Proxy_Impl (void);
-  
-  virtual ~_TAO_ConsumesDef_ThruPOA_Proxy_Impl (void) { }
-  
+  public:
+    static _TAO_ConsumesDef_Strategized_Proxy_Broker *the_TAO_ConsumesDef_Strategized_Proxy_Broker (void);
   };
-
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class ComponentDef;
-typedef ComponentDef *ComponentDef_ptr;
-// Forward Classes Declaration
-class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
-class _TAO_ComponentDef_Strategized_Proxy_Broker;
-
-class  ComponentDef : public virtual POA_CORBA_InterfaceDef
-{
-protected:
-  ComponentDef (void);
-
-public:
-  ComponentDef (const ComponentDef& rhs);
-  virtual ~ComponentDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::ComponentDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  virtual CORBA_InterfaceDefSeq * supported_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_supported_interfaces_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void supported_interfaces (
-      const CORBA_InterfaceDefSeq & supported_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _set_supported_interfaces_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::ComponentDef_ptr base_component (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_base_component_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::ProvidesDefSeq * provides_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_provides_interfaces_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::UsesDefSeq * uses_interfaces (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_uses_interfaces_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::EmitsDefSeq * emits_events (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_emits_events_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::PublishesDefSeq * publishes_events (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_publishes_events_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::ConsumesDefSeq * consumes_events (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_consumes_events_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual CORBA::Boolean is_basic (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_is_basic_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::ProvidesDef_ptr create_provides (
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_InterfaceDef_ptr interface_type,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_provides_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::UsesDef_ptr create_uses (
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_InterfaceDef_ptr interface_type,
-      CORBA::Boolean is_multiple,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_uses_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::EmitsDef_ptr create_emits (
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_emits_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::PublishesDef_ptr create_publishes (
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_publishes_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::ConsumesDef_ptr create_consumes (
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_consumes_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_base_interfaces_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_base_interfaces_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void is_a_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_attribute_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_operation_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void lookup_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void contents_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void lookup_name_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_contents_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_module_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_constant_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_struct_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_union_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_enum_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_alias_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_value_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_value_box_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_exception_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_native_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_abstract_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_local_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_type_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_ComponentDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentDef_Proxy_Broker
-{
-public: 
-  _TAO_ComponentDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_ComponentDef_Strategized_Proxy_Broker (void);
   
-  virtual ::IR::_TAO_ComponentDef_Proxy_Impl &select_proxy (
-    ::IR::ComponentDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
-
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
-private:
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_ComponentDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_ComponentDef_Strategized_Proxy_Broker *the_TAO_ComponentDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_ComponentDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_ComponentDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_InterfaceDef_ThruPOA_Proxy_Impl
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
   
-{
-public:
-  _TAO_ComponentDef_ThruPOA_Proxy_Impl (void);
+  class TAO_IFR_Client_Export _TAO_ConsumesDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_ConsumesDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_ConsumesDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_ConsumesDef_ThruPOA_Proxy_Impl (void) { }
+    
+  };
   
-  virtual ~_TAO_ComponentDef_ThruPOA_Proxy_Impl (void) { }
+
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  class ComponentDef;
+  typedef ComponentDef *ComponentDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
+  class _TAO_ComponentDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export ComponentDef : public virtual POA_CORBA_InterfaceDef
+  {
+  protected:
+    ComponentDef (void);
+
+  public:
+    ComponentDef (const ComponentDef& rhs);
+    virtual ~ComponentDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::ComponentDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
     virtual CORBA_InterfaceDefSeq * supported_interfaces (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_supported_interfaces_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual void supported_interfaces (
-      CORBA_Object *_collocated_tao_target_,
-      const CORBA_InterfaceDefSeq & supported_interfaces,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual void supported_interfaces (
+        const CORBA_InterfaceDefSeq & supported_interfaces,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _set_supported_interfaces_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::ComponentDef_ptr base_component (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::ComponentDef_ptr base_component (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_base_component_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::ProvidesDefSeq * provides_interfaces (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::ProvidesDefSeq * provides_interfaces (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_provides_interfaces_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::UsesDefSeq * uses_interfaces (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::UsesDefSeq * uses_interfaces (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_uses_interfaces_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::EmitsDefSeq * emits_events (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::EmitsDefSeq * emits_events (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_emits_events_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::PublishesDefSeq * publishes_events (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::PublishesDefSeq * publishes_events (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_publishes_events_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::ConsumesDefSeq * consumes_events (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::ConsumesDefSeq * consumes_events (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_consumes_events_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual CORBA::Boolean is_basic (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual CORBA::Boolean is_basic (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_is_basic_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::ProvidesDef_ptr create_provides (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_InterfaceDef_ptr interface_type,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::ProvidesDef_ptr create_provides (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_InterfaceDef_ptr interface_type,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_provides_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::UsesDef_ptr create_uses (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_InterfaceDef_ptr interface_type,
-      CORBA::Boolean is_multiple,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::UsesDef_ptr create_uses (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_InterfaceDef_ptr interface_type,
+        CORBA::Boolean is_multiple,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_uses_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::EmitsDef_ptr create_emits (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::EmitsDef_ptr create_emits (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_emits_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::PublishesDef_ptr create_publishes (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::PublishesDef_ptr create_publishes (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_publishes_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual IR::ConsumesDef_ptr create_consumes (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual IR::ConsumesDef_ptr create_consumes (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_consumes_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-};
+    static void _get_base_interfaces_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_base_interfaces_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void is_a_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_attribute_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_operation_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void lookup_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void contents_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void lookup_name_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_contents_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_module_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_constant_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_struct_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_union_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_enum_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_alias_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_value_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_value_box_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_exception_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_native_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_abstract_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_local_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_type_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
 
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
+  };
 
-
-class PrimaryKeyDef;
-typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
-// Forward Classes Declaration
-class _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl;
-class _TAO_PrimaryKeyDef_Strategized_Proxy_Broker;
-
-class  PrimaryKeyDef : public virtual POA_CORBA_Contained
-{
-protected:
-  PrimaryKeyDef (void);
-
-public:
-  PrimaryKeyDef (const PrimaryKeyDef& rhs);
-  virtual ~PrimaryKeyDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::PrimaryKeyDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  virtual CORBA::Boolean is_a (
-      const char * primary_key_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void is_a_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual CORBA_ValueDef_ptr primary_key (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_primary_key_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_PrimaryKeyDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Broker
-{
-public: 
-  _TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void);
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
   
-  virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Impl &select_proxy (
-    ::IR::PrimaryKeyDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
+  class TAO_IFR_Client_Export _TAO_ComponentDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentDef_Proxy_Broker
+  {
+  public: 
+    _TAO_ComponentDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_ComponentDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_ComponentDef_Proxy_Impl &select_proxy (
+      ::IR::ComponentDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
 
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+    
 private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
-private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_PrimaryKeyDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_ComponentDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_PrimaryKeyDef_Strategized_Proxy_Broker *the_TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
+  public:
+    static _TAO_ComponentDef_Strategized_Proxy_Broker *the_TAO_ComponentDef_Strategized_Proxy_Broker (void);
+  };
   
-{
-public:
-  _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl (void) { }
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_ComponentDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_ComponentDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_InterfaceDef_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_ComponentDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_ComponentDef_ThruPOA_Proxy_Impl (void) { }
+    
+    virtual CORBA_InterfaceDefSeq * supported_interfaces (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual void supported_interfaces (
+        CORBA_Object *_collocated_tao_target_,
+        const CORBA_InterfaceDefSeq & supported_interfaces,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::ComponentDef_ptr base_component (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::ProvidesDefSeq * provides_interfaces (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::UsesDefSeq * uses_interfaces (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::EmitsDefSeq * emits_events (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::PublishesDefSeq * publishes_events (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::ConsumesDefSeq * consumes_events (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual CORBA::Boolean is_basic (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::ProvidesDef_ptr create_provides (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_InterfaceDef_ptr interface_type,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::UsesDef_ptr create_uses (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_InterfaceDef_ptr interface_type,
+        CORBA::Boolean is_multiple,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::EmitsDef_ptr create_emits (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::PublishesDef_ptr create_publishes (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::ConsumesDef_ptr create_consumes (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr value,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    
+  };
+  
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class PrimaryKeyDef;
+  typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl;
+  class _TAO_PrimaryKeyDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export PrimaryKeyDef : public virtual POA_CORBA_Contained
+  {
+  protected:
+    PrimaryKeyDef (void);
+
+  public:
+    PrimaryKeyDef (const PrimaryKeyDef& rhs);
+    virtual ~PrimaryKeyDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::PrimaryKeyDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
     virtual CORBA::Boolean is_a (
-      CORBA_Object *_collocated_tao_target_,
-      const char * primary_key_id,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+        const char * primary_key_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void is_a_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-  virtual CORBA_ValueDef_ptr primary_key (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual CORBA_ValueDef_ptr primary_key (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_primary_key_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
 
-};
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
 
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
 
-class FactoryDef;
-typedef FactoryDef *FactoryDef_ptr;
-// Forward Classes Declaration
-class _TAO_FactoryDef_ThruPOA_Proxy_Impl;
-class _TAO_FactoryDef_Strategized_Proxy_Broker;
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
-class  FactoryDef : public virtual POA_CORBA_OperationDef
-{
-protected:
-  FactoryDef (void);
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
 
-public:
-  FactoryDef (const FactoryDef& rhs);
-  virtual ~FactoryDef (void);
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::FactoryDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  static void _get_result_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_result_def_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_result_def_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_params_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_params_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_mode_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_mode_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_contexts_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_contexts_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_exceptions_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_exceptions_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
 
 
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_FactoryDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FactoryDef_Proxy_Broker
-{
-public: 
-  _TAO_FactoryDef_Strategized_Proxy_Broker (void);
-  
-  virtual ~_TAO_FactoryDef_Strategized_Proxy_Broker (void);
-  
-  virtual ::IR::_TAO_FactoryDef_Proxy_Impl &select_proxy (
-    ::IR::FactoryDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
-
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
-private:
-  
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_FactoryDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-  
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_FactoryDef_Strategized_Proxy_Broker *the_TAO_FactoryDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_FactoryDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_FactoryDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_OperationDef_ThruPOA_Proxy_Impl
-  
-{
-public:
-  _TAO_FactoryDef_ThruPOA_Proxy_Impl (void);
-  
-  virtual ~_TAO_FactoryDef_ThruPOA_Proxy_Impl (void) { }
-  
   };
 
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class FinderDef;
-typedef FinderDef *FinderDef_ptr;
-// Forward Classes Declaration
-class _TAO_FinderDef_ThruPOA_Proxy_Impl;
-class _TAO_FinderDef_Strategized_Proxy_Broker;
-
-class  FinderDef : public virtual POA_CORBA_OperationDef
-{
-protected:
-  FinderDef (void);
-
-public:
-  FinderDef (const FinderDef& rhs);
-  virtual ~FinderDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::FinderDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  static void _get_result_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_result_def_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_result_def_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_params_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_params_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_mode_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_mode_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_contexts_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_contexts_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_exceptions_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_exceptions_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_FinderDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FinderDef_Proxy_Broker
-{
-public: 
-  _TAO_FinderDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_FinderDef_Strategized_Proxy_Broker (void);
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
   
-  virtual ::IR::_TAO_FinderDef_Proxy_Impl &select_proxy (
-    ::IR::FinderDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
+  class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Broker
+  {
+  public: 
+    _TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Impl &select_proxy (
+      ::IR::PrimaryKeyDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
 
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+    
 private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_FinderDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_PrimaryKeyDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_FinderDef_Strategized_Proxy_Broker *the_TAO_FinderDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_FinderDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_FinderDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_OperationDef_ThruPOA_Proxy_Impl
+  public:
+    static _TAO_PrimaryKeyDef_Strategized_Proxy_Broker *the_TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void);
+  };
   
-{
-public:
-  _TAO_FinderDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_FinderDef_ThruPOA_Proxy_Impl (void) { }
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl (void) { }
+    
+    virtual CORBA::Boolean is_a (
+        CORBA_Object *_collocated_tao_target_,
+        const char * primary_key_id,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual CORBA_ValueDef_ptr primary_key (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    
+  };
+  
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class FactoryDef;
+  typedef FactoryDef *FactoryDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_FactoryDef_ThruPOA_Proxy_Impl;
+  class _TAO_FactoryDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export FactoryDef : public virtual POA_CORBA_OperationDef
+  {
+  protected:
+    FactoryDef (void);
+
+  public:
+    FactoryDef (const FactoryDef& rhs);
+    virtual ~FactoryDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::FactoryDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    static void _get_result_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_result_def_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_result_def_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_params_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_params_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_mode_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_mode_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_contexts_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_contexts_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_exceptions_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_exceptions_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
   };
 
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
-class HomeDef;
-typedef HomeDef *HomeDef_ptr;
-// Forward Classes Declaration
-class _TAO_HomeDef_ThruPOA_Proxy_Impl;
-class _TAO_HomeDef_Strategized_Proxy_Broker;
-
-class  HomeDef : public virtual POA_CORBA_InterfaceDef
-{
-protected:
-  HomeDef (void);
-
-public:
-  HomeDef (const HomeDef& rhs);
-  virtual ~HomeDef (void);
-
-
-  virtual CORBA::Boolean _is_a (
-      const char* logical_type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void* _downcast (
-      const char* logical_type_id
-    );
-
-  static void _is_a_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _non_existent_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _interface_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual void _dispatch (
-      TAO_ServerRequest &_tao_req,
-      void *_tao_context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  ::IR::HomeDef *_this (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual const char* _interface_repository_id (void) const;
-
-  virtual IR::HomeDef_ptr base_home (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_base_home_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::ComponentDef_ptr managed_component (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_managed_component_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::PrimaryKeyDef_ptr primary_key (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_primary_key_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::FactoryDefSeq * factories (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_factories_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::FinderDefSeq * finders (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_finders_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual CORBA::Boolean is_basic (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void _get_is_basic_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::PrimaryKeyDef_ptr create_primary_key (
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_primary_key_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::FactoryDef_ptr create_factory (
-      const char * id,
-      const char * name,
-      const char * version,
-      const CORBA_ParDescriptionSeq & params,
-      const CORBA_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_factory_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  virtual IR::FinderDef_ptr create_finder (
-      const char * id,
-      const char * name,
-      const char * version,
-      const CORBA_ParDescriptionSeq & params,
-      const CORBA_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
-
-  static void create_finder_skel (
-      TAO_ServerRequest &_tao_req, 
-      void *_tao_obj, 
-      void *_tao_context, 
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_base_interfaces_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_base_interfaces_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void is_a_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_attribute_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_operation_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void lookup_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void contents_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void lookup_name_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_contents_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_module_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_constant_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_struct_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_union_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_enum_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_alias_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_value_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_value_box_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_exception_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_native_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_abstract_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void create_local_interface_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_id_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _set_version_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-
-  static void _get_defined_in_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_absolute_name_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_containing_repository_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void describe_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void move_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_type_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void _get_def_kind_skel (
-      TAO_ServerRequest &req,
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-  static void destroy_skel (
-      TAO_ServerRequest &req, 
-      void *obj,
-      void *context,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-
-
-};
-
-
-///////////////////////////////////////////////////////////////////////
-//               Strategized Proxy Broker Declaration 
-//
-
-class  _TAO_HomeDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_HomeDef_Proxy_Broker
-{
-public: 
-  _TAO_HomeDef_Strategized_Proxy_Broker (void);
   
-  virtual ~_TAO_HomeDef_Strategized_Proxy_Broker (void);
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
   
-  virtual ::IR::_TAO_HomeDef_Proxy_Impl &select_proxy (
-    ::IR::HomeDef *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-  );
+  class TAO_IFR_Client_Export _TAO_FactoryDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FactoryDef_Proxy_Broker
+  {
+  public: 
+    _TAO_FactoryDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_FactoryDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_FactoryDef_Proxy_Impl &select_proxy (
+      ::IR::FactoryDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
 
-private:
-
-// Helper methods that takes care to create the proxy
-// as soon as their use is necessary.
-  void create_proxy (
-    int collocation_strategy,
-    CORBA::Environment &ACE_TRY_ENV
-  );
-
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+    
 private:
   
-  // Caches the proxy implementations. The proxy implementation
-  // are totally stateless, and those can be shared by all the
-  // instances of a given IDL interface type.
-  ::IR::_TAO_HomeDef_Proxy_Impl
-   *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_FactoryDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
   
-  TAO_SYNCH_MUTEX mutex_;
-// This funxtion is used to get an handle to the unique instance
-// of the Strategized Proxy Broker that is available for a given
-// interface.
-
-public:
-  static _TAO_HomeDef_Strategized_Proxy_Broker *the_TAO_HomeDef_Strategized_Proxy_Broker (void);
-};
-
-
-//
-//            End Strategized Proxy Broker Declaration 
-///////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////
-//                    ThruPOA  Impl. Declaration
-//
-
-class  _TAO_HomeDef_ThruPOA_Proxy_Impl : 
-  public virtual ::IR::_TAO_HomeDef_Proxy_Impl,
-  public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::_TAO_CORBA_InterfaceDef_ThruPOA_Proxy_Impl
+  public:
+    static _TAO_FactoryDef_Strategized_Proxy_Broker *the_TAO_FactoryDef_Strategized_Proxy_Broker (void);
+  };
   
-{
-public:
-  _TAO_HomeDef_ThruPOA_Proxy_Impl (void);
   
-  virtual ~_TAO_HomeDef_ThruPOA_Proxy_Impl (void) { }
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
   
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_FactoryDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_FactoryDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_OperationDef_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_FactoryDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_FactoryDef_ThruPOA_Proxy_Impl (void) { }
+    
+  };
+  
+
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class FinderDef;
+  typedef FinderDef *FinderDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_FinderDef_ThruPOA_Proxy_Impl;
+  class _TAO_FinderDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export FinderDef : public virtual POA_CORBA_OperationDef
+  {
+  protected:
+    FinderDef (void);
+
+  public:
+    FinderDef (const FinderDef& rhs);
+    virtual ~FinderDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::FinderDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    static void _get_result_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_result_def_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_result_def_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_params_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_params_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_mode_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_mode_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_contexts_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_contexts_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_exceptions_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_exceptions_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
+  };
+
+  
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
+  
+  class TAO_IFR_Client_Export _TAO_FinderDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FinderDef_Proxy_Broker
+  {
+  public: 
+    _TAO_FinderDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_FinderDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_FinderDef_Proxy_Impl &select_proxy (
+      ::IR::FinderDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
+
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
+      CORBA::Environment &ACE_TRY_ENV
+    );
+    
+private:
+  
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_FinderDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
+  
+  public:
+    static _TAO_FinderDef_Strategized_Proxy_Broker *the_TAO_FinderDef_Strategized_Proxy_Broker (void);
+  };
+  
+  
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_FinderDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_FinderDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_OperationDef_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_FinderDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_FinderDef_ThruPOA_Proxy_Impl (void) { }
+    
+  };
+  
+
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  class HomeDef;
+  typedef HomeDef *HomeDef_ptr;
+  // Forward Classes Declaration
+  class _TAO_HomeDef_ThruPOA_Proxy_Impl;
+  class _TAO_HomeDef_Strategized_Proxy_Broker;
+  
+  class TAO_IFR_Client_Export HomeDef : public virtual POA_CORBA_InterfaceDef
+  {
+  protected:
+    HomeDef (void);
+
+  public:
+    HomeDef (const HomeDef& rhs);
+    virtual ~HomeDef (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    static void _is_a_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _non_existent_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _interface_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual void _dispatch (
+        TAO_ServerRequest &req,
+        void *_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    ::IR::HomeDef *_this (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
     virtual IR::HomeDef_ptr base_home (
-      CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_base_home_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual IR::ComponentDef_ptr managed_component (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_managed_component_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual IR::PrimaryKeyDef_ptr primary_key (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_primary_key_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual IR::FactoryDefSeq * factories (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_factories_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual IR::FinderDefSeq * finders (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_finders_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual CORBA::Boolean is_basic (
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void _get_is_basic_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual IR::PrimaryKeyDef_ptr create_primary_key (
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_primary_key_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual IR::FactoryDef_ptr create_factory (
+        const char * id,
+        const char * name,
+        const char * version,
+        const CORBA_ParDescriptionSeq & params,
+        const CORBA_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_factory_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    virtual IR::FinderDef_ptr create_finder (
+        const char * id,
+        const char * name,
+        const char * version,
+        const CORBA_ParDescriptionSeq & params,
+        const CORBA_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+        static void create_finder_skel (
+        TAO_ServerRequest &_tao_req,
+        void *_tao_obj,
+        void *_tao_servant_upcall,
+        CORBA::Environment &ACE_TRY_ENV
+      );
+
+    static void _get_base_interfaces_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_base_interfaces_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void is_a_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_attribute_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_operation_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void lookup_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void contents_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void lookup_name_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_contents_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_module_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_constant_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_struct_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_union_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_enum_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_alias_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_value_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_value_box_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_exception_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_native_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_abstract_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void create_local_interface_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_id_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _set_version_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV = 
+          TAO_default_environment ()
+      );
+
+    static void _get_defined_in_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_absolute_name_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_containing_repository_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void describe_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void move_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_type_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void _get_def_kind_skel (
+        TAO_ServerRequest &req,
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    static void destroy_skel (
+        TAO_ServerRequest &req, 
+        void *obj,
+        void *context,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
+  };
+
+  
+  ///////////////////////////////////////////////////////////////////////
+  //               Strategized Proxy Broker Declaration 
+  //
+  
+  class TAO_IFR_Client_Export _TAO_HomeDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_HomeDef_Proxy_Broker
+  {
+  public: 
+    _TAO_HomeDef_Strategized_Proxy_Broker (void);
+    
+    virtual ~_TAO_HomeDef_Strategized_Proxy_Broker (void);
+    
+    virtual ::IR::_TAO_HomeDef_Proxy_Impl &select_proxy (
+      ::IR::HomeDef *object,
+      CORBA_Environment &ACE_TRY_ENV
+    );
+  
+  private:
+
+    // Helper methods that takes care to create the proxy
+    // as soon as their use is necessary.
+    void create_proxy (
+      int collocation_strategy,
       CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::ComponentDef_ptr managed_component (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::PrimaryKeyDef_ptr primary_key (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::FactoryDefSeq * factories (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::FinderDefSeq * finders (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual CORBA::Boolean is_basic (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::PrimaryKeyDef_ptr create_primary_key (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      CORBA_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::FactoryDef_ptr create_factory (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      const CORBA_ParDescriptionSeq & params,
-      const CORBA_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-  virtual IR::FinderDef_ptr create_finder (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      const CORBA_ParDescriptionSeq & params,
-      const CORBA_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
-
-};
-
-
-//
-//                ThruPOA  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
+    );
+    
+private:
+  
+    // Caches the proxy implementations. The proxy implementation
+    // are totally stateless, and those can be shared by all the
+    // instances of a given IDL interface type.
+    ::IR::_TAO_HomeDef_Proxy_Impl
+    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    
+    TAO_SYNCH_MUTEX mutex_;
+    // This funxtion is used to get an handle to the unique instance
+    // of the Strategized Proxy Broker that is available for a given
+    // interface.
+  
+  public:
+    static _TAO_HomeDef_Strategized_Proxy_Broker *the_TAO_HomeDef_Strategized_Proxy_Broker (void);
+  };
+  
+  
+  //
+  //            End Strategized Proxy Broker Declaration 
+  ///////////////////////////////////////////////////////////////////////
+  
+  
+  ///////////////////////////////////////////////////////////////////////
+  //                    ThruPOA  Impl. Declaration
+  //
+  
+  class TAO_IFR_Client_Export _TAO_HomeDef_ThruPOA_Proxy_Impl : 
+    public virtual ::IR::_TAO_HomeDef_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::_TAO_CORBA_InterfaceDef_ThruPOA_Proxy_Impl
+    
+  {
+  public:
+    _TAO_HomeDef_ThruPOA_Proxy_Impl (void);
+    
+    virtual ~_TAO_HomeDef_ThruPOA_Proxy_Impl (void) { }
+    
+    virtual IR::HomeDef_ptr base_home (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::ComponentDef_ptr managed_component (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::PrimaryKeyDef_ptr primary_key (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::FactoryDefSeq * factories (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::FinderDefSeq * finders (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual CORBA::Boolean is_basic (
+        CORBA_Object *_collocated_tao_target_,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::PrimaryKeyDef_ptr create_primary_key (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        CORBA_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::FactoryDef_ptr create_factory (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        const CORBA_ParDescriptionSeq & params,
+        const CORBA_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    virtual IR::FinderDef_ptr create_finder (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        const CORBA_ParDescriptionSeq & params,
+        const CORBA_ExceptionDefSeq & exceptions,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+    
+    
+  };
+  
+  //
+  //                ThruPOA  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
 }
-TAO_NAMESPACE_CLOSE
+TAO_NAMESPACE_CLOSE // module IR
 
 #include "IFR_ComponentsS_T.h"
 

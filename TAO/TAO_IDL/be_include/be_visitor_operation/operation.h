@@ -50,6 +50,9 @@ public:
   virtual int has_param_type (be_operation *, AST_Argument::Direction);
   // does any of the argument node have the specified direction
 
+  /// Count the number of "in" and "inout" parameters.
+  virtual size_t count_non_out_parameters (be_operation *node);
+
   virtual int gen_throw_spec (be_operation *node);
   // generate the throw specification
 

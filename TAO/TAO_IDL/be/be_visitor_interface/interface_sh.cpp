@@ -74,7 +74,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Generate the _ptr declaration.
   *os << "typedef " << namebuf << " *" << namebuf
       << "_ptr;" << be_nl;
-  
+
   // Forward class declaration.
   *os << "// Forward Classes Declaration" << be_nl;
 
@@ -87,8 +87,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     {
       *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
     }
-  
-  if (be_global->gen_thru_poa_collocation () 
+
+  if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())
     {
       *os << "class " << node->strategized_proxy_broker_name () << ";" << be_nl;
@@ -113,7 +113,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
           *os << ", public virtual ";
           intf = be_interface::narrow_from_decl (node->inherits ()[i]);
           *os << intf->relative_skel_name (node->full_skel_name ());
-        } 
+        }
     }
   else
     // We don't inherit from another user defined object, hence our
@@ -145,39 +145,32 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *context," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "void *servant_upcall," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _non_existent method.
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *context," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "void *servant_upcall," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _interface method.
   *os << "static void _interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *obj," << be_nl
-      << "void *context," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "void *servant_upcall," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV"
+      << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &_tao_req," << be_nl
-      << "void *_tao_context," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "void *_servant_upcall," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   this->this_method (node);
@@ -230,7 +223,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   visitor = 0;
 
   *os << be_uidt_nl << "};\n\n";
-  
+
   if (be_global->gen_thru_poa_collocation () ||
       be_global->gen_direct_collocation ())
     {
@@ -301,11 +294,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 }
 
 
-void 
+void
 be_visitor_interface_sh::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   // Print out the _this() method.
   *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl

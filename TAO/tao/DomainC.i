@@ -23,56 +23,13 @@
 #if !defined (_CORBA_DOMAINMANAGER___CI_)
 #define _CORBA_DOMAINMANAGER___CI_
 
-ACE_INLINE CORBA_DomainManager_ptr
-tao_CORBA_DomainManager_duplicate (
-    CORBA_DomainManager_ptr p
-  )
-{
-  return CORBA_DomainManager::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_DomainManager_release (
-    CORBA_DomainManager_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_DomainManager_ptr
-tao_CORBA_DomainManager_nil (
-    void
-  )
-{
-  return CORBA_DomainManager::_nil ();
-}
-
-ACE_INLINE CORBA_DomainManager_ptr
-tao_CORBA_DomainManager_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_DomainManager::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_DomainManager_upcast (
-    void *src
-  )
-{
-  CORBA_DomainManager **tmp =
-    ACE_static_cast (CORBA_DomainManager **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 CORBA_DomainManager::CORBA_DomainManager (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA_Object (objref, _tao_collocated, servant)
+  : CORBA::Object (objref, _tao_collocated, servant)
 {
   this->CORBA_DomainManager_setup_collocation (_tao_collocated);
 }
@@ -84,56 +41,13 @@ CORBA_DomainManager::CORBA_DomainManager (
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___CI_)
 #define _CORBA_CONSTRUCTIONPOLICY___CI_
 
-ACE_INLINE CORBA_ConstructionPolicy_ptr
-tao_CORBA_ConstructionPolicy_duplicate (
-    CORBA_ConstructionPolicy_ptr p
-  )
-{
-  return CORBA_ConstructionPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_CORBA_ConstructionPolicy_release (
-    CORBA_ConstructionPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_ConstructionPolicy_ptr
-tao_CORBA_ConstructionPolicy_nil (
-    void
-  )
-{
-  return CORBA_ConstructionPolicy::_nil ();
-}
-
-ACE_INLINE CORBA_ConstructionPolicy_ptr
-tao_CORBA_ConstructionPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_ConstructionPolicy::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_ConstructionPolicy_upcast (
-    void *src
-  )
-{
-  CORBA_ConstructionPolicy **tmp =
-    ACE_static_cast (CORBA_ConstructionPolicy **, src);
-  return *tmp;
-}
-
 ACE_INLINE
 CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA_Object (objref, _tao_collocated, servant)
+  : CORBA::Object_ptr (objref, _tao_collocated, servant)
 {
   this->CORBA_ConstructionPolicy_setup_collocation (_tao_collocated);
 }
@@ -515,22 +429,22 @@ CORBA_DomainManagerList_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const CORBA_DomainManager_ptr
   );
 
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     CORBA_DomainManager_ptr &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const CORBA_ConstructionPolicy_ptr
   );
 
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     CORBA_ConstructionPolicy_ptr &
   );

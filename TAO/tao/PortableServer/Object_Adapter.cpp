@@ -5,6 +5,7 @@
 #include "POA.h"
 #include "Strategized_Object_Proxy_Broker.h"
 #include "ServerRequestInfo.h"
+#include "ServerInterceptorAdapter.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
@@ -256,7 +257,6 @@ TAO_Object_Adapter::create_lock (int enable_locking,
 int
 TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
                                       TAO_ServerRequest &req,
-                                      void *context,
                                       CORBA::Object_out forward_to,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
@@ -285,7 +285,6 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
 
     this->servant_dispatcher_->dispatch (servant_upcall,
                                          req,
-                                         context,
                                          ACE_TRY_ENV);
     ACE_CHECK_RETURN (result);
   }
@@ -620,7 +619,6 @@ TAO_Object_Adapter::priority (void) const
 int
 TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
                               TAO_ServerRequest &request,
-                              void *context,
                               CORBA::Object_out forward_to,
                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -639,7 +637,7 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
     this->orb_core_.server_request_interceptors (),
     request.interceptor_count ());
 
-  TAO_ServerRequestInfo ri (request);
+  TAO_ServerRequestInfo ri (request, 0);
 
   ACE_TRY
     {
@@ -648,11 +646,21 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
       // servant.
       sri_adapter.receive_request_service_contexts (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      // If a PortableInterceptor::ForwardRequest exception was
+      // thrown, then set the forward_to object reference and return
+      // with the appropriate return status.
+      if (sri_adapter.location_forwarded ())
+        {
+          forward_to = ri.forward_reference (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          return TAO_Adapter::DS_FORWARD;
+        }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
       result = this->dispatch_servant (key,
                                        request,
-                                       context,
                                        forward_to,
                                        ACE_TRY_ENV);
 
@@ -667,23 +675,25 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
           ACE_TRY_CHECK;
         }
     }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-    {
-      ri.forward_reference (exc);
-      sri_adapter.send_other (&ri,
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      forward_to = CORBA::Object::_duplicate (exc.forward.in ());
-      return TAO_Adapter::DS_FORWARD;
-    }
   ACE_CATCHANY
     {
+      ri.exception (&ACE_ANY_EXCEPTION);
+
       sri_adapter.send_exception (&ri,
                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_RE_THROW;
-    };
+
+      PortableInterceptor::ReplyStatus status =
+        ri.reply_status (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Only re-throw the exception if it hasn't been transformed by
+      // the send_exception() interception point (e.g. to a
+      // LOCATION_FORWARD).
+      if (status == PortableInterceptor::SYSTEM_EXCEPTION
+          || status == PortableInterceptor::USER_EXCEPTION)
+        ACE_RE_THROW;
+    }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (result);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -743,11 +753,12 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
               //       -Ossama
               stub->servant_orb (this->orb_core_.orb ());
 
-              CORBA::Object_ptr x;
+              CORBA_Object_ptr x;
               ACE_NEW_RETURN (x,
-                              CORBA::Object (stub, 1,
+                              CORBA::Object (stub,
+                                             1,
                                              servant),
-                              0);
+                              CORBA::Object::_nil ());
 
               // Here we set the strategized Proxy Broker.
               x->_proxy_broker (the_tao_strategized_object_proxy_broker ());

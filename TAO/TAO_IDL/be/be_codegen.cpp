@@ -314,13 +314,19 @@ TAO_CodeGen::start_client_stubs (const char *fname)
 
   this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
   this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
-  this->gen_standard_include (this->client_stubs_, "tao/ClientRequestInfo.h");
 
-  // Include the RequestInfo_Util utility header.  Used by the
-  // PortableInterceptor::RequestInfo subclasses.
+  // The following header must always be included.
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/PortableInterceptor.h");
 
-  *this->client_stubs_ << "#if TAO_HAS_INTERCEPTORS == 1\n";
-  this->gen_standard_include (this->client_stubs_, "tao/RequestInfo_Util.h");
+  // Include the Portable Interceptor related headers.
+  *this->client_stubs_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/RequestInfo_Util.h");
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/ClientRequestInfo.h");
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/ClientInterceptorAdapter.h");
   *this->client_stubs_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
 
   *this->client_stubs_ << "#if defined (__BORLANDC__)\n"
@@ -654,14 +660,19 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
                               "tao/Stub.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/IFR_Client_Adapter.h");
-  this->gen_standard_include (this->server_skeletons_,
-                              "tao/PortableServer/ServerRequestInfo.h");
 
-  // Include the RequestInfo_Util utility header.  Used by the
-  // PortableInterceptor::RequestInfo subclasses.
-  *this->server_skeletons_ << "#if TAO_HAS_INTERCEPTORS == 1\n";
+  // The following header must always be included.
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableInterceptor.h");
+
+  // Include Portable Interceptor related headers.
+  *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
   this->gen_standard_include (this->server_skeletons_,
                               "tao/RequestInfo_Util.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/ServerRequestInfo.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/ServerInterceptorAdapter.h");
   *this->server_skeletons_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
 
   this->gen_standard_include (this->server_skeletons_,

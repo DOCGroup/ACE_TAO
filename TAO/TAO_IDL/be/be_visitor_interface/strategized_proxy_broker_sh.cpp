@@ -48,7 +48,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
   *os << "virtual " << "::" << node->full_base_proxy_impl_name () << " &" << "select_proxy (" << be_idt_nl;
 
   *os << "::" << node->full_name () << " *object," << be_nl
-      << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
+      << "CORBA_Environment &ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
 
@@ -74,7 +74,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
       << be_uidt_nl << be_nl;
 
   *os << "public:" << be_idt_nl
-      << "static " << node->strategized_proxy_broker_name () 
+      << "static " << node->strategized_proxy_broker_name ()
       << " *the" << node->strategized_proxy_broker_name ()
       << " (void);" << be_uidt_nl;
 

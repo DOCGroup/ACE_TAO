@@ -63,10 +63,10 @@ public:
   /// Return the status....
   virtual int dispatch (TAO_ObjectKey &key,
                         TAO_ServerRequest &request,
-                        void *context, /* unused? */
                         CORBA::Object_out forward_to,
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
   enum {
     DS_OK,
     // The operation was successfully dispatched, an exception may
@@ -140,7 +140,6 @@ public:
    */
   void dispatch (TAO_ObjectKey &key,
                  TAO_ServerRequest &request,
-                 void *context, /* unused? */
                  CORBA::Object_out forward_to,
                  CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));

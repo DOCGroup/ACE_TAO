@@ -90,7 +90,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (void)
     orb_core_ (0),
     transport_ (0),
     endpoint_selector_ (0),
-    is_selector_initialized_ (0),
     inconsistent_policies_ (0),
     profile_ (0),
     endpoint_ (0),
@@ -124,7 +123,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     orb_core_ (orb_core),
     transport_ (0),
     endpoint_selector_ (0),
-    is_selector_initialized_ (0),
     inconsistent_policies_ (0),
     profile_ (0),
     endpoint_ (0),
@@ -183,14 +181,13 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Initialize endpoint selection strategy.
-  if (!this->is_selector_initialized_)
+  if (this->endpoint_selector_ == 0)
     {
       this->endpoint_selector_ =
-        this->orb_core_->endpoint_selector_factory ()->get_selector (this,
-                                                                     ACE_TRY_ENV);
+        this->orb_core_->endpoint_selector_factory ()->get_selector (
+          this,
+          ACE_TRY_ENV);
       ACE_CHECK;
-
-      this->is_selector_initialized_ = 1;
     }
 
   if (this->max_wait_time_ == 0)
@@ -595,6 +592,39 @@ TAO_GIOP_Invocation::location_forward (CORBA::Object_ptr forward,
 
   return TAO_INVOKE_RESTART;
 }
+
+void
+TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,
+                                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Add the profiles in the given stub object to the list of forward
+  // profiles.
+  if (stubobj == 0)
+    ACE_THROW (CORBA::INTERNAL ());
+
+  // Initialize endpoint selection strategy.
+  if (this->endpoint_selector_ == 0)
+    {
+      this->endpoint_selector_ =
+        this->orb_core_->endpoint_selector_factory ()->get_selector (
+          this,
+          ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  // Modify the state as appropriate to include new forwarding
+  // profiles.
+  this->endpoint_selector_->forward (this,
+                                     stubobj->base_profiles (),
+                                     ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->received_location_forward_ = 1;
+
+  this->restart_flag_ = 1;
+}
+
 
 #if (TAO_HAS_RT_CORBA == 1)
 #include "tao/RT_Stub.h"

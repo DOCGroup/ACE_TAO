@@ -520,7 +520,6 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       // Do this before the reply is sent.
       orb_core->adapter_registry ()->dispatch (request.object_key (),
                                                request,
-                                               0,
                                                forward_to,
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -732,7 +731,6 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       orb_core->adapter_registry ()->dispatch (server_request.object_key (),
                                                server_request,
-                                               0,
                                                forward_to,
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;

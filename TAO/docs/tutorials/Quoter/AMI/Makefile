@@ -56,24 +56,25 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Handler_i.h QuoterS.h QuoterC.h QuoterS_T.h \
- QuoterS_T.cpp QuoterS_T.i
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Handler_i.h QuoterS.h QuoterC.h QuoterC.i \
+ QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Stock_Factory_i.h Stock_i.h QuoterS.h QuoterC.h \
- QuoterS_T.h QuoterS_T.cpp QuoterS_T.i
+ QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/QuoterC.o .obj/QuoterC.so .shobj/QuoterC.o .shobj/QuoterC.so: QuoterC.cpp QuoterC.h QuoterC.i
 
-.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h QuoterC.h QuoterS_T.h QuoterS_T.cpp \
- QuoterS_T.i QuoterS.i
+.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h QuoterC.h QuoterC.i QuoterS_T.h \
+ QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/Handler_i.o .obj/Handler_i.so .shobj/Handler_i.o .shobj/Handler_i.so: Handler_i.cpp Handler_i.h QuoterS.h QuoterC.h QuoterS_T.h \
- QuoterS_T.cpp QuoterS_T.i
+.obj/Handler_i.o .obj/Handler_i.so .shobj/Handler_i.o .shobj/Handler_i.so: Handler_i.cpp Handler_i.h QuoterS.h QuoterC.h QuoterC.i \
+ QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
-.obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h QuoterC.h QuoterS_T.h \
- QuoterS_T.cpp QuoterS_T.i
+.obj/Stock_i.o .obj/Stock_i.so .shobj/Stock_i.o .shobj/Stock_i.so: Stock_i.cpp Stock_i.h QuoterS.h QuoterC.h QuoterC.i \
+ QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 .obj/Stock_Factory_i.o .obj/Stock_Factory_i.so .shobj/Stock_Factory_i.o .shobj/Stock_Factory_i.so: Stock_Factory_i.cpp Stock_Factory_i.h Stock_i.h \
- QuoterS.h QuoterC.h QuoterS_T.h QuoterS_T.cpp QuoterS_T.i
+ QuoterS.h QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp \
+ QuoterS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

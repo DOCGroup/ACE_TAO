@@ -250,102 +250,60 @@ CORBA_Contained::CORBA_Contained (
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_CONTAINEDSEQ_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_CONTAINEDSEQ_CI_
 
-  ACE_INLINE CORBA_Contained **
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (CORBA::ULong nelems)
-  {
-    CORBA_Contained **buf = 0;
-    
-    ACE_NEW_RETURN (buf, CORBA_Contained*[nelems], 0);
-    
-    for (CORBA::ULong i = 0; i < nelems; i++)
-      {
-        buf[i] = CORBA_Contained::_nil ();
-      }
-    
-    return buf;
-  }
+ACE_INLINE CORBA_Contained **
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (CORBA::ULong nelems)
+{
+  CORBA_Contained **buf = 0;
   
-  ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::freebuf (CORBA_Contained **buffer)
-  {
-    if (buffer == 0)
-      return;
-    delete[] buffer;
-  }
+  ACE_NEW_RETURN (buf, CORBA_Contained*[nelems], 0);
   
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (void)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_Contained* *value,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &rhs)
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
+  for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      CORBA_Contained **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (this->maximum_);
-      CORBA_Contained ** const tmp2 = ACE_reinterpret_cast (CORBA_Contained ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = CORBA_Contained::_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
+      buf[i] = CORBA_Contained::_nil ();
     }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &rhs)
+  return buf;
+}
+
+ACE_INLINE void 
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::freebuf (CORBA_Contained **buffer)
+{
+  if (buffer == 0)
+    return;
+  delete[] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (void)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_Contained* *value,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      CORBA_Contained **tmp = ACE_reinterpret_cast (CORBA_Contained **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = CORBA_Contained::_nil ();
-      }
-      if (this->maximum_ < rhs.maximum_)
-      {
-        _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_Contained **tmp1 = ACE_reinterpret_cast (CORBA_Contained **, this->buffer_);
+    CORBA_Contained **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (this->maximum_);
     CORBA_Contained ** const tmp2 = ACE_reinterpret_cast (CORBA_Contained ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
@@ -353,59 +311,101 @@ CORBA_Contained::CORBA_Contained (
         tmp1[i] = CORBA_Contained::_duplicate (tmp2[i]);
       }
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &rhs)
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  ACE_INLINE TAO_Object_Manager<CORBA_Contained,CORBA_Contained_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::operator[] (CORBA::ULong index) const
-  // read-write accessor
+  if (this->release_)
   {
-    ACE_ASSERT (index < this->maximum_);
-    CORBA_Contained ** const tmp = ACE_reinterpret_cast (CORBA_Contained ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA_Contained,CORBA_Contained_var> (tmp + index, this->release_);
-  }
-  
-  ACE_INLINE CORBA_Contained* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_Contained **result = 0;
-    if (orphan == 0)
+    CORBA_Contained **tmp = ACE_reinterpret_cast (CORBA_Contained **, this->buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (this->maximum_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_Contained**, this->buffer_);
-      }
+      CORBA::release (tmp[i]);
+      tmp[i] = CORBA_Contained::_nil ();
     }
-    else // if (orphan == 1)
+    if (this->maximum_ < rhs.maximum_)
     {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_Contained**,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
+      _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (rhs.maximum_);
     }
-    return result;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (rhs.maximum_);
   
-  ACE_INLINE const CORBA_Contained* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::get_buffer (void) const
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_Contained **tmp1 = ACE_reinterpret_cast (CORBA_Contained **, this->buffer_);
+  CORBA_Contained ** const tmp2 = ACE_reinterpret_cast (CORBA_Contained ** ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+    {
+      tmp1[i] = CORBA_Contained::_duplicate (tmp2[i]);
+    }
+  
+  return *this;
+}
+
+ACE_INLINE TAO_Object_Manager<CORBA_Contained,CORBA_Contained_var>
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::operator[] (CORBA::ULong index) const
+// read-write accessor
+{
+  ACE_ASSERT (index < this->maximum_);
+  CORBA_Contained ** const tmp = ACE_reinterpret_cast (CORBA_Contained ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<CORBA_Contained,CORBA_Contained_var> (tmp + index, this->release_);
+}
+
+ACE_INLINE CORBA_Contained* *
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_Contained **result = 0;
+  if (orphan == 0)
   {
-    return ACE_reinterpret_cast(const CORBA_Contained ** ACE_CAST_CONST, this->buffer_);
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (this->maximum_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_Contained**, this->buffer_);
+    }
   }
-  
-  
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_Contained**,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_Contained* *
+_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_Contained ** ACE_CAST_CONST, this->buffer_);
+}
+
+
 #endif /* end #if !defined */
 
 
@@ -624,102 +624,60 @@ CORBA_ContainedSeq_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CI_
 
-  ACE_INLINE CORBA_InterfaceDef **
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
-  {
-    CORBA_InterfaceDef **buf = 0;
-    
-    ACE_NEW_RETURN (buf, CORBA_InterfaceDef*[nelems], 0);
-    
-    for (CORBA::ULong i = 0; i < nelems; i++)
-      {
-        buf[i] = tao_CORBA_InterfaceDef_nil ();
-      }
-    
-    return buf;
-  }
+ACE_INLINE CORBA_InterfaceDef **
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+{
+  CORBA_InterfaceDef **buf = 0;
   
-  ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (CORBA_InterfaceDef **buffer)
-  {
-    if (buffer == 0)
-      return;
-    delete[] buffer;
-  }
+  ACE_NEW_RETURN (buf, CORBA_InterfaceDef*[nelems], 0);
   
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_InterfaceDef* *value,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
+  for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      CORBA_InterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (this->maximum_);
-      CORBA_InterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_InterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = tao_CORBA_InterfaceDef_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
+      buf[i] = tao_CORBA_InterfaceDef_nil ();
     }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
+  return buf;
+}
+
+ACE_INLINE void 
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (CORBA_InterfaceDef **buffer)
+{
+  if (buffer == 0)
+    return;
+  delete[] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_InterfaceDef* *value,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      CORBA_InterfaceDef **tmp = ACE_reinterpret_cast (CORBA_InterfaceDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-      {
-        tao_CORBA_InterfaceDef_release (tmp[i]);
-        tmp[i] = tao_CORBA_InterfaceDef_nil ();
-      }
-      if (this->maximum_ < rhs.maximum_)
-      {
-        _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_InterfaceDef **tmp1 = ACE_reinterpret_cast (CORBA_InterfaceDef **, this->buffer_);
+    CORBA_InterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (this->maximum_);
     CORBA_InterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_InterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
@@ -727,59 +685,101 @@ CORBA_ContainedSeq_out::operator[] (CORBA::ULong index)
         tmp1[i] = tao_CORBA_InterfaceDef_duplicate (tmp2[i]);
       }
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  ACE_INLINE TAO_Object_Manager<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator[] (CORBA::ULong index) const
-  // read-write accessor
+  if (this->release_)
   {
-    ACE_ASSERT (index < this->maximum_);
-    CORBA_InterfaceDef ** const tmp = ACE_reinterpret_cast (CORBA_InterfaceDef ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA_InterfaceDef,CORBA_InterfaceDef_var> (tmp + index, this->release_);
-  }
-  
-  ACE_INLINE CORBA_InterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_InterfaceDef **result = 0;
-    if (orphan == 0)
+    CORBA_InterfaceDef **tmp = ACE_reinterpret_cast (CORBA_InterfaceDef **, this->buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (this->maximum_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_InterfaceDef**, this->buffer_);
-      }
+      tao_CORBA_InterfaceDef_release (tmp[i]);
+      tmp[i] = tao_CORBA_InterfaceDef_nil ();
     }
-    else // if (orphan == 1)
+    if (this->maximum_ < rhs.maximum_)
     {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_InterfaceDef**,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
+      _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (rhs.maximum_);
     }
-    return result;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (rhs.maximum_);
   
-  ACE_INLINE const CORBA_InterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (void) const
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_InterfaceDef **tmp1 = ACE_reinterpret_cast (CORBA_InterfaceDef **, this->buffer_);
+  CORBA_InterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_InterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+    {
+      tmp1[i] = tao_CORBA_InterfaceDef_duplicate (tmp2[i]);
+    }
+  
+  return *this;
+}
+
+ACE_INLINE TAO_Object_Manager<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator[] (CORBA::ULong index) const
+// read-write accessor
+{
+  ACE_ASSERT (index < this->maximum_);
+  CORBA_InterfaceDef ** const tmp = ACE_reinterpret_cast (CORBA_InterfaceDef ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<CORBA_InterfaceDef,CORBA_InterfaceDef_var> (tmp + index, this->release_);
+}
+
+ACE_INLINE CORBA_InterfaceDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_InterfaceDef **result = 0;
+  if (orphan == 0)
   {
-    return ACE_reinterpret_cast(const CORBA_InterfaceDef ** ACE_CAST_CONST, this->buffer_);
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (this->maximum_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_InterfaceDef**, this->buffer_);
+    }
   }
-  
-  
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_InterfaceDef**,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_InterfaceDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_InterfaceDef ** ACE_CAST_CONST, this->buffer_);
+}
+
+
 #endif /* end #if !defined */
 
 
@@ -998,102 +998,60 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CI_
 
-  ACE_INLINE CORBA_ValueDef **
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (CORBA::ULong nelems)
-  {
-    CORBA_ValueDef **buf = 0;
-    
-    ACE_NEW_RETURN (buf, CORBA_ValueDef*[nelems], 0);
-    
-    for (CORBA::ULong i = 0; i < nelems; i++)
-      {
-        buf[i] = tao_CORBA_ValueDef_nil ();
-      }
-    
-    return buf;
-  }
+ACE_INLINE CORBA_ValueDef **
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (CORBA::ULong nelems)
+{
+  CORBA_ValueDef **buf = 0;
   
-  ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (CORBA_ValueDef **buffer)
-  {
-    if (buffer == 0)
-      return;
-    delete[] buffer;
-  }
+  ACE_NEW_RETURN (buf, CORBA_ValueDef*[nelems], 0);
   
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (void)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_ValueDef* *value,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
+  for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      CORBA_ValueDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (this->maximum_);
-      CORBA_ValueDef ** const tmp2 = ACE_reinterpret_cast (CORBA_ValueDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = tao_CORBA_ValueDef_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
+      buf[i] = tao_CORBA_ValueDef_nil ();
     }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
+  return buf;
+}
+
+ACE_INLINE void 
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (CORBA_ValueDef **buffer)
+{
+  if (buffer == 0)
+    return;
+  delete[] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (void)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_ValueDef* *value,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      CORBA_ValueDef **tmp = ACE_reinterpret_cast (CORBA_ValueDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-      {
-        tao_CORBA_ValueDef_release (tmp[i]);
-        tmp[i] = tao_CORBA_ValueDef_nil ();
-      }
-      if (this->maximum_ < rhs.maximum_)
-      {
-        _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_ValueDef **tmp1 = ACE_reinterpret_cast (CORBA_ValueDef **, this->buffer_);
+    CORBA_ValueDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (this->maximum_);
     CORBA_ValueDef ** const tmp2 = ACE_reinterpret_cast (CORBA_ValueDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
@@ -1101,59 +1059,101 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
         tmp1[i] = tao_CORBA_ValueDef_duplicate (tmp2[i]);
       }
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  ACE_INLINE TAO_Object_Manager<CORBA_ValueDef,CORBA_ValueDef_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator[] (CORBA::ULong index) const
-  // read-write accessor
+  if (this->release_)
   {
-    ACE_ASSERT (index < this->maximum_);
-    CORBA_ValueDef ** const tmp = ACE_reinterpret_cast (CORBA_ValueDef ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA_ValueDef,CORBA_ValueDef_var> (tmp + index, this->release_);
-  }
-  
-  ACE_INLINE CORBA_ValueDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_ValueDef **result = 0;
-    if (orphan == 0)
+    CORBA_ValueDef **tmp = ACE_reinterpret_cast (CORBA_ValueDef **, this->buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (this->maximum_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_ValueDef**, this->buffer_);
-      }
+      tao_CORBA_ValueDef_release (tmp[i]);
+      tmp[i] = tao_CORBA_ValueDef_nil ();
     }
-    else // if (orphan == 1)
+    if (this->maximum_ < rhs.maximum_)
     {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_ValueDef**,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
+      _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (rhs.maximum_);
     }
-    return result;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (rhs.maximum_);
   
-  ACE_INLINE const CORBA_ValueDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (void) const
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_ValueDef **tmp1 = ACE_reinterpret_cast (CORBA_ValueDef **, this->buffer_);
+  CORBA_ValueDef ** const tmp2 = ACE_reinterpret_cast (CORBA_ValueDef ** ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+    {
+      tmp1[i] = tao_CORBA_ValueDef_duplicate (tmp2[i]);
+    }
+  
+  return *this;
+}
+
+ACE_INLINE TAO_Object_Manager<CORBA_ValueDef,CORBA_ValueDef_var>
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator[] (CORBA::ULong index) const
+// read-write accessor
+{
+  ACE_ASSERT (index < this->maximum_);
+  CORBA_ValueDef ** const tmp = ACE_reinterpret_cast (CORBA_ValueDef ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<CORBA_ValueDef,CORBA_ValueDef_var> (tmp + index, this->release_);
+}
+
+ACE_INLINE CORBA_ValueDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_ValueDef **result = 0;
+  if (orphan == 0)
   {
-    return ACE_reinterpret_cast(const CORBA_ValueDef ** ACE_CAST_CONST, this->buffer_);
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (this->maximum_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_ValueDef**, this->buffer_);
+    }
   }
-  
-  
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_ValueDef**,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_ValueDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_ValueDef ** ACE_CAST_CONST, this->buffer_);
+}
+
+
 #endif /* end #if !defined */
 
 
@@ -1372,102 +1372,60 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CI_
 
-  ACE_INLINE CORBA_AbstractInterfaceDef **
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
-  {
-    CORBA_AbstractInterfaceDef **buf = 0;
-    
-    ACE_NEW_RETURN (buf, CORBA_AbstractInterfaceDef*[nelems], 0);
-    
-    for (CORBA::ULong i = 0; i < nelems; i++)
-      {
-        buf[i] = tao_CORBA_AbstractInterfaceDef_nil ();
-      }
-    
-    return buf;
-  }
+ACE_INLINE CORBA_AbstractInterfaceDef **
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+{
+  CORBA_AbstractInterfaceDef **buf = 0;
   
-  ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::freebuf (CORBA_AbstractInterfaceDef **buffer)
-  {
-    if (buffer == 0)
-      return;
-    delete[] buffer;
-  }
+  ACE_NEW_RETURN (buf, CORBA_AbstractInterfaceDef*[nelems], 0);
   
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_AbstractInterfaceDef* *value,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
+  for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      CORBA_AbstractInterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (this->maximum_);
-      CORBA_AbstractInterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = tao_CORBA_AbstractInterfaceDef_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
+      buf[i] = tao_CORBA_AbstractInterfaceDef_nil ();
     }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
+  return buf;
+}
+
+ACE_INLINE void 
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::freebuf (CORBA_AbstractInterfaceDef **buffer)
+{
+  if (buffer == 0)
+    return;
+  delete[] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_AbstractInterfaceDef* *value,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      CORBA_AbstractInterfaceDef **tmp = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-      {
-        tao_CORBA_AbstractInterfaceDef_release (tmp[i]);
-        tmp[i] = tao_CORBA_AbstractInterfaceDef_nil ();
-      }
-      if (this->maximum_ < rhs.maximum_)
-      {
-        _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_AbstractInterfaceDef **tmp1 = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef **, this->buffer_);
+    CORBA_AbstractInterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (this->maximum_);
     CORBA_AbstractInterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
@@ -1475,59 +1433,101 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
         tmp1[i] = tao_CORBA_AbstractInterfaceDef_duplicate (tmp2[i]);
       }
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs)
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  ACE_INLINE TAO_Object_Manager<CORBA_AbstractInterfaceDef,CORBA_AbstractInterfaceDef_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator[] (CORBA::ULong index) const
-  // read-write accessor
+  if (this->release_)
   {
-    ACE_ASSERT (index < this->maximum_);
-    CORBA_AbstractInterfaceDef ** const tmp = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA_AbstractInterfaceDef,CORBA_AbstractInterfaceDef_var> (tmp + index, this->release_);
-  }
-  
-  ACE_INLINE CORBA_AbstractInterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_AbstractInterfaceDef **result = 0;
-    if (orphan == 0)
+    CORBA_AbstractInterfaceDef **tmp = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef **, this->buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (this->maximum_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef**, this->buffer_);
-      }
+      tao_CORBA_AbstractInterfaceDef_release (tmp[i]);
+      tmp[i] = tao_CORBA_AbstractInterfaceDef_nil ();
     }
-    else // if (orphan == 1)
+    if (this->maximum_ < rhs.maximum_)
     {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_AbstractInterfaceDef**,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
+      _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (rhs.maximum_);
     }
-    return result;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (rhs.maximum_);
   
-  ACE_INLINE const CORBA_AbstractInterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (void) const
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_AbstractInterfaceDef **tmp1 = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef **, this->buffer_);
+  CORBA_AbstractInterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+    {
+      tmp1[i] = tao_CORBA_AbstractInterfaceDef_duplicate (tmp2[i]);
+    }
+  
+  return *this;
+}
+
+ACE_INLINE TAO_Object_Manager<CORBA_AbstractInterfaceDef,CORBA_AbstractInterfaceDef_var>
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::operator[] (CORBA::ULong index) const
+// read-write accessor
+{
+  ACE_ASSERT (index < this->maximum_);
+  CORBA_AbstractInterfaceDef ** const tmp = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<CORBA_AbstractInterfaceDef,CORBA_AbstractInterfaceDef_var> (tmp + index, this->release_);
+}
+
+ACE_INLINE CORBA_AbstractInterfaceDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_AbstractInterfaceDef **result = 0;
+  if (orphan == 0)
   {
-    return ACE_reinterpret_cast(const CORBA_AbstractInterfaceDef ** ACE_CAST_CONST, this->buffer_);
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (this->maximum_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_AbstractInterfaceDef**, this->buffer_);
+    }
   }
-  
-  
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_AbstractInterfaceDef**,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_AbstractInterfaceDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_AbstractInterfaceDef ** ACE_CAST_CONST, this->buffer_);
+}
+
+
 #endif /* end #if !defined */
 
 
@@ -1746,102 +1746,60 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CI_
 
-  ACE_INLINE CORBA_LocalInterfaceDef **
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
-  {
-    CORBA_LocalInterfaceDef **buf = 0;
-    
-    ACE_NEW_RETURN (buf, CORBA_LocalInterfaceDef*[nelems], 0);
-    
-    for (CORBA::ULong i = 0; i < nelems; i++)
-      {
-        buf[i] = tao_CORBA_LocalInterfaceDef_nil ();
-      }
-    
-    return buf;
-  }
+ACE_INLINE CORBA_LocalInterfaceDef **
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+{
+  CORBA_LocalInterfaceDef **buf = 0;
   
-  ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::freebuf (CORBA_LocalInterfaceDef **buffer)
-  {
-    if (buffer == 0)
-      return;
-    delete[] buffer;
-  }
+  ACE_NEW_RETURN (buf, CORBA_LocalInterfaceDef*[nelems], 0);
   
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_LocalInterfaceDef* *value,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
+  for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      CORBA_LocalInterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (this->maximum_);
-      CORBA_LocalInterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_LocalInterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = tao_CORBA_LocalInterfaceDef_duplicate (tmp2[i]);
-        }
-      
-      this->buffer_ = tmp1;
+      buf[i] = tao_CORBA_LocalInterfaceDef_nil ();
     }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
+  return buf;
+}
+
+ACE_INLINE void 
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::freebuf (CORBA_LocalInterfaceDef **buffer)
+{
+  if (buffer == 0)
+    return;
+  delete[] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_LocalInterfaceDef* *value,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      CORBA_LocalInterfaceDef **tmp = ACE_reinterpret_cast (CORBA_LocalInterfaceDef **, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-      {
-        tao_CORBA_LocalInterfaceDef_release (tmp[i]);
-        tmp[i] = tao_CORBA_LocalInterfaceDef_nil ();
-      }
-      if (this->maximum_ < rhs.maximum_)
-      {
-        _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_LocalInterfaceDef **tmp1 = ACE_reinterpret_cast (CORBA_LocalInterfaceDef **, this->buffer_);
+    CORBA_LocalInterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (this->maximum_);
     CORBA_LocalInterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_LocalInterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
@@ -1849,59 +1807,101 @@ CORBA_AbstractInterfaceDefSeq_out::operator[] (CORBA::ULong index)
         tmp1[i] = tao_CORBA_LocalInterfaceDef_duplicate (tmp2[i]);
       }
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs)
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  ACE_INLINE TAO_Object_Manager<CORBA_LocalInterfaceDef,CORBA_LocalInterfaceDef_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator[] (CORBA::ULong index) const
-  // read-write accessor
+  if (this->release_)
   {
-    ACE_ASSERT (index < this->maximum_);
-    CORBA_LocalInterfaceDef ** const tmp = ACE_reinterpret_cast (CORBA_LocalInterfaceDef ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA_LocalInterfaceDef,CORBA_LocalInterfaceDef_var> (tmp + index, this->release_);
-  }
-  
-  ACE_INLINE CORBA_LocalInterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_LocalInterfaceDef **result = 0;
-    if (orphan == 0)
+    CORBA_LocalInterfaceDef **tmp = ACE_reinterpret_cast (CORBA_LocalInterfaceDef **, this->buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (this->maximum_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_LocalInterfaceDef**, this->buffer_);
-      }
+      tao_CORBA_LocalInterfaceDef_release (tmp[i]);
+      tmp[i] = tao_CORBA_LocalInterfaceDef_nil ();
     }
-    else // if (orphan == 1)
+    if (this->maximum_ < rhs.maximum_)
     {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_LocalInterfaceDef**,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
+      _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (rhs.maximum_);
     }
-    return result;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (rhs.maximum_);
   
-  ACE_INLINE const CORBA_LocalInterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (void) const
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_LocalInterfaceDef **tmp1 = ACE_reinterpret_cast (CORBA_LocalInterfaceDef **, this->buffer_);
+  CORBA_LocalInterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA_LocalInterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+    {
+      tmp1[i] = tao_CORBA_LocalInterfaceDef_duplicate (tmp2[i]);
+    }
+  
+  return *this;
+}
+
+ACE_INLINE TAO_Object_Manager<CORBA_LocalInterfaceDef,CORBA_LocalInterfaceDef_var>
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::operator[] (CORBA::ULong index) const
+// read-write accessor
+{
+  ACE_ASSERT (index < this->maximum_);
+  CORBA_LocalInterfaceDef ** const tmp = ACE_reinterpret_cast (CORBA_LocalInterfaceDef ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<CORBA_LocalInterfaceDef,CORBA_LocalInterfaceDef_var> (tmp + index, this->release_);
+}
+
+ACE_INLINE CORBA_LocalInterfaceDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_LocalInterfaceDef **result = 0;
+  if (orphan == 0)
   {
-    return ACE_reinterpret_cast(const CORBA_LocalInterfaceDef ** ACE_CAST_CONST, this->buffer_);
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (this->maximum_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_LocalInterfaceDef**, this->buffer_);
+    }
   }
-  
-  
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_LocalInterfaceDef**,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_LocalInterfaceDef* *
+_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_LocalInterfaceDef ** ACE_CAST_CONST, this->buffer_);
+}
+
+
 #endif /* end #if !defined */
 
 
@@ -2313,176 +2313,176 @@ CORBA_StructMember_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_STRUCTMEMBERSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_STRUCTMEMBERSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE CORBA_StructMember *
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE CORBA_StructMember *
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  CORBA_StructMember *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA_StructMember[size], 0);
+  return retval;
+}
+
+ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (CORBA_StructMember *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_StructMember *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (const _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    CORBA_StructMember *retval = 0;
-    ACE_NEW_RETURN (retval, CORBA_StructMember[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (CORBA_StructMember *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_StructMember *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (const _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      CORBA_StructMember *tmp1 = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (this->maximum_);
-      CORBA_StructMember * const tmp2 = ACE_reinterpret_cast (CORBA_StructMember * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_StructMember *tmp = ACE_reinterpret_cast (CORBA_StructMember *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_StructMember *tmp1 = ACE_reinterpret_cast (CORBA_StructMember *, this->buffer_);
+    CORBA_StructMember *tmp1 = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (this->maximum_);
     CORBA_StructMember * const tmp2 = ACE_reinterpret_cast (CORBA_StructMember * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE CORBA_StructMember &
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_StructMember* tmp = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_StructMember &
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_StructMember * const tmp = ACE_reinterpret_cast (CORBA_StructMember* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_StructMember *
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_StructMember *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_StructMember*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_StructMember *
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_StructMember * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_StructMember *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_StructMember *tmp = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
+      // free the old buffer
+      CORBA_StructMember *tmp = ACE_reinterpret_cast (CORBA_StructMember *, this->buffer_);
       _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_StructMember *tmp1 = ACE_reinterpret_cast (CORBA_StructMember *, this->buffer_);
+  CORBA_StructMember * const tmp2 = ACE_reinterpret_cast (CORBA_StructMember * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE CORBA_StructMember &
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_StructMember* tmp = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const CORBA_StructMember &
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_StructMember * const tmp = ACE_reinterpret_cast (CORBA_StructMember* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE CORBA_StructMember *
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_StructMember *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_StructMember*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_StructMember *
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_StructMember * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+_TAO_Unbounded_Sequence_CORBA_StructMemberSeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+CORBA_StructMember *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    CORBA_StructMember *tmp = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
+    _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -2900,176 +2900,176 @@ CORBA_Initializer_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_INITIALIZERSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_INITIALIZERSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE CORBA_Initializer *
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE CORBA_Initializer *
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  CORBA_Initializer *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA_Initializer[size], 0);
+  return retval;
+}
+
+ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (CORBA_Initializer *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_Initializer *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (const _TAO_Unbounded_Sequence_CORBA_InitializerSeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    CORBA_Initializer *retval = 0;
-    ACE_NEW_RETURN (retval, CORBA_Initializer[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (CORBA_Initializer *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_Initializer *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (const _TAO_Unbounded_Sequence_CORBA_InitializerSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      CORBA_Initializer *tmp1 = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (this->maximum_);
-      CORBA_Initializer * const tmp2 = ACE_reinterpret_cast (CORBA_Initializer * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_InitializerSeq &
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_InitializerSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_Initializer *tmp = ACE_reinterpret_cast (CORBA_Initializer *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_Initializer *tmp1 = ACE_reinterpret_cast (CORBA_Initializer *, this->buffer_);
+    CORBA_Initializer *tmp1 = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (this->maximum_);
     CORBA_Initializer * const tmp2 = ACE_reinterpret_cast (CORBA_Initializer * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Sequence_CORBA_InitializerSeq &
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_InitializerSeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE CORBA_Initializer &
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Initializer* tmp = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_Initializer &
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Initializer * const tmp = ACE_reinterpret_cast (CORBA_Initializer* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_Initializer *
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_Initializer *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_Initializer*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_Initializer *
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_Initializer * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_Initializer *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_Initializer *tmp = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
+      // free the old buffer
+      CORBA_Initializer *tmp = ACE_reinterpret_cast (CORBA_Initializer *, this->buffer_);
       _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_Initializer *tmp1 = ACE_reinterpret_cast (CORBA_Initializer *, this->buffer_);
+  CORBA_Initializer * const tmp2 = ACE_reinterpret_cast (CORBA_Initializer * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE CORBA_Initializer &
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_Initializer* tmp = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const CORBA_Initializer &
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_Initializer * const tmp = ACE_reinterpret_cast (CORBA_Initializer* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE CORBA_Initializer *
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_Initializer *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_Initializer*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_Initializer *
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_Initializer * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+_TAO_Unbounded_Sequence_CORBA_InitializerSeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+CORBA_Initializer *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    CORBA_Initializer *tmp = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
+    _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -3487,176 +3487,176 @@ CORBA_UnionMember_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_UNIONMEMBERSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_UNIONMEMBERSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE CORBA_UnionMember *
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE CORBA_UnionMember *
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  CORBA_UnionMember *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA_UnionMember[size], 0);
+  return retval;
+}
+
+ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (CORBA_UnionMember *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_UnionMember *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (const _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    CORBA_UnionMember *retval = 0;
-    ACE_NEW_RETURN (retval, CORBA_UnionMember[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (CORBA_UnionMember *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_UnionMember *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (const _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      CORBA_UnionMember *tmp1 = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (this->maximum_);
-      CORBA_UnionMember * const tmp2 = ACE_reinterpret_cast (CORBA_UnionMember * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_UnionMember *tmp = ACE_reinterpret_cast (CORBA_UnionMember *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_UnionMember *tmp1 = ACE_reinterpret_cast (CORBA_UnionMember *, this->buffer_);
+    CORBA_UnionMember *tmp1 = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (this->maximum_);
     CORBA_UnionMember * const tmp2 = ACE_reinterpret_cast (CORBA_UnionMember * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE CORBA_UnionMember &
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_UnionMember* tmp = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_UnionMember &
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_UnionMember * const tmp = ACE_reinterpret_cast (CORBA_UnionMember* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_UnionMember *
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_UnionMember *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_UnionMember*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_UnionMember *
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_UnionMember * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_UnionMember *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_UnionMember *tmp = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
+      // free the old buffer
+      CORBA_UnionMember *tmp = ACE_reinterpret_cast (CORBA_UnionMember *, this->buffer_);
       _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_UnionMember *tmp1 = ACE_reinterpret_cast (CORBA_UnionMember *, this->buffer_);
+  CORBA_UnionMember * const tmp2 = ACE_reinterpret_cast (CORBA_UnionMember * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE CORBA_UnionMember &
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_UnionMember* tmp = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const CORBA_UnionMember &
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_UnionMember * const tmp = ACE_reinterpret_cast (CORBA_UnionMember* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE CORBA_UnionMember *
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_UnionMember *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_UnionMember*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_UnionMember *
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_UnionMember * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+CORBA_UnionMember *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    CORBA_UnionMember *tmp = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
+    _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -4286,176 +4286,176 @@ CORBA_Container::Description_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_CONTAINER_DESCRIPTIONSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_CONTAINER_DESCRIPTIONSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE CORBA_Container::Description *
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE CORBA_Container::Description *
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  CORBA_Container::Description *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA_Container::Description[size], 0);
+  return retval;
+}
+
+ACE_INLINE void CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (CORBA_Container::Description *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  CORBA_Container::Description *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    CORBA_Container::Description *retval = 0;
-    ACE_NEW_RETURN (retval, CORBA_Container::Description[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (CORBA_Container::Description *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_Container::Description *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      CORBA_Container::Description *tmp1 = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (this->maximum_);
-      CORBA_Container::Description * const tmp2 = ACE_reinterpret_cast (CORBA_Container::Description * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_Container::Description *tmp = ACE_reinterpret_cast (CORBA_Container::Description *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_Container::Description *tmp1 = ACE_reinterpret_cast (CORBA_Container::Description *, this->buffer_);
+    CORBA_Container::Description *tmp1 = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (this->maximum_);
     CORBA_Container::Description * const tmp2 = ACE_reinterpret_cast (CORBA_Container::Description * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE CORBA_Container::Description &
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Container::Description* tmp = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_Container::Description &
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Container::Description * const tmp = ACE_reinterpret_cast (CORBA_Container::Description* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_Container::Description *
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_Container::Description *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_Container::Description*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_Container::Description *
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_Container::Description * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_Container::Description *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_Container::Description *tmp = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
+      // free the old buffer
+      CORBA_Container::Description *tmp = ACE_reinterpret_cast (CORBA_Container::Description *, this->buffer_);
       _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA_Container::Description *tmp1 = ACE_reinterpret_cast (CORBA_Container::Description *, this->buffer_);
+  CORBA_Container::Description * const tmp2 = ACE_reinterpret_cast (CORBA_Container::Description * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE CORBA_Container::Description &
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_Container::Description* tmp = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const CORBA_Container::Description &
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA_Container::Description * const tmp = ACE_reinterpret_cast (CORBA_Container::Description* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE CORBA_Container::Description *
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA_Container::Description *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA_Container::Description*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA_Container::Description *
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA_Container::Description * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+CORBA_Container::Description *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    CORBA_Container::Description *tmp = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
+    _TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 

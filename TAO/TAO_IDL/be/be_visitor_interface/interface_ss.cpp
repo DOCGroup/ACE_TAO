@@ -121,9 +121,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       // Proxy Broker Function Pointer Initializer.
       *os << "int" << be_nl
           << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
-          << "_Factory_Initializer (long _dummy_)" << be_nl
+          << "_Factory_Initializer (long)" << be_nl
           << "{" << be_idt_nl // idt = 1
-          << "ACE_UNUSED_ARG (_dummy_);" << be_nl << be_nl
           << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
           << "_Factory_function_pointer = "
           << be_idt_nl  // idt = 2
@@ -268,7 +267,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_is_a_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
-      << "void * /* context */," << be_nl
+      << "void * /* Servant_Upcall */," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
@@ -299,7 +298,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_non_existent_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
-      << "void * /* context */," << be_nl
+      << "void * /* Servant_Upcall */," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
@@ -321,7 +320,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_interface_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
-      << "void * /* context */," << be_nl
+      << "void * /* Servant_Upcall */," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
@@ -415,12 +414,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "return 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-
   // Print out dispatch method
   this->dispatch_method (node);
 
   *os << be_nl;
-  
+
   *os << "const char* " << node->full_skel_name ()
       << "::_interface_repository_id (void) const"
       << be_nl;
@@ -440,8 +438,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << be_idt_nl // idt = 2
       << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
       << be_uidt_nl << be_nl // idt = 1
-      << "CORBA::Object_var obj = tmp;" << be_nl
-      << "return " << "::" << node->full_name () << "::_unchecked_narrow (obj.in ());"
+      << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
+
+  *os << "(void) safe_stub.release ();" << be_nl << be_nl;
+
+  *os << "return " << "::" << node->full_name () << "::_unchecked_narrow (obj.in ());"
       << be_uidt_nl // idt = 0
       << "}" << be_nl;
 
@@ -507,32 +508,36 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 }
 
 
-void 
+void
 be_visitor_interface_ss::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   // the _this () operation
   *os << node->full_name () << "*" << be_nl
       << node->full_skel_name ()
       << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
       << "{" << be_idt_nl // idt = 1
       << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
+      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
+      << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl << be_nl;
 }
 
-void 
+void
 be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   // now the dispatch method
   *os << "void " << node->full_skel_name () <<
     "::_dispatch (TAO_ServerRequest &req, " <<
-    "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
+    "void *servant_upcall, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
   *os << "{" << be_idt_nl;
   //BRT
-  *os << "this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);" << be_uidt_nl;
+  *os << "this->synchronous_upcall_dispatch (req," << be_nl
+      << "                                   servant_upcall," << be_nl
+      << "                                   this," << be_nl
+      << "                                   ACE_TRY_ENV);" << be_uidt_nl;
   //  *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
 //  *os << "const char *opname = req.operation (); // retrieve operation name"
 //      << be_nl;
