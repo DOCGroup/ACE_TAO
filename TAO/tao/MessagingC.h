@@ -2897,7 +2897,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_pt
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
-
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#include "ace/post.h"
 #endif /* ifndef */
