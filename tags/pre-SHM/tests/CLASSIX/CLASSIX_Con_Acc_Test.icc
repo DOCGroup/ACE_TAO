@@ -1,0 +1,22 @@
+option
+    define ("ACE_HAS_WINSOCK2","1"),
+    define ("__ACE_INLINE__","0"),
+    define ("WIN32","1"),
+    define ("_WINDOWS","1"),
+    define("ACE_HAS_DLL","0"),
+    link(libSearchPath,'H:\ACE_wrappers\ace'),
+    incl(searchPath,'H:\ACE_wrappers'),
+    link(linkWithMultiThreadLib,yes)
+     {
+	target "CLASSIX_Con_Acc_Test.exe"
+	{
+	   source type (cpp) "CLASSIX_Con_Acc_Test.cpp"
+
+	   source type (lib) "aced.lib"
+   	   source type (lib) "advapi32.lib"
+	   source type (lib) "user32.lib"
+	   source type (lib) "ws2_32.lib"
+	   source type (lib) "wsock32.lib"
+	   source type (lib) "mswsock.lib"
+	}
+   }

@@ -1,0 +1,5 @@
+
+NAME = deadlock_detection_test
+OBJFILES=$(OBJDIR)\$(NAME).obj
+!include <$(ACE_ROOT)\netsvcs\build.bor>
+

@@ -1,0 +1,199 @@
+/* -*- C++ -*- */
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//    CosTransaction.idl
+//
+// = DESCRIPTION
+//    Described in CORBAservices: Common Object Services
+//    Specification, chapter 7 The concurrency service description can
+//    be downloaded from
+//    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
+//
+// = AUTHOR
+//    Torben Worm <tworm@cs.wustl.edu>
+//
+// ============================================================================
+
+#ifndef TAO_CONCURRENCY_IDL
+#define TAO_CONCURRENCY_IDL
+
+//CosConcurrencyControl Module, page 7-8
+//Includes the following interfaces:
+//  LockCoordinator, LockSet, TransactionalLockSet, LockSetFactory
+
+// The part depending on the transaction service may be included by defining
+// TAO_HAS_TRANSACTION_CONTROL_SERVICE
+
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+#include <CosTransactions.idl>
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
+
+#pragma prefix "omg.org"
+
+module CosConcurrencyControl 
+{
+  // = TITLE
+  //     CosConcurrencyControl
+  //
+  // = DESCRIPTION
+  //     This idl file describes the concurrency control service.  The
+  //     purpose of the concurrency control service is to mediate
+  //     concurrent access to an pbject such that the consistency of
+  //     the object is not compromised when accessed by concurrently
+  //     executing computations.
+
+  // = These are the different lock types supported by this module. 
+
+  // For a description of the compatability between the different lock
+  // types please consult the service description (OMG).
+  enum lock_mode 
+  {
+    read,
+    write,
+    upgrade,
+    intention_read,
+    intention_write
+  };
+
+  exception LockNotHeld {};
+  // The LockNotHeld exception is is raised when an operation to
+  // unlock or change the mode of a lock is called and the specified
+  // lock is not held
+
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+  // @@ The lock coordinator is designed for transactional lock sets,
+  // so we don't support it (yet).
+  interface LockCoordinator
+    {
+      // = TITLE
+      //     LockCoordinator drops all locks associated with a transaction.
+      // = DESCRIPTION
+      //     The LockCoordinator interface enables a transaction service to 
+      //     drop all locks held by a transaction.
+
+      void drop_locks ();
+      // Releases all the locks held by the transaction. Designet to be
+      // used by transaction service when a transaction commits or aborts.
+    };
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
+
+  interface LockSet
+    {
+      // = TITLE
+      //     LockSet inteface to the concurrency service in implicit
+      //     mode. 
+      //
+      // = DESCRIPTION
+      //     Clients operating in the implicit mode
+      //     (i.e. non-transactional mode) acquire and release locks
+      //     in lock sets throug this interface. The interface only
+      //     provides operations to acquire and release locks on
+      //     behalf of the calling thread or transaction.
+
+      void lock (in lock_mode mode);
+      // Acquires a lock on the specified lock set in the specified
+      // mode.  Blocks until lock is obtained.
+
+      boolean try_lock (in lock_mode mode);
+      // Tries to acquire a lock on the specified lock set. If it is
+      // not possible to acquire the lock false is returned.
+
+      void unlock (in lock_mode mode)
+        raises (LockNotHeld);
+      // Releases a single lock on the specified lock set. A lock can
+      // be held multiple times in the same mode. If the lock is not
+      // held the exception LockNotHeld is raised.
+
+      void change_mode (in lock_mode held_mode,
+                        in lock_mode new_mode)
+        raises (LockNotHeld);
+      // Changes the mode of the lock on the specified lock set. If a
+      // conflicting lock is held by another client the call blocks
+      // until the new mode can be granted. If the lock is not held in
+      // the specified mode the exception LockNotHeld is raised.
+
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+      LockCoordinator get_coordinator (in CosTransactions::Coordinator which);
+      // Returns the lock coordinator associated with the specified
+      // transaction.
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
+    };
+
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+  interface TransactionalLockSet
+    {
+      // = TITLE
+      //     TransactionalLockSet interface to the concurrency service
+      //     in transactional mode.
+      // 
+      // = DESCRIPTION
+      //     Clients operating in the transactional mode acquire and
+      //     release locks in lock sets through this interface. The
+      //     interface provides operations identical to the operations
+      //     described in the LockSet interface section. The
+      //     difference beeing that the coordinator for the
+      //     transaction is explicitly passed as a reference to the
+      //     operations. Please see the description of the LockSet
+      //     interface for a detailed description.
+      
+      void lock (in CosTransactions::Coordinator current,
+                 in lock_mode mode);
+      // See LockSet::lock
+      
+      boolean try_lock (in CosTransactions::Coordinator current,
+                        in lock_mode mode);
+      // See LockSet::try_lock
+      
+      void unlock (in CosTransactions::Coordinator current,
+                   in lock_mode mode)
+        raises (LockNotHeld);
+      // See LockSet::unlock
+      
+      void change_mode (in CosTransactions::Coordinator current,
+                        in lock_mode held_mode,
+                        in lock_mode new_mode)
+        raises (LockNotHeld);
+      // See LockSet::change_mode
+      
+      LockCoordinator get_coordinator (in CosTransactions::Coordinator which);
+      // See LockSet::get_coordinator
+    };
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
+
+  interface LockSetFactory
+    {
+      // = TITLE
+      //     Factory interface for the LockSet and
+      //     TransactionalLockSet interfaces.
+      //
+      // = DESCRIPTION
+      //     Factory for creating the lock sets.
+
+      LockSet create ();
+      // Creates a new LockSet and lock coordinator
+      // @@TAO ??? is this correct? Lock coordinators are associated with
+      //       transactions. - tworm
+
+      LockSet create_related (in LockSet which);
+      // Creates a lock set related to the specified lock set. Related lock
+      // sets drop their locks together.
+
+#if defined (TAO_HAS_TRANSACTION_CONTROL_SERVICE)
+      TransactionalLockSet create_transactional ();
+      // Creates a new TransactionalLockSet and lock coordinator for
+      // transactional mode clients.
+
+      TransactionalLockSet create_transactional_related (in TransactionalLockSet which);
+      // Creates a new transactional lock set related to the specified lock
+      // set. Related lock sets drop locks together.
+#endif /* TAO_HAS_TRANSACTION_CONTROL_SERVICE */
+    };
+};
+
+#endif /* TAO_CONCURRENCY_IDL */

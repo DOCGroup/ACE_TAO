@@ -1,0 +1,71 @@
+TAO MPEG Player
+==========================
+
+This directory contains the source code for TAO's Audio/Video Mpeg
+player. This is written using the TAO's Audio/Video streaming service.
+
+This is a modified version of the Distributed Audio/video Mpeg player
+developed at the Oregon Graduate Institute. For more information about
+the original player read README.OGI.
+
+The MPEG-1 player requires X windows and hence may not work on Windows
+platforms. 
+
+To run:
+======
+
+1. Start the Naming service.
+
+2. Start mpeg/source/server/server
+
+3. You can start the player
+        mpeg/source/client/vcr
+
+The video and audio files can be either specified on the command line
+or be read from a file in 
+
+        ~/.vcr/vcrPrograms
+
+The format of the entries should be like this
+Three Stooges-1
+/project/merengue/MPEG_movies/ts1_v.mpg
+/project/merengue/MPEG_movies/ts1_a.au
+
+i.e
+Name of the Movie.
+Video file path
+Audio file path.
+
+You can download some of the MPEG-1 audio and video files from this
+URL.
+        http://www.cs.wustl.edu/~naga/MPEG_movies
+
+You can also download the .Info files used by the server to store the
+information about the MPEG files.
+
+If you have the ~/.vcr/vcrPrograms then you can select the Prog button
+on the player and select the movie.
+
+You can also give the audio and video files on the command line like
+
+vcr -v video_file_path -a audio_file_path.
+
+Using the Trading Service:
+==========================
+
+The mpeg client can also be run using the Trading service to find the
+server which can give the best QoS and other properties.
+
+But in this case follow the steps in 'To run' above but instead of step 2 do the following two steps:
+
+1. Start the Trading Service
+2. Start the mpeg/source/server/augmented_server
+
+The files for the Trader Agent  are in
+$TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery.
+
+For more instructions read the $TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery/README.
+
+
+Nagarajan Surendran (naga@cs.wustl.edu)
+Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
