@@ -107,9 +107,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // The array containing the TAO_Acceptors will never contain more
   // than the number of endpoints stored in TAO_ORB_Parameters.
   if (this->acceptors_ == 0)
-    ACE_NEW_THROW_EX (this->acceptors_,
-                      TAO_Acceptor *[endpoint_set.size ()],
-                      CORBA::NO_MEMORY ());
+    {
+      ACE_NEW_THROW_EX (this->acceptors_,
+                        TAO_Acceptor *[endpoint_set.size ()],
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (-1);
+    }
 
   ACE_Auto_Basic_Array_Ptr <char> addr_str;
 
