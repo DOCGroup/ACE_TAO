@@ -24,6 +24,8 @@ project(Hello_Base_Receiver_DnC_svnt) : ciao_servant_dnc {
   
   idlflags  +=  -Wb,export_macro=RECEIVER_SVNT_Export -Wb,export_include=Receiver_svnt_export.h
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
+  cidlflags -= --
+  cidlflags += --custom-container upgradeable --
 
   CIDL_Files {
     Receiver.cidl
