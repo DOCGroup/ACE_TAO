@@ -45,13 +45,61 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Default number of clients/servers.
-static int n_servers = 2000;
+static int n_servers = 3000;
 static double purge_percentage = 20;
-static int caching_strategy_type = 1;
+
+enum Caching_Strategy_Type
+{
+  ACE_LFU,
+  ACE_FIFO,
+  ACE_LRU,
+  ACE_NULL,
+  ACE_ALL
+};
+static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
+
+class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
+
+public:
+
+  Svc_Handler (ACE_Thread_Manager *t = 0)
+    : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
+    {
+    }
+     
+  int open (void *v = 0)
+    {
+      ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (v);
+      ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) opening Svc_Handler %d with handle %d\n"),
+                  this,
+                  this->peer ().get_handle ()));
+      return 0;
+    }
+ 
+  int close (u_long flags = 0)
+    {
+      ACE_UNUSED_ARG (flags);
+      ACE_DEBUG ((LM_DEBUG, 
+                  ASYS_TEXT ("(%P|%t) Closing Svc_Handler %d with handle %d\n"),
+                  this,
+                  this->peer ().get_handle ()));
+      return this->handle_close ();
+    }
+
+  int idle (u_long flags = 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) idling Svc_Handler %d with handle %d\n"),
+                  this,
+                  this->peer ().get_handle ()));
+      return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
+    }
+  
+};
 
 typedef size_t ATTRIBUTES;
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        Svc_Handler;
 typedef ACE_Pair<Svc_Handler *, ATTRIBUTES> 
         CACHED_HANDLER;
 typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
@@ -70,7 +118,7 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED
         HASH_MAP_REVERSE_ITERATOR;
 typedef ACE_Svc_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>
         CLEANUP_STRATEGY;
-typedef ACE_Pair_Caching_Utility<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
+typedef ACE_Recyclable_Handler_Caching_Utility<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP_ITERATOR, ATTRIBUTES>
         CACHING_UTILITY;
 
 typedef ACE_Caching_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP, ATTRIBUTES, CACHING_UTILITY>
@@ -150,7 +198,7 @@ server (ACCEPTOR *acceptor)
       
   // Create a new <Svc_Handler> to consume the data.
   Svc_Handler svc_handler;
-      
+  
   int result = acceptor->accept (&svc_handler,
                                  &cli_addr);
   if (result == -1)
@@ -186,7 +234,7 @@ server (ACCEPTOR *acceptor)
       
   if (r_bytes == 0)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P|%t) reached end of input, connection cached by client\n")));
+                ASYS_TEXT ("(%P|%t) reached end of input, connection closed by client\n")));
   else if (r_bytes == -1)
     {
       if (errno == EWOULDBLOCK)
@@ -256,7 +304,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                   ASYS_TEXT ("(%P|%t) *starting cached blocking connect\n")));
           
       int result = cached_connect (strategy_connector,
-                                         server_addr);
+                                   server_addr);
       ACE_ASSERT (result != -1);
           
       result = server (&acceptor);
@@ -274,6 +322,44 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
     } 
 }
   
+void
+test_caching_strategy_type (void)
+{
+  CACHING_STRATEGY *caching_strategy = 0;
+
+  switch (caching_strategy_type)
+    {
+    case ACE_NULL:
+      ACE_DEBUG ((LM_DEBUG, "\nNull_Caching_Strategy\n\n"));
+      ACE_NEW (caching_strategy,
+               NULL_CACHING_STRATEGY_ADAPTER);
+      break;
+
+    case ACE_LRU:
+      ACE_DEBUG ((LM_DEBUG, "\nLRU_Caching_Strategy\n\n"));
+      ACE_NEW (caching_strategy,
+               LRU_CACHING_STRATEGY_ADAPTER);
+      break;
+
+    case ACE_LFU:
+      ACE_DEBUG ((LM_DEBUG, "\nLFU_Caching_Strategy\n\n"));
+      ACE_NEW (caching_strategy,
+               LFU_CACHING_STRATEGY_ADAPTER);
+      break;
+
+    case ACE_FIFO:
+      ACE_DEBUG ((LM_DEBUG, "\nFIFO_Caching_Strategy\n\n"));
+      ACE_NEW (caching_strategy,
+               FIFO_CACHING_STRATEGY_ADAPTER);
+      break;
+      
+    case ACE_ALL: // Just to remove warnings!
+      break;
+    } 
+
+  test_connection_management (*caching_strategy);
+  delete caching_strategy;
+}
 
 
 int
@@ -293,7 +379,14 @@ parse_args (int argc, char *argv[])
         purge_percentage = atoi (get_opt.optarg);
         break;
       case 'c': // If Null Caching Strategy then this test will fail!
-        caching_strategy_type = atoi (get_opt.optarg);
+        if (ACE_OS::strcmp (get_opt.optarg, "null") == 0)
+          caching_strategy_type = ACE_NULL;
+        if (ACE_OS::strcmp (get_opt.optarg, "lru") == 0)
+          caching_strategy_type = ACE_LRU;
+        if (ACE_OS::strcmp (get_opt.optarg, "lfu") == 0)
+          caching_strategy_type = ACE_LFU;
+        if (ACE_OS::strcmp (get_opt.optarg, "fifo") == 0)
+          caching_strategy_type = ACE_FIFO;
         break;
       case '?':
       case 'h':
@@ -323,48 +416,23 @@ main (int argc,
   int result = parse_args (argc, argv);
   ACE_ASSERT (result == 0);
 
-  CACHING_STRATEGY *caching_strategy = 0;
-  switch (caching_strategy_type)
+  // Do we need to test all the strategies.
+  if (caching_strategy_type == ACE_ALL)
     {
-    case 0:
-      {      
-        caching_strategy = new NULL_CACHING_STRATEGY_ADAPTER;
-        test_connection_management (*caching_strategy);
-        break;
-      }
-    case 2:
-      {
-        caching_strategy = new LFU_CACHING_STRATEGY_ADAPTER;
-        test_connection_management (*caching_strategy);
-        break;
-      }
-       case 3:
-      {
-        caching_strategy = new FIFO_CACHING_STRATEGY_ADAPTER;
-        test_connection_management (*caching_strategy);
-        break;
-      }
-    case 1:
-    default:
-      {
-        ACE_DEBUG ((LM_DEBUG, "*************LRU Caching Strategy*****************\n"));
-        caching_strategy = new LRU_CACHING_STRATEGY_ADAPTER;
-        test_connection_management (*caching_strategy);
-        delete caching_strategy;
-        
-        ACE_DEBUG ((LM_DEBUG, "*************LFU Caching Strategy*****************\n"));
-        caching_strategy = new LFU_CACHING_STRATEGY_ADAPTER;
-        test_connection_management (*caching_strategy);
-        delete caching_strategy;
+      caching_strategy_type = ACE_LRU;
+      test_caching_strategy_type ();
 
-        ACE_DEBUG ((LM_DEBUG, "*************FIFO Caching Strategy*****************\n"));
-        caching_strategy = new FIFO_CACHING_STRATEGY_ADAPTER;
-        test_connection_management (*caching_strategy);
-        break;
-      }
+      caching_strategy_type = ACE_LFU;
+      test_caching_strategy_type ();
+
+      caching_strategy_type = ACE_FIFO;
+      test_caching_strategy_type ();
     }
-
-  delete caching_strategy;
+  else
+    {
+      test_caching_strategy_type ();
+    }
+  
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
   return 0;
@@ -431,6 +499,7 @@ template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_
 
 template class ACE_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>;
 template class ACE_Default_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>;
+template class ACE_Recyclable_Handler_Caching_Utility<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP::iterator, ATTRIBUTES>;
 template class ACE_Pair_Caching_Utility<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP::iterator, ATTRIBUTES>;
 template class ACE_Svc_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>;
 
@@ -506,6 +575,7 @@ template class ACE_Caching_Strategy_Adapter<REFCOUNTED_HASH_RECYCLABLE_ADDR, CAC
 
 #pragma instantiate ACE_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>
 #pragma instantiate ACE_Default_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>
+#pragma instantiate ACE_Recyclable_Handler_Caching_Utility<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP::iterator, ATTRIBUTES>
 #pragma instantiate ACE_Pair_Caching_Utility<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP, HASH_MAP::iterator, ATTRIBUTES>
 #pragma instantiate ACE_Svc_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDR, CACHED_HANDLER, HASH_MAP>
 
