@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -65,8 +65,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Metrics___Win32_Debug"
 # PROP Intermediate_Dir "Metrics___Win32_Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /I "../../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_METRICS_BUILD_DLL" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -110,6 +110,7 @@ SOURCE=.\Metrics\Metrics_Utils.cpp
 # Begin Source File
 
 SOURCE=.\MetricsC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

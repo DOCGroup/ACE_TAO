@@ -1,3 +1,9 @@
+Tue Jul 29 10:08:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Metrics/Metrics.dsp:
+
+	  Turned on RTTI in MetricsC.cpp.
+
 Tue Jul 29 09:24:16 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tao/Muxed_TMS.cpp
