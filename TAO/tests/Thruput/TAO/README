@@ -43,5 +43,5 @@ To provide for 2way tests (no data is sent in the reverse
 direction. Sender blocks for a minimal ACK), comment out the -DONEWAY
 flag from the CPPFLAGS
 
--Aniruddha Gokhale
-(gokhale@cs.wustl.edu)
+Aniruddha Gokhale 
+gokhale@cs.wustl.edu
