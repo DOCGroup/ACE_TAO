@@ -26,10 +26,10 @@ public ACE_Event_Handler
 ,public virtual POA_RtecEventComm::PushSupplier
 {
 public:
-	PushSupplier_impl(CORBA::ORB_ptr orb);
-	~PushSupplier_impl();
+  PushSupplier_impl(CORBA::ORB_ptr orb);
+  ~PushSupplier_impl();
 
-	int init(RtecEventChannelAdmin::EventChannel_ptr ACE_ENV_ARG_DECL);
+  int init(RtecEventChannelAdmin::EventChannel_ptr ACE_ENV_ARG_DECL);
 
     virtual void  disconnect_push_supplier (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -39,25 +39,25 @@ public:
       ));
 private:
 
-	class ReactorTask : public ACE_Task_Base
-	{
-	public:
-		// ctor
-		ReactorTask(ACE_Event_Handler* handler) : handler_(handler){}
-		virtual int svc (void);
-		// The thread entry point.
+  class ReactorTask : public ACE_Task_Base
+  {
+  public:
+    // ctor
+    ReactorTask(ACE_Event_Handler* handler) : handler_(handler){}
+    virtual int svc (void);
+    // The thread entry point.
 
-		ACE_Reactor* reactor_;
-		ACE_Event_Handler* handler_;
-	};
+    ACE_Reactor* reactor_;
+    ACE_Event_Handler* handler_;
+  };
 
     virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *act = 0);
-	CORBA::ORB_var orb_;
-	CORBA::ULong seq_no_;
-	ReactorTask reactor_task_;
-	RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
-	PushSupplier_impl(const PushSupplier_impl&);
-	void operator==(const PushSupplier_impl&);
+  CORBA::ORB_var orb_;
+  CORBA::ULong seq_no_;
+  ReactorTask reactor_task_;
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
+  PushSupplier_impl(const PushSupplier_impl&);
+  void operator==(const PushSupplier_impl&);
 };
 #endif
