@@ -25,392 +25,16 @@
 
 ACE_RCSID(MT_Cubit, server, "$Id$")
 
-Globals::Globals (void)
-  : ior_file (0),
-    base_port (0),
-    num_of_objs (2),
-    use_name_service (1),
-    thread_per_rate (0),
-    use_multiple_priority (0),
-    run_utilization_test (0),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_),
-    barrier_ (0)
-{
-  if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
-    ACE_OS::perror ("gethostname");
-}
 
-int
-Globals::parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rmU");
-  int c;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s",
-              hostname));
-
-  while ((c = opts ()) != -1)
-    {
-      //      ACE_DEBUG ((LM_DEBUG,"parse_args:%c ,",c));
-      switch (c)
-      {
-      case 'U':
-        run_utilization_test = 1;
-        break;
-      case 'm':
-        use_multiple_priority = 1;
-        break;
-      case 'r':
-        thread_per_rate = 1;
-        break;
-      case 's':
-        //        ACE_DEBUG ((LM_DEBUG,"Not using naming service\n"));
-        use_name_service = 0;
-        break;
-      case 'f':
-        //        ior_file = opts.optarg;
-        ACE_NEW_RETURN (ior_file,
-                        char[BUFSIZ],-1);
-        ACE_OS::strcpy (ior_file,
-                        opts.optarg);
-        //        ACE_DEBUG ((LM_DEBUG,"Using file %s",ior_file));
-        break;
-      case 'h':
-        ACE_OS::strcpy (hostname, opts.optarg);
-        //        ACE_DEBUG ((LM_DEBUG, "h\n"));
-        break;
-      case 'p':
-        base_port = ACE_OS::atoi (opts.optarg);
-        ACE_DEBUG ((LM_DEBUG, "base_port:%d\n",base_port));
-        break;
-      case 't':
-        num_of_objs = ACE_OS::atoi (opts.optarg);
-        //        ACE_DEBUG ((LM_DEBUG,"num_of_objs:%d\n",num_of_objs));
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " \t[-s Means NOT to use the name service] \n"
-                           " \t[-p <port>]\n"
-                           " \t[-h <my_hostname>]\n"
-                           " \t[-t <num_objects>]\n"
-                           " \t[-f <ior_file>]\n"
-                           " \t[-r Use thread per rate]\n"
-                           "\n", argv [0]),
-                          -1);
-      }
-    }
-  if (thread_per_rate == 1)
-    num_of_objs = 4;
-
-  if (run_utilization_test == 1)
-    num_of_objs = 1;
-
-  // Indicates successful parsing of command line
-  return 0;
-}
-
-Cubit_Task::Cubit_Task (void)
-{
-  // No-op.
-}
-
-Cubit_Task::Cubit_Task (const char *args,
-                        const char *orbname,
-                        u_int num_of_objs,
-                        Task_State *ts,
-                        ACE_Thread_Manager *thr_mgr,
-                        u_int task_id)
-  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thr_mgr)),
-    key_ ("Cubit"),
-    orbname_ ((char *) orbname),
-    orbargs_ ((char *) args),
-    num_of_objs_ (num_of_objs),
-    servants_ (0),
-    servants_iors_ (0),
-    task_id_ (task_id),
-    ts_ (ts)
-{
-}
-
-int
-Cubit_Task::svc (void)
-{
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-  int prio;
-
-  // thr_getprio () on the current thread should never fail.
-  ACE_OS::thr_getprio (thr_handle, prio);
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Beginning Cubit task with args = '%s' and priority %d\n",
-              orbargs_,
-              prio));
-
-  int rc = this->initialize_orb ();
-
-  if (rc == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ORB initialization failed.\n"),
-                      -1);
-
-  rc = this->create_servants ();
-  if (rc == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Create Servants failed.\n"),
-                      -1);
-  TAO_TRY
-    {
-      GLOBALS::instance ()->barrier_->wait ();
-
-      // Handle requests for this object until we're killed, or one of
-      // the methods asks us to exit.
-      if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "run"),
-                          -1);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("poa->destroy()");
-    }
-  TAO_ENDTRY;
-
-  // Need to clean up and do a CORBA::release on everything we've
-  // created!
-
-  for (u_int i = 0; i < num_of_objs_; i++)
-    delete this->servants_[i];
-
-  return 0;
-}
-
-int
-Cubit_Task::initialize_orb (void)
-{
-  TAO_TRY
-    {
-      ACE_ARGV args (this->orbargs_);
-
-      int argc = args.argc ();
-      char **argv = args.argv ();
-
-      // /*DONE*/@@ Naga, can you please try to use the TAO_Object_Manager for
-      // /*DONE*/all of this initialization, rather than doing it all by hand?
-
-      if (this->orb_manager_.init_child_poa (argc,
-                                             argv,
-                                             "persistent_poa",
-                                             TAO_TRY_ENV) == -1)
-        return -1;
-
-
-      this->orb_ = this->orb_manager_.orb ();
-      // Do the argument parsing.
-      if (this->task_id_ == 0)
-        {
-          //          ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
-          if (GLOBALS::instance ()->parse_args (argc,
-                                                argv) < 0)
-            return -1;
-          ACE_NEW_RETURN (GLOBALS::instance ()->barrier_,
-                          ACE_Barrier (GLOBALS::instance ()->num_of_objs + 1),
-                          -1);
-          //          ACE_DEBUG ((LM_DEBUG,"(%t)Arguments parsed successfully\n"));
-          ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
-          GLOBALS::instance ()->ready_ = 1;
-          GLOBALS::instance ()->ready_cnd_.broadcast ();
-          ready_mon.release ();
-          if (GLOBALS::instance ()->barrier_ == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%t)Unable to create barrier\n"),
-                              -1);
-        }
-
-      if (GLOBALS::instance ()->use_name_service == 0)
-        return 0;
-      /*
-	CORBA::Object_var naming_obj =
-	this->orb_->resolve_initial_references ("NameService");
-	if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-	" (%P|%t) Unable to resolve the Name Service.\n"),
-	-1);
-
-	this->naming_context_ =
-	CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-
-      // Check the environment and return 1 if exception occurred or
-      // nil pointer.
-      if (TAO_TRY_ENV.exception () != 0 ||
-      CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
-      return -1;
-      */
-
-      // Initialize the naming services
-      // Init should be able to be passed the command line arguments,
-      // but it isn't possible here, so use dummy values
-      if (my_name_client_.init (orb_.in (), 0, 0) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
-      
-      // Register the servant with the Naming Context....
-      CosNaming::Name cubit_context_name (1);
-      cubit_context_name.length (1);
-      cubit_context_name[0].id =
-        CORBA::string_dup ("MT_Cubit");
-
-      TAO_TRY_ENV.clear ();
-      CORBA::Object_var objref =
-        this->my_name_client_->bind_new_context (cubit_context_name,
-                                                 TAO_TRY_ENV);
-
-      if (TAO_TRY_ENV.exception() != 0)
-        {
-          CosNaming::NamingContext::AlreadyBound_ptr ex =
-            CosNaming::NamingContext::AlreadyBound::_narrow (TAO_TRY_ENV.exception());
-          if (ex != 0)
-            {
-              TAO_TRY_ENV.clear ();
-              objref = this->my_name_client_->resolve (cubit_context_name,
-                                                       TAO_TRY_ENV);
-              printf("NamingContext::AlreadyBound\n");
-            }
-          else
-            TAO_TRY_ENV.print_exception ("bind() Cubit context object\n");
-        }
-      TAO_CHECK_ENV;
-
-      this->mt_cubit_context_ =
-        CosNaming::NamingContext::_narrow (objref.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("orb_init");
-      return -1;
-    }
-  TAO_ENDTRY;
-
-  return 0;
-}
-
-CORBA::String
-Cubit_Task::get_servant_ior (u_int index)
-{
-  if (index >= num_of_objs_)
-    return 0;
-
-  return ACE_OS::strdup (this->servants_iors_[index]);
-}
-
-int
-Cubit_Task::create_servants (void)
-{
-  TAO_TRY
-    {
-      // Create the array of cubit implementations.
-      ACE_NEW_RETURN (this->servants_,
-                      Cubit_i *[this->num_of_objs_],
-                      -1);
-
-      // Create the array of strings.
-      ACE_NEW_RETURN (this->servants_iors_,
-                      CORBA::String [this->num_of_objs_],
-                      -1);
-
-      char *buffer;
-      // @@ Naga, can you please document why the value "3" is here?
-      int len = ACE_OS::strlen (this->key_) + 3;
-
-      ACE_NEW_RETURN (buffer,
-                      char[len],
-                      -1);
-
-      // This loop creates multiple servants, and prints out their
-      // IORs.
-      for (u_int i = 0;
-           i < this->num_of_objs_;
-           i++)
-        {
-          ACE_OS::sprintf (buffer,
-                           "%s%02d",
-                           (char *) this->key_,
-                           this->task_id_);
-
-          ACE_NEW_RETURN (this->servants_[i],
-                          Cubit_i (ts_),
-                          -1);
-
-          if (this->servants_[i] == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to create "
-                               "implementation object #%d\n",
-                               i),
-                              2);
-
-          this->orb_manager_.activate_under_child_poa (buffer,
-                                                       this->servants_[i],
-                                                       TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          // Stringify the objref we'll be implementing, and print it
-          // to stdout.  Someone will take that string and give it to
-          // some client.  Then release the object.
-
-          Cubit_var cubit =
-            this->servants_[i]->_this (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          CORBA::String_var str =
-            this->orb_->object_to_string (cubit.in (),
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          this->servants_iors_[i] = ACE_OS::strdup (str.in ());
-
-          // Register the servant with the Naming Context....
-          CosNaming::Name cubit_name (1);
-          cubit_name.length (1);
-          cubit_name[0].id =
-            CORBA::string_dup (buffer);
-
-          if (CORBA::is_nil (this->mt_cubit_context_.in ()) == CORBA::B_FALSE)
-            {
-              this->mt_cubit_context_->bind (cubit_name,
-                                             cubit.in (),
-                                             TAO_TRY_ENV);
-              if (TAO_TRY_ENV.exception () != 0)
-                TAO_TRY_ENV.print_exception ("Attempt to bind() a cubit object to the name service Failed!\n");
-              else
-                ACE_DEBUG ((LM_DEBUG,
-                            " (%t) Cubit object bound to the name \"%s\".\n",
-                            buffer));
-            }
-        }
-
-      delete [] buffer;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("print IOR");
-      return -1;
-    }
-  TAO_ENDTRY;
-  return 0;
-}
-
-
+// Global options used to configure various parameters.
+// static char hostname[BUFSIZ];
+// static char *ior_file = 0;
+// static int base_port = ACE_DEFAULT_SERVER_PORT;
+// static u_int num_of_objs = 2;
+// static u_int use_name_service = 1;
+// static u_int thread_per_rate = 0;
+// static u_int use_multiple_priority = 0;
+// static u_int run_utilization_test = 0;
 
 int
 Server::initialize (int argc, char **argv)
@@ -449,8 +73,7 @@ Server::initialize (int argc, char **argv)
 }
 
 int
-Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
-                        Task_State *ts)
+Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
 {
   //DONE// @@ Naga, can you please explain why you need to do all of this?
   //DONE// i.e, we need some comments here!  In particular, what is args1
@@ -516,7 +139,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
                   Cubit_Task (high_argv.buf (),
                               "internet",
                               1,
-                              ts,
                               serv_thr_mgr,
                               0), //task id 0.
                   -1);
@@ -532,13 +154,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
   // much of a "magic" number.  Can you make this more "abstract?"
   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
 #endif /* VXWORKS */
-
-  if (GLOBALS::instance ()->run_utilization_test == 1)
-    priority =
-      ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                       ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                                       ACE_SCOPE_THREAD),
-                                       ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating servant 0 with high priority %d\n",
@@ -559,13 +174,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
     GLOBALS::instance ()->ready_cnd_.wait ();
 
   //  ACE_DEBUG ((LM_DEBUG,"(%t) Argument parsing waiting done\n"));
-
-  if (GLOBALS::instance ()->run_utilization_test == 1)
-    priority = 
-      ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                       ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                                                       ACE_SCOPE_THREAD),
-                                       ACE_SCOPE_THREAD);
 
   // Create an array to hold pointers to the low priority tasks.
   Cubit_Task **low_priority_task;
@@ -644,17 +252,14 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
                                  "-ORBsndsock 32768 ",
                                  "-ORBrcvsock 32768 ",
                                  0};
-
       ACE_NEW_RETURN (low_argv,
                       ACE_ARGV (this->argv_,low_second_argv),
                       -1);
-
 
       ACE_NEW_RETURN (low_priority_task [i - 1],
                       Cubit_Task (low_argv->buf (),
 				  "internet",
 				  1,
-				  ts,
 				  serv_thr_mgr,
 				  i),
                       -1);
@@ -733,39 +338,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
 
 }
 
-Util_Thread *
-Server::start_utilization (ACE_Thread_Manager *util_thr_mgr,
-                           Task_State *ts)
-{
-  Util_Thread *util_task;
-
-  ACE_NEW_RETURN (util_task,
-                  Util_Thread (ts,
-                               util_thr_mgr),
-                  0);
-
-  ACE_Sched_Priority priority =
-    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                    ACE_SCOPE_THREAD);
-  
-  ACE_DEBUG ((LM_DEBUG,
-              "Creating Utilization Task with priority %d\n",
-              priority));
-
-  // Make the high priority task an active object.
-  if (util_task->activate (THR_BOUND | ACE_SCHED_FIFO,
-                           1,
-                           0,
-                           priority) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n"
-                  "\tutil_task->activate failed"));
-    }
-
-  return util_task;
-}
-
-
 // main routine.
 
 #if defined (VXWORKS)
@@ -820,71 +392,8 @@ main (int argc, char *argv[])
                   "-t",
                   "1"};
 
-  Task_State ts ( _argc, _argv);
-
-  // parse the arguments to set the global task state.
-  ts.parse_args (_argc,_argv);
-
-  // preliminary argument processing
-  
-  for (int i=0;i<argc;i++)
-    if (ACE_OS::strcmp (argv[i],"-U")==0)
-      GLOBALS::instance ()->run_utilization_test =1;
-
-  if (GLOBALS::instance ()->run_utilization_test == 1)
-    {
-      ts.run_server_utilization_test_ = 1;
-      ts.loop_count_ = 0;
-     }
-
-  Util_Thread *util_task = 0;
-
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager servant_thread_manager;
-  ACE_Thread_Manager util_thr_mgr;
-  ACE_Time_Value total_elapsed;
-  double util_task_duration = 0.0;
-  double total_latency = 0.0;
-  double total_latency_servants = 0.0;
-  double total_util_task_duration = 0.0;
-
-  if (GLOBALS::instance ()->run_utilization_test == 1)
-    {
-      if ((util_task = server.start_utilization (&util_thr_mgr, &ts)) == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error creating the utilization thread!\n"),
-                          1);
-
-      //
-      // Time the utilization thread' "computation" to get %IdleCPU at the end of the test.
-      //
-
-#if defined (CHORUS)
-      int pstartTime = 0;
-      int pstopTime = 0;
-      // Elapsed time will be in microseconds.
-      pstartTime = pccTime1Get();
-      // execute one computation.
-      util_task->computation ();
-      pstopTime = pccTime1Get();
-      // Store the time in micro-seconds.
-      util_task_duration = pstopTime - pstartTime;
-#else /* CHORUS */
-      ACE_High_Res_Timer timer_;
-      // Elapsed time will be in microseconds.
-      ACE_Time_Value delta_t;
-      timer_.start ();
-      // execute computation.
-      for (int k=0; k < 10000; k++)
-        util_task->computation ();
-      timer_.stop ();
-      timer_.elapsed_time (delta_t);
-      // Store the time in milli-seconds.
-      util_task_duration = ((double)delta_t.sec () *
-                            ACE_ONE_SECOND_IN_USECS +
-                            (double)delta_t.usec ())  / 10000;
-#endif /* !CHORUS */
-    }
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();
@@ -892,7 +401,7 @@ main (int argc, char *argv[])
   quantify_start_recording_data();
 #endif /* NO_ACE_QUANTIFY */
 
-  if (server.start_servants (&servant_thread_manager,&ts) != 0)
+  if (server.start_servants (&servant_thread_manager) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);
@@ -903,52 +412,6 @@ main (int argc, char *argv[])
   // Wait for all the threads to exit.
   servant_thread_manager.wait ();
   //  ACE_Thread_Manager::instance ()->wait ();
-
-  if (GLOBALS::instance ()->run_utilization_test == 1)
-    {
-      util_task->done_ = 1;
-
-      // This will wait for the utilization thread to finish.
-      util_thr_mgr.wait ();
-
-      ts.timer_.elapsed_time (total_elapsed);
-
-      total_util_task_duration =
-        util_task_duration * util_task->get_number_of_computations ();
-
-      total_latency = (total_elapsed.sec () *
-                       ACE_ONE_SECOND_IN_USECS +
-                       (double)total_elapsed.usec ());
-
-      total_latency_servants = total_latency - total_util_task_duration;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "-------------------------- Stats -------------------------------\n"));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) UTILIZATION task performed \t%u computations\n"
-                  "(%t) SERVANT task serviced \t\t%u CORBA calls\n"
-                  "\t Ratio of computations to CORBA calls is %u.%u:1\n\n",
-                  util_task->get_number_of_computations (),
-                  ts.loop_count_,
-                  util_task->get_number_of_computations () / ts.loop_count_,
-                  (util_task->get_number_of_computations () % ts.loop_count_) * 100 / ts.loop_count_
-                  ));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Each computation had a duration of %f msecs\n"
-                  "(%t) Total elapsed time of test is %f msecs\n",
-                  util_task_duration / 1000,
-                  total_latency / 1000));
-
-      // Calc and print the CPU percentage. I add 0.5 to round to the
-      // nearest integer before casting it to int.
-      ACE_DEBUG ((LM_DEBUG,
-                  "\t%% ORB Servant CPU utilization: %d %%\n"
-                  "\t%% Idle time: %d %%\n",
-                  (int) (total_latency_servants * 100 / total_latency + 0.5),
-                  (int) (total_util_task_duration * 100 / total_latency + 0.5) ));
-    }
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();

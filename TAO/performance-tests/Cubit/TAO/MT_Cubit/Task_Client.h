@@ -159,6 +159,9 @@ public:
   // Flag that indicates if we are going to use oneway calls instead
   // of two-way.
 
+char *one_ior_;
+
+
   u_int use_name_service_;
   // Flag that say if we are using the or not the name service.
 
@@ -211,11 +214,6 @@ public:
   ACE_High_Res_Timer timer_;
   // global timer to be started by the utilization task.
 
-  u_int run_server_utilization_test_;
-  // flag to indicate we are to run the utilization test of the server.
-  // This means we are not sending requests at a determined frequency,
-  // but rather "let it rip"!
-
   u_int util_time_;
   // the amount of time in seconds that the utilization test will run.
 
@@ -230,6 +228,12 @@ public:
   // condition variable for the low priority threads to wait 
   //until the high priority thread is done with the arguments parsing.
 
+  u_int remote_invocations_;
+  // flag to indicate whether we make remote versus local invocations
+  // to calculate accurately the ORB overhead.
+
+  double util_test_time_;
+  // holds the total time for the utilization test to complete.
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
