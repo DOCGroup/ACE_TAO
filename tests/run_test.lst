@@ -31,7 +31,7 @@ CDR_Array_Test
 Collection_Test
 Config_Test
 Conn_Test: !chorus !VxWorks
-Dirent_Test: !VxWorks
+Dirent_Test
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
 Dynamic_Priority_Test
@@ -51,28 +51,28 @@ Map_Manager_Test
 Map_Test
 Max_Default_Port_Test: !ST
 MEM_Stream_Test: !VxWorks
-Mem_Map_Test: !chorus !Unicos
+Mem_Map_Test: !chorus !Unicos !VxWorks
 Message_Block_Test: !chorus
 Message_Queue_Notifications_Test
 Message_Queue_Test: !chorus
 Message_Queue_Test_Ex: !chorus
-MM_Shared_Memory_Test: !chorus !Unicos
+MM_Shared_Memory_Test: !chorus !Unicos !VxWorks
 MT_Reactor_Timer_Test: !VxWorks
 MT_SOCK_Test: !chorus
-Malloc_Test
+Malloc_Test: !VxWorks
 Naming_Test: OTHER !chorus !LynxOS !Unicos !VxWorks
 New_Fail_Test: ALL !DISABLED
 Notify_Performance_Test
 Object_Manager_Test
 OrdMultiSet_Test
 OS_Test
-Pipe_Test: !MSVC !chorus
+Pipe_Test: !MSVC !chorus !VxWorks
 Priority_Buffer_Test: !VxWorks
 Priority_Reactor_Test: !chorus !VxWorks
 Priority_Task_Test: !Unicos
 Process_Manager_Test: ALL MSVC !DISABLED
-Process_Mutex_Test: !MSVC !chorus
-Process_Strategy_Test: !chorus !LynxOS
+Process_Mutex_Test: !MSVC !chorus !VxWorks
+Process_Strategy_Test: !chorus !LynxOS !VxWorks
 RB_Tree_Test
 Reactors_Test
 Reactor_Exceptions_Test
@@ -91,9 +91,9 @@ Svc_Handler_Test
 SOCK_Test: !chorus
 SOCK_Connector_Test
 SOCK_Send_Recv_Test: !LynxOS
-SPIPE_Test
+SPIPE_Test: !VxWorks
 SString_Test
-SV_Shared_Memory_Test: !MSVC !Unicos
+SV_Shared_Memory_Test: !MSVC !Unicos !VxWorks
 Task_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
@@ -106,5 +106,5 @@ Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
 Tokens_Test: ALL MSVC !DISABLED TOKEN !chorus !Unicos
 TSS_Test
-UPIPE_SAP_Test
+UPIPE_SAP_Test: !VxWorks
 Upgradable_RW_Test: !chorus

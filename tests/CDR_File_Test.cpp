@@ -355,8 +355,9 @@ main (int argc, ACE_TCHAR *argv[])
                        filename.get_path_name ()),
                       1);
 
-#if !defined (ACE_WIN32) \
-    || (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 == 1)
+#if (!defined (ACE_WIN32) \
+     || (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 == 1)) && \
+    !defined (VXWORKS)
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 
