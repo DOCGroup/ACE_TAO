@@ -1,3 +1,23 @@
+Fri Jun 11 12:27:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/fe/lex.yy.cpp.diff: Updated the diff output to handle
+	  the new flex output from idl.ll.
+
+	* TAO_IDL/fe/idl.ll: Made the following two changes to TAO's IDL
+	  flex file.
+	
+	  Removed the "A" through "Z" characters ranges.  Under EBCDIC
+	  the need to be "A through I", "J through R", and "S through Z"
+	  (ditto for the lower case letters).  Perhaps it should just be
+	  changed to be "[ABCDEFGHIJKLMNOPQRSTUVWXYZ]"...
+
+	  Added support for the trigraph "??=" which is the trigraph for
+	  the "#" sign.  The OpenEdition preprocessor inserts a "pragma" 
+	  statement at the start of the preprocessed output using this
+	  trigraph.
+	  
+	  Thanks to Jim Rogers <jrogers@viasoft.com> for these fixes.
+
 Fri Jun 11 14:48:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl,
@@ -6,27 +26,23 @@ Fri Jun 11 14:48:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jun 11 14:33:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO/tests/DynAny_Test/test_dynenum.cpp:
-          Changed test code to match the change in enum labels
-          made in the IDL file a while back.
+        * TAO/tests/DynAny_Test/test_dynenum.cpp: Changed test code to
+ 	  match the change in enum labels made in the IDL file a while
+ 	  back.
 
 Fri Jun 11 14:17:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * TAO_IDL/include/be_extern.h:
-          Changed several extern "C" functions to plain extern. They were
-          actually compiled with C++ and was giving warnings under Sun/CC
-          5.0 (and errors in other platforms).
-
-Fri Jun 11 13:01:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+        * TAO_IDL/include/be_extern.h: Changed several extern "C"
+ 	  functions to plain extern. They were actually compiled with C++
+ 	  and was giving warnings under Sun/CC 5.0 (and errors in other
+ 	  platforms).
 
         * tests/MT_Client/run_test.pl:
-        * examples/POA/Forwarding/run_test.pl:
-          Modified to use the new timeouts, just an example for other test
-          developers.
+        * examples/POA/Forwarding/run_test.pl: Modified to use the new
+ 	  timeouts, just an example for other test developers.
 
-        * orbsvcs/tests/Simple_Naming/run_test.pl:
-          It was missing the ACEutils package. Updated to use the process
-          timeouts.
+        * orbsvcs/tests/Simple_Naming/run_test.pl: It was missing the
+ 	  ACEutils package. Updated to use the process timeouts.
 
 Fri Jun 11 11:42:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -147,9 +163,9 @@ Thu Jun 10 21:20:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Jun 10 17:15:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/Exception.cpp: Added include and modified identifier related
-          to the codeset translator implemented for IBM1047. Thanks to Jim
-          Rogers jrogers@viasoft.com for pointing this out.
+	* tao/Exception.cpp: Added include and modified identifier related
+ 	  to the codeset translator implemented for IBM1047. Thanks to Jim
+ 	  Rogers <jrogers@viasoft.com> for pointing this out.
 
 Thu Jun 10 16:51:02 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
