@@ -467,7 +467,7 @@ tokenize (char *buffer)
   parser.preserve_designators ('\"', '\"'); // "  This quote is for emacs
   parser.preserve_designators ('\'', '\'');
 
-  for (const char *temp; ;-)
+  for (const char *temp; ;)
     {
       temp = parser.next ();
       if (temp == 0)
