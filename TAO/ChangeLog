@@ -1,3 +1,15 @@
+Mon Jan 24 13:22:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/FlResource.mpc:
+	* tao/QtResource.mpc:
+	* tao/TkResource.mpc:
+	* tao/XtResource.mpc:
+
+	  Removed Default_Resources subsection from Source_Files.
+
+	  Added empty Inline_Files, Template_Files, Resource_Files, and
+	  PIDL_Files sections.
+
 Mon Jan 24 09:38:08 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/GIOP_Fragments/PMB_With_Fragments/giop1.2_fragments_be.dat:

@@ -2,17 +2,30 @@
 // $Id$
 
 project(TAO_XtResource) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_xtreactor {
+
   sharedname   = TAO_XtResource
   dynamicflags += TAO_XTRESOURCE_BUILD_DLL
+
+  Source_Files {
+    XtResource_Factory.cpp
+    XtResource_Loader.cpp
+  }
+
   Header_Files {
     XtResource_Factory.h
     XtResource_Loader.h
     TAO_XtResource_Export.h
   }
-  Source_Files(TAO_COMPONENTS) {
-    Default_Resources {
-      XtResource_Factory.cpp
-      XtResource_Loader.cpp
-    }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  PIDL_Files {
   }
 }
