@@ -196,11 +196,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   // memory and next because the realignment may introduce
   // extra padding. 2*MAX_ALIGNMENT should be enough.
   // @@EXC@@ This doesn't seem to be exception safe.
-  ACE_Message_Block cdr (end - begin + 2 * ACE_CDR::MAX_ALIGNMENT);
-
-  // Align the buffer before creating the CDR stream.
-  ACE_CDR::mb_align (&cdr);
-  TAO_OutputCDR out (&cdr);
+  TAO_OutputCDR out (end - begin + 2 * ACE_CDR::MAX_ALIGNMENT);
 
   retval = out.append (elem_tc.in (), stream, env);
   TAO_CHECK_ENV_RETURN (env, retval);

@@ -815,6 +815,12 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // return COMPLETED_YES status ... even ones reported by code which
   // we call.
 
+
+  // @@ We must validate the reply_status variable, if it is not one
+  // of the values listed in this switch statement we should:
+  //  1) The and MessageError message back to the server
+  //  2) Raise a COMM_FAILURE exception
+
   switch (reply_status)
     {
     case TAO_GIOP_NO_EXCEPTION:

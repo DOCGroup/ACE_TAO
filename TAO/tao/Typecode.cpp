@@ -18,6 +18,7 @@
 #include "tao/Exception.h"
 #include "tao/CDR_Interpreter.h"
 #include "tao/Principal.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
@@ -1683,24 +1684,21 @@ CORBA_TypeCode::private_member_name (CORBA::ULong index,
 // Return member labels for CORBA::tk_union typecodes.
 CORBA::Any_ptr
 CORBA_TypeCode::private_member_label (CORBA::ULong n,
-                                      CORBA::Environment &env) const
+                                      CORBA::Environment &ACE_TRY_ENV) const
 {
-  env.clear ();
-
   // this function is only applicable to the CORBA::tk_union TC
   if (this->kind_ != CORBA::tk_union)
-    TAO_THROW_ENV_RETURN (CORBA::TypeCode::BadKind (), env, 0);
+    ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 
-  TAO_InputCDR stream (this->buffer_+4, this->length_-4,
+  TAO_InputCDR stream (this->buffer_+4,
+                       this->length_-4,
                        this->byte_order_);
 
-  // skip ID and name, and then get the discriminant TC
-  CORBA::TypeCode_ptr    tc = 0;
-
+  // skip ID and name
   if (!stream.skip_string ()       // type ID, hidden
       || !stream.skip_string ()    // typedef name
       || !skip_typecode (stream))  // skip discriminant typecode
-    TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+    ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 
       // skip default used, and get member count
   CORBA::ULong member_count;
@@ -1711,7 +1709,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       ACE_DEBUG ((LM_DEBUG,
                   "TypeCode::private_member_label -- "
                   "error reading from stream"));
-      TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 0);
     }
 
   // Double checked locking...
@@ -1721,69 +1719,84 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
     if (n < member_count)
       return this->private_state_->tc_member_label_list_[n];
     else
-      TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
+      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-      // member labels are of type Any. However, the actual types are
-      // restricted to simple types
-      // @@EXC@@ We need a macro here to use new (nothrow()) xxx.
-  this->private_state_->tc_member_label_list_ = new CORBA::Any_ptr [member_count];
-  if (this->private_state_->tc_member_label_list_ == 0)
-    TAO_THROW_ENV_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), env, 0);
+  // member labels are of type Any. However, the actual types are
+  // restricted to simple types
 
-  tc = this->discriminator_type (env);
-  // retrieve the discriminator type as this decides what the
-  // label is
-  TAO_CHECK_ENV_RETURN (env, 0);
+
+  // @@EXC@@ We should use Auto_Ptr_Array to make this exception
+  // safe.
+  CORBA::Any_ptr* label_list;
+  ACE_NEW_THROW_RETURN (label_list,
+                        CORBA::Any_ptr [member_count],
+                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
+
+  // get the discriminant TC
+  CORBA::TypeCode_ptr tc = this->discriminator_type (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   for (CORBA::ULong i = 0; i < member_count; i++)
     {
-      // allocate buffer to hold the member label value
-      // @@EXC@@ Also need to check for buf == 0.
-      CORBA::Octet *buf = 0;
-      buf = new CORBA::Octet [tc->size (env)];
-      TAO_CHECK_ENV_RETURN (env, 0);
+      // Create an any from the portion of the CDR stream created
+      // above.....
 
-      CORBA::TypeCode::traverse_status status =
-        CORBA::TypeCode::TRAVERSE_STOP;
+      // @@ This code assumes that the stream is a single message
+      //    block, this is perfectly OK [the stream is created from a
+      //    single buffer], but we may need to change this is the
+      //    stream creation changes. [Carlos]
+      TAO_InputCDR temp (stream);
 
-      TAO_TRY_VAR (env)
-        {
-          status = stream.decode (tc, buf, this, env);
-          TAO_CHECK_ENV;
-        }
-      TAO_CATCHANY
-        {
-          delete [] buf;
-          TAO_RETHROW_SAME_ENV_RETURN (0);
-        }
-      TAO_ENDTRY;
+      char *begin = stream.rd_ptr ();
+      int retval = temp.skip (tc, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
-          || !stream.skip_string ()         // member name
-          || !skip_typecode (stream)) // member type
-        {           // member TC
-          ACE_DEBUG ((LM_DEBUG,
-                      "TypeCode::private_member_label -- "
-                      "error getting typecode for member %d",i));
-          delete [] buf;
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
-        }
-      else
+      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+
+      char* end = temp.rd_ptr ();
+
+      // We need to allocate more memory than in the original
+      // stream, first to guarantee that the buffer is aligned in
+      // memory and next because the realignment may introduce
+      // extra padding. 2*MAX_ALIGNMENT should be enough.
+      // @@EXC@@ This doesn't seem to be exception safe.
+      TAO_OutputCDR out (end - begin + 2 * ACE_CDR::MAX_ALIGNMENT);
+
+      retval = out.append (tc, &stream, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+        return 0;
+
+      // @@EXC@@ Need to check memory allocation failure.
+      ACE_Message_Block* mb = ACE_Message_Block::duplicate(out.begin ());
+      ACE_NEW_THROW_RETURN (label_list[i],
+                            CORBA::Any (tc, mb),
+                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+                            0);
+
+      if (stream.skip_string () == 0
+          || this->skip_typecode (stream) == 0)
         {
-          // @@EXC@@ Need to check memory allocation failure.
-          this->private_state_->tc_member_label_list_[i] = new
-            CORBA::Any (tc, buf, 1);
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        "TypeCode::private_member_label "
+                        "error getting typecode for member %d\n",
+                        i));
+          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 
+                            0);
         }
     }
 
+  this->private_state_->tc_member_label_list_ = label_list;
   this->private_state_->tc_member_label_list_known_ = 1;
 
-      // If caller asked for the label for a nonexistent member, they get
-      // an error report!
+  // If caller asked for the label for a nonexistent member, they get
+  // an error report!
   if (n >= member_count)
-    TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
-  else
-    return this->private_state_->tc_member_label_list_[n];
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
+
+  return this->private_state_->tc_member_label_list_[n];
 }
 
 CORBA::TypeCode_ptr

@@ -205,14 +205,16 @@ void
 CORBA_Any::replace (CORBA::TypeCode_ptr tc,
                     const void *value,
                     CORBA::Boolean any_owns_data,
-                    CORBA::Environment &env)
+                    CORBA::Environment &ACE_TRY_ENV)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
   // message block (i.e. it is always cloned or duplicated).
   ACE_Message_Block::release (this->cdr_);
+  this->cdr_ = 0;
 
-  this->free_value (env);
+ this->free_value (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Duplicate tc and then release this->type_, just in case tc and
   // type_ are the same thing.
@@ -220,17 +222,18 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   CORBA::release (this->type_);
   this->type_ = tmp;
 
-  this->value_ = ACE_const_cast(void *, value);
-  this->any_owns_data_ = any_owns_data;
-  this->cdr_ = 0;
-
   // NW: I think an Any should alway owns the CDR stream, so I removed the
   //     check here.
   // if the Any owns the data, we encode the "value" into a CDR stream and
   // store it. We also destroy the "value" since we own it.
   TAO_OutputCDR stream;
+  stream.encode (tc, value, 0, ACE_TRY_ENV);
+  ACE_CHECK;
 
-  stream.encode (tc, value, 0, env);
+  this->value_ = ACE_const_cast(void *, value);
+  this->any_owns_data_ = any_owns_data;
+  this->cdr_ = 0;
+
   // retrieve the start of the message block chain and duplicate it
   this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
 }
@@ -261,6 +264,57 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   // We can save the decode operation
   // if there's no need to extract the object.
  }
+
+void
+CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
+                         const ACE_Message_Block *mb,
+                         CORBA::Boolean any_owns_data,
+                         void* value,
+                         CORBA::Environment &ACE_TRY_ENV)
+{
+  // Decrement the refcount on the Message_Block we hold, it does not
+  // matter if we own the data or not, because we always own the
+  // message block (i.e. it is always cloned or duplicated).
+  ACE_Message_Block::release (this->cdr_);
+  this->cdr_ = 0;
+
+  this->free_value (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->value_ = value;
+
+  // Duplicate tc and then release this->type_, just in case tc and
+  // type_ are the same thing.
+  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
+  CORBA::release (this->type_);
+  this->type_ = tmp;
+
+  this->any_owns_data_ = any_owns_data;
+
+  this->cdr_ = ACE_Message_Block::duplicate (mb);
+  // We can save the decode operation
+  // if there's no need to extract the object.
+}
+
+void
+CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
+                         CORBA::Boolean any_owns_data,
+                         void* value,
+                         CORBA::Environment &ACE_TRY_ENV)
+{
+  this->free_value (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->value_ = value;
+
+  // Duplicate tc and then release this->type_, just in case tc and
+  // type_ are the same thing.
+  CORBA::TypeCode_ptr tmp = CORBA::TypeCode::_duplicate (tc);
+  CORBA::release (this->type_);
+  this->type_ = tmp;
+
+  this->any_owns_data_ = any_owns_data;
+}
 
 // Free internal data.
 void

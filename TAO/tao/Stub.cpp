@@ -60,7 +60,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_TAO_Stub_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_Stub::TAO_Stub (char *repository_id,
-                          TAO_MProfile &profiles)
+                    TAO_MProfile &profiles)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
     forward_profiles_ (0),
