@@ -1251,7 +1251,7 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
           idl_global->err ()->redef_error (decl_name->get_string (),
                                            ref_string);
 
-          break;
+          return;
         }
       // If the spellings differ only by case, it's also an error.
       else if (decl_name->case_compare_quiet (ref_name) == I_TRUE)
@@ -1267,7 +1267,7 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
                                                      ref_string);
             }
 
-          break;
+          return;
         }
     }
 
@@ -1280,31 +1280,28 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
     {
       Identifier *parent_name = d->local_name ();
 
-      if (parent_name != 0) 
-	{
-          if (decl_name->compare (parent_name) == I_TRUE)
+      if (decl_name->compare (parent_name) == I_TRUE)
+        {
+          idl_global->err ()->redef_error (
+                                  decl_name->get_string (),
+                                  parent_name->get_string ()
+                                );
+        }
+      else if (decl_name->case_compare_quiet (parent_name) == I_TRUE)
+        {
+          if (idl_global->case_diff_error ())
             {
-              idl_global->err ()->redef_error (
+              idl_global->err ()->name_case_error (
                                       decl_name->get_string (),
                                       parent_name->get_string ()
                                     );
             }
-          else if (decl_name->case_compare_quiet (parent_name) == I_TRUE)
+          else
             {
-              if (idl_global->case_diff_error ())
-                {
-                  idl_global->err ()->name_case_error (
-                                          decl_name->get_string (),
-                                          parent_name->get_string ()
-                                        );
-                }
-              else
-                {
-                  idl_global->err ()->name_case_warning (
-                                          decl_name->get_string (),
-                                          parent_name->get_string ()
-                                        );
-                }
+              idl_global->err ()->name_case_warning (
+                                      decl_name->get_string (),
+                                      parent_name->get_string ()
+                                    );
             }
         }
     }
