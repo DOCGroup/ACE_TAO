@@ -43,6 +43,7 @@ Counter32::Counter32( const unsigned long i):SnmpUInt32(i)
 
 // copy constructor
 Counter32::Counter32( const Counter32 &c)
+  : SnmpUInt32 (c)
 {
    this->smival.value.uNumber = c.smival.value.uNumber;
    smival.syntax = sNMP_SYNTAX_CNTR32;

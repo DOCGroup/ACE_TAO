@@ -161,17 +161,16 @@ int getapp::run()
        " GET SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   char *name = address_.resolve_hostname(rc);
-   if (rc)
-      name = "<< did not resolve via gethostbyname() >>";
+   const char *name = address_.resolve_hostname(rc);
 
-   cout << "Device: " << address_ << " " << name << "\n"; 
+   cout << "Device: " << address_ << " ";
+   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
    cout << "[ Retries=" << target_.get_retry() << " \
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
 
    if (snmp_.get( pdu_, target_, this) != SNMP_CLASS_SUCCESS) {
-    char *ptr = snmp_.error_string();
+    const char *ptr = snmp_.error_string();
     cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
    } else {
        ACE_Reactor::instance()->run_event_loop();
@@ -184,7 +183,7 @@ void getapp::result(Snmp *, int rc)
     Vb vb;
     if (rc < 0)
     {
-	char *ptr = snmp_.error_string();
+	const char *ptr = snmp_.error_string();
 	cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
     } else {
 	// check to see if there are any errors

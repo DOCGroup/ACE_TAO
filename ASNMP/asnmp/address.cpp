@@ -222,6 +222,7 @@ SmiUINT32 IpAddress::get_syntax()
 
 //-----[ IP Address copy constructor ]---------------------------------
 IpAddress::IpAddress(const IpAddress &ipaddr)
+  : Address (ipaddr)
 {
   // always initialize what type this object is
   smival.syntax = sNMP_SYNTAX_IPADDR;
@@ -655,7 +656,7 @@ Address_Iter::Address_Iter(const char *hostname): valid_(0), count_(0),
 {
    ACE_OS::memset(&buffer_, 0, sizeof(ACE_HOSTENT_DATA));
    ACE_OS::memset(&lookupResult_, 0, sizeof(struct hostent));
-   if (ACE_OS::inet_addr(hostname) == -1)
+   if (ACE_OS::inet_addr(hostname) == (in_addr_t) -1)
      valid_ = query_dns(hostname);
    else {
      ACE_ASSERT(0);             // don't support dot-quad lookup yet
@@ -1024,6 +1025,7 @@ int NetbiosAddress::parse_address(const char *address)
 }
 
 NetbiosAddress::NetbiosAddress( const NetbiosAddress& nbaddr)
+  : Address (nbaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1181,6 +1183,7 @@ IpxAddress::IpxAddress( const char  *inaddr):Address( )
 
 //-----[ IPX Address copy constructor ]----------------------------------
 IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
+  : Address (ipxaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1735,6 +1738,7 @@ SmiUINT32 MacAddress::get_syntax()
 
 //-----[ MAC Address copy constructor ]---------------------------------
 MacAddress::MacAddress(const MacAddress &macaddr)
+  : Address (macaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -2061,7 +2065,9 @@ GenAddress::GenAddress( const Address &addr): address(0)
 }
 
 //-----------------[ constructor with another GenAddress object ]-------------
-GenAddress::GenAddress( const GenAddress &addr): address(0)
+GenAddress::GenAddress( const GenAddress &addr)
+  : Address (addr),
+    address(0)
 {
   valid_flag = 0;
 
@@ -2419,7 +2425,8 @@ DecNetAddress::DecNetAddress( const char *inaddr): Address()
   DecNetAddress::format_output();
 }
 
-DecNetAddress::DecNetAddress( const DecNetAddress&)
+DecNetAddress::DecNetAddress( const DecNetAddress& addr)
+  : Address (addr)
 {
 }
 
@@ -2554,7 +2561,8 @@ AppleTalkAddress::AppleTalkAddress( const char *inaddr): Address()
   valid_flag = parse_address( (char *) inaddr);
   AppleTalkAddress::format_output();
 }
-AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress&)
+AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress& addr)
+  : Address (addr)
 {
 }
 

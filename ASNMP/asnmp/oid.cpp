@@ -93,6 +93,7 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
 //
 // do an oid copy using the oid object passed in
 Oid::Oid ( const Oid &oid)
+  : SnmpSyntax (oid)
 {
   set_null();
 
@@ -485,7 +486,7 @@ Oid& Oid::operator+=( const Oid &o)
 
 // return string portion of the oid
 //
-char * Oid::to_string()
+const char * Oid::to_string()
 {
   unsigned long n;
   if (!valid())

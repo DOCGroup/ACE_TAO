@@ -160,11 +160,10 @@ int nextapp::run()
        " GET_NEXT SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   char *name = address_.resolve_hostname(rc);
-   if (rc)
-      name = "<< did not resolve via gethostbyname() >>";
+   const char *name = address_.resolve_hostname(rc);
 
-   cout << "Device: " << address_ << " " << name << "\n"; 
+   cout << "Device: " << address_ << " ";
+   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
    cout << "[ Retries=" << target_.get_retry() << " \
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
@@ -185,7 +184,7 @@ int nextapp::run()
      }
    }
    else {
-    char *ptr = snmp_.error_string();
+    const char *ptr = snmp_.error_string();
     cout << "ASNMP:ERROR: get_next command failed reason: " << ptr << endl;
   }
   cout << "ASNMP:INFO:command completed normally. ACE Rocks...\n"<< endl;

@@ -175,13 +175,13 @@ public:
   friend void set_exception_status( Vb *vb, const SmiUINT32 status);
   // set the exception status
 
-  char *to_string();
+  const char *to_string();
   // return fomatted version of this object
 
-  char *to_string_value();
+  const char *to_string_value();
   // returns a formatted version of the value
 
-  char *to_string_oid();
+  const char *to_string_oid();
   // returns a formatted version of the value
 
 protected:
