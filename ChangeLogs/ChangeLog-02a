@@ -1,3 +1,8 @@
+Fri Oct 26 07:37:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Quoter example will not run in
+	  minimum_corba builds.  
+
 Wed Oct 24 08:04:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Reactor.h: Improved the documentation of the
