@@ -1,8 +1,13 @@
+Wed May 16 16:41:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RT_ORB_Loader.cpp:
+	  Fixed fuzz errors.
+
 Wed May 16 16:35:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.h: 
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.h:
 	* tao/Strategies/GIOP_Message_NonReactive_Base.in: Fixed fuzz
-	  errors. 
+	  errors.
 
 Wed May 16 16:15:24 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
