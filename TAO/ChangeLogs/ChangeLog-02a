@@ -1,3 +1,10 @@
+Tue Sep 19 14:33:39 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+
+	  Added collocation related file to the workspaces.
+
 Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Abstract_Servant_Base.h:
@@ -83,13 +90,13 @@ Tue Sep 19 14:09:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	  Changend implementation of the method <create_object> to create
 	  
 
-	* tao/PortableServer/ObjectAdapter.cpp:
+	* tao/PortableServer/Object_Adapter.cpp:
 
 	  Modified the implementation of the method <create_collocated_object>
 	  not to create a TAO_Collocated_Object, but to set the
 	  right type of proxy broker. 
 
-	* tao/tao.dsp:
+	* tao/TAO.dsp:
 	  
 	  Added new files to the TAO's VC++ workspace.
 	  Added <Bind_Dispatcher_Guard.*> to the VC++ workspace.
