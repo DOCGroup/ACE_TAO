@@ -128,9 +128,12 @@ public:
                    int ignore_static_svcs = 1,
                    int ignore_default_svc_conf_file = 0);
   // Performs an open without parsing command-line arguments.  If
-  // <ignore_default_svc_conf_file> is non-0 then the "svc.conf" file
-  // will be ignored.  Returns number of errors that occurred on
-  // failure and 0 otherwise.
+  // <ignore_default_svc_conf_file> is non-0 then the <svc.conf>
+  // configuration file will be ignored.  Returns zero upon success,
+  // -1 if the file is not found or cannot be opened (errno is set
+  // accordingly), otherwise returns the number of errors encountered
+  // loading the services in the specified svc.conf configuration
+  // file.
 
   static int open (int argc,
                    ASYS_TCHAR *argv[],
