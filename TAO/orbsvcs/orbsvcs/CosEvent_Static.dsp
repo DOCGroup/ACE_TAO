@@ -449,14 +449,6 @@ SOURCE=.\CosEvent\CEC_SupplierControl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CosEvent\ConsumerAdmin_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent_Utilities.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosEventChannelAdminC.h
 # End Source File
 # Begin Source File
@@ -482,22 +474,6 @@ SOURCE=.\CosEventCommS_T.h
 # Begin Source File
 
 SOURCE=.\CosEvent\event_export.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\EventChannel_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\ProxyPushConsumer_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\ProxyPushSupplier_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\SupplierAdmin_i.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -577,14 +553,6 @@ SOURCE=.\CosEvent\CEC_SupplierControl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CosEvent\ConsumerAdmin_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent_Utilities.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosEventChannelAdminC.cpp
 # End Source File
 # Begin Source File
@@ -598,22 +566,6 @@ SOURCE=.\CosEventCommC.cpp
 # Begin Source File
 
 SOURCE=.\CosEventCommS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\EventChannel_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\ProxyPushConsumer_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\ProxyPushSupplier_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CosEvent\SupplierAdmin_i.cpp
 # End Source File
 # End Group
 # End Target
