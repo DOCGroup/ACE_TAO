@@ -1,5 +1,9 @@
 Mon Oct 12 18:32:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/try_macros.h: 
+	  Added new macros to support multiple TRY blocks in the same
+	  function. Andy is going to test them.
+
 	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
 	  The file still made references to the -s option.
 
