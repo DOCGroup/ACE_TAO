@@ -19,7 +19,8 @@ CIAO::XMLHelpers::Cascadable_DocHandler::Cascadable_DocHandler (ACEXML_XMLReader
       qName_ (ACE::strnew (qName)),
       parser_ (parser),
       parent_ (parent),
-      child_ (0)
+      child_ (0),
+      locator_ (0)
 {
 }
 
@@ -46,6 +47,7 @@ CIAO::XMLHelpers::Cascadable_DocHandler::push_handler (Cascadable_DocHandler *ne
 {
   // This method should be invoked from this->startElement ().
 
+  new_handler->setDocumentLocator (this->locator_);
   this->child_ = new_handler;
   this->parser_->setContentHandler (new_handler);
   this->parser_->setDTDHandler (new_handler);
@@ -86,6 +88,21 @@ CIAO::XMLHelpers::Cascadable_DocHandler::pop_handler (const ACEXML_Char *namespa
   this->child_ = 0;
 }
 
+void
+CIAO::XMLHelpers::Cascadable_DocHandler::print_warning (const ACEXML_Char *level,
+                                                        ACEXML_SAXParseException & ex
+                                                        ACEXML_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
+{
+  ACE_DEBUG ((LM_DEBUG, "%s (%s): line :%d col: %d ",
+              level,
+              this->locator_->getSystemId (),
+              this->locator_->getLineNumber(),
+              this->locator_->getColumnNumber()));
+  ex.print();
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+}
+
 CIAO::XMLHelpers::Skip_DocHandler::Skip_DocHandler (ACEXML_XMLReader *parser,
                                                     Cascadable_DocHandler *parent,
                                                     const ACEXML_Char *namespaceURI,
@@ -117,6 +134,8 @@ CIAO::XMLHelpers::Skip_DocHandler::endElement (const ACEXML_Char *namespaceURI,
                                                ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_TRACE ("CIAO::XMLHelpers::Skip_DocHandler::endElement");
+
   --this->element_count_;
   if (this->element_count_ == 0)
     {
@@ -125,10 +144,6 @@ CIAO::XMLHelpers::Skip_DocHandler::endElement (const ACEXML_Char *namespaceURI,
                                   qName
                                   ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK;
-    }
-  else
-    {
-      cout << "End Skip level " << this->element_count_ << endl;
     }
 }
 
@@ -140,6 +155,7 @@ CIAO::XMLHelpers::Skip_DocHandler::startElement (const ACEXML_Char *namespaceURI
                                                  ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_TRACE ("CIAO::XMLHelpers::Skip_DocHandler::startElement");
+
   ++this->element_count_;
-  cout << "Start Skip level " << this->element_count_ << endl;
 }

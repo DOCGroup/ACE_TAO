@@ -1,9 +1,6 @@
 // $Id$
 
-#include "ACEXML/common/FileCharStream.h"
-#include "ACEXML/common/StrCharStream.h"
-#include "ACEXML/parser/parser/Parser.h"
-#include "Svcconf_Handler.h"
+#include "XML_Utils.h"
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
@@ -34,49 +31,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (filename == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "No filename specified\n"), -1);
 
-  ACEXML_DefaultHandler *handler = 0;
-  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
-    ACEXML_CharStream *stm = 0;
-    ACEXML_FileCharStream *fstm = 0;
-    ACE_NEW_RETURN (fstm,
-                    ACEXML_FileCharStream (),
-                    1);
+  CIAO::Softpkg_Handler::Softpkg_Info info;
+  info.csd_path_ = filename;
 
-    if (fstm->open (filename) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Fail to open XML file: %s\n"),
-                         filename),
-                        -1);
-    stm = fstm;
+  if (CIAO::XML_Utils::parse_softpkg (&info) == 0)
+    info.dump ();
 
-  ACEXML_TRY_NEW_ENV
-    {
-      ACEXML_Parser parser;
-      ACE_NEW_RETURN (handler,
-                      Svcconf_Handler (&parser,
-                                       0,
-                                       0,
-                                       0,
-                                       0,
-                                       0
-                                       ACEXML_ENV_ARG_PARAMETER),
-                      -1);
-
-      ACEXML_InputSource input(stm);
-
-      parser.setContentHandler (handler);
-      parser.setDTDHandler (handler);
-      parser.setErrorHandler (handler);
-      parser.setEntityResolver (handler);
-
-      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_TRY_CHECK;
-    }
-  ACEXML_CATCH (ACEXML_SAXException, ex)
-    {
-      ex.print ();
-      return -1;
-  }
-  ACEXML_ENDTRY;
   return 0;
 }
