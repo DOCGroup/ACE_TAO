@@ -68,6 +68,9 @@ public:
 
   ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
 
+  void destroy (void);
+  // Cleanup function.
+
   const char *filename (void) const;
   void filename (char *fname);
 
