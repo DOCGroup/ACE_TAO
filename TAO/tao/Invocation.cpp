@@ -166,6 +166,8 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
       if (this->profile_ == 0)
         ACE_THROW_RETURN (CORBA::INV_POLICY (),
                           0);
+      else
+        return this->profile_;
     }
 }
 
