@@ -129,7 +129,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
       << "tmp1[i] = tmp2[i];" << be_uidt_nl
       << be_nl
-      << "return *this;" << be_uidt_nl
+      << "return *this;" << be_uidt_nl << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 

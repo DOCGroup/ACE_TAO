@@ -68,7 +68,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   os->indent ();
 
   *os << "class " << class_name << " : public TAO_Unbounded_Base_Sequence" << be_nl
-      << "{" << be_idt_nl
+      << "{" << be_nl
       << "public:" << be_idt_nl
       << "// = Initialization and termination methods." << be_nl
       << be_nl;
@@ -225,7 +225,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 
   // deallocate_buffer
   *os << "virtual void _deallocate_buffer (void)" << be_nl
-      << "{" << be_nl
+      << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl
       << be_nl;
