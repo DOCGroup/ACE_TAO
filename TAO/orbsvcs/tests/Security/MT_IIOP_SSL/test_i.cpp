@@ -37,16 +37,16 @@ Simple_Server_i::validate_protocol (ACE_ENV_SINGLE_ARG_DECL)
       if (this->validated_ != NOT_VALIDATED)
         return;
 
-      TAO_Transport_Cache_Manager::HASH_MAP &map =
+      TAO::Transport_Cache_Manager::HASH_MAP &map =
         this->orb_->orb_core ()->lane_resources ().transport_cache ().map ();
 
-      TAO_Transport_Cache_Manager::HASH_MAP_ITER st_iter =
+      TAO::Transport_Cache_Manager::HASH_MAP_ITER st_iter =
         map.begin ();
 
-      TAO_Transport_Cache_Manager::HASH_MAP_ITER end_iter =
+      TAO::Transport_Cache_Manager::HASH_MAP_ITER end_iter =
         map.end ();
 
-      for (TAO_Transport_Cache_Manager::HASH_MAP_ITER iter = st_iter;
+      for (TAO::Transport_Cache_Manager::HASH_MAP_ITER iter = st_iter;
            iter != end_iter;
            ++iter)
         {
