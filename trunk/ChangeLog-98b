@@ -1,3 +1,10 @@
+Fri Nov 06 22:41:21 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Process.cpp (spawn): initialize local "result" to 0
+          to avoid egcs warning about possible unitialized use.  Added
+          const to loop index to avoid egcs warning about discarding
+          const.
+
 Fri Nov  6 13:29:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.h (ACE_UINT64_FORMAT_SPECIFIER): Changed
