@@ -231,7 +231,7 @@ AV_Server_Sig_Handler::int_handler (int sig)
 
 AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
 {
-  TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
+  //  TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
 }
 
 // AV_Server routines
@@ -337,9 +337,7 @@ AV_Server::init (int argc,
                       -1);
 
   // Initialize the naming services
-  if (my_name_client_.init (this->orb_manager_.orb (),
-			    argc,
-			    argv) != 0)
+  if (my_name_client_.init (this->orb_manager_.orb ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Unable to initialize "
 		       "the TAO_Naming_Client. \n"),
@@ -351,9 +349,11 @@ AV_Server::init (int argc,
                   -1);
 
   // create the video server mmdevice with the naming service pointer.
-  this->orb_manager_.activate_under_child_poa ("Video_Server_MMDevice",
-                                               this->video_mmdevice_,
-                                               env);
+  CORBA::String_var video_mmdevice_ior = this->orb_manager_.activate_under_child_poa ("Video_Server_MMDevice",
+                                                                                      this->video_mmdevice_,
+                                                                                      env);
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) video_mmdevice_ior is :%s\n",video_mmdevice_ior.in ()));
+
   TAO_CHECK_ENV_RETURN (env,-1);
 
   // Register the video_mmdevice with the naming service.
@@ -382,9 +382,10 @@ AV_Server::init (int argc,
                   -1);
 
   // create the audio server mmdevice with the naming service pointer.
-  this->orb_manager_.activate_under_child_poa ("Audio_Server_MMDevice",
-                                               this->audio_mmdevice_,
-                                               env);
+  CORBA::String_var audio_mmdevice_ior = this->orb_manager_.activate_under_child_poa ("Audio_Server_MMDevice",
+                                                                                      this->audio_mmdevice_,
+                                                                                      env);
+  ACE_DEBUG ((LM_DEBUG,"Audio MMDevice ior is: %s\n",audio_mmdevice_ior.in ()));
   TAO_CHECK_ENV_RETURN (env,-1);
 
   // Register the audio_mmdevice with the naming service.
@@ -441,12 +442,8 @@ AV_Server::~AV_Server (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server: Removing handlers from the Reactor\n"));
-
-  if (this->video_mmdevice_ != 0)
-    delete this->video_mmdevice_;
-  if (this->audio_mmdevice_ != 0)
-    delete this->audio_mmdevice_;
-  
+  delete this->video_mmdevice_;
+  delete this->audio_mmdevice_;
 }
 
 int

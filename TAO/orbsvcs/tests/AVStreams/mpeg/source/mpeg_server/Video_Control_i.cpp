@@ -144,6 +144,11 @@ Video_Control_i::set_peer (char * &peer,
                client_data_addr.get_host_addr (),
                client_data_addr.get_port_number ()));
 
+   char temp_addr [BUFSIZ];
+   if (VIDEO_SINGLETON::instance ()->data_host != 0)
+     ACE_OS::sprintf (temp_addr,"%s:%d",VIDEO_SINGLETON::instance ()->data_host,0);
+   else
+     ACE_OS::sprintf (temp_addr,":%d",0);
  
   if (VIDEO_SINGLETON::instance ()->dgram.open (client_data_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 

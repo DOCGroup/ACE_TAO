@@ -45,7 +45,7 @@ Audio_Child_Process::init (int argc,
 int
 Audio_Child_Process::make_mediactrl (Audio_Control_i *& media_ctrl)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Child_Process::make_mediactrl ()\n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Child_Process::make_mediactrl ()\n"));
   media_ctrl = AUDIO_CONTROL_I::instance ();
   return 0;
 }

@@ -82,6 +82,8 @@
 ACE_RCSID(client, vcr, "$Id$")
 
 static int mainPid;
+int orig_argc;
+char **orig_argv;
 
 static time_t start_time;
 /*
@@ -108,8 +110,8 @@ usage(char *s)	/* program name */
     fprintf(stderr, "    [-dither ordered|ordered2|fs4|fs2|fs2fast|hybrid|\n");
     fprintf(stderr, "             hybrid2|2x2|gray|color|mono|threshold]\n");
     fprintf(stderr, "    [X-window options]\n");
-    fprintf(stderr, "    [-v [host_name:]video_file_name]\n");
-    fprintf(stderr, "    [-a [host_name:]audio_file_name]\n");
+    fprintf(stderr, "    [-v video_file_name]\n");
+    fprintf(stderr, "    [-a audio_file_name]\n");
     
     fprintf(stderr, "    [-p movie_file_name]\n");
     fprintf(stderr, "    [-l movie_list_file_name]\n");
@@ -236,6 +238,9 @@ int main(int argc, char ** argv)
 
   argc_share	= argc;
   argv_share	= argv;
+
+  orig_argc = argc;
+  orig_argv = argv;
   mark = 1;
   argc--;
 
@@ -249,18 +254,18 @@ int main(int argc, char ** argv)
   shmemFlag = 0;
 #endif
 
-  if (getenv("DISPLAY")!= NULL)
-  {
-    char * disp = getenv("DISPLAY");
-    if (strncmp(disp, "anquetil:0", 10) == 0 ||
-	strncmp(disp, "helix:0", 7) == 0 ||
-	strncmp(disp, "hinault:0", 9) == 0 ||
-	strncmp(disp, "lemond:0", 8) == 0 ||
-	strncmp(disp, "indurain:0", 10) == 0)
-      ditherType = ORDERED_DITHER;
-    else
-      ditherType = ORDERED_DITHER;
-  }
+//   if (getenv("DISPLAY")!= NULL)
+//   {
+//     char * disp = getenv("DISPLAY");
+//     if (strncmp(disp, "anquetil:0", 10) == 0 ||
+// 	strncmp(disp, "helix:0", 7) == 0 ||
+// 	strncmp(disp, "hinault:0", 9) == 0 ||
+// 	strncmp(disp, "lemond:0", 8) == 0 ||
+// 	strncmp(disp, "indurain:0", 10) == 0)
+//       ditherType = ORDERED_DITHER;
+//     else
+//       ditherType = ORDERED_DITHER;
+//   }
 
   while (argc) {
     if (strcmp(argv[mark], "-rt") == 0) {
@@ -472,7 +477,7 @@ int main(int argc, char ** argv)
 
   mainPid = getpid();
 
-  CTRmain(argc,argv);
+  CTRmain(orig_argc,orig_argv);
 
   return 0;
 }

@@ -1,3 +1,4 @@
+
 /* $Id$ */
 
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
@@ -176,7 +177,7 @@ static void exit_on_kill(void)
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) ABprocess killed \n"));
   extern void set_exit_routine_tag(int tag);
   set_exit_routine_tag(0);
-  ComCloseConn(savedSocket);
+  //  ComCloseConn(savedSocket);
   VBdeleteBuf();
   exit(0);
 }

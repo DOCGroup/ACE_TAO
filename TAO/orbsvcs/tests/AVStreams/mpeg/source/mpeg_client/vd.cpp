@@ -409,7 +409,7 @@ void VDprocess(int CTRpid)
     }
     p = (VideoPacket*)VBgetMsg();   /* guarranteed to get a Packet */
 
-    //    printPacket(p);
+    //printPacket(p);
 
 
     //    fprintf(stderr, "VD: got frame %d\n", p->frame);
@@ -647,10 +647,10 @@ void VDprocess(int CTRpid)
     if (!mpegVidRsrc((char*)p))  /* successfully decoded */
     {
       curPict = curVidStream->current;
-      /*
-      fprintf(stderr, "VD successfully decodes a frame.\n");
-      printPacket(p);
-      */
+
+      //      fprintf(stderr, "VD successfully decodes a frame.\n");
+      //      printPacket(p);
+
       if (curcmd == CmdPLAY && shared->rtplay)
       {
 	if ((curVidStream->picture.code_type == I_TYPE) ||
