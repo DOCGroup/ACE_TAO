@@ -281,14 +281,14 @@ public:
   // get the exception type
 
 private:
-   void parse_header (CORBA::Environment &env);
+   void parse_header (CORBA::Environment &TAO_IN_ENV);
   // Parse the request header and store the result on this object.
 
-  void parse_header_std (CORBA::Environment &env);
+  void parse_header_std (CORBA::Environment &TAO_IN_ENV);
   // Parse the standard IIOP request header and store the result on
   // this object.
 
-  void parse_header_lite (CORBA::Environment &env);
+  void parse_header_lite (CORBA::Environment &TAO_IN_ENV);
   // Parse the lightweight version of the IIOP request header and
   // store the result on this object.
 

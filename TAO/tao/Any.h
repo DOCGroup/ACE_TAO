@@ -322,7 +322,7 @@ public:
   // CDR accessor.
 
 protected:
-  void free_value (CORBA::Environment &env);
+  void free_value (CORBA::Environment &TAO_IN_ENV);
   // Release the <value_>.
 
 private:

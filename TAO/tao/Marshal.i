@@ -143,11 +143,11 @@ TAO_Marshal_WString::~TAO_Marshal_WString (void)
 // the kind of the typecode.
 ACE_INLINE TAO_Marshal_Object *
 TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
-                                          CORBA::Environment &env)
+                                          CORBA::Environment &TAO_IN_ENV)
 {
   if (tc && tc->kind_ >= 0 && tc->kind_ < CORBA::TC_KIND_COUNT)
     return this->mobj_table_[tc->kind_].obj_;
-  TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
+  TAO_THROW_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), 0);
 }
 
 // *************** deep_free methods ******************

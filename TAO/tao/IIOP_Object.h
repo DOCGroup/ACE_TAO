@@ -114,7 +114,7 @@ class TAO_Export IIOP_Object : public STUB_Object
   //   interpreter that let  static stubs be very small.  It's
   //   specific to objrefs with IIOP::Profile.
 public:
-  virtual void do_static_call (CORBA_Environment &env,
+  virtual void do_static_call (CORBA_Environment &TAO_IN_ENV,
                                const TAO_Call_Data *info,
                                void** args);
   // SII-based "Stub interpreter" for static stubs.  IDL compiler just
@@ -200,7 +200,7 @@ public:
   // Reset the <handler_>.  Usually used on errors.
 
 protected:
-  void put_params (CORBA_Environment &env,
+  void put_params (CORBA_Environment &TAO_IN_ENV,
                    const TAO_Call_Data *info,
                    TAO_GIOP_Invocation &call,
                    void** args);
