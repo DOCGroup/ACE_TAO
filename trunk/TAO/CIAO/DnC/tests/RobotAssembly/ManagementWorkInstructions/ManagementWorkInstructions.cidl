@@ -1,0 +1,13 @@
+// $Id$
+#include "ManagementWorkInstructions.idl"
+
+composition session ManagementWorkInstructions_Impl
+{
+  home executor ManagementWorkInstructionsHome_Exec
+  {
+    implements RobotAssembly::ManagementWorkInstructionsHome;
+    manages    ManagementWorkInstructions_Exec;
+  };
+};
+
+

@@ -1,0 +1,56 @@
+// $Id$ 
+
+project(WatchSettingManager_stub): ciao_client_dnc {
+  after += RobotAssembly_stub
+  sharedname = WatchSettingManager_stub
+  libs += RobotAssembly_stub
+  idlflags += -Wb,stub_export_macro=WATCHSETTINGMANAGER_STUB_Export -Wb,stub_export_include=WatchSettingManager_stub_export.h -Wb,skel_export_macro=WATCHSETTINGMANAGER_SVNT_Export -Wb,skel_export_include=WatchSettingManager_svnt_export.h
+  dynamicflags   = WATCHSETTINGMANAGER_STUB_BUILD_DLL
+
+  IDL_Files {
+    WatchSettingManager.idl
+  }
+
+  Source_Files {
+    WatchSettingManagerC.cpp
+  }
+}
+
+project(WatchSettingManager_svnt) : ciao_servant_dnc {
+  after +=  WatchSettingManager_stub
+  sharedname = WatchSettingManager_svnt
+  libs    += WatchSettingManager_stub RobotAssembly_stub RobotAssembly_svnt
+
+  idlflags  += -Wb,export_macro=WATCHSETTINGMANAGER_SVNT_Export -Wb,export_include=WatchSettingManager_svnt_export.h
+  dynamicflags = WATCHSETTINGMANAGER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    WatchSettingManager.cidl
+  }
+
+  IDL_Files {
+    WatchSettingManagerE.idl
+  }
+                                                                                                        
+  Source_Files {
+    WatchSettingManagerEC.cpp
+    WatchSettingManagerS.cpp
+    WatchSettingManager_svnt.cpp
+  }
+}
+
+project(WatchSettingManager_exec) : ciao_component_dnc {
+  after += WatchSettingManager_svnt
+  sharedname = WatchSettingManager_exec
+  libs      += RobotAssembly_stub RobotAssembly_svnt WatchSettingManager_stub WatchSettingManager_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=WATCHSETTINGMANAGER_EXEC_Export -Wb,export_include=RobotManger_exec_export.h
+  dynamicflags   = WATCHSETTINGMANAGER_EXEC_BUILD_DLL
+                                                                                                        
+  IDL_Files {
+  }
+                                                                                                        
+  Source_Files {
+    WatchSettingManager_exec.cpp
+  }
+}

@@ -1,0 +1,17 @@
+// $Id$
+#include "../Robot_Base.idl"
+
+module RobotAssembly
+{
+  component HumanMachineInterface
+  {
+	 // Production Interfaces.
+    uses WorkOrderResponses HumanResponse;
+    consumes DisplayWork WorkDisplayUpdate;
+
+    // Development Interfaces.
+    provides HMIController Controller;
+  };
+  home HumanMachineInterfaceHome manages HumanMachineInterface {};
+
+};

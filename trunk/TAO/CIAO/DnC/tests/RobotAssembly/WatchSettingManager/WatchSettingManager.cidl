@@ -1,0 +1,12 @@
+// $Id$
+#include "WatchSettingManager.idl"
+
+composition session WatchSettingManager_Impl
+{
+  home executor WatchSettingManagerHome_Exec
+  {
+    implements RobotAssembly::WatchSettingManagerHome;
+    manages    WatchSettingManager_Exec;
+  };
+};
+
