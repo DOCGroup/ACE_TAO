@@ -3,6 +3,7 @@ Sat Mar 31 10:16:01 2001  Carlos O'Ryan  <coryan@uci.edu>
         * ACE-INSTALL.html:
           Removed broken link, the web page does not exist anymore. Thanks
           to John R. Ashmun <john.ashmun@esca.com> for pointing this out.
+	  This fixes [BUGID:833]
 
 Fri Mar 30 14:08:18 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
