@@ -4,6 +4,7 @@
 #include "Static_Assembly_Visitors.h"
 #include "../XML_Helpers/XML_Utils.h"
 #include "ace/Configuration_Import_Export.h"
+#include "ace/OS_NS_stdio.h"
 
 const char* comp_reg_type_to_str (
               CIAO::Assembly_Placement::componentinstantiation::IF_Register_Type type)
@@ -295,7 +296,7 @@ CIAO::Static_Assembly_Builder_Visitor::visit_homeplacement
 int
 CIAO::Static_Assembly_Builder_Visitor::visit_componentinstantiation
 (CIAO::Assembly_Placement::componentinstantiation *ci
- ACE_ENV_ARG_DECL_NOT_USED)
+ ACE_ENV_ARG_DECL)
 {
   // @@ instantiation and register component.
   ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n", ci->id ()));
@@ -668,14 +669,14 @@ generate_static_app_mpc (const char* app_mpc_file_name)
                                      0,
                                      section);
   if (rc == -1)
-    printf ("error in open\n");
+    ACE_ERROR_RETURN ((LM_ERROR, "error in installation open\n"), -1);
 
   ACE_OS::fprintf (mpc_file, "%s\n\n",
-  "project(Static_CCM_App) : ciao_server, ciao_client, rtcorba, iortable { \
-  includes += $(ACE_ROOT)/TAO/CIAO/tools/Assembly_Deployer \
-  includes += $(ACE_ROOT)/TAO/CIAO/tools/static_configurator \
-  libs += CIAO_XML_Helpers Static_Configurator \
-  after += CIAO_XML_Helpers Static_Configurator");
+  "project(Static_CCM_App) : ciao_server, ciao_client, rtcorba, iortable {\n"
+  "includes += $(ACE_ROOT)/TAO/CIAO/tools/Assembly_Deployer\n"
+  "includes += $(ACE_ROOT)/TAO/CIAO/tools/static_configurator\n"
+  "libs += CIAO_XML_Helpers Static_Configurator\n"
+  "after += CIAO_XML_Helpers Static_Configurator\n");
 
   for (int i=0; i<=homes_table_last_index_; ++i)
     {
@@ -710,16 +711,15 @@ generate_static_app_mpc (const char* app_mpc_file_name)
     }
 
   ACE_OS::fprintf (mpc_file, "%s\n",
-  "   Source_Files { \
-         Static_CCM_App.cpp \
-      } \
-      IDL_Files { \
-      } \
-   }");
+  "   Source_Files {\n"
+  "       Static_CCM_App.cpp\n"
+  "    }\n\n"
+  "    IDL_Files {\n"
+  "    }\n"
+  "}\n");
 
   ACE_OS::fclose (mpc_file);
-
-  return 0;
+  return rc;
 }
 
 void CIAO::Static_Assembly_Builder_Visitor::
@@ -729,191 +729,194 @@ generate_static_app_driver (const char* app_driver_file_name)
     ACE_OS::fopen (app_driver_file_name, "w");
 
   const char *text =
-"#include \"ComponentServer_Impl.h\" 
-#include \"CIAO_ServersC.h\" 
-#include \"Server_init.h\" 
-#include \"Static_Configurator.h\" 
-#include \"ace/SString.h\" 
-#include \"ace/Get_Opt.h\"
-#include \"Static_Assembly_Config.h\"
-
-char *ior_file_name_ = 0; \
-
-int
-parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, \"k:o:\");
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':  // get the file name to write to
-       ior_file_name_ = get_opts.opt_arg ();
-      break;
-
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           \"usage:  %s\\n\"
-                           \"-o <ior_output_file>\\n\"
-                           \"\\n\",
-                           argv [0]),
-                          -1);
-      }
-
-  return 0;
-}
-
-
-int
-main (int argc, char *argv[])
-{
-  ACE_TRY_NEW_ENV
-    {
-      // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CIAO::Server_init (orb.in ());
-
-      if (parse_args (argc, argv) != 0)
-        return -1;
-
-      // Get reference to Root POA.
-      CORBA::Object_var obj
-        = orb->resolve_initial_references (\"RootPOA\"
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Activate POA manager
-      PortableServer::POAManager_var mgr
-        = poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CIAO::ComponentServer_Impl *comserv_servant;
-
-      CIAO::Static_Configurator configurator;
-      int containers_table_size =
-        sizeof (containers_table_)/sizeof(CIAO::Static_Config::ContainerAttributes);
-      int homes_table_size =
-        sizeof (homes_table_)/sizeof(CIAO::Static_Config::HomeAttributes);
-      int components_table_size =
-        sizeof (components_table_)/sizeof(CIAO::Static_Config::ComponentAttributes);
-      int component_registrations_table_size =
-        sizeof (component_registrations_table_)/sizeof(CIAO::Assembly_Placement::componentinstantiation::Register_Info);
-      int connections_table_size =
-        sizeof (connections_table_)/sizeof(CIAO::Static_Config::ConnectionAttributes);
-      int resolvers_table_size =
-        sizeof (resolvers_table_)/sizeof(CIAO::Static_Config::ResolveInfoAttributes);
-
-      CIAO::HOMECREATOR_FUNCPTR_MAP home_creator_fptr_map;
-      CIAO::HOMESERVANTCREATOR_FUNCPTR_MAP homesvnt_creator_fptr_map;
-      CIAO::Static_Config_EntryPoints_Maps maps;
-      maps.home_creator_funcptr_map_ = &home_creator_fptr_map;
-      maps.home_servant_creator_funcptr_map_ = &homesvnt_creator_fptr_map;
-
-      int i=0;
-      for (i=0; i<homes_table_size; ++i)
-        {
-          home_creator_fptr_map.bind (homes_table_[i].executor_entrypt_,
-                                      homes_table_[i].executor_fptr_);
-
-          homesvnt_creator_fptr_map.bind (homes_table_[i].servant_entrypt_,
-                                          homes_table_[i].servant_fptr_);
-        }
-
-      ACE_NEW_RETURN (comserv_servant,
-                      CIAO::ComponentServer_Impl (orb.in (),
-                                                  poa.in (),
-                                                  1,
-                                                  &maps),
-                      -1);
-
-      PortableServer::ServantBase_var safe_servant (comserv_servant);
-
-      Components::ConfigValues configs;
-
-      comserv_servant->init (configs
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Configuring ComponentServer.
-      PortableServer::ObjectId_var cs_oid
-        = poa->activate_object (comserv_servant
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      obj = poa->id_to_reference (cs_oid.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      Components::Deployment::ComponentServer_var comserv_obj =
-        Components::Deployment::ComponentServer::_narrow (obj.in ()
-                                                          ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (comserv_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, \"Unable to activate ComponentServer object\\n\"), -1);
-
-
-      Components::Deployment::ServerActivator_var activator;
-      Components::ConfigValues_var config = new Components::ConfigValues;
-
-      comserv_servant->set_objref (activator.in (),
-                                   config,
-                                   comserv_obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      configurator.configure (orb.in (),
-                              comserv_obj.in (),
-                              containers_table_,
-                              containers_table_size,
-                              homes_table_,
-                              homes_table_size,
-                              components_table_,
-                              components_table_size,
-                              component_registrations_table_,
-                              component_registrations_table_size,
-                              connections_table_,
-                              connections_table_size,
-                              resolvers_table_,
-                              resolvers_table_size);
-
-      CORBA::String_var str = orb->object_to_string (comserv_obj.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
-
-      CIAO::Utility::write_IOR (ior_file_name_, str.in ());
-      ACE_DEBUG ((LM_INFO, \"ComponentServer IOR: %s\\n\", str.in ()));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  \"Running ComponentServer...\\n\"));
-
-      // Run the main event loop for the ORB.
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           \"server::main\t\\n\");
-      return 1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
-}";
+"\n"
+"#include \"ComponentServer_Impl.h\"\n"
+"#include \"CIAO_ServersC.h\"\n"
+"#include \"Server_init.h\"\n"
+"#include \"Static_Configurator.h\"\n"
+"#include \"ace/SString.h\"\n"
+"#include \"ace/Get_Opt.h\"\n"
+"\n"
+"#include \"Static_Assembly_Config.h\"\n"
+"\n"
+"char *ior_file_name_ = 0;\n"
+"\n"
+"int\n"
+"parse_args (int argc, char *argv[])\n"
+"{\n"
+"  ACE_Get_Opt get_opts (argc, argv, \"k:o:\");\n"
+"  int c;\n"
+"\n"
+"  while ((c = get_opts ()) != -1)\n"
+"    switch (c)\n"
+"      {\n"
+"      case 'o':  // get the file name to write to\n"
+"       ior_file_name_ = get_opts.opt_arg ();\n"
+"      break;\n"
+"\n"
+"      case '?':  // display help for use of the server.\n"
+"      default:\n"
+"        ACE_ERROR_RETURN ((LM_ERROR,\n"
+"                           \"usage:  %s\\n\"\n"
+"                           \"-o <ior_output_file>\\n\"\n"
+"                           \"\\n\",\n"
+"                           argv [0]),\n"
+"                          -1);\n"
+"      }\n"
+"\n"
+"  return 0;\n"
+"}\n"
+"\n"
+"\n"
+"int\n"
+"main (int argc, char *argv[])\n"
+"{\n"
+"  ACE_TRY_NEW_ENV\n"
+"    {\n"
+"      // Initialize orb\n"
+"      CORBA::ORB_var orb = CORBA::ORB_init (argc,\n"
+"                                            argv,\n"
+"                                            0\n"
+"                                            ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      CIAO::Server_init (orb.in ());\n"
+"\n"
+"      if (parse_args (argc, argv) != 0)\n"
+"        return -1;\n"
+"\n"
+"      // Get reference to Root POA.\n"
+"      CORBA::Object_var obj\n"
+"        = orb->resolve_initial_references (\"RootPOA\"\n"
+"                                           ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      PortableServer::POA_var poa\n"
+"        = PortableServer::POA::_narrow (obj.in ()\n"
+"                                        ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      // Activate POA manager\n"
+"      PortableServer::POAManager_var mgr\n"
+"        = poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      CIAO::ComponentServer_Impl *comserv_servant;\n"
+"\n"
+"      CIAO::Static_Configurator configurator;\n"
+"      int containers_table_size =\n"
+"        sizeof (containers_table_)/sizeof(CIAO::Static_Config::ContainerAttributes);\n"
+"      int homes_table_size =\n"
+"        sizeof (homes_table_)/sizeof(CIAO::Static_Config::HomeAttributes);\n"
+"      int components_table_size =\n"
+"        sizeof (components_table_)/sizeof(CIAO::Static_Config::ComponentAttributes);\n"
+"      int component_registrations_table_size =\n"
+"        sizeof (component_registrations_table_)/sizeof(CIAO::Assembly_Placement::componentinstantiation::Register_Info);\n"
+"      int connections_table_size =\n"
+"        sizeof (connections_table_)/sizeof(CIAO::Static_Config::ConnectionAttributes);\n"
+"      int resolvers_table_size =\n"
+"        sizeof (resolvers_table_)/sizeof(CIAO::Static_Config::ResolveInfoAttributes);\n"
+"\n"
+"      CIAO::HOMECREATOR_FUNCPTR_MAP home_creator_fptr_map;\n"
+"      CIAO::HOMESERVANTCREATOR_FUNCPTR_MAP homesvnt_creator_fptr_map;\n"
+"      CIAO::Static_Config_EntryPoints_Maps maps;\n"
+"      maps.home_creator_funcptr_map_ = &home_creator_fptr_map;\n"
+"      maps.home_servant_creator_funcptr_map_ = &homesvnt_creator_fptr_map;\n"
+"\n"
+"      int i=0;\n"
+"      for (i=0; i<homes_table_size; ++i)\n"
+"        {\n"
+"          home_creator_fptr_map.bind (homes_table_[i].executor_entrypt_,\n"
+"                                      homes_table_[i].executor_fptr_);\n"
+"\n"
+"          homesvnt_creator_fptr_map.bind (homes_table_[i].servant_entrypt_,\n"
+"                                          homes_table_[i].servant_fptr_);\n"
+"        }\n"
+"\n"
+"      ACE_NEW_RETURN (comserv_servant,\n"
+"                      CIAO::ComponentServer_Impl (orb.in (),\n"
+"                                                  poa.in (),\n"
+"                                                  1,\n"
+"                                                  &maps),\n"
+"                      -1);\n"
+"\n"
+"      PortableServer::ServantBase_var safe_servant (comserv_servant);\n"
+"\n"
+"      Components::ConfigValues configs;\n"
+"\n"
+"      comserv_servant->init (configs\n"
+"                             ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      // Configuring ComponentServer.\n"
+"      PortableServer::ObjectId_var cs_oid\n"
+"        = poa->activate_object (comserv_servant\n"
+"                                ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      obj = poa->id_to_reference (cs_oid.in ()\n"
+"                                  ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      Components::Deployment::ComponentServer_var comserv_obj =\n"
+"        Components::Deployment::ComponentServer::_narrow (obj.in ()\n"
+"                                                          ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      if (CORBA::is_nil (comserv_obj.in ()))\n"
+"        ACE_ERROR_RETURN ((LM_ERROR, \"Unable to activate ComponentServer object\\n\"), -1);\n"
+"\n"
+"\n"
+"      Components::Deployment::ServerActivator_var activator;\n"
+"      Components::ConfigValues_var config = new Components::ConfigValues;\n"
+"\n"
+"      comserv_servant->set_objref (activator.in (),\n"
+"                                   config,\n"
+"                                   comserv_obj.in ()\n"
+"                                   ACE_ENV_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK;\n"
+"\n"
+"      configurator.configure (orb.in (),\n"
+"                              comserv_obj.in (),\n"
+"                              containers_table_,\n"
+"                              containers_table_size,\n"
+"                              homes_table_,\n"
+"                              homes_table_size,\n"
+"                              components_table_,\n"
+"                              components_table_size,\n"
+"                              component_registrations_table_,\n"
+"                              component_registrations_table_size,\n"
+"                              connections_table_,\n"
+"                              connections_table_size,\n"
+"                              resolvers_table_,\n"
+"                              resolvers_table_size);\n"
+"\n"
+"      CORBA::String_var str = orb->object_to_string (comserv_obj.in ()\n"
+"                                                     ACE_ENV_ARG_PARAMETER);\n"
+"\n"
+"      CIAO::Utility::write_IOR (ior_file_name_, str.in ());\n"
+"      ACE_DEBUG ((LM_INFO, \"ComponentServer IOR: %s\\n\", str.in ()));\n"
+"\n"
+"      ACE_DEBUG ((LM_DEBUG,\n"
+"                  \"Running ComponentServer...\\n\"));\n"
+"\n"
+"      // Run the main event loop for the ORB.\n"
+"      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);\n"
+"      ACE_TRY_CHECK\n"
+"    }\n"
+"  ACE_CATCHANY\n"
+"    {\n"
+"      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,\n"
+"                           \"server::main\t\\n\");\n"
+"      return 1;\n"
+"    }\n"
+"  ACE_ENDTRY;\n"
+"\n"
+"  return 0;\n"
+"}";
 
   ACE_OS::fprintf( app_driver_file, "%s\n", text);
 
