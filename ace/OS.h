@@ -2218,10 +2218,6 @@ protected:
 # include /**/ <sched.h>
 #endif /* ACE_NEEDS_SCHED_H */
 
-#if defined (ghs) && defined (__Chorus)
-# include /**/ <stdfileio.h>
-#endif /* ghs && __Chorus */
-
 #if defined (ACE_HAS_WINCE)
 #define islower iswlower
 #define isdigit iswdigit
