@@ -400,6 +400,22 @@ CIAO::Partitioning_Handler::endElement (const ACEXML_Char *namespaceURI,
           this->home_placement_->insert_tail (this->comp_instance_);
           this->comp_instance_ = 0;
         }
+      else if (ACE_OS::strcmp (qName, "registercomponent") == 0)
+        {
+          this->comp_instance_->register_info_.enqueue_tail (this->comp_register_info_);
+        }
+      else if (ACE_OS::strcmp (qName, "providesidentifier") == 0)
+        {
+          this->comp_register_info_.type_ =
+            CIAO::Assembly_Placement::componentinstantiation::PROVIDESID;
+          this->comp_register_info_.port_id_ = this->characters_.c_str ();
+        }
+      else if (ACE_OS::strcmp (qName, "consumesidentifier") == 0)
+        {
+          this->comp_register_info_.type_ =
+            CIAO::Assembly_Placement::componentinstantiation::CONSUMESID;
+          this->comp_register_info_.port_id_ = this->characters_.c_str ();
+        }
       break;
 
     default:
@@ -531,10 +547,43 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
           ACEXML_CHECK;
 
         }
+      else if (ACE_OS::strcmp (qName, "registerwithhomefinder") == 0 ||
+               ACE_OS::strcmp (qName, "registerwithnaming") == 0)
+        {
+          const char *name;
+          CIAO::XML_Utils::get_single_attribute ("name",
+                                                 name,
+                                                 atts
+                                                 ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_CHECK;
+
+          CIAO::Assembly_Placement::homeplacement::Register_Info reg_info;
+          if (ACE_OS::strcmp (qName, "registerwithhomefinder") == 0)
+            reg_info.type_ = CIAO::Assembly_Placement::homeplacement::HOMEFINDER;
+          else
+            reg_info.type_ = CIAO::Assembly_Placement::homeplacement::NAMING;
+          reg_info.name_ = name;
+          this->home_placement_->register_info_.enqueue_tail (reg_info);
+        }
       // @@ Ignore the rest of element in home placement for now.
       break;
 
     case COMPONENT_INSTANTIATION:
+      if (ACE_OS::strcmp (qName, "registercomponent") == 0)
+        {
+          this->comp_register_info_.reset ();
+        }
+      else if (ACE_OS::strcmp (qName, "registerwithnaming") == 0)
+        {
+          const char *name;
+          CIAO::XML_Utils::get_single_attribute ("name",
+                                                 name,
+                                                 atts
+                                                 ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_CHECK;
+
+          this->comp_register_info_.name_ = name;
+        }
 
       break;
 
