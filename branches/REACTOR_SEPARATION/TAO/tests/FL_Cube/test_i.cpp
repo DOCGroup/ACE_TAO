@@ -2,7 +2,6 @@
 
 #include "test_i.h"
 
-#if defined(ACE_HAS_FL)
 #include <GL/gl.h>
 
 #if !defined(__ACE_INLINE__)
@@ -181,4 +180,3 @@ Simple_Window::draw_cube (void)
     glEnd();
 }
 
-#endif /* ACE_HAS_FL */

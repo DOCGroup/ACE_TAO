@@ -25,7 +25,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_FL)
 #include "ace/ACE_FlReactor_export.h"
 #include "ace/Select_Reactor.h"
 
@@ -103,7 +102,8 @@ private:
   ACE_FlReactor &operator = (const ACE_FlReactor &);
 };
 
-#endif /* ACE_HAS_FL */
+// Factory method to create an instance of ACE_FlReactor
+extern "C" ACE_FlReactor_Export ACE_Reactor_Impl *ACE_create_flreactor(void);
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FLREACTOR_H */

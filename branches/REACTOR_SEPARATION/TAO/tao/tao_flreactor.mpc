@@ -1,0 +1,17 @@
+project(TAO_FlReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_flreactor {
+  requires     += tao_flreactor
+  sharedname   = TAO_FlReactor
+  dynamicflags += TAO_FLREACTOR_BUILD_DLL
+  Header_Files {
+    fl_resource.h
+    TAO_FlReactor_export.h
+  }
+  Inline_Files {
+    fl_resource.i
+  }
+  Source_Files(TAO_COMPONENTS) {
+    Default_Resources {
+      fl_resource.cpp
+    }
+  }
+}
