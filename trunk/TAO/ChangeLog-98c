@@ -5,6 +5,10 @@ Sat Jan 03 09:04:28 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_NOTSUP_VERBOSE, because thr_setcanceltype isn't
           supported there.
 
+        * tao/corba.h: g++/VxWorks doesn't like backslashes at the
+          end of comment lines, so replaced a commenting of a #define
+          with #if 0.
+
 Fri Jan 02 18:42:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.51, released Fri Jan 02 18:42:31 1998.
