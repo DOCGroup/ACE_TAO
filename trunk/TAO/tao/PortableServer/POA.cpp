@@ -724,12 +724,12 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
-  TAO::ORT_Array array_obj_ref_template;
+  TAO::ORT_Array array_obj_ref_template (1);
 
   CORBA::ULong i = 0;
 
   // Gather all ObjectReferenceTemplates and change all adapter states
-  // to inactivate
+  // to INACTIVE.
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end ();
        ++iterator)
@@ -747,22 +747,26 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
           // Add it to the sequence of object reference templates that
           // will be destroyed.
-          array_obj_ref_template.size (i + 1);
+          array_obj_ref_template.size (1);
 
-          array_obj_ref_template[i] = ort;
+          array_obj_ref_template[0] = ort;
         }
 
       child_poa->adapter_state_ =
         PortableInterceptor::INACTIVE;
 
+      // Notify the state changes to the IORInterceptors
+      this->adapter_state_changed (array_obj_ref_template,
+                                   PortableInterceptor::INACTIVE
+                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (adapter != 0)
+        adapter->release (array_obj_ref_template[0]);
+
       ++i;
     }
 
-  // Notify the state changes to the IORInterceptors
-  this->adapter_state_changed (array_obj_ref_template,
-                               PortableInterceptor::INACTIVE
-                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   // Destroy all child POA's now.
   for (CHILDREN::iterator destroy_iterator = this->children_.begin ();
@@ -848,8 +852,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           // Add it to the sequence of object reference templates, we
           // just notify for ourselves that we are now non_existent,
           // our childs will do it for themselves.
-          array_obj_ref_template.size (1);
-          array_obj_ref_template[0] = ort;
+          my_array_obj_ref_template.size (1);
+          my_array_obj_ref_template[0] = ort;
         }
 
       // According to the ORT spec, after a POA is destroyed, its state
@@ -865,21 +869,19 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
-      this->adapter_state_changed (array_obj_ref_template,
+      this->adapter_state_changed (my_array_obj_ref_template,
                                    this->adapter_state_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (ort_adapter != 0)
-        ort_adapter->release (array_obj_ref_template[0]);
-
-      // ---------------------------------------------
-      if (this->ort_adapter_ != 0)
         {
+          ort_adapter->release (my_array_obj_ref_template[0]);
+
           TAO::ORT_Adapter_Factory *ort_factory =
             this->ORT_adapter_factory ();
 
-          ort_factory->destroy (this->ort_adapter_
+          ort_factory->destroy (ort_adapter
                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 

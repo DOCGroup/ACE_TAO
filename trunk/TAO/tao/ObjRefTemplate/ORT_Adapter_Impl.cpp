@@ -109,7 +109,7 @@ TAO::ORT_Adapter_Impl::activate (
 
   this->ort_template_ = t;
 
-  // Must increase ref count since this->obj_ref_factory_ will
+  // Must increase ref count since this->ort_factory_ will
   // decrease it upon destruction.
   CORBA::add_ref (t);
   this->ort_factory_ = t;
