@@ -69,8 +69,8 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
         }
 
       *os << be_uidt_nl << "};" << be_uidt_nl
-          << "static size_t const _tao_nexceptions =" << be_nl
-          << "  sizeof (_tao_exceptions) / sizeof (_tao_exceptions[0]);";
+          << "static size_t const _tao_nexceptions = "
+          << node->exceptions()->length () << ";";
     }
   else
     {
