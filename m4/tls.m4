@@ -42,6 +42,7 @@ AC_DEFUN([ACE_CHECK_TLS],
  dnl ---------------------------------------------------------
 
  ace_TLS_CPPFLAGS=""
+ ace_TLS_LDFLAGS=""
 
  dnl Check if OpenSSL requires the Kerberos include directory to be
  dnl added to the header search path.
@@ -49,10 +50,7 @@ AC_DEFUN([ACE_CHECK_TLS],
  AC_CACHE_CHECK([for Kerberos include flags needed by OpenSSL],
  [ac_cv_kerberos_dir],
  [
-  for ace_kerberos in usr usr/local; do
-   ace_TLS_CPPFLAGS="-I/${ace_kerberos}/kerberos/include"
-
-   CPPFLAGS="$ace_TLS_CPPFLAGS $ace_save_CPPFLAGS"
+   dnl Try compiling without any Kerberos-specific flags first.
 
    AC_COMPILE_IFELSE([
      AC_LANG_PROGRAM([
@@ -79,19 +77,59 @@ SSL_shutdown (ssl);
      ])
    ],
    [
-    ac_cv_kerberos_dir="$ace_TLS_CPPFLAGS"
-    break
+    ac_cv_kerberos_dir=no
    ],
    [
-    ac_cv_kerberos_dir=no
-   ])
+    ace_kerberos_dir=""
+    for ace_kerberos in usr usr/local; do
+     ace_kerberos_dir="${ace_kerberos}/kerberos/include"
+     ace_TLS_CPPFLAGS="-I/${ace_kerberos_dir}"
 
-  done
+     CPPFLAGS="$ace_TLS_CPPFLAGS $ace_save_CPPFLAGS"
+
+     AC_COMPILE_IFELSE([
+       AC_LANG_PROGRAM([
+#include <openssl/ssl.h>
+       ],
+       [
+// ... THIS CODE DOES NOTHING!  IT IS JUST USED FOR COMPILE TESTS ...
+
+// ... Perform TCP connection ...
+
+// ... Perform TLS/SSL stuff ...
+CRYPTO_set_locking_callback (0);
+SSLeay_add_ssl_algorithms ();
+SSL_load_error_strings ();
+SSL_METHOD * meth = TLSv1_method ();
+SSL_CTX * ctx = SSL_CTX_new (meth);
+SSL * ssl = SSL_new (ctx);
+int fd = 2000;  // Dummy file descriptor value.
+SSL_set_fd (ssl, fd);
+SSL_connect (ssl);
+SSL_shutdown (ssl);
+
+// ...
+       ])
+     ],
+     [
+      ac_cv_kerberos_dir="$ace_kerberos_dir"
+      break
+     ],
+     [
+      ac_cv_kerberos_dir=no
+     ])
+    done
+   ])
  ])
 
- if test $ac_cv_kerberos_dir != no; then
-    AC_SUBST([ACE_TLS_CPPFLAGS],[$ace_TLS_CPPFLAGS])
- fi   
+ AS_IF([test "$ac_cv_kerberos_dir" = no],
+       [
+        AC_SUBST([ACE_KERBEROS_INCLUDES],[.])
+       ],
+       [
+        AC_SUBST([ACE_TLS_CPPFLAGS],[-I${ac_cv_kerberos_dir}])
+        AC_SUBST([ACE_KERBEROS_INCLUDES],[$ac_cv_kerberos_dir])
+       ])
 
  dnl ---------------------------------------------------------
 
@@ -136,9 +174,9 @@ SSL_shutdown (ssl);
   ])
  ])
 
- if test $ac_cv_openssl_libs != no; then
-   AC_SUBST([ACE_TLS_LIBS],[$ace_TLS_LIBS])
- fi   
+ AS_IF([test $ac_cv_openssl_libs != no],
+       [AC_SUBST([ACE_TLS_LIBS],[$ace_TLS_LIBS])],
+       [])
 
  AM_CONDITIONAL([BUILD_SSL], [test X$ace_user_with_ssl = Xyes])
 

@@ -5,4 +5,9 @@ project(SSL) : acelib, core, openssl {
   requires    += ssl
   sharedname   = ACE_SSL
   dynamicflags = ACE_SSL_BUILD_DLL
+
+  specific(automake) {
+    lit_libs += ssl crypto
+    includes     += $(ACE_KERBEROS_INCLUDES)
+  }
 }
