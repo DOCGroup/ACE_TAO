@@ -39,6 +39,7 @@ CPP_SRCS += \
   Collocated_Object \
   PolicyS \
   ORB_Manager \
+  ImplRepo_i \
   ServerRequestInfo \
   Default_Servant_Dispatcher \
   Servant_Dispatcher

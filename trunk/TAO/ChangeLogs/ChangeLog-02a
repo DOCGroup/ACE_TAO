@@ -1,3 +1,138 @@
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/Active_Object_Map.i
+	  (bind_using_system_id_returning_system_id and
+	  find_system_id_using_user_id):
+
+	  If we are not using any active maps, we can employ a shortcut
+	  where we can skip the creation of
+	  TAO_Active_Object_Map::Map_Entry and the inserting into the user
+	  id map.  This should not be a problem because the insertion into
+	  the user id map was not useful because the servant field was
+	  zero.
+
+	* tao/PortableServer/Active_Object_Map.cpp: Added a flag
+	  <using_active_maps_> to see if we are using active maps in this
+	  implementation of the active object map.
+
+	  The motivation of the above changes are described here:
+
+	  With the RETAIN policy, POA::create_reference and
+	  POA::create_reference_with_id consume resources when creating
+	  references.  This can lead to scalibility problems on the server
+	  specially if the server creates many references that end up not
+	  being used.
+
+	  The POA::create_reference* methods create a instance of
+	  TAO_Active_Object_Map::Map_Entry and bind it to the user id map.
+	  The binding in the user id map is really not useful because the
+	  servant field is zero.
+
+	  The solution is to recognize when the servant is zero, create a
+	  key without creating an instance of
+	  TAO_Active_Object_Map::Map_Entry and without occupying a slot in
+	  any of the tables.  The tables will get populated when the
+	  servant is available (either through the POA::activate methods
+	  or through the Servant Activators).
+
+	  Creating a fake key that is usable in the future should be easy
+	  with the hash and linear maps.  However, it will not be possible
+	  with the active map since the key encodes the information of the
+	  slot that is being occupied.
+
+	  The change was to check if we are using active maps - active
+	  maps are used when we either have system ids and reactivation is
+	  not allowed or when using hints.  If we are not using active
+	  maps, we short cut the POA::create_reference* methods such that
+	  no map entry is created and nothing is added to the user id map.
+	  With POA::create_reference, we ask the linear or hash map to
+	  create us a key which we use as the system id; with
+	  POA::create_reference_with_id, we use the user id as the system
+	  id.  
+	
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/ImplRepo_i.cpp (ServerObject_i): Moved the
+	  ServerObject_i from POA.cpp to ImplRepo_i.h and ImplRepo_i.cpp.
+	  Enhanced the ServerObject_i so that it remembers which POA it is
+	  registered with.
+
+	* tao/PortableServer/POA.cpp (destroy_i): Changed the deactivation
+	  of <server_object> such that we do not have to access the Root
+	  POA in order to deactivate it.  We use the POA in the
+	  <server_object> itself.  Also improved the memory management for
+	  <server_object>.  This change should fix bug 924.  Also, the
+	  ImplRepo tests should no longer crash.  Thanks to Greg Hall
+	  <greg.j.hall@boeing.com> for reporting this problem.
+	
+	* tao/PortableServer/Makefile
+	* tao/PortableServer/Makefile.bor
+	* tao/PortableServer/TAO_PortableServer.dsp
+	* tao/PortableServer/TAO_PortableServer_Static.dsp
+
+	  Added new files.
+
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/PortableServer.pidl: 
+	* tao/PortableServer/POA.h: 
+	* tao/PortableServer/POA.cpp: 
+
+	  Added readonly attribute id which was recently introduced by
+	  the PortableInterceptor spec
+	  (http://cgi.omg.org/cgi-bin/doc?ptc/01-03-04.pdf).  This
+	  returns the unique id of the POA in the process in which it
+	  is created. It is for use by portable interceptors.
+
+          This id is guaranteed unique for the life span of the POA in
+          the process. For persistent POAs, this means that if a POA
+          is created in the same path with the same name as another
+          POA, these POAs are identical and, therefore, have the same
+          id. For transient POAs, each POA is unique.
+
+	* tao/PortableServer/POA.cpp (create_object_key): Refactored code
+	  to reuse the now cached POA id instead of recalculating the POA
+	  id every time.
+
+	* examples/POA/NewPOA/NewPOA.cpp: Extended test to print out POA
+	  id in addition to the POA name.
+
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (check_poa_manager_state): Minor code
+	  for exception when POA Manager is in holding state should be 1
+	  instead of 0.  Same for the discarding and inactive states.
+
+	* tao/Exception.cpp (_info): 
+	* tao/corbafwd.h (TAO_POA_INACTIVE): Added new constant.	
+
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (~TAO_ORB_Core): Added the deletion of the stub
+	  factory to avoid a memory leak.
+
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Leader_Followers/run_test.pl: 
+
+	  - Renamed st_directive and tp_directive to
+	  select_reactor_directive and tpool_reactor_directive
+	  respectively since these names are more indicative of what is
+	  going on.
+
+	  - Removed mt_conffile and st_conffile variables.
+
+	  - Changed "-ORBreactortype select_st" to "-ORBreactortype
+	  select_mt". 
+
+	  - Moved the "-ORBsvcconfdirective" argument to the directive
+	  variable to make easier to read.
+
+Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/POA/Create_Reference/create_reference.dsp:
+	  Removed the linking of the Strategies library from this project.
+
 Fri May 25 17:38:42 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tests/RTCORBA/Banded_Connections/server.cpp:
