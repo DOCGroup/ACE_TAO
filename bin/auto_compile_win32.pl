@@ -46,7 +46,7 @@ ace/ace.dsw, ACE DLL:
 apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO DLL:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
-TAO/orbsvcs/orbsvcs/orbsvcs.dsw, ORB Services DLL :
+TAO/orbsvcs/orbsvcs/orbsvcs.dsw, ORB Services DLL:
 TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
 TAO/orbsvcs/Scheduling_Service/Scheduling_Service.dsw, Scheduling_Service:
 TAO/orbsvcs/Event_Service/Event_Service.dsw, Event_Service:
@@ -65,7 +65,7 @@ netsvcs/lib/netsvcs.dsw, NETSVCS Library:
 netsvcs/servers/servers.dsw, NETSVCS Servers:
 EOD
                      "$Win32_Lists[1]" => <<EOD , # Release
-ace/ace.dsw, ACE DLL
+ace/ace.dsw, ACE DLL:
 apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO DLL:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
@@ -189,8 +189,10 @@ sub Build_Config
         else
         {
             $Status = 0;
+            print "*****************************************\n";
+            print "Project_Dir: $Project_Dir -- Project_Name: $Project_Name\n";
             print "chdir (\"$ENV{ACE_ROOT}/$Project_Dir\");\n";
-            print "$Status = $Command_Line\n";
+            print "$Status = $Command_Line\n\n";
         }
 
         if ($Ignore_error == 0)
@@ -232,7 +234,7 @@ sub Build_Collection
     for (; $Cntr < scalar(@Lists); $Cntr ++)
     {
         $Config = $Lists[$Cntr];
-        print "Building $Config of $Target{$Config}\n" if ( $Debug );
+        print "Building $Config of: \n$Target{$Config}\n" if ( $Debug );
         Build_Config ($Config, $Target{$Config});
         if ($Build_Alpha == 0)
         {
