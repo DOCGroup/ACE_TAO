@@ -568,6 +568,14 @@ public:
   virtual void wakeup_all_threads (void);
   // Wake up all threads in waiting in the event loop
 
+  // = Miscellaneous Handler operations.
+  virtual int handler (ACE_HANDLE handle,
+                       ACE_Reactor_Mask mask,
+                       ACE_Event_Handler **eh = 0) = 0;
+  // Check to see if <handle> is associated with a valid Event_Handler
+  // bound to <mask>.  Return the <eh> associated with this <handler>
+  // if <eh> != 0.
+
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0);
   // Check to see if <signum> is associated with a valid Event_Handler
