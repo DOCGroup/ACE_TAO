@@ -177,16 +177,14 @@ public:
 protected:
   // = Internal methods that do the actual work.
 
-  virtual int dispatch_io_set (int number_of_active_handles,
-                               int& number_dispatched,
-                               int mask,
-                               ACE_Handle_Set& dispatch_mask,
-                               ACE_Handle_Set& ready_mask,
-                               ACE_EH_PTMF callback);
-  // Overwrites <ACE_Select_Reactor::dispatch_io_set> to *not*
-  // dispatch any event handlers.  The information of one activated
-  // event handler is stored away, so that the event handler can be
-  // dispatch later.
+  int dispatch_i (ACE_Time_Value *max_wait_time,
+                  ACE_EH_Dispatch_Info &event);
+  // Dispatch signal, timer, notification handlers and return possibly
+  // 1 I/O handler for dispatching. Ideally, it would dispatch nothing,
+  // and return dispatch information for only one of (signal, timer,
+  // notification, I/O); however, the reactor mechanism is too enmeshed
+  // in the timer queue expiry functions and the notification class to
+  // do this without some significant redesign.
 
   virtual void notify_handle (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask,
@@ -198,9 +196,6 @@ protected:
   virtual int notify_handle (ACE_EH_Dispatch_Info &dispatch_info);
   // Notify the appropriate <callback> in the context of the <eh>
   // associated with <handle> that a particular event has occurred.
-
-  ACE_EH_Dispatch_Info dispatch_info_;
-  // Dispatch information of the activated event handler
 
 private:
   ACE_TP_Reactor (const ACE_TP_Reactor &);
