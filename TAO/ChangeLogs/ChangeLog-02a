@@ -1,4 +1,15 @@
-Sun Apr 23 00:45:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+Mon Apr 23 10:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/MT_Timeout/client.cpp:
+	* tests/MT_Timeout/Client_Task.cpp:
+	* tests/MT_Timeout/Client_Taks.h:
+
+	  Made the test more smart and tolerant regarding scheduling jitters.
+	  The test now checks how many calls have taken too long to return
+	  and prints warnings, or even errors in the case more than 5 % of
+	  the calls have taken too long. Thanks to Carlos for his suggestions.
+	
+Mon Apr 23 00:45:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/*/Makefile
           All AVStreams tests now depend on libACE_QoS.so (even if they
