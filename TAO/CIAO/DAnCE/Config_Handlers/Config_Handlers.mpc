@@ -53,6 +53,7 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, ifr_client, xerces {
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   requires += exceptions
+  includes += .
   libs     += CIAO_DnC_Server
 
   Source_Files {
