@@ -65,17 +65,22 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
+        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
+        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
           break;
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
+        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
           {
             os->indent (); 
             // if the operation node has parameters, then we need to insert a comma
             *os << ",\n";
             os->indent ();
             *os << "ACE_TRY_ENV";
+            break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
+        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
           {
             os->indent ();
             // if the operation node has parameters, then we need to insert a comma
@@ -85,6 +90,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
+        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
             {
               // if the operation node has parameters, then we need to insert a comma
               //if (node->argument_count () > 0)
@@ -171,6 +177,22 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS);
       break;
 
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH);
+      break;
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH);
+      break;
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
+      break;
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS);
+      break;
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS);
+      break;
+
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -213,6 +235,7 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
       {
         if (!this->last_node (bd))
           {
@@ -224,6 +247,10 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
       {
         // if we are not the last node in the list of arguments, generate a comma
         // else decide if we are generating code to support true exceptions - in
