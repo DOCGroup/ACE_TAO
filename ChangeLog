@@ -1,3 +1,13 @@
+Sat Feb 21 14:24:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_macosx_panther.GNU:
+
+	  Added -mpcpu=G3 and -mtune=G4 to OCFLAGS. Mac OS X 10.3 requires
+	  a PowerPC G3 chip and hence this isn't adding any restrictions
+	  to ACE/TAO that the target platform doesn't already have for
+	  itself.  Thanks to Thomas Costa <oohrah@mac.com> for the
+	  patches. 
+
 Sat Feb 21 19:56:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_static_order.lst:
