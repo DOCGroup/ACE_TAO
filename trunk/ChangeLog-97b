@@ -22,6 +22,9 @@ Tue Nov 18 05:40:53 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/Memory_Pool.cpp (ACE_Shared_Memory_Pool): reordered
           initializers to match declaration order.
 
+        * etc/purify.solaris2: added suppression of pthread_setcanceltype
+          BSW.
+
 Tue Nov 18 00:11:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.50, released Tue Nov 18 00:11:26 1997.
@@ -70,26 +73,26 @@ Mon Nov 17 01:34:34 1997    <nw1@COYOTE>
 	* netsvcs/servers/main.cpp (main): Removed daemon and changed to
  	  use the singleton service configurator.  Thanks to John Mulhern
 	  and Stephen Coy for tracing this down and Irfan for coming out
-	  with the fix. 
+	  with the fix.
 
 Sun Nov 16 21:58:51 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/*.dsp, ace/*.dsp: Added Release, Unicode Debug, and 
-	  Unicode Release versions for each of the tests.  
-	  
-	  Also found out that precompiled headers take up insane 
-	  amounts of disk space when used with ACE and also slows 
+	* tests/*.dsp, ace/*.dsp: Added Release, Unicode Debug, and
+	  Unicode Release versions for each of the tests.
+
+	  Also found out that precompiled headers take up insane
+	  amounts of disk space when used with ACE and also slows
 	  the compilation down.  I turned it off for the tests and
 	  for the ace libraries
 
 Sun Nov 16 13:34:29 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
-	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking): 
+	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
 	  Changed the line
 
 	  status = con.complete (sock);
 
-	  to 
+	  to
 
 	  if (sock.get_handle () != ACE_INVALID_HANDLE)
   	    status = con.complete (sock);
@@ -190,7 +193,7 @@ Sun Nov 16 13:34:29 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 Sat Nov 15 17:31:58 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * Ran "make depend" on all of ACE.
- 
+
 Sat Nov 15 15:55:52 1997  Steve Huston  <shuston@riverace.com>
 
 	* tests/Priority_Reactor_Test.cpp: Removed the writer->peer().close()
