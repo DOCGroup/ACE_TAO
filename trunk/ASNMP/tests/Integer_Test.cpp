@@ -133,6 +133,7 @@ static void TestInteger32()
  */
 static void TestUnsignedInteger32()
 {
+#if !defined (ACE_WIN32)
   // constructors
    SnmpUInt32 u1;
    ACE_ASSERT(u1 == def);
@@ -178,6 +179,7 @@ static void TestUnsignedInteger32()
   ACE_ASSERT(u1 == us);
   u1 = si; // unsigned short
   ACE_ASSERT(u1 == si);
+#endif /*ACE_WIN32 */
 }
 
 int
