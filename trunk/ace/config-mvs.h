@@ -106,5 +106,9 @@
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 
+#define ACE_SIZEOF_FLOAT 4
+#define ACE_SIZEOF_DOUBLE 4
+#define ACE_SIZEOF_LONG_DOUBLE 4
+
 #endif /* ACE_CONFIG_H */
 
