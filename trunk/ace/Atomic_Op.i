@@ -169,7 +169,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>
 // FUZZ: disable check_for_inline
 
 ACE_TEMPLATE_SPECIALIZATION
-inline long
+ACE_INLINE long
 ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>::operator++ (void)
 {
   return ::InterlockedIncrement (&this->value_);

@@ -1,3 +1,8 @@
+Mon Dec 25 01:05:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Atomic_Op.h: Added a #include to get it compiling on win32
+	  platforms.   
+
 Mon Dec 25 00:18:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Merry Christmas to the members of the doc_group and to all the

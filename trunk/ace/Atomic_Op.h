@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Synch.h"
+
 
 /**
  * @class ACE_Atomic_Op_Ex
