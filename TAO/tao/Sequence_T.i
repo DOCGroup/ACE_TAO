@@ -129,7 +129,6 @@ TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (CORBA::ULong length,
                                                     CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (MAX, length, data, release)
 {
-  this->_allocate_buffer (MAX);
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE T *

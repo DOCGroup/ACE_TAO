@@ -91,14 +91,14 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
   *os << "void" << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os <<"* tmp = " << full_class_name << "::allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os <<" *old = ACE_reinterpret_cast (";
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os << " *,this->buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
@@ -118,9 +118,9 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl
       << be_nl;
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os <<" *tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os << " *,this->buffer_);" << be_nl
       << be_nl
       << full_class_name << "::freebuf (tmp);" << be_nl
