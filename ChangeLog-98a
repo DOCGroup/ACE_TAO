@@ -1,3 +1,13 @@
+Thu Dec 18 15:48:03 1997    <nw1@JIG>
+
+	* ace/OS.{h,cpp} (rethrow_w32_structural_exception):  Added this
+	  function prints out an error message to indicate the occurance
+	  of structural exception and rethrow it again.  
+	  (ACE_Thread_Adapter::invoke): Rearranged try and except block
+	  for Win32 and added a finally block so when a structural
+	  exception occurs, a thread can clean it up properly, print out
+	  an error message, and rethrow the exception again. 
+
 Thu Dec 18 15:40:50 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* ace/Filecache.{cpp,h}:
