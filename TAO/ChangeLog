@@ -1,7 +1,12 @@
-Thu Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
+Sat Feb 21 08:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.h:
+	  Fixed include paths
+
+Fri Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\GIOP_Message_Generator_Parser_10.cpp (write_request_header):
-	  
+
 	  Added code to add the username as principal in the request
 	  header.  This is required for some older ORBs, such as Orbix3.
 	  To turn on this code, TAO_PEER_REQUIRES_PRINCIPAL must be
