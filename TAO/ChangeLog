@@ -1,109 +1,116 @@
+Thu Mar 11 12:24:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Corrected the settings for this project and added a comment
+          describing the options required to properly process this mpc file.
+
 Thu Mar 11 08:06:43 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* CIAO/docs/static_ciao_contents.html: Updated the locations of
-	  the images.
+        * CIAO/docs/static_ciao_contents.html: Updated the locations of
+          the images.
 
 Wed Mar 10 19:41:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/LoadBalancer/Signal_Handler.cpp:
-	* orbsvcs/LoadBalancer/Signal_Handler.h:
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	* orbsvcs/orbsvcs/Event/RT_Task.h:
+        * orbsvcs/LoadBalancer/Signal_Handler.cpp:
+        * orbsvcs/LoadBalancer/Signal_Handler.h:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
 
-	  Fixed warnings from SunCC and Borland builds.
+          Fixed warnings from SunCC and Borland builds.
 
 Tue Mar  9 17:25:17 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:
-	  Fixed incorrect doxygen file tag
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:
+          Fixed incorrect doxygen file tag
 
 Tue Mar  9 16:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
           Use ACE_AUTO_PTR_RESET to reset an auto_ptr
 
 Tue Mar  9 15:50:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
-	  Fixed usage of wrong variable.
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+          Fixed usage of wrong variable.
 
 Tue Mar  9 11:39:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
-	  Changed export macro to use, this fixes a link error with VC71
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
+          Changed export macro to use, this fixes a link error with VC71
 
 Mon Mar  8 21:47:39 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tao/Acceptor_Impl.cpp: An application that linked against TAO
-	  crashed inside TAO (dangling pointer access) if the default ACE
- 	  reactor is deleted before the orb is deactivated.  Fixed this by
- 	  making sure the ORB uses the same reactor as the
- 	  ACE_Accept_Strategy.  Thanks to Peter Hercek <peter@syncad.com>
- 	  for this fix.
+        * tao/Acceptor_Impl.cpp: An application that linked against TAO
+          crashed inside TAO (dangling pointer access) if the default ACE
+          reactor is deleted before the orb is deactivated.  Fixed this by
+          making sure the ORB uses the same reactor as the
+          ACE_Accept_Strategy.  Thanks to Peter Hercek <peter@syncad.com>
+          for this fix.
 
 Mon Mar  8 13:53:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Added a NEWS file which tracks user visible changes between
-	  every beta. Thanks to Olli Savia and Gary Duzan for motivating
-	  this.
+          Added a NEWS file which tracks user visible changes between
+          every beta. Thanks to Olli Savia and Gary Duzan for motivating
+          this.
 
 Sun Mar  7 17:47:16 2004  Olli Savia  <ops@iki.fi>
 
-	* TAO-INSTALL.html
-	  Moved LynxOS to "partially supported" category.
-	  Fixed some HTML errors.
+        * TAO-INSTALL.html
+          Moved LynxOS to "partially supported" category.
+          Fixed some HTML errors.
 
 Sat Mar  6 09:09:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Thread_Per_Connection_Handler.cpp:
+        * tao/Thread_Per_Connection_Handler.cpp:
 
-	  Fixed a warning in g++ builds.
+          Fixed a warning in g++ builds.
 
 Fri Mar  5 23:31:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Acceptor_Impl.cpp:
-	* tao/Thread_Per_Connection_Handler.cpp:
-	* tao/Thread_Per_Connection_Handler.h:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Thread_Per_Connection_Handler.cpp:
+        * tao/Thread_Per_Connection_Handler.h:
 
-	  Reverted the change from "Fri Mar  5 15:56:08 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>", and used the argument
-	  inherit_priority to do the same thing.
+          Reverted the change from "Fri Mar  5 15:56:08 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>", and used the argument
+          inherit_priority to do the same thing.
 
 Fri Mar  5 16:32:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
 
-	  Linked in the TAO_Messaging library, since the Naming service
-	  depends on the messaging library. This should fix link errors
-	  with static builds in our scoreboard.
+          Linked in the TAO_Messaging library, since the Naming service
+          depends on the messaging library. This should fix link errors
+          with static builds in our scoreboard.
 
 Fri Mar  5 15:56:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Thread_Per_Connection_Handler.cpp:
-	* tao/Thread_Per_Connection_Handler.h:
+        * tao/Thread_Per_Connection_Handler.cpp:
+        * tao/Thread_Per_Connection_Handler.h:
 
-	  Added a new method activate_threads (). This method gets the
-	  priority of the invoking thread and transfers it to the thread
-	  that it is about to create. This feature was broken before,
-	  ie. TAO never honored the priority of the invoking thread at
-	  all.
+          Added a new method activate_threads (). This method gets the
+          priority of the invoking thread and transfers it to the thread
+          that it is about to create. This feature was broken before,
+          ie. TAO never honored the priority of the invoking thread at
+          all.
 
-	* tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.cpp:
 
-	  Use activate_threads () instead of activate ().
+          Use activate_threads () instead of activate ().
 
-	  These changes were due to a bug report submitted by Abhi
-	  <abhi@qualcomm.com> and thanks to him for reporting the
-	  problem and also providing patches that were useful for this
-	  fix.
+          These changes were due to a bug report submitted by Abhi
+          <abhi@qualcomm.com> and thanks to him for reporting the
+          problem and also providing patches that were useful for this
+          fix.
 
 Fri Mar  5 18:36:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
-	  Fixed unused variable warning
+        * orbsvcs/performance-tests/LoadBalancing/client.cpp:
+          Fixed unused variable warning
 
 Fri Mar  5 12:09:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
