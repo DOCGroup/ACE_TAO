@@ -1,3 +1,10 @@
+Tue Feb  8 14:16:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-sunos5.5.h (ACE_HAS_USING_KEYWORD):
+
+	  Sun C++ 5.0 supports the `using' keyword.  Thanks to David Wicks
+	  <wicks@swbell.net> for pointing this out.
+
 Mon Feb 07 21:11:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Token: Bug 416
