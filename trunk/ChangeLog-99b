@@ -1,3 +1,12 @@
+Tue Mar  2 22:50:18 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/POSIX_Asynch_IO.h: 
+	* ace/POSIX_Proactor.cpp:
+	Added forward declaration for ACE_Proactor_Impl. Using static cast
+	to down cast from <aiocb *> to 
+	<ACE_POSIX_Asynch_Result *>. Thanks to John.Mulhern@lawson.com for
+	reporting the warnings in HP UX. 
+
 Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},Object_Manager.{h,cpp}: changed Object_Manager
