@@ -6,6 +6,7 @@
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
 #include "tao/Base_Transport_Property.h"
+#include "tao/debug.h"
 
 
 #if !defined (__ACE_INLINE__)
