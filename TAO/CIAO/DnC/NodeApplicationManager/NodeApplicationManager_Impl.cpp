@@ -176,7 +176,6 @@ create_node_application (const ACE_CString & options
 
       {
         //ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-	//@@ No Duplication here! so becareful.
         this->nodeapp_ = Deployment::NodeApplication::_duplicate (retval.in ());
       }
     }
@@ -273,7 +272,7 @@ startLaunch (const Deployment::Properties & configProperty,
 
   Deployment::ImplementationInfos infos;
 
-  if (!(infos << this->plan_))
+  if (!(infos << (this->plan_)))
   {
     ACE_DEBUG ((LM_DEBUG, "Failed to create Component Implementation Infos!\n"));
     ACE_THROW_RETURN (Deployment::StartError (), 0);

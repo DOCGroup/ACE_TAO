@@ -1,3 +1,16 @@
+Tue Jun  8 20:53:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/NodeApplicationManager/ImplementationInfo.cpp:
+	* DnC/NodeApplicationManager/ImplementationInfo.h:
+	  Added these files.
+
+	* DnC/NodeApplicationManager/NodeApplicationManager.mpc:
+	  Changed MPC file reflect the changes.
+
+	  Seems MPC doesn't support template very well for GCC. The
+	  dependency is not set at all. I have no choice but to switch to
+	  normal operator overlaoding.
+
 Tue Jun  8 19:54:03 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/ciao/CCM_Core.mpc:
