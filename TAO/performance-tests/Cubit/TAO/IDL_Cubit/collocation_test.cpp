@@ -39,9 +39,11 @@ svr_worker (void *arg)
       if (result == -1)
         return (void *) 1;
 
-      barrier->wait ();
+      barrier[0].wait ();
       cubit_server.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      barrier[1].wait ();
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -89,7 +91,7 @@ main (int argc, char **argv)
   ACE_OS::strcat (cmd_line, " -f " THE_IOR);
   ACE_ARGV args (cmd_line);
 
-  ACE_Barrier barrier (2);
+  ACE_Barrier barrier [2] = {2, 2};
 
   int retv = 1;
 
@@ -99,7 +101,7 @@ main (int argc, char **argv)
   ACE_Thread_Manager tm;
   tm.spawn (ACE_reinterpret_cast (ACE_THR_FUNC, &svr_worker),
             &barrier);
-  barrier.wait ();
+  barrier[0].wait ();
   ACE_OS::sleep (1);
 
   Cubit_Client cubit_client (1);
@@ -110,6 +112,7 @@ main (int argc, char **argv)
   else
     retv = cubit_client.run ();
 
+  barrier[1].wait ();
   tm.wait ();
 
   ACE_OS::unlink (THE_IOR);
