@@ -297,7 +297,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "_tao_vfr.receive_request (&ri, ACE_TRY_ENV);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */";
 
   // Make the upcall and assign to the return val.
   ctx = *this->ctx_;
@@ -332,8 +332,12 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // End the upcall.
-  *os << be_uidt_nl << ");" << be_uidt_nl
-      << "TAO_INTERCEPTOR_CHECK;" << be_nl << be_nl;
+  *os << be_uidt_nl << ");" << be_uidt_nl;
+
+  if (!be_global->exception_support ())
+    {
+      *os << "TAO_INTERCEPTOR_CHECK;" << be_nl;
+    }
 
   // Update the result.
   bt = be_type::narrow_from_decl (node->return_type ());
@@ -453,7 +457,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
           << "&& !_tao_server_request.sync_with_server ())" << be_uidt_nl
           << "{" << be_idt_nl
           << "_tao_server_request.init_reply ();" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl;
+          << "}" << be_uidt_nl << be_nl;
     }
 
   // Marshal outgoing parameters.
@@ -466,7 +470,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << "}\n\n";
+  *os << "// In case ACE_TRY_ENV is not used in this function" << be_nl
+      << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_uidt_nl
+      << "}\n\n";
   return 0;
 }
 
@@ -596,8 +602,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   // We will be here only if we are 2way
   // first initialize a reply message
-  os->indent ();
-  *os << "_tao_server_request.init_reply ();";
+  *os << "_tao_server_request.init_reply ();" << be_nl << be_nl;
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type.
@@ -605,12 +610,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
       !this->has_param_type (node, AST_Argument::dir_INOUT) &&
       !this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      *os << be_uidt_nl;
       return 0;
-    }
-  else
-    {
-      *os << be_nl;
     }
 
   // Create temporary variables for the out and return parameters.
@@ -648,8 +648,9 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-  *os << "if (!(\n" << be_idt;
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" 
+      << be_nl << be_nl;
+  *os << "if (!(\n" << be_idt << be_idt;
 
   if (!this->void_return_type (bt))
     {
@@ -697,7 +698,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
     }
 
-  *os << be_uidt_nl << "))\n" << be_idt;
+  *os << be_uidt_nl << "))\n";
   // if marshaling fails, raise exception
   if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
                                  "",
@@ -710,7 +711,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << be_uidt << be_uidt << "\n";
+  *os << be_uidt_nl;
 
   return 0;
 }
