@@ -1,3 +1,30 @@
+Tue Apr 17 14:21:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Synch_Queued_Message.h:
+          The bytes_transferred() method does not need to return anything,
+          the return value was ignored anyway, so change it to return
+          void.
+
+        * tao/Synch_Queued_Message.cpp:
+          Fixed implementation of bytes_transferred(), the byte_count
+          argument was not updated on all exit branches.
+
+        * tao/GIOP_Message_Handler.cpp:
+          Fixed inconsistency with main trunk.
+
+        * tao/Sync_Strategies.cpp:
+          Set the must_flush and set_timer flags to zero if there is no
+          buffering constraint policy.
+
+        * tao/Transport.cpp:
+          Cosmetic fixes.  Return 1 from drain_queue_i() even if the flush
+          operation returned 0, the return value is supposed to represent
+          what happened to the message, not if there was a generic problem
+          with the ORB.
+
 Tue Apr 17 09:59:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Sync_Strategies.h:

@@ -55,7 +55,7 @@ TAO_Asynch_Queued_Message::fill_iov (int iovcnt_max,
   iovcnt++;
 }
 
-int
+void
 TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
 {
   size_t remaining_bytes = this->size_ - this->offset_;
@@ -63,11 +63,10 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
     {
       this->offset_ = this->size_;
       byte_count -= remaining_bytes;
-      return 1;
+      return;
     }
   this->offset_ += byte_count;
   byte_count = 0;
-  return 0;
 }
 
 void

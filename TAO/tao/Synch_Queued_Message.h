@@ -61,7 +61,7 @@ public:
   virtual size_t message_length (void) const;
   virtual int all_data_sent (void) const;
   virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
-  virtual int bytes_transferred (size_t &byte_count);
+  virtual void bytes_transferred (size_t &byte_count);
   virtual void destroy (void);
   //@}
 

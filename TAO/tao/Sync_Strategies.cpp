@@ -61,6 +61,9 @@ TAO_Eager_Buffering_Sync_Strategy::
                                    int &set_timer,
                                    ACE_Time_Value &new_deadline)
 {
+  must_flush = 0;
+  set_timer = 0;
+
   TAO_Buffering_Constraint_Policy *buffering_constraint_policy =
     stub->buffering_constraint ();
 

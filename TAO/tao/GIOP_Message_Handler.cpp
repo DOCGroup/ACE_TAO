@@ -484,6 +484,9 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
       return -1;
     }
 
+  // Now we have a succesful read. First adjust the write pointer
+  this->current_buffer_.wr_ptr (n);
+
   if (TAO_debug_level == 2)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -504,10 +507,6 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
         }
       ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
     }
-
-  // Now we have a succesful read. First adjust the write pointer
-  this->current_buffer_.wr_ptr (n);
-
 
   return 0;
 

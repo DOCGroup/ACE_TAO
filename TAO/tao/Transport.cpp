@@ -475,7 +475,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
                                                &synch_message,
                                                max_wait_time);
   }
-  if (result == -1&& errno == ETIME)
+  if (result == -1 && errno == ETIME)
     {
       if (this->head_ != &synch_message)
         {
@@ -515,7 +515,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
 
   ACE_ASSERT (synch_message.next () == 0);
   ACE_ASSERT (synch_message.prev () == 0);
-  return result;
+  return 1;
 }
 
 int
@@ -927,7 +927,7 @@ TAO_Transport::drain_queue_i (void)
             }
           else if (retval == -1)
             {
-              if (errno == EWOULDBLOCK || errno == ETIME)
+              if (errno == EWOULDBLOCK)
                 return 0;
               return -1;
             }
@@ -965,7 +965,7 @@ TAO_Transport::drain_queue_i (void)
         }
       else if (retval == -1)
         {
-          if (errno == EWOULDBLOCK || errno == ETIME)
+          if (errno == EWOULDBLOCK)
             return 0;
           return -1;
         }

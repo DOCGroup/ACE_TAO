@@ -62,7 +62,7 @@ TAO_Synch_Queued_Message::fill_iov (int iovcnt_max,
     }
 }
 
-int
+void
 TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
 {
   while (this->current_block_ != 0 && byte_count > 0)
@@ -71,12 +71,12 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
       if (byte_count < l)
         {
           this->current_block_->rd_ptr (byte_count);
-          return 0;
+          byte_count = 0;
+          return;
         }
       byte_count -= l;
       this->current_block_ = this->current_block_->cont ();
     }
-  return (this->current_block_ == 0);
 }
 
 void
