@@ -1,3 +1,9 @@
+Wed Feb 20 13:01:25 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Atomic_Op.i: Fix the return value of the ACE_GUARD_RETURN
+	   macros so that if the lock fails, the comparison also fails.
+  	  Thanks to Ivan Pia <pia@octet.spb.ru> for reporting this.
+
 Wed Feb 20 17:00:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++.GNU: Users who use
