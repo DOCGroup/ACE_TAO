@@ -18,25 +18,15 @@
 #undef _M_IX86
 // This turns on ACE_HAS_PENTIUM
 #define _M_IX86 500
-// GHS does not provide DLL support
-#define ACE_HAS_DLL 0
-#define TAO_HAS_DLL 0
-#undef _DLL
-
-//Green Hills Native x86 does not support structural exceptions
-# undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-# undef ACE_HAS_WCHAR
 
 // Changed ACE_TEXT to ACE_LIB_TEXT in the following line
-# define ACE_CC_NAME ACE_LIB_TEXT ("Green Hills C++")
+# define ACE_CC_NAME ACE_LIB_TEXT ("Digital Mars")
 # define ACE_CC_MAJOR_VERSION (1)
 # define ACE_CC_MINOR_VERSION (8)
 # define ACE_CC_BETA_VERSION (9)
-# define ACE_CC_PREPROCESSOR "GCX.EXE"
+# define ACE_CC_PREPROCESSOR "DMC.EXE"
 # define ACE_CC_PREPROCESSOR_ARGS "-E"
 
-// GHS uses Microsoft's standard cpp library, which has auto_ptr.
-# undef ACE_LACKS_AUTO_PTR
 // Microsoft's standard cpp library auto_ptr doesn't have reset ().
 # define ACE_AUTO_PTR_LACKS_RESET
 
@@ -79,8 +69,7 @@
 // Changed ACE_TEXT to ACE_LIB_TEXT in the following two lines
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_HAS_STRBUF_T
-// Set the following to zero to placate SString.h ACE_WString CTOR
-# undef ACE_WSTRING_HAS_USHORT_SUPPORT
+#define ACE_HAS_3_PARAM_WCSTOK
 #define ACE_USES_OLD_IOSTREAMS
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_SYS_RESOURCE_H
