@@ -1,3 +1,13 @@
+Wed Apr 24 07:56:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Future_Set.h:
+          Converted a comment to javadoc style because it is very long for
+          the brief documentation.
+
+        * ace/DEV_IO.h:
+        * ace/TTY_IO.h:
+          Removed not needed includes
+
 Wed Apr 24 03:14:11 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/MT_Reactor_Upcall_Test.cpp: Fix warnings on threads=0

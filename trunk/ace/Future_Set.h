@@ -30,11 +30,11 @@
  *
  * @brief This class implements a mechanism which allows the values of
  * a collection of <ACE_Future> objects to be accessed by reader threads
- * as they become available.  The caller(s) provide the <ACE_Future_Set> 
- * (i.e. the observer...) with the collection of <ACE_Future> objects 
+ * as they become available.  The caller(s) provide the <ACE_Future_Set>
+ * (i.e. the observer...) with the collection of <ACE_Future> objects
  * (i.e. the subjects...) that are to be observed using the
- * the <ACE_Future_Set::insert> method.  The caller(s) may then iterate 
- * over the collection in the order in which they become readable using 
+ * the <ACE_Future_Set::insert> method.  The caller(s) may then iterate
+ * over the collection in the order in which they become readable using
  * the <ACE_Future_Set::next_readable> method.
  */
 template <class T>
@@ -49,14 +49,16 @@ public:
   /// Destructor.
   ~ACE_Future_Set (void);
 
-  /// Return 1 if their are no <ACE_Future> objects left on its queue and
-  /// 0 otherwise
-  ///
-  /// When an <ACE_Future_Set> has no <ACE_Future> subjects to observe it is
-  /// empty. The <ACE_Future_Set> is in the empty state when either the caller(s)
-  /// have retrieved every readable <ACE_Future> subject assigned the 
-  /// <ACE_Future_Set> via the <ACE_Future_Set::next_readable> method,
-  /// or when the <ACE_Future_Set> has not been assigned any subjects.
+  /**
+   * Return 1 if their are no <ACE_Future> objects left on its queue and
+   * 0 otherwise.
+   *
+   * When an <ACE_Future_Set> has no <ACE_Future> subjects to observe it is
+   * empty. The <ACE_Future_Set> is in the empty state when either the caller(s)
+   * have retrieved every readable <ACE_Future> subject assigned the
+   * <ACE_Future_Set> via the <ACE_Future_Set::next_readable> method,
+   * or when the <ACE_Future_Set> has not been assigned any subjects.
+   */
   int is_empty (void) const;
 
   /**
@@ -74,12 +76,12 @@ public:
    * next <ACE_Future> that is readable.  If <tv> = 0, the will block
    * forever.
    *
-   * If a readable future becomes available, then the input 
-   * <ACE_Future> object param will be assigned with it and 1 will 
+   * If a readable future becomes available, then the input
+   * <ACE_Future> object param will be assigned with it and 1 will
    * be returned.  If the <ACE_Future_Set> is empty (i.e. see definition
    * of <ACE_Future_Set::is_empty>), then 0 is returned.
    *
-   * When a readable <ACE_Future> object is retrieved via the 
+   * When a readable <ACE_Future> object is retrieved via the
    * <ACE_Future_Set::next_readable> method, the <ACE_Future_Set> will
    * remove that <ACE_Future> object from its list of subjects.
    */

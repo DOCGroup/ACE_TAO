@@ -19,8 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/DEV_Addr.h"
-#include "ace/DEV_Connector.h"
 #include "ace/DEV_IO.h"
 
 /**
