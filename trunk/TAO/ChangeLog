@@ -1,3 +1,8 @@
+Tue Feb 22 07:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ThreadStrategyORBControl.cpp:
+          Removed ifdef TAO_HAS_MINIMUM_POA
+
 Mon Feb 21 22:31:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/UserException.cpp (_downcast):
