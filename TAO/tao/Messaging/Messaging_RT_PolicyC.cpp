@@ -62,32 +62,32 @@ static const CORBA::Long _oc_Messaging_Timeout[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5469), 
-  ACE_NTOHL (0x6d656f75), 
-  ACE_NTOHL (0x743a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5469),
+  ACE_NTOHL (0x6d656f75),
+  ACE_NTOHL (0x743a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/Timeout:1.0
     8,
-  ACE_NTOHL (0x54696d65), 
+  ACE_NTOHL (0x54696d65),
   ACE_NTOHL (0x6f757400),  // name = Timeout
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
@@ -145,7 +145,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_RelativeRoundtripTimeoutPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -156,7 +156,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
 Messaging::RelativeRoundtripTimeoutPolicy::~RelativeRoundtripTimeoutPolicy (void)
 {}
 
-void 
+void
 Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RelativeRoundtripTimeoutPolicy *_tao_tmp_pointer =
@@ -183,7 +183,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (RelativeRoundtripTimeoutP
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -238,29 +238,29 @@ static const CORBA::Long _oc_Messaging_RelativeRoundtripTimeoutPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   57,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5265), 
-  ACE_NTOHL (0x6c617469), 
-  ACE_NTOHL (0x7665526f), 
-  ACE_NTOHL (0x756e6474), 
-  ACE_NTOHL (0x72697054), 
-  ACE_NTOHL (0x696d656f), 
-  ACE_NTOHL (0x7574506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5265),
+  ACE_NTOHL (0x6c617469),
+  ACE_NTOHL (0x7665526f),
+  ACE_NTOHL (0x756e6474),
+  ACE_NTOHL (0x72697054),
+  ACE_NTOHL (0x696d656f),
+  ACE_NTOHL (0x7574506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Messaging/RelativeRoundtripTimeoutPolicy:1.0
     31,
-  ACE_NTOHL (0x52656c61), 
-  ACE_NTOHL (0x74697665), 
-  ACE_NTOHL (0x526f756e), 
-  ACE_NTOHL (0x64747269), 
-  ACE_NTOHL (0x7054696d), 
-  ACE_NTOHL (0x656f7574), 
-  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x52656c61),
+  ACE_NTOHL (0x74697665),
+  ACE_NTOHL (0x526f756e),
+  ACE_NTOHL (0x64747269),
+  ACE_NTOHL (0x7054696d),
+  ACE_NTOHL (0x656f7574),
+  ACE_NTOHL (0x506f6c69),
   ACE_NTOHL (0x63790000),  // name = RelativeRoundtripTimeoutPolicy
   };
 
@@ -280,6 +280,29 @@ namespace Messaging
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -323,30 +346,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_root/root.cpp:1703
 
@@ -372,7 +371,7 @@ TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::demarshal_value (TAO
         Messaging::RelativeRoundtripTimeoutPolicy,
         TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::RelativeRoundtripTimeoutPolicy,
@@ -406,7 +405,7 @@ TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::demarshal_value (TAO
         Messaging::RelativeRoundtripTimeoutPolicy, \
         TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RelativeRoundtripTimeoutPolicy, \
@@ -418,5 +417,4 @@ TAO::Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::demarshal_value (TAO
         Messaging::RelativeRoundtripTimeoutPolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

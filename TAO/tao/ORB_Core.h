@@ -16,24 +16,26 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Resource_Factory.h"
+#include "tao/Resource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Collocation_Strategy.h"
-#include "params.h"
-#include "Adapter.h"
-#include "PolicyFactory_Registry.h"
-#include "Parser_Registry.h"
-#include "ORBInitializer_Registry.h"
-#include "Service_Callbacks.h"
-#include "Fault_Tolerance_Service.h"
-#include "Cleanup_Func_Registry.h"
-#include "Object_Ref_Table.h"
-#include "ObjectKey_Table.h"
-#include "ORB_Constants.h"
+#include "tao/Collocation_Strategy.h"
+#include "tao/params.h"
+#include "tao/Adapter.h"
+#include "tao/ORB_Constants.h"
+#include "tao/PolicyFactory_Registry.h"
+#include "tao/Parser_Registry.h"
+#include "tao/ORBInitializer_Registry.h"
+#include "tao/Service_Callbacks.h"
+#include "tao/Fault_Tolerance_Service.h"
+#include "tao/Cleanup_Func_Registry.h"
+#include "tao/Object_Ref_Table.h"
+#include "tao/ObjectKey_Table.h"
+#include "tao/Messaging_SyncScopeC.h"
+#include "tao/Object.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "Interceptor_List.h"
@@ -108,8 +110,15 @@ namespace CORBA
   class ORB_ObjectIdList;  // CORBA::ORB::ObjectIdList
   class ORB;
   typedef ORB *ORB_ptr;
+
+  class PolicyList;
 }
 
+namespace PortableInterceptor
+{
+  class IORInterceptor;
+  typedef IORInterceptor *IORInterceptor_ptr;
+}
 // ****************************************************************
 
 /**
@@ -274,7 +283,7 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
-  static 
+  static
   TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
                                                   ACE_ENV_ARG_DECL);
   //@}
@@ -967,11 +976,11 @@ public:
   /// Get Code Set Manager
   TAO_Codeset_Manager *codeset_manager (void);
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, 
-                                  ACE_CString, 
-                                  ACE_Hash<ACE_CString>, 
-                                  ACE_Equal_To<ACE_CString>, 
-                                  ACE_Null_Mutex> 
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  ACE_CString,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex>
     InitRefMap;
 
   /// Return a pointer to the -ORBInitRef map.

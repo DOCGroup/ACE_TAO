@@ -57,13 +57,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:262
 
 #if !defined (__TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_)
 #define __TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_RTPortableServer_Export Arg_Traits<CORBA::OctetSeq>
     : public
@@ -76,13 +76,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:262
 
 #if !defined (__TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_)
 #define __TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_RTPortableServer_Export Arg_Traits<PortableServer::ObjectId>
     : public
@@ -134,7 +134,7 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*RTPortableServer__TAO_POA_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -145,7 +145,7 @@ RTPortableServer::POA::POA (void)
 RTPortableServer::POA::~POA (void)
 {}
 
-void 
+void
 RTPortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
@@ -172,7 +172,7 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -227,15 +227,15 @@ static const CORBA::Long _oc_RTPortableServer_POA[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254506f), 
-  ACE_NTOHL (0x72746162), 
-  ACE_NTOHL (0x6c655365), 
-  ACE_NTOHL (0x72766572), 
-  ACE_NTOHL (0x2f504f41), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254506f),
+  ACE_NTOHL (0x72746162),
+  ACE_NTOHL (0x6c655365),
+  ACE_NTOHL (0x72766572),
+  ACE_NTOHL (0x2f504f41),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTPortableServer/POA:1.0
     4,
   ACE_NTOHL (0x504f4100),  // name = POA
@@ -257,6 +257,30 @@ namespace RTPortableServer
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<RTPortableServer::POA>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<RTPortableServer::POA>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -300,29 +324,7 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root.cpp:1703
@@ -534,7 +536,7 @@ TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
         RTPortableServer::POA,
         TAO::Objref_Traits<RTPortableServer::POA>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         RTPortableServer::POA,
@@ -747,7 +749,7 @@ TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
         RTPortableServer::POA, \
         TAO::Objref_Traits<RTPortableServer::POA> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTPortableServer::POA, \
@@ -759,5 +761,4 @@ TAO::Any_Impl_T<RTPortableServer::POA>::demarshal_value (TAO_InputCDR &)
         RTPortableServer::POA \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -92,7 +92,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*Messaging__TAO_SyncScopePolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -103,7 +103,7 @@ Messaging::SyncScopePolicy::SyncScopePolicy (void)
 Messaging::SyncScopePolicy::~SyncScopePolicy (void)
 {}
 
-void 
+void
 Messaging::SyncScopePolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SyncScopePolicy *_tao_tmp_pointer =
@@ -130,7 +130,7 @@ Messaging::SyncScopePolicy::_duplicate (SyncScopePolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -185,21 +185,21 @@ static const CORBA::Long _oc_Messaging_SyncScopePolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x4d657373), 
-  ACE_NTOHL (0x6167696e), 
-  ACE_NTOHL (0x672f5379), 
-  ACE_NTOHL (0x6e635363), 
-  ACE_NTOHL (0x6f706550), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x4d657373),
+  ACE_NTOHL (0x6167696e),
+  ACE_NTOHL (0x672f5379),
+  ACE_NTOHL (0x6e635363),
+  ACE_NTOHL (0x6f706550),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x793a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/SyncScopePolicy:1.0
     16,
-  ACE_NTOHL (0x53796e63), 
-  ACE_NTOHL (0x53636f70), 
-  ACE_NTOHL (0x65506f6c), 
+  ACE_NTOHL (0x53796e63),
+  ACE_NTOHL (0x53636f70),
+  ACE_NTOHL (0x65506f6c),
   ACE_NTOHL (0x69637900),  // name = SyncScopePolicy
   };
 
@@ -219,6 +219,30 @@ namespace Messaging
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::SyncScopePolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::SyncScopePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::SyncScopePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 
 // Copying insertion.
 void
@@ -262,30 +286,6 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::SyncScopePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::SyncScopePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::SyncScopePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_root/root.cpp:1703
 
@@ -311,7 +311,7 @@ TAO::Any_Impl_T<Messaging::SyncScopePolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::SyncScopePolicy,
         TAO::Objref_Traits<Messaging::SyncScopePolicy>
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         Messaging::SyncScopePolicy,
@@ -345,7 +345,7 @@ TAO::Any_Impl_T<Messaging::SyncScopePolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::SyncScopePolicy, \
         TAO::Objref_Traits<Messaging::SyncScopePolicy> \
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::SyncScopePolicy, \
@@ -357,5 +357,4 @@ TAO::Any_Impl_T<Messaging::SyncScopePolicy>::demarshal_value (TAO_InputCDR &)
         Messaging::SyncScopePolicy \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
