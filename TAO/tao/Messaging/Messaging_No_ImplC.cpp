@@ -196,7 +196,7 @@ Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 Messaging::PriorityRange::_tao_any_destructor (
@@ -1224,7 +1224,7 @@ Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 Messaging::RoutingTypeRange::_tao_any_destructor (

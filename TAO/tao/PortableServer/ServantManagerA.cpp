@@ -26,7 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "ServantManagerC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
@@ -34,49 +37,27 @@
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
-static const CORBA::Long _oc_PortableServer_ServantManager[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f53), 
-  ACE_NTOHL (0x65727661), 
-  ACE_NTOHL (0x6e744d61), 
-  ACE_NTOHL (0x6e616765), 
-  ACE_NTOHL (0x723a322e), 
-  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/ServantManager:2.3
-    15,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x616e744d), 
-  ACE_NTOHL (0x616e6167), 
-  ACE_NTOHL (0x65720000),  // name = ServantManager
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantManager (
-    CORBA::tk_objref,
-    sizeof (_oc_PortableServer_ServantManager),
-    (char *) &_oc_PortableServer_ServantManager,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_ServantManager (
+    "IDL:omg.org/PortableServer/ServantManager:2.3",
+    "ServantManager");
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantManager =
-    &_tc_TAO_tc_PortableServer_ServantManager;
+    &_tao_tc_PortableServer_ServantManager;
 }
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ServantManager>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -86,14 +67,14 @@ TAO::Any_Impl_T<PortableServer::ServantManager>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ServantManager>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::ServantManager>::demarshal_value (TAO_InputCDR &)
 {

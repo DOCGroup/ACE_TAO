@@ -23,6 +23,7 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/ValueModifierC.h"
+#include "tao/Typecode_types.h"
 
 namespace CORBA
 {
