@@ -330,7 +330,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   *this->client_stubs_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
 
   *this->client_stubs_ << "#if defined (__BORLANDC__)\n"
-                       << "#pragma option -w-rvl -w-rch -w-ccc -w-aus\n"
+                       << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
                        << "#endif /* __BORLANDC__ */\n\n";
 
   // Generate the code that includes the inline file if not included in the
