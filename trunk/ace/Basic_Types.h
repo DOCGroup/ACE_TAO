@@ -240,7 +240,7 @@
 #endif /* defined (ACE_UINT32_TYPE) */
 
 #if defined (ACE_INT64_TYPE)
-  typedef ACE_INT64_TYPE	ACE_INT64
+  typedef ACE_INT64_TYPE	ACE_INT64;
 #elif defined (ACE_HAS_INT64_T)
   typedef int64_t		ACE_INT64;
 #elif ACE_SIZEOF_LONG == 8
@@ -250,7 +250,7 @@
 #endif /* defined (ACE_INT64_TYPE) */
 
 #if defined (ACE_UINT64_TYPE)
-  typedef ACE_UINT64_TYPE	ACE_UINT64
+  typedef ACE_UINT64_TYPE	ACE_UINT64;
 #eif defined (ACE_HAS_UINT64_T)
   typedef uint64_t		ACE_UINT64;
 #elif ACE_SIZEOF_LONG == 8
