@@ -774,7 +774,8 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc,
                                              0,
-                                             cdr.byte_order ()),
+                                             cdr.byte_order (),
+                                             1),
                       0);
 
       any.replace (impl);
