@@ -24,13 +24,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 #include "tao/corbafwd.h"
 #include "tao/Resource_Factory.h"
 
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
-class ACE_CString;
 class TAO_ORB_Core;
 class TAO_Acceptor_Filter;
 
