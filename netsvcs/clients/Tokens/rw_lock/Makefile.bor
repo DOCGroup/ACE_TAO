@@ -1,5 +1,0 @@
-
-NAME = rw_locks
-OBJFILES = $(OBJDIR)\$(NAME).obj
-!include <$(ACE_ROOT)\netsvcs\build.bor>
-
