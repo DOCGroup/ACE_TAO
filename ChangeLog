@@ -1,3 +1,10 @@
+Tue Aug 26 11:22:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        
+          Projects should default to optimization=0. This prevented the
+        tao_idl project from compiling.
+
 Tue Aug 26 11:10:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Stream.i:
