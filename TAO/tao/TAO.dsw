@@ -144,6 +144,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TAO_Strategies"=.\Strategies\TAO_Strategies.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TAO_Strategies_Static"=.\Strategies\TAO_Strategies_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Global:
 
 Package=<5>
