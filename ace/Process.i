@@ -188,21 +188,33 @@ ACE_Process_Options::set_thread_attributes (void)
 #else /* !defined (ACE_WIN32) */
 
 ACE_INLINE ACE_HANDLE
-ACE_Process_Options::get_stdin (void)
+ACE_Process_Options::get_stdin (void) const
 {
   return stdin_;
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_Process_Options::get_stdout (void)
+ACE_Process_Options::get_stdout (void) const
 {
   return stdout_;
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_Process_Options::get_stderr (void)
+ACE_Process_Options::get_stderr (void) const
 {
   return stderr_;
+}
+
+ACE_INLINE int
+ACE_Process_Options::inherit_environment (void) const
+{
+  return inherit_environment_;
+}
+
+ACE_INLINE void
+ACE_Process_Options::inherit_environment (int nv)
+{
+  inherit_environment_ = nv;
 }
 
 ACE_INLINE int
@@ -252,25 +264,25 @@ ACE_Process_Options::setegid (uid_t id)
 }
 
 ACE_INLINE uid_t
-ACE_Process_Options::getruid (void)
+ACE_Process_Options::getruid (void) const
 {
   return this->ruid_;
 }
 
 ACE_INLINE uid_t
-ACE_Process_Options::geteuid (void)
+ACE_Process_Options::geteuid (void) const
 {
   return this->euid_;
 }
 
 ACE_INLINE uid_t
-ACE_Process_Options::getrgid (void)
+ACE_Process_Options::getrgid (void) const
 {
   return this->rgid_;
 }
 
 ACE_INLINE uid_t
-ACE_Process_Options::getegid (void)
+ACE_Process_Options::getegid (void) const
 {
   return this->egid_;
 }
