@@ -260,16 +260,16 @@ Headers_Map::place (const char *const header)
   ACE_OS::free ((void *) this->map_[this->num_headers_++].header_);
   this->map_[this->num_headers_++].header_ = ACE_OS::strdup(header);
 
-  int i = this->num_headers_-1;
+  int i = this->num_headers_ - 1;
   Headers_Map::Map_Item temp_item;
 
   while (i > 0)
     {
-      if (Headers_Map::compare (&(this->map_[i]), &(this->map_[i-1])) > 0)
+      if (Headers_Map::compare (&this->map_[i], &this->map_[i - 1]) > 0)
         break;
-      ACE_OS::memcpy (temp_item, this->map_[i-1],
+      ACE_OS::memcpy (temp_item, this->map_[i - 1],
                       sizeof (Headers_Map::Map_Item));
-      ACE_OS::memcpy (this->map_[i-1], this->map_[i],
+      ACE_OS::memcpy (this->map_[i - 1], this->map_[i],
                       sizeof (Headers_Map::Map_Item));
       ACE_OS::memcpy (this->map_[i], temp_item,
                       sizeof (Headers_Map::Map_Item));

@@ -1,3 +1,8 @@
+Sun Jul 27 21:56:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* server/Parse_Headers.cpp (place): Reformatted a few things
+	  to make them easier to read.
+
 Fri Jul 25 02:05:20 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* server/HTTP_Server.cpp: Changes to allow the thread creation
