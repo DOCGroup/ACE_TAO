@@ -1,3 +1,9 @@
+Thu Apr 25 05:36:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+	* orbsvcs/examples/Security/Send_File/Makefile: Updated
+	  dependencies.  
+
 Thu Apr 25 05:25:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/Callback: Updated dependencies.
