@@ -1,3 +1,10 @@
+Wed Jul 10 11:46:02 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added tests/AMH_Exception and examples/AMH/Sink_Server as tests
+	  for AMH
+
 Wed Jul 10 13:31:49 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/CLD.dsp:
