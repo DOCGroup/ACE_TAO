@@ -9,9 +9,19 @@ JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory (void)
 
 JAWS_Synch_IO_Handler::JAWS_Synch_IO_Handler (JAWS_IO *io,
                                               JAWS_IO_Handler_Factory *factory)
-  : io_ (io),
+  : state_ (0),
+    io_ (io),
+    pipeline_ (0),
     factory_ (factory)
 {
+  this->io_.handler (this);
+}
+
+JAWS_Synch_IO_Handler::~JAWS_Synch_IO_Handler (void)
+{
+  if (this->state_)
+    this->state_->release ();
+  this->state_ = 0;
 }
 
 void
@@ -29,23 +39,26 @@ JAWS_Synch_IO_Handler::accept_error (void)
 void
 JAWS_Synch_IO_Handler::read_complete (ACE_Message_Block &data)
 {
-  ACE_UNUSED_ARG(data);
+  // We can call back into the pipeline task at this point
+  this->pipeline_->read_complete (data);
 }
 
 void
 JAWS_Synch_IO_Handler::read_error (void)
 {
+  this->pipeline_->read_error ();
 }
 
 void
 JAWS_Synch_IO_Handler::transmit_file_complete (void)
 {
+  this->pipeline_->transmit_file_complete ();
 }
 
 void
 JAWS_Synch_IO_Handler::transmit_file_error (int result)
 {
-  ACE_UNUSED_ARG(result);
+  this->pipeline_->transmit_file_complete (result);
 }
 
 void
@@ -62,6 +75,10 @@ JAWS_Synch_IO_Handler::receive_file_error (int result)
 void
 JAWS_Synch_IO_Handler::write_error (void)
 {
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in writing response\n",
+              request_.uri ()));
+
+  this->done ();
 }
 
 void
@@ -78,6 +95,12 @@ JAWS_IO_Handler_Factory *
 JAWS_Synch_IO_Handler::factory (void)
 {
   return this->factory_;
+}
+
+void
+JAWS_Synch_IO_Handler::done (void)
+{
+  this->factory()->destroy_http_handler (this, this->io_);
 }
 
 JAWS_IO_Handler *
