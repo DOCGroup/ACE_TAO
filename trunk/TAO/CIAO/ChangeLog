@@ -1,3 +1,30 @@
+Sat Jun 21 10:30:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OEP/BasicSP/BasicSP.mpc:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+	* examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+	* examples/OEP/BasicSP/EC/EC.mpc: Added new MPC files.
+
+	* examples/OEP/BasicSP/BasicSP.dsw:
+	* examples/OEP/BasicSP/BasicSP_stub.dsp:
+	* examples/OEP/BasicSP/BasicSP_svnt.dsp:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+	* examples/OEP/BasicSP/EC/EC_client.dsp:
+	* examples/OEP/BasicSP/EC/EC_exec.dsp:
+	* examples/OEP/BasicSP/EC/EC_stub.dsp:
+	* examples/OEP/BasicSP/EC/EC_svnt.dsp:
+	* examples/OEP/BasicSP/EC/controller.dsp: Removed these
+	  handcrafted projects/workspaces now that we genertae them via MPC.
+
 Sat Jun 21 09:50:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OEP/Display/HUDisplay.mpc:
