@@ -9,7 +9,7 @@ ACE_RCSID (SSLIOP,
 
 
 TAO::SSLIOP::OwnCredentials::OwnCredentials (X509 *cert, EVP_PKEY *evp)
-  : TAO::SSLIOP::Credentials (cert, evp)
+  : TAO::SSLIOP_Credentials (cert, evp)
 {
 }
 
