@@ -71,6 +71,20 @@ MyImpl::CB_Worker_exec::set_session_context (Components::SessionContext_ptr ctx
 }
 
 void
+MyImpl::CB_Worker_exec::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
+MyImpl::CB_Worker_exec::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
 MyImpl::CB_Worker_exec::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
