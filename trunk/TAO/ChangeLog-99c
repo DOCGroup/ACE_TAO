@@ -1,3 +1,16 @@
+Mon Mar  8 14:27:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Invocation.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/Connect.cpp:
+	* tao/ORB.cpp:
+	* tao/skip.cpp:
+	  The first four files have the new ACE timeprobes for the
+	  pluggable protocols test. The last has a change in
+	  TAO_Marshal_Union::skip() from using 
+	  (ACE_Message_Block *) Any::value() to
+	  Any::_tao_get_cdr ().
+
 Mon Mar  8 13:44:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB.cpp: Added a superfast implementation of CORBA::string_copy().
