@@ -1,3 +1,18 @@
+Wed Aug 09 19:22:17 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* tests/tests.dsw:
+	* tests/test_stdio.dsp:
+
+	  Added to the repository.
+	  Note that I also added the pace_lib and pace_dll projects
+	  to this workspace. Unlike, ACE, the library is pretty
+	  small and the tests are quite limited and so they all
+	  fit quite nicely in a project file!
+	
+	* tests/Stdio_Test.c:
+
+	  Altered to sleep for 20 secs to test the exe size in memory.
+
 Tue Aug 08 17:09:38 2000  Joe Hoffert <joeh@cs.wustl.edu>
 
         * pace/config/config.h:

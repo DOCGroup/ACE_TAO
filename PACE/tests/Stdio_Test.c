@@ -19,12 +19,14 @@
 /* ===================================================================== */
 
 #include "pace/stdio.h"
+#include "pace/unistd.h"
 
 const char * filename = "temp";
 const char * mode = "w+";
 const char * string1 = "line 1\n";
 const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
+const int SLEEPTIME = 20;
 
 int
 main (int argc, char **argv)
@@ -109,6 +111,11 @@ main (int argc, char **argv)
 
   printf("pace_fclose %s\n", success);
 
+
+  // use this to pause the program to test the size of the exe
+  // Cntr-Alt-Del and then look at the task manager to
+  // find the size
+  pace_sleep (SLEEPTIME);
 
   PACE_UNUSED_ARG (argc);
   PACE_UNUSED_ARG (argv);
