@@ -1,3 +1,11 @@
+Fri Aug  8 13:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+          Added include of OS.h to get ACE_TMAIN. This fixes the link errors we see
+          with these examples.
+
 Fri Aug  8 07:10:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
