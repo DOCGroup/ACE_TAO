@@ -1,3 +1,27 @@
+Mon Mar 19 19:49:04 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.bor:
+        * orbsvcs/tests/Event/Basic/BCast.bor:
+        * orbsvcs/tests/Event/Basic/Bitmask.bor:
+        * orbsvcs/tests/Event/Basic/Complex.bor:
+        * orbsvcs/tests/Event/Basic/Control.bor:
+        * orbsvcs/tests/Event/Basic/Disconnect.bor:
+        * orbsvcs/tests/Event/Basic/Gateway.bor:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.bor:
+        * orbsvcs/tests/Event/Basic/Negation.bor:
+        * orbsvcs/tests/Event/Basic/Observer.bor:
+        * orbsvcs/tests/Event/Basic/Random.bor:
+        * orbsvcs/tests/Event/Basic/Reconnect.bor:
+        * orbsvcs/tests/Event/Basic/Shutdown.bor:
+        * orbsvcs/tests/Event/Basic/Timeout.bor:
+        * orbsvcs/tests/Event/Basic/Wildcard.bor:
+        * orbsvcs/tests/Event/Performance/Connect.bor:
+        * orbsvcs/tests/Event/Performance/Inversion.bor:
+        * orbsvcs/tests/Event/Performance/Throughput.bor:
+        * orbsvcs/tests/Event/Performance/Latency.bor:
+        * orbsvcs/tests/Event/Performance/Latency_Server.bor:
+	  Use the new directory for the ECTest library.
+
 Mon Mar 19 16:37:21 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/Transport.cpp:
