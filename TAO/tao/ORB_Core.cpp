@@ -843,6 +843,7 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
   // Inherit properties/objects used in ORB_Core from the
   // parent thread.  
 
+  this->orb (p->orb ());
   this->root_poa (p->root_poa ());
   // At the moment, only root_poa needs to be inherited.
 
