@@ -49,7 +49,8 @@ public:
   // Method that binds the sender to the Naming Service and retreives
   // the references of any registered receivers.
 
-  void connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_receivers (AVStreams::MMDevice_ptr sender
+			     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Connect to the receivers that we found.
 
   void bind_to_sender (const ACE_CString &sender_name,
