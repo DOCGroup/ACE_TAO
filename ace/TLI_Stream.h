@@ -15,11 +15,13 @@
 #define ACE_TLI_STREAM_H
 #include /**/ "ace/pre.h"
 
-#include "ace/TLI.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/TLI.h"
 
 #include "ace/INET_Addr.h"
 
