@@ -1,65 +1,70 @@
+Thu Mar 25 14:55:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Basic_Types_Test.cpp: print out ACE version
+          information even with ACE_HAS_MINIMAL_ACE_OS.
+
 Thu Mar 25 13:52:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Reactor_Performance_Test.cpp (handle_input): This code
-	  wasn't entirely correct.  Well actually, I think where was some
-	  change in the semantics of Windows. Previously, once the handle
-	  was close, it seems that the application still got notified if
-	  there was data on the socket.  With WinNT SP4, it seems that
-	  once the handle was closed, no additional FD_READs were issued
-	  by the OS, even if data was available on the socket.
+        * tests/Reactor_Performance_Test.cpp (handle_input): This code
+          wasn't entirely correct.  Well actually, I think where was some
+          change in the semantics of Windows. Previously, once the handle
+          was close, it seems that the application still got notified if
+          there was data on the socket.  With WinNT SP4, it seems that
+          once the handle was closed, no additional FD_READs were issued
+          by the OS, even if data was available on the socket.
 
-	  In ACE, both FD_READ and FD_CLOSE get mapped to handle_input().
-	  The way to know when the connection was closed is to do a recv()
-	  in handle_input() and check for a zero return. When told of new
-	  data, the old code in handle_input() only did one recv() of
-	  BUFSIZ bytes. If there was more than BUFSIZ bytes of data on the
-	  socket, there would be some data left on the socket.  Hence,
-	  when notified of FD_CLOSE, it did another recv() which
-	  succeeded, and handle_input() never returned -1, making the test
-	  hang.
+          In ACE, both FD_READ and FD_CLOSE get mapped to handle_input().
+          The way to know when the connection was closed is to do a recv()
+          in handle_input() and check for a zero return. When told of new
+          data, the old code in handle_input() only did one recv() of
+          BUFSIZ bytes. If there was more than BUFSIZ bytes of data on the
+          socket, there would be some data left on the socket.  Hence,
+          when notified of FD_CLOSE, it did another recv() which
+          succeeded, and handle_input() never returned -1, making the test
+          hang.
 
-	  The change made was to make handle_input() call recv() until
-	  EWOULDBLOCK occurs (note that the socket is in non-blocking
-	  mode).  Hence, when FD_CLOSE occurred, the socket did not have
-	  any data left, recv() returned 0 and handle_input() returned -1,
-	  which finally closed the test down correctly.
+          The change made was to make handle_input() call recv() until
+          EWOULDBLOCK occurs (note that the socket is in non-blocking
+          mode).  Hence, when FD_CLOSE occurred, the socket did not have
+          any data left, recv() returned 0 and handle_input() returned -1,
+          which finally closed the test down correctly.
 
 Thu Mar 25 13:13:51 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile.am (ACE.ifnames):
-	  Placed rule generation of ACE.ifnames within a MAINTAINER_MODE
-	  automake conditional.  If a `--enable-maintainer-mode' option
-	  isn't given on the configure script command line then don't
-	  generate a new `ACE.ifnames' file.
+        * Makefile.am (ACE.ifnames):
+          Placed rule generation of ACE.ifnames within a MAINTAINER_MODE
+          automake conditional.  If a `--enable-maintainer-mode' option
+          isn't given on the configure script command line then don't
+          generate a new `ACE.ifnames' file.
 
-	* configure.in:
-	  Added AM_MAINTAINER_MODE so that maintainer level Makefile
-	  features are disabled by default.
+        * configure.in:
+          Added AM_MAINTAINER_MODE so that maintainer level Makefile
+          features are disabled by default.
 
-	* acconfig.h:
-	* ace/OS.h:
-	* ace/README:
-	  Added ACE_HAS_BROKEN_MAP_FAILED macro for platforms that do not
-	  cast MAP_FAILED to a (void *).  Defining this macro prevents
-	  compilers on those platforms from complaining about assigning
-	  an int to a (void *).  Thanks to Roland Gigler
-	  <roland@mch.pn.siemens.de> for providing feedback about this.
+        * acconfig.h:
+        * ace/OS.h:
+        * ace/README:
+          Added ACE_HAS_BROKEN_MAP_FAILED macro for platforms that do not
+          cast MAP_FAILED to a (void *).  Defining this macro prevents
+          compilers on those platforms from complaining about assigning
+          an int to a (void *).  Thanks to Roland Gigler
+          <roland@mch.pn.siemens.de> for providing feedback about this.
 
 Thu Mar 25 11:30:44 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/exceptions.html:
-	Corrected a couple of links...
+        * docs/exceptions.html:
+        Corrected a couple of links...
 
 Thu Mar 25 01:04:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/OS.h (ACE_OS): Added ACE_DEFAULT_TEMP_DIR_ENV to be "TEMP"
-	for WIN32 and "TMP" for Unix.
+        * ace/OS.h (ACE_OS): Added ACE_DEFAULT_TEMP_DIR_ENV to be "TEMP"
+        for WIN32 and "TMP" for Unix.
 
 Wed Mar 24 18:30:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp: Added a new
- 	  version of this program that fixes a number of bugs with the old
- 	  one.  Thanks to Hao Ruan <hruan@lucent.com> for these fixes.
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp: Added a new
+          version of this program that fixes a number of bugs with the old
+          one.  Thanks to Hao Ruan <hruan@lucent.com> for these fixes.
 
 Wed Mar 24 15:31:27 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -68,7 +73,7 @@ Wed Mar 24 15:31:27 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * OS.i:
 
           Changed the implementation of the High Resolution Timer on
-	  Win32 to use QueryPerformanceCounter instead of assembly code.
+          Win32 to use QueryPerformanceCounter instead of assembly code.
           The docs also say that this is MP-safe.  Thanks to Gregory
           Fee <gdf2@cec.wustl.edu> for suggesting this.
 
@@ -80,8 +85,8 @@ Wed Mar 24 15:31:27 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Mar 24 14:36:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.cpp (ACE_OS_PREALLOCATE_OBJECT): Initialized obj_p to zero
-	  to make egcs happy.
+        * ace/OS.cpp (ACE_OS_PREALLOCATE_OBJECT): Initialized obj_p to zero
+          to make egcs happy.
 
 Wed Mar 24 13:23:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
