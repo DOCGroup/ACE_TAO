@@ -1,3 +1,10 @@
+Tue Jun 15 16:13:30 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* performance-tests\Protocols:
+
+	  New test for measuring the performance of protocols under
+	  varying network conditions.
+
 Mon Jun 14 19:34:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
