@@ -155,7 +155,10 @@ case $os in
 		;;
 	-psos*)
 		os=-psos
-		;;
+                ;;
+        -qnx*)
+                os=-neutrino
+                ;;
 esac
 
 # Decode aliases for certain CPU-COMPANY combinations.
@@ -987,6 +990,9 @@ case $os in
         -*mint | -*MiNT)
 	        os=-mint
 		;;
+        -neutrino* | -nto*)
+                os=-neutrino
+                ;;
 	-none)
 		;;
 	*)
@@ -1207,6 +1213,9 @@ case $basic_machine in
 			-*mint | -*MiNT)
 				vendor=atari
 				;;
+			-neutrino* | -nto*)
+				vendor=qnx
+                                ;;
 		esac
 		basic_machine=`echo $basic_machine | sed "s/unknown/$vendor/"`
 		;;
