@@ -1029,6 +1029,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Recursive_Condition_Bug_Test"=".\Recursive_Condition_Bug_Test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Recursive_Mutex_Test"=".\Recursive_Mutex_Test.dsp" - Package Owner=<4>
 
 Package=<5>
