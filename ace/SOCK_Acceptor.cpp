@@ -90,9 +90,19 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
       else
         local_inet_addr = *(sockaddr_in *) local_sap.get_addr ();  
   
-      if (ACE::bind_port (this->get_handle (),
-                          local_inet_addr.sin_addr.s_addr) == -1)
-	error = 1;
+      if (local_inet_addr.sin_port == 0)
+        {
+          if (ACE::bind_port (this->get_handle (),
+                              local_inet_addr.sin_addr.s_addr) == -1)
+            error = 1;
+        }
+      else
+        {
+          if (ACE_OS::bind (this->get_handle (), 
+                            (sockaddr *) &local_inet_addr, 
+                            sizeof local_inet_addr) == -1)
+            error = 1;
+        }
     }
   else if (ACE_OS::bind (this->get_handle (), (sockaddr *) local_sap.get_addr (), 
                          local_sap.get_size ()) == -1)
