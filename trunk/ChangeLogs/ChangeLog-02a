@@ -1,3 +1,8 @@
+Tue Apr 30 14:54:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added $TAO_ROOT/tests/Connection_Timeout
+	  to the daily build list.
+
 Mon Apr 29 20:28:49 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/nightlybuild/builds.lst: Move SunOS_SunCC51, SunOS_GCC_2_95,
