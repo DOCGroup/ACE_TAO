@@ -7,8 +7,11 @@ optimize = 1
 
 CC		= gcc
 CXX             = g++
+
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CFLAGS		+= -w
-CCFLAGS		+= $(CFLAGS) -D__m88k__ -fno-implicit-templates -fno-strict-prototypes
+CCFLAGS		+= $(CFLAGS) -D__m88k__ $(TEMPLATES_FLAG) -fno-strict-prototypes
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)

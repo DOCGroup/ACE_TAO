@@ -1,3 +1,15 @@
+Wed Sep  4 20:59:40 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_irix5.2.GNU:
+	* include/makeinclude/platform_m88k.GNU:
+	* include/makeinclude/platform_netbsd.GNU:
+	* include/makeinclude/platform_qnx_neutrino.GNU:
+	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
+	* include/makeinclude/platform_sco-nothread.GNU:
+	  Instead of setting -fno-implicit-templates, 
+	  use $(TEMPLATES_FLAG).  Include platform_g++.GNU to get the
+	  correct value of $(TEMPLATES_FLAG).
+
 Wed Sep  4 16:31:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Wheel_T.cpp: Formatting tweaks for ACE coding style.
