@@ -1,3 +1,8 @@
+Tue Dec  2 12:15:18 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv2/Server_Shutdown.cpp:
+	  Added include of ace/OS_NS_string.h to get ACE_OS::strcmp
+
 Tue Dec  2 12:07:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Cache_Manager_T.cpp:
