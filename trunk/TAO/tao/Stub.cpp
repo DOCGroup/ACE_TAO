@@ -907,8 +907,9 @@ TAO_Stub::set_policy_overrides (
     CORBA::SetOverrideType set_add,
     CORBA::Environment &ACE_TRY_ENV)
 {
+  // Notice the use of an explicit constructor....
   auto_ptr<TAO_Policy_Manager_Impl> policy_manager =
-    new TAO_Policy_Manager_Impl;
+    auto_ptr<TAO_Policy_Manager_Impl> (new TAO_Policy_Manager_Impl);
 
 
   if (set_add == CORBA::SET_OVERRIDE)

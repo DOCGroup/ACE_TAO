@@ -1,3 +1,9 @@
+Tue Apr 13 17:02:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Stub.cpp:
+	  auto_ptr<> requires an explicit constructor, thanks to David and 
+	  the green hills compiler for detecting this.
+
 Tue Apr 13 13:59:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
