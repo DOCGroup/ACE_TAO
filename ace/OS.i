@@ -8123,6 +8123,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
       if (ACE_OS::ftruncate (lock->handle_,
                              sizeof (ACE_mutex_t)) == -1)
         return -1;
+      // Note that only the owner can destroy a file lock...
       ACE_ALLOCATOR_RETURN (lock->lockname_,
                             ACE_OS::strdup (name),
                             -1);
@@ -8333,7 +8334,10 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
 
   int result = 0;
   // Does not block, if no access, returns -1 and set errno = EBUSY;
-  ACE_OSCALL (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1, result);
+  ACE_OSCALL (::fcntl (lock->handle_,
+                       F_SETLK,
+                       &lock->lock_),
+              int, -1, result);
 
 # if ! defined (ACE_PSOS)
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
