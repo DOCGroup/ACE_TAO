@@ -142,10 +142,13 @@ Event_Supplier::load_schedule_data
                 {
                   ACE_NEW (data, Schedule_Viewer_Data);
                   scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
-                                       &(data->operation_name), &(data->utilitzation),
-                                       &(data->overhead), &(data->arrival_time),
-                                       &(data->deadline_time), &(data->completion_time),
-                                       &(data->computation_time));
+                                       data->operation_name,
+                                       &data->utilitzation,
+                                       &data->overhead,
+                                       &data->arrival_time,
+                                       &data->deadline_time,
+                                       &data->completion_time,
+                                       &data->computation_time);
                   if (scan_count != 7)
                     {
                       ACE_ERROR ((LM_ERROR,
