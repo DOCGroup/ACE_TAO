@@ -1,3 +1,11 @@
+Fri Oct 25 09:56:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * TAO_IDL/be/be_valuetype.cpp:
+
+          Restored the const cast to pointer operator for valuetype _var classes.
+
 Fri Oct 25 09:49:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * examples/OBV/Typed_Events/Event_Types_impl.cpp:
