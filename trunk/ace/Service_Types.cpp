@@ -6,7 +6,7 @@
 #include "ace/Stream_Modules.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Record.i"
+#include "ace/Service_Types.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
