@@ -970,7 +970,7 @@ nobase_include_HEADERS += \
   BiDir_GIOP/BiDir_PolicyFactory.h \
   BiDir_GIOP/BiDir_Policy_i.h \
   BiDir_GIOP/bidirgiop_export.h \
-  BiDir_GIOP/BiDirPolicyC.i \
+  BiDir_GIOP/BiDirPolicyC.inl \
   BiDir_GIOP/BiDirPolicy.pidl
 
 pkgconfigdata_DATA += TAO_BiDirGIOP.pc
