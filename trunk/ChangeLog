@@ -8,7 +8,8 @@ Wed Jul 23 23:47:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * include/makeinclude/platform_linux.GNU:
           Added -Wl,-E to LDFLAGS to add all symbols to the dynamic symbol
           table in order to enable dynamic_cast'ing in shared libraries
-          loaded by ACE_DLL.
+          loaded by ACE_DLL.  Thanks to Milan Cvetkovic
+          <mcvetkovic@mpathix.com> for reporting this and providing the fix.
 
         * tests/DLL_Test.cpp:
         * tests/DLL_Test.h:
