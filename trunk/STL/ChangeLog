@@ -1,3 +1,8 @@
+Thu Apr 03 08:58:05 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* STL/bool.h: added /**/ to #include <yvals.h>.  Tanks to
+	  Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting this.
+
 Sat Jan 25 11:34:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* STL/bstring.h: Fixed typo.
