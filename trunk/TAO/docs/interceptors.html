@@ -377,6 +377,7 @@ module PortableInterceptor
       <CODE>ServerRequestInfo::get_slot</CODE>,
       <CODE>ServerRequestInfo::set_slot</CODE>, and
       <CODE>ServerRequestInfo::get_server_policy</CODE> methods.
+  <li>Client interception points are now invoked for AMI calls.
 </ul>
 
 <hr><P>
@@ -397,14 +398,15 @@ module PortableInterceptor
   <li>The current implementation does not go through the interceptor chain
       when using collocation optimizations such as <CODE>direct</CODE> or
       <CODE>ThruPOA</CODE>.
-  <li>Add interception points for AMI requests.
+  <li><CODE>ClientRequestInfo::{arguments,exceptions,result}() are not
+      available for AMI calls.</CODE>
   <li>Add interception points for DII/DSI invocations.
 </ul>
 
 <hr><P>
 <H3><a name="ref">References</a></H3>
 <UL>
-  <LI><A HREF="http://www.omg.org/cgi-bin/doc?formal/02-05-15">formal/02-05-15</A> -- CORBA 2.6.1 Specification -- contains the Portable Interceptors chapter</LI>
+  <LI><A HREF="http://www.omg.org/cgi-bin/doc?formal/02-11-03">formal/02-11-03</A> -- CORBA 3.0.1 Specification -- contains the Portable Interceptors chapter</LI>
 
 </UL>
 <hr>
