@@ -61,7 +61,7 @@ int be_visitor_exception_ctor::visit_exception (be_exception *node)
     *os << node->local_name ();
   else
     *os << node->name () << "::" << node->local_name ();
-  *os << "(" << be_idt << "\n";
+  *os << " (" << be_idt << "\n";
 
   if (this->visit_scope (node) == -1)
     {
@@ -73,9 +73,9 @@ int be_visitor_exception_ctor::visit_exception (be_exception *node)
     }
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
-    *os << be_uidt << ");\n\n";
+    *os << be_uidt_nl << ");\n";
   else
-    *os << be_uidt << ")\n\n";
+    *os << be_uidt_nl << ")\n";
 
   return 0;
 }
