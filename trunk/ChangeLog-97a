@@ -1,3 +1,11 @@
+Fri Apr 11 15:14:59 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Conn_Test.cpp: moved declaration of "result" out of
+	  loop because it's used after the loop.  Thanks to
+	  Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  reporting this.  Also, removed a few unnecessary template
+	  specializations.
+
 Fri Apr 11 14:31:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp: Added several explicit template
