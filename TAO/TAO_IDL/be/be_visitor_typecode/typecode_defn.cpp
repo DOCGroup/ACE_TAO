@@ -148,7 +148,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                          "codegen for typecode encapsulation failed\n"), 
                         -1);
     }
-  *os << be_uidt << "};" << be_nl;
+  *os << be_uidt << "};" << be_nl << be_nl;
 
   // Type code definition.
   *os << "static CORBA::TypeCode _tc_TAO_tc_";
@@ -156,7 +156,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   // Flat name generation.
   *os << node->flat_name ();
   
-  *os << " (";
+  *os << " (" << be_idt << be_idt_nl;
   
   switch (node->node_type ())
     {
@@ -188,18 +188,23 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       return -1; // error
     }
 
-  *os << ", sizeof (_oc_";
+  *os << "," << be_nl
+      << "sizeof (_oc_";
   
   // Flat name generation.
   *os <<  node->flat_name ();
   
-  *os << "), (char *) &_oc_";
+  *os << ")," << be_nl
+      << "(char *) &_oc_";
 
   // Flat name generation.
   *os <<  node->flat_name ();
   
   // Name generation.
-  *os << ", 0, sizeof (" << node->name () << "));" << be_nl;
+  *os << "," << be_nl
+      << "0," << be_nl
+      << "sizeof (" << node->name () << ")" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
   
   // Is our enclosing scope a module? We need this check because for
   // platforms that support namespaces, the typecode must be declared
@@ -235,6 +240,8 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                              "Error parsing nested name\n"),
                             -1);
         }
+
+      *os << be_nl;
     }
   else
     {
@@ -244,12 +251,13 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       // Tc name generation.
       *os << node->tc_name ();
       
-      *os << " = &_tc_TAO_tc_";
+      *os << " =" << be_idt_nl
+          << "&_tc_TAO_tc_";
 
       // Flat name generation.
       *os <<  node->flat_name ();
       
-      *os << ";\n\n";
+      *os << ";" << be_uidt_nl << "\n";
     }
 
   return 0;
@@ -2885,7 +2893,8 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
     {
       // Unoptimized case.
       
-      *os << (ACE_OS::strlen (node->repoID ()) + 1) << ", ";
+      *os << (ACE_OS::strlen (node->repoID ()) + 1) 
+          << "," << be_nl;
       
       ACE_CDR::ULong *arr, i, arrlen;
 
@@ -2894,6 +2903,11 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       for (i = 0; i < arrlen; i++)
         {
           os->print ("ACE_NTOHL (0x%x), ", arr[i]);
+
+          if (i < arrlen - 1)
+            {
+              *os << be_nl;
+            }
         }
       
       // Comment.
@@ -2927,12 +2941,19 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
     {
       ACE_CDR::ULong *arr, i, arrlen;
 
-      *os << (ACE_OS::strlen (node->local_name ()->get_string ()) + 1) << ", ";
+      *os << (ACE_OS::strlen (node->local_name ()->get_string ()) + 1) 
+          << "," << be_nl;
+
       (void) this->tc_name2long (node->local_name ()->get_string (), arr, arrlen);
 
       for (i = 0; i < arrlen; i++)
         {
           os->print ("ACE_NTOHL (0x%x), ", arr[i]);
+
+          if (i < arrlen - 1)
+            {
+              *os << be_nl;
+            }
         }
       
       *os << " // name = " << node->local_name ();
