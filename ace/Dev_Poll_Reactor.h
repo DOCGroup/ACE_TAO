@@ -196,9 +196,9 @@ public:
    * caller will block until action is possible, else will wait until
    * the relative time specified in *timeout elapses).
    */
-  virtual ssize_t notify (ACE_Event_Handler * = 0,
-                          ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-                          ACE_Time_Value * = 0);
+  virtual int notify (ACE_Event_Handler *eh = 0,
+                      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
+                      ACE_Time_Value *timeout = 0);
 
   /// Unimplemented method required by pure virtual method in abstract
   /// base class.
