@@ -239,6 +239,10 @@ SOURCE=.\FaultTolerance\FT_Service_Activate.h
 
 SOURCE=.\FaultTolerance\FT_Service_Callbacks.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\ftconf.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
