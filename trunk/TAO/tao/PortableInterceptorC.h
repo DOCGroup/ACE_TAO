@@ -33,7 +33,7 @@
 #include "CurrentC.h"
 #include "DynamicC.h"
 #include "ObjectReferenceTemplateC.h"
-#include "MessagingC.h"
+#include "Messaging_SyncScopeC.h"
 #include "IOPC.h"
 #include "PolicyC.h"
 

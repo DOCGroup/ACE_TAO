@@ -11,7 +11,7 @@
 #include "Client_Task.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"

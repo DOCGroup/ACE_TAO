@@ -41,7 +41,7 @@
 #include "tao/NVList.h"
 #include "tao/Environment.h"
 #include "tao/Sequence.h"
-#include "tao/MessagingC.h"
+#include "tao/Messaging/MessagingC.h"
 
 class TAO_DynamicInterface_Export CORBA_Request
 {

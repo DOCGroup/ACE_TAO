@@ -25,7 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "dynamicinterface_export.h"
-#include "tao/Asynch_Reply_Dispatcher.h"
+#include "tao/Messaging/Asynch_Reply_Dispatcher.h"
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
 
 class TAO_ORB_Core;
 

@@ -46,7 +46,7 @@
 
 #include <ObjectReferenceTemplate.pidl>
 
-#include <Messaging.pidl>
+#include <Messaging_SyncScope.pidl>
 
 module PortableInterceptor {
 

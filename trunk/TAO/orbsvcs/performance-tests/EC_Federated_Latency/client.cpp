@@ -3,7 +3,7 @@
 #include "Peer.h"
 #include "Servant_var.h"
 
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "ace/Get_Opt.h"
