@@ -1,11 +1,3 @@
-Mon Sep 28 16:39:30 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
-
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h: 
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: 	
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp: Replaced
- 	the use of ACE_Unbounded_Set with ACE_Unbounded_Queue, fixing the
- 	inconsistent results of stats.
-
 Mon Sep 28 16:06:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.*,Object_Manager.{h,cpp}: removed ACE_HAS_TSS_EMULATION's
