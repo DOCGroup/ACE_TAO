@@ -307,7 +307,7 @@ idl_parse_line_and_file(char *buf)
 
           h[i] = h[j];
         }
-
+      h[i] = '\0';
       idl_global->set_filename(new String(h));
     }
   idl_global->set_in_main_file(

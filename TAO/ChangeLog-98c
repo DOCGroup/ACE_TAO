@@ -1,7 +1,10 @@
 Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll (idl_parse_line_and_file): Had to make a minor
- 	change to skip over the #line directive from Microsoft.
+ 	change to skip over the #line directive from Microsoft.  In
+ 	addition, had to add some code to put Microsoft-style pathnames
+ 	into a canonical form (i.e., replacing = '\\' with '\').  Thanks
+ 	to Darrell for helping with this.
 
 	* TAO_IDL/fe/idl.ll: Added a new rule to handle the fact
 	that the Microsoft C++ preprocessor generates tags of the
