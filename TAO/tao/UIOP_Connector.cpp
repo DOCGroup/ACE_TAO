@@ -143,8 +143,8 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
         {
-          char buffer [MAXNAMELEN + 1];
-          profile->addr_to_string (buffer, MAXNAMELEN);
+          char buffer [MAXPATHLEN + 1];
+          profile->addr_to_string (buffer, MAXPATHLEN);
           ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
                       "%s failed (%p)\n",
                       __FILE__,
