@@ -152,7 +152,7 @@
 						Name="VCCustomBuildTool"
 						Description="Invoking TAO_IDL Compiler on <%idl_file%>"
 						CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%idl_file%>"
-						Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp;<%noextension(idl_file)%>S_T.h;<%noextension(idl_file)%>S_T.i;<%noextension(idl_file)%>S_T.cpp"/>
+						Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp"/>
 				</FileConfiguration>
 <%endfor%>
 			</File>

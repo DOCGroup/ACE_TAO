@@ -52,6 +52,12 @@ my(%validNames) = ('exename'         => 1,
                    'dllflags'        => 1,
                    'libflags'        => 1,
                    'version'         => 1,
+                   'requires'        => 1,
+                   'avoids'          => 1,
+                   'compname'        => 1,
+                   'comps'           => 1,
+                   'tagname'         => 1,
+                   'tagchecks'       => 1,
                   );
 
 ## Deal with these components in a special way
@@ -396,6 +402,7 @@ sub process_assignment_add {
     $nval = $value;
   }
   $self->process_assignment($name, $nval);
+  $self->process_lib_modification($name);
 }
 
 
@@ -414,6 +421,33 @@ sub process_assignment_sub {
       }
     }
     $self->process_assignment($name, $nval);
+    $self->process_lib_modification($name);
+  }
+}
+
+
+sub process_lib_modification {
+  my($self)   = shift;
+  my($name)   = shift;
+
+  ## If we are modifying the "libs" assignment with
+  ## either addition or subtraction, we are going to
+  ## perform a little fix on the value to avoid multiple
+  ## libraries and to try to insure the correct linking order
+  if ($name eq "libs") {
+    my($nval) = $self->get_assignment($name);
+    if (defined $nval) {
+      my($parts) = $self->create_array($nval);
+      my(%seen)  = ();
+      my($value) = "";
+      foreach my $part (reverse @$parts) {
+        if (!defined $seen{$part}) {
+          $value = "$part $value";
+          $seen{$part} = 1;
+        }
+      }
+      $self->process_assignment($name, $value);
+    }
   }
 }
 

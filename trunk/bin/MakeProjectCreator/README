@@ -54,6 +54,14 @@ depends         Specifies 1 or more projects upon which this project depends
 dllflags	(Windows Only) Specifies preprocessor flags needed for dll's
 libflags	(Windows Only) Specifies preprocessor flags needed for lib's
 
+The Following are GNU only:
+requires        Specifies which tao macros should be set to build the target
+avoids          Specifies which tao macros should not be set to build the target
+compname        Specifies the argument to pass to the ace_components script
+comps           Specifies which components are required to build the target
+tagname         Specifies the make macro to check before building the target
+tagchecks       Specifies the values for tagname to check
+
 
 Special Keywords Available to Templates
 ---------------------------------------
