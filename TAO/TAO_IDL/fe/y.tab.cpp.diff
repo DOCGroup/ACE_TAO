@@ -1,5 +1,11 @@
---- y.tab.cpp	Tue Dec 19 09:31:07 2000
-+++ y.tab.cpp.mod	Tue Dec 19 09:28:09 2000
+--- y.tab.cpp	Fri Jan 25 11:06:56 2002
++++ y.tab.cpp.mod	Fri Jan 25 11:09:03 2002
+@@ -1,4 +1,4 @@
+-// $Id$
++// $Id$
+ #ifndef lint
+ char tao_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
+  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
 @@ -960,7 +960,7 @@
  #ifdef TAO_YYMAXDEPTH
  #define TAO_YYSTACKSIZE TAO_YYMAXDEPTH
@@ -9,7 +15,7 @@
  #endif
  #endif
  int tao_yydebug;
-@@ -1134,7 +1134,7 @@
+@@ -1153,7 +1153,7 @@
      extern char *ace_foo();
  #endif
  
@@ -18,7 +24,7 @@
      {
          tao_yyn = *tao_yys;
          if (tao_yyn >= '0' && tao_yyn <= '9')
-@@ -1151,7 +1151,7 @@
+@@ -1170,7 +1170,7 @@
      *tao_yyssp = tao_yystate = 0;
  
  tao_yyloop:
@@ -40,3 +46,23 @@
      ++tao_yynerrs;
  tao_yyinrecovery:
      if (tao_yyerrflag < 3)
+@@ -2683,7 +2682,10 @@
+               idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
+             }
+ 
+-          tao_yyval.dcval = idl_global->scopes ()->bottom ()->lookup_primitive_type (tao_yyvsp[0].etval);
++          tao_yyval.dcval =
++            idl_global->scopes ()->bottom ()->lookup_primitive_type (
++                                                  tao_yyvsp[0].etval
++                                                );
+         }
+ break;
+ case 227:
+@@ -3495,6 +3497,7 @@
+         }
+ break;
+ case 309:
++#line 2588 "fe/idl.tao_yy"
+ {
+           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
+         }

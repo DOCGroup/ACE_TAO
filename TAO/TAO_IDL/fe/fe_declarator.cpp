@@ -130,10 +130,6 @@ FE_Declarator::compose (AST_Decl *d)
     {
       arr = AST_Array::narrow_from_decl (this->pd_complex_part);
       arr->set_base_type (ct);
-
-      // Add the new array to the types defined in the global scope
-      idl_global->root ()->fe_add_array (arr);
-
       return arr;
     }
 
