@@ -270,7 +270,7 @@ server (void *)
   ACE_OS::memset (buf, 0, sizeof buf);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Received: ("));
 
-  while (buf[ACE_OS::strlen (buf) - 1] != '"')
+  while (ACE_OS::strlen (buf) == 0  ||  buf[ACE_OS::strlen (buf) - 1] != '"')
     {
       client_handler >> buf;
       ACE_DEBUG ((LM_DEBUG, "%s ", buf));
