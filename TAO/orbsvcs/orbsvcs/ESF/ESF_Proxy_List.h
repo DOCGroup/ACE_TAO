@@ -16,7 +16,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Set_Ex.h"
+#include "ace/Unbounded_Set.h"
 #include "ace/Containers.h"
 
 /// A concrete proxy collection.
@@ -29,20 +29,20 @@ class TAO_ESF_Proxy_List
 {
 public:
   /// A typedef for the underlying implementaiton class
-  typedef ACE_Unbounded_Set_Ex<PROXY*> Implementation;
+  typedef ACE_Unbounded_Set<PROXY*> Implementation;
 
   /// A typedef for the underlying iterator
-  typedef ACE_Unbounded_Set_Ex_Iterator<PROXY*> Iterator;
+  typedef ACE_Unbounded_Set_Iterator<PROXY*> Iterator;
 
   /// Constructor
   TAO_ESF_Proxy_List (void);
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  ACE_Unbounded_Set_Ex_Iterator<PROXY*> begin (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> begin (void);
 
   /// Return one past the last element in the collection
-  ACE_Unbounded_Set_Ex_Iterator<PROXY*> end (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> end (void);
 
   /// Return the number of elements in the collection
   size_t size (void) const;
@@ -65,7 +65,7 @@ public:
 
 private:
   /// The underlying implementation object
-  ACE_Unbounded_Set_Ex<PROXY*> impl_;
+  ACE_Unbounded_Set<PROXY*> impl_;
 };
 
 #if defined (__ACE_INLINE__)
