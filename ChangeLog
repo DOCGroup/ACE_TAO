@@ -1,3 +1,8 @@
+Sat Nov 27 14:51:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+	  Changed use of 'mkdir -p' to '$(MKDIR)' command for more compatibility.
+
 Fri Nov 26 19:38:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
