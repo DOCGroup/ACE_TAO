@@ -35,6 +35,8 @@ TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
 
 //****************************************************************************
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 ACE_INLINE
 TAO_GIOP_DII_Deferred_Invocation::
 TAO_GIOP_DII_Deferred_Invocation (TAO_Stub *stub,
@@ -53,3 +55,6 @@ TAO_GIOP_DII_Deferred_Invocation (TAO_Stub *stub,
   ACE_NEW (rd_,
            TAO_DII_Deferred_Reply_Dispatcher (req));
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
