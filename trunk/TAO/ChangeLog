@@ -47,54 +47,54 @@ Wed Apr 16 13:44:47 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  TAO_RT_ORBInitializer::pre_init(), specially given the fact that
 	  the scheduling scope of a thread cannot be changed after it has
 	  been created, and without the scheduling scope being set
-	  appropriately, real-time threading behavior is not possible.  
+	  appropriately, real-time threading behavior is not possible.
 
 	  To achieve the similar behavior as before on platforms like
 	  Linux that only support the PTHREAD_SCOPE_SYSTEM scheduling
 	  scope, please call the
 	  TAO_RT_ORB::modify_thread_scheduling_policy() static method.
 
-	* tao\RTCORBA\Thread_Pool.cpp (create_dynamic_threads): 
+	* tao\RTCORBA\Thread_Pool.cpp (create_dynamic_threads):
 
 	  Changed code to use the new canonical thread_creation_flags()
 	  routine.
 
-	* tao\RTCORBA\Thread_Pool.cpp: 
-	* tao\Exception.cpp: 
+	* tao\RTCORBA\Thread_Pool.cpp:
+	* tao\Exception.cpp:
 	* tao\corbafwd.h:
-	
+
 	  Added TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE so that failures
 	  in thread creation for RTCORBA thread pools can be easily
 	  identified.
 
 Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\RTCORBA\Destroy_Thread_Pool\Destroy_Thread_Pool.cpp: 
-	* tests\RTCORBA\Explicit_Binding\client.cpp: 
-	* tests\RTCORBA\Explicit_Binding\server.cpp: 
-	* tests\RTCORBA\ORB_init\ORB_init.cpp: 
-	* tests\RTCORBA\Persistent_IOR\client.cpp: 
-	* tests\RTCORBA\Persistent_IOR\server.cpp: 
-	* tests\RTCORBA\Private_Connection\client.cpp: 
-	* tests\RTCORBA\Private_Connection\server.cpp: 
-	* tests\RTCORBA\RTMutex\server.cpp: 
-	* tests\RTCORBA\Server_Declared\client.cpp: 
-	* tests\RTCORBA\Server_Declared\server.cpp: 
+	* tests\RTCORBA\Destroy_Thread_Pool\Destroy_Thread_Pool.cpp:
+	* tests\RTCORBA\Explicit_Binding\client.cpp:
+	* tests\RTCORBA\Explicit_Binding\server.cpp:
+	* tests\RTCORBA\ORB_init\ORB_init.cpp:
+	* tests\RTCORBA\Persistent_IOR\client.cpp:
+	* tests\RTCORBA\Persistent_IOR\server.cpp:
+	* tests\RTCORBA\Private_Connection\client.cpp:
+	* tests\RTCORBA\Private_Connection\server.cpp:
+	* tests\RTCORBA\RTMutex\server.cpp:
+	* tests\RTCORBA\Server_Declared\client.cpp:
+	* tests\RTCORBA\Server_Declared\server.cpp:
 	* tests\RTCORBA\Server_Protocol\client.cpp:
 	* tests\RTCORBA\Server_Protocol\server.cpp:
-	* tests\RTCORBA\Thread_Pool\client.cpp: 
+	* tests\RTCORBA\Thread_Pool\client.cpp:
 
  	  Check for multiple priorities is not needed for this test since
 	  multiple priorities are not used in this test.
 
-	* tests\RTCORBA\Banded_Connections\client.cpp: 
-	* tests\RTCORBA\Client_Protocol\client.cpp: 
-	* tests\RTCORBA\Collocation\Collocation.cpp: 
-	* tests\RTCORBA\Linear_Priority\client.cpp: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\client.cpp: 
-	* tests\RTCORBA\Policy_Combinations\client.cpp: 
-	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp: 
-	* tests\RTCORBA\Thread_Pool\client.cpp: 
+	* tests\RTCORBA\Banded_Connections\client.cpp:
+	* tests\RTCORBA\Client_Protocol\client.cpp:
+	* tests\RTCORBA\Collocation\Collocation.cpp:
+	* tests\RTCORBA\Linear_Priority\client.cpp:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\client.cpp:
+	* tests\RTCORBA\Policy_Combinations\client.cpp:
+	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp:
+	* tests\RTCORBA\Thread_Pool\client.cpp:
 	* performance-tests\RTCorba\Thread_Pool\client.cpp:
 
 	  Make all real-time invocations and priority changes from a
@@ -102,7 +102,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  the test to work on platforms like Linux with root as the user
 	  (and the appropriate svc.conf settings).
 
-	* tests\RTCORBA\Client_Propagated\server.cpp: 
+	* tests\RTCORBA\Client_Propagated\server.cpp:
 	* tests\RTCORBA\Linear_Priority/server.cpp:
 	* tests\RTCORBA\MT_Client_Protocol_Priority/server.cpp:
 	* tests\RTCORBA\Policy_Combinations/server.cpp:
@@ -115,108 +115,108 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  like Linux with root as the user (and the appropriate svc.conf
 	  settings).
 
-	* tests\RTCORBA\Banded_Connections\svc.conf: 
-	* tests\RTCORBA\Client_Propagated\svc.conf: 
-	* tests\RTCORBA\Client_Protocol\svc.conf: 
-	* tests\RTCORBA\Explicit_Binding\svc.conf: 
-	* tests\RTCORBA\Linear_Priority\svc.conf: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\server.conf: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\client.conf: 
-	* tests\RTCORBA\Policy_Combinations\svc.conf: 
-	* tests\RTCORBA\Profile_And_Endpoint_Selection\svc.conf: 
-	* tests\RTCORBA\Server_Declared\svc.conf: 
+	* tests\RTCORBA\Banded_Connections\svc.conf:
+	* tests\RTCORBA\Client_Propagated\svc.conf:
+	* tests\RTCORBA\Client_Protocol\svc.conf:
+	* tests\RTCORBA\Explicit_Binding\svc.conf:
+	* tests\RTCORBA\Linear_Priority\svc.conf:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\server.conf:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\client.conf:
+	* tests\RTCORBA\Policy_Combinations\svc.conf:
+	* tests\RTCORBA\Profile_And_Endpoint_Selection\svc.conf:
+	* tests\RTCORBA\Server_Declared\svc.conf:
 	* tests\RTCORBA\Server_Protocol\server_iiop.conf:
 	* tests\RTCORBA\Server_Protocol\server_reverse.conf:
 	* tests\RTCORBA\Server_Protocol\server_reverse_nt.conf:
 	* tests\RTCORBA\Server_Protocol\server_shmiop.conf:
 	* tests\RTCORBA\Server_Protocol\server_uiop.conf:
-	* tests\RTCORBA\Thread_Pool\svc.conf: 
-	
+	* tests\RTCORBA\Thread_Pool\svc.conf:
+
 	  Updated config file to remove SCHED_FIFO as the scheduling
 	  policy for normal, non-RT testing.
 
-	* tests\RTCORBA\Banded_Connections\svc.conf.xml: 
-	* tests\RTCORBA\Client_Propagated\svc.conf.xml: 
-	* tests\RTCORBA\Collocation\svc.conf.xml: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\svc.conf.xml: 
-	* tests\RTCORBA\Server_Declared\svc.conf.xml: 
-	* tests\RTCORBA\Thread_Pool\svc.conf.xml: 
+	* tests\RTCORBA\Banded_Connections\svc.conf.xml:
+	* tests\RTCORBA\Client_Propagated\svc.conf.xml:
+	* tests\RTCORBA\Collocation\svc.conf.xml:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\svc.conf.xml:
+	* tests\RTCORBA\Server_Declared\svc.conf.xml:
+	* tests\RTCORBA\Thread_Pool\svc.conf.xml:
 
 	  Added missing file.
-	
+
 	* tests\RTCORBA\Banded_Connections\server.conf:
 	* tests\RTCORBA\Banded_Connections\server.conf.xml:
-	* tests\RTCORBA\Destroy_Thread_Pool\svc.conf: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\server.conf: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\client.conf: 
-	* tests\RTCORBA\ORB_init\svc.conf: 
-	* tests\RTCORBA\Persistent_IOR\svc.conf: 
-	* tests\RTCORBA\Policies\svc.conf: 
-	* tests\RTCORBA\Private_Connection\svc.conf: 
-	* tests\RTCORBA\RTMutex\svc.conf: 
-	* tests\RTCORBA\Server_Declared\server.conf: 
-	* tests\RTCORBA\Server_Declared\server.conf.xml: 
+	* tests\RTCORBA\Destroy_Thread_Pool\svc.conf:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\server.conf:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\client.conf:
+	* tests\RTCORBA\ORB_init\svc.conf:
+	* tests\RTCORBA\Persistent_IOR\svc.conf:
+	* tests\RTCORBA\Policies\svc.conf:
+	* tests\RTCORBA\Private_Connection\svc.conf:
+	* tests\RTCORBA\RTMutex\svc.conf:
+	* tests\RTCORBA\Server_Declared\server.conf:
+	* tests\RTCORBA\Server_Declared\server.conf.xml:
 	* tests\RTCORBA\Server_Protocol\svc.conf:
-	* performance-tests\RTCorba\Thread_Pool\fudge_priorities.cpp: 
-	
-	  These files are no longer used.	
+	* performance-tests\RTCorba\Thread_Pool\fudge_priorities.cpp:
 
-	* tests\RTCORBA\Banded_Connections\server.cpp: 
-	* tests\RTCORBA\Client_Propagated\client.cpp: 
-	* tests\RTCORBA\Client_Propagated\server.cpp: 
-	* tests\RTCORBA\Client_Protocol\client.cpp: 
-	* tests\RTCORBA\Client_Protocol\server.cpp: 
-	* tests\RTCORBA\Destroy_Thread_Pool\Destroy_Thread_Pool.cpp: 
-	* tests\RTCORBA\Diffserv\server.cpp: 
-	* tests\RTCORBA\Diffserv\client.cpp: 
-	* tests\RTCORBA\Explicit_Binding\client.cpp: 
-	* tests\RTCORBA\Explicit_Binding\server.cpp: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\client.cpp: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\server.cpp: 
-	* tests\RTCORBA\Private_Connection\client.cpp: 
-	* tests\RTCORBA\Private_Connection\server.cpp: 
-	* tests\RTCORBA\RTMutex\server.cpp: 
-	* tests\RTCORBA\Server_Declared\client.cpp: 
-	* tests\RTCORBA\Server_Declared\server.cpp: 
+	  These files are no longer used.
+
+	* tests\RTCORBA\Banded_Connections\server.cpp:
+	* tests\RTCORBA\Client_Propagated\client.cpp:
+	* tests\RTCORBA\Client_Propagated\server.cpp:
+	* tests\RTCORBA\Client_Protocol\client.cpp:
+	* tests\RTCORBA\Client_Protocol\server.cpp:
+	* tests\RTCORBA\Destroy_Thread_Pool\Destroy_Thread_Pool.cpp:
+	* tests\RTCORBA\Diffserv\server.cpp:
+	* tests\RTCORBA\Diffserv\client.cpp:
+	* tests\RTCORBA\Explicit_Binding\client.cpp:
+	* tests\RTCORBA\Explicit_Binding\server.cpp:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\client.cpp:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\server.cpp:
+	* tests\RTCORBA\Private_Connection\client.cpp:
+	* tests\RTCORBA\Private_Connection\server.cpp:
+	* tests\RTCORBA\RTMutex\server.cpp:
+	* tests\RTCORBA\Server_Declared\client.cpp:
+	* tests\RTCORBA\Server_Declared\server.cpp:
 	* tests\RTCORBA\Server_Protocol\client.cpp:
 	* tests\RTCORBA\Server_Protocol\server.cpp:
-	* tests\RTCORBA\Thread_Pool\client.cpp: 
-	* tests\RTCORBA\Thread_Pool\server.cpp: 
+	* tests\RTCORBA\Thread_Pool\client.cpp:
+	* tests\RTCORBA\Thread_Pool\server.cpp:
 
 	  Errors should be indicated with a return value -1 and not 1.
 
-	* tests\RTCORBA\Banded_Connections\run_test.pl: 
-	* tests\RTCORBA\Client_Propagated\run_test.pl: 
-	* tests\RTCORBA\Collocation\run_test.pl: 
+	* tests\RTCORBA\Banded_Connections\run_test.pl:
+	* tests\RTCORBA\Client_Propagated\run_test.pl:
+	* tests\RTCORBA\Collocation\run_test.pl:
 	* tests\RTCORBA\Linear_Priority\run_test.pl:
 	* tests\RTCORBA\MT_Client_Protocol_Priority\run_test.pl:
-	* tests\RTCORBA\Policy_Combinations\run_test.pl: 
-	* tests\RTCORBA\Profile_And_Endpoint_Selection\run_test.pl: 
-	* tests\RTCORBA\Server_Declared\run_test.pl: 
-	* tests\RTCORBA\Thread_Pool\run_test.pl: 
-	
+	* tests\RTCORBA\Policy_Combinations\run_test.pl:
+	* tests\RTCORBA\Profile_And_Endpoint_Selection\run_test.pl:
+	* tests\RTCORBA\Server_Declared\run_test.pl:
+	* tests\RTCORBA\Thread_Pool\run_test.pl:
+
 	  Removed incorrect error message.
-	
-	* tests\RTCORBA\MT_Client_Protocol_Priority\client.cpp: 
-	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp: 
-	* examples\RTCORBA\Activity\Activity.cpp: 
+
+	* tests\RTCORBA\MT_Client_Protocol_Priority\client.cpp:
+	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp:
+	* examples\RTCORBA\Activity\Activity.cpp:
 	* orbsvcs\orbsvcs\Notify\ThreadPool_Task.cpp:
 
 	  Use thread_creation_flags() to create invocation threads.
 
-	* tests\RTCORBA\Policy_Combinations\server.cpp: 
+	* tests\RTCORBA\Policy_Combinations\server.cpp:
 
 	  Fixed the use of calling sched_policy() to calling
 	  ace_sched_policy().
 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\svc.conf: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\run_test.pl: 
+	* tests\RTCORBA\MT_Client_Protocol_Priority\svc.conf:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\run_test.pl:
 
 	  No need for separate client.conf and server.conf files.  Options
 	  can be combined into one svc.conf file.
 
-	* tests\RTCORBA\Linear_Priority\client.cpp: 
-	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp: 
+	* tests\RTCORBA\Linear_Priority\client.cpp:
+	* tests\RTCORBA\Profile_And_Endpoint_Selection\client.cpp:
 
 	  Gave the Worker_Threads a stack based instance of the
 	  Thread_Manager rather than using the singleton instance.
@@ -234,13 +234,13 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - sched_policy_name(): Added a helper routine to help convert
 	  scheduling policy constants into strings.
 
-	* tests\RTCORBA\Server_Declared\run_test.pl: 
-	* tests\RTCORBA\MT_Client_Protocol_Priority\run_test.pl: 
+	* tests\RTCORBA\Server_Declared\run_test.pl:
+	* tests\RTCORBA\MT_Client_Protocol_Priority\run_test.pl:
 
 	  Fixed the priority values for Solaris since they were not in the
 	  SCHED_FIFO range for Solaris 5.7.
-	
-	* performance-tests\RTCorba\Thread_Pool\client.cpp: 
+
+	* performance-tests\RTCorba\Thread_Pool\client.cpp:
 
 	  - Removed the <continuous_workers_are_rt> options since all
 	  threads have to be of the same scope to get the mapping correct.
@@ -248,12 +248,12 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - No need to call fudge_priorities() since the main thread no
 	  longer makes real-time invocations.
 
-	* examples\RTCORBA\Activity\Activity.cpp: 
+	* examples\RTCORBA\Activity\Activity.cpp:
 
 	  - No need to store <scope_policy> since it is available from ORB
 	  params.
 
-	  - init_sched() is not needed and was removed.		
+	  - init_sched() is not needed and was removed.
 
 	  - Simplified call to activate().
 
@@ -265,7 +265,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Removed <scope_policy> and <sched_policy> since these are
 	  available from ORB params.
-	
+
 	* $ACE_ROOT/bin/tao_orb_tests.lst:
 
 	  - All RTCORBA tests should now run on Linux.  If there are
@@ -278,7 +278,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\Object_Adapter (Non_Servant_Upcall): 
+	* tao\PortableServer\Object_Adapter (Non_Servant_Upcall):
 
 	  Nested non-servant upcalls were not being handling correctly.
 	  Added <non_servant_upcall_nesting_level_> that counts the current
@@ -288,7 +288,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  Thanks to Weston Markham <wmarkham@tissueinformatics.com> for
 	  pointing this out.  This fixes bug #1432.
 
-	* tests\POA\Nested_Non_Servant_Upcalls: 
+	* tests\POA\Nested_Non_Servant_Upcalls:
 
 	  New test to ensure that nested non-servant upcalls are handled
 	  correctly.
@@ -315,7 +315,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\POA.h (server_protocol): 
+	* tao\PortableServer\POA.h (server_protocol):
 
 	  Made this method virtual so that the correct derived real-time
 	  method gets invoked.  Thanks to Craig Rodrigues
