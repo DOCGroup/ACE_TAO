@@ -1,3 +1,17 @@
+Wed Feb 23 01:03:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Fixed_Array_SArgument_T.h:
+	* tao/PortableServer/Fixed_Array_SArgument_T.inl:
+	* tao/PortableServer/Var_Array_SArgument_T.cpp:
+	* tao/PortableServer/Var_Array_SArgument_T.h:
+	* tao/PortableServer/Var_Array_SArgument_T.inl:
+	* tao/PortableServer/Var_Size_SArgument_T.cpp:
+	* tao/PortableServer/Var_Size_SArgument_T.h:
+	* tao/PortableServer/Var_Size_SArgument_T.inl:
+
+	  Fixed memory management / parameter passing issues.  Addresses
+	  seg faults exhibited by TAO's Param_Test regression test.
+
 Wed Feb 23 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Special_Basic_SArguments.h:

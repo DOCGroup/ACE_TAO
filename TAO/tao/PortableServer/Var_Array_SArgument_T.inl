@@ -17,7 +17,8 @@ TAO::In_Var_Array_SArgument_T<S,
                               S_slice,
                               S_forany>::arg (void) const
 {
-  return this->x_.in ();
+  S_forany tmp (this->x_);
+  return tmp.in ();
 }
 
 // ==========================================================================
@@ -35,7 +36,8 @@ TAO::Inout_Var_Array_SArgument_T<S,
                                  S_slice,
                                  S_forany>::arg (void)
 {
-  return this->x_.inout ();
+  S_forany tmp (this->x_);
+  return tmp.inout ();
 }
 
 // ==========================================================================
