@@ -1,3 +1,10 @@
+Wed Oct 20 08:45:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+	  The ACE_THROW_SPEC was missing on the method implementation of
+	  raise_xx methods of the execption holder. Thanks to Thomas
+	  Groth <groth.th@stn-atlas.de> for pointing out this fix.
+
 Wed Oct 20 00:28:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (start_client_header): 
