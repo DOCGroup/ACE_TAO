@@ -19,7 +19,7 @@ project(TAO_ObjRefTemplate): valuetype, core {
     ObjRefTemplate
   }
 
-  Resource_Files
+  Resource_Files {
     ObjRefTemplate
   }
 }
