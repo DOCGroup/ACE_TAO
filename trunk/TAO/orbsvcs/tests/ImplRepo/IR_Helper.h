@@ -21,7 +21,7 @@
 #define IR_HELPER_H
 
 #include "tao/TAO.h"
-#include "../../ImplRepo_Service/ImplRepoC.h"
+#include "orbsvcs/ImplRepoC.h"
 
 class POA_Ping_Object;
 
