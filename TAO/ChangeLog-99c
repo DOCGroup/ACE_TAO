@@ -1,10 +1,16 @@
+Sat Jan 23 11:59:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connect.cpp (send_error):
+	  (handle_input): Must use ACE_TRY_CHECK within the try block, not
+	  ACE_CHECK.  Thanks to David for reporting this.
+
 Fri Jan 22 18:45:48 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: 
+	* docs/releasenotes/index.html:
 	Added the information about the generation of skeletons for
 	implementation by the IDL Compiler
 
-	* docs/compiler.html: 
+	* docs/compiler.html:
 	Added the IDL compiler options for generating skeletons for implementation
 
 Fri Jan 22 13:08:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
