@@ -507,7 +507,7 @@ DRV_copy_input (FILE *fin,
                 char *fn,
                 const char *orig_filename)
 {
-  FILE  *f = ACE_OS::fopen (fn, "w");
+  FILE *f = ACE_OS::fopen (fn, "w");
 
   if (f == 0)
     {

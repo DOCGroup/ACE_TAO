@@ -1,3 +1,30 @@
+Wed Aug 13 10:34:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_exception.cpp (in_recursion):
+        * TAO_IDL/ast/ast_structure.cpp (in_recursion):
+        * TAO_IDL/ast/ast_union.cpp (in_recursion):
+
+          Fixed a possible bug when the above types have a member that is
+          a typedef.
+
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_structure_fwd/structure_fwd_ch.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Cosmetic changes to source code.
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Replaced calls to a forward declaration redefinition helper
+          function for structs and unions that had somehow gone missing.
+          These helper functions and calls to them were added as part of
+          support for forward declared structs and unions. Their absence
+          caused an assertion failure when computing the size type of a
+          recursive and/or nested struct as part of generating its _var
+          class typedef. Thanks to Jerome Waibel <schrom@schlund.de> for
+          reporting the problem.
+
 Wed Aug 13 10:36:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Factory_Map.h: 
