@@ -528,29 +528,32 @@ Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
   weekly_intervals_.length (100);
 
   // convert the weekmask into a sequence of time intervals.
-  for (CORBA::ULong i = 0; i < masks.length (); ++i)
-  {
-    for (CORBA::ULong j = 0; j < masks[i].intervals.length (); ++j)
+  for (CORBA::ULong k = 0; k < masks.length (); ++k)
     {
-      for (int d = 0; d < 7; ++d)
-       {  if ( (1 << d) & masks[i].days)
-          {
-            temp_interval.start = CORBA::ULongLong ((d * 3600* 24) +
-                      (masks[i].intervals[j].start.hour * 3600) +
-                      (masks[i].intervals[j].start.minute * 60)) * 10000000;                      ;
+      for (CORBA::ULong j = 0; j < masks[k].intervals.length (); ++j)
+        {
+          for (int d = 0; d < 7; ++d)
+            {
+              if ( (1 << d) & masks[k].days)
+                {
+                  temp_interval.start =
+                    CORBA::ULongLong (
+                      (d * 3600* 24) +
+                      (masks[k].intervals[j].start.hour * 3600) +
+                      (masks[k].intervals[j].start.minute * 60)) * 10000000;
 
-            temp_interval.stop = CORBA::ULongLong ((d * 3600* 24) +
-                      (masks[i].intervals[j].stop.hour * 3600) +
-                      (masks[i].intervals[j].stop.minute * 60)) * 10000000;
+                  temp_interval.stop =
+                    CORBA::ULongLong (
+                      (d * 3600* 24) +
+                      (masks[k].intervals[j].stop.hour * 3600) +
+                      (masks[k].intervals[j].stop.minute * 60)) * 10000000;
 
-            weekly_intervals_[count] = temp_interval;
-            ++count;
-
-         }
-       }
-
+                  weekly_intervals_[count] = temp_interval;
+                  ++count;
+                }
+            }
+        }
     }
-  }
   weekly_intervals_.length (count);
 
   //TODO: SORT AND CLEAN
