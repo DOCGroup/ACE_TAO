@@ -1,3 +1,9 @@
+Sat Dec 13 08:36:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Bug_1559/Makefile:
+
+	  Updated Makefile dependencies.
+
 Sat Dec 13 08:29:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp:
