@@ -43,28 +43,6 @@ CORBA::UserException::_is_a (char const * interface_id) const
     || this->Exception::_is_a (interface_id);
 }
 
-CORBA::UserException*
-CORBA::UserException::_downcast (CORBA::Exception* exception)
-{
-  if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
-    {
-      return dynamic_cast<CORBA::UserException *> (exception);
-    }
-
-  return 0;
-}
-
-const CORBA::UserException*
-CORBA::UserException::_downcast (CORBA::Exception const * exception)
-{
-  if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
-    {
-      return dynamic_cast<const CORBA::UserException *> (exception);
-    }
-
-  return 0;
-}
-
 ACE_CString
 CORBA::UserException::_info (void) const
 {
