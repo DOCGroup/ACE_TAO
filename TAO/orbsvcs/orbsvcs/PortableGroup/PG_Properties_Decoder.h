@@ -63,6 +63,6 @@ namespace TAO_PG
 
 ////////////////////////////////////
 // include templated helper function
-// DISABLE THIS #include "PG_Properties_Decoder_Find.h"
+#include "PG_Properties_Decoder_Find.h"
 
 #endif // TAO_PG_PROPERTIES_DECODER_H
