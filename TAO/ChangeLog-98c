@@ -1,22 +1,29 @@
+Tue Dec 15 14:29:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/EC_Throughput.ds[wp]:
+	* orbsvcs/tests/EC_Throughput/EC_Supplier.dsp:
+	* orbsvcs/tests/EC_Throughput/EC_Comsumer.dsp: Added/Updated
+	  projects/workspace.
+
 Tue Dec 15 10:40:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/Makefile: 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp: 
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
 	  Base class for the test drivers.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
 	  Moved the non-collocated test drivers to separate files.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
 	  This is a collocated version of the Event Channel Throughput
 	  test.
 Mon Dec 14 20:38:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
