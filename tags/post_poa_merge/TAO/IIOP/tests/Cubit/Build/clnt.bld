@@ -1,0 +1,8 @@
+#!build
+default:
+	program
+	:debuglevel=multi
+../cubit.cpp
+	C++
+../clnt.cpp
+	C++

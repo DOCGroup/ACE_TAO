@@ -1,0 +1,25 @@
+#!/bin/csh -f
+# All ATM tests: 64k socket Queue Size
+#
+# shorts
+run_test 67108864 128 mambo-atm.wustl.edu ./results/REMOTE/$1/sun-iiop.atm.64 s 
+sleep 5
+# longs
+run_test 67108864 128 mambo-atm.wustl.edu ./results/REMOTE/$1/sun-iiop.atm.64 l 
+sleep 5
+# octets
+run_test 67108864 128 mambo-atm.wustl.edu ./results/REMOTE/$1/sun-iiop.atm.64 o
+sleep 5
+# doubles
+run_test 67108864 128 mambo-atm.wustl.edu ./results/REMOTE/$1/sun-iiop.atm.64 d 
+sleep 5
+# chars
+#run_test 67108864 128 mambo-atm.wustl.edu ./results/REMOTE/$1/sun-iiop.atm.64 c 
+#sleep 5
+# structures
+run_test 67108864 128 mambo-atm.wustl.edu ./results/REMOTE/$1/sun-iiop.atm.64 S 
+sleep 5
+# Composite Structs
+#run_test 67108864 128 mambo-atm.wustl.edu ./results/REMOTE/$1/sun-iiop.atm.64 C 
+#sleep 5
+#
