@@ -396,12 +396,6 @@ public:
   char *end (void) const;
   // Return a pointer to 1 past the end of the data in a message.
 
-  // = Message length is wr_ptr() - rd_ptr ().
-  size_t length (void) const;
-  // Get the length of the message 
-  void length (size_t n);
-  // Set the length of the message 
-
   // = Message size is the total amount of space alloted.
   size_t size (void) const;
   // Get the total amount of space in the message.
