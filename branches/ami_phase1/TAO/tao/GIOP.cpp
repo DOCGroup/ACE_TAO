@@ -103,15 +103,20 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description,
 static const char digits [] = "0123456789ABCD";
 static const char *names [] =
 {
+  "CommunicationError",
+  "EndOfFile",
+  "ShortRead",
   "Request",
   "Reply",
   "CancelRequest",
   "LocateRequest",
   "LocateReply",
   "CloseConnection",
-  "MessageError",
-  "EndOfFile"
+  "MessageError"
+  "Fragment"
 };
+
+CORBA::ULong const TAO_GIOP::tao_specific_message_types = 3;
 
 void
 TAO_GIOP::dump_msg (const char *label,
@@ -127,7 +132,8 @@ TAO_GIOP::dump_msg (const char *label,
                   digits[ptr[5]],
                   len - TAO_GIOP_HEADER_LEN,
                   (ptr[6] == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
-                  (ptr[7] <= TAO_GIOP::MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
+                  (ptr[7] <= TAO_GIOP::Fragment) ? names [ptr[7] +
+                                                         TAO_GIOP::tao_specific_message_types] : "UNKNOWN TYPE"));
 
       if (TAO_debug_level >= 4)
         ACE_HEX_DUMP ((LM_DEBUG,

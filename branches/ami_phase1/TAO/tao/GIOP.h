@@ -297,23 +297,31 @@ class TAO_Export TAO_GIOP
   ACE_CLASS_IS_NAMESPACE (TAO_GIOP);
 
 public:
+
+  static const CORBA::ULong tao_specific_message_types;
+  // Number of TAO specific message types = 3.
+
   enum Message_Type
   {
     // = DESCRIPTION
     //   All GIOP messages include a header and message type.  Not
     //   really a message type, but needed to bring that information
     //   back somehow.
-    
-    CommunicationError = -2,    // Invalid request.
-    EndOfFile = -1,             // "discovered" by either.
-    ShortRead = 0,              // "discovered" by either.
-    Request = 1,                // sent by client.
-    Reply = 2,                  // by server.
-    CancelRequest = 3,          // by client.
-    LocateRequest = 4,          // by client.
-    LocateReply = 5,            // by server.
-    CloseConnection = 6,        // by server.
-    MessageError = 7            // by both.
+
+    // = TAO specific message types.
+    CommunicationError = -3,    // Invalid request.
+    EndOfFile = -2,             // "discovered" by either.
+    ShortRead = -1,             // "discovered" by either.
+
+    // = GIOP message types.
+    Request = 0,                // sent by client.
+    Reply = 1,                  // by server.
+    CancelRequest = 2,          // by client.
+    LocateRequest = 3,          // by client.
+    LocateReply = 4,            // by server.
+    CloseConnection = 5,        // by server.
+    MessageError = 6,           // by both.
+    Fragment = 7                // by both.
   };
 
   static void close_connection (TAO_Transport *transport,
