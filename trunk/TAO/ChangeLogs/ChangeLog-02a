@@ -1,3 +1,20 @@
+Fri Oct 13 20:03:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Protocol/Client_Protocol.dsw
+	* tests/RTCORBA/Client_Protocol/Makefile
+	* tests/RTCORBA/Client_Protocol/Makefile.bor
+	* tests/RTCORBA/Client_Protocol/README
+	* tests/RTCORBA/Client_Protocol/client.bor
+	* tests/RTCORBA/Client_Protocol/client.cpp
+	* tests/RTCORBA/Client_Protocol/client.dsp
+	* tests/RTCORBA/Client_Protocol/run_test.pl
+	* tests/RTCORBA/Client_Protocol/server.bor
+	* tests/RTCORBA/Client_Protocol/server.cpp
+	* tests/RTCORBA/Client_Protocol/server.dsp
+	* tests/RTCORBA/Client_Protocol/test.idl:
+
+	  Added a test for RTCORBA::ClientProtocolPolicy policy.
+
 Fri Oct 13 18:17:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
@@ -25,8 +42,8 @@ Fri Oct 13 13:21:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/tao_idl.cpp:
 
 	  Added some missing commas in the functions that output
-	  the FE and BE version. Thanks to Craig Rodrigues 
-	  <rodrigc@mediaone.net> for pointing this out and 
+	  the FE and BE version. Thanks to Craig Rodrigues
+	  <rodrigc@mediaone.net> for pointing this out and
 	  supplying a patch.
 
 Fri Oct 13 11:27:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -37,7 +54,7 @@ Fri Oct 13 11:27:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added a check for an imported node along with all the
 	  other checks that are there to decide whether to
 	  generate the ACE_NESTED_CLASS macro or not for the
-	  members of the request info subclasses constructor signature 
+	  members of the request info subclasses constructor signature
 	  and private member declaration. If the member is imported,
 	  the full scoped name should be generated on all platforms.
 	  Thanks to Base V Paul <basev@wiproge.med.ge.com> for
@@ -131,15 +148,15 @@ Fri Oct 13 10:06:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri 13 10:07:16 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* examples/Quoter/Quoter_i.cpp: Removed the code to move the
-	  Quoter object. This code was relying on the proprietary 
+	  Quoter object. This code was relying on the proprietary
 	  TAO_POA::forward_object () method. To implement the move ()
-	  operation in a standard way, the whole example would have 
+	  operation in a standard way, the whole example would have
 	  needed to be rewritten using a PortableServer::ServantLocator.
-	 
+
 	* examples/Quoter/client.cpp: Removed the code for moving
 	  the Quoter object.
 
-	* examples/Quoter/README: Documented the step described above. 
+	* examples/Quoter/README: Documented the step described above.
 
 Fri Oct 13 06:28:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
