@@ -287,9 +287,9 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::IdAssignmentPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::IdAssignmentPolicyValue>::create (
-              "IdAssignmentPolicyFactory",
+              "IdAssignmentPolicyFactoryImpl",
               ACE_TEXT("dynamic IdAssignmentPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactoryImpl()"),
               PortableServer::SYSTEM_ID);
   policies.merge_policy (id_assignment_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

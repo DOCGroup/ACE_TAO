@@ -67,9 +67,9 @@ TAO_PortableServer_PolicyFactory::create_policy (
             TAO::Portable_Server::IdAssignmentPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::IdAssignmentPolicyValue>::create (
-              "IdAssignmentPolicyFactory",
+              "IdAssignmentPolicyFactoryImpl",
               ACE_TEXT("dynamic IdAssignmentPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactoryImpl()"),
               value ACE_ENV_ARG_PARAMETER);
 
 #if (TAO_HAS_MINIMUM_POA == 0)

@@ -124,9 +124,9 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
           TAO::Portable_Server::IdAssignmentPolicyFactory,
           ::PortableServer::IdAssignmentPolicy_ptr,
           ::PortableServer::IdAssignmentPolicyValue>::create (
-            "IdAssignmentPolicyFactory",
+            "IdAssignmentPolicyFactoryImpl",
             ACE_TEXT("dynamic IdAssignmentPolicyFactory Service_Object *")
-            ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactory()"),
+            ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactoryImpl()"),
             value);
 }
 

@@ -1,23 +1,23 @@
 // $Id$
 
-#include "IdAssignmentPolicyFactory.h"
+#include "IdAssignmentPolicyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "IdAssignmentPolicy.h"
 
 ACE_RCSID (PortableServer,
-           IdAssignmentPolicyFactory,
+           IdAssignmentPolicyFactoryImpl,
            "$Id$")
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    IdAssignmentPolicyFactory::~IdAssignmentPolicyFactory (void)
+    IdAssignmentPolicyFactoryImpl::~IdAssignmentPolicyFactoryImpl (void)
     {
     }
 
     ::PortableServer::IdAssignmentPolicy_ptr
-    IdAssignmentPolicyFactory::create (
+    IdAssignmentPolicyFactoryImpl::create (
       ::PortableServer::IdAssignmentPolicyValue value)
     {
       IdAssignmentPolicy* policy = 0;
@@ -32,7 +32,7 @@ namespace TAO
     }
 
     ::PortableServer::IdAssignmentPolicy_ptr
-    IdAssignmentPolicyFactory::create (
+    IdAssignmentPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::PolicyError))
@@ -49,22 +49,22 @@ namespace TAO
       return policy;
     }
 
-ACE_STATIC_SVC_DEFINE (IdAssignmentPolicyFactory,
-                       ACE_TEXT ("IdAssignmentPolicyFactory"),
+ACE_STATIC_SVC_DEFINE (IdAssignmentPolicyFactoryImpl,
+                       ACE_TEXT ("IdAssignmentPolicyFactoryImpl"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (IdAssignmentPolicyFactory),
+                       &ACE_SVC_NAME (IdAssignmentPolicyFactoryImpl),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-ACE_FACTORY_DEFINE (TAO_PortableServer, IdAssignmentPolicyFactory)
+ACE_FACTORY_DEFINE (TAO_PortableServer, IdAssignmentPolicyFactoryImpl)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class ACE_Dynamic_Service<IdAssignmentPolicyFactory>;
+  template class ACE_Dynamic_Service<IdAssignmentPolicyFactoryImpl>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<IdAssignmentPolicyFactory>
+    #pragma instantiate ACE_Dynamic_Service<IdAssignmentPolicyFactoryImpl>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
