@@ -1,3 +1,12 @@
+Tue Sep 26 21:11:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
+
+	  Fixed erroneous use of CORBA::string_copy().  That method was
+	  removed from TAO since it provided no additional functionality
+	  compared to CORBA::string_dup().  The standard
+	  CORBA::string_dup() is used instead.
+
 Tue Sep 26 19:58:52 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/Makefile.bor:
