@@ -20,6 +20,32 @@ CIAO_HelloWorld_Context::~CIAO_HelloWorld_Context ()
 
 }
 
+// Operations for ::Components::SessionContext interface
+CORBA::Object_ptr
+CIAO_HelloWorld_Context::get_CCM_object (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::IllegalState))
+{
+  // @@ How do I check for IllegalState here?  When it's not in a
+  //    callback operation...
+  //    ACE_THROW_RETURN (::Components::IllegalState (), 0);
+
+  if (CORBA::is_nil (this->component_.in ()))
+    {
+      CORBA::Object_var obj =  this->container_->get_objref (this->servant_
+                                                             ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      this->component_ = HelloWorld::_narrow (obj.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (CORBA::is_nil (this->component_.in ()))
+        ACE_THROW_RETURN (CORBA::INTERNAL (), 0); // This should not happen...
+    }
+  return HelloWorld::_duplicate (this->component_.in ());
+}
+
 // Operations for HellowWorld attributes, event source, and
 // receptable defined in CCM_HelloWorld_Context.
 
@@ -88,6 +114,25 @@ CIAO_HelloWorld_Servant::CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr exe,
     container_ (c)
 {
   this->context_ = new CIAO_HelloWorld_Context (h, c, this);
+
+  ACE_TRY_NEW_ENV;
+    {
+      Components::SessionComponent_var temp =
+        Components::SessionComponent::_narrow (exe
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! CORBA::is_nil (temp.in ()))
+        {
+          temp->set_session_context (this->context_.in ());
+        }
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
 }
 
 CIAO_HelloWorld_Servant::~CIAO_HelloWorld_Servant (void)

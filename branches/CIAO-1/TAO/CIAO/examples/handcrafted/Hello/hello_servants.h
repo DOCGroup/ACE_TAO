@@ -24,11 +24,13 @@
 #include "helloS.h"
 #include "helloEC.h"
 #include "ciao/Container_Base.h"
+#include "tao/LocalObject.h"
 
 class CIAO_HelloWorld_Servant;
 
 class HELLO_SERVANT_Export CIAO_HelloWorld_Context :
-  public virtual CCM_HelloWorld_Context
+  public virtual CCM_HelloWorld_Context,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
   // Ctor.
@@ -64,7 +66,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::IllegalState));
 
-
+  // Operations for ::Components::SessionContext interface
+  virtual CORBA::Object_ptr
+  get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::IllegalState));
 protected:
   ::Components::CCMHome_var home_;
 

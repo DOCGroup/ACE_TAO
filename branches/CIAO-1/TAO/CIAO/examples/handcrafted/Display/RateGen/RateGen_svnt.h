@@ -21,6 +21,7 @@
 #include "RateGenEC.h"       // Source in the executor mapping
                                 // that component implementations use
 #include "ciao/Container_Base.h" //Source in the container interface definitions
+#include "tao/LocalObject.h"
 #include "ace/Active_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -32,7 +33,8 @@ namespace CIAO_GLUE_HUDisplay
   //////////////////////////////////////////////////////////////////
   // Component specific context implementation
   class RATEGEN_SVNT_Export RateGen_Context :
-    public virtual HUDisplay::CCM_RateGen_Context
+    public virtual HUDisplay::CCM_RateGen_Context,
+    public virtual TAO_Local_RefCounted_Object
   {
   public:
     // We will allow the the servant glue code we generate to access

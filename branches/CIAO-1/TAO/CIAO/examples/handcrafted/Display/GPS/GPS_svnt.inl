@@ -100,6 +100,26 @@ CIAO_GLUE_HUDisplay::GPS_Servant::GPS_Servant (HUDisplay::CCM_GPS_ptr exe,
     container_ (c)
 {
   this->context_ = new CIAO_GLUE_HUDisplay::GPS_Context (h, c, this);
+
+  ACE_TRY_NEW_ENV
+    {
+      Components::SessionComponent_var scom =
+        Components::SessionComponent::_narrow (exe
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! CORBA::is_nil (scom.in ()))
+        {
+          scom->set_session_context (this->context_
+                                     ACE_ENV_ARG_PARAMETER);
+        }
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
 }
 
 ACE_INLINE

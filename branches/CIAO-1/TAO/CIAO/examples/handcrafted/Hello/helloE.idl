@@ -28,7 +28,7 @@ local interface CCM_HelloWorld
 };
 
 local interface CCM_HelloWorld_Context
-  : ::Components::CCMContext
+  : ::Components::SessionContext
 {
 };
 

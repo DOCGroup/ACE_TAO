@@ -8,7 +8,9 @@
 #include "helloEC.h"
 #include "hello_executors_export.h"
 
-class HelloWorld_Impl : public virtual CCM_HelloWorld
+class HelloWorld_Impl :
+  public virtual CCM_HelloWorld,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
   /// Default ctor.
@@ -24,7 +26,9 @@ public:
     ));
 };
 
-class HelloHome_Impl : public virtual CCM_HelloHome
+class HelloHome_Impl :
+  public virtual CCM_HelloHome,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
   /// Default ctor.
