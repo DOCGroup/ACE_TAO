@@ -1,3 +1,8 @@
+Wed Apr 17 11:34:55 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/IFR_Service/ifr_service_export.h:
+	  Added the new file to define the WIN32 export directives.
+
 Wed Apr 17 11:21:52 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAOC.cpp:
