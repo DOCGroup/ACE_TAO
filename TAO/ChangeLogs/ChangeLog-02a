@@ -1,3 +1,30 @@
+Thu Jun  6 13:36:22 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp (gen_throw_spec): 
+	  The 'throw_spec_close' generation logic was a 'bit off'.  I had
+	  changed the logic before by splitting the 'if' statement into
+	  two separate parts.  The 'throw_spec_close' generation was
+	  supposed to generated if only all the 'if' conditions were met.
+	  But, previously I had left the 'throw_spec_close' generation
+	  code outside of the second if.  I moved it into the second-if
+	  and now the throw_spec close parenthesis are being generated
+	  correctly. This should clean up all the broken AMI test builds.
+	  The Throw spec generation for AMH is now listed as a separate
+	  point:
+	  --------------------------------------------------------------
+	  2.6) Generate Throw Spec the confirms to raises clause of
+	  original operation in IDL.
+	  -------------------------------------------------------------
+	
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp: 
+	  I had forgotten to check if it was an AMH Exception Holder
+	  before generating the protected CORBA::Exception member
+	  variable (2.4), thus this was generating the member variable for
+	  all ExceptionHolders.  This is now fixed.
+	
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp: 
+	  Cosmetic changes.
+
 Thu Jun 06 13:56:54 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/Object_Adapter.cpp:
