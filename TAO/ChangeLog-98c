@@ -1,64 +1,69 @@
+Mon Jul 13 14:37:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * Event_Latency.cpp: use ACE_CU64_TO_CU32 to convert const
+          64-bit u_ints to 32-bits happily with Sun C++.
+
 Mon Jul 13 13:59:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/run_test.pl: 
-	  Fixed a few (minor) perl warnings.
+        * tests/Param_Test/run_test.pl:
+          Fixed a few (minor) perl warnings.
 
 Mon Jul 13 11:49:29 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/Marshall.i: Now setting freed string pointer to zero.
+        * tao/Marshall.i: Now setting freed string pointer to zero.
 
-	* tao/deep_free.cpp: Although the struct fields were being freed,
-	the memory for the struct itself wasn't. Note: other types may
-	also have this problem. 
+        * tao/deep_free.cpp: Although the struct fields were being freed,
+        the memory for the struct itself wasn't. Note: other types may
+        also have this problem.
 
 Sun Jul 12 19:47:34 1998  Seth Widoff  <sbw1@cs.wustl.edu>
 
-	* docs/releasenotes/trader.html:
-	Finished the initial draft of the Trading Service documentation. 
+        * docs/releasenotes/trader.html:
+        Finished the initial draft of the Trading Service documentation.
 
 Sun Jul 12 13:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/NestedUpcalls/MT_Client_Test/*:
-	  Added a new test for testing multiple threads accessing
-	  global resources, which means, one ORB and one Reactor.
-	  It also tests for proper nested upcalls.
+        * tests/NestedUpcalls/MT_Client_Test/*:
+          Added a new test for testing multiple threads accessing
+          global resources, which means, one ORB and one Reactor.
+          It also tests for proper nested upcalls.
 
 Sun Jul 12 01:40:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Fixed several problems reported by John Mulhern
-	  <9107@mn3.lawson.lawson.com>, that fix portability problems to
-	  HP/aCC.
+        * Fixed several problems reported by John Mulhern
+          <9107@mn3.lawson.lawson.com>, that fix portability problems to
+          HP/aCC.
 
-	* tao/Typecode.cpp: 
-	  Declared a temporary buffer as CORBA::Octet* instead of void*,
-	  otherwise HP/aCC balks.
+        * tao/Typecode.cpp:
+          Declared a temporary buffer as CORBA::Octet* instead of void*,
+          otherwise HP/aCC balks.
 
-	* TAO_IDL/be_include/be_sequence.h: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	  fe_add_sequence() was redefined with different arguments and
-	  return value. It was not the intention and it triggered warnings
-	  on several compilers (HP/aCC, SGI/CC).
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be/be_sequence.cpp:
+          fe_add_sequence() was redefined with different arguments and
+          return value. It was not the intention and it triggered warnings
+          on several compilers (HP/aCC, SGI/CC).
 
-	* TAO_IDL/fe/y.tab.cpp: 
-	  Removed indent pragma.
-	  Declared tao_yyerror as taking a const char*, it is not used
-	  anyway.
+        * TAO_IDL/fe/y.tab.cpp:
+          Removed indent pragma.
+          Declared tao_yyerror as taking a const char*, it is not used
+          anyway.
 
-	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
-	  Tie delegation is similar to collocated upcalls, the arguments
-	  are T_ptr objects and not T_var, hence, no .in () calls are
-	  needed.
+        * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+          Tie delegation is similar to collocated upcalls, the arguments
+          are T_ptr objects and not T_var, hence, no .in () calls are
+          needed.
 
-	* TAO_IDL/fe/fe_extern.cpp: 
-	* TAO_IDL/driver/drv_preproc.cpp: 
-	  Changed old C-style cast to reinterpret_cast, that should make
-	  HP/aCC compiler happy. This is just because SunCFE uses File* as
-	  a compilation barrier for FILE*, IMHO a waste of time.
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Changed old C-style cast to reinterpret_cast, that should make
+          HP/aCC compiler happy. This is just because SunCFE uses File* as
+          a compilation barrier for FILE*, IMHO a waste of time.
 
 Sat Jul 11 10:17:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Makefile: 
-	  Added EC_Mcast to the list of tests.
+        * orbsvcs/tests/Makefile:
+          Added EC_Mcast to the list of tests.
 
 Fri Jul 10 22:25:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
