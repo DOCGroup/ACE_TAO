@@ -587,7 +587,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
   ACE_UINT16 data_length;
   rtp_packet->get_packet_data (&data_ptr, data_length);
 
-  iovec send_iov[IOV_MAX];
+  iovec send_iov[ACE_IOV_MAX];
   send_iov [0].iov_base = data_ptr;
   send_iov [0].iov_len  = data_length;
   for (int i=1;i<iovcnt; i++)

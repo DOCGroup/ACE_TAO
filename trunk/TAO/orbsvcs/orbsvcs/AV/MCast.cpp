@@ -105,7 +105,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   // For the most part this was copied from GIOP::send_request and
   // friends.
 
-  iovec iov[IOV_MAX];
+  iovec iov[ACE_IOV_MAX];
   int iovcnt = 0;
   ssize_t n = 0;
   ssize_t nbytes = 0;
@@ -126,8 +126,8 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
           // platforms do not implement writev() there we should copy
           // the data into a buffer and call send_n(). In other cases
           // there may be some limits on the size of the iovec, there
-          // we should set IOV_MAX to that limit.
-          if (iovcnt == IOV_MAX)
+          // we should set ACE_IOV_MAX to that limit.
+          if (iovcnt == ACE_IOV_MAX)
             {
               n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
                                                              iovcnt);
