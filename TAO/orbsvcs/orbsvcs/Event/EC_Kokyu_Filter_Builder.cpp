@@ -305,8 +305,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 
         //build a unique name using the cosumer_rt_info
         ACE_OS::sprintf (buf, "TIMEOUT:%umsec:%d",
-                         ACE_static_cast (u_int,
-                                          (e.header.creation_time / 10000)),
+                         static_cast<u_int> ((e.header.creation_time / 10000)),
                          h_consumer_rt_info);
         ACE_CString name = buf;
         
@@ -470,8 +469,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
 
       char buf[64];
       ACE_OS::sprintf (buf, "TIMEOUT:%umsec",
-                       ACE_static_cast (u_int,
-                                        (e.header.creation_time / 10000)));
+                       static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 
       return;

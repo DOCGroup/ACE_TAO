@@ -365,7 +365,7 @@ void TAO::PG_FactoryRegistry::register_factory (
   ACE_DEBUG(( LM_DEBUG,
     "%s: Added factory: [%d] %s@%s \n",
       this->identity_.c_str(),
-      ACE_static_cast(int,length + 1),
+      static_cast<int> (length + 1),
       role,
       static_cast<const char *> (factory_info.the_location[0].id)
     ));

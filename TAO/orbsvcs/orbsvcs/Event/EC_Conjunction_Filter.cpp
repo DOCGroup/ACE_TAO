@@ -52,7 +52,7 @@ TAO_EC_Conjunction_Filter::all_received (void) const
        i != this->bitvec_ + this->nwords_;
        ++i)
     {
-      if (*i != ACE_static_cast(Word,~0))
+      if (*i != static_cast<Word> (~0))
         return 0;
     }
   return 1;
@@ -159,7 +159,7 @@ TAO_EC_Conjunction_Filter::clear (void)
     {
       *j = 0;
     }
-  int b = ACE_static_cast (int, this->n_ % bits_per_word);
+  int b = static_cast<int> (this->n_ % bits_per_word);
   Word last = ~0 << b;
   *j = last;
 

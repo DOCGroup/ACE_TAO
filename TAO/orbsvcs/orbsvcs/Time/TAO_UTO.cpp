@@ -28,8 +28,7 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   this->attr_utc_time_.inacchi = 0;
 #else
   this->attr_utc_time_.inacchi =
-    ACE_static_cast (CORBA::UShort,
-                     (inaccuracy >> 32U) & 0xFFFF);
+    static_cast<CORBA::UShort> ((inaccuracy >> 32U) & 0xFFFF);
 
 #endif /* ACE_LACKS_U_LONGLONG_T */
 

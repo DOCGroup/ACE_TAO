@@ -1490,7 +1490,7 @@ get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
     {
       // TODO - rethink this: is it more useful to only return the *enabled* RT_Infos?
       rt_info = (*info_iter).int_id_;
-      infos[ACE_static_cast (CORBA::ULong, rt_info->handle - 1)] = *rt_info;
+      infos[static_cast<CORBA::ULong> (rt_info->handle - 1)] = *rt_info;
     }
 
   return;
@@ -1813,8 +1813,7 @@ create_i (const char *entry_point,
 
   // Connect the entry to the RT_Info.
   new_rt_info->volatile_token =
-    ACE_static_cast (CORBA::ULongLong,
-                     reinterpret_cast<ptrdiff_t> (new_sched_entry));
+    static_cast<CORBA::ULongLong> (reinterpret_cast<ptrdiff_t> (new_sched_entry));
 
   // With everything safely registered in the map and tree, just
   // update the next handle and info counter and return the new info.

@@ -751,17 +751,15 @@ ACE_Scheduler_Factory::preemption_priority (void)
       // call the type conversion operator.  So, call it explicitly.
 #if defined (HPUX) && !defined (__GNUG__)
       const RtecScheduler::Preemption_Priority_t preemption_priority =
-        ACE_static_cast (RtecScheduler::Preemption_Priority_t,
-                         tss->operator RtecScheduler_Preemption_Priority_t ());
+        static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler_Preemption_Priority_t ());
 #else
       const RtecScheduler::Preemption_Priority_t preemption_priority =
-        ACE_static_cast (RtecScheduler::Preemption_Priority_t,
-                         tss->operator RtecScheduler::Preemption_Priority_t ());
+        static_cast<RtecScheduler::Preemption_Priority_t> (tss->operator RtecScheduler::Preemption_Priority_t ());
 #endif /* HPUX && !g++ */
       return preemption_priority;
     }
   else
-    return ACE_static_cast (RtecScheduler::Preemption_Priority_t, -1);
+    return static_cast<RtecScheduler::Preemption_Priority_t> (-1);
 }
 
 void

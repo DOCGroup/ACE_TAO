@@ -359,8 +359,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
                                        TAO_Acceptor *acceptor)
 {
   TAO::HTIOP::Acceptor *htiop_acceptor =
-    ACE_dynamic_cast (TAO::HTIOP::Acceptor *,
-                      acceptor );
+    dynamic_cast<TAO::HTIOP::Acceptor *> (acceptor );
 
   // Get the array of endpoints serviced by TAO::HTIOP::Acceptor
   const ACE::HTBP::Addr *endpoint_addr =

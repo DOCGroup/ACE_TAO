@@ -50,8 +50,8 @@ public:
     ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) %s: New heap blocks: %d; bytes: %d\n"),
       name_.c_str (),
-      ACE_static_cast (int, diff.lCounts[_NORMAL_BLOCK]),
-      ACE_static_cast (int, diff.lSizes[_NORMAL_BLOCK])
+      static_cast<int> (diff.lCounts[_NORMAL_BLOCK]),
+      static_cast<int> (diff.lSizes[_NORMAL_BLOCK])
       ));
     if (this->verbose_)
     {

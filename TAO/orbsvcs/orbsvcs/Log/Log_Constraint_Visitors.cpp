@@ -31,7 +31,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
 #if defined (ACE_LACKS_LONGLONG_T)
   *value <<= ACE_U64_TO_U32 (this->rec_.id);
 #else
-  *value <<= ACE_static_cast (ACE_UINT32, (this->rec_.id));
+  *value <<= static_cast<ACE_UINT32> ((this->rec_.id));
 #endif
   if (value != 0)
     {
@@ -45,7 +45,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
 #if defined (ACE_LACKS_LONGLONG_T)
   *value2 <<= ACE_U64_TO_U32 (this->rec_.time)
 #else
-  *value2 <<= ACE_static_cast (ACE_UINT32, (this->rec_.time));
+  *value2 <<= static_cast<ACE_UINT32> ((this->rec_.time));
 #endif
   if (value2 != 0)
     {
@@ -1316,8 +1316,7 @@ TAO_Log_Constraint_Visitor::any_does_contain (
 
   *any >>= result;
 
-  TAO_ETCL_Literal_Constraint element (ACE_const_cast (CORBA::Any *,
-                                                       result));
+  TAO_ETCL_Literal_Constraint element (const_cast<CORBA::Any *> (result));
 
   return (item == element);
 }

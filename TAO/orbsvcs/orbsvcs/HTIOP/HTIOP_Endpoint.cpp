@@ -195,7 +195,7 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     const_cast<TAO_Endpoint *> (other_endpoint);
 
   TAO::HTIOP::Endpoint *endpoint =
-    ACE_dynamic_cast (TAO::HTIOP::Endpoint *, endpt);
+    dynamic_cast<TAO::HTIOP::Endpoint *> (endpt);
   if (endpoint == 0)
     return 0;
 

@@ -148,8 +148,7 @@ TAO_LB_Random::_tao_next_member (
   const CORBA::Float flen = static_cast<CORBA::Float> (len);
                                   
   const CORBA::ULong i =
-    ACE_static_cast (CORBA::ULong,
-                     flen * ACE_OS::rand () / (RAND_MAX + 1.0));
+    static_cast<CORBA::ULong> (flen * ACE_OS::rand () / (RAND_MAX + 1.0));
 
   ACE_ASSERT (i < len);
 

@@ -335,8 +335,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
     }
 
   CORBA::UShort mcast_port =
-      ACE_static_cast (CORBA::UShort,
-        ACE_OS::strtoul (ace_str.c_str () + pos, 0, 10));
+      static_cast<CORBA::UShort> (ACE_OS::strtoul (ace_str.c_str () + pos, 0, 10));
 
   //
   // Finally, set all of the fields of the profile.

@@ -460,8 +460,7 @@ TAO_Naming_Context::to_url (const char * addr,
 
   // Allocate dynamic memory
   //
-  char *str_url = CORBA::string_alloc (ACE_static_cast (CORBA::ULong,
-                                                no_char + sizeof (prefix)));
+  char *str_url = CORBA::string_alloc (static_cast<CORBA::ULong> (no_char + sizeof (prefix)));
 
   // Copy 'prefix' to the return parameter.
   char *dest = ACE_OS::strcpy (str_url , prefix);

@@ -124,8 +124,7 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
 TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
 {
   delete allocator_;
-  ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      const_cast<ACE_TCHAR *> (index_file_)));
+  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *> (index_file_)));
 }
 
 ACE_Allocator*

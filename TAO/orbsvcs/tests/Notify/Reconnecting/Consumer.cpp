@@ -13,7 +13,7 @@ ACE_RCSID (Notify_Tests, Consumer_Main, "$Id$")
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";
 
-static const size_t minus_one = ACE_static_cast (size_t, -1);
+static const size_t minus_one = static_cast<size_t> (-1);
 
 ///////////////////////////
 // StructuredPushConsumer_i
@@ -390,7 +390,7 @@ SequencePushConsumer_i::push_structured_events (
       ACE_DEBUG ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Sequence Consumer failing at event # %d. Expecting %d duplicates.\n"),
         static_cast<int> (this->received_),
-        ACE_static_cast (int, nevent + 1)
+        static_cast<int> (nevent + 1)
         ));
       ACE_THROW (CORBA::UNKNOWN());
       ACE_CHECK;
@@ -1368,7 +1368,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   }
 }
 
-CosNotifyChannelAdmin::AdminID default_admin_id = ACE_static_cast (CosNotifyChannelAdmin::AdminID, -1);
+CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAdmin::AdminID> (-1);
 
 void
 Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)

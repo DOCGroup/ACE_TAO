@@ -70,8 +70,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (const CosNotification::Str
       int status =
         this->filterable_data_.bind (
                                      name_str,
-                                     ACE_const_cast (CORBA::Any *,
-                                                     &s_event.filterable_data[index].value)
+                                     const_cast<CORBA::Any *> (&s_event.filterable_data[index].value)
                                      );
 
       if (status != 0)
@@ -87,8 +86,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (const CosNotification::Str
       int status =
         this->variable_header_.bind (
                                      name_str,
-                                     ACE_const_cast (CORBA::Any *,
-                                                     &s_event.header.variable_header[index].value)
+                                     const_cast<CORBA::Any *> (&s_event.header.variable_header[index].value)
                                      );
 
       if (status != 0)
@@ -1421,8 +1419,7 @@ TAO_Notify_Constraint_Visitor::any_does_contain (
 
   *any >>= result;
 
-  TAO_ETCL_Literal_Constraint element (ACE_const_cast (CORBA::Any *,
-                                                       result));
+  TAO_ETCL_Literal_Constraint element (const_cast<CORBA::Any *> (result));
   return item == element;
 }
 

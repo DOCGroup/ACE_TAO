@@ -16,7 +16,7 @@ TAO::HTIOP::Endpoint::object_addr (void) const
       // We need to modify the object_addr_ in this method.  Do so
       // using a non-const copy of the <this> pointer.
       TAO::HTIOP::Endpoint *endpoint =
-        ACE_const_cast (TAO::HTIOP::Endpoint *, this);
+        const_cast<TAO::HTIOP::Endpoint *> (this);
 
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
