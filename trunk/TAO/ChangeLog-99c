@@ -1,10 +1,19 @@
+Mon Feb  8 12:16:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+	  Changed to generate ACE_TRY_ENV instead of TAO_IN_ENV.
+
 Mon Feb 08 00:52:18 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.3 released.
 
 Mon Feb  8 00:00:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Makefile: 
+	* orbsvcs/tests/Simulator/Event_Supplier/Makefile:
 	  Some binaries did not link both NavWeapC.o and NavWeapS.o, this
 	  is needed for colocation support.
 
@@ -32,11 +41,11 @@ Sun Feb  7 20:01:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun Feb  7 16:57:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/Simple_util.cpp 
+	* examples/Simple/Simple_util.cpp
 	* examples/Simple/time/Time_Client.cpp
-	* examples/Simple/time/server.cpp 
-	* examples/Simple/grid/Grid_Client_i.cpp 
-	* examples/Simple/grid/server.cpp 
+	* examples/Simple/time/server.cpp
+	* examples/Simple/grid/Grid_Client_i.cpp
+	* examples/Simple/grid/server.cpp
 	Changed TAO_TRY macros to ACE_TRY macros
 
 Sun Feb  7 15:30:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -69,7 +78,7 @@ Sun Feb  7 14:32:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Sun Feb  7 11:44:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp: 
+	* TAO_IDL/driver/drv_args.cpp:
 	  Fixed the -Gi parsing code, it was setting compiled marshaling
 	  to 1, it must be 0.
 
