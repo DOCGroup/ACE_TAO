@@ -32,36 +32,36 @@ TAO_LoadBalancing_ReplicationManager_i::~TAO_LoadBalancing_ReplicationManager_i 
 
 void
 TAO_LoadBalancing_ReplicationManager_i::register_load_notifier (
-    TAO_LoadBalancing::LoadNotifier_ptr /* load_notifier */,
+    LoadBalancing::LoadNotifier_ptr /* load_notifier */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT());
 }
 
-TAO_LoadBalancing::LoadNotifier_ptr
+LoadBalancing::LoadNotifier_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-    TAO_LoadBalancing::InterfaceNotFound))
+    LoadBalancing::InterfaceNotFound))
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void
 TAO_LoadBalancing_ReplicationManager_i::set_default_properties (
-    const TAO_LoadBalancing::Properties &props,
+    const LoadBalancing::Properties &props,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::UnsupportedProperty))
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::UnsupportedProperty))
 {
   return
     this->property_manager_.set_default_properties (props,
                                                     ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::Properties *
+LoadBalancing::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_default_properties (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -72,11 +72,11 @@ TAO_LoadBalancing_ReplicationManager_i::get_default_properties (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::remove_default_properties (
-    const TAO_LoadBalancing::Properties &props,
+    const LoadBalancing::Properties &props,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::UnsupportedProperty))
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::UnsupportedProperty))
 {
   return
     this->property_manager_.remove_default_properties (props,
@@ -86,11 +86,11 @@ TAO_LoadBalancing_ReplicationManager_i::remove_default_properties (
 void
 TAO_LoadBalancing_ReplicationManager_i::set_type_properties (
     const char *type_id,
-    const TAO_LoadBalancing::Properties &overrides,
+    const LoadBalancing::Properties &overrides,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::UnsupportedProperty))
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::UnsupportedProperty))
 {
   return
     this->property_manager_.set_type_properties (type_id,
@@ -98,7 +98,7 @@ TAO_LoadBalancing_ReplicationManager_i::set_type_properties (
                                                  ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::Properties *
+LoadBalancing::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_type_properties (
     const char * /* type_id */,
     CORBA::Environment &ACE_TRY_ENV)
@@ -112,11 +112,11 @@ TAO_LoadBalancing_ReplicationManager_i::get_type_properties (
 void
 TAO_LoadBalancing_ReplicationManager_i::remove_type_properties (
     const char *type_id,
-    const TAO_LoadBalancing::Properties &props,
+    const LoadBalancing::Properties &props,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::UnsupportedProperty))
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::UnsupportedProperty))
 {
   return
     this->property_manager_.remove_type_properties (type_id,
@@ -126,13 +126,13 @@ TAO_LoadBalancing_ReplicationManager_i::remove_type_properties (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::set_properties_dynamically (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
-    const TAO_LoadBalancing::Properties &overrides,
+    LoadBalancing::ObjectGroup_ptr object_group,
+    const LoadBalancing::Properties &overrides,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::UnsupportedProperty))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::UnsupportedProperty))
 {
   return
     this->property_manager_.set_properties_dynamically (object_group,
@@ -140,32 +140,32 @@ TAO_LoadBalancing_ReplicationManager_i::set_properties_dynamically (
                                                         ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::Properties *
+LoadBalancing::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_properties (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
+    LoadBalancing::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound))
+                   LoadBalancing::ObjectGroupNotFound))
 {
   return
     this->property_manager_.get_properties_dynamically (object_group,
                                                         ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::create_member (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
-    const TAO_LoadBalancing::Location &the_location,
+    LoadBalancing::ObjectGroup_ptr object_group,
+    const LoadBalancing::Location &the_location,
     const char *type_id,
-    const TAO_LoadBalancing::Criteria &the_criteria,
+    const LoadBalancing::Criteria &the_criteria,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberAlreadyPresent,
-                   TAO_LoadBalancing::NoFactory,
-                   TAO_LoadBalancing::ObjectNotCreated,
-                   TAO_LoadBalancing::InvalidCriteria,
-                   TAO_LoadBalancing::CannotMeetCriteria))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberAlreadyPresent,
+                   LoadBalancing::NoFactory,
+                   LoadBalancing::ObjectNotCreated,
+                   LoadBalancing::InvalidCriteria,
+                   LoadBalancing::CannotMeetCriteria))
 {
   return
     this->object_group_manager_.create_member (object_group,
@@ -175,16 +175,16 @@ TAO_LoadBalancing_ReplicationManager_i::create_member (
                                                ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::add_member (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
-    const TAO_LoadBalancing::Location &the_location,
+    LoadBalancing::ObjectGroup_ptr object_group,
+    const LoadBalancing::Location &the_location,
     CORBA::Object_ptr member,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberAlreadyPresent,
-                   TAO_LoadBalancing::ObjectNotAdded))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberAlreadyPresent,
+                   LoadBalancing::ObjectNotAdded))
 {
   return
     this->object_group_manager_.add_member (object_group,
@@ -193,14 +193,14 @@ TAO_LoadBalancing_ReplicationManager_i::add_member (
                                             ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::remove_member (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
-    const TAO_LoadBalancing::Location &the_location,
+    LoadBalancing::ObjectGroup_ptr object_group,
+    const LoadBalancing::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberNotFound))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberNotFound))
 {
   return
     this->object_group_manager_.remove_member (object_group,
@@ -208,16 +208,16 @@ TAO_LoadBalancing_ReplicationManager_i::remove_member (
                                                ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::set_primary_member (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
-    const TAO_LoadBalancing::Location &the_location,
+    LoadBalancing::ObjectGroup_ptr object_group,
+    const LoadBalancing::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberNotFound,
-                   TAO_LoadBalancing::PrimaryNotSet,
-                   TAO_LoadBalancing::BadReplicationStyle))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberNotFound,
+                   LoadBalancing::PrimaryNotSet,
+                   LoadBalancing::BadReplicationStyle))
 {
   return
     this->object_group_manager_.set_primary_member (object_group,
@@ -225,36 +225,36 @@ TAO_LoadBalancing_ReplicationManager_i::set_primary_member (
                                                     ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::Locations *
+LoadBalancing::Locations *
 TAO_LoadBalancing_ReplicationManager_i::locations_of_members (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
+    LoadBalancing::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound))
+                   LoadBalancing::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.locations_of_members (object_group,
                                                       ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::ObjectGroupId
+LoadBalancing::ObjectGroupId
 TAO_LoadBalancing_ReplicationManager_i::get_object_group_id (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
+    LoadBalancing::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound))
+                   LoadBalancing::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.get_object_group_id (object_group,
                                                      ACE_TRY_ENV);
 }
 
-TAO_LoadBalancing::ObjectGroup_ptr
+LoadBalancing::ObjectGroup_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_object_group_ref (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
+    LoadBalancing::ObjectGroup_ptr object_group,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound))
+                   LoadBalancing::ObjectGroupNotFound))
 {
   return
     this->object_group_manager_.get_object_group_ref (object_group,
@@ -263,12 +263,12 @@ TAO_LoadBalancing_ReplicationManager_i::get_object_group_ref (
 
 CORBA::Object_ptr
 TAO_LoadBalancing_ReplicationManager_i::get_member_ref (
-    TAO_LoadBalancing::ObjectGroup_ptr object_group,
-    const TAO_LoadBalancing::Location &the_location,
+    LoadBalancing::ObjectGroup_ptr object_group,
+    const LoadBalancing::Location &the_location,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectGroupNotFound,
-                   TAO_LoadBalancing::MemberNotFound))
+                   LoadBalancing::ObjectGroupNotFound,
+                   LoadBalancing::MemberNotFound))
 {
   return
     this->object_group_manager_.get_member_ref (object_group,
@@ -279,16 +279,16 @@ TAO_LoadBalancing_ReplicationManager_i::get_member_ref (
 CORBA::Object_ptr
 TAO_LoadBalancing_ReplicationManager_i::create_object (
     const char * type_id,
-    const TAO_LoadBalancing::Criteria & the_criteria,
-    TAO_LoadBalancing::GenericFactory::FactoryCreationId_out
+    const LoadBalancing::Criteria & the_criteria,
+    LoadBalancing::GenericFactory::FactoryCreationId_out
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::NoFactory,
-                   TAO_LoadBalancing::ObjectNotCreated,
-                   TAO_LoadBalancing::InvalidCriteria,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::CannotMeetCriteria))
+                   LoadBalancing::NoFactory,
+                   LoadBalancing::ObjectNotCreated,
+                   LoadBalancing::InvalidCriteria,
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::CannotMeetCriteria))
 {
   return
     this->generic_factory_.create_object (type_id,
@@ -299,11 +299,11 @@ TAO_LoadBalancing_ReplicationManager_i::create_object (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::process_criteria (
-  const TAO_LoadBalancing::Criteria & the_criteria,
+  const LoadBalancing::Criteria & the_criteria,
   CORBA::Environment &ACE_TRY_ENV)
 {
   // List of invalid criteria.  If this list has a length greater than
-  // zero, then the TAO_LoadBalancing::InvalidCriteria exception will
+  // zero, then the LoadBalancing::InvalidCriteria exception will
   // be thrown.
   TAO_Loadbalancing::Criteria invalid_criteria;
 
@@ -315,7 +315,7 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
   for (CORBA::ULong i = 0; i < criteria_size; ++i)
     {
       CORBA::UShort initial_number_replicas = 0;
-      TAO_LoadBalancing::FactoryInfos factory_infos;
+      LoadBalancing::FactoryInfos factory_infos;
 
       // Obtain the InitialNumberReplicas from the_criteria.
       if (this->get_initial_number_replicas (type_id,
@@ -341,19 +341,19 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
     }
 
   if (invalid_criteria.length () != 0)
-    ACE_THROW (TAO_LoadBalancing::InvalidCriteria (invalid_criteria));
+    ACE_THROW (LoadBalancing::InvalidCriteria (invalid_criteria));
 
   if (found_factory == 0)
-    ACE_THROW_RETURN (TAO_LoadBalancing::NoFactory ());
+    ACE_THROW_RETURN (LoadBalancing::NoFactory ());
 }
 
 void
 TAO_LoadBalancing_ReplicationManager_i::delete_object (
-    const TAO_LoadBalancing::GenericFactory::FactoryCreationId &
+    const LoadBalancing::GenericFactory::FactoryCreationId &
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectNotFound))
+                   LoadBalancing::ObjectNotFound))
 {
   return
     this->generic_factory_.delete_object (factory_creation_id,
@@ -366,7 +366,7 @@ TAO_LoadBalancing_ReplicationManager_i::init (
 {
   ACE_TRY_NEW_ENV
     {
-      // Create a new transient servant manager object in the Root
+      // Create a new transient servant manager object in the child
       // POA.
       PortableServer::ServantManager_ptr tmp;
       ACE_NEW_RETURN (servant_manager,
@@ -391,7 +391,8 @@ TAO_LoadBalancing_ReplicationManager_i::init (
           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Create the PolicyList.
+      // Create the PolicyList containing the policies necessary for
+      // the POA to support ServantLocators.
       CORBA::PolicyList policy_list;
       policy_list.length (2);
       policy_list[0] =
@@ -444,11 +445,11 @@ TAO_LoadBalancing_ReplicationManager_i::init (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::operator= (
-  TAO_LoadBalancing::FactoryInfo &lhs,
-  const TAO_LoadBalancing::FactoryInfo &rhs)
+  LoadBalancing::FactoryInfo &lhs,
+  const LoadBalancing::FactoryInfo &rhs)
 {
   lhs.the_factory =
-    TAO_LoadBalancing::GenericFactory::_duplicate (rhs.the_factory);
+    LoadBalancing::GenericFactory::_duplicate (rhs.the_factory);
 
   lhs.the_location = rhs.the_location;
 

@@ -39,7 +39,7 @@ class TAO_LB_ObjectGroup_Map;
  *
  */
 class TAO_LB_GenericFactory
-  : public virtual TAO_LoadBalancing::GenericFactory
+  : public virtual LoadBalancing::GenericFactory
 {
 public:
 
@@ -61,16 +61,16 @@ public:
    */
   virtual CORBA::Object_ptr create_object (
       const char * type_id,
-      const TAO_LoadBalancing::Criteria & the_criteria,
-      TAO_LoadBalancing::GenericFactory::FactoryCreationId_out
+      const LoadBalancing::Criteria & the_criteria,
+      LoadBalancing::GenericFactory::FactoryCreationId_out
         factory_creation_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::NoFactory,
-                     TAO_LoadBalancing::ObjectNotCreated,
-                     TAO_LoadBalancing::InvalidCriteria,
-                     TAO_LoadBalancing::InvalidProperty,
-                     TAO_LoadBalancing::CannotMeetCriteria));
+                     LoadBalancing::NoFactory,
+                     LoadBalancing::ObjectNotCreated,
+                     LoadBalancing::InvalidCriteria,
+                     LoadBalancing::InvalidProperty,
+                     LoadBalancing::CannotMeetCriteria));
 
   /**
    * Delete the object corresponding to the provided
@@ -79,11 +79,11 @@ public:
    * Afterward, the ObjectGroup itself will be deleted.
    */
   virtual void delete_object (
-      const TAO_LoadBalancing::GenericFactory::FactoryCreationId &
+      const LoadBalancing::GenericFactory::FactoryCreationId &
         factory_creation_id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::ObjectNotFound));
+                     LoadBalancing::ObjectNotFound));
 
   //@}
 

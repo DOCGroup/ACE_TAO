@@ -21,18 +21,18 @@ TAO_LB_GenericFactory::TAO_LB_GenericFactory (
 CORBA::Object_ptr
 TAO_LB_GenericFactory::create_object (
     const char * type_id,
-    const TAO_LoadBalancing::Criteria & the_criteria,
-    TAO_LoadBalancing::GenericFactory::FactoryCreationId_out
+    const LoadBalancing::Criteria & the_criteria,
+    LoadBalancing::GenericFactory::FactoryCreationId_out
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::NoFactory,
-                   TAO_LoadBalancing::ObjectNotCreated,
-                   TAO_LoadBalancing::InvalidCriteria,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::CannotMeetCriteria))
+                   LoadBalancing::NoFactory,
+                   LoadBalancing::ObjectNotCreated,
+                   LoadBalancing::InvalidCriteria,
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::CannotMeetCriteria))
 {
-  TAO_LoadBalancing::Criteria_var creation_criteria =
+  LoadBalancing::Criteria_var creation_criteria =
     this->property_manager_.process_criteria (the_criteria,
                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -43,7 +43,7 @@ TAO_LB_GenericFactory::create_object (
   // replicas, then the desired number of replicas cannot possibly be
   // created.
   if (factory_infos_count < initial_number_replicas)
-    ACE_THROW_RETURN (TAO_LoadBalancing::CannotMeetCriteria (),
+    ACE_THROW_RETURN (LoadBalancing::CannotMeetCriteria (),
                       CORBA::Object::_nil ());
 
   TAO_LB_ObjectGroup_Map::Map_Entry *object_group_entry = 0;
@@ -84,9 +84,9 @@ TAO_LB_GenericFactory::create_object (
     CORBA::Object::_duplicate (object_group.in ());
 
   // Allocate a new FactoryCreationId for use as an "out" parameter.
-  TAO_LoadBalancing::GenericFactory::FactoryCreationId *tmp = 0;
+  LoadBalancing::GenericFactory::FactoryCreationId *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
-                    TAO_LoadBalancing::GenericFactory::FactoryCreationId,
+                    LoadBalancing::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -124,11 +124,11 @@ TAO_LB_GenericFactory::create_object (
 
 void
 TAO_LB_GenericFactory::delete_object (
-    const TAO_LoadBalancing::GenericFactory::FactoryCreationId &
+    const LoadBalancing::GenericFactory::FactoryCreationId &
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::ObjectNotFound))
+                   LoadBalancing::ObjectNotFound))
 {
   CORBA::ULong fcid = 0;
 
@@ -139,7 +139,7 @@ TAO_LB_GenericFactory::delete_object (
       TAO_LB_ObjectGroup_Entry *object_group = 0;
 
       if (this->object_group_map_.find (fcid, object_group) == -1)
-        ACE_THROW (TAO_LoadBalancing::ObjectNotFound ());
+        ACE_THROW (LoadBalancing::ObjectNotFound ());
 
       TAO_LB_Replica_Map *replica_map = object_group->replica_map;
 
@@ -149,12 +149,12 @@ TAO_LB_GenericFactory::delete_object (
         {
           TAO_LB_Replica_Map_Entry *replica = (*i).ext_id_;
 
-          TAO_LoadBalancing::GenericFactory_ptr factory =
+          LoadBalancing::GenericFactory_ptr factory =
             replica->factory.in ();
 
           if (!CORBA::is_nil (factory))
             {
-              TAO_LoadBalancing::GenericFactory::FactoryCreationId
+              LoadBalancing::GenericFactory::FactoryCreationId
                 &replica_fcid = replica->factory_creation_id;
 
               factory->delete_object (replica_fcid.in, ACE_TRY_ENV);
@@ -173,11 +173,12 @@ TAO_LB_GenericFactory::delete_object (
       delete object_group;
     }
 
-  ACE_THROW (TAO_LoadBalancing::ObjectNotFound ());
+  ACE_THROW (LoadBalancing::ObjectNotFound ());
 }
 
 void
 TAO_LB_GenericFactory::populate_object_group (
+  TAO_LB_ObjectGroup_Map::Map_Entry *object_group_entry,
   CORBA::Environment &ACE_TRY_ENV)
 {
   for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
@@ -197,13 +198,13 @@ TAO_LB_GenericFactory::populate_object_group (
       //    a given type is created at a given location.
 
 
-      TAO_LoadBalancing::FactoryInfo &factory_info =
+      LoadBalancing::FactoryInfo &factory_info =
         factory_infos[j];
 
       TAO_LoadBalancer::GenericFactory_ptr factory =
         factory_info.the_factory;
 
-      TAO_LoadBalancing::GenericFactory::FactoryCreationId_var
+      LoadBalancing::GenericFactory::FactoryCreationId_var
         replica_fcid;
 
       CORBA::Object_var replica =
