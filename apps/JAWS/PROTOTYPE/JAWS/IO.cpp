@@ -135,6 +135,51 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
+                              ACE_HANDLE handle,
+                              const char *header,
+                              unsigned int header_size,
+                              const char *trailer,
+                              unsigned int trailer_size)
+{
+  int result = 0;
+
+  if (handle != ACE_INVALID_HANDLE)
+    {
+      ACE_SOCK_Stream stream;
+      stream.set_handle (ioh->handle ());
+
+      if ((unsigned long) stream.send_n (header, header_size) < header_size)
+        result = -1;
+      else
+        {
+          int count;
+          char buf[BUFSIZ];
+
+          do
+            {
+              count = ACE::recv (handle, buf, sizeof (buf));
+              if (count <= 0)
+                break;
+
+              if (stream.send_n (buf, count) < count)
+                result = -1;
+            }
+          while (result == 0);
+
+          if ((unsigned long) stream.send_n (trailer, trailer_size)
+              < trailer_size)
+            result = -1;
+        }
+    }
+
+  if (result == 0)
+    ioh->transmit_file_complete ();
+  else
+    ioh->transmit_file_error (result);
+}
+
+void
+JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
                               const char *filename,
                               const char *header,
                               unsigned int header_size,
@@ -325,6 +370,58 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
       this->handler_->receive_file_error (result);
       delete mb;
       delete handle;
+    }
+}
+
+void
+JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
+                               ACE_HANDLE handle,
+                               const char *header,
+                               unsigned int header_size,
+                               const char *trailer,
+                               unsigned int trailer_size)
+{
+  JAWS_TRACE ("JAWS_Asynch_IO::transmit_file");
+
+  ioh->idle ();
+
+  JAWS_Asynch_IO_Handler *aioh =
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
+
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+
+  int result = 0;
+
+  if (handle != ACE_INVALID_HANDLE)
+    {
+      ACE_Message_Block hdr_mb (header, header_size);
+      ACE_Message_Block trl_mb (trailer, trailer_size);
+
+      header_and_trailer =
+        new ACE_Asynch_Transmit_File::Header_And_Trailer (hdr_mb.duplicate (),
+                                                          header_size,
+                                                          trl_mb.duplicate (),
+                                                          trailer_size);
+
+      ACE_Asynch_Transmit_File tf;
+
+      if (tf.open (*(aioh->handler ()), aioh->handle ()) == -1
+          || tf.transmit_file (handle, // file handle
+                               header_and_trailer, // header and trailer data
+                               0,  // bytes_to_write
+                               0,  // offset
+                               0,  // offset_high
+                               0,  // bytes_per_send
+                               0,  // flags
+                               0 // act
+                               ) == -1)
+        result = -1;
+    }
+
+  if (result != 0)
+    {
+      ioh->transmit_file_error (result);
+      delete header_and_trailer;
     }
 }
 

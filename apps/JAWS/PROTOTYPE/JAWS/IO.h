@@ -68,6 +68,14 @@ public:
   // read from the handle size bytes into the message block.
 
   virtual void transmit_file (JAWS_IO_Handler *ioh,
+                              ACE_HANDLE file,
+                              const char *header,
+                              unsigned int header_size,
+                              const char *trailer,
+                              unsigned int trailer_size) = 0;
+  // send header, filename, trailer to the handle.
+
+  virtual void transmit_file (JAWS_IO_Handler *ioh,
                               const char *filename,
                               const char *header,
                               unsigned int header_size,
@@ -118,6 +126,13 @@ public:
   virtual void read (JAWS_IO_Handler *ioh,
                      ACE_Message_Block *mb,
                      unsigned int size);
+
+  virtual void transmit_file (JAWS_IO_Handler *ioh,
+                              ACE_HANDLE handle,
+                              const char *header,
+                              unsigned int header_size,
+                              const char *trailer,
+                              unsigned int trailer_size);
 
   virtual void transmit_file (JAWS_IO_Handler *ioh,
                               const char *filename,
@@ -171,6 +186,13 @@ public:
   virtual void read (JAWS_IO_Handler *ioh,
                      ACE_Message_Block *mb,
                      unsigned int size);
+
+  virtual void transmit_file (JAWS_IO_Handler *ioh,
+                              ACE_HANDLE handle,
+                              const char *header,
+                              unsigned int header_size,
+                              const char *trailer,
+                              unsigned int trailer_size);
 
   virtual void transmit_file (JAWS_IO_Handler *ioh,
                               const char *filename,
