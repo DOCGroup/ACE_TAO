@@ -1,3 +1,10 @@
+Tue Oct 21 01:07:58 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* examples/Timer_Queue:
+	  Added documentation and fixed some warnings from the unused 
+	  arguments in some member functions.  Cleaned up some .h files of 
+	  unnecessary template instantiations.
+
 Tue Oct 21 01:01:12 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Thread_Manager.h: Added more comments.
@@ -117,6 +124,24 @@ Sun Oct 19 21:15:10 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 	* examples/Timer_Queue: Added a new testing framework for
 	  various types of ACE_Time_Queue usecases, e.g., threaded,
 	  reactive, and asynchronous.  
+	  The new classes are:
+	  <Timer_Queue_Test_Driver> which factors out the common code for
+	    different type of Timer queue implementations, for example the parsing,
+	    the input reading, and leaves the implementation of display_menu() for 
+	    example, to subclasses.
+	  <Async_Timer_Queue_Test_Driver> the asynchronous version of the timer 
+	    queue, uses signals.
+	  <Reactor_Timer_Queue_Test_Driver> implements the reactive timer queue
+	    test driver using <ACE_Reactor>
+	  <Thread_Timer_Queue_Test_Driver> the threaded implementation of the 
+	    timer queue.  
+	  <Command> this class is used to specify operations on the timer queue
+	    independently of their implementation.  Thsi allows different 
+	    implementations of the timer queue to have different ways of 
+	    doing the operations without the base class having to know that.
+	    See the Command pattern.
+	  Added some helper functions into the <Input_Task> class.
+	  
 
 Sun Oct 19 18:07:31 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
