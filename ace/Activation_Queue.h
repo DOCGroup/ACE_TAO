@@ -62,6 +62,15 @@ public:
   // Enqueue the <Method_Request> in priority order.  The priority is
   // determined by the <priority> method of the <new_message_request>.
 
+  int method_count (void) const;
+  // Get the current number of method objects in the queue.
+
+  int is_empty (void) const;
+  // Returns 1 if the queue is empty, 0 otherwise.
+
+  int is_full (void) const;
+  // Returns 1 if the queue is full, 0 otherwise.
+
   void dump (void) const;
   // Dump the state of an request.
 
