@@ -8,7 +8,7 @@ Wed Jul  1 22:42:13 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
 	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
-	Addressed DEC dxx warnings/errors. Hopefully solved some, probbaly
+	Addressed DEC cxx warnings/errors. Hopefully solved some, probbaly
 	introduced more.
 
 Wed Jul 01 21:14:11 1998  David L. Levine  <levine@cs.wustl.edu>
