@@ -22,7 +22,7 @@ private:
 void *
 Pipe_Thr_Test::reader (Pipe_Thr_Test *t)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
 
   ACE_HANDLE handle = t->pipe_handles[0];
   int ni = t->thr_id ();
@@ -44,7 +44,7 @@ Pipe_Thr_Test::init (int, char **)
   if (ACE_OS::pipe (this->pipe_handles) == -1)
     ACE_OS::perror ("pipe"), ACE_OS::exit (1);
 
-  if (ACE_Service_Config::thr_mgr ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn 
       (ACE_THR_FUNC (Pipe_Thr_Test::reader),
        (void *) this, options.t_flags ()) == -1)
     ACE_OS::perror ("thr_create"), ACE_OS::exit (1);
