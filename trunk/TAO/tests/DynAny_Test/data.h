@@ -41,7 +41,7 @@ public:
   CORBA::Any            m_any1,       m_any2;
   CORBA::Object_var     m_objref1,    m_objref2;
 
-char* labels[16];
+const char* labels[16];
 
 private:
   CORBA::ORB_var orb_;
