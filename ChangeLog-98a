@@ -1,3 +1,8 @@
+Fri Mar 13 21:17:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Process.cpp (ACE_Process_Options): reordered initializers
+          to match declaration order.
+
 Fri Mar 13 17:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.{h,i,cpp}: As CE's CreateProcess is basically
