@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>ACE Tutorial 001</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 005<BR>
+Creating a MultiThreaded Server </FONT></B></P></CENTER>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>Since each Logging_Handler has a reactor, we could implement multiple
+connections per reactor. To do this we need some mechanism for tracking
+the number of connections that are associated with a particular reactor.
+We can achieve this by deriving a class from base class ACE_Reactor and
+holding a private variable associated with the derived object. This will
+be incremented and decremented as client connections are added and deleted
+respectively. I know this mechanism is crude ..... but show me another
+way of doing it !! The dervied class definition is as follows : </P>
+
+<UL>
+<PRE>1. class Reactor_Derived : public ACE_Reactor
+        {       
+        
+        public :
+2.             Reactor_Derived() : ()
+                {
+3.                     counter = 0;
+                }
+                
+4.             virtual ~Reactor_Derived()
+                {
+
+                }
+        
+        private :
+5.             friend class Logging_Handler;
+                
+                // counter is used to keep track of the number of service handlers
+                // registered with this reactor (Surely theres a better way ;-)
+6.             int counter;
+        };
+                     
+        
+</PRE>
+</UL>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P>Here's the step-by-step explanation:</P>
+
+<OL>
+<LI>Declaration for the subclassed-reactor which is derived from the ACE_Reactor
+base class</LI>
+
+<LI>Constructor for our subclassed-reactor. Notice the empty parentheses
+- This calls the parent class constructor.</LI>
+
+<LI>Set our connection counter variable to 0.</LI>
+
+<LI>Our default constructor does nothing. We've moved anything with failure
+potential into the <I>open</I> function. Should the constructor be virtual?</LI>
+
+<LI>Declare the Logging_Handler class to be a friend class of this object.
+This allows the Logging_Handler class to access our private connection
+counter variable , allowing it to detect when all of our connections have
+been terminated for this reactor object.</LI>
+
+<LI>Our private counter variable which is used to count the number of connections
+registered with this reactor. </LI>
+
+<P>Now that the special reactor has been defined, we will define the final
+class in our multi-threaded server, the Logging_Handler.</P>
+
+<OL>
+<OL>
+<OL>
+<OL>
+<OL>
+<P>[<A HREF="..">Tutorial Index</A>] [<A HREF="page03.html">Previous Page</A>]
+[<A HREF="page05.html">Continue This Tutorial</A>] </P>
+</OL>
+</OL>
+</OL>
+</OL>
+</OL>
+</OL>
+
+</BODY>
+</HTML>
