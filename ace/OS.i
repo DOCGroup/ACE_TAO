@@ -581,6 +581,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 extern "C" {
   extern char *_Pctime_r (const time_t *, char *);
   extern struct tm *_Plocaltime_r (const time_t *, struct tm *);
+  extern struct tm *_Pgmtime_r (const time_t *, struct tm *);
   extern char *_Pasctime_r (const struct tm *, char *);
   extern int _Prand_r (unsigned int *seedptr);
 }
@@ -5716,6 +5717,30 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   ACE_UNUSED_ARG (res);
 	
   ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
+#endif
+}
+
+ACE_INLINE struct tm *
+ACE_OS::gmtime (const time_t *t)
+{
+  // ACE_TRACE ("ACE_OS::localtime");
+  ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
+}
+
+ACE_INLINE struct tm *
+ACE_OS::gmtime_r (const time_t *t, struct tm *res)
+{
+  // ACE_TRACE ("ACE_OS::localtime_r");
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (DIGITAL_UNIX)
+  ACE_OSCALL_RETURN (::_Pgmtime_r(t, res), struct tm *, 0);
+#else
+  ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
+#endif /* DIGITAL_UNIX */
+#else
+  ACE_UNUSED_ARG (res);
+	
+  ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
 #endif
 }
 
