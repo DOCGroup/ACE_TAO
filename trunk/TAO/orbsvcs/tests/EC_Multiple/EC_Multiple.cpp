@@ -24,6 +24,9 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "EC_Multiple.h"
 
+#include "Scheduler_Runtime1.h"
+#include "Scheduler_Runtime2.h"
+
 Test_ECG::Test_ECG (void)
   : consumer_ (this),
     supplier_ (this),
@@ -38,14 +41,14 @@ Test_ECG::Test_ECG (void)
     event_a_ (0),
     event_b_ (0),
     event_c_ (0),
-    lcl_cnt_ (0),
-    rmt_cnt_ (0),
-    scavenger_start_ (0),
-    scavenger_end_ (0),
+    lcl_count_ (0),
+    rmt_count_ (0),
     scavenger_barrier_ (2),
-    scavenger_cnt_ (0),
+    scavenger_count_ (0),
     scavenger_priority_ (0),
-    scheduling_class_ (ACE_SCHED_FIFO)
+    push_count_ (1),
+    schedule_file_ (0),
+    pid_file_name_ (0)
 {
 }
 
@@ -173,10 +176,13 @@ Test_ECG::run (int argc, char* argv[])
 		  "  local Scheduler name = <%s>\n"
 		  "  remote Scheduler name = <%s>\n"
 		  "  global scheduler = <%d>\n"
-		  "  scavenger count = <%d>\n"
+		  "  scavenger work = <%d>\n"
+		  "  push work = <%d>\n" 
 		  "  short circuit EC = <%d>\n"
 		  "  interval between events = <%d> (usecs)\n"
 		  "  message count = <%d>\n"
+		  "  schedule_file = <%s>\n"
+		  "  pid file name = <%s>\n"
 		  "  event A = <%d>\n"
 		  "  event B = <%d>\n"
 		  "  event C = <%d>\n",
@@ -185,26 +191,35 @@ Test_ECG::run (int argc, char* argv[])
 		  this->lcl_sch_name_,
 		  this->rmt_sch_name_?this->rmt_sch_name_:"nil",
 		  this->global_scheduler_,
-		  this->scavenger_cnt_,
+		  this->scavenger_count_,
+		  this->push_count_,
 		  this->short_circuit_,
 		  this->interval_,
 		  this->message_count_,
+		  this->schedule_file_?this->schedule_file_:"nil",
+		  this->pid_file_name_?this->pid_file_name_:"nil",
 		  this->event_a_,
 		  this->event_b_,
 		  this->event_c_) );
 
       print_priority_info ("Test_ECG::run (Main)");
 
+      if (this->pid_file_name_ != 0)
+	{
+	  FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+	  if (pid != 0)
+	    {
+	      ACE_OS::fprintf (pid, "%d\n", ACE_OS::getpid ());
+	      ACE_OS::fclose (pid);
+	    }
+	}
+
       this->scavenger_priority_ = 
-	ACE_Sched_Params::priority_min (this->scheduling_class_);
-      int next_priority = 
-	ACE_Sched_Params::next_priority (this->scheduling_class_,
-					 this->scavenger_priority_,
-					 ACE_SCOPE_PROCESS);
+	ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
       // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-      if (ACE_OS::sched_params (ACE_Sched_Params (this->scheduling_class_,
-						  next_priority,
+      if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+						  this->scavenger_priority_,
 						  ACE_SCOPE_PROCESS)) != 0)
 	{
 	  if (ACE_OS::last_error () == EPERM)
@@ -216,6 +231,10 @@ Test_ECG::run (int argc, char* argv[])
 			"%s: ACE_OS::sched_params failed\n", argv[0]));
 	}
 
+      int next_priority = 
+	ACE_Sched_Params::next_priority (this->scavenger_priority_,
+					 ACE_SCHED_FIFO,
+					 ACE_SCOPE_THREAD);
       if (ACE_OS::thr_setprio (next_priority) == -1)
 	{
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed\n"));
@@ -223,9 +242,9 @@ Test_ECG::run (int argc, char* argv[])
 
       print_priority_info ("Test_ECG::run (Main)");
 
-      if (this->scavenger_cnt_ != 0)
+      if (this->scavenger_count_ != 0)
 	{
-	  if (this->activate (THR_BOUND|this->scheduling_class_,
+	  if (this->activate (THR_BOUND|ACE_SCHED_FIFO,
 			      1, 0, this->scavenger_priority_) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       " (%P|%t) Cannot activate scavenger.\n"),
@@ -272,12 +291,12 @@ Test_ECG::run_short_circuit (CORBA::ORB_ptr orb,
       ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
       ACE_Time_Value tv (this->interval_ / ACE_ONE_SECOND_IN_USECS,
 			 (this->interval_ % ACE_ONE_SECOND_IN_USECS));
-      reactor->schedule_timer (this, 0, tv, tv);
+      reactor->schedule_timer (this, 0, tv);
 
       this->supplier_id_ = 0;
 
       ACE_DEBUG ((LM_DEBUG, "running short circuit test\n"));
-      if (this->scavenger_cnt_ != 0)
+      if (this->scavenger_count_ != 0)
 	{
 	  if (this->scavenger_barrier_.wait () == -1)
 	    return -1;
@@ -334,19 +353,36 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 	}
       else
 	{
-	  scheduler_impl =
-	    auto_ptr<ACE_Config_Scheduler>(new ACE_Config_Scheduler);
-	  if (scheduler_impl.get () == 0)
-	    return -1;
-
-	  RtecScheduler::Scheduler_var scheduler =
-	    scheduler_impl->_this (TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-
+	  int config = 0;
+	  RtecScheduler::Scheduler_var scheduler;
+	  if (ACE_OS::strcmp (this->lcl_sch_name_, "RUNTIME1") == 0)
+	    {
+	      ACE_Scheduler_Factory::use_runtime
+		(sizeof(runtime_infos_1)/sizeof(runtime_infos_1[0]),
+		 runtime_infos_1);
+	      scheduler = RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
+	    }
+	  else if (ACE_OS::strcmp (this->lcl_sch_name_, "RUNTIME2") == 0)
+	    {
+	      ACE_Scheduler_Factory::use_runtime
+		(sizeof(runtime_infos_2)/sizeof(runtime_infos_2[0]),
+		 runtime_infos_2);
+	      scheduler = RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
+	    }
+	  else
+	    {
+	      scheduler_impl =
+		auto_ptr<ACE_Config_Scheduler>(new ACE_Config_Scheduler);
+	      if (scheduler_impl.get () == 0)
+		return -1;
+	      scheduler =
+		scheduler_impl->_this (TAO_TRY_ENV);
+	      TAO_CHECK_ENV;
+	      config = 1;
+	    }
 	  CORBA::String_var str =
 	    orb->object_to_string (scheduler.in (), TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
-
 	  ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
 		      str.in ()));
 
@@ -357,9 +393,12 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 	  naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  if (ACE_Scheduler_Factory::use_config (naming_context.in (),
-						 this->lcl_sch_name_) == -1)
-	    return -1;
+	  if (config == 1)
+	    {
+	      if (ACE_Scheduler_Factory::use_config (naming_context.in (),
+						     this->lcl_sch_name_) == -1)
+		return -1;
+	    }
 	}
 
       if (ACE_Scheduler_Factory::use_config (naming_context.in (),
@@ -459,7 +498,7 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer\n"));
 
-      if (this->scavenger_cnt_ != 0)
+      if (this->scavenger_count_ != 0)
 	{
 	  if (this->scavenger_barrier_.wait () == -1)
 	    return -1;
@@ -487,6 +526,42 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 			   "(%P|%t) waiting for scavenger tasks\n"), 1);
 
       this->dump_results ();
+
+      if (this->schedule_file_ != 0)
+	{
+	  RtecScheduler::RT_Info_Set_var infos;
+
+#if defined (__SUNPRO_CC)
+	  // Sun C++ 4.2 warns with the code below:
+	  //   Warning (Anachronism): Temporary used for non-const
+	  //   reference, now obsolete.
+	  //   Note: Type "CC -migration" for more on anachronisms.
+	  //   Warning (Anachronism): The copy constructor for argument
+	  //   infos of type RtecScheduler::RT_Info_Set_out should take
+	  //   const RtecScheduler::RT_Info_Set_out&.
+	  // But, this code is not CORBA conformant, because users should
+	  // not define instances of _out types.
+
+	  RtecScheduler::RT_Info_Set_out infos_out (infos);
+	  ACE_Scheduler_Factory::server ()->compute_scheduling
+	    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+					     ACE_SCOPE_THREAD),
+	     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+					     ACE_SCOPE_THREAD),
+	     infos_out, TAO_TRY_ENV);
+#else  /* ! __SUNPRO_CC */
+	  ACE_Scheduler_Factory::server ()->compute_scheduling
+	    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+					     ACE_SCOPE_THREAD),
+	     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+					     ACE_SCOPE_THREAD),
+	     infos.out (), TAO_TRY_ENV);
+#endif /* ! __SUNPRO_CC */
+
+	  TAO_CHECK_ENV;
+	  ACE_Scheduler_Factory::dump_schedule (infos.in (),
+						this->schedule_file_);
+	}
     }
   TAO_CATCHANY
     {
@@ -513,11 +588,11 @@ Test_ECG::svc (void)
   if (this->scavenger_barrier_.wait () == -1)
     return -1;
 
-  this->scavenger_start_ = ACE_OS::gethrtime ();
+  this->scavenger_timer_.start ();
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting scavenger\n"));
 
   for (int i = 0;
-       i < this->scavenger_cnt_;
+       i < this->scavenger_count_;
        ++i)
     {
       u_long n = 1279UL;
@@ -529,7 +604,7 @@ Test_ECG::svc (void)
 		    i));
 #endif
     }
-  this->scavenger_end_ = ACE_OS::gethrtime ();
+  this->scavenger_timer_.stop ();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger finished its work\n"));
   return 0;
 }
@@ -568,15 +643,20 @@ Test_ECG::connect_supplier (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         server->create (buf, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // The worst case execution time is far less than 2
+      // mislliseconds, but that is a safe estimate....
+      ACE_Time_Value tv (0, 2000);
+      TimeBase::TimeT time;
+      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
       server->set (rt_info,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
-		   ORBSVCS_Time::zero,
-		   ORBSVCS_Time::zero,
-		   ORBSVCS_Time::zero,
-                   this->interval_ * 10, // @@ Make it parametric
+		   time, time, time,
+		   // @@ Make it parametric; the number below is the
+		   // maximum rate in the EC....
+                   25000 * 10,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
-		   ORBSVCS_Time::zero,
-                   1,
+		   time,
+		   1,
                    RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -636,15 +716,18 @@ Test_ECG::connect_consumer (RtecEventChannelAdmin::EventChannel_ptr local_ec,
         server->create (buf, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // The worst case execution time is far less than 2
+      // mislliseconds, but that is a safe estimate....
+      ACE_Time_Value tv (0, 2000);
+      TimeBase::TimeT time;
+      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
       server->set (rt_info,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
-		   ORBSVCS_Time::zero,
-		   ORBSVCS_Time::zero,
-		   ORBSVCS_Time::zero,
-                   this->interval_ * 10, // @@ Make it parametric
+		   time, time, time,
+                   25000 * 10, // @@ Make it parametric
                    RtecScheduler::VERY_LOW_IMPORTANCE,
-		   ORBSVCS_Time::zero,
-                   1,
+		   time,
+		   0,
                    RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -702,24 +785,36 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       RtecScheduler::Scheduler_ptr local_sch =
         ACE_Scheduler_Factory::server ();
 
+      // ECG name.
+      char ecg_name[BUFSIZ];
+      ACE_OS::strcpy (ecg_name, "ecg_");
+      ACE_OS::strcat (ecg_name, this->lcl_ec_name_);
+
       // Generate its ConsumerQOS
+
+      // We could use the same name on the local and remote scheduler,
+      // but that fails when using a global scheduler.
       char rmt[BUFSIZ];
-      ACE_OS::strcpy (rmt, "ecp@");
+      ACE_OS::strcpy (rmt, ecg_name);
+      ACE_OS::strcat (rmt, "@");
       ACE_OS::strcat (rmt, this->rmt_ec_name_);
 
       RtecScheduler::handle_t rmt_info =
         remote_sch->create (rmt, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      // The worst case execution time is far less than 500 usecs, but
+      // that is a safe estimate.... 
+      ACE_Time_Value tv (0, 500);
+      TimeBase::TimeT time;
+      ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
       remote_sch->set (rmt_info,
 		       RtecScheduler::VERY_HIGH_CRITICALITY,
-		       ORBSVCS_Time::zero,
-		       ORBSVCS_Time::zero,
-		       ORBSVCS_Time::zero,
-		       this->interval_ * 10,
+		       time, time, time,
+		       25000 * 10, // @@ Make it parametric
 		       RtecScheduler::VERY_LOW_IMPORTANCE,
-		       ORBSVCS_Time::zero,
-		       1,
+		       time,
+		       0,
 		       RtecScheduler::OPERATION,
 		       TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -731,8 +826,12 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       consumer_qos.insert_type (ACE_ES_EVENT_SHUTDOWN, rmt_info);
 
       // Generate its SupplierQOS
+
+      // We could use the same name on the local and remote scheduler,
+      // but that fails when using a global scheduler.
       char lcl[BUFSIZ];
-      ACE_OS::strcpy (lcl, "ecp@");
+      ACE_OS::strcpy (lcl, ecg_name);
+      ACE_OS::strcat (lcl, "@");
       ACE_OS::strcat (lcl, this->lcl_ec_name_);
 
       RtecScheduler::handle_t lcl_info =
@@ -741,12 +840,10 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 
       local_sch->set (lcl_info,
 		      RtecScheduler::VERY_HIGH_CRITICALITY,
-		      ORBSVCS_Time::zero,
-		      ORBSVCS_Time::zero,
-		      ORBSVCS_Time::zero,
-		      this->interval_ * 10,
+		      time, time, time,
+		      25000 * 10,
 		      RtecScheduler::VERY_LOW_IMPORTANCE,
-		      ORBSVCS_Time::zero,
+		      time,
 		      1,
 		      RtecScheduler::OPERATION,
 		      TAO_TRY_ENV);
@@ -865,24 +962,27 @@ Test_ECG::push (const RtecEventComm::EventSet &events,
 	  ACE_hrtime_t nsec = r - s;
 	  if (this->supplier_id_ == e.source_)
 	    {
-	      this->lcl_time_[this->lcl_cnt_] = nsec;
-	      this->lcl_cnt_++;
+	      this->lcl_time_[this->lcl_count_] = nsec;
+	      this->lcl_count_++;
 	      // ACE_DEBUG ((LM_DEBUG, "Latency[LOCAL]: %d\n",
 	      // nsec));
 	    }
 	  else
 	    {
-	      this->rmt_time_[this->rmt_cnt_] = nsec;
-	      this->rmt_cnt_++;
+	      this->rmt_time_[this->rmt_count_] = nsec;
+	      this->rmt_count_++;
 	      // ACE_DEBUG ((LM_DEBUG, "Latency[REMOTE]: %d\n",
 	      // nsec));
 	    }
 
-	  // Eat a little CPU so the Utilization test can measure the
-	  // consumed time....
-	  /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-	  u_long n = 1279UL;
-	  ACE::is_prime (n, 2, n / 2);
+	  for (int j = 0; j < this->push_count_; ++j)
+	    {
+	      // Eat a little CPU so the Utilization test can measure the
+	      // consumed time....
+	      /* takes about 40.2 usecs on a 167 MHz Ultra2 */
+	      u_long n = 1279UL;
+	      ACE::is_prime (n, 2, n / 2);
+	    }
         }
     }
   this->push_timer_.stop_incr ();
@@ -968,23 +1068,25 @@ void
 Test_ECG::dump_results (void)
 {
   int i;
-  for (i = 0; i < this->lcl_cnt_; ++i)
+  for (i = 0; i < this->lcl_count_; ++i)
     {
       double usec = this->lcl_time_[i] / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Latency[LCL]: %.3f\n", usec));
     }
-  for (i = 0; i < this->rmt_cnt_; ++i)
+  for (i = 0; i < this->rmt_count_; ++i)
     {
       double usec = this->rmt_time_[i] / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Latency[RMT]: %.3f\n", usec));
     }
-  if (this->scavenger_cnt_ != 0)
+
+  ACE_Time_Value tv;
+  if (this->scavenger_count_ != 0)
     {
-      double usec = (this->scavenger_end_ - this->scavenger_start_) / 1000.0;
+      this->scavenger_timer_.elapsed_time (tv);
+      double usec = tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
       ACE_DEBUG ((LM_DEBUG, "Scavenger time: %.3f\n", usec));
     }
 
-  ACE_Time_Value tv;
   this->push_timer_.elapsed_time_incr (tv);
   double usec = tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
   ACE_DEBUG ((LM_DEBUG, "Push time: %.3f\n", usec));
@@ -993,7 +1095,7 @@ Test_ECG::dump_results (void)
 int
 Test_ECG::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "tgxl:r:s:o:i:m:u:a:b:c:");
+  ACE_Get_Opt get_opt (argc, argv, "tgxw:p:d:l:r:s:o:i:m:u:a:b:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -1012,17 +1114,23 @@ Test_ECG::parse_args (int argc, char *argv [])
 	case 'o':
 	  this->rmt_sch_name_ = get_opt.optarg;
 	  break;
-	case 't':
-	  this->scheduling_class_ = ACE_SCHED_OTHER;
-	  break;
 	case 'g':
 	  this->global_scheduler_ = 1;
 	  break;
 	case 'u':
-	  this->scavenger_cnt_ = ACE_OS::atoi (get_opt.optarg);
+	  this->scavenger_count_ = ACE_OS::atoi (get_opt.optarg);
 	  break;
 	case 'x':
 	  this->short_circuit_ = 1;
+	  break;
+	case 'w':
+	  this->push_count_ = ACE_OS::atoi (get_opt.optarg);
+	  break;
+	case 'p':
+	  this->pid_file_name_ = get_opt.optarg;
+	  break;
+	case 'd':
+	  this->schedule_file_ = get_opt.optarg;
 	  break;
         case 'i':
           this->interval_ = ACE_OS::atoi (get_opt.optarg);
@@ -1053,8 +1161,8 @@ Test_ECG::parse_args (int argc, char *argv [])
 		      "-s <scheduling service name> "
 		      "-o <remote scheduling service name> "
 		      "-x (short circuit EC) "
-		      "-t (run in real-time class) "
 		      "-u <utilization test iterations> "
+		      "-w <'work' iterations per push> "
                       "<-a event_type_a> "
                       "<-b event_type_b> "
                       "<-c event_type_c> "
@@ -1077,11 +1185,11 @@ Test_ECG::parse_args (int argc, char *argv [])
       this->message_count_ = Test_ECG::DEFAULT_EVENT_COUNT;
     }
 
-  if (this->scavenger_cnt_ < 0)
+  if (this->scavenger_count_ < 0)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "%s: scavenger count < 0, test disabled\n"));
-      this->scavenger_cnt_ = 0;
+      this->scavenger_count_ = 0;
     }
 
   if (this->event_a_ <= 0
