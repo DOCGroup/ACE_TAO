@@ -21,9 +21,7 @@ DIRS  =	lib \
         Sequence_Multi_Filter \
         Sequence_Multi_ETCL_Filter \
 	RT_lib \
-	Test_Filter \
-	Driver \
-	Destroy \
+	Test_Filter
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
