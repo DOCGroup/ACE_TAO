@@ -1,3 +1,24 @@
+Thu Feb 10 10:18:00 2000  Ossama Othman  <ossama@uci.edu>
+
+	* THANKS:
+
+	  Added Hajdukiewicz Markus <MHajdukiewic@heyde.de> and Gerwin
+	  Robert <RGerwin@heyde.de> to the list of fame.
+
+	* configure.in (ACE_LACKS_SETSCHED):
+
+	  Fixed test so that it defines ACE_LACKS_SETSCHED when
+	  sched_setscheduler() isn't found.  This was the intended
+	  behavior.  Thanks to Hajdukiewicz Markus <MHajdukiewic@heyde.de>
+	  and Gerwin Robert <RGerwin@heyde.de> for providing a patch for
+	  this problem.
+
+	  (ace_cv_feature_cxx_std_template_specialization):
+
+	  It appears that this variable had to be quoted when testing if
+	  it was set to "yes."  Thanks again to Markus and Robert for
+	  providing a patch.
+
 Wed Feb 09 00:41:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Pipe_Test.cpp (main): Spawn command should be
