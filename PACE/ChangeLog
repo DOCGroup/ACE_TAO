@@ -1,3 +1,12 @@
+Tue Sep  4 15:26:46 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* tests/Cond_Var_Test.c: 
+	  Cleanup up unused variables and signed type on argc.
+
+	* tests/Makefile: 
+	  Corrected inclusion of BIN2 - executables that aren't
+	  always included - for non VxWorks platforms.
+
 Tue Sep  4 09:15:00 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* tests/Pthreads_Test.c: 
