@@ -1,14 +1,14 @@
 # $Id$
 
-# SunOS 5.x (Solaris 2.x) with g++ *not* using Orbix
+# SunOS 5.x (Solaris 2.x) with egcs
 
 debug = 1
 optimize = 1
 
 CC              = gcc -pipe
-CXX             = g++ -pipe
+CXX             = c++ -pipe
 CFLAGS          += -Wall -Wpointer-arith -pipe #### -Winline
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates 
+CCFLAGS         += $(CFLAGS)
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
@@ -19,7 +19,7 @@ PIC             = -fpic
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
-SOFLAGS         = -G $(CPPFLAGS)
+SOFLAGS         = -shared $(CPPFLAGS)
 # SOBUILD - compile into .so directly
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
