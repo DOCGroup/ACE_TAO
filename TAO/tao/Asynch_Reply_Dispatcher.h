@@ -50,8 +50,6 @@ public:
 
   // virtual TAO_GIOP_Message_State *message_state (void);
 
-  virtual void dispatcher_bound (TAO_Transport *t);
-
   virtual void connection_closed (void);
 
     /// Inform that the reply timed out

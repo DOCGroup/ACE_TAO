@@ -1,47 +1,43 @@
-// -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Service_Config_Test.cpp
- *
- *  $Id$
- *
- *  This is a simple test to make sure the Service_Configurator is
- *  working correctly.
- *
- *  @author David Levine <levine@cs.wustl.edu>
- *  @author Ossama Othman <ossama@uci.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Service_Config_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test to make sure the Service_Configurator is
+//      working correctly.
+//
+// = AUTHOR
+//    David Levine <levine@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
-#include "ace/Thread_Manager.h"
-#include "ace/ARGV.h"
 
-ACE_RCSID (tests,
-           Service_Config_Test,
-           "$Id$")
+ACE_RCSID(tests, Service_Config_Test, "$Id$")
 
 static const u_int VARIETIES = 3;
 
 static u_int error = 0;
 
-/**
- * @class Test_Singleton
- *
- * @brief Test the Singleton
- *
- * This should be a template class, with singleton instantiations.
- * But to avoid having to deal with compilers that want template
- * declarations in separate files, it's just a plain class.  The
- * instance argument differentiates the "singleton" instances.  It
- * also demonstrates the use of the param arg to the cleanup ()
- * function.
- */
 class Test_Singleton
+  // = TITLE
+  //   Test the Singleton
+  //
+  // = DESCRIPTION
+  //   This should be a template class, with singleton instantiations.
+  //   But to avoid having to deal with compilers that want template
+  //   declarations in separate files, it's just a plain class.  The
+  //   instance argument differentiates the "singleton" instances.  It
+  //   also demonstrates the use of the param arg to the cleanup ()
+  //   function.
 {
 public:
   static Test_Singleton *instance (u_short variety);
@@ -118,19 +114,11 @@ Test_Singleton::~Test_Singleton (void)
 static void
 run_test (int argc, ACE_TCHAR *argv[])
 {
-  ACE_ARGV new_argv;
-
-  // Process the Service Configurator directives in this test's
-  ACE_ASSERT (new_argv.add (argv) != -1
-              && new_argv.add ("-f") != -1
-              && new_argv.add ("Service_Config_Test.conf") != -1);
-
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
   ACE_Service_Config daemon;
 
-  ACE_ASSERT (daemon.open (new_argv.argc (),
-                           new_argv.argv ()) != -1 || errno == ENOENT);
+  ACE_ASSERT (daemon.open (argc, argv) != -1 || errno == ENOENT);
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
@@ -153,9 +141,6 @@ main (int argc, ACE_TCHAR *argv[])
     }
 
   run_test (argc, argv);
-
-  // Wait for all threads to complete.
-  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_END_TEST;
   return error == 0 ? 0 : 1;

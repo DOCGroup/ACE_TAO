@@ -10,34 +10,13 @@
 ACE_RCSID(tao, Queued_Message, "$Id$")
 
 TAO_Queued_Message::TAO_Queued_Message (void)
-  : connection_closed_ (0)
-  , send_failure_ (0)
-  , timeout_ (0)
-  , next_ (0)
+  : next_ (0)
   , prev_ (0)
 {
 }
 
 TAO_Queued_Message::~TAO_Queued_Message (void)
 {
-}
-
-void
-TAO_Queued_Message::connection_closed (void)
-{
-  this->connection_closed_ = 1;
-}
-
-void
-TAO_Queued_Message::send_failure (void)
-{
-  this->send_failure_ = 1;
-}
-
-void
-TAO_Queued_Message::timeout (void)
-{
-  this->timeout_ = 1;
 }
 
 void

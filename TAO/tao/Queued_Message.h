@@ -15,6 +15,7 @@
 #include "ace/pre.h"
 
 #include "corbafwd.h"
+#include "LF_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,7 +61,7 @@ class ACE_Message_Block;
  *        allocating the memory?
  *
  */
-class TAO_Export TAO_Queued_Message
+class TAO_Export TAO_Queued_Message : public TAO_LF_Event
 {
 public:
   /// Constructor
@@ -68,16 +69,6 @@ public:
 
   /// Destructor
   virtual ~TAO_Queued_Message (void);
-
-  /// The underlying connection has been closed, release resources and
-  /// signal waiting threads.
-  void connection_closed (void);
-
-  /// There was an error while sending the data.
-  void send_failure (void);
-
-  /// There was a timeout while sending the data
-  void timeout (void);
 
   /** @name Intrusive list manipulation
    *
@@ -178,16 +169,6 @@ public:
    */
   virtual void destroy (void) = 0;
   //@}
-
-protected:
-  /// Set to 1 if the connection was closed
-  int connection_closed_;
-
-  /// Set to 1 if there was a failure while sending the data
-  int send_failure_;
-
-  /// Set to 1 if there was a timeout while sending the data
-  int timeout_;
 
 private:
   /// Implement an intrusive double-linked list for the message queue

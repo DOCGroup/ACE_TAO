@@ -172,13 +172,6 @@ ACE_Mutex::acquire (ACE_Time_Value &tv)
 }
 
 ACE_INLINE int
-ACE_Mutex::acquire (ACE_Time_Value *tv)
-{
-  // ACE_TRACE ("ACE_Mutex::acquire");
-  return ACE_OS::mutex_lock (&this->lock_, tv);
-}
-
-ACE_INLINE int
 ACE_Mutex::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire");
@@ -284,13 +277,6 @@ ACE_Semaphore::acquire (ACE_Time_Value &tv)
 }
 
 ACE_INLINE int
-ACE_Semaphore::acquire (ACE_Time_Value *tv)
-{
-// ACE_TRACE ("ACE_Semaphore::acquire");
-  return ACE_OS::sema_wait (&this->semaphore_, tv);
-}
-
-ACE_INLINE int
 ACE_Semaphore::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Semaphore::tryacquire");
@@ -386,15 +372,7 @@ ACE_Null_Semaphore::remove (void)
 ACE_INLINE int
 ACE_Null_Semaphore::acquire (ACE_Time_Value &)
 {
-  errno = ETIME;
-  return -1;
-}
-
-ACE_INLINE int
-ACE_Null_Semaphore::acquire (ACE_Time_Value *)
-{
-  errno = ETIME;
-  return -1;
+  return 0;
 }
 
 ACE_INLINE int
@@ -509,13 +487,6 @@ ACE_Thread_Mutex::acquire (void)
 
 ACE_INLINE int
 ACE_Thread_Mutex::acquire (ACE_Time_Value &tv)
-{
-  // ACE_TRACE ("ACE_Thread_Mutex::acquire");
-  return ACE_OS::thread_mutex_lock (&this->lock_, tv);
-}
-
-ACE_INLINE int
-ACE_Thread_Mutex::acquire (ACE_Time_Value *tv)
 {
   // ACE_TRACE ("ACE_Thread_Mutex::acquire");
   return ACE_OS::thread_mutex_lock (&this->lock_, tv);
@@ -760,15 +731,7 @@ ACE_Null_Mutex::acquire (void)
 ACE_INLINE int
 ACE_Null_Mutex::acquire (ACE_Time_Value &)
 {
-  errno = ETIME;
-  return -1;
-}
-
-ACE_INLINE int
-ACE_Null_Mutex::acquire (ACE_Time_Value *)
-{
-  errno = ETIME;
-  return -1;
+  return 0;
 }
 
 ACE_INLINE int

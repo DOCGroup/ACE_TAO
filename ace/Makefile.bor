@@ -184,7 +184,6 @@ OBJFILES = \
 	$(OBJDIR)\SV_Shared_Memory.obj \
 	$(OBJDIR)\Svc_Conf_l.obj \
 	$(OBJDIR)\Svc_Conf_y.obj \
-	$(OBJDIR)\Svc_Conf_Lexer_Guard.obj \
 	$(OBJDIR)\Svc_Handler.obj \
 	$(OBJDIR)\Synch.obj \
 	$(OBJDIR)\Process_Semaphore.obj \
@@ -250,6 +249,8 @@ INCLUDES = \
 	Free_List.cpp \
 	Future.cpp \
 	Future_Set.cpp \
+	Intrusive_List.cpp \
+	Intrusive_List_Node.cpp \
 	LOCK_SOCK_Acceptor.cpp \
 	Managed_Object.cpp \
 	Map_Manager.cpp \

@@ -43,8 +43,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   this->request_id_ = request_id;
   this->rd_ = rd;
 
-  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
-                                                      rd);
+  return 0;
 }
 
 void

@@ -1,14 +1,11 @@
 %{
 // $Id$
-
 #include "ace/ARGV.h"
 #include "ace/Svc_Conf.h"
 #include "ace/Module.h"
 #include "ace/Stream.h"
 
-ACE_RCSID (ace,
-           Svc_Conf_y,
-           "$Id$")
+ACE_RCSID(ace, Svc_Conf_y, "$Id$")
 
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
@@ -22,13 +19,9 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
 // #define YYDEBUG 1
 
 // Efficient memory allocation technique.
-ACE_Obstack_T<ACE_TCHAR> *ace_obstack = 0;
-
-// Keeps track of the number of errors encountered so far.
-int yyerrno = 0;
+ACE_Obstack *ace_obstack;
 
 %}
-
 %token ACE_DYNAMIC ACE_STATIC ACE_SUSPEND ACE_RESUME ACE_REMOVE ACE_USTREAM
 %token ACE_MODULE_T ACE_STREAM_T ACE_SVC_OBJ_T ACE_ACTIVE ACE_INACTIVE
 %token ACE_PATHNAME ACE_IDENT ACE_STRING
@@ -43,9 +36,6 @@ int yyerrno = 0;
 %type <static_node_> stream_ops
 %type <svc_record_> svc_location
 %type <location_node_> svc_initializer
-
-// Generate a pure (reentrant) parser -- GNU Bison only
-%pure_parser
 
 %%
 
@@ -318,7 +308,6 @@ parameters_opt
 pathname
   : ACE_PATHNAME
   | ACE_IDENT
-  | ACE_STRING
   ;
 
 %%
@@ -458,7 +447,7 @@ int
 main (int argc, char *argv[])
 {
   yyin = stdin;
-  ace_obstack = new ACE_Obstack_T<ACE_TCHAR>;
+  ace_obstack = new ACE_Obstack;
 
   // Try to reopen any filename argument to use YYIN.
   if (argc > 1 && (yyin = freopen (argv[1], "r", stdin)) == 0)

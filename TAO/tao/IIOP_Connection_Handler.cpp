@@ -23,6 +23,7 @@ ACE_RCSID(tao, IIOP_Connection_Handler, "$Id$")
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
+    pending_upcalls_ (1),
     tcp_properties_ (0),
     resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
 {
@@ -36,17 +37,18 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                          CORBA::Boolean flag,
+                                                          CORBA::Boolean /* flag*/,
                                                           void *arg)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
+    pending_upcalls_ (1),
     tcp_properties_ (ACE_static_cast
                      (TAO_IIOP_Properties *, arg)),
     resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO_IIOP_Transport (this, orb_core, flag));
+          TAO_IIOP_Transport (this, orb_core, 0));
 
   // store this pointer (indirectly increment ref count)
   this->transport(specific_transport);
@@ -204,9 +206,8 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                handle,
                rm));
 
-  long upcalls = this->decr_pending_upcalls ();
-
-  if (upcalls <= 0)
+  --this->pending_upcalls_;
+  if (this->pending_upcalls_ <= 0)
     {
       if (this->transport ()->wait_strategy ()->is_registered ())
         {
@@ -330,7 +331,7 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
 {
   // Increase the reference count on the upcall that have passed us.
-  this->incr_pending_upcalls ();
+  this->pending_upcalls_++;
 
   this->resume_flag_ = TAO_RESUMES_CONNECTION_HANDLER;
   TAO_Resume_Handle  resume_handle (this->orb_core (),
@@ -339,7 +340,7 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
   int retval = this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
-  if (this->decr_pending_upcalls () <= 0)
+  if (--this->pending_upcalls_ <= 0)
     retval = -1;
 
   if (retval == -1)

@@ -1,8 +1,9 @@
 // $Id$
 
 #include "tao/Wait_On_Read.h"
-#include "Transport.h"
-#include "Resume_Handle.h"
+#include "tao/Transport.h"
+#include "tao/Resume_Handle.h"
+#include "tao/Synch_Reply_Dispatcher.h"
 
 ACE_RCSID(tao, Wait_On_Read, "$Id$")
 
@@ -20,9 +21,9 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 // Wait on the read operation.
 int
 TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
-                        int &reply_received)
+                        TAO_Synch_Reply_Dispatcher &rd)
 {
-  reply_received = 0;
+  rd.state_changed (TAO_LF_Event::LFS_ACTIVE);
 
   // Do the same sort of looping that is done in other wait
   // strategies.
@@ -37,7 +38,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
       // If we got our reply, no need to run the loop any
       // further.
-      if (reply_received)
+      if (!rd.keep_waiting ())
         break;
 
       // @@ We are not checking for timeouts here...
@@ -47,12 +48,18 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
         break;
     }
 
-  if (reply_received == -1 || retval == -1)
+  if (rd.error_detected () == -1 || retval == -1)
     {
       this->transport_->close_connection ();
     }
 
-  return (reply_received == 1 ? 0 : reply_received);
+  if (rd.successful ())
+    return 0;
+
+  if (rd.error_detected ())
+    return -1;
+
+  return 1;
 }
 
 // No-op.

@@ -21,8 +21,6 @@ OBJFILES = \
 	$(OBJDIR)\fwdS.obj \
 	$(OBJDIR)\generic_objectC.obj \
 	$(OBJDIR)\generic_objectS.obj \
-	$(OBJDIR)\gperfC.obj \
-	$(OBJDIR)\gperfS.obj \
 	$(OBJDIR)\includedC.obj \
 	$(OBJDIR)\includedS.obj \
 	$(OBJDIR)\includingC.obj \
@@ -70,7 +68,6 @@ IDLFILES = \
         $(IDLDIR)\full.idl \
         $(IDLDIR)\fwd.idl \
         $(IDLDIR)\generic_object.idl \
-        $(IDLDIR)\gperf.idl \
         $(IDLDIR)\included.idl \
         $(IDLDIR)\including.idl \
         $(IDLDIR)\interface.idl \
@@ -113,9 +110,6 @@ $(IDLDIR)\fwdC.cpp $(IDLDIR)\fwdS.cpp: $(IDLDIR)\fwd.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\generic_objectC.cpp $(IDLDIR)\generic_objectS.cpp: $(IDLDIR)\generic_object.idl
-	$(TAO_IDL) $**
-
-$(IDLDIR)\gperfC.cpp $(IDLDIR)\gperfS.cpp: $(IDLDIR)\gperf.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\includedC.cpp $(IDLDIR)\includedS.cpp: $(IDLDIR)\included.idl

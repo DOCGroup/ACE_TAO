@@ -842,10 +842,6 @@ SOURCE=.\Svc_Conf_l.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Svc_Conf_Lexer_Guard.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Svc_Conf_y.cpp
 # End Source File
 # Begin Source File
@@ -1931,10 +1927,6 @@ SOURCE=.\SV_Shared_Memory.h
 # Begin Source File
 
 SOURCE=.\Svc_Conf.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Svc_Conf_Lexer_Guard.h
 # End Source File
 # Begin Source File
 

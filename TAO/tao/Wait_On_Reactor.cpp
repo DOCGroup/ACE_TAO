@@ -2,7 +2,8 @@
 
 #include "tao/Wait_On_Reactor.h"
 #include "tao/ORB_Core.h"
-#include "Transport.h"
+#include "tao/Transport.h"
+#include "tao/Synch_Reply_Dispatcher.h"
 
 ACE_RCSID(tao, Wait_On_Reactor, "$Id$")
 
@@ -17,7 +18,7 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 
 int
 TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
-                           int &reply_received)
+                           TAO_Synch_Reply_Dispatcher &rd)
 {
   // Reactor does not change inside the loop.
   ACE_Reactor* reactor =
@@ -32,7 +33,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
       // If we got our reply, no need to run the event loop any
       // further.
-      if (reply_received)
+      if (!rd.keep_waiting ())
         break;
 
       // Did we timeout? If so, stop running the loop.
@@ -48,13 +49,13 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
       // Otherwise, keep going...
     }
 
-  if (result == -1 || reply_received == -1)
+  if (result == -1 || rd.error_detected ())
     return -1;
 
   // Return an error if there was a problem receiving the reply.
   if (max_wait_time != 0)
     {
-      if (reply_received != 1 &&
+      if (rd.successful () &&
           *max_wait_time == ACE_Time_Value::zero)
         {
           result = -1;
@@ -64,7 +65,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   else
     {
       result = 0;
-      if (reply_received == -1)
+      if (rd.error_detected ())
         result = -1;
     }
 

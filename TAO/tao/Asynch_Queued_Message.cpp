@@ -59,6 +59,8 @@ TAO_Asynch_Queued_Message::fill_iov (int iovcnt_max,
 void
 TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
 {
+  this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
+
   size_t remaining_bytes = this->size_ - this->offset_;
   if (byte_count > remaining_bytes)
     {
@@ -68,6 +70,9 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
     }
   this->offset_ += byte_count;
   byte_count = 0;
+
+  if (this->all_data_sent ())
+    this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 }
 
 void

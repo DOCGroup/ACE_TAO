@@ -7,12 +7,10 @@
 #include "ace/Service_Manager.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
-#include "ace/Svc_Conf_Lexer_Guard.h"
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Object_Manager.h"
 
 #include "ace/Service_Config.h"
 
@@ -20,9 +18,7 @@
 #include "ace/Service_Config.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Service_Config,
-           "$Id$")
+ACE_RCSID(ace, Service_Config, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Config)
 
@@ -369,9 +365,6 @@ ACE_Service_Config::process_directives_i (void)
   // The fact that these are all global variables means that we really
   // can't be doing this processing in multiple threads
   // simultaneously...
-  // @@ It is actually now possible to do processing in multiple
-  //    threads since the lock acquired prior to entering this method
-  //    prevents more than thread from invoking this method.
   ace_yyerrno = 0;
   ace_yylineno = 1;
 
@@ -407,15 +400,17 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 
   ACE_UNUSED_ARG (directive);
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                            ace_mon,
-                            *ACE_Static_Object_Lock::instance (),
-                            -1));
+  ace_yyrestart (0);
 
-  ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (directive);
+  // Place <directive> into a buffer that the YY_INPUT macro knows how
+  // to process correctly.
+  ace_yydirective = directive;
 
   int result = ACE_Service_Config::process_directives_i ();
 
+  // Reset to 0 to avoid confusing the YY_INPUT macro on subsequent
+  // requests.
+  ace_yydirective = 0;
   return result;
 }
 
@@ -455,13 +450,7 @@ ACE_Service_Config::process_directives (void)
             }
           else
             {
-              ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                                        ace_mon,
-                                        *ACE_Static_Object_Lock::instance (),
-                                        -1));
-
-              ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (fp);
-
+              ace_yyrestart (fp);
               // Keep track of the number of errors.
               result += ACE_Service_Config::process_directives_i ();
             }
@@ -678,6 +667,8 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     // Make sure to save/restore errno properly.
     ACE_Errno_Guard error (errno);
 
+    ace_yy_delete_parse_buffer ();
+
     if (ignore_debug_flag == 0)
       {
         // Reset debugging back to the way it was when we came into
@@ -807,6 +798,9 @@ ACE_Service_Config::close (void)
   // Delete the dynamically allocated static_svcs instance.
   delete ACE_Service_Config::static_svcs_;
   ACE_Service_Config::static_svcs_ = 0;
+
+  // We've prepared a buffer that we no longer need. Delete it.
+  ace_yy_delete_parse_buffer ();
 
   return 0;
 }

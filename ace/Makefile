@@ -181,8 +181,7 @@ SVCCONF_FILES = \
   Service_Templates \
   Shared_Object \
   Svc_Conf_l \
-  Svc_Conf_y \
-  Svc_Conf_Lexer_Guard
+  Svc_Conf_y
 STREAMS_FILES = \
   CDR_Base \
   CDR_Stream \
@@ -264,6 +263,8 @@ TEMPLATE_FILES = \
 	   Hash_Map_With_Allocator_T \
            Hash_Cache_Map_Manager_T \
            IOStream_T \
+	   Intrusive_List \
+	   Intrusive_List_Node \
            LOCK_SOCK_Acceptor \
            Local_Name_Space_T \
            Malloc_T \
@@ -527,24 +528,27 @@ all.nested: all.local
 	echo >> $@ "// EOF";
 
 Svc_Conf_y.cpp: Svc_Conf.y
-	if [ -f /pkg/gnu/bin/bison ]; then \
-          /pkg/gnu/bin/bison -d Svc_Conf.y; \
+	if [ -f /home/cs/faculty/schmidt/bin/SunOS5/yacc ]; then \
+          /home/cs/faculty/schmidt/bin/SunOS5/yacc -d Svc_Conf.y; \
           sed -e "s/char \*getenv/char *ace_foo/g" \
               -e "s/= getenv/= ACE_OS::getenv/g" \
+              -e "s/yyerrlab://g" \
+              -e "s/yynewerror://g" \
               -e "s/yy/ace_yy/g" \
               -e "s/YY/ACE_YY/g" \
-              -e "s/Svc_Conf\.tab\.c/Svc_Conf_y.cpp/g" < Svc_Conf.tab.c > /tmp/$@; \
+              -e "s/y\.tab\.c/Svc_Conf_y.cpp/g" < y.tab.c > /tmp/$@; \
           cp /tmp/$@ $@; \
+	  patch < ../etc/Svc_Conf_y.cpp.diff; \
 	  echo '// $$'\I\d'$$' > Svc_Conf_Tokens.h; \
-	  cat Svc_Conf.tab.h >> Svc_Conf_Tokens.h; \
-          $(RM) -f /tmp/$@ Svc_Conf.tab.c Svc_Conf.tab.h Svc_Conf_y.cpp.orig; \
+	  cat y.tab.h >> Svc_Conf_Tokens.h; \
+          $(RM) -f /tmp/$@ y.tab.c y.tab.h Svc_Conf_y.cpp.orig; \
         else \
           touch $@; \
         fi
 
 Svc_Conf_l.cpp: Svc_Conf.l
-	if [ -f /pkg/gnu/bin/flex ]; then \
-          /pkg/gnu/bin/flex -t -I Svc_Conf.l > $@; \
+	if [ -f /home/cs/faculty/schmidt/bin/SunOS5/flex ]; then \
+          /home/cs/faculty/schmidt/bin/SunOS5/flex -t -I Svc_Conf.l > $@; \
           sed -e "s/unistd/stdio/g" \
               -e "s/yy/ace_yy/g" \
               -e "s/YY/ACE_YY/g" \
@@ -555,7 +559,7 @@ Svc_Conf_l.cpp: Svc_Conf.l
               -e "s/realloc( ptr, size );/realloc( ACE_MALLOC_T (ptr), size );/g" \
               -e "s@#include <stdio\.h>@#include \"ace/OS.h\"@" \
               -e "s@#include <@#include /**/ <@" \
-              -e "s@ECHO@ACE_SVC_CONF_ECHO@" < $@ > /tmp/$@; \
+              -e "s@ECHO@ACE_SVC_CONF_ECHO@" < $@ >> /tmp/$@; \
           cp /tmp/$@ $@; \
           patch < ../etc/Svc_Conf_l.cpp.diff; \
           $(RM) -f /tmp/$@ Svc_Conf_l.cpp.orig; \
@@ -632,8 +636,7 @@ endif # GHS
  OS.i \
  Template_Instantiations.cpp
 
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
- OS.h \
+.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -937,8 +940,7 @@ endif # GHS
  OS.i \
  Sched_Params.i
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
- ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -8575,8 +8577,7 @@ endif # GHS
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
- DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
  pre.h \
  IO_SAP.h \
  Flag_Manip.h \
@@ -10113,8 +10114,7 @@ endif # GHS
  OS_Log_Msg_Attributes.h \
  OS_Log_Msg_Attributes.inl
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
- TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
  pre.h \
  IPC_SAP.h \
  Flag_Manip.h \
@@ -12479,8 +12479,7 @@ endif # GHS
  High_Res_Timer.h \
  High_Res_Timer.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
- DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -12958,7 +12957,6 @@ endif # GHS
  Service_Manager.i \
  Service_Repository.h \
  Service_Repository.i \
- Svc_Conf_Lexer_Guard.h \
  Containers.h \
  Containers.i \
  Containers_T.h \
@@ -14046,132 +14044,6 @@ endif # GHS
  Time_Value.h \
  Stream.i \
  Stream.cpp
-
-.obj/Svc_Conf_Lexer_Guard.o .obj/Svc_Conf_Lexer_Guard.so .shobj/Svc_Conf_Lexer_Guard.o .shobj/Svc_Conf_Lexer_Guard.so: Svc_Conf_Lexer_Guard.cpp \
- Svc_Conf.h \
- pre.h \
- Obstack.h \
- Obstack_T.h \
- Obchunk.h \
- Malloc.h \
- ACE.h \
- OS.h \
- config-all.h \
- config.h \
- config-linux.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- ace_wchar.inl \
- OS_Errno.h \
- OS_Export.h \
- OS_Errno.inl \
- OS_Dirent.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Flag_Manip.h \
- Flag_Manip.i \
- Handle_Ops.h \
- Handle_Ops.i \
- Lib_Find.h \
- Lib_Find.i \
- Init_ACE.h \
- Init_ACE.i \
- Sock_Connect.h \
- Sock_Connect.i \
- ACE.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- OS_Log_Msg_Attributes.h \
- OS_Log_Msg_Attributes.inl \
- Malloc.i \
- Malloc_T.h \
- Synch.h \
- Synch.i \
- Synch_T.h \
- Synch_T.i \
- Thread.h \
- Thread_Adapter.h \
- Base_Thread_Adapter.h \
- Base_Thread_Adapter.inl \
- Thread_Adapter.inl \
- Thread.i \
- Atomic_Op.i \
- Synch_T.cpp \
- Malloc_Allocator.h \
- Malloc_Base.h \
- Malloc_Allocator.i \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Event_Handler.h \
- Event_Handler.i \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Unbounded_Set.h \
- Node.h \
- Node.cpp \
- Unbounded_Set.inl \
- Unbounded_Set.cpp \
- Memory_Pool.i \
- Obchunk.i \
- Obstack_T.i \
- Obstack_T.cpp \
- Service_Config.h \
- Service_Object.h \
- Shared_Object.h \
- Shared_Object.i \
- Service_Object.i \
- Unbounded_Queue.h \
- Unbounded_Queue.inl \
- Unbounded_Queue.cpp \
- SString.h \
- SString.i \
- Service_Config.i \
- Reactor.h \
- Handle_Set.h \
- Handle_Set.i \
- Timer_Queue.h \
- Timer_Queue_T.h \
- Test_and_Set.h \
- Test_and_Set.i \
- Test_and_Set.cpp \
- Timer_Queue_T.i \
- Timer_Queue_T.cpp \
- Reactor.i \
- Reactor_Impl.h \
- Svc_Conf_Tokens.h \
- Parse_Node.h \
- Service_Types.h \
- Service_Types.i \
- DLL.h \
- Parse_Node.i \
- Svc_Conf_Lexer_Guard.h
 
 .obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp \
  CDR_Base.h \

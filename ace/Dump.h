@@ -11,10 +11,7 @@
  * with a central in-memory "database" that can dump the state of all
  * live ACE objects (e.g., from within a debugger).
  *
- * The macros which allow easy registration and removal of objects to be
- * dumped (ACE_REGISTER_OBJECT and ACE_REMOVE_OBJECT) are turned into
- * no-ops by compiling with the ACE_NDEBUG macro defined. This allows
- * usage to be removed in "release mode" builds without changing code.
+ * To turn on this feature simply compile with -DACE_NDEBUG
  *
  * There are several interesting aspects to this design:
  *

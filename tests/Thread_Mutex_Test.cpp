@@ -64,10 +64,12 @@ test (void *args)
 
       if (mutex->acquire (timeout) != 0)
         {
-          if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) = mutex acquisition ")
-                        ACE_TEXT ("timed out\n")));
+          if (errno == ETIMEDOUT || errno == EBUSY)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) = mutex acquisition ")
+                          ACE_TEXT ("timed out\n")));
+            }
           else if (errno == ENOTSUP)
             {
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)

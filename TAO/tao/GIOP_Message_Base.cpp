@@ -11,6 +11,7 @@
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "Transport.h"
+#include "tao/LF_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
@@ -550,11 +551,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  if (TAO_debug_level > 0)
-    this->dump_msg ("recv",
-                    ACE_reinterpret_cast (u_char *,
-                                          qd->msg_block_->rd_ptr ()),
-                    qd->msg_block_->length ());
+  this->dump_msg ("recv",
+                  ACE_reinterpret_cast (u_char *,
+                                        qd->msg_block_->rd_ptr ()),
+                  qd->msg_block_->length ());
 
 
   // Create a input CDR stream.
@@ -612,11 +612,10 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  if (TAO_debug_level > 0)
-    this->dump_msg ("recv",
-                    ACE_reinterpret_cast (u_char *,
-                                          qd->msg_block_->rd_ptr ()),
-                    qd->msg_block_->length ());
+  this->dump_msg ("recv",
+                  ACE_reinterpret_cast (u_char *,
+                                        qd->msg_block_->rd_ptr ()),
+                  qd->msg_block_->length ());
 
 
   // Create a empty buffer on stack

@@ -30,15 +30,11 @@ if ($^O eq "MSWin32") {
     $priority2 = 1;
     $priority3 = 5;
 }
-elsif ($^O eq "dec_osf") {
+
+if ($^O eq "dec_osf") {
     $priority1 = 20;
     $priority2 = 25;
     $priority3 = 30;
-}
-elsif ($^O eq "hpux") {
-    $priority1 = 17;
-    $priority2 = 22;
-    $priority3 = 29;
 }
 
 # Clean up leftovers from previous runs.
