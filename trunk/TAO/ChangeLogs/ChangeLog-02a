@@ -1,3 +1,14 @@
+Fri Sep 22 14:22:47 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/locate_request.html:
+        * orbsvcs/examples/RtEC/Schedule/Schedule.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies_Runtime.h:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.h:
+
+          The CVS Id strings were not correctly formatted, so CVS
+          never recognized them or updated them.  Fixed.
+
 Fri Sep 22 14:21:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/README:
