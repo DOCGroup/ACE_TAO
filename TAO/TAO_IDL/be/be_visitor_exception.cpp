@@ -977,4 +977,6 @@ int be_visitor_exception_ctor_assign::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+  this->ctx_->alias (0);
+  return 0;
 }
