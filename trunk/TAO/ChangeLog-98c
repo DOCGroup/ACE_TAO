@@ -22,6 +22,11 @@ Wed Mar 25 11:11:47 1998  David L. Levine  <levine@cs.wustl.edu>
           tests/Thruput/TAO/server.cpp:
           removed unnecessary #include of ace/streams.h.
 
+        * tao/Makefile,tests/Cubit/TAO/IDL_Cubit/Makefile,
+          tests/NestedUpcall/Makefile:
+          removed CPPFLAGS, LDFLAGS, and DCFLAGS because they duplicated
+          what's already in taoconfig.mk or platform_macros.GNU.
+
 Wed Mar 25 09:08:44 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Added comment to the concurrency
