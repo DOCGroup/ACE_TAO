@@ -1215,6 +1215,7 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
     return 0;
 #else
   // Hackish because of missing buffer size!
+  ACE_UNUSED_ARG (maxlen);
   ACE_OSCALL_RETURN (::cuserid (user), char *, 0);
 #endif /* VXWORKS */
 }
