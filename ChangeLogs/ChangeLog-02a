@@ -1,3 +1,10 @@
+Sun Sep 23 19:28:06 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Reactor.h (ACE_Reactor): Fixed comments for
+	  <end_reactor_event_loop> and <reactor_event_loop_done>.  Both
+	  methods work on an instance of reactor, not the global singleton
+	  reacotr.  Thanks to Doug for noticing this.
+
 Sun Sep 23 10:02:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/High_Res_Timer.h: Removed a question mark "?",  in a line
@@ -55,7 +62,7 @@ Fri Sep 21 17:11:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  suggesting this.
 
 	* THANKS: Added Tom Wagner <TomW@CoManage.net> to the hall of
-	  fame. 
+	  fame.
 
 Fri Sep 21 22:11:53 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -210,16 +217,16 @@ Mon Sep 17 11:36:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  moved as a new file.
 
 	* tests/run_tests_remote.lst: Renamed the run_tests.lst as
-	  run_tests_shell.lst. This is invoked by run_tests.sh 
+	  run_tests_shell.lst. This is invoked by run_tests.sh
 
 	* tests/run_tests.sh: Renamed as a new file.
-	
+
 	* tests/run_tests_remote.sh: Renamed the file run_tests.sh as this
 	  one. This script can be used to run tests remotely on a
 	  CHORUS/ClassiX/MVME targets. Further this can also be used to
 	  run tests on platforms that dont support perl or do not have
-	  perl. 
-  
+	  perl.
+
 Sun Sep 16 11:19:01 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.20 released.

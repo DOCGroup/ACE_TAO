@@ -169,14 +169,12 @@ public:
                                                 REACTOR_EVENT_HOOK = 0);
 
   /**
-   * Instruct the <ACE_Reactor::instance> to terminate its event loop
-   * and notifies the <ACE_Reactor::instance> so that it can wake up
-   * and close down gracefully.
+   * Instruct the Reactor to terminate its event loop and notifies the
+   * Reactor so that it can wake up and close down gracefully.
    */
   virtual int end_reactor_event_loop (void);
 
-  /// Indicate if the <ACE_Reactor::instance>'s event loop has been
-  /// ended.
+  /// Indicate if the Reactor's event loop has been ended.
   virtual int reactor_event_loop_done (void);
 
   /// Resets the <ACE_Reactor::end_event_loop_> static so that the
