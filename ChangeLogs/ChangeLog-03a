@@ -1,3 +1,9 @@
+Wed May  2 11:10:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added a colon to seperate the
+	  run_test.pl specification from "!" that is used to indicate
+	  where the scripts shouldn't be run.
+
 Wed May 02 05:40:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
