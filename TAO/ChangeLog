@@ -1,3 +1,8 @@
+Tue Oct 28 08:20:30 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
+          Minor coding style changes.
+
 Fri Oct 24 14:42:39 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:

@@ -68,9 +68,10 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
     if (result == 0)
     {
       CORBA::Object_var obj = CORBA::Object::_nil ();
-      if (rm_ior_ != 0)
+      if (this->rm_ior_ != 0)
       {
-        obj = this->orb_->string_to_object (rm_ior_ ACE_ENV_ARG_PARAMETER);
+        obj = this->orb_->string_to_object (
+          this->rm_ior_ ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
       else
