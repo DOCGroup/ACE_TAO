@@ -54,11 +54,23 @@ LINK32=link.exe
 # Name "Gateway - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\Concrete_Proxy_Handlers.cpp
+SOURCE=.\Concrete_Connection_Handlers.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Config_Files.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler_Acceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler_Connector.cpp
 # End Source File
 # Begin Source File
 
@@ -75,18 +87,6 @@ SOURCE=.\Gateway.cpp
 # Begin Source File
 
 SOURCE=.\Options.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Proxy_Handler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Proxy_Handler_Acceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Proxy_Handler_Connector.cpp
 # End Source File
 # End Target
 # End Project
