@@ -97,6 +97,7 @@ TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM
 TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST
 TAO/examples/Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Queued_Message_Test/run_test.pl
+TAO/tests/DLL_ORB/run_test.pl
 
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
