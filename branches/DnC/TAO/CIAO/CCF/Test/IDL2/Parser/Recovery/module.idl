@@ -1,0 +1,38 @@
+// file      : CCF/Test/IDL2/Parsing/Recovery/module.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+// Module declaration syntax errors
+//
+//
+
+//
+
+module;
+
+//
+
+module M;
+
+//
+
+module M {;
+
+//
+
+module M {}
+
+
+//
+
+module M {
+  interface I;
+;
+
+//
+
+module N
+{
+  interface I;
+}
+
