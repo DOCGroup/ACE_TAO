@@ -1,3 +1,19 @@
+Sun Nov  5 17:23:55 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * etc/ace.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/tao.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtevent.doxygen:
+          Commit doxygen templates, I'm still writing the script to use
+          them effectively.
+
 Sun Nov  5 14:37:13 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
