@@ -2531,8 +2531,11 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #if defined (ACE_WIN32)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
 #else
-      ACE_Time_Value timeout (0, msec_timeout * 1000);
-      result = ACE_OS::sema_wait (&cv->sema_, timeout);
+      // Inline the call to ACE_OS::sema_wait () because it takes an
+      // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
+      int ticks_per_sec = ::sysClkRateGet ();
+      int ticks = msec_timeout * ticks_per_sec / ACE_ONE_SECOND_IN_MSECS;
+      result = ::semTake (cv->sema_.sema_, ticks);
 #endif /* ACE_WIN32 */
     }
 
@@ -2558,8 +2561,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
         }
       result = -1;
     } 
-#else
-  if (result != OK)
+#else /* VXWORKS */
+  if (result == ERROR)
     {
       switch (errno)
         {
@@ -2572,7 +2575,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
         }
       result = -1;
     }
-#endif /* ACE_WIN32 */
+#endif /* VXWORKS */
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   else if (external_mutex->type_ == USYNC_PROCESS)
     {
