@@ -14,8 +14,10 @@ for possible in "$TMPDIR" "$TEMP" "$TMP"; do
   fi
 done
 
-## Send the output to a temporary file and save the return code
-$@ -DTAO_INSTANTIATING_TEMPLATES > "$usrtmp/$output" 2>&1
+## Send the output to a temporary file and save the return code.
+## This macro is being passed during the to avoid #include errors
+## while instantiating templates.
+$@ -DACE_VACPP_INSTANTIATING_TEMPLATES > "$usrtmp/$output" 2>&1
 status=$?
 
 ## Print the output to stdout, but filter duplicate symbol warnings from
