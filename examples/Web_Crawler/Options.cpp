@@ -9,20 +9,20 @@
 ACE_RCSID(Web_Crawler, Options, "$Id$")
 
 int 
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("df:h:i:l:rt:u:vo:p:"));
 
   ACE_LOG_MSG->open (argv[0]);
 
-  this->hostname_ = "www.cs.wustl.edu";
-  this->uri_ = "index.html";
+  this->hostname_ = ACE_TEXT ("www.cs.wustl.edu");
+  this->uri_ = ACE_TEXT ("index.html");
   this->recurse_ = 0;
   this->debug_ = 0;
   this->timeout_.sec (ACE_DEFAULT_TIMEOUT);
   this->url_filter_ = 0;
   this->verbose_ = 0;
-  this->order_ = "FIFO";
+  this->order_ = ACE_TEXT ("FIFO");
   this->port_no_ = ACE_DEFAULT_HTTP_PORT;
   
   // The default is to make this limit as large as possible.
@@ -33,58 +33,58 @@ Options::parse_args (int argc, char *argv[])
        )
     switch (c)
       {
-      case 'd':
+      case ACE_TEXT ('d'):
         this->debug_ = 1;
         break;
-      case 'f':
+      case ACE_TEXT ('f'):
         this->url_filter_ = getopt.opt_arg ();
         break;
-      case 'h':
+      case ACE_TEXT ('h'):
         this->hostname_ = getopt.opt_arg ();
         break;
-      case 'i':
+      case ACE_TEXT ('i'):
         this->uri_ = getopt.opt_arg ();
         break;
-      case 'l':
+      case ACE_TEXT ('l'):
         this->handle_limit_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
-      case 'r':
+      case ACE_TEXT ('r'):
         this->recurse_ = 1;
         break;
-      case 't':
+      case ACE_TEXT ('t'):
         this->timeout_.sec (ACE_OS::atoi (getopt.opt_arg ()));
         break;
-      case 'u':
+      case ACE_TEXT ('u'):
         {
           this->hostname_ = getopt.opt_arg ();
-          char *s = ACE_OS::strchr (getopt.opt_arg (), '/');
+          ACE_TCHAR *s = ACE_OS::strchr (getopt.opt_arg (), ACE_TEXT ('/'));
           if (s != 0)
             {
               this->uri_ = s + 1;
-              *s = '\0';
+              *s = ACE_TEXT ('\0');
             }
           else
             ACE_ERROR ((LM_ERROR,
-                        "invalid URL %s\n",
+                        ACE_TEXT ("invalid URL %s\n"),
                         getopt.opt_arg ()));
         }
         break;
-      case 'v':
+      case ACE_TEXT ('v'):
         this->verbose_ = 1;
         break;
-      case 'o':
+      case ACE_TEXT ('o'):
         {
         this->order_ = getopt.opt_arg ();
         }
         break;
-      case 'p':
+      case ACE_TEXT ('p'):
         this->port_no_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       default:
         ACE_ERROR ((LM_ERROR,
-                    "usage: %n [-d] [-f filter] [-h hostname]"
-                    " [-l handle-limit] [-r] [-t timeout] [-u URI]"
-                    " [-v]\n%a",
+                    ACE_TEXT ("usage: %n [-d] [-f filter] [-h hostname]")
+                    ACE_TEXT (" [-l handle-limit] [-r] [-t timeout] [-u URI]")
+                    ACE_TEXT (" [-v]\n%a"),
                     1));
 
         /* NOTREACHED */

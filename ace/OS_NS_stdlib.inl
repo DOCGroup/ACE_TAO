@@ -202,7 +202,7 @@ extern "C" {
 #endif
 
 ACE_INLINE int
-ACE_OS::putenv (const ACE_TCHAR *string)
+ACE_OS::putenv (const char *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
 #if defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
@@ -212,13 +212,26 @@ ACE_OS::putenv (const ACE_TCHAR *string)
 #elif defined (ACE_LACKS_ENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
 #else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
   // VxWorks declares ::putenv with a non-const arg.
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv ((char *) string), int, -1);
 #endif /* ACE_HAS_WINCE */
 }
+
+#if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
+ACE_INLINE int
+ACE_OS::putenv (const wchar_t *string)
+{
+  ACE_OS_TRACE ("ACE_OS::putenv");
+#if defined (ACE_HAS_WINCE)
+  // WinCE doesn't have the concept of environment variables.
+  ACE_UNUSED_ARG (string);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
+#endif /* ACE_HAS_WINCE */
+}
+#endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
 ACE_INLINE void
 ACE_OS::qsort (void *base,

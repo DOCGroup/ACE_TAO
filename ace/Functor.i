@@ -61,6 +61,15 @@ ACE_Hash<char>::operator () (char t) const
   return t;
 }
 
+#if defined (ACE_HAS_WCHAR) && defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+ACE_INLINE unsigned long
+ACE_Hash<wchar_t>::operator () (wchar_t t) const
+{
+  return t;
+}
+#endif /* ACE_HAS_WCHAR && ACE_WSTRING_HAS_USHORT_SUPPORT */
+
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE unsigned long
 ACE_Hash<signed char>::operator () (signed char t) const
@@ -113,14 +122,14 @@ ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE unsigned long
-ACE_Hash<const ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
+ACE_Hash<const char *>::operator () (const char *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE unsigned long
-ACE_Hash<ACE_TCHAR *>::operator () (const ACE_TCHAR *t) const
+ACE_Hash<char *>::operator () (const char *t) const
 {
   return ACE::hash_pjw (t);
 }
@@ -135,14 +144,14 @@ ACE_Hash<void *>::operator () (const void *t) const
 /***********************************************************************/
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Equal_To<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
+ACE_Equal_To<const char *>::operator () (const char *lhs, const char *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Equal_To<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
+ACE_Equal_To<char *>::operator () (const char *lhs, const char *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
@@ -184,61 +193,63 @@ ACE_Equal_To<ACE_UINT64>::operator () (const ACE_UINT64 lhs, const ACE_UINT64 rh
 /****************************************************************************/
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Less_Than<const ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
+ACE_Less_Than<const char *>::operator () (const char *lhs, const char *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Less_Than<ACE_TCHAR *>::operator () (const ACE_TCHAR *lhs, const ACE_TCHAR *rhs) const
+ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 
-#if defined (ACE_USES_WCHAR)
+#if defined (ACE_HAS_WCHAR)
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE unsigned long
-ACE_Hash<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *t) const
+ACE_Hash<const wchar_t *>::operator () (const wchar_t *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE unsigned long
-ACE_Hash<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *t) const
+ACE_Hash<wchar_t *>::operator () (const wchar_t *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Equal_To<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+ACE_Equal_To<const wchar_t *>::operator () (const wchar_t *lhs,
+                                            const wchar_t *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Equal_To<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+ACE_Equal_To<wchar_t *>::operator () (const wchar_t *lhs,
+                                      const wchar_t *rhs) const
 {
   return !ACE_OS::strcmp (lhs, rhs);
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Less_Than<const ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+ACE_Less_Than<const wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE int
-ACE_Less_Than<ACE_ANTI_TCHAR *>::operator () (const ACE_ANTI_TCHAR *lhs, const ACE_ANTI_TCHAR *rhs) const
+ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-#endif  // ACE_USES_WCHAR
+#endif  // ACE_HAS_WCHAR

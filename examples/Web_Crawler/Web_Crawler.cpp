@@ -17,7 +17,7 @@ Web_Crawler::Web_Crawler (void)
 }
 
 int
-Web_Crawler::open (int argc, char *argv[])
+Web_Crawler::open (int argc, ACE_TCHAR *argv[])
 {
   if (OPTIONS::instance ()->parse_args (argc, argv) == -1)
     return -1;

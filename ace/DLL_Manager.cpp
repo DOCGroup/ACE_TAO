@@ -1,4 +1,3 @@
-// DLL_Manager.cpp
 // $Id$
 
 #include "ace/DLL_Manager.h"
@@ -506,7 +505,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
               typedef int (*dll_unload_policy)(void);
               dll_unload_policy the_policy = 0;
               void *unload_policy_ptr =
-                dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
+                dll_handle->symbol (ACE_LIB_TEXT ("_get_dll_unload_policy"), 1);
               ptrdiff_t temp_p =
                 reinterpret_cast<ptrdiff_t> (unload_policy_ptr);
               the_policy =

@@ -44,7 +44,7 @@ public:
   ~Web_Crawler (void);
   // Destructor.
 
-  int open (int argc, char *argv[]);
+  int open (int argc, ACE_TCHAR *argv[]);
   // Parses the command-line options and initializes the
   // <URL_Visitor_Factory>.
 

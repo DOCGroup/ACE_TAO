@@ -97,7 +97,7 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
 
 #if defined (ACE_WIN32)
 FILE *
-ACE_OS::fopen (const ACE_TCHAR *filename,
+ACE_OS::fopen (const char *filename,
                const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
@@ -149,6 +149,63 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
     }
   return 0;
 }
+
+#if defined (ACE_HAS_WCHAR)
+FILE *
+ACE_OS::fopen (const wchar_t *filename,
+               const ACE_TCHAR *mode)
+{
+  ACE_OS_TRACE ("ACE_OS::fopen");
+  int hmode = _O_TEXT;
+
+  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
+    ACE_OS::fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
+
+  ACE_HANDLE handle = ACE_OS::open (filename, hmode);
+  if (handle != ACE_INVALID_HANDLE)
+    {
+# if defined (ACE_HAS_WINCE)
+      FILE *fp = ::_wfdopen (handle, mode);
+      if (fp != 0)
+      {
+        checkUnicodeFormat(fp);
+        return fp;
+      }
+# else
+      hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
+#   if defined (ACE_WIN64)
+      int fd = _open_osfhandle (intptr_t (handle), hmode);
+#   else
+      int fd = _open_osfhandle (long (handle), hmode);
+#   endif /* ACE_WIN64 */
+      if (fd != -1)
+        {
+#   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
+          FILE *fp = ::_fdopen (fd, ACE_const_cast (char *, mode));
+#   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+          FILE *fp = ::_wfdopen (fd, ACE_const_cast (wchar_t *, mode));
+#   elif defined (ACE_USES_WCHAR)
+          FILE *fp = ::_wfdopen (fd, mode);
+#   else
+          FILE *fp = ::fdopen (fd, mode);
+#   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
+          if (fp != 0)
+          {
+#   if defined (ACE_USES_WCHAR)
+            checkUnicodeFormat(fp);
+#   endif  // ACE_USES_WCHAR
+            return fp;
+          }
+          _close (fd);
+        }
+# endif  // ACE_HAS_WINCE
+
+      ACE_OS::close (handle);
+    }
+  return 0;
+}
+#endif /* ACE_HAS_WCHAR */
+
 #endif /* ACE_WIN32 */
 
 int

@@ -22,7 +22,8 @@ int
 URL_Command::execute (void)
 {
 
-  ACE_CString check_string (this->url_->url_addr ().get_path_name ());
+  ACE_CString check_string
+    (ACE_TEXT_ALWAYS_CHAR (this->url_->url_addr ().get_path_name ()));
   if (check_string.find ("news:") >= 0)
     return 0;
 
@@ -105,18 +106,18 @@ Command_Processor::insert (Command *command)
   // According to the order specified the commands are removed from the queue.
   if (this->url_queue_.is_full() != 1)
     {
-      if (ACE_OS::strcmp (OPTIONS::instance ()->order (),"FIFO") == 0)
+      if (ACE_OS::strcmp (OPTIONS::instance ()->order (), ACE_TEXT ("FIFO")) == 0)
         {
           if (this->url_queue_.enqueue_tail (command) !=0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n", "enqueue_tail"),
+                               ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_tail")),
                               - 1);
         }
-      if (ACE_OS::strcmp (OPTIONS::instance ()->order (),"LIFO") == 0)
+      if (ACE_OS::strcmp (OPTIONS::instance ()->order (), ACE_TEXT ("LIFO")) == 0)
         {
           if (this->url_queue_.enqueue_head (command) !=0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n", "enqueue_head"),
+                               ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_head")),
                               - 1);
         }
     }
