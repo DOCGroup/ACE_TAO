@@ -19,10 +19,8 @@
 // ********* class Coffee_i ****************
 // Constructor
 
-Coffee_i::Coffee_i (const char *name,
-                    const char *obj_name)
-  : name_ (name),
-    POA_Coffee (obj_name)
+Coffee_i::Coffee_i (const char *name)
+  : name_ (name)
 {
 }
 
@@ -56,8 +54,7 @@ Coffee_i::description (const Coffee::Desc &description,
 
 Param_Test_i::Param_Test_i (const char *coffee_name,
                             const char *obj_name)
-  : obj_ (new Coffee_i (coffee_name)),
-    POA_Param_Test (obj_name)
+  : obj_ (coffee_name)
 {
 }
 
@@ -203,9 +200,9 @@ Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
 
 // make a Coffee object
 Coffee_ptr
-Param_Test_i::make_coffee (CORBA::Environment & /*env*/)
+Param_Test_i::make_coffee (CORBA::Environment &env)
 {
-  return Coffee::_duplicate (this->obj_.in ());
+  return this->obj_._this (env);
 }
 
 // test for object references
@@ -215,17 +212,36 @@ Param_Test_i::test_objref (Coffee_ptr o1,
                            Coffee_out o3,
                            CORBA::Environment &env)
 {
-  // o1's attribute should be same as the one we have
-  if (this->obj_->_is_equivalent (o1, env))
+  Coffee_ptr ret = Coffee::_nil ();
+  
+  TAO_TRY
     {
-      o2 = Coffee::_duplicate (this->obj_.in ());
-      o3 = Coffee::_duplicate (this->obj_.in ());
-      return Coffee::_duplicate (this->obj_.in ());
+      Coffee_var myobj = obj_._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (myobj->_is_equivalent (o1, env))
+        {
+          o2 = Coffee::_duplicate (myobj.in ());
+          o3 = Coffee::_duplicate (myobj.in ());
+          ret = Coffee::_duplicate (myobj.in ());
+        }
+      else
+        {
+          o2 = Coffee::_nil ();
+          o3 = Coffee::_nil ();
+        }
     }
-  else
+  TAO_CATCH (CORBA::SystemException, sysex)
     {
-      o2 = Coffee::_nil ();
-      o3 = Coffee::_nil ();
-      return Coffee::_nil ();
+      TAO_TRY_ENV.print_exception ("System Exception");
+      env.exception (TAO_TRY_ENV.exception ());
     }
+  TAO_CATCH (CORBA::UserException, userex)
+    {
+      TAO_TRY_ENV.print_exception ("User Exception");
+      env.exception (TAO_TRY_ENV.exception ());
+    }
+  TAO_ENDTRY;
+
+  return ret;
 }
