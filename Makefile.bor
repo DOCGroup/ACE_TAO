@@ -6,6 +6,8 @@ DIRS = \
         ace \
         examples \
         performance-tests \
-        tests
+        tests \
+        XML \
+        XML\tests
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
