@@ -1,3 +1,9 @@
+Wed Dec 17 09:26:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance.mpc:
+
+	  Fixed a typo that prevented the library from building.
+
 Tue Dec 16 07:52:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/default_resource.cpp (get_reactor): Changed
