@@ -119,7 +119,11 @@ endif
 	-$(RANLIB) $@
 
 # Note that if you don't want to build shared libraries, just remove the $(VSHOBJS)
+ifdef SHLIBBUILD
 $(VSHLIB): $(VSHOBJS) $(STATLIB)
+else
+$(VSHLIB): $(VSHOBJS1) $(STATLIB)
+endif
 ifdef PRELIB
 	$(PRELIB)
 endif
