@@ -133,7 +133,7 @@ ACE_Dev_Poll_Reactor_Notify::close (void)
   return this->notification_pipe_.close ();
 }
 
-ssize_t
+int
 ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
                                      ACE_Reactor_Mask mask,
                                      ACE_Time_Value *timeout)
