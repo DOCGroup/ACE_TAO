@@ -247,12 +247,6 @@ TAO_Contained_i::name_i (const char *name
                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (exists)
-    {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
-                                   CORBA::COMPLETED_NO));
-    }
-
   // Reset the local name.
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "name",

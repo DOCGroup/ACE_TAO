@@ -41,7 +41,9 @@ IFR_Service::init (int argc,
                                                    argv,
                                                    this->orb_.in ());
       if (result == -1)
-        return result;
+        {
+          return result;
+        }
 
     }
   ACE_CATCHANY

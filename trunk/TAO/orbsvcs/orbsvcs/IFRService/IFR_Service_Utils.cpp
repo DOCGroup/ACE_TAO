@@ -700,7 +700,7 @@ TAO_IFR_Service_Utils::name_exists (
 
           if ((*checker) (defn_name.fast_rep ()) != 0)
             {
-              ACE_THROW (CORBA::BAD_PARAM (3,
+              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
                                            CORBA::COMPLETED_NO));
             }
         }
