@@ -2484,7 +2484,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Handle the easy case first.
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
-#if defined (ACE_HAS_WTHREADS)
+#if defined (ACE_HAS_WTHREADS) || defined (VXWORKS)
 
   // It's ok to increment this because the <external_mutex> must be
   // locked by the caller.
@@ -2519,15 +2519,20 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   else
 #endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
     {
-      // We keep the lock held just long enough to increment the count of
-      // waiters by one.  Note that we can't keep it held across the call
-      // to WaitForSingleObject since that will deadlock other calls to
-      // ACE_OS::cond_signal().
+      // We keep the lock held just long enough to increment the count
+      // of waiters by one.  Note that we can't keep it held across
+      // the call to WaitForSingleObject since that will deadlock
+      // other calls to ACE_OS::cond_signal().
       if (ACE_OS::mutex_unlock (external_mutex) != 0)
         return -1;
 
-      // Wait to be awakened by a ACE_OS::signal() or ACE_OS::broadcast().
+      // Wait to be awakened by a ACE_OS::signal() or
+      // ACE_OS::broadcast().
+#if defined (ACE_WIN32)
       result = ::WaitForSingleObject (cv->sema_, msec_timeout);
+#else
+      result = ACE_OS::sema_wait (&cv->sema_, msec_timeout);
+#endif /* ACE_WIN32 */
     }
 
   // Reacquire lock to avoid race conditions.
@@ -2538,6 +2543,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
+#if defined (ACE_WIN32)
   if (result != WAIT_OBJECT_0)
     {
       switch (result)
@@ -2549,8 +2555,23 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
           error = ::GetLastError ();
           break;
         }
-      result = -1;  
+      result = -1;
+    } 
+#else
+  if (result != OK)
+    {
+      switch (errno)
+        {
+        case S_objLib_OBJ_TIMEOUT:
+          error = ETIME;
+          break;
+        default:
+          error = errno;
+          break;
+        }
+      result = -1;
     }
+#endif /* ACE_WIN32 */
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   else if (external_mutex->type_ == USYNC_PROCESS)
     {
@@ -2580,13 +2601,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   errno = error;
   return result;
-#elif defined (VXWORKS)
-  // POSIX semaphores don't have a timed wait.  Should implement conds
-  // with VxWorks semaphores instead, they do have a timed wait.  But
-  // all of the other cond operations would have to be modified.
-  else
-    ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_WTHREADS */
+#endif /* ACE_HAS_WTHREADS || ACE_HAS_VXWORKS */
 #else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (external_mutex);

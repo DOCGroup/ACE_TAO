@@ -1,3 +1,9 @@
+Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.i: Fixed the implementation of ACE_OS::cond_timedwait()
+ 	  so that it will work on VxWorks.  Thanks to David Levine for
+ 	  chasing this down and doing most of the changes.
+
 Mon Oct 20 12:05:39 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* Thread_Manager.*:  Replace the thr_table_ with a double-linked
