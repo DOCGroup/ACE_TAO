@@ -69,7 +69,7 @@ public:
 
   /// Set the property for the IOGR
   virtual CORBA::Boolean set_property (
-      CORBA::Object_ptr ior
+      CORBA::Object_ptr &ior
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -78,7 +78,7 @@ public:
 
   /// Set <ior1> as  primary which is a part of <ior2>
   virtual CORBA::Boolean set_primary (
-      CORBA::Object_ptr ior1,
+      CORBA::Object_ptr &ior1,
       CORBA::Object_ptr ior2
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -105,7 +105,7 @@ public:
     ));
 
   virtual CORBA::Boolean remove_primary_tag (
-      CORBA::Object_ptr iogr
+      CORBA::Object_ptr &iogr
       ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

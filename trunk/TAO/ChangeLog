@@ -1,3 +1,14 @@
+Mon Aug  4 18:28:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORManipulation/IOR.pidl:
+	* tao/IORManipulation/IORC.h: Fixed typos from the last checkin.
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Made the
+	  signature changes that were necessitated from "Mon Aug  4
+	  11:06:55 2003  Balachandran Natarajan
+	  <bala@dre.vanderbilt.edu>". 
+
 Mon Aug  4 18:01:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
