@@ -240,7 +240,7 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
   // (which is also the order that DII users are required to
   // use).
 
-  if (this->result_ != 0)
+  if (this->result_ != 0 && this->result_->value ()->impl ())
     {
       // We can be sure that the impl is a TAO::Unknown_IDL_Type.
       this->result_->value ()->impl ()->_tao_decode (call.inp_stream ()
