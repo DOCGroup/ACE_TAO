@@ -1,3 +1,9 @@
+Fri Apr 30 13:23:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * docs/tutorials/017/Barrier_i.cpp:
+        * docs/tutorials/018/token.cpp:  Added explicit template
+          instantiations.
+
 Fri Apr 30 12:11:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/OS.i (gethostbyname2): 
