@@ -22,7 +22,7 @@ Consumer_Handler::init (int argc,
                         char *argv[],
                         ShutdownCallback *_shutdowncallback)
 {
-  char *filtering_criteria = "";
+  const char *filtering_criteria = "";
 
    // First see if we have any environment variables.
   filtering_criteria =

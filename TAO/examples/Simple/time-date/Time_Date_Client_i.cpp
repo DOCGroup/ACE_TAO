@@ -26,7 +26,7 @@ Time_Date_Client_i::parse_args (int argc,
 }
 
 int
-Time_Date_Client_i::run (char *name,
+Time_Date_Client_i::run (const char *name,
                          int argc,
                          char *argv[])
 {

@@ -12,7 +12,7 @@ ACE_RCSID(client, remote_service_directory_test, "$Id$")
 static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;
 
 // Name of remote host. 
-static char *host_name = ACE_DEFAULT_SERVER_HOST;
+static const char *host_name = ACE_DEFAULT_SERVER_HOST;
 
 // Trigger a remote reconfiguration.
 static int remote_reconfigure = 0;
