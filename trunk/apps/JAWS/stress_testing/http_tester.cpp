@@ -9,7 +9,7 @@ Stats *Client_Parameters::stats;
 static void *client_thread(void *data) {
   ACE_Thread_Control tc(ACE_Service_Config::thr_mgr());
   Client_Parameters *cp = (Client_Parameters *) data;
-  float latency, throughput;
+  float latency = 0, throughput;
   URL *u = cp->url;
   
   // Check for presence of protocol, hostname and filename.
@@ -59,6 +59,7 @@ static void *client_thread(void *data) {
   throughput = (8 * total_read/et.real_time) / pow(10,6) ;
   cp->stats->log(cp->id, throughput, latency);
   webserver.close();
+  return NULL;
 }
 
 int driver(char *id, int total_num, float requests_sec, char *url1, float p1, char *url2, float p2, char *url3, float p3, int tcp_nodelay, int sockbufsiz) {
@@ -84,7 +85,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
       }
     else
       {
-	ACE_Time_Value tv(0, sleep_time - delta);
+	ACE_Time_Value tv(0, (long int) (sleep_time - delta));
 	ACE_OS::sleep(tv);
 	timer.start();
       }
@@ -94,7 +95,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
     // cerr << " choosing between " << url1 << url2 << url3 << " with r == " << r;
     if(r <= p1)   cp->url = new URL(url1);
     if( (r > p1) && (r <= (p1 + p2)))   cp->url = new URL(url2);
-    if( (r > (p1 + p2)))  cp->url = new URL(url3);
+    if( (r > (p1 + p2)) && (r <= p1 + p2 + p3))  cp->url = new URL(url3);
     // cerr << "The URL being requested is " << cp->url->get_filename() << endl;
     
 	

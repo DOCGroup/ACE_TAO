@@ -19,13 +19,14 @@ void Stats::print(char *message) {
   char time_buf[64];
   long ltime;
   time(&ltime);
+  ACE_UNUSED_ARG (message);
   ACE_OS::ctime_r(&ltime, time_buf, sizeof time_buf);
     
   if(ACE_OS::gettimeofday() == -1) {
     perror("gettimeofday");
   }
   time_buf[strlen(time_buf)-1] = 0;
-  //printf("%010ld%09ld \t %s %s\n", tp.tv_sec, tp.tv_usec, time_buf, message);
+  //  printf("%010ld%09ld \t %s %s\n", tp.tv_sec, tp.tv_usec, time_buf, message);
 }
 
 
