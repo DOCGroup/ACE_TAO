@@ -84,7 +84,7 @@ ifr_visitor::visit_valuetype_fwd (AST_InterfaceFwd *)
 }
 
 int 
-ifr_visitor::visit_factory (AST_Factory *node)
+ifr_visitor::visit_factory (AST_Factory *)
 {
   return 0;
 }

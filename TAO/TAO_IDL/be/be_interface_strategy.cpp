@@ -91,13 +91,13 @@ be_interface_strategy::compute_coll_names (int type,
 
   static const char *collocated_names[] = { "_tao_thru_poa_collocated_",
                                             "_tao_direct_collocated_" };
-  const char poa[] = "POA_";
+  static const char *poa = "POA_";
   // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
   // prefix and the local name and the (optional) "::"
   const char *collocated = collocated_names[type];
 
   int name_len = ACE_OS::strlen (collocated)
-    + sizeof (poa)
+    + ACE_OS::strlen (poa)
     + 1;
 
   if (prefix)
@@ -312,8 +312,8 @@ be_interface_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
 
 int
 be_interface_strategy::has_extra_code_generation (
-                                                  TAO_CodeGen::CG_STATE /* current_state */
-                                                  )
+    TAO_CodeGen::CG_STATE /* current_state */
+  )
 {
   return 0;
 }
@@ -329,8 +329,8 @@ be_interface_strategy::replacement (void)
 // AMI Hander Strategy
 
 be_interface_ami_handler_strategy::be_interface_ami_handler_strategy (
-                                                                      be_interface *node
-                                                                      )
+    be_interface *node
+  )
   : be_interface_default_strategy (node,
                                    AMI_HANDLER)
 {
@@ -343,9 +343,9 @@ be_interface_ami_handler_strategy::~be_interface_ami_handler_strategy (void)
 
 TAO_CodeGen::CG_STATE
 be_interface_ami_handler_strategy::next_state (
-                                               TAO_CodeGen::CG_STATE current_state,
-                                               int /*is_extra_state */
-                                               )
+    TAO_CodeGen::CG_STATE current_state,
+    int /*is_extra_state */
+  )
 {
   return current_state;
 }
@@ -358,7 +358,6 @@ be_interface_ami_exception_holder_strategy
 ::be_interface_ami_exception_holder_strategy (be_interface *node)
   : be_interface_default_strategy (node,
                                    AMI_EXCEPTION_HOLDER)
-
 {
 }
 
@@ -370,9 +369,9 @@ be_interface_ami_exception_holder_strategy
 
 TAO_CodeGen::CG_STATE
 be_interface_ami_exception_holder_strategy::next_state (
-                                                        TAO_CodeGen::CG_STATE current_state,
-                                                        int is_extra_state
-                                                        )
+    TAO_CodeGen::CG_STATE current_state,
+    int is_extra_state
+  )
 {
   if (is_extra_state)
     {
@@ -395,8 +394,8 @@ be_interface_ami_exception_holder_strategy::next_state (
 
 int
 be_interface_ami_exception_holder_strategy::has_extra_code_generation (
-                                                                       TAO_CodeGen::CG_STATE current_state
-                                                                       )
+    TAO_CodeGen::CG_STATE current_state
+  )
 {
   if (current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CH
       || current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CS)
@@ -455,8 +454,8 @@ be_interface_ami_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
 
 int
 be_interface_ami_strategy::has_extra_code_generation (
-                                                      TAO_CodeGen::CG_STATE current_state
-                                                      )
+    TAO_CodeGen::CG_STATE current_state
+  )
 {
   if (current_state == TAO_CodeGen::TAO_AMI_INTERFACE_CH)
     {
@@ -494,29 +493,29 @@ const char *be_interface_default_strategy::tag_table_[] =
 
 
 be_interface_default_strategy::be_interface_default_strategy (
-                                                              be_interface *node,
-                                                              Strategy_Kind strategy_kind
-                                                              )
+    be_interface *node,
+    Strategy_Kind strategy_kind
+  )
   : be_interface_strategy (node,
                            strategy_kind),
-  base_proxy_impl_name_ (0),
-  remote_proxy_impl_name_ (0),
-  thruPOA_proxy_impl_name_ (0),
-  direct_proxy_impl_name_ (0),
-  full_base_proxy_impl_name_ (0),
-  full_remote_proxy_impl_name_ (0),
-  full_thruPOA_proxy_impl_name_ (0),
-  full_direct_proxy_impl_name_ (0),
-  base_proxy_broker_ (0),
-  remote_proxy_broker_ (0),
-  strategized_proxy_broker_ (0),
-  full_base_proxy_broker_name_ (0),
-  full_remote_proxy_broker_name_ (0),
-  full_strategized_proxy_broker_name_(0),
-  client_scope_ (0),
-  flat_client_scope_ (0),
-  server_scope_ (0),
-  flat_server_scope_ (0)
+    base_proxy_impl_name_ (0),
+    remote_proxy_impl_name_ (0),
+    thruPOA_proxy_impl_name_ (0),
+    direct_proxy_impl_name_ (0),
+    full_base_proxy_impl_name_ (0),
+    full_remote_proxy_impl_name_ (0),
+    full_thruPOA_proxy_impl_name_ (0),
+    full_direct_proxy_impl_name_ (0),
+    base_proxy_broker_ (0),
+    remote_proxy_broker_ (0),
+    strategized_proxy_broker_ (0),
+    full_base_proxy_broker_name_ (0),
+    full_remote_proxy_broker_name_ (0),
+    full_strategized_proxy_broker_name_(0),
+    client_scope_ (0),
+    flat_client_scope_ (0),
+    server_scope_ (0),
+    flat_server_scope_ (0)
 {
 }
 
@@ -547,9 +546,8 @@ be_interface_default_strategy::local_name (void)
 {
   if (!this->local_name_)
     {
-      int len = ACE_OS::strlen (
-                                node_->AST_Interface::local_name ()->get_string ()
-                                );
+      int len = 
+        ACE_OS::strlen (node_->AST_Interface::local_name ()->get_string ());
 
       ACE_NEW_RETURN (this->local_name_,
                       char[len + 1],
@@ -633,10 +631,12 @@ be_interface_default_strategy::local_coll_name (int type)
 }
 
 char *
-be_interface_default_strategy::create_with_prefix_suffix (const char *prefix,
-                                                          const char *str,
-                                                          const char *suffix,
-                                                          const char *separator)
+be_interface_default_strategy::create_with_prefix_suffix (
+    const char *prefix,
+    const char *str,
+    const char *suffix,
+    const char *separator
+  )
 {
   char *cat_string = 0;
   unsigned int length =
