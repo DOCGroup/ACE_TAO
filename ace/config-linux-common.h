@@ -138,7 +138,13 @@
 # include "ace/config-cxx-common.h"
 #elif defined (__INTEL_COMPILER)
 # include "ace/config-icc-common.h"
-#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER*/
+#elif defined (__BORLANDC__)
+# undef ACE_HAS_LLSEEK
+# undef ACE_HAS_LSEEK64
+# undef ACE_LACKS_LLSEEK_PROTOTYPE
+# undef ACE_LACKS_LSEEK64_PROTOTYPE
+# include "ace/config-borland-common.h"
+#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__*/
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 
