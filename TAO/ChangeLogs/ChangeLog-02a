@@ -1,3 +1,7 @@
+Wed Mar 27 10:03:47 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/Invocation.cpp: Add include of ace/Auto_Ptr.h for Tru64 builds.
+
 Tue Mar 26 12:21:41 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:

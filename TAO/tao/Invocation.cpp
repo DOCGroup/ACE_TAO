@@ -20,6 +20,8 @@
 #include "Endpoint_Selector_Factory.h"
 #include "Invocation_Endpoint_Selectors.h"
 
+#include "ace/Auto_Ptr.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Invocation.i"
 #endif /* ! __ACE_INLINE__ */
