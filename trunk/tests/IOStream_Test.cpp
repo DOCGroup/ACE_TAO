@@ -167,7 +167,7 @@ client (void *arg)
 
   // Send a string to the server which it can interpret as a qchar[]
   char *str = "\"This is a test     string.\"";
-  ACE_DEBUG ((LM_DEBUG, "Client Sending:  (%s)\n", str));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Sending:  (%s)\n", str));
   server << str << endl;
 
   // Allow the server to get the string and echo it to the user.  (The
@@ -179,7 +179,7 @@ client (void *arg)
   // the spaces sent by the client.
 
   str = "\"THIS IS A     TEST STRING.\"";
-  ACE_DEBUG ((LM_DEBUG, "Client Sending:  (%s)\n", str));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Sending:  (%s)\n", str));
   server << str << endl;
 
   // Again, give the server time to display the happenings to the
@@ -197,20 +197,13 @@ client (void *arg)
   server >> i >> f1 >> l >> f2 >> d;
 
   ACE_DEBUG ((LM_DEBUG, 
-	      "Client Received: int %d float %f long %d float %f double %f\n", 
+	      "(%P|%t) Client Received: int %d float %f long %d float %f double %f\n", 
 	      i, f1, (int) l, f2, d));
 
   // Check for proper received values.
-  if (i != 1  ||  (f1 < 0.123420 || f1 > 0.123422)  
-      || l != 666555444  ||  (f2 < 23.44 || f2 > 23.46)  
-      || (d < -47.1e+9 || d > -45.9e+9))
-    {
-      ACE_DEBUG ((LM_ERROR, "incorrect value received, should be:\n"
-		  "int 1 float 0.123421 long 666555444 float 23.450001 "
-		  "double -46500000000.00000\n"));
-      ++error_at_client;
-    }
-
+  ACE_ASSERT (i == 1  && (f1 >= 0.123420 && f1 <= 0.123422)  
+	      && l == 666555444  &&  (f2 >= 23.44 && f2 <= 23.46)  
+	      && (d >= -47.1e+9 && d <= -45.9e+9));
   // Reset the precision to limit ourselves to two significant digits.
   server.precision (2);
 
@@ -244,13 +237,13 @@ server (void *)
   ACE_SOCK_Acceptor acceptor (addr);
   ACE_SOCK_IOStream client_handler;
 
-  if (thr_mgr.spawn (ACE_THR_FUNC (client), 
-		     0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (client), 
+					     0,
+					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n","spawing client thread"), 1);
 
   if (acceptor.accept (client_handler) == -1)
-    ACE_DEBUG ((LM_ERROR, "Failed to accept new client_handler"));
+    ACE_DEBUG ((LM_ERROR, "(%P|%t) Failed to accept new client_handler"));
 
   // Read a qbuf[] from the client.  Notice that all of the client's
   // whitespace is preserved.
@@ -258,7 +251,7 @@ server (void *)
   ACE_OS::memset (qbuf, 0, sizeof qbuf);
   client_handler >> qbuf;
   ACE_DEBUG ((LM_DEBUG, 
-	      "Server Received: (\"%s\")\n", 
+	      "(%P|%t) Server Received: (\"%s\")\n", 
 	      qbuf));
 
   // Give the client time to announce the next test to the user.
@@ -270,12 +263,12 @@ server (void *)
 
   char buf[1024];
   ACE_OS::memset (buf, 0, sizeof buf);
-  ACE_DEBUG ((LM_DEBUG, "Server Received: ("));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Received: ("));
 
   while (buf[ACE_OS::strlen (buf) - 1] != '"')
     {
       client_handler >> buf;
-      ACE_DEBUG ((LM_DEBUG, "%s ", buf));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s ", buf));
     }
 
   ACE_DEBUG ((LM_DEBUG, ")\n"));
@@ -286,7 +279,7 @@ server (void *)
   // filled or when we flush it with an explicit client.sync() command
   // or the implicit <<endl.
 
-  ACE_DEBUG ((LM_DEBUG, "Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n"));
   client_handler << 1 << " ";
   client_handler << .12342134 << " ";
   client_handler << 666555444 << " ";
@@ -305,33 +298,27 @@ server (void *)
   client_handler >> i >> f1 >> l >> f2 >> d;
 
   ACE_DEBUG ((LM_DEBUG, 
-	      "Server Received: int %d float %g long %d float %g double %g\n", 
+	      "(%P|%t) Server Received: int %d float %g long %d float %g double %g\n", 
 	      i, f1, (int) l, f2, d));
 
   // check for proper received values
-  if (i != -1  ||  (f1 < -0.13 || f1 > -0.11)  
-      || l != -666555444  ||  (f2 < -24.0 || f2 > -22.0)  
-      || (d < 45e+9 || d > 47e+9))
-    {
-      ACE_DEBUG ((LM_ERROR, "incorrect value received, should be:\n"
-		  "int -1 float -0.12 long -666555444 float -23 double 4.6e+10\n"));
-      ++error_at_server;
-    }
-
-  ACE_ASSERT (error_at_client == 0 && error_at_server == 0);
+  ACE_ASSERT (i == -1  && (f1 >= -0.13 && f1 <= -0.11)
+	      && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)  
+	      && (d >= -45e+9 && d <= 47e+9));
+  return 0;
 }
 
-static void 
+static int
 spawn (void)
 {
 #if defined (ACE_HAS_THREADS)
-  if (thr_mgr.spawn (ACE_THR_FUNC (server),
-		     0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (server),
+					     0,
+					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n","spawing server thread"), 1);
 
   // Wait for the client and server thread to exit.
-  thr_mgr.wait ();
+  ACE_Service_Config::thr_mgr ()->wait ();
 
 #elif !defined (ACE_LACKS_EXEC)
   server ();
