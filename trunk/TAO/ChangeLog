@@ -1,3 +1,10 @@
+Wed Nov 13 10:41:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+
+	  Checked in these files again after yesterday's update loss.
+
 Wed Nov 13 06:27:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Fixed a compile
