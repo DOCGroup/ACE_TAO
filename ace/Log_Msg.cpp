@@ -24,6 +24,7 @@
 #include "ace/Thread.h"
 #include "ace/Synch.h"
 #include "ace/Signal.h"
+#include "ace/Set.h"
 
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
@@ -44,6 +45,10 @@ static ACE_FIFO_Send_Msg message_queue_;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
+#if !defined(VXWORKS)
+static ACE_thread_key_t key_;
+#endif /* VXWORKS */
+
 // This is only needed here because we can't afford to call
 // ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else
 // we will recurse infinitely!
@@ -54,30 +59,102 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
      } while (0)
 
 #if defined (ACE_MT_SAFE)
+
+typedef ACE_Unbounded_Set<ACE_Log_Msg *> ACE_Log_Msg_Set;
+
 // Synchronize output operations.
-class ACE_Log_Msg_Lock
+class ACE_Log_Msg_Manager
 {
 public:
-  static ACE_Thread_Mutex *instance (void);
+	static ACE_Thread_Mutex *get_lock(void);
+
+#if defined (VXWORKS)
+	static void atexit (WIND_TCB *);
+#else
+	static void atexit (void);
+
+	static void	insert (ACE_Log_Msg*);
+	static int	remove (ACE_Log_Msg*);
+	// remove returns true when the last ACE_Log_Msg instance has
+	// been deleted
+#endif /* VXWORKS */
 
 private:
-  static ACE_Thread_Mutex *lock_;
+	static ACE_Thread_Mutex *lock_;
+
+	// Holds a list of all logmsg instances.
+	// instances_ requires global construction/destruction.  If
+	// that's a problem, could change it to a pointer and allocate
+	// it dynamically when lock_ is allocated.
+#if ! defined (VXWORKS)
+	static ACE_Log_Msg_Set instances_;
+#endif /* VXWORKS */
 };
 
-ACE_Thread_Mutex *ACE_Log_Msg_Lock::lock_ = 0;
+ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
 ACE_Thread_Mutex *
-ACE_Log_Msg_Lock::instance (void)
+ACE_Log_Msg_Manager::get_lock(void)
 {
-  if (ACE_Log_Msg_Lock::lock_ == 0)
-    ACE_NEW_RETURN_I (ACE_Log_Msg_Lock::lock_, ACE_Thread_Mutex, 0);
+	if (ACE_Log_Msg_Manager::lock_ == 0)
+		ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
 
-  return ACE_Log_Msg_Lock::lock_;
+	return ACE_Log_Msg_Manager::lock_;
 }
 
-#if !defined(VXWORKS)
-static ACE_thread_key_t key_;
-#endif /* VXWORKS */
+#if defined (VXWORKS)
+void
+ACE_Log_Msg_Manager::atexit (WIND_TCB *tcb)
+{
+	// The task is exiting, so its ACE_Log_Msg instance.
+	delete tcb->spare1;
+
+	// ugly, ugly, but don't know a better way
+	delete ACE_Log_Msg_Manager::lock_;
+	ACE_Log_Msg_Manager::lock_ = 0;
+}
+#else
+ACE_Log_Msg_Set ACE_Log_Msg_Manager::instances_;
+
+void
+ACE_Log_Msg_Manager::insert(ACE_Log_Msg* log_msg)
+{
+	ACE_Log_Msg_Manager::instances_.insert(log_msg);
+}
+
+int
+ACE_Log_Msg_Manager::remove(ACE_Log_Msg* log_msg)
+{
+	ACE_Log_Msg_Manager::instances_.remove(log_msg);
+
+	return ! ACE_Log_Msg_Manager::instances_.size();
+}
+
+void
+ACE_Log_Msg_Manager::atexit ()
+{
+	// The program is exiting, so delete all ACE_Log_Msg instances.
+	ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i (instances_);
+        ACE_Log_Msg **log_msg;
+
+	while (i.next (log_msg) != 0)
+	{
+		// Advance the iterator first because it needs to read
+		// the next field of the ACE_Set_Node that will be deleted
+		// as a result of the following call to remove the node.
+		i.advance ();
+
+		// Causes a call to ACE_Log_Msg_Manager::remove.
+		delete *log_msg;
+	}
+
+	ACE_OS::thr_keyfree(key_);
+
+	// ugly, ugly, but don't know a better way
+	delete ACE_Log_Msg_Manager::lock_;
+	ACE_Log_Msg_Manager::lock_ = 0;
+}
+#endif /* ! VXWORKS */
 
 /* static */
 #if defined (ACE_HAS_THR_C_FUNC)
@@ -86,7 +163,7 @@ extern "C"
 void
 ACE_TSS_cleanup (void *ptr)
 {
-  delete (ACE_Log_Msg *) ptr;
+  delete (ACE_Log_Msg *)ptr;
 }
 #endif /* ACE_MT_SAFE */
 
@@ -95,10 +172,6 @@ ACE_Log_Msg::instance (void)
 {
 #if defined (ACE_MT_SAFE)
 #if defined (VXWORKS)
-  // Allocate the Singleton lock.  Note that this isn't thread-safe
-  // but VxWorks doesn't provide any good solutions here...
-  ACE_Log_Msg_Lock::instance ();
-
   // Get the tss_log_msg from thread-specific storage, using one of
   // the "spare" fields in the task control block.  Note that no locks
   // are required here since this is within our thread context.  This
@@ -110,9 +183,17 @@ ACE_Log_Msg::instance (void)
   // assumes that the spare1 field in the task control block is
   // initialized to 0, which holds true for VxWorks 5.2-5.3.
   if (*(int **) tss_log_msg == 0)
-    // Allocate memory off the heap and store it in a pointer in
-    // thread-specific storage (i.e., on the stack...).
-    ACE_NEW_RETURN_I (*tss_log_msg, ACE_Log_Msg, 0);
+    {
+      // Allocate the Singleton lock.  Note that this isn't thread-safe.
+      ACE_Log_Msg_Manager::get_lock();
+
+      // Register cleanup handler.
+      ::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::atexit);
+
+      // Allocate memory off the heap and store it in a pointer in
+      // thread-specific storage, i.e., in the task control block.
+      ACE_NEW_RETURN_I (*tss_log_msg, ACE_Log_Msg, 0);
+    }
 
   return *tss_log_msg;
 #elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -135,7 +216,7 @@ ACE_Log_Msg::instance (void)
       if (once_ == 0)
 	{
 	  // Allocate the Singleton lock.
-	  ACE_Log_Msg_Lock::instance ();
+	  ACE_Log_Msg_Manager::get_lock();
 
 	  if (ACE_OS::thr_keycreate (&key_,
 				     &ACE_TSS_cleanup) != 0)
@@ -143,6 +224,8 @@ ACE_Log_Msg::instance (void)
 	      ACE_OS::thread_mutex_unlock (&lock);
 	      return 0; // Major problems, this should *never* happen!
 	    }
+	  // Register cleanup handler.
+	  ::atexit (ACE_Log_Msg_Manager::atexit);
 	  once_ = 1;
 	}
       ACE_OS::thread_mutex_unlock (&lock);
@@ -150,8 +233,7 @@ ACE_Log_Msg::instance (void)
 
   ACE_Log_Msg *tss_log_msg = 0;
 
-  // Get the tss_log_msg from thread-specific storage.  Note that no locks
-  // are required here...
+  // Get the tss_log_msg from thread-specific storage.  
   if (ACE_OS::thr_getspecific (key_, 
 			       (void **) &tss_log_msg) == -1)
     return 0; // This should not happen!
@@ -162,7 +244,12 @@ ACE_Log_Msg::instance (void)
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage (on the stack...).
 
+	  // Must protect access to lock managers list
+	  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), 0));
+
       ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
+
+	  ACE_Log_Msg_Manager::insert(tss_log_msg);
 
       // Store the dynamically allocated pointer in thread-specific
       // storage.
@@ -172,7 +259,7 @@ ACE_Log_Msg::instance (void)
     }
 
   return tss_log_msg;
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#endif /* VXWORKS || ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #else 
   // Singleton implementation.
   static ACE_Log_Msg log_msg;
@@ -218,7 +305,7 @@ ACE_Log_Msg::flags (void)
 {
   ACE_TRACE ("ACE_Log_Msg::flags");
   u_long result;
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance (), 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), 0));
 
   result = ACE_Log_Msg::flags_;
   return result;
@@ -228,7 +315,7 @@ void
 ACE_Log_Msg::set_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::set_flags");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance ()));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock()));
 
   ACE_SET_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -237,7 +324,7 @@ void
 ACE_Log_Msg::clr_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::clr_flags");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance ()));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock()));
 
   ACE_CLR_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -247,7 +334,7 @@ ACE_Log_Msg::acquire (void)
 {
   ACE_TRACE ("ACE_Log_Msg::acquire");
 #if defined (ACE_MT_SAFE)
-  return ACE_Log_Msg_Lock::instance ()->acquire ();
+  return ACE_Log_Msg_Manager::get_lock()->acquire ();
 #else
   return 0;
 #endif /* ACE_MT_SAFE */
@@ -273,7 +360,7 @@ ACE_Log_Msg::release (void)
   ACE_TRACE ("ACE_Log_Msg::release");
 
 #if defined (ACE_MT_SAFE)
-  return ACE_Log_Msg_Lock::instance ()->release ();
+  return ACE_Log_Msg_Manager::get_lock()->release ();
 #else
   return 0;
 #endif /* ACE_MT_SAFE */
@@ -305,6 +392,29 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 }
 
+ACE_Log_Msg::~ACE_Log_Msg()
+{
+#if ! defined (VXWORKS)
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock()));
+  
+  // Last instance ?
+  if ( ACE_Log_Msg_Manager::remove(this) )
+  {
+	if(ACE_Log_Msg::program_name_) 
+	{
+		ACE_OS::free((void*)ACE_Log_Msg::program_name_);
+		ACE_Log_Msg::program_name_ = 0;
+	}
+
+	if(ACE_Log_Msg::local_host_) 
+	{
+		ACE_OS::free((void*)ACE_Log_Msg::local_host_);
+		ACE_Log_Msg::local_host_ = 0;
+	}
+  }
+#endif /* ! VXWORKS */
+}
+
 // Open the sender-side of the Message ACE_Queue.
 
 int
@@ -313,10 +423,13 @@ ACE_Log_Msg::open (const char *prog_name,
 		   LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance (), -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), -1));
 
   if (prog_name)
-    ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+    {
+      ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
+      ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
+    }
 
   int status = 0;
 
@@ -702,7 +815,7 @@ ACE_Log_Msg::log (const char *format_str,
       ACE_Sig_Guard sb;
 
       // Make sure that the lock is held during all this.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Lock::instance (), -1));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), -1));
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR) 
 	  && abort_prog == 0) // We'll get this further down.
@@ -824,7 +937,7 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nmsg_off_ = %d\n", this->msg_off_));
   message_queue_.dump ();
 #if defined (ACE_MT_SAFE)  
-  ACE_Log_Msg_Lock::instance ()->dump ();
+  ACE_Log_Msg_Manager::get_lock()->dump ();
   // Synchronize output operations.  
 #endif /* ACE_MT_SAFE */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -1010,3 +1123,10 @@ ACE_Log_Msg::getpid (void) const
 
   return ACE_Log_Msg::pid_;
 }
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Set_Node<ACE_Log_Msg *>;
+template class ACE_Unbounded_Set<ACE_Log_Msg *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Log_Msg *>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
