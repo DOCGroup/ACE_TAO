@@ -6,21 +6,31 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../bin";
-require Process;
+require PerlACE::Run_Test;
+
+$poa_file = PerlACE::LocalFile ("POA.cfg");
+$obj_file = PerlACE::LocalFile ("Object.cfg");
+
+$SV = new PerlACE::Process ("server", "-ORBSvcConf server.conf"
+                                      . " -ORBendpoint iiop://localhost:0/priority=5"
+                                      . " -ORBendpoint iiop://localhost:0/priority=15"
+                                      . " -POAConfigFile $poa_file"
+                                      . " -ObjectConfigFile $obj_file");
+
+$CL = new PerlACE::Process ("client", "-POAConfigFile $poa_file -ObjectConfigFile $obj_file");
 
 $status = 0;
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-ORBSvcConf server.conf -ORBendpoint iiop://localhost:0/priority=5 -ORBendpoint iiop://localhost:0/priority=15 -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg");
+$SV->Spawn ();
 
+sleep (5);
 
-$client = Process::Create($EXEPREFIX."client$EXE_EXT", "-POAConfigFile POA.cfg  -ObjectConfigFile Object.cfg");
-
-if ($client->TimedWait (60) == -1) {
+if ($CL->SpawnWaitKill (60) == -1) {
   print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $client->Kill (); $client->TimedWait (1);
+  $CL->Kill (); 
+  exit 1;
 }
 
 $SV->Kill ();
 
-exit $status;
+exit 0;
