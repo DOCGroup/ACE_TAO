@@ -1,3 +1,8 @@
+Sun Jan  2 13:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Conn_Test.cpp:
+          Fixed compile errors with VxWorks and ACE_HAS_PTHREADS
+
 Sun Jan  2 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
