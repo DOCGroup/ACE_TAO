@@ -1,3 +1,8 @@
+Fri Jun  4 11:03:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+	  Fixed broken test code in cube_union_dii().
+
 Fri Jun  4 00:32:04 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Client_Strategy_Factory.cpp:
