@@ -1,3 +1,10 @@
+Fri Apr 23 21:18:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* src/Options.h (operator !=):
+	* src/Options.cpp (operator !=):
+
+	  Changed return type to bool, as is the norm in modern C++.
+
 Tue Jan 20 17:13:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* version.texi: Something in the autoconf build thought it wise to
