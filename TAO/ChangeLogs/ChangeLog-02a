@@ -1,3 +1,24 @@
+Sat Mar  9 21:00:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Muxed_GIOP_Versions/*: 
+	* tests/Muxed_GIOP_Versions/client.bor:
+	* tests/Muxed_GIOP_Versions/Makefile.bor:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+	* tests/Muxed_GIOP_Versions/test_i.cpp:
+	* tests/Muxed_GIOP_Versions/test_i.h:
+	* tests/Muxed_GIOP_Versions/test_i.i:
+	* tests/Muxed_GIOP_Versions/test.idl:
+	* tests/Muxed_GIOP_Versions/client.cpp:
+	* tests/Muxed_GIOP_Versions/MT_Server_and_Client.dsw:
+	* tests/Muxed_GIOP_Versions/server.bor:
+	* tests/Muxed_GIOP_Versions/client.dsp:
+	* tests/Muxed_GIOP_Versions/README:
+        * tests/Muxed_GIOP_Versions/server.cpp:
+	* tests/Muxed_GIOP_Versions/Makefile:
+        * tests/Muxed_GIOP_Versions/server.dsp:
+	* tests/Muxed_GIOP_Versions/run_test.pl: New stress test for bug
+	  1159.  
+
 Sat Mar  9 20:02:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.h:
