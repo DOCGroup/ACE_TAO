@@ -35,7 +35,11 @@ Thu Mar 25 22:08:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/CDR.{h,cpp}:
           Changed TAO_TRY stuff to ACE_TRY;
+	
+Thu Mar 25 21:42:28 1999  Ossama Othman  <othman@cs.wustl.edu>
 
+	* TAO_IDL/be/be_helper.cpp: Updated tao_idl's copyright message.
+	
 Thu Mar 25 21:11:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/tests/Dynany_Test/driver.cpp:
