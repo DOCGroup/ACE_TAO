@@ -1,3 +1,17 @@
+Fri Feb 26 18:29:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Time/implrepo.conf
+	  tests/NestedUpcall/MT_Client_Test/client.conf
+	  examples/POA/On_Demand_Loading/svc.conf
+	  examples/Quoter/client.conf
+	  examples/Quoter/server.conf
+	  performance-tests/Cubit/TAO/MT_Cubit/svc.conf
+	  performance-tests/Thruput/TAO/svc.conf
+
+	  Changed -ORBdemuxstrategy option to 
+	  -ORBsystemidpolicydemuxstrategy
+
+	
 Fri Feb 26 18:00:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Makefile:
