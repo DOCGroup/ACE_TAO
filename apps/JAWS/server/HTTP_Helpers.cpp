@@ -15,7 +15,7 @@ HTTP_Helper::months_[12]=
 char const *HTTP_Helper::alphabet_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 char * HTTP_Helper::date_string_ = 0;
-ACE_Thread_Mutex HTTP_Helper::mutex_;
+ACE_SYNCH_MUTEX HTTP_Helper::mutex_;
 
 ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
 int HTTP_Status_Code::instance_ = 0;
@@ -95,9 +95,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   {
 
 #if !defined (ACE_HAS_REENTRANT_LIBC)
-#if defined (ACE_HAS_THREADS)
-    ACE_Guard<ACE_Thread_Mutex> g(HTTP_Helper::mutex_);
-#endif /* ACE_HAS_THREADS */
+    ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> g (HTTP_Helper::mutex_));
 #endif /* NOT ACE_HAS_REENTRANT_LIBC */
 
     return ACE_OS::mktime (&tms);
@@ -109,7 +107,7 @@ HTTP_Helper::HTTP_date (void)
 {
   if (HTTP_Helper::date_string_ == 0)
     {
-      ACE_Guard<ACE_Thread_Mutex> m (HTTP_Helper::mutex_);
+      ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> m (HTTP_Helper::mutex_));
 
       time_t tloc;
       struct tm tms;
