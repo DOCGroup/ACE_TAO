@@ -39,6 +39,7 @@ BasicLog_i::copy (DsLogAdmin::LogId &id
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
+
   // Copy the attributes from the log.
   this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
