@@ -25,7 +25,7 @@ Start the following processes in any order.
 sender
 ------
 
-sender [-f <filename>] [-r <data_rate>] [-s <sender device name>]
+sender [-f <filename>] [-r <data_rate>] [-s <sender device name>] [-a <address_file>]
 
 -f filename --> The name of the file from which data needs to be sent
 
@@ -33,12 +33,19 @@ sender [-f <filename>] [-r <data_rate>] [-s <sender device name>]
 
 -s sender device name --> This is the name of the sender as it will be
                           registered with the naming service and which
-                          receivers connect to.
+                          receivers connect to.  
+
+-a address_file -->	  This file contains the sender and receiver
+			  endpoint addressses to be used to set up a
+			  flow for each flow. The format for each flow
+			  is Flowname/sender_endpoint_host:sender_endpoint_port/receiver_endpoint_host:receiver_endpoint_port
+			  If no endpoint addresses are specified default addresses would be used.
+
 
 receiver
 --------
 
-receiver [-f <filename>] [-s <sender device name>] [-r <receiver device name>]
+receiver [-f <filename>] [-s <sender device name>] [-r <receiver device name>] [-a <address_file>]
 
 -f filename --> File into which the data received from the distributer is stored.
 
@@ -49,17 +56,30 @@ receiver [-f <filename>] [-s <sender device name>] [-r <receiver device name>]
                             will be registered with the naming
                             service.
 
+-a address_file -->	  This file contains the sender and receiver
+			  endpoint addressses to be used to set up a
+			  flow for each flow. The format for each flow
+			  is Flowname/sender_endpoint_host:sender_endpoint_port/receiver_endpoint_host:receiver_endpoint_port
+			  If no endpoint addresses are specified default addresses would be used.
+
+
 distributer:
 -----------
 
-distributer [-s <sender device name>] [-r <distributer device name>]
+distributer [-s <sender device name>] [-r <distributer device name>] [-a <address_file>]
 
 -s sender device name --> This is the name of the sender that the
-                          receiver wants to connect to.
+                          distributer wants to connect to.
 
 -r distributer device name --> This is the name with which this
                                distributer will be registered with the
                                naming service. The receivers will bind
                                with this name to receieve data from
                                this distributer.
+
+-a address_file -->	  This file contains the sender and receiver
+			  endpoint addressses to be used to set up a
+			  flow for each flow. The format for each flow
+			  is Flowname/sender_endpoint_host:sender_endpoint_port/receiver_endpoint_host:receiver_endpoint_port
+			  If no endpoint addresses are specified default addresses would be used.
 
