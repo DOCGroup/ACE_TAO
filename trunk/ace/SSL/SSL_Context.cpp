@@ -1,5 +1,7 @@
 // -*- C++ -*-
 
+#include "ace/OS_NS_string.h"
+#include "ace/ACE.h"
 #include "SSL_Context.h"
 
 #include "sslconf.h"
