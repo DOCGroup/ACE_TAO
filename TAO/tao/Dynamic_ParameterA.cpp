@@ -34,15 +34,14 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_Dynamic_Parameter[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_Dynamic_Parameter[] =
   {
     { "argument", &CORBA::_tc_any },
     { "mode", &CORBA::_tc_ParameterMode }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -62,7 +61,7 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
