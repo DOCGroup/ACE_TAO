@@ -2,7 +2,7 @@ Thu Jan 20 09:15:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/bootstrap:
 
-	  Create of NEWS file before automake is run.  Automake complains
+	  Create NEWS file before automake is run.  Automake complains
 	  about missing NEWS file.
 
 Thu Jan 20 09:03:37 2000  Ossama Othman  <ossama@uci.edu>
