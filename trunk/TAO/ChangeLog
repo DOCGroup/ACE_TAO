@@ -1,3 +1,8 @@
+Fri Feb  6 13:34:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Event_Service/Stock_Consumer.h:
+          Fixed include path
+
 Fri Feb  6 13:30:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_18/server.cpp:
