@@ -28,7 +28,7 @@
 /**
  * @class ACE_Init_ACE
  *
- * @brief 
+ * @brief
  *
  */
 namespace ACE

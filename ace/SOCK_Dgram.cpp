@@ -124,8 +124,8 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
           )
         {
           if (ACE::bind_port (this->get_handle (),
-			      INADDR_ANY,
-			      protocol_family) == -1)
+                              INADDR_ANY,
+                              protocol_family) == -1)
             error = 1;
         }
     }

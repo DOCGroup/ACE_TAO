@@ -52,22 +52,22 @@ run_main (int, ACE_TCHAR *[])
 
   if (rc != 0)
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("%p\n"),
-		ACE_TEXT ("ACE::get_ip_interfaces failed")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE::get_ip_interfaces failed")));
   else if (how_many == 0)
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("No interfaces presently configured in the kernel\n")));
+                ACE_TEXT ("No interfaces presently configured in the kernel\n")));
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("there are %d interfaces\n"), how_many));
 
       for (size_t i = 0; i < how_many; i++)
-	ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"),
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"),
                     ACE_TEXT_CHAR_TO_TCHAR (the_addr_array[i].get_host_addr ())));
 
       delete [] the_addr_array;
     }
 
   ACE_END_TEST;
-  return rc != 0;	// return 1 if get_ip_interfaces() failed
+  return rc != 0;       // return 1 if get_ip_interfaces() failed
 }

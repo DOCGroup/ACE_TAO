@@ -63,7 +63,7 @@ namespace ACE
    * long enough.
    */
   extern ACE_Export int get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len);
-  
+
   /// Opening the temp file.  File is automagically unlinked when it is
   /// closed.  This is useful for have temp files.
   extern ACE_Export ACE_HANDLE open_temp_file (const ACE_TCHAR *name,
