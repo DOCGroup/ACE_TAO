@@ -238,7 +238,8 @@ ACE_INLINE int
 ACE_CString::find (const char *s, int pos) const
 {
   char *substr = this->rep_ + pos;
-  char *pointer = ACE_OS::strnstr (substr, s, this->len_ - pos);
+  size_t len = ACE_OS::strlen (s);
+  char *pointer = ACE_OS::strnstr (substr, s, len);
   if (pointer == 0)
     return ACE_CString::npos;
   else

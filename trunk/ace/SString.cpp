@@ -899,22 +899,23 @@ ACE_WString::strstr (const ACE_USHORT16 *s1,
 {
   ACE_TRACE ("ACE_WString::strstr");
 
+  // Original string length
   size_t len1 = ACE_WString::strlen (s1);
+  // Substring length
   size_t len2 = ACE_WString::strlen (s2);
 
+  // Check if the substring is longer than the string being searched.
+  if (len2 > len1)
+    return 0;                 
+
+  // Go upto <len>
   size_t len = len1 - len2;
 
   for (size_t i = 0; i <= len; i++)
     {
-      size_t j;
-
-      for (j = 0; j < len2; j++)
-        if (s1[i + j] != s2[j])
-          break;
-
-      if (j == len2)
+      if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (ACE_USHORT16)) == 0)
         // Found a match!  Return the index.
-        return &s1[i];
+        return s1 + i;
     }
 
   return 0;

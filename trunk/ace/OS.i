@@ -1285,12 +1285,24 @@ ACE_OS::strstr (char *s, const char *t)
 }
 
 ACE_INLINE const char *
-ACE_OS::strnstr (const char *s, const char *t, size_t len)
+ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 {
-  size_t t_len = ::strlen (t);
-  for (size_t i = 0; i <= len - t_len; i++)
-    if (::memcmp (s + i, t, t_len) == 0)
-      return s + i;
+  // Substring length
+  size_t len1 = ACE_OS::strlen (s1);
+
+  // Check if the substring is longer than the string being searched.
+  if (len2 > len1)
+    return 0;                 
+
+  // Go upto <len>
+  size_t len = len1 - len2;
+
+  for (size_t i = 0; i <= len; i++)
+    {
+      if (ACE_OS::memcmp (s1 + i, s2, len2) == 0)
+        // Found a match!  Return the index.
+        return s1 + i;
+    }
 
   return 0;
 }
@@ -9736,15 +9748,24 @@ ACE_OS::strstr (wchar_t *s, const wchar_t *t)
 }
 
 ACE_INLINE const wchar_t *
-ACE_OS::strnstr (const wchar_t *s, const wchar_t *t, size_t len)
+ACE_OS::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
 {
-  size_t t_len = ACE_OS::strlen (t);
+  // Substring length
+  size_t len1 = ACE_OS::strlen (s1);
 
-  for (size_t i = 0; i <= len - t_len; i++)
-    if (::memcmp (s + i,
-                  t,
-                  t_len * sizeof (wchar_t)) == 0)
-      return s + i;
+  // Check if the substring is longer than the string being searched.
+  if (len2 > len1)
+    return 0;                 
+
+  // Go upto <len>
+  size_t len = len1 - len2;
+
+  for (size_t i = 0; i <= len; i++)
+    {
+      if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (wchar_t)) == 0)
+        // Found a match!  Return the index.
+        return s1 + i;
+    }
 
   return 0;
 }

@@ -96,6 +96,48 @@ ACE_Timeprobe<ACE_LOCK>::reset (void)
   this->current_size_ = 0;
 }
 
+template <class ACE_LOCK> ACE_Unbounded_Set<ACE_Event_Descriptions> &
+ACE_Timeprobe<ACE_LOCK>::event_descriptions (void) 
+{
+  return this->event_descriptions_;
+}
+
+template <class ACE_LOCK> ACE_Unbounded_Set<ACE_Event_Descriptions> &
+ACE_Timeprobe<ACE_LOCK>::sorted_event_descriptions (void)
+{
+  return this->sorted_event_descriptions_;
+}
+
+template <class ACE_LOCK> u_int *
+ACE_Timeprobe<ACE_LOCK>::current_slot_vme_address (void)
+{
+  return this->current_slot_vme_address_;
+}
+
+template <class ACE_LOCK> ACE_timeprobe_t *
+ACE_Timeprobe<ACE_LOCK>::timeprobes (void)
+{
+  return this->timeprobes_;
+}
+
+template <class ACE_LOCK> ACE_LOCK &
+ACE_Timeprobe<ACE_LOCK>::lock (void)
+{
+  return this->lock_;
+}
+
+template <class ACE_LOCK> u_long 
+ACE_Timeprobe<ACE_LOCK>::max_size (void)
+{
+  return this->max_size_;
+}
+
+template <class ACE_LOCK> u_long 
+ACE_Timeprobe<ACE_LOCK>::current_size (void)
+{
+  return this->current_size_;
+}
+
 template <class ACE_LOCK> int
 ACE_Timeprobe<ACE_LOCK>::event_descriptions (const char **descriptions,
                                              u_long minimum_id)

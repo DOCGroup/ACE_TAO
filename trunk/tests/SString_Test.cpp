@@ -44,10 +44,13 @@ main (int, ASYS_TCHAR *[])
     ACE_ASSERT (s1 != s5);
     ACE_ASSERT (s1.strstr (s2) == -1);
     ACE_ASSERT (s1.strstr (s3) == 2);
+    ACE_ASSERT (s3.strstr (s1) == -1);
     ACE_ASSERT (s1.strstr (s4) == 1);
 
     ACE_ASSERT (s1.find (s3) == 2);
+    ACE_ASSERT (s3.find (s1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s3, 2) == 0);
+    ACE_ASSERT (s3.find (s1, 1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_CString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
     ACE_ASSERT (s1.rfind ('l') == 3);
@@ -65,10 +68,13 @@ main (int, ASYS_TCHAR *[])
     ACE_ASSERT (s1 != s5);
     ACE_ASSERT (s1.strstr (s2) == -1);
     ACE_ASSERT (s1.strstr (s3) == 2);
+    ACE_ASSERT (s3.strstr (s1) == -1);
     ACE_ASSERT (s1.strstr (s4) == 1);
 
     ACE_ASSERT (s1.find (s3) == 2);
+    ACE_ASSERT (s3.find (s1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s3, 2) == 0);
+    ACE_ASSERT (s3.find (s1, 1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_CString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
     ACE_ASSERT (s1.rfind ('l') == 3);
@@ -86,10 +92,13 @@ main (int, ASYS_TCHAR *[])
     ACE_ASSERT (s1 != s5);
     ACE_ASSERT (s1.strstr (s2) == -1);
     ACE_ASSERT (s1.strstr (s3) == 2);
+    ACE_ASSERT (s3.strstr (s1) == -1);
     ACE_ASSERT (s1.strstr (s4) == 1);
 
     ACE_ASSERT (s1.find (s3) == 2);
+    ACE_ASSERT (s3.find (s1) == ACE_WString::npos);
     ACE_ASSERT (s1.find (s3, 2) == 0);
+    ACE_ASSERT (s3.find (s1, 1) == ACE_WString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_WString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
     ACE_ASSERT (s1.rfind ('l') == 3);
