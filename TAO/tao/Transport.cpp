@@ -11,7 +11,8 @@
 #include "Stub.h"
 #include "Sync_Strategies.h"
 #include "Connection_Handler.h"
-#include "Queued_Message.h"
+#include "Synch_Queued_Message.h"
+#include "Asynch_Queued_Message.h"
 #include "Flushing_Strategy.h"
 #include "debug.h"
 
@@ -370,38 +371,82 @@ TAO_Transport::send_current_message (void)
   if (this->head_ == 0)
     return 1;
 
-  size_t bytes_transferred;
+  // This is the vector used to send data, it must be declared outside
+  // the loop because after the loop there may still be data to be
+  // sent
+  int iovcnt = 0;
+  iovec iov[IOV_MAX];
 
+  // We loop over all the elements in the queue ...
+  TAO_Queued_Message *i = this->head_;
+  while (i != 0)
+    {
+      // ... each element fills the iovector ...
+      i->fill_iov (IOV_MAX, iovcnt, iov);
+
+      // ... if the vector is not full we tack another message into
+      // the vector ...
+      if (iovcnt != IOV_MAX)
+        {
+          // Go for the next element in the list
+          i = i->next ();
+          continue;
+        }
+
+      // ... time to send data because the vector is full.  We need to
+      // loop because a single message can span multiple IOV_MAX
+      // elements ...
+      while (iovcnt == IOV_MAX)
+        {
+          size_t byte_count;
+
+          // ... send the message ...
+          ssize_t retval =
+            this->send (iov, iovcnt, byte_count);
+
+          // ... now we need to update the queue, removing elements
+          // that have been sent, and updating the last element if it
+          // was only partially sent ...
+          this->bytes_transferred_i (byte_count, i);
+          iovcnt = 0;
+
+          if (retval == 0)
+            {
+              return -1;
+            }
+          else if (retval == -1)
+            {
+              if (errno == EWOULDBLOCK || errno == ETIME)
+                return 0;
+              return -1;
+            }
+
+          if (i == 0)
+            break;
+
+          /// Message <i> may have been only partially sent...
+          i->fill_iov (IOV_MAX, iovcnt, iov);
+        }
+
+      if (i != 0)
+        i = i->next ();
+    }
+
+  size_t byte_count;
   ssize_t retval =
-    this->send_message_block_chain (this->head_->mb (),
-                                    bytes_transferred);
+    this->send (iov, iovcnt, byte_count);
+
+  this->bytes_transferred_i (byte_count, i);
+  iovcnt = 0;
+
   if (retval == 0)
     {
-      // The connection was closed, return -1 to have the Reactor
-      // close this transport and event handler
       return -1;
     }
-
-  // Because there can be a partial transfer we need to adjust the
-  // number of bytes sent.
-  this->head_->bytes_transferred (bytes_transferred);
-  if (this->head_->done ())
+  else if (retval == -1)
     {
-      // Remove the current message....
-      TAO_Queued_Message *head = this->head_;
-      head->remove_from_list (this->head_, this->tail_);
-
-      head->destroy ();
-    }
-
-  if (retval == -1)
-    {
-      // ... timeouts and flow control are not real errors, the
-      // connection is still valid and we must continue sending the
-      // current message ...
       if (errno == EWOULDBLOCK || errno == ETIME)
         return 0;
-
       return -1;
     }
 
@@ -434,7 +479,6 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
       must_queue = 1;
     }
 
-  TAO_Queued_Message *queued_message = 0;
   if (must_queue)
     {
       // ... simply queue the message ...
@@ -447,164 +491,144 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
                       this->id ()));
         }
 
-      queued_message =
-        this->copy_message_block (message_block);
-
+      TAO_Queued_Message *queued_message = 0;
+      ACE_NEW_RETURN (queued_message,
+                      TAO_Asynch_Queued_Message (message_block),
+                      -1);
       queued_message->push_back (this->head_, this->tail_);
+
+      if (this->must_flush_queue_i (stub))
+        {
+          ace_mon.release ();
+          int result = flushing_strategy->flush_message (this,
+                                                         this->tail_);
+          return result;
+        }
+      return 0;
     }
-  else
+
+  // ... in this case we must try to send the message first ...
+
+  if (TAO_debug_level > 6)
     {
-      // ... in this case we must try to send the message first ...
-
-      if (TAO_debug_level > 6)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
-                      "trying to send the message\n",
-                      this->id ()));
-        }
-
-      size_t byte_count;
-
-      // @@ I don't think we want to hold the mutex here, however if
-      // we release it we need to recheck the status of the transport
-      // after we return... once I understand the final form for this
-      // code I will re-visit this decision
-      ssize_t n = this->send_message_block_chain (message_block,
-                                                  byte_count,
-                                                  max_wait_time);
-      if (n == 0)
-        return -1; // EOF
-      else if (n == -1)
-        {
-          // ... if this is just an EWOULDBLOCK we must schedule the
-          // message for later ...
-          if (errno != EWOULDBLOCK)
-            {
-              return -1;
-            }
-        }
-
-      // ... let's figure out if the complete message was sent ...
-      if (message_block->total_length () == byte_count)
-        {
-          // Done, just return.  Notice that there are no allocations
-          // or copies up to this point (though some fancy calling
-          // back and forth).
-          // This is the common case for the critical path, it should
-          // be fast.
-          return 0;
-        }
-
-      // ... the message was only partially sent, schedule reactive
-      // output...
-      flushing_strategy->schedule_output (this);
-
-      // ... and set it as the current message ...
-      if (twoway_flag)
-        {
-          // ... we are going to block, so there is no need to clone
-          // the message block...
-          // @@ It seems wasteful to allocate a TAO_Queued_Message in
-          //    this case, but it is simpler to do it this way.
-          ACE_NEW_RETURN (queued_message,
-                   TAO_Queued_Message (
-                       ACE_const_cast(ACE_Message_Block*,message_block),
-                       0),
-                   -1);
-        }
-      else
-        {
-          queued_message =
-            this->copy_message_block (message_block);
-          if (queued_message == 0)
-            return -1;
-        }
-
-      if (TAO_debug_level > 6)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
-                      " queued anyway, %d bytes sent\n",
-                      this->id (),
-                      byte_count));
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
-                      " queued message contains %d bytes, %d transferred\n",
-                      this->id (),
-                      queued_message->mb ()->total_length (),
-                      byte_count));
-        }
-
-      queued_message->bytes_transferred (byte_count);
-
-      if (TAO_debug_level > 6)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
-                      " queued message still has %d bytes to go\n",
-                      this->id (),
-                      queued_message->mb ()->total_length ()));
-        }
-
-      // ... insert at the head of the queue, we can use push_back()
-      // because the queue is empty ...
-      queued_message->push_back (this->head_, this->tail_);
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                  "trying to send the message\n",
+                  this->id ()));
     }
 
-  // ... two choices, this is a twoway request or not, if it is
-  // then we must only return once the complete message has been
-  // sent:
+  size_t byte_count;
 
+  // @@ I don't think we want to hold the mutex here, however if
+  // we release it we need to recheck the status of the transport
+  // after we return... once I understand the final form for this
+  // code I will re-visit this decision
+  ssize_t n = this->send_message_block_chain (message_block,
+                                              byte_count,
+                                              max_wait_time);
+  if (n == 0)
+    return -1; // EOF
+  else if (n == -1)
+    {
+      // ... if this is just an EWOULDBLOCK we must schedule the
+      // message for later ...
+      if (errno != EWOULDBLOCK)
+        {
+          return -1;
+        }
+    }
+
+  // ... let's figure out if the complete message was sent ...
+  if (message_block->total_length () == byte_count)
+    {
+      // Done, just return.  Notice that there are no allocations
+      // or copies up to this point (though some fancy calling
+      // back and forth).
+      // This is the common case for the critical path, it should
+      // be fast.
+      return 0;
+    }
+
+  // ... the message was only partially sent, schedule reactive
+  // output...
+  flushing_strategy->schedule_output (this);
+
+  // ... and set it as the current message ...
   if (twoway_flag)
     {
+      // ... we are going to block, so there is no need to clone
+      // the message block...
+      // @@ It seems wasteful to allocate a TAO_Queued_Message in
+      //    this case, but it is simpler to do it this way.
+      TAO_Synch_Queued_Message synch_message (message_block);
+
+      synch_message.bytes_transferred (byte_count);
+      synch_message.push_back (this->head_, this->tail_);
+
       // Release the mutex, other threads may modify the queue as we
       // block for a long time writing out data.
-      ace_mon.release ();
-      int result = flushing_strategy->flush_message (this, queued_message);
-      queued_message->destroy ();
+      int result;
+      {
+        ace_mon.release ();
+        result = flushing_strategy->flush_message (this,
+                                                   &synch_message);
+
+        ace_mon.acquire ();
+      }
+      synch_message.remove_from_list (this->head_, this->tail_);
+      synch_message.destroy ();
       return result;
     }
+
+  TAO_Queued_Message *queued_message = 0;
+  ACE_NEW_RETURN (queued_message,
+                  TAO_Asynch_Queued_Message (message_block),
+                  -1);
+
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                  " queued anyway, %d bytes sent\n",
+                  this->id (),
+                  byte_count));
+
+#if 0
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                  " queued message contains %d bytes, %d transferred\n",
+                  this->id (),
+                  queued_message->mb ()->total_length (),
+                  byte_count));
+#endif /* 0 */
+    }
+  
+#if 0
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                  " queued message still has %d bytes to go\n",
+                  this->id (),
+                  queued_message->mb ()->total_length ()));
+    }
+#endif /* 0 */
+
+  // ... insert at the head of the queue, we can use push_back()
+  // because the queue is empty ...
+
+  queued_message->push_back (this->head_, this->tail_);
 
   // ... this is not a twoway.  We must check if the buffering
   // constraints have been reached, if so, then we should start
   // flushing out data....
 
-  // First let's compute the size of the queue:
-  size_t msg_count = 0;
-  size_t total_bytes = 0;
-  for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
-    {
-      msg_count++;
-      total_bytes += i->mb ()->total_length ();
-    }
-
-  int set_timer;
-  ACE_Time_Value interval;
-
-  if (stub->sync_strategy ().buffering_constraints_reached (stub,
-                                                            msg_count,
-                                                            total_bytes,
-                                                            set_timer,
-                                                            interval))
+  if (this->must_flush_queue_i (stub))
     {
       ace_mon.release ();
-      // @@ memory management of the queued messages is getting tricky.
       int result = flushing_strategy->flush_message (this,
                                                      this->tail_);
       return result;
-    }
-  else
-    {
-      // ... it is not time to flush yet, but maybe we need to set a
-      // timer ...
-      if (set_timer)
-        {
-          // @@ We need to schedule the timer. We should also be
-          // careful not to schedule one if there is one scheduled
-          // already.
-        }
     }
   return 0;
 }
@@ -708,9 +732,6 @@ TAO_Transport::mark_invalid (void)
   // @@ Do we need this method at all??
   this->orb_core_->transport_cache ().mark_invalid (
     this->cache_map_entry_);
-
-
-
 }
 
 int
@@ -735,8 +756,14 @@ TAO_Transport::close_connection (void)
 
   // Purge the entry
   this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
+
+  for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
+    {
+      i->connection_closed ();
+    }
 }
 
+#if 0
 TAO_Queued_Message *
 TAO_Transport::copy_message_block (const ACE_Message_Block *message_block)
 {
@@ -756,6 +783,7 @@ TAO_Transport::copy_message_block (const ACE_Message_Block *message_block)
 
   return msg;
 }
+#endif /* 0 */
 
 ssize_t
 TAO_Transport::send (iovec *iov, int iovcnt,
@@ -899,4 +927,73 @@ TAO_Transport::cancel_output (void)
     }
 
   return reactor->cancel_wakeup (eh, ACE_Event_Handler::WRITE_MASK);
+}
+
+int
+TAO_Transport::must_flush_queue_i (TAO_Stub *stub)
+{
+  // First let's compute the size of the queue:
+  size_t msg_count = 0;
+  size_t total_bytes = 0;
+  for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
+    {
+      msg_count++;
+      total_bytes += i->message_length ();
+    }
+
+  int set_timer;
+  ACE_Time_Value interval;
+
+  if (stub->sync_strategy ().buffering_constraints_reached (stub,
+                                                            msg_count,
+                                                            total_bytes,
+                                                            set_timer,
+                                                            interval))
+    {
+      return 1;
+    }
+
+  // ... it is not time to flush yet, but maybe we need to set a
+  // timer ...
+  if (set_timer)
+    {
+      // @@ We need to schedule the timer. We should also be
+      // careful not to schedule one if there is one scheduled
+      // already.
+    }
+
+  return 0;
+}
+
+void
+TAO_Transport::bytes_transferred_i (size_t byte_count,
+                                    TAO_Queued_Message *&iterator)
+{
+  TAO_Queued_Message *i = this->head_;
+  while (i != iterator && byte_count > 0)
+    {
+      // Update the state of each queued message
+      i->bytes_transferred (byte_count);
+      // ... if all the data was sent the message must be removed from
+      // the queue...
+      TAO_Queued_Message *tmp = i->next ();
+      if (i->all_data_sent ())
+        {
+          i->remove_from_list (this->head_, this->tail_);
+          i->destroy ();
+        }
+      i = tmp;
+    }
+  // ... all the data has been taken care of ...
+  if (byte_count == 0 || iterator == 0)
+    return;
+
+  iterator->bytes_transferred (byte_count);
+  TAO_Queued_Message *tmp = iterator->next ();
+  if (iterator->all_data_sent ())
+    {
+      iterator->remove_from_list (this->head_, this->tail_);
+      iterator->destroy ();
+      iterator = tmp;
+    }
 }

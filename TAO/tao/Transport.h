@@ -603,17 +603,17 @@ public:
   /// for a timer.
   /**
    * At this point, only
-   * <code>TAO_Eager_Buffering_Sync_Strategy::timer_check()</code> 
+   * <code>TAO_Eager_Buffering_Sync_Strategy::timer_check()</code>
    * uses this, and it's unclear whether it needs to stay around.
    * But, it's here because it uses the associated protocol-specific
    * connection handler, and accesses to that must be serialized on
-   * the internal lock. 
+   * the internal lock.
    *
    * @param arg argument passed to the handle_timeout() method of the
-   *        event handler 
+   *        event handler
    * @param delay  time interval after which the timer will expire
    * @param interval  time interval after which the timer will be
-   *        automatically rescheduled 
+   *        automatically rescheduled
    * @return -1 on failure, a Reactor timer_id value on success
    *
    * @see ACE_Reactor::schedule_timer()
@@ -693,7 +693,14 @@ private:
   int send_current_message (void);
 
   /// Copy the contents of a message block into a Queued_Message
-  TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
+  /// TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
+
+  /// Check if the buffering constraints have been reached
+  int must_flush_queue_i (TAO_Stub *stub);
+
+  /// Update the queue, exactly <byte_count> bytes have been sent.
+  void bytes_transferred_i (size_t byte_count,
+                            TAO_Queued_Message *&iterator);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))

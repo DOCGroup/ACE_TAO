@@ -119,6 +119,10 @@ SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Queued_Message.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
@@ -776,6 +780,10 @@ SOURCE=.\stub.h
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Queued_Message.h
 # End Source File
 # Begin Source File
 
@@ -1543,6 +1551,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Queued_Message.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -2144,6 +2156,10 @@ SOURCE=.\Stub.cpp
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Queued_Message.cpp
 # End Source File
 # Begin Source File
 
