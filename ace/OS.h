@@ -4762,13 +4762,18 @@ private:
   int error_;
 };
 
+
 #if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2_GQOS)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
+#else
+typedef u_long ACE_SERVICE_TYPE;
+#endif /* ACE_HAS_WINSOCK2_GQOS */
 typedef GROUP ACE_SOCK_GROUP;
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
 #else
-typedef u_long ACE_SOCK_GROUP;
 typedef u_long ACE_SERVICE_TYPE;
+typedef u_long ACE_SOCK_GROUP;
 typedef u_long ACE_Protocol_Info;
 #endif /* SERVICETYPE */
 
