@@ -12,7 +12,7 @@ use Cwd;
 
 ACE::checkForTarget(getcwd());
 
-$T = Process::Create ($EXEPREFIX."Connection_Purging".$EXE_EXT." -ORBCollocation no -d");
+$T = Process::Create ($EXEPREFIX."Connection_Purging".$EXE_EXT." -ORBCollocation no");
 
 $client = $T->TimedWait (60);
 if ($client == -1) {
