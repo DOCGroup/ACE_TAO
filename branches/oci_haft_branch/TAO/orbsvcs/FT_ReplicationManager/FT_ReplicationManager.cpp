@@ -672,7 +672,7 @@ TAO::FT_ReplicationManager::set_primary_member (
   TAO::PG_Object_Group * group;
   if (this->object_group_map_.find_group (object_group, group))
   {
-//    group->set_primary (member ACE_ENV_ARG_PARAMETER);
+    group->set_primary_location (the_location ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
     // Set the new group reference
     // and distribute it to all members
@@ -705,6 +705,48 @@ TAO::FT_ReplicationManager::create_member (
                                                the_criteria
                                                ACE_ENV_ARG_PARAMETER);
 }
+
+#if 0   // debug code
+void TAO::FT_ReplicationManager::dump_membership (TAO_IOP::TAO_IOR_Manipulation_ptr iorm, const char * label, PortableGroup::ObjectGroup_ptr member) const
+{
+  FT::TagFTGroupTaggedComponent ft_tag_component;
+  TAO_FT_IOGR_Property prop (ft_tag_component);
+  if (iorm->is_primary_set(&prop, member))
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      "%s: PRIMARY member.\n",
+      label
+      ));
+  }
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      "%s: backup member.\n",
+      label
+      ));
+  }
+
+  PortableGroup::TagGroupTaggedComponent tag_component;
+  if (TAO::PG_Utils::get_tagged_component (member, tag_component))
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      "%s: Group: ."
+      " version: %u\n",
+
+      label,
+      tag_component.object_group_ref_version
+      ));
+  }
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      "%s: No group information found.\n",
+      label
+      ));
+  }
+}
+#endif // debug code
+
 
 
 PortableGroup::ObjectGroup_ptr
@@ -762,6 +804,7 @@ TAO::FT_ReplicationManager::add_member (
         ));
     }
     ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
+
     merged = cleaned;
   }
   ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
@@ -784,9 +827,11 @@ TAO::FT_ReplicationManager::add_member (
   {
     group->add_member (the_location, member ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
     // Set the new group reference
     // and distribute it to all members
     group->set_reference (merged, tag_component.object_group_ref_version, 1);
+
   }
   return merged._retn();
 

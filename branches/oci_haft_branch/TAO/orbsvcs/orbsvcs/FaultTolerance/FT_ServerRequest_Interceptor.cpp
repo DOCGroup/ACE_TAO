@@ -95,9 +95,6 @@ namespace TAO
     if (ACE_OS::strcmp (op.in (),
       PortableGroup::TAO_UPDATE_OBJECT_GROUP_METHOD_NAME) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-        "FT_ServerRequestInterceptor updating IOGR.\n"
-        ));
       this->update_iogr (ri
                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -175,7 +172,7 @@ namespace TAO
         if (TAO_debug_level > 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-              "Forwarding request to new IOGR  [%u | %u] \n",
+              "TAO-FT (%P|%t) - Forwarding request to new IOGR  [%u | %u] \n",
                         ACE_static_cast( unsigned, fgvsc.object_group_ref_version ),
                         ACE_static_cast( unsigned, this->object_group_ref_version_)
                         ));
@@ -192,7 +189,7 @@ namespace TAO
         if (TAO_debug_level > 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-              "Request arrived at backup replica.  Throwing TRANSIENT.[%u] \n",
+              "TAO-FT (%P|%t) - Request arrived at backup replica.  Throwing TRANSIENT.[%u] \n",
                         ACE_static_cast( unsigned, this->object_group_ref_version_)
                         ));
           }
@@ -244,34 +241,31 @@ namespace TAO
       ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (param->length () != 2)
+    if (param->length () != 3)
       ACE_THROW (CORBA::TRANSIENT ());
 
     const char *str = 0;
+    this->is_primary_ = 0;            // assume we're a backup member
 
-    (*param)[0].argument >>= str;
-    (*param)[1].argument >>= this->object_group_ref_version_;
+    (*param)[0].argument >>= str;                                       // the stringified IOGR
+    (*param)[1].argument >>= this->object_group_ref_version_;           // the version
+    (*param)[2].argument >>= CORBA::Any::to_boolean (this->is_primary_);// boolean is_primary
+
+    if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        "TAO-FT (%P|%t) - FT_ServerRequestInterceptor updating IOGR to version %u %s.\n",
+        ACE_static_cast (unsigned, this->object_group_ref_version_),
+        (this->is_primary_ ? "Primary" : "Backup")
+        ));
+    }
 
     CORBA::String_var obj (str);
-
     this->iogr_ =
       this->orb_->string_to_object (obj.in ()
                                     ACE_ENV_ARG_PARAMETER);
 
     ACE_CHECK;
-
-    this->is_primary_ = 1; // assume we're primary
-#if 0   // @@ disabled 'cause I don't know "whoami"
-    CORBA::Boolean primary_set = iorm_->is_primary_set (this->iogr_.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    if (primary_set)
-    {
-      CORBA::Object_var primary_obj = iorm_->get_primary (this->iogr_.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      this->is_primary_ = whoami->_is_equivalent (primary_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-#endif // 0
 
     // @@ This exception is a hack to let the RM know that we have
     // received and updated the IOGR. We will add a special minor code

@@ -65,11 +65,15 @@ namespace
   }
 }
 
+// NO_RESPONSE ->no reinvocation
+
+#define FAULT_CODE CORBA::TRANSIENT
+
 // Macros to simplify suicide.
 #define KEVORKIAN(value, method)                                   \
   if (this->death_pending_ == (FT_TEST::TestReplica::value)){      \
     suicide (#value " in method " #method);                        \
-    ACE_THROW (CORBA::NO_RESPONSE (                                \
+    ACE_THROW (FAULT_CODE (                                \
       CORBA::SystemException::_tao_minor_code (                    \
             TAO_DEFAULT_MINOR_CODE,                                \
             EFAULT),                                               \
@@ -79,7 +83,7 @@ namespace
 #define KEVORKIAN_DURING(method)                                   \
   if (this->death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){\
     suicide ("read-only method " #method);                         \
-    ACE_THROW (CORBA::NO_RESPONSE (                                \
+    ACE_THROW (FAULT_CODE (                                \
       CORBA::SystemException::_tao_minor_code (                    \
             TAO_DEFAULT_MINOR_CODE,                                \
             EFAULT),                                               \
@@ -108,7 +112,7 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 
 void FT_TestReplica_i::suicide(const char * note)
 {
-  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Simulate fault: " << note << std::endl;
+  std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Simulate FAULT_CODE fault: " << note << std::endl;
 
   // Tell the poa we aren't accepting future calls
   this->poa_->deactivate_object (this->object_id_.in ()
@@ -294,7 +298,8 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 
 void FT_TestReplica_i::tao_update_object_group (
     const char * iogr,
-    PortableGroup::ObjectGroupRefVersion version
+    PortableGroup::ObjectGroupRefVersion version,
+    CORBA::Boolean is_primary
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))

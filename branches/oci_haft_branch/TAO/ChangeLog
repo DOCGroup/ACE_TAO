@@ -1,27 +1,52 @@
+Tue Nov  4 09:49:20 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Modify the tao_update_object_group method to take an additional 
+          argument: is_primary.  This will be true in for the IOGR pushed
+          to the primary member and false for backup members.
+
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+          "implement" modified tao_update_object_group method.
+          Change thrown exception in hopes of triggering transparent
+          reinvocation (no luck, yet.)
+
+        These changes were made in the oci_haft branch.
+
+
 Mon Nov  3 17:29:58 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/FaultTolerance/Makefile:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/Log.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/LogACE_RB_Tree.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/LogStdMap.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/README:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.idl:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/StateUpdate.h:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+        * orbsvcs/examples/FaultTolerance/Makefile:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/CrashPoint.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Log.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/LogACE_RB_Tree.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/LogStdMap.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Makefile:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/README:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.idl:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/StateUpdate.h:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
 
- 	  RolyPoly is a simple example that shows how to increase 
-	  application reliability by using replication to tolerate 
-	  faults. See README for details.
+          RolyPoly is a simple example that shows how to increase
+          application reliability by using replication to tolerate
+          faults. See README for details.
+
+        These changes were made in the oci_haft branch.
+
 
 Mon Nov  3 16:09:59 2003  Dale Wilson  <wilson_d@ociweb.com>
 
