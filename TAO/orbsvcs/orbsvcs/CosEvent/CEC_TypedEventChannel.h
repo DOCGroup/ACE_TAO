@@ -28,6 +28,7 @@
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/NVList.h"
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
