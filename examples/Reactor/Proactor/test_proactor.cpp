@@ -33,6 +33,10 @@
 
 ACE_RCSID(Proactor, test_proactor, "$Id$")
 
+#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+  // This only works on Win32 platforms and on Unix platforms supporting
+  // POSIX aio calls.
+
 static char *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 static char *file = "test_proactor.cpp";
@@ -89,8 +93,8 @@ private:
 };
 
 Receiver::Receiver (void)
-  : handle_ (ACE_INVALID_HANDLE),
-    dump_file_ (ACE_INVALID_HANDLE)
+  : dump_file_ (ACE_INVALID_HANDLE),
+    handle_ (ACE_INVALID_HANDLE)
 {
 }
 
@@ -154,6 +158,7 @@ Receiver::open (ACE_HANDLE handle,
                                                                      initial_read_size,
                                                                      0,
                                                                      ACE_INVALID_HANDLE,
+                                                                     0,
                                                                      0);
       
       size_t bytes_transferred = message_block.length ();
@@ -402,14 +407,11 @@ Sender::transmit_file (void)
 						this->welcome_message_.length (),
 						this->welcome_message_.duplicate (),
 						this->welcome_message_.length ());
-
-  // Starting position
-  cerr << "Starting position: " << ACE_OS::lseek (file_handle, 0L, SEEK_CUR) << endl;
-
+  
   // Send it
   if (tf.transmit_file (file_handle,
 			&this->header_and_trailer_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::transmit_file"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::transmit_file"), -1); 
 
   return 0;
 }
@@ -432,12 +434,9 @@ Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
-  // Ending position
-  cerr << "Ending position: " << ACE_OS::lseek (result.file (), 0L, SEEK_CUR) << endl;
-
   // Done with file
   ACE_OS::close (result.file ());
-
+  
   this->transmit_file_done_ = 1;
   if (this->stream_write_done_)
     done = 1;
@@ -581,7 +580,6 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  
   if (parse_args (argc, argv) == -1)
     return -1;
 
@@ -616,3 +614,5 @@ template class ACE_Asynch_Acceptor<Receiver>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Asynch_Acceptor<Receiver>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/

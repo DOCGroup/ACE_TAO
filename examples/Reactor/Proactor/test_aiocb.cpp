@@ -9,14 +9,8 @@
 //    test_aiocb.cpp
 //
 // = DESCRIPTION
-//    This program helps you to test the <aio_*> calls on a
-//    platform. Before running this test, make sure the platform can 
-//    support POSIX <aio_> calls. use $ACE_ROOT/tests for this.
-//    This is for testing the AIOCB (AIO Control Blocks) based
-//    completion approach which uses <aio_suspend> for completion
-//    querying. 
-//    If this test is successful, ACE_POSIX_AIOCB_PROACTOR
-//    can be used on this platform.
+//    Checkout $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp,
+//    which is the ACE'ified version of this program. 
 // 
 // = COMPILE and RUN
 //    % CC -g -o test_aiocb -lrt test_aiocb.cpp
