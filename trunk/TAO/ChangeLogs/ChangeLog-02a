@@ -1,3 +1,17 @@
+Tue Mar  5 17:32:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Fixed a bug in #pragma prefix implementation reported by
+          Craig Rodrigues <crodrigu@bbn.com>, who is using Red Hat
+          7.1 and an experimental configuration of gcc
+          (version 3.1 20020302 prerelease). The preprocessor output
+          of this configuration is radically different than any 
+          others we support, and an additional check was required to
+          prevent the current prefix from being popped off the stack
+          prematurely.
+
 Tue Mar  5 15:21:51 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
