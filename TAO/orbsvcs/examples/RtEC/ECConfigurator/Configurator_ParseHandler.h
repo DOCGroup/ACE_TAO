@@ -23,14 +23,6 @@
 #include "SyntaxVisitor.h"
 #include "SyntaxTree.h"
 
-//TODO: We need a name table.  If name order shouldn't matter, we're
-//going to need two passes: one to get the names and one to parse the
-//rest of the XML.
-
-//TODO: An element/attribute tag database would be helpful for adding
-//new stuff (make this class more generic) and if tag names change.
-//We could hardcode it into setup or have it parse the DTD.
-
 /**
  * @class Configurator_ParseHandler
  *
@@ -230,8 +222,11 @@ public:
 
   virtual VisitableSyntax* getRootNode (void);
 
+  NameTable& getNameTable (void);
+
 private:
 
+  NameTable nametable;
   ACE_CString fileName_;
   ACEXML_Locator* locator_;
 

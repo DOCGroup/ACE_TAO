@@ -6,7 +6,8 @@
 void visitableTypeToString (VisitableSyntax::element type, char *buf, int buflen) {
   if (buflen <= 0) return;
 
-  char* typestr[] = {
+  static int numtypes = 26;
+  static char* typestr[] = {
     "ECCONFIGURATION",
     "EVENT",
     "CRITICALITY",
@@ -36,8 +37,13 @@ void visitableTypeToString (VisitableSyntax::element type, char *buf, int buflen
     "VALUE",
     "UNKNOWN_ELEMENT"
   };
+
   //assume type is just index
-  char *str = typestr[type];
+  char *str = NULL;
+  if (type < numtypes && type >= 0)
+    str = typestr[type];
+  else
+    str = typestr[numtypes]; //default to UNKNOWN for rest
 
   //copy over type string
   for(int i=0; i<buflen-1; ++i) {

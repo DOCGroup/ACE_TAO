@@ -1,0 +1,166 @@
+// $Id$
+
+#include "ECConsumer.h"
+#include "ECSupplier.h"
+#include "Service_Handler.h"
+
+#include "ace/Timeprobe.h"
+#include "ace/High_Res_Timer.h"
+#include "ace/Time_Value.h"
+#include "ace/ACE.h" //for is_prime()
+#include "orbsvcs/orbsvcs/Time_Utilities.h" //ORBSVCS_Time
+#include <ace/Counter.h>
+#include <ace/OS_NS_sys_time.h>
+
+#include <algorithm>
+
+ACE_RCSID(EC_Examples, ECConsumer, "$Id$")
+
+ECConsumer::ECConsumer (EventTypeVector &sub_types,
+                        ECSupplier *fwddest, Service_Handler * handler)
+  : worktime_(0,0)
+  , fwddest_(fwddest)
+  , handler_(handler)
+  , sub_types_(sub_types)
+{
+}
+
+ECConsumer::ECConsumer (EventTypeVector &sub_types,
+                        ACE_Time_Value& worktime,
+                        ECSupplier *fwddest, Service_Handler *handler)
+  : worktime_(worktime)
+  , fwddest_(fwddest)
+  , handler_(handler)
+  , sub_types_(sub_types)
+{
+}
+
+ECConsumer::~ECConsumer(void)
+{
+}
+
+void
+ECConsumer::push (const RtecEventComm::EventSet& events
+                ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (events.length () == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "ECConsumer (%P|%t) no events\n"));
+      return;
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "ECConsumer (%P|%t) we received event type %d\n",
+              events[0].header.type));
+
+  if (this->handler_ != 0)
+    {
+      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) calling handle_service_start()\n"));
+      this->handler_->handle_service_start(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) handle_service_start() DONE\n"));
+    }
+
+  if (std::find(this->sub_types_.begin(),this->sub_types_.end(),events[0].header.type) == this->sub_types_.end())
+    {
+      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) received unknown type %d; ignoring\n",events[0].header.type));
+      return;
+    }
+
+  ACE_High_Res_Timer timer;
+  ACE_Time_Value elapsed_time;
+
+  static CORBA::ULong prime_number = 9619899;
+
+  ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) worktime is %isec %iusec\n",
+             this->worktime_.sec(),this->worktime_.usec()));
+
+  ACE_Time_Value start_time(ACE_OS::gettimeofday());
+  timer.start();
+  int j=0;
+  while (elapsed_time <= this->worktime_)
+    {
+      //ACE_DEBUG((LM_DEBUG,"%isec %iusec elapsed\n",elapsed_time.sec(),elapsed_time.usec()));
+
+      ACE::is_prime (prime_number,
+                     2,
+                     prime_number / 2);
+
+      ++j;
+      elapsed_time = ACE_OS::gettimeofday() - start_time;
+    }
+
+  //ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) elapsed %isec %iusec\n",elapsed_time.sec(),elapsed_time.usec()));
+
+  timer.stop ();
+  timer.elapsed_time (elapsed_time); //total elapsed time
+
+  ACE_DEBUG ((LM_DEBUG, "ECConsumer (%P|%t) request processing for %d done, "
+              "elapsed time = %isec %iusec\n",
+              events[0].header.type,elapsed_time.sec(),elapsed_time.usec()));
+  ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) processing took %d iterations\n",j));
+  ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) event had deadline %i\n",
+             events[0].header.deadline));
+
+//   ACE_DEBUG ((LM_DEBUG,
+//               "Request processing in thread %t done, "
+//               "prio = %d, load = %d, elapsed time = %umsec\n",
+//               prio, exec_duration, elapsed_time.msec ()));
+
+  //now, trigger the next subtask if any
+  if (this->fwddest_ != 0)
+    {
+      //trigger next subtask; we assume we are the only ones who set the ECSupplier's mode!
+      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) triggering next subtask\n"));
+      this->fwddest_->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+  if (this->handler_ != 0)
+    {
+      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) calling handle_service_stop()\n"));
+      this->handler_->handle_service_stop(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG,"ECConsumer (%P|%t) handle_service_stop() DONE\n"));
+    }
+}
+
+void
+ECConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+void
+ECConsumer::setWorkTime(ACE_Time_Value& worktime)
+{
+  this->worktime_.set(worktime.sec(),worktime.usec());
+}
+
+void
+ECConsumer::rt_info(InfoHandle consumer_rt_info)
+{
+  rt_info_ = consumer_rt_info;
+}
+
+ECConsumer::InfoHandle
+ECConsumer::rt_info(void)
+{
+  return rt_info_;
+}
+
+void
+ECConsumer::handler(Service_Handler * handler)
+{
+  this->handler_ = handler;
+}
+
+Service_Handler *
+ECConsumer::handler(void) const
+{
+  return this->handler_;
+}
+
+// ****************************************************************
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

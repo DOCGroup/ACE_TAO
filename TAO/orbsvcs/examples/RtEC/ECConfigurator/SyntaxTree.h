@@ -18,6 +18,7 @@
 
 #include "RtecSchedulerC.h"
 #include "ace/OS_String.h"
+#include "ace/Hash_Map_Manager.h"
 
 #include <vector>
 
@@ -53,6 +54,20 @@ class Period;
 class Phase;
 class Time;
 class Value;
+
+// Typedefs
+typedef std::vector<Event*>              EventVector;
+typedef std::vector<Timeout*>            TimeoutVector;
+typedef std::vector<LocalEventChannel*>  LocalECVector;
+typedef std::vector<RemoteEventChannel*> RemoteECVector;
+typedef std::vector<Consumer*>           ConsumerVector;
+typedef std::vector<Supplier*>           SupplierVector;
+typedef std::vector<EventName*>          EventNameVector;
+typedef std::vector<SupplierName*>       SupplierNameVector;
+typedef std::vector<TimeoutName*>        TimeoutNameVector;
+
+typedef ACE_Hash_Map_Manager<ACE_CString,VisitableSyntax*,ACE_Null_Mutex> NameTable;
+
 
 // Utility classes
 
@@ -122,7 +137,7 @@ public:
   {}
 
   // Value
-  int val;
+  long val;
 };
 
 class Driver: public VisitableSyntax
@@ -154,11 +169,11 @@ public:
   }
 
   // Children
-  std::vector<Event*>              events;
-  std::vector<Timeout*>            timeouts;
-  std::vector<LocalEventChannel*>  localECs;
-  std::vector<RemoteEventChannel*> remoteECs;
-  Driver                           *driver;
+  EventVector     events;
+  TimeoutVector   timeouts;
+  LocalECVector   localECs;
+  RemoteECVector  remoteECs;
+  Driver          *driver;
 };
 
 class Event : public VisitableSyntax
@@ -276,8 +291,8 @@ public:
 
   // Children
   SchedulingStrategy *schedulingstrategy;
-  std::vector<Consumer*> consumers;
-  std::vector<Supplier*> suppliers;
+  ConsumerVector consumers;
+  SupplierVector suppliers;
 
   // Attributes
   ACE_CString name;
@@ -302,8 +317,8 @@ public:
 
   // Children
   IORFile                *iorfile;
-  std::vector<Consumer*> consumers;
-  std::vector<Supplier*> suppliers;
+  ConsumerVector consumers;
+  SupplierVector suppliers;
 
   // Attributes
   ACE_CString name;
@@ -376,7 +391,7 @@ public:
   }
 
   // Children
-  std::vector<EventName*> eventnames;
+  EventNameVector eventnames;
 };
 
 class Dependants : public VisitableSyntax
@@ -397,7 +412,7 @@ public:
   }
 
   // Children
-  std::vector<SupplierName*> suppliernames;
+  SupplierNameVector suppliernames;
 };
 
 class Supplier : public VisitableSyntax
@@ -443,7 +458,7 @@ public:
   }
 
   // Children
-  std::vector<EventName*> eventnames;
+  EventNameVector eventnames;
 };
 
 class Triggers : public VisitableSyntax
@@ -464,8 +479,8 @@ public:
   }
 
   // Children
-  std::vector<EventName*> eventnames;
-  std::vector<TimeoutName*> timeoutnames;
+  EventNameVector eventnames;
+  TimeoutNameVector timeoutnames;
 };
 
 class TestDriver : public Driver
