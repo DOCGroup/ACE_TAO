@@ -1,3 +1,14 @@
+Thu Jul  8 21:02:58 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Connector_Registry.cpp (preprocess_preconnects):
+ 	
+	  Minor fix for case when preconnect string contains no
+	  preconnects (e.g.: "iiop://").
+
+	* tao/{IIOP,UIOP}_Connect.cpp:
+
+	  Cosmetic updates.
+
 Thu Jul  8 17:18:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/params.{h,cpp}:
