@@ -1,3 +1,9 @@
+Fri Mar 24 10:30:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/FILE_SAP/client.cpp. Fixed the formatting
+	  to conform to ACE guidelines.  Thanks to Steve Luoma
+ 	  <stevel@dvc400.com> for motivating this.
+
 Thu Mar 23 20:37:19 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/check_build_logs: removed leading "./" from log file names.
