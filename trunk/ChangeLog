@@ -1,3 +1,10 @@
+Thu Jul 10 19:51:52 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\Conn_Test.cpp: 
+
+	  Fixed incorrect template instantiation for
+	  ACE_NonBlocking_Connect_Handler.
+
 Thu Jul 10 15:11:55 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\MT_Reference_Counted_Event_Handler_Test.dsp

@@ -127,7 +127,7 @@ template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
 template class ACE_Recycling_Strategy<Svc_Handler>;
 template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_NonBlocking_Connect_EH<Svc_Handler, ACE_SYNCH_MUTEX>;
+template class ACE_NonBlocking_Connect_Handler<Svc_Handler>;
 template class ACE_Auto_Basic_Array_Ptr<pid_t>;
 
 #if defined (__BORLANDC__)
@@ -178,7 +178,7 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
 #pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_NonBlocking_Connect_EH<Svc_Handler, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Svc_Handler>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<pid_t>
 
 #if defined (__BORLANDC__)
