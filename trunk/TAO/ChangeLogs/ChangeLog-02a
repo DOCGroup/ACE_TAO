@@ -1,3 +1,11 @@
+Thu Aug 10 17:35:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/Makefile:
+
+	  I must have overlooked checking this in before. IFR_Service
+	  was added to the list of directories in my workspace but
+	  evidently never checked in. Now it is.
+
 Thu Aug 10 17:24:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
