@@ -38,7 +38,7 @@ ifeq ($(corba_messaging),1)
 endif # corba_messaging
 
 ifeq ($(rt_corba),1)
-  DIRS += RTCORBA RTPortableServer
+  DIRS += RTCORBA RTPortableServer RTScheduling
 endif # rt_corba
 DIRS += IFR_Client Domain TypeCodeFactory
 
