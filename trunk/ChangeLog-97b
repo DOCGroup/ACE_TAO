@@ -5,8 +5,13 @@ Tue Nov 18 16:27:32 1997    <irfan@TWOSTEP>
 
 Tue Nov 18 15:59:37 1997  Steve Huston  <shuston@riverace.com>
 
-        * tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
-          the proceses can be forked.
+	* ace/IOStream.cpp: In underflow() and overflow(), use base() to
+	  check for buffer in use in every case - not just without
+	  ACE_HAS_STANDARD_CPP_LIBRARY==1.  Thanks to James CE Johnson
+	  (jcej@lads.com) for this fix.
+
+	* tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
+	  the proceses can be forked.
 
 Tue Nov 18 15:27:37 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
