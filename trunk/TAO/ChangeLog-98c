@@ -1,3 +1,17 @@
+Tue Sep 22 14:29:29 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Made changes to the ACE_DEBUG to print the server/client Process ID/ thread ID
+	for all messages to console. Also modified README to include the description of \
+	tests done by client.
+
+	* examples/Simple/bank/README:
+	* examples/Simple/bank/ AccountManager_i.cpp
+	* examples/Simple/bank/ Account_i.cpp
+	* examples/Simple/bank/ Client_i.cpp
+	* examples/Simple/bank/Server_i.cpp
+	* examples/Simple/bank/client.cpp
+	* examples/Simple/bank/server.cpp
+
 Tue Sep 22 13:21:02 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (destroy): Must destroy
