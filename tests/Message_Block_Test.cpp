@@ -33,7 +33,7 @@ static const int ACE_ALLOC_STRATEGY_NO = 2;
 // Number of iterations to run the test.
 static size_t n_iterations = ACE_MAX_ITERATIONS;
 
-static ACE_Lock_Adapter<ACE_Thread_Mutex> lock_adapter_;
+static ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
 // Serialize access to <ACE_Message_Block> reference count, which will
 // be decremented from multiple threads.
 
@@ -94,7 +94,7 @@ Cached_Memory_Pool_Allocator<TYPE, LOCK>::Cached_Memory_Pool_Allocator (size_t n
   // ERRNO could be lost because this is within ctor
   
   for (size_t c = 0 ; c < n_chunks ; c++)
-    this->free_list_.add (new (&this->pool_ [c]) Mem_Pool_Node<TYPE> ());
+    this->free_list_.add (new (&this->pool_ [c]) Mem_Pool_Node<TYPE>);
   // put into free list using placement contructor, no real memory
   // allocation in the above new
 }
@@ -108,14 +108,13 @@ Cached_Memory_Pool_Allocator<TYPE, LOCK>::~Cached_Memory_Pool_Allocator (void)
 template <class TYPE, class LOCK> void *
 Cached_Memory_Pool_Allocator<TYPE, LOCK>::malloc (size_t nbytes)
 {
-  // check if size requested fits within pre-determined size
+  // Check if size requested fits within pre-determined size.
   if (sizeof (TYPE) < nbytes)
     return NULL;
 
-  void * ptr;
+  // addr() call is really not absolutely necessary because of the way
+  // Mem_Pool_Node's internal structure is arranged.
   return this->free_list_.remove ()->addr ();
-  // addr() call is really not absolutely necessary because of 
-  // the way Mem_Pool_Node's internal structure is arranged.
 }
 
 template <class TYPE, class LOCK> void
@@ -331,6 +330,16 @@ struct
   { &mem_allocator, "Cached Memory" }
 };
 
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class Cached_Memory_Pool_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
+template class Mem_Pool_Node<MEMORY_CHUNK>;
+template class ACE_Locked_Simple_Free_List<Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
+template class ACE_Free_List<Mem_Pool_Node<MEMORY_CHUNK> >;
+template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
+template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
+template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #endif /* ACE_HAS_THREADS */
 
 int 
@@ -384,10 +393,3 @@ main (int, char *[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-#if defined(ACE_HAS_THREADS)
- template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
-#endif /* ACE_HAS_THREADS */
-template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
-template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
