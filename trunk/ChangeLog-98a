@@ -1,3 +1,12 @@
+Sat Feb 14 18:34:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Timer_{Wheel,Hash}_T.cpp: Fixed a bug with earliest time
+	  pointers not being set correctly.  Thanks to Mark Evans
+	  <mark.evans@tandem.com> for reporting this.
+
+	* tests/Timer_Queue_Test.cpp: Added a quick test to check to 
+	  make sure the earliest time is reported correctly.
+
 Sat Feb 14 18:28:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Fixed a problem with the
