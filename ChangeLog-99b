@@ -1,3 +1,8 @@
+Thu Sep  9 09:39:46 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* etc/purify.solaris2: Added suppression for MLK due to OS accept
+	  call.
+
 Thu Sep 09 09:24:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.lst: disabled Signal_Test.  [Bug 309]
