@@ -974,7 +974,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 // Default semaphore key and mutex name
 #define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
 #define ACE_INVALID_SEM_KEY 0
-#define ACE_DEFAULT_MUTEX "ACE_MUTEX"
+#define ACE_DEFAULT_MUTEX __TEXT ("ACE_MUTEX")
 
 // This flag speeds up the inclusion of Win32 header files.
 #if !defined (WIN32_LEAN_AND_MEAN)
