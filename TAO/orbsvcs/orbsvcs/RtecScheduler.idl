@@ -264,17 +264,19 @@ module RtecScheduler
     //   Once the scheduling data is computed it can be retrieved
     //   remotely to generate the code for the run-time version.
   {
-    handle_t create (in string entry_point) raises (DUPLICATE_NAME);
+    handle_t create (in string entry_point)
+      raises (DUPLICATE_NAME, INTERNAL, SYNCHRONIZATION_FAILURE);
     // Creates a new RT_Info entry for the function identifier
     // "entry_point", it can be any string, but the fully qualified
     // name function name is suggested.
     // Returns a handle to the RT_Info.
 
-    handle_t lookup (in string entry_point);
+    handle_t lookup (in string entry_point)
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE);
     // Lookups a handle for entry_point.
-    // TODO: Should we add INVALID_HANDLE or raise an exception?
 
-    RT_Info get (in handle_t handle) raises (UNKNOWN_TASK);
+    RT_Info get (in handle_t handle)
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE);
     // Retrieve information about an RT_Info.
 
     void set (in handle_t handle,
@@ -287,7 +289,7 @@ module RtecScheduler
               in Quantum_t quantum,
               in long threads,
               in Info_Type_t info_type)
-      raises (UNKNOWN_TASK);
+      raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
     // Set the attributes of an RT_Info.
     // Notice that some values may not be modified (like priority).
     // Criticality and Info_Type are only used with the Dynamic Scheduler.
@@ -296,7 +298,7 @@ module RtecScheduler
                          in handle_t dependency,
                          in long number_of_calls,
                          in Dependency_Type_t dependency_type)
-      raises (UNKNOWN_TASK);
+      raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
     // Adds <dependency> to <handle>.
     // Dependency_Type_t is only used with the Dynamic Scheduler.
 
@@ -304,12 +306,12 @@ module RtecScheduler
                    out OS_Priority o_priority,
                    out Preemption_Subpriority_t p_subpriority,
                    out Preemption_Priority_t p_priority)
-      raises (UNKNOWN_TASK, NOT_SCHEDULED);
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
     void entry_point_priority (in string entry_point,
                                out OS_Priority o_priority,
                                out Preemption_Subpriority_t p_subpriority,
                                out Preemption_Priority_t p_priority)
-      raises (UNKNOWN_TASK, NOT_SCHEDULED);
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
     // Obtain the run time priorities.
     // TODO: Do we need the two interfaces or is it simply confusing?
     // If we should to keep only the <handle> version: Are the extra
@@ -323,6 +325,7 @@ module RtecScheduler
                              out Config_Info_Set configs,
                              out Scheduling_Anomaly_Set anomalies)
       raises (UTILIZATION_BOUND_EXCEEDED,
+              SYNCHRONIZATION_FAILURE,
               INSUFFICIENT_THREAD_PRIORITY_LEVELS,
               TASK_COUNT_MISMATCH);
     // Computes the scheduling priorities, returns the RT_Info's with
@@ -353,7 +356,9 @@ module RtecScheduler
     void dispatch_configuration (in Preemption_Priority_t p_priority,
                                  out OS_Priority o_priority,
                                  out Dispatching_Type_t d_type)
-      raises (UNKNOWN_PRIORITY_LEVEL, NOT_SCHEDULED);
+      raises (NOT_SCHEDULED,
+              SYNCHRONIZATION_FAILURE,
+              UNKNOWN_PRIORITY_LEVEL);
     // Returns the thread priority and dispatching type assigned
     // to the dispatching priority level that was passed in.  This
     // information is used to configure the queues through wich
@@ -368,7 +373,7 @@ module RtecScheduler
 
 
     Preemption_Priority_t last_scheduled_priority ()
-      raises (NOT_SCHEDULED);
+      raises (SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
     // Returns the last priority number assigned to an operation in the schedule.
     // The number returned is one less than the total number of scheduled priorities.
     // All scheduled priorities range from 0 to the number returned, inclusive.

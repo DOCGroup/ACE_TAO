@@ -313,7 +313,9 @@ RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 lookup (const char * entry_point,
         CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK))
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::UNKNOWN_TASK,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
@@ -335,7 +337,8 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 get (RtecScheduler::handle_t handle,
      CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK))
+                     RtecScheduler::UNKNOWN_TASK,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
@@ -378,7 +381,9 @@ set (RtecScheduler::handle_t handle,
      RtecScheduler::Info_Type_t info_type,
      CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
-                      RtecScheduler::UNKNOWN_TASK))
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
@@ -444,6 +449,7 @@ priority (RtecScheduler::handle_t handle,
           CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::NOT_SCHEDULED))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
@@ -481,6 +487,7 @@ entry_point_priority (const char * entry_point,
                       CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::NOT_SCHEDULED))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
@@ -511,6 +518,7 @@ add_dependency (RtecScheduler::handle_t handle /* RT_Info that has the dependenc
                 RtecScheduler::Dependency_Type_t dependency_type,
                 CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::UNKNOWN_TASK))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
@@ -545,6 +553,7 @@ compute_scheduling (CORBA::Long /* minimum_priority */,
                     CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
                       RtecScheduler::TASK_COUNT_MISMATCH))
 {
@@ -618,6 +627,7 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                         CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::NOT_SCHEDULED,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE,
                       RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
@@ -651,7 +661,8 @@ RtecScheduler::Preemption_Priority_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 last_scheduled_priority (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                    RtecScheduler::NOT_SCHEDULED))
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::NOT_SCHEDULED))
 {
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
@@ -853,7 +864,8 @@ RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 lookup_i (const char * entry_point,
           CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK))
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::UNKNOWN_TASK))
 {
   RtecScheduler::RT_Info *rt_info = 0;
   if (rt_info_tree_.find (entry_point, rt_info) != 0)
@@ -907,6 +919,7 @@ add_dependency_i (RtecScheduler::handle_t handle /* RT_Info that has the depende
                   RtecScheduler::Dependency_Type_t dependency_type,
                   CORBA::Environment &ACE_TRY_ENV)
      ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::INTERNAL,
                       RtecScheduler::UNKNOWN_TASK))
 {
   // All dependencies are mapped by both the calling and called
@@ -1022,6 +1035,8 @@ map_dependency_i (RtecScheduler::handle_t key,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 dfs_traverse_i (CORBA::Environment &ACE_TRY_ENV)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::INTERNAL))
 {
   int i;  // index into array of scheduling entry pointers
 
@@ -1096,6 +1111,9 @@ comp_entry_finish_times (const void *first, const void *second)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 detect_cycles_i (CORBA::Environment &ACE_TRY_ENV)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::CYCLIC_DEPENDENCIES))
 {
   // Sort the pointers to entries in order of descending forward
   // finish times, which produces a topological ordering, with
@@ -1132,6 +1150,10 @@ detect_cycles_i (CORBA::Environment &ACE_TRY_ENV)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 propagate_characteristics_i (CORBA::Environment &ACE_TRY_ENV)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::UNRESOLVED_LOCAL_DEPENDENCIES,
+                      RtecScheduler::THREAD_SPECIFICATION))
 {
   // Traverse entries in topological (DFS finish) order,
   // propagating period and effective execution time from
@@ -1166,6 +1188,8 @@ propagate_characteristics_i (CORBA::Environment &ACE_TRY_ENV)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::INTERNAL))
 {
   // Sort the pointers to entries in descending order
   // of static priority and static subpriority, according
@@ -1192,6 +1216,8 @@ assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 compute_utilization_i (CORBA::Environment &ACE_TRY_ENV)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::INTERNAL))
 {
   TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK> util_visitor;
   for (i = 0; i < this->next_handle_; ++i)
@@ -1213,6 +1239,8 @@ compute_utilization_i (CORBA::Environment &ACE_TRY_ENV)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 compute_dispatch_config_i (CORBA::Environment &ACE_TRY_ENV)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::INTERNAL))
 {
   // @@ TBD - do this in the strategy
 }
@@ -1222,6 +1250,7 @@ compute_dispatch_config_i (CORBA::Environment &ACE_TRY_ENV)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecScheduler::RT_Info &rt_info)
+     ACE_THROW_SPEC (())
 {
   // Set some reasonable default values.
   rt_info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;

@@ -48,8 +48,6 @@ class TAO_ORBSVCS_Export TAO_Reconfig_Scheduler :
   //
 public:
 
-  // @@ TBD - check throw specs against method definitions
-
   TAO_Reconfig_Scheduler ();
   // Default constructor.
 
@@ -88,6 +86,7 @@ public:
                                           CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::DUPLICATE_NAME,
+                     RtecScheduler::INTERNAL,
                      RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Create an RT_Info.  If it does not exist, a new RT_Info is
   // created and inserted into the schedule, and the handle of the new
@@ -96,14 +95,17 @@ public:
 
   virtual RtecScheduler::handle_t lookup (const char * entry_point,
                                           CORBA::Environment &_env)
-    ACE_THROW_SPEC((CORBA::SystemException));
+    ACE_THROW_SPEC((CORBA::SystemException,
+                    RtecScheduler::UNKNOWN_TASK,
+                    RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Lookup a handle for an RT_Info, and return its handle, or an error
   // value if it's not present.
 
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle,
                                        CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                     RtecScheduler::UNKNOWN_TASK,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Return a pointer to the RT_Info corresponding to the passed handle.
 
   virtual void set (RtecScheduler::handle_t handle,
@@ -118,7 +120,9 @@ public:
                     RtecScheduler::Info_Type_t info_type,
                     CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                     RtecScheduler::UNKNOWN_TASK,
+                     RtecScheduler::INTERNAL,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Set characteristics of the RT_Info corresponding to the passed handle.
 
   virtual void priority (RtecScheduler::handle_t handle,
@@ -128,6 +132,7 @@ public:
                          CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::NOT_SCHEDULED));
   // Returns the priority and subpriority values assigned to an RT_Info,
   // based on its handle.
@@ -139,6 +144,7 @@ public:
                                      CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::NOT_SCHEDULED));
   // Returns the priority and subpriority values assigned to an RT_Info,
   // based on its entry point name.
@@ -149,6 +155,7 @@ public:
                                RtecScheduler::Dependency_Type_t dependency_type,
                                CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::UNKNOWN_TASK));
   // This method registers a dependency between two RT_Infos.
 
@@ -160,6 +167,7 @@ public:
                                    CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
                      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
                      RtecScheduler::TASK_COUNT_MISMATCH));
   // If information has been added or changed since the last stable
@@ -172,13 +180,15 @@ public:
                                        RtecScheduler::Dispatching_Type_t & d_type,
                                        CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                    RtecScheduler::NOT_SCHEDULED,
-                    RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
+                     RtecScheduler::NOT_SCHEDULED,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
   // Provides the thread priority and queue type for the given priority level.
 
   virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                    RtecScheduler::NOT_SCHEDULED));
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::NOT_SCHEDULED));
   // Returns the last priority number assigned to an operation in the
   // schedule.  The number returned is one less than the total number
   // of scheduled priorities.  All scheduled priorities range from 0
@@ -272,7 +282,8 @@ protected:
 
   virtual RtecScheduler::handle_t lookup_i (const char * entry_point,
                                             CORBA::Environment &_env)
-    ACE_THROW_SPEC((CORBA::SystemException));
+    ACE_THROW_SPEC((CORBA::SystemException,
+                    RtecScheduler::UNKNOWN_TASK));
   // Internal method to look up a handle for an RT_Info, and return
   // its handle, or an exception if it's not present.
 
@@ -293,6 +304,7 @@ protected:
                                  RtecScheduler::Dependency_Type_t dependency_type,
                                  CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::INTERNAL,
                      RtecScheduler::UNKNOWN_TASK));
   // Internal method that registers a dependency between two RT_Infos.
   // Assumes it is being called with all locks held, and does *not*
@@ -311,39 +323,42 @@ protected:
 
   virtual void dfs_traverse_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                     RtecScheduler::INTERNAL));
   // Traverses dependency graph, assigning a topological ordering.
   // Resets DFS map entries, do DFS traversal, constructs DFS map.
 
   virtual void detect_cycles_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                     RtecScheduler::INTERNAL,
+                     RtecScheduler::CYCLIC_DEPENDENCIES));
   // Sorts an array of RT_info handles in topological order, then
   // checks for loops, marks unresolved remote dependencies.
 
   virtual void propagate_characteristics_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::UNRESOLVED_LOCAL_DEPENDENCIES,
+                      RtecScheduler::THREAD_SPECIFICATION));
   // Propagates effective execution time and period, sets total frame size.
 
   virtual void assign_priorities_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                     RtecScheduler::INTERNAL));
   // Sort operations by urgency (done by strategy), then
   // assign priorities and subpriorities in one pass.
   // Sets last scheduled priority.
 
   virtual void compute_utilization_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                     RtecScheduler::INTERNAL));
   // Compute utilization, set last feasible priority.
 
   virtual void compute_dispatch_config_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     RtecScheduler::UNKNOWN_TASK));
+                     RtecScheduler::INTERNAL));
   // Compute dispatching configuration information.
 
-  static void init_rt_info (RtecScheduler::RT_Info &rt_info);
+  static void init_rt_info (RtecScheduler::RT_Info &rt_info)
     ACE_THROW_SPEC (());
   // Helper method to give an RT_Info some reasonable default values
 
