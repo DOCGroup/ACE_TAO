@@ -1,3 +1,11 @@
+Mon Aug  2 11:44:03 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp (open):
+	* tao/UIOP_Connector.cpp (open):
+
+	  Additional minor code reorganization to aid in prevention of
+	  potential memory leak.
+
 Mon Aug  2 10:28:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp (open):
