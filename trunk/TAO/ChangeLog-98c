@@ -1,3 +1,19 @@
+Mon Aug 10 12:45:01 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Added extra code to
+	  test the "logv ()" method.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: Added new method
+	  "init_new_naming ()" which creates a new naming service. Modified
+	  "init ()" to try and resolve a preexisting NameService before
+	  calling "init_new_naming ()" 
+
+	* orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}: Implemented new "logv ()"
+	  method 
+
+	* orbsvcs/orbsvcs/Logger.idl (Logger): Added new method "logv ()"
+	  which allows logging with a specified verbosity level.
+	
 Mon Aug 10 10:51:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
