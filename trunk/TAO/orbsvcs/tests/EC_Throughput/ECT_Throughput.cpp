@@ -208,36 +208,36 @@ ECT_Throughput::run (int argc, char* argv[])
 
           if (this->reactive_ec_ == 1)
             {
-              module_factory =
-                auto_ptr<TAO_Module_Factory> (new TAO_Reactive_Module_Factory);
+              auto_ptr<TAO_Module_Factory> auto_module_factory (new TAO_Reactive_Module_Factory);
+              module_factory = auto_module_factory;
             }
           else
             {
-              module_factory =
-                auto_ptr<TAO_Module_Factory> (new TAO_Default_Module_Factory);
+              auto_ptr<TAO_Module_Factory> auto_module_factory (new TAO_Default_Module_Factory);
+              module_factory = auto_module_factory;
             }
 
           // Create the EC
-          ec_impl =
-            auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
-                (new ACE_EventChannel (scheduler.in (),
-                                       1,
-                                       ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                       module_factory.get ()));
+          auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl
+            (new ACE_EventChannel (scheduler.in (),
+                                   1,
+                                   ACE_DEFAULT_EVENT_CHANNEL_TYPE,
+                                   module_factory.get ()));
+          ec_impl = auto_ec_impl;
         }
       else
         {
-          ec_factory =
-            auto_ptr<TAO_EC_Factory>(new TAO_EC_Basic_Factory (root_poa.in ()));
+          auto_ptr<TAO_EC_Factory> auto_ec_factory (new TAO_EC_Basic_Factory (root_poa.in ()));
+          ec_factory = auto_ec_factory;
 
-          TAO_EC_Event_Channel* ec =
+          TAO_EC_Event_Channel *ec =
             new TAO_EC_Event_Channel (ec_factory.get ());
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
           ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
-          ec_impl =
-            auto_ptr<POA_RtecEventChannelAdmin::EventChannel> (ec);
+          auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
+          ec_impl = auto_ec_impl;
         }
 
       RtecEventChannelAdmin::EventChannel_var channel =

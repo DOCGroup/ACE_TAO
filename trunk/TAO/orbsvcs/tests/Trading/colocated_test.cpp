@@ -38,14 +38,13 @@ main (int argc, char** argv)
       // Command line argument interpretation.
       CORBA::Boolean verbose = 0;
       ::parse_args (argc, argv, verbose);
-        
+
       // Initialize ORB.
       CORBA::ORB_var orb = orb_manager.orb ();
 
       // Create a Service Type Repository and a Trader Object.
       TAO_Service_Type_Repository type_repos;
-      auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
-	auto_ptr<TAO_Trader_Factory::TAO_TRADER>(TAO_Trader_Factory::create_trader (argc, argv));
+      auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader (TAO_Trader_Factory::create_trader (argc, argv));
       TAO_Support_Attributes_i& sup_attr = trader->support_attributes ();
       TAO_Trading_Components_i& trd_comp = trader->trading_components ();
 
@@ -63,16 +62,16 @@ main (int argc, char** argv)
 
       type_exporter.remove_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       type_exporter.add_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       type_exporter.list_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       type_exporter.describe_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       type_exporter.fully_describe_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -92,7 +91,7 @@ main (int argc, char** argv)
 
       offer_exporter.describe_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       offer_exporter.modify_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -103,16 +102,16 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       offer_exporter.describe_offers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
 
       offer_exporter.withdraw_offers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
 
       offer_exporter.export_offers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
 
       offer_exporter.describe_offers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      TAO_CHECK_ENV;
 
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));

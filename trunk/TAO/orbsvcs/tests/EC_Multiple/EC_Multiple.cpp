@@ -264,10 +264,12 @@ Test_ECG::run (int argc, char* argv[])
           break;
 
         case Test_ECG::ss_local:
-          scheduler_impl =
-            auto_ptr<POA_RtecScheduler::Scheduler>(new ACE_Config_Scheduler);
+          {
+            auto_ptr<POA_RtecScheduler::Scheduler> scheduler_impl (new ACE_Config_Scheduler);
+            scheduler_impl = auto_scheduler_impl;
+          }
           if (scheduler_impl.get () == 0)
-                return -1;
+            return -1;
           scheduler = scheduler_impl->_this (TAO_TRY_ENV);
           TAO_CHECK_ENV;
           break;
@@ -282,12 +284,13 @@ Test_ECG::run (int argc, char* argv[])
                 sizeof (runtime_infos_1)/sizeof (runtime_infos_1[0]),
                 runtime_infos_1);
 
-              scheduler_impl =
-                auto_ptr<POA_RtecScheduler::Scheduler>
-                    (new ACE_Runtime_Scheduler (runtime_configs_1_size,
-                                                runtime_configs_1,
-                                                runtime_infos_1_size,
-                                                runtime_infos_1));
+              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+                (new ACE_Runtime_Scheduler (runtime_configs_1_size,
+                                            runtime_configs_1,
+                                            runtime_infos_1_size,
+                                            runtime_infos_1));
+              scheduler_impl = auto_scheduler_impl;
+
               if (scheduler_impl.get () == 0)
                 return -1;
               scheduler = scheduler_impl->_this (TAO_TRY_ENV);
@@ -302,12 +305,13 @@ Test_ECG::run (int argc, char* argv[])
                 sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
                 runtime_infos_2);
 
-              scheduler_impl =
-                auto_ptr<POA_RtecScheduler::Scheduler>
-                    (new ACE_Runtime_Scheduler (runtime_configs_2_size,
-                                                runtime_configs_2,
-                                                                                                runtime_infos_2_size,
-                                                runtime_infos_2));
+              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+                (new ACE_Runtime_Scheduler (runtime_configs_2_size,
+                                            runtime_configs_2,
+                                            runtime_infos_2_size,
+                                            runtime_infos_2));
+              scheduler_impl = auto_scheduler_impl;
+
               if (scheduler_impl.get () == 0)
                 return -1;
               scheduler = scheduler_impl->_this (TAO_TRY_ENV);
@@ -322,12 +326,13 @@ Test_ECG::run (int argc, char* argv[])
                 sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
                 runtime_infos_3);
 
-              scheduler_impl =
-                auto_ptr<POA_RtecScheduler::Scheduler>
-                    (new ACE_Runtime_Scheduler (runtime_configs_3_size,
-                                                runtime_configs_3,
-                                                                                                runtime_infos_3_size,
-                                                runtime_infos_3));
+              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+                (new ACE_Runtime_Scheduler (runtime_configs_3_size,
+                                            runtime_configs_3,
+                                            runtime_infos_3_size,
+                                            runtime_infos_3));
+              scheduler_impl = auto_scheduler_impl;
+
               if (scheduler_impl.get () == 0)
                 return -1;
               scheduler = scheduler_impl->_this (TAO_TRY_ENV);
@@ -338,8 +343,10 @@ Test_ECG::run (int argc, char* argv[])
               ACE_ERROR ((LM_WARNING,
                           "Unknown name <%s> defaulting to "
                           "config scheduler\n", this->lcl_name_));
-              scheduler_impl =
-                auto_ptr<POA_RtecScheduler::Scheduler>(new ACE_Config_Scheduler);
+
+              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
+              scheduler_impl = auto_scheduler_impl;
+
               if (scheduler_impl.get () == 0)
                 return -1;
               scheduler = scheduler_impl->_this (TAO_TRY_ENV);
