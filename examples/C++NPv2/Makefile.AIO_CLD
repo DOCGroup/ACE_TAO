@@ -8,8 +8,11 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-# This code uses SSL.
-ssl=1
+# This example uses SSL.
+ifeq ($(ssl),)
+default:
+	@echo 'This example requires SSL; build with make ssl=1'
+endif #ssl
 
 SHLIB   = libAIO_CLD.$(SOEXT)
 FILES   = AIO_Client_Logging_Daemon
@@ -36,3 +39,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ifdef TEMPINCDIR
 COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
 endif
+
+ifneq ($(ssl),)
+  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+  LIBS += $(PLATFORM_SSL_LIBS)
+  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
+endif # ssl

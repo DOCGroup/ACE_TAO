@@ -11,6 +11,8 @@
 INFO  = README
 
 DIRS  =	ASX \
+	C++NPv1 \
+	C++NPv2 \
 	Connection \
 	IPC_SAP \
 	IOStream \

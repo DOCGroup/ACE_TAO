@@ -9,7 +9,10 @@
 #----------------------------------------------------------------------------
 
 # This example uses SSL.
-ssl=1
+ifeq ($(ssl),)
+default:
+	@echo 'This example requires SSL; build with make ssl=1'
+endif #ssl
 
 SHLIB   = libTPCLS.$(SOEXT)
 FILES   = TPC_Logging_Server \
@@ -37,3 +40,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ifdef TEMPINCDIR
 COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
 endif
+
+ifneq ($(ssl),)
+  CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+  LIBS += $(PLATFORM_SSL_LIBS)
+  LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
+endif # ssl
