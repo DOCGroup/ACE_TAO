@@ -31,7 +31,7 @@
 #include "be_visitor_array/array_cs.cpp"
 #include "be_visitor_array/any_op_ch.cpp"
 #include "be_visitor_array/any_op_cs.cpp"
-#include "be_visitor_arraycdr_op_ch.cpp"
+#include "be_visitor_array/cdr_op_ch.cpp"
 #include "be_visitor_array/cdr_op_ci.cpp"
 
 ACE_RCSID(be, be_visitor_array, "$Id$")
