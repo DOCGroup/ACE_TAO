@@ -1,3 +1,23 @@
+Tue Apr 29 18:15:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp
+
+        Added check for IPPROTO_SCTP for platforms that natively
+        know about SCTP.
+
+        * tests/SOCK_SEQPACK_Association_Test.cpp
+
+        Changed 'char' usage to 'ACE_TCHAR'
+
+        * tests/icc.bat
+
+        Added Multihomed_INET_Addr_Test.
+        Suggestion: README needs to be updated to reflect
+        current set of files where new tests must be added to.
+
 Tue Apr 29 12:58:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
