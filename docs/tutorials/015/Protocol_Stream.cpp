@@ -33,7 +33,7 @@ Protocol_Stream::~Protocol_Stream (void)
 }
 
 /* Even opening the stream is rather simple.  The important thing to
-   rememer is that the modules you push onto the stream first will be
+   remember is that the modules you push onto the stream first will be
    at the tail (eg -- most downstream) end of things when you're
    done.
  */
@@ -71,7 +71,7 @@ Protocol_Stream::open (ACE_SOCK_Stream &peer,
   // will be sent through here last.  Server applications will
   // typically use this task to do the actual processing of data.
   // Note the use of Thru_Task.  Since a module must always have a
-  // pair of tasks we use this on the writter side as a no-op.
+  // pair of tasks we use this on the writer side as a no-op.
   if (reader)
     {
       if (stream ().push (new Module ("Reader",

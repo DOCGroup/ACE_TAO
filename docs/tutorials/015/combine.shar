@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-02-01 13:06 EST by <jcej@beta.mobsec.com>.
-# Source directory was `/projects/home/jcej/projects/ACE_wrappers/docs/tutorials/015'.
+# Made on 1999-02-10 22:34 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/015'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    414 -rw-rw-r-- hdr
 #    419 -rw-rw-r-- bodies
-#   1505 -rw-rw-r-- page01.pre
+#   4303 -rw-rw-r-- page01.pre
 #    194 -rw-rw-r-- page02.pre
 #    318 -rw-rw-r-- page03.pre
 #    178 -rw-rw-r-- page04.pre
@@ -24,7 +24,7 @@
 #    640 -rw-rw-r-- page09.pre
 #    978 -rw-rw-r-- page10.pre
 #    334 -rw-rw-r-- page11.pre
-#    334 -rw-rw-r-- page12.pre
+#     49 -rw-rw-r-- page12.pre
 #    326 -rw-rw-r-- page13.pre
 #    540 -rw-rw-r-- page14.pre
 #    770 -rw-rw-r-- page15.pre
@@ -83,7 +83,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh22831; then
+if mkdir _sh29164; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -218,23 +218,78 @@ What it amounts to is using the ACE_Select_Reactor for all platforms.
 Win32 defaults to ACE_WFMO_Reactor and that seems to be causing some
 or all of the problems.
 <P>
+Kirthika's abstract:
+<UL>
+The Protocol Stream model consists of a stream layer which pushes the
+data towards the underlying SOCK_Stream thru the stages of encryption
+and compression. This data is received at the other end of the
+SOCK_Stream and sent up to its Protocol_Stream layer via the stages of
+decompression and decryption and an optional Reader task. This is very
+similar to the model of the TCP/IP stack (specifically the datalink to
+physical layer portion).
+<P>
+ACE_Message_Blocks are used to communicate between the client and the
+server across the Protocol Stream, which abstracts the protocol
+conformance details. The underlying SOCK_Stream is used to set up the
+connection using the ACE_SOCK_Connector class. Once the connector
+completes its job, the SOCK_Stream pointer is passed on to the
+Protocol Stream which now takes over. The Client has put() and get()
+methods to send and receive data from the server. 
+<P>
+The server is implemented using the ACE_Acceptor to listen at the port
+for connections and a reactor for delegating events to the appropriate
+event handler. The handle_input () method of the handler simply allows
+the stream to receive the data and hand it over to the Handler_Task (a
+derivative of the ACE_Task) which will then process it.
+<P>
+The implementation of this Protocol Stream model is done using the
+ACE_Module class. The module for Xmit/Recv is shoved in first
+into the stream, followed by the compression and encryption modules. The
+optional Reader if defined is bundled with a dummy task
+(ACE_Thru_Task class) into a module. The get() and put() methods do
+the job of reading and writing to the Stream. Each module is made up
+of a pair of Protocol Tasks. A Protocol Task is a derivative of the
+ACE_Task and whose recv() and send() methods need to be filled to
+perform the appropriate task.
+<P>
+The Xmit object derives from the Protocol task and has a send() method
+which does the task of transmitting data to the underlying
+SOCK_Stream. Keeping the fragmentation and reassembly issues in mind,
+block-size is also sent across with the block of data.
+The Recv object uses a dummy Message Block to provoke the Protocol
+Task object to call the recv() on it. This is done by being
+foresighted about the use of mutliple threads instead of a single
+thread.
+<P>
+The compression/decompression is bundled in a single Protocol Task
+object with the send () method doing the compression and the recv()
+doing the decompression. Similarly, the encrption/decryption is done
+using a single Protocol Task object.
+<P>
+This tutorial provides a glimpse on how to design and implement a
+protocol in layers and also revises a lot of what has been learnt until
+now from the previous tutorials.
+(for instance, Message_Block, Task, Acceptor, Connector, Event_Handler
+etc.)
+</UL>
+<P>
 <font size=-1>* Ok, I didn't really implement encryption and
 X        compression objects.  I'll leave that as a thought
 X        exercise!</font>
 SHAR_EOF
-  $shar_touch -am 0201130299 'page01.pre' &&
+  $shar_touch -am 0210223099 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-6fb7af94b2876cbac76a358ffc05c226  page01.pre
+77d3deec35fab659429a2eef4ab5b679  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1505 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1505,' 'current size' "$shar_count!"
+    test 4303 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '4303,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -550,26 +605,22 @@ if test -f 'page12.pre' && test "$first_param" != -c; then
 else
   $echo 'x -' extracting 'page12.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page12.pre' &&
-And now the implementation of the Protocol_Stream.  There are more
-lines of code here than we've seen so far but it still isn't
-complicated.  The basic idea is to construct the ACE_Stream with our
-set of protocol objects that will manipulate the data.  Our primary
-concern in this file is to get everything in the correct order!
+A quick look at the Protocol_Task header...
 <HR>
 SHAR_EOF
-  $shar_touch -am 1019173798 'page12.pre' &&
+  $shar_touch -am 0210223499 'page12.pre' &&
   chmod 0664 'page12.pre' ||
   $echo 'restore of' 'page12.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page12.pre:' 'MD5 check failed'
-b0e968102fb417b12710e99465f4e387  page12.pre
+5258df32a7fddcecfe902aec8440f98f  page12.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page12.pre'`"
-    test 334 -eq "$shar_count" ||
-    $echo 'page12.pre:' 'original size' '334,' 'current size' "$shar_count!"
+    test 49 -eq "$shar_count" ||
+    $echo 'page12.pre:' 'original size' '49,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page13.pre ==============
@@ -1007,5 +1058,5 @@ SHAR_EOF
     $echo 'page09.pst:' 'original size' '617,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh22831
+rm -fr _sh29164
 exit 0
