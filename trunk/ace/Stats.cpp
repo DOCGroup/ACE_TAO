@@ -547,7 +547,8 @@ ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
 {
   if (this->samples_count_ == 0u)
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s : no data collected\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("%s : no data collected\n"), msg));
       return;
     }
 
