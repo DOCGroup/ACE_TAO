@@ -25,7 +25,7 @@
 #include "ace/SString.h"
 
 #ifdef ACE_HAS_THREADS
-# include "ace/os_include/os_pthread.h"
+# include "ace/OS_NS_Thread.h"
 #endif  /* ACE_HAS_THREADS */
 
 #include <openssl/ssl.h>
