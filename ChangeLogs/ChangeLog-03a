@@ -1,3 +1,7 @@
+Mon Feb 28 20:04:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Time_Service_Test.cpp:  Missed a semicolon.
+
 Mon Feb 28 20:42:17 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
@@ -12,11 +16,10 @@ Mon Feb 28 17:34:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.h:
         * ace/ACE.cpp:
-
-          Realized that the Unix and Win32 behavior wasn't the same.  Now
-          both will return -1 if there is any problem such as if the buffer
-          is not long enough.  The Win32 version used to return the size of
-          the buffer needed, so -1 wasn't returned on error.
+          
+          The Unix and Win32 behavior for get_temp_dir () wasn't consistent.  
+          Now both will return -1 if there is any problem such as the buffer
+          not being long enough.  
 
 Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 

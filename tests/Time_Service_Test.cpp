@@ -48,7 +48,7 @@ main (int, ASYS_TCHAR *[])
   // the Clerk is not allowed to do a graceful shutdown. By cleaning
   // the backing store here, we are sure that we get a fresh start and
   // no garbage data from a possible aborted run
-  TCHAR backing_store[MAXPATHLEN + 1]
+  TCHAR backing_store[MAXPATHLEN + 1];
 
 #if defined (ACE_DEFAULT_BACKING_STORE)
   // Create a temporary file.
