@@ -1,13 +1,19 @@
+Fri Jun  4 10:46:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+
+          Made changes to fix dumping of some "Ref" variables.
+
 Fri Jun  4 09:53:14 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/Config_Handlers/tckind_names.h:
 	* DnC/Config_Handlers/tckind_names.cpp:
-	* DnC/Config_Handlers/DnC_Dump.cpp: 
+	* DnC/Config_Handlers/DnC_Dump.cpp:
 
 	Deleted the files which initially written for dumping out the
 	ComponentPropertyDescription::type.  It is handled as a big
 	switch section in DnC_Dump.cpp.
-	
+
 Fri Jun  4 09:52:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
