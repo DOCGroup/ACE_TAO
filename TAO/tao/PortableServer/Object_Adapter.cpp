@@ -550,9 +550,10 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 #endif /* 0 */
 
   // Construct a new POA
+  TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
   ACE_NEW_THROW_EX (this->root_,
-                    TAO_POA (TAO_DEFAULT_ROOTPOA_NAME,
-                             poa_manager,
+                    TAO_POA (root_poa_name,
+                             *poa_manager,
                              policies,
                              0,
                              this->lock (),
@@ -1523,7 +1524,7 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
           if (poa_.orb_core ().get_protocols_hooks ()->
               set_thread_priority (&poa_.orb_core (),
                                    target_priority,
-                                   ACE_TRY_ENV) 
+                                   ACE_TRY_ENV)
               == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
