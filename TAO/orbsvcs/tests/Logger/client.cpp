@@ -26,6 +26,7 @@
 #include "orbsvcs/LoggerC.h"
 #include "client.h"
 
+
 // constructor
 
 Logger_Client::Logger_Client (void)
@@ -69,35 +70,35 @@ Logger_Client::parse_args (void)
 }
 
 void
-Logger_Client::setup_record (Logger::Log_Record newrec,
+Logger_Client::setup_record (Logger::Log_Record &newrec,
                              Logger::Log_Priority lp,
 			     const char *msg)
 {
-  struct utsname h_name;
-
-  char msg_data[ACE_MAXLOGMSGLEN+1];
-  ACE_OS::strncpy (msg_data,
-                   msg,
-                   ACE_MAXLOGMSGLEN);
+  newrec.msg_data = CORBA::string_copy (msg);
+  // Copy the message data into newrec
+  
   newrec.type = lp;
-
-  ACE_Time_Value time = ACE_OS::gettimeofday ();
+  // Assign the log priority
+  
+  ACE_Time_Value time (ACE_OS::gettimeofday ());
   newrec.time = time.sec ();
+  // Create and assign the timestamp
 
   pid_t pid = ACE_OS::getpid ();
   newrec.app_id = pid;
-
-  ACE_OS::uname (&h_name);
-  hostent *he = (ACE_OS::gethostbyname (h_name.nodename));
-
-  newrec.host_addr = inet_addr (he->h_addr);
-
-  ACE_OS::strcpy (newrec.msg_data,
-                  msg);
-}
+  // Get and store the PID of the calling process
   
-// Execute client example code.
+  char name[MAXHOSTNAMELEN];
+  ACE_OS::hostname (name, MAXHOSTNAMELEN);
+  hostent* he = ACE_OS::gethostbyname(name);
+  newrec.host_addr =
+   (ACE_reinterpret_cast (in_addr *, he->h_addr_list[0])->s_addr);
+  // Get and store the IP of the local host
+  
+}
 
+
+// Execute client example code.
 int
 Logger_Client::run (void)
 {
@@ -106,23 +107,37 @@ Logger_Client::run (void)
       Logger::Log_Record rec1;
       Logger::Log_Record rec2;
 
-      this->setup_record (rec1,
-                          Logger::LM_DEBUG,
-                          "Logging at logger 1");
+
+       this->setup_record (rec1,
+			  Logger::LM_DEBUG,
+			  "Logging at logger 1\n");
       
+       in_addr address;
+       address.s_addr = rec1.host_addr;
+       ACE_DEBUG ((LM_DEBUG, "First Logger created in run. Contents:\n"
+		   "Log Priority: %d\n"
+		   "        Time: %d\n"
+		   "         PID: %d\n"
+		   "Host Address: %s\n"
+		   "     Message: %s\n",
+		   rec1.type, rec1.time,
+		   rec1.app_id, inet_ntoa(address),
+		   rec1.msg_data.in()));
+      
+
       this->logger_1_->log (rec1, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->setup_record (rec2,
-                          Logger::LM_ERROR,
-                          "Logging at logger 2");
+			  Logger::LM_ERROR,
+			  "Logging at logger 2\n");
 
       this->logger_2_->log (rec2, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
     }
   TAO_CATCHANY
-    {
+    {      
       TAO_TRY_ENV.print_exception ("run");
       return -1;
     }
@@ -195,16 +210,18 @@ Logger_Client::init (int argc, char **argv)
           if (ex != 0)
             TAO_TRY_ENV.print_exception ("Negative test case for name not found, succeeded\n");
           else
-            TAO_TRY_ENV.print_exception ("Negative test case for name not found, FAILED!\n");
+	    TAO_TRY_ENV.print_exception ("Negative test case for name not found, FAILED!\n");
+	  TAO_TRY_ENV.clear();
         }
 
+      
       if (CORBA::is_nil (factory_ref.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "resolved to nil object"),
                           -1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Logger_Factory resolved\n"));
+                  "\nLogger_Factory resolved\n"));
 
       Logger_Factory_var factory =
         Logger_Factory::_narrow (factory_ref.in (),
@@ -216,17 +233,20 @@ Logger_Client::init (int argc, char **argv)
                            "narrow returned nil"),
                           -1);
       ACE_DEBUG ((LM_DEBUG,
-                  "Logger_Factory narrowed\n"));
+                  "\nLogger_Factory narrowed\n"));
 
       CORBA::String_var str =
         this->orb_->object_to_string (factory.in (),
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG,
+      /* ACE_DEBUG ((LM_DEBUG,
                   "The factory IOR is <%s>\n",
                   str.in ()));
-
+      */
+      // Uncomment the above if you don't mind lots of unnecessary
+      // information
+      
       // Now retrieve the Logger obj ref corresponding to key1 and key2
       this->logger_1_ = factory->make_logger ("key1",
                                               TAO_TRY_ENV);
@@ -236,7 +256,7 @@ Logger_Client::init (int argc, char **argv)
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Created two loggers"));
+                  "Created two loggers\n"));
 
       if (CORBA::is_nil (this->logger_1_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -252,6 +272,7 @@ Logger_Client::init (int argc, char **argv)
 
       if (this->test_nesting_)
         {
+	  
           CosNaming::Name nested(1);
           nested.length (1);
           nested[0].id = CORBA::string_dup ("my_naming_context_1");
