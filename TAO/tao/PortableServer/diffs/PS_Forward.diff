@@ -1,6 +1,6 @@
---- orig/PS_ForwardC.h	2005-03-25 15:46:06.196712000 +0100
-+++ PS_ForwardC.h	2005-03-25 15:46:17.082364800 +0100
-@@ -68,11 +68,25 @@
+--- orig/PS_ForwardC.h	2005-03-31 13:47:19.552625600 +0200
++++ PS_ForwardC.h	2005-03-31 13:47:23.518328000 +0200
+@@ -61,11 +61,25 @@
  #pragma option push -w-rvl -w-rch -w-ccc -w-inl
  #endif /* __BORLANDC__ */
  

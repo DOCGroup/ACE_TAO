@@ -80,17 +80,6 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:62
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
@@ -155,7 +144,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_POAList;
+  extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_POAList;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -1256,7 +1245,7 @@ namespace PortableServer
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_POA;
+  extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_POA;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66

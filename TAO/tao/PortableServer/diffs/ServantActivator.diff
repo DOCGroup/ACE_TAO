@@ -1,25 +1,25 @@
---- orig/ServantActivatorC.h	2005-03-25 15:46:08.189577600 +0100
-+++ ServantActivatorC.h	2005-03-25 15:46:17.512984000 +0100
-@@ -75,6 +75,8 @@
- // TAO_IDL - Generated from 
- // be\be_visitor_root/root_ch.cpp:62
+--- orig/ServantActivatorC.h	2005-03-31 13:47:20.213576000 +0200
++++ ServantActivatorC.h	2005-03-31 13:49:46.944564800 +0200
+@@ -68,6 +68,8 @@
+ // TAO_IDL - Generated from
+ // be\be_visitor_module/module_ch.cpp:48
  
 +#if (TAO_HAS_MINIMUM_POA == 0)
 +
- namespace TAO
+ namespace PortableServer
  {
-   class Collocation_Proxy_Broker;
-@@ -247,6 +249,8 @@
+   
+@@ -229,6 +231,8 @@
  TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantActivator_ptr *); // non-copying
  TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantActivator_ptr &);
  
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:969
+ // be\be_codegen.cpp:947
  
---- orig/ServantActivatorC.cpp	2005-03-25 15:46:08.189577600 +0100
-+++ ServantActivatorC.cpp	2005-03-25 15:46:17.563056000 +0100
+--- orig/ServantActivatorC.cpp	2005-03-31 13:47:20.213576000 +0200
++++ ServantActivatorC.cpp	2005-03-31 13:47:23.578414400 +0200
 @@ -45,6 +45,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:69
@@ -35,8 +35,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ServantActivatorA.cpp	2005-03-25 15:46:08.189577600 +0100
-+++ ServantActivatorA.cpp	2005-03-25 17:30:26.718900800 +0100
+--- orig/ServantActivatorA.cpp	2005-03-31 13:47:20.213576000 +0200
++++ ServantActivatorA.cpp	2005-03-31 13:47:23.578414400 +0200
 @@ -34,6 +34,8 @@
  #include "tao/Any.h"
  #include "tao/Any_Impl_T.h"
