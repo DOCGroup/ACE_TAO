@@ -106,3 +106,10 @@ public:
 };
 
 static Static_Constructor_Test the_instance;
+
+// Test dynamic cast
+extern "C" ACE_Svc_Export int
+dynamic_cast_test (Parent *target)
+{
+   return target == dynamic_cast<Child*>( target )? 0 : -1;
+}  

@@ -94,6 +94,12 @@ DLD     = $(CXX)
 LD      = $(CXX)
 LIBS    += -ldl
 
+# Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast 
+# for shared libraries. (see http://gcc.gnu.org/faq.html#dso)
+ifeq ($(shared_libs), 1)
+  LDFLAGS += -Wl,-E
+endif # shared_libs
+
 ifeq ($(threads),1)
   LIBS += -lpthread
 endif
