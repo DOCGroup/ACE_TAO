@@ -89,7 +89,7 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object ("iioploc://localhost:12345/FakeIOR",
+        orb->string_to_object ("corbaloc:iiop:localhost:12345/FakeIOR",
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

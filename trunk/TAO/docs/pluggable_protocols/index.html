@@ -1265,7 +1265,7 @@ TAO_IIOP_Connector::check_prefix&nbsp;(const&nbsp;char&nbsp;*endpoint)&nbsp;
 }</DD>
 </DL>
 <P>
-It checks that the protocol prefix in a URL style IOR (e.g. <TT>iioploc://foo.bar.com:1234/...</TT>)
+It checks that the protocol prefix in a URL style IOR (e.g. <TT>corbaloc:iiop:foo.bar.com:1234/...</TT>)
 or preconnect endpoint matches the one(s) supported by the IIOP pluggable protocol,
 in this case ``<TT>iiop</TT>'' and ``<TT>iioploc</TT>.'' If no match occurs
 then return an error condition (<TT>-1</TT>). Note that the protocol prefix
@@ -1287,7 +1287,7 @@ in the following IIOP URL style IOR:
 
 <DL COMPACT>
 <DT>
-<DD>iioploc://1.1@foo.bar.com:1234/some_object_key</DD>
+<DD>corbaloc:iiop:1.1@foo.bar.com:1234/some_object_key</DD>
 </DL>
 <P>
 the object key delimiter is `<TT>/</TT>.' However, this character is not suitable
@@ -1591,7 +1591,7 @@ address in the following IIOP URL style IOR:
 
 <DL COMPACT>
 <DT>
-<DD>iioploc://1.1@foo.bar.com:1234/yet_another_object_key</DD>
+<DD>corbaloc:iiop:1.1@foo.bar.com:1234/yet_another_object_key</DD>
 </DL>
 <P>is ``<TT>foo.bar.com:1234</TT>.'' Much of the in TAO's existing pluggable
 protocols may also be factored out because that code is common to all pluggable
@@ -2986,7 +2986,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Wed Jan 24 08:28:07 PST 2001
+Last modified: Sat May 19 17:18:30 CDT 2001
 <!-- hhmts end -->
 </BODY>
 </HTML>
