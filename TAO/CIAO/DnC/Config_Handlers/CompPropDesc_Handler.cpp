@@ -1,4 +1,12 @@
-// $Id$
+//==================================================================
+/**
+ *  @file  CompPropDesc_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ */
+//=====================================================================
 
 #ifndef COMPPROPDESC_HANDLER_C
 #define COMPPROPDESC_HANDLER_C
