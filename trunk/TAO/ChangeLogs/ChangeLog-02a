@@ -1,3 +1,7 @@
+Sun Nov 19 07:06:21 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Cache_Entries.inl: Added checks for allocation failures.
+
 Sun Nov 19 00:03:21 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Makefile.bor
