@@ -94,51 +94,16 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
-//       << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
-//       << be_idt << be_idt_nl
-//       << "obj->_stubobj ()"
-//       << "->servant_orb_var ()->orb_core ()"
-//       << be_uidt_nl
-//       << ");" << be_uidt_nl << be_nl
-      << "TAO_Abstract_ServantBase * const servant ="
-      << " obj->_servant ();" << be_nl
-      << be_nl
-      << "TAO_Collocated_Skeleton collocated_skel;" << be_nl
-      << "int const status = servant->_find (op," << be_nl
-      << "                                   collocated_skel," << be_nl
-      << "                                   strategy," << be_nl
-      << "                                   op_len);" << be_nl << be_nl
-      << "if (status == -1)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_THROW (CORBA::BAD_OPERATION (CORBA::OMGVMCID | 2, "
-      << "CORBA::COMPLETED_NO));" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "ACE_TRY" << be_idt_nl
-      << "{" << be_idt_nl
-      << "collocated_skel (servant," << be_nl
-      << "                 args," << be_nl
-      << "                 num_args" << be_nl
-      << "                 ACE_ENV_ARG_PARAMETER);" << be_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}" << be_uidt
-      << "\n#if (TAO_HAS_MINIMUM_CORBA == 0)" << be_nl
-      << "ACE_CATCH (PortableServer::ForwardRequest, forward_request)"
-      << be_idt_nl
-      << "{" << be_idt_nl
-      << "forward_obj =" << be_idt_nl
-      << "CORBA::Object::_duplicate (forward_request.forward_reference.in ());"
-      << be_uidt_nl
-      << "return;" << be_uidt_nl
-      << "}" << be_uidt
-      << "\n#else" << be_nl
-      << "ACE_CATCHANY" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG (forward_obj);" << be_nl
-      << "ACE_RE_THROW;" << be_uidt_nl
-      << "}" << be_uidt
-      << "\n#endif /* TAO_HAS_MINIMUM_CORBA */" << be_nl
-      << "ACE_ENDTRY;" << be_nl
-      << "ACE_CHECK;" << be_uidt_nl
+      << "TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;" << be_nl
+      << "collocation_upcall_wrapper.upcall (" << be_idt_nl
+      << "obj, " << be_nl
+      << "forward_obj, " << be_nl
+      << "args, " << be_nl
+      << "num_args, " << be_nl
+      << "op, " << be_nl
+      << "op_len, " << be_nl
+      << "strategy " << be_nl
+      << "ACE_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl
       << "}";
 
   *os << be_nl << be_nl
