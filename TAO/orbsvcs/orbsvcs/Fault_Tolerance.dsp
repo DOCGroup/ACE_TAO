@@ -56,7 +56,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_IORManip.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_Svc_Utils.lib TAO_FTORB_Utils.lib TAO_FT_ServerORB.lib TAO_FT_ClientORB.lib  TAO_CosEvent.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"ETCL" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_Valuetype.lib TAO_Messaging.lib TAO_IORManip.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_Svc_Utils.lib TAO_FTORB_Utils.lib TAO_FT_ServerORB.lib TAO_FT_ClientORB.lib TAO_CosEvent.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"ETCL" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Fault Tolerance - Win32 Debug"
 
@@ -83,7 +84,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_FTORB_Utilsd.lib TAO_FT_ServerORBd.lib TAO_FT_ClientORBd.lib TAO_CosNamingd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosEventd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib TAO_IORManipd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Toleranced.dll" /pdbtype:sept /libpath:"ETCL" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_FTORB_Utilsd.lib TAO_Messagingd.lib TAO_FT_ServerORBd.lib TAO_FT_ClientORBd.lib TAO_CosNamingd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosEventd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib TAO_Valuetyped.lib TAO_IORManipd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Toleranced.dll" /pdbtype:sept /libpath:"ETCL" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\Messaging"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Fault Tolerance - Win32 mfc Release"
