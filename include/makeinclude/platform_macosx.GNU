@@ -14,7 +14,7 @@ endif
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -pipe -I/sw/include
+CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe -I/sw/include
 
 # Test for template instantiation.
 #
