@@ -1,5 +1,8 @@
 Wed Feb 25 12:58:04 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* tao/tao_util.cpp: Added the implementation for the 2 new methods
+	to use a child_poa.
+
 	* tao/tao_util.h (class TAO_ORB_Manager): Added 2 new methods 
 	init_child_poa and activate_under_child_poa to create a child_poa
 	with policies PERSISTENT and USER_ID.
