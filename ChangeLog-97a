@@ -1,3 +1,10 @@
+Wed Apr 23 20:57:35 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* ace/OS.i and ace/OS.h: added methods for getpwnam and
+	  getpwnam_r, with hooks for NT.
+
+	* ace/config-irix6.2.*: added ACE_LACKS_PWD_REENTRANT_FUNCTIONS.
+	
 Wed Apr 23 14:27:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_Queue.cpp (ACE_Timer_Queue ctor): reordered initializers
