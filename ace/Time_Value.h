@@ -238,6 +238,13 @@ public:
   friend ACE_OS_Export int operator != (const ACE_Time_Value &tv1,
                                         const ACE_Time_Value &tv2);
 
+  /// Multiplies the time value by <d>
+  friend ACE_OS_Export ACE_Time_Value operator * (double d,
+                                                  const ACE_Time_Value &tv);
+
+  friend ACE_OS_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
+                                                  double d);
+
   /// Dump is a no-op.
   /**
    * The dump() method is a no-op.  It's here for backwards compatibility

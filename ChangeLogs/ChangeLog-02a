@@ -1,3 +1,15 @@
+Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Time_Value.h (ACE_Time_Value): Fix for [BUGID 1240]. Some of
+	  the operators were missing explicit declarations in the header
+	  file (they were anyway defined in the inlined files) which
+	  created problems in builds where inlining was diabled. Please
+	  see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1240 for
+	  more details. Thanks to Marina Spivak <marina@atdesk.com> for
+	  reporting this.
+
 Fri Jul  5 18:44:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Corrected undeclared 'select_width' errors and
