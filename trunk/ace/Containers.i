@@ -288,7 +288,7 @@ template <class T> ACE_INLINE int
 ACE_Ordered_MultiSet<T>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Ordered_MultiSet<T>::is_empty");
-  return this->head_ == this->head_->next_;
+  return this->cur_size_ > 0 ? 0 : 1;
 }
 
 template <class T> ACE_INLINE size_t
