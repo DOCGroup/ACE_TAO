@@ -1,4 +1,7 @@
-Sat Jun 20 00:28:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sat Jun 20 01:24:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/platform_freebsd_pthread.GNU: Changed to use
+	  -Wall to report all warnings.
 
 	* ace/OS.cpp (thr_create): Specify <priority> as an unused
 	  argument when ACE_LACKS_SETSCHED.
