@@ -112,7 +112,7 @@ ACE_Parse_Node::ACE_Parse_Node (void)
 
 
 ACE_Parse_Node::ACE_Parse_Node (const ASYS_TCHAR *nm)
-  : name_ (ACE::strnew (nm)),
+  : name_ (nm ? ACE::strnew (nm) : 0),
     next_ (0)
 {
   ACE_TRACE ("ACE_Parse_Node::ACE_Parse_Node");
@@ -279,7 +279,7 @@ ACE_Static_Node::dump (void) const
 ACE_Static_Node::ACE_Static_Node (const ASYS_TCHAR *nm,
                                   ASYS_TCHAR *params)
   : ACE_Parse_Node (nm),
-    parameters_ (ACE::strnew (params))
+    parameters_ (params ? ACE::strnew (params) : 0)
 {
   ACE_TRACE ("ACE_Static_Node::ACE_Static_Node");
 }
@@ -443,10 +443,10 @@ ACE_Object_Node::dump (void) const
 
 ACE_Object_Node::ACE_Object_Node (const ASYS_TCHAR *path,
                                   const ASYS_TCHAR *obj_name)
-  : object_name_ (ACE::strnew (obj_name))
+  : object_name_ (obj_name ? ACE::strnew (obj_name) : 0)
 {
   ACE_TRACE ("ACE_Object_Node::ACE_Object_Node");
-  this->pathname (ACE::strnew (path));
+  this->pathname (path ? ACE::strnew (path) : 0);
   this->must_delete_ = 0;
 }
 
@@ -504,7 +504,7 @@ ACE_Function_Node::dump (void) const
 
 ACE_Function_Node::ACE_Function_Node (const ASYS_TCHAR *path,
                                       const ASYS_TCHAR *func_name)
-  : function_name_ (ACE::strnew (func_name))
+  : function_name_ (func_name ? ACE::strnew (func_name) : 0)
 {
   ACE_TRACE ("ACE_Function_Node::ACE_Function_Node");
   this->pathname (path);
@@ -639,7 +639,7 @@ ACE_Static_Function_Node::dump (void) const
 }
 
 ACE_Static_Function_Node::ACE_Static_Function_Node (const ASYS_TCHAR *func_name)
-  : function_name_ (ACE::strnew (func_name))
+  : function_name_ (func_name ? ACE::strnew (func_name) : 0)
 {
   ACE_TRACE ("ACE_Static_Function_Node::ACE_Static_Function_Node");
   this->must_delete_ = 1;

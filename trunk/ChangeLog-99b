@@ -1,3 +1,10 @@
+Wed Oct 13 01:15:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Parse_Node.cpp: Made sure we don't try to duplicate a null
+	  string.  This was causing problem when the initialization string
+	  was missing from a service entry.  Thanks to Chris Hafey
+	  <chris@stentorsoft.com> for reporting this.
+
 Tue Oct 12 15:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/run_tests.lst: Reenabed Dave Madden's new
@@ -13,29 +20,29 @@ Tue Oct 12 15:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  <dhm@mersenne.com> for contributing this fix.
 
 	* ace/ACE.cpp (format_hexdump): Replaced
-  
+
           textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
-  
+
           with
-  
+
           textver[i] = isprint (c) ? c : '.';
-	  
+
 	  since this is more portable.  Thanks to Jim Rogers
  	  <jrogers@viasoft.com> for reporting this.
 
-	* ace/Memory_Pool.i: Changed implementation to 
+	* ace/Memory_Pool.i: Changed implementation to
 	  round_to_chunk_size() to ACE::round_to_pagesize(), which appears
  	  to be the "Right Thing"[TM] on NT.
 
 Tue Oct 12 14:49:00 1999  Ruibiao Qiu  <ruibiao@cs.wustl.edu>
 
 	* ace/ATM_Stream.h
-	* ace/ATM_Acceptor.h: Moved #pragma after ACE include 
+	* ace/ATM_Acceptor.h: Moved #pragma after ACE include
 	  so that g++ would not give warning messages.  Thanks to
  	  Dr. David L. Levine <levine@cs.wustl.edu> for pointing this out.
 
 Tue Oct 12 14:26:15 1999  David L. Levine  <levine@cs.wustl.edu>
-  
+
         * ace/config-qnx-neutrino.h: added #define of
           ACE_THR_PRI_FIFO_DEF.  This allows us to easily set a thread
  	  priority (10) that's lower the the TCP service threads (17) in
