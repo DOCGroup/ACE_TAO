@@ -17,6 +17,7 @@ DIRS  = POA_Destruction \
 	Object_Reactivation \
 	Non_Servant_Upcalls \
 	Single_Threaded_POA \
+	Persistent_ID \
 	Identity 
 
 # The following test hasn't been updated yet
