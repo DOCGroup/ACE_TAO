@@ -1,3 +1,8 @@
+Fri Oct 27 10:51:26 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Reactor_Notify_Test.cpp: Moved definition of 'int status'
+          outside the auto_ptr-scoping block.
+
 Fri Oct 27 02:06:29 2000  Luther J Baker  <luther@cs.wustl.edu>
 
         * ace/OS.cpp:
