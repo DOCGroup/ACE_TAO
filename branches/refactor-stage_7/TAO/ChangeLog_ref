@@ -1,3 +1,12 @@
+Fri Sep  5 12:46:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/IFR_Client_Adapter.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+
+          Fixed get_interface_remote() method to conform to the new
+          style for invocations.
+
 Fri Sep  5 12:00:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO.dsp:
