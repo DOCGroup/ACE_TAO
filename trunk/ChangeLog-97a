@@ -1,3 +1,16 @@
+Wed Jun 11 15:20:15 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Timer_Queue_T.{h,cpp} (calculate_timeout): Changed the
+	  second parameter the_timeout from a ref. to a ptr. to a ptr in
+	  order to avoid compilation warning.  Since the pointer itself is
+	  not modified within the function, it's ok to change this. 
+
+	* ace/Reactor.cpp (wait_for_multiple_events): Added ACE_Time_Value
+	  the_timeout as a place holder for timeout value when
+	  max_wait_time is NULL.  Otherwise,
+	  Timer_Queue::calculate_timeout won't process the timer queue
+	  even it's not empty.
+
 Wed Jun 11 11:14:29 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* include/makeinclude/platform_mvs.GNU (RANLIB):  Requested change
