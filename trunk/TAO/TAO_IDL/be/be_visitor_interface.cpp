@@ -1760,10 +1760,10 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
 
   os->incr_indent ();
 
-  if (node->defined_in ())
+  if (node->is_nested ())
     {
       be_decl* scope =
-	be_scope::narrow_from_scope (node->defined_in())->decl ();
+	be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
       *os << ": ACE_NESTED_CLASS ("
 	  << scope->name () << ","
@@ -1785,7 +1785,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
         {
           be_interface* parent =
             be_interface::narrow_from_decl (node->inherits()[i]);
-	  if (parent->defined_in ())
+	  if (parent->is_nested ())
 	    {
 	      be_decl* scope =
 		be_scope::narrow_from_scope (parent->defined_in())->decl ();

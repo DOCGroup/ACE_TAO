@@ -1,7 +1,14 @@
+Mon Apr 20 16:46:07 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface.cpp: An ACE_NESTED_CLASS was
+	getting generated with a blank first argument for cases where the
+	interfaces were defined in the outermost scope. This is now fixed
+	by using a conditional "is_nested".
+
 Mon Apr 20 13:23:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Server_Request.h: 
-	* tao/Server_Request.cpp: 
+	* tao/Server_Request.h:
+	* tao/Server_Request.cpp:
 	  We keep a flag to determine whether the exceptions stored with
 	  the set_exception() method are user exceptions or system
 	  exceptions.
