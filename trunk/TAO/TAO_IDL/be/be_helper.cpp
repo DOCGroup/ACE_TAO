@@ -315,7 +315,7 @@ TAO_OutStream::operator<< (const ACE_CDR::Short num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULong num)
 {
-  ACE_OS::fprintf (this->fp_, "%lu", num);
+  ACE_OS::fprintf (this->fp_, "%lu", (unsigned long) num);
   ACE_OS::fflush (fp_);
   return *this;
 }
@@ -323,7 +323,7 @@ TAO_OutStream::operator<< (const ACE_CDR::ULong num)
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::Long num)
 {
-  ACE_OS::fprintf (this->fp_, "%ld", num);
+  ACE_OS::fprintf (this->fp_, "%ld", (long) num);
   ACE_OS::fflush (fp_);
   return *this;
 }
