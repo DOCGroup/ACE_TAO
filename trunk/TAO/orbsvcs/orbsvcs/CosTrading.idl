@@ -144,7 +144,7 @@ module CosTrading {
 		readonly attribute boolean supports_modifiable_properties;
 		readonly attribute boolean supports_dynamic_properties;
 		readonly attribute boolean supports_proxy_offers;
-		//		readonly attribute TypeRepository type_repos;
+		readonly attribute TypeRepository type_repos;
 	};
 
 	interface ImportAttributes {
@@ -496,7 +496,7 @@ module CosTrading {
 
 		FollowOption set_max_link_follow_policy (in FollowOption policy);
 
-		//		TypeRepository set_type_repos (in TypeRepository repository);
+		TypeRepository set_type_repos (in TypeRepository repository);
 
 		OctetSeq set_request_id_stem (in OctetSeq stem);
 
