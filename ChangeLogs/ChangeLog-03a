@@ -1,3 +1,8 @@
+Wed Dec 18 18:59:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.mpc:
+        * tests/tests.mpc: Back out the below changes... jumped the gun.
+
 Wed Dec 18 18:55:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.mpc: Added new Hash_Map_Manager_RT[_T].cpp files.
