@@ -1,3 +1,9 @@
+Thu May  3 06:58:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Unbounded_Queue.h: The comment was incorrect for
+	  ~ACE_Unbounded_Queue.  Thanks to Johnny Willemsen for
+	  reporting this.
+
 Thu May  3 08:00:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Event_Server/Options.cpp:

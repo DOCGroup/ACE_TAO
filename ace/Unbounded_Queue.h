@@ -100,7 +100,7 @@ public:
   /// Assignment operator.
   void operator= (const ACE_Unbounded_Queue<T> &);
 
-  /// construction.
+  /// Destructor.
   ~ACE_Unbounded_Queue (void);
 
   // = Check boundary conditions.
