@@ -60,7 +60,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_TAO_Stub_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_Stub::TAO_Stub (char *repository_id,
-                    TAO_MProfile &profiles)
+                    TAO_MProfile &profiles,
+                    TAO_ORB_Core* orb_core)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
     forward_profiles_ (0),
@@ -70,17 +71,62 @@ TAO_Stub::TAO_Stub (char *repository_id,
     // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
-    first_locate_request_ (0)
+    first_locate_request_ (0),
+    orb_core_ (orb_core)
 {
+  if (this->orb_core_ == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO: (%P|%t) TAO_Stub created with default "
+                      "ORB core\n"));
+        }
+      this->orb_core_ = TAO_ORB_Core_instance ();
+    }
 
   this->profile_lock_ptr_ =
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
+    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
 
-  set_base_profiles (&profiles);
+  this->set_base_profiles (&profiles);
 }
 
 TAO_Stub::TAO_Stub (char *repository_id,
-                          TAO_Profile *profile)
+                    TAO_MProfile *profiles,
+                    TAO_ORB_Core* orb_core)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    forward_profiles_ (0),
+    profile_in_use_ (0),
+    profile_lock_ptr_ (0),
+    profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0),
+    orb_core_ (orb_core)
+{
+  if (this->orb_core_ == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO: (%P|%t) TAO_Stub created with default "
+                      "ORB core\n"));
+        }
+      this->orb_core_ = TAO_ORB_Core_instance ();
+    }
+
+  // @@ does this need to be freed?
+  this->profile_lock_ptr_ =
+    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
+
+  this->set_base_profiles (profiles);
+}
+
+#if 0
+TAO_Stub::TAO_Stub (char *repository_id,
+                    TAO_Profile *profile)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
     forward_profiles_ (0),
@@ -95,36 +141,13 @@ TAO_Stub::TAO_Stub (char *repository_id,
   // @@ XXX need to verify type and deal with wrong types
 
   this->profile_lock_ptr_ =
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
+    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
 
   base_profiles_.set (1);
 
   base_profiles_.give_profile (profile);
 
   reset_base ();
-
-}
-
-TAO_Stub::TAO_Stub (char *repository_id,
-                          TAO_MProfile *profiles)
-  : type_id (repository_id),
-    base_profiles_ ((CORBA::ULong) 0),
-    forward_profiles_ (0),
-    profile_in_use_ (0),
-    profile_lock_ptr_ (0),
-    profile_success_ (0),
-    // what about ACE_SYNCH_MUTEX refcount_lock_
-    refcount_ (1),
-    use_locate_request_ (0),
-    first_locate_request_ (0)
-{
-  // @@ XXX need to verify type and deal with wrong types
-
-  // @@ does this need to be freed?
-  this->profile_lock_ptr_ =
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
-
-  set_base_profiles (profiles);
 
 }
 
@@ -141,8 +164,9 @@ TAO_Stub::TAO_Stub (char *repository_id)
     first_locate_request_ (0)
 {
   this->profile_lock_ptr_ =
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
+    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
 }
+#endif /* 0 */
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -305,8 +329,6 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
   ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_SET_CANCEL);
 
-  TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
-
   ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE);
 
   // Do a locate_request if necessary/wanted.
@@ -315,7 +337,8 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      TAO_GIOP_Locate_Request_Invocation call (this, orb_core);
+      TAO_GIOP_Locate_Request_Invocation call (this,
+                                               this->orb_core_);
 
       // Simply let these exceptions propagate up
       // (if any of them occurs.)
@@ -330,7 +353,8 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
   if (info->is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, info->opname, orb_core);
+      TAO_GIOP_Twoway_Invocation call (this, info->opname,
+                                       this->orb_core_);
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
       // We may need to loop through here more than once if we're
@@ -452,7 +476,8 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
     } // if (two way)
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, info->opname, orb_core);
+      TAO_GIOP_Oneway_Invocation call (this, info->opname,
+                                       this->orb_core_);
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
       for (;;)
@@ -533,15 +558,13 @@ TAO_Stub::do_dynamic_call (const char *opname,
 {
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-
   // Do a locate_request if necessary/wanted.
   // Suspect that you will be forwarded, so be proactive!
   // strategy for reducing overhead when you think a request will
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      TAO_GIOP_Locate_Request_Invocation call (this, orb_core);
+      TAO_GIOP_Locate_Request_Invocation call (this, this->orb_core_);
 
       // Simply let these exceptions propagate up
       // (if any of them occurs.)
@@ -556,7 +579,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
   if (is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, opname, orb_core);
+      TAO_GIOP_Twoway_Invocation call (this, opname, this->orb_core_);
 
       // Loop as needed for forwarding; see above.
 
@@ -744,7 +767,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
     }
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, opname, orb_core);
+      TAO_GIOP_Oneway_Invocation call (this, opname, this->orb_core_);
 
       for (;;)
         {
@@ -773,8 +796,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
 void
 TAO_Stub::put_params (TAO_GIOP_Invocation &call,
-                         CORBA::NVList_ptr args,
-                         CORBA::Environment &ACE_TRY_ENV)
+                      CORBA::NVList_ptr args,
+                      CORBA::Environment &ACE_TRY_ENV)
 {
   // Now, put all "in" and "inout" parameters into the request
   // message body.
@@ -797,7 +820,9 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
           else
             {
               TAO_OutputCDR &cdr = call.out_stream ();
-              TAO_InputCDR in (value->value ()->cdr_);
+              TAO_InputCDR in (value->value ()->cdr_,
+                               TAO_ENCAP_BYTE_ORDER,
+                               this->orb_core_);
               cdr.append (value->value ()->type_, &in, ACE_TRY_ENV);
               ACE_CHECK;
             }
