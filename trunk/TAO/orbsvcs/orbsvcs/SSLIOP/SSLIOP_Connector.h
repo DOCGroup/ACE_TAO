@@ -82,11 +82,11 @@ public:
           TAO_SSLIOP_CONNECT_CREATION_STRATEGY;
 
   typedef ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler,
-                               ACE_SOCK_CONNECTOR>
+                               ACE_SSL_SOCK_CONNECTOR>
           TAO_SSLIOP_CONNECT_STRATEGY ;
 
   typedef ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler,
-                                 ACE_SOCK_CONNECTOR>
+                                 ACE_SSL_SOCK_CONNECTOR>
           TAO_SSLIOP_BASE_CONNECTOR;
 
 private:
