@@ -23,7 +23,7 @@ Grid_Client_i::Grid_Client_i (void)
 //Destructor.
 Grid_Client_i::~Grid_Client_i (void)
 {
-  cout << "Called " << endl;
+  ACE_DEBUG ((LM_DEBUG, "Called \n"));
   //no-op
 }
 
