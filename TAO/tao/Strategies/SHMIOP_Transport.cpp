@@ -180,12 +180,9 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
 
   this->messaging_object ()->get_message_data (&pqd);
 
-  // Resume the handle before processing the request
-  rh.resume_handle ();
-
   // Now we have a full message in our buffer. Just go ahead and
   // process that
-  return this->process_parsed_messages (&pqd);
+  return this->process_parsed_messages (&pqd, rh);
 }
 
 

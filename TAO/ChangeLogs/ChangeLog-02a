@@ -1,3 +1,17 @@
+Wed Jul 25 22:45:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/DIOP_Transport.cpp: Fixed a compile error that
+	  came up from my previous change.
+
+Wed Jul 25 22:39:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+	* tests/RTCORBA/Client_Propagated/server.cpp:
+	* tests/RTCORBA/Thread_Pool/server.cpp: Added checks & debugging
+	  statments for a null RootPOA. thanks to Johnny Willemsen for
+	  pointing this out. Did some minor cosmetic fixes.
+
 Wed Jul 25 22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp:
