@@ -1181,10 +1181,6 @@ protected:
   /// This is where the tss resources for this ORB are stored.
   ACE_TSS_TYPE (TAO_ORB_Core_TSS_Resources) tss_resources_;
 
-  /// If the resources are per-ORB (as opposed to per-ORB-per-thread)
-  /// then they are stored here...
-  TAO_ORB_Core_TSS_Resources orb_resources_;
-
   /// Flag which denotes that the ORB has been shutdown.
   int has_shutdown_;
 
