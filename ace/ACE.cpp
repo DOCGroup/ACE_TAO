@@ -372,11 +372,25 @@ ACE::ldfind (const char filename[],
 
       if (ld_path != 0 && (ld_path = ACE_OS::strdup (ld_path)) != 0)
 	{
-	  // Look at each dynamic lib directory in the search path.
-	  char *path_entry = ACE_OS::strtok
-	    (ld_path, ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+          // strtok has the strange behavior of not separating the
+          // string ":/foo:/bar" into THREE tokens.  One would expect
+          // that the first iteration the token would be an empty
+          // string, the second iteration would be "/foo", and the
+          // third iteration would be "/bar".  However, this is not
+          // the case; one only gets two iterations: "/foo" followed
+          // by "/bar".
 
-	  int result = 0;
+          // This is especially a problem in parsing Unix paths
+          // because it is permissible to specify 'the current
+          // directory' as an empty entry.  So, we introduce the
+          // following special code to cope with this:
+              
+	  // Look at each dynamic lib directory in the search path.
+          char *nextholder = 0;
+          char *path_entry = ACE_OS::strsplit_r
+            (ld_path, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
+
+          int result = 0;
 
 	  while (path_entry != 0)
 	    {
@@ -388,27 +402,37 @@ ACE::ldfind (const char filename[],
 		  break;
 		}
 
+              // This works around the issue where a path might have
+              // an empty component indicating 'current directory'.
+              // We need to do it here rather than anywhere else so
+              // that the loop condition will still work.
+              if (path_entry[0] == '\0')
+                path_entry = ".";
+              
 	      // First, try matching the filename *without* adding a
 	      // prefix.
-	      ACE_OS::sprintf (pathname, "%s%c%s",
+	      ACE_OS::sprintf (pathname, "%s%c%s%s",
 			       path_entry,
 			       ACE_DIRECTORY_SEPARATOR_CHAR,
-			       searchfilename);
+			       searchfilename,
+                               got_suffix ? "" : ACE_DLL_SUFFIX);
 	      if (ACE_OS::access (pathname, F_OK) == 0)
 		break;
 
 	      // Second, try matching the filename *with* adding a
 	      // prefix.
-	      ACE_OS::sprintf (pathname, "%s%c%s%s",
+	      ACE_OS::sprintf (pathname, "%s%c%s%s%s",
 			       path_entry,
 			       ACE_DIRECTORY_SEPARATOR_CHAR,
 			       ACE_DLL_PREFIX,
-			       searchfilename);
+			       searchfilename,
+                               got_suffix ? "" : ACE_DLL_SUFFIX);
 	      if (ACE_OS::access (pathname, F_OK) == 0)
 		break;
 
-	      path_entry = ACE_OS::strtok
-		(0, ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+              // Fetch the next item in the path
+	      path_entry = ACE_OS::strsplit_r
+		(0, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
 	    }
 
 	  ACE_OS::free ((void *) ld_path);
