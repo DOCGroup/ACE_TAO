@@ -1,3 +1,7 @@
+Fri May 15 08:25:19 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Service_Config.cpp: fixed and added template instantations.
+
 Fri May 15 02:47:35 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.5 released.
@@ -8,63 +12,63 @@ Fri May 15 02:42:06 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu May 14 15:28:42 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/config-kcc-common.h: Added the ACE_HAS_USING_KEYWORD to the
- 	  config file.  Thanks to Ben Eng <ben@jetpen.com> for reporting
- 	  this.
+        * ace/config-kcc-common.h: Added the ACE_HAS_USING_KEYWORD to the
+          config file.  Thanks to Ben Eng <ben@jetpen.com> for reporting
+          this.
 
-	* examples/Service_Configurator/Misc: Updated the Timer_Service
- 	  test to demonstrate the new service configurator feature.  It's
- 	  AWESOME!
+        * examples/Service_Configurator/Misc: Updated the Timer_Service
+          test to demonstrate the new service configurator feature.  It's
+          AWESOME!
 
-	* ace/Svc_Conf.h,
-	  ace/Svc_Conf.l:
-	  Added a super-cool new feature that allows us to parse service
- 	  configurator directives from a string rather than from a
- 	  svc.conf file.
+        * ace/Svc_Conf.h,
+          ace/Svc_Conf.l:
+          Added a super-cool new feature that allows us to parse service
+          configurator directives from a string rather than from a
+          svc.conf file.
 
-	* ace/Svc_Conf.l (yywrap): Free up ace_yy_current_buffer in yywrap
- 	  to prevent a memory leak.  Thanks to Paul Motuzenko
- 	  <p_motuzenko@hotmail.com> for reporting this.
+        * ace/Svc_Conf.l (yywrap): Free up ace_yy_current_buffer in yywrap
+          to prevent a memory leak.  Thanks to Paul Motuzenko
+          <p_motuzenko@hotmail.com> for reporting this.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp: Enhanced the
-	  implementation to make it easier to follow and to support the
-	  latest features of CPP-inclient.cpp.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp: Enhanced the
+          implementation to make it easier to follow and to support the
+          latest features of CPP-inclient.cpp.
 
-	* ace/OS.h (ACE_OS): Added a wrapper for strcspn(3s).
+        * ace/OS.h (ACE_OS): Added a wrapper for strcspn(3s).
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp: Added more
- 	  cool changes to the CPP-inserver.cpp example and renamed it.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp: Added more
+          cool changes to the CPP-inserver.cpp example and renamed it.
 
 Thu May 14 14:46:02 1998  Irfan Pyarali <irfan@cs.wustl.edu>
 
-	* ace/OS.h: Moved the definition of ACE_Export before it is used.
+        * ace/OS.h: Moved the definition of ACE_Export before it is used.
 
 Thu May 14 13:22:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Message_Block.h: 
-	* ace/Message_Block.cpp: 
-	  The static duplicate() method can take pointer to a const
-	  Message_Block.
+        * ace/Message_Block.h:
+        * ace/Message_Block.cpp:
+          The static duplicate() method can take pointer to a const
+          Message_Block.
 
 Wed May 13 18:46:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-{inserver,inclient}.cpp: Added
-	  profile timing to the server so we can compute socket
-	  performance metrics.  Also generalized the tests so we can
-	  experiment with both oneway and twoway calls.
+        * examples/IPC_SAP/SOCK_SAP/CPP-{inserver,inclient}.cpp: Added
+          profile timing to the server so we can compute socket
+          performance metrics.  Also generalized the tests so we can
+          experiment with both oneway and twoway calls.
 
 Wed May 13 19:20:27 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/OS.cpp: Added a substitute gets implementation for when
-	  ACE_LACKS_GETS.  The substitute is actually safer than gets, so
-	  I may end up making gets call the new routine instead of
-	  Standard C's.
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp: Added a substitute gets implementation for when
+          ACE_LACKS_GETS.  The substitute is actually safer than gets, so
+          I may end up making gets call the new routine instead of
+          Standard C's.
 
-	* ace/config-g++-common.h: Changed the g++ common file so that
-	  2.8.1 acts like EGCS does.  This worked on Solaris 2.5.1.  We'll
-	  see how other's fare.
+        * ace/config-g++-common.h: Changed the g++ common file so that
+          2.8.1 acts like EGCS does.  This worked on Solaris 2.5.1.  We'll
+          see how other's fare.
 
 Wed May 13 18:13:12 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -72,12 +76,12 @@ Wed May 13 18:13:12 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed May 13 11:29:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Synch-Benchmarks/Options.cpp (print_results):
-	  My previous change to add print_results functionality when
-	  ACE_HAS_GETRUSAGE broke this on Win32.
+        * performance-tests/Synch-Benchmarks/Options.cpp (print_results):
+          My previous change to add print_results functionality when
+          ACE_HAS_GETRUSAGE broke this on Win32.
 
-	* ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS):
-	  Made this macro defined for all versions of g++.
+        * ace/config-g++-common.h (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS):
+          Made this macro defined for all versions of g++.
 
 Wed May 13 09:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -85,20 +89,20 @@ Wed May 13 09:26:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed May 13 00:35:25 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace: Added ACE_Export to a bunch of class in ACE.  Thanks to
- 	  Gonzalo A. Diethelm (gonzo@ing.puc.cl) for pointing this out.
+        * ace: Added ACE_Export to a bunch of class in ACE.  Thanks to
+          Gonzalo A. Diethelm (gonzo@ing.puc.cl) for pointing this out.
 
 Tue May 12 15:16:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-WinCE.h:
-	* ace/OS.h: Stopped using non-static object manager for CE.  This
-	  is causing some problem at process shutdown.
+        * ace/config-WinCE.h:
+        * ace/OS.h: Stopped using non-static object manager for CE.  This
+          is causing some problem at process shutdown.
 
-	* ace/Acceptor.cpp: Made CE friendly.
+        * ace/Acceptor.cpp: Made CE friendly.
 
-	* ace/Process.cpp ([~]ACE_Process_Options): Moved things around to
-	  avoid compilation errors on CE.  Secret: CE doesn't have
-	  environment variables.
+        * ace/Process.cpp ([~]ACE_Process_Options): Moved things around to
+          avoid compilation errors on CE.  Secret: CE doesn't have
+          environment variables.
 
 Tue May 12 13:28:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
