@@ -41,6 +41,7 @@ be_visitor_constant_cs::~be_visitor_constant_cs (void)
 int
 be_visitor_constant_cs::visit_constant (be_constant *node)
 {
+/*
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (!node->cli_stub_gen () 
@@ -123,7 +124,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 
       node->cli_stub_gen (I_TRUE);
     }
-
+*/
   return 0;
 }
 
