@@ -124,41 +124,39 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
 }
 
 
-
-ACE_INLINE void
-TAO_ORB_Core:: services_log_msg_rcv (TAO_Message_State_Factory &state)
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
+                                     const TAO_Profile *that_p)
 {
-    if (this->ft_service_.service_callback ())
-      {
-        this->ft_service_.service_callback ()->service_log_msg_rcv (state);
-      }
+  CORBA::Boolean retval = 0;
+
+  if (this->ft_service_.service_callback ())
+    {
+      retval =
+        this->ft_service_.service_callback ()->is_profile_equivalent (this_p,
+                                                                      that_p);
+    }
+
+  return retval;
 }
 
-ACE_INLINE void
-TAO_ORB_Core:: services_log_msg_pre_upcall (TAO_ServerRequest &req)
+ACE_INLINE CORBA::ULong
+TAO_ORB_Core::hash_service (TAO_Profile *p,
+                            CORBA::ULong m)
 {
-    if (this->ft_service_.service_callback ())
-      {
-        this->ft_service_.service_callback ()->service_log_msg_pre_upcall (req);
-      }
-}
+  if (this->ft_service_.service_callback ())
+    {
+      return this->ft_service_.service_callback ()->hash_ft (p, m);
+    }
 
-ACE_INLINE void
-TAO_ORB_Core:: services_log_msg_post_upcall (TAO_ServerRequest &req)
-{
-    if (this->ft_service_.service_callback ())
-      {
-        this->ft_service_.service_callback ()->service_log_msg_post_upcall (req);
-      }
+  return 0;
 }
-
 
 ACE_INLINE TAO_Fault_Tolerance_Service &
 TAO_ORB_Core::fault_tolerance_service (void)
 {
   return this->ft_service_;
 }
-
 
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)

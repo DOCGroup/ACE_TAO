@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  @author Bala Natarajan <bala@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -22,10 +22,6 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-// @@ This class inherits from TAO_Local_RefCounted_Object as the
-// functionality outlined in the spec seems to indicate that. I could
-// very well be wrong - Bala
 
 /**
  * @class TAO_FT_Request_Duration_Policy
@@ -63,7 +59,7 @@ public:
   virtual TAO_FT_Request_Duration_Policy *clone (void) const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_value (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TimeT request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
@@ -209,7 +205,7 @@ private:
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "FT_Policy_i.i"
+#include "FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -254,6 +254,9 @@ TAO_IIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
         return 0;
     }
 
+  if (!TAO_Profile::is_profile_equivalent_i (other_profile))
+    return 0;
+
   return 1;
 }
 
@@ -281,6 +284,8 @@ TAO_IIOP_Profile::hash (CORBA::ULong max
       hashval += ok[1];
       hashval += ok[3];
     }
+
+  hashval += TAO_Profile::hash_service_i (max);
 
   return hashval % max;
 }

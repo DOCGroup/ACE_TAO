@@ -10,8 +10,6 @@
  *
  */
 //=============================================================================
-
-
 #ifndef TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -23,8 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Endpoint_Selector_Factory.h"
-// @@todo: Inclusion of this files has been a mystery. Needs
-// investigation
 #include "ace/Service_Config.h"
 
 class TAO_FT_Invocation_Endpoint_Selector;
@@ -60,6 +56,9 @@ private:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
   TAO_FT_Invocation_Endpoint_Selector *ft_endpoint_selector_;
+
+  /// Mutex to prevent multiple initializations
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 //extern TAO_FT_Export ACE_Static_Svc_Descriptor ace_svc_desc_TAO_FT_Endpoint_Selector_Factory;

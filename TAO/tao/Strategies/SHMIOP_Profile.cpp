@@ -292,6 +292,9 @@ TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
         return 0;
     }
 
+  if (!this->is_profile_equivalent_i (other_profile))
+    return 0;
+
   return 1;
 }
 
@@ -319,6 +322,8 @@ TAO_SHMIOP_Profile::hash (CORBA::ULong max
       hashval += ok[1];
       hashval += ok[3];
     }
+
+  hashval += this->hash_service_i (max);
 
   return hashval % max;
 }

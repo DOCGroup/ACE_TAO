@@ -188,8 +188,22 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
     ACE_ENV_ARG_DECL)
 {
   // Get the current profile
-  TAO_Profile *temp_profile =
-    invoc->stub ()->base_profiles ().get_current_profile ();
+  TAO_Profile *temp_profile = 0;
+
+  // Get the forwarded profile if it exists
+  if (invoc->stub ()->forward_profiles ())
+    {
+      TAO_MProfile *tmp =
+        ACE_const_cast (TAO_MProfile *,
+                        invoc->stub ()->forward_profiles ());
+      temp_profile =
+        tmp->get_current_profile ();
+    }
+  else
+    {
+      temp_profile =
+        invoc->stub ()->base_profiles ().get_current_profile ();
+    }
 
   int retval = 0;
 

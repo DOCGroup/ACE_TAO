@@ -825,11 +825,27 @@ public:
   void reset_service_profile_flags (void);
 
   /**
-   * The loaded service would determineif the CORBA::Object_ptr is
-   * actually nill or not. This would be useful to accomodate new
+   * The loaded service would determine if the CORBA::Object_ptr is
+   * actually nil or not. This would be useful to accomodate new
    * enhanced definitions as defined by the service specification.
    */
   CORBA::Boolean object_is_nil (CORBA::Object_ptr object);
+
+  /// Hook for the services to determine whether the profiles are
+  /// equivalent or not.
+  /**
+   * For details on how this is used please see the FT service
+   */
+  CORBA::Boolean is_profile_equivalent (const TAO_Profile *this_p,
+                                        const TAO_Profile *that_p);
+
+  /// Hook for the services to determine the <hash> value of a
+  /// profile.
+  /**
+   * For details on how this is used please see the FT service
+   */
+  CORBA::ULong hash_service (TAO_Profile *this_p,
+                             CORBA::ULong max);
 
   /// Call the service layers with the Service Context to check
   /// whether they would like to add something to the list.
@@ -854,18 +870,6 @@ public:
   int service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
                                        TAO_Profile *profile
                                        ACE_ENV_ARG_DECL);
-
-  /// Hook for logging of messages by the Logging & Recovery service
-  /// of an FT service.
-  void services_log_msg_rcv (TAO_Message_State_Factory &state);
-
-  /// Hook for logging of messages by the Logging & Recovery service
-  /// of an FT service.
-  void services_log_msg_pre_upcall (TAO_ServerRequest &req);
-
-  /// Hook for logging of messages by the Logging & Recovery service
-  /// of an FT service.
-  void services_log_msg_post_upcall (TAO_ServerRequest &req);
   //@}
 
   /**
