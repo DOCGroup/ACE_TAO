@@ -1,7 +1,12 @@
+Mon Jan 14 11:02:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * include/makeinclude/ace_flags.bor:
+          Added flags for new TAO FT_ORB library
+
 Sun Jan 13 08:20:05 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/config-all.h: Make sure that ACE_bad_alloc
-	  is defined as std::bad_alloc if 
+	  is defined as std::bad_alloc if
 	  ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB macro is set.
 	  Fixes gcc 3.0.3 compilation problem.
 
