@@ -633,7 +633,7 @@ TAO_AV_RTCP_Object::handle_input (void)
 
 int
 TAO_AV_RTCP_Object::send_frame (ACE_Message_Block *frame,
-                                TAO_AV_frame_info *frame_info)
+                                TAO_AV_frame_info */*frame_info*/)
 {
   return this->transport_->send (frame);
 }
@@ -641,7 +641,7 @@ TAO_AV_RTCP_Object::send_frame (ACE_Message_Block *frame,
 int
 TAO_AV_RTCP_Object::send_frame (const iovec *iov,
                                int iovcnt,
-                               TAO_AV_frame_info *frame_info)
+                                TAO_AV_frame_info */*frame_info*/)
 {
   return this->transport_->send (iov,
                                  iovcnt);
@@ -665,7 +665,7 @@ TAO_AV_RTCP_Object::destroy (void)
 }
 
 int
-TAO_AV_RTCP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
+TAO_AV_RTCP_Object::set_policies (const TAO_AV_PolicyList &/*policy_list*/)
 {
   return -1;
 }
@@ -768,7 +768,7 @@ TAO_AV_RTCP_Callback::handle_stop (void)
 }
 
 int
-TAO_AV_RTCP_Callback::handle_timeout (void *arg)
+TAO_AV_RTCP_Callback::handle_timeout (void */*arg*/)
 {
   // Here we do the send_report.
   TAO_AV_RTCP::send_report (0,
@@ -781,7 +781,7 @@ TAO_AV_RTCP_Callback::handle_timeout (void *arg)
 
 void
 TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
-                                   void *&arg)
+                                   void *&/*arg*/)
 {
   // Here we do the RTCP timeout calculation.
   ACE_NEW (tv,

@@ -47,12 +47,12 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    flow_protocol_ (CORBA::string_dup (flow_protocol)),
    use_flow_protocol_ (0),
    entry_ (0),
+   is_multicast_ (0),
    peer_addr_ (0),
    local_addr_ (0),
    transport_ (0),
    handler_ (0),
    protocol_object_ (0),
-   is_multicast_ (0),
    role_ (TAO_AV_INVALID_ROLE)
 {
   this->set_protocol ();
@@ -74,12 +74,12 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    flow_protocol_ (CORBA::string_dup (flow_protocol)),
    use_flow_protocol_ (0),
    entry_ (0),
+   is_multicast_ (0),
    peer_addr_ (0),
    local_addr_ (0),
    transport_ (0),
    handler_ (0),
    protocol_object_ (0),
-   is_multicast_ (0),
    role_ (TAO_AV_INVALID_ROLE)
 {
   ACE_CString cstring(this->address_str_,0,0);
