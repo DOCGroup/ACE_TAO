@@ -61,7 +61,7 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:236
+// be/be_valuetype.cpp:463
 
 #if defined (__ACE_INLINE__)
 
@@ -80,7 +80,7 @@ TAO_ORT_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterce
 TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:236
+// be/be_valuetype.cpp:463
 
 #if defined (__ACE_INLINE__)
 

@@ -26,21 +26,19 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:301
+// be/be_codegen.cpp:302
 
 
 #include "ObjectReferenceTemplateC.h"
-#include "tao/Stub.h"
+#include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
-#include "tao/Object_T.h"
+#include "tao/Valuetype/ValueFactory.h"
+#include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
 #include "tao/Basic_Arguments.h"
-#include "tao/Object_Argument_T.h"
 #include "tao/UB_String_Arguments.h"
 #include "tao/Var_Size_Argument_T.h"
-#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -51,36 +49,17 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:60
 
 // Arg traits specializations.
 namespace TAO
 {
   
   // TAO_IDL - Generated from
-  // be/be_visitor_arg_traits.cpp:262
+  // be/be_visitor_arg_traits.cpp:263
 
-#if !defined (__TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_)
-#define __TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_ORT_Export Arg_Traits<CORBA::OctetSeq>
-    : public
-        Var_Size_Arg_Traits_T<
-            CORBA::OctetSeq,
-            CORBA::OctetSeq_var,
-            CORBA::OctetSeq_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_arg_traits.cpp:262
-
-#if !defined (__TAO_SEQ_CORBA_STRING___ARG_TRAITS_CS_)
-#define __TAO_SEQ_CORBA_STRING___ARG_TRAITS_CS_
+#if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_CS_)
+#define _CORBA_STRINGSEQ__ARG_TRAITS_CS_
   
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_ORT_Export Arg_Traits<CORBA::StringSeq>
@@ -89,44 +68,6 @@ namespace TAO
             CORBA::StringSeq,
             CORBA::StringSeq_var,
             CORBA::StringSeq_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_arg_traits.cpp:262
-
-#if !defined (__TAO_SEQ_CORBA_STRING___ARG_TRAITS_CS_)
-#define __TAO_SEQ_CORBA_STRING___ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_ORT_Export Arg_Traits<PortableInterceptor::AdapterName>
-    : public
-        Var_Size_Arg_Traits_T<
-            PortableInterceptor::AdapterName,
-            PortableInterceptor::AdapterName_var,
-            PortableInterceptor::AdapterName_out
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_arg_traits.cpp:262
-
-#if !defined (__TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_)
-#define __TAO_SEQ_CORBA_OCTET___ARG_TRAITS_CS_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_ORT_Export Arg_Traits<PortableInterceptor::ObjectId>
-    : public
-        Var_Size_Arg_Traits_T<
-            PortableInterceptor::ObjectId,
-            PortableInterceptor::ObjectId_var,
-            PortableInterceptor::ObjectId_out
           >
   {
   };
@@ -184,7 +125,7 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_cs.cpp:94
+// be/be_visitor_valuetype/valuetype_cs.cpp:66
 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::tao_add_ref (
@@ -210,7 +151,7 @@ PortableInterceptor::ObjectReferenceFactory::_downcast (CORBA::ValueBase *v)
       return 0;
     }
   
-  return (ObjectReferenceFactory *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
+  return dynamic_cast<PortableInterceptor::ObjectReferenceFactory *> (v);
 }
 
 const char *
@@ -218,32 +159,6 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_repository_id (void) const
 {
   return this->_tao_obv_static_repository_id ();
 }
-
-void *
-#if defined (_MSC_VER)
-PortableInterceptor::ObjectReferenceFactory::PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (ptrdiff_t type_id)
-#else
-PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptrdiff_t type_id)
-#endif /* _MSC_VER */
-{
-  if (type_id == (ptrdiff_t) &_downcast)
-    {
-      return this;
-    }
-  
-  void *rval = 0;
-  
-  return rval;
-}
-
-#if defined (_MSC_VER)
-void *
-PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptrdiff_t type_id)
-{
-  return this->PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (type_id);
-}
-#endif /* _MSC_VER */
-
 void
 PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -348,7 +263,7 @@ namespace PortableInterceptor
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_cs.cpp:94
+// be/be_visitor_valuetype/valuetype_cs.cpp:66
 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::tao_add_ref (
@@ -374,7 +289,7 @@ PortableInterceptor::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
       return 0;
     }
   
-  return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
+  return dynamic_cast<PortableInterceptor::ObjectReferenceTemplate *> (v);
 }
 
 const char *
@@ -382,41 +297,6 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_repository_id (void) cons
 {
   return this->_tao_obv_static_repository_id ();
 }
-
-void *
-#if defined (_MSC_VER)
-PortableInterceptor::ObjectReferenceTemplate::PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (ptrdiff_t type_id)
-#else
-PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
-#endif /* _MSC_VER */
-{
-  if (type_id == (ptrdiff_t) &_downcast)
-    {
-      return this;
-    }
-  
-  void *rval = 0;
-  
-  if (rval == 0)
-    {
-#if defined (_MSC_VER)
-      rval = this->PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (type_id);
-#else
-      rval = this->PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (type_id);
-#endif /* _MSC_VER */
-    }
-  
-  return rval;
-}
-
-#if defined (_MSC_VER)
-void *
-PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
-{
-  return this->PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (type_id);
-}
-#endif /* _MSC_VER */
-
 void
 PortableInterceptor::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -701,7 +581,19 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // be/be_visitor_valuetype/any_op_cs.cpp:57
 
-// Copying insertion.
+
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}// Copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
@@ -742,23 +634,24 @@ operator>>= (
       );
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_valuetype/any_op_cs.cpp:57
+
+
+
+template<>
+ACE_INLINE
 CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>::to_value (
+TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>::to_value (
     CORBA::ValueBase *&_tao_elem
   ) const
 {
   CORBA::add_ref (this->value_);
   _tao_elem = this->value_;
   return 1;
-}
-
-
-
-// TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
-
-// Copying insertion.
+}// Copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
@@ -797,17 +690,6 @@ operator>>= (
         PortableInterceptor::_tc_ObjectReferenceTemplate,
         _tao_elem
       );
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>::to_value (
-    CORBA::ValueBase *&_tao_elem
-  ) const
-{
-  CORBA::add_ref (this->value_);
-  _tao_elem = this->value_;
-  return 1;
 }
 
 
@@ -871,7 +753,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:263
+// be/be_valuetype.cpp:490
 
 void
 CORBA::add_ref (PortableInterceptor::ObjectReferenceFactory * vt)
@@ -923,7 +805,7 @@ operator>> (
 
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:263
+// be/be_valuetype.cpp:490
 
 void
 CORBA::add_ref (PortableInterceptor::ObjectReferenceTemplate * vt)
@@ -1047,53 +929,9 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1702
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::OctetSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::OctetSeq,
-        CORBA::OctetSeq_var,
-        CORBA::OctetSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::TCKind
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::exception_type
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::ParameterMode
-      >;
 
 #if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
@@ -1101,7 +939,7 @@ CORBA::Boolean operator>> (
   template class TAO::Arg_Traits<CORBA::StringSeq>;
 
   template class
-    TAO::Var_Size_Arg_Traits<
+    TAO::Var_Size_Arg_Traits_T<
         CORBA::StringSeq,
         CORBA::StringSeq_var,
         CORBA::StringSeq_out
@@ -1109,34 +947,37 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
+  template class TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>;
+
   template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;  template class
     TAO_Value_Var_T<
-        PortableInterceptor::ObjectReferenceFactory,
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>
+        PortableInterceptor::ObjectReferenceFactory
+        
       >;
   
   template class
     TAO_Value_Out_T<
-        PortableInterceptor::ObjectReferenceFactory,
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>
+        PortableInterceptor::ObjectReferenceFactory
+        
       >;
 
   template class
     TAO::Any_Impl_T<
         PortableInterceptor::ObjectReferenceFactory
-      >;  template class
+      >;
+
+  template class TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>;
+
+  template class
     TAO_Value_Var_T<
-        PortableInterceptor::ObjectReferenceTemplate,
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>
+        PortableInterceptor::ObjectReferenceTemplate
+        
       >;
   
   template class
     TAO_Value_Out_T<
-        PortableInterceptor::ObjectReferenceTemplate,
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>
+        PortableInterceptor::ObjectReferenceTemplate
+        
       >;
 
   template class
@@ -1145,9 +986,9 @@ CORBA::Boolean operator>> (
       >;
 
   template class
-    TAO_Valuetypet_Manager<
+    TAO_Valuetype_Manager<
         PortableInterceptor::ObjectReferenceTemplate,
-        PortableInterceptor::ObjectReferenceTemplate_va,
+        PortableInterceptor::ObjectReferenceTemplate_var
       >;
 
   template class
@@ -1155,7 +996,7 @@ CORBA::Boolean operator>> (
         PortableInterceptor::ObjectReferenceTemplateSeq,
         TAO_Valuetype_Manager<
             PortableInterceptor::ObjectReferenceTemplate,
-            PortableInterceptor::ObjectReferenceTemplate_var,
+            PortableInterceptor::ObjectReferenceTemplate_var
           >
       >;
 
@@ -1164,7 +1005,7 @@ CORBA::Boolean operator>> (
         PortableInterceptor::ObjectReferenceTemplateSeq,
         TAO_Valuetype_Manager<
             PortableInterceptor::ObjectReferenceTemplate,
-            PortableInterceptor::ObjectReferenceTemplate_var,
+            PortableInterceptor::ObjectReferenceTemplate_var
           >
       >;
 
@@ -1174,12 +1015,12 @@ CORBA::Boolean operator>> (
         PortableInterceptor::ObjectReferenceTemplateSeq_var,
         TAO_Valuetype_Manager<
             PortableInterceptor::ObjectReferenceTemplate,
-            PortableInterceptor::ObjectReferenceTemplate_var,
+            PortableInterceptor::ObjectReferenceTemplate_var
           >
       >;
 
-#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_)
-#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ__EXPLICIT_CS_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Valuetype_Sequence<
@@ -1196,57 +1037,13 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::OctetSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::OctetSeq, \
-        CORBA::OctetSeq_var, \
-        CORBA::OctetSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::TCKind \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::exception_type \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::ParameterMode \
-      >
-
 #if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
 
 # pragma instantiate TAO::Arg_Traits<CORBA::StringSeq>
 
 # pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
+    TAO::Var_Size_Arg_Traits_T< \
         CORBA::StringSeq, \
         CORBA::StringSeq_var, \
         CORBA::StringSeq_out \
@@ -1254,34 +1051,37 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
+# pragma instantiate TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>
+
 # pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      ># pragma instantiate \
     TAO_Value_Var_T< \
-        PortableInterceptor::ObjectReferenceFactory, \
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory> \
+        PortableInterceptor::ObjectReferenceFactory \
+        
       >
   
 # pragma instantiate \
     TAO_Value_Out_T< \
-        PortableInterceptor::ObjectReferenceFactory, \
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory> \
+        PortableInterceptor::ObjectReferenceFactory \
+        
       >
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         PortableInterceptor::ObjectReferenceFactory \
-      ># pragma instantiate \
+      >
+
+# pragma instantiate TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>
+
+# pragma instantiate \
     TAO_Value_Var_T< \
-        PortableInterceptor::ObjectReferenceTemplate, \
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate> \
+        PortableInterceptor::ObjectReferenceTemplate \
+        
       >
   
 # pragma instantiate \
     TAO_Value_Out_T< \
-        PortableInterceptor::ObjectReferenceTemplate, \
-        TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate> \
+        PortableInterceptor::ObjectReferenceTemplate \
+        
       >
 
 # pragma instantiate \
@@ -1294,7 +1094,7 @@ CORBA::Boolean operator>> (
         PortableInterceptor::ObjectReferenceTemplateSeq, \
         TAO_Valuetype_Manager< \
             PortableInterceptor::ObjectReferenceTemplate, \
-            PortableInterceptor::ObjectReferenceTemplate_var, \
+            PortableInterceptor::ObjectReferenceTemplate_var \
           > \
       >
 
@@ -1303,7 +1103,7 @@ CORBA::Boolean operator>> (
         PortableInterceptor::ObjectReferenceTemplateSeq, \
         TAO_Valuetype_Manager< \
             PortableInterceptor::ObjectReferenceTemplate, \
-            PortableInterceptor::ObjectReferenceTemplate_var, \
+            PortableInterceptor::ObjectReferenceTemplate_var \
           > \
       >
 
@@ -1313,12 +1113,12 @@ CORBA::Boolean operator>> (
         PortableInterceptor::ObjectReferenceTemplateSeq_var, \
         TAO_Valuetype_Manager< \
             PortableInterceptor::ObjectReferenceTemplate, \
-            PortableInterceptor::ObjectReferenceTemplate_var, \
+            PortableInterceptor::ObjectReferenceTemplate_var \
           > \
       >
 
-#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_)
-#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ__EXPLICIT_CS_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Valuetype_Sequence< \
