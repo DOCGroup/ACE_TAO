@@ -335,7 +335,11 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 #define ACE_TSS_GET(I, T) (I)
 #else
 #define ACE_TSS_TYPE(T) ACE_TSS< T >
+#if defined (ACE_HAS_BROKEN_CONVERSIONS)
+#define ACE_TSS_GET(I, T) (*(I))
+#else
 #define ACE_TSS_GET(I, T) ((I)->operator T * ())
+#endif /* ACE_HAS_BROKEN_CONVERSIONS */
 #endif /* !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)) */
 
 #if defined (ACE_LACKS_MODE_MASKS)
@@ -1429,12 +1433,6 @@ undef t_errno
 #include <sys/sockio.h>
 #endif /* ACE_HAS_SOCKIO_ */
 
-#if defined (ACE_HAS_TIMOD_H)
-#include <sys/timod.h>
-#elif defined (ACE_HAS_OSF_TIMOD_H)
-#include <tli/timod.h>
-#endif /* ACE_HAS_TIMOD_H */
-
 // There must be a better way to do this...
 #if defined (Linux) || defined (AIX) || defined (SCO)
 #if defined (RLIMIT_OFILE)
@@ -1798,6 +1796,12 @@ typedef int ucontext_t;
 #if !defined (SA_RESTART)
 #define SA_RESTART 0
 #endif /* SA_RESTART */
+
+#if defined (ACE_HAS_TIMOD_H)
+#include <sys/timod.h>
+#elif defined (ACE_HAS_OSF_TIMOD_H)
+#include <tli/timod.h>
+#endif /* ACE_HAS_TIMOD_H */
 
 // Type of the extended signal handler.
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);

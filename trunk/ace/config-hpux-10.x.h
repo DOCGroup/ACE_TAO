@@ -17,6 +17,8 @@
 #include <sys/stdsyms.h>
 #include <sched.h>                              //  pthread.h doesn't include this
 
+#define ACE_HAS_BROKEN_CONVERSIONS
+
 // They forgot a const in the prototype of const_timewait...
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 
