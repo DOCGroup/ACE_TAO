@@ -3,11 +3,9 @@
 # SunOS 5.x (Solaris 2.x) with GreenHills compiler.
 
 debug = 1
-optimize = 1
 exceptions =
-
-#### Green Hills 1.8.9 isn't compatible with the SunOS threads libraries.
-threads =
+optimize = 1
+threads = 1
 
 CC       = gcx
 CXX      = $(CC)
@@ -26,6 +24,8 @@ RANLIB   = @true
 SOFLAGS  = -shared
 
 ifeq ($(threads),1)
+  #### Don't use g7 register with threading.
+  CFLAGS += -Xleaveg7
   LIBS += -lthread
 else  # ! threads
   CFLAGS += -DACE_MT_SAFE=0
