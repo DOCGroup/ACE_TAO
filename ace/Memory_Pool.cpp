@@ -1153,7 +1153,7 @@ ACE_Pagefile_Memory_Pool::unmap (void)
   this->local_cb_.sh_.free_size_ = 0;
 
   // Release the pool
-  if (this->object_handle_ == 0)
+  if (this->object_handle_ != 0)
     {
       ::CloseHandle (this->object_handle_);
       this->object_handle_ = 0;
