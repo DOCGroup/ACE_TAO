@@ -1,3 +1,8 @@
+Thu Apr 24 01:44:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_Heap: Made many minor enhancements to ACE_Timer_Heap
+ 	  in an effort to figure out why we're getting memory leaks.
+
 Wed Apr 23 22:56:57 1997  Sumedh Mungee <sumedh@cs.wustl.edu>
 
         * apps/JAWS/client/*:  Fixed warnings due to size_t

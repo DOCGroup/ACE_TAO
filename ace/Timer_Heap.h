@@ -154,11 +154,19 @@ private:
   // If preallocation is used, will also double the size of the 
   // preallocated array of ACE_Timer_Nodes.
 
-  void reheap_up (ACE_Timer_Node *new_node);
-  // Restore the heap property.
+  void reheap_up (ACE_Timer_Node *new_node, 
+		  size_t index,
+		  size_t parent);
+  // Restore the heap property, starting at <index>.
 
-  void reheap_down (ACE_Timer_Node *moved_node, size_t child_index);
-  // Restore the heap property, starting at <child_index>.
+  void reheap_down (ACE_Timer_Node *moved_node, 
+		    size_t index, 
+		    size_t child);
+  // Restore the heap property, starting at <index>.
+
+  void copy (int index, ACE_Timer_Node *moved_node);
+  // Copy <moved_node> into the <index> slot of <heap_> and move
+  // <index> into the corresponding slot in the <timer_id_> array.
 
   int timer_id (void);
   // Returns a timer id that uniquely identifies this timer.  This id
