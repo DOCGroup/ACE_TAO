@@ -23,7 +23,7 @@ ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast (void)
 int
 ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 				 int reuse_addr,
-				 const char *net_if,
+				 const ASYS_TCHAR *net_if,
 				 int protocol_family,
 				 int protocol)
 {
@@ -91,7 +91,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (void)
 
 int
 ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
-					      const char *net_if)
+					      const ASYS_TCHAR *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::make_multicast_address");
 

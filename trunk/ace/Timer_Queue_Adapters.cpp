@@ -104,7 +104,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
                                                   siginfo_t *,
                                                   ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "handling signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("handling signal %S\n"), signum));
 
   switch (signum)
     {
@@ -118,7 +118,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
 
         if (expired_timers > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      "time = %d, timers expired = %d\n",
+                      ASYS_TEXT ("time = %d, timers expired = %d\n"),
                       ACE_OS::time (),
                       expired_timers));
 
@@ -223,7 +223,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* ACE_LACKS_PTHREAD_CANCEL */
 
-  ACE_DEBUG ((LM_DEBUG, "terminating dispatching thread\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("terminating dispatching thread\n")));
   return 0;
 }
 
