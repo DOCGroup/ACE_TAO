@@ -42,8 +42,8 @@ public:
   ~be_visitor_amh_rh_interface_ss (void);
 
 protected:
-  virtual void this_method (be_interface *node);
-  virtual void dispatch_method (be_interface *node);
+  //  virtual void this_method (be_interface *node);
+  //  virtual void dispatch_method (be_interface *node);
 
 };
 
