@@ -3,8 +3,10 @@
 
 ACE_INLINE
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
-                          TAO_ORB_Core *orb_core)
-  : are_policies_parsed_ (0),
+                          TAO_ORB_Core *orb_core,
+                          const TAO_GIOP_Version &version)
+  : version_ (version),
+    are_policies_parsed_ (0),
     policy_list_ (0),
     tag_ (tag),
     orb_core_ (orb_core),
@@ -17,6 +19,12 @@ ACE_INLINE CORBA::ULong
 TAO_Profile::tag (void) const
 {
   return this->tag_;
+}
+
+ACE_INLINE const TAO_GIOP_Version &
+TAO_Profile::version (void) const
+{
+  return this->version_;
 }
 
 ACE_INLINE TAO_ORB_Core *

@@ -38,6 +38,7 @@ class ACE_Reactor;
 class TAO_ORB_Core;
 
 class TAO_Stub;
+class TAO_Endpoint;
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_Resource_Factory;
@@ -302,7 +303,7 @@ public:
                                TAO_MProfile &mprofile) = 0;
   // Create the corresponding profile for this endpoint.
 
-  virtual int is_collocated (const TAO_Profile* profile) = 0;
+  virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
   // Return 1 if the <profile> has the same endpoint as the acceptor.
 
   virtual CORBA::ULong endpoint_count (void) = 0;
@@ -362,7 +363,7 @@ public:
   virtual int close (void) = 0;
   // Shutdown Connector bridge and concreate Connector.
 
-  virtual int connect (TAO_Profile *profile,
+  virtual int connect (TAO_Endpoint *endpoint,
                        TAO_Transport *&,
                        ACE_Time_Value *max_wait_time) = 0;
   // To support pluggable we need to abstract away the connect()

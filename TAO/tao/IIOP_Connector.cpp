@@ -452,21 +452,21 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::connect (TAO_Profile *profile,
+TAO_IIOP_Connector::connect (TAO_Endpoint *endpoint,
                              TAO_Transport *&transport,
                              ACE_Time_Value *max_wait_time)
 {
-  if (profile->tag () != TAO_TAG_IIOP_PROFILE)
+  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
-  TAO_IIOP_Profile *iiop_profile =
-    ACE_dynamic_cast (TAO_IIOP_Profile *,
-                      profile);
-  if (iiop_profile == 0)
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+                      endpoint);
+  if (iiop_endpoint == 0)
     return -1;
 
   const ACE_INET_Addr &remote_address =
-    iiop_profile->object_addr ();
+    iiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -497,7 +497,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (iiop_profile->hint (),
+      result = this->base_connector_.connect (iiop_endpoint->hint (),
                                               svc_handler,
                                               remote_address,
                                               synch_options);
@@ -508,7 +508,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (iiop_profile->hint (),
+      result = this->base_connector_.connect (iiop_endpoint->hint (),
                                               svc_handler,
                                               remote_address);
     }
@@ -523,30 +523,14 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
                       ACE_TEXT ("%s:%d failed (%p)\n"),
                       __FILE__,
                       __LINE__,
-                      iiop_profile->host (),
-                      iiop_profile->port (),
+                      iiop_endpoint->host (),
+                      iiop_endpoint->port (),
                       "errno"));
         }
       return -1;
     }
 
   transport = svc_handler->transport ();
-
-  // Now that we have the client connection handler object we need to
-  // set the right messaging protocol for in the client side transport.
-  const TAO_GIOP_Version& version = iiop_profile->version ();
-  int ret_val = transport->messaging_init (version.major,
-                                           version.minor);
-  if (ret_val == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
-        }
-      return -1;
-    }
-
   return 0;
 }
 

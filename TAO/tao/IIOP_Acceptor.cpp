@@ -79,6 +79,21 @@ int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
+  // Sanity check.
+  if (this->endpoint_count_ == 0)
+    return -1;
+
+  // If RT_CORBA is enabled, only one IIOP profile is created for
+  // <mprofile> and all IIOP endpoints are added into that profile.
+  // If RT_CORBA is not enabled, we create a separate profile for each
+  // endpoint.
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  return create_rt_mprofile (object_key, mprofile);
+
+#else  /* TAO_HAS_RT_CORBA == 1 */
+
   // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
@@ -87,6 +102,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
+      // @@ Use autopointer here.
       TAO_IIOP_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
                       TAO_IIOP_Profile (this->hosts_[i].c_str (),
@@ -115,28 +131,101 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
       code_set_info.ForWcharData.native_code_set =
         TAO_DEFAULT_WCHAR_CODESET_ID;
       pfile->tagged_components ().set_code_sets (code_set_info);
-
-      pfile->tagged_components ().set_tao_priority (this->priority ());
     }
 
+  return 0;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+}
+
+int
+TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
+                                       TAO_MProfile &mprofile)
+{
+  size_t index = 0;
+  TAO_Profile *pfile = 0;
+  TAO_IIOP_Profile *iiop_profile = 0;
+
+  // First see if <mprofile> already contains a IIOP profile.
+  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+    {
+      pfile = mprofile.get_profile (i);
+      if (pfile->tag () == TAO_TAG_IIOP_PROFILE)
+      {
+        iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
+                                         pfile);
+        break;
+      }      
+    }
+
+  // If <mprofile> doesn't contain IIOP_Profile, we need to create
+  // one.
+  if (iiop_profile == 0)
+    {
+      ACE_NEW_RETURN (iiop_profile,
+                      TAO_IIOP_Profile (this->hosts_[0].c_str (),
+                                        this->addrs_[0].get_port_number (),
+                                        object_key,
+                                        this->addrs_[0],
+                                        this->version_,
+                                        this->orb_core_),
+                      -1);
+      iiop_profile->endpoint ()->priority (this->priority ());
+
+      if (mprofile.give_profile (iiop_profile) == -1)
+        {
+          iiop_profile->_decr_refcnt ();
+          iiop_profile = 0;
+          return -1;
+        }
+      
+      if (this->orb_core_->orb_params ()->std_profile_components () != 0)
+        {
+          iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
+      
+          CONV_FRAME::CodeSetComponentInfo code_set_info;
+          code_set_info.ForCharData.native_code_set  =
+            TAO_DEFAULT_CHAR_CODESET_ID;
+          code_set_info.ForWcharData.native_code_set =
+            TAO_DEFAULT_WCHAR_CODESET_ID;
+          iiop_profile->tagged_components ().set_code_sets (code_set_info);
+        }
+
+      index = 1;
+    }
+
+  // Add any remaining endpoints to the IIOP_Profile.
+  for (; 
+       index < this->endpoint_count_; 
+       ++index)
+    {
+      TAO_IIOP_Endpoint *endpoint = 0;
+      ACE_NEW_RETURN (endpoint,
+                      TAO_IIOP_Endpoint (this->hosts_[index].c_str (),
+                                         this->addrs_[index].get_port_number (),
+                                         this->addrs_[index]),
+                      -1);
+      endpoint->priority (this->priority_);
+      iiop_profile->add_endpoint (endpoint);
+    }  
+  
   return 0;
 }
 
 int
-TAO_IIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
+TAO_IIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
-  const TAO_IIOP_Profile *profile =
-    ACE_dynamic_cast (const TAO_IIOP_Profile *,
-                      pfile);
+  const TAO_IIOP_Endpoint *endp =
+    ACE_dynamic_cast (const TAO_IIOP_Endpoint *, endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (profile == 0)
+  if (endp == 0)
     return 0;
 
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       // compare the port and sin_addr (numeric host address)
-      if (profile->object_addr () == this->addrs_[i])
+      if (endp->object_addr () == this->addrs_[i])
         return 1;  // Collocated
     }
 

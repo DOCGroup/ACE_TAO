@@ -4,6 +4,7 @@
 #include "tao/Connector_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
+#include "tao/Endpoint.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
 
@@ -262,18 +263,18 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 
 
 int
-TAO_Connector_Registry::connect (TAO_Profile *&profile,
+TAO_Connector_Registry::connect (TAO_Endpoint *endpoint,
                                  TAO_Transport *&transport,
                                  ACE_Time_Value *max_wait_time)
 {
   // Find the appropriate connector object
   TAO_Connector *connector =
-    this->get_connector (profile->tag ());
+    this->get_connector (endpoint->tag ());
 
   if (connector == 0)
     return -1;
 
-  return connector->connect (profile, transport, max_wait_time);
+  return connector->connect (endpoint, transport, max_wait_time);
 }
 
 int

@@ -456,21 +456,21 @@ TAO_UIOP_Connector::close (void)
 }
 
 int
-TAO_UIOP_Connector::connect (TAO_Profile *profile,
+TAO_UIOP_Connector::connect (TAO_Endpoint *endpoint
                              TAO_Transport *& transport,
                              ACE_Time_Value *max_wait_time)
 {
-  if (profile->tag () != TAO_TAG_UIOP_PROFILE)
+  if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
     return -1;
 
-  TAO_UIOP_Profile *uiop_profile =
-    ACE_dynamic_cast (TAO_UIOP_Profile *,
+  TAO_UIOP_Profile *uiop_endpoint =
+    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
                       profile);
-  if (uiop_profile == 0)
+  if (uiop_endpoint == 0)
     return -1;
 
   const ACE_UNIX_Addr &remote_address =
-    uiop_profile->object_addr ();
+    uiop_endpoint->object_addr ();
 
   // @@ Note, POSIX.1g renames AF_UNIX to AF_LOCAL.
 
@@ -491,7 +491,7 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (uiop_profile->hint (),
+      result = this->base_connector_.connect (uiop_endpoint->hint (),
                                               svc_handler,
                                               remote_address,
                                               synch_options);
@@ -502,7 +502,7 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (uiop_profile->hint (),
+      result = this->base_connector_.connect (uiop_endpoint->hint (),
                                               svc_handler,
                                               remote_address);
     }
@@ -517,7 +517,7 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
                       ACE_TEXT ("%s failed (%p)\n"),
                       __FILE__,
                       __LINE__,
-                      uiop_profile->rendezvous_point (),
+                      uiop_endpoint->rendezvous_point (),
                       "errno"));
         }
 
@@ -525,20 +525,6 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
     }
 
   transport = svc_handler->transport ();
-  // Now that we have the client connection handler object we need to
-  // set the right messaging protocol for the connection handler.
-  const TAO_GIOP_Version& version = uiop_profile->version ();
-  int ret_val = transport->messaging_init (version.major,
-                                           version.minor);
-  if (ret_val == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
-        }
-      return -1;
-    }
 
   return 0;
 }

@@ -27,22 +27,4 @@ TAO_UIOP_Profile::object_addr (void) const
   return this->object_addr_;
 }
 
-ACE_INLINE const char *
-TAO_UIOP_Profile::rendezvous_point (void) const
-{
-  return this->object_addr_.get_path_name ();
-}
-
-ACE_INLINE const TAO_GIOP_Version &
-TAO_UIOP_Profile::version (void) const
-{
-  return this->version_;
-}
-
-ACE_INLINE TAO_UIOP_Client_Connection_Handler *&
-TAO_UIOP_Profile::hint (void)
-{
-  return this->hint_;
-}
-
 #endif  /* TAO_HAS_UIOP == 1 */
