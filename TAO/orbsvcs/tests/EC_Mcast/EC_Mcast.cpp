@@ -865,6 +865,8 @@ ECM_Supplier::push (const RtecEventComm::EventSet& events,
 void
 ECM_Supplier::disconnect_push_supplier (CORBA::Environment& _env)
 {
+  ACE_UNUSED_ARG (_env);
+
   // this->supplier_proxy_->disconnect_push_supplier (_env);
 }
 
