@@ -105,8 +105,10 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   for (i = 0; i < this->max_handlep1_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if (this->current_handles_[i] == handle || 
-        this->current_info_[i].io_handle_ == handle)
+    if ((this->current_handles_[i] == handle || 
+         this->current_info_[i].io_handle_ == handle) &&
+        // Make sure that it is not already marked for deleted
+        !this->current_info_[i].delete_entry_)
       {
         result = this->remove_handler_i (i, mask);
         if (result == -1)
@@ -117,8 +119,10 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   for (i = 0; i < this->suspended_handles_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if (this->current_suspended_info_[i].io_handle_ == handle || 
-        this->current_suspended_info_[i].event_handle_ == handle)
+    if ((this->current_suspended_info_[i].io_handle_ == handle || 
+         this->current_suspended_info_[i].event_handle_ == handle) &&
+        // Make sure that it is not already marked for deleted
+        !this->current_suspended_info_[i].delete_entry_)
       {
         result = this->remove_suspended_handler_i (i, mask);
         if (result == -1)
@@ -233,8 +237,10 @@ ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
   for (size_t i = 0; i < this->max_handlep1_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if (this->current_handles_[i] == handle || 
-        this->current_info_[i].io_handle_ == handle)
+    if ((this->current_handles_[i] == handle || 
+         this->current_info_[i].io_handle_ == handle) &&
+        // Make sure that it is not already marked for suspension
+        !this->current_info_[i].suspend_entry_)
       {
         // Mark to be suspended
         this->current_info_[i].suspend_entry_ = 1;
@@ -266,8 +272,10 @@ ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
   for (size_t i = 0; i < this->suspended_handles_; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if (this->current_suspended_info_[i].event_handle_ == handle || 
-        this->current_suspended_info_[i].io_handle_ == handle)
+    if ((this->current_suspended_info_[i].event_handle_ == handle || 
+         this->current_suspended_info_[i].io_handle_ == handle) &&
+        // Make sure that it is not already marked for resumption
+        !this->current_suspended_info_[i].resume_entry_)
       {
         this->current_suspended_info_[i].resume_entry_ = 1;
         this->handles_to_be_resumed_++;
@@ -287,14 +295,19 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_all (void)
   {
     ACE_GUARD (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_);
     
+    int dummy;
     size_t i;
 
     // Remove all the handlers 
     for (i = 0; i < this->max_handlep1_; i++)
-      this->remove_handler_i (i, ACE_Event_Handler::ALL_EVENTS_MASK);
-
+      this->unbind_i (this->current_handles_[i], 
+                      ACE_Event_Handler::ALL_EVENTS_MASK,
+                      dummy);
+    
     for (i = 0; i < this->suspended_handles_; i++)
-      this->remove_suspended_handler_i (i, ACE_Event_Handler::ALL_EVENTS_MASK);    
+      this->unbind_i (this->current_suspended_info_[i].event_handle_,
+                      ACE_Event_Handler::ALL_EVENTS_MASK,
+                      dummy);
   }
 
   // The guard is released here
@@ -747,7 +760,15 @@ ACE_WFMO_Reactor::close (void)
 
 ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
 {
+  // Assumption: No threads are left in the Reactor when this method
+  // is called (i.e., active_threads_ == 0)
+
+  // Close down 
   this->close ();
+
+  // Make necessary changes to the handler repository that we caused
+  // by close ()
+  this->handler_rep_.make_changes ();
 
   if (this->delete_timer_queue_)
     {

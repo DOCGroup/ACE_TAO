@@ -169,6 +169,9 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
   else
     ACE_DEBUG ((LM_DEBUG, "(%t) joined with acceptor thread\n"));
+  
+  // Close the acceptor
+  acc.close ();
 
 #else
 
