@@ -1,3 +1,10 @@
+Wed Aug 23 13:56:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAOACE.dsw:
+
+	  Added FE and BE DLL IDL compiler projects to workspace,
+	  and updated IDL compiler project dependencies.
+
 Wed Aug 23 13:21:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.dsp:
