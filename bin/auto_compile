@@ -40,7 +40,12 @@ $MODULE='ACE_wrappers';
      'netsvcs',
      'tests',
      'apps/gperf',
-     'TAO');
+     'TAO/tao',
+     'TAO/TAO_IDL',
+     'TAO/orbsvcs',
+     'TAO/tests',
+     'TAO/examples/POA',
+     'TAO/performance-tests');
 
 # This are the pairs "sub-directory , script" we run; the separator
 # *must* be a space followed by a comma and then another space.
@@ -50,11 +55,30 @@ $MODULE='ACE_wrappers';
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
       'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
-      'TAO/tests/MT_Client , run_test.pl',
+      'TAO/orbsvcs/tests/Event/Basic , run_test.pl',
+      'TAO/orbsvcs/tests/Event/Performance , run_test.pl',
       'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
-      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
-      'TAO/orbsvcs/tests/Property , run_test.pl' );
+      'TAO/examples/POA/Adapter_Activator , run_test.pl',
+      'TAO/examples/POA/DSI , run_test.pl',
+      'TAO/examples/POA/Default_Servant , run_test.pl',
+      'TAO/examples/POA/Explicit_Activation , run_test.pl',
+#      'TAO/examples/POA/FindPOA , run_test.pl',
+      'TAO/examples/POA/Forwarding , run_test.pl',
+      'TAO/examples/POA/NewPOA , run_test.pl',
+      'TAO/examples/POA/On_Demand_Activation , run_test.pl',
+      'TAO/examples/POA/On_Demand_Loading , run_test.pl',
+      'TAO/examples/POA/Reference_Counted_Servant , run_test.pl',
+      'TAO/examples/POA/Loader , run_test.pl',
+      'TAO/examples/POA/RootPOA , RootPOA',
+      'TAO/examples/POA/Identity , Identity',
+      'TAO/examples/POA/Adapter_Activator , run_test.pl',
+      'TAO/tests/MT_Client , run_test.pl',
+      'TAO/tests/NestedUpcall/Reactor , run_test.pl'
+#      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
+#      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
+#      'TAO/orbsvcs/tests/Property , run_test.pl'
+    );
+
 
 # We obtain our revision to report errors.
 $REVISION='$Revision$';
@@ -184,6 +208,7 @@ $ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 $MAKEFLAGS .= " shared_libs_only=1";
 foreach $i (@BUILD_LIST) {
     $date = localtime;
+    print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make for $i started at ", $date, "\n";
     open(MAKE, "make -k $MAKEFLAGS -C $i 2>&1 |")
 	|| mydie "cannot start make for $i";
@@ -217,6 +242,7 @@ foreach $i (@BUILD_LIST) {
     }
     $date = localtime;
     print LOG "$CMD: make for $i finished at ", $date, "\n";
+    print LOG "$CMD: =============================================\n\n";
 }
 
 foreach $i (@RUN_LIST) {
@@ -225,6 +251,7 @@ foreach $i (@RUN_LIST) {
     local $program = $test_info[1];
 
     $date = localtime;
+    print LOG "$CMD: =============================================\n";
     print LOG "$CMD: running $program in $directory at ", $date, "\n";
     local $subdir =
 	$CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;
@@ -238,12 +265,12 @@ foreach $i (@RUN_LIST) {
     }
     while (<RUN>) {
 	print LOG $_;
-	if (m/^Error/ || m/FAILED/) {
+	if (m/^Error/ || m/FAILED/ || m/EXCEPTION/) {
 	    $run_error = 1;
 	}
     }
     if (close(RUN) == 0) {
-	push @failures, "cannot finish $program in $directory";
+	push @failures, "Error when closing pipe for $program in $directory";
 	next;
     }
     $date = localtime;
