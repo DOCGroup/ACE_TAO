@@ -512,6 +512,14 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 <TR>
   <TD><CODE>-ORBConnectionLock</CODE> <EM>locktype</EM></TD>
   <TD><a name="-ORBConnectionLock"></a>
+      This option deprecated. Usage of this option will switch usage
+      automatically to "-ORBConnectionCacheLock". Please see the
+      documentation of "-ORBConnectionCacheLock" for details.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBConnectionCacheLock</CODE> <EM>locktype</EM></TD>
+  <TD><a name="-ORBConnectionCacheLock"></a>
       Specify the type of lock to be used by the Connection
       Cache. Possible values for lock type are thread, which specifies
       that an inter-thread mutex is used to guarantee exclusive
