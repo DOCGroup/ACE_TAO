@@ -1,3 +1,10 @@
+Tue Aug 28 10:19:18 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+
+	  Corrected Borland warning using a more efficient fix (i.e. less
+	  function calls).
+
 Tue Aug 28 10:36:10 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/vxworks_modify.pl:

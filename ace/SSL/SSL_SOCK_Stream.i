@@ -135,12 +135,10 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
 
-  // @@Ossama: Need to be sure that we want to inline this..
-
   // NOTE: Caller must provide thread-synchronization.
 
   int bytes_read = 0;
-  //const ACE_HANDLE &handle = this->get_handle ();
+  const ACE_HANDLE handle = this->get_handle ();
 
   // Flag that forces another iteration of the read loop.
   int ssl_read = 0;
@@ -149,7 +147,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   int val = 0;
 
   if (timeout != 0)
-    ACE::record_and_set_non_blocking_mode (this->get_handle (),
+    ACE::record_and_set_non_blocking_mode (handle,
                                            val);
 
   // The SSL_read() and SSL_peek() calls are wrapped in a
@@ -179,7 +177,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
         {
         case SSL_ERROR_NONE:
           if (timeout != 0)
-            ACE::restore_non_blocking_mode (this->get_handle (), val);
+            ACE::restore_non_blocking_mode (handle, val);
 
           return bytes_read;
 
@@ -192,7 +190,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           if (timeout != 0
               && !SSL_pending (this->ssl_))
             {
-              if (ACE::enter_recv_timedwait (this->get_handle (),
+              if (ACE::enter_recv_timedwait (handle,
                                              timeout,
                                              val) == -1)
                 return -1;
@@ -204,7 +202,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
         case SSL_ERROR_ZERO_RETURN:
           if (timeout != 0)
-            ACE::restore_non_blocking_mode (this->get_handle (), val);
+            ACE::restore_non_blocking_mode (handle, val);
 
           // @@ This appears to be the right/expected thing to do.
           //    However, it'd be nice if someone could verify this.
