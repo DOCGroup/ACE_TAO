@@ -6,6 +6,60 @@
 #include "client.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include "tao/Timeprobe.h"
+
+static const char *Cubit_Client_Timeprobe_Description[] = 
+{ 
+  "Cubit_Client::cube_octet - start",
+  "Cubit_Client::cube_octet - end",
+
+  "Cubit_Client::cube_short - start",
+  "Cubit_Client::cube_short - end",
+
+  "Cubit_Client::cube_long - start",
+  "Cubit_Client::cube_long - end",
+
+  "Cubit_Client::cube_struct - start",
+  "Cubit_Client::cube_struct - end",
+
+  "Cubit_Client::cube_union - start",
+  "Cubit_Client::cube_union - end",
+
+  "Cubit_Client::cube_sequence - start",
+  "Cubit_Client::cube_sequence - end",
+
+  "Cubit_Client::cube_raw - start",
+  "Cubit_Client::cube_raw - end"
+};
+
+enum 
+{
+  CUBIT_CLIENT_CUBE_OCTET_START = 10000,
+  CUBIT_CLIENT_CUBE_OCTET_END,
+
+  CUBIT_CLIENT_CUBE_SHORT_START,
+  CUBIT_CLIENT_CUBE_SHORT_END,
+
+  CUBIT_CLIENT_CUBE_LONG_START,
+  CUBIT_CLIENT_CUBE_LONG_END,
+
+  CUBIT_CLIENT_CUBE_STRUCT_START,
+  CUBIT_CLIENT_CUBE_STRUCT_END,
+
+  CUBIT_CLIENT_CUBE_UNION_START,
+  CUBIT_CLIENT_CUBE_UNION_END,
+
+  CUBIT_CLIENT_CUBE_SEQUENCE_START,
+  CUBIT_CLIENT_CUBE_SEQUENCE_END,
+
+  CUBIT_CLIENT_CUBE_RAW_START,
+  CUBIT_CLIENT_CUBE_RAW_END
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description, 
+                                  CUBIT_CLIENT_CUBE_OCTET_START);
+
 // Constructor.
 Cubit_Client::Cubit_Client (void)
   : cubit_factory_key_ (0),
@@ -121,7 +175,12 @@ Cubit_Client::cube_union_stub (void)
   u.l (3); // use the long union branch.
 
   // Cube a "union" ...
-  Cubit::oneof r = this->cubit_->cube_union (u, this->env_);
+  Cubit::oneof r;
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_UNION_START);
+
+    r = this->cubit_->cube_union (u, this->env_);
+  }
 
   if (this->env_.exception () != 0)
     {
@@ -155,7 +214,11 @@ Cubit_Client::cube_union_stub (void)
   u.cm ().o = 3;
 
   // Cube another "union" which uses the default arm ... NOT tested yet
-  r = this->cubit_->cube_union (u, this->env_);
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_UNION_START);
+
+    r = this->cubit_->cube_union (u, this->env_);
+  }
 
   if (this->env_.exception () != 0)
     {
@@ -282,7 +345,12 @@ Cubit_Client::cube_short (int i)
   CORBA::Short arg_short = this->func (i);
 
   // Cube a short.
-  CORBA::Short ret_short = cubit_->cube_short (arg_short, this->env_);
+  CORBA::Short ret_short;
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_SHORT_START);
+
+    ret_short = cubit_->cube_short (arg_short, this->env_);
+  }
 
   this->call_count_++;
 
@@ -316,7 +384,12 @@ Cubit_Client::cube_octet (int i)
   CORBA::Octet arg_octet = this->func (i);
 
    // Cube an octet.
-  CORBA::Octet ret_octet = this->cubit_->cube_octet (arg_octet, this->env_);
+  CORBA::Octet ret_octet;
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_OCTET_START);
+
+    ret_octet = this->cubit_->cube_octet (arg_octet, this->env_);
+  }
 
   this->call_count_++;
 
@@ -347,7 +420,12 @@ Cubit_Client::cube_long (int i)
   CORBA::Long arg_long = this->func (i);
 
   // Cube a long.
-  CORBA::Long ret_long = this->cubit_->cube_long (arg_long, this->env_);;
+  CORBA::Long ret_long;
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_START);
+    
+    ret_long = this->cubit_->cube_long (arg_long, this->env_);
+  }
 
   this->call_count_++;
 
@@ -387,7 +465,11 @@ Cubit_Client::cube_struct (int i)
   arg_struct.o = this->func (i);
 
   // Cube a "struct" ...
-  ret_struct = this->cubit_->cube_struct (arg_struct, this->env_);
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_STRUCT_START);
+    
+    ret_struct = this->cubit_->cube_struct (arg_struct, this->env_);
+  }
 
   if (this->env_.exception () != 0)
     {
@@ -436,7 +518,11 @@ Cubit_Client::cube_sequence (int i, int l)
   Cubit::vector_out vout (output);
 
   // Cube the sequence
-  this->cubit_->cube_sequence (input, vout, this->env_);
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_SEQUENCE_START);
+    
+    this->cubit_->cube_sequence (input, vout, this->env_);
+  }
 
   //  Cubit::vector& output = *vout.ptr ();
   //  output = vout;
@@ -501,7 +587,11 @@ Cubit_Client::cube_raw (int i, int l)
   Cubit::Raw_out vout (output);
 
   // Cube the sequence
-  this->cubit_->cube_raw (input, vout, this->env_);
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_RAW_START);
+    
+    this->cubit_->cube_raw (input, vout, this->env_);
+  }
 
   //  Cubit::vector& output = *vout.ptr ();
   //  output = vout;
