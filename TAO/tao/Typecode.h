@@ -34,7 +34,6 @@
 #include "tao/Arg_Traits_T.h"
 #include "tao/OBV_Constants.h"
 #include "tao/corbafwd.h"
-#include "tao/tckind.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Synch_Traits.h"
