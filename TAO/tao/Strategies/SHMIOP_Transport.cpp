@@ -1,13 +1,11 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "SHMIOP_Transport.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
-
 
 #include "SHMIOP_Connection_Handler.h"
 #include "SHMIOP_Profile.h"
@@ -90,12 +88,23 @@ TAO_SHMIOP_Transport::idle (void)
 }
 
 ssize_t
-TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *)
+TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *max_wait_time)
 {
-  return this->service_handler ()->peer ().send (message_block,
-                                                 max_wait_time);
+  bytes_transferred = 0;
+  for (int i = 0; i < iovcnt; ++i)
+    {
+      ssize_t retval =
+        this->service_handler ()->peer ().send (iov[i].iov_base,
+                                                iov[i].iov_len,
+                                                max_wait_time);
+      if (retval > 0)
+        bytes_transferred += retval;
+      if (retval <= 0)
+        return retval;
+    }
+  return bytes_transferred;
 }
 
 ssize_t
@@ -204,7 +213,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -217,17 +226,6 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->handle (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
       return -1;
     }
 

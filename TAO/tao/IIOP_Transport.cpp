@@ -86,14 +86,16 @@ TAO_IIOP_Transport::idle (void)
 }
 
 ssize_t
-TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time,
-                          size_t *bytes_transferred)
+TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *max_wait_time)
 {
-  return ACE::send_n (this->handle (),
-                      message_block,
-                      max_wait_time,
-                      bytes_transferred);
+  ssize_t retval = this->service_handler ()->peer ().sendv (iov, iovcnt,
+                                                            max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
+
+  return retval;
 }
 
 ssize_t
@@ -197,12 +199,8 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (this->messaging_object_->format_message (stream) != 0)
     return -1;
 
-  // Strictly speaking, should not need to loop here because the
-  // socket never gets set to a nonblocking mode ... some Linux
-  // versions seem to need it though.  Leaving it costs little.
-
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -215,17 +213,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->handle (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing conn %d\n"),
-                    this->handle()));
       return -1;
     }
 
@@ -327,6 +314,31 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
+int
+TAO_IIOP_Transport::schedule_output (void)
+{
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - schedule_output\n"));
+    }
+  ACE_Reactor *r =
+    this->connection_handler_->reactor ();
+  return r->schedule_wakeup (this->connection_handler_,
+                             ACE_Event_Handler::WRITE_MASK);
+}
+
+int
+TAO_IIOP_Transport::cancel_output (void)
+{
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - cancel_output\n"));
+    }
+  ACE_Reactor *r =
+    this->connection_handler_->reactor ();
+  return r->cancel_wakeup (this->connection_handler_,
+                           ACE_Event_Handler::WRITE_MASK);
+}
 
 int
 TAO_IIOP_Transport::process_message (void)

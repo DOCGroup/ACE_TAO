@@ -4837,7 +4837,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
- ServerRequestInfo.inl \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
  MessagingS_T.h MessagingS_T.i MessagingS_T.cpp MessagingS.i \
  Operation_Table.h Object_Adapter.h Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \

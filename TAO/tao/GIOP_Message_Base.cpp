@@ -873,7 +873,8 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-  int result = transport->send (&message_block);
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block, bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -998,7 +999,9 @@ TAO_GIOP_Message_Base::
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-  if (transport->send (&message_block) == -1)
+  size_t bt;
+  int result = transport->send_message_block_chain (&message_block, bt);
+  if (result == -1)
     {
       if (TAO_orbdebug)
         ACE_ERROR ((LM_ERROR,

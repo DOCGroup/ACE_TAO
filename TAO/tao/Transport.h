@@ -32,9 +32,7 @@ class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
-#include "ace/Message_Queue.h"
-
-typedef	ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
+class TAO_Queued_Message;
 
 /**
  * @class TAO_Transport
@@ -124,11 +122,6 @@ typedef	ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
  */
 class TAO_Export TAO_Transport
 {
-
-  friend class TAO_Transport_Sync_Strategy;
-  friend class TAO_Eager_Buffering_Sync_Strategy;
-  friend class TAO_Delayed_Buffering_Sync_Strategy;
-
 public:
   /// default creator, requres the tag value be	supplied.
   TAO_Transport	(CORBA::ULong tag,
@@ -171,11 +164,22 @@ public:
    */
   TAO_Wait_Strategy *wait_strategy (void) const;
 
-  /// Send a request or	queue it for later.
+  /// Callback method to reactively drain the outgoing data queue
+  int handle_output (void);
+
   /**
-   * If	the right policies are set queue the request for later.
-   * Otherwise,	or if the queue	size has reached the configured
-   * limits, start draining the	queue.
+   * Return the TSS leader follower condition variable used in the
+   * Wait Strategy. Muxed Leader Follower implementation returns a
+   * valid condition variable, others return 0.
+   */
+  virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
+
+#if 0
+  /// Send a request or queue it for later.
+  /**
+   * If the right policies are set queue the request for later.
+   * Otherwise, or if the queue size has reached the configured
+   * limits, start draining the queue.
    *
    * If	any data is to be sent it blocks until the queue is completely
    * drained.
@@ -195,8 +199,8 @@ public:
    */
   virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
 
-  /// Queue for	buffering transport messages.
-  virtual TAO_Transport_Buffering_Queue	&buffering_queue (void);
+  /// Queue for buffering transport messages.
+  virtual TAO_Transport_Buffering_Queue &buffering_queue (void);
 
   /// Timer id associated with buffering.
   long buffering_timer_id (void) const;
@@ -209,13 +213,9 @@ public:
   /// Send any messages	that have been buffered.
   ssize_t send_buffered_messages (const	ACE_Time_Value *max_wait_time =	0);
 
-  /**
-   * Initialising the messaging	object.	This would be used by the
-   * connector	side. On the acceptor side the connection handler
-   * would take	care of	the messaging objects.
-   */
-  virtual int messaging_init (CORBA::Octet major,
-			      CORBA::Octet minor) = 0;
+  /// Send any messages that have been buffered.
+  ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
+#endif /* 0 */
 
   /// Get/Set the bidirectional	flag
   virtual int bidirectional_flag (void)	const;
@@ -256,7 +256,7 @@ public:
    * The Transport class uses the Template Method Pattern to implement
    * the protocol specific functionality.
    * Implementors of a pluggable protocol should override the
-   * following methods with the	semantics documented below.
+   * following methods with the semantics documented below.
    */
   //@{
 
@@ -334,9 +334,9 @@ public:
    * bytes already on the OS I/O subsystem.
    *
    */
-  virtual ssize_t send (const ACE_Message_Block	*mblk,
-			const ACE_Time_Value *timeout =	0,
-			size_t *bytes_transferred = 0) = 0;
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *timeout = 0) = 0;
 
   // Read len bytes from into buf.
   /**
@@ -475,27 +475,59 @@ public:
    */
   virtual int reactor_signalling (void);
 
+  /**
+   * Initialising the messaging object. This would be used by the
+   * connector  side. On the acceptor side the connection handler
+   * would take care of the messaging objects.
+   */
+  virtual int messaging_init (CORBA::Octet major,
+                              CORBA::Octet minor) = 0;
+
+  /// There is data queued or pending data in the current
+  /// message. Enable the reactive calls through the reactor
+  virtual int schedule_output (void);
+
+  /// There is no more data to send, cancel any reactive calls through
+  /// the reactor
+  virtual int cancel_output (void);
+
   //@}
 
+  /// Send a message block chain,
+  int send_message_block_chain (const ACE_Message_Block *message_block,
+                                size_t &bytes_transferred,
+                                ACE_Time_Value *max_wait_time = 0);
+
 protected:
-  /// Remove the first message from the	outgoing queue.
-  void dequeue_head (void);
+  /// Sent the contents of <message_block>, blocking if required by
+  /// the twoway flag or by the current policies in the stub.
+  int send_message_i (TAO_Stub *stub,
+                      int twoway_flag,
+                      const ACE_Message_Block *message_block,
+                      ACE_Time_Value *max_wait_time);
 
-  /// Update the state of the outgoing queue, assuming that
-  /// bytes_delivered bytes have been sent already.
-  void reset_queued_message (ACE_Message_Block *message_block,
-			     size_t bytes_delivered);
-
-  /// Update the state of the outgoing queue, this time	a complete
-  /// message was sent.
-  void reset_sent_message (ACE_Message_Block *message_block,
-			   size_t bytes_delivered);
-
-  /// Helper function used to implement	the two	methods	above.
-  void reset_message (ACE_Message_Block	*message_block,
-		      size_t bytes_delivered,
-		      int queued_message);
 private:
+
+  /// Try to send the current message.
+  /**
+   * As the outgoing data is drained this method is invoked to send as
+   * much of the current message as possible.
+   *
+   * Returns 0 if there is more data to send, -1 if there was an error
+   * and 1 if the message was completely sent.
+   */
+  int send_current_message (void);
+
+  /// Dequeue the next message, if any, and continue sending data
+  /**
+   * Once a message is completely sent, a new message is dequeued and
+   * setup as the current message.
+   *
+   * Returns 0 if there is more data to send, -1 if there was an error
+   * and 1 if the message was completely sent.
+   */
+  int dequeue_next_message (void);
+
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport	(const TAO_Transport&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const	TAO_Transport&))
@@ -514,14 +546,16 @@ protected:
   /// Strategy for waiting for the reply after sending the request.
   TAO_Wait_Strategy *ws_;
 
-  /// Queue for	buffering transport messages.
-  TAO_Transport_Buffering_Queue	*buffering_queue_;
+#if 0
+  /// Queue for buffering transport messages.
+  TAO_Transport_Buffering_Queue *buffering_queue_;
 
   /// Buffering	timer id.
   long buffering_timer_id_;
 
   /// Buffering	timeout	value.
   ACE_Time_Value buffering_timeout_value_;
+#endif /* 0 */
 
   /// Use to check if bidirectional info has been synchronized with
   /// the peer.
@@ -544,6 +578,17 @@ protected:
    * if	the server receives the	info.
    */
   int bidirectional_flag_;
+
+  /// Synchronize access to the outgoing data queue
+  TAO_SYNCH_MUTEX queue_mutex_;
+
+  /// Implement the outgoing data queue
+  TAO_Queued_Message *head_;
+  TAO_Queued_Message *tail_;
+
+  /// Once part of a message has been sent it is kept here until it is
+  /// completely sent
+  TAO_Queued_Message *current_message_;
 };
 
 #if defined (__ACE_INLINE__)

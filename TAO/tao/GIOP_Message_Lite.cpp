@@ -1350,7 +1350,9 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_LITE_HEADER_LEN);
 
-  int result = transport->send (&message_block);
+  size_t bytes_transferred;
+  int result = transport->send_message_block_chain (&message_block,
+                                                    bytes_transferred);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
