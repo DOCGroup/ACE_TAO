@@ -8,7 +8,7 @@ Thu May  8 18:04:14 1997  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Fixed subtle bug in delete_all_nodes.
 
 	* ace/OS.cpp (ACE_TSS_Cleanup::exit): Changed because of
-	  return value changes. 
+	  return value changes in ACE containers. 
 
 Thu May  8 18:04:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
