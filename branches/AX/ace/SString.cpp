@@ -235,7 +235,14 @@ operator<< (ostream &os, const ACE_CString &cs)
 ostream &
 operator<< (ostream &os, const ACE_WString &ws)
 {
+  // @@ Need to figure out how to print the "wide" string
+  //    on platforms that don't support "wide" strings.
+#if defined (ACE_HAS_WCHAR)
   os << ACE_Wide_To_Ascii (ws.fast_rep ()).char_rep ();
+#else
+  ACE_UNUSED_ARG (ws);
+  os << "(*non-printable string*)";
+#endif
   return os;
 }
 
