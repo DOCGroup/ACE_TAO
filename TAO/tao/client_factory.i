@@ -28,3 +28,22 @@ TAO_Client_Strategy_Factory::TAO_Client_Strategy_Factory (void)
 ACE_INLINE
 TAO_Client_Strategy_Factory::~TAO_Client_Strategy_Factory (void)
 {}
+
+// @@ Chris, shouldn't we protect this stuff with some type of #ifdef
+// for platforms that lack template specialization?  
+// Template specializations that allow the cached connection manager
+// to work better.
+
+ACE_INLINE size_t
+ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::hash_i (const ACE_INET_Addr &addr) const
+{
+  return addr.get_ip_address () + addr.get_port_number ();
+}
+
+ACE_INLINE int
+ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::compare_i (const ACE_INET_Addr &a1, 
+                                                                        const ACE_INET_Addr &a2) const
+{
+  return a1 != a2;
+}
+
