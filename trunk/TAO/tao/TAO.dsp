@@ -2798,6 +2798,25 @@ SOURCE=.\RT_ORB.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_ORB_Loader.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_ORBInitializer.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -4151,6 +4170,10 @@ SOURCE=.\RT_Mutex.h
 # Begin Source File
 
 SOURCE=.\RT_ORB.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_ORB_Loader.h
 # End Source File
 # Begin Source File
 
