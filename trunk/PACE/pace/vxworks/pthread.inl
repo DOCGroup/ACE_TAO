@@ -25,25 +25,19 @@
 
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_pthread_atfork (
 # if defined (PACE_HAS_CPLUSPLUS)
-PACE_INLINE
-int
-pace_pthread_atfork (pace_atfork_pf prepare,
+                     pace_atfork_pf prepare,
                      pace_atfork_pf parent,
-                     pace_atfork_pf child)
-{
-  PACE_TRACE("pace_pthread_atfork");
-  /*
-   * In VxWorks, there is only one process.
-   */
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-}
+                     pace_atfork_pf child
 # else /* ! PACE_HAS_CPLUSPLUS */
-PACE_INLINE
-int
-pace_pthread_atfork (void (*prepare) (),
+                     void (*prepare) (),
                      void (*parent) (),
-                     void (*child) ())
+                     void (*child) ()
+# endif /* PACE_HAS_CPLUSPLUS */
+                     )
 {
   PACE_TRACE("pace_pthread_atfork");
   /*
@@ -51,7 +45,6 @@ pace_pthread_atfork (void (*prepare) (),
    */
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
-# endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
@@ -532,6 +525,7 @@ pace_pthread_exit (void * value_ptr)
  
       exit(0);
     }
+
   exit(-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
@@ -853,14 +847,9 @@ PACE_INLINE
 pace_pthread_t
 pace_pthread_self ()
 {
-  WIND_TCB *pTcb;
-
   PACE_TRACE("pace_pthread_self");
 
-  if ((pTcb = taskTcb(taskIdSelf())) == NULL)
-    return (pace_pthread_t)NULL;
-
-  return (pace_pthread_t)(pTcb->_USER_SPARE4);
+  return pthread_self();
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
