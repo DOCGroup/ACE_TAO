@@ -123,6 +123,22 @@ SOURCE=.\Base_Connection_Property.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -360,6 +376,10 @@ SOURCE=.\IIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.h
 # End Source File
 # Begin Source File
 
@@ -671,6 +691,10 @@ SOURCE=.\Service_Callbacks.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Service_Context.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Services.h
 # End Source File
 # Begin Source File
@@ -839,6 +863,14 @@ SOURCE=.\Base_Connection_Property.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_Policy_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -864,10 +896,6 @@ SOURCE=.\Cleanup_Func_Registry.inl
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ClientRequestInfo.inl
 # End Source File
 # Begin Source File
 
@@ -1044,6 +1072,10 @@ SOURCE=.\IIOP_Profile.i
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 
@@ -1279,6 +1311,10 @@ SOURCE=.\Service_Callbacks.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Service_Context.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Services.i
 # End Source File
 # Begin Source File
@@ -1420,6 +1456,22 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # Begin Source File
 
 SOURCE=.\Base_Connection_Property.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_Policy_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDir_PolicyFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BiDirPolicyC.cpp
 # End Source File
 # Begin Source File
 
@@ -1648,6 +1700,10 @@ SOURCE=.\IIOP_Profile.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.cpp
 # End Source File
 # Begin Source File
 
@@ -1924,6 +1980,10 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Service_Callbacks.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Context.cpp
 # End Source File
 # Begin Source File
 

@@ -1402,3 +1402,19 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
                   *id));
     }
 }
+
+int
+TAO_GIOP_Message_Lite::generate_locate_reply_header (
+    TAO_OutputCDR & /*cdr*/,
+    TAO_Pluggable_Reply_Params & /*params*/)
+{
+  return 0;
+}
+
+
+int
+TAO_GIOP_Message_Lite::is_ready_for_bidirectional (void)
+{
+  // No we dont support..
+  return 0;
+}

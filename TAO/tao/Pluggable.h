@@ -234,6 +234,14 @@ public:
   virtual int
   messaging_init (CORBA::Octet major,
                   CORBA::Octet minor);
+  // Initialising the messaging object. This would be used by the
+  // connector  side. On the acceptor side the connection handler
+  // would take care of the messaging objects.
+
+  virtual void bidirectional_flag (int flag);
+  // Set the bidirectional flag
+
+  virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
   void dequeue_all (void);
 

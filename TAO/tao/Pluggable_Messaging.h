@@ -118,6 +118,7 @@ public:
 
   /// Reset teh messaging object
   virtual void reset (int reset_flag = 1) = 0;
+  // Reset the messaging object
 
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
@@ -134,6 +135,11 @@ public:
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params &params,
       CORBA::Exception &x) = 0;
+  // Generate a reply message with the exception <ex>.
+
+  virtual int is_ready_for_bidirectional (void) = 0;
+  // Is the messaging object ready for processing BiDirectional
+  // request/response?
 };
 
 #if defined (__ACE_INLINE__)

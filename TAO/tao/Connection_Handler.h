@@ -79,6 +79,9 @@ public:
   /// Make ourselves ready for use
   int make_idle (void);
 
+  /// recache ourselves in the cache
+  int recache_handler (TAO_Connection_Descriptor_Interface *);
+
   /// Increment the reference count
   void incr_ref_count (void);
 

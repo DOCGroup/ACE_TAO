@@ -13,3 +13,11 @@ TAO_IIOP_Acceptor::address (void) const
   //                    -Ossama
   return this->addrs_[0];
 }
+
+ACE_INLINE const ACE_INET_Addr *
+TAO_IIOP_Acceptor::endpoints (void)
+{
+  ACE_ASSERT (this->addrs_ != 0);
+
+  return this->addrs_;
+}

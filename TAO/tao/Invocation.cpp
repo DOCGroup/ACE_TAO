@@ -589,6 +589,15 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
               == 0)
             ACE_THROW (CORBA::MARSHAL ());
 
+          // @@ The piece of code that comes here should go. It should
+          // be something like this.
+          // IOP::ServiceContext context;
+          // context.context_id = IOP::RTCorbaPriority;
+          // this->op_details_.service_context ().set_context
+          // (context, cdr);
+          // RT Folks can you please do these changes consistently
+          // wherever you guys are adding service context information
+          // - Bala
           IOP::ServiceContextList &context_list = this->service_info ();
 
           CORBA::ULong l = context_list.length ();
