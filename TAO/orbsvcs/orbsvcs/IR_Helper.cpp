@@ -98,7 +98,7 @@ IR_Helper::IR_Helper (char *server_name,
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "IR_Helper::IR_Helper - %s\n", exception_message));
-      ACE_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
       return;
     }
   ACE_ENDTRY;
@@ -149,7 +149,7 @@ IR_Helper::register_server (const char *comm_line,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("IR_Helper::register_server");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "IR_Helper::register_server");
       return -1;
     }
   ACE_ENDTRY;
