@@ -1,5 +1,12 @@
 Sun Jan  4 10:11:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (rw_trywrlock_upgrade): Temporarily comments out this
+ 	  method since we need to finish implementing it correctly.
+
+	* ace/OS.i (rw_trywrlock_upgrade): Fixed a minor bug where we
+ 	  weren't releasing the lock correctly if there were competing
+ 	  readers.
+
 	* apps/Gateway/Gateway/Event_Channel.cpp (put): Uncommented the
  	  code that sets the appropriate locking strategy for the Message
  	  Blocks.
