@@ -412,7 +412,7 @@ sub check_for_pre_and_post ()
 
 ##############################################################################
 
-our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m);
+#our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m);
 
 if (!getopts ('cdhl:m') || $opt_h) {
     print "fuzz.pl [-cdhm] [-l level] [file1, file2, ...]\n";
@@ -451,6 +451,6 @@ check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
 check_for_pre_and_post () if ($opt_l >= 4);
 
-print "\n$errors error(s), $warnings warnings(s)\n";
+print "\nFuzz.pl - $errors error(s), $warnings warnings(s)\n";
 
 exit (1) if $errors > 0;
