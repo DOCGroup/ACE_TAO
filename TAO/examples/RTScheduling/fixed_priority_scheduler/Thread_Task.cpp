@@ -7,15 +7,13 @@
 ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_count = 0;
 
 Thread_Task::Thread_Task (RTScheduling::Current_ptr current,
-			  CORBA::Policy_ptr sched_param,
+			  FP_Scheduling::SegmentSchedulingParameterPolicy_ptr sched_param,
 			  int start_time,
 			  int load,
-			  long flags,
-			  ACE_Barrier* barrier)
+			  long flags)
 {
   this->current_ = RTScheduling::Current::_narrow (current);
-  this->sched_param_ = CORBA::Policy::_duplicate (sched_param);
-  this->barrier_ = barrier;
+  this->sched_param_ = FP_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (sched_param);
   this->load_ = load;
   this->start_time_ = start_time;
   this->flags_ = flags;
@@ -25,8 +23,10 @@ Thread_Task::Thread_Task (RTScheduling::Current_ptr current,
 
 
 int
-Thread_Task::activate_task (void)
+Thread_Task::activate_task (ACE_Barrier* barrier)
 {
+  this->barrier_ = barrier;
+  
   if (this->activate (flags_,
 		      1) == -1)
     {

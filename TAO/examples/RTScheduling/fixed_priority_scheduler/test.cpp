@@ -3,6 +3,14 @@
 #include "test.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
+#include "ace/Arg_Shifter.h"
+
+DT_Test* dt_test;
+
+DT_Test::DT_Test (void)
+{
+  dt_test = this;
+}
 
 
 void
@@ -38,7 +46,7 @@ DT_Test::check_supported_priorities (void)
 
 
   max_priority_ = ACE_Sched_Params::priority_max (sched_policy_);
-  min_priority = ACE_Sched_Params::priority_min (sched_policy_);
+  min_priority_ = ACE_Sched_Params::priority_min (sched_policy_);
 
   if (max_priority_ == min_priority_)
     {
@@ -51,14 +59,14 @@ DT_Test::check_supported_priorities (void)
 		   max_priority_, min_priority_));
 }
 
-void 
-DT_Test::init_test (int argc, char *argv []
-	    ACE_ENV_ARG_DECL)
+int
+DT_Test::init (int argc, char *argv []
+	       ACE_ENV_ARG_DECL)
 {
   orb_ = CORBA::ORB_init (argc,
-				argv,
-				""
-				ACE_ENV_ARG_PARAMETER);
+			  argv,
+			  ""
+			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
   this->check_supported_priorities ();
@@ -72,8 +80,8 @@ DT_Test::init_test (int argc, char *argv []
   ACE_CHECK;
       
   
-  ACE_NEW (scheduler_,
-	   Fixed_Priority_Scheduler (orb.in ()));
+  ACE_NEW_RETURN (scheduler_,
+	   Fixed_Priority_Scheduler (orb_.in ()), -1);
   
   manager->rtscheduler (scheduler_);
   
@@ -86,15 +94,11 @@ DT_Test::init_test (int argc, char *argv []
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  flags_ = THR_NEW_LWP | THR_JOINABLE;
-  flags_ |= 
-    orb_->orb_core ()->orb_params ()->scope_policy () |
-    orb_->orb_core ()->orb_params ()->sched_policy ();
-  
+
   // Set the main thread to max priority...
   if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
-					      max_priority,
-					      sched_scope_)) != 0)
+					      max_priority_,
+					      ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
 	{
@@ -103,81 +107,44 @@ DT_Test::init_test (int argc, char *argv []
 		      "test runs in time-shared class\n"));
 	}
       else
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%P|%t): sched_params failed\n"),-1);
+	ACE_ERROR ((LM_ERROR,
+			   "(%P|%t): sched_params failed\n"));
     }
+
+  
+  return 0;
 }
 
-void 
-DT_Test::init_distributable_threads (int argc, char *argv []
-				  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+void
+DT_Test::run (int argc, char* argv [] 
+			  ACE_ENV_ARG_DECL)
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  init (argc,argv
+	ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   
-  const ACE_TCHAR* current_arg = 0;
+  dt_creator_->create_distributable_threads (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   
-  dt_count_ = 0;
-  int dt_index = 0;
-  FP_Scheduling::SegmentSchedulingParameterPolicy_ptr sched_param;
-  int start_time;
-
-  while (arg_shifter.is_anything_left ())
-    {
-      if ((current_arg = arg_shifter.get_the_parameter ("-DT_Count")))
-        {
-          dt_count_ = ACE_OS::atoi (current_arg);
-          ACE_NEW (dt_list_, Thread_Task*[dt_count_]);
-          arg_shifter.consume_arg ();
-        }
-      if ((current_arg = arg_shifter.get_the_parameter ("-DT_Task")))
-	{
-          arg_shifter.consume_arg ();
-	  
-	  while (arg_shifter.is_anything_left ())
-	    {
-	      if ((current_arg = arg_shifter.get_the_parameter ("-Importance")))
-		{
-		  sched_param = scheduler.create_segment_scheduling_parameter (current_arg);
-		  arg_shifter.consume_arg ();
-		}
-	      if ((current_arg = arg_shifter.get_the_parameter ("-Start_Time")))
-		{
-		  start_time = current_arg;
-		  arg_shifter.consume_arg ();
-		}
-	      if ((current_arg = arg_shifter.get_the_parameter ("-Load")))
-		{
-		  load = current_arg;
-		  arg_shifter.consume_arg ();
-		}
-	    }
-  	  
-          Thread_Task *task;
-	  
-          ACE_NEW (task, 
-		   Thread_Task (current_.in (),
-				sched_param,
-				start_time,
-				load,
-				flags_,
-				&barrier_));
-	  
-	  dt_list_ [dt_index++] = task;
-	}
-    }
-      
+  this->orb_->run ();
 }
 
-void 
-DT_Test::create_distributable_threads (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+void
+DT_Test::dt_creator (DT_Creator* dt_creator)
 {
-  ACE_NEW (barrier_,
-	   ACE_Barrier (this->dt_count_ + 1));
-  
-	   
-  ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch...\n"));
-  barrier.wait ();
-  ACE_DEBUG ((LM_DEBUG, "Tasks have synched...\n"));
+  this->dt_creator_ = dt_creator;
+}
+
+Fixed_Priority_Scheduler* 
+DT_Test::scheduler (void)
+{
+  return this->scheduler_;
+}
+
+RTScheduling::Current_ptr 
+DT_Test::current (void)
+{
+  return current_.retn ();
 }
 
 int
@@ -185,12 +152,11 @@ main (int argc, char* argv [])
 {
   ACE_TRY_NEW_ENV
     {
-      init_test (argc,argv
-		 ACE_ENV_ARG_PARAMETER);
+      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_DT_Test);
       
-      
-      
-      orb->run ();
+      DT_TEST::instance ()->run (argc, argv
+								  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -203,11 +169,13 @@ main (int argc, char* argv [])
   return 0;
 }
 
-ACE_STATIC_SVC_DEFINE(DT_Test,
-                      ACE_TEXT ("DT_Test"),
-                      ACE_SVC_OBJ_T,
-                      &ACE_SVC_NAME (DT_Test),
-                      ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-                      0)
 
-ACE_FACTORY_DEFINE (test, DT_Test)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Singleton<DT_Test, ACE_Null_Mutex>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Singleton<DT_Test, ACE_Null_Mutex>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
