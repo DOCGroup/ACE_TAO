@@ -34,7 +34,7 @@
 class ACE_Export ACE_Sbrk_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for constructor options.
+  //     Helper class for Sbrk Memory Pool constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
@@ -104,7 +104,7 @@ protected:
 class ACE_Export ACE_Shared_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for constructor options.
+  //     Helper class for Shared Memory Pool constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
@@ -244,7 +244,7 @@ protected:
 class ACE_Export ACE_Local_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for constructor options.
+  //     Helper class for Local Memory Pool constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
@@ -316,7 +316,7 @@ protected:
 class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
   // = TITLE
-  //     Helper class for constructor options.
+  //     Helper class for MMAP Memory Pool constructor options.
   //
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many
