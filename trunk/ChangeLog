@@ -1,3 +1,8 @@
+Mon Nov  3 10:19:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor:
+          Updated this file with all recent changes
+
 Mon Nov  3 08:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
