@@ -1,10 +1,16 @@
+Wed Sep 24 11:41:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+
+	  #included FT_IOGR_Property.h to get the test compling. 
+
 Tue Sep 23 21:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosLoadBalancing.mpc
         * orbsvcs/orbsvcs/FTORB.mpc
         * orbsvcs/tests/FaultTolerance/IOGRManipulation/FaultTolerance_IOGRManipulation.mpc
         * orbsvcs/orbsvcs/PortableGroup.mpc
-        Changed to eliminate link errors.
+          Changed to eliminate link errors.
 
         * orbsvcs/orbsvcs/FT_CORBA_ORB.idl
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
@@ -24,31 +30,32 @@ Tue Sep 23 21:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
         * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h
         * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp
-        TagFTGroupTaggedComponent was previously moved to Portablegroups as
-        TagGroupTaggedComponent, but was never removed from FT_CORBA_ORB.idl.
-        Consequently, some code was using the PortableGroup version and some
-        code was using the FT version. This removes the FT version and changes
-        all code that referenced it to now use the PortableGroup version.
+          TagFTGroupTaggedComponent was previously moved to Portablegroups
+	  as  TagGroupTaggedComponent, but was never removed from
+	  FT_CORBA_ORB.idl.   Consequently, some code was using the
+	  PortableGroup version and some code was using the FT
+	  version. This removes the FT version and changes all code that
+	  referenced it to now use the PortableGroup version. 
 
         * orbsvcs/tests/FT_App/FT_Client.cpp
         * orbsvcs/tests/FT_App/FT_UnitTests.cpp
         * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp
-        Changed to eliminate compile errors due to merging changes.
+          Changed to eliminate compile errors due to merging changes.
 
 Tue Sep 23 17:19:48 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
         * orbsvcs/Fault_Detector/Fault_Detector.mpc:
         * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
-    Added inheritance from orbsvcsexe base project to resolve include
-    path problems.
+	  Added inheritance from orbsvcsexe base project to resolve
+	  include path problems.
 
         * orbsvcs/orbsvcs/FaultTolerance.mpc:
-    Manipulated the SourceFiles list to resolve some link errors.
+          Manipulated the SourceFiles list to resolve some link errors. 
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
-    Changed forward declaration of IOP::ServiceContext to quiet
-    compiler warnings on VC++ 6.0.
+          Changed forward declaration of IOP::ServiceContext to quiet
+	  compiler warnings on VC++ 6.0. 
 
 Tue Sep 23 17:03:40 2003  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -71,11 +78,12 @@ Tue Sep 23 17:03:40 2003  Dale Wilson  <wilson_d@ociweb.com>
 
 Mon Sep 22 18:26:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-  * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: The
-    set_component () created problems if we don't send a constant
-    version of TAO_Tagged_Components.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: The
+	  set_component () created problems if we don't send a constant
+	  version of TAO_Tagged_Components. 
 
 Mon Sep 22 17:42:23 2003  Dale Wilson  <wilson_d@ociweb.com>
+	
         * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp
         * orbsvcs/test/FT_App/FT_ReplicaFactory_i.h
         * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp
