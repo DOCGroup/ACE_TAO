@@ -43,10 +43,10 @@ parse_args (int argc, char **argv)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "\nusage:  %s"
-			   "-d"
-			   "-i <ior_input_file>"
-                           "-k IOR"
+                           "\nusage:  %s "
+			   "-d "
+			   "-i <ior_input_file> "
+                           "-k IOR "
                            "\n",
                            argv [0]),
                           -1);
