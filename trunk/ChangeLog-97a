@@ -1,3 +1,8 @@
+Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: fixed
+	  typos in template specializations.
+
 Mon Apr 28 02:16:19 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/Conn_Test.cpp: Removed some extraneous template
