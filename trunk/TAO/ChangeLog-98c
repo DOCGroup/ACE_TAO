@@ -6,6 +6,9 @@ Wed Sep  2 19:24:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Sun/CC on Solaris 2.6. Thanks to Don Davis
 	  <ded@heart.jhuapl.edu> for reporting this and providing a fix!
 
+	* tao/POA.cpp: 
+	  Added some missing template instantiations.
+
 Wed Sep  2 18:59:22 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp : Updated the print statements to
