@@ -4,14 +4,14 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    MsgQueue_Notification_Test.cpp
 //
 // = DESCRIPTION
 //      There are two tests that test 2 different notification mechanisms
 //      in Message Queue.
-//      
+//
 //      The first test illustrates the notification mechanisms in
 //      Message_Queue and its integration with Reactor.
 //
@@ -31,7 +31,7 @@
 //
 // = AUTHOR
 //    Irfan Pyarali and Nanbor Wang.
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -58,7 +58,7 @@ class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   Message_Handler (ACE_Reactor &reactor);
-  
+
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -67,7 +67,7 @@ private:
   int process_message (void);
   void make_message (void);
 
-  ACE_Reactor_Notification_Strategy notification_strategy_;  
+  ACE_Reactor_Notification_Strategy notification_strategy_;
 };
 
 class Watermark_Test : public ACE_Task<ACE_SYNCH>
@@ -84,13 +84,13 @@ public:
   void print_producer_debug_message (void);
 
 private:
-  const len_, hwm_, lwm_;
-  ACE_Atomic_Op <ACE_Thread_Mutex, int> role_;
+  const size_t len_, hwm_, lwm_;
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> role_;
   ACE_Barrier mq_full_, mq_low_water_mark_hit_;
 };
 
 Message_Handler::Message_Handler (ACE_Reactor &reactor)
-  // First time handle_input will be called 
+  // First time handle_input will be called
   : notification_strategy_ (&reactor,
 			    this,
 			    ACE_Event_Handler::READ_MASK)
@@ -104,31 +104,31 @@ Message_Handler::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_input\n")));
 
-  // Next time handle_output will be called 
+  // Next time handle_output will be called
   this->notification_strategy_.mask (ACE_Event_Handler::WRITE_MASK);
 
   return process_message ();
 }
 
-int 
+int
 Message_Handler::handle_output (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_output\n")));
-  ACE_UNUSED_ARG (fd);  
+  ACE_UNUSED_ARG (fd);
 
-  // Next time handle_exception will be called 
+  // Next time handle_exception will be called
   this->notification_strategy_.mask (ACE_Event_Handler::EXCEPT_MASK);
 
-  return process_message ();  
+  return process_message ();
 }
 
-int 
+int
 Message_Handler::handle_exception (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Message_Handler::handle_exception\n")));
-  ACE_UNUSED_ARG (fd);  
+  ACE_UNUSED_ARG (fd);
 
-  // Next time handle_input will be called 
+  // Next time handle_input will be called
   this->notification_strategy_.mask (ACE_Event_Handler::READ_MASK);
 
   return process_message ();
@@ -149,7 +149,7 @@ Message_Handler::process_message (void)
 
   this->make_message ();
   return 0;
-}  
+}
 
 void
 Message_Handler::make_message (void)
@@ -157,12 +157,12 @@ Message_Handler::make_message (void)
   if (--iterations > 0)
     {
       ACE_Message_Block *mb = new ACE_Message_Block ((char *) ASYS_TEXT ("hello"));
-      
+
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sending message\n")));
       this->putq (mb);
     }
 }
-  
+
 Watermark_Test::Watermark_Test ()
   : len_ (ACE_OS::strlen (default_message) + 1),
     hwm_ (this->len_ * default_high_water_mark),
@@ -288,7 +288,7 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("MsgQueue_Notifications_Test"));
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Starting message queue reactive notification test...\n")));
-  ACE_Reactor reactor; 
+  ACE_Reactor reactor;
   Message_Handler mh (reactor);
 
   while (iterations > 0)
@@ -301,7 +301,7 @@ main (int, ASYS_TCHAR *[])
               ASYS_TEXT ("Low water mark is %d\n"),
               default_high_water_mark,
               default_low_water_mark));
-              
+
   watermark_test.activate (THR_NEW_LWP, worker_threads);
 
   ACE_Thread_Manager::instance ()->wait ();
@@ -313,3 +313,8 @@ main (int, ASYS_TCHAR *[])
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
