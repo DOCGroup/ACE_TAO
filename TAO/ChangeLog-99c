@@ -1,3 +1,8 @@
+Tue Apr 27 22:35:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp: Fixed template instantiations and
+	  constructor initialization order problems.
+
 Tue Apr 27 21:46:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Eliminated priority inversion in the reactive dispatcher, we
@@ -6,7 +11,7 @@ Tue Apr 27 21:46:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
 	  Use the "reactive_push_to_consumer()" method in the
-	  ProxyPushSupplier to ensure that the lock is released during the 
+	  ProxyPushSupplier to ensure that the lock is released during the
 	  upcall.
 
 	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
@@ -21,13 +26,13 @@ Tue Apr 27 21:46:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
 	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
-	  Added a new callback method to the ProxyPushSupplier used by the 
+	  Added a new callback method to the ProxyPushSupplier used by the
 	  Timeout filters to correctly grab the lock before dispatching
 	  the timeout.
 	  We need to control access to this kind of callback interfaces,
 	  possibly using helper classes with "friend" access.
 
-	* orbsvcs/tests/EC_Throughput/ec.conf: 
+	* orbsvcs/tests/EC_Throughput/ec.conf:
 	* orbsvcs/Event_Service/svc.conf:
 	  By default use a regular mutex in the ProxyPushSupplier, it is
 	  more efficient and works correctly.
