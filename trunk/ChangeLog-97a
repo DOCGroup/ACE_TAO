@@ -25,6 +25,10 @@ Mon Apr 14 21:32:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Apr 14 00:02:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/OS.i (getpgid): Removed the extraneous return in front of
+	  ACE_NOTSUP_RETURN.  Thanks to Mike Bernat <sagmb@sagus.com> for 
+	  reporting this.
+
 	* ace/Process.cpp: Replaced the use of ACE_OS::fork(void) with
  	  ACE_OS::fork(const char *) so that we can pass in the name of
  	  the process we're exec'ing.
