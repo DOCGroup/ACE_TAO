@@ -1,5 +1,5 @@
 project : taoexe, portableserver {
-  lib += Quoter_Idl_Lib
+  libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
   requires += exceptions
