@@ -53,7 +53,7 @@ endif # SUPPRESS_DASH_G
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/TS_Server_Handler.o .obj/TS_Server_Handler.so .shobj/TS_Server_Handler.o .shobj/TS_Server_Handler.so: TS_Server_Handler.cpp \
+.obj/TS_Server_Handler.o .obj/TS_Server_Handler.o .obj/TS_Server_Handler.o .obj/TS_Server_Handler.o: TS_Server_Handler.cpp \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -62,6 +62,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -208,7 +217,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/Time_Request_Reply.h
 
-.obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.so .shobj/TS_Clerk_Handler.o .shobj/TS_Clerk_Handler.so: TS_Clerk_Handler.cpp \
+.obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.o .obj/TS_Clerk_Handler.o: TS_Clerk_Handler.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -217,6 +226,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -366,7 +384,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Time_Request_Reply.h
 
-.obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.so .shobj/Client_Logging_Handler.o .shobj/Client_Logging_Handler.so: Client_Logging_Handler.cpp \
+.obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.o .obj/Client_Logging_Handler.o: Client_Logging_Handler.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -375,6 +393,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -529,7 +556,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
  Client_Logging_Handler.h
 
-.obj/Name_Handler.o .obj/Name_Handler.so .shobj/Name_Handler.o .shobj/Name_Handler.so: Name_Handler.cpp \
+.obj/Name_Handler.o .obj/Name_Handler.o .obj/Name_Handler.o .obj/Name_Handler.o: Name_Handler.cpp \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -537,6 +564,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -692,13 +728,22 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Name_Request_Reply.h \
  $(ACE_ROOT)/ace/Name_Space.h
 
-.obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.so .shobj/Server_Logging_Handler_T.o .shobj/Server_Logging_Handler_T.so: Server_Logging_Handler_T.cpp \
+.obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.o .obj/Server_Logging_Handler_T.o: Server_Logging_Handler_T.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -734,12 +779,10 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -852,7 +895,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Acceptor.cpp \
  Server_Logging_Handler_T.cpp
 
-.obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.so .shobj/Log_Message_Receiver.o .shobj/Log_Message_Receiver.so: Log_Message_Receiver.cpp \
+.obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.o .obj/Log_Message_Receiver.o: Log_Message_Receiver.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -861,6 +904,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -887,7 +939,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Synch_T.cpp \
  Log_Message_Receiver.h Log_Message_Receiver.cpp
 
-.obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.so .shobj/Server_Logging_Handler.o .shobj/Server_Logging_Handler.so: Server_Logging_Handler.cpp \
+.obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.o: Server_Logging_Handler.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -896,6 +948,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -928,12 +989,10 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -1048,7 +1107,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Token_Handler.o .obj/Token_Handler.so .shobj/Token_Handler.o .shobj/Token_Handler.so: Token_Handler.cpp \
+.obj/Token_Handler.o .obj/Token_Handler.o .obj/Token_Handler.o .obj/Token_Handler.o: Token_Handler.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1057,6 +1116,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1211,7 +1279,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Token_Request_Reply.h \
  $(ACE_ROOT)/ace/Token_Request_Reply.i
 
-.obj/Logging_Strategy.o .obj/Logging_Strategy.so .shobj/Logging_Strategy.o .shobj/Logging_Strategy.so: Logging_Strategy.cpp \
+.obj/Logging_Strategy.o .obj/Logging_Strategy.o .obj/Logging_Strategy.o .obj/Logging_Strategy.o: Logging_Strategy.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1220,6 +1288,15 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1240,13 +1317,22 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i
 
-.obj/Base_Optimizer.o .obj/Base_Optimizer.so .shobj/Base_Optimizer.o .shobj/Base_Optimizer.so: Base_Optimizer.cpp Base_Optimizer.h \
+.obj/Base_Optimizer.o .obj/Base_Optimizer.o .obj/Base_Optimizer.o .obj/Base_Optimizer.o: Base_Optimizer.cpp Base_Optimizer.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

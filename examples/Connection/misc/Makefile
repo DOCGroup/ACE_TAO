@@ -46,7 +46,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_upipe.o .obj/test_upipe.so .shobj/test_upipe.o .shobj/test_upipe.so: test_upipe.cpp \
+.obj/test_upipe.o .obj/test_upipe.o .obj/test_upipe.o .obj/test_upipe.o: test_upipe.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -58,6 +58,15 @@ endif
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -209,7 +218,7 @@ endif
  $(ACE_ROOT)/ace/UPIPE_Connector.i \
  test_upipe.h
 
-.obj/Connection_Handler.o .obj/Connection_Handler.so .shobj/Connection_Handler.o .shobj/Connection_Handler.so: Connection_Handler.cpp \
+.obj/Connection_Handler.o .obj/Connection_Handler.o .obj/Connection_Handler.o .obj/Connection_Handler.o: Connection_Handler.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -221,6 +230,15 @@ endif
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

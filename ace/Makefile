@@ -534,7 +534,7 @@ endif # GHS
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Basic_Types.o .obj/Basic_Types.so .shobj/Basic_Types.o .shobj/Basic_Types.so: Basic_Types.cpp \
+.obj/Basic_Types.o .obj/Basic_Types.o .obj/Basic_Types.o .obj/Basic_Types.o: Basic_Types.cpp \
  OS.h \
  pre.h \
  config-all.h \
@@ -561,43 +561,47 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- Template_Instantiations.cpp
-
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
- OS.h \
- pre.h \
- config-all.h \
- config.h \
- config-linux-lxpthreads.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ace_wchar.h \
- ACE_export.h \
- svc_export.h \
- OS_Dirent.h \
- OS_Export.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Sched_Params.h \
- Sched_Params.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ Template_Instantiations.cpp
 
-.obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp \
+.obj/OS.o .obj/OS.o .obj/OS.o .obj/OS.o: OS.cpp \
+ OS.h \
+ pre.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ace_wchar.h \
+ ACE_export.h \
+ svc_export.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ Sched_Params.h \
+ Sched_Params.i
+
+.obj/OS_Dirent.o .obj/OS_Dirent.o .obj/OS_Dirent.o .obj/OS_Dirent.o: OS_Dirent.cpp \
  OS_Dirent.h \
  pre.h \
  config-all.h \
@@ -614,7 +618,7 @@ endif # GHS
  OS_String.h \
  OS_String.inl
 
-.obj/OS_Memory.o .obj/OS_Memory.so .shobj/OS_Memory.o .shobj/OS_Memory.so: OS_Memory.cpp \
+.obj/OS_Memory.o .obj/OS_Memory.o .obj/OS_Memory.o .obj/OS_Memory.o: OS_Memory.cpp \
  OS_Memory.h \
  pre.h \
  config-all.h \
@@ -629,7 +633,7 @@ endif # GHS
  OS_Export.h \
  OS_Memory.inl
 
-.obj/OS_String.o .obj/OS_String.so .shobj/OS_String.o .shobj/OS_String.so: OS_String.cpp \
+.obj/OS_String.o .obj/OS_String.o .obj/OS_String.o .obj/OS_String.o: OS_String.cpp \
  OS_String.h \
  pre.h \
  config-all.h \
@@ -646,7 +650,7 @@ endif # GHS
  OS_Memory.h \
  OS_Memory.inl
 
-.obj/OS_TLI.o .obj/OS_TLI.so .shobj/OS_TLI.o .shobj/OS_TLI.so: OS_TLI.cpp \
+.obj/OS_TLI.o .obj/OS_TLI.o .obj/OS_TLI.o .obj/OS_TLI.o: OS_TLI.cpp \
  OS_TLI.h \
  pre.h \
  config-all.h \
@@ -661,7 +665,7 @@ endif # GHS
  OS_Export.h \
  OS_TLI.inl
 
-.obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
+.obj/Sched_Params.o .obj/Sched_Params.o .obj/Sched_Params.o .obj/Sched_Params.o: Sched_Params.cpp \
  Sched_Params.h \
  pre.h \
  OS.h \
@@ -689,9 +693,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Sched_Params.i
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
+.obj/ACE.o .obj/ACE.o .obj/ACE.o .obj/ACE.o: ACE.cpp \
  ACE.h \
  pre.h \
  OS.h \
@@ -719,6 +727,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Handle_Set.h \
  Handle_Set.i \
@@ -740,10 +752,6 @@ endif # GHS
  Version.h \
  Message_Block.h \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -788,7 +796,7 @@ endif # GHS
  Message_Block_T.i \
  Message_Block_T.cpp
 
-.obj/Active_Map_Manager.o .obj/Active_Map_Manager.so .shobj/Active_Map_Manager.o .shobj/Active_Map_Manager.so: Active_Map_Manager.cpp \
+.obj/Active_Map_Manager.o .obj/Active_Map_Manager.o .obj/Active_Map_Manager.o .obj/Active_Map_Manager.o: Active_Map_Manager.cpp \
  Active_Map_Manager.h \
  pre.h \
  OS.h \
@@ -816,6 +824,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Active_Map_Manager.i \
  Active_Map_Manager_T.h \
  Map_Manager.h \
@@ -835,10 +847,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -894,7 +902,7 @@ endif # GHS
  Active_Map_Manager_T.i \
  Active_Map_Manager_T.cpp
 
-.obj/Arg_Shifter.o .obj/Arg_Shifter.so .shobj/Arg_Shifter.o .shobj/Arg_Shifter.so: Arg_Shifter.cpp \
+.obj/Arg_Shifter.o .obj/Arg_Shifter.o .obj/Arg_Shifter.o .obj/Arg_Shifter.o: Arg_Shifter.cpp \
  Arg_Shifter.h \
  pre.h \
  OS.h \
@@ -921,9 +929,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/ARGV.o .obj/ARGV.so .shobj/ARGV.o .shobj/ARGV.so: ARGV.cpp \
+.obj/ARGV.o .obj/ARGV.o .obj/ARGV.o .obj/ARGV.o: ARGV.cpp \
  ARGV.h \
  pre.h \
  ACE.h \
@@ -952,6 +964,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Containers.h \
  Malloc_Base.h \
@@ -960,10 +976,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1005,7 +1017,7 @@ endif # GHS
  Memory_Pool.i \
  ARGV.i
 
-.obj/Capabilities.o .obj/Capabilities.so .shobj/Capabilities.o .shobj/Capabilities.so: Capabilities.cpp \
+.obj/Capabilities.o .obj/Capabilities.o .obj/Capabilities.o .obj/Capabilities.o: Capabilities.cpp \
  Map_Manager.h \
  pre.h \
  OS.h \
@@ -1033,6 +1045,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch.h \
  ACE.h \
  ACE.i \
@@ -1049,10 +1065,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -1117,7 +1129,7 @@ endif # GHS
  Hash_Map_Manager_T.cpp \
  Capabilities.i
 
-.obj/Containers.o .obj/Containers.so .shobj/Containers.o .shobj/Containers.so: Containers.cpp \
+.obj/Containers.o .obj/Containers.o .obj/Containers.o .obj/Containers.o: Containers.cpp \
  OS.h \
  pre.h \
  config-all.h \
@@ -1144,6 +1156,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -1153,10 +1169,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1197,7 +1209,7 @@ endif # GHS
  Mem_Map.i \
  Memory_Pool.i
 
-.obj/Configuration.o .obj/Configuration.so .shobj/Configuration.o .shobj/Configuration.so: Configuration.cpp \
+.obj/Configuration.o .obj/Configuration.o .obj/Configuration.o .obj/Configuration.o: Configuration.cpp \
  Configuration.h \
  pre.h \
  ACE.h \
@@ -1226,6 +1238,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SString.h \
  SString.i \
@@ -1238,10 +1254,6 @@ endif # GHS
  Functor_T.i \
  Functor_T.cpp \
  Hash_Map_Manager_T.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Hash_Map_Manager_T.i \
  Synch.h \
  SV_Semaphore_Complex.h \
@@ -1308,7 +1320,7 @@ endif # GHS
  Hash_Map_With_Allocator_T.i \
  Hash_Map_With_Allocator_T.cpp
 
-.obj/Dirent.o .obj/Dirent.so .shobj/Dirent.o .shobj/Dirent.so: Dirent.cpp \
+.obj/Dirent.o .obj/Dirent.o .obj/Dirent.o .obj/Dirent.o: Dirent.cpp \
  Dirent.h \
  pre.h \
  OS_Dirent.h \
@@ -1342,7 +1354,7 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/Dynamic.o .obj/Dynamic.so .shobj/Dynamic.o .shobj/Dynamic.so: Dynamic.cpp \
+.obj/Dynamic.o .obj/Dynamic.o .obj/Dynamic.o .obj/Dynamic.o: Dynamic.cpp \
  Dynamic.h \
  pre.h \
  ACE.h \
@@ -1371,6 +1383,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Synch_T.h \
  Event_Handler.h \
@@ -1386,10 +1402,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Singleton.h \
  Singleton.i \
  Singleton.cpp \
@@ -1400,7 +1412,7 @@ endif # GHS
  Managed_Object.cpp \
  Dynamic.i
 
-.obj/Functor.o .obj/Functor.so .shobj/Functor.o .shobj/Functor.so: Functor.cpp \
+.obj/Functor.o .obj/Functor.o .obj/Functor.o .obj/Functor.o: Functor.cpp \
  Functor_T.h \
  pre.h \
  Functor.h \
@@ -1430,12 +1442,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Functor.i \
  Functor_T.i \
  Functor_T.cpp
 
-.obj/Get_Opt.o .obj/Get_Opt.so .shobj/Get_Opt.o .shobj/Get_Opt.so: Get_Opt.cpp \
+.obj/Get_Opt.o .obj/Get_Opt.o .obj/Get_Opt.o .obj/Get_Opt.o: Get_Opt.cpp \
  Get_Opt.h \
  pre.h \
  ACE.h \
@@ -1464,14 +1480,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Get_Opt.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ Get_Opt.i
 
-.obj/Hash_Map_Manager.o .obj/Hash_Map_Manager.so .shobj/Hash_Map_Manager.o .shobj/Hash_Map_Manager.so: Hash_Map_Manager.cpp \
+.obj/Hash_Map_Manager.o .obj/Hash_Map_Manager.o .obj/Hash_Map_Manager.o .obj/Hash_Map_Manager.o: Hash_Map_Manager.cpp \
  Hash_Map_Manager.h \
  pre.h \
  OS.h \
@@ -1499,6 +1515,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Functor.h \
  ACE.h \
  ACE.i \
@@ -1507,10 +1527,6 @@ endif # GHS
  Functor_T.i \
  Functor_T.cpp \
  Hash_Map_Manager_T.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Hash_Map_Manager_T.i \
  Synch.h \
  SV_Semaphore_Complex.h \
@@ -1578,7 +1594,7 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/High_Res_Timer.o .obj/High_Res_Timer.so .shobj/High_Res_Timer.o .shobj/High_Res_Timer.so: High_Res_Timer.cpp \
+.obj/High_Res_Timer.o .obj/High_Res_Timer.o .obj/High_Res_Timer.o .obj/High_Res_Timer.o: High_Res_Timer.cpp \
  High_Res_Timer.h \
  pre.h \
  ACE.h \
@@ -1607,6 +1623,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  High_Res_Timer.i \
  Stats.h \
@@ -1617,10 +1637,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1662,7 +1678,7 @@ endif # GHS
  Memory_Pool.i \
  Stats.i
 
-.obj/Method_Request.o .obj/Method_Request.so .shobj/Method_Request.o .shobj/Method_Request.so: Method_Request.cpp \
+.obj/Method_Request.o .obj/Method_Request.o .obj/Method_Request.o .obj/Method_Request.o: Method_Request.cpp \
  Method_Request.h \
  pre.h \
  OS.h \
@@ -1689,9 +1705,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/Object_Manager.o .obj/Object_Manager.so .shobj/Object_Manager.o .shobj/Object_Manager.so: Object_Manager.cpp \
+.obj/Object_Manager.o .obj/Object_Manager.o .obj/Object_Manager.o .obj/Object_Manager.o: Object_Manager.cpp \
  Object_Manager.h \
  pre.h \
  OS.h \
@@ -1719,6 +1739,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Object_Manager.i \
  Managed_Object.h \
  Managed_Object.i \
@@ -1740,10 +1764,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Map_Manager.h \
  Map_Manager.i \
  Map_Manager.cpp \
@@ -1822,7 +1842,7 @@ endif # GHS
  SOCK_Acceptor.i \
  Service_Manager.i
 
-.obj/Profile_Timer.o .obj/Profile_Timer.so .shobj/Profile_Timer.o .shobj/Profile_Timer.so: Profile_Timer.cpp \
+.obj/Profile_Timer.o .obj/Profile_Timer.o .obj/Profile_Timer.o .obj/Profile_Timer.o: Profile_Timer.cpp \
  Profile_Timer.h \
  pre.h \
  ACE.h \
@@ -1851,13 +1871,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Time_Value.h \
  High_Res_Timer.h \
  High_Res_Timer.i \
  Profile_Timer.i
 
-.obj/Registry.o .obj/Registry.so .shobj/Registry.o .shobj/Registry.so: Registry.cpp \
+.obj/Registry.o .obj/Registry.o .obj/Registry.o .obj/Registry.o: Registry.cpp \
  Registry.h \
  pre.h \
  OS.h \
@@ -1884,9 +1908,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/SString.o .obj/SString.so .shobj/SString.o .shobj/SString.so: SString.cpp \
+.obj/SString.o .obj/SString.o .obj/SString.o .obj/SString.o: SString.cpp \
  Malloc.h \
  pre.h \
  ACE.h \
@@ -1915,12 +1943,12 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -1987,7 +2015,7 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Stats.o .obj/Stats.so .shobj/Stats.o .shobj/Stats.so: Stats.cpp \
+.obj/Stats.o .obj/Stats.o .obj/Stats.o .obj/Stats.o: Stats.cpp \
  Stats.h \
  pre.h \
  ACE.h \
@@ -2016,6 +2044,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Containers.h \
  Malloc_Base.h \
@@ -2024,10 +2056,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -2069,7 +2097,7 @@ endif # GHS
  Memory_Pool.i \
  Stats.i
 
-.obj/System_Time.o .obj/System_Time.so .shobj/System_Time.o .shobj/System_Time.so: System_Time.cpp \
+.obj/System_Time.o .obj/System_Time.o .obj/System_Time.o .obj/System_Time.o: System_Time.cpp \
  System_Time.h \
  pre.h \
  OS.h \
@@ -2097,6 +2125,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Memory_Pool.h \
  ACE.h \
  ACE.i \
@@ -2115,10 +2147,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -2150,7 +2178,7 @@ endif # GHS
  Mem_Map.i \
  Memory_Pool.i
 
-.obj/Time_Request_Reply.o .obj/Time_Request_Reply.so .shobj/Time_Request_Reply.o .shobj/Time_Request_Reply.so: Time_Request_Reply.cpp \
+.obj/Time_Request_Reply.o .obj/Time_Request_Reply.o .obj/Time_Request_Reply.o .obj/Time_Request_Reply.o: Time_Request_Reply.cpp \
  Time_Request_Reply.h \
  pre.h \
  Time_Value.h \
@@ -2179,17 +2207,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  SString.h \
  ACE.h \
  ACE.i \
  SString.i \
- Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Malloc_Base.h
 
-.obj/Timeprobe.o .obj/Timeprobe.so .shobj/Timeprobe.o .shobj/Timeprobe.so: Timeprobe.cpp \
+.obj/Timeprobe.o .obj/Timeprobe.o .obj/Timeprobe.o .obj/Timeprobe.o: Timeprobe.cpp \
  OS.h \
  pre.h \
  config-all.h \
@@ -2215,9 +2243,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/Timer_Hash.o .obj/Timer_Hash.so .shobj/Timer_Hash.o .shobj/Timer_Hash.so: Timer_Hash.cpp \
+.obj/Timer_Hash.o .obj/Timer_Hash.o .obj/Timer_Hash.o .obj/Timer_Hash.o: Timer_Hash.cpp \
  Timer_Hash.h \
  pre.h \
  Timer_Hash_T.h \
@@ -2248,6 +2280,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch_T.h \
  Event_Handler.h \
  ACE.h \
@@ -2264,10 +2300,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Timer_Queue_T.i \
@@ -2309,7 +2341,7 @@ endif # GHS
  Timer_List_T.h \
  Timer_List_T.cpp
 
-.obj/Timer_Heap.o .obj/Timer_Heap.so .shobj/Timer_Heap.o .shobj/Timer_Heap.so: Timer_Heap.cpp \
+.obj/Timer_Heap.o .obj/Timer_Heap.o .obj/Timer_Heap.o .obj/Timer_Heap.o: Timer_Heap.cpp \
  Timer_Heap.h \
  pre.h \
  Timer_Heap_T.h \
@@ -2340,6 +2372,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch_T.h \
  Event_Handler.h \
  ACE.h \
@@ -2356,10 +2392,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Timer_Queue_T.i \
@@ -2395,7 +2427,7 @@ endif # GHS
  Signal.i \
  Timer_Heap_T.cpp
 
-.obj/Timer_List.o .obj/Timer_List.so .shobj/Timer_List.o .shobj/Timer_List.so: Timer_List.cpp \
+.obj/Timer_List.o .obj/Timer_List.o .obj/Timer_List.o .obj/Timer_List.o: Timer_List.cpp \
  Timer_List.h \
  pre.h \
  Timer_List_T.h \
@@ -2426,6 +2458,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch_T.h \
  Event_Handler.h \
  ACE.h \
@@ -2442,10 +2478,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Timer_Queue_T.i \
@@ -2481,7 +2513,7 @@ endif # GHS
  Signal.i \
  Timer_List_T.cpp
 
-.obj/Timer_Queue.o .obj/Timer_Queue.so .shobj/Timer_Queue.o .shobj/Timer_Queue.so: Timer_Queue.cpp \
+.obj/Timer_Queue.o .obj/Timer_Queue.o .obj/Timer_Queue.o .obj/Timer_Queue.o: Timer_Queue.cpp \
  Containers.h \
  pre.h \
  OS.h \
@@ -2509,6 +2541,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Malloc_Base.h \
  Containers.i \
  Containers_T.h \
@@ -2517,10 +2553,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -2565,7 +2597,7 @@ endif # GHS
  Timer_Queue_T.i \
  Timer_Queue_T.cpp
 
-.obj/Timer_Wheel.o .obj/Timer_Wheel.so .shobj/Timer_Wheel.o .shobj/Timer_Wheel.so: Timer_Wheel.cpp \
+.obj/Timer_Wheel.o .obj/Timer_Wheel.o .obj/Timer_Wheel.o .obj/Timer_Wheel.o: Timer_Wheel.cpp \
  Timer_Wheel.h \
  pre.h \
  Timer_Wheel_T.h \
@@ -2596,6 +2628,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch_T.h \
  Event_Handler.h \
  ACE.h \
@@ -2612,10 +2648,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Free_List.i \
  Free_List.cpp \
  Timer_Queue_T.i \
@@ -2653,7 +2685,7 @@ endif # GHS
  High_Res_Timer.h \
  High_Res_Timer.i
 
-.obj/Filecache.o .obj/Filecache.so .shobj/Filecache.o .shobj/Filecache.so: Filecache.cpp \
+.obj/Filecache.o .obj/Filecache.o .obj/Filecache.o .obj/Filecache.o: Filecache.cpp \
  Filecache.h \
  pre.h \
  Mem_Map.h \
@@ -2683,6 +2715,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Mem_Map.i \
  Synch_T.h \
@@ -2699,10 +2735,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Hash_Map_Manager.h \
  Functor.h \
  Functor.i \
@@ -2761,7 +2793,7 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Dump.o .obj/Dump.so .shobj/Dump.o .shobj/Dump.so: Dump.cpp \
+.obj/Dump.o .obj/Dump.o .obj/Dump.o .obj/Dump.o: Dump.cpp \
  Synch_T.h \
  pre.h \
  Event_Handler.h \
@@ -2791,6 +2823,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -2804,10 +2840,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Dump.h \
  Dump_T.h \
  Dump_T.cpp \
@@ -2817,7 +2849,7 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Log_Msg.o .obj/Log_Msg.so .shobj/Log_Msg.o .shobj/Log_Msg.so: Log_Msg.cpp \
+.obj/Log_Msg.o .obj/Log_Msg.o .obj/Log_Msg.o .obj/Log_Msg.o: Log_Msg.cpp \
  config-all.h \
  pre.h \
  config.h \
@@ -2845,6 +2877,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Thread_Manager.h \
  Thread.h \
@@ -2861,10 +2897,6 @@ endif # GHS
  Synch_T.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -2915,7 +2947,7 @@ endif # GHS
  Time_Value.h \
  SOCK_Connector.i
 
-.obj/Log_Record.o .obj/Log_Record.so .shobj/Log_Record.o .shobj/Log_Record.so: Log_Record.cpp \
+.obj/Log_Record.o .obj/Log_Record.o .obj/Log_Record.o .obj/Log_Record.o: Log_Record.cpp \
  Log_Record.h \
  OS.h \
  pre.h \
@@ -2943,13 +2975,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
  Log_Priority.h \
  Log_Record.i \
- Log_Msg.h \
  ACE.h \
  ACE.i
 
-.obj/Trace.o .obj/Trace.so .shobj/Trace.o .shobj/Trace.so: Trace.cpp \
+.obj/Trace.o .obj/Trace.o .obj/Trace.o .obj/Trace.o: Trace.cpp \
  config-all.h \
  pre.h \
  config.h \
@@ -2981,7 +3013,7 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/Activation_Queue.o .obj/Activation_Queue.so .shobj/Activation_Queue.o .shobj/Activation_Queue.so: Activation_Queue.cpp \
+.obj/Activation_Queue.o .obj/Activation_Queue.o .obj/Activation_Queue.o .obj/Activation_Queue.o: Activation_Queue.cpp \
  Activation_Queue.h \
  pre.h \
  Synch_T.h \
@@ -3012,6 +3044,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -3025,10 +3061,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Message_Queue.h \
  Message_Block.h \
  Malloc.h \
@@ -3117,7 +3149,7 @@ endif # GHS
  Method_Request.h \
  Activation_Queue.i
 
-.obj/Process.o .obj/Process.so .shobj/Process.o .shobj/Process.so: Process.cpp \
+.obj/Process.o .obj/Process.o .obj/Process.o .obj/Process.o: Process.cpp \
  OS.h \
  pre.h \
  config-all.h \
@@ -3144,6 +3176,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Process.h \
  SString.h \
  ACE.h \
@@ -3158,10 +3194,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -3203,7 +3235,7 @@ endif # GHS
  Memory_Pool.i \
  ARGV.i
 
-.obj/Process_Manager.o .obj/Process_Manager.so .shobj/Process_Manager.o .shobj/Process_Manager.so: Process_Manager.cpp \
+.obj/Process_Manager.o .obj/Process_Manager.o .obj/Process_Manager.o .obj/Process_Manager.o: Process_Manager.cpp \
  Synch_T.h \
  pre.h \
  Event_Handler.h \
@@ -3233,6 +3265,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -3246,10 +3282,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Process.h \
  SString.h \
  SString.i \
@@ -3298,7 +3330,7 @@ endif # GHS
  Reactor_Impl.h \
  Process_Manager.i
 
-.obj/Synch.o .obj/Synch.so .shobj/Synch.o .shobj/Synch.so: Synch.cpp \
+.obj/Synch.o .obj/Synch.o .obj/Synch.o .obj/Synch.o: Synch.cpp \
  Thread.h \
  pre.h \
  ACE.h \
@@ -3327,6 +3359,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Thread.i \
  Synch_T.h \
@@ -3340,13 +3376,9 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Atomic_Op.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Synch_T.cpp
 
-.obj/Synch_Options.o .obj/Synch_Options.so .shobj/Synch_Options.o .shobj/Synch_Options.so: Synch_Options.cpp \
+.obj/Synch_Options.o .obj/Synch_Options.o .obj/Synch_Options.o .obj/Synch_Options.o: Synch_Options.cpp \
  Synch_Options.h \
  pre.h \
  ACE.h \
@@ -3375,10 +3407,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Synch_Options.i
 
-.obj/Thread.o .obj/Thread.so .shobj/Thread.o .shobj/Thread.so: Thread.cpp \
+.obj/Thread.o .obj/Thread.o .obj/Thread.o .obj/Thread.o: Thread.cpp \
  Thread.h \
  pre.h \
  ACE.h \
@@ -3407,10 +3443,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Thread.i
 
-.obj/Thread_Manager.o .obj/Thread_Manager.so .shobj/Thread_Manager.o .shobj/Thread_Manager.so: Thread_Manager.cpp \
+.obj/Thread_Manager.o .obj/Thread_Manager.o .obj/Thread_Manager.o .obj/Thread_Manager.o: Thread_Manager.cpp \
  Synch_T.h \
  pre.h \
  Event_Handler.h \
@@ -3440,6 +3480,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -3453,10 +3497,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Thread_Manager.h \
  Containers.h \
  Malloc_Base.h \
@@ -3497,7 +3537,7 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
+.obj/Token.o .obj/Token.o .obj/Token.o .obj/Token.o: Token.cpp \
  Thread.h \
  pre.h \
  ACE.h \
@@ -3526,6 +3566,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Thread.i \
  Token.h \
@@ -3541,13 +3585,9 @@ endif # GHS
  Synch_T.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Token.i
 
-.obj/Event_Handler.o .obj/Event_Handler.so .shobj/Event_Handler.o .shobj/Event_Handler.so: Event_Handler.cpp \
+.obj/Event_Handler.o .obj/Event_Handler.o .obj/Event_Handler.o .obj/Event_Handler.o: Event_Handler.cpp \
  Event_Handler.h \
  pre.h \
  ACE.h \
@@ -3576,15 +3616,15 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -3643,7 +3683,7 @@ endif # GHS
  Thread_Manager.h \
  Thread_Manager.i
 
-.obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp \
+.obj/FlReactor.o .obj/FlReactor.o .obj/FlReactor.o .obj/FlReactor.o: FlReactor.cpp \
  FlReactor.h \
  pre.h \
  Select_Reactor.h \
@@ -3677,6 +3717,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -3691,10 +3735,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -3746,7 +3786,7 @@ endif # GHS
  Timer_Heap_T.cpp \
  Select_Reactor_T.i
 
-.obj/Handle_Set.o .obj/Handle_Set.so .shobj/Handle_Set.o .shobj/Handle_Set.so: Handle_Set.cpp \
+.obj/Handle_Set.o .obj/Handle_Set.o .obj/Handle_Set.o .obj/Handle_Set.o: Handle_Set.cpp \
  Handle_Set.h \
  pre.h \
  ACE.h \
@@ -3775,14 +3815,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Handle_Set.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ Handle_Set.i
 
-.obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.so .shobj/Msg_WFMO_Reactor.o .shobj/Msg_WFMO_Reactor.so: Msg_WFMO_Reactor.cpp \
+.obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.o .obj/Msg_WFMO_Reactor.o: Msg_WFMO_Reactor.cpp \
  Msg_WFMO_Reactor.h \
  pre.h \
  WFMO_Reactor.h \
@@ -3814,6 +3854,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -3828,10 +3872,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -3917,7 +3957,7 @@ endif # GHS
  WFMO_Reactor.i \
  Msg_WFMO_Reactor.i
 
-.obj/POSIX_Proactor.o .obj/POSIX_Proactor.so .shobj/POSIX_Proactor.o .shobj/POSIX_Proactor.so: POSIX_Proactor.cpp \
+.obj/POSIX_Proactor.o .obj/POSIX_Proactor.o .obj/POSIX_Proactor.o .obj/POSIX_Proactor.o: POSIX_Proactor.cpp \
  POSIX_Proactor.h \
  pre.h \
  Proactor_Impl.h \
@@ -3945,9 +3985,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/Priority_Reactor.o .obj/Priority_Reactor.so .shobj/Priority_Reactor.o .shobj/Priority_Reactor.so: Priority_Reactor.cpp \
+.obj/Priority_Reactor.o .obj/Priority_Reactor.o .obj/Priority_Reactor.o .obj/Priority_Reactor.o: Priority_Reactor.cpp \
  Priority_Reactor.h \
  pre.h \
  Containers.h \
@@ -3976,6 +4020,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Malloc_Base.h \
  Containers.i \
  Containers_T.h \
@@ -3984,10 +4032,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -4050,7 +4094,7 @@ endif # GHS
  Timer_Heap_T.cpp \
  Select_Reactor_T.i
 
-.obj/Proactor.o .obj/Proactor.so .shobj/Proactor.o .shobj/Proactor.so: Proactor.cpp \
+.obj/Proactor.o .obj/Proactor.o .obj/Proactor.o .obj/Proactor.o: Proactor.cpp \
  Proactor.h \
  pre.h \
  OS.h \
@@ -4078,6 +4122,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Proactor_Impl.h \
  Object_Manager.h \
  Object_Manager.i \
@@ -4091,10 +4139,6 @@ endif # GHS
  ACE.i \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -4195,7 +4239,7 @@ endif # GHS
  Stream_Modules.h \
  Stream_Modules.cpp
 
-.obj/Reactor.o .obj/Reactor.so .shobj/Reactor.o .shobj/Reactor.so: Reactor.cpp \
+.obj/Reactor.o .obj/Reactor.o .obj/Reactor.o .obj/Reactor.o: Reactor.cpp \
  Reactor.h \
  pre.h \
  Handle_Set.h \
@@ -4225,6 +4269,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Handle_Set.i \
  Timer_Queue.h \
@@ -4242,10 +4290,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Timer_Queue_T.h \
  Free_List.h \
  Free_List.i \
@@ -4345,7 +4389,7 @@ endif # GHS
  TP_Reactor.h \
  TP_Reactor.i
 
-.obj/Select_Reactor.o .obj/Select_Reactor.so .shobj/Select_Reactor.o .shobj/Select_Reactor.so: Select_Reactor.cpp \
+.obj/Select_Reactor.o .obj/Select_Reactor.o .obj/Select_Reactor.o .obj/Select_Reactor.o: Select_Reactor.cpp \
  Select_Reactor.h \
  pre.h \
  Select_Reactor_T.h \
@@ -4378,6 +4422,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -4392,10 +4440,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -4447,7 +4491,7 @@ endif # GHS
  Timer_Heap_T.cpp \
  Select_Reactor_T.i
 
-.obj/Select_Reactor_Base.o .obj/Select_Reactor_Base.so .shobj/Select_Reactor_Base.o .shobj/Select_Reactor_Base.so: Select_Reactor_Base.cpp \
+.obj/Select_Reactor_Base.o .obj/Select_Reactor_Base.o .obj/Select_Reactor_Base.o .obj/Select_Reactor_Base.o: Select_Reactor_Base.cpp \
  Select_Reactor_Base.h \
  pre.h \
  Signal.h \
@@ -4478,6 +4522,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -4492,10 +4540,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -4563,7 +4607,7 @@ endif # GHS
  Timer_Heap_T.h \
  Timer_Heap_T.cpp
 
-.obj/TP_Reactor.o .obj/TP_Reactor.so .shobj/TP_Reactor.o .shobj/TP_Reactor.so: TP_Reactor.cpp \
+.obj/TP_Reactor.o .obj/TP_Reactor.o .obj/TP_Reactor.o .obj/TP_Reactor.o: TP_Reactor.cpp \
  TP_Reactor.h \
  pre.h \
  Select_Reactor.h \
@@ -4597,6 +4641,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -4611,10 +4659,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -4667,7 +4711,7 @@ endif # GHS
  Select_Reactor_T.i \
  TP_Reactor.i
 
-.obj/TkReactor.o .obj/TkReactor.so .shobj/TkReactor.o .shobj/TkReactor.so: TkReactor.cpp \
+.obj/TkReactor.o .obj/TkReactor.o .obj/TkReactor.o .obj/TkReactor.o: TkReactor.cpp \
  Synch_T.h \
  pre.h \
  Event_Handler.h \
@@ -4697,6 +4741,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -4710,10 +4758,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  SOCK_Acceptor.h \
  SOCK_Stream.h \
  SOCK_IO.h \
@@ -4788,7 +4832,7 @@ endif # GHS
  Timer_Heap_T.cpp \
  Select_Reactor_T.i
 
-.obj/WFMO_Reactor.o .obj/WFMO_Reactor.so .shobj/WFMO_Reactor.o .shobj/WFMO_Reactor.so: WFMO_Reactor.cpp \
+.obj/WFMO_Reactor.o .obj/WFMO_Reactor.o .obj/WFMO_Reactor.o .obj/WFMO_Reactor.o: WFMO_Reactor.cpp \
  WFMO_Reactor.h \
  pre.h \
  Signal.h \
@@ -4819,6 +4863,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -4833,10 +4881,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -4924,7 +4968,7 @@ endif # GHS
  Timer_Heap_T.h \
  Timer_Heap_T.cpp
 
-.obj/XtReactor.o .obj/XtReactor.so .shobj/XtReactor.o .shobj/XtReactor.so: XtReactor.cpp \
+.obj/XtReactor.o .obj/XtReactor.o .obj/XtReactor.o .obj/XtReactor.o: XtReactor.cpp \
  Synch_T.h \
  pre.h \
  Event_Handler.h \
@@ -4954,6 +4998,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -4967,10 +5015,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  SOCK_Acceptor.h \
  SOCK_Stream.h \
  SOCK_IO.h \
@@ -5045,7 +5089,7 @@ endif # GHS
  Timer_Heap_T.cpp \
  Select_Reactor_T.i
 
-.obj/QtReactor.o .obj/QtReactor.so .shobj/QtReactor.o .shobj/QtReactor.so: QtReactor.cpp \
+.obj/QtReactor.o .obj/QtReactor.o .obj/QtReactor.o .obj/QtReactor.o: QtReactor.cpp \
  QtReactor.h \
  pre.h \
  Select_Reactor.h \
@@ -5079,6 +5123,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -5093,10 +5141,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -5148,7 +5192,7 @@ endif # GHS
  Timer_Heap_T.cpp \
  Select_Reactor_T.i
 
-.obj/Asynch_IO.o .obj/Asynch_IO.so .shobj/Asynch_IO.o .shobj/Asynch_IO.so: Asynch_IO.cpp \
+.obj/Asynch_IO.o .obj/Asynch_IO.o .obj/Asynch_IO.o .obj/Asynch_IO.o: Asynch_IO.cpp \
  Asynch_IO.h \
  pre.h \
  OS.h \
@@ -5175,9 +5219,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.so .shobj/Asynch_IO_Impl.o .shobj/Asynch_IO_Impl.so: Asynch_IO_Impl.cpp \
+.obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.o .obj/Asynch_IO_Impl.o: Asynch_IO_Impl.cpp \
  OS.h \
  pre.h \
  config-all.h \
@@ -5204,9 +5252,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Asynch_IO_Impl.h
 
-.obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.so .shobj/POSIX_Asynch_IO.o .shobj/POSIX_Asynch_IO.so: POSIX_Asynch_IO.cpp \
+.obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.o .obj/POSIX_Asynch_IO.o: POSIX_Asynch_IO.cpp \
  POSIX_Asynch_IO.h \
  pre.h \
  OS.h \
@@ -5233,9 +5285,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/Strategies.o .obj/Strategies.so .shobj/Strategies.o .shobj/Strategies.so: Strategies.cpp \
+.obj/Strategies.o .obj/Strategies.o .obj/Strategies.o .obj/Strategies.o: Strategies.cpp \
  Reactor.h \
  pre.h \
  Handle_Set.h \
@@ -5265,6 +5321,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Handle_Set.i \
  Timer_Queue.h \
@@ -5282,10 +5342,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Timer_Queue_T.h \
  Free_List.h \
  Free_List.i \
@@ -5368,7 +5424,7 @@ endif # GHS
  WFMO_Reactor.i \
  Strategies.i
 
-.obj/IPC_SAP.o .obj/IPC_SAP.so .shobj/IPC_SAP.o .shobj/IPC_SAP.so: IPC_SAP.cpp \
+.obj/IPC_SAP.o .obj/IPC_SAP.o .obj/IPC_SAP.o .obj/IPC_SAP.o: IPC_SAP.cpp \
  IPC_SAP.h \
  pre.h \
  ACE.h \
@@ -5397,14 +5453,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- IPC_SAP.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ IPC_SAP.i
 
-.obj/LSOCK.o .obj/LSOCK.so .shobj/LSOCK.o .shobj/LSOCK.so: LSOCK.cpp \
+.obj/LSOCK.o .obj/LSOCK.o .obj/LSOCK.o .obj/LSOCK.o: LSOCK.cpp \
  LSOCK.h \
  pre.h \
  SOCK.h \
@@ -5434,6 +5490,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5443,13 +5503,9 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i \
  SOCK.i \
- LSOCK.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ LSOCK.i
 
-.obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.so .shobj/LSOCK_Acceptor.o .shobj/LSOCK_Acceptor.so: LSOCK_Acceptor.cpp \
+.obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.o .obj/LSOCK_Acceptor.o: LSOCK_Acceptor.cpp \
  LSOCK_Acceptor.h \
  pre.h \
  SOCK_Acceptor.h \
@@ -5482,6 +5538,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5496,17 +5556,13 @@ endif # GHS
  Time_Value.h \
  SOCK_Acceptor.i \
  UNIX_Addr.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  UNIX_Addr.i \
  LSOCK_Stream.h \
  LSOCK.h \
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.so .shobj/LSOCK_CODgram.o .shobj/LSOCK_CODgram.so: LSOCK_CODgram.cpp \
+.obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.o .obj/LSOCK_CODgram.o: LSOCK_CODgram.cpp \
  LSOCK_CODgram.h \
  pre.h \
  LSOCK.h \
@@ -5537,6 +5593,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5551,13 +5611,9 @@ endif # GHS
  SOCK_IO.h \
  SOCK_IO.i \
  SOCK_CODgram.i \
- LSOCK_CODgram.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ LSOCK_CODgram.i
 
-.obj/LSOCK_Connector.o .obj/LSOCK_Connector.so .shobj/LSOCK_Connector.o .shobj/LSOCK_Connector.so: LSOCK_Connector.cpp \
+.obj/LSOCK_Connector.o .obj/LSOCK_Connector.o .obj/LSOCK_Connector.o .obj/LSOCK_Connector.o: LSOCK_Connector.cpp \
  LSOCK_Connector.h \
  pre.h \
  SOCK_Connector.h \
@@ -5590,6 +5646,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5605,17 +5665,13 @@ endif # GHS
  SOCK_Connector.i \
  LSOCK_Stream.h \
  UNIX_Addr.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  UNIX_Addr.i \
  LSOCK.h \
  LSOCK.i \
  LSOCK_Stream.i \
  LSOCK_Connector.i
 
-.obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.so .shobj/LSOCK_Dgram.o .shobj/LSOCK_Dgram.so: LSOCK_Dgram.cpp \
+.obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.o .obj/LSOCK_Dgram.o: LSOCK_Dgram.cpp \
  LSOCK_Dgram.h \
  pre.h \
  SOCK_Dgram.h \
@@ -5646,6 +5702,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5658,13 +5718,9 @@ endif # GHS
  SOCK_Dgram.i \
  LSOCK.h \
  LSOCK.i \
- LSOCK_Dgram.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ LSOCK_Dgram.i
 
-.obj/LSOCK_Stream.o .obj/LSOCK_Stream.so .shobj/LSOCK_Stream.o .shobj/LSOCK_Stream.so: LSOCK_Stream.cpp \
+.obj/LSOCK_Stream.o .obj/LSOCK_Stream.o .obj/LSOCK_Stream.o .obj/LSOCK_Stream.o: LSOCK_Stream.cpp \
  LSOCK_Stream.h \
  pre.h \
  SOCK_Stream.h \
@@ -5696,6 +5752,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5708,16 +5768,12 @@ endif # GHS
  SOCK_IO.i \
  SOCK_Stream.i \
  UNIX_Addr.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  UNIX_Addr.i \
  LSOCK.h \
  LSOCK.i \
  LSOCK_Stream.i
 
-.obj/SOCK.o .obj/SOCK.so .shobj/SOCK.o .shobj/SOCK.so: SOCK.cpp \
+.obj/SOCK.o .obj/SOCK.o .obj/SOCK.o .obj/SOCK.o: SOCK.cpp \
  SOCK.h \
  pre.h \
  ACE.h \
@@ -5746,6 +5802,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5754,13 +5814,9 @@ endif # GHS
  QoS_Session.h \
  INET_Addr.h \
  INET_Addr.i \
- SOCK.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SOCK.i
 
-.obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.so .shobj/SOCK_Acceptor.o .shobj/SOCK_Acceptor.so: SOCK_Acceptor.cpp \
+.obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.o .obj/SOCK_Acceptor.o: SOCK_Acceptor.cpp \
  SOCK_Acceptor.h \
  pre.h \
  SOCK_Stream.h \
@@ -5792,6 +5848,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5805,10 +5865,6 @@ endif # GHS
  SOCK_Stream.i \
  Time_Value.h \
  SOCK_Acceptor.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Synch.h \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -5824,7 +5880,7 @@ endif # GHS
  Atomic_Op.i \
  Synch_T.cpp
 
-.obj/SOCK_CODgram.o .obj/SOCK_CODgram.so .shobj/SOCK_CODgram.o .shobj/SOCK_CODgram.so: SOCK_CODgram.cpp \
+.obj/SOCK_CODgram.o .obj/SOCK_CODgram.o .obj/SOCK_CODgram.o .obj/SOCK_CODgram.o: SOCK_CODgram.cpp \
  SOCK_CODgram.h \
  pre.h \
  SOCK_IO.h \
@@ -5855,6 +5911,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5865,13 +5925,9 @@ endif # GHS
  INET_Addr.i \
  SOCK.i \
  SOCK_IO.i \
- SOCK_CODgram.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SOCK_CODgram.i
 
-.obj/SOCK_Connector.o .obj/SOCK_Connector.so .shobj/SOCK_Connector.o .shobj/SOCK_Connector.so: SOCK_Connector.cpp \
+.obj/SOCK_Connector.o .obj/SOCK_Connector.o .obj/SOCK_Connector.o .obj/SOCK_Connector.o: SOCK_Connector.cpp \
  SOCK_Connector.h \
  pre.h \
  SOCK_Stream.h \
@@ -5903,6 +5959,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5915,13 +5975,9 @@ endif # GHS
  SOCK_IO.i \
  SOCK_Stream.i \
  Time_Value.h \
- SOCK_Connector.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SOCK_Connector.i
 
-.obj/SOCK_Dgram.o .obj/SOCK_Dgram.so .shobj/SOCK_Dgram.o .shobj/SOCK_Dgram.so: SOCK_Dgram.cpp \
+.obj/SOCK_Dgram.o .obj/SOCK_Dgram.o .obj/SOCK_Dgram.o .obj/SOCK_Dgram.o: SOCK_Dgram.cpp \
  SOCK_Dgram.h \
  pre.h \
  SOCK.h \
@@ -5951,6 +6007,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -5976,13 +6036,9 @@ endif # GHS
  Thread.h \
  Thread.i \
  Atomic_Op.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Synch_T.cpp
 
-.obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.so .shobj/SOCK_Dgram_Bcast.o .shobj/SOCK_Dgram_Bcast.so: SOCK_Dgram_Bcast.cpp \
+.obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.o .obj/SOCK_Dgram_Bcast.o: SOCK_Dgram_Bcast.cpp \
  SOCK_Dgram_Bcast.h \
  pre.h \
  INET_Addr.h \
@@ -6012,6 +6068,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -6023,13 +6083,9 @@ endif # GHS
  QoS_Session.h \
  SOCK.i \
  SOCK_Dgram.i \
- SOCK_Dgram_Bcast.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SOCK_Dgram_Bcast.i
 
-.obj/SOCK_Dgram_Mcast.o .obj/SOCK_Dgram_Mcast.so .shobj/SOCK_Dgram_Mcast.o .shobj/SOCK_Dgram_Mcast.so: SOCK_Dgram_Mcast.cpp \
+.obj/SOCK_Dgram_Mcast.o .obj/SOCK_Dgram_Mcast.o .obj/SOCK_Dgram_Mcast.o .obj/SOCK_Dgram_Mcast.o: SOCK_Dgram_Mcast.cpp \
  SOCK_Dgram_Mcast.h \
  pre.h \
  SOCK_Dgram.h \
@@ -6060,6 +6116,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -6072,7 +6132,7 @@ endif # GHS
  SOCK_Dgram.i \
  SOCK_Dgram_Mcast.i
 
-.obj/SOCK_Dgram_Mcast_QoS.o .obj/SOCK_Dgram_Mcast_QoS.so .shobj/SOCK_Dgram_Mcast_QoS.o .shobj/SOCK_Dgram_Mcast_QoS.so: SOCK_Dgram_Mcast_QoS.cpp \
+.obj/SOCK_Dgram_Mcast_QoS.o .obj/SOCK_Dgram_Mcast_QoS.o .obj/SOCK_Dgram_Mcast_QoS.o .obj/SOCK_Dgram_Mcast_QoS.o: SOCK_Dgram_Mcast_QoS.cpp \
  SOCK_Dgram_Mcast_QoS.h \
  pre.h \
  SOCK_Dgram_Mcast.h \
@@ -6104,6 +6164,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -6115,13 +6179,9 @@ endif # GHS
  SOCK.i \
  SOCK_Dgram.i \
  SOCK_Dgram_Mcast.i \
- SOCK_Dgram_Mcast_QoS.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SOCK_Dgram_Mcast_QoS.i
 
-.obj/SOCK_IO.o .obj/SOCK_IO.so .shobj/SOCK_IO.o .shobj/SOCK_IO.so: SOCK_IO.cpp \
+.obj/SOCK_IO.o .obj/SOCK_IO.o .obj/SOCK_IO.o .obj/SOCK_IO.o: SOCK_IO.cpp \
  SOCK_IO.h \
  pre.h \
  SOCK.h \
@@ -6151,6 +6211,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -6164,7 +6228,7 @@ endif # GHS
  Handle_Set.h \
  Handle_Set.i
 
-.obj/SOCK_Stream.o .obj/SOCK_Stream.so .shobj/SOCK_Stream.o .shobj/SOCK_Stream.so: SOCK_Stream.cpp \
+.obj/SOCK_Stream.o .obj/SOCK_Stream.o .obj/SOCK_Stream.o .obj/SOCK_Stream.o: SOCK_Stream.cpp \
  SOCK_Stream.h \
  pre.h \
  SOCK_IO.h \
@@ -6195,6 +6259,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -6207,7 +6275,7 @@ endif # GHS
  SOCK_IO.i \
  SOCK_Stream.i
 
-.obj/Addr.o .obj/Addr.so .shobj/Addr.o .shobj/Addr.so: Addr.cpp \
+.obj/Addr.o .obj/Addr.o .obj/Addr.o .obj/Addr.o: Addr.cpp \
  Addr.h \
  pre.h \
  OS.h \
@@ -6235,13 +6303,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- Addr.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ Addr.i
 
-.obj/ATM_Addr.o .obj/ATM_Addr.so .shobj/ATM_Addr.o .shobj/ATM_Addr.so: ATM_Addr.cpp \
+.obj/ATM_Addr.o .obj/ATM_Addr.o .obj/ATM_Addr.o .obj/ATM_Addr.o: ATM_Addr.cpp \
  ATM_Addr.h \
  pre.h \
  ACE.h \
@@ -6270,16 +6338,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Addr.h \
- Addr.i \
- ATM_Addr.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ Addr.h \
+ Addr.i \
+ ATM_Addr.i
 
-.obj/ATM_Acceptor.o .obj/ATM_Acceptor.so .shobj/ATM_Acceptor.o .shobj/ATM_Acceptor.so: ATM_Acceptor.cpp \
+.obj/ATM_Acceptor.o .obj/ATM_Acceptor.o .obj/ATM_Acceptor.o .obj/ATM_Acceptor.o: ATM_Acceptor.cpp \
  ATM_Acceptor.h \
  pre.h \
  Time_Value.h \
@@ -6308,6 +6376,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ATM_Stream.h \
  ATM_Addr.h \
  ACE.h \
@@ -6318,7 +6390,7 @@ endif # GHS
  ATM_Params.h \
  ATM_QoS.h
 
-.obj/ATM_Connector.o .obj/ATM_Connector.so .shobj/ATM_Connector.o .shobj/ATM_Connector.so: ATM_Connector.cpp \
+.obj/ATM_Connector.o .obj/ATM_Connector.o .obj/ATM_Connector.o .obj/ATM_Connector.o: ATM_Connector.cpp \
  Handle_Set.h \
  pre.h \
  ACE.h \
@@ -6347,6 +6419,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Handle_Set.i \
  ATM_Connector.h \
@@ -6358,7 +6434,7 @@ endif # GHS
  ATM_Params.h \
  ATM_QoS.h
 
-.obj/ATM_Params.o .obj/ATM_Params.so .shobj/ATM_Params.o .shobj/ATM_Params.so: ATM_Params.cpp \
+.obj/ATM_Params.o .obj/ATM_Params.o .obj/ATM_Params.o .obj/ATM_Params.o: ATM_Params.cpp \
  ATM_Params.h \
  pre.h \
  ACE.h \
@@ -6387,9 +6463,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i
 
-.obj/ATM_QoS.o .obj/ATM_QoS.so .shobj/ATM_QoS.o .shobj/ATM_QoS.so: ATM_QoS.cpp \
+.obj/ATM_QoS.o .obj/ATM_QoS.o .obj/ATM_QoS.o .obj/ATM_QoS.o: ATM_QoS.cpp \
  ATM_QoS.h \
  pre.h \
  ACE.h \
@@ -6418,9 +6498,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i
 
-.obj/ATM_Stream.o .obj/ATM_Stream.so .shobj/ATM_Stream.o .shobj/ATM_Stream.so: ATM_Stream.cpp \
+.obj/ATM_Stream.o .obj/ATM_Stream.o .obj/ATM_Stream.o .obj/ATM_Stream.o: ATM_Stream.cpp \
  ATM_Stream.h \
  pre.h \
  ATM_Addr.h \
@@ -6450,13 +6534,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
  ATM_Addr.i \
  ATM_Params.h
 
-.obj/XTI_ATM_Mcast.o .obj/XTI_ATM_Mcast.so .shobj/XTI_ATM_Mcast.o .shobj/XTI_ATM_Mcast.so: XTI_ATM_Mcast.cpp \
+.obj/XTI_ATM_Mcast.o .obj/XTI_ATM_Mcast.o .obj/XTI_ATM_Mcast.o .obj/XTI_ATM_Mcast.o: XTI_ATM_Mcast.cpp \
  XTI_ATM_Mcast.h \
  pre.h \
  TLI_Connector.h \
@@ -6489,20 +6577,20 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  Addr.h \
  Addr.i \
  INET_Addr.h \
  INET_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
+.obj/DEV.o .obj/DEV.o .obj/DEV.o .obj/DEV.o: DEV.cpp \
  DEV.h \
  pre.h \
  IO_SAP.h \
@@ -6532,6 +6620,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_SAP.i \
  DEV_Addr.h \
@@ -6543,7 +6635,7 @@ endif # GHS
  Malloc_Base.h \
  DEV.i
 
-.obj/DEV_Addr.o .obj/DEV_Addr.so .shobj/DEV_Addr.o .shobj/DEV_Addr.so: DEV_Addr.cpp \
+.obj/DEV_Addr.o .obj/DEV_Addr.o .obj/DEV_Addr.o .obj/DEV_Addr.o: DEV_Addr.cpp \
  DEV_Addr.h \
  pre.h \
  Addr.h \
@@ -6572,19 +6664,19 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Addr.i \
  ACE.h \
  ACE.i \
  DEV_Addr.i \
  SString.h \
  SString.i \
- Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Malloc_Base.h
 
-.obj/DEV_Connector.o .obj/DEV_Connector.so .shobj/DEV_Connector.o .shobj/DEV_Connector.so: DEV_Connector.cpp \
+.obj/DEV_Connector.o .obj/DEV_Connector.o .obj/DEV_Connector.o .obj/DEV_Connector.o: DEV_Connector.cpp \
  DEV_Connector.h \
  pre.h \
  DEV_IO.h \
@@ -6616,6 +6708,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_SAP.i \
  DEV_Addr.h \
@@ -6627,13 +6723,9 @@ endif # GHS
  Malloc_Base.h \
  DEV.i \
  DEV_IO.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  DEV_Connector.i
 
-.obj/DEV_IO.o .obj/DEV_IO.so .shobj/DEV_IO.o .shobj/DEV_IO.so: DEV_IO.cpp \
+.obj/DEV_IO.o .obj/DEV_IO.o .obj/DEV_IO.o .obj/DEV_IO.o: DEV_IO.cpp \
  DEV_IO.h \
  pre.h \
  DEV.h \
@@ -6664,6 +6756,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_SAP.i \
  DEV_Addr.h \
@@ -6674,13 +6770,9 @@ endif # GHS
  SString.i \
  Malloc_Base.h \
  DEV.i \
- DEV_IO.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ DEV_IO.i
 
-.obj/FIFO.o .obj/FIFO.so .shobj/FIFO.o .shobj/FIFO.so: FIFO.cpp \
+.obj/FIFO.o .obj/FIFO.o .obj/FIFO.o .obj/FIFO.o: FIFO.cpp \
  FIFO.h \
  pre.h \
  IPC_SAP.h \
@@ -6710,15 +6802,15 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- IPC_SAP.i \
- FIFO.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ IPC_SAP.i \
+ FIFO.i
 
-.obj/FIFO_Recv.o .obj/FIFO_Recv.so .shobj/FIFO_Recv.o .shobj/FIFO_Recv.so: FIFO_Recv.cpp \
+.obj/FIFO_Recv.o .obj/FIFO_Recv.o .obj/FIFO_Recv.o .obj/FIFO_Recv.o: FIFO_Recv.cpp \
  FIFO_Recv.h \
  pre.h \
  FIFO.h \
@@ -6749,16 +6841,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- IPC_SAP.i \
- FIFO.i \
- FIFO_Recv.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ IPC_SAP.i \
+ FIFO.i \
+ FIFO_Recv.i
 
-.obj/FIFO_Recv_Msg.o .obj/FIFO_Recv_Msg.so .shobj/FIFO_Recv_Msg.o .shobj/FIFO_Recv_Msg.so: FIFO_Recv_Msg.cpp \
+.obj/FIFO_Recv_Msg.o .obj/FIFO_Recv_Msg.o .obj/FIFO_Recv_Msg.o .obj/FIFO_Recv_Msg.o: FIFO_Recv_Msg.cpp \
  FIFO_Recv_Msg.h \
  pre.h \
  FIFO_Recv.h \
@@ -6790,17 +6882,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  FIFO.i \
  FIFO_Recv.i \
- FIFO_Recv_Msg.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ FIFO_Recv_Msg.i
 
-.obj/FIFO_Send.o .obj/FIFO_Send.so .shobj/FIFO_Send.o .shobj/FIFO_Send.so: FIFO_Send.cpp \
+.obj/FIFO_Send.o .obj/FIFO_Send.o .obj/FIFO_Send.o .obj/FIFO_Send.o: FIFO_Send.cpp \
  FIFO_Send.h \
  pre.h \
  FIFO.h \
@@ -6831,16 +6923,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- IPC_SAP.i \
- FIFO.i \
- FIFO_Send.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ IPC_SAP.i \
+ FIFO.i \
+ FIFO_Send.i
 
-.obj/FIFO_Send_Msg.o .obj/FIFO_Send_Msg.so .shobj/FIFO_Send_Msg.o .shobj/FIFO_Send_Msg.so: FIFO_Send_Msg.cpp \
+.obj/FIFO_Send_Msg.o .obj/FIFO_Send_Msg.o .obj/FIFO_Send_Msg.o .obj/FIFO_Send_Msg.o: FIFO_Send_Msg.cpp \
  FIFO_Send_Msg.h \
  pre.h \
  FIFO_Send.h \
@@ -6872,17 +6964,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  FIFO.i \
  FIFO_Send.i \
- FIFO_Send_Msg.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ FIFO_Send_Msg.i
 
-.obj/FILE_Addr.o .obj/FILE_Addr.so .shobj/FILE_Addr.o .shobj/FILE_Addr.so: FILE_Addr.cpp \
+.obj/FILE_Addr.o .obj/FILE_Addr.o .obj/FILE_Addr.o .obj/FILE_Addr.o: FILE_Addr.cpp \
  FILE_Addr.h \
  pre.h \
  Addr.h \
@@ -6911,19 +7003,19 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Addr.i \
  ACE.h \
  ACE.i \
  FILE_Addr.i \
  SString.h \
  SString.i \
- Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Malloc_Base.h
 
-.obj/FILE.o .obj/FILE.so .shobj/FILE.o .shobj/FILE.so: FILE.cpp \
+.obj/FILE.o .obj/FILE.o .obj/FILE.o .obj/FILE.o: FILE.cpp \
  FILE.h \
  pre.h \
  IO_SAP.h \
@@ -6953,6 +7045,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_SAP.i \
  FILE_Addr.h \
@@ -6964,7 +7060,7 @@ endif # GHS
  Malloc_Base.h \
  FILE.i
 
-.obj/FILE_Connector.o .obj/FILE_Connector.so .shobj/FILE_Connector.o .shobj/FILE_Connector.so: FILE_Connector.cpp \
+.obj/FILE_Connector.o .obj/FILE_Connector.o .obj/FILE_Connector.o .obj/FILE_Connector.o: FILE_Connector.cpp \
  FILE_Connector.h \
  pre.h \
  FILE_IO.h \
@@ -6996,6 +7092,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_SAP.i \
  FILE_Addr.h \
@@ -7007,13 +7107,9 @@ endif # GHS
  Malloc_Base.h \
  FILE.i \
  FILE_IO.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  FILE_Connector.i
 
-.obj/FILE_IO.o .obj/FILE_IO.so .shobj/FILE_IO.o .shobj/FILE_IO.so: FILE_IO.cpp \
+.obj/FILE_IO.o .obj/FILE_IO.o .obj/FILE_IO.o .obj/FILE_IO.o: FILE_IO.cpp \
  FILE_IO.h \
  pre.h \
  FILE.h \
@@ -7044,6 +7140,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_SAP.i \
  FILE_Addr.h \
@@ -7054,13 +7154,9 @@ endif # GHS
  SString.i \
  Malloc_Base.h \
  FILE.i \
- FILE_IO.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ FILE_IO.i
 
-.obj/INET_Addr.o .obj/INET_Addr.so .shobj/INET_Addr.o .shobj/INET_Addr.so: INET_Addr.cpp \
+.obj/INET_Addr.o .obj/INET_Addr.o .obj/INET_Addr.o .obj/INET_Addr.o: INET_Addr.cpp \
  INET_Addr.h \
  pre.h \
  ACE.h \
@@ -7089,16 +7185,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Addr.h \
- Addr.i \
- INET_Addr.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ Addr.h \
+ Addr.i \
+ INET_Addr.i
 
-.obj/IO_SAP.o .obj/IO_SAP.so .shobj/IO_SAP.o .shobj/IO_SAP.so: IO_SAP.cpp \
+.obj/IO_SAP.o .obj/IO_SAP.o .obj/IO_SAP.o .obj/IO_SAP.o: IO_SAP.cpp \
  IO_SAP.h \
  pre.h \
  ACE.h \
@@ -7127,14 +7223,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- IO_SAP.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ IO_SAP.i
 
-.obj/IOStream.o .obj/IOStream.so .shobj/IOStream.o .shobj/IOStream.so: IOStream.cpp \
+.obj/IOStream.o .obj/IOStream.o .obj/IOStream.o .obj/IOStream.o: IOStream.cpp \
  IOStream.h \
  pre.h \
  OS.h \
@@ -7162,6 +7258,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  INET_Addr.h \
  ACE.h \
  ACE.i \
@@ -7174,7 +7274,7 @@ endif # GHS
  IOStream_T.i \
  IOStream_T.cpp
 
-.obj/Pipe.o .obj/Pipe.so .shobj/Pipe.o .shobj/Pipe.so: Pipe.cpp \
+.obj/Pipe.o .obj/Pipe.o .obj/Pipe.o .obj/Pipe.o: Pipe.cpp \
  Pipe.h \
  pre.h \
  ACE.h \
@@ -7203,6 +7303,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Pipe.i \
  SOCK_Acceptor.h \
@@ -7222,13 +7326,9 @@ endif # GHS
  Time_Value.h \
  SOCK_Acceptor.i \
  SOCK_Connector.h \
- SOCK_Connector.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SOCK_Connector.i
 
-.obj/Signal.o .obj/Signal.so .shobj/Signal.o .shobj/Signal.so: Signal.cpp \
+.obj/Signal.o .obj/Signal.o .obj/Signal.o .obj/Signal.o: Signal.cpp \
  Synch_T.h \
  pre.h \
  Event_Handler.h \
@@ -7258,6 +7358,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -7271,10 +7375,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Signal.h \
  Containers.h \
  Malloc_Base.h \
@@ -7308,7 +7408,7 @@ endif # GHS
  Memory_Pool.i \
  Signal.i
 
-.obj/SPIPE_Addr.o .obj/SPIPE_Addr.so .shobj/SPIPE_Addr.o .shobj/SPIPE_Addr.so: SPIPE_Addr.cpp \
+.obj/SPIPE_Addr.o .obj/SPIPE_Addr.o .obj/SPIPE_Addr.o .obj/SPIPE_Addr.o: SPIPE_Addr.cpp \
  SPIPE_Addr.h \
  pre.h \
  Addr.h \
@@ -7337,6 +7437,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Addr.i \
  ACE.h \
  ACE.i \
@@ -7345,7 +7449,7 @@ endif # GHS
  SString.i \
  Malloc_Base.h
 
-.obj/SPIPE.o .obj/SPIPE.so .shobj/SPIPE.o .shobj/SPIPE.so: SPIPE.cpp \
+.obj/SPIPE.o .obj/SPIPE.o .obj/SPIPE.o .obj/SPIPE.o: SPIPE.cpp \
  SPIPE.h \
  pre.h \
  IPC_SAP.h \
@@ -7375,6 +7479,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
@@ -7386,7 +7494,7 @@ endif # GHS
  Malloc_Base.h \
  SPIPE.i
 
-.obj/SPIPE_Acceptor.o .obj/SPIPE_Acceptor.so .shobj/SPIPE_Acceptor.o .shobj/SPIPE_Acceptor.so: SPIPE_Acceptor.cpp \
+.obj/SPIPE_Acceptor.o .obj/SPIPE_Acceptor.o .obj/SPIPE_Acceptor.o .obj/SPIPE_Acceptor.o: SPIPE_Acceptor.cpp \
  SPIPE_Acceptor.h \
  pre.h \
  SPIPE_Stream.h \
@@ -7418,6 +7526,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
@@ -7428,13 +7540,9 @@ endif # GHS
  SString.i \
  Malloc_Base.h \
  SPIPE.i \
- SPIPE_Stream.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SPIPE_Stream.i
 
-.obj/SPIPE_Connector.o .obj/SPIPE_Connector.so .shobj/SPIPE_Connector.o .shobj/SPIPE_Connector.so: SPIPE_Connector.cpp \
+.obj/SPIPE_Connector.o .obj/SPIPE_Connector.o .obj/SPIPE_Connector.o .obj/SPIPE_Connector.o: SPIPE_Connector.cpp \
  SPIPE_Connector.h \
  pre.h \
  SPIPE_Stream.h \
@@ -7466,6 +7574,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
@@ -7477,13 +7589,9 @@ endif # GHS
  Malloc_Base.h \
  SPIPE.i \
  SPIPE_Stream.i \
- SPIPE_Connector.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ SPIPE_Connector.i
 
-.obj/SPIPE_Stream.o .obj/SPIPE_Stream.so .shobj/SPIPE_Stream.o .shobj/SPIPE_Stream.so: SPIPE_Stream.cpp \
+.obj/SPIPE_Stream.o .obj/SPIPE_Stream.o .obj/SPIPE_Stream.o .obj/SPIPE_Stream.o: SPIPE_Stream.cpp \
  SPIPE_Stream.h \
  pre.h \
  SPIPE.h \
@@ -7514,6 +7622,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  SPIPE_Addr.h \
@@ -7526,7 +7638,7 @@ endif # GHS
  SPIPE.i \
  SPIPE_Stream.i
 
-.obj/SV_Message.o .obj/SV_Message.so .shobj/SV_Message.o .shobj/SV_Message.so: SV_Message.cpp \
+.obj/SV_Message.o .obj/SV_Message.o .obj/SV_Message.o .obj/SV_Message.o: SV_Message.cpp \
  SV_Message.h \
  pre.h \
  ACE.h \
@@ -7555,10 +7667,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Message.i
 
-.obj/SV_Message_Queue.o .obj/SV_Message_Queue.so .shobj/SV_Message_Queue.o .shobj/SV_Message_Queue.so: SV_Message_Queue.cpp \
+.obj/SV_Message_Queue.o .obj/SV_Message_Queue.o .obj/SV_Message_Queue.o .obj/SV_Message_Queue.o: SV_Message_Queue.cpp \
  SV_Message_Queue.h \
  pre.h \
  ACE.h \
@@ -7587,16 +7703,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- SV_Message.h \
- SV_Message.i \
- SV_Message_Queue.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ SV_Message.h \
+ SV_Message.i \
+ SV_Message_Queue.i
 
-.obj/SV_Semaphore_Complex.o .obj/SV_Semaphore_Complex.so .shobj/SV_Semaphore_Complex.o .shobj/SV_Semaphore_Complex.so: SV_Semaphore_Complex.cpp \
+.obj/SV_Semaphore_Complex.o .obj/SV_Semaphore_Complex.o .obj/SV_Semaphore_Complex.o .obj/SV_Semaphore_Complex.o: SV_Semaphore_Complex.cpp \
  SV_Semaphore_Complex.h \
  pre.h \
  SV_Semaphore_Simple.h \
@@ -7626,15 +7742,15 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i
 
-.obj/SV_Semaphore_Simple.o .obj/SV_Semaphore_Simple.so .shobj/SV_Semaphore_Simple.o .shobj/SV_Semaphore_Simple.so: SV_Semaphore_Simple.cpp \
+.obj/SV_Semaphore_Simple.o .obj/SV_Semaphore_Simple.o .obj/SV_Semaphore_Simple.o .obj/SV_Semaphore_Simple.o: SV_Semaphore_Simple.cpp \
  SV_Semaphore_Simple.h \
  pre.h \
  ACE.h \
@@ -7663,14 +7779,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- SV_Semaphore_Simple.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ SV_Semaphore_Simple.i
 
-.obj/SV_Shared_Memory.o .obj/SV_Shared_Memory.so .shobj/SV_Shared_Memory.o .shobj/SV_Shared_Memory.so: SV_Shared_Memory.cpp \
+.obj/SV_Shared_Memory.o .obj/SV_Shared_Memory.o .obj/SV_Shared_Memory.o .obj/SV_Shared_Memory.o: SV_Shared_Memory.cpp \
  SV_Shared_Memory.h \
  pre.h \
  ACE.h \
@@ -7699,14 +7815,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- SV_Shared_Memory.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ SV_Shared_Memory.i
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
+.obj/TLI.o .obj/TLI.o .obj/TLI.o .obj/TLI.o: TLI.cpp \
  TLI.h \
  pre.h \
  IPC_SAP.h \
@@ -7736,16 +7852,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- IPC_SAP.i \
- Addr.h \
- Addr.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ IPC_SAP.i \
+ Addr.h \
+ Addr.i
 
-.obj/TLI_Acceptor.o .obj/TLI_Acceptor.so .shobj/TLI_Acceptor.o .shobj/TLI_Acceptor.so: TLI_Acceptor.cpp \
+.obj/TLI_Acceptor.o .obj/TLI_Acceptor.o .obj/TLI_Acceptor.o .obj/TLI_Acceptor.o: TLI_Acceptor.cpp \
  TLI_Acceptor.h \
  pre.h \
  TLI.h \
@@ -7776,6 +7892,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  Addr.h \
@@ -7783,13 +7903,9 @@ endif # GHS
  Time_Value.h \
  TLI_Stream.h \
  INET_Addr.h \
- INET_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ INET_Addr.i
 
-.obj/TLI_Connector.o .obj/TLI_Connector.so .shobj/TLI_Connector.o .shobj/TLI_Connector.so: TLI_Connector.cpp \
+.obj/TLI_Connector.o .obj/TLI_Connector.o .obj/TLI_Connector.o .obj/TLI_Connector.o: TLI_Connector.cpp \
  Handle_Set.h \
  pre.h \
  ACE.h \
@@ -7818,6 +7934,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Handle_Set.i \
  TLI_Connector.h \
@@ -7828,13 +7948,9 @@ endif # GHS
  Addr.h \
  Addr.i \
  INET_Addr.h \
- INET_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ INET_Addr.i
 
-.obj/TLI_Stream.o .obj/TLI_Stream.so .shobj/TLI_Stream.o .shobj/TLI_Stream.so: TLI_Stream.cpp \
+.obj/TLI_Stream.o .obj/TLI_Stream.o .obj/TLI_Stream.o .obj/TLI_Stream.o: TLI_Stream.cpp \
  TLI_Stream.h \
  pre.h \
  TLI.h \
@@ -7865,6 +7981,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IPC_SAP.i \
  Addr.h \
@@ -7872,7 +7992,7 @@ endif # GHS
  INET_Addr.h \
  INET_Addr.i
 
-.obj/TTY_IO.o .obj/TTY_IO.so .shobj/TTY_IO.o .shobj/TTY_IO.so: TTY_IO.cpp \
+.obj/TTY_IO.o .obj/TTY_IO.o .obj/TTY_IO.o .obj/TTY_IO.o: TTY_IO.cpp \
  TTY_IO.h \
  pre.h \
  OS.h \
@@ -7900,6 +8020,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  DEV_Addr.h \
  Addr.h \
  Addr.i \
@@ -7916,13 +8040,9 @@ endif # GHS
  IO_SAP.i \
  DEV.i \
  DEV_IO.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  DEV_Connector.i
 
-.obj/UNIX_Addr.o .obj/UNIX_Addr.so .shobj/UNIX_Addr.o .shobj/UNIX_Addr.so: UNIX_Addr.cpp \
+.obj/UNIX_Addr.o .obj/UNIX_Addr.o .obj/UNIX_Addr.o .obj/UNIX_Addr.o: UNIX_Addr.cpp \
  UNIX_Addr.h \
  pre.h \
  Addr.h \
@@ -7951,16 +8071,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- Addr.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ Addr.i \
  ACE.h \
  ACE.i \
  UNIX_Addr.i
 
-.obj/UPIPE_Acceptor.o .obj/UPIPE_Acceptor.so .shobj/UPIPE_Acceptor.o .shobj/UPIPE_Acceptor.so: UPIPE_Acceptor.cpp \
+.obj/UPIPE_Acceptor.o .obj/UPIPE_Acceptor.o .obj/UPIPE_Acceptor.o .obj/UPIPE_Acceptor.o: UPIPE_Acceptor.cpp \
  UPIPE_Acceptor.h \
  pre.h \
  UPIPE_Stream.h \
@@ -7991,15 +8111,15 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_Cntl_Msg.h \
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8123,7 +8243,7 @@ endif # GHS
  SPIPE_Stream.i \
  UPIPE_Acceptor.i
 
-.obj/UPIPE_Connector.o .obj/UPIPE_Connector.so .shobj/UPIPE_Connector.o .shobj/UPIPE_Connector.so: UPIPE_Connector.cpp \
+.obj/UPIPE_Connector.o .obj/UPIPE_Connector.o .obj/UPIPE_Connector.o .obj/UPIPE_Connector.o: UPIPE_Connector.cpp \
  UPIPE_Connector.h \
  pre.h \
  UPIPE_Stream.h \
@@ -8154,15 +8274,15 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_Cntl_Msg.h \
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8285,7 +8405,7 @@ endif # GHS
  SPIPE_Stream.i \
  UPIPE_Connector.i
 
-.obj/UPIPE_Stream.o .obj/UPIPE_Stream.so .shobj/UPIPE_Stream.o .shobj/UPIPE_Stream.so: UPIPE_Stream.cpp \
+.obj/UPIPE_Stream.o .obj/UPIPE_Stream.o .obj/UPIPE_Stream.o .obj/UPIPE_Stream.o: UPIPE_Stream.cpp \
  UPIPE_Stream.h \
  pre.h \
  Stream.h \
@@ -8315,15 +8435,15 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  IO_Cntl_Msg.h \
  Message_Block.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8443,7 +8563,7 @@ endif # GHS
  UPIPE_Addr.h \
  UPIPE_Stream.i
 
-.obj/MEM_Acceptor.o .obj/MEM_Acceptor.so .shobj/MEM_Acceptor.o .shobj/MEM_Acceptor.so: MEM_Acceptor.cpp \
+.obj/MEM_Acceptor.o .obj/MEM_Acceptor.o .obj/MEM_Acceptor.o .obj/MEM_Acceptor.o: MEM_Acceptor.cpp \
  MEM_Acceptor.h \
  pre.h \
  SOCK_Acceptor.h \
@@ -8476,6 +8596,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8494,10 +8618,6 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8554,7 +8674,7 @@ endif # GHS
  MEM_Addr.i \
  MEM_Acceptor.i
 
-.obj/MEM_Addr.o .obj/MEM_Addr.so .shobj/MEM_Addr.o .shobj/MEM_Addr.so: MEM_Addr.cpp \
+.obj/MEM_Addr.o .obj/MEM_Addr.o .obj/MEM_Addr.o .obj/MEM_Addr.o: MEM_Addr.cpp \
  MEM_Addr.h \
  pre.h \
  ACE.h \
@@ -8583,18 +8703,18 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  INET_Addr.h \
  Addr.h \
  Addr.i \
  INET_Addr.i \
- MEM_Addr.i \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ MEM_Addr.i
 
-.obj/MEM_Connector.o .obj/MEM_Connector.so .shobj/MEM_Connector.o .shobj/MEM_Connector.so: MEM_Connector.cpp \
+.obj/MEM_Connector.o .obj/MEM_Connector.o .obj/MEM_Connector.o .obj/MEM_Connector.o: MEM_Connector.cpp \
  MEM_Connector.h \
  pre.h \
  SOCK_Connector.h \
@@ -8627,6 +8747,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8645,10 +8769,6 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8705,7 +8825,7 @@ endif # GHS
  MEM_Addr.i \
  MEM_Connector.i
 
-.obj/MEM_IO.o .obj/MEM_IO.so .shobj/MEM_IO.o .shobj/MEM_IO.so: MEM_IO.cpp \
+.obj/MEM_IO.o .obj/MEM_IO.o .obj/MEM_IO.o .obj/MEM_IO.o: MEM_IO.cpp \
  MEM_IO.h \
  pre.h \
  SOCK.h \
@@ -8735,6 +8855,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8747,10 +8871,6 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8805,7 +8925,7 @@ endif # GHS
  Handle_Set.h \
  Handle_Set.i
 
-.obj/MEM_SAP.o .obj/MEM_SAP.so .shobj/MEM_SAP.o .shobj/MEM_SAP.so: MEM_SAP.cpp \
+.obj/MEM_SAP.o .obj/MEM_SAP.o .obj/MEM_SAP.o .obj/MEM_SAP.o: MEM_SAP.cpp \
  MEM_SAP.h \
  pre.h \
  Malloc.h \
@@ -8835,12 +8955,12 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8887,7 +9007,7 @@ endif # GHS
  Memory_Pool.i \
  MEM_SAP.i
 
-.obj/MEM_Stream.o .obj/MEM_Stream.so .shobj/MEM_Stream.o .shobj/MEM_Stream.so: MEM_Stream.cpp \
+.obj/MEM_Stream.o .obj/MEM_Stream.o .obj/MEM_Stream.o .obj/MEM_Stream.o: MEM_Stream.cpp \
  MEM_Stream.h \
  pre.h \
  MEM_IO.h \
@@ -8918,6 +9038,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -8930,10 +9054,6 @@ endif # GHS
  MEM_SAP.h \
  Malloc.h \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -8987,7 +9107,7 @@ endif # GHS
  MEM_IO.i \
  MEM_Stream.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
+.obj/DLL.o .obj/DLL.o .obj/DLL.o .obj/DLL.o: DLL.cpp \
  DLL.h \
  pre.h \
  OS.h \
@@ -9022,7 +9142,7 @@ endif # GHS
  ACE.h \
  ACE.i
 
-.obj/Parse_Node.o .obj/Parse_Node.so .shobj/Parse_Node.o .shobj/Parse_Node.so: Parse_Node.cpp \
+.obj/Parse_Node.o .obj/Parse_Node.o .obj/Parse_Node.o .obj/Parse_Node.o: Parse_Node.cpp \
  Service_Config.h \
  pre.h \
  Service_Object.h \
@@ -9053,6 +9173,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -9071,10 +9195,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -9167,7 +9287,7 @@ endif # GHS
  Parse_Node.h \
  Parse_Node.i
 
-.obj/Service_Config.o .obj/Service_Config.so .shobj/Service_Config.o .shobj/Service_Config.so: Service_Config.cpp \
+.obj/Service_Config.o .obj/Service_Config.o .obj/Service_Config.o .obj/Service_Config.o: Service_Config.cpp \
  Svc_Conf.h \
  pre.h \
  Obstack.h \
@@ -9198,12 +9318,12 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9300,9 +9420,13 @@ endif # GHS
  Auto_Ptr.cpp \
  Proactor.h \
  Thread_Manager.h \
- Thread_Manager.i
+ Thread_Manager.i \
+ Process_Manager.h \
+ Process.h \
+ Process.i \
+ Process_Manager.i
 
-.obj/Service_Manager.o .obj/Service_Manager.so .shobj/Service_Manager.o .shobj/Service_Manager.so: Service_Manager.cpp \
+.obj/Service_Manager.o .obj/Service_Manager.o .obj/Service_Manager.o .obj/Service_Manager.o: Service_Manager.cpp \
  Get_Opt.h \
  pre.h \
  ACE.h \
@@ -9331,6 +9455,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Get_Opt.i \
  Service_Repository.h \
@@ -9353,10 +9481,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Service_Types.i \
  Service_Repository.i \
  Service_Config.h \
@@ -9455,7 +9579,7 @@ endif # GHS
  Message_Queue.i \
  WFMO_Reactor.i
 
-.obj/Service_Object.o .obj/Service_Object.so .shobj/Service_Object.o .shobj/Service_Object.so: Service_Object.cpp \
+.obj/Service_Object.o .obj/Service_Object.o .obj/Service_Object.o .obj/Service_Object.o: Service_Object.cpp \
  Service_Types.h \
  pre.h \
  Service_Object.h \
@@ -9486,6 +9610,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -9503,13 +9631,9 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Service_Types.i
 
-.obj/Service_Repository.o .obj/Service_Repository.so .shobj/Service_Repository.o .shobj/Service_Repository.so: Service_Repository.cpp \
+.obj/Service_Repository.o .obj/Service_Repository.o .obj/Service_Repository.o .obj/Service_Repository.o: Service_Repository.cpp \
  Service_Repository.h \
  pre.h \
  Service_Types.h \
@@ -9541,6 +9665,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -9558,10 +9686,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Service_Types.i \
  Service_Repository.i \
  Object_Manager.h \
@@ -9570,7 +9694,7 @@ endif # GHS
  Managed_Object.i \
  Managed_Object.cpp
 
-.obj/Service_Types.o .obj/Service_Types.so .shobj/Service_Types.o .shobj/Service_Types.so: Service_Types.cpp \
+.obj/Service_Types.o .obj/Service_Types.o .obj/Service_Types.o .obj/Service_Types.o: Service_Types.cpp \
  Service_Types.h \
  pre.h \
  Service_Object.h \
@@ -9601,6 +9725,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -9618,10 +9746,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Service_Types.i \
  Stream_Modules.h \
  Task.h \
@@ -9717,7 +9841,7 @@ endif # GHS
  Stream.i \
  Stream.cpp
 
-.obj/Shared_Object.o .obj/Shared_Object.so .shobj/Shared_Object.o .shobj/Shared_Object.so: Shared_Object.cpp \
+.obj/Shared_Object.o .obj/Shared_Object.o .obj/Shared_Object.o .obj/Shared_Object.o: Shared_Object.cpp \
  Shared_Object.h \
  pre.h \
  ACE.h \
@@ -9746,10 +9870,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Shared_Object.i
 
-.obj/Svc_Conf_l.o .obj/Svc_Conf_l.so .shobj/Svc_Conf_l.o .shobj/Svc_Conf_l.so: Svc_Conf_l.cpp \
+.obj/Svc_Conf_l.o .obj/Svc_Conf_l.o .obj/Svc_Conf_l.o .obj/Svc_Conf_l.o: Svc_Conf_l.cpp \
  OS.h \
  pre.h \
  config-all.h \
@@ -9776,16 +9904,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Svc_Conf.h \
  Obstack.h \
  Malloc.h \
  ACE.h \
  ACE.i \
  Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -9854,7 +9982,7 @@ endif # GHS
  Service_Types.i \
  Parse_Node.i
 
-.obj/Svc_Conf_y.o .obj/Svc_Conf_y.so .shobj/Svc_Conf_y.o .shobj/Svc_Conf_y.so: Svc_Conf_y.cpp \
+.obj/Svc_Conf_y.o .obj/Svc_Conf_y.o .obj/Svc_Conf_y.o .obj/Svc_Conf_y.o: Svc_Conf_y.cpp \
  ARGV.h \
  pre.h \
  ACE.h \
@@ -9883,6 +10011,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Containers.h \
  Malloc_Base.h \
@@ -9891,10 +10023,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10008,7 +10136,7 @@ endif # GHS
  Stream.i \
  Stream.cpp
 
-.obj/CDR_Stream.o .obj/CDR_Stream.so .shobj/CDR_Stream.o .shobj/CDR_Stream.so: CDR_Stream.cpp \
+.obj/CDR_Stream.o .obj/CDR_Stream.o .obj/CDR_Stream.o .obj/CDR_Stream.o: CDR_Stream.cpp \
  CDR_Stream.h \
  pre.h \
  Message_Block.h \
@@ -10038,13 +10166,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc.h \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc.h \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10097,7 +10225,7 @@ endif # GHS
  SString.i \
  CDR_Stream.i
 
-.obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.so .shobj/Codeset_IBM1047.o .shobj/Codeset_IBM1047.so: Codeset_IBM1047.cpp \
+.obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.o .obj/Codeset_IBM1047.o: Codeset_IBM1047.cpp \
  Codeset_IBM1047.h \
  pre.h \
  config-all.h \
@@ -10110,7 +10238,7 @@ endif # GHS
  ACE_export.h \
  svc_export.h
 
-.obj/Message_Block.o .obj/Message_Block.so .shobj/Message_Block.o .shobj/Message_Block.so: Message_Block.cpp \
+.obj/Message_Block.o .obj/Message_Block.o .obj/Message_Block.o .obj/Message_Block.o: Message_Block.cpp \
  Message_Block.h \
  ACE.h \
  pre.h \
@@ -10139,13 +10267,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc.h \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc.h \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10196,7 +10324,7 @@ endif # GHS
  Message_Block_T.cpp \
  Timeprobe.h
 
-.obj/Message_Queue.o .obj/Message_Queue.so .shobj/Message_Queue.o .shobj/Message_Queue.so: Message_Queue.cpp \
+.obj/Message_Queue.o .obj/Message_Queue.o .obj/Message_Queue.o .obj/Message_Queue.o: Message_Queue.cpp \
  Message_Queue.h \
  pre.h \
  Message_Block.h \
@@ -10226,13 +10354,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc.h \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc.h \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10329,7 +10457,7 @@ endif # GHS
  Strategies.i \
  Message_Queue.i
 
-.obj/Task.o .obj/Task.so .shobj/Task.o .shobj/Task.so: Task.cpp \
+.obj/Task.o .obj/Task.o .obj/Task.o .obj/Task.o: Task.cpp \
  Task.h \
  pre.h \
  Service_Object.h \
@@ -10360,6 +10488,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -10378,10 +10510,6 @@ endif # GHS
  Synch_T.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -10472,7 +10600,7 @@ endif # GHS
  Stream_Modules.h \
  Stream_Modules.cpp
 
-.obj/Based_Pointer_Repository.o .obj/Based_Pointer_Repository.so .shobj/Based_Pointer_Repository.o .shobj/Based_Pointer_Repository.so: Based_Pointer_Repository.cpp \
+.obj/Based_Pointer_Repository.o .obj/Based_Pointer_Repository.o .obj/Based_Pointer_Repository.o .obj/Based_Pointer_Repository.o: Based_Pointer_Repository.cpp \
  Map_Manager.h \
  pre.h \
  OS.h \
@@ -10500,6 +10628,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch.h \
  ACE.h \
  ACE.i \
@@ -10516,10 +10648,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -10573,7 +10701,7 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Malloc.o .obj/Malloc.so .shobj/Malloc.o .shobj/Malloc.so: Malloc.cpp \
+.obj/Malloc.o .obj/Malloc.o .obj/Malloc.o .obj/Malloc.o: Malloc.cpp \
  Malloc.h \
  pre.h \
  ACE.h \
@@ -10602,12 +10730,12 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10653,7 +10781,7 @@ endif # GHS
  Mem_Map.i \
  Memory_Pool.i
 
-.obj/Mem_Map.o .obj/Mem_Map.so .shobj/Mem_Map.o .shobj/Mem_Map.so: Mem_Map.cpp \
+.obj/Mem_Map.o .obj/Mem_Map.o .obj/Mem_Map.o .obj/Mem_Map.o: Mem_Map.cpp \
  Mem_Map.h \
  pre.h \
  ACE.h \
@@ -10682,14 +10810,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Mem_Map.i \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ Mem_Map.i
 
-.obj/Memory_Pool.o .obj/Memory_Pool.so .shobj/Memory_Pool.o .shobj/Memory_Pool.so: Memory_Pool.cpp \
+.obj/Memory_Pool.o .obj/Memory_Pool.o .obj/Memory_Pool.o .obj/Memory_Pool.o: Memory_Pool.cpp \
  Memory_Pool.h \
  pre.h \
  ACE.h \
@@ -10718,6 +10846,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.h \
  Event_Handler.i \
@@ -10734,10 +10866,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -10772,7 +10900,7 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Obstack.o .obj/Obstack.so .shobj/Obstack.o .shobj/Obstack.so: Obstack.cpp \
+.obj/Obstack.o .obj/Obstack.o .obj/Obstack.o .obj/Obstack.o: Obstack.cpp \
  Obstack.h \
  pre.h \
  Malloc.h \
@@ -10802,12 +10930,12 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10854,7 +10982,7 @@ endif # GHS
  Memory_Pool.i \
  Obstack.i
 
-.obj/Read_Buffer.o .obj/Read_Buffer.so .shobj/Read_Buffer.o .shobj/Read_Buffer.so: Read_Buffer.cpp \
+.obj/Read_Buffer.o .obj/Read_Buffer.o .obj/Read_Buffer.o .obj/Read_Buffer.o: Read_Buffer.cpp \
  Read_Buffer.h \
  pre.h \
  ACE.h \
@@ -10883,13 +11011,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- Malloc.h \
- Malloc_Base.h \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
  Log_Record.i \
+ ACE.i \
+ Malloc.h \
+ Malloc_Base.h \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -10954,7 +11082,7 @@ endif # GHS
  Reactor_Impl.h \
  Svc_Conf_Tokens.h
 
-.obj/Shared_Memory.o .obj/Shared_Memory.so .shobj/Shared_Memory.o .shobj/Shared_Memory.so: Shared_Memory.cpp \
+.obj/Shared_Memory.o .obj/Shared_Memory.o .obj/Shared_Memory.o .obj/Shared_Memory.o: Shared_Memory.cpp \
  Shared_Memory.h \
  pre.h \
  ACE.h \
@@ -10983,9 +11111,13 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i
 
-.obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.so .shobj/Shared_Memory_MM.o .shobj/Shared_Memory_MM.so: Shared_Memory_MM.cpp \
+.obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.o .obj/Shared_Memory_MM.o: Shared_Memory_MM.cpp \
  Shared_Memory_MM.h \
  pre.h \
  Shared_Memory.h \
@@ -11015,12 +11147,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Mem_Map.h \
  Mem_Map.i \
  Shared_Memory_MM.i
 
-.obj/Shared_Memory_SV.o .obj/Shared_Memory_SV.so .shobj/Shared_Memory_SV.o .shobj/Shared_Memory_SV.so: Shared_Memory_SV.cpp \
+.obj/Shared_Memory_SV.o .obj/Shared_Memory_SV.o .obj/Shared_Memory_SV.o .obj/Shared_Memory_SV.o: Shared_Memory_SV.cpp \
  Shared_Memory_SV.h \
  pre.h \
  Shared_Memory.h \
@@ -11050,12 +11186,16 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Shared_Memory.h \
  SV_Shared_Memory.i \
  Shared_Memory_SV.i
 
-.obj/Local_Tokens.o .obj/Local_Tokens.so .shobj/Local_Tokens.o .shobj/Local_Tokens.so: Local_Tokens.cpp \
+.obj/Local_Tokens.o .obj/Local_Tokens.o .obj/Local_Tokens.o .obj/Local_Tokens.o: Local_Tokens.cpp \
  Thread.h \
  pre.h \
  ACE.h \
@@ -11084,6 +11224,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Thread.i \
  Local_Tokens.h \
@@ -11099,10 +11243,6 @@ endif # GHS
  Synch_T.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -11162,7 +11302,7 @@ endif # GHS
  Token_Manager.h \
  Token_Manager.i
 
-.obj/Remote_Tokens.o .obj/Remote_Tokens.so .shobj/Remote_Tokens.o .shobj/Remote_Tokens.so: Remote_Tokens.cpp \
+.obj/Remote_Tokens.o .obj/Remote_Tokens.o .obj/Remote_Tokens.o .obj/Remote_Tokens.o: Remote_Tokens.cpp \
  Remote_Tokens.h \
  pre.h \
  INET_Addr.h \
@@ -11192,6 +11332,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -11225,10 +11369,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -11287,7 +11427,7 @@ endif # GHS
  Token_Request_Reply.i \
  Remote_Tokens.i
 
-.obj/Token_Collection.o .obj/Token_Collection.so .shobj/Token_Collection.o .shobj/Token_Collection.so: Token_Collection.cpp \
+.obj/Token_Collection.o .obj/Token_Collection.o .obj/Token_Collection.o .obj/Token_Collection.o: Token_Collection.cpp \
  Token_Collection.h \
  pre.h \
  Map_Manager.h \
@@ -11316,6 +11456,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Synch.h \
  ACE.h \
  ACE.i \
@@ -11332,10 +11476,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Map_Manager.i \
  Map_Manager.cpp \
  Malloc.h \
@@ -11394,7 +11534,7 @@ endif # GHS
  Local_Tokens.i \
  Token_Collection.i
 
-.obj/Token_Invariants.o .obj/Token_Invariants.so .shobj/Token_Invariants.o .shobj/Token_Invariants.so: Token_Invariants.cpp \
+.obj/Token_Invariants.o .obj/Token_Invariants.o .obj/Token_Invariants.o .obj/Token_Invariants.o: Token_Invariants.cpp \
  Token_Invariants.h \
  pre.h \
  Synch.h \
@@ -11424,6 +11564,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -11438,10 +11582,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Map_Manager.h \
  Map_Manager.i \
  Map_Manager.cpp \
@@ -11500,7 +11640,7 @@ endif # GHS
  Synch_Options.i \
  Local_Tokens.i
 
-.obj/Token_Manager.o .obj/Token_Manager.so .shobj/Token_Manager.o .shobj/Token_Manager.so: Token_Manager.cpp \
+.obj/Token_Manager.o .obj/Token_Manager.o .obj/Token_Manager.o .obj/Token_Manager.o: Token_Manager.cpp \
  Token_Manager.h \
  pre.h \
  Synch.h \
@@ -11530,6 +11670,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -11544,10 +11688,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Map_Manager.h \
  Map_Manager.i \
  Map_Manager.cpp \
@@ -11607,7 +11747,7 @@ endif # GHS
  Local_Tokens.i \
  Token_Manager.i
 
-.obj/Token_Request_Reply.o .obj/Token_Request_Reply.so .shobj/Token_Request_Reply.o .shobj/Token_Request_Reply.so: Token_Request_Reply.cpp \
+.obj/Token_Request_Reply.o .obj/Token_Request_Reply.o .obj/Token_Request_Reply.o .obj/Token_Request_Reply.o: Token_Request_Reply.cpp \
  Token_Request_Reply.h \
  pre.h \
  Local_Tokens.h \
@@ -11639,6 +11779,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Event_Handler.i \
  Synch.h \
@@ -11652,10 +11796,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -11715,7 +11855,7 @@ endif # GHS
  Time_Value.h \
  Token_Request_Reply.i
 
-.obj/CORBA_Handler.o .obj/CORBA_Handler.so .shobj/CORBA_Handler.o .shobj/CORBA_Handler.so: CORBA_Handler.cpp \
+.obj/CORBA_Handler.o .obj/CORBA_Handler.o .obj/CORBA_Handler.o .obj/CORBA_Handler.o: CORBA_Handler.cpp \
  CORBA_Handler.h \
  pre.h \
  Service_Config.h \
@@ -11747,6 +11887,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Shared_Object.i \
  Event_Handler.h \
@@ -11765,10 +11909,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -11818,7 +11958,7 @@ endif # GHS
  Thread_Manager.h \
  Thread_Manager.i
 
-.obj/CORBA_Ref.o .obj/CORBA_Ref.so .shobj/CORBA_Ref.o .shobj/CORBA_Ref.so: CORBA_Ref.cpp \
+.obj/CORBA_Ref.o .obj/CORBA_Ref.o .obj/CORBA_Ref.o .obj/CORBA_Ref.o: CORBA_Ref.cpp \
  CORBA_Ref.h \
  pre.h \
  ACE.h \
@@ -11847,14 +11987,14 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
- ACE.i \
- CORBA_Ref.cpp \
  Log_Msg.h \
  Log_Record.h \
  Log_Priority.h \
- Log_Record.i
+ Log_Record.i \
+ ACE.i \
+ CORBA_Ref.cpp
 
-.obj/Local_Name_Space.o .obj/Local_Name_Space.so .shobj/Local_Name_Space.o .shobj/Local_Name_Space.so: Local_Name_Space.cpp \
+.obj/Local_Name_Space.o .obj/Local_Name_Space.o .obj/Local_Name_Space.o .obj/Local_Name_Space.o: Local_Name_Space.cpp \
  ACE.h \
  pre.h \
  OS.h \
@@ -11882,6 +12022,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Local_Name_Space.h \
  SString.h \
@@ -11893,10 +12037,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -11989,7 +12129,7 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/Name_Proxy.o .obj/Name_Proxy.so .shobj/Name_Proxy.o .shobj/Name_Proxy.so: Name_Proxy.cpp \
+.obj/Name_Proxy.o .obj/Name_Proxy.o .obj/Name_Proxy.o .obj/Name_Proxy.o: Name_Proxy.cpp \
  Name_Proxy.h \
  pre.h \
  INET_Addr.h \
@@ -12019,6 +12159,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -12055,10 +12199,6 @@ endif # GHS
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -12107,7 +12247,7 @@ endif # GHS
  Synch_Options.i \
  Name_Request_Reply.h
 
-.obj/Name_Request_Reply.o .obj/Name_Request_Reply.so .shobj/Name_Request_Reply.o .shobj/Name_Request_Reply.so: Name_Request_Reply.cpp \
+.obj/Name_Request_Reply.o .obj/Name_Request_Reply.o .obj/Name_Request_Reply.o .obj/Name_Request_Reply.o: Name_Request_Reply.cpp \
  Name_Request_Reply.h \
  pre.h \
  Time_Value.h \
@@ -12136,17 +12276,17 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  SString.h \
  ACE.h \
  ACE.i \
  SString.i \
- Malloc_Base.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i
+ Malloc_Base.h
 
-.obj/Name_Space.o .obj/Name_Space.so .shobj/Name_Space.o .shobj/Name_Space.so: Name_Space.cpp \
+.obj/Name_Space.o .obj/Name_Space.o .obj/Name_Space.o .obj/Name_Space.o: Name_Space.cpp \
  Name_Space.h \
  pre.h \
  ACE.h \
@@ -12175,6 +12315,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SString.h \
  SString.i \
@@ -12185,10 +12329,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -12265,7 +12405,7 @@ endif # GHS
  Synch_Options.i \
  Name_Request_Reply.h
 
-.obj/Naming_Context.o .obj/Naming_Context.so .shobj/Naming_Context.o .shobj/Naming_Context.so: Naming_Context.cpp \
+.obj/Naming_Context.o .obj/Naming_Context.o .obj/Naming_Context.o .obj/Naming_Context.o: Naming_Context.cpp \
  Get_Opt.h \
  pre.h \
  ACE.h \
@@ -12294,6 +12434,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Get_Opt.i \
  Naming_Context.h \
@@ -12306,10 +12450,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -12404,7 +12544,7 @@ endif # GHS
  Auto_Ptr.cpp \
  Registry_Name_Space.h
 
-.obj/Registry_Name_Space.o .obj/Registry_Name_Space.so .shobj/Registry_Name_Space.o .shobj/Registry_Name_Space.so: Registry_Name_Space.cpp \
+.obj/Registry_Name_Space.o .obj/Registry_Name_Space.o .obj/Registry_Name_Space.o .obj/Registry_Name_Space.o: Registry_Name_Space.cpp \
  Registry_Name_Space.h \
  pre.h \
  OS.h \
@@ -12431,9 +12571,13 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i
+ OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i
 
-.obj/Remote_Name_Space.o .obj/Remote_Name_Space.so .shobj/Remote_Name_Space.o .shobj/Remote_Name_Space.so: Remote_Name_Space.cpp \
+.obj/Remote_Name_Space.o .obj/Remote_Name_Space.o .obj/Remote_Name_Space.o .obj/Remote_Name_Space.o: Remote_Name_Space.cpp \
  Remote_Name_Space.h \
  pre.h \
  ACE.h \
@@ -12462,6 +12606,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  SString.h \
  SString.i \
@@ -12472,10 +12620,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -12556,7 +12700,7 @@ endif # GHS
  Auto_Ptr.i \
  Auto_Ptr.cpp
 
-.obj/QoS_Session_Impl.o .obj/QoS_Session_Impl.so .shobj/QoS_Session_Impl.o .shobj/QoS_Session_Impl.so: QoS_Session_Impl.cpp \
+.obj/QoS_Session_Impl.o .obj/QoS_Session_Impl.o .obj/QoS_Session_Impl.o .obj/QoS_Session_Impl.o: QoS_Session_Impl.cpp \
  SOCK.h \
  pre.h \
  ACE.h \
@@ -12585,6 +12729,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -12602,10 +12750,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -12648,7 +12792,7 @@ endif # GHS
  QoS_Session_Impl.h \
  QoS_Session_Impl.i
 
-.obj/QoS_Session_Factory.o .obj/QoS_Session_Factory.so .shobj/QoS_Session_Factory.o .shobj/QoS_Session_Factory.so: QoS_Session_Factory.cpp \
+.obj/QoS_Session_Factory.o .obj/QoS_Session_Factory.o .obj/QoS_Session_Factory.o .obj/QoS_Session_Factory.o: QoS_Session_Factory.cpp \
  QoS_Session_Factory.h \
  pre.h \
  QoS_Session.h \
@@ -12679,6 +12823,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  ACE.i \
  Addr.h \
  Addr.i \
@@ -12690,10 +12838,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
@@ -12736,7 +12880,7 @@ endif # GHS
  QoS_Session_Impl.h \
  QoS_Session_Impl.i
 
-.obj/QoS_Manager.o .obj/QoS_Manager.so .shobj/QoS_Manager.o .shobj/QoS_Manager.so: QoS_Manager.cpp \
+.obj/QoS_Manager.o .obj/QoS_Manager.o .obj/QoS_Manager.o .obj/QoS_Manager.o: QoS_Manager.cpp \
  QoS_Manager.h \
  pre.h \
  Addr.h \
@@ -12765,6 +12909,10 @@ endif # GHS
  Basic_Types.i \
  Trace.h \
  OS.i \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
  Addr.i \
  IPC_SAP.h \
  ACE.h \
@@ -12777,10 +12925,6 @@ endif # GHS
  Containers_T.i \
  Containers_T.cpp \
  Malloc.h \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
  Based_Pointer_T.h \
  Based_Pointer_T.i \
  Based_Pointer_T.cpp \
