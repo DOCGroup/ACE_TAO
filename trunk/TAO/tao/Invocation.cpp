@@ -5,6 +5,7 @@
 #include "tao/Principal.h"
 
 #include "tao/Timeprobe.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"

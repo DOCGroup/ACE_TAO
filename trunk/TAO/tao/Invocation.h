@@ -242,7 +242,8 @@ public:
                               TAO_ORB_Core* orb_core);
 
   void start (CORBA_Environment &TAO_IN_ENV =
-                    CORBA::default_environment ());
+                    CORBA::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Call TAO_GIOP_Invocation::start()
 
   int invoke (CORBA_Environment &TAO_IN_ENV =
@@ -263,11 +264,13 @@ public:
                                       TAO_ORB_Core* orb_core);
 
   void start (CORBA_Environment &TAO_IN_ENV =
-                    CORBA::default_environment ());
+                    CORBA::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Calls TAO_GIOP_Invocation::start.
 
   int invoke (CORBA_Environment &TAO_IN_ENV =
-                    CORBA::default_environment ());
+                    CORBA::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, without blocking for any response.
 
 private:
