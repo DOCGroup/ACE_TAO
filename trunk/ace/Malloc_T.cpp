@@ -70,8 +70,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->memory_pool_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "cb_ptr_ = %x", this->cb_ptr_));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("cb_ptr_ = %x"), this->cb_ptr_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
 #if defined (ACE_HAS_MALLOC_STATS)
   this->cp_ptr_->malloc_stats_.dump ();
 #endif /* ACE_HAS_MALLOC_STATS */
@@ -87,14 +87,14 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::print_stats (void) const
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   this->cb_ptr_->malloc_stats_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) contents of freelist:\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("(%P|%t) contents of freelist:\n")));
 
   for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->s_.next_block_; 
        ; 
        currp = currp->s_.next_block_)
     {
       ACE_DEBUG ((LM_DEBUG, 
-		  "(%P|%t) ptr = %u, ACE_Malloc_Header units = %d, byte units = %d\n", 
+		  ASYS_TEXT ("(%P|%t) ptr = %u, ACE_Malloc_Header units = %d, byte units = %d\n"), 
 		  currp, currp->s_.size_, 
 		  currp->s_.size_ * sizeof (ACE_Malloc_Header)));
       if (currp == this->cb_ptr_->freep_)
@@ -138,7 +138,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "init_acquire failed"), -1);
   else if (first_time)
     {
-      // ACE_DEBUG ((LM_DEBUG, "(%P|%t) first time in, control block = %u\n", this->cb_ptr_));
+      // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("(%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
 
 #if defined (ACE_HAS_MALLOC_STATS)
       // Call the constructor on the ACE_LOCK, using the placement
@@ -227,7 +227,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::remove (void)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::remove");
-  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) destroying ACE_Malloc\n"));
+  // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("(%P|%t) destroying ACE_Malloc\n")));
   int result = 0;
 
 #if defined (ACE_HAS_MALLOC_STATS)
@@ -574,8 +574,8 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->curr_->dump ();
   this->guard_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "name_ = %s", this->name_));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("name_ = %s"), this->name_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
