@@ -1,3 +1,8 @@
+Thu Dec 12 09:20:07 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/Orbsvcs/CosNotification.bor:
+	  Added missing .obj extensions to new files added.
+
 Wed Dec 11 23:23:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/util/utl_global.cpp: Fixed a warning in the builds.
