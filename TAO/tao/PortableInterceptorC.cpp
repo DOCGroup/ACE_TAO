@@ -4306,6 +4306,18 @@ PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
   return obj;
 }
 
+// Hand-crafted.
+
+::CORBA::Policy_ptr
+PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
+                                                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA::PolicyError))
+{
+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                    CORBA::Policy::_nil ());
+}
+
 void *PortableInterceptor::PolicyFactory::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;

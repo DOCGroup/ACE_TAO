@@ -161,14 +161,8 @@ TAO_NAMESPACE_END
 // to the CORBA namespace.
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Current, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
 TAO_NAMESPACE_END
-
-CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -379,33 +373,6 @@ TAO_TypeCodes::init (void)
                                           (char *) &_oc_CORBA_ORBid,
                                           0,
                                           sizeof (CORBA::ORBid));
-
-  static const CORBA::Long _oc_CORBA_ObjectId[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f62),
-    ACE_NTOHL (0x6a656374),
-    ACE_NTOHL (0x49643a31),
-    ACE_NTOHL (0x2e300000),  // repository ID =
-                             //   IDL:omg.org/CORBA/ObjectId:1.0
-    9,
-    ACE_NTOHL (0x4f626a65),
-    ACE_NTOHL (0x63744964),
-    ACE_NTOHL (0x0),        // name = ObjectId
-    CORBA::tk_string,
-    0,                      // string length
-  };
-  CORBA_ORB::_tc_ObjectId =
-    new CORBA::TypeCode (CORBA::tk_alias,
-                         sizeof (_oc_CORBA_ObjectId),
-                         (char *) &_oc_CORBA_ObjectId,
-                         0,
-                         sizeof (CORBA_ORB::ObjectId));
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -715,26 +682,6 @@ TAO_TypeCodes::init (void)
                          sizeof (CORBA::ServiceInformation));
 
  // ****************************************************************
-
-  static const CORBA::Long _oc_CORBA_Current[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    22,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4375),
-    ACE_NTOHL (0x7272656e),
-    ACE_NTOHL (0x743a312e),
-    ACE_NTOHL (0x3000fdfd),   // repository ID = IDL:CORBA/Current:1.0
-    8,
-    ACE_NTOHL (0x43757272),
-    ACE_NTOHL (0x656e7400),   // name = Current,
-  };
- CORBA::_tc_Current = new CORBA::TypeCode (CORBA::tk_objref,
-                                           sizeof (_oc_CORBA_Current),
-                                           (char *) &_oc_CORBA_Current,
-                                           1,
-                                           sizeof (CORBA::Current));
 
  // The following are internal to the TAO ORB
 

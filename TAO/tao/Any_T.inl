@@ -106,9 +106,6 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::value (void) const
 
 // ***********************************************************************
 
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &);
-
 template<typename T> ACE_INLINE CORBA::Boolean
 TAO::Any_Dual_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 {

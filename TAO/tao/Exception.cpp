@@ -1218,6 +1218,27 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Boolean \
+TAO::Any_Dual_Impl_T<CORBA_##name >::marshal_value (TAO_OutputCDR &cdr) \
+{ \
+  ACE_TRY_NEW_ENV \
+    { \
+      this->value_->_tao_encode (cdr \
+                                 ACE_ENV_ARG_PARAMETER); \
+      ACE_TRY_CHECK; \
+      return 1; \
+    } \
+  ACE_CATCHANY \
+    { \
+    } \
+  ACE_ENDTRY; \
+  return 0; \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA::Boolean \
 TAO::Any_Dual_Impl_T<CORBA_##name >::demarshal_value (TAO_InputCDR &cdr) \
 { \
   ACE_TRY_NEW_ENV \
