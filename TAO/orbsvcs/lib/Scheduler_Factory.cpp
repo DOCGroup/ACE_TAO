@@ -16,7 +16,7 @@
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
 
 static int entry_count = -1;
-static POD_RT_Info* rt_info = 0;
+static ACE_Scheduler_Factory::POD_RT_Info* rt_info = 0;
 
 int ACE_Scheduler_Factory::use_runtime (int ec,
 					POD_RT_Info rti[])
