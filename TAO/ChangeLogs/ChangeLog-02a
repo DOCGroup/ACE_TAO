@@ -1,3 +1,13 @@
+Wed Apr 26 16:57:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/CosEvent/CosEvent.dsw:
+        * tests/CosEvent/Basic/Basic.dsw:
+        * tests/CosEvent/Basic/Random.dsp:
+          Add a project file for the new Random test.
+
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+          Add the Random test to the driver script
+
 Wed Apr 26 15:41:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Param_Test/bd_wstr_seq.cpp:

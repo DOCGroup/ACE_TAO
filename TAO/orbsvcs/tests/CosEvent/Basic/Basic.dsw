@@ -3,7 +3,19 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Push_Event"=.\Push_Event.dsp - Package Owner=<4>
+Project: "Disconnect"=.\Disconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_Disconnect"=.\MT_Disconnect.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Disconnect"=.\Disconnect.dsp - Package Owner=<4>
+Project: "Push_Event"=.\Push_Event.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MT_Disconnect"=.\MT_Disconnect.dsp - Package Owner=<4>
+Project: "Random"=.\Random.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
