@@ -67,6 +67,8 @@ ACE_Select_Reactor::register_handler (ACE_Event_Handler *event_handler,
 				      ACE_HANDLE event_handle)
 {
   // Don't have an implementation for this yet...
+  ACE_UNUSED_ARG (event_handler);
+  ACE_UNUSED_ARG (event_handle);
   ACE_NOTSUP_RETURN (-1);
 }
 
@@ -77,6 +79,10 @@ ACE_Select_Reactor::register_handler (ACE_HANDLE event_handle,
 				      ACE_Reactor_Mask mask)
 {
   // Don't have an implementation for this yet...
+  ACE_UNUSED_ARG (event_handle);
+  ACE_UNUSED_ARG (io_handle);
+  ACE_UNUSED_ARG (event_handler);
+  ACE_UNUSED_ARG (mask);
   ACE_NOTSUP_RETURN (-1);
 }
 
