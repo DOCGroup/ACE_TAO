@@ -3769,6 +3769,7 @@ class ACE_Export ACE_Thread_ID
 public:
   // = Initialization method.
   ACE_Thread_ID (ACE_thread_t, ACE_hthread_t);
+  ACE_Thread_ID (const ACE_Thread_ID &id);
 
   // = Set/Get the Thread ID.
   ACE_thread_t id (void);
@@ -5212,7 +5213,7 @@ private:
 
 //          **** Warning ****
 // You should not use the following functions under CE at all.
-// 
+//
 //          **** Warning ****
 
 size_t fwrite (void *buf, size_t sz, size_t count, FILE *fp);
