@@ -1,3 +1,9 @@
+Mon Jan 28 12:39:50 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/EC_Throughput/README:
+	  Fixed paths in the README file, some of the binaries were
+	  completely wrong.  Made a pass to improved documentation.
+
 Mon Jan 28 12:30:38 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
