@@ -29,6 +29,7 @@ class TAO_Transport_Cache_Manager;
 class TAO_Leader_Follower;
 class TAO_MProfile;
 class TAO_New_Leader_Generator;
+class TAO_Connector_Registry;
 
 /**
  * @class TAO_Thread_Lane_Resources
@@ -66,6 +67,12 @@ public:
 
   TAO_Acceptor_Registry &acceptor_registry (void);
 
+  /*
+   * @@ NOTE: Returning a pointer helps to return 0 in case of
+   * exceptions.
+   */
+  TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
+
   TAO_Transport_Cache_Manager &transport_cache (void);
 
   TAO_Leader_Follower &leader_follower (void);
@@ -83,6 +90,10 @@ private:
   /// The registry which maintains a list of acceptor factories for
   /// each loaded protocol.
   TAO_Acceptor_Registry *acceptor_registry_;
+
+  /// The connector registry which all active connectors must register
+  /// themselves with.
+  TAO_Connector_Registry *connector_registry_;
 
   /// Transport cache.
   TAO_Transport_Cache_Manager *transport_cache_;
