@@ -1,3 +1,11 @@
+Wed Aug 13 10:08:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORManipulation/IORC.h: 
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+
+	  Fixed fuzz errors.
+	
+	
 Wed Aug 13 14:03:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
