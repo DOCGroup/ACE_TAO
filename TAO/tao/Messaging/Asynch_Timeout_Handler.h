@@ -33,7 +33,7 @@
 class TAO_Asynch_Reply_Dispatcher_Base;
 class TAO_Transport_Mux_Strategy;
 
-class TAO_Export TAO_Asynch_Timeout_Handler
+class TAO_Messaging_Export TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
   // = TITLE
