@@ -42,10 +42,10 @@ Logger_Factory_i::make_logger (const char *name,
 
       // This attempts to create a new Logger_i and throws an
       // exception and returns a null value if it fails
-      ACE_NEW_THROW_RETURN (result,
-                            Logger_i (name),
-                            CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-                            Logger::_nil ());
+      ACE_NEW_THROW_EX (result,
+                        Logger_i (name),
+                        CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (Logger::_nil ());
     }
 
   // Enter the new logger into the hash map.  Check if the <bind>

@@ -1,3 +1,24 @@
+Sun Mar 28 03:27:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	*  TAO/examples/Callback_Quoter/Notifier_i.cpp:
+	*  TAO/examples/Simple/bank/AccountManager_i.cpp:
+	*  TAO/examples/Simple/grid/Grid_i.cpp:
+	*  TAO/orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	*  TAO/orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+	*  TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+	*  TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+	*  TAO/orbsvcs/orbsvcs/Log/Logger_i.cpp:
+	*  TAO/orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+	*  TAO/orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+	*  TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+	*  TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+	*  TAO/orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+	*  TAO/tao/DynAny_i.cpp:
+	*  TAO/tao/Invocation.cpp:
+	*  TAO/tao/ORB.cpp:
+	*  TAO/tao/Typecode.cpp: Replaced ACE_NEW_THROW* macros with
+	   ACE_NEW_THROW_EX and appropriate ACE_CHECK* macros.
+
 1999-03-27  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Updated the A/V documentation.

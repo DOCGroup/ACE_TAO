@@ -20,18 +20,18 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 // inaccuracy in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::universal_time (CORBA::Environment &TAO_IN_ENV)
+TAO_Time_Service_Server::universal_time (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_UTO *uto = 0;
 
   // Return the local time of the system as a UTO.
-  ACE_NEW_THROW_RETURN (uto,
-			TAO_UTO (CORBA::ULongLong (ACE_OS::gettimeofday ().sec () * 10000000
-                                                   + ACE_OS::gettimeofday ().usec () * 10),
-				 0,
-				 0),
-			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			CosTime::UTO::_nil ());
+  ACE_NEW_THROW_EX (uto,
+                    TAO_UTO (CORBA::ULongLong (ACE_OS::gettimeofday ().sec () * 10000000
+                                               + ACE_OS::gettimeofday ().usec () * 10),
+                             0,
+                             0),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   ACE_DEBUG ((LM_DEBUG,
 	      "Returning a UTO\n"));
@@ -66,16 +66,16 @@ CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 					     TimeBase::InaccuracyT inaccuracy,
 					     TimeBase::TdfT tdf,
-					     CORBA::Environment &TAO_IN_ENV)
+					     CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_UTO *uto = 0;
 
-  ACE_NEW_THROW_RETURN (uto,
-			TAO_UTO (time,
-				 inaccuracy,
-				 tdf),
-			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			CosTime::UTO::_nil ());
+  ACE_NEW_THROW_EX (uto,
+                    TAO_UTO (time,
+                             inaccuracy,
+                             tdf),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
 
   return uto->_this ();
 
@@ -85,16 +85,16 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
-				       CORBA::Environment &TAO_IN_ENV)
+				       CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_UTO *uto = 0;
 
-  ACE_NEW_THROW_RETURN (uto,
-			TAO_UTO (utc.time,
-				 utc.inacclo + utc.inacchi,
-				 utc.tdf),
-			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			CosTime::UTO::_nil ());
+  ACE_NEW_THROW_EX (uto,
+                    TAO_UTO (utc.time,
+                             utc.inacclo + utc.inacchi,
+                             utc.tdf),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   return uto->_this ();
 }
 
@@ -103,14 +103,14 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
 				       TimeBase::TimeT upper,
-				       CORBA::Environment &TAO_IN_ENV)
+				       CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_TIO *tio = 0;
 
-  ACE_NEW_THROW_RETURN (tio,
-			TAO_TIO (lower,
-				 upper),
-			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			CosTime::TIO::_nil ());
+  ACE_NEW_THROW_EX (tio,
+                    TAO_TIO (lower,
+                             upper),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CosTime::TIO::_nil ());
   return tio->_this ();
 }

@@ -150,18 +150,19 @@ TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO
 
 void
 TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier,
-                                                      CORBA::Environment &TAO_IN_ENV)
+                                                      CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->connected ())
-    TAO_THROW (CosEventChannelAdmin::AlreadyConnected ());
+    ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
 
-  ACE_NEW_THROW (this->wrapper_,
-                 TAO_CosEC_PushSupplierWrapper (push_supplier),
-                 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_NEW_THROW_EX (this->wrapper_,
+                    TAO_CosEC_PushSupplierWrapper (push_supplier),
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_CHECK;
 
-  this->proxypushconsumer_->connect_push_supplier (this->wrapper_->_this (TAO_IN_ENV),
+  this->proxypushconsumer_->connect_push_supplier (this->wrapper_->_this (ACE_TRY_ENV),
                                                    this->qos_,
-                                                   TAO_IN_ENV);
+                                                   ACE_TRY_ENV);
 }
 
 int
