@@ -1,3 +1,9 @@
+Thu Nov 11 22:31:12 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+
+	  Remove stray comma which resulted in truncated error message.
+
 Thu Nov 11 19:17:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Event_Service/Makefile.am:
