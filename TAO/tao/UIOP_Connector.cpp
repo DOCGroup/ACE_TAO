@@ -74,7 +74,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_null_creation_strategy_,
+                                     connect_creation_strategy_,
                                      &this->connect_strategy_,
                                      &this->null_activation_strategy_);
 }
