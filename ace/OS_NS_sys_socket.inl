@@ -259,7 +259,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
   // compile-time (e.g. if EAGAIN or EWOULDBLOCK are not preprocessor
   // macros) perform the check at run-time.  The goal is to avoid two
   // TSS accesses in the _REENTRANT case when EAGAIN == EWOULDBLOCK.
-  if (ace_result == -1
+  if (ace_result_ == -1
 #  if !defined (EAGAIN) || !defined (EWOULDBLOCK)
       && EAGAIN != EWOULDBLOCK
 #  endif  /* !EAGAIN || !EWOULDBLOCK */

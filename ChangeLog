@@ -1,3 +1,7 @@
+Fri Apr 30 10:19:28 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_sys_socket.inl (read): Fix typo, missing _.
+
 Thu Apr 29 14:17:46 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/config-doxygen.h (OPENSSL_VERSION_NUMBER):
