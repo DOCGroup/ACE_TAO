@@ -14,6 +14,7 @@ OBJFILES = \
         $(OBJDIR)\Messaging_ORBInitializer.obj \
         $(OBJDIR)\Messaging_PolicyFactory.obj \
         $(OBJDIR)\Messaging_Policy_i.obj \
+	$(OBJDIR)\TAO_ExtC.obj \
         $(OBJDIR)\Twoway_Asynch_Invocation.obj
 
 RESOURCE = $(OBJDIR)\TAO_Messaging.res
