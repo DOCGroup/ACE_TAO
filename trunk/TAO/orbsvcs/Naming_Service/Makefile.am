@@ -1,36 +1,74 @@
-##---------------------------------------------------------------------------
-##       $Id$
-##
-##       Makefile for TAO's Naming Service
-##
-##---------------------------------------------------------------------------
-
-##
 ##  Process this file with automake to create Makefile.in
-##
 
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4
+ACE_ROOT = $(top_srcdir)/..
+ACE_BUILDDIR = $(top_builddir)/..
+TAO_ROOT = $(top_srcdir)
+TAO_BUILDDIR = $(top_builddir)
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+## Makefile.NT_Naming_Service.am 
 
-bin_PROGRAMS = Naming_Service
+noinst_PROGRAMS = NT_Naming_Service
 
-Naming_Service_LDADD = \
-	$(top_builddir)/ace/libACE.la $(top_builddir)/TAO/tao/libTAO.la
+NT_Naming_Service_CPPFLAGS = \
+ -I$(ACE_ROOT) \
+ -I$(ACE_BUILDDIR) \
+ -I$(TAO_ROOT) \
+ -I$(TAO_BUILDDIR) \
+ -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-Naming_Service_SOURCES = \
-        Naming_Service.cpp
+NT_Naming_Service_SOURCES = \
+  Naming_Service.cpp \
+  NT_Naming_Server.cpp \
+  NT_Naming_Service.cpp
+
+NT_Naming_Service_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 noinst_HEADERS = \
-        Naming_Service.h
+  NT_Naming_Service.h \
+  Naming_Service.h
 
-EXTRA_DIST = README
+## Makefile.Naming_Service.am 
 
-## Clean up some additional files/directories possibly created during
-## the configure script tests.
+noinst_PROGRAMS += Naming_Service
+
+Naming_Service_CPPFLAGS = \
+ -I$(ACE_ROOT) \
+ -I$(ACE_BUILDDIR) \
+ -I$(TAO_ROOT) \
+ -I$(TAO_BUILDDIR) \
+ -I$(TAO_ROOT)/orbsvcs/orbsvcs
+
+Naming_Service_SOURCES = \
+  Naming_Server.cpp \
+  Naming_Service.cpp
+
+Naming_Service_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
+  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+noinst_HEADERS += \
+  Naming_Service.h
+
+## Clean up template repositories, etc.
 clean-local:
 	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
-
+	-rm -f gcctemp.c gcctemp so_locations
+	-rm -rf ptrepository SunWS_cache Templates.DB

@@ -87,7 +87,7 @@ libTAO_Svc_Utils_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS = \
+noinst_HEADERS = \
   TimeBaseS_T.h \
   Channel_Clients_T.h \
   TimeBaseC.h \
@@ -180,7 +180,7 @@ libTAO_CosNaming_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Naming/naming_export.h \
   Channel_Clients_T.h \
   CosNamingS_T.h \
@@ -263,7 +263,7 @@ libTAO_CosProperty_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   CosPropertyServiceS_T.h \
   Channel_Clients_T.h \
   Property/CosPropertyService_i.h \
@@ -405,7 +405,7 @@ libTAO_AV_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   AV/TCP.h \
   AV/Transport.h \
   sfpC.h \
@@ -523,7 +523,7 @@ libTAO_CosConcurrency_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   CosConcurrencyControlS_T.h \
   Concurrency/CC_LockSetFactory.h \
@@ -591,56 +591,6 @@ CLEANFILES += \
 CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminS.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminS.h CosTypedEventChannelAdminS_T.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS.inl CosTypedEventChannelAdminS_T.inl: CosTypedEventChannelAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
 
-BUILT_SOURCES += \
-  CosEventCommS_T.cpp \
-  CosEventCommC.cpp \
-  CosEventCommS.cpp \
-  CosEventCommC.h \
-  CosEventCommS.h \
-  CosEventCommS_T.h \
-  CosEventCommC.inl \
-  CosEventCommS.inl \
-  CosEventCommS_T.inl
-
-CLEANFILES += \
-  CosEventCommS_T.cpp \
-  CosEventCommC.cpp \
-  CosEventCommS.cpp \
-  CosEventCommC.h \
-  CosEventCommS.h \
-  CosEventCommS_T.h \
-  CosEventCommC.inl \
-  CosEventCommS.inl \
-  CosEventCommS_T.inl
-
-CosEventCommS_T.cpp CosEventCommC.cpp CosEventCommS.cpp CosEventCommC.h CosEventCommS.h CosEventCommS_T.h CosEventCommC.inl CosEventCommS.inl CosEventCommS_T.inl: CosEventComm.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
-
-BUILT_SOURCES += \
-  CosEventChannelAdminS_T.cpp \
-  CosEventChannelAdminC.cpp \
-  CosEventChannelAdminS.cpp \
-  CosEventChannelAdminC.h \
-  CosEventChannelAdminS.h \
-  CosEventChannelAdminS_T.h \
-  CosEventChannelAdminC.inl \
-  CosEventChannelAdminS.inl \
-  CosEventChannelAdminS_T.inl
-
-CLEANFILES += \
-  CosEventChannelAdminS_T.cpp \
-  CosEventChannelAdminC.cpp \
-  CosEventChannelAdminS.cpp \
-  CosEventChannelAdminC.h \
-  CosEventChannelAdminS.h \
-  CosEventChannelAdminS_T.h \
-  CosEventChannelAdminC.inl \
-  CosEventChannelAdminS.inl \
-  CosEventChannelAdminS_T.inl
-
-CosEventChannelAdminS_T.cpp CosEventChannelAdminC.cpp CosEventChannelAdminS.cpp CosEventChannelAdminC.h CosEventChannelAdminS.h CosEventChannelAdminS_T.h CosEventChannelAdminC.inl CosEventChannelAdminS.inl CosEventChannelAdminS_T.inl: CosEventChannelAdmin.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h $<
-
 CosEvent = \
   CosTypedEventCommC.cpp \
   CosTypedEventChannelAdminC.cpp \
@@ -706,7 +656,7 @@ libTAO_CosEvent_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la 
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   CosEvent/CEC_Factory.h \
   CosEvent/CEC_Pulling_Strategy.h \
   CosEvent/CEC_DynamicImplementation.h \
@@ -874,7 +824,7 @@ libTAO_CosLifeCycle_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   LifeCycleServiceS_T.h \
   Channel_Clients_T.h \
   CosLifeCycleS_T.h \
@@ -966,7 +916,7 @@ libTAO_FTORB_Utils_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   PortableGroup_Simple_DSS_T.h \
   FT_CORBA_ORBS_T.h \
@@ -1109,7 +1059,7 @@ libTAO_PortableGroup_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   PortableGroup/PG_Factory_Map.h \
   PortableGroup/PG_Location_Map.h \
   PortableGroup/PG_Group_Factory.h \
@@ -1282,7 +1232,7 @@ libTAO_CosLoadBalancing_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   LoadBalancing/LB_ObjectReferenceFactory.h \
   LoadBalancing/LB_LoadAlertInfo.h \
   LoadBalancing/LB_LoadMap.h \
@@ -1354,7 +1304,7 @@ libTAO_ETCL_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   ETCL/ETCL_Constraint.h \
   Channel_Clients_T.h \
   ETCL/ETCL_Interpreter.h \
@@ -1679,7 +1629,7 @@ libTAO_CosNotification_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Notify/Notify_Default_POA_Factory.h \
   Notify/Default_Factory.h \
   Notify/CosNotify_Service.h \
@@ -1933,7 +1883,7 @@ libTAO_CosTime_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   TimeServiceS_T.h \
   Time/TAO_Time_Service_Server.h \
@@ -2074,7 +2024,7 @@ libTAO_CosTrading_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Trader/Trader_Constraint_Visitors.h \
   Trader/Service_Type_Repository.h \
   Trader/Offer_Database.h \
@@ -2205,7 +2155,7 @@ libTAO_DsLogAdmin_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Log/Log_Constraint_Visitors.h \
   Log/BasicLogFactory_i.h \
   Log/Iterator_i.h \
@@ -2300,7 +2250,7 @@ libTAO_DsEventLogAdmin_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Log/EventLogConsumer.h \
   DsEventLogAdminC.h \
   DsEventLogAdminS.h \
@@ -2386,7 +2336,7 @@ libTAO_DsNotifyLogAdmin_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Log/NotifyLog_i.h \
   DsNotifyLogAdminC.h \
   Log/NotifyLogFactory_i.h \
@@ -2433,7 +2383,7 @@ libTAO_FTRT_ClientORB_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h \
   FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h \
   FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h \
@@ -2648,7 +2598,7 @@ libTAO_RTEvent_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Event/ECG_Adapters.h \
   Event/EC_Filter_Builder.h \
   Event/EC_Masked_Type_Filter.h \
@@ -2959,7 +2909,7 @@ libTAO_FtRtEvent_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   FtRtEvent/Utils/Safe_InputCDR.h \
   FTRTC.h \
   FtRtecEventCommC.h \
@@ -3072,7 +3022,7 @@ libTAO_FTRT_EventChannel_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   FtRtEvent/EventChannel/Fault_Detector_Loader.h \
   FtRtEvent/EventChannel/create_persistent_poa.h \
   FtRtEvent/EventChannel/Request_Context_Repository.h \
@@ -3159,7 +3109,7 @@ libTAO_FT_ClientORB_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   FaultTolerance/FT_ClientRequest_Interceptor.h \
   FaultTolerance/FT_ClientPolicy_i.h \
   FaultTolerance/FT_Invocation_Endpoint_Selectors.h \
@@ -3216,7 +3166,7 @@ libTAO_FT_ServerORB_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   FaultTolerance/FT_ServerPolicyFactory.h \
   FaultTolerance/FT_ServerRequest_Interceptor.h \
@@ -3402,7 +3352,7 @@ libTAO_FaultTolerance_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   FT_FaultDetectorFactoryS_T.h \
   Channel_Clients_T.h \
   FT_ReplicationManagerS_T.h \
@@ -3510,7 +3460,7 @@ libTAO_IFRService_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   IFRService/ComponentRepository_i.h \
   IFRService/ExtAbstractInterfaceDef_i.h \
   IFRService/ComponentContainer_i.h \
@@ -3611,7 +3561,7 @@ libTAO_RTCORBAEvent_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Event/EC_RTCORBA_Dispatching.h \
   Event/EC_RTCORBA_Factory.h \
@@ -3680,7 +3630,7 @@ libTAO_RTCosScheduling_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   RTCosScheduling/RTCosScheduling_ServerScheduler_i.h \
   RTCosScheduling/RTCosScheduling_ClientScheduler_i.h \
   RTCosSchedulingC.h \
@@ -3765,7 +3715,7 @@ libTAO_RTSched_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Runtime_Scheduler.h \
   Sched/Config_Scheduler.h \
   Sched/Reconfig_Scheduler.h \
@@ -3844,7 +3794,7 @@ libTAO_RTOLDEvent_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Event/ReactorTask.h \
   Event/RT_Task.h \
   Event/BCU.h \
@@ -3937,7 +3887,7 @@ libTAO_RTEventLogAdmin_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   RTEventLogAdminS_T.h \
   Log/RTEventLogNotification.h \
@@ -3991,7 +3941,7 @@ libTAO_RTKokyuEvent_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Event/EC_Kokyu_Scheduling.h \
   Event/EC_Kokyu_Dispatching.h \
   Event/EC_Kokyu_Filter.h \
@@ -4046,7 +3996,7 @@ libTAO_RTSchedEvent_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Event/EC_Sched_Filter.h \
   Event/EC_Priority_Scheduling.h \
   Event/EC_Gateway_Sched.h \
@@ -4101,7 +4051,7 @@ libTAO_RT_Notification_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Channel_Clients_T.h \
   Notify/RT_Builder.h \
   Notify/RT_POA_Helper.h \
@@ -4338,7 +4288,7 @@ libTAO_Security_la_LIBADD = \
  $(top_builddir)/tao/libTAO.la \
  $(top_builddir)/../ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+noinst_HEADERS += \
   Security/SL3_ObjectCredentialsPolicy.h \
   Security/SL3_SecurityCurrent.h \
   Security/SL3_SecurityManager.h \
