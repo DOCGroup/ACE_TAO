@@ -221,13 +221,12 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk)
             {
               n = this->do_sendv ((const iovec *) iov,
                                   iovcnt,
-                                  totlen)
+                                  totlen);
               if (n < 1)
                 return n;
 
               nbytes += n;
               iovcnt = totlen = 0;
-
             } 
         }
     } 
@@ -241,7 +240,6 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk)
         return 0;
 
       nbytes += n;
-
     }
 
   return nbytes;

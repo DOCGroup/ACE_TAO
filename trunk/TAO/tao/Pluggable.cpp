@@ -32,7 +32,7 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 {
   // For now, only IIOP connectors.
   if (tag != TAO_IOP_TAG_INTERNET_IOP)
-    ACE_ERROR_RETURN ((LM_ERROR,,
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "Invalid connector tag %d\n",
                        tag),
                       0);
