@@ -142,9 +142,9 @@ ACE_Process_Mutex::unique_name (void)
 
 ACE_Process_Mutex::ACE_Process_Mutex (LPCTSTR name, void *arg)
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  : lock_ (USYNC_PROCESS, name, arg)
+  : lock_ (USYNC_PROCESS, name, (ACE_mutexattr_t *) arg)
 #else
-  : lock_ (name?name:ACE_Process_Mutex::unique_name ())
+  : lock_ (name ? name : ACE_Process_Mutex::unique_name ())
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
 #if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM)
