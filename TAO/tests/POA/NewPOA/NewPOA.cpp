@@ -1,4 +1,5 @@
 // $Id$
+
 // ===========================================================================================
 // = LIBRARY
 //    TAO/tests/POA/NewPOA
@@ -36,10 +37,12 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // Obtain the object reference to the RootPOA.
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  // _narrow() the Object to get the POA object, i.e., the root_poa
+  // _narrow() the Object to get the POA object, i.e., the root_poa.
   PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in(), env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
@@ -49,8 +52,10 @@ main (int argc, char **argv)
   // CORBA::PolicyList policies (2); Policies for the new POAs
   PortableServer::PolicyList policies (2);
   policies.length (2);
-  policies[0] = root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL, env);
-  policies[1] = root_poa->create_lifespan_policy (PortableServer::TRANSIENT, env);
+  policies[0] =
+    root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL, env);
+  policies[1] =
+    root_poa->create_lifespan_policy (PortableServer::TRANSIENT, env);
 
   // Creation of the firstPOA
   ACE_CString name = "firstPOA";
@@ -103,6 +108,7 @@ main (int argc, char **argv)
       PortableServer::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");
