@@ -188,7 +188,7 @@ typedef ACE_UINT16 ACE_USHORT16;
   //     The high one contributes 0x100000000 times its value.  So,
   //     for example, (0, 2) is _not_ 20000000000, but instead
   //     0x200000000.  To emphasize this, the default values are expressed
-  //     in hex, and dump () outputs the value in hex.
+  //     in hex, and output () dumps the value in hex.
   {
   public:
     // = Initialization and termination methods.
