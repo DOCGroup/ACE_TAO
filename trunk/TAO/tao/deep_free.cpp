@@ -226,8 +226,8 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
         case CORBA::tk_objref:
           {
-            TAO_Object_Field* field =
-              ACE_reinterpret_cast (TAO_Object_Field *,
+            TAO_Object_Field_T<CORBA_Object>* field =
+              ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
                                     ACE_const_cast (void *, source));
             field->_release ();
             retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
