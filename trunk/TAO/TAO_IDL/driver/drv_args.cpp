@@ -470,6 +470,10 @@ DRV_parse_args(long ac, char **av)
 int 
 DRV_check_gperf (void)
 {
+  // Make sure the perfect hasher is valid.
+  if (idl_global->perfect_hasher () == 0)
+    return -1;
+
   // Just call gperf in silent mode. It will come and immly exit.
 
   // Using ACE_Process.
