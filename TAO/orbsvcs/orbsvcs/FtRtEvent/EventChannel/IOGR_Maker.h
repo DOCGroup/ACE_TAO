@@ -59,7 +59,9 @@ public:
   CORBA::ULong get_ref_version() const;
 
 private:
-  void set_tag_components(CORBA::Object_ptr merged, CORBA::Object_ptr primary
+  void set_tag_components(CORBA::Object_ptr merged, 
+                          CORBA::Object_ptr primary,
+                          FT::TagFTGroupTaggedComponent& ft_tag_component
                           ACE_ENV_ARG_DECL);
   TAO_IOP::TAO_IOR_Manipulation_var iorm_;
   FT::TagFTGroupTaggedComponent ft_tag_component_;

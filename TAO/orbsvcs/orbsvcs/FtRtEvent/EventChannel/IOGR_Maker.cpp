@@ -60,10 +60,14 @@ CORBA::Object_ptr
 IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
                       ACE_ENV_ARG_DECL)
 {
+  /// generate a new IOGR if the object group changes.
   CORBA::Object_var obj = merge_iors(list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(CORBA::Object::_nil());
 
-  set_tag_components(obj.in(), list[0]
+  FT::TagFTGroupTaggedComponent ft_tag_component(ft_tag_component_);
+  /// the generated IOGR should use a new object_group_ref_version 
+  ft_tag_component.object_group_ref_version++;
+  set_tag_components(obj.in(), list[0], ft_tag_component
                      ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN(CORBA::Object::_nil());
@@ -81,6 +85,7 @@ CORBA::Object_ptr
 IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
                        ACE_ENV_ARG_DECL)
 {
+  /// forge an IOGR whose object_key is the same with that of \a obj. 
   CORBA::Object_var merged;
   // make a copy of the object
   FtRtecEventChannelAdmin::EventChannel_var successor
@@ -127,7 +132,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
   else
     merged = CORBA::Object::_duplicate(obj);
 
-  set_tag_components(merged.in(), obj
+  set_tag_components(merged.in(), obj, ft_tag_component_
                      ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN(CORBA::Object::_nil ());
@@ -235,11 +240,14 @@ IOGR_Maker::get_ref_version() const
 
 
 void
-IOGR_Maker::set_tag_components(CORBA::Object_ptr merged, CORBA::Object_ptr primary
-                               ACE_ENV_ARG_DECL)
+IOGR_Maker::set_tag_components(
+  CORBA::Object_ptr merged, 
+  CORBA::Object_ptr primary,
+  FT::TagFTGroupTaggedComponent& ft_tag_component
+  ACE_ENV_ARG_DECL)
 {
     // set the primary
-    TAO_FT_IOGR_Property prop (ft_tag_component_);
+    TAO_FT_IOGR_Property prop (ft_tag_component);
 
 
     prop.remove_primary_tag(merged
