@@ -77,7 +77,7 @@ protected:
                      CORBA::SystemException
                      ));
 
-  void push (TAO_NS_Event_var &);
+  void push (TAO_NS_Event_var &ns) {TAO_NS_ProxyConsumer::push (ns);}
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
