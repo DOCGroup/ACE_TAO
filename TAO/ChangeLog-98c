@@ -6,6 +6,9 @@ Thu Aug 20 11:41:03 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp
           (DOVE_Supplier): reordered initializers to match declaration order.
 
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+          added explicit template instantiations.
+
 Thu Aug 20 08:29:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
