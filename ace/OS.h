@@ -1886,7 +1886,6 @@ extern "C" {
 #include /**/ <cx/select.h>
 #include /**/ <sys/uio.h>
 #include /**/ <time.h>
-#include /**/ <pwd.h>
 #include /**/ <stdfileio.h>
 
 // This must come after limits.h is included

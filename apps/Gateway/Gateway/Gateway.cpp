@@ -185,7 +185,8 @@ Gateway::init (int argc, char *argv[])
       (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 
-  // Register this handler to receive test events on stdin.
+  // Register this handler to receive events on stdin.  We use this to
+  // shutdown the Gateway gracefully.
   if (ACE::register_stdin_handler (this,
 				   ACE_Service_Config::reactor (),
 				   ACE_Service_Config::thr_mgr ()) == -1)
