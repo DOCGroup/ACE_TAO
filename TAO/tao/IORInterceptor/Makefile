@@ -12,7 +12,7 @@ LIBNAME  = libTAO_IORInterceptor
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO -lACE
+ACE_SHLIBS = -lTAO_ObjRefTemplate -lTAO_Valuetype -lTAO -lACE
 
 
 CPP_SRCS += \

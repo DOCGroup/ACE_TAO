@@ -1,3 +1,11 @@
+Sun Nov  9 11:19:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORInterceptor/IORInterceptor.mpc:
+	* tao/IORInterceptor/Makefile:
+	* tao/IORInterceptor/Makefile.bor:
+  
+	  IORInterceptor needs Valuetype and ORT libraries to build fine.  
+
 Sun Nov  9 14:39:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/DynamicInterface/Makefile.bor:
