@@ -1,3 +1,9 @@
+Sat Aug  9 12:49:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_rtevent.doxygen:
+          Added TAO/orbsvcs/orbsvcs/Event_Service_Constants.h to the list
+          of files that must be parsed for the RTEvent doxygen documentation
+
 Sat Aug  9 06:17:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Process_Mutex.cpp:
@@ -26,7 +32,7 @@ Sat Aug  9 04:21:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * include/makeinclude/platform_sunos5_ghs.GNU:
         * include/makeinclude/wrapper_macros.GNU:
           Add ACE_MT_SAFE=0 to CPPFLAG in wrapper_macros.GNU instead of
-          each individual platform_*.GNU file. 
+          each individual platform_*.GNU file.
 
         * include/makeinclude/platform_g++_common.GNU:
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
@@ -68,10 +74,10 @@ Sat Aug  9 04:21:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Aug  8 23:23:30 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.{h,cpp,i}: 
+	* Kokyu/Dispatcher_Task.{h,cpp,i}:
 	  Renamed init() method so that it does not hide the base class
-	  init method. 
-	
+	  init method.
+
 	* Kokyu/Default_Dispatcher_Impl.cpp:
 	  Commented out some debug statements.
 
