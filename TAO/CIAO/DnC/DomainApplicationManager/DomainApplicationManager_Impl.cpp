@@ -25,7 +25,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
-  // @@ remove the DomainApplication?
+  // @@ ?
 }
 
 
@@ -38,17 +38,68 @@ init (void)
 {
   //@@ Not implemented yet.
 
+  ACE_TRY
+    {
+      // Invoke preparePlan for each child deployment plan.
+      for (int i = 0; i < this->num_child_plans_; i++)
+      {
+        // Get the NodeManager reference.
+        ::Deployment::NodeManager_var my_node_manager = 
+          this->deployment_config_.get_node_manager 
+            (this->node_manager_names_[i].c_str ());
+
+        // Get the child deployment plan reference.
+        ACE_Hash_Map_Entry 
+          <ACE_CString,
+          ::Deployment::DeploymentPlan_var> *entry;
+
+        if (this->child_plans_info_.find (this->node_manager_names_[i], 
+                                          entry) != 0)
+           ACE_THROW ((::Deployment::PlanError() ));
+                                          
+        Deployment::DeploymentPlan_var my_child_plan = entry->int_id_;
+
+        // Call preparePlan() method on the NodeManager, which returns
+        // a node application manager.
+        // @@TODO: Does preparePlan take a _var type variable?
+        ::Deployment::NodeApplicationManager_var my_nam = 
+          my_node_manager->preparePlan (my_child_plan
+                                        ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        // Cache the node_application_manager reference 
+      }
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+
   return;
 }
 
 
-bool check_validity (void)
+bool
+CIAO::DomainApplicationManager_Impl::
+check_validity (void)
 {
   // (1) Read the deployment information data file through the
-  //     Deployment_Configuration helper class, and build the hash
+  //     Deployment_Configuration helper class,  which builds the hash
   //     table.
   // (1) For each NodeManager name, check whether the name is contained
   //     in the hash table, if not, then return <false>.
+  if ( this->deployment_config_.init (this->deployment_file_) == -1 )
+    return false;
+
+  for (int i = 0; i < this->num_child_plans_; i++)
+    {
+      if (this->deployment_config_.get_node_manager
+            (this->node_manager_names_[i].c_str ()) == NULL) // invalid name
+        {
+          return false;
+        }
+    }
   return true;
 }
 
