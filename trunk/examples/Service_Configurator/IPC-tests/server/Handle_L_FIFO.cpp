@@ -5,7 +5,7 @@
 ACE_RCSID(server, Handle_L_FIFO, "$Id$")
 
 #if defined (SunOS4)
-extern "C" 
+extern "C"
 {
   int init (void);
   int fini (void);
@@ -13,14 +13,14 @@ extern "C"
   void __std__Handle_L_FIFO_C_init_();
 }
 
-int 
+int
 init (void)
 {
   __sti__Handle_L_FIFO_C_init_();
   return 0;
 }
 
-int 
+int
 fini (void)
 {
   __std__Handle_L_FIFO_C_init_();
@@ -28,11 +28,11 @@ fini (void)
 }
 #endif /* SunOS4 */
 
-const char *Handle_L_FIFO::DEFAULT_RENDEZVOUS = "/tmp/foo_fifo";
+const ACE_TCHAR *Handle_L_FIFO::DEFAULT_RENDEZVOUS = ACE_TEXT("/tmp/foo_fifo");
 
 #if !defined (__ACE_INLINE__)
 #include "Handle_L_FIFO.i"
 #endif /* __ACE_INLINE__ */
 
 Handle_L_FIFO local_fifo;
-ACE_Service_Object_Type lf (&local_fifo, "Local_FIFO");
+ACE_Service_Object_Type lf (&local_fifo, ACE_TEXT("Local_FIFO"));
