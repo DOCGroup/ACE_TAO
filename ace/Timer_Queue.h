@@ -177,6 +177,10 @@ public:
   // implementations of the timer queue to use special high resolution
   // timers.
 
+  void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  // Allows applications to control how the timer queue gets the time
+  // of day.
+
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
   // Determine the next event to timeout.  Returns <max> if there are
   // no pending timers or if all pending timers are longer than max.
@@ -208,6 +212,9 @@ protected:
   ACE_Recursive_Thread_Mutex lock_; 
   // Synchronization variable for the MT_SAFE ACE_Reactor 
 #endif /* ACE_MT_SAFE */
+
+  ACE_Time_Value (*gettimeofday_)(void);
+  // Pointer to function that returns the current time of day.
 
 private:
   ACE_Time_Value timeout_;

@@ -109,8 +109,8 @@ ACE_Timer_Queue::dump (void) const
 }
 
 ACE_Timer_Queue::ACE_Timer_Queue (void)
-  : timer_skew_ (0, ACE_TIMER_SKEW)
-
+  : timer_skew_ (0, ACE_TIMER_SKEW),
+    gettimeofday_ (ACE_OS::gettimeofday)
 {
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
 }
@@ -177,5 +177,13 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 ACE_Time_Value
 ACE_Timer_Queue::gettimeofday (void)
 {
-  return ACE_OS::gettimeofday ();
+  // Invoke gettimeofday via pointer to function.
+  return gettimeofday_ ();
 }
+
+void
+ACE_Timer_Queue::gettimeofday (ACE_Time_Value (*gettimeofday)(void))
+{
+  gettimeofday_ = gettimeofday;
+}
+
