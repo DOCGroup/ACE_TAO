@@ -63,7 +63,7 @@ foreach $o (@opts)
   $test_number++;
 }
 
-print "\n";
+print STDERR "\n";
 
 # Now run the multithreaded test, sending output to the file.
 open (OLDOUT, ">&STDOUT");
@@ -82,9 +82,9 @@ open (STDERR, ">&OLDERR");
 
 $NS->Kill ();
 
-print "          Multithreaded Test:\n";
+print STDERR "          Multithreaded Test:\n";
 system ("process-m-output.pl test_run.data 25");
-print "\n";
+print STDERR "\n";
 
 # @@ Capture any exit status from the processes.
 exit 0;
