@@ -516,7 +516,6 @@ TAO_PG_ObjectGroupManager::create_object_group (
   CORBA::Object_var object_group = manipulator_.create_object_group (
     type_id,
     domain_id,
-    the_criteria,
     group_id
     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());

@@ -1,3 +1,11 @@
+Fri Nov 28 17:37:36 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+          Linux/gcc build errors/warnings.
+
 Fri Nov 28 16:52:43 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * tao/IORManipulation/IORManipulation.h:
@@ -7,7 +15,7 @@ Fri Nov 28 16:52:43 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
-          New files factor out IOGR creation and manipulation 
+          New files factor out IOGR creation and manipulation
           from PG_Object_Group and PG_ObjectGroupManager
 
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
@@ -22,7 +30,7 @@ Fri Nov 28 16:52:43 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.cpp:
           Fuzz from last checkin.
-          
+
 
 Fri Nov 28 11:36:06 2003  Dale Wilson  <wilson_d@ociweb.com>
 

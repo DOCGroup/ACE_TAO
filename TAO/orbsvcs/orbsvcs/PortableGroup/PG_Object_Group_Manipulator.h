@@ -55,7 +55,6 @@ namespace TAO
     PortableGroup::ObjectGroup_ptr create_object_group (
       const char * type_id,
       const char * domain_id,
-      const PortableGroup::Criteria & the_criteria,
       PortableGroup::ObjectGroupId & group_id
       ACE_ENV_ARG_DECL);
 
