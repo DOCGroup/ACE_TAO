@@ -1,3 +1,11 @@
+Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},Object_Manager.{h,cpp}: changed Object_Manager
+          state to be per-instance, instead of global.  This makes
+          it easier to enforce startup and shutdown ordering,
+          regardless of whether the Object_Managers are static,
+          created on the stack of main (), or dynamically allocated.
+
 Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
 
        * ace/Map_T.(h i): Qualified types inherited from template base
@@ -12,37 +20,37 @@ Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Mar  2 12:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-       * ace/IOStream_T.{cpp, h}: Fixed some line breaks that were 
+       * ace/IOStream_T.{cpp, h}: Fixed some line breaks that were
          inadvertently introduced when these files were last checked in.
 
 Tue Mar  2 10:54:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Cache_{Hash,Heap}_T.{h,cpp}:
-	* Cache_Manager[_T].{h,cpp}:
-	* Cache_Object.cpp:
-	* Hash_Bucket_T.{h,cpp}: Fixed erroneous include directives.
-	  Thanks to Christian.Destor@alcatel.fr for reporting this.
+        * Cache_{Hash,Heap}_T.{h,cpp}:
+        * Cache_Manager[_T].{h,cpp}:
+        * Cache_Object.cpp:
+        * Hash_Bucket_T.{h,cpp}: Fixed erroneous include directives.
+          Thanks to Christian.Destor@alcatel.fr for reporting this.
 
 Tue Mar  2 10:33:47 1999  James CE Johnson  <jcej@lads.com>
 
-	* ace/IOStream_T.{cpp|h|i}: Christopher Healey
- 	<chealey@entera.com> noticed occasional core dumps from
- 	~ACE_IOStream on heavily loaded systems.  It turns out that
- 	streambuf_ was being deleted out from under the object.  These
- 	three files include his patches for this problem.
+        * ace/IOStream_T.{cpp|h|i}: Christopher Healey
+        <chealey@entera.com> noticed occasional core dumps from
+        ~ACE_IOStream on heavily loaded systems.  It turns out that
+        streambuf_ was being deleted out from under the object.  These
+        three files include his patches for this problem.
 
 Tue Mar  2 02:28:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (do_byte_swap): This accessor function should
-	  be public accessible.  Otherwise it's useless.  Reorder class
-	  declaration so the protected members appear before private
-	  members/functions.
+        * ace/CDR_Stream.h (do_byte_swap): This accessor function should
+          be public accessible.  Otherwise it's useless.  Reorder class
+          declaration so the protected members appear before private
+          members/functions.
 
 Mon Mar  1 23:26:41 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp (ACE_HAS_SVR4_DYNAMIC_LINKING):
-	  Added this check to prevent this test from being run
-	  separately.
+        * tests/DLL_Test.cpp (ACE_HAS_SVR4_DYNAMIC_LINKING):
+          Added this check to prevent this test from being run
+          separately.
 
 Mon Mar 01 17:02:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
