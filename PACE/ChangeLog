@@ -45,6 +45,9 @@ Mon Jul  3 00:25:44 2000  John Heitmann  <jwh1@cs.wustl.edu>
 	* pace/posix/stdlib.*:
 	  Added abort ().
 
+        * pace/:
+          Added stddef.h and errno.h
+
 Fri Jun 30 16:54:41 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/wait.h:
