@@ -16,6 +16,8 @@
 #ifndef PACE_DIRENT_H_INDIRECT
 #define PACE_DIRENT_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/dirent.h"
 #elif defined (PACE_VXWORKS)

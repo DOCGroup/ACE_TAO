@@ -16,6 +16,8 @@
 #ifndef PACE_CTYPE_H_INDIRECT
 #define PACE_CTYPE_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/ctype.h"
 #elif defined (PACE_VXWORKS)

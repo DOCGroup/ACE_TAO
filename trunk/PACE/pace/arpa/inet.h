@@ -16,6 +16,8 @@
 #ifndef PACE_ARPA_INET_H_INDIRECT
 #define PACE_ARPA_INET_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/inet.h"
 #elif defined (PACE_VXWORKS)

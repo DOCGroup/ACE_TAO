@@ -16,6 +16,8 @@
 #ifndef PACE_SYS_MMAN_H_INDIRECT
 #define PACE_SYS_MMAN_H_INDIRECT
 
+#include "pace/config/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/mman.h"
 #elif defined (PACE_VXWORKS)
