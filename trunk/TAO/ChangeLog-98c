@@ -1,3 +1,18 @@
+Sat Dec 20 00:34:45 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* tests/Cubit/CORBAplus/MT_Cubit/client/client.cpp (main): 
+	* tests/Cubit/CORBAplus/MT_Cubit/client/Makefile:
+	* tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.cpp:
+	* tests/Cubit/CORBAplus/MT_Cubit/client/Task_Client.h:
+	* tests/Cubit/CORBAplus/MT_Cubit/client/client.cpp:
+	* tests/Cubit/CORBAplus/MT_Cubit/client/cubit.idl:
+	* tests/Cubit/CORBAplus/MT_Cubit/server/Makefile:
+	* tests/Cubit/CORBAplus/MT_Cubit/server/cubit.idl:
+	* tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.cpp:
+	* tests/Cubit/CORBAplus/MT_Cubit/server/cubit_i.h:
+	* tests/Cubit/CORBAplus/MT_Cubit/server/svr.cpp:
+	Ported the MT_Cubit example to CORBAplus.
+
 Fri Dec 19 11:33:51 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	

@@ -12,7 +12,7 @@ the client or open a separate window for the client and server.
 server:
 -------
 
-./svr -p <port_num> -h <my_hostname>
+./svr -pbtrace
 
 port_num is the port number at which the server will start the high
 priority servant. The low priority servant will be created at
@@ -24,7 +24,7 @@ but it is not required by the client.
 client:
 -------
 
-./client -d <datatype> -p <port_num> -h <server_hostname> -n <num_calls> -t <num_threads>
+./client -d <datatype> -n <num_calls> -t <num_threads> -pbtrace -pbinit Cubit iiop://<remoteHost>:<port>/Cubit00 
 
 <datatype> is one of the following:
 
