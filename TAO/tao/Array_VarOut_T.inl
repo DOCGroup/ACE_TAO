@@ -300,10 +300,15 @@ ACE_INLINE
 const T_slice &
 TAO_Array_Forany_T<T_slice,T_life>::operator[] (CORBA::ULong index) const
 {
+#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
   return ACE_const_cast (
       const T_slice &,
       this->ptr_[index]
-    );
+   );
+#else
+  const T_slice & tmp = this->ptr_[index];
+  return tmp;
+#endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */
 }
 
 template<typename T_slice, typename T_life>
