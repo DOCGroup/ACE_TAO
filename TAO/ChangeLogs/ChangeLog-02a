@@ -1,3 +1,11 @@
+Tue Mar 20 08:30:10 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.cpp (_tao_get_omg_exception_description):
+
+	  Forgot to add the "const" qualifier to the description table
+	  declarations.  This fixes a "string literal loses const
+	  qualifier" warning.
+
 Tue Mar 20 06:17:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Schedule:/Service.cpp: Fixed a nagging
