@@ -1,3 +1,42 @@
+Thu May  8 12:51:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp: Added #include "ace/Synch.h" to keep the
+ 	  DEC C++ compiler happy.  Thanks to James CE Johnson
+ 	  <jcej@lads.com> for this.
+
+	* ace/Containers.i (size): Changed <TYPE> to <T> so that this
+ 	  compiles on the Alpha.  Thanks to James CE Johnson
+ 	  <jcej@lads.com> for this.
+
+	* ace/IOStream.h: Include the std_macros header on the Alpha.
+  	  Thanks to James CE Johnson <jcej@lads.com> for this.
+
+	* include/makeinclude/platform_osf1_4.0.GNU (SOBUILD): Removed
+ 	  -lACE from the link line.  Thanks to James CE Johnson
+ 	  <jcej@lads.com> for this.
+
+	* tests/Timer_Queue_Test.cpp: Changed all the int timer ids to
+ 	  long so that the test will work on DEC ALPHAs.  Thanks to Thilo
+ 	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
+
+	* ace/Process: Fixed a number of compile problems for UNIX.
+
+	* ace/Process.h: Changed the methods named stdin/stdout/stderr to
+ 	  std_in/std_out/std_err to avoid name clashes with the standard C
+ 	  library.
+
+	* ace/OS: Changed the use of ACE_Unbounded_Set to
+ 	  ACE_Unbounded_Stack in order to get the appropriate semantics
+ 	  for TSS cleanup on NT.
+
+	* ace/Containers: Enhanced the ACE_Unbounded_Stack class so
+	  that it supports insert()/remove()/find() methods.  These
+	  rather unorthodox methods are useful for implementing the
+	  TSS semantics required by OS.cpp.
+
+	* ace/Containers: Revised all the interfaces for the various
+ 	  containers so that they all have the same "look and feel."
+
 Thu May  8 11:52:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/{Task,Thread}.h: Added documentation describing
@@ -34,41 +73,6 @@ Thu May 08 01:12:59 1997    <irfan@TWOSTEP>
 
 	* tests: Added new test. Following changed:
 	  Makefile run_tests.bat run_tests.sh tests.mak tests.mdp
-
-Thu May  8 00:40:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Containers.i (size): Changed <TYPE> to <T> so that this
- 	  compiles on the Alpha.  Thanks to James CE Johnson
- 	  <jcej@lads.com> for this.
-
-	* ace/IOStream.h: Include the std_macros header on the Alpha.
-  	  Thanks to James CE Johnson <jcej@lads.com> for this.
-
-	* include/makeinclude/platform_osf1_4.0.GNU (SOBUILD): Removed
- 	  -lACE from the link line.  Thanks to James CE Johnson
- 	  <jcej@lads.com> for this.
-
-	* tests/Timer_Queue_Test.cpp: Changed all the int timer ids to
- 	  long so that the test will work on DEC ALPHAs.  Thanks to Thilo
- 	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
-
-	* ace/Process: Fixed a number of compile problems for UNIX.
-
-	* ace/Process.h: Changed the methods named stdin/stdout/stderr to
- 	  std_in/std_out/std_err to avoid name clashes with the standard C
- 	  library.
-
-	* ace/OS: Changed the use of ACE_Unbounded_Set to
- 	  ACE_Unbounded_Stack in order to get the appropriate semantics
- 	  for TSS cleanup on NT.
-
-	* ace/Containers: Enhanced the ACE_Unbounded_Stack class so
-	  that it supports insert()/remove()/find() methods.  These
-	  rather unorthodox methods are useful for implementing the
-	  TSS semantics required by OS.cpp.
-
-	* ace/Containers: Revised all the interfaces for the various
- 	  containers so that they all have the same "look and feel."
 
 Thu May 08 00:10:00 1997    <harrison@samba.cs.wustl.edu>
 

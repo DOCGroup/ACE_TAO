@@ -5,6 +5,7 @@
 #define ACE_TIMER_QUEUE_T_C
 
 #define ACE_BUILD_DLL
+#include "ace/Synch.h"
 #include "ace/Timer_Queue_T.h"
 
 #if !defined (__ACE_INLINE__)
