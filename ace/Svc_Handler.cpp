@@ -1,4 +1,3 @@
-// Svc_Handler.cpp
 // $Id$
 
 #if !defined (ACE_SVC_HANDLER_C)
@@ -24,14 +23,24 @@ template <PR_ST_1, ACE_SYNCH_DECL> void *
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new");
-  // Allocate the memory and store it (usually in thread-specific
-  // storage, depending on config flags).
-  ACE_Dynamic::instance ()->set ();
-  return ::new char[n];
+
+  if (ACE_Dynamic::instance () == 0)
+    {
+      ACE_ASSERT (ACE_Dynamic::instance () != 0);  // Ran out of TSS keys?
+      return 0;
+    }
+  else
+    {
+      // Allocate the memory and store it (usually in thread-specific
+      // storage, depending on config flags).
+      ACE_Dynamic::instance ()->set ();
+
+      return ::new char[n];
+    }
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void) 
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy");
 
@@ -42,11 +51,11 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
     // Note that if we are *not* allocated dynamically then the
     // destructor will call <shutdown> automatically when it gets run
     // during cleanup.
-    delete this; 
+    delete this;
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> void
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *obj) 
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *obj)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::delete");
   // You cannot delete a 'void*' (X3J16/95-0087 5.3.5.3), but we know
@@ -58,7 +67,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *obj)
 
 // Default constructor.
 
-template <PR_ST_1, ACE_SYNCH_DECL> 
+template <PR_ST_1, ACE_SYNCH_DECL>
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
                                                           ACE_Message_Queue<ACE_SYNCH_USE> *mq,
                                                           ACE_Reactor *reactor)
@@ -68,7 +77,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
     recycling_act_ (0)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler");
-  
+
   this->reactor (reactor);
 
   // This clever idiom transparently checks if we were allocated
@@ -97,18 +106,18 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
 
   if (this->peer_.get_remote_addr (client_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("get_remote_addr")), -1);
-    
+
   if (client_addr.addr_to_string (buf, sizeof buf) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), 
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("can't obtain peer's address")), -1);
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("connected to %s on fd %d\n"), 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("connected to %s on fd %d\n"),
               buf, this->peer_.get_handle ()));
 #endif /* DEBUGGING */
-  if (this->reactor () 
-      && this->reactor ()->register_handler 
+  if (this->reactor ()
+      && this->reactor ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p"), 
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p"),
                        ASYS_TEXT ("unable to register client handler")), -1);
   return 0;
 }
@@ -171,7 +180,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::set_handle (ACE_HANDLE h)
   this->peer_.set_handle (h);
 }
 
-template <PR_ST_1, ACE_SYNCH_DECL> 
+template <PR_ST_1, ACE_SYNCH_DECL>
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler");
@@ -188,7 +197,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler (void)
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE, 
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE,
                                                        ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close");
@@ -244,8 +253,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::idle (u_long flags)
     return this->close (flags);
 }
 
-template <PR_ST_1, ACE_SYNCH_DECL> void 
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycler (ACE_Connection_Recycling_Strategy *recycler, 
+template <PR_ST_1, ACE_SYNCH_DECL> void
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycler (ACE_Connection_Recycling_Strategy *recycler,
                                                    const void *recycling_act)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycler");
@@ -267,7 +276,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycling_act (void) const
   return this->recycling_act_;
 }
 
-template <PR_ST_1, ACE_SYNCH_DECL> int 
+template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle (void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycle");
