@@ -62,7 +62,7 @@ namespace TAO
   private:
 
     /// Reference to the "IN" argument.
-    S * x_;
+    S x_;
 
   };
 
@@ -102,7 +102,7 @@ namespace TAO
 
   private:
 
-    S * x_;
+    S x_;
   };
 
   // ------------------------------------------------------------
@@ -179,7 +179,7 @@ namespace TAO
 
   private:
 
-    S * x_;
+    S x_;
 
   };
 
@@ -209,7 +209,7 @@ namespace TAO
     typedef in_type                           in_arg_type;
     typedef inout_type                        inout_arg_type;
     typedef out_type                          out_arg_type;
-    typedef ret_type                          ret_arg_type;
+    typedef out_type                          ret_arg_type;
 
   };
 
