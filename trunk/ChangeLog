@@ -1,7 +1,15 @@
+Tue Nov 13 15:04:15 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* html/Stats/index.shtml:
+	* html/Stats/detailed_performance.shtml:
+	  Improved documentation about the test location, ORB and network
+	  configuration used.  Thanks to David Yongqiang Wang
+	  <davidyw@avaya.com> for pointing out the problems.
+
 Tue Nov 13 11:46:11 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print 
-	statements that were accessing the element of the unbounded set as 
+	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print
+	statements that were accessing the element of the unbounded set as
 	an int rather than an UglyThing.  Thanks to Ossama for pointing
 	this out.
 
