@@ -959,10 +959,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (const ACE_Time_Value &timeout)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (const ACE_Time_Value &max_wait_time)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
+  ACE_Time_Value timer_buf (0);
+  ACE_Time_Value *this_timeout = 
+    this->timer_queue_->calculate_timeout (&max_wait_time,
+                                           &timer_buf);
   u_long width = (u_long) this->handler_rep_.max_handlep1 ();
 
   ACE_Select_Reactor_Handle_Set fd_set;
@@ -974,7 +978,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (const ACE_Time_Val
                          fd_set.rd_mask_,
                          fd_set.wr_mask_,
                          fd_set.ex_mask_,
-                         timeout);
+                         this_timeout);
 }
 
 // Must be called with lock held.
@@ -987,7 +991,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
   ACE_TRACE ("ACE_Select_Reactor_T::wait_for_multiple_events");
   u_long width = 0;
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout = &timer_buf;
+  ACE_Time_Value *this_timeout;
 
   int number_of_active_handles = this->any_ready (dispatch_set);
 
@@ -998,10 +1002,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
     {
       do
         {
-          if (this->timer_queue_->calculate_timeout (max_wait_time,
-                                                     this_timeout) == 0)
-            this_timeout = 0;
-
+          this_timeout = 
+            this->timer_queue_->calculate_timeout (max_wait_time,
+                                                   &timer_buf);
           width = (u_long) this->handler_rep_.max_handlep1 ();
 
           dispatch_set.rd_mask_ = this->wait_set_.rd_mask_;
