@@ -2,10 +2,12 @@
 
 #include "RTServer_Impl.h"
 #include "ciao/CIAO_common.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RTServer_Impl.inl"
 #endif /* __ACE_INLINE__ */
+
 
 CIAO::RTServer::RTComponentServer_Impl::~RTComponentServer_Impl ()
 {

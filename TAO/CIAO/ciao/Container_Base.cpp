@@ -4,6 +4,7 @@
 #include "ace/DLL.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 #include "Servant_Activator.h"
 
 #if !defined (__ACE_INLINE__)

@@ -9,7 +9,12 @@ Sun Jan 30 20:30:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* DAnCE/ciao/NodeApplication_Impl.cpp:
 	* ciao/Container_Base.cpp:
 	* ciao/ServerActivator_Impl.h:
+	* docs/tutorial/Hello/hello_exec.cpp:
 	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/client.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tools/Assembly_Deployer/Deployment_Configuration.h:
+	* tools/RTComponentServer/RTServer_Impl.cpp:
 
 	  Added missing header include directives that are necessary due
 	  to inter-header dependency reductions in ACE.
