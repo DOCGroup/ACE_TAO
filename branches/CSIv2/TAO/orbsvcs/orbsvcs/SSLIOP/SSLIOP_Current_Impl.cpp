@@ -1,10 +1,10 @@
-// -*- C++ -*-
-
 #include "SSLIOP_Current_Impl.h"
 
-ACE_RCSID (TAO_SSLIOP,
+
+ACE_RCSID (SSLIOP,
            SSLIOP_Current_Impl,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Current_Impl.inl"
@@ -26,7 +26,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong len = attributes.length ();
+  const CORBA::ULong len = attributes.length ();
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated.
@@ -59,7 +59,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
           && attribute.attribute_family.family == 1  // privileges
           && attribute.attribute_type == Security::AccessId)
         {
-          CORBA::ULong j = attribute_list->length ();
+          const CORBA::ULong j = attribute_list->length ();
           attribute_list->length (j + 1);
 
           // ----------------------------------------------------
@@ -99,7 +99,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
             }
 
           // Get the size of the ASN.1 encoding.
-          int cert_length = ::i2d_X509 (cert.in (), 0);
+          const int cert_length = ::i2d_X509 (cert.in (), 0);
           if (cert_length <= 0)
             {
               // An error occurred, so do not include this attribute
@@ -134,8 +134,8 @@ TAO_SSLIOP_Current_Impl::received_credentials (
     ACE_THROW_RETURN (CORBA::BAD_OPERATION (),
                       SecurityLevel2::ReceivedCredentials::_nil ());
 
-  TAO_SSLIOP_ReceivedCredentials *c = 0;
-  ACE_NEW_THROW_EX (c,
+  SecurityLevel2::ReceivedCredentials_ptr creds;
+  ACE_NEW_THROW_EX (creds,
                     TAO_SSLIOP_ReceivedCredentials (cert.in (), 0),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
@@ -144,9 +144,7 @@ TAO_SSLIOP_Current_Impl::received_credentials (
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (SecurityLevel2::ReceivedCredentials::_nil ());
 
-  SecurityLevel2::ReceivedCredentials_var creds = c;
-
-  return creds._retn ();
+  return creds;
 }
 
 void
@@ -161,7 +159,7 @@ TAO_SSLIOP_Current_Impl::get_peer_certificate (
     return;
 
   // Get the size of the ASN.1 encoding.
-  int cert_length = ::i2d_X509 (cert.in (), 0);
+  const int cert_length = ::i2d_X509 (cert.in (), 0);
   if (cert_length <= 0)
     return;
 
@@ -196,7 +194,7 @@ TAO_SSLIOP_Current_Impl::get_peer_certificate_chain (
       X509 *x = sk_X509_value (certs, i);
 
       // Get the size of the ASN.1 encoding.
-      int cert_length = ::i2d_X509 (x, 0);
+      const int cert_length = ::i2d_X509 (x, 0);
       if (cert_length <= 0)
         continue;  // @@ What do we do if there is an error?
 

@@ -1,4 +1,29 @@
-Thu Aug  7  1:51:27 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
+Sun Mar 28 23:45:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
+
+	  Improved "const correctness" in this method.
+
+	 (received_credentials):
+
+	  No need to assign TAO_SSLIOP_ReceivedCredentials instance to a
+	  SecurityLevel2::ReceivedCredentials_var.  Simply return
+	  immediately instead.
+
+Wed Aug 13 23:03:39 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IIOP_Factory.h:
+	* tao/IIOP_Factory.cpp:
+	* tao/Strategies/DIOP_Factory.h:
+	* tao/Strategies/DIOP_Factory.cpp:
+	* tao/Strategies/SHMIOP_Factory.h:
+	* tao/Strategies/SHMIOP_Factory.cpp:
+	* tao/Strategies/UIOP_Factory.h:
+	* tao/Strategies/UIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+	  Removed unused "major_" and "minor_" members.
 
 	* orbsvcs/orbsvcs/CSI.idl:
 	* orbsvcs/orbsvcs/CSIIOP.idl:
