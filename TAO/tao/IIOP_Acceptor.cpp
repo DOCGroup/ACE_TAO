@@ -35,17 +35,12 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 {
 }
 
-// @@ Fred&Ossama: Maybe not for the current round of changes, but
-//    shouldn't the acceptor know which version to create?
-//    And isn't this the right place to setup the tagged components of
-//    a v1.[12] profile?
-
-// @@ Fred&Ossama: We need to check this interface: a single
-//    TAO_Acceptor may be bound to multiple addresses (think of a
-//    multihomed machine with an acceptor listening on the wildcard
-//    address), hence the "Right Thing" seems to be that we pass an
-//    MProfile that is filled up by the TAO_Acceptor class.
-// @@ Right, I agree but for now we assume single endpoint.  fredk
+// TODO = 
+//    1) Set the version number for IIOP for which this acceptor is is valid
+//    2) For V1.[1,2] there are tagged components
+//    3) Create multiple profiles for wild carded endpoints (may be multiple
+//       interfaces over which we can receive requests.  Thus a profile
+//       must be made for each one.
 
 int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
@@ -79,15 +74,8 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
   const TAO_IIOP_Profile *profile =
     ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
 
-  // @@ We should probably cache this value, but then again some
-  //    acceptors have multiple addresses.
-  // @@ Fred: any ideas on how to optimize that?
-  ACE_INET_Addr address;
-  if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
-    return 0;
-
-  // @@ Ossama: can you verify that this operator does the right thing?
-  return profile->object_addr () == address;
+  // compare the port and sin_addr (numeric host address)
+  return profile->object_addr () == this->address_;
 }
 
 ACE_Event_Handler *
@@ -124,6 +112,8 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
     return -1;
 
   addr.set (u_short(0), buffer, 1);
+
+  this->host_ = buffer;
 
   return this->open_i (orb_core, addr);
 }

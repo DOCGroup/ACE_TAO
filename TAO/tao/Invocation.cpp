@@ -136,14 +136,11 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // @@ It seems like this is the right spot to re-order the profiles
   // based on the policies in the ORB.
-  // The following text was here:
-  //     The connection registry is also responsible for selecting the
-  //     profile to use based on some policy or the current forwarding
-  //     state.
-  // IMHO this is not right, the connector registry only finds one
+  // IMHO the connector registry only finds one
   // connector for the given policies, if the connector is not
   // available (say the user wants an ATM connection, but we don't
   // have the protocol) then we give it another profile to try.
+  // So the invocation Object should handle policy decisions.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 #if 0 // @@ TODO implement once PP are merged in
@@ -180,7 +177,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       if (this->transport_ != 0)
         this->transport_->idle ();
 
-      int result = conn_reg->connect (this->stub_, this->transport_);
+      int result = conn_reg->connect (this->profile_, this->transport_);
       if (result == 0)
         break;
 

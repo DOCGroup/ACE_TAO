@@ -71,9 +71,7 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Profile* pfile)
   const TAO_UIOP_Profile *profile =
     ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
 
-  // @@ We should probably cache this value, but then again some
-  //    acceptors have multiple addresses.
-  // @@ Fred: any ideas on how to optimize that?
+  // for UNIX Files this is relatively cheap
   ACE_UNIX_Addr address;
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
     return 0;

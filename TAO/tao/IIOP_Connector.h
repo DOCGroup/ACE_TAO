@@ -60,7 +60,9 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
   //   IIOP-specific Connector bridge for pluggable protocols.
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   Concrete instance of the TAO_Connector class.  Responsible
+  //   for establishing a connection with a server and is called from the
+  //   Connector_Registory.
   //
 public:
   // = Initialization and termination methods.

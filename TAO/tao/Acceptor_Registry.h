@@ -50,6 +50,7 @@ class TAO_Export TAO_Acceptor_Registry
   // = DESCRIPTION
   //   This class maintains a list os acceptor factories
   //   for all loaded ORB protocols.
+  //   There is one Acceptor_Registry per ORB_Core.
 public:
   // = Initialization and termination methods.
   TAO_Acceptor_Registry (void);
@@ -58,27 +59,8 @@ public:
   ~TAO_Acceptor_Registry (void);
   //  Default destructor.
 
-  // @@ Fred, should this method be removed?  If so, where should the
-  // comments be put?
-
-  // virtual TAO_Acceptor *acceptor (const char *endpoint) = 0;
-  // Create a new acceptor from an endpoint specification, if
-  // the specification is not recognized then we return 0.
-  // Each protocol will be characterized by a prefix, so
-  // endpoints will be specified as:
-  // "iiop://macarena:0" - IIOP on macarena, port <any>
-  // "uiop:///foo/bar"   - GIOP over unix domain, file /foo/bar
-  // "iiop://localhost:0" - IIOP, sap_any [any better idea?]
-  // "aal5giop:......"   - GIOP over AAL5, how to specify the
-  //                       end point?
-  // this format is extensible, for example:
-  // "rtiiop://macarena:0,15" - real-time IIOP, host, port, prio.
-
   int open (TAO_ORB_Core *orb_core);
   // Initialize all registered acceptors.  Return -1 on error.
-  // @@ Fred&Ossama: What is the relationship between the ORB_Core and
-  // the Acceptor_Registry? Is there just one per orb core? Should tbe
-  // acceptor registry know which ORB_Core it belongs to?
 
   int close_all (void);
   // Close all open acceptors.

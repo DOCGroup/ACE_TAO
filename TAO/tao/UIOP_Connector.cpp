@@ -130,13 +130,16 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
                                      oa) == -1)
     { // Give users a clue to the problem.
       if (TAO_orbdebug)
-        ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
-                    "%s failed (%p)\n",
-                    __FILE__,
-                    __LINE__,
-                    profile->addr_to_string (),
-                    "errno"));
-
+        {
+          char buffer [MAXNAMELEN + 1];
+          profile->addr_to_string (buffer, MAXNAMELEN);
+          ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
+                      "%s failed (%p)\n",
+                      __FILE__,
+                      __LINE__,
+                      buffer,
+                      "errno"));
+        }
       return -1;
     }
 

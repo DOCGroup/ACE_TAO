@@ -119,9 +119,6 @@ public:
   // Return a string representation for this profile.
   // client must deallocate memory.
 
-  const TAO_opaque& body (void) const;
-  // Create IIOP_Profile Object from marshalled data.
-
   int decode (TAO_InputCDR& cdr);
   // Initialize this object using the given CDR octet string.
 
@@ -134,7 +131,7 @@ public:
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
 
-  TAO_ObjectKey *_key (CORBA::Environment &env) const;
+  TAO_ObjectKey *_key (void) const;
   //  Return a pointer to the Object Key.
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
@@ -147,7 +144,7 @@ public:
                      CORBA::Environment &env);
   // Return a hash value for this object.
 
-  char *addr_to_string (void);
+  int addr_to_string (char *buffer, size_t length);
   // Return a string representation for the address.
 
   const ACE_INET_Addr &object_addr (void) const;
@@ -191,9 +188,6 @@ private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
 
-  void create_body (void);
-  // Does the work for <add_profile>.
-
 private:
 
   char *host_;
@@ -201,9 +195,6 @@ private:
 
   CORBA::UShort port_;
   // TCP port number
-
-  TAO_opaque body_;
-  // Marshaled profile (CDR).
 
   TAO_IOP_Version version_;
   // IIOP version number.

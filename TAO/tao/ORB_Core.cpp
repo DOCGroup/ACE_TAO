@@ -1119,6 +1119,17 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
   if (this->acceptor_registry_ == 0)
     return 0;
 
+  // @@ Lots of issues arrise when dealing with collocation.  What about
+  //    forwarding or what if this is a multi-profile IOR where the order is
+  //    significant and only one of the profiles is collocated.  For example
+  //    when using a multiple servers for fault tolerance.  For now, we just
+  //    look through all profiles and if any are colocated then we assume
+  //    the object is collocated.
+  // @@ Note, if collocated we can not be forwarded!
+  //    Also, acceptor_registry_->is_collocated (...) will check the
+  //    address (ORB Host) but not the object_key.  This should be checked 
+  //    also.
+
   return this->acceptor_registry_->is_collocated (mprofile);
 }
 

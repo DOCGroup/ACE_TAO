@@ -15,15 +15,9 @@ TAO_IIOP_Profile::object_key (TAO_ObjectKey& objkey)
 }
 
 ACE_INLINE TAO_ObjectKey *
-TAO_IIOP_Profile::_key (CORBA::Environment &) const
+TAO_IIOP_Profile::_key (void) const
 {
   return new TAO_ObjectKey (this->object_key_);
-}
-
-ACE_INLINE const TAO_opaque&
-TAO_IIOP_Profile::body (void) const
-{
-  return this->body_;
 }
 
 ACE_INLINE const ACE_INET_Addr&

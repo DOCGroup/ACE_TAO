@@ -114,13 +114,11 @@ TAO_Connector_Registry::preconnect (TAO_EndpointSet &preconnections)
 }
 
 int
-TAO_Connector_Registry::connect (TAO_Stub *&obj,
+TAO_Connector_Registry::connect (TAO_Profile *&profile,
                                  TAO_Transport *&transport)
 {
-  TAO_Profile *profile = obj->profile_in_use ();
 
-  // Here is where we get the appropriate connector object but we are
-  // the Connector Registry so call get_connector(tag)
+  // Find the appropriate connector object
   TAO_Connector *connector =
     this->get_connector (profile->tag ());
 
