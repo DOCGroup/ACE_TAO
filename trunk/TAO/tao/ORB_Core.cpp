@@ -881,9 +881,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else
         {
+	  this->thread_per_connection_use_timeout_ = 1;
           int milliseconds =
             ACE_OS::atoi (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT);
-
           this->thread_per_connection_timeout_.set (0,
                                                     1000 * milliseconds);
         }

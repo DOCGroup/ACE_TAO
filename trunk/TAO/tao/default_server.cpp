@@ -14,7 +14,7 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
     thread_flags_ (THR_BOUND),
     poa_lock_type_ (TAO_THREAD_LOCK),
     event_loop_lock_type_ (TAO_NULL_LOCK),
-    thread_per_connection_timeout_ (-1)
+    thread_per_connection_use_timeout_ (-1)
 {
 }
 
