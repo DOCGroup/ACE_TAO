@@ -79,13 +79,10 @@ int be_visitor_args_ami_handler_upcall_cs::visit_array (be_array *node)
     {
     case AST_Argument::dir_IN:
       break;
-    case AST_Argument::dir_OUT:
     case AST_Argument::dir_INOUT:
+    case AST_Argument::dir_OUT:
       os->indent ();
-      if (node->size_type () == be_decl::VARIABLE)
-        *os << arg->local_name () << ".in ()";
-      else
-        *os << arg->local_name ();
+	  *os << arg->local_name ();
       break;
     }
   return 0;
@@ -122,7 +119,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_interface (be_interface *)
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << arg->local_name () << ".in ()";
+    if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".in ()";
       break;
     }
   return 0;
@@ -140,7 +141,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_interface_fwd (be_interface_fwd
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << arg->local_name () << ".in ()";
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".in ()";
       break;
     }
   return 0;
@@ -160,7 +165,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_valuetype (be_valuetype *)
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << arg->local_name () << ".in ()";
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".in ()";
       break;
     }
   return 0;
@@ -178,7 +187,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_valuetype_fwd (be_valuetype_fwd
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << arg->local_name () << ".in ()";
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".in ()";
       break;
     }
   return 0;
@@ -215,7 +228,11 @@ int be_visitor_args_ami_handler_upcall_cs::visit_predefined_type (be_predefined_
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
           os->indent ();
-          *os << arg->local_name () << ".in ()";
+          if (this->ctx_->state ()
+              == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS)
+            *os << arg->local_name ();
+          else
+            *os << arg->local_name () << ".in ()";
           break;
         } // end switch direction
     } // end else if
@@ -272,7 +289,12 @@ int be_visitor_args_ami_handler_upcall_cs::visit_string (be_string *)
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << arg->local_name () << ".in ()";
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+  	    *os << arg->local_name () << ".in ()";
+      break;
     }
   return 0;
 }
@@ -289,10 +311,7 @@ int be_visitor_args_ami_handler_upcall_cs::visit_structure (be_structure *node)
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      if (node->size_type () == be_decl::VARIABLE)
-        *os << arg->local_name () << ".in ()";
-      else
-        *os << arg->local_name ();
+      *os << arg->local_name ();
       break;
     }
   return 0;
@@ -310,10 +329,7 @@ int be_visitor_args_ami_handler_upcall_cs::visit_union (be_union *node)
     case AST_Argument::dir_INOUT:
     case AST_Argument::dir_OUT:
       os->indent ();
-      if (node->size_type () == be_decl::VARIABLE)
-        *os << arg->local_name () << ".in ()";
-      else
-        *os << arg->local_name ();
+      *os << arg->local_name ();
       break;
     }
   return 0;

@@ -1,3 +1,14 @@
+Wed Sep 08 01:42:01 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_factory.cpp,
+	  TAO/TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp,
+	  TAO_IDL/be/be_visitor_operation/argument.cpp,
+	  TAO_IDL/be_include/be_codegen.h:
+	  The upcall for strings as out parameter did not work properly due
+	  to an superfluous in (). I also fixed other data types
+	  having the same problems.
+
 Tue Sep 07 22:25:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Load_Balancing/Makefile: don't build with repo=1,
