@@ -232,7 +232,6 @@ public:
   // extract an object reference
 
   // = ALLOCATION
-
   void *operator new (size_t, const void *p);
   // Placement new.
 
@@ -269,9 +268,15 @@ public:
   // to the contained type safely.
 
   // = Memory management methods.
+
   CORBA::ULong AddRef (void);
   CORBA::ULong Release (void);
-
+  
+  // = Debugging method.
+  
+  static void dump (const CORBA::Any any_value);
+  // Prints the type and the value of the any value. Dumping is
+  // supported only for standard data types.
 private:
   CORBA::TypeCode_ptr type_;
   // Typecode for the <Any>.
