@@ -223,7 +223,7 @@ test_performance (ACE_Timer_Queue *tq,
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
 	      ASYS_TEXT ("time per call = %f usecs\n"), 
-	      (et.user_time / double (max_iterations)) * 1000000));
+	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to cancel all the timers.
 
@@ -246,7 +246,7 @@ test_performance (ACE_Timer_Queue *tq,
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
 	      ASYS_TEXT ("time per call = %f usecs\n"), 
-	      (et.user_time / double (max_iterations)) * 1000000));
+	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to schedule and expire all the
   // timers.
@@ -283,7 +283,7 @@ test_performance (ACE_Timer_Queue *tq,
               et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
 	      ASYS_TEXT ("time per call = %f usecs\n"), 
-	      (et.user_time / double (max_iterations)) * 1000000));
+	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to randomly cancel all the
   // timers.
@@ -323,7 +323,7 @@ test_performance (ACE_Timer_Queue *tq,
              et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
              ASYS_TEXT ("time per call = %f usecs\n"), 
-             (et.user_time / double (max_iterations)) * 1000000));
+             (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to randomly schedule all the timers.
 
@@ -356,7 +356,7 @@ test_performance (ACE_Timer_Queue *tq,
               et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
 	      ASYS_TEXT ("time per call = %f usecs\n"), 
-	      (et.user_time / double (max_iterations)) * 1000000));
+	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
   // Test the amount of time required to cancel all the timers.
 
@@ -384,7 +384,7 @@ test_performance (ACE_Timer_Queue *tq,
 	    et.real_time, et.user_time, et.system_time));
   ACE_DEBUG ((LM_DEBUG, 
 	      ASYS_TEXT ("time per call = %f usecs\n"), 
-	      (et.user_time / double (max_iterations)) * 1000000));
+	      (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
   
   delete [] times;
 }
