@@ -4,9 +4,9 @@
 # add "VERSION=3.0.0" to your make invocation.
 
 debug = 1
-optimize = 1
 shared_libs =
 static_libs = 1
+#### optimize is defined below because it is version-dependent.
 
 ifneq ($(shell uname -s),LynxOS)
   CROSS-COMPILE = 1
@@ -36,6 +36,14 @@ ifneq ($(shell uname -s),LynxOS)
 /usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/bin:/usr/lynx/$(VERSION)/$(LYNXTARGET)/cdk/$(HOST_OS)-$(LYNXTARGET)/usr/bin:$(PATH)
   endif # PATH
 endif # ! LynxOS
+
+ifeq (2.5.0,$(VERSION))
+  # NOTE: On LynxOS Version 2.5.0, optimization causes these warnings:
+  #       warning: internal compiler error: debugging info corrupted
+  optimize = 0
+else
+  optimize = 1
+endif # VERSION
 
 CC              = gcc
 CXX             = g++
