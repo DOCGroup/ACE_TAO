@@ -5,13 +5,27 @@
 
 ACE_INLINE
 ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
-  : thr_handle_ (ACE_OS::NULL_hthread)
+  : thr_id_ (ACE_OS::NULL_thread),
+    thr_handle_ (ACE_OS::NULL_hthread)
 {
 }
 
 ACE_INLINE
 ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base (void)
 {
+}
+
+ACE_INLINE int
+ACE_Thread_Descriptor_Base::operator==(const ACE_Thread_Descriptor_Base &rhs) const
+{
+  return ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_) == 0
+    && ACE_OS::thr_equal (this->thr_id_, rhs.thr_id_) == 0;
+}
+
+ACE_INLINE int
+ACE_Thread_Descriptor_Base::operator!=(const ACE_Thread_Descriptor_Base &rhs) const
+{
+  return !(*this == rhs);
 }
 
 // Unique thread id.

@@ -82,7 +82,18 @@ public:
   ACE_Thread_Descriptor_Base (void);
   ~ACE_Thread_Descriptor_Base (void);
 
+  // = We need the following operators to make Borland happy.
+
+  int operator== (const ACE_Thread_Descriptor_Base &rhs) const;
+  // Equality operator.
+
+  int operator!= (const ACE_Thread_Descriptor_Base &rhs) const;
+  // Inequality operator.
+	
 protected:
+  ACE_thread_t thr_id_;
+  // Unique thread ID.
+	
   ACE_hthread_t thr_handle_;
   // Unique handle to thread (used by Win32 and AIX).
 
@@ -142,13 +153,6 @@ public:
   ~ACE_Thread_Descriptor (void);
   // Do nothing destructor to keep some compilers happy
 
-  // = We need the following to make BORLANDC happy.
-  int operator== (const ACE_Thread_Descriptor &rhs) const;
-  // Equality operator.
-
-  int operator!= (const ACE_Thread_Descriptor &rhs) const;
-  // Inequality operator.
-
   long flags (void) const;
   // Get the thread creation flags.
 
@@ -168,9 +172,6 @@ public:
   // of g++ couldn't grok this code without it.
 
 private:
-  ACE_thread_t thr_id_;
-  // Unique thread ID.
-
   int grp_id_;
   // Group ID.
 

@@ -107,13 +107,13 @@ ACE_Time_Value::operator FILETIME () const
 		     ACE_Time_Value::FILETIME_to_timval_skew);
   FILETIME file_time;
 
-# if (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530)
+# if defined(__BORLANDC__)
 #   define LOWPART(x) x.u.LowPart
 #   define HIGHPART(x) x.u.HighPart
 # else
 #   define LOWPART(x) x.LowPart
 #   define HIGHPART(x) x.HighPart
-# endif /* (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
+# endif /* defined(__BORLANDC__) */
 
   file_time.dwLowDateTime = LOWPART(_100ns);
   file_time.dwHighDateTime = HIGHPART(_100ns);

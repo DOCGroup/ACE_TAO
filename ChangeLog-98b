@@ -1,3 +1,16 @@
+Mon Jun 22 02:32:56 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* ace/Thread_Manager.h: 
+	* ace/Thread_Manager.cpp: 
+	* ace/Thread_Manager.i: 
+	* ace/OS.cpp (uname): 
+	Moved a few things (comparison operators) from
+	ACE_Thread_Descriptor to ACE_Thread_Descriptor_Base, to satisfy
+	Borland compilers.
+	Enabled a conditional compilation for all Borland compilers.
+ 	Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for pointing
+	these things out.
+
 Mon Jun 22 01:14:36 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* ace/ACE.bpg: 
