@@ -1,4 +1,6 @@
 #include "orbsvcs/Log/EventLogFactory_i.h"
+// @@ David, once you switch to a PortableServer::ServantBase_var, you
+//    won't need to include the ace/Auto_Ptr.h header.
 #include "ace/Auto_Ptr.h"
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/EventLogNotification.h"
@@ -183,6 +185,9 @@ EventLogFactory_i::create_with_id (
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
+  // @@ David, EventLog_i is reference count.  auto_ptr<> does not
+  //    apply in this case.  Use PortableServer::ServantBase_var
+  //    instead.  Also remove the below call to _remove_ref().
   auto_ptr<EventLog_i> event_log_auto (event_log_i);
   // just in case the activation fails.
 
@@ -197,14 +202,19 @@ EventLogFactory_i::create_with_id (
   event_log = event_log_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
+  // @@ David, once you switch from an auto_ptr<> to a
+  //    PortableServer::ServantBase_var above,  remove this
+  //    _remove_ref() call (and the ACE_CHECK_RETURN after it).
   event_log_i->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   // Add to the Hash table..
-  if (hash_map_.bind (id, log) == -1)
+  if (hash_map_.bind (id, event_log.in ()) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       DsEventLogAdmin::EventLog::_nil ());
 
+  // @@ David, zap this auto_ptr<>::release() call once you switch to
+  //    a PortableServer::ServantBase_var above.
   // All is well, release the reference.
   event_log_auto.release ();
 
@@ -231,6 +241,8 @@ EventLogFactory_i::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
+// @@ David, once you switch to a PortableServer::ServantBase_var, you
+//    won't need these explicit template instantations.
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class auto_ptr <EventLog_i>;
