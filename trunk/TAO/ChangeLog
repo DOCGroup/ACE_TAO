@@ -25,7 +25,7 @@ Wed Jan 19 10:01:57 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typedef.cpp:
         * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
-        
+
           Fixed a bug in code generation when both an array (which
           is declared in generated code as a typedef) and a typedef
           of the array are declared inside another data type which
@@ -36,9 +36,9 @@ Wed Jan 19 10:01:57 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           with the *_slice, *_var, *_out, and *_forany typedefs.
           Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
           submitting the example IDL that demonstrated the problem.
-        
+
         * tests/IDL_Test/array.idl:
-        
+
           Added the submitted IDL mentioned above to the IDL test
           for arrays.
 
