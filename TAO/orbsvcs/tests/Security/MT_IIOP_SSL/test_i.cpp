@@ -6,13 +6,14 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (MT_Server, 
-           test_i, 
+ACE_RCSID (MT_IIOP_SSL,
+           test_i,
            "$Id$")
 
 void
