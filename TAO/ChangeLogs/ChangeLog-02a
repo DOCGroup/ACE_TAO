@@ -5,6 +5,10 @@ Fri Apr 27 04:07:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 	  Fixed the send method, as it used not the right handle to send 
 	  its data.
 
+	* examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+	 
+	  Fixed code to remove connection handlers.
+
 Thu Apr 26 22:21:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/interface.idl:
