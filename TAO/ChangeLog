@@ -1,4 +1,9 @@
-Tue apr 01 08:03:03 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Apr 01 12:13:33 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/Makefile.bor: Added this
+          missing BCB makefile to fix error on the scoreboard.
+
+Tue Apr 01 08:03:03 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IOP_Codec.pidl:
         * tao/IOP_IOR.pidl:
