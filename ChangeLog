@@ -1,3 +1,10 @@
+Mon Mar  8 18:34:09 2004  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* ace/Process_Semaphore.cpp:
+	* ace/Process_Mutex.inl:
+	Added SEM_UNDO when using SysV Semaphore Complex methods.
+	That fixes bug 1153 thanks to Frank Kuhlmann <kuhlmann@materna.de>
+
 Mon Mar  8 16:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ASNMP/tests/tests.mpc:
