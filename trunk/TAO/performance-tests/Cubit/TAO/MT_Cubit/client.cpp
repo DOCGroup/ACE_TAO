@@ -101,8 +101,8 @@ do_priority_inversion_test (Task_State &ts)
 
       // Get the next higher priority.
       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-						  priority,
-						  ACE_SCOPE_THREAD);
+                                                  priority,
+                                                  ACE_SCOPE_THREAD);
     }
 
   // Wait for all the threads to exit (except the utilization thread).
@@ -128,10 +128,10 @@ do_priority_inversion_test (Task_State &ts)
   char buffer[BUFSIZ];
 
   sprintf (latency_file,
-	   "cb%d%s%d.txt",
-	   ACE_OS::getpid (),
-	   ts.use_sysbench_ == 1? "SB": "__",
-	   ts.thread_count_);
+           "cb%d%s%d.txt",
+           ACE_OS::getpid (),
+           ts.use_sysbench_ == 1? "SB": "__",
+           ts.thread_count_);
   ACE_DEBUG ((LM_DEBUG,
               "--->Output file for latency data is \"%s\"\n",
               latency_file));
@@ -147,13 +147,13 @@ do_priority_inversion_test (Task_State &ts)
                j);
 
       for (u_int i = 0; i < ts.loop_count_; i ++)
-	{
-	  sprintf (buffer + ACE_OS::strlen (buffer),
+        {
+          sprintf (buffer + ACE_OS::strlen (buffer),
                    "\t%u\n", ts.global_jitter_array_[j][i]);
-	  ACE_OS::fputs (buffer,
+          ACE_OS::fputs (buffer,
                          latency_file_handle);
-	  buffer[0] = 0;
-	}
+          buffer[0] = 0;
+        }
     }
 
   ACE_OS::fclose (latency_file_handle);
@@ -256,11 +256,11 @@ do_thread_per_rate_test (Task_State &ts)
 
     ACE_DEBUG ((LM_DEBUG,
                 "Test done.\n"
-                "40Hz client latency : %d usec\n"
-                "20Hz client latency : %d usec\n"
-                "10Hz client latency : %d usec\n"
-                "5Hz client latency : %d usec\n"
-                "1Hz client latency : %d usec\n",
+                "40Hz client latency : %u usec\n"
+                "20Hz client latency : %u usec\n"
+                "10Hz client latency : %u usec\n"
+                "5Hz client latency : %u usec\n"
+                "1Hz client latency : %u usec\n",
                 CB_40Hz_client.get_latency (0),
                 CB_20Hz_client.get_latency (1),
                 CB_10Hz_client.get_latency (2),

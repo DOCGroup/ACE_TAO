@@ -165,10 +165,10 @@ Client::get_low_priority_latency (void)
   return ts_->start_count_ > 1? l / (double) (ts_->start_count_ - 1) : 0;
 }
 
-int
+u_int
 Client::get_latency (u_int thread_id)
 {
-  return ts_->latency_ [thread_id];
+  return ACE_static_cast (u_int, ts_->latency_ [thread_id]);
 }
 
 double
@@ -567,12 +567,12 @@ Client::run_tests (Cubit_ptr cb,
       ACE_Time_Value delta_t;
 
       // use sysBench when CHORUS defined and option specified on command line
-#if defined (CHORUS)      
+#if defined (CHORUS)
       if (ts_->use_sysbench_ == 1)
-	timer_.start (ACE_OS::ACE_HRTIMER_START); 
-      else 
+        timer_.start (ACE_OS::ACE_HRTIMER_START);
+      else
 #endif /* CHORUS */
-	timer_.start ();
+        timer_.start ();
 
       if (ts_->oneway_ == 0)
         {
@@ -764,13 +764,13 @@ Client::run_tests (Cubit_ptr cb,
         }
 
       // use sysBench when CHORUS defined and option specified on command line
-#if defined (CHORUS)      
+#if defined (CHORUS)
       if (ts_->use_sysbench_ == 1)
-	timer_.stop (ACE_OS::ACE_HRTIMER_STOP); 
-      else 
+        timer_.stop (ACE_OS::ACE_HRTIMER_STOP);
+      else
 #endif /* CHORUS */
       // if CHORUS is not defined just use plain timer_.stop ().
-      timer_.stop (); 
+      timer_.stop ();
 
       timer_.elapsed_time (delta_t);
 
