@@ -5,6 +5,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Thread.h"
 #include "ace/Time_Value.h"
+#include "ace/Reactor.h"
+#include "ace/Event_Handler.h"
 #include "ace/OS_NS_sys_time.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
@@ -35,56 +37,84 @@ class Once_Handler: public Service_Handler
 public:
   Once_Handler(void)
     : handled_start_(0)
-      , handled_stop_(0)
+    , handled_stop_(0)
   {
   }
 
-  ///Takes ownership of the Timeout_Consumer ONLY (ownership is passed to the Kokyu_EC).
+  virtual ~Once_Handler(void)
+  {
+    this->reactor_->cancel_timer(this->timer_handle_);
+
+    delete timeout_handler_impl_;
+  }
+
+  ///Takes ownership of the Timeout_Handler ONLY.
   void init (
-             Kokyu_EC * kokyu_ec,
-             Supplier * supplier_impl,
-             Timeout_Consumer *timeout_consumer_impl,
-             const char * timeout_entry_point,
-             ACE_Time_Value period,
-             RtecScheduler::Criticality_t crit,
-             RtecScheduler::Importance_t imp
+             ACE_Reactor * reactor
+             , ACE_Event_Handler *timeout_handler_impl
+             , ACE_Time_Value period
              )
   {
-    this->timeout_consumer_impl_ = timeout_consumer_impl;
-    this->timeout_entry_point_ = timeout_entry_point;
+    this->reactor_ = reactor;
+    this->timeout_handler_impl_ = timeout_handler_impl;
     this->period_ = period;
-    this->crit_ = crit;
-    this->imp_ = imp;
-    this->supplier_impl_ = supplier_impl;
-    this->kokyu_ec_ = kokyu_ec;
   }
 
   virtual void handle_service_start(const RtecEventComm::EventSet&
                                     ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ))
   {
-    if (!this->handled_start_)
+    if (this->handled_start_ == 0)
       {
+        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_start() START\n"));
         this->handled_start_++; //set to true
 
+        // Uncommenting this causes the Supplier_EC event type 18 to never be pushed again (despite the timeout happening)
         //trigger Task 3!
+        /*
         kokyu_ec_->add_timeout_consumer(
                                        supplier_impl_,
-                                       timeout_consumer_impl_,
+                                       timeout_handler_impl_,
                                        timeout_entry_point_,
                                        period_,
                                        crit_,
                                        imp_
                                        ACE_ENV_ARG_PARAMETER
                                        );
+        ACE_CHECK;
+
+        //should be able to just call Kokyu_EC::start() to recompute schedule
+        //BEWARE if kokyu_ec_ overrides start() to do stuff we don't want to redo!
+        //which is why we specify the Kokyu_EC version of the function!
+        kokyu_ec_->Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+        */
+
+        //WARNING: depending on Reactor, might not be a RT solution!
+
+        this->timer_handle_ = this->reactor_->schedule_timer(this->timeout_handler_impl_,
+                                                             0, //arg
+                                                             ACE_Time_Value::zero, //delay
+                                                             this->period_ //period
+                                                             );
+
+        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_start() END\n"));
       }
   }
 
   virtual void handle_service_stop(const RtecEventComm::EventSet&
                                     ACE_ENV_ARG_DECL)
   {
-    if (!this->handled_stop_)
+    if (this->handled_stop_ == 0)
       {
+        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_stop() START\n"));
         this->handled_stop_++; //set to true
+        ACE_DEBUG((LM_DEBUG,"Once_Handler (%P|%t) handle_service_stop() END\n"));
       }
   }
 
@@ -92,14 +122,19 @@ private:
   int handled_start_;
   int handled_stop_;
 
-  Timeout_Consumer *timeout_consumer_impl_;
-  const char * timeout_entry_point_;
+  ACE_Reactor *reactor_;
+  ACE_Event_Handler *timeout_handler_impl_;
   ACE_Time_Value period_;
+  long timer_handle_;
+
+  /*
+  Timeout_Consumer * timeout_consumer_impl_;
+  Supplier * supplier_impl_;
+  const char * timeout_entry_point_;
   RtecScheduler::Criticality_t crit_;
   RtecScheduler::Importance_t imp_;
-
-  Supplier * supplier_impl_;
   Kokyu_EC * kokyu_ec_;
+  */
 };
 
 class Consumer_EC : public Kokyu_EC
@@ -114,7 +149,8 @@ public:
   {
   } //~Consumer_EC()
 
-  void set_up_supp_and_cons(ACE_ENV_SINGLE_ARG_DECL)
+  void set_up_supp_and_cons(CORBA::ORB_var orb
+                            ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      , RtecScheduler::UNKNOWN_TASK
@@ -143,10 +179,14 @@ public:
     // *************************************************************
     // Create a consumer, intialize its RT_Info structures, and
     // connnect to the event channel....
-
+    /*
     Timeout_Consumer * timeout_consumer_impl3;
     ACE_NEW(timeout_consumer_impl3,
             Timeout_Consumer(supplier_impl3));
+    */
+    Supplier_Timeout_Handler * timeout_handler_impl3;
+    ACE_NEW(timeout_handler_impl3,
+            Supplier_Timeout_Handler(supplier_impl3));
     Once_Handler * task3_trigger;
     ACE_NEW(task3_trigger,
             Once_Handler);
@@ -158,7 +198,11 @@ public:
     info.threads = 0;
     info.info_type = RtecScheduler::OPERATION;
 
-
+    task3_trigger->init(orb->orb_core()->reactor(),
+                        timeout_handler_impl3,
+                        tv
+                        );
+    /*
     task3_trigger->init(this,
                         supplier_impl3,
                         timeout_consumer_impl3,
@@ -167,8 +211,9 @@ public:
                         info.criticality,
                         info.importance
                         );
+    */
     once_ = task3_trigger;
-    //need specify period, criticality, importance for supplier_impl3
+    //need specify period, criticality, importance for supplier_impl3, since timeout not yet registered
     RtecScheduler::Scheduler_ptr sched = this->scheduler();
     sched->set (supplier_impl3->rt_info(),
                 info.criticality,
@@ -244,121 +289,127 @@ main (int argc, char* argv[])
   ds_control* ds_cntl = new ds_control ("Federated_Test_Consumer","consumer_enabled.dsui");
 #endif // ACE_HAS_DSUI
 
-TAO_EC_Kokyu_Factory::init_svcs ();
+  TAO_EC_Kokyu_Factory::init_svcs ();
 
-//@BT
-//DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
-ACE_Time_Value tv = ACE_OS::gettimeofday();
-ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",tv.msec()));
+  //@BT
+  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t START at %u\n",tv.msec()));
 #ifdef ACE_HAS_DSUI
-//  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
-//  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
-DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 0, 0, NULL);
+  //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
+  //  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+  DSUI_EVENT_LOG(MAIN_GROUP_FAM, START, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
 
-ACE_DECLARE_NEW_CORBA_ENV;
-ACE_TRY
-{
-  // ORB initialization boiler plate...
-  CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  if (parse_args (argc, argv) == -1)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      ACE_ERROR ((LM_ERROR,
-                  "Usage: Service [-o IOR_file_name]\n"));
+      // ORB initialization boiler plate...
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (parse_args (argc, argv) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Usage: Service [-o IOR_file_name]\n"));
+          return 1;
+        }
+
+      CORBA::Object_var object =
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      PortableServer::POA_var poa =
+        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      PortableServer::POAManager_var poa_manager =
+        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      //We need to set the ACE_Reactor::instance() to be the ORB
+      //reactor so Kokyu's RG implementation can use it w/o creating
+      //an extra thread to run the reactor event loop. I hope this
+      //doesn't screw something else up!
+      //ACE_Reactor::instance(orb->orb_core()->reactor());
+
+      // ****************************************************************
+
+      Consumer_EC consumer_ec;
+      if (consumer_ec.init(sched_type.c_str(), poa.in()) == -1)
+        {
+          ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Consumer_EC"), 1);
+        }
+
+      consumer_ec.set_up_supp_and_cons(orb ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // ****************************************************************
+      RtEventChannelAdmin::RtSchedEventChannel_var consumer_ec_ior =
+        consumer_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::String_var ior = orb->object_to_string(consumer_ec_ior.in()
+                                                    ACE_ENV_ARG_PARAMETER);
+
+      ACE_OS::fprintf(ior_output_file, ior.in());
+      ACE_OS::fclose(ior_output_file);
+
+      // ****************************************************************
+
+      // At this point the consumer and supplier are connected to the
+      // EC, they have provided their QoS info to the Scheduling
+      // Service and the EC has informed the Scheduler about the
+      // dependencies between them.
+      // We can now compute the schedule for this configuration...
+
+      // The schedule is returned in this variables....
+
+      consumer_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // ****************************************************************
+
+      ACE_hthread_t thr_handle;
+      ACE_Thread::self (thr_handle);
+
+      int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
+      ACE_OS::thr_setprio (thr_handle, prio);
+
+#ifdef ACE_HAS_DSUI
+      //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
+      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+      tv = ACE_OS::gettimeofday();
+      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",tv.msec()));
+      DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
+#endif //ACE_HAS_DSUI
+
+#ifdef ACE_HAS_DSUI
+      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
+#else
+      EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
+#endif //ACE_HAS_DSUI
+      ACE_Time_Value ticker (125);
+      orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
+
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // ****************************************************************
+
+      // We should do a lot of cleanup (disconnect from the EC,
+      // deactivate all the objects with the POA, etc.) but this is
+      // just a simple demo so we are going to be lazy.
+
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_EC - Service");
       return 1;
     }
-
-  CORBA::Object_var object =
-    orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-  PortableServer::POA_var poa =
-    PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-  PortableServer::POAManager_var poa_manager =
-    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  // ****************************************************************
-
-  Consumer_EC consumer_ec;
-  if (consumer_ec.init(sched_type.c_str(), poa.in()) == -1)
-    {
-      ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Consumer_EC"), 1);
-    }
-
-  consumer_ec.set_up_supp_and_cons(ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  // ****************************************************************
-  RtEventChannelAdmin::RtSchedEventChannel_var consumer_ec_ior =
-    consumer_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  CORBA::String_var ior = orb->object_to_string(consumer_ec_ior.in()
-                                                ACE_ENV_ARG_PARAMETER);
-
-  ACE_OS::fprintf(ior_output_file, ior.in());
-  ACE_OS::fclose(ior_output_file);
-
-  // ****************************************************************
-
-  // At this point the consumer and supplier are connected to the
-  // EC, they have provided their QoS info to the Scheduling
-  // Service and the EC has informed the Scheduler about the
-  // dependencies between them.
-  // We can now compute the schedule for this configuration...
-
-  // The schedule is returned in this variables....
-
-  consumer_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  // ****************************************************************
-
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-
-  int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
-  ACE_OS::thr_setprio (thr_handle, prio);
-
-#ifdef ACE_HAS_DSUI
-  //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
-  //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
-  tv = ACE_OS::gettimeofday();
-  ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",tv.msec()));
-  DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
-#endif //ACE_HAS_DSUI
-
-#ifdef ACE_HAS_DSUI
-  EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance(), ds_cntl);
-#else
-  EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
-#endif //ACE_HAS_DSUI
-  ACE_Time_Value ticker (125);
-  orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
-
-  orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  // ****************************************************************
-
-  // We should do a lot of cleanup (disconnect from the EC,
-  // deactivate all the objects with the POA, etc.) but this is
-  // just a simple demo so we are going to be lazy.
-
-}
-ACE_CATCHANY
-{
-  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_EC - Service");
-  return 1;
-}
-ACE_ENDTRY;
-return 0;
+  ACE_ENDTRY;
+  return 0;
 }
 
 // ****************************************************************

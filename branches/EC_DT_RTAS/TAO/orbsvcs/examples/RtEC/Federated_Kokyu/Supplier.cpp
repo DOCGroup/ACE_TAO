@@ -2,6 +2,7 @@
 
 #include "Supplier.h"
 #include "ace/Time_Value.h"
+#include "ace/Thread.h" //for ACE_Thread::self()
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/RtecEventCommC.h"
@@ -82,6 +83,8 @@ Supplier::get_id(void) const
   return this->id_;
 }
 
+// ****************************************************************
+
 Timeout_Consumer::Timeout_Consumer (Supplier* supplier)
   :supplier_impl_ (supplier)
 {
@@ -111,8 +114,9 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   Object_ID oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
+  oid.pid = events[0].header.eid.pid;
   oid.queue_id = events[0].header.eid.queue_id;
-  oit.type = events[0].header.type;
+  oid.type = events[0].header.type;
 
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
@@ -131,6 +135,45 @@ Timeout_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+// ****************************************************************
+
+/// Constructor
+Supplier_Timeout_Handler::Supplier_Timeout_Handler (Supplier * supplier_impl)
+  : supplier_impl_(supplier_impl)
+{}
+
+int
+Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &current_time,
+                                          const void *act)
+{
+  ACE_DEBUG ((LM_DEBUG, "Supplier_Timeout_Handler (%t): timeout received\n"));
+  //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
+  //timeout occurs to trigger event push. Roughly equivalent to the
+  //scheduling segments started for each one-way call of the DTs.
+  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
+             this->supplier_impl_->get_id(),tv.msec()));
+
+  Object_ID oid;
+  //oid.id = events[0].header.eid.id;
+  oid.tid = ACE_Thread::self();
+  oid.pid = ACE_OS::getpid();
+  //oid.queue_id = events[0].header.eid.queue_id;
+  //oid.type = events[0].header.type;
+
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+
+  supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  //@BT: Finished handling the timeout.
+  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
+  tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
+             this->supplier_impl_->get_id(),tv.msec()));
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+} //Supplier_Timeout_Handler::handle_timeout()
 
 // ****************************************************************
 

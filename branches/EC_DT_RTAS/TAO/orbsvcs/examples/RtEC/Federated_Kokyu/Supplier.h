@@ -17,6 +17,8 @@
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
+#include "ace/Event_Handler.h"
+
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
@@ -87,6 +89,27 @@ public:
   virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
+
+private:
+  Supplier *supplier_impl_;
+}; //class Timeout_Consumer
+
+class Supplier_Timeout_Handler : public ACE_Event_Handler
+{
+  // = TITLE
+  //   Timer consumer object
+  //
+  // = DESCRIPTION
+  //   This class is a consumer of timeout events from EC.
+  //   It registers for timeout event with EC and calls
+  //   the
+  //
+public:
+  Supplier_Timeout_Handler (Supplier * supplier_impl);
+  // Constructor
+
+  virtual int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act = 0);
 
 private:
   Supplier *supplier_impl_;
