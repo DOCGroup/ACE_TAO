@@ -311,6 +311,13 @@ avoid_warning:
 <%endif%>
 <%if(custom_types)%>
 <%foreach(custom_types)%>
+<%if(custom_types->libpath)%>
+LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+SHLIB_PATH      := $(SHLIB_PATH):<%custom_type->libpath%>
+LIBPATH         := $(LIBPATH):<%custom_type->libpath%>
+PATH            := $(PATH):<%custom_type->libpath%>
+
+<%endif%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
 GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>

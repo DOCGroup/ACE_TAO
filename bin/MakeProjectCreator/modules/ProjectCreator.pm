@@ -67,21 +67,25 @@ my(%validNames) = ('exename'         => 1,
                   );
 
 ## Custom definitions only
+## -1 means that it is always an array
+##  0 means that it is an array that gets outputext converted to files
+##  1 means that it is always scalar
 my(%customDefined) = ('automatic'               => 1,
                       'command'                 => 1,
                       'commandflags'            => 1,
-                      'inputext'                => 1,
+                      'inputext'                => -1,
+                      'libpath'                 => 1,
                       'output_option'           => 1,
                       'pch_option'              => 1,
-                      'pre_extension'           => 1,
-                      'pre_filename'            => 1,
-                      'source_outputext'        => 1,
-                      'template_outputext'      => 1,
-                      'header_outputext'        => 1,
-                      'inline_outputext'        => 1,
-                      'documentation_outputext' => 1,
-                      'resource_outputext'      => 1,
-                      'generic_outputext'       => 1,
+                      'pre_extension'           => 0,
+                      'pre_filename'            => 0,
+                      'source_outputext'        => 0,
+                      'template_outputext'      => 0,
+                      'header_outputext'        => 0,
+                      'inline_outputext'        => 0,
+                      'documentation_outputext' => 0,
+                      'resource_outputext'      => 0,
+                      'generic_outputext'       => 0,
                      );
 
 ## Custom sections as well as definitions
@@ -837,7 +841,7 @@ sub parse_define_custom {
           my($name)  = $values[1];
           my($value) = $values[2];
           if (defined $customDefined{$name}) {
-            if ($name eq 'inputext') {
+            if ($customDefined{$name} == -1) {
               $value = $self->escape_regex_special($value);
               my(@array) = split(/\s*,\s*/, $value);
               $self->process_array_assignment(
@@ -861,9 +865,7 @@ sub parse_define_custom {
                   $value =~ s/\$\(([^\)]+)\)/$envstart$1$envend/g;
                 }
               }
-              if ($name eq 'command'      || $name eq 'automatic'     ||
-                  $name eq 'commandflags' || $name eq 'output_option' ||
-                  $name eq 'pch_option') {
+              if ($customDefined{$name} == 1) {
                 if ($type eq 'assignment') {
                   $self->process_assignment(
                                      $name, $value,
@@ -1858,8 +1860,8 @@ sub get_custom_value {
     }
     $value = \@array;
   }
-  elsif ($cmd eq 'command'       || $cmd eq 'pch_option' ||
-         $cmd eq 'output_option' || defined $custom{$cmd}) {
+  elsif (defined $custom{$cmd} ||
+         (defined $customDefined{$cmd} && $customDefined{$cmd} == 1)) {
     $value = $self->get_assignment($cmd,
                                    $self->{'generated_exts'}->{$based});
   }
