@@ -2,14 +2,20 @@
 //
 // $Id$
 
-ACE_INLINE IOP::ServiceContextList &
-TAO_GIOP_Invocation::service_info (void)
+ACE_INLINE TAO_Service_Context &
+TAO_GIOP_Invocation::request_service_context (void)
 {
-  return this->op_details_.service_info	();
+  return this->op_details_.request_service_context ();
+}
+
+ACE_INLINE TAO_Service_Context &
+TAO_GIOP_Invocation::reply_service_context (void)
+{
+  return this->op_details_.reply_service_context ();
 }
 
 ACE_INLINE CORBA::ULong
-TAO_GIOP_Invocation::request_id	(void)
+TAO_GIOP_Invocation::request_id (void)
 {
   return this->op_details_.request_id ();
 }
@@ -21,7 +27,7 @@ TAO_GIOP_Invocation::operation (void)
 }
 
 ACE_INLINE TAO_OutputCDR &
-TAO_GIOP_Invocation::out_stream	(void)
+TAO_GIOP_Invocation::out_stream (void)
 {
   return this->out_stream_;
 }
@@ -30,7 +36,7 @@ ACE_INLINE void
 TAO_GIOP_Invocation::restart_flag (CORBA::Boolean flag)
 {
   // Set the flag
-  this->restart_flag_ =	flag;
+  this->restart_flag_ = flag;
 }
 
 ACE_INLINE CORBA::Object_ptr
@@ -113,18 +119,18 @@ TAO_GIOP_Synch_Invocation::TAO_GIOP_Synch_Invocation (
     TAO_ORB_Core *orb_core,
     int byte_order
   )
-  : TAO_GIOP_Invocation	(stub,
-			 operation,
-			 opname_len,
-			 argument_flag,
-			 orb_core,
-                         byte_order),
-    rd_	(orb_core,
-	 this->op_details_.service_info	())
+  : TAO_GIOP_Invocation (stub,
+                         operation,
+                         opname_len,
+                         argument_flag,
+                         orb_core,
+       byte_order),
+    rd_ (orb_core,
+         this->op_details_.reply_service_info   ())
 {
 }
 
-ACE_INLINE TAO_InputCDR	&
+ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Synch_Invocation::inp_stream (void)
 {
   return this->rd_.reply_cdr ();
@@ -142,23 +148,23 @@ TAO_GIOP_Twoway_Invocation::TAO_GIOP_Twoway_Invocation (
     int byte_order
   )
   : TAO_GIOP_Synch_Invocation (stub,
-			       operation,
-			       opname_len,
-			       argument_flag,
-			       orb_core,
+                               operation,
+                               opname_len,
+                               argument_flag,
+                               orb_core,
                                byte_order)
 {
 }
 
 ACE_INLINE
-TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation	(void)
+TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
 {
 }
 
 // ****************************************************************
 
 ACE_INLINE
-TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation	(void)
+TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
 {
 }
 
@@ -173,16 +179,16 @@ TAO_GIOP_Oneway_Invocation::sync_scope (void)
 ACE_INLINE
 TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
-				    TAO_ORB_Core *orb_core)
+                                    TAO_ORB_Core *orb_core)
   : TAO_GIOP_Synch_Invocation (stub,
-			       0,
-			       0,
-			       0,
-			       orb_core)
+                               0,
+                               0,
+                               0,
+                               orb_core)
 {
 }
 
 ACE_INLINE
-TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation	(void)
+TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
 {
 }

@@ -321,7 +321,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // First lookup at the services to see whether they have anything to
   // add to the service context lists
   this->orb_core_->service_context_list (this->stub_,
-                                         this->service_info (),
+                                         this->request_service_context().service_info (),
                                          this->restart_flag_,
                                          ACE_TRY_ENV);
   ACE_CHECK;
@@ -577,7 +577,7 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
 
 TAO_GIOP_Synch_Invocation::TAO_GIOP_Synch_Invocation (void)
   : rd_ (0,
-         this->op_details_.service_info ())
+         this->op_details_.reply_service_info ())
 {
 }
 

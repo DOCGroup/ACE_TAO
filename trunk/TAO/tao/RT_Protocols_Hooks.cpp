@@ -45,7 +45,7 @@ TAO_RT_Protocols_Hooks::call_client_protocols_hook (
                                                      recv_buffer_size,
                                                      no_delay,
                                                      protocol_type);
-  
+
   return 0;
 }
 
@@ -166,35 +166,8 @@ TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
           == 0)
         ACE_THROW (CORBA::MARSHAL ());
 
-      // @@ The piece of code that comes here should go. It should
-      // be something like this.
-      // IOP::ServiceContext context;
-      // context.context_id = IOP::RTCorbaPriority;
-      // this->op_details_.service_context ().set_context
-      // (context, cdr);
-      // RT Folks can you please do these changes consistently
-      // wherever you guys are adding service context information
-      // - Bala
-      IOP::ServiceContextList &context_list = invocation->service_info ();
-
-      CORBA::ULong l = context_list.length ();
-      context_list.length (l + 1);
-      context_list[l].context_id = IOP::RTCorbaPriority;
-
-      // Make a *copy* of the CDR stream...
-      CORBA::ULong length = cdr.total_length ();
-      context_list[l].context_data.length (length);
-      CORBA::Octet *buf = context_list[l].context_data.get_buffer ();
-
-      for (const ACE_Message_Block *i = cdr.begin ();
-           i != 0;
-           i = i->cont ())
-        {
-          ACE_OS::memcpy (buf,
-                          i->rd_ptr (),
-                           i->length ());
-          buf += i->length ();
-        }
+      TAO_Service_Context &service_context = invocation->request_service_context ();
+      service_context.set_context (IOP::RTCorbaPriority, cdr);
     }
 }
 
@@ -421,7 +394,7 @@ TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
 {
   // Obtain a reference to the Priority Mapping Manager.
   CORBA::Object_var obj = orb_core->priority_mapping_manager ();
-  
+
   TAO_Priority_Mapping_Manager_var priority_mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                            ACE_TRY_ENV);
