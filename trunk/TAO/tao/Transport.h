@@ -128,7 +128,7 @@ struct iovec;
  * process the incoming GIOP message as quickly and efficiently as
  * possible. There are other forces that needs to be given due
  * consideration. They are
- *  - Multiple threads should  be able to tarverse along the same data
+ *  - Multiple threads should be able to traverse along the same data
  *    path but should not be able to read from the same handle at the
  *    same time ie. the handle should not be shared between threads at
  *    any instant.
@@ -262,8 +262,10 @@ public:
   /// Set the bidirectional flag
   void bidirectional_flag (int flag);
 
-  /// Set/Get the Cache Map entry
+  /// Set the Cache Map entry
   void cache_map_entry (TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
+
+  /// Get the Cache Map entry
   TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
 
   /// Set and Get the identifier for this transport instance.
@@ -290,7 +292,7 @@ public:
   /**
    * Called by the cache when the cache is closing.
    *
-   * @param handlers the TAO_Connection_Handler_Set into which the
+   * @param handlers The TAO_Connection_Handler_Set into which the
    *        transport should place its handler
    */
   void provide_handler (TAO_Connection_Handler_Set &handlers);

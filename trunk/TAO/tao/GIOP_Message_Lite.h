@@ -60,13 +60,13 @@ public:
   /// Reset the messaging the object
   virtual void reset (void);
 
-  /// Write the RequestHeader in to the <cdr> stream. The underlying
+  /// Write the RequestHeader in to the @a cdr stream. The underlying
   /// implementation of the mesaging should do the right thing.
   virtual int generate_request_header (TAO_Operation_Details &op,
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &cdr);
 
-  /// Write the RequestHeader in to the <cdr> stream.
+  /// Write the RequestHeader in to the @a cdr stream.
   virtual int generate_locate_request_header (
       TAO_Operation_Details &op,
       TAO_Target_Specification &spec,
@@ -105,14 +105,14 @@ public:
   /// message block.
   virtual ssize_t missing_data (ACE_Message_Block &message_block);
 
-  /* Extract the details of the next message from the <incoming>
-   * through <qd>. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in <incoming>.
+  /* Extract the details of the next message from the @a incoming
+   * through @a qd. Returns 1 if there are more messages and returns a
+   * 0 if there are no more messages in @a incoming.
    */
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd);
 
-  /// Check whether the node <qd> needs consolidation from <incoming>
+  /// Check whether the node @a qd needs consolidation from @a incoming
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming);
 
@@ -129,12 +129,12 @@ public:
                                        TAO_Queued_Data *qd);
 
   /// Parse the reply message that we received and return the reply
-  /// information though <reply_info>
+  /// information through @a reply_info
   virtual int process_reply_message (
       TAO_Pluggable_Reply_Params &reply_info,
       TAO_Queued_Data *qd);
 
-  /// Generate a reply message with the exception <ex>.
+  /// Generate a reply message with the exception @a ex.
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
@@ -143,25 +143,25 @@ public:
 
 private:
 
-  /// Writes the GIOP header in to <msg>
-  /// NOTE: If the GIOP header happens to change in the future, we can
+  /// Writes the GIOP header in to @a msg
+  /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
   int write_protocol_header (TAO_GIOP_Message_Type t,
                              TAO_OutputCDR &msg);
 
-  /// Processes the <GIOP_REQUEST> messages
+  /// Processes the GIOP_REQUEST messages
   int process_request (TAO_Transport *transport,
                        TAO_InputCDR &input,
                        TAO_OutputCDR &output);
 
-  /// Processes the <GIOP_LOCATE_REQUEST> messages
+  /// Processes the GIOP_LOCATE_REQUEST messages
   int process_locate_request (TAO_Transport *transport,
                               TAO_InputCDR &input,
                               TAO_OutputCDR &output);
 
-  /// Make a <GIOP_LOCATEREPLY> and hand that over to the transport so
+  /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
   /// that it can be sent over the connection.
-  /// NOTE:As on date 1.1 & 1.2 seem to have similar headers. Till an
+  /// @note As on date 1.1 & 1.2 seem to have similar headers. Till an
   /// unmanageable difference comes let them be implemented here.
   int make_send_locate_reply (TAO_Transport *transport,
                               TAO_OutputCDR &output,
@@ -176,7 +176,7 @@ private:
                               TAO_Transport *transport,
                               void *ctx);
 
-  /// We must send a LocateReply through <transport>, this request
+  /// We must send a LocateReply through @a transport, this request
   /// resulted in some kind of exception.
   int send_reply_exception (TAO_Transport *transport,
                             TAO_ORB_Core* orb_core,
