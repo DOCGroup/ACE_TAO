@@ -1,5 +1,9 @@
 Mon Sep  6 08:45:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i: Fixed ACE_UNUSED_ARG(options) to be
+ 	  ACE_UNUSED_ARG(wait_options).  Thanks to David's build logs for
+ 	  reporting this.
+
 	* tests/Signal_Test.cpp: Changed the types of parameters passed
 	  to run_test() from int to long so that we can safely cast them
  	  to and from void *'s.  Thanks to David Levine for pointing this
