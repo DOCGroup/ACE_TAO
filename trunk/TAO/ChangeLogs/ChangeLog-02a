@@ -1,139 +1,177 @@
+Mon Mar 20 12:36:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.h:
+        * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.i:
+        * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Add support for the Copy-on-Write dispatching strategy.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+          We can now bound the number of messages in the queue.  This
+          throttles the supplier threads and results in bounded resource
+          requirements, but worse performance in some cases.
+          It also changes dispatching because it is now possible to
+          block while pushing an event into a queue, so the mutexes held
+          in the supplier proxy must be released before dispatching.
+          This makes reactive dispatching and MT dispatching more similar,
+          but increases the synchronization overhead.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Changed to support the new dispatching interfaces.
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp:
+          Moved code from the .i to the .cpp file, they are virtual
+          functions anyway.
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Fixed compilation warnings under gcc-2.95
+
 Sun Mar 19 20:01:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/AMI/Makefile:
-	* tests/CDR/Makefile:
-	* tests/Collocation/Makefile:
-	* tests/Connection_Purging/Makefile:
-	* tests/DSI_Gateway/Makefile:
-	* tests/DynAny_Test/Makefile:
-	* tests/Endpoint_Per_Priority/Makefile:
-	* tests/Explicit_Event_Loop/Makefile:
-	* tests/FL_Cube/Makefile:
-	* tests/Faults/Makefile:
-	* tests/IDL_Test/Makefile:
-	* tests/IORManipulation/Makefile:
-	* tests/InterOp-Naming/Makefile:
-	* tests/Interceptors/Makefile:
-	* tests/Leader_Followers/Makefile:
-	* tests/MProfile/Makefile:
-	* tests/MProfile_Forwarding/Makefile:
-	* tests/MT_Client/Makefile:
-	* tests/MT_Server/Makefile:
-	* tests/Multiple_Inheritance/Makefile:
-	* tests/Native_Exceptions/Makefile:
-	* tests/NestedUpcall/Makefile:
-	* tests/Nested_Event_Loop/Makefile:
-	* tests/ORB_init/Makefile:
-	* tests/OctetSeq/Makefile:
-	* tests/POA/Destruction/Makefile:
-	* tests/POA/Decativation/Makefile:
-	* tests/POA/Identity/Makefile:
-	* tests/Param_Test/Makefile:
-	* tests/QtTests/Makefile:
-	* tests/Smart_Proxies/Makefile:
-	* tests/Timed_Buffered_Oneways/Makefile:
-	* tests/Timeout/Makefile:
-	* tests/Xt_Stopwatch/Makefile:
-	  Updated the following Makefiles depedencies. The need arose as I
-	  retired some files from the repository and added new files in
-	  their place. Please see the change below.
-		
+        * tests/AMI/Makefile:
+        * tests/CDR/Makefile:
+        * tests/Collocation/Makefile:
+        * tests/Connection_Purging/Makefile:
+        * tests/DSI_Gateway/Makefile:
+        * tests/DynAny_Test/Makefile:
+        * tests/Endpoint_Per_Priority/Makefile:
+        * tests/Explicit_Event_Loop/Makefile:
+        * tests/FL_Cube/Makefile:
+        * tests/Faults/Makefile:
+        * tests/IDL_Test/Makefile:
+        * tests/IORManipulation/Makefile:
+        * tests/InterOp-Naming/Makefile:
+        * tests/Interceptors/Makefile:
+        * tests/Leader_Followers/Makefile:
+        * tests/MProfile/Makefile:
+        * tests/MProfile_Forwarding/Makefile:
+        * tests/MT_Client/Makefile:
+        * tests/MT_Server/Makefile:
+        * tests/Multiple_Inheritance/Makefile:
+        * tests/Native_Exceptions/Makefile:
+        * tests/NestedUpcall/Makefile:
+        * tests/Nested_Event_Loop/Makefile:
+        * tests/ORB_init/Makefile:
+        * tests/OctetSeq/Makefile:
+        * tests/POA/Destruction/Makefile:
+        * tests/POA/Decativation/Makefile:
+        * tests/POA/Identity/Makefile:
+        * tests/Param_Test/Makefile:
+        * tests/QtTests/Makefile:
+        * tests/Smart_Proxies/Makefile:
+        * tests/Timed_Buffered_Oneways/Makefile:
+        * tests/Timeout/Makefile:
+        * tests/Xt_Stopwatch/Makefile:
+          Updated the following Makefiles depedencies. The need arose as I
+          retired some files from the repository and added new files in
+          their place. Please see the change below.
+
 Sun Mar 19 19:22:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp:
-	* tao/GIOP_Message_Accept_State.h:
-	* tao/GIOP_Message_Accept_State.i:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Acceptors.h:
-	* tao/GIOP_Message_Acceptors.i:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.i:
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/GIOP_Message_Connectors.h:
-	* tao/GIOP_Message_Connectors.i:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.i:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Utils.cpp:
-	* tao/GIOP_Utils.h:
-	* tao/GIOP_Utils.i: 
-	  Addressed most of Carlos's suggestion on Coding style and some
-	  design issues. Have left a few @@ answers for some of his
-	  questions. Some of his questions have a reply, that I will be
-	  implementing them shortly.  
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Accept_State.h:
+        * tao/GIOP_Message_Accept_State.i:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Acceptors.i:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.i:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Message_Connectors.h:
+        * tao/GIOP_Message_Connectors.i:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.i:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Utils.cpp:
+        * tao/GIOP_Utils.h:
+        * tao/GIOP_Utils.i:
+          Addressed most of Carlos's suggestion on Coding style and some
+          design issues. Have left a few @@ answers for some of his
+          questions. Some of his questions have a reply, that I will be
+          implementing them shortly.
 
-	* tao/target_specification.h:
-	* tao/target_specification.cpp:
-	* tao/target_specification.i: 
-	  Added these files to the repository. They now will replace these
-	  three files that would be retired from the repository.
+        * tao/target_specification.h:
+        * tao/target_specification.cpp:
+        * tao/target_specification.i:
+          Added these files to the repository. They now will replace these
+          three files that would be retired from the repository.
 
-	* tao/target_identifier.h:
-	* tao/target_identifier.cpp:
-	* tao/target_identifier.i: 
-	  Files retired from the repository.
+        * tao/target_identifier.h:
+        * tao/target_identifier.cpp:
+        * tao/target_identifier.i:
+          Files retired from the repository.
 
-	* tao/GIOP_Message_Headers.h:
-	* tao/GIOP_Message_Headers.i:
-	* tao/GIOP_Message_Headers.cpp:
-	  Added these files in to the repository in place of the
-	  following.
+        * tao/GIOP_Message_Headers.h:
+        * tao/GIOP_Message_Headers.i:
+        * tao/GIOP_Message_Headers.cpp:
+          Added these files in to the repository in place of the
+          following.
 
-	* tao/GIOP_Assorted_Headers.h:
-	* tao/GIOP_Assorted_Headers.cpp:
-	* tao/GIOP_Assorted_Headers.i: 
-	  Retired these files from the repository. 
-	 
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.cpp:
-	* tao/GIOP_Message_State.i: 
-	  Added these new files to the repository. Moved the definition of
-	  GIOP_Message_State class to this file from GIOP_Utils.h
+        * tao/GIOP_Assorted_Headers.h:
+        * tao/GIOP_Assorted_Headers.cpp:
+        * tao/GIOP_Assorted_Headers.i:
+          Retired these files from the repository.
 
-	* tao/Invocation.cpp:
-	* tao/Invocation.h: 
-	* tao/IIOP_Connect.cpp:
-	* tao/IIOP_Connect.h:
-	* tao/IIOP_Profile.h:
-	* tao/IIOP_Transport.h:
-	* tao/Reply_Dispatcher.h:
-	* tao/SHMIOP_Connect.cpp:
-	* tao/SHMIOP_Connect.h:
-	* tao/SHMIOP_Profile.h:
-	* tao/SHMIOP_Transport.h:
-	* tao/Transport_Mux_Strategy.h:
-	* tao/UIOP_Acceptor.h:
-	* tao/UIOP_Connect.cpp:
-	* tao/Pluggable.cpp:
-	  Changes that had to be done because of the above. The changes
-	  include change of method names, reducing unnecessary header file
-	  inclusions. 
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.i:
+          Added these new files to the repository. Moved the definition of
+          GIOP_Message_State class to this file from GIOP_Utils.h
 
-	* tao/Makefile: 
-	  Updated the makefile with new files.  I should also update the
-	  Makefiles in the different directories now. That would be the
-	  next. 
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/IIOP_Connect.cpp:
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Transport.h:
+        * tao/Reply_Dispatcher.h:
+        * tao/SHMIOP_Connect.cpp:
+        * tao/SHMIOP_Connect.h:
+        * tao/SHMIOP_Profile.h:
+        * tao/SHMIOP_Transport.h:
+        * tao/Transport_Mux_Strategy.h:
+        * tao/UIOP_Acceptor.h:
+        * tao/UIOP_Connect.cpp:
+        * tao/Pluggable.cpp:
+          Changes that had to be done because of the above. The changes
+          include change of method names, reducing unnecessary header file
+          inclusions.
+
+        * tao/Makefile:
+          Updated the makefile with new files.  I should also update the
+          Makefiles in the different directories now. That would be the
+          next.
 
 Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         First, some miscellaneous changes:
 
         * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
-          
+
           Not all paths were returning a value in main.  Added a return 0;
           to fix it.
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-          
-          Some template definitions macros were using TAO_ORBSVCS still, 
+
+          Some template definitions macros were using TAO_ORBSVCS still,
           changed to TAO_AV.
 
         * orbsvcs/tests/Trading/Simple_Dynamic.h:
-          
-          Still some inheritance by dominance warnings hanging around. 
+
+          Still some inheritance by dominance warnings hanging around.
           Disabled in MSVC.
 
         * orbsvcs/examples/CosEC/Factory/Factory.dsw:
@@ -142,9 +180,9 @@ Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
 
         Now, the big stuff.  I broke up the orbsvcs library in MSVC into
-        separate libraries for each component.  THIS BREAKS CURRENT PROJECT 
-        FILES.  I fixed all of them in TAO, but any external projects that 
-        use orbsvcs must change the link libraries to the specific ones 
+        separate libraries for each component.  THIS BREAKS CURRENT PROJECT
+        FILES.  I fixed all of them in TAO, but any external projects that
+        use orbsvcs must change the link libraries to the specific ones
         listed below.
 
         So now we have:
@@ -168,14 +206,14 @@ Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
         library specific version, and many files were changed to include
         the appropriate *_export.h file.
 
-        There are several reasons for this change.  
-        
+        There are several reasons for this change.
+
         - Orbsvcs was too brittle.  If one thing failed to build, the whole
           library was lost.
         - Orbsvcs was too big.  This didn't reduce the size, but it is more
           manageable since only what is needed can be included.  So this has
           a positive effect on footprint also.  For example, if the project
-          was only using the Naming Service, it had to link in a 9MB 
+          was only using the Naming Service, it had to link in a 9MB
           orbsvcsd.dll, whereas now it only needs a 360k TAO_CosNamingd.dll
           library.
         - Subsetting wasn't supported with MSVC project files.  This isn't
@@ -186,22 +224,22 @@ Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         There are some files still in TAO/orbsvcs/orbsvcs/ that really
         should be in the subdirectories.  A later time, perhaps, let's
-        see how this is handled on the Makefile side first.  But if I 
+        see how this is handled on the Makefile side first.  But if I
         remember correctly, this will probably be the path taken by the
         AutoCompile scripts.
 
         Note, this is ONLY with MSVC.  The makefiles will still support
-        the old subset technique until someone else feels inclined to 
+        the old subset technique until someone else feels inclined to
         change it.  This does depend on the fact that the export macros
         expand to nothing in Unix.  Oh well, we'll see how correct I am
         soon, after I do a test run on Unix after checking in.
 
         And also Note: The release builds of several projects give warnings
         because libraries had to be linked in to succeed, but then the linker
-        determined the library wasn't actually needed.  I couldn't find an 
-        easy fix, so I just left them for now.  
+        determined the library wasn't actually needed.  I couldn't find an
+        easy fix, so I just left them for now.
 
-        And finally Note: This only applies to the DLL Debug and Release 
+        And finally Note: This only applies to the DLL Debug and Release
         versions.  The Alpha versions have pretty much been deprecated, and
         the static versions are missing.  The static versions will be added
         later, and I'm hoping to find an easy way to generate them from
@@ -228,7 +266,7 @@ Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:
         * TAOACE.dsw:
-          
+
           Changed these workspaces to use the new projects.  TAOACE
           only includes CosNaming and Svc_utils though.
 
@@ -405,7 +443,7 @@ Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/orbsvcs/Trader/Trader.h:
         * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
 
-          All these were changed to use the new library specific export 
+          All these were changed to use the new library specific export
           macros and *_export files.
 
         * examples/Buffered_Oneways/client.dsp:
@@ -512,42 +550,42 @@ Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
         * utils/catior/catior.dsp:
         * utils/nslist/nslist.dsp:
 
-          All these projects used the orbsvcs library, so all had to be 
-          changed to use the specific libraries instead.  This was a good 
-          chance to go through all the different projects and make sure 
+          All these projects used the orbsvcs library, so all had to be
+          changed to use the specific libraries instead.  This was a good
+          chance to go through all the different projects and make sure
           they work, a few did need some updating with release configurations,
           since they are not run that regularly here.
 
 Sun Mar 19 16:48:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Sequence_T.i:
-	* tao/Sequence.i:
-	  The automatic buffer allocation in the bounded
-	  sequence default constructor was causing a 
-	  problem with recursive structs/unions. Since the
-	  constructor was still executing, there would be
-	  an infinite loop of calls to 'new'. Buffer allocation
-	  has been moved to the length() function, so now
-	  bounded sequences behave like unbounced ones in TAO
-	  (the CORBA spec states that the default constructors
-	  for bounded or unbounded sequences need not allocate
-	  a buffer). Thanks to Sal Amander <virgis@megagis.lt> 
-	  for reporting this problem.
+        * tao/Sequence_T.i:
+        * tao/Sequence.i:
+          The automatic buffer allocation in the bounded
+          sequence default constructor was causing a
+          problem with recursive structs/unions. Since the
+          constructor was still executing, there would be
+          an infinite loop of calls to 'new'. Buffer allocation
+          has been moved to the length() function, so now
+          bounded sequences behave like unbounced ones in TAO
+          (the CORBA spec states that the default constructors
+          for bounded or unbounded sequences need not allocate
+          a buffer). Thanks to Sal Amander <virgis@megagis.lt>
+          for reporting this problem.
 
-	* tests/Param_Test/bd_long_seq.cpp:
-	* tests/Param_Test/bd_short_seq.cpp:
-	* tests/Param_Test/bd_struct_seq.cpp:
-	  Added initialization for certain paramters, needed
-	  because of the change in the behavior of the defaul
-	  constructor noted above. 
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_struct_seq.cpp:
+          Added initialization for certain paramters, needed
+          because of the change in the behavior of the defaul
+          constructor noted above.
 
 Sun Mar 19 16:46:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: Updated dependencies. Thanks to 
+        * orbsvcs/orbsvcs/Makefile: Updated dependencies. Thanks to
           JM Strauss <jms97@club-internet.fr> for reporting this. The last
-	  update was the dumbest thing I could have done. I made the
-	  update in my workspace which had a skewed $TAO_ROOT/tao. These
-	  went in to the Makefile.
+          update was the dumbest thing I could have done. I made the
+          update in my workspace which had a skewed $TAO_ROOT/tao. These
+          went in to the Makefile.
 
 Sat Mar 18 17:51:13 2000  David L. Levine  <levine@cs.wustl.edu>
 
