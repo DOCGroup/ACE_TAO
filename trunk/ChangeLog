@@ -1,3 +1,21 @@
+Mon Jan  3 14:34:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+	* ace/QoS/Makefile.am:
+	* ace/RMCast/Makefile.am:
+	* ace/SSL/Makefile.am:
+	* ace/TMCast/Makefile.am:
+
+	  Generate pkg-config *.pc files from templates.
+
+	* ace/ACE.pc.in:
+	* ace/QoS/ACE_QoS.pc.in:
+	* ace/RMCast/ACE_RMCast.pc.in:
+	* ace/SSL/ACE_SSL.pc.in:
+	* ace/TMCast/ACE_TMCast.pc.in:
+
+	  New files, pkg-config *.pc templates.
+
 Mon Jan  3 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.{h,cpp}:

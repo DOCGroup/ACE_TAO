@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace/SSL
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -57,6 +58,11 @@ nobase_include_HEADERS += \
   SSL_SOCK_Acceptor.i \
   SSL_SOCK_Connector.i \
   SSL_SOCK_Stream.i
+
+pkgconfigdata_DATA = ACE_SSL.pc
+
+ACE_SSL.pc: ${top_builddir}/config.status ACE_SSL.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_SSL.pc.in
 
 endif BUILD_SSL
 
