@@ -108,6 +108,12 @@ TAO_CodeGen::upcase (const char *str)
 int
 TAO_CodeGen::start_client_header (const char *fname)
 {
+  if (fname == 0)
+    {
+      // Bad file name.
+      return -1;
+    }
+
   // @@ We are making use of "included_idl_files" that is in the
   // idl_global. We need to make sure the validity of those files.
   idl_global->validate_included_idl_files ();
@@ -132,56 +138,11 @@ TAO_CodeGen::start_client_header (const char *fname)
       // Generate the #ident string, if any.
       this->gen_ident_string (this->client_header_);
 
-      // Now generate the #if !defined clause.
-      static char macro_name [NAMEBUFSIZE];
-
-      ACE_OS::memset (macro_name, 
-                      '\0', 
-                      NAMEBUFSIZE);
-
-      const char *suffix = ACE_OS::strrchr (fname, '.');
-
-      if (suffix == 0)
-        {
-          // File seems to have no extension, so let us take the name
-          // as it is.
-          if (fname == 0)
-            {
-              // Bad file name.
-              return -1;
-            }
-          else
-            {
-              suffix = fname;
-            }
-        }
-
-      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-
-      // Convert letters in fname to upper case.
-      for (int i = 0; i < (suffix - fname); i++)
-        {
-          if (isalpha (fname [i]))
-            {
-              macro_name[i + 9] = (char) toupper (fname [i]);
-            }
-          else if (isdigit (fname [i]))
-            {
-              macro_name[i + 9] = fname[i];
-            }
-          else
-            {
-              macro_name[i + 9] = '_';
-            }
-        }
-
-      ACE_OS::strcat (macro_name, "_H_");
-
-      // Generate the #ifndef ... #define statements.
-      this->client_header_->print ("#ifndef %s\n", 
-                                   macro_name);
-      this->client_header_->print ("#define %s\n\n", 
-                                   macro_name);
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->client_header_,
+                               "_TAO_IDL_",
+                               "_H_");
 
       if (be_global->pre_include () != 0)
         {
@@ -542,50 +503,11 @@ TAO_CodeGen::start_server_header (const char *fname)
       // Generate the ident string, if any.
       this->gen_ident_string (this->server_header_);
 
-      // Now generate the #if !defined clause.
-      static char macro_name [NAMEBUFSIZE];
-
-      ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strrchr (fname, '.');
-
-      if (suffix == 0)
-        {
-          // File seems to have no extension, so let us take the name
-          // as it is.
-          if (fname == 0)
-            {
-              // Bad file name.
-              return -1;
-            }
-          else
-            {
-              suffix = fname;
-            }
-        }
-
-      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-
-      // Convert letters in fname to upper case.
-      for (int i=0; i < (suffix - fname); i++)
-        {
-          if (isalpha (fname [i]))
-            {
-              macro_name[i+9] = (char) toupper (fname [i]);
-            }
-          else if (isdigit (fname [i]))
-            {
-              macro_name[i+9] = fname[i];
-            }
-          else
-            {
-              macro_name[i+9] = '_';
-            }
-        }
-
-      ACE_OS::strcat (macro_name, "_H_");
-
-      this->server_header_->print ("#ifndef %s\n", macro_name);
-      this->server_header_->print ("#define %s\n\n", macro_name);
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->server_header_,
+                               "_TAO_IDL_",
+                               "_H_");
 
       if (be_global->pre_include () != 0)
         {
@@ -771,54 +693,11 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       // Generate the ident string, if any.
       this->gen_ident_string (this->server_template_header_);
 
-      // Now generate the #if !defined clause.
-      static char macro_name [NAMEBUFSIZE];
-
-      ACE_OS::memset (macro_name, 
-                      '\0', 
-                      NAMEBUFSIZE);
-
-      const char *suffix = ACE_OS::strrchr (fname, '.');
-
-      if (suffix == 0)
-        {
-          // File seems to have no extension, so let us take the name
-          // as it is.
-          if (fname == 0)
-            {
-              // Bad file name.
-              return -1;
-            }
-          else
-            {
-              suffix = fname;
-            }
-        }
-
-      ACE_OS::sprintf (macro_name, 
-                       "_TAO_IDL_");
-
-      // Convert letters in fname to upper case.
-      for (int i = 0; i < (suffix - fname); ++i)
-        {
-          if (isalpha (fname [i]))
-            {
-              macro_name[i+9] = (char) toupper (fname [i]);
-            }
-          else if (isdigit (fname [i]))
-            {
-              macro_name[i+9] = fname[i];
-            }
-          else
-            {
-              macro_name[i+9] = '_';
-            }
-        }
-
-      ACE_OS::strcat (macro_name, "_H_");
-
-      this->server_template_header_->print ("#ifndef %s\n", macro_name);
-      this->server_template_header_->print ("#define %s\n\n", macro_name);
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->server_template_header_,
+                               "_TAO_IDL_",
+                               "_H_");
 
       if (be_global->pre_include () != 0)
         {
@@ -875,6 +754,12 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_skeletons_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->server_skeletons_,
+                           "_TAO_IDL_",
+                           "_CPP_");
 
   // Generate the include statement for the precompiled header file.
   if (be_global->pch_include ())
@@ -969,53 +854,11 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       // Generate the ident string, if any.
       this->gen_ident_string (this->server_template_skeletons_);
 
-      // Now generate the #if !defined clause.
-      static char macro_name [NAMEBUFSIZE];
-
-      ACE_OS::memset (macro_name, 
-                      '\0', 
-                      NAMEBUFSIZE);
-
-      const char *suffix = ACE_OS::strrchr (fname, '.');
-
-      if (suffix == 0)
-        {
-          // File seems to have no extension, so let us take the name
-          // as it is.
-          if (fname == 0)
-            {
-              // Bad file name.
-              return -1;
-            }
-          else
-            {
-              suffix = fname;
-            }
-        }
-
-      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-
-      // Convert letters in fname to upper case.
-      for (int i=0; i < (suffix - fname); i++)
-        {
-          if (isalpha (fname [i]))
-            {
-              macro_name[i+9] = (char) toupper (fname [i]);
-            }
-          else if (isdigit (fname [i]))
-            {
-              macro_name[i+9] = fname[i];
-            }
-          else
-            {
-              macro_name[i+9] = '_';
-            }
-        }
-
-      ACE_OS::strcat (macro_name, "_CPP_");
-
-      this->server_template_skeletons_->print ("#ifndef %s\n", macro_name);
-      this->server_template_skeletons_->print ("#define %s\n\n", macro_name);
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->server_template_skeletons_,
+                               "_TAO_IDL_",
+                               "_CPP_");
 
       // Generate the include statement for the server header.
       *this->server_template_skeletons_
@@ -1144,50 +987,11 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       // Generate the ident string, if any.
       this->gen_ident_string (this->implementation_header_);
 
-      // Now generate the #ifndef clause.
-      static char macro_name [NAMEBUFSIZE];
-
-      ACE_OS::memset (macro_name, 
-                      '\0', 
-                      NAMEBUFSIZE);
-
-      const char *suffix = ACE_OS::strrchr (fname, '.');
-
-      if (suffix == 0)
-        {
-          // File seems to have no extension, so let us take the name
-          // as it is.
-          if (fname == 0)
-            {
-              // Bad file name.
-              return -1;
-            }
-          else
-            {
-              suffix = fname;
-            }
-        }
-
-      for (int i = 0; i < (suffix - fname); ++i)
-        {
-          if (isalpha (fname [i]))
-            {
-              macro_name[i] = (char) toupper (fname [i]);
-            }
-          else if (isdigit (fname [i]))
-            {
-              macro_name[i] = fname[i];
-            }
-          else
-            {
-              macro_name[i] = '_';
-            }
-        }
-
-      ACE_OS::strcat (macro_name, "_H_");
-
-      this->implementation_header_->print ("#ifndef %s\n", macro_name);
-      this->implementation_header_->print ("#define %s\n\n", macro_name);
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->implementation_header_,
+                               "",
+                               "_H_");
 
       const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (1);
 
@@ -1240,43 +1044,6 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
     {
       // Generate the ident string, if any.
       this->gen_ident_string (this->implementation_skeleton_);
-
-      static char macro_name [NAMEBUFSIZE];
-
-      ACE_OS::memset (macro_name, 
-                      '\0', 
-                      NAMEBUFSIZE);
-
-      const char *suffix = ACE_OS::strrchr (fname, '.');
-
-
-      if (suffix == 0)
-        {
-          // File seems to have no extension, so let us take the name
-          // as it is.
-          if (fname == 0)
-            {
-              // Bad file name.
-              return -1;
-            }
-          else
-            {
-              suffix = fname;
-            }
-        }
-
-      // Convert letters in fname to upper case.
-      for (int i = 0; i < (suffix - fname); ++i)
-        {
-          if (isalpha (fname [i]))
-            {
-              macro_name[i] = fname [i];
-            }
-          else
-            {
-              macro_name[i] = fname[i];
-            }
-        }
 
       const char* impl_hdr =
         BE_GlobalData::be_get_implementation_hdr_fname ();
@@ -1479,6 +1246,15 @@ TAO_CodeGen::end_server_template_skeletons (void)
   return 0;
 }
 
+int
+TAO_CodeGen::end_server_skeletons (void)
+{
+  // Code to put the last #endif.
+  *this->server_skeletons_ << "\n#endif /* ifndef */\n";
+
+  return 0;
+}
+
 // We use the following helper functions to pass information. This class is the
 // best place to pass such information rather than passing information through
 // global variables spread everywhere. This class is a singleton and is
@@ -1554,6 +1330,57 @@ TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
     {
       *stream << "#" << str << be_nl << be_nl;
     }
+}
+
+void
+TAO_CodeGen::gen_ifndef_string (const char *fname,
+                                TAO_OutStream *stream,
+                                const char *prefix,
+                                const char *suffix)
+{
+  static char macro_name [NAMEBUFSIZE];
+
+  ACE_OS::memset (macro_name, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  const char *extension = ACE_OS::strrchr (fname, '.');
+
+  if (extension == 0)
+    {
+      // File seems to have no extension, so let us take the name
+      // as it is.
+      extension = fname;
+    }
+
+  ACE_OS::sprintf (macro_name, prefix);
+
+  int offset = ACE_OS::strlen (prefix);
+
+  // Convert letters in fname to upper case.
+  for (int i = 0; i < (extension - fname); i++)
+    {
+      if (isalpha (fname [i]))
+        {
+          macro_name[i + offset] = (char) toupper (fname [i]);
+        }
+      else if (isdigit (fname [i]))
+        {
+          macro_name[i + offset] = fname[i];
+        }
+      else
+        {
+          macro_name[i + offset] = '_';
+        }
+    }
+
+  ACE_OS::strcat (macro_name, suffix);
+
+  // Generate the #ifndef ... #define statements.
+  stream->print ("#ifndef %s\n", 
+                 macro_name);
+  stream->print ("#define %s\n\n", 
+                 macro_name);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

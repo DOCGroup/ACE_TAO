@@ -607,6 +607,9 @@ public:
   int end_server_template_skeletons (void);
   // Put a last #endif in the server skeletons.
 
+  int end_server_skeletons (void);
+  // Put a last #endif in the server skeletons.
+
   TAO_OutStream *client_header (void);
   // Get the client header stream.
 
@@ -679,6 +682,11 @@ public:
   // Pass along the #ident string, if any, from the IDL file.
 
 private:
+  void gen_ifndef_string (const char *fname,
+                          TAO_OutStream *stream,
+                          const char *prefix,
+                          const char *suffix);
+
   TAO_OutStream *client_header_;
   // Client header stream.
 
