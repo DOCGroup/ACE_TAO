@@ -1,3 +1,9 @@
+Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+       * ace/Makefile.bor: 
+
+       Added codeset registry files to makefile.
+
 Tue Mar 04 19:58:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/FileCharStream.cpp (determine_encoding): Commented
