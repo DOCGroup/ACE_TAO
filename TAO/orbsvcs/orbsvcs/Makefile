@@ -41,7 +41,9 @@ IDL_FILES += \
 	AVStreamsS \
 	AVStreamsC \
 	sfpS \
-	sfpC 
+	sfpC \
+	Null_MediaCtrlS \
+	Null_MediaCtrlC 
 
 endif
 
@@ -204,6 +206,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_O
 
 .PRECIOUS: CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h
 .PRECIOUS: AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h
+.PRECIOUS: Null_MediaCtrlC.cpp Null_MediaCtrlS.cpp Null_MediaCtrlC.h Null_MediaCtrlS.h
 
 idl_stubs: $(addsuffix .h, $(IDL_FILES))
 
