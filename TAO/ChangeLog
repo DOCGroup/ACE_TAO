@@ -1,3 +1,9 @@
+Sat Jul 13 14:57:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.dsp:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/server.dsp: Fixed
+	  the path to strategies library. 
+
 Sat Jul 13 14:26:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/POA/Persistent_ID/server.cpp (method): 
