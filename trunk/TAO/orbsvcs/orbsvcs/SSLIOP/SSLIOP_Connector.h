@@ -37,7 +37,7 @@
 #include "tao/Resource_Factory.h"
 
 
-
+class TAO_Base_Connection_Property;
 // ****************************************************************
 
 class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
@@ -90,7 +90,7 @@ public:
   // Pluggable.h
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
-  virtual int connect (TAO_Endpoint *endpoint,
+  virtual int connect (TAO_Base_Connection_Property *prop,
                        TAO_Transport *&transport,
                        ACE_Time_Value *max_wait_time,
                        CORBA::Environment &ACE_TRY_ENV);
@@ -108,11 +108,11 @@ protected:
 public:
 
   typedef ACE_NOOP_Concurrency_Strategy<TAO_SSLIOP_Client_Connection_Handler>
-        TAO_NULL_ACTIVATION_STRATEGY;
+        TAO_SSLIOP_NULL_ACTIVATION_STRATEGY;
 
-  typedef ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
-                               ACE_SSL_SOCK_CONNECTOR>;
-        TAO_CONNECT_STRATEGY;
+  typedef ACE_Connect_Strategy<TAO_SSLIOP_Client_Connection_Handler,
+                               ACE_SSL_SOCK_CONNECTOR>
+        TAO_SSLIOP_CONNECT_STRATEGY;
 
   typedef ACE_Strategy_Connector<TAO_SSLIOP_Client_Connection_Handler,
                                  ACE_SSL_SOCK_CONNECTOR>
@@ -124,10 +124,10 @@ private:
   // If zero, connect to IIOP over SSL port by default.
   // Otherwise, connect to the insecure IIOP port.
 
-  TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
+  TAO_SSLIOP_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
   // Our activation strategy
 
-  TAO_CONNECT_STRATEGY connect_strategy_;
+  TAO_SSLIOP_CONNECT_STRATEGY connect_strategy_;
   // Our connect strategy
 
   TAO_SSLIOP_BASE_CONNECTOR base_connector_;

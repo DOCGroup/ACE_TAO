@@ -92,15 +92,40 @@ TAO_SSLIOP_Endpoint::next (void)
 }
 
 CORBA::Boolean
-TAO_SSLIOP_Endpoint::is_equivalent (const TAO_SSLIOP_Endpoint *other_endpoint)
+TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
+  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
+                                        other_endpoint);
+
+  TAO_SSLIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
+                                                    endpt);
+
   if (this->ssl_component_.port != 0
-      && other_endpoint->ssl_component_.port != 0
-      && this->ssl_component_.port != other_endpoint->ssl_component_.port)
+      && endpoint->ssl_component_.port != 0
+      && this->ssl_component_.port != endpoint->ssl_component_.port)
     return 0;
 
   return
-    this->iiop_endpoint_->is_equivalent (other_endpoint->iiop_endpoint_);
+    this->iiop_endpoint_->is_equivalent (endpoint->iiop_endpoint_);
+}
+
+TAO_Endpoint *
+TAO_SSLIOP_Endpoint::duplicate (void)
+{
+  TAO_SSLIOP_Endpoint *endpoint = 0;
+
+  ACE_NEW_RETURN (endpoint,
+                  TAO_SSLIOP_Endpoint (&this->ssl_component_,
+                                       this->iiop_endpoint_),
+                  0);
+
+  return endpoint;
+}
+
+CORBA::ULong
+TAO_SSLIOP_Endpoint::hash (void)
+{
+  return this->iiop_endpoint_->hash ();
 }
 
 #endif  /* ACE_HAS_SSL */

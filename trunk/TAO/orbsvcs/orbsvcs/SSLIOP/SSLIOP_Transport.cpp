@@ -54,66 +54,49 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Transport_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (TAO_SSLIOP_Handler_Base *handler,
-                                        TAO_ORB_Core *orb_core)
+TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_IIOP_PROFILE,
-                   orb_core),
-    handler_ (handler)
+                   orb_core)
 {
 }
 
 TAO_SSLIOP_Transport::~TAO_SSLIOP_Transport (void)
 {
-  // If the socket has not already been closed.
-  if (this->handle () != ACE_INVALID_HANDLE)
-    {
-      // Cannot deal with errors, and therefore they are ignored.
-      this->send_buffered_messages ();
-    }
-  else
-    {
-      // Dequeue messages and delete message blocks.
-      this->dequeue_all ();
-    }
 }
 
-TAO_SSLIOP_Handler_Base *&
-TAO_SSLIOP_Transport::handler (void)
-{
-  return this->handler_;
-}
 
 int
 TAO_SSLIOP_Transport::idle (void)
 {
-  return this->handler_->idle ();
+  return this->service_handler ()->idle ();
 }
 
 void
 TAO_SSLIOP_Transport::close_connection (void)
 {
-  this->handler_->handle_close ();
+  this->service_handler ()->handle_close ();
 }
 
 ACE_HANDLE
 TAO_SSLIOP_Transport::handle (void)
 {
-  return this->handler_->get_handle ();
+  return this->service_handler ()->get_handle ();
 }
 
 ACE_Event_Handler *
 TAO_SSLIOP_Transport::event_handler (void)
 {
-  return this->handler_;
+  return this->service_handler ();
 }
 
 // ****************************************************************
 
 TAO_SSLIOP_Server_Transport::
     TAO_SSLIOP_Server_Transport (TAO_SSLIOP_Server_Connection_Handler *handler,
-                               TAO_ORB_Core* orb_core)
-  : TAO_SSLIOP_Transport (handler, orb_core),
-    message_state_ (orb_core)
+                                 TAO_ORB_Core* orb_core)
+  : TAO_SSLIOP_Transport (orb_core),
+    message_state_ (orb_core),
+    handler_ (handler)
 {
 }
 
@@ -121,12 +104,25 @@ TAO_SSLIOP_Server_Transport::~TAO_SSLIOP_Server_Transport (void)
 {
 }
 
+int
+TAO_IIOP_Server_Transport::idle (void)
+{
+  return this->handler_->make_idle ();
+}
+
+TAO_IIOP_SVC_HANDLER *
+TAO_IIOP_Server_Transport::service_handler (void)
+{
+  return this->handler_;
+}
+
 // ****************************************************************
 
 TAO_SSLIOP_Client_Transport::TAO_SSLIOP_Client_Transport (
       TAO_SSLIOP_Client_Connection_Handler *handler,
       TAO_ORB_Core *orb_core)
-  : TAO_SSLIOP_Transport (handler, orb_core),
+  : TAO_SSLIOP_Transport (orb_core),
+    handler_ (handler),
     client_mesg_factory_ (0),
     orb_core_ (orb_core),
     params_ ()
@@ -138,6 +134,12 @@ TAO_SSLIOP_Client_Transport::~TAO_SSLIOP_Client_Transport (void)
   delete this->client_mesg_factory_;
 }
 
+int
+TAO_IIOP_Client_Transport::idle (void)
+{
+  return this->handler_->make_idle ();
+}
+
 void
 TAO_SSLIOP_Client_Transport::start_request (TAO_ORB_Core * /* orb_core */,
                                             TAO_Target_Specification & /* spec */,
@@ -147,15 +149,6 @@ TAO_SSLIOP_Client_Transport::start_request (TAO_ORB_Core * /* orb_core */,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_CLIENT_TRANSPORT_START_REQUEST_START);
 
-//   const TAO_SSLIOP_Profile* profile =
-//     ACE_dynamic_cast(const TAO_SSLIOP_Profile*, pfile);
-
-//   // @@ This should be implemented in the transport object, which
-//   //    would query the profile to obtain the version...
-//   if (TAO_GIOP::start_message (profile->version (),
-//                                TAO_GIOP::Request,
-//                                output,
-//                                orb_core) == 0)
   if (this->client_mesg_factory_->write_protocol_header
       (TAO_PLUGGABLE_MESSAGE_REQUEST,
        output) == 0)
@@ -300,14 +293,23 @@ TAO_SSLIOP_Client_Transport::handle_client_input (int /* block */,
 int
 TAO_SSLIOP_Client_Transport::register_handler (void)
 {
-  // @@ It seems like this method should go away, the right reactor is
+    // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core ()->reactor ();
-  if (r == this->handler ()->reactor ())
+  if (r == this->service_handler ()->reactor ())
     return 0;
 
-  return r->register_handler (this->handler (),
-                              ACE_Event_Handler::READ_MASK);
+  // About to be registered with the reactor, so bump the ref
+  // count
+  this->handler_->incr_ref_count ();
+
+  // Set the flag in the Connection Handler
+  this->handler_->is_registered (1);
+
+  // Register the handler with the reactor
+  return  r->register_handler (this->handler_,
+                               ACE_Event_Handler::READ_MASK);
+
 }
 
 int
@@ -366,6 +368,12 @@ TAO_SSLIOP_Client_Transport::messaging_init (CORBA::Octet major,
     }
 
   return 1;
+}
+
+TAO_SSL_SVC_HANDLER *
+TAO_SSLIOP_Client_Transport::service_handler (void)
+{
+  return this->handler_;
 }
 
 CORBA::Boolean
@@ -450,12 +458,12 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
           if (iovcnt == IOV_MAX)
             {
               if (max_wait_time == 0)
-                n = this->handler_->peer ().sendv_n (iov,
-                                                     iovcnt);
+                n = this->service_handler ()->peer ().sendv_n (iov,
+                                                               iovcnt);
               else
                 // @@ No timeouts!!!
-                n = this->handler_->peer ().sendv_n (iov,
-                                                     iovcnt /*,
+                n = this->service_handler ()->peer ().sendv_n (iov,
+                                                               iovcnt /*,
                                                      max_wait_time */);
 
               if (n == 0 ||
@@ -471,8 +479,8 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->peer ().sendv_n (iov,
-                                           iovcnt);
+      n = this->service_handler ()->peer ().sendv_n (iov,
+                                                     iovcnt);
       if (n == 0 ||
           n == -1)
         return n;
@@ -490,8 +498,8 @@ TAO_SSLIOP_Transport::send (const u_char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
 
-  return this->handler_->peer ().send_n (buf,
-                                         len /*,
+  return this->service_handler ()->peer ().send_n (buf,
+                                                   len /*,
                                          max_wait_time */);
 }
 
@@ -502,7 +510,7 @@ TAO_SSLIOP_Transport::recv (char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
 
-  return this->handler_->peer ().recv_n (buf,
+  return this->service_handler ()->peer ().recv_n (buf,
                                          len /*,
                                          max_wait_time */);
 }
