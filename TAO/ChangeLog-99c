@@ -12,8 +12,10 @@ Thu Jul  8 14:41:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Thu Jul  8 14:36:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Added 'default' values for the ORB
-	  configuration options.
-
+	  configuration options in TAO_Resource_Factory,
+	  TAO_Default_Server_Strategy_Factory &
+	  TAO_Default_Client_Strategy_Factory..
+	
 	* tests/Xt_Stopwatch/run_test.pl: Added run_test.pl for spawning
 	  the server & client processes
 
