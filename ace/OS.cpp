@@ -2503,7 +2503,8 @@ ACE_Thread_Adapter::invoke (void)
             // Invoke the start hook to give the user a chance to
             // perform some initialization processing before the
             // <func> is invoked.
-            status = hook->start (ACE_static_cast (ACE_THR_FUNC, func), arg);
+            status = hook->start (ACE_reinterpret_cast (ACE_THR_FUNC, func),
+                                  arg);
           else
             // Call thread entry point.
             status = ACE_reinterpret_cast (void *, (*func) (arg));
