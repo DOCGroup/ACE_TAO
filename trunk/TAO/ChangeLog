@@ -1,3 +1,15 @@
+Sat Aug  9 13:38:27 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/Event_Service/Event_Service.h:
+	  Added <none> as a possible value for the -s (scheduler type)
+	  option. If -s option is not specified and the new EC is selected
+	  using the -t (EC type) option, then no scheduler is used by the
+	  EC. If the old EC (-t <old_reactive|old_mt>) is used, then it
+	  requires a scheduler and the -s <none> option translates to
+	  using a local scheduler. This will preserve the behavior for
+	  existing users.  	  
+
 Sat Aug  9 13:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
