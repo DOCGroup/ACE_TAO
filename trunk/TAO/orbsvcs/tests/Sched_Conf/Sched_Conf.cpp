@@ -1,6 +1,6 @@
 // $Id$
 
-// This program simulates a scheduler configuration run, 
+// This program simulates a scheduler configuration run,
 // and dumps the results of one scheduling in a C++ file.
 
 #include "ace/Sched_Params.h"
@@ -30,19 +30,19 @@ parse_args (int argc, char *argv [])
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
-	{
-	case 'n':
-	  service_name = get_opt.optarg;
-	  break;
-	case '?':
-	default:
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Usage: %s "
-		      "-n service_name "
-		      "\n",
-		      argv[0]));
-	  return -1;
-	}
+        {
+        case 'n':
+          service_name = get_opt.optarg;
+          break;
+        case '?':
+        default:
+          ACE_DEBUG ((LM_DEBUG,
+                      "Usage: %s "
+                      "-n service_name "
+                      "\n",
+                      argv[0]));
+          return -1;
+        }
     }
 
   return 0;
@@ -59,262 +59,262 @@ main (int argc, char *argv[])
   // create initial data for supplier and consumer operations
   const int operation_count = 16;
   ACE_Scheduler_Factory::POD_RT_Info config_infos[operation_count] = {
-		  // 20 Hz high criticality supplier
-		  { "hi_20_S",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			500000,             // period (100 ns)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 20 Hz low criticality supplier
-		  { "lo_20_S",         // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			500000,             // period (100 ns)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 10 Hz high criticality supplier
-		  { "hi_10_S",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			1000000,             // period (100 ns)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 10 Hz low criticality supplier
-		  { "lo_10_S",         // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			1000000,            // period (100 ns)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 5 Hz high criticality supplier
+                  // 20 Hz high criticality supplier
+                  { "hi_20_S",              // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        500000,             // period (100 ns)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 20 Hz low criticality supplier
+                  { "lo_20_S",         // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        500000,             // period (100 ns)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 10 Hz high criticality supplier
+                  { "hi_10_S",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        1000000,             // period (100 ns)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 10 Hz low criticality supplier
+                  { "lo_10_S",         // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        1000000,            // period (100 ns)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 5 Hz high criticality supplier
                   { "hi_05_S",         // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			2000000,            // period (100 ns)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 5 Hz low criticality supplier
-		  { "lo_05_S",         // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			2000000,            // period (100 ns)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 1 Hz high criticality supplier
-		  { "hi_01_S",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			10000000,            // period (100 ns)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 1 Hz low criticality supplier
-		  { "lo_01_S",         // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			10000000,           // period (100 ns)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			1,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 20 Hz high criticality consumer
-		  { "hi_20_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 20 Hz low criticality consumer
-		  { "lo_20_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 10 Hz high criticality consumer
-		  { "hi_10_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 10 Hz low criticality consumer
-		  { "lo_10_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 5 Hz high criticality consumer
-		  { "hi_05_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 5 Hz low criticality consumer
-		  { "lo_05_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 1 Hz high criticality consumer
-		  { "hi_01_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::HIGH_CRITICALITY,   // criticality
-			RtecScheduler::LOW_IMPORTANCE,     // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  },
-		  // 10 Hz low criticality consumer
-		  { "lo_01_C",        // entry point
-			0,                  // handle
-			{0, 0},             // worst case execution time
-			{0, 0},             // typical execution time (unused)
-			{0, 0},             // cached execution time
-			0,                  // period (zero)
-			RtecScheduler::LOW_CRITICALITY,    // criticality
-			RtecScheduler::HIGH_IMPORTANCE,    // importance
-			{0, 0},             // quantum (unused)
-			0,                  // threads 
-			0,                  // OS priority 
-			0,                  // Preemption subpriority
-			0,                  // Preemption priority
-			RtecScheduler::OPERATION           // info type
-		  }
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        2000000,            // period (100 ns)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 5 Hz low criticality supplier
+                  { "lo_05_S",         // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        2000000,            // period (100 ns)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 1 Hz high criticality supplier
+                  { "hi_01_S",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        10000000,            // period (100 ns)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 1 Hz low criticality supplier
+                  { "lo_01_S",         // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        10000000,           // period (100 ns)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        1,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 20 Hz high criticality consumer
+                  { "hi_20_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 20 Hz low criticality consumer
+                  { "lo_20_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 10 Hz high criticality consumer
+                  { "hi_10_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 10 Hz low criticality consumer
+                  { "lo_10_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 5 Hz high criticality consumer
+                  { "hi_05_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 5 Hz low criticality consumer
+                  { "lo_05_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 1 Hz high criticality consumer
+                  { "hi_01_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::HIGH_CRITICALITY,   // criticality
+                        RtecScheduler::LOW_IMPORTANCE,     // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  },
+                  // 10 Hz low criticality consumer
+                  { "lo_01_C",        // entry point
+                        0,                  // handle
+                        0,                  // worst case execution time
+                        0,                  // typical execution time (unused)
+                        0,                  // cached execution time
+                        0,                  // period (zero)
+                        RtecScheduler::LOW_CRITICALITY,    // criticality
+                        RtecScheduler::HIGH_IMPORTANCE,    // importance
+                        0,                  // quantum (unused)
+                        0,                  // threads
+                        0,                  // OS priority
+                        0,                  // Preemption subpriority
+                        0,                  // Preemption priority
+                        RtecScheduler::OPERATION           // info type
+                  }
   };
 
 
@@ -356,42 +356,42 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                           " (%P|%t) Unable to bind to the scheduling service.\n"),
                           1);
-	  }
-	  // create and initialize RT_Infos in the scheduler,
-	  // make second half of array depend on first half.
-	  for (int i = 0; i < operation_count; ++i)
-	  {
-		// create the RT_Info
-	    config_infos[i].handle = 
-		  ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
-		                                            TAO_TRY_ENV);
+          }
+          // create and initialize RT_Infos in the scheduler,
+          // make second half of array depend on first half.
+          for (int i = 0; i < operation_count; ++i)
+          {
+                // create the RT_Info
+            config_infos[i].handle =
+                  ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point,
+                                                            TAO_TRY_ENV);
 
-		// initialize the RT_Info
-		ACE_Scheduler_Factory::server ()->
-	      set (config_infos[i].handle, 
-		       (RtecScheduler::Criticality) config_infos[i].criticality, 
-               config_infos[i].worst_case_execution_time, 
-               config_infos[i].typical_execution_time, 
-               config_infos[i].cached_execution_time, 
-               config_infos[i].period, 
-               (RtecScheduler::Importance) config_infos[i].importance, 
-               config_infos[i].quantum, 
-               config_infos[i].threads, 
-               (RtecScheduler::Info_Type) config_infos[i].info_type, 
-			   TAO_TRY_ENV);
+                // initialize the RT_Info
+                ACE_Scheduler_Factory::server ()->
+              set (config_infos[i].handle,
+                       (RtecScheduler::Criticality) config_infos[i].criticality,
+               config_infos[i].worst_case_execution_time,
+               config_infos[i].typical_execution_time,
+               config_infos[i].cached_execution_time,
+               config_infos[i].period,
+               (RtecScheduler::Importance) config_infos[i].importance,
+               config_infos[i].quantum,
+               config_infos[i].threads,
+               (RtecScheduler::Info_Type) config_infos[i].info_type,
+                           TAO_TRY_ENV);
 
         // make operations in second half dependant on
-		// operations in the first half of the array,
-		// and have each called twice as a oneway call
-		if (i >= (operation_count / 2))
-		{
-		  ACE_Scheduler_Factory::server ()->
-	        add_dependency (config_infos[i].handle, 
-			                config_infos[i - (operation_count / 2)].handle, 
-							2,                             // number of calls
-							RtecScheduler::ONE_WAY_CALL,   // type of dependency
-			                TAO_TRY_ENV);
-		}
+                // operations in the first half of the array,
+                // and have each called twice as a oneway call
+                if (i >= (operation_count / 2))
+                {
+                  ACE_Scheduler_Factory::server ()->
+                add_dependency (config_infos[i].handle,
+                                        config_infos[i - (operation_count / 2)].handle,
+                                                        2,                             // number of calls
+                                                        RtecScheduler::ONE_WAY_CALL,   // type of dependency
+                                        TAO_TRY_ENV);
+                }
       }
 
       RtecScheduler::RT_Info_Set_var infos;
@@ -418,17 +418,17 @@ main (int argc, char *argv[])
          infos_out, configs_out, TAO_TRY_ENV);
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
-	(ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-					 ACE_SCOPE_THREAD),
-	 ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-					 ACE_SCOPE_THREAD),
-	 infos.out (), configs.out (), TAO_TRY_ENV);
+        (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                         ACE_SCOPE_THREAD),
+         infos.out (), configs.out (), TAO_TRY_ENV);
 #endif /* ! __SUNPRO_CC */
 
       TAO_CHECK_ENV;
 
-      ACE_Scheduler_Factory::dump_schedule (infos.in (), 
-		                                    configs.in (),
+      ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                                    configs.in (),
                                             "Sched_Conf_Runtime.h",
                                             format_string);
     }
