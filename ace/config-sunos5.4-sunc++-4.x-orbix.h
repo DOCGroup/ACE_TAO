@@ -190,5 +190,6 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 #define ACE_HAS_IDTYPE_T
+#define ACE_HAS_GPERF
 
 #endif /* ACE_CONFIG_H */
