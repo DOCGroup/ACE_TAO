@@ -1,3 +1,8 @@
+Mon Dec  2 13:25:20 2002  Craig Rodrigues <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/Makefile.av (ACE_SHLIBS): Add -lTAO_IORTable to
+	  appease MacOS X linker.
+
 Mon Dec  2 13:21:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Utils/Auto_Functor.cpp: Changed the names of #ifndef. They
