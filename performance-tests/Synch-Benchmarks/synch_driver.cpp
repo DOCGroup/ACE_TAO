@@ -29,9 +29,9 @@ Benchmark_Test::Benchmark_Test (void)
   : ACE_Service_Config (1), // Do not load default services
     n_lwps_ (0), 
     orig_n_lwps_ (0),
-    done_ (ACE_Sig_Handler_Ex (ACE_Service_Config::end_reactor_event_loop))
+    done_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
-  ACE_Service_Config::reactor ()->register_handler (SIGINT, &this->done_);
+  ACE_Reactor::instance ()->register_handler (SIGINT, &this->done_);
 }
 
 void
@@ -41,7 +41,7 @@ Benchmark_Test::run_test (void)
   Benchmark::done (0);
   
   // Allow thread(s) to make progress.
-  ACE_Service_Config::thr_mgr ()->resume_all ();
+  ACE_Thread_Manager::instance ()->resume_all ();
 
   ACE_Time_Value timeout (options.sleep_time ());
 
@@ -49,13 +49,13 @@ Benchmark_Test::run_test (void)
   options.start_timer ();
 
   // Use Reactor as a timer (which can be interrupted by a signal).
-  ACE_Service_Config::run_reactor_event_loop (timeout);
+  ACE_Reactor::run_event_loop (timeout);
 
   options.stop_timer ();
   ACE_DEBUG ((LM_DEBUG, "\nstopping timer\n"));
 
   // Stop thread(s) from making any further progress.
-  ACE_Service_Config::thr_mgr ()->suspend_all (); 
+  ACE_Thread_Manager::instance ()->suspend_all (); 
 
   // Tell the threads that we are finished.
   Benchmark::done (1);
@@ -77,10 +77,10 @@ Benchmark_Test::run_test (void)
   options.print_results ();
 
   // Allow thread(s) to finish up.
-  ACE_Service_Config::thr_mgr ()->resume_all ();
+  ACE_Thread_Manager::instance ()->resume_all ();
 
   // Wait for all the threads to exit. 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   options.init ();
 }
 
@@ -97,7 +97,7 @@ Benchmark_Test::init (int argc, char **argv)
   if (this->open (argv[0]) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "ACE_Service_Config::open failed\n%a", 1), -1);
 
-  ACE_Service_Repository_Iterator sri (*this->ACE_Service_Config::svc_rep ());
+  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance ());
   
   // Iteratively execute each service loaded in from the svc.conf
   // file.
@@ -123,7 +123,7 @@ Benchmark_Test::init (int argc, char **argv)
       // We should probably use a "barrier" here rather than
       // THR_SUSPENDED since many OS platforms lack the ability to
       // create suspended threads...
-      if (ACE_Service_Config::thr_mgr ()->spawn_n 
+      if (ACE_Thread_Manager::instance ()->spawn_n 
 	  (options.thr_count (), ACE_THR_FUNC (bp->svc_run), 
 	   (void *) bp, options.t_flags () | THR_SUSPENDED) == -1)
 	ACE_ERROR ((LM_ERROR, "%p\n%a", "couldn't spawn threads", 1));
