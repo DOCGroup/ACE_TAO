@@ -1,0 +1,19 @@
+//$Id$
+
+#ifndef CONSUMER_CIDL
+#define CONSUMER_CIDL
+
+#include "Consumer.idl"
+
+composition session Consumer_Impl
+{
+  home executor ConsumerHome_Exec
+  {
+    implements EC_Benchmark::ConsumerHome;
+    manages Consumer_Exec;
+  };
+};
+
+#endif /* CONSUMER_CIDL */
+
+

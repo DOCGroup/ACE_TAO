@@ -761,9 +761,9 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
-      <xsd:enumeration value="cosEventEmitter"/>
-      <xsd:enumeration value="cosEventPublisher"/>
-      <xsd:enumeration value="cosEventConsumer"/>
+      <xsd:enumeration value="ecEventEmitter"/>
+      <xsd:enumeration value="ecEventPublisher"/>
+      <xsd:enumeration value="ecEventConsumer"/>
       <xsd:enumeration value="rtecEventEmitter"/>
       <xsd:enumeration value="rtecEventPublisher"/>
       <xsd:enumeration value="rtecEventConsumer"/>
