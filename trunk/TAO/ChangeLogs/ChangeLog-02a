@@ -1,3 +1,17 @@
+Thu Aug 10 05:35:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/FT_Service/FT_CORBA_ServiceC.cpp:
+	* orbsvcs/FT_Service/FT_CORBA_ServiceC.h:
+	* orbsvcs/FT_Service/FT_CORBA_ServiceC.i:
+	* orbsvcs/FT_Service/FT_CORBA_ServiceS.h:
+	* orbsvcs/FT_Service/FT_CORBA_ServiceS.cpp:
+	* orbsvcs/FT_Service/FT_CORBA_ServiceS.i:
+	* orbsvcs/FT_Service/FT_CORBA_Service.pidl:
+	* orbsvcs/FT_Service/Makefile: The data types and interfaces for
+	  the service layer of the FT specification. Service developers
+	  like DOORS, CASO would be using these files to develop their
+	  service.
+
 Thu Aug 10 05:23:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Added a macro TAO_HAS_FT_CORBA and #defines for
@@ -20,7 +34,6 @@ Thu Aug 10 05:23:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/FT_CORBAS.h:
 	* tao/FT_CORBAS.i: The client and server side code that is
 	  specific to the ORB core.
-
 
 Thu Aug 10 04:41:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
