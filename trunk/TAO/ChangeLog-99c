@@ -1,3 +1,10 @@
+Tue May 11 17:47:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/append.cpp:
+	  Fixed a case (wchar) of TAO_Marshal_Union::append
+	  that Andy had marked as TODO and eliminated another
+	  shaky call to Any::value().
+
 Tue May 11 17:19:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Event.dsw:
