@@ -1,3 +1,11 @@
+Mon Jul 27 17:11:07 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitor.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	  Fixed compiler errors with g++ 2.7.2. Thanks to good ol' Sergio
+	  <sergiof@microsoft.com> for pointing this out. 
+
 Mon Jul 27 16:55:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/MT_Client_Test/run_test.pl: 

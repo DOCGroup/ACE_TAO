@@ -243,7 +243,7 @@ class TAO_Sequence_Extracter : private TAO_Sequence_Extracter_Base
  public:
 
   TAO_Sequence_Extracter (CORBA::TypeCode* type_code)
-    : typecode_ (type_code) {}
+    : typecode_ (CORBA::TypeCode::_duplicate (type_code)) {}
   
   CORBA::Boolean extract (const CORBA::Any&, SEQ_TYPE*&);
   // Extract the underlying sequence value into a newly allocated
@@ -252,7 +252,7 @@ class TAO_Sequence_Extracter : private TAO_Sequence_Extracter_Base
   
  private:
   
-  CORBA::TypeCode* typecode_;
+  CORBA::TypeCode_var typecode_;
 };
 
 

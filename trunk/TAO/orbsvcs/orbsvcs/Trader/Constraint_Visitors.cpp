@@ -555,7 +555,7 @@ sequence_does_contain (CORBA::Any* sequence,
   CORBA::Boolean return_value = CORBA::B_FALSE;
   CORBA::TypeCode_var type = sequence->type ();
   CORBA::TCKind sequence_type =
-    TAO_Sequence_Extracter_Base::sequence_type (type, env);
+    TAO_Sequence_Extracter_Base::sequence_type (type.in (), env);
   TAO_CHECK_ENV_RETURN (env, return_value);
 
   if (sequence_type == CORBA::tk_void)
