@@ -1,15 +1,5 @@
-Mon Jul  6 15:24:21 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
-
-	* tests/Logger/client.h
-	* tests/Logger/client.cpp
-	* orbsvcs/orbsvcs/Log/Logger_i.h
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp
-	* orbsvcs/orbsvcs/Logger.idl
-
-	Routine checkin. Ignore the man behind that curtain....
-	Fully working version complete, but not yet Purified. 
-	
 Mon Jul  6 14:24:11 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
+	
 	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
 	Add a pause after each send_n()(i.e. ipcSend()) as a temporary
 	work around over the block problem in ipcSend() when the resources are
