@@ -369,7 +369,7 @@ PortableInterceptor::ForwardRequest::ForwardRequest (const ::PortableInterceptor
 PortableInterceptor::ForwardRequest&
 PortableInterceptor::ForwardRequest::operator= (const ::PortableInterceptor::ForwardRequest &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   this->forward = CORBA::Object::_duplicate (_tao_excp.forward.in ());
   this->permanent = _tao_excp.permanent;
   return *this;
@@ -644,7 +644,7 @@ PortableInterceptor::InvalidSlot::InvalidSlot (const ::PortableInterceptor::Inva
 PortableInterceptor::InvalidSlot&
 PortableInterceptor::InvalidSlot::operator= (const ::PortableInterceptor::InvalidSlot &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -3878,7 +3878,7 @@ PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (const ::Portable
 PortableInterceptor::ORBInitInfo::DuplicateName&
 PortableInterceptor::ORBInitInfo::DuplicateName::operator= (const ::PortableInterceptor::ORBInitInfo::DuplicateName &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   this->name = CORBA::string_dup (_tao_excp.name.in ());
   return *this;
 }
@@ -3974,7 +3974,7 @@ PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (const ::PortableInte
 PortableInterceptor::ORBInitInfo::InvalidName&
 PortableInterceptor::ORBInitInfo::InvalidName::operator= (const ::PortableInterceptor::ORBInitInfo::InvalidName &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
