@@ -82,22 +82,22 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
       return;
     }
 
-  ACE_TRY
+  TAO_TRY
     {
-      push_consumer_->push (events, ACE_TRY_ENV);
-      ACE_CHECK_ENV;
+      push_consumer_->push (events, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
-  ACE_CATCH (RtecEventComm::Disconnected, d)
+  TAO_CATCH (RtecEventComm::Disconnected, d)
     {
       ACE_ERROR ((LM_ERROR, "consumer disconnected.\n"));
-      ACE_RETHROW;
+      TAO_RETHROW;
     }
-  ACE_CATCH (CORBA::SystemException, se)
+  TAO_CATCH (CORBA::SystemException, se)
     {
       ACE_ERROR ((LM_ERROR, "system exception.\n"));
-      ACE_RETHROW;
+      TAO_RETHROW;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 }
 
 ACE_INLINE ACE_ES_Consumer_Correlation &
@@ -417,7 +417,7 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 
     ACE_ES_Subscription_Info::Subscriber_Set_Iterator iter (set);
 
-    ACE_TRY
+    TAO_TRY
       {
 	// Iterate through all subscribers.
 	for (ACE_ES_Consumer_Rep **consumer = 0;
@@ -428,8 +428,8 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 	    // and not disconnected.
 	    if ((*consumer)->receiving_events ())
 	      {
-		up_->push (*consumer, event, ACE_TRY_ENV);
-		ACE_CHECK_ENV;
+		up_->push (*consumer, event, TAO_TRY_ENV);
+		TAO_CHECK_ENV;
 	      }
 	    // If the consumer has disconnected, schedule it for
 	    // disconnection.  We can not modify our list now.  It
@@ -438,11 +438,11 @@ ACE_ES_Subscription_Module::push_source (ACE_Push_Supplier_Proxy *source,
 	      disconnect_list.insert (*consumer);
 	  }
       }
-    ACE_CATCHANY
+    TAO_CATCHANY
       {
 	return -1;
       }
-    ACE_ENDTRY;
+    TAO_ENDTRY;
 
     // Release the read lock.
   }
@@ -530,7 +530,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
     // of event from this supplier.  Forward the event to each.
     ACE_ES_Subscription_Info::Subscriber_Set_Iterator iter (*set);
 
-    ACE_TRY
+    TAO_TRY
       {
 	for (ACE_ES_Consumer_Rep **consumer = 0;
 	     iter.next (consumer) != 0;
@@ -538,19 +538,19 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
 	  {
 	    if ((*consumer)->receiving_events ())
 	      {
-		up_->push (*consumer, event, ACE_TRY_ENV);
-		ACE_CHECK_ENV;
+		up_->push (*consumer, event, TAO_TRY_ENV);
+		TAO_CHECK_ENV;
 	      }
 	    if ((*consumer)->disconnected ())
 	      disconnect_list.insert (*consumer);
 	  }
       }
-    ACE_CATCHANY
+    TAO_CATCHANY
       {
 	ACE_TIMEPROBE ("  push_source_type");
 	return -1;
       }
-    ACE_ENDTRY;
+    TAO_ENDTRY;
   }
 
   if (disconnect_list.size () != 0)
