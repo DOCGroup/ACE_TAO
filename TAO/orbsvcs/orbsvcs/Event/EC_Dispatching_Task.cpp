@@ -64,10 +64,10 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
                                  CORBA::COMPLETED_NO));
 
   ACE_Message_Block *mb =
-    new (mb) TAO_EC_Push_Command (proxy,
-                                  event,
-                                  this->data_block_.duplicate (),
-                                  this->allocator_);
+    new (buf) TAO_EC_Push_Command (proxy,
+                                   event,
+                                   this->data_block_.duplicate (),
+                                   this->allocator_);
   this->putq (mb);
 }
 

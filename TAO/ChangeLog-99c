@@ -1,3 +1,9 @@
+Sat May 15 16:26:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	  Fixed placement new expression, thanks to David Levine for
+	  pointing this out.
+
 Sat May 15 14:45:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/Repository.h:
