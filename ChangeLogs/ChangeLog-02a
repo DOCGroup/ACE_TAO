@@ -1,3 +1,19 @@
+Sat Apr 22 18:41:06 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SOCK_Dgram_Mcast.i: Removed the QoS enabled overloaded
+	  methods.
+
+	* ace/SOCK_Dgram_Mcast_QoS.h:
+	* ace/SOCK_Dgram_Mcast_QoS.cpp:
+	* ace/SOCK_Dgram_Mcast_QoS.i: Added this new class that derives from
+	  ACE_SOCK_Dgram_Mcast and handles all the QoS functionality that 
+	  was being done by the latter. 
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added the ace/SOCK_Dgram_Mcast_QoS.{cpp,i,h}
+	
 Fri Apr 21 10:23:19 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl: 

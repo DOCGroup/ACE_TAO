@@ -18,20 +18,28 @@ CFG=ACE DLL - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE DLL - Win32 Unicode Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 Unicode Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Unicode Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Unicode Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Unicode Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Alpha Unicode Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 MFC Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 MFC Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE DLL - Win32 Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "ACE DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
@@ -111,12 +119,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /Ob2 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -143,12 +151,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /MDd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -175,12 +183,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD nologo MT Gt0 W3 GX O2 Ob2 I "..\\ /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O2 /Ob2 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -207,12 +215,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Unicode_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -3722,6 +3730,33 @@ SOURCE=.\SOCK_Dgram_Mcast.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SOCK_Dgram_Mcast_QoS.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\SOCK_IO.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
@@ -5887,6 +5922,10 @@ SOURCE=.\SOCK_Dgram_Mcast.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SOCK_Dgram_Mcast_QoS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SOCK_IO.h
 # End Source File
 # Begin Source File
@@ -6703,6 +6742,10 @@ SOURCE=.\SOCK_Dgram_Mcast.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\SOCK_Dgram_Mcast_QoS.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\SOCK_IO.i
 # End Source File
 # Begin Source File
@@ -7092,7 +7135,49 @@ SOURCE=.\Auto_Ptr.cpp
 # Begin Source File
 
 SOURCE=.\Based_Pointer_T.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -8926,6 +9011,29 @@ SOURCE=..\Version
 # Begin Source File
 
 SOURCE=.\ace.rc
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
