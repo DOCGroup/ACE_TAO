@@ -1,0 +1,18 @@
+--------------------Configuration: WindozeCE - Win32 (WCE x86em) Debug--------------------
+Begining build with project "C:\Nanbor\WinCE\WindozeCE\WindozeCE.dsp", at root.
+Active configuration is Win32 (WCE x86em) Application (based on Win32 (WCE x86em) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86em" with flags "/nologo /MTd /W3 /Gm /Zi /Od /D UNDER_CE=$(CEVersion) /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=$(CEVersion) /D "$(CEConfigName)" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D "_AFXDLL" /Fp"x86emDbg/WindozeCE.pch" /Yu"stdafx.h" /Fo"x86emDbg/" /Fd"x86emDbg/" /c "
+			"Win32 Resource Compiler" with flags "/l 0x409 /fo"x86emDbg/WindozeCE.res" /d UNDER_CE=$(CEVersion) /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=$(CEVersion) /d "$(CEConfigName)" /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_" /d "_AFXDLL" "
+			"OLE Type Library Maker" with flags "/nologo /D "_DEBUG" /mktyplib203 /o NUL /win32 "
+			"Browser Database Maker" with flags "/nologo /o"x86emDbg/WindozeCE.bsc" "
+			"COFF Linker for 80x86em" with flags "/nologo /entry:"wWinMainCRTStartup" /subsystem:windows /incremental:yes /pdb:"x86emDbg/WindozeCE.pdb" /debug /machine:I386 /out:"x86emDbg/WindozeCE.exe" /windowsce:emulation "
+			"Empfile Utility" with flags "-COPY "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+
+
+
+WindozeCE.exe - 0 error(s), 0 warning(s)
