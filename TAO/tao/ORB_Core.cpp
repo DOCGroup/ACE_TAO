@@ -1080,7 +1080,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
-  this->bidirectional_giop_init ();
+  int ret = this->bidirectional_giop_init (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (ret == -1)
+    return -1;
 
   // As a last step perform initializations of the service callbacks
   this->services_callbacks_init ();
@@ -1382,7 +1386,7 @@ TAO_ORB_Core::get_protocols_hooks (void)
 }
 
 int
-TAO_ORB_Core::bidirectional_giop_init (void)
+TAO_ORB_Core::bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->bidir_adapter_ == 0)
     {
@@ -1410,7 +1414,10 @@ TAO_ORB_Core::bidirectional_giop_init (void)
         }
     }
 
-  return this->bidir_adapter_->activate (this->orb_.in (), 0, 0);
+  return this->bidir_adapter_->activate (this->orb_.in (),
+                                         0,
+                                         0,
+                                         ACE_TRY_ENV);
 }
 
 void
