@@ -1,3 +1,9 @@
+Wed Jun 13 10:45:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp (process_reply_message): Fixed the
+	  reply parsing and generation of the CDR stream that is passed on
+	  to the higher layers of the ORB.
+
 Wed Jun 13 07:25:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile: Added new files.
