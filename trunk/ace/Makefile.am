@@ -138,10 +138,10 @@ libACE_OS_la_SOURCES = \
   OS_Memory.cpp \
   OS_String.cpp \
   OS_TLI.cpp \
-  Thread_Hook \
-  Thread_Adapter \
-  Thread_Exit \
-  Thread_Control \
+  Thread_Hook.cpp \
+  Thread_Adapter.cpp \
+  Thread_Exit.cpp \
+  Thread_Control.cpp \
   Sched_Params.cpp
 
 libACE_Utils_la_SOURCES = \
@@ -684,6 +684,10 @@ HEADER_FILES = \
   Task.h \
   Task_T.h \
   Thread.h \
+  Thread_Adapter.h \
+  Thread_Control.h \
+  Thread_Exit.h \
+  Thread_Hook.h \
   Thread_Manager.h \
   Time_Request_Reply.h \
   Time_Value.h \
@@ -904,7 +908,9 @@ INLINE_FILES = \
   OS_Dirent.inl \
   OS_Memory.inl \
   OS_String.inl \
-  OS_TLI.inl
+  OS_TLI.inl \
+  Thread_Adapter.inl \
+  Thread_Control.inl
 
 
 ## It would be good to remove pkgincludedir.  However, we want to install
