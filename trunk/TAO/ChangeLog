@@ -5,6 +5,8 @@ Tue Dec  7 18:10:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/Container_i.h:
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/IFR_Service/IFR_Server.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
         
           Fixes to the Contained::move() method implementation,
           and changes to eliminate the output of the IFR's IOR
