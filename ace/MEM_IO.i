@@ -65,6 +65,7 @@ ACE_MEM_IO::recv (void *buf, size_t n, int flags)
       n -= length;
       count += length;
     }
+
   return count;
 }
 
