@@ -175,7 +175,7 @@ ACE_HANDLE
 JAWS_IO_Asynch_Acceptor::get_handle (void)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  return this->acceptor_.get_handle ();
+  return this->acceptor_.accept_handle ();
 #else
   return ACE_INVALID_HANDLE;
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
