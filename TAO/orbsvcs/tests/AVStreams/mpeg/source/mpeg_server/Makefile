@@ -16,7 +16,9 @@ FILES= as las lvs vs Globals Video_Server Video_Control_State
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-##LIBS 	+= -lTAO -lACE
+LIBS 	+= -lTAO -lACE
+MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
+CPPFLAGS += -I$(MPEG_ROOT)/include -I$(MPEG_ROOT)/mpeg_shared -I$(MPEG_ROOT)/mpeg_server -I$(MPEG_ROOT)/mpeg_client
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -175,7 +177,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -183,16 +187,18 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -202,18 +208,14 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i \
@@ -245,9 +247,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- server_proto.h Globals.h \
- $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Log_Record.i server_proto.h \
+ Globals.h $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -356,7 +357,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -364,16 +367,18 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -383,18 +388,14 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i \
@@ -537,7 +538,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -545,16 +548,18 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -564,18 +569,14 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i \
@@ -625,8 +626,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Singleton.i \
- Video_Server.h $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Singleton.i Video_Server.h \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -718,7 +719,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -726,16 +729,18 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -745,18 +750,14 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i \
@@ -803,11 +804,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Singleton.i \
- ../include/common.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
- ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h \
- Video_Server.h $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Singleton.i ../include/common.h \
+ ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h \
+ ../mpeg_shared/fileio.h ../mpeg_shared/com.h ../mpeg_shared/sendpt.h \
+ server_proto.h Video_Server.h \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -899,7 +900,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -907,16 +910,18 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -926,18 +931,14 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i \
@@ -1077,7 +1078,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1085,16 +1088,18 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -1104,18 +1109,14 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i \
@@ -1130,8 +1131,8 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/singletons.h \
- Globals.h ../include/common.h ../mpeg_shared/routine.h \
+ $(TAO_ROOT)/tao/singletons.h Globals.h \
+ ../include/common.h ../mpeg_shared/routine.h \
  ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
  ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h \
  Video_Control_State.h
@@ -1165,8 +1166,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Singleton.i \
- Video_Server.h $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Singleton.i Video_Server.h \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -1258,7 +1259,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1266,16 +1269,18 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.h \
  $(TAO_ROOT)/tao/ORB_Strategies_T.i \
- $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
+ $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
@@ -1285,18 +1290,14 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
+ $(TAO_ROOT)/tao/ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Object.h \
  $(TAO_ROOT)/tao/IIOP_ORB.h \
  $(TAO_ROOT)/tao/IIOP_Interpreter.h \
  $(TAO_ROOT)/tao/GIOP.h \
- $(TAO_ROOT)/tao/ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/NVList.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Marshal.i \
@@ -1311,8 +1312,8 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/singletons.h \
- Globals.h ../include/common.h ../mpeg_shared/routine.h \
+ $(TAO_ROOT)/tao/singletons.h Globals.h \
+ ../include/common.h ../mpeg_shared/routine.h \
  ../mpeg_shared/../include/common.h ../mpeg_shared/fileio.h \
  ../mpeg_shared/com.h ../mpeg_shared/sendpt.h server_proto.h
 
