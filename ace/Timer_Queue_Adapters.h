@@ -117,8 +117,13 @@ public:
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
   /// Creates the timer queue.  Activation of the task is the user's
-  /// responsibility.
-  ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
+  /// responsibility. Optionally a pointer to a timer queue can be passed,
+  /// when no pointer is passed, a TQ is dynamically created
+  ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager * = ACE_Thread_Manager::instance (),
+                                  TQ* timer_queue = 0);
+
+  /// Destructor.
+  virtual ~ACE_Thread_Timer_Queue_Adapter (void);
 
   /// Schedule the timer according to the semantics of the <TQ>; wakes
   /// up the dispatching thread.
@@ -140,11 +145,18 @@ public:
   /// Access the locking mechanism, useful for iteration.
   ACE_SYNCH_MUTEX &mutex (void);
 
-  /// Access the implementation queue, useful for iteration.
+  /// @deprecated Access the implementation queue, useful for iteration.
+  /// Use the method that returns a pointer instead
   TQ &timer_queue (void);
 
+  /// Set a user-specified timer queue.
+  int timer_queue (TQ *tq);
+
+  /// Return the current <TQ>.
+  TQ *timer_queue (void) const;
+
   /// Return the thread id of our active object.
-  ACE_thread_t thr_id (void);
+  ACE_thread_t thr_id (void) const;
 
   /**
    * We override the default <activate> method so that we can ensure
@@ -193,7 +205,11 @@ private:
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
   /// The underlying Timer_Queue.
-  TQ timer_queue_;
+  TQ* timer_queue_;
+
+  /// Keeps track of whether we should delete the timer queue (if we
+  /// didn't create it, then we don't delete it).
+  int delete_timer_queue_;
 
   /**
    * The dispatching thread sleeps on this condition while waiting to

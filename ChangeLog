@@ -1,3 +1,17 @@
+Mon Apr 15 16:20:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_Adapters.{h,i,cpp}:
+          Made several additions to the ACE_Thread_Timer_Queue_Adapter
+          - Make it possible to pass a timer queue instance to the
+            ACE_Thread_Timer_Queue_Adapter instance using the constructor
+          - Make it possible to get/set the timer queue based on pointers, the
+            get method with a & is still available, but is marked as deprecated
+          - Make the thr_id method const
+          - When the timer queue is created by the ACE_Thread_Timer_Queue_Adapter
+            then it is also deleted, if it is passed or set afterwards it isn't
+            deleted by ACE_Thread_Timer_Queue_Adapter (just like in the
+            ACE_Reactor).
+
 Mon Apr 15 10:22:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Containers_T.h:

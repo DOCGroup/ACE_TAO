@@ -147,12 +147,32 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
 }
 
 template<class TQ>
-ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager *tm)
+ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager *tm,
+                                                                    TQ* timer_queue)
   : ACE_Task_Base (tm),
+    timer_queue_(timer_queue),
+    delete_timer_queue_(0),
     condition_ (mutex_),
     active_ (1), // Assume that we start in active mode.
     thr_id_ (ACE_OS::NULL_thread)
 {
+  if (timer_queue_ == 0)
+    {
+      ACE_NEW (this->timer_queue_,
+               TQ);
+      this->delete_timer_queue_ = 1;
+    }
+}
+
+template<class TQ>
+ACE_Thread_Timer_Queue_Adapter<TQ>::~ACE_Thread_Timer_Queue_Adapter (void)
+{
+  if (this->delete_timer_queue_)
+    {
+      delete this->timer_queue_;
+      this->timer_queue_ = 0;
+      this->delete_timer_queue_ = 0;
+    }
 }
 
 template<class TQ> ACE_SYNCH_MUTEX &
@@ -170,7 +190,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-  long result = this->timer_queue_.schedule (handler, act, future_time, interval);
+  long result = this->timer_queue_->schedule (handler, act, future_time, interval);
   this->condition_.signal ();
   return result;
 }
@@ -181,7 +201,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-  int result = this->timer_queue_.cancel (timer_id, act);
+  int result = this->timer_queue_->cancel (timer_id, act);
   condition_.signal ();
   return result;
 }
@@ -229,13 +249,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
       // If the queue is empty, sleep until there is a change on it.
-      if (this->timer_queue_.is_empty ())
+      if (this->timer_queue_->is_empty ())
         this->condition_.wait ();
       else
         {
           // Compute the remaining time, being careful not to sleep
           // for "negative" amounts of time.
-          ACE_Time_Value tv = this->timer_queue_.earliest_time ();
+          ACE_Time_Value tv = this->timer_queue_->earliest_time ();
 
           // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting until %u.%3.3u secs\n"),
           // tv.sec(), tv.msec()));
@@ -243,7 +263,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
         }
 
       // Expire timers anyway, at worst this is a no-op.
-      this->timer_queue_.expire ();
+      this->timer_queue_->expire ();
     }
 
    // Thread cancellation point, if ACE supports it.
