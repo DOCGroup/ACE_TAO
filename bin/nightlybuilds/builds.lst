@@ -33,30 +33,30 @@
 #WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_release
 #STATUS = http://tao.doc.wustl.edu/bugzilla/DLL_Release/status.txt
 
-[Win2000_Borland]
-LIST   = http://tao.doc.wustl.edu/bugzilla/Borland/
-WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland
-STATUS = http://tao.doc.wustl.edu/bugzilla/Borland/status.txt
+#[Win2000_Borland]
+#LIST   = http://tao.doc.wustl.edu/bugzilla/Borland/
+#WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland
+#STATUS = http://tao.doc.wustl.edu/bugzilla/Borland/status.txt
 
-[Win2000_Borland_Wchar]
-LIST   = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/
-WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland_wchar
-STATUS = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/status.txt
+#[Win2000_Borland_Wchar]
+#LIST   = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/
+#WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland_wchar
+#STATUS = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/status.txt
 
 #[Win2000_Fuzz]
 #LIST   = http://tao.doc.wustl.edu/bugzilla/Fuzz/
 #WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
 #STATUS = http://tao.doc.wustl.edu/bugzilla/Fuzz/status.txt
 
-[Win2000_WChar_Unicode]
-LIST   = http://tao.doc.wustl.edu/bugzilla/Unicode/
-WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?unicode
-STATUS = http://tao.doc.wustl.edu/bugzilla/Unicode/status.txt
+#[Win2000_WChar_Unicode]
+#LIST   = http://tao.doc.wustl.edu/bugzilla/Unicode/
+#WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?unicode
+#STATUS = http://tao.doc.wustl.edu/bugzilla/Unicode/status.txt
 
-[Win2000_WChar]
-LIST   = http://tao.doc.wustl.edu/bugzilla/wchar/
-WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
-STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
+#[Win2000_WChar]
+#LIST   = http://tao.doc.wustl.edu/bugzilla/wchar/
+#WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
+#STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
 
 [Debian_Core]
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/
