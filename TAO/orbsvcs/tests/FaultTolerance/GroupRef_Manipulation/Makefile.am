@@ -38,7 +38,7 @@ CLEANFILES = \
 testS_T.cpp testC.inl testS.inl testS_T.inl testC.cpp testC.h testS.h testS_T.h: test-stamp
 
 test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Gv -DCORBA3 -I$(TAO_ROOT) $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -DCORBA3 -I$(TAO_ROOT) $(srcdir)/test.idl
 	@touch $@
 
 noinst_PROGRAMS = client
