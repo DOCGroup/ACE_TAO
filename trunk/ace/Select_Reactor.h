@@ -208,6 +208,22 @@ public:
   // Called back by the <ACE_Select_Reactor> when a thread wants to
   // unblock us.
 
+  virtual void max_notify_iterations (int);
+  // Set the maximum number of times that the
+  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.  By default,
+  // this is set to -1, which means "iterate until the pipe is empty."
+  // Setting this to a value like "1 or 2" will increase "fairness"
+  // (and thus prevent starvation) at the expense of slightly higher
+  // dispatching overhead.
+
+  virtual int max_notify_iterations (void);
+  // Get the maximum number of times that the
+  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -224,6 +240,13 @@ private:
   // Contains the <ACE_HANDLE> the <ACE_Select_Reactor> is listening
   // on, as well as the <ACE_HANDLE> that threads wanting the
   // attention of the <ACE_Select_Reactor> will write to.
+
+  int max_notify_iterations_;
+  // Keeps track of the maximum number of times that the
+  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify pipe before breaking out of its <recv> loop.  By default,
+  // this is set to -1, which means "iterate until the pipe is empty."
 };
 
 class ACE_Export ACE_Select_Reactor_Handler_Repository
@@ -655,22 +678,6 @@ public:
   // Get position that the main ACE_Select_Reactor thread is requeued in the
   // list of waiters during a notify() callback.
 
-  virtual void max_notify_iterations (int);
-  // Set the maximum number of times that the
-  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-  // dispatch the <ACE_Event_Handlers> that are passed in via the
-  // notify pipe before breaking out of its <recv> loop.  By default,
-  // this is set to -1, which means "iterate until the pipe is empty."
-  // Setting this to a value like "1 or 2" will increase "fairness"
-  // (and thus prevent starvation) at the expense of slightly higher
-  // dispatching overhead.
-
-  virtual int max_notify_iterations (void);
-  // Get the maximum number of times that the
-  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-  // dispatch the <ACE_Event_Handlers> that are passed in via the
-  // notify pipe before breaking out of its <recv> loop.
-
   // = Low-level wait_set mask manipulation methods.
   virtual int mask_ops (ACE_Event_Handler *eh,
                         ACE_Reactor_Mask mask,
@@ -865,8 +872,8 @@ protected:
   // Keeps track of whether we should delete the signal handler (if we
   // didn't create it, then we don't delete it).
 
-  ACE_Select_Reactor_Notify *notify_handler_;
-  // Callback object that unblocks the ACE_Select_Reactor if it's
+  ACE_Reactor_Notify *notify_handler_;
+  // Callback object that unblocks the <ACE_Select_Reactor> if it's
   // sleeping.
 
   int delete_notify_handler_;
@@ -892,13 +899,6 @@ protected:
   // -1 we are requeued at the end of the list.  Else if it's 0 then
   // we are requeued at the front of the list.  Else if it's > 1 then
   // that indicates the number of waiters to skip over.
-
-  int max_notify_iterations_;
-  // Keeps track of the maximum number of times that the
-  // <ACE_Select_Reactor_Notify::handle_input> method will iterate and
-  // dispatch the <ACE_Event_Handlers> that are passed in via the
-  // notify pipe before breaking out of its <recv> loop.  By default,
-  // this is set to -1, which means "iterate until the pipe is empty."
 
   int initialized_;
   // True if we've been initialized yet...

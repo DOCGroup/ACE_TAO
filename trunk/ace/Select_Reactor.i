@@ -9,11 +9,6 @@ ACE_Event_Tuple::~ACE_Event_Tuple (void)
 }
 
 ACE_INLINE
-ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
-{
-}
-
-ACE_INLINE
 ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify (void)
 {
 }

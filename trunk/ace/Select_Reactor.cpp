@@ -541,11 +541,7 @@ ACE_Select_Reactor::max_notify_iterations (int iterations)
   ACE_TRACE ("ACE_Select_Reactor::max_notify_iterations");
   ACE_MT (ACE_GUARD (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_));
 
-  // Must always be > 0 or < 0 to optimize the loop exit condition.
-  if (iterations == 0)
-    iterations = 1;
-
-  this->max_notify_iterations_ = iterations;
+  this->notify_handler_->max_notify_iterations (iterations);
 }
 
 int
@@ -553,7 +549,7 @@ ACE_Select_Reactor::max_notify_iterations (void)
 {
   ACE_TRACE ("ACE_Select_Reactor::max_notify_iterations");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_, -1));
-  return this->max_notify_iterations_;
+  return this->notify_handler_->max_notify_iterations ();
 }
 
 // Enqueue ourselves into the list of waiting threads.
@@ -626,6 +622,27 @@ ACE_Select_Reactor_Token::sleep_hook (void)
 }
 
 #endif /* ACE_MT_SAFE */
+
+ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
+  : max_notify_iterations_ (-1)
+{
+}
+
+void
+ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)
+{
+  // Must always be > 0 or < 0 to optimize the loop exit condition.
+  if (iterations == 0)
+    iterations = 1;
+
+  this->max_notify_iterations_ = iterations;
+}
+
+int
+ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)
+{
+  return this->max_notify_iterations_;
+}
 
 void
 ACE_Select_Reactor_Notify::dump (void) const
@@ -799,7 +816,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
       // Bail out if we've reached the <notify_threshold_>.  Note that
       // by default <notify_threshold_> is -1, so we'll loop until all
       // the notifications in the pipe have been dispatched.
-      if (number_dispatched == this->select_reactor_->max_notify_iterations_)
+      if (number_dispatched == this->max_notify_iterations_)
         break;
     }
 
@@ -1071,7 +1088,6 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
     delete_signal_handler_ (0),
     delete_notify_handler_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
-    max_notify_iterations_ (-1),
     initialized_ (0),
     state_changed_ (0),
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -1107,7 +1123,6 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
     delete_signal_handler_ (0),
     delete_notify_handler_ (0),
     requeue_position_ (-1), // Requeue at end of waiters by default.
-    max_notify_iterations_ (-1),
     initialized_ (0),
     state_changed_ (0),
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
