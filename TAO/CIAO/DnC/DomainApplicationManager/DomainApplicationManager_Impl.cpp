@@ -32,7 +32,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
-  ACE_DEBUG ((LM_DEBUG, "Dtor: DAM\n"));
+  ACE_DEBUG ((LM_DEBUG, "DomainApplicationManager destroyed\n"));
 }
 
 void
@@ -81,14 +81,10 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.
 
-	  ACE_DEBUG ((LM_DEBUG, "DAM:INIT calling prepareplan On NM?\n"));
-
           Deployment::NodeApplicationManager_var app_manager
 	      = Deployment::NodeApplicationManager::_narrow
 	      (my_node_manager->preparePlan (artifacts.child_plan_
 					     ACE_ENV_ARG_PARAMETER));
-	  ACE_DEBUG ((LM_DEBUG, "DAM:INIT 3\n"));
-
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (app_manager.in ()))

@@ -56,7 +56,6 @@ namespace CIAO
 		    ACE_CString name (arti.execParameter[prop_num].name.in ());
 		    if (name == ACE_CString ("entryPoint"))
 		      {
-			ACE_DEBUG ((LM_DEBUG, "Found entryPoint!\n"));
 			const char * entry;
 			(arti.execParameter[prop_num].value) >>= entry;
 			info[i].servant_entrypt = CORBA::string_dup (entry);
@@ -89,8 +88,6 @@ namespace CIAO
 		    ACE_CString name (arti.execParameter[prop_num].name.in ());
 		    if (name == ACE_CString ("entryPoint"))
 		      {
-			ACE_DEBUG ((LM_DEBUG, "Found entryPoint!\n"));
-
 			const char * entry;
 			(arti.execParameter[prop_num].value) >>= entry;
 			info[i].executor_entrypt = CORBA::string_dup (entry);
