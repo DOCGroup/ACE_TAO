@@ -105,6 +105,11 @@ public:
                               ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
+
+  /**
+   * Dump the content of the attribute definition.
+   */
+  virtual void dump (void);
 private:
   CONTENT_TYPE type_;
 

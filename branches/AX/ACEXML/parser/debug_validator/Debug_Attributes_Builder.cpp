@@ -78,6 +78,77 @@ ACEXML_Debug_Attribute_Builder::validAttr (void)
   return 1;
 }
 
+void
+ACEXML_Debug_Attribute_Builder::dump (void)
+{
+  cout << this->name_ << " ";
+
+  switch (this->type_)
+    {
+    case CDATA:
+      cout << "CDATA ";
+      break;
+    case ID:
+      cout << "ID ";
+      break;
+    case IDREF:
+      cout << "IDREF ";
+      break;
+    case IDREFS:
+      cout << "IDREFS ";
+      break;
+    case ENTITY:
+      cout << "ENTITY ";
+      break;
+    case ENTITIES:
+      cout << "ENTITIES ";
+      break;
+    case NMTOKEN:
+      cout << "NMTOKEN ";
+      break;
+    case NMTOKENS:
+      cout << "NMTOKENS ";
+      break;
+    case NOTATION:
+      cout << "NOTATION ";
+      // Fall thru
+    case ENUMERATION:
+      {
+        cout << "(";
+        ACEXML_STRING_QUEUE_ITERATOR iter (this->att_value_queue_);
+        ACEXML_String *n = 0;
+
+        while (iter.advance () != 0)
+          {
+            if (n == 0)
+              cout << " | ";
+            iter.next (n);
+            cout << *n;
+          }
+        cout << ") ";
+      }
+      break;
+    default:
+      cout << "*** UNKNOW TYPE ***";
+      break;
+    }
+
+  switch (this->default_decl_)
+    {
+    case REQUIRED:
+      cout << "#REQUIRED";
+      break;
+    case IMPLIED:
+      cout << "#IMPLIED";
+      break;
+    case FIXED:
+      cout << "#FIXED " << this->default_value_;
+      break;
+    default:
+      cout << "**** UNDEFINED DEFAULT DECL ****";
+      break;
+    }
+}
 // ========================================
 
 ACEXML_Debug_Attributes_Builder::ACEXML_Debug_Attributes_Builder ()
@@ -126,5 +197,22 @@ ACEXML_Debug_Attributes_Builder::insertAttribute (ACEXML_Attribute_Def_Builder *
     }
   xmlenv.exception (new ACEXML_SAXParseException ("ACEXML_Debug_Attributes_Builder internal error"));
   return -1;
+}
 
+void
+ACEXML_Debug_Attributes_Builder::dump (void)
+{
+  // @@ Print print.
+  cout << "<!ATTLIST " << this->element_name_ << endl;
+
+  ACEXML_ATT_MAP_ITER iter (this->attributes_);
+  ACEXML_ATT_MAP_ENTRY *item;
+
+  while (iter.advance () != 0)
+    {
+      iter.next (item);
+      cout << "\n\t";
+      item->int_id_.dump ();
+    }
+  cout << ">" << endl;
 }

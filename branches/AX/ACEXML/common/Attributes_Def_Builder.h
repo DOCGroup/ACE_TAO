@@ -57,6 +57,10 @@ public:
    * Specify the name of the attribute.
    */
   virtual int setName (const ACEXML_Char *n) = 0;
+
+  /**
+   * Get the name of the attribute.
+   */
   virtual const ACEXML_Char *getName (void) = 0;
 
   /**
@@ -91,6 +95,10 @@ public:
    */
   virtual int validAttr (void) = 0;
 
+  /**
+   * Dump the content of the attribute definition.
+   */
+  virtual void dump (void) = 0;
 };
 
 /**
@@ -133,6 +141,11 @@ public:
   virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def,
                                ACEXML_Env &xmlenv) = 0;
 
+
+  /**
+   * Dump the content of the attribute definition.
+   */
+  virtual void dump (void) = 0;
 };
 
 #endif /* _ACEXML_ATTRIBUTES_DEF_BUILDER_H_ */

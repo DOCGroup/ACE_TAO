@@ -73,6 +73,11 @@ public:
    */
   virtual int validAttr (void);
 
+
+  /**
+   * Dump the content of the attribute definition.
+   */
+  virtual void dump (void);
 private:
   /// Attribute name.
   ACEXML_String name_;
@@ -147,6 +152,11 @@ public:
   virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def,
                                ACEXML_Env &xmlenv);
 
+
+  /**
+   * Dump the content of the attribute definition.
+   */
+  virtual void dump (void);
 protected:
   /// The name of the element type these attributes applied.
   ACEXML_String element_name_;
