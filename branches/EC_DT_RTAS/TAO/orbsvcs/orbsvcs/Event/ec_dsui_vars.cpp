@@ -5,7 +5,6 @@
 counter_t EC2_GROUP_COUNTERS[NUM_COUNTERS_EC2_GROUP] = {
 };
 histogram_t EC2_GROUP_HISTOGRAMS[NUM_HISTOGRAMS_EC2_GROUP] = {
-{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL}
 };
 family_t EC2_GROUP = {
 	"EC2_GROUP",
@@ -14,9 +13,9 @@ family_t EC2_GROUP = {
 	NUM_HISTOGRAMS_EC2_GROUP,
 	EC2_GROUP_COUNTERS,
 	EC2_GROUP_HISTOGRAMS,
-	0, 
-	0, 
-	0, 
+	0,
+	0,
+	0,
 	0
 };
 
@@ -31,15 +30,25 @@ family_t TIMEOUT = {
 	NUM_HISTOGRAMS_TIMEOUT,
 	TIMEOUT_COUNTERS,
 	TIMEOUT_HISTOGRAMS,
-	0, 
-	0, 
-	0, 
+	0,
+	0,
+	0,
 	0
 };
 
-int ec_table_offset= 1;
-family_t *ec_family_table[ec_NUM_FAMILIES] = {
-	
+int ec_table_offset= 2;
+family_t *ec_family_table[NUM_FAMILIES] = {
+
+
+
+
+
+
+
+
+
+
+
 	&EC2_GROUP,
 	&TIMEOUT,
 };
