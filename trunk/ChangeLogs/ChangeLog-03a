@@ -1,3 +1,16 @@
+Sat May 27 01:07:01 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32-common.h:
+
+          Added a semicolon to the definitions of 
+          ACE_EXPORT_SINGLETON_DECLARE
+          ACE_IMPORT_SINGLETON_DECLARE
+
+          Since the default definition for this is nothing, the semicolon is
+          better off in the definitions themselves.  Otherwise, one needs to 
+          add a semicolon after the use of these macros, which can cause 
+          warnings when the macro expands to nothing.
+
 Fri May 26 20:00:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.inl (strcasecmp, strncasecmp):
