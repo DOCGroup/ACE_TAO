@@ -375,14 +375,18 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
 {
   // Please do _not_ rearrange this equation.  It is carefully
   // designed and tested to avoid overflow on machines that don't have
-  // native 64-bit ints.
+  // native 64-bit ints. In particular, division can be a problem.
+  // For more background on this, please see bugzilla #1024.
 #if defined (ACE_WIN32)
   nanoseconds = (this->end_ - this->start_)
-                * (1000000u / ACE_High_Res_Timer::global_scale_factor ());
+            * (1024000000u / ACE_High_Res_Timer::global_scale_factor());
 #else
   nanoseconds = (this->end_ - this->start_)
-                * (1000u / ACE_High_Res_Timer::global_scale_factor ());
+            * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
 #endif /* ACE_WIN32 */
+  nanoseconds >>= 10;
+  // Right shift is implemented for non native 64-bit ints
+  // operator/ only for a 32 bit result !
 }
 
 void
@@ -391,11 +395,12 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
   // Same as above.
 #if defined (ACE_WIN32)
   nanoseconds = this->total_
-                / ACE_High_Res_Timer::global_scale_factor () * 1000000u;
+            * (1024000000u / ACE_High_Res_Timer::global_scale_factor());
 #else
   nanoseconds = this->total_
-                / ACE_High_Res_Timer::global_scale_factor () * 1000u;
+            * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
 #endif
+  nanoseconds >>= 10;
 }
 
 #if !defined (ACE_HAS_WINCE)
