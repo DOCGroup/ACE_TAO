@@ -28,7 +28,7 @@
  *
  */
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM>
-class TAO_Notify_Export TAO_Notify_Method_Request_Dispatch_T
+class TAO_Notify_Method_Request_Dispatch_T
 {
 public:
   /// Constuctor
