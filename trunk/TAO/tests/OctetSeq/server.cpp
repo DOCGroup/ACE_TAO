@@ -3,9 +3,11 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 
-ACE_RCSID(OctetSeq, server, "$Id$")
+ACE_RCSID (OctetSeq, 
+           server, 
+           "$Id$")
 
-const char *ior_output_file = 0;
+const char *ior_output_file = "test.ior";
 
 int
 parse_args (int argc, char *argv[])
