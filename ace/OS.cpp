@@ -95,7 +95,7 @@ ACE_Cleanup_Info::ACE_Cleanup_Info (void)
 }
 
 int
-ACE_Cleanup_Info::operator== (const struct ACE_Cleanup_Info &o) const
+ACE_Cleanup_Info::operator== (const ACE_Cleanup_Info &o) const
 {
   return o.object_ == this->object_
     && o.cleanup_hook_ == this->cleanup_hook_
@@ -103,7 +103,7 @@ ACE_Cleanup_Info::operator== (const struct ACE_Cleanup_Info &o) const
 }
 
 int
-ACE_Cleanup_Info::operator!= (const struct ACE_Cleanup_Info &o) const
+ACE_Cleanup_Info::operator!= (const ACE_Cleanup_Info &o) const
 {
   return !(*this == o);
 }
@@ -1656,19 +1656,19 @@ ACE_Thread_Adapter::invoke (void)
 	{
 	  ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
 	  ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
-	  
+
 	  // This calls the Task->close () hook.
 	  task_ptr->cleanup (task_ptr, 0);
-	  
+
 	  // This prevents a second invocation of the cleanup code (called
 	  // later by ACE_Thread_Manager::exit()).
 	  thr_mgr_ptr->at_exit (task_ptr, 0, 0);
 	}
-      
+
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
       // Call TSS destructors.
       ACE_OS::cleanup_tss (0 /* not main thread */);
-      
+
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
       // Exit the thread.
       // Allow CWinThread-destructor to be invoked from AfxEndThread.
@@ -1680,9 +1680,9 @@ ACE_Thread_Adapter::invoke (void)
       else
 	::AfxEndThread ((DWORD)status);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
-      
+
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-      
+
       return status;
     }
   }
