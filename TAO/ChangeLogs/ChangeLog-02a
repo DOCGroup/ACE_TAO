@@ -1,3 +1,8 @@
+Thu Jun 14 08:24:03 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/RTPortableServer/Makefile.bor:
+          Added TAO_PortableServer library required for linking.
+
 Thu Jun 14 00:45:08 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp
