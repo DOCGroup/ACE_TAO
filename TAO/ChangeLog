@@ -1,3 +1,11 @@
+Thu Oct 09 20:33:24 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile
+          updated dependancies for above Makefiles
+
+
 Thu Oct 09 19:36:08 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FT_ServerPolicy_i.cpp
