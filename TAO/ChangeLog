@@ -15,7 +15,7 @@ Thu Oct 21 10:49:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           sense not only from the implementer's point of view, but also
           since it avoids a double chain of inheritance (eventtypes +
           interfaces). Thanks to Gary Duzan <gduzan@bbn.com> for
-          reporting the bug.
+          reporting the bug. This fix closes [BUGID:1964] and [BUGID:1965].
 
 Thu Oct 21 08:37:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
