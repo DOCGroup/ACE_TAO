@@ -1,3 +1,9 @@
+Wed Aug  5 16:12:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Replaced usage of ACE_OS::thr_* with
+	  ACE_Thread::*.  Thanks to Arturo Montes
+	  <mitosys@colomsat.net.co> for sending the patches.
+
 Wed Aug  5 11:07:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Manager: Cleaned up the documentation and formatting

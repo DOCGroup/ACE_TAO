@@ -117,7 +117,7 @@ ACE_Log_Msg_Manager::close (void)
   delete ACE_Log_Msg::instance ();
 #endif /* ACE_HAS_STHREADS && ! TSS_EMULATION && ! ACE_HAS_EXCEPTIONS */
 
-  ACE_OS::thr_keyfree (ACE_Log_Msg_key_);
+  ACE_Thread::keyfree (ACE_Log_Msg_key_);
 
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
@@ -152,7 +152,7 @@ ACE_Log_Msg::exists (void)
 
   // Get the tss_log_msg from thread-specific storage.
   return ACE_Log_Msg_key_created_
-    && ACE_OS::thr_getspecific (ACE_Log_Msg_key_, (void **) &tss_log_msg) != -1
+    && ACE_Thread::getspecific (ACE_Log_Msg_key_, (void **) &tss_log_msg) != -1
     && tss_log_msg;
 # else
 #   error "Platform must support thread-specific storage if threads are used..."
@@ -184,7 +184,7 @@ ACE_Log_Msg::instance (void)
 
           {
             ACE_NO_HEAP_CHECK;
-            if (ACE_OS::thr_keycreate (&ACE_Log_Msg_key_,
+            if (ACE_Thread::keycreate (&ACE_Log_Msg_key_,
                                        &ACE_TSS_cleanup) != 0)
               {
                 return 0; // Major problems, this should *never* happen!
@@ -198,7 +198,7 @@ ACE_Log_Msg::instance (void)
   ACE_Log_Msg *tss_log_msg = 0;
 
   // Get the tss_log_msg from thread-specific storage.
-  if (ACE_OS::thr_getspecific (ACE_Log_Msg_key_,
+  if (ACE_Thread::getspecific (ACE_Log_Msg_key_,
                                (void **) &tss_log_msg) == -1)
     return 0; // This should not happen!
 
@@ -219,7 +219,7 @@ ACE_Log_Msg::instance (void)
         // storage.  It gets deleted via the ACE_TSS_cleanup function
         // when the thread terminates.
 
-        if (ACE_OS::thr_setspecific (ACE_Log_Msg_key_,
+        if (ACE_Thread::setspecific (ACE_Log_Msg_key_,
                                      (void *) tss_log_msg) != 0)
           return 0; // Major problems, this should *never* happen!
       }
