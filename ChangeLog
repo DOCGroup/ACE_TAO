@@ -1,3 +1,13 @@
+Mon Apr 22 17:24:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Reactor_Logging_Server.mak:
+        * examples/C++NPv2/Logging_Acceptor.{cpp h}:
+        * examples/C++NPv2/Logging_Acceptor_Ex.h:
+        * examples/C++NPv2/Logging_Event_Handler.{cpp h}:
+        * examples/C++NPv2/Logging_Event_Handler_Ex.{cpp h}:
+        * examples/C++NPv2/Reactor_Logging_Server.{cpp h}:
+          New files for examples in C++NPv2, chapter 3.
+
 Mon Apr 22 15:43:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/DLL/Today.h:
@@ -19,7 +29,6 @@ Mon Apr 22 15:20:02 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  new/delete operator implementations.
 
 Mon Apr 22 12:33:30 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
-
 
 	* tests/MT_Reactor_Upcall_Test: This is a test that shows how to
 	  handle upcalls from the TP_Reactor and the WFMO_Reactor when the
