@@ -28,7 +28,8 @@ class TAO_TSS_Resources;
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
 
-extern ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
+//extern ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_counter;
+extern long guid_counter;
 
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {
@@ -321,8 +322,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   TAO_ORB_Core* orb_;
   RTScheduling::Current::IdType guid_;
   CORBA::String_var name_;
-  CORBA::Policy_ptr sched_param_;
-  CORBA::Policy_ptr implicit_sched_param_;
+  CORBA::Policy_var sched_param_;
+  CORBA::Policy_var implicit_sched_param_;
   RTScheduling::DistributableThread_var dt_;
   TAO_RTScheduler_Current_i* previous_current_;
   DT_Hash_Map* dt_hash_;

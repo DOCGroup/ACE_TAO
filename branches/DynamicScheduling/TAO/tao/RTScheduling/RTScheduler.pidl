@@ -1,7 +1,7 @@
 //$Id$
-#include <tao/RTCORBA/RTCORBA.pidl>
-#include <tao/PortableServer/PortableServer.pidl>
-#include <tao/PortableInterceptor.pidl>
+#include <RTCORBA.pidl>
+#include <PortableServer.pidl>
+#include <PortableInterceptor.pidl>
 
 
 module CORBA
@@ -13,7 +13,7 @@ module CORBA
     // C:    void*
     // C++:  void*
     // Java: Object
-		
+
    // exception THREAD_CANCELLED {};
 };
 
@@ -43,7 +43,7 @@ module RTScheduling
 	readonly attribute DT_State state;
     };
 
-    local interface Current 
+    local interface Current
         : RTCORBA::Current
     {
         DistributableThread
@@ -98,7 +98,7 @@ module RTScheduling
             // to outmost segment name
     };
 
-    local interface ResourceManager 
+    local interface ResourceManager
         : RTCORBA::Mutex
     {
     };
@@ -165,7 +165,7 @@ module RTScheduling
 
 	void send_other (in PortableInterceptor::ServerRequestInfo ri)
 	raises (PortableInterceptor::ForwardRequest);
-	
+
 	void receive_reply (in PortableInterceptor::ClientRequestInfo ri);
 
 	void receive_exception (in PortableInterceptor::ClientRequestInfo ri)
