@@ -36,16 +36,15 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_TAO_IIOP_Endpoint_Info[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_TAO_IIOP_Endpoint_Info[] =
   {
     { "host", &CORBA::_tc_string },
     { "port", &CORBA::_tc_short },
     { "priority", &CORBA::_tc_short }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -65,25 +64,35 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_TAO_IIOPEndpointSequence_0 (
-    CORBA::tk_sequence,
-    &TAO::_tc_IIOP_Endpoint_Info,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      TAO_IIOPEndpointSequence_0 (
+        CORBA::tk_sequence,
+        &TAO::_tc_IIOP_Endpoint_Info,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_TAO_IIOPEndpointSequence_0 =
+      &TAO_IIOPEndpointSequence_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_TAO_IIOPEndpointSequence (
     "IDL:TAO/IIOPEndpointSequence:1.0",
     "IIOPEndpointSequence",
-    &::_tao_tc_TAO_IIOPEndpointSequence_0);
+    &TAO::TypeCode::tc_TAO_IIOPEndpointSequence_0);
   
 namespace TAO
 {
@@ -94,7 +103,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -152,7 +161,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -163,7 +172,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::insert_copy (
       _tao_any,
       TAO::IIOPEndpointSequence::_tao_any_destructor,
-      TAO_IIOPEndpointSequence_0,
+      TAO::TypeCode::tc_TAO_IIOPEndpointSequence_0,
       _tao_elem
     );
 }
@@ -177,7 +186,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::insert (
       _tao_any,
       TAO::IIOPEndpointSequence::_tao_any_destructor,
-      TAO_IIOPEndpointSequence_0,
+      TAO::TypeCode::tc_TAO_IIOPEndpointSequence_0,
       _tao_elem
     );
 }
@@ -204,7 +213,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<TAO::IIOPEndpointSequence>::extract (
         _tao_any,
         TAO::IIOPEndpointSequence::_tao_any_destructor,
-        TAO_IIOPEndpointSequence_0,
+        TAO::TypeCode::tc_TAO_IIOPEndpointSequence_0,
         _tao_elem
       );
 }

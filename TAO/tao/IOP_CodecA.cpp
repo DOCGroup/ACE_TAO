@@ -37,13 +37,9 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IOP_Codec_InvalidTypeForEncoding[] =
-  {
-    
-  };
-
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_Codec_InvalidTypeForEncoding = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -58,13 +54,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_IOP_Codec_InvalidTypeForEncoding;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IOP_Codec_FormatMismatch[] =
-  {
-    
-  };
-
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_Codec_FormatMismatch = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -79,13 +71,9 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_IOP_Codec_FormatMismatch;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IOP_Codec_TypeMismatch[] =
-  {
-    
-  };
-
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_Codec_TypeMismatch = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -100,7 +88,7 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_IOP_Codec_TypeMismatch;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -118,14 +106,14 @@ namespace IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_IOP_EncodingFormat (
     "IDL:omg.org/IOP/EncodingFormat:1.0",
     "EncodingFormat",
-    &::_tao_tc_CORBA::_tc_short);
+    &CORBA::_tc_short);
   
 namespace IOP
 {
@@ -136,16 +124,15 @@ namespace IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IOP_Encoding[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_IOP_Encoding[] =
   {
     { "format", &IOP::_tc_EncodingFormat },
     { "major_version", &CORBA::_tc_octet },
     { "minor_version", &CORBA::_tc_octet }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -165,13 +152,9 @@ namespace IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IOP_CodecFactory_UnknownEncoding[] =
-  {
-    
-  };
-
+static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_IOP_CodecFactory_UnknownEncoding = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,
@@ -186,7 +169,7 @@ static TAO::TypeCode::Struct<char const *,
   &_tao_tc_IOP_CodecFactory_UnknownEncoding;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:73
+// be/be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -204,7 +187,7 @@ namespace IOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -273,7 +256,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -345,7 +328,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -417,7 +400,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -489,7 +472,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -547,7 +530,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -616,7 +599,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_exception/any_op_cs.cpp:50
+// be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean
@@ -686,3 +669,79 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::Codec::InvalidTypeForEncoding
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::Codec::FormatMismatch
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::Codec::TypeMismatch
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        IOP::Codec
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::Encoding
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::CodecFactory::UnknownEncoding
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        IOP::CodecFactory
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::Codec::InvalidTypeForEncoding \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::Codec::FormatMismatch \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::Codec::TypeMismatch \
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        IOP::Codec \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::Encoding \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        IOP::CodecFactory::UnknownEncoding \
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
+        IOP::CodecFactory \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
