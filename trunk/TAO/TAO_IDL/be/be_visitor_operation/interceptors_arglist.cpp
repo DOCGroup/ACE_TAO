@@ -60,7 +60,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
 
   // generate the CORBA::Environment parameter for the alternative mapping
   if (!be_global->exception_support ())
-    {      
+    {
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
@@ -109,8 +109,8 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
                                "visit_operation - "
                                "Bad context\n"),
                               -1);
-          }            
-        }      
+          }
+        }
     }
 
   return 0;
@@ -121,7 +121,7 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = be_argument::narrow_from_decl (bd);
-  
+
   if (!arg)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -131,10 +131,10 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
-  
+
   if (arg->direction () == AST_Argument::dir_OUT)
     return 0;
-      
+
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
@@ -191,7 +191,7 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
                         -1);
     }
 
-  // We dont generate the "out" args as part of arglist 
+  // We dont generate the "out" args as part of arglist
   if (node->direction () == AST_Argument::dir_OUT)
     return 0;
 
@@ -222,7 +222,8 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH);
+      // ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS);
@@ -234,13 +235,15 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH);
+      // ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_SH);
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
+      // ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS);
@@ -287,7 +290,7 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = be_argument::narrow_from_decl (bd);
-  
+
   if (!arg)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -297,10 +300,10 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
                                    "Bad argument node\n"),
                         -1);
     }
-  
+
   if (arg->direction () != AST_Argument::dir_OUT)
     return 0;
-      
+
   os->indent ();
   switch (this->ctx_->state ())
     {

@@ -91,8 +91,8 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
     case AST_Argument::dir_IN:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "const ACE_NESTED_CLASS (";
@@ -110,8 +110,8 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
     case AST_Argument::dir_INOUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -129,8 +129,8 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
     case AST_Argument::dir_OUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -169,8 +169,8 @@ int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
     case AST_Argument::dir_IN:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "const ACE_NESTED_CLASS (";
@@ -188,8 +188,8 @@ int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
     case AST_Argument::dir_INOUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -207,8 +207,8 @@ int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
     case AST_Argument::dir_OUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -358,8 +358,8 @@ int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
     case AST_Argument::dir_IN:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "const ACE_NESTED_CLASS (";
@@ -374,8 +374,8 @@ int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
     case AST_Argument::dir_INOUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -390,8 +390,8 @@ int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
     case AST_Argument::dir_OUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -412,7 +412,7 @@ int be_visitor_args_request_info_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
 
-  if (node->width () == sizeof (char))
+  if (node->width () == 1)
     {
       switch (this->direction ())
         {
@@ -464,8 +464,8 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
     case AST_Argument::dir_IN:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "const ACE_NESTED_CLASS (";
@@ -480,8 +480,8 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
     case AST_Argument::dir_INOUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -496,8 +496,8 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
     case AST_Argument::dir_OUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -532,8 +532,8 @@ int be_visitor_args_request_info_ch::visit_union (be_union *node)
     case AST_Argument::dir_IN:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "const ACE_NESTED_CLASS (";
@@ -548,8 +548,8 @@ int be_visitor_args_request_info_ch::visit_union (be_union *node)
     case AST_Argument::dir_INOUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
@@ -564,8 +564,8 @@ int be_visitor_args_request_info_ch::visit_union (be_union *node)
     case AST_Argument::dir_OUT:
       {
         be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-        
-        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
