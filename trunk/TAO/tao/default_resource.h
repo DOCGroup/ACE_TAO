@@ -126,6 +126,7 @@ public:
   virtual int purge_percentage (void) const;
   virtual int max_muxed_connections (void) const;
   virtual ACE_Lock *create_cached_connection_lock (void);
+  virtual ACE_Lock *create_object_key_table_lock (void);
   virtual ACE_Lock *create_corba_object_lock (void);
   virtual int locked_transport_cache (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
@@ -218,6 +219,9 @@ private:
 
   /// Type of lock used by the cached connector.
   Lock_Type cached_connection_lock_type_;
+
+  /// Type of lock used by the corba object.
+  Lock_Type object_key_table_lock_type_;
 
   /// Type of lock used by the corba object.
   Lock_Type corba_object_lock_type_;

@@ -195,6 +195,12 @@ TAO_Resource_Factory::locked_transport_cache (void)
 }
 
 ACE_Lock *
+TAO_Resource_Factory::create_object_key_table_lock (void)
+{
+  return 0;
+}
+
+ACE_Lock *
 TAO_Resource_Factory::create_corba_object_lock (void)
 {
   return 0;

@@ -20,20 +20,24 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Version.h"
-#include "tao/Object_KeyC.h"
-
-
 #include "ace/Synch.h"
+#include "tao/Refcounted_ObjectKey.h"
 
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
 class TAO_ORB_Core;
 
+
 /// Forward declaration of PolicyList
 namespace CORBA
 {
   class PolicyList;
+}
+
+namespace TAO
+{
+  class Refcounted_ObjectKey;
 }
 
 /**
@@ -309,7 +313,7 @@ protected:
   IOP::TaggedProfile *tagged_profile_;
 
   /// object_key associated with this profile.
-  TAO::ObjectKey object_key_;
+  TAO::Refcounted_ObjectKey *ref_object_key_;
 
 private:
   /// IOP protocol tag.

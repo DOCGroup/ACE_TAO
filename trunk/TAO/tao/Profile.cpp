@@ -6,6 +6,8 @@
 #include "Stub.h"
 #include "debug.h"
 #include "target_specification.h"
+#include "Object_KeyC.h"
+#include "ORB_Core.h"
 #include "ace/CDR_Base.h"
 
 #if !defined (__ACE_INLINE__)
@@ -27,12 +29,14 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , policy_list_ (0)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
-    , object_key_ (obj_key)
+    , ref_object_key_ (0)
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
     , refcount_ (1)
 {
+  (void) this->orb_core_->object_key_table ().bind (obj_key,
+                                                    this->ref_object_key_);
 }
 
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
@@ -44,7 +48,7 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , policy_list_ (0)
     , addressing_mode_ (0)
     , tagged_profile_ (0)
-    , object_key_ ()
+    , ref_object_key_ (0)
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
@@ -56,6 +60,8 @@ TAO_Profile::~TAO_Profile (void)
 {
   if (this->tagged_profile_)
     delete this->tagged_profile_;
+
+  this->orb_core_->object_key_table ().unbind (this->ref_object_key_);
 }
 
 CORBA::ULong
@@ -107,10 +113,12 @@ TAO_Profile::_key (void) const
 {
   TAO::ObjectKey *key = 0;
 
-  ACE_NEW_RETURN (key,
-                  TAO::ObjectKey (this->object_key_),
-                  0);
-
+  if (this->ref_object_key_)
+    {
+      ACE_NEW_RETURN (key,
+                      TAO::ObjectKey (this->ref_object_key_->object_key ()),
+                      0);
+    }
   return key;
 }
 
@@ -166,8 +174,30 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
   if (this->decode_profile (cdr) < 0)
     return -1;
 
+  // @@NOTE: This place *may* need strategizing. Here are the
+  // issues. Placing the ObjectKey in the table adds an allocation and
+  // a lock while decoding. This is bad for some cases especially if
+  // the application is marshalling object references across to the
+  // server end. But the server could use "lazy" evaluation and avoid
+  // this during marshalling.
+  //
+  // The only place this will get important is when a thead tries to
+  // use the object reference to create a CORBA object to make an
+  // invocation. Since creation of a CORBA object itself is expensive,
+  // it looks like we may not need to worry much.
+  //
+  // Remember strategizing needs  reconciliation of forces imposed
+  // by runtime memory growth. Doing a random strategization would
+  // destroy the wins in runtime memory growth got by using this
+  // table scheme.
+  TAO::ObjectKey ok;
+
   // ... and object key.
-  if ((cdr >> this->object_key_) == 0)
+  if ((cdr >> ok) == 0)
+    return -1;
+
+  if (this->orb_core ()->object_key_table ().bind (ok,
+                                                   this->ref_object_key_) == -1)
     return -1;
 
   // Tagged Components *only* exist after version 1.0!

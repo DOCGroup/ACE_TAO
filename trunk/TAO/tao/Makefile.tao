@@ -296,7 +296,9 @@ ORB_CORE_FILES = \
   Default_Thread_Lane_Resources_Manager \
   Default_Stub_Factory \
   Request_Dispatcher \
-  Valuetype_Adapter
+  Valuetype_Adapter \
+  ObjectKey_Table \
+  Refcounted_ObjectKey
 
 DYNAMIC_ANY_FILES =
 

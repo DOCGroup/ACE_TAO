@@ -142,14 +142,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     orb_params_ (),
     init_ref_map_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE),
     object_ref_table_ (),
+    object_key_table_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
-#if 0
-    /// @@todo:Need to go one day
-    message_block_dblock_allocator_ (0),
-    message_block_buffer_allocator_ (0),
-    message_block_msgblock_allocator_ (0),
-#endif /*if 0*/
 //    server_id_ (0),
     client_factory_ (0),
     server_factory_ (0),
@@ -923,6 +918,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
   ssf->open (this);
 
+  // Open the ObjectKey_Table
+  (void) this->object_key_table_.init (this);
+
   // Obtain the timeout value for the thread-per-connection model
   this->thread_per_connection_use_timeout_ =
     ssf->thread_per_connection_timeout (this->thread_per_connection_timeout_);
@@ -1123,20 +1121,8 @@ TAO_ORB_Core::fini (void)
 
   (void) TAO_Internal::close_services ();
 
-#if 0
-  // @@todo: Need to go someday!
-  if (this->message_block_dblock_allocator_)
-    this->message_block_dblock_allocator_->remove ();
-  delete this->message_block_dblock_allocator_;
-
-  if (this-> message_block_buffer_allocator_)
-    this->message_block_buffer_allocator_->remove ();
-  delete this->message_block_buffer_allocator_;
-
-  if (this->message_block_msgblock_allocator_)
-    this->message_block_msgblock_allocator_->remove ();
-  delete this->message_block_msgblock_allocator_;
-#endif /*if 0*/
+  // Destroy the object_key table
+  this->object_key_table_.destroy ();
 
   delete this;
 
