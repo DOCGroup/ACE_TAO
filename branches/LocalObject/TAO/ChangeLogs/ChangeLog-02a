@@ -1,10 +1,38 @@
 	TO-DO
 
+	* Need to figure out how to generate different sequence, union and
+	  struct code for local interfaces.
+
 	* Need to add syntax/semantic check for local/abstract interfaces
 	  as defined in CCM.  (E.g., a local interface can not be an
 	  argument in an operation of a remote interface.)
 
 	* Rename TAO/TAO_IDL/util/utl_error.cpp to utl_err.cpp.
+
+Thu Apr 20 03:00:35 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_codegen.h: Attribute accessors/mutators
+	  also need to be handled differently if they are part of a local
+	  interface.  Added local attribute states.
+
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: Added state
+	  transition rules for "local attributes."
+
+	* TAO_IDL/be/be_visitor_module/module.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp: Fixed previously
+	  missing state transitions.
+
+	* TAO_IDL/be/be_interface.cpp: Fixed a syntax error in generated
+	  code.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: I accidentally
+	  removed the endif codegen for local interfaces.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp: Forgot to
+	  supress codegen for remote object constructor for local
+	  interfaces.
 
 Thu Apr 20 00:40:19 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
