@@ -1,3 +1,7 @@
+Mon Jul 22 17:45:48 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Get_Opt.h: Doxygen fixes.
+
 Mon Jul 22 16:39:21 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Acceptor.cpp (info):
