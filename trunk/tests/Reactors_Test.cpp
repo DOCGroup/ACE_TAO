@@ -104,8 +104,16 @@ Test_Task::svc (void)
     {
       ACE_OS::thr_yield ();
 
-      if (r_->notify (this, ACE_Event_Handler::READ_MASK) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+      // Only wait up to 10 milliseconds to notify the Reactor.
+      ACE_Time_Value timeout (0, 10 * 1000);
+
+      if (r_->notify (this, ACE_Event_Handler::READ_MASK, &timeout) == -1)
+	{
+	  if (errno == ETIME)
+	    ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", "notify() timed out"));
+	  else
+	    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
+	}
     }
 
   return 0;

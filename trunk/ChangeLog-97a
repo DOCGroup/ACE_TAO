@@ -1,3 +1,91 @@
+Sun Jan  5 10:48:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests: Added a new test for ACE_Message_Block, which is called
+ 	  Message_Block_Test.cpp (no surprise there ;-)).  This test
+ 	  exercises the reference counting mechanisms.
+
+	* ace/Message_Block.h: Made the destructors for ACE_Message_Block
+ 	  and ACE_Data_Block virtual, so that these classes can be
+ 	  subclassed and ACE_Message_Blocks can delete these
+	  subclasses (either via release() or delete).  Thanks to Tilo
+	  Christ for suggesting this.
+
+	* ace/Message_Block.cpp: Modified the implementation
+	  of ACE_Message_Block/ACE_Data_Block so that we always create
+	  an allocator_strategy_.  By default, this strategy will be
+	  ACE_Allocator_Adapter <ACE_Malloc <ACE_Local_Memory_Pool, ACE_Null_Mutex> >;
+	  This greatly simplifies the code.
+
+	* ace/Message_Block.h: It's now possible to assign a
+ 	  Message_Block's priority when you create it.
+
+	* ace/Reactor: Sped things up some more by merging the Reactor's
+ 	  any_ready() and fill_in_ready() methods together.  This reduces
+ 	  redundant computations.
+
+	* ace/Reactor: Changed the name of ACE_Reactor::detach() to
+ 	  ACE_Reactor::remove_handler_i() and changed the name of
+ 	  ACE_Reactor::attach() to ACE_Reactor::register_handler_i().
+  	  This is more consistent with the other naming schemes.
+
+	* ace/Reactor.cpp: Reworked the implementation of the Handler
+ 	  Repository's unbind() method in order to simplfy the logic.
+  	  Also merged in all the Reactor's detach() functionality into the
+ 	  unbind() method in order to localize all the handler removal
+ 	  processing.
+
+	* ace/Reactor[Ex].cpp: Added more descriptive errno entries for
+ 	  failed operations in the handler repository.
+
+	* ace/Reactor.cpp: Modified the implementation of the Handler
+ 	  Repository's bind() method so that it reports an error if you
+ 	  try to register an Event_Handler for an invalid HANDLE.
+
+	* ace/Reactor.cpp: Reimplemented the internals of the Reactor to
+ 	  prepare for the upcoming merge of the Reactor and ReactorEx to
+ 	  use a single code base.
+
+	* ace/Timer_Queue.cpp: Modified the behavior of the expire()
+ 	  methods so that they return the number of ACE_Event_Handlers
+ 	  whose handle_timeout() method was called.
+
+Sat Jan  4 11:47:05 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor.h: Removed the #ifdefs for ACE_HAS_POLL.  This will
+ 	  be recast as a strategy in subsequent implementations.
+
+	* ace/Reactor.cpp: Added a new call,
+ 	  ACE_Handler_Repository::handle_in_range(), which checks to make
+ 	  sure that the HANDLE is within the range of 0 .. max_handlep1_.
+  	  This factors out some redundant code.
+
+	* ace/Reactor.cpp: Sped up the performance of the Reactor by
+ 	  removing redundant calls to
+ 	  ACE_Handler_Repository::invalid_handle() and
+ 	  ACE_Handler_Repository::find().
+
+	* tests/Reactors_Test.cpp: Added a test for
+ 	  the new Reactor::notify() method with timeouts.
+
+	* examples/Reactor/Misc/notification.cpp (svc): Added a test for
+ 	  the new Reactor::notify() method with timeouts.
+
+	* ace/Reactor[Ex]: Modified the Reactor and ReactorEx so that they
+ 	  use timed send() operations for their notify() methods.  This
+ 	  makes it possible for users to bound the amount of time they're
+ 	  willing to wait to try and notify the Reactor.  This is mostly
+ 	  useful to avoid infinite blocking if there is congestion in the
+ 	  Reactor's notification mechanism.
+
+	* ace/ACE.cpp: Added a new timed send() method that uses the
+ 	  write() system call on UNIX and the socket send() call on Win32.
+  	  This new method is used in the new ACE_Reactor::notify() method,
+ 	  which now supported timed notifications.
+
+	* ace/Reactor.cpp (ACE_Handler_Repository): To simplify the code
+ 	  and reduce unnecessary #ifdefs, I've merged the max_handlep1_
+ 	  and cur_size_ fields (which are now called max_handlep1_).
+
 Fri Jan  3 10:47:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Replaced all uses of "delete mb" with mb->release ();

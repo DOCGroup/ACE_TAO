@@ -118,13 +118,17 @@ public:
   // argument passed in when the <Event_Handler> was registered.  This
   // makes it possible to free up the memory and avoid memory leaks.
 
-  virtual int expire (void);
-  // Expires all pending timers whose values are <=
-  // ACE_OS::gettimeofday.  Also accounts for timer_skew_.
-
   virtual int expire (const ACE_Time_Value &current_time);
   // Run the <handle_timeout> method for all Timers whose values are
-  // <= <cur_time>.
+  // <= <cur_time>.  This does not account for <timer_skew>.  Returns
+  // the number of <Event_Handler>s for which <handle_timeout> was
+  // called.
+
+  virtual int expire (void);
+  // Run the <handle_timeout> method for all Timers whose values are
+  // <= <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.
+  // Returns the number of <Event_Handler>s for which <handle_timeout>
+  // was called.
 
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
   // Determine the next event to timeout.  Returns <max> if there are
