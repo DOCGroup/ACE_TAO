@@ -360,10 +360,7 @@ TAO_Notify_Resource_Manager::activate_object_with_id (CORBA::Long id, PortableSe
 CORBA::Object_ptr
 TAO_Notify_Resource_Manager::activate_object (PortableServer::POA_ptr poa, PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV)
 {
-  poa->activate_object (servant, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  PortableServer::ObjectId_var oid = poa->servant_to_id (servant, ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid = poa->activate_object (servant, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return poa->id_to_reference (oid.in (), ACE_TRY_ENV);

@@ -40,16 +40,15 @@ TAO_Notify_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin
     this->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
-  CosNotifyChannelAdmin::ProxySupplier_ptr proxysupplier =
+  CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_id_, ACE_TRY_ENV);
   ACE_CHECK;
 
-  ACE_ASSERT (!CORBA::is_nil (proxysupplier));
+  ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
 
   // narrow
-  this->proxy_supplier_ =
-    CosNotifyChannelAdmin::StructuredProxyPushSupplier::
-    _narrow (proxysupplier, ACE_TRY_ENV);
+  this->proxy_supplier_ = CosNotifyChannelAdmin::StructuredProxyPushSupplier::
+    _narrow (proxysupplier.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
