@@ -65,7 +65,7 @@ enum Test_Type {BEST, WORST, RANDOM};
 // structure used to pass arguments to test functions
 struct ArgStruct
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> *queue_;
+  ACE_Message_Queue<ACE_SYNCH> *queue_;
   const char *order_string_;
   ACE_Message_Block **array_;
   u_int expected_count_;
@@ -128,7 +128,7 @@ order_consumer (void * args)
 {
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
   const char *receipt_order = ((ArgStruct *) args)->order_string_;
   u_int expected_count = ((ArgStruct *) args)->expected_count_;
 
@@ -172,7 +172,7 @@ order_producer (void *args)
 {
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
   const char *send_order = ((ArgStruct *) args)->order_string_;
   ACE_Message_Block **block_array = ((ArgStruct *) args)->array_;
   int expected_count = ((ArgStruct *) args)->expected_count_;
@@ -210,7 +210,7 @@ order_producer (void *args)
 }
 
 
-int  run_order_test (ACE_Message_Queue<ACE_MT_SYNCH>* msg_queue, const char *send_order, const char *receipt_order)
+int  run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue, const char *send_order, const char *receipt_order)
 {
   u_int i;
   u_int array_size = ACE_OS::strlen (send_order);
@@ -318,7 +318,7 @@ performance_consumer (void * args)
 
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
   u_int expected_count = ((ArgStruct *) args)->expected_count_;
 
   ACE_ASSERT (msg_queue != 0);
@@ -368,7 +368,7 @@ performance_producer (void *args)
 
   ACE_ASSERT (args != 0);
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
+  ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
   ACE_Message_Block **block_array = ((ArgStruct *) args)->array_;
   int expected_count = ((ArgStruct *) args)->expected_count_;
 
@@ -430,16 +430,16 @@ int  run_performance_test (u_int min_load, u_int max_load, u_int load_step,
   // build a static queue, a deadline based dynamic
   // queue, and a laxity based dynamic queue
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *static_queue = 0;
-  static_queue = ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_static_message_queue (max_queue);
+  ACE_Message_Queue<ACE_SYNCH> *static_queue = 0;
+  static_queue = ACE_Message_Queue_Factory<ACE_SYNCH>::create_static_message_queue (max_queue);
   ACE_ASSERT (static_queue != 0);
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *deadline_queue = 0;
-  deadline_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_deadline_message_queue (max_queue);
+  ACE_Message_Queue<ACE_SYNCH> *deadline_queue = 0;
+  deadline_queue =  ACE_Message_Queue_Factory<ACE_SYNCH>::create_deadline_message_queue (max_queue);
   ACE_ASSERT (deadline_queue != 0);
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *laxity_queue = 0;
-  laxity_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_laxity_message_queue (max_queue);
+  ACE_Message_Queue<ACE_SYNCH> *laxity_queue = 0;
+  laxity_queue =  ACE_Message_Queue_Factory<ACE_SYNCH>::create_laxity_message_queue (max_queue);
   ACE_ASSERT (laxity_queue != 0);
 
   // zero out unused struct members
@@ -678,22 +678,22 @@ main (int, ASYS_TCHAR *[])
   }
 
 
-  ACE_Message_Queue<ACE_MT_SYNCH> *test_queue = 0;
+  ACE_Message_Queue<ACE_SYNCH> *test_queue = 0;
 
   // test factory, static message queue
-  test_queue = ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_static_message_queue (max_queue);
+  test_queue = ACE_Message_Queue_Factory<ACE_SYNCH>::create_static_message_queue (max_queue);
   ACE_ASSERT (test_queue != 0);
   run_order_test (test_queue, send_order, static_receipt_order);
   delete test_queue;
 
   // test factory, dynamic message queue (deadline strategy)
-  test_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_deadline_message_queue (max_queue);
+  test_queue =  ACE_Message_Queue_Factory<ACE_SYNCH>::create_deadline_message_queue (max_queue);
   ACE_ASSERT (test_queue != 0);
   run_order_test (test_queue, send_order, deadline_receipt_order);
   delete test_queue;
 
   // test factory, dynamic message queue (laxity strategy)
-  test_queue =  ACE_Message_Queue_Factory<ACE_MT_SYNCH>::create_laxity_message_queue (max_queue);
+  test_queue =  ACE_Message_Queue_Factory<ACE_SYNCH>::create_laxity_message_queue (max_queue);
   ACE_ASSERT (test_queue != 0);
   run_order_test (test_queue, send_order, laxity_receipt_order);
   delete test_queue;
@@ -708,7 +708,7 @@ main (int, ASYS_TCHAR *[])
   //  If so, uncomment order test, or if not remove order test, below)
   // @@ % levine 22 Jul 1998 % It'd be nice to run the test, but:
   //                           ACE_Message_Queue_Vx isa
-  //                           ACE_Message_Queue<ACE_NULL_SYNCH>, not a
+  //                           ACE_Message_Queue<ACE_NULL_SYNCH>, not an
   //                           ACE_Message_Queue<ACE_MT_SYNCH>, so we're
   //                           not type-compatible.
 
