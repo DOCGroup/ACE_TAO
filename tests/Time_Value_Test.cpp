@@ -93,11 +93,27 @@ test_ace_u_longlong (void)
                         ACE_U_LongLong (0x1112, 0);
   errors += check_ace_u_longlong ("ull5", ull5, 0, 0xfffffffful);
 
+  ++ull5;
+  errors += check_ace_u_longlong ("ull5", ull5, 1, 0);
+
   ACE_U_LongLong ull6 = ull2 + ACE_U_LongLong (0, 1);
   errors += check_ace_u_longlong ("ull6", ull6, 3, 0x20);
 
   ull6 += ACE_U_LongLong (0xffffffff, 0xfff0);
   errors += check_ace_u_longlong ("ull6", ull6, 0xfff4, 0x1f);
+
+  ++ull6;
+  errors += check_ace_u_longlong ("ull6", ull6, 0xfff4, 0x20);
+
+  //  ull1.hi (1); ull1.lo (0);
+  ACE_UINT32 div = ull6 / 1;
+  if (div != 0x20)
+    {
+      ++errors;
+      ACE_ERROR ((LM_ERROR,
+                  "div: 0x%x, should be 0x20.\n",
+                  div));
+    }
 
   return errors;
 }
