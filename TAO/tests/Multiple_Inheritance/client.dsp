@@ -38,12 +38,13 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
+# PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\.." /I "..\..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\.." /I "..\..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -127,28 +128,38 @@ SOURCE=.\Multiple_Inheritance.idl
 
 !IF  "$(CFG)" == "Multiple Inheritance Client - Win32 Release"
 
-# Begin Custom Build
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Multiple_Inheritance.idl
+InputName=Multiple_Inheritance
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl Multiple_Inheritance.idl
+	..\..\tao_idl\Release\tao_idl $(InputName).idl
 
-"Multiple_InheritanceS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"Multiple_InheritanceS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"Multiple_InheritanceS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"Multiple_InheritanceC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"Multiple_InheritanceC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"Multiple_InheritanceC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
