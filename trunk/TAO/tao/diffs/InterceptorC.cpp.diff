@@ -1,5 +1,5 @@
-/* -*- C++ -*- $Id$ */
-+++ InterceptorC.cpp.orig	Fri Apr 28 13:39:04 2000
+--- InterceptorC.cpp.orig	Sat Apr 29 23:33:47 2000
++++ InterceptorC.cpp	Sat Apr 29 23:37:56 2000
 @@ -9,6 +9,8 @@
  
  #include "InterceptorC.h"
