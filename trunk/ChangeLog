@@ -1,3 +1,9 @@
+Thu Jan  8 18:15:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Timers/Alarm.cpp:
+	* examples/APG/Timers/Task.cpp:
+ 	* examples/APG/Timers/Upcall.cpp: Add missing template instantiations.
+
 Thu Jan  8 15:15:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Streams/Answerer.cpp (RecordingStream::open): Change
