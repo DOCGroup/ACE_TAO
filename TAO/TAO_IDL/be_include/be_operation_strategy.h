@@ -179,8 +179,10 @@ public:
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 
+  virtual be_operation *arguments ();
 
 private:
+  be_operation *arguments_;
 };
 
 #endif  // TAO_BE_OPERATION_STRATEGY_H

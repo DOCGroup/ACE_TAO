@@ -68,7 +68,7 @@ be_operation_strategy::arguments (void)
 be_operation_default_strategy::be_operation_default_strategy (
     be_operation *node
   )
-  : be_operation_strategy (node, 
+  : be_operation_strategy (node,
                            DEFAULT)
 {
 }
@@ -97,7 +97,7 @@ be_operation_ami_sendc_strategy::be_operation_ami_sendc_strategy (
     be_operation *marshaling,
     be_operation *arguments
   )
-  : be_operation_strategy (node, 
+  : be_operation_strategy (node,
                            AMI_SENDC),
     marshaling_ (marshaling),
     arguments_ (arguments)
@@ -133,14 +133,14 @@ be_operation_ami_sendc_strategy::next_state (
     }
 }
 
-int 
+int
 be_operation_ami_sendc_strategy::has_extra_code_generation (
     TAO_CodeGen::CG_STATE current_state
   )
 {
   if (current_state == TAO_CodeGen::TAO_OPERATION_CH
        || current_state == TAO_CodeGen::TAO_OPERATION_CS)
-    { 
+    {
       return 1;
     }
   else
@@ -168,7 +168,7 @@ be_operation_ami_sendc_strategy::arguments (void)
 
 be_operation_ami_exception_holder_raise_strategy
 ::be_operation_ami_exception_holder_raise_strategy (be_operation *node)
-  : be_operation_strategy (node, 
+  : be_operation_strategy (node,
                            AMI_EXCEPTION_HOLDER_RAISE)
 {
 }
@@ -207,7 +207,7 @@ be_operation_ami_exception_holder_raise_strategy::next_state (
 
 be_operation_ami_handler_reply_stub_strategy
 ::be_operation_ami_handler_reply_stub_strategy (be_operation *node)
-  : be_operation_strategy (node, 
+  : be_operation_strategy (node,
                            AMI_EXCEPTION_HOLDER_RAISE)
 {
 }
@@ -236,7 +236,7 @@ be_operation_ami_handler_reply_stub_strategy::next_state (
 
         default:
           return current_state;
-      }  
+      }
     }
   else
     {
@@ -245,7 +245,7 @@ be_operation_ami_handler_reply_stub_strategy::next_state (
 }
 
 
-int 
+int
 be_operation_ami_handler_reply_stub_strategy::has_extra_code_generation (
     TAO_CodeGen::CG_STATE current_state
   )
@@ -263,7 +263,7 @@ be_operation_ami_handler_reply_stub_strategy::has_extra_code_generation (
 
 
 // ****************************************************************
-// AMY Strategy
+// AMH Strategy
 
 be_operation_amh_strategy::be_operation_amh_strategy (be_operation *node)
   : be_operation_strategy (node, AMI_EXCEPTION_HOLDER_RAISE)
@@ -292,14 +292,16 @@ be_operation_amh_strategy::next_state (
   }
 }
 
+be_operation*
+be_operation_amh_strategy::arguments (void)
+{
+  return arguments_;
+}
 
-int 
+int
 be_operation_amh_strategy::has_extra_code_generation (
-    TAO_CodeGen::CG_STATE 
+    TAO_CodeGen::CG_STATE
   )
 {
   return 0;
 }
-
-
-
