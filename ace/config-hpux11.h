@@ -52,6 +52,10 @@
 
 // Platform can do async I/O (aio_*)
 #define ACE_HAS_AIO_CALLS
+// ... but seems to require this in order to keep from hanging.  Needs some
+// investigation, maybe with HP.  John Mulhern determined this value
+// empirically.  YMMV.
+#define ACE_INFINITE 10000000
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
