@@ -27,7 +27,7 @@ void ProxySupplierStateWorker::set_size(size_t size)
 }
 
 void ProxySupplierStateWorker::work(TAO_EC_ProxyPushSupplier* object
-            ACE_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL_NOT_USED)
 {
   TAO_FTEC_ProxyPushSupplier* proxy =
     static_cast<TAO_FTEC_ProxyPushSupplier*>(object);

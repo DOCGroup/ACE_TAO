@@ -29,7 +29,7 @@ public:
     const char * type_id,
     const FT::Criteria & the_criteria,
     FT::GenericFactory::FactoryCreationId_out factory_creation_id
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -42,7 +42,7 @@ public:
 
   virtual void delete_object (
     const FT::GenericFactory::FactoryCreationId & factory_creation_id
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
     CORBA::SystemException

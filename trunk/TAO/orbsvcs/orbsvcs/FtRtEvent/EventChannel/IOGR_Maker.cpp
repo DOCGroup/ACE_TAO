@@ -25,7 +25,7 @@ IOGR_Maker::IOGR_Maker()
 
 void
 IOGR_Maker::init(CORBA::ORB_ptr orb
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                 ACE_ENV_ARG_DECL)
 {
     iorm_ = resolve_init<TAO_IOP::TAO_IOR_Manipulation>(orb,
                                                         TAO_OBJID_IORMANIPULATION
@@ -45,7 +45,7 @@ IOGR_Maker::instance()
 
 CORBA::Object_ptr
 IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var obj;
   if (list.length() != 1)
@@ -58,7 +58,7 @@ IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
 
 CORBA::Object_ptr
 IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var obj = merge_iors(list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(CORBA::Object::_nil());
@@ -91,14 +91,14 @@ void replace_key(char* ior, char* end_ior,
 
 CORBA::Object_ptr
 IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var merged;
   // make a copy of the object
   FtRtecEventChannelAdmin::EventChannel_var successor
     = GroupInfoPublisher::instance()->successor();
   if (! CORBA::is_nil(successor.in())) {
-    TAO::ObjectKey_var newkey = obj->_key();
+    TAO::ObjectKey_var newkey = obj->_key(ACE_ENV_SINGLE_ARG_PARAMETER);
 
     CORBA::Object_var new_base = ior_replace_key(successor.in(), newkey.in()
                                                  ACE_ENV_ARG_PARAMETER);
@@ -150,7 +150,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
 CORBA::Object_ptr
 IOGR_Maker::ior_replace_key(CORBA::Object_ptr obj,
                             const TAO::ObjectKey& key
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                            ACE_ENV_ARG_DECL)
 {
     TAO_OutputCDR out_cdr;
     if (!(out_cdr << obj))
@@ -248,7 +248,7 @@ IOGR_Maker::get_ref_version() const
 
 void
 IOGR_Maker::set_tag_components(CORBA::Object_ptr merged, CORBA::Object_ptr primary
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               ACE_ENV_ARG_DECL)
 {
     // set the primary
     TAO_FT_IOGR_Property prop (ft_tag_component_);

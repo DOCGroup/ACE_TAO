@@ -16,7 +16,7 @@ AMI_Replication_Strategy::replicate_request(
   const FTRT::State& state,
   RollbackOperation rollback,
   const FtRtecEventChannelAdmin::ObjectId& oid
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_UNUSED_ARG(state);
   ACE_UNUSED_ARG(rollback);
