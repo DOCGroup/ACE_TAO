@@ -95,10 +95,6 @@ be_visitor_interface::visit_scope (be_scope *node)
         helper =
           be_visitor_interface_ss::gen_abstract_ops_helper;
         break;
-      case TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS:
-        helper =
-          be_visitor_interface_upcall_command_ss::gen_abstract_ops_helper;
-        break;
       case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
         helper =
           be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper;
@@ -432,12 +428,6 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
       {
         be_visitor_operation_smart_proxy_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS:
-      {
-        be_visitor_operation_upcall_command_ss visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

@@ -182,9 +182,9 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &_tao_server_request," << be_nl
-      << "void *_tao_servant," << be_nl
-      << "void * TAO_INTERCEPTOR (_tao_servant_upcall)" << be_nl
+      << "TAO_ServerRequest &server_request," << be_nl
+      << "void *servant," << be_nl
+      << "void * TAO_INTERCEPTOR (servant_upcall)" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
@@ -204,10 +204,10 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
     }
 
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " * const _tao_impl =" << be_idt_nl
+  *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
       << "static_cast<" << be_idt << be_idt_nl
       << intf->full_skel_name () << " *> (" << be_nl
-      << "_tao_servant" << be_uidt_nl
+      << "servant" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl;
 
 
@@ -225,17 +225,16 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   this->gen_skel_body_arglist (node, os);
 
   *os << be_nl << be_nl
-      << "TAO::Argument * const _tao_args [] =" << be_idt_nl
+      << "TAO::Argument * const args[] =" << be_idt_nl
       << "{" << be_idt_nl
-      << "&_tao_retval";
-
-  AST_Argument *arg = 0;
+      << "&retval";
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
        arg_list_iter.next ())
     {
-      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+      AST_Argument * const arg =
+        AST_Argument::narrow_from_decl (arg_list_iter.item ());
 
       *os << "," << be_nl
           << "&_tao_" << arg->local_name ();
@@ -244,64 +243,39 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << be_uidt_nl
       << "};" << be_uidt_nl << be_nl;
 
-  *os << "static size_t const _tao_nargs = "
+  *os << "static size_t const nargs = "
       << (node->argument_count () + 1) << ";" << be_nl << be_nl;
 
-  *os << "TAO_" << node->flat_name ();
 
-  // We need the interface node in which this operation was defined.
-  // However, if this operation node was an attribute node in
-  // disguise, we get this information from the context and add a
-  // "_get"/"_set" to the flat name to get around the problem of
-  // overloaded methods which are generated for attributes.
-  if (this->ctx_->attribute ())
-    {
-      be_type * const bt = be_type::narrow_from_decl (node->return_type ());
+  // Generate the local class encapsulating the actual servant upcall
+  // command/invocation.
+  be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
+  upcall_command_visitor.visit_operation (node);
 
-      if (!bt)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_upcall_command_ss::"
-                             "visit_operation - "
-                             "Bad return type\n"),
-                            -1);
-        }
-
-      // Grab the right visitor to generate the return type if its not
-      // void it means it is not the accessor.
-      if (!this->void_return_type (bt))
-        {
-          *os << "_get";
-        }
-      else
-        {
-          *os << "_set";
-        }
-    }
-
-  *os << "_Upcall_Command _tao_upcall_command (" << be_idt_nl
-      << "  _tao_impl";
+  *os << be_nl
+      << "Upcall_Command command (" << be_idt_nl
+      << "  impl";
 
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      *os << ", _tao_args";
+      *os << ", args";
     }
 
   *os << ");" << be_uidt_nl << be_nl;
 
 
-  *os << "TAO::Upcall_Wrapper _tao_upcall_wrapper;" << be_nl
-      << "_tao_upcall_wrapper.upcall (_tao_server_request" << be_nl
-      << "                            , _tao_args" << be_nl
-      << "                            , _tao_nargs" << be_nl
-      << "                            , _tao_upcall_command" << be_nl
+  *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
+      << "upcall_wrapper.upcall (server_request" << be_nl
+      << "                       , args" << be_nl
+      << "                       , nargs" << be_nl
+      << "                       , command" << be_nl
       << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
-      << "                            , _tao_servant_upcall" << be_nl
-      << "                            , _tao_impl" << be_nl
-      << "                            , _tao_exceptions" << be_nl
-      << "                            , _tao_nexceptions"
+      << "                       , servant_upcall" << be_nl
+      << "                       , impl" << be_nl
+      << "                       , exceptions" << be_nl
+      << "                       , nexceptions"
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
-      << "                            ACE_ENV_ARG_PARAMETER);" << be_nl
+      << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK;" << be_nl;
 
 

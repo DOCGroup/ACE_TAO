@@ -68,7 +68,6 @@
 #include "be_visitor_interface/smart_proxy_ch.cpp"
 #include "be_visitor_interface/smart_proxy_cs.cpp"
 #include "be_visitor_interface/ami_interface_ch.cpp"
-#include "be_visitor_interface/upcall_command_ss.cpp"
 
 // Proxy Brokers
 #include "be_visitor_interface/strategized_proxy_broker_sh.cpp"
