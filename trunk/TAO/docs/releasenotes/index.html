@@ -541,18 +541,19 @@ The service configurator is now used to load protocol factories.
 <P><li>
 	    The <code>-ORBHost</code> and <code>-ORBPort</code>
             options are deprecated. The new <code>-ORBEndpoint</code>
-            option supercedes them. If the deprecated options are
-            used, the ORB issues a warning.  The user should not
-            depend on the existence of these options in the future.
+            option supersedes them. If the deprecated options are
+            used, the ORB exits with a CORBA::BAD_PARAM() exception,
+	    indicating an unknown -ORB option.
 </li>
 
 <P><li>
             The <code>-ORBPreconnect</code> option supports multiple
             protocols using the same URL formats that
-            <code>-ORBEndpoint</code> does. Note that the old
-            <em><code>host:port</code></em> format is supported for
-            backwards compatibility, but the user should not depend on
-            the existence of this old format since it is now deprecated.
+            <code>-ORBEndpoint</code> does.  The old
+	    <em><code>host:port</code></em> format is no longer
+	    supported.  If the old format is used the ORB exits with a
+	    CORBA::BAD_PARAM() exception, indicating invalid
+	    parameters.
 </li>
 
 <P><li>

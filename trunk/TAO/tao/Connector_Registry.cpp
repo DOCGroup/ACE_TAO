@@ -280,8 +280,8 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
     // Failure: Null IOR string pointer
     ACE_THROW_RETURN (CORBA::INV_OBJREF (
       CORBA_SystemException::_tao_minor_code (
-        TAO_NULL_POINTER_MINOR_CODE,
-        0),
+        TAO_DEFAULT_MINOR_CODE,
+        EINVAL),
       CORBA::COMPLETED_NO),
       -1);
 
@@ -307,8 +307,8 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
         // Failure: Null pointer to connector in connector registry.
         ACE_THROW_RETURN (CORBA::INV_OBJREF (
           CORBA_SystemException::_tao_minor_code (
-            TAO_NULL_POINTER_MINOR_CODE,
-            0),
+            TAO_DEFAULT_MINOR_CODE,
+            EINVAL),
           CORBA::COMPLETED_NO),
           -1);
     }

@@ -189,30 +189,6 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   </TR>
 
   <TR>
-
-    <TD><CODE>-ORBHost</CODE> <EM>hostname</EM></TD>
-    <TD><a name="-ORBHost"></a>Tells the ORB to listen for requests on the
-        interface associated with the host named
-        <I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>
-        <STRONG>NOTE:</STRONG> This option has been superseded by the
-        <CODE>-ORBEndpoint</CODE> option. It will not be supported in the
-        future.</TD>
-  </TR>
-
-  <TR>
-
-    <TD><CODE>-ORBPort</CODE> <EM>portspec</EM></TD>
-    <TD>Tells the ORB to
-        listen for requests on the port specified by
-        <I><EM>portspec</EM></I>. If not specified, the OS gets to choose a
-        random empty port.  This option is valid only for IIOP endpoints.<BR>
-        <STRONG>NOTE:</STRONG> This option has been superseded by the
-        <CODE>-ORBEndpoint</CODE> option. It will not be supported in the
-        future.</TD>
-
-  </TR>
-
-  <TR>
     <TD><CODE>-ORBObjRefStyle</CODE> <EM>which</EM></TD>
     <TD>Specifies the user-visible style of object references. The range of values
         is <CODE>IOR</CODE> (default), which is the traditional nonsensical object reference,
@@ -313,9 +289,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         using the <CODE>-ORBDebugLevel</CODE> option.  Listing the same combination
         multiple times will properly establish multiple connections to that endpoint.
         The <CODE>-ORBPreconnect</CODE> option uses the same endpoint format as the
-        <CODE>-ORBEndpoint</CODE> option.  Specifying IIOP endpoints using a comma
-        delimited list of <EM>host<STRONG>:</STRONG>port</EM> pairs is deprecated
-        and will not be supported in the future.
+        <CODE>-ORBEndpoint</CODE> option.
         <P>
         This is a client-side option.
     </TD>

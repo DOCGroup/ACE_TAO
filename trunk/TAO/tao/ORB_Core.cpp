@@ -28,7 +28,6 @@
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/INET_Addr.h"
 
 #include "tao/Sync_Strategies.h"
 
@@ -218,9 +217,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   //
   // Prepare a copy of the argument vector for the service configurator.
 
-  // @@ deprecated
-  int old_style_endpoint = 0;
-
   ACE_NEW_THROW_EX (this->svc_config_argv_,
                     char *[argc + 1],
                     CORBA::NO_MEMORY (
@@ -237,9 +233,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   if (argc > 0 && argv != 0)
     argv0 = argv[0];
   this->svc_config_argv_[this->svc_config_argc_++] = CORBA::string_dup (argv0);
-
-  ACE_CString host;
-  CORBA::UShort port = 0;
 
   // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
   // int giop_lite = 0;
@@ -450,30 +443,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBHost")))
-        {
-          // @@ This option now has the same effect as specifying
-          //    an extra -ORBendpoint.  Ideally, this option
-          //    should be removed so that all INET specific
-          //    stuff can be removed from the ORB core but I
-          //    guess we need to leave it here for backward
-          //    compatibility.  C'est la vie.
-
-          old_style_endpoint = 1;
-          // Specify the name of the host (i.e., interface) on which
-          // the server should listen.
-
-          // Issue a warning since this backward compatibilty support
-          // may be dropped in future releases.
-          ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("(%P|%t) \nWARNING: The `-ORBHost' option is obsolete.\n")
-                      ASYS_TEXT ("In the future, use the `-ORBEndpoint' option.\n")));
-
-          host = current_arg;
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBNameServiceIOR")))
         {
           // Specify the IOR of the NameService.
@@ -619,24 +588,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Specify the multicast port number for the Implementation
           // Repository.
           ir_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBPort")))
-        {
-          // Issue a warning since this backward compatibilty support
-          // may be dropped in future releases.
-
-          old_style_endpoint = 1;
-          ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("(%P|%t) \nWARNING: The `-ORBPort' option is obsolete.\n")
-                      ASYS_TEXT ("In the future, use the `-ORBEndpoint' option.\n")));
-
-          // Specify the port number/name on which we should listen
-          // We really shouldn't limit this to being specified as
-          // an int, but oh well for now.
-          port = (CORBA::UShort) ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -788,27 +739,16 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           if (this->orb_params ()->preconnects (preconnections) != 0)
             {
-              // Handle old style preconnects for backward compatibility.
-              // The old style preconnects only work for IIOP!
-
-              // Issue a warning since this backward compatibilty support
-              // may be dropped in future releases.
-
-              ACE_DEBUG ((LM_WARNING,
-                          ASYS_TEXT ("(%P|%t) \nWARNING: The `host:port' pair style ")
-                          ASYS_TEXT ("for `-ORBPreconnect' is obsolete.\n")
-                          ASYS_TEXT ("In the future, use the URL style.\n")));
-
-              preconnections =
-                ACE_CString ("iiop://") +
-                ACE_CString (preconnections);
-
-              ACE_DEBUG ((LM_WARNING,
-                          ASYS_TEXT ("(%P|%t) \nWARNING: The following preconnection ")
-                          ASYS_TEXT ("will be used:\n%s\n"),
-                          preconnections.c_str()));
-
-              this->orb_params ()->preconnects (preconnections);
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("(%P|%t)\n")
+                          ASYS_TEXT ("Invalid preconnect(s)")
+                          ASYS_TEXT ("specified:\n%s\n"),
+                          preconnections.c_str ()));
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO), -1);
             }
 
           arg_shifter.consume_arg ();
@@ -1203,27 +1143,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // deferred until after the service config entries had been
   // determined.
 
-  // @@ Set the endpoint string to iiop://host:port
-  //    Add a string to hold the endpoint designation for this ORB
-  //    for now it will be iiop://host:port
-  //              -fredk
-  if (old_style_endpoint)
-    {
-      ACE_CString iiop_endpoint;
-      if (this->set_iiop_endpoint (dotted_decimal_addresses,
-                                   port,
-                                   host,
-                                   iiop_endpoint) == -1)
-        ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                            CORBA_SystemException::_tao_minor_code (
-                              TAO_ORB_CORE_INIT_LOCATION_CODE,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          -1);
-      // Add the endpoint
-      this->orb_params ()->endpoints (iiop_endpoint);
-    }
-
   // Set the list of prefixes from -ORBDefaultInitRef.
   this->orb_params ()->default_init_ref (default_init_ref);
 
@@ -1280,63 +1199,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
   this->has_shutdown_ = 0;
-
-  return 0;
-}
-
-int
-TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
-                                 CORBA::UShort port,
-                                 ACE_CString &host,
-                                 ACE_CString &endpoint)
-{
-  // @@ It would be nice to get rid of this environment variable at
-  //    some point in the near future.
-  //       -Ossama
-
-  // Check if the a default port has been specified by the user in an
-  // environment variable.
-  ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
-                              TAO_DEFAULT_SERVER_PORT);
-
-  if (port == 0)
-    port = ACE_static_cast (CORBA::UShort, defport);
-
-  // No host specified; find it
-  if (host.length () == 0)
-    {
-      ASYS_TCHAR name[MAXHOSTNAMELEN + 1];
-      if (ACE_OS::hostname (name, MAXHOSTNAMELEN + 1) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%P|%t) %p\n"),
-                             ASYS_TEXT ("failed to look up local host name")),
-                            -1);
-        }
-      host.set (name, 1);
-    }
-
-  // @@ For compatibility (ug) with how things were done before,
-  //    get the local host name in the correct format.  This will be
-  //    stored away in the ORB!  fredk
-  ACE_INET_Addr rendezvous;
-  rendezvous.set (port, host.c_str ());
-
-  char buffer[MAXHOSTNAMELEN + 1];
-
-  if (rendezvous.addr_to_string (buffer,
-                                 MAXHOSTNAMELEN,
-                                 dotted_decimal_addresses) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%P|%t) %p\n"),
-                         ASYS_TEXT ("failed in addr_to_string ()")),
-                        -1);
-    }
-
-  // endpoint == iiop://host:port
-  endpoint.set ("iiop://", 1);
-  endpoint += buffer;
 
   return 0;
 }
