@@ -69,8 +69,6 @@ Globals::parse_args (int argc, char *argv[])
         base_port = ACE_OS::atoi (opts.optarg);
         // @@ Naga, do we need to keep this printout here or can we
         // remove it?
-        ACE_DEBUG ((LM_DEBUG,
-                    "base_port:%d\n",base_port));
         break;
       case 't':
         num_of_objs = ACE_OS::atoi (opts.optarg);
@@ -96,23 +94,3 @@ Globals::parse_args (int argc, char *argv[])
   // Indicates successful parsing of command line.
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

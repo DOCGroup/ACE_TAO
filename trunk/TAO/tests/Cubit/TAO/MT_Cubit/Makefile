@@ -22,7 +22,8 @@ PROG_SRCS = server.cpp \
 	Util_Thread.cpp \
 	tmplinst.cpp \
 	Cubit_Task.cpp \
-	Globals.cpp
+	Globals.cpp \
+	Timer.cpp
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
@@ -35,7 +36,8 @@ CUBIT_SVR_OBJS = \
 	Util_Thread.o \
 	Globals.o \
 	Cubit_Task.o \
-	tmplinst.o 
+	tmplinst.o \
+	Timer.o
 
 CUBIT_CLIENT_OBJS = \
 	cubitC.o \
@@ -46,7 +48,8 @@ CUBIT_CLIENT_OBJS = \
 	tmplinst.o \
 	Cubit_Task.o \
 	cubit_i.o \
-	Globals.o
+	Globals.o \
+	Timer.o
 
 BIN = server client
 BUILD = $(BIN)

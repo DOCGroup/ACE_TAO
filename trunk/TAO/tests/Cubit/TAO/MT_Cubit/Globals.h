@@ -33,22 +33,41 @@ public:
 class Globals
 {
   // = TITLE
-  //   // @@ Naga, can you please fill in here?
+  //     Globals class to be used as a singleton.
   // = DESCRIPTION
-  //   // @@ Naga, can you please fill in here?
+  //     This is used both by the server and client side.
 public:
   Globals (void);
 
   // @@ Naga, can you please make sure these fields/methods are
   // commented briefly?
   int parse_args (int argc,char **argv);
+  // parse the arguments.
+
   char hostname[BUFSIZ];
+  // hostname to be used for ORB_init.
+
   char *ior_file;
+  // file name to read/write the iors of the servants.
+
   int base_port;
+  // base_port at which the servants will be listening.The high
+  // priority servant will listen at the base_port and the
+  // low_priority servants will listen at base_port+i where i is the
+  // number of that low priority servant.
+
   u_int num_of_objs;
+  // number of objects per servant thread.
+
   u_int use_name_service;
+  // flag for usage of naming service.
+
   u_int thread_per_rate;
+  //  thread_per_rate test flag.
+
   u_int use_multiple_priority;
+  // flag to use multiple priorities for the low  priority servants
+  // instead of one priority.
 
   int ready_;
   // ready flag used by the high priority thread to wake up the low

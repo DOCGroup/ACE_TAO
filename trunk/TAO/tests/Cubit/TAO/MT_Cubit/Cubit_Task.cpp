@@ -133,24 +133,6 @@ Cubit_Task::initialize_orb (void)
         return 0;
       // @@ Naga, if this code is no longer needed can we please
       // remove it?
-      /*
-	CORBA::Object_var naming_obj =
-	this->orb_->resolve_initial_references ("NameService");
-	if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-	" (%P|%t) Unable to resolve the Name Service.\n"),
-	-1);
-
-	this->naming_context_ =
-	CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-
-      // Check the environment and return 1 if exception occurred or
-      // nil pointer.
-      if (TAO_TRY_ENV.exception () != 0 ||
-      CORBA::is_nil (this->naming_context_.in ())==1 )
-      return -1;
-      */
 
       // Initialize the naming services.  Init should be able to be
       // passed the command line arguments, but it isn't possible
@@ -229,6 +211,8 @@ Cubit_Task::create_servants (void)
 
       char *buffer;
       // @@ Naga, can you please document why the value "3" is here?
+      // Length of the string is the length of the key + 2 char 
+      // id of the servant + null space.
       int len = ACE_OS::strlen (this->key_) + 3;
 
       ACE_NEW_RETURN (buffer,
@@ -247,7 +231,7 @@ Cubit_Task::create_servants (void)
                            this->task_id_);
 
           ACE_NEW_RETURN (this->servants_[i],
-                          Cubit_i,
+                          Cubit_i (this->orb_),
                           -1);
 
           if (this->servants_[i] == 0)

@@ -18,14 +18,13 @@
 #define _CUBIT_I_HH
 
 #include "cubitS.h"
-#include "Task_Client.h"
 
 class Cubit_i : public POA_Cubit
 {
   // = TITLE
   //   Cubit implementation class.
 public:
-  Cubit_i (void);
+  Cubit_i (CORBA::ORB_ptr orb);
   ~Cubit_i (void);
    
   virtual CORBA::Octet cube_octet (CORBA::Octet o,
@@ -43,6 +42,10 @@ public:
   virtual void noop (CORBA::Environment &env);
 
   virtual void shutdown (CORBA::Environment &env);
+
+protected:
+  CORBA::ORB_var orb_;
+  // Keep a pointer to the ORB so we can shut it down.
 };
 
 #endif /* _CUBIT_I_HH */

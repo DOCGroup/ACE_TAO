@@ -25,20 +25,43 @@
 
 ACE_RCSID(MT_Cubit, server, "$Id$")
 
-
-// Global options used to configure various parameters.
-// static char hostname[BUFSIZ];
-// static char *ior_file = 0;
-// static int base_port = ACE_DEFAULT_SERVER_PORT;
-// static u_int num_of_objs = 2;
-// static u_int use_name_service = 1;
-// static u_int thread_per_rate = 0;
-// static u_int use_multiple_priority = 0;
-// static u_int run_utilization_test = 0;
+char *force_argv[]=
+{
+  "server",
+  "-s",
+  "-f",
+  "ior.txt" 
+};
 
 int
 Server::initialize (int argc, char **argv)
 {
+#if defined (ACE_HAS_THREADS)
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  if (ACE_OS::sched_params (
+        ACE_Sched_Params (
+          ACE_SCHED_FIFO,
+#if defined (__Lynx__)
+          30,
+#elif defined (VXWORKS) /* ! __Lynx__ */
+          6,
+#elif defined (ACE_WIN32)
+  ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                  ACE_SCOPE_THREAD),
+#else
+          ACE_THR_PRI_FIFO_DEF + 25,
+#endif /* ! __Lynx__ */
+          ACE_SCOPE_PROCESS)) != 0)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        ACE_DEBUG ((LM_MAX,
+                    "preempt: user is not superuser, "
+                    "so remain in time-sharing class\n"));
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%n: ACE_OS::sched_params failed\n%a"),
+                          -1);
+    }
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -76,8 +99,8 @@ Server::initialize (int argc, char **argv)
    return 0;
 }
 
-int
-Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
+void
+Server::prelim_args_process (void)
 {
   int i;
 
@@ -101,21 +124,132 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
         GLOBALS::instance ()->num_of_objs =
           ACE_OS::atoi (this->argv_ [i + 1]);
     }
-  // Create an array to hold pointers to the Cubit objects.
-  CORBA::String *cubits;
+}
 
-  ACE_NEW_RETURN (cubits,
-                  CORBA::String [GLOBALS::instance ()->num_of_objs],
-                  -1);
-  
+void
+Server::init_high_priority (void)
+{
+  // @@ Naga, here's another place where we write the same code again.
+  // Please make sure that this gets factored out into a macro or an
+  // inline function!
+#if defined (VXWORKS)
+  ACE_Sched_Priority this->high_priority_ = ACE_THR_PRI_FIFO_DEF;
+#elif defined (ACE_WIN32)
+  ACE_Sched_Priority this->high_priority_ =
+    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+                                    ACE_SCOPE_THREAD);
+#else
+  // @@ Naga/Sergio, why is there a "25" here?  This seems like to
+  // much of a "magic" number.  Can you make this more "abstract?"
+  this->high_priority_ = ACE_THR_PRI_FIFO_DEF + 25;
+#endif /* VXWORKS */
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating servant 0 with high priority %d\n",
+              this->high_priority_));
+
+}
+
+void
+Server::init_low_priority (void)
+{
+  int j;
+  this->num_low_priority_ =
+    GLOBALS::instance ()->num_of_objs - 1;
+
+  ACE_Sched_Priority prev_priority = this->high_priority_;
+  // Drop the priority
+  if (GLOBALS::instance ()->thread_per_rate == 1 
+      || GLOBALS::instance ()->use_multiple_priority == 1)
+    {
+      this->num_priorities_ = 0;
+
+      for (ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
+                                                          ACE_SCOPE_THREAD);
+           priority_iterator.more ();
+          priority_iterator.next ())
+        this->num_priorities_ ++;
+      // 1 priority is exclusive for the high priority client.
+      this->num_priorities_ --;
+      // Drop the priority, so that the priority of clients will
+      // increase with increasing client number.
+      for (j = 0;
+           j < this->num_low_priority_;
+           j++)
+        {
+          this->low_priority_ =
+            ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                 prev_priority,
+                                                 ACE_SCOPE_THREAD);
+          prev_priority = this->low_priority_;
+        }
+      // Granularity of the assignment of the priorities.  Some OSs
+      // have fewer levels of priorities than we have threads in our
+      // test, so with this mechanism we assign priorities to groups
+      // of threads when there are more threads than priorities.
+      this->grain_ = this->num_low_priority_ / this->num_priorities_;
+      this->counter_ = 0;
+
+      if (this->grain_ <= 0)
+        this->grain_ = 1;
+    }
+  else
+    this->low_priority_ =
+      ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                           prev_priority,
+                                           ACE_SCOPE_THREAD);
+}
+
+// Write the ior's to a file so the client can read them.
+void
+Server::write_iors (void)
+{
+  int j;
+  this->cubits_[0] = ACE_OS::strdup (this->high_priority_task_->get_servant_ior (0));
+
+  for (j = 1;
+       j < GLOBALS::instance ()->num_of_objs;
+       ++j)
+    this->cubits_[j] = ACE_OS::strdup (this->low_priority_tasks_[j-1]->get_servant_ior (0));
+
+  FILE *ior_f = 0;
+
+  if (GLOBALS::instance ()->ior_file != 0)
+    {
+      //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Opening file:%s\n",GLOBALS::instance ()->ior_file));
+      ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file, "w");
+    }
+
+  for (j = 0;
+       j < GLOBALS::instance ()->num_of_objs;
+       ++j)
+    {
+      if (ior_f != 0)
+        {
+          //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) ior_file is open :%s",GLOBALS::instance ()->ior_file));
+          ACE_OS::fprintf (ior_f, "%s\n", this->cubits_[j]);
+          ACE_OS::printf ("this->cubits_[%d] ior = %s\n",
+                          j,
+                          this->cubits_[j]);
+        }
+    }
+
+  if (ior_f != 0)
+    {
+      //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) Closing ior file\n"));
+      ACE_OS::fclose (ior_f);
+    }
+}
+
+int
+Server::activate_high_servant (ACE_Thread_Manager *serv_thr_mgr)
+{
   char orbport[BUFSIZ];
-  
+  char orbhost[BUFSIZ];
+
   ACE_OS::sprintf (orbport,
                    "-ORBport %d ",
                    GLOBALS::instance ()->base_port);
-
-  char orbhost[BUFSIZ];
-
   ACE_OS::sprintf (orbhost,
                    "-ORBhost %s ",
                    GLOBALS::instance ()->hostname);
@@ -126,118 +260,53 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
                               "-ORBsndsock 32768 ",
                               "-ORBrcvsock 32768 ",
                               0};
-
-  ACE_ARGV high_argv (this->argv_,high_second_argv);
-
-  Cubit_Task *high_priority_task;
-
-  ACE_NEW_RETURN (high_priority_task,
-                  Cubit_Task (high_argv.buf (),
+  ACE_NEW_RETURN (this->high_argv_,
+                  ACE_ARGV (this->argv_,high_second_argv),
+                  -1);
+  ACE_NEW_RETURN (this->high_priority_task_,
+                  Cubit_Task (this->high_argv_->buf (),
                               "internet",
                               1,
                               serv_thr_mgr,
                               0), //task id 0.
                   -1);
-
-  // @@ Naga, here's another place where we write the same code again.
-  // Please make sure that this gets factored out into a macro or an
-  // inline function!
-#if defined (VXWORKS)
-  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
-#elif defined (ACE_WIN32)
-  ACE_Sched_Priority priority =
-    ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                    ACE_SCOPE_THREAD);
-#else
-  // @@ Naga/Sergio, why is there a "25" here?  This seems like to
-  // much of a "magic" number.  Can you make this more "abstract?"
-  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
-#endif /* VXWORKS */
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Creating servant 0 with high priority %d\n",
-              priority));
-
   // Make the high priority task an active object.
-  if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
-                                    1,
-                                    0,
-                                    priority) == -1)
+  if (this->high_priority_task_->activate (THR_BOUND | ACE_SCHED_FIFO,
+                                           1,
+                                           0,
+                                           this->high_priority_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n"
                 "\thigh_priority_task->activate failed"));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
-
+  // wait on the condition variable for the high priority client to
+  // finish parsing the arguments.
   while (!GLOBALS::instance ()->ready_)
     GLOBALS::instance ()->ready_cnd_.wait ();
 
-  // Create an array to hold pointers to the low priority tasks.
-  Cubit_Task **low_priority_task;
+}
 
-  ACE_NEW_RETURN (low_priority_task,
-                  Cubit_Task *[GLOBALS::instance ()->num_of_objs],
-                  -1);
+int
+Server::activate_low_servants (ACE_Thread_Manager *serv_thr_mgr)
+{
+  char orbport[BUFSIZ];
+  char orbhost[BUFSIZ];
+  int i;
 
-  u_int number_of_low_priority_servants = 0;
-  u_int number_of_priorities = 0;
-  u_int grain = 0;
-  u_int counter = 0;
-  u_int j;
-
-  number_of_low_priority_servants =
-    GLOBALS::instance ()->num_of_objs - 1;
-
-  // Drop the priority
-  if (GLOBALS::instance ()->thread_per_rate == 1 
-      || GLOBALS::instance ()->use_multiple_priority == 1)
-    {
-      number_of_priorities = 0;
-
-      for (ACE_Sched_Priority_Iterator priority_iterator (ACE_SCHED_FIFO,
-                                                          ACE_SCOPE_THREAD);
-           priority_iterator.more ();
-          priority_iterator.next ())
-        number_of_priorities ++;
-
-      // 1 priority is exclusive for the high priority client.
-      number_of_priorities --;
-
-      // Drop the priority, so that the priority of clients will
-      // increase with increasing client number.
-      for (j = 0;
-           j < number_of_low_priority_servants;
-           j++)
-        priority =
-          ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                               priority,
-                                               ACE_SCOPE_THREAD);
-
-      // Granularity of the assignment of the priorities.  Some OSs
-      // have fewer levels of priorities than we have threads in our
-      // test, so with this mechanism we assign priorities to groups
-      // of threads when there are more threads than priorities.
-      grain = number_of_low_priority_servants / number_of_priorities;
-      counter = 0;
-
-      if (grain <= 0)
-        grain = 1;
-    }
-  else
-    priority =
-      ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                           priority,
-                                           ACE_SCOPE_THREAD);
-
+  ACE_OS::sprintf (orbhost,
+                   "-ORBhost %s ",
+                   GLOBALS::instance ()->hostname);
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d servants starting at priority %d\n",
-              number_of_low_priority_servants,
-              priority));
+              this->num_low_priority_,
+              this->low_priority_));
 
   // Create the low priority servants.
-  ACE_ARGV *low_argv;
-
-  for (i = number_of_low_priority_servants; i > 0; i--)
+  ACE_NEW_RETURN (this->low_priority_tasks_,
+                  Cubit_Task *[GLOBALS::instance ()->num_of_objs],
+                  -1);
+  for (i = this->num_low_priority_; i > 0; i--)
     {
       ACE_OS::sprintf (orbport,
                       "-ORBport %d",
@@ -251,86 +320,78 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
                                  "-ORBsndsock 32768 ",
                                  "-ORBrcvsock 32768 ",
                                  0};
-      ACE_NEW_RETURN (low_argv,
+      ACE_NEW_RETURN (this->low_argv_,
                       ACE_ARGV (this->argv_,
                                 low_second_argv),
                       -1);
-
-      ACE_NEW_RETURN (low_priority_task [i - 1],
-                      Cubit_Task (low_argv->buf (),
+      ACE_NEW_RETURN (this->low_priority_tasks_ [i - 1],
+                      Cubit_Task (this->low_argv_->buf (),
 				  "internet",
 				  1,
 				  serv_thr_mgr,
 				  i),
                       -1);
-
       // Make the low priority task an active object.
-      if (low_priority_task [i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
+      if (this->low_priority_tasks_ [i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
                                                1,
                                                0,
-                                               priority) == -1)
+                                               this->low_priority_) == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n"
-                    "\tlow_priority_task[i]->activate"));
+                    "\tthis->low_priority_tasks_[i]->activate"));
       ACE_DEBUG ((LM_DEBUG,
                   "Created servant %d with priority %d\n",
                   i,
-                  priority));
+                  this->low_priority_));
 
       // Use different priorities on thread per rate or multiple
       // priority.
       if (GLOBALS::instance ()->use_multiple_priority == 1 
           || GLOBALS::instance ()->thread_per_rate == 1)
         {
-          counter = (counter + 1) % grain;
-          if (counter == 0
+          this->counter_ = (this->counter_ + 1) % this->grain_;
+          if (this->counter_ == 0
               &&
                //Just so when we distribute the priorities among the
                //threads, we make sure we don't go overboard.
-              number_of_priorities * grain > number_of_low_priority_servants - (i - 1))
+              this->num_priorities_ * this->grain_ > this->num_low_priority_ - (i - 1))
             // Get the next higher priority.
-            priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                        priority,
-                                                        ACE_SCOPE_THREAD);
+            this->low_priority_ = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                                   this->low_priority_,
+                                                                   ACE_SCOPE_THREAD);
         }
     } /* end of for() */
+}
 
+int
+Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
+{
+  int i;
+  ACE_NEW_RETURN (this->cubits_,
+                  CORBA::String [GLOBALS::instance ()->num_of_objs],
+                  -1);
+  // Do the preliminary argument processing for options -p and -h.  
+  this->prelim_args_process ();
+  // Find the priority for the high priority servant.
+  this->init_high_priority ();
+  // activate the high priority servant task
+  if (this->activate_high_servant (serv_thr_mgr) < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Failure in activating high priority servant\n"),
+                      -1);
+  // initialize the priority of the low priority servants.
+  this->init_low_priority ();
+  // activate the low priority servants.
+  if (this->activate_low_servants (serv_thr_mgr) < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Failure in activating low priority servant\n"),
+                      -1);
+  // wait in the barrier.
   GLOBALS::instance ()->barrier_->wait ();
 
-  // Write the ior's to a file so the client can read them.
-  {
-    cubits[0] = high_priority_task->get_servant_ior (0);
+  this->write_iors ();
 
-    for (j = 0;
-         j < GLOBALS::instance ()->num_of_objs - 1;
-         ++j)
-      cubits[j + 1] = low_priority_task[j]->get_servant_ior (0);
-
-    FILE *ior_f = 0;
-
-    if (GLOBALS::instance ()->ior_file != 0)
-      ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file,
-                             "w");
-
-    for (j = 0;
-         j < GLOBALS::instance ()->num_of_objs;
-         ++j)
-      {
-        if (ior_f != 0)
-          {
-            ACE_OS::fprintf (ior_f, "%s\n", cubits[j]);
-            ACE_DEBUG ((LM_DEBUG,
-                        "cubits[%d] ior = %s\n",
-                        j,
-                        cubits[j]));
-          }
-      }
-
-    if (ior_f != 0)
-      ACE_OS::fclose (ior_f);
-  }
   return 0;
-
 }
 
 // main routine.
@@ -353,32 +414,6 @@ main (int argc, char *argv[])
   GLOBALS::instance ();
 
   Server server;
-#if defined (ACE_HAS_THREADS)
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  if (ACE_OS::sched_params (
-        ACE_Sched_Params (
-          ACE_SCHED_FIFO,
-#if defined (__Lynx__)
-          30,
-#elif defined (VXWORKS) /* ! __Lynx__ */
-          6,
-#elif defined (ACE_WIN32)
-  ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                  ACE_SCOPE_THREAD),
-#else
-          ACE_THR_PRI_FIFO_DEF + 25,
-#endif /* ! __Lynx__ */
-          ACE_SCOPE_PROCESS)) != 0)
-    {
-      if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_MAX,
-                    "preempt: user is not superuser, "
-                    "so remain in time-sharing class\n"));
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%n: ACE_OS::sched_params failed\n%a"),
-                          -1);
-    }
 
   if (server.initialize (argc, argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
