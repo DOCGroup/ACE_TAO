@@ -184,6 +184,16 @@ Support dynamic libraries on NT, i.e., marking classes for DLL export was
 added. Two backend options control the name of the export macro, and the
 name of an extra include file were the macro is defined; the options are
 <TT>-Wp,export_macro=MACRO_NAME</TT> <TT>-Wp,export_include=INCLUDE_NAME</TT>.</LI>
+
+<LI>
+The IDL compiler generates now source code for sequences. The user has now the option
+to use these generated sequence classes or to use, as up to now, the template 
+instatiation. If TAO_LACKS_TEMPLATE_SPECIALIZATION is defined, then 
+template instantiation will be used, else not. The reason for this was, that
+some C++ compilers did not support template instantiation properly and 
+sequences were based on templates. The generated source code is mainly
+contained in the generated header file directly in the class declaration.</LI>
+
 </UL>
 Known bugs/unimplemented constructs:
 <UL>
@@ -251,6 +261,13 @@ Tweak the IDL compiler to generate code that's more easily integrated back
 into the ORB Core, e.g., POA, etc. This will depend largely on our ability
 to generalize the changes necessary to generated code.</LI><P>
 </UL>
+
+<LI>
+The generated sequence classes should not be generated per sequence, but 
+per type and parent scope. Which means, that the overhead of having
+the source code generated serveral times should be reduced. To do this,
+an extra pass over the internal representation of the IDL file has to 
+be done.
 
 <HR>
 <H3>
