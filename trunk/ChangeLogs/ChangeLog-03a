@@ -1,3 +1,10 @@
+Sun Nov  3 19:41:30 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Multicast_Test.cpp:
+	* tests/Makefile:
+	* tests/run_test.lst:  Added a new test to exercise some of the new
+	  functionality of ACE_SOCK_Dgram_Mcast.
+
 Sun Nov  3 10:36:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/run_test.lst: Prevented SV_Shared_Memory test from running

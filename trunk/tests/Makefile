@@ -62,6 +62,7 @@ BIN =   Aio_Platform_Test \
         Message_Queue_Test \
         Message_Queue_Test_Ex \
         Message_Queue_Notifications_Test \
+        Multicast_Test \
         Notify_Performance_Test \
         Object_Manager_Test \
         Obstack_Test \
