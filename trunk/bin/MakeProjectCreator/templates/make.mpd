@@ -132,7 +132,7 @@ clean:
 realclean: clean
 	-$(RM) <%if(exename)%>$(BIN)<%else%>$(SHLIB) $(LIB)<%endif%><%if(install)%> <%install%>/$(INSTARGET)<%endif%>
 <%if(custom_types)%>
-	-$(RM) $(GENERATED_DIRTY)
+	-$(RM) -r $(GENERATED_DIRTY)
 <%endif%>
 
 #----------------------------------------------------------------------------
