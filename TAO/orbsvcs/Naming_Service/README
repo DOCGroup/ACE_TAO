@@ -159,9 +159,9 @@ How to Run the TAO Naming Service
 
         2. Command-line options
                 
-                The -ORBNameServiceIOR or environment variable
-                NameServiceIOR can be used on the client side to
-                specify the object that the call to
+                The "-ORBInitRef NameService=IOR:..." or environment
+                variable NameServiceIOR can be used on the client side
+                to specify the object that the call to
                 <resolve_initial_references> should return to the
                 client.  (On the server side, -o option can be used to
                 get the ior).
@@ -169,7 +169,7 @@ How to Run the TAO Naming Service
                 Example (Unix, same host):
 
                         % TAO_ROOT/orbsvcs/Naming_Service -o ior_file
-                        % my_client -ORBnameserviceior file://ior_file
+                        % my_client -ORBInitRef NameService=file://ior_file
 
                         On the first line, we start the Naming
                         Service, and output its ior to <ior_file>.  On
