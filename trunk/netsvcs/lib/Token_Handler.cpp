@@ -56,12 +56,6 @@ ACE_Token_Acceptor::init (int argc, char *argv[])
 		       "acceptor::open failed", 
 		       this->service_addr_.get_port_number ()), -1);
 
-  // Register ourselves to receive SIGINT so we can shutdown
-  // gracefully.
-  if (this->reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
-		      "register_handler (SIGINT)"), -1);
-
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);

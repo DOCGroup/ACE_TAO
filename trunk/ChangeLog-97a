@@ -7,6 +7,15 @@ Tue Apr 29 20:03:38 1997    <sumedh@cs.wustl.edu>
 
 Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
+	* netsvcs/servers/main.cpp (main): Added special code for Win32
+	  such that only SIGINT is being registered with the Signal
+	  Handler. SIGQUIT is not supported on Win32.
+
+	* netsvcs/lib/Token_Handler.cpp (init): Removed the registration
+	  of the Acceptor for SIGINTs.
+
+	* netsvcs/lib/TS_Server_Handler.cpp (init): Same as above.
+
 	* tests/Process_Strategy_Test.cpp (server): The new thread must
  	  become owner before it can call Reactor::handle_events. Also
 	  fixed #define typo.
