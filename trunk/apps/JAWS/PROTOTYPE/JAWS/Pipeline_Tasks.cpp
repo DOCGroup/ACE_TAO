@@ -117,29 +117,6 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
         JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
         // Should mean that the IO is asynchronous, and the word isn't out
         // yet.
-
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-        if (policy->ratio () > 1)
-          {
-            while (policy->ratio () > 1)
-              {
-                JAWS_IO_Handler *ioh = this->new_handler (data);
-                if (handler == 0)
-                  break;
-                ioh->task (handler->task ());
-                io->accept (ioh);
-                if (ioh->status () == JAWS_IO_Handler::ACCEPT_ERROR)
-                  {
-                    ioh->message_block ()->release ();
-                    ioh->factory ()->destroy_io_handler (ioh);
-                    break;
-                  }
-                int i = policy->ratio () - 1;
-                policy->ratio (i);
-              }
-          }
-#endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
-
         break;
       }
     }

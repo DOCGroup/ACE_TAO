@@ -265,11 +265,13 @@ JAWS_Asynch_Handler::act (const void *act_ref)
   this->ioh_ = (JAWS_IO_Handler *) act_ref;
 }
 
+#if 0
 ACE_HANDLE
 JAWS_Asynch_Handler::handle (void) const
 {
   return this->ioh_->handle ();
 }
+#endif
 
 void
 JAWS_Asynch_Handler::dispatch_handler (void)
