@@ -1,3 +1,9 @@
+Fri Oct 30 20:31:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tests/Semaphore_Test.cpp: Cleaned up the #if's to make it easier
+          to understand, and fixed a related problem.  Thanks to 
+          Ossama for finding this.
+
 Fri Oct 30 15:47:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Select_Reactor_T.cpp (dispatch): Make sure to include a
