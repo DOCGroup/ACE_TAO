@@ -95,13 +95,26 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("deployRequirement")))
             {
-              // increase the length of the sequence
-              CORBA::ULong i (iad.deployRequirement.length ());
-              iad.deployRequirement.length (i + 1);
-
-              // delegate the populating process
-              Requirement_Handler::process_Requirement (this->iter_,
-							iad.deployRequirement[i]);
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong i
+                    (iad.deployRequirement.length ());
+                  iad.deployRequirement.length (i + 1);
+                  if (length == 1)
+                    {
+                      Requirement_Handler::process_Requirement
+                         (this->iter_,
+                          iad.deployRequirement[i]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_deploy_requirement
+                       (named_node_map, this->doc_,
+                        this->iter_, i, iad.deployRequirement[i]);
+                    }
+                }
             }
           else if (node_name == XStr (ACE_TEXT ("dependsOn")))
             {
@@ -328,6 +341,96 @@ namespace CIAO
           (doc->getDocumentElement ()->getNodeName ());
 
       return doc;
+    }
+
+    void IAD_Handler::process_attributes_for_deploy_requirement
+       (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::Requirement& iad_req)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              id_map_.bind (aceattrnodevalue, value);
+              Requirement_Handler::process_Requirement
+                  (iter,
+                   iad_req);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              this->process_refs (named_node_map);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              Requirement_Handler::process_Requirement
+                  (href_iter,
+                   iad_req);
+            }
+        }
+
+      return;
+    }
+
+    void IAD_Handler::process_refs (DOMNamedNodeMap* named_node_map)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue = XMLString::transcode
+             (attribute_node->getNodeValue ());
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              this->index_ = this->index_ + 1;
+              idref_map_.bind (this->index_, aceattrnodevalue);
+            }
+        }
     }
 
   }  // namespace Config_Handler
