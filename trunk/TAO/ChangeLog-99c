@@ -14,24 +14,21 @@ Fri Feb 12 15:04:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri Feb 12 12:55:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/Simple_util.cpp:
-	Fix for the warning from Digital Unix
+	  Fix for the warning from Digital Unix
 
 Fri Feb 12 10:03:56 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * tao/IIOP_Profile.{h,cpp}
 	  tao/ORB.cpp
 	  tao/Stub.{i,cpp}
-	  Modified Stub and IIOP_Profile creation to use the 
-	  cached address info in the orb_core.
+	  Modified Stub and IIOP_Profile creation to use the cached
+ 	  address info in the orb_core.  Thanks to Dr. David A. Janello
+ 	  <argon@mcs.net> for reporting this performance problem.
 
-	  Thanks to Dr. David A. Janello <argon@mcs.net> for
-	  reporting this performance problem.
-
-        * Modified tao/Stub.i to not print warning messages with 
-	  a forwarded request is itself forwarded.  Since the multiple
-	  profile code and forwarding is still in development I left a
-	  debug message.
-	  
+        * Modified tao/Stub.i to not print warning messages with a
+ 	  forwarded request is itself forwarded.  Since the multiple
+ 	  profile code and forwarding is still in development I left a
+ 	  debug message.
 
 Fri Feb 12 09:35:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -39,28 +36,28 @@ Fri Feb 12 09:35:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           TAO/orbsvcs/tests/Simulator/DOVEBrowser/DoubleVisComp.java
           TAO/orbsvcs/tests/Simulator/DOVEBrowser/MTQueue.java
           TAO/orbsvcs/tests/Simulator/DOVEBrowser/make.bat: changed
-          all uses of notify () to notifyAll () in MTQueue class,
-          added monotonic scaling of windows for the dual EC demo.
+          all uses of notify () to notifyAll () in MTQueue class, added
+ 	  monotonic scaling of windows for the dual EC demo.
 
         * TAO/orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.{cpp, h}
           TAO/orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.{cpp, h}:
-          added dummy registrations to schedulers to ensure priority separation
-	  for high and low priority channels, put all threads in DualEC_Sup
-	  process into the realtime scheduling class.
+          added dummy registrations to schedulers to ensure priority
+ 	  separation for high and low priority channels, put all threads
+ 	  in DualEC_Sup process into the realtime scheduling class.
 
 Thu Feb 11 20:11:33 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/grid/Grid_Client_i.cpp:
 	* examples/Simple/grid/Grid_Client_i.h:
 	* examples/Simple/grid/client.cpp:
-	Made changes to accomodate changes that were 
-	put in to Simple_util for Naming service.
+	  Made changes to accomodate changes that were put in to
+ 	  Simple_util for Naming service.
 
 Thu Feb 11 18:01:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/performance-tests/cubit/tao/idl_cubit/Cubit_Client.cpp:
           Took out one too many "unused args". Had to put one back.
-          Thanks to Nanbor for pointing this out.
+  	  Thanks to Nanbor for pointing this out.
 
 Thu Feb 11 17:37:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -72,16 +69,16 @@ Thu Feb 11 17:37:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Simple/echo/Echo_Client_i.h
 	* examples/Simple/Simple_util.cpp
 	* examples/Simple/Simple_util.h:
-	Made changes to use the name service.
+	  Made changes to use the name service.
 
 Thu Feb 11 16:01:17 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/Time_Service/Clerk_i.cpp: Changed the ior_read () method
-	to use ACE_Read_Buffer instead of fscanf (). Also ran purify on
-	this. Got 0 memory leaks.
+ 	  to use ACE_Read_Buffer instead of fscanf (). Also ran purify on
+ 	  this. Got 0 memory leaks.
 
 	* orbsvcs/Time_Service/Clerk_i.h (class Clerk_i): Changed ior_fp_
-	from FILE * to int. Used an ACE_HANDLE instead of FILE*.
+ 	  from FILE * to int. Used an ACE_HANDLE instead of FILE*.
 
 Thu Feb 11 15:36:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -93,8 +90,8 @@ Thu Feb 11 15:29:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tao/Exception.h:
 	* tao/Environment.{h,cpp}: Unprotected private members and add
 	  exception id and major number to CORBA_Environment if
-	  TAO_USES_FLICK is defined.  Thanks to Tim Stack <stack@aros.net>
-	  for notifying us the change.
+ 	  TAO_USES_FLICK is defined.  Thanks to Tim Stack <stack@aros.net>
+ 	  for notifying us the change.
 
 Thu Feb 11 15:28:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
