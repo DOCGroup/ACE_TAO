@@ -1,3 +1,8 @@
+Tue Sep  1 09:37:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* utils/catior: Added several new tests for Jeff Hopper's catior
+ 	  program, as well as a new version of his program.  Thanks Jeff.
+
 Mon Aug 31 18:08:10 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Now mentions the perl scripts (run_test.pl)
