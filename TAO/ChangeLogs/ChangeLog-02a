@@ -1,6 +1,7 @@
 Fri Apr 28 13:16:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/InterceptorC.h: Doh! I forgot to check in this file.
+	* tao/InterceptorC.h: This file need to be conditionally
+	  compiled.
 
 Fri Apr 28 11:17:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
