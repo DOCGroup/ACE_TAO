@@ -1,3 +1,15 @@
+Fri Dec  3 09:50:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        
+          Regarding the generated _downcast() method for exceptions,
+          valuetypes and value factories, since we are using
+          dynamic_cast<> now for these, the existing checks for nil
+          or the string compares of repo ids are unnecessary, and have
+          been removed.
+
 Fri Dec  3 15:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ORT/ObjectReferenceFactory.idl:
