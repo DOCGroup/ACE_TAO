@@ -18,7 +18,7 @@ static int verbose = 0;
 
 static void
 run_server (ACE_THR_FUNC server,
-            ACE_SSL_SOCK_Stream *new_stream)
+            ACE_SSL_SOCK_Stream * new_stream)
 {
 #if defined (ACE_HAS_THREADS)
   // Spawn a new thread and run the new connection in that thread of
@@ -30,7 +30,7 @@ run_server (ACE_THR_FUNC server,
                 "(%P|%t) %p\n",
                 "spawn"));
 #else
-  (*server) ((void *) handle);
+  (*server) ((void *) new_stream);
 #endif /* ACE_HAS_THREADS */
 }
 
@@ -327,7 +327,6 @@ run_event_loop (u_short port)
   ACE_SSL_SOCK_Stream * new_stream = 0;
 
   // Performs the iterative server activities.
-
   for (;;)
     {
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
@@ -380,7 +379,7 @@ run_event_loop (u_short port)
               else
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) spawning twoway server\n"));
-                          
+
               // Run the twoway server.
               run_server (twoway_server,
                           new_stream);
