@@ -1,3 +1,10 @@
+Mon Mar  3 11:39:20 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Strategies_T.h:
+
+	  Forward declare ACE_Service_Repository.  Fixes a problem exposed
+	  by IBM Visual Age C++ 5 builds about unexpected text.
+
 Fri Feb 28 17:43:02 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Service_Manager.h (ACE_Service_Manager): Changed private to
