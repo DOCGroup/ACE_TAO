@@ -6,7 +6,7 @@ Sat Nov  8 17:51:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Removed DEPENENCY_FILE variable and updated dependencies.  This
           should cause the library to get rebuilt and relinked and clear
           up the autobuild errors.  This particular lib hasn't been
-          rebuilt since 1.3.4.
+          rebuilt/relinked since 1.3.4 (on SUSE82_WChar).
 
 Sat Nov  8 05:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
