@@ -38,7 +38,7 @@ public:
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
                void *addr = 0,
-               off_t pos = 0,
+               off_t offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
@@ -50,7 +50,7 @@ public:
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
                void *addr = 0,
-               off_t pos = 0,
+               off_t offset = 0,
                LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <file_name>.
 
@@ -59,7 +59,7 @@ public:
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
-           off_t pos = 0,
+           off_t offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
@@ -68,7 +68,7 @@ public:
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
-           off_t pos = 0,
+           off_t offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Remap the file associated with <handle_>.
 
@@ -79,7 +79,7 @@ public:
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
-           off_t pos = 0,
+           off_t offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
   // Map a file specified by <filename>.
 
@@ -186,7 +186,7 @@ private:
               int prot = PROT_RDWR,
               int share = MAP_SHARED,
               void *addr = 0,
-              off_t pos = 0,
+              off_t offset = 0,
               LPSECURITY_ATTRIBUTES sa = 0);
   // This method does the dirty work of actually calling ::mmap to map
   // the file into memory.
