@@ -612,9 +612,6 @@ public:
   CORBA::Policy_ptr stubless_sync_scope (void);
 #endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
-  static Sync_Scope_Hook sync_scope_hook_;
-  // The hook to be set for the SyncScopePolicy
-
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   CORBA::Policy_ptr default_buffering_constraint (void) const;
@@ -632,12 +629,6 @@ public:
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
-
-  // Name of the protocols_hooks that needs to be instantiated.
-  // The default value is "Protocols_Hooks". If RTCORBA option is
-  // set, its value will be set to
-  // be "RT_Protocols_Hooks".
-  static ACE_CString protocols_hooks_name_;
 
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
@@ -1010,12 +1001,6 @@ private:
                                               TAO_ORB_Core *other_orb,
                                               const TAO_MProfile &mprofile);
 
-  /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
-  static Timeout_Hook timeout_hook_;
-
-  /// The hook to be set for the ConnectionTimeoutPolicy
-  static Timeout_Hook connection_timeout_hook_;
-
 protected:
 
   /// Synchronize internal state...
@@ -1100,69 +1085,8 @@ protected:
   //@}
 #endif /*if 0*/
 
-  // Name of the endpoint selector factory that needs to be instantiated.
-  // The default value is "Default_Endpoint_Selector_Factory". If
-  // TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
-  // called to set the value to be "RT_Endpoint_Selector_Factory".
-  static ACE_CString endpoint_selector_factory_name_;
-
-  // Name of the thread lane resources manager that needs to be
-  // instantiated.  The default value is
-  // "Default_Thread_Lane_Resources_Manager_Factory". If TAO_RTCORBA
-  // is linked, the set_thread_lane_resources_manager will be called
-  // to set the value to be
-  // "RT_Thread_Lane_Resources_Manager_Factory".
-  static ACE_CString thread_lane_resources_manager_factory_name_;
-
-
   /// The server_id_ that was passed via -ORBServerId option
   ACE_CString server_id_;
-  // Name of the collocation resolver that needs to be instantiated.
-  // The default value is "Default_Collocation_Resolver". If
-  // TAO_RTCORBA is linked, the set_collocation_resolver will be
-  // called to set the value to be "RT_Collocation_Resolver".
-  static ACE_CString collocation_resolver_name_;
-
-  // Name of the stub factory that needs to be instantiated.
-  // The default value is "Default_Stub_Factory". If TAO_RTCORBA is
-  // linked, the set_stub_factory will be called to set the value
-  // to be "RT_Stub_Factory".
-  static ACE_CString stub_factory_name_;
-
-  // Name of the resource factory that needs to be instantiated.
-  // The default value is "Resource_Factory". If TAO_Strategies is
-  // linked, the set_resource_factory will be called to set the value
-  // to be "Advanced_Resource_Factory".
-  static ACE_CString resource_factory_name_;
-
-  // Name of the service object for DII request creation that needs
-  // to be instantiated. The default value is "Dynamic_Adaper". If
-  // TAO_DynamicInterface is linked, dynamic_adapter_name() will be
-  // called to set the value to "Concrete_Dynamic_Adapter".
-  static ACE_CString dynamic_adapter_name_;
-
-  // Name of the service object for functions that make calls on
-  // the Interface Repository. The default value is "IFR_Client_Adaper".
-  // If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
-  // called to set the value to "Concrete_IFR_Client_Adapter".
-  static ACE_CString ifr_client_adapter_name_;
-
-  // Name of the service object used by the ORB create_*_tc functions.
-  // The default value is "TypeCodeFactory_Adapter". If the
-  // TypeCodeFactory library is linked, the corresponding accessor
-  // function typecodefactory_adapter_name() will be called to set
-  // the value to "Concrete_TypeCodeFactory_Adapter".
-  static ACE_CString typecodefactory_adapter_name_;
-
-  // Name of the service object used to create the RootPOA.  The
-  // default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
-  // will be changed to TAO_RT_POA so that a POA equipped with
-  // realtime extensions will be returned.
-  static ACE_CString poa_factory_name_;
-
-  // The service configurator directive used to load
-  // poa_factory_name_ dynamically.
-  static ACE_CString poa_factory_directive_;
 
   /// Handle to the factory for Client-side strategies.
   TAO_Client_Strategy_Factory *client_factory_;
@@ -1316,6 +1240,123 @@ protected:
 
   /// Hold the flushing strategy
   TAO_Flushing_Strategy *flushing_strategy_;
+};
+
+// ****************************************************************
+
+/**
+ * @class TAO_ORB_Core_Static_Resources
+ *
+ * @brief The static (global) resoures of all ORB cores.
+ *
+ * This class is used by the ORB_Core to store the resources global to
+ * all ORB_Cores.  All instance variables that would have been
+ * declared "static" in TAO_ORB_Core, should be declared in this class
+ * to avoid the "static initialization order fiasco" as described in
+ * http://www.parashift.com/c++-faq-lite/ctors.html#faq-10.11.
+ * Briefly, this is the problem that occurs if any static initializers
+ * in any other code call into set static members of TAO_ORB_Core.
+ * Since the order in which these initializers execute is unspecified,
+ * uninitialized members can be accessed.
+ */
+class TAO_Export TAO_ORB_Core_Static_Resources
+{
+public:
+
+  /// Return the singleton instance.
+  static TAO_ORB_Core_Static_Resources* instance (void);
+
+public:
+  // The hook to be set for the SyncScopePolicy
+  TAO_ORB_Core::Sync_Scope_Hook sync_scope_hook_;
+
+  // Name of the protocols_hooks that needs to be instantiated.
+  // The default value is "Protocols_Hooks". If RTCORBA option is
+  // set, its value will be set to
+  // be "RT_Protocols_Hooks".
+  ACE_CString protocols_hooks_name_;
+
+  /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
+  TAO_ORB_Core::Timeout_Hook timeout_hook_;
+
+  /// The hook to be set for the ConnectionTimeoutPolicy
+  TAO_ORB_Core::Timeout_Hook connection_timeout_hook_;
+
+  // Name of the endpoint selector factory that needs to be instantiated.
+  // The default value is "Default_Endpoint_Selector_Factory". If
+  // TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
+  // called to set the value to be "RT_Endpoint_Selector_Factory".
+  ACE_CString endpoint_selector_factory_name_;
+
+  // Name of the thread lane resources manager that needs to be
+  // instantiated.  The default value is
+  // "Default_Thread_Lane_Resources_Manager_Factory". If TAO_RTCORBA
+  // is linked, the set_thread_lane_resources_manager will be called
+  // to set the value to be
+  // "RT_Thread_Lane_Resources_Manager_Factory".
+  ACE_CString thread_lane_resources_manager_factory_name_;
+
+  // Name of the collocation resolver that needs to be instantiated.
+  // The default value is "Default_Collocation_Resolver". If
+  // TAO_RTCORBA is linked, the set_collocation_resolver will be
+  // called to set the value to be "RT_Collocation_Resolver".
+  ACE_CString collocation_resolver_name_;
+
+  // Name of the stub factory that needs to be instantiated.
+  // The default value is "Default_Stub_Factory". If TAO_RTCORBA is
+  // linked, the set_stub_factory will be called to set the value
+  // to be "RT_Stub_Factory".
+  ACE_CString stub_factory_name_;
+
+  // Name of the resource factory that needs to be instantiated.
+  // The default value is "Resource_Factory". If TAO_Strategies is
+  // linked, the set_resource_factory will be called to set the value
+  // to be "Advanced_Resource_Factory".
+  ACE_CString resource_factory_name_;
+
+  // Name of the service object for DII request creation that needs
+  // to be instantiated. The default value is "Dynamic_Adaper". If
+  // TAO_DynamicInterface is linked, dynamic_adapter_name() will be
+  // called to set the value to "Concrete_Dynamic_Adapter".
+  ACE_CString dynamic_adapter_name_;
+
+  // Name of the service object for functions that make calls on
+  // the Interface Repository. The default value is "IFR_Client_Adaper".
+  // If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
+  // called to set the value to "Concrete_IFR_Client_Adapter".
+  ACE_CString ifr_client_adapter_name_;
+
+  // Name of the service object used by the ORB create_*_tc functions.
+  // The default value is "TypeCodeFactory_Adapter". If the
+  // TypeCodeFactory library is linked, the corresponding accessor
+  // function typecodefactory_adapter_name() will be called to set
+  // the value to "Concrete_TypeCodeFactory_Adapter".
+  ACE_CString typecodefactory_adapter_name_;
+
+  // Name of the service object used to create the RootPOA.  The
+  // default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
+  // will be changed to TAO_RT_POA so that a POA equipped with
+  // realtime extensions will be returned.
+  ACE_CString poa_factory_name_;
+
+  // The service configurator directive used to load
+  // poa_factory_name_ dynamically.
+  ACE_CString poa_factory_directive_;
+
+private:
+
+  /// Constructor.
+  TAO_ORB_Core_Static_Resources (void);
+
+private:
+
+  /// The singleton instance.
+  static TAO_ORB_Core_Static_Resources* instance_;
+
+  /// Mostly unused variable whose sole purpose is to enforce
+  /// the instantiation of a TAO_ORB_Core_Static_Resources instance
+  /// at initialization time.
+  static TAO_ORB_Core_Static_Resources* initialization_reference_;
 };
 
 // ****************************************************************
