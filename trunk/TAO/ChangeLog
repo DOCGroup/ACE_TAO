@@ -92,7 +92,7 @@ Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/Typecode.h:
 
 	  Include "Hash_Map_Manager_T.h" instead of "Hash_Map_Manager.h".
-	  We save one level header indirection in doing so since the
+	  We save one level of header indirection in doing so since the
 	  latter includes the former.
 
 	* tao/NVList.h:
