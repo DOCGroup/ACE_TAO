@@ -1,3 +1,8 @@
+Tue Jun 13 12:56:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* */Makefile:
+	  Updated dependencies.
+
 Tue Jun 13 09:47:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl:
@@ -9,18 +14,18 @@ Mon Jun 12 20:45:18 2000  Darrell Brunsch <brunsch@uci.edu>
         * bin/Process_Win32.pm:
 
           Changed the $newwindow check to check to see if the variable
-          was defined before comparing it to "yes".  This removes a 
+          was defined before comparing it to "yes".  This removes a
           perl warning.
 
         * bin/msvc_auto_compile.pl:
 
           The TAOACE[_static].dsw files were changed, so I altered the
-          CORE option to use the TAOACE.dsw file with -DLL, and added 
-          some missing dsp files for the -LIB build.  
-          
+          CORE option to use the TAOACE.dsw file with -DLL, and added
+          some missing dsp files for the -LIB build.
+
         * bin/create_vt_dsps.pl:
 
-          Changed the runtime library type used in the static versions 
+          Changed the runtime library type used in the static versions
           and added ACE_OS_HAS_DLL=0.
 
         * ace/ace_lib.dsp:
@@ -135,7 +140,7 @@ Sat Jun 10 23:34:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/CE-status.txt:
 
-          Updated to reflect my current plans for Windows CE.  
+          Updated to reflect my current plans for Windows CE.
           Unfortunately, ACE on CE will not be working with the
           next beta kit of ACE. :-(  Need to get an autobuild
           set up for CE sometime...
@@ -150,7 +155,7 @@ Sat Jun 10 20:51:56 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/ACE-guidelines.html:
 
-          Updated the section on wchar support in ACE.  
+          Updated the section on wchar support in ACE.
 
 Sat Jun 10 17:33:55 2000  Carlos O'Ryan  <coryan@uci.edu>
 
