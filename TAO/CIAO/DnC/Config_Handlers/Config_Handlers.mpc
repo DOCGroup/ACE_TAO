@@ -3,7 +3,7 @@
 project (Config_Handlers) : taolib {
 
   requires += dnc
-  sharedname = Config_Handers
+  sharedname = Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
   includes += $(XERCESCROOT)/include $(CIAO_ROOT)/DnC
@@ -53,6 +53,8 @@ project (Config_Handlers) : taolib {
     SPK_Handler.cpp
     SPR_Handler.cpp
     DnC_Dump.cpp
+    XercesString.cpp
+    Config_Error_Handler.cpp
     Utils.cpp
   }
 }

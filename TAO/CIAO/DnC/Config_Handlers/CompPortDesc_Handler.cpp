@@ -124,7 +124,7 @@ namespace CIAO
     }
 
     /// handle specificType attribute
-    void process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc)
+    void CompPortDesc_Handler::process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (specificType)
 	      {
@@ -133,7 +133,7 @@ namespace CIAO
     }
 
     /// handle supportedType attribute
-    void process_supportedType (const XMLCh* supportedType, ::Deployment::ComponentPortDescription &compportdesc)
+    void CompPortDesc_Handler::process_supportedType (const XMLCh* supportedType, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (supportedType)
 	      {
@@ -147,7 +147,7 @@ namespace CIAO
     }
 
     /// handle provider attribute
-    void process_provider (const XMLCh* provider, ::Deployment::ComponentPortDescription &compportdesc)
+    void CompPortDesc_Handler::process_provider (const XMLCh* provider, ::Deployment::ComponentPortDescription &compportdesc)
     {
       XStr true_val ("true");
       XStr true_cap_val ("TRUE");
@@ -160,7 +160,7 @@ namespace CIAO
     }
 
     /// handle exclusiveProvider attribute
-    void process_exclusiveProvider (const XMLCh* exclusiveProvider, ::Deployment::ComponentPortDescription &compportdesc)
+    void CompPortDesc_Handler::process_exclusiveProvider (const XMLCh* exclusiveProvider, ::Deployment::ComponentPortDescription &compportdesc)
     {
       XStr true_val ("true");
       XStr true_cap_val ("TRUE");
@@ -173,7 +173,7 @@ namespace CIAO
     }
 
     /// handle exclusiveUser attribute
-    void process_exclusiveUser (const XMLCh* exclusiveUser, ::Deployment::ComponentPortDescription &compportdesc)
+    void CompPortDesc_Handler::process_exclusiveUser (const XMLCh* exclusiveUser, ::Deployment::ComponentPortDescription &compportdesc)
     {
       XStr true_val ("true");
       XStr true_cap_val ("TRUE");
@@ -186,7 +186,7 @@ namespace CIAO
     }
 
     /// handle optional attribute
-    void process_optional (const XMLCh* optional, ::Deployment::ComponentPortDescription &compportdesc)
+    void CompPortDesc_Handler::process_optional (const XMLCh* optional, ::Deployment::ComponentPortDescription &compportdesc)
     {
       XStr true_val ("true");
       XStr true_cap_val ("TRUE");
