@@ -13,7 +13,7 @@
 //    Header file for the driver program.
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 

@@ -12,7 +12,7 @@
 //    Implementation of the simple DynUnion test
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -21,8 +21,8 @@
 #include "data.h"
 
 Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb)
-  : test_name_ (CORBA::string_dup ("test_dynunion")),
-    orb_ (orb),
+  : orb_ (orb),
+    test_name_ (CORBA::string_dup ("test_dynunion")),
     error_count_ (0)
 {
 }

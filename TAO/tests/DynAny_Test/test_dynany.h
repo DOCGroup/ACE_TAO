@@ -12,7 +12,7 @@
 //    Header file for class to test the simple dynany.
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
