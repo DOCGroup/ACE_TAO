@@ -1,3 +1,10 @@
+Mon Aug 02 13:21:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h (ACE_Name_Node): Added an unimplemented assignment
+	  operator for this class.  Otherwise, some compilers will try to
+	  use ACE_Base_Pointer_Base<T>::operator= which is not
+	  implemented.
+
 Mon Aug  2 09:58:20 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* netsvcs/lib/Name_Handler.cpp (init):
@@ -35,7 +42,7 @@ Sun Aug  1 15:58:39 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
  	  ACE_HAS_POSITION_INDEPENDENT_MALLOC feature, because we can now
  	  let the OS choose the mapping location with out fear of begin
  	  mapped to a different location!
-  
+
 	* ace  /Memory_Pool.cpp: Conditionally include
 	  ace/Based_Pointer_Repository.h when
  	  ACE_HAS_POSITION_INDEPENDENT_MALLOC is defined.
@@ -44,11 +51,11 @@ Sun Aug  1 15:58:39 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  ACE_HAS_POSITION_INDEPENDENT_MALLOC macro by default.  Let's see
  	  whether this breaks lots of stuff ;-).
 
-	* ace/OS.h: Moved the definition of ACE_IPPROTO_TCP down 
+	* ace/OS.h: Moved the definition of ACE_IPPROTO_TCP down
 	  further in this file so that the IPPROTO_TCP macro would be
  	  defined.
 
-	* ace/Based_Pointer_T.cpp: Removed an inappropriate use of 
+	* ace/Based_Pointer_T.cpp: Removed an inappropriate use of
 	  ACE_INLINE in the *.cpp file.  Thanks to DEC UNIX C++ for
  	  reporting this!
 
