@@ -1,3 +1,31 @@
+Thu Jun 10 23:11:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cache_Map_Manager_T.{h, i, cpp}:
+	  Added Iterator implementations to the template parameters to be
+	  able to build using the g++ compiler. Also removed unnecessary
+	  HASH_KEY and COMPARE_KEYS from the template list.
+
+	* ace/Hash_Cache_Map_Manager_T.{h, i, cpp}:
+	  Made appropriate changes to support changes made to
+	  Cache_Map_Manager.
+
+	* ace/Caching_Strategies_T.{h, i, cpp}:
+	  Added an overloaded clear_cache method which allows the user to
+	  specify the total number of entries in the cache. Also added the
+	  Caching_Strategy_Utility parameter which decouples the actual
+	  purging from the caching strategy.
+
+	* ace/Caching_Strategy_Utility.{h,i,cpp}:
+	  Added a Null version of the utility to be used with the Null
+	  strategy.
+
+	* ace/Cleanup_Strategies_T.{h,i,cpp}:
+	  Added the ACE_UNSED_ARGS macro to ward of g++ warnings.
+
+	* tests/Map_Manager_Test.cpp:
+	  Added performance tests for the Cache_Map_Manager and the
+	  Hash_Cache_Map_Manager.
+
 Thu Jun 10 20:29:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.h: Made constructors for iterator base class protected
