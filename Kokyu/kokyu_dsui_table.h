@@ -1,9 +1,10 @@
-/* $Id$ */
-// Automatically generated header file "kokyu_dsui_table.h" by dsui-parse.py
+// $Id$
+// Automatically generated header file "kokyu_dsui_table.h" by dsui-parse.py 
 #ifndef _kokyu_DSUI_TABLE_H
 #define _kokyu_DSUI_TABLE_H
 
 #include "kokyu_dsui_families.h"
+
 
 
 

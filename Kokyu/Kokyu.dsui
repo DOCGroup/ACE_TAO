@@ -9,6 +9,7 @@ DSTRM_FAMILY    DSRT_DISPATCH_IMPL      9       "DSRT Dispatcher_Impl Events"
 DSTRM_EVENT	DSRT_DISPATCH_IMPL	9	INIT2	0	"Initialize Dispatcher object"	print_string
 
 # Dispatcher Task (Dispatcher_Task.cpp)
+DSTRM_EVENT     DISP_TASK       8       ENQUEUE_QUEUE_LEVEL     4       "Queue level after an event added"      print_string
 DSTRM_EVENT     DISP_TASK       8       EVENT_DEFERRED  3       "Time event is deferred"        print_string
 DSTRM_EVENT     DISP_TASK       8       EVENT_FINISHED_DISPATCHING      2       "End time of dispatching event"    print_string
 DSTRM_EVENT     DISP_TASK       8       EVENT_START_DISPATCHING 1       "Start time of actually dispatching event"    print_string
