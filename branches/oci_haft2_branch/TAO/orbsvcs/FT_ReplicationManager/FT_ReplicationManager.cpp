@@ -588,13 +588,13 @@ TAO::FT_ReplicationManager::set_type_properties (
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  
+
   TAO_PG::Properties_Decoder * typeid_properties;
   if ( 0 != this->typeid_properties_map_.find (type_id, typeid_properties))
   {
     ACE_NEW_THROW_EX (
-      typeid_properties, 
-      TAO_PG::Properties_Decoder (overrides, & this->default_properties_), 
+      typeid_properties,
+      TAO_PG::Properties_Decoder (overrides, & this->default_properties_),
       CORBA::NO_MEMORY());
     this->typeid_properties_map_.bind (type_id, typeid_properties);
   }
@@ -623,7 +623,7 @@ TAO::FT_ReplicationManager::get_type_properties (
     typeid_properties->export_properties (*result ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
-  return result._retn ();  
+  return result._retn ();
 #endif
 }
 
@@ -977,8 +977,8 @@ TAO::FT_ReplicationManager::create_object (
   if ( 0 != this->typeid_properties_map_.find (type_id, typeid_properties))
   {
     ACE_NEW_THROW_EX (
-      typeid_properties, 
-      TAO_PG::Properties_Decoder (& this->default_properties_), 
+      typeid_properties,
+      TAO_PG::Properties_Decoder (& this->default_properties_),
       CORBA::NO_MEMORY());
     this->typeid_properties_map_.bind (type_id, typeid_properties);
   }

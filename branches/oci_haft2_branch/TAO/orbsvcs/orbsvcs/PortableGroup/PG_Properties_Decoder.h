@@ -39,8 +39,8 @@ namespace TAO_PG
       const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX> ValueMap;
     typedef ACE_Hash_Map_Iterator<
-      ACE_CString, 
-      const PortableGroup::Value *, 
+      ACE_CString,
+      const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX> ValueMapIterator;
 
   public:

@@ -30,7 +30,7 @@ TAO_PG::Properties_Decoder::Properties_Decoder (const PortableGroup::Properties 
 }
 
 TAO_PG::Properties_Decoder::Properties_Decoder (
-    const PortableGroup::Properties & property_set, 
+    const PortableGroup::Properties & property_set,
     Properties_Decoder * defaults)
   : defaults_ (defaults)
 {
@@ -312,8 +312,8 @@ int TAO_PG::test_encode_decode ()
     ACE_SYNCH_NULL_MUTEX>;
 
     typedef class ACE_Hash_Map_Iterator<
-      ACE_CString, 
-      const PortableGroup::Value *, 
+      ACE_CString,
+      const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -323,8 +323,8 @@ int TAO_PG::test_encode_decode ()
     const PortableGroup::Value *,
     ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator<
-      ACE_CString, 
-      const PortableGroup::Value *, 
+      ACE_CString,
+      const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
