@@ -307,7 +307,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::expire (void)
   return this->timer_queue_.expire ();
 }
 
-template <class TQ> long
+template <class TQ> int
 ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm (void)
 {
   ACE_Time_Value tv = this->timer_queue_.earliest_time () 

@@ -1,3 +1,10 @@
+Sat Sep 20 11:47:14 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp: 
+	  Changed the return type to <int>, to match its declaration. The
+	  intent was to error error values, which are declared as <int>
+	  throughout ACE.
+
 Sat Sep 20 08:07:36 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_Queue_T.h (schedule_ualaram): changed return type
