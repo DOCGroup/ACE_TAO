@@ -1,6 +1,7 @@
 Mon Nov 15 15:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Exceptions/AMH_Exceptions.mpc:
+        * tests/AMH_Oneway/AMH_Oneway.mpc:
           Base the server on taoserver, instead of taoexe and portableserver,
           taoserver is derived from taoexe and portableserver, but also sets
           the exename to server
