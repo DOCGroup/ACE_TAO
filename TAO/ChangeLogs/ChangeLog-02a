@@ -1,3 +1,11 @@
+Sun Apr  1 18:18:45 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
+
+	* docs/tutorials/Quoter/On_Demand_Activation/index.html: 
+	* docs/tutorials/Quoter/Simple/Persistent/index.html: 
+	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html: 
+	* docs/tutorials/Quoter/Simple/ImprovedServer/index.html: Changed
+	~schmidt/ACE_wrappers links to point to relative files 
+
 Sun Apr  1 17:44:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/ImplRepo.pidl:
