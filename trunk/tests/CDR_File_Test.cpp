@@ -177,7 +177,9 @@ run_test (int write_file,
                                 ACE_CDR_BYTE_ORDER,
                                 0,
                                 0,
-                                ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
+                                ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                                ACE_CDR_GIOP_MAJOR_VERSION,
+                                ACE_CDR_GIOP_MINOR_VERSION);
       // Marshal the <CDR_Test> object data to the output CDR stream.
       output_cdr << cdr_test;
 

@@ -1,3 +1,7 @@
+Thu May 10 06:36:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/CDR_File_Test.cpp: Fixed a compile error with g++.
+
 Thu May 10 08:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
