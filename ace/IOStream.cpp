@@ -7,7 +7,7 @@
 
 ACE_RCSID(ace, IOStream, "$Id$")
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM) && defined (ACE_USES_OLD_IOSTREAMS)
+#if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -654,5 +654,5 @@ u_char ACE_Streambuf::timeout (void)
   return rval;
 }
 
-#endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_C */
