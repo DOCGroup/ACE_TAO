@@ -41,6 +41,9 @@ module PortableServer
 
     ObjectId get_object_id ()
       raises (NoContext);
+
+    Servant get_servant ()
+      raises (NoContext);
   };
 };
 

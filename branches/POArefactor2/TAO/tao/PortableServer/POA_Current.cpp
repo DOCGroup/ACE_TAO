@@ -45,6 +45,20 @@ namespace TAO
       return impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
+    PortableServer::Servant
+    POA_Current::get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::Current::NoContext))
+    {
+      POA_Current_Impl *impl = this->implementation ();
+
+      if (impl == 0)
+        ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                          0);
+      return impl->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+
     POA_Current_Impl *
     POA_Current::implementation (void)
     {

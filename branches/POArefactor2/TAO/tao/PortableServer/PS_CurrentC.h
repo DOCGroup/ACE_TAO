@@ -215,6 +215,17 @@ namespace PortableServer
       )) = 0;
     
     // TAO_IDL - Generated from
+    // be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual ::PortableServer::Servant get_servant (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ::PortableServer::Current::NoContext
+      )) = 0;
+    
+    // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
     
     virtual CORBA::Boolean _is_a (

@@ -89,6 +89,15 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::Current::NoContext));
 
+      /**
+       * Returns a reference to the servant that hosts the object in whose
+       * context it is called. If called outside the context of the POA
+       * dispatched operation, a NoContext exception is raised
+       */
+      PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::Current::NoContext));
+
       /// Set the POA implementation.
       void poa (TAO_POA *);
 
@@ -158,7 +167,6 @@ namespace TAO
       /// The priority for the current upcall.
       CORBA::Short priority_;
 
-      /// void *previous_current_impl_;
       /// Current previous from <this>.
       POA_Current_Impl *previous_current_impl_;
 

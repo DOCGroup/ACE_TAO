@@ -115,6 +115,14 @@ namespace TAO
       return objid;
     }
 
+    PortableServer::Servant
+    POA_Current_Impl::get_servant (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::Current::NoContext))
+    {
+      return this->servant_;
+    }
+
     TAO_ORB_Core &
     POA_Current_Impl::orb_core (void) const
 
