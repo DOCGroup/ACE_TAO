@@ -4,7 +4,7 @@
 
 
 #include <ace/OS.h>
-#include <protocols/ace/RMCast/Socket.h>
+#include <ace/RMCast/Socket.h>
 
 #include <iostream>
 
