@@ -1,7 +1,11 @@
 Tue Jun 15 11:59:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/config-qnx-neutrino.h: removed ACE_LACKS_PRAGMA_ONCE
-          #define, because it's in config-g++-common.h.
+        * ace/config-qnx-neutrino.h: removed a handful of #defines
+          that are in config-g++-common.h.
+
+        * ace/config-g++-common.h: removed the question about whether
+          some of the advanced features work with g++ 2.8.x.  They do
+          (with g++ 2.8.1, at least).
 
 Tue Jun 15 09:28:34 1999  Steve Huston  <shuston@riverace.com>
 
