@@ -7696,38 +7696,6 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_IDLTYPE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_IDLTYPE__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::IDLType
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::IDLType_ptr,
-        CORBA::IDLType_var,
-        CORBA::IDLType_out,
-        TAO::Objref_Traits<CORBA::IDLType>
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::InterfaceDefSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::InterfaceDefSeq,
-        CORBA::InterfaceDefSeq_var,
-        CORBA::InterfaceDefSeq_out
-      >;
-
-#endif /* end #if !defined */
-
 #if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
 
@@ -7745,17 +7713,6 @@ CORBA::Boolean operator>> (
       >;
 
 #endif /* end #if !defined */
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        CORBA::InterfaceDefSeq,
-        CORBA::InterfaceDefSeq_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::InterfaceDefSeq
-      >;
 
   template class
     TAO::Ret_Var_Size_Argument_T<
@@ -7886,45 +7843,9 @@ CORBA::Boolean operator>> (
       >;
 
   template class
-    TAO::In_Object_Argument_T<
-        CORBA::IDLType_ptr
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::AttributeDef_ptr,
-        CORBA::AttributeDef_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        CORBA::AttributeMode
-      >;
-
-  template class
     TAO::Ret_Object_Argument_T<
         CORBA::OperationDef_ptr,
         CORBA::OperationDef_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        CORBA::OperationMode
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::ParDescriptionSeq
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::ExceptionDefSeq
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::ContextIdSeq
       >;
 
   template class
@@ -7967,12 +7888,6 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
   template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::IDLType_ptr,
-        CORBA::IDLType_var
-      >;
-
-  template class
     TAO::Objref_Traits<
         CORBA::ValueBoxDef
       >;
@@ -8003,11 +7918,6 @@ CORBA::Boolean operator>> (
         CORBA::ExtInitializerSeq_var
       >;
 
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::ExtInitializerSeq
-      >;
-
 #if !defined (_CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_TMPLINST_CS_
 
@@ -8018,20 +7928,6 @@ CORBA::Boolean operator>> (
         CORBA::ExtValueDef::ExtFullValueDescription,
         CORBA::ExtValueDef::ExtFullValueDescription_var,
         CORBA::ExtValueDef::ExtFullValueDescription_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::ExtInitializerSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::ExtInitializerSeq,
-        CORBA::ExtInitializerSeq_var,
-        CORBA::ExtInitializerSeq_out
       >;
 
 #endif /* end #if !defined */
@@ -8064,12 +7960,6 @@ CORBA::Boolean operator>> (
       >;
 
   template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::ExtAttributeDef_ptr,
-        CORBA::ExtAttributeDef_var
-      >;
-
-  template class
     TAO::Objref_Traits<
         CORBA::ExtValueDef
       >;
@@ -8118,120 +8008,6 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T<
         CORBA::FixedDef
       >;
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::ExceptionDefSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::ExceptionDefSeq,
-        CORBA::ExceptionDefSeq_var,
-        CORBA::ExceptionDefSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_ATTRIBUTEMODE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_ATTRIBUTEMODE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::AttributeMode>;
-
-  template class TAO::Basic_Arg_Traits_T<CORBA::AttributeMode>;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_ATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_ATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::AttributeDef
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::AttributeDef_ptr,
-        CORBA::AttributeDef_var,
-        CORBA::AttributeDef_out,
-        TAO::Objref_Traits<CORBA::AttributeDef>
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::ExtAttributeDef
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::ExtAttributeDef_ptr,
-        CORBA::ExtAttributeDef_var,
-        CORBA::ExtAttributeDef_out,
-        TAO::Objref_Traits<CORBA::ExtAttributeDef>
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_OPERATIONMODE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_OPERATIONMODE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::OperationMode>;
-
-  template class TAO::Basic_Arg_Traits_T<CORBA::OperationMode>;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::ParDescriptionSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::ParDescriptionSeq,
-        CORBA::ParDescriptionSeq_var,
-        CORBA::ParDescriptionSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::ContextIdSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::ContextIdSeq,
-        CORBA::ContextIdSeq_var,
-        CORBA::ContextIdSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_OPERATIONDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_OPERATIONDEF__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::OperationDef
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::OperationDef_ptr,
-        CORBA::OperationDef_var,
-        CORBA::OperationDef_out,
-        TAO::Objref_Traits<CORBA::OperationDef>
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_Var_Var_T<
@@ -8320,38 +8096,6 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_CORBA_IDLTYPE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_IDLTYPE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::IDLType \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::IDLType_ptr, \
-        CORBA::IDLType_var, \
-        CORBA::IDLType_out, \
-        TAO::Objref_Traits<CORBA::IDLType> \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::InterfaceDefSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::InterfaceDefSeq, \
-        CORBA::InterfaceDefSeq_var, \
-        CORBA::InterfaceDefSeq_out \
-      >
-
-#endif /* end #if !defined */
-
 #if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
 
@@ -8369,11 +8113,6 @@ CORBA::Boolean operator>> (
       >
 
 #endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::InterfaceDefSeq \
-      >
 
 # pragma instantiate \
     TAO::In_Var_Size_Argument_T< \
@@ -8474,36 +8213,6 @@ CORBA::Boolean operator>> (
       >
 
 # pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        CORBA::IDLType_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        CORBA::AttributeMode \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        CORBA::OperationMode \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::ParDescriptionSeq \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::ExceptionDefSeq \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::ContextIdSeq \
-      >
-
-# pragma instantiate \
     TAO::Objref_Traits< \
         CORBA::ValueDef \
       >
@@ -8567,11 +8276,6 @@ CORBA::Boolean operator>> (
         CORBA::ValueBoxDef \
       >
 
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::ExtInitializerSeq \
-      >
-
 #if !defined (_CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_TMPLINST_CS_
 
@@ -8582,20 +8286,6 @@ CORBA::Boolean operator>> (
         CORBA::ExtValueDef::ExtFullValueDescription, \
         CORBA::ExtValueDef::ExtFullValueDescription_var, \
         CORBA::ExtValueDef::ExtFullValueDescription_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::ExtInitializerSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::ExtInitializerSeq, \
-        CORBA::ExtInitializerSeq_var, \
-        CORBA::ExtInitializerSeq_out \
       >
 
 #endif /* end #if !defined */
@@ -8670,120 +8360,6 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T< \
         CORBA::FixedDef \
       >
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::ExceptionDefSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::ExceptionDefSeq, \
-        CORBA::ExceptionDefSeq_var, \
-        CORBA::ExceptionDefSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_ATTRIBUTEMODE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_ATTRIBUTEMODE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::AttributeMode>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<CORBA::AttributeMode>
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_ATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_ATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::AttributeDef \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::AttributeDef_ptr, \
-        CORBA::AttributeDef_var, \
-        CORBA::AttributeDef_out, \
-        TAO::Objref_Traits<CORBA::AttributeDef> \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::ExtAttributeDef \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::ExtAttributeDef_ptr, \
-        CORBA::ExtAttributeDef_var, \
-        CORBA::ExtAttributeDef_out, \
-        TAO::Objref_Traits<CORBA::ExtAttributeDef> \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_OPERATIONMODE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_OPERATIONMODE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::OperationMode>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<CORBA::OperationMode>
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::ParDescriptionSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::ParDescriptionSeq, \
-        CORBA::ParDescriptionSeq_var, \
-        CORBA::ParDescriptionSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::ContextIdSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::ContextIdSeq, \
-        CORBA::ContextIdSeq_var, \
-        CORBA::ContextIdSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_OPERATIONDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_OPERATIONDEF__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::OperationDef \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::OperationDef_ptr, \
-        CORBA::OperationDef_var, \
-        CORBA::OperationDef_out, \
-        TAO::Objref_Traits<CORBA::OperationDef> \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_Var_Var_T< \
