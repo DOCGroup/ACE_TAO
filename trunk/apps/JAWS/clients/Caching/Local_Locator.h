@@ -20,6 +20,7 @@
 
 #include "URL_Locator.h"
 #include "ace/Containers.h"
+#include "ID_Generator.h"
 
 class ACE_URL_Record
   // = TITLE
