@@ -40,4 +40,8 @@ template class ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,TAO_SYNCH_MUTEX>;
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >
 #pragma instantiate ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,TAO_SYNCH_MUTEX>
 
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template ACE_Singleton<ACE_ES_Dispatch_Request_Allocator, ACE_Thread_Mutex> *ACE_Singleton<ACE_ES_Dispatch_Request_Allocator, ACE_Thread_Mutex>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
