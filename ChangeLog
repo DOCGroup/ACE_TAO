@@ -1,3 +1,8 @@
+Sun Jun 13 15:44:23 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tests/Message_Queue_Test.cpp: Enhanced this test so that it
+	  checks to see whether dequeue_prio() works properly.
+
 Sun Jun 13 18:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/tmcast.mpb:
