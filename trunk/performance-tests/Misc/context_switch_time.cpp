@@ -70,7 +70,6 @@ static const char usage [] = "[-? |\n"
 #include "ace/Synch.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
-#include <iomanip.h>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -78,17 +77,8 @@ static const char usage [] = "[-? |\n"
 #define DEBUG 0
 #endif /* DEBUG */
 
-#if defined (__sun) || defined (ACE_WIN32)
-  // Solaris and Win32 priority values range from low to high with
-  // increasing priority
-  static const unsigned int LOW_PRIORITY = 1;
-  static const unsigned int HIGH_PRIORITY = 2;
-#else
-  // VxWorks priority values range from high to low with
-  // increasing priority
-  static const unsigned int LOW_PRIORITY = 2;
-  static const unsigned int HIGH_PRIORITY = 1;
-#endif
+static unsigned int LOW_PRIORITY;
+static unsigned int HIGH_PRIORITY;
 
 // global test configuration parameters
 static unsigned long count = 1;
@@ -134,13 +124,13 @@ Low_Priority_Null_Task::Low_Priority_Null_Task() :
   blocked_semaphore_ (0)
 {
 #if DEBUG > 0
-  cout << "Low_Priority_Null_Task ctor" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor\n"));
 #endif /* DEBUG */
 
   this->activate (THR_BOUND | THR_DETACHED | new_lwp, 1, 0, LOW_PRIORITY);
 
 #if DEBUG > 0
-  cout << "Low_Priority_Null_Task ctor, activated" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task ctor, activated\n"));
 #endif /* DEBUG */
 }
 
@@ -152,14 +142,14 @@ int
 Low_Priority_Null_Task::svc ()
 {
 #if DEBUG > 0
-  cout << "Low_Priority_Null_Task::svc (), entering" << ::flush;
+  ACE_DEBUG ((LM_DEBUG, "Low_Priority_Null_Task::svc (), entering"));
 #endif /* DEBUG */
 
   ACE_Service_Config::thr_mgr ()->thr_self (thread_id_);
   initialized_.release ();
 
 #if DEBUG > 0
-  cout << "; thread ID is " << thread_id_ << endl;
+  ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
 #endif /* DEBUG */
 
   // this task must never actually execute, so just have it block
@@ -167,7 +157,7 @@ Low_Priority_Null_Task::svc ()
   blocked_semaphore_.acquire ();
 
 #if DEBUG > 0
-  cout << "Low_Priority_Task::svc, finishing" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Low_Priority_Task::svc, finishing\n"));
 #endif /* DEBUG */
 
   return 0;
@@ -217,7 +207,7 @@ Suspend_Resume_Test::Suspend_Resume_Test (const unsigned long iterations) :
   timer_ ()
 {
 #if DEBUG > 0
-  cout << "Suspend_Resume_Test ctor" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
   this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, HIGH_PRIORITY);
@@ -234,7 +224,8 @@ Suspend_Resume_Test::svc ()
   ACE_hthread_t thread_id;
   ACE_Service_Config::thr_mgr ()->thr_self (thread_id);
 
-  cout << "Suspend_Resume_Test::svc (), thread ID is " << thread_id << endl;
+  ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc (), thread ID is %d\n",
+              thread_id));
 #endif /* DEBUG */
 
   low_.ready ();
@@ -250,7 +241,8 @@ Suspend_Resume_Test::svc ()
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
         {
-          cout << "Suspend_Resume_Test::svc (), iteration " << i << endl;
+          ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc (), iteration %u\n",
+                      i));
         }
 #endif /* DEBUG */
 
@@ -265,7 +257,7 @@ Suspend_Resume_Test::svc ()
   low_.done ();
 
 #if DEBUG > 0
-  cout << "Suspend_Resume_Test::svc, finishing" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc, finishing\n"));
 #endif /* DEBUG */
 
   return 0;
@@ -313,13 +305,13 @@ High_Priority_Simple_Task::High_Priority_Simple_Task() :
   iterations_ (0)
 {
 #if DEBUG > 0
-  cout << "High_Priority_Simple_Task ctor" << endl;
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor\n"));
 #endif /* DEBUG */
 
   this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, HIGH_PRIORITY);
 
 #if DEBUG > 0
-  cout << "High_Priority_Simple_Task ctor, activated" << endl;
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task ctor, activated\n"));
 #endif /* DEBUG */
 }
 
@@ -331,21 +323,21 @@ int
 High_Priority_Simple_Task::svc ()
 {
 #if DEBUG > 0
-  cout << "High_Priority_Simple_Task::svc (), entering" << ::flush;
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc (), entering"));
 #endif /* DEBUG */
 
   ACE_Service_Config::thr_mgr ()->thr_self (thread_id_);
   initialized_.release ();
 
 #if DEBUG > 0
-  cout << "; thread ID is " << thread_id_ << endl;
+  ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id_));
 #endif /* DEBUG */
 
   while (! terminate_)
     {
 #if DEBUG > 0
-      cout << "High_Priority_Simple_Task::svc, suspend self ("
-           << thread_id_ << ")" << endl;
+      ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, suspend self ("
+                            "%u)\n", thread_id_));
 #endif /* DEBUG */
 
       ++iterations_;
@@ -354,13 +346,13 @@ High_Priority_Simple_Task::svc ()
       ACE_OS::thr_suspend (thread_id_);
 
 #if DEBUG > 0
-      cout << "High_Priority_Simple_Task::svc, resumed ("
-           << thread_id_ << ")" << endl;
+      ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, resumed (%u)\n",
+                            thread_id_));
 #endif /* DEBUG */
     }
 
 #if DEBUG > 0
-  cout << "High_Priority_Simple_Task::svc, finishing" << endl;
+  ACE_DEBUG ((LM_DEBUG, "High_Priority_Simple_Task::svc, finishing\n"));
 #endif /* DEBUG */
 
   return 0;
@@ -412,7 +404,7 @@ Ping_Suspend_Resume_Test::Ping_Suspend_Resume_Test (const unsigned long
   timer_ ()
 {
 #if DEBUG > 0
-  cout << "Ping_Suspend_Resume_Test ctor" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test ctor\n"));
 #endif /* DEBUG */
 
   this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 1, 0, LOW_PRIORITY);
@@ -426,12 +418,12 @@ int
 Ping_Suspend_Resume_Test::svc ()
 {
 #if DEBUG > 0
-  cout << "Ping_Suspend_Resume_Test::svc (), entering" << ::flush;
+  ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc (), entering"));
 
   ACE_hthread_t thread_id;
   ACE_Service_Config::thr_mgr ()->thr_self (thread_id);
 
-  cout << "; thread ID is " << thread_id << endl;
+  ACE_DEBUG ((LM_DEBUG, "; thread ID is %u\n", thread_id));
 #endif /* DEBUG */
 
   high_.ready ();
@@ -440,9 +432,9 @@ Ping_Suspend_Resume_Test::svc ()
   int priority, high_priority;
   ACE_OS::thr_getprio (thread_id, priority);
   ACE_OS::thr_getprio (high_.thread_id (), high_priority);
-  cout << "Ping_Suspend_Resume_Test::svc (), priority is "
-       << priority << ", high thread priority is "
-       << high_priority << endl;
+  ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc (), priority is %d, "
+                        ", high thread priority is %d\n",
+              priority, high_priority));
 #endif /* DEBUG */
 
   // for information:  the cost of the just the loop itself below,
@@ -456,9 +448,9 @@ Ping_Suspend_Resume_Test::svc ()
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
         {
-          cout << "Ping_Suspend_Resume_Test::svc (), iteration " << i
-               << ", continue high-priority thread " << high_.thread_id ()
-               << endl;
+          ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc (), iteration "
+                                "%d, continue high-priority thread %u\n",
+                      i, high_.thread_id ()));
         }
 #endif /* DEBUG */
       ACE_OS::thr_continue (high_.thread_id ());
@@ -470,8 +462,8 @@ Ping_Suspend_Resume_Test::svc ()
 
   high_.done ();
 #if DEBUG > 0
-  cout << "Ping_Suspend_Resume_Test::svc: told high priority task to terminate"
-       << endl;
+  ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc: told high priority "
+                        "task to terminate\n"));
 #endif /* DEBUG */
 
   // resume the thread just one more time, to let it finish execution . . .
@@ -482,12 +474,13 @@ Ping_Suspend_Resume_Test::svc ()
   // thread to terminate
   if (high_.iterations () < iterations_)
     {
-      cout << "high priority task executed only " << high_.iterations ()
-           << " iterations!" << endl;
+      ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test: high priority task "
+                            "executed only %u iterations!\n",
+                  high_.iterations ()));
     }
 
 #if DEBUG > 0
-  cout << "Ping_Suspend_Resume_Test::svc, finishing" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc, finishing\n"));
 #endif /* DEBUG */
 
   return 0;
@@ -511,9 +504,8 @@ public:
   ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const unsigned long iterations_;
-
+  ACE_Barrier timer_barrier_;
   ACE_High_Res_Timer timer_;
-
   ACE_hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
@@ -525,13 +517,21 @@ private:
 Yield_Test::Yield_Test (const unsigned long iterations) :
   ACE_Task<ACE_MT_SYNCH> (),
   iterations_ (iterations),
+  timer_barrier_ (3),
   timer_ ()
 {
 #if DEBUG > 0
-  cout << "Yield_Test ctor" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Yield_Test ctor\n"));
 #endif /* DEBUG */
 
+  timer_.start ();
+
   this->activate (THR_BOUND | THR_DETACHED |  new_lwp, 2, 0, LOW_PRIORITY);
+
+  timer_barrier_.wait ();
+
+  timer_.stop ();
+  timer_.elapsed_microseconds (elapsed_time_);
 }
 
 Yield_Test::~Yield_Test()
@@ -542,7 +542,7 @@ int
 Yield_Test::svc ()
 {
 #if DEBUG > 0
-  cout << "Yield_Test::svc (), entering" << ::flush;
+  ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc (), entering"));
 
   ACE_hthread_t thread_id;
   ACE_Service_Config::thr_mgr ()->thr_self (thread_id);
@@ -550,29 +550,26 @@ Yield_Test::svc ()
   int priority;
   ACE_OS::thr_getprio (thread_id, priority);
 
-  cout << "; thread ID is " << thread_id
-       << ", priority is " << priority << endl;
+  ACE_DEBUG ((LM_DEBUG, "; thread ID is %u, priority is %u\n", thread_id,
+              priority));
 #endif /* DEBUG */
-
-  timer_.start ();
 
   for (unsigned long i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
         {
-          cout << "Yield_Test::svc () [" << thread_id << "], iteration " << i
-               << endl;
+          ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc () [%u], iteration %u\n",
+                      thread_id, i));
         }
 #endif /* DEBUG */
       ACE_OS::thr_yield ();
     }
 
-  timer_.stop ();
-  timer_.elapsed_microseconds (elapsed_time_);
+  timer_barrier_.wait ();
 
 #if DEBUG > 0
-  cout << "Yield_Test::svc, finishing" << endl;
+  ACE_DEBUG ((LM_DEBUG, "Yield_Test::svc, finishing\n"));
 #endif /* DEBUG */
 
   return 0;
@@ -587,7 +584,7 @@ Yield_Test::svc ()
 
 static
 unsigned int
-get_options (int argc, char *argv [])
+get_options (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "c:n?");
   int opt;
@@ -600,7 +597,7 @@ get_options (int argc, char *argv [])
         }
       else
         {
-          cerr << argv [0] << ": count must be >= 0" << endl;
+          ACE_DEBUG ((LM_ERROR, "%n: count must be >= 0\n"));
           return 1;
         }
       break;
@@ -608,12 +605,11 @@ get_options (int argc, char *argv [])
       new_lwp = THR_NEW_LWP;
       break;
     case '?':
-      cout << "usage: " << argv [0] << " " << usage << endl;
-      ACE_OS::exit (0);
+      ACE_DEBUG ((LM_ERROR, "usage: %n %s\n%a", usage, 0));
       break;
     default:
-      cerr << argv [0] << ": unknown arg, " << (char) opt << endl;
-      cerr << "usage: " << argv [0] << " " << usage << endl;
+      ACE_DEBUG ((LM_ERROR, "%n: unknown arg, %c\n", opt));
+      ACE_DEBUG ((LM_ERROR, "usage: %n %s\n", usage));
       return 1;
     }
   }
@@ -629,13 +625,13 @@ get_options (int argc, char *argv [])
       }
     else
       {
-        cerr << argv [0] << ": iterations must be > 0" << endl;
+        ACE_DEBUG ((LM_ERROR, "%n: iterations must be > 0\n"));
         return 1;
       }
     break;
   default:
-    cerr << argv [0] << ": too many arguments" << endl;
-    cerr << "usage: " << argv [0] << " " << usage << endl;
+    ACE_DEBUG ((LM_ERROR, "%n: too many arguments\n"));
+    ACE_DEBUG ((LM_ERROR, "usage: %n %s\n", usage));
     return 1;
   }
 
@@ -652,7 +648,12 @@ get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
-  ACE_High_Res_Timer::get_env_global_scale_factor ();
+  ACE_LOG_MSG->open (argv[0] ? argv[0] : "context_switch_time");
+
+  // Disable LM_DEBUG
+  ACE_Log_Msg::instance ()->priority_mask (ACE_LOG_MSG->priority_mask () ^
+                                           LM_DEBUG);
+
   if (get_options (argc, argv)) ACE_OS::exit (-1);
 
   if (ACE_OS::sched_params (
@@ -663,15 +664,22 @@ main (int argc, char *argv [])
     {
       if (ACE_OS::last_error () == EPERM)
         {
-          ACE_OS::fprintf (stderr, "%s: user is not superuser, so remain in "
-                                   "time-sharing class\n", argv[0]);
+          ACE_DEBUG ((LM_MAX, "context_switch_time: user is not superuser, "
+                              "so remain in time-sharing class\n"));
         }
       else
         {
-          ACE_OS::perror (argv[0]);
+          ACE_OS::perror ("context_switch_time");
           ACE_OS::exit (-1);
         }
     }
+
+  LOW_PRIORITY = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+  HIGH_PRIORITY = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                   LOW_PRIORITY);
+
+  ACE_DEBUG ((LM_INFO, "low priority: %d, high priority: %d\n",
+              LOW_PRIORITY, HIGH_PRIORITY));
 
   int forever = count == 0;
 
@@ -687,31 +695,30 @@ main (int argc, char *argv [])
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
+      // NOTE:  the divisions by 1ul below allow transparent support of
+      // ACE_U_LongLongs.
+
       if (ping_suspend_resume_test.elapsed_time () >
            suspend_resume_test.elapsed_time ())
         {
-          cout << "context switch time is ("
-               << setw (9)
-               << (double) ping_suspend_resume_test.elapsed_time () /
-                  num_iterations
-               << " - "
-               << setw (9)
-               << (double) suspend_resume_test.elapsed_time () / num_iterations
-               << ")/2 = "
-               << setw (9)
-               << (double) (ping_suspend_resume_test.elapsed_time () -
-                            suspend_resume_test.elapsed_time ()) /
-                            num_iterations / 2
-               << " microseconds" << endl;
+          ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
+                               "%.3f microseconds\n",
+                      (double) (ping_suspend_resume_test.elapsed_time ()/1ul) /
+                        num_iterations,
+                      (double) (suspend_resume_test.elapsed_time ()/1ul) /
+                        num_iterations,
+                      (double) ((ping_suspend_resume_test.elapsed_time () -
+                                suspend_resume_test.elapsed_time ())/1ul) /
+                        num_iterations / 2));
         }
       else
         {
-          cout << "ping suspend/resume time of "
-               << (double) ping_suspend_resume_test.elapsed_time () /
-                  num_iterations
-               << " usec was less than suspend/resume time of "
-               << (double) suspend_resume_test.elapsed_time () / num_iterations
-               << endl;
+          ACE_DEBUG ((LM_INFO, "ping suspend/resume time of %.3f usec was "
+                               "less than suspend/resume time of %.3f\n",
+                      (double) (ping_suspend_resume_test.elapsed_time ()/1ul) /
+                        num_iterations,
+                      (double) (suspend_resume_test.elapsed_time ()/1ul) /
+                        num_iterations));
         }
 
       // then Yield test
@@ -719,10 +726,10 @@ main (int argc, char *argv [])
       // Wait for all tasks to exit.
       ACE_Service_Config::thr_mgr ()->wait ();
 
-      cout << "context switch time from yield test is "
-           << (double) yield_test.elapsed_time () / num_iterations / 2
-           << " microseconds"
-           << endl;
+      ACE_DEBUG ((LM_INFO, "context switch time from yield test is %.3f "
+                           "microseconds\n",
+                  (double) (yield_test.elapsed_time ()/1ul) / num_iterations /
+                    2));
     }
 
   return 0;
