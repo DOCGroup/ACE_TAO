@@ -58,6 +58,9 @@ public:
   int enable_locking (void) const;
   // Should the repository have a real mutex or a null mutex?
 
+  int support_multicast_discovery (void) const;
+  // should the service support discovery via multicast?
+
 private:
   char *ior_output_file_;
   // File where the IOR of the server object is stored.
@@ -73,6 +76,9 @@ private:
 
   int enable_locking_;
   // Should the repository have a real mutex or a null mutex?
+
+  int support_multicast_;
+  // If not zero multicast is enabled.
 };
 
 // Typedef an Options Singleton. 

@@ -39,7 +39,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $nice " . " $locking");
+$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $nice " . " -o $iorfile" . " $locking");
 $CL = new PerlACE::Process ("IFR_Test", 
                             "-ORBInitRef InterfaceRepository=file://$iorfile"
                             . " $debug $test $iterations");
