@@ -83,7 +83,7 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
   virtual CORBA::Policy *effective_client_protocol_hook (CORBA::Policy *override,
                                                          CORBA::Policy *exposed,
                                                          CORBA::Environment &);
-  
+
   /**
    * Accessor and modifier to the current thread priority, used to
    * implement the RTCORBA::Current interface, but it is faster for
@@ -103,7 +103,7 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
   virtual void set_priority_mapping (TAO_ORB_Core *,
                                      TAO_Resource_Factory *,
                                      CORBA::Environment &);
-  
+
   virtual int set_default_policies (TAO_ORB_Core *orb_core);
 
 };
@@ -112,7 +112,7 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
 #include "tao/Default_Protocols_Hooks.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE (TAO_Default_Protocols_Hooks)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Protocols_Hooks)
 
 #include "ace/post.h"

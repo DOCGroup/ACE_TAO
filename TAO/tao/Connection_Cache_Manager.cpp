@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
+#include "ace/Handle_Set.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Connection_Cache_Manager.inl"

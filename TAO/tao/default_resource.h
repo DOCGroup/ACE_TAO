@@ -173,7 +173,7 @@ private:
 #include "tao/default_resource.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_STATIC_SVC_DECLARE (TAO_Default_Resource_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Resource_Factory)
 
 #include "ace/post.h"

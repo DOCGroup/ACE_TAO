@@ -60,7 +60,7 @@ private:
   int minor_;
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_IIOP_Lite_Protocol_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_IIOP_Lite_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Lite_Protocol_Factory)
 
 #include "ace/post.h"
