@@ -1,3 +1,7 @@
+Fri Nov  2 09:07:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp: Added the new files. 
+
 Fri Nov  2 07:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.h:
