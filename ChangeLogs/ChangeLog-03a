@@ -1,3 +1,113 @@
+Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
+
+	The following are changes that make the Service Configurator
+	reentrant and thread-safe.
+
+	* ace/Svc_Conf.y:
+
+	  Generate a pure (reentrant) parser using Bison.  BYACC doesn't
+	  support generation of reentrant parsers.
+
+	* ace/Svc_Conf.l:
+
+	  Implemented "buffer stack" support.  This feature makes it
+	  possible to process Service Configurator directives within a
+	  Service Object's init() method, i.e. support nested directive
+	  processing.
+
+	  (ace_yyerrno):
+
+	  Moved declaration of ace_yyerrno from this file to
+	  `Svc_Conf.y'.  ace_yyerrno was not used in the generated
+	  scanner.  It was only used in the generated parser.
+
+	  (yy_delete_parse_buffer):
+
+	  No longer any need for this function.  The lexer buffer stack
+	  implementation handles memory management of lexer buffers.
+
+	  (yywrap):
+
+	  Do not call yy_delete_parse_buffer().  It is no longer necessary
+	  to do so, in addition to the fact that that function was
+	  removed (as described above).
+
+	  (<<EOF>>):
+
+	  Do not call ACE_YY_NEW_FILE in this rule.  The new buffer stack
+	  implementation handles the buffer switching that ACE_YY_NEW_FILE
+	  did, and more.
+
+	* ace/Svc_Conf_Tokens.h:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Svc_Conf_y.cpp:
+
+	  Regenerated these files using updated Bison/YACC and FLEX input
+	  files to pull in support for reentrant parsing and nested
+	  processing of Service Configurator directives.
+
+	* ace/Svc_Conf.h (ace_yy_push_buffer, ace_yy_pop_buffer):
+
+	  Added function prototypes for the newly implemented lexer buffer
+	  stack manipulation functions.
+
+	  (ace_yylex):
+
+	  Added ACE_YYSTYPE parameter to this functions signature, as
+	  required by the new reentrant parser support.
+
+	  (ACE_SERVICE_DIRECTIVE_STACK_DEPTH):
+
+	  New symbolic constant that defines the maximum supported depth
+	  for nested Service Configurator processing.  The current default
+	  is 8.
+
+	  (ACE_YY_INPUT):
+
+	  No longer any need to redefine this macro to support scanning of
+	  Service Configurator directive strings.  The new lexer buffer
+	  stack implementation provides support creation of lexer buffers
+	  from a string instead of a pointer to "FILE."
+
+	  (ace_yydirective):
+	
+	  This global variable is no longer needed due to the fact that
+	  the new buffer stack implementation handles directives read from
+	  both a string and a file.
+
+	* ace/Service_Config.cpp:
+
+	  (process_directive, process_directives):
+
+	  Obtain a recursive lock before manipulating the lexer buffer
+	  stack, and invoking the parser and scanner.  This makes
+	  invocation of the scanner thread-safe.
+
+	  The new lexer buffer stack implemenation obviates the need to
+	  call yyrestart() since buffer switching is handled by the stack
+	  implementation.
+
+	  (open_i, close):
+
+	  No need to deallocate the lexer buffer since the buffer stack
+	  implementation handles that.
+	
+	* ace/Svc_Conf_Lexer_Guard.h:
+	* ace/Svc_Conf_Lexer_Guard.cpp:
+
+	  New "guard" class that makes lexer buffer stack pushing and
+	  popping exception-safe.
+
+	* ace/Makefile:
+	* ace/Makefile.am:
+	* ace/Makefile.bor:
+	* ace/ace.icc:
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+
+	  Added Svc_Conf_Lexer_Guard.* sources to these Makefiles and
+	  project files.
+
 Sat Jul 28 14:58:30 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Svc_Conf_l.cpp:
