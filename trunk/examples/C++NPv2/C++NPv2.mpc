@@ -32,6 +32,7 @@ project(*CLD) : acelib {
 }
 
 project(*Configurable_Log_Server) : aceexe {
+  avoids += uses_wchar
   exename = configurable_logging_server
   Source_Files {
     Configurable_Logging_Server.cpp
