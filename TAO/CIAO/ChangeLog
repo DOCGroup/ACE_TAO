@@ -1,3 +1,7 @@
+2003-08-12  Diego Sevilla  <dsevilla@ditec.um.es>
+
+	* CIAO.mwc: Removed CCF MPC files as they still not work.
+
 2003-08-11  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CIDLC/ServantGenerator.cpp: Removed commented code.
