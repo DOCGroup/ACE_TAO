@@ -40,6 +40,7 @@ OBJFILES = \
 	$(OBJDIR)\CDR_Stream.obj \
 	$(OBJDIR)\Configuration.obj \
 	$(OBJDIR)\Configuration_Import_Export.obj \
+        $(OBJDIR)\Connection_Recycling_Strategy.obj \
 	$(OBJDIR)\Containers.obj \
 	$(OBJDIR)\Date_Time.obj \
 	$(OBJDIR)\DEV.obj \
@@ -67,6 +68,7 @@ OBJFILES = \
 	$(OBJDIR)\Functor.obj \
 	$(OBJDIR)\Get_Opt.obj \
 	$(OBJDIR)\Handle_Set.obj \
+        $(OBJDIR)\Hashable.obj \
 	$(OBJDIR)\Hash_Map_Manager.obj \
 	$(OBJDIR)\High_Res_Timer.obj \
 	$(OBJDIR)\INET_Addr.obj \
@@ -110,6 +112,7 @@ OBJFILES = \
 	$(OBJDIR)\Name_Request_Reply.obj \
 	$(OBJDIR)\Name_Space.obj \
 	$(OBJDIR)\Naming_Context.obj \
+        $(OBJDIR)\Notification_Strategy.obj \
 	$(OBJDIR)\NT_Service.obj \
 	$(OBJDIR)\Object_Manager.obj \
 	$(OBJDIR)\Obchunk.obj \
@@ -137,7 +140,9 @@ OBJFILES = \
 	$(OBJDIR)\Process_Manager.obj \
 	$(OBJDIR)\Profile_Timer.obj \
 	$(OBJDIR)\Reactor.obj \
+        $(OBJDIR)\Reactor_Notification_Strategy.obj \
 	$(OBJDIR)\Read_Buffer.obj \
+        $(OBJDIR)\Refcountable.obj \
 	$(OBJDIR)\Registry.obj \
 	$(OBJDIR)\Registry_Name_Space.obj \
 	$(OBJDIR)\Remote_Name_Space.obj \
@@ -174,7 +179,6 @@ OBJFILES = \
 	$(OBJDIR)\Basic_Stats.obj \
 	$(OBJDIR)\Stats.obj \
 	$(OBJDIR)\Sample_History.obj \
-	$(OBJDIR)\Strategies.obj \
 	$(OBJDIR)\SV_Message.obj \
 	$(OBJDIR)\SV_Message_Queue.obj \
 	$(OBJDIR)\SV_Semaphore_Complex.obj \
