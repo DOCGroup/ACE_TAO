@@ -1,3 +1,20 @@
+Thu Jul 01 00:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * examples/Simulator/DOVEMIB/AnyAnalyser.cpp
+          examples/Simulator/DOVEMIB/DOVEMIB.{cpp, h}
+          examples/Simulator/DOVEMIB/PrintVisitor.cpp
+          examples/Simulator/DOVEMIB/any_test_i.cpp
+          examples/Simulator/DOVEMIB/clnt.cpp
+          examples/Simulator/DOVEMIB/svr.cpp
+          examples/Simulator/Event_Supplier/DOVE_Supplier.{cpp, h}
+          examples/Simulator/Event_Supplier/DualEC_Sup.cpp
+          examples/Simulator/Event_Supplier/Event_Con.cpp
+          examples/Simulator/Event_Supplier/Event_Sup.cpp
+          examples/Simulator/Event_Supplier/Logging_Sup.cpp: Fixed exception
+          specifications and replaced TAO try macros with ACE try macros.
+          Thanks to Randy Heiland <heiland@ncsa.uiuc.edu> for reporting
+          these problems.
+	
 Wed Jun 30 21:09:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/Options.cpp:

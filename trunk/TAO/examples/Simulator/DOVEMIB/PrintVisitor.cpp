@@ -21,10 +21,10 @@ ACE_RCSID(DOVEMIB, PrintVisitor, "$Id$")
 
 PrintVisitor::PrintVisitor (const char *file_name) {
   
-  TAO_TRY {
+  ACE_TRY {
     if (file_name != 0) {
       output_ =  ACE_OS::fopen(file_name, "w");
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
        // print it on the screen if file could be opened
       if (output_ == 0) {
@@ -45,11 +45,11 @@ PrintVisitor::PrintVisitor (const char *file_name) {
     }
 
   }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Failing when trying to open the output file.\n"));
     }
-  TAO_ENDTRY;  
+  ACE_ENDTRY;  
 }
 
 

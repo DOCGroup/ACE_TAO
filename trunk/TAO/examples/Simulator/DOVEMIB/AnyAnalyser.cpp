@@ -16,7 +16,6 @@
 // ============================================================================
 
 #include "AnyAnalyser.h"
-#include "tao/Align.h"
 
 ACE_RCSID(DOVEMIB, AnyAnalyser, "$Id$")
 
@@ -75,12 +74,13 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
   CORBA::TypeCode_ptr param;
   const unsigned char *start_addr = value_ptr;
 
-  TAO_TRY {
+  ACE_TRY_NEW_ENV
+  {
     Node *node_ptr_ = 0;
 
     if (tc_ptr != 0) {
 
-      switch (tc_ptr->kind(TAO_TRY_ENV)) {
+      switch (tc_ptr->kind(ACE_TRY_ENV)) {
 
         case CORBA::tk_struct:
                 {
@@ -88,10 +88,10 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
             start_addr = value_ptr;
 
             // create a new Node
-                  StructNode *structNode_ptr_ = new StructNode (tc_ptr->name (TAO_TRY_ENV),
+                  StructNode *structNode_ptr_ = new StructNode (tc_ptr->name (ACE_TRY_ENV),
                                                                                    ri.recursion_level);
 
-            for (unsigned int i = 0; i < tc_ptr->member_count (TAO_TRY_ENV); i++) {
+            for (unsigned int i = 0; i < tc_ptr->member_count (ACE_TRY_ENV); i++) {
 
                     // get the TypeCode pointer to the ith parameter
                     // and analyse it recursively
@@ -102,16 +102,16 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
 
 
               // get the type code of the child i
-              param = tc_ptr->member_type (i, TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+              param = tc_ptr->member_type (i, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
               // get the size
-              /* size = */ param->size (TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+              /* size = */ param->size (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
               // get the alignment
-              alignment = param->alignment (TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+              alignment = param->alignment (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
 
               // calculate
               align_offset =
@@ -119,7 +119,7 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
                       - (ptr_arith_t) value_ptr
                       + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
                       - (ptr_arith_t) start_addr;
-              TAO_CHECK_ENV;
+              ACE_TRY_CHECK;
 
               // if both the start_addr and data are not aligned as per
               // the alignment, we do not add the offset
@@ -139,12 +139,12 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
           if (ri.kind == PARENT_IS_STRUCT) {
                   node_ptr_ = (Node *) new DoubleNode ((CORBA::Double *)value_ptr,
                                                                                ri.parent_tc_ptr->member_name(ri.member_number,
-                                                                               TAO_TRY_ENV),
+                                                                               ACE_TRY_ENV),
                                                                                ri.recursion_level);
           }
           else {
                   node_ptr_ = (Node *) new DoubleNode ((CORBA::Double *)value_ptr,
-                                                                               tc_ptr->name(TAO_TRY_ENV),
+                                                                               tc_ptr->name(ACE_TRY_ENV),
                                                                                ri.recursion_level);
           }
                 value_ptr += 8;
@@ -154,12 +154,12 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
           if (ri.kind == PARENT_IS_STRUCT) {
                 node_ptr_ = (Node *) new LongNode ((CORBA::Long *)value_ptr,
                                                                                ri.parent_tc_ptr->member_name(ri.member_number,
-                                                                               TAO_TRY_ENV),
+                                                                               ACE_TRY_ENV),
                                                                                ri.recursion_level);
           }
           else {
                   node_ptr_ = (Node *) new LongNode ((CORBA::Long *)value_ptr,
-                                                                           tc_ptr->name(TAO_TRY_ENV),
+                                                                           tc_ptr->name(ACE_TRY_ENV),
                                                                            ri.recursion_level);
           }
                 value_ptr += 4;
@@ -169,12 +169,12 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
           if (ri.kind == PARENT_IS_STRUCT) {
                 node_ptr_ = (Node *) new ULongNode ((CORBA::ULong *)value_ptr,
                                                                                ri.parent_tc_ptr->member_name(ri.member_number,
-                                                                               TAO_TRY_ENV),
+                                                                               ACE_TRY_ENV),
                                                                                ri.recursion_level);
           }
           else {
                   node_ptr_ = (Node *) new ULongNode ((CORBA::ULong *)value_ptr,
-                                                                              tc_ptr->name(TAO_TRY_ENV),
+                                                                              tc_ptr->name(ACE_TRY_ENV),
                                                                               ri.recursion_level);
           }
                 value_ptr += 4;
@@ -184,12 +184,12 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
           if (ri.kind == PARENT_IS_STRUCT) {
                 node_ptr_ = (Node *) new StringNode (*(CORBA::String_var *)value_ptr,
                                                                                ri.parent_tc_ptr->member_name(ri.member_number,
-                                                                               TAO_TRY_ENV),
+                                                                               ACE_TRY_ENV),
                                                                                ri.recursion_level);
           }
           else {
                 node_ptr_ = (Node *) new StringNode (*(CORBA::String_var *)value_ptr,
-                                                                               tc_ptr->name(TAO_TRY_ENV),
+                                                                               tc_ptr->name(ACE_TRY_ENV),
                                                                                ri.recursion_level);
           }
                   value_ptr += 4;
@@ -199,17 +199,17 @@ AnyAnalyser::analyse (CORBA::TypeCode_ptr tc_ptr,
                 exit (1);
                 break;
       }
-      TAO_CHECK_ENV;
-            return node_ptr_;
+      ACE_TRY_CHECK;
+      return node_ptr_;
     }
     else {
             ACE_DEBUG ((LM_ERROR, "AnyAnalyser::analyse: TypeCode pointer to member was Null!\n"));
     }
   }
-  TAO_CATCHANY {
+  ACE_CATCHANY {
     ACE_ERROR ((LM_ERROR, "(%t)AnyAnalyser::analyse: Error in analysing the any.\n"));
   }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 

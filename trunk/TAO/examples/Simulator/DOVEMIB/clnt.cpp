@@ -35,7 +35,8 @@ int
 Any_Test_Client::init (int argc, char *argv [])
 {
   
-  TAO_TRY {
+  ACE_TRY_NEW_ENV 
+  {
      this->argc_ = argc;
      this->argv_ = argv;
             
@@ -43,19 +44,19 @@ Any_Test_Client::init (int argc, char *argv [])
       this->orb_ = CORBA::ORB_init (this->argc_,
 				                            this->argv_,
 				                            "internet",
-				                            TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+				                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->argc_ != 2)
 	    { 
 	      ACE_ERROR_RETURN ((LM_ERROR, "Expected an IOR as parameter\n"),-1);
 	    }
 
-      CORBA::Object_var any_test_object_ =  this->orb_->string_to_object (argv_[1], TAO_TRY_ENV);
-      TAO_CHECK_ENV;  
+      CORBA::Object_var any_test_object_ =  this->orb_->string_to_object (argv_[1], ACE_TRY_ENV);
+      ACE_TRY_CHECK;  
 
-      this->any_test_ptr_ = Any_Test::_narrow (any_test_object_.in(), TAO_TRY_ENV);	
-      TAO_CHECK_ENV;
+      this->any_test_ptr_ = Any_Test::_narrow (any_test_object_.in(), ACE_TRY_ENV);	
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->any_test_ptr_))
 	    {
@@ -65,18 +66,18 @@ Any_Test_Client::init (int argc, char *argv [])
 	    }     
       return 0;
   }
-  TAO_CATCHANY {
-    TAO_TRY_ENV.print_exception ("SYS_EX");
+  ACE_CATCHANY {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
     return 0;
   }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
 int
 Any_Test_Client::run ()
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::Any data; 
 
@@ -94,7 +95,7 @@ Any_Test_Client::run ()
       navigation_.completion_time = 5;
       navigation_.computation_time = 6;
 
-      data.replace (_tc_Navigation, &navigation_, 0, TAO_TRY_ENV);
+      data.replace (_tc_Navigation, &navigation_, 0, ACE_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,"Starting test with Any: Navigation\n")); 
       //any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
@@ -133,18 +134,18 @@ Any_Test_Client::run ()
       weapons_.completion_time = 5;
       weapons_.computation_time = 6;
       
-      data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      data.replace (_tc_Weapons, &weapons_, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       ACE_DEBUG ((LM_DEBUG,"Starting test with Any: Weapons\n")); 
-      any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
+      any_test_ptr_->try_an_any (data, ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,"Ending test with Any: Weapons\n"));   	
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Error in Any_Test_Client::run");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error in Any_Test_Client::run");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
       
   return 0;
@@ -158,25 +159,23 @@ int
 main (int argc, char *argv [])
 {
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       Any_Test_Client any_test_client_;
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       if (any_test_client_.init (argc, argv) == -1)
 	return 1;
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       return any_test_client_.run ();
-      TAO_CHECK_ENV;
-
-
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
 
   return 0;
