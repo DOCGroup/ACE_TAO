@@ -1,15 +1,14 @@
-// -*- C++ -*-
-//
-// $Id$
-
-
 #include "PolicyFactory_Registry.h"
 
-ACE_RCSID(tao, PolicyFactory_Registry, "$Id$")
+ACE_RCSID (tao,
+           PolicyFactory_Registry,
+           "$Id$")
 
+
+// ****************************************************************
 
 TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry (void)
-  : factories_ ()
+  : factories_ (TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE)
 {
 }
 
