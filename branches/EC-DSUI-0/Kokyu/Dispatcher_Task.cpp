@@ -120,6 +120,8 @@ Dispatcher_Task::svc (void)
       Dispatch_Command* command = qitem->command ();
 
       ACE_ASSERT(command != 0);
+
+      //@@DSUI - DISPATCH_COMMAND_EXECUTE event
       int result = command->execute ();
 
       if (command->can_be_deleted ())
@@ -137,6 +139,7 @@ int
 Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
                           const QoSDescriptor& qos_info)
 {
+  //@@DSUI - DISPATCH_COMMAND_ENQUEUE event
   void* buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
   if (buf == 0)
