@@ -126,14 +126,21 @@ componentry.</TD></TR>
 more output (try 10).
 </TD></TR>
 <TR>
-<TD><CODE>-ORBhost</CODE> <EM>hostname</EM></TD>
-<TD><a name="-ORBhost"></a>Tells the Object Adapter to listen for requests on the interface associated
-with the host named <I><EM>hostname</EM></I>.</TD></TR>
+
+<TD><CODE>-ORBhost</CODE> <EM>hostname</EM></TD> <TD><a
+name="-ORBhost"></a>Tells the ORB to listen for requests on the
+interface associated with the host named
+<I><EM>hostname</EM></I>.</TD></TR>
+
 <TR>
-<TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD>
-<TD>Tells the Object Adapter to listen for requests on the port specified by
-<I><EM>portspec</EM></I>, which can be a name as found in <TT>/etc/services</TT>
-or a number. The default is <TT>10013</TT>.</TD></TR>
+
+<TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD> <TD>Tells the ORB to
+listen for requests on the port specified by
+<I><EM>portspec</EM></I>. If not specified, the OS gets to choose a
+random empty port.</TD>
+
+</TR>
+
 <TR>
 <TD><CODE>-ORBobjrefstyle</CODE> <EM>which</EM></TD>
 <TD>Specifies the user-visible style of object references. The range of values
