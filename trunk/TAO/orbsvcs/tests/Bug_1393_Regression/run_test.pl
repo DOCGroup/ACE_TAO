@@ -24,7 +24,7 @@ else
 }
 
 # The location of the tao_idl utility binary
-$tao_idl_bin = "../../../../TAO/TAO_IDL";
+$tao_idl_bin = "../../../../bin";
 
 # The idl file to be used for the test
 $test_idl = PerlACE::LocalFile("test.idl");
