@@ -1,5 +1,18 @@
 Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+        * performance-tests/Benchmark/RoundTrip/svc.conf: 
+	  Changed to load Advanced_Resource_Factory dynamically.  
+	
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
+        * performance-tests/Benchmark/RoundTripServer/server.cpp: 
+	  Changed to implement the Benchmark::Latency_Test interface
+	  instead of the Latency_Test interface.  Otherwise, we won't be
+	  able to connect the interface to a receptacle expecting another
+	  interface type.
+	
+Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
 	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
 	  Fixed a minor compilation problem.
 	
