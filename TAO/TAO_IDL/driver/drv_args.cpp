@@ -154,6 +154,9 @@ DRV_usage (void)
   cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
   cerr << GTDEVEL (" -Sa\t\t\tsuppress Any support (support enabled by default)\n");
   cerr << GTDEVEL (" -St\t\t\tsuppress TypeCode support (support enabled by default)\n");
+  cerr << GTDEVEL (" -Sc\t\t\tsuppress tie class (and file) generation (enabled by default)\n");
+  cerr << GTDEVEL (" -Sp\t\t\tsuppress generating Thru POA collocated stubs (enabled by default)\n");
+  cerr << GTDEVEL (" -Sd\t\t\tsuppress generating Direct collocated stubs (disable by default)\n");
 #ifdef IDL_HAS_VALUETYPE
   cerr << GTDEVEL (" -Sv\t\t\tdisable OBV (Valuetype) support (disabled by default)\n");
 #endif /* IDL_HAS_VALUETYPE */
@@ -556,6 +559,11 @@ DRV_parse_args (long ac, char **av)
                 {
                   // suppress generating Direct collocated stubs
                   idl_global->gen_direct_collocation (0);
+                }
+              else if (av[i][2] == 'c')
+                {
+                  // suppress generating tie classes and files
+                  idl_global->gen_tie_classes (0);
                 }
               else if (av[i][2] == 'v')
                 {

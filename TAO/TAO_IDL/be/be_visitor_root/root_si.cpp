@@ -52,14 +52,18 @@ be_visitor_root_si::init (void)
                          "server inline open failed\n"), -1);
     }
 
-  if (tao_cg->start_server_template_inline
-      (idl_global->be_get_server_template_inline_fname ())
-      == -1)
+  if (idl_global->gen_tie_classes ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_root_si::init - "
-                         "Error opening server template inline file\n"),
-                        -1);
+      if (tao_cg->start_server_template_inline (
+              idl_global->be_get_server_template_inline_fname ()
+            )
+          == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root_si::init - "
+                             "Error opening server template inline file\n"),
+                            -1);
+        }
     }
 
   // init stream
