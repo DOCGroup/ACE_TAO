@@ -12,7 +12,7 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 {
 }
 
-Deployment::NodeApplicationManager_ptr
+CIAO::NodeApplicationManager_Impl *
 CIAO::NodeApplicationManager_Impl::
 init (const char *nodeapp_location,
       CORBA::ULong delay,
@@ -21,11 +21,6 @@ init (const char *nodeapp_location,
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::InvalidProperty))
 {
-  ACE_UNUSED_ARG (delay); // @@ We need to use this argumetn
-                                // later to determine is a
-                                // NodeApplication has been spawned
-                                // successfully.
-
   if (nodeapp_location == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
 
@@ -64,7 +59,10 @@ init (const char *nodeapp_location,
 							       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return Deployment::NodeApplicationManager::_duplicate (this->objref_.in ());
+  // Note: even I created the object here but I don't hold the object ref.
+  // Here I return pointer of myself so the NodeManager could do
+  // servant_to_reference to get the reference since we are in the same POA.
+  return this;
 }
 
 void
@@ -101,7 +99,7 @@ create_node_application (const ACE_CString & options
   ACE_NEW_THROW_EX (callback_servant,
                     CIAO::NodeApplication_Callback_Impl (this->orb_.in (),
 							 this->callback_poa_.in (),
-							 this->objref_.in (),
+							 this->objref_,
 							 prop.in ()),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (CORBA::_nil ());
@@ -254,4 +252,6 @@ destroyApplication (Deployment::Application_ptr app
 
   this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  //@@ I might have to deal with the leftover in the comoponentmap here.
 }
