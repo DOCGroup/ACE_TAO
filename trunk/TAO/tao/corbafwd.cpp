@@ -20,6 +20,10 @@ CORBA::string_dup (const char *str)
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (len);
 
+  if (copy == 0)
+    return 0;    // The below memcpy() assumes that the destination is
+                 // a valid buffer.
+
   ACE_OS::memcpy (copy, str, len + 1);
   return copy;
 }
@@ -38,6 +42,11 @@ CORBA::wstring_dup (const WChar *const str)
     }
 
   CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
+
+  if (retval == 0)
+    return 0;    // The below wscpy() assumes that the destination is
+                 // a valid buffer.
+
   return ACE_OS::wscpy (retval, str);
 }
 
