@@ -1,3 +1,9 @@
+Thu Aug 29 09:40:20 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/Transcode.h:
+	* ACEXML/parser/parser/Parser.h: Fixed incorrect usage of Doxygen
+	  tag.  Thanks to Johnny for pointing this out.
+
 Thu Aug 29 12:20:17 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
