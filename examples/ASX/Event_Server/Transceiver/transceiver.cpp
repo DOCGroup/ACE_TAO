@@ -67,6 +67,7 @@ class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH
   //     it is a ``transceiver.''
 {
 public:
+  // = Initialization method.
   Event_Transceiver (void);
 
   // = Svc_Handler hook called by the <ACE_Connector>.
@@ -99,12 +100,12 @@ Event_Transceiver::handle_close (ACE_HANDLE,
   return 0;
 }
 
-// Close down via SIGINT.
+// Close down via SIGINT or SIGQUIT.
 
 int 
 Event_Transceiver::handle_signal (int signum, 
-				       siginfo_t *, 
-				       ucontext_t *)
+				  siginfo_t *, 
+				  ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
   
@@ -117,24 +118,37 @@ Event_Transceiver::Event_Transceiver (void)
   ACE_Sig_Set sig_set;
   
   sig_set.sig_add (SIGINT);
+
+#if !defined (ACE_WIN32)
   sig_set.sig_add (SIGQUIT);
+#endif /* ACE_WIN32 */
 
   if (ACE_Service_Config::reactor ()->register_handler 
       (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+
+  // We need to register <this> here before we're connected since
+  // otherwise <get_handle> will return the connection socket handle
+  // for the peer.
+  else if (ACE::register_stdin_handler (this,
+					ACE_Service_Config::reactor (),
+					ACE_Service_Config::thr_mgr ()) == -1)
+    ACE_ERROR ((LM_ERROR, 
+		"%p\n", 
+		"register_stdin_handler"));
 }
 
 int
 Event_Transceiver::open (void *)
 {
+  // Register ourselves to be notified when there's data on the
+  // socket.
   if (ACE_Service_Config::reactor ()->register_handler
-      (this->peer ().get_handle (), this,
-       ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
-  else if (ACE::register_stdin_handler (this,
-					ACE_Service_Config::reactor (),
-					ACE_Service_Config::thr_mgr ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_stdin_handler"), -1);
+	   (this, ACE_Event_Handler::READ_MASK) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "%p\n", 
+		       "register_handler"), 
+		       -1);
   return 0;
 }
 
@@ -192,11 +206,13 @@ main (int argc, char *argv[])
 
   parse_args (argc, argv);
 
-  // Establish the connection.
   ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR> connector;
   Event_Transceiver transceiver, *tp = &transceiver;
 
-  if (connector.connect (tp, ACE_INET_Addr (port_number, host_name)) == -1)
+  ACE_INET_Addr server_addr (port_number, host_name);
+
+  // Establish the connection to the Event Server.
+  if (connector.connect (tp, server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", host_name), 1);
 
   // Run event loop until either the event server shuts down or we get

@@ -20,7 +20,7 @@
 #define ACE_LOCAL_NAME_SPACE_H
 
 #include "ace/SString.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 #include "ace/Malloc.h"
 #include "ace/Synch.h"
 

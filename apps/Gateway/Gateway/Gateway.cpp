@@ -367,6 +367,6 @@ Gateway::parse_consumer_config_file (void)
 ACE_SVC_FACTORY_DEFINE (Gateway)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Set_Node<Proxy_Handler *>;
+template class ACE_Node<Proxy_Handler *>;
 template class ACE_Unbounded_Set<Proxy_Handler *>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

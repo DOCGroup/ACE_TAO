@@ -18,7 +18,7 @@
 #define ACE_TIMER_HEAP_T_H
 
 #include "ace/Timer_Queue.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 
 // Forward declaration
 template <class TYPE, class FUNCTOR>

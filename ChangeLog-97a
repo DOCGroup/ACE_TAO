@@ -1,11 +1,49 @@
-Mon May 05 14:53:11 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* netsvcs/lib/Server_Logging_Handler.cpp: fixed ACE_Svc_Handler
-	  specializations, yet again, for Linux w/LXPthreads.  Thanks to
-	  Luis Lopes <llopes@tick.rcc.Ryerson.CA> for reporting this
-	  problem with sufficient detail for us to track it down.
-
 Mon May  5 08:19:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers.cpp (set): Optimized for the common case where
+ 	  we're increasing the size of the set by 1.
+
+	* ace/Containers: Merged the ACE_Set_Node, ACE_Stack_Node, and
+	  ACE_Set_Node into a single "ACE_Node" class.  This tidies up the
+	  code quite a bit.
+
+	* ace: Removed the Set.* and Stack.* files and replaced them with
+ 	  the Containers.* files.  This file contains the ACE_*Stack,
+ 	  ACE_*Queue, and ACE_*Set classes.  If this revised file scheme
+ 	  breaks existing code please let me know and I'll provide
+ 	  backwards compatibility.
+
+	* ace/Stack: Changed the name of ACE_Unbounded_Queue::enqueue() to
+ 	  ACE_Unbounded_Queue::enqueue_tail() and also added
+ 	  ACE_Unbounded_Queue::enqueue_head().
+
+	* ace/OS: Changed the names of the parameters of the ACE_OS::mem*
+ 	  methods from ACE_OS::mem* (void *s, const void *t) to
+ 	  ACE_OS::mem* (void *t, const void *s) since "t" should stand for
+ 	  "target" and "s" for "source."  Thanks to Andres Kruse
+ 	  <Andres.Kruse@cern.ch> for pointing this out.
+
+	* ace/Stack: Removed the peek() method from ACE_Unbounded_Queue.
+  	  This functionality is now subsumed by the get(..., 0) method.
+  	  If this breaks any existing code please let me know.
+
+	* ace/Stack.h: Moved all the functionality from ACE_Unbounded_Set
+ 	  into ACE_Unbounded_Queue.  That's really where this belonged in
+ 	  the first place.  Thanks to David Levine for noticing this.
+
+	* ace/Set.h: Moved ACE_Set_Node from the *.cpp file into the *.cpp
+ 	  file in anticipation of AIX C++ compiler bugs ;-).
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+ 	  Rearranged the location where we register to receive standard
+ 	  input so that the socket handle will not be initialized at this
+ 	  point.  Thanks to craig perras <craigp@wolfenet.com> for
+ 	  reporting this.
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp
+ 	  (Event_Transceiver): Make sure to #ifdef around SIGQUIT for
+ 	  WIN32 since it lacks this signal.  Thanks to craig perras
+ 	  <craigp@wolfenet.com> for reporting this.
 
 	* ace/config-osf1-4.0-g++.h: Removed the ACE_LACKS_SIGNED_CHAR
  	  since this seems to be compiler specific.  Thanks to Thilo for
@@ -58,6 +96,11 @@ Mon May 5 17:16:41 1997  Carlos O'Ryan  <coryan@mat.puc.cl>
 	  I documented those patches.
  
 Mon May 05 11:50:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: fixed ACE_Svc_Handler
+	  specializations, yet again, for Linux w/LXPthreads.  Thanks to
+	  Luis Lopes <llopes@tick.rcc.Ryerson.CA> for reporting this
+	  problem with sufficient detail for us to track it down.
 
 	* ace/Stack.* (ACE_Unbounded_Queue):
 	  1) made peek () const.

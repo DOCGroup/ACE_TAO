@@ -24,7 +24,7 @@
 #include "ace/Thread.h"
 #include "ace/Synch.h"
 #include "ace/Signal.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
@@ -169,7 +169,7 @@ ACE_Log_Msg_Manager::atexit (void)
        )
     {
       // Advance the iterator first because it needs to read the next
-      // field of the ACE_Set_Node that will be deleted as a result of
+      // field of the ACE_Node that will be deleted as a result of
       // the following call to remove the node.
       i.advance ();
 
@@ -1259,7 +1259,7 @@ ACE_Log_Msg::getpid (void) const
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Set_Node<ACE_Log_Msg *>;
+template class ACE_Node<ACE_Log_Msg *>;
 template class ACE_Unbounded_Set<ACE_Log_Msg *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Log_Msg *>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

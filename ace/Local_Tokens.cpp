@@ -1412,5 +1412,5 @@ ACE_Token_Name::dump (void) const
 template class ACE_TSS <ACE_TPQ_Entry>;
 #endif /* ACE_NO_TSS_TOKENS */
 template class ACE_Unbounded_Stack <ACE_TPQ_Entry *>;
-template class ACE_Stack_Node <ACE_TPQ_Entry *>;
+template class ACE_Node <ACE_TPQ_Entry *>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -17,7 +17,7 @@
 #if !defined (_DISPATCH_SET)
 #define _DISPATCH_SET
 
-#include "ace/Set.h"
+#include "ace/Containers.h"
 
 // Forward reference.
 class Proxy_Handler;
