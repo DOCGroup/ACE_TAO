@@ -1,3 +1,9 @@
+Wed Mar 24 18:30:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp: Added a new
+ 	  version of this program that fixes a number of bugs with the old
+ 	  one.  Thanks to Hao Ruan <hruan@lucent.com> for these fixes.
+
 Wed Mar 24 15:31:27 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * High_Res_Timer.cpp:
