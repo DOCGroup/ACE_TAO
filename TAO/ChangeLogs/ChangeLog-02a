@@ -1,3 +1,24 @@
+Fri Sep 29 01:27:26 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/IIOP_Acceptor.h
+	* tao/IIOP_Connector.h:
+
+	  Made <tcp_properties_> members protected for use by SSLIOP.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+
+	  Removed <init_tcp_properties> method and <tcp_properties_>
+	  member because we already inherit them from TAO_IIOP_Acceptor. 
+	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+
+	  Added support for client protocol properties configurations
+	  through RTCORBA::ClientProtocolPolicy.
+	
 Thu Sep 28 23:51:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp
