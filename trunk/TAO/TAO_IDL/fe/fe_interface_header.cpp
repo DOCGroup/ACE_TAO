@@ -264,27 +264,6 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
       this->compile_inheritance (inherits,
                                  I_FALSE);
     }
-
-  int abstract_parent_seen = 0;
-
-  if (this->pd_n_inherits > 0)
-    {
-      AST_Interface *iface = 0;
-
-      for (long i = 0; i < this->pd_n_inherits; ++i)
-        {
-          iface = this->pd_inherits[i];
-
-          if (iface->is_abstract ())
-            {
-              abstract_parent_seen = 1;
-            }
-          else if (abstract_parent_seen == 1)
-            {
-              idl_global->err ()->abstract_expected (iface);
-            }
-        }
-    }
 }
 
 FE_InterfaceHeader::~FE_InterfaceHeader (void)
