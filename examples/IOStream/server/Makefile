@@ -27,6 +27,10 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
+ifneq (,$(findstring gcc,$(CXX)))
+VLDLIBS += -lg++
+endif
+
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
