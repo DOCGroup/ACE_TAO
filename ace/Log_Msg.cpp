@@ -1119,7 +1119,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'M': // Print the name of the priority of the message.
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
-                  ACE_OS::sprintf (bp, ACE_Log_Record::priority_name (log_priority));
+                  ACE_OS::sprintf (bp, format, ACE_Log_Record::priority_name (log_priority));
                   break;
 
                 case 'm': // Format the string assocated with the errno value.

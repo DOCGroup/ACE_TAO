@@ -27,7 +27,7 @@ TAO_EC_Sched_Factory::init (int argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      char *arg = arg_shifter.get_current ();
+      const char *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, "-ECDispatching") == 0)
         {
@@ -35,7 +35,7 @@ TAO_EC_Sched_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "reactive") == 0)
                 {
                   this->dispatching_ = 0;
@@ -65,7 +65,7 @@ TAO_EC_Sched_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 {
                   this->filtering_ = 0;
@@ -99,7 +99,7 @@ TAO_EC_Sched_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "reactive") == 0)
                 {
                   this->timeout_ = 0;
@@ -127,7 +127,7 @@ TAO_EC_Sched_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 {
                   this->scheduling_ = 0;

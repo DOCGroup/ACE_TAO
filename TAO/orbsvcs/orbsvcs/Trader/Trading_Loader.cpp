@@ -441,7 +441,7 @@ TAO_Trading_Loader::parse_args (int &argc, char *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      char *current_arg = arg_shifter.get_current ();
+      const char *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg,
                           "-TSfederate") == 0)
@@ -455,8 +455,7 @@ TAO_Trading_Loader::parse_args (int &argc, char *argv [])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-
-              char *file_name =
+              const char *file_name =
                 arg_shifter.get_current ();
               this->ior_output_file_ =
                 ACE_OS::fopen (file_name, "w");
