@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef UAV_GS_CIDL
+#define UAV_GS_CIDL
+
+#include "UAV_GS.idl"
+
+composition session UAV_GS_Impl
+{
+  home executor UAV_GSHome_Exec
+  {
+    implements BBN_UAV::UAV_GSHome;
+    manages UAV_GS_Exec;
+  };
+};
+
+#endif /* UAV_GS_CIDL */

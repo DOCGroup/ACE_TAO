@@ -6,6 +6,7 @@
  * Definition of the UCAV component
  *
  * @author George Edwards <g.edwards@vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 //=============================================================================
 #ifndef CIAO_UCAV_IDL
@@ -17,7 +18,7 @@ module BBN_UAV
 {
   component UCAV
     {
-      consumes EngageTarget engage_target;
+      consumes StartMove start_move;
     };
 
   home UCAVHome manages UCAV

@@ -1,0 +1,62 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Battle"
+
+project(Battle_stub): ciao_client {
+  
+  sharedname = Battle_stub
+  idlflags += -Wb,stub_export_macro=BATTLE_STUB_Export -Wb,stub_export_include=Battle_stub_export.h -Wb,skel_export_macro=BATTLE_SVNT_Export -Wb,skel_export_include=Battle_svnt_export.h
+  dynamicflags   = BATTLE_STUB_BUILD_DLL
+
+  IDL_Files {
+    Battle.idl
+  }
+
+  Source_Files {
+    BattleC.cpp
+  }
+}
+
+project(Battle_svnt) : ciao_servant {
+  after +=  Battle_stub
+  sharedname  = Battle_svnt
+  libs    += Battle_stub 
+  
+  idlflags  +=  -Wb,export_macro=BATTLE_SVNT_Export -Wb,export_include=Battle_svnt_export.h
+  dynamicflags = BATTLE_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    Battle.cidl
+  }
+
+  IDL_Files {
+    BattleE.idl
+  }
+
+  Source_Files {
+    BattleEC.cpp
+    BattleS.cpp
+    Battle_svnt.cpp
+  }
+}
+
+
+project(Battle_exec) : ciao_component {
+  after   += Battle_svnt
+  sharedname = Battle_exec
+  libs      += Battle_stub Battle_svnt 
+  
+  idlflags  +=  -Wb,export_macro=BATTLE_EXEC_Export -Wb,export_include=Battle_exec_export.h
+  dynamicflags   = BATTLE_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    Battle_exec.cpp
+  }
+}
+
+
+

@@ -6,6 +6,7 @@
  * Definition of the Engagement component
  *
  * @author George Edwards <g.edwards@vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  */
 //=============================================================================
 #ifndef CIAO_ENGAGEMENT_IDL
@@ -18,7 +19,8 @@ module BBN_UAV
   component Engagement
     {
       publishes EngageTarget engage_target;
-      consumes TargetRecognized target_recognized;
+      publishes PrepareMove prepare_move;
+      consumes PrepareEngage prepare_engage;
     };
 
   home EngagementHome manages Engagement
