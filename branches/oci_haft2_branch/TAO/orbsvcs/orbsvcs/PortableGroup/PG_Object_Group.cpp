@@ -58,7 +58,7 @@ TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
 }
 
 TAO::PG_Object_Group::PG_Object_Group (
-  CORBA::ORB_ptr orb,  
+  CORBA::ORB_ptr orb,
   TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
   CORBA::Object_ptr empty_group,
   const PortableGroup::TagGroupTaggedComponent & tagged_component,
@@ -125,11 +125,11 @@ TAO::PG_Object_Group * TAO::PG_Object_Group::create (
   ACE_NEW_THROW_EX (
     objectGroup,
     TAO::PG_Object_Group (
-      orb, 
+      orb,
       iorm,
       empty_group,
       tagged_component,
-      type_id, 
+      type_id,
       the_criteria),
     CORBA::NO_MEMORY());
   return objectGroup;
@@ -226,8 +226,8 @@ const PortableGroup::Location & TAO::PG_Object_Group::primary_location() const
   return this->primary_location_;
 }
 
-void TAO::PG_Object_Group::add_member ( 
-    const PortableGroup::Location & the_location, 
+void TAO::PG_Object_Group::add_member (
+    const PortableGroup::Location & the_location,
     CORBA::Object_ptr member
     ACE_ENV_ARG_PARAMETER)
   ACE_THROW_SPEC ( (CORBA::SystemException,
@@ -380,7 +380,7 @@ void TAO::PG_Object_Group::remove_member (
   {
     if (this->members_.current_size() > 0)
     {
-      this->reference_ = 
+      this->reference_ =
         this->iorm_->remove_profiles (this->reference_.in (), info->member_.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

@@ -179,13 +179,13 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         value <<= domain_id;
         encoder.add(::FT::FT_DOMAIN_ID, value);
 
-        FT::Location object_location;
+        PortableGroup::Location object_location;
         object_location.length(1);
         object_location[0].id = CORBA::string_dup("Test location");
         value <<= object_location;
         encoder.add(::FT::FT_LOCATION, value);
 
-        FT::TypeId object_type = CORBA::string_dup("dummy_type");
+        PortableGroup::TypeId object_type = CORBA::string_dup("dummy_type");
         value <<= object_type;
         encoder.add(::FT::FT_TYPE_ID, value);
 
@@ -194,9 +194,9 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         encoder.add(::FT::FT_GROUP_ID, value);
 
         // allocate and populate the criteria
-        FT::Criteria_var criteria;
+        PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
-          FT::Criteria);
+          PortableGroup::Criteria);
         if (criteria.ptr() == 0)
         {
           ACE_ERROR((LM_ERROR,
@@ -207,7 +207,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         else
         {
           encoder.encode(criteria);
-          FT::GenericFactory::FactoryCreationId_var factory_creation_id;
+          PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
           ACE_DEBUG((LM_DEBUG,
             "Call create_object with type: %s\n", type_id.in()

@@ -124,7 +124,7 @@ namespace TAO
       const char * type_id,
       PortableGroup::Criteria the_criteria
       ACE_ENV_ARG_DECL);
-    
+
     /// Destructor
     ~PG_Object_Group ();
 
@@ -187,14 +187,14 @@ namespace TAO
      * @param the_location the location for the new member
      * @param member_ior_string the IOR for the new memeber (expressed as a string.)
      */
-    void add_member ( 
-        const PortableGroup::Location & the_location, 
+    void add_member (
+        const PortableGroup::Location & the_location,
         CORBA::Object_ptr member
         ACE_ENV_ARG_PARAMETER)
       ACE_THROW_SPEC ( (CORBA::SystemException,
                        PortableGroup::ObjectNotAdded));
-      
-      
+
+
     int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
       const PortableGroup::Location & the_location
