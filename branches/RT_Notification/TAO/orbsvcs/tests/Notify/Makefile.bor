@@ -14,6 +14,8 @@ DIRS = \
         Sequence_Multi_ETCL_Filter \
         Sequence_Multi_Filter \
         Structured_Filter \
-        Structured_Multi_Filter
+        Structured_Multi_Filter \
+	RT_lib \
+	Test_Filter
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
