@@ -2,6 +2,9 @@
 
 # VxWorks 5.2-5.3.1 with Green Hills 1.8.8
 
+VXWORKS = 1
+CROSS-COMPILE = 1
+
 debug = 1
 shared_libs =
 static_libs = 1
@@ -19,4 +22,3 @@ PIC             =
 AR              = ax
 ARFLAGS         = rv
 RANLIB          = /bin/true
-VXWORKS         = 1

@@ -21,15 +21,18 @@ ifndef MVME_LIB
 endif # MVME_LIB
 
 CHORUS = 1
+CROSS-COMPILE = 1
 
 debug = 1
 optimize = 1
 shared_libs =
 static_libs = 1
 
-CC      = $(GHS_DIR)/build -driver ch68
+CC      = $(GHS_DIR)/ccch68
+
 CXX     = $(CC)
-CFLAGS  = -I$(MVME_INCL)/posix \
+CFLAGS  = -groot= -alttools=$(GHS_DIR) -68040 -X445 -fprecise -D__cpluplus=1 \
+          -I$(MVME_INCL)/posix \
           -I$(MVME_INCL)/stdc \
           -I$(MVME_INCL)/chorus \
           -I$(MVME_INCL)/CC
