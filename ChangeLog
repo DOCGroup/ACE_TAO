@@ -1,3 +1,8 @@
+Mon Dec 10 14:10:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Makefile.bor: Added an ace_only target for Borland_wchar nightly
+	  build.
+
 Sun Dec  9 08:54:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Activation_Queue.cpp (enqueue): Fixed a leak where the
@@ -82,10 +87,10 @@ Thu Dec  6 18:48:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Thu Dec  6 09:02:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Sock_Connect.cpp: Added MACOSX support.  Thanks to 
+	* ace/Sock_Connect.cpp: Added MACOSX support.  Thanks to
 	  John Michael Zorko <j.zorko@att.net> for contributing this.
 
-	* tests/Logging_Strategy_Test.cpp: Add a "wait()" at the 
+	* tests/Logging_Strategy_Test.cpp: Add a "wait()" at the
 	  end of the main function to avoid problems when the main thread
  	  exits before the reactor thread.  Thanks to Michael Searles
  	  <msearles@base16.com> for reporting this.
