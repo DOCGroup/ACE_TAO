@@ -6,6 +6,7 @@
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(Log, Logger_i, "$Id$")
 

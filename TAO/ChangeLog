@@ -1,3 +1,8 @@
+Fri Nov 14 02:51:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Logging/Logger_i.cpp:
+          Added #include os_netdb.h.
+
 Fri Nov 14 02:28:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Messaging/Asynch_Invocation_Adapter.{h,cpp,inl}:
