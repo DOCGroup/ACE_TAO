@@ -5,8 +5,8 @@
 // GNU C++ and the POSIX (pthread) threads package. You can get QNX
 // RTP at http://get.qnx.com
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_RTP_PRE62x_H
+#define ACE_CONFIG_RTP_PRE62x_H
 #include /**/ "ace/pre.h"
 #include /**/ "ace/config-qnx-rtp-common.h"
 
@@ -91,9 +91,10 @@
 #define ACE_LACKS_SBRK
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SOCKET_BUFSIZ
-#define ACE_LACKS_SOCKETPAIR     // Even if the QNX RTP docs says that socket pair are
-                                 // available, there is actually no implementation of
-				 // soket-pairs.
+#define ACE_LACKS_SOCKETPAIR     
+// Even if the QNX RTP docs says that socket pair are
+// available, there is actually no implementation of
+// soket-pairs.
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
@@ -153,4 +154,4 @@
 #define ACE_LACKS_ACE_IOSTREAM
 
 #include /**/ "ace/post.h"
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_RTP_PRE62x_H */
