@@ -126,49 +126,25 @@ class TAO_OBV_GIOP_Flags
 {
   // CORBA 2.3: 15.3.4
 public:
-  enum Tag                                   // test:
-  {
-    Null_ref              =  0x00000000L,    // equal
-    Value_tag_base        =  0x7fffff00L,
-    Value_tag_sigbits     =  0xffffff00L,
-      Codebase_url        =  0x00000001L,    // and
-      Type_info_no        =  0x00000000L,
-      Type_info_single    =  0x00000002L,
-      Type_info_list      =  0x00000006L,
-      Type_info_sigbits   =  0x00000006L,
-      Chunked_encoding    =  0x00000008L,    // and
-    Indirection_tag       =  0xffffffffL,    // equal
-    Block_size_tag_min    =  1,              // range
-    Block_size_tag_max    =  0x7fffff00L -1,
-    // @@ %! but how encode a stateless block ?
+  static const CORBA::ULong Value_tag_base;
+  static const CORBA::ULong Value_tag_sigbits;
+  static const CORBA::ULong Codebase_url;
+  static const CORBA::ULong Type_info_sigbits;
+  static const CORBA::ULong Type_info_none;
+  static const CORBA::ULong Type_info_single;
+  static const CORBA::ULong Type_info_list;
 
-    // This constants define the ranges for end tags and
-    // indirections.
-    End_tag_min           = 0x80000000L - 1, // range
-    End_tag_max           = 0xFFFFFFFFL,
-    Indirection_min       = 0x80000000L - 1, // range
-    Indirection_max       = 0xFFFFFFFFL - 4
-  };
-  // all flags without a comment are complete tested against
-  // the analog _sigbits mask.
-
-
-
-public:
-  static CORBA::Boolean is_null_ref  (CORBA::ULong);
-  static CORBA::Boolean is_value_tag (CORBA::ULong);
-  static CORBA::Boolean has_codebase_url (CORBA::ULong);
-  static CORBA::Boolean has_no_type_info (CORBA::ULong);
-  static CORBA::Boolean has_single_type_info (CORBA::ULong);
-  static CORBA::Boolean has_list_type_info (CORBA::ULong);
-  static CORBA::Boolean is_chunked (CORBA::ULong);
-  static CORBA::Boolean is_indirection_tag  (CORBA::ULong);
-  static CORBA::Boolean block_size (CORBA::ULong, CORBA::ULong &size);
-  static CORBA::Boolean end_tag_depth (CORBA::ULong, CORBA::ULong &d);
-  static CORBA::Boolean indirection (CORBA::ULong, CORBA::Long &jump);
-  //  static CORBA::Boolean (CORBA::ULong);
-  //  static CORBA::Boolean (CORBA::ULong);
-
+  static CORBA::Boolean is_null_ref           (CORBA::ULong);
+  static CORBA::Boolean is_value_tag          (CORBA::ULong);
+  static CORBA::Boolean has_codebase_url      (CORBA::ULong);
+  static CORBA::Boolean has_no_type_info      (CORBA::ULong);
+  static CORBA::Boolean has_single_type_info  (CORBA::ULong);
+  static CORBA::Boolean has_list_type_info    (CORBA::ULong);
+  static CORBA::Boolean is_chunked            (CORBA::ULong);
+  static CORBA::Boolean is_indirection_tag    (CORBA::ULong);
+  static CORBA::Boolean is_indirection        (CORBA::ULong);
+  static CORBA::Boolean is_block_size         (CORBA::ULong);
+  static CORBA::Boolean is_end_tag            (CORBA::ULong);
 };
 
 #if defined (__ACE_INLINE__)

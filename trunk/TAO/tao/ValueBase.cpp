@@ -70,7 +70,8 @@ CORBA_ValueBase::_tao_marshal (TAO_OutputCDR &strm,
 
   if (this_ == 0)
     {
-      retval = strm.write_ulong (TAO_OBV_GIOP_Flags::Null_ref);
+      retval = strm.write_ulong (0);
+      // write TAO_OBV_GIOP_Flags::Null_ref
       return retval;
     }
 
@@ -87,8 +88,8 @@ CORBA_ValueBase::_tao_marshal (TAO_OutputCDR &strm,
   //    is provided. The latter is necessary if the formal_type_id
   //    is unequal the 'true derived' type of this object. +++
 
-  CORBA::ULong value_tag = TAO_OBV_GIOP_Flags::Value_tag_base |
-                           TAO_OBV_GIOP_Flags::Type_info_single;
+  CORBA::ULong value_tag =   TAO_OBV_GIOP_Flags::Value_tag_base
+                           | TAO_OBV_GIOP_Flags::Type_info_single;
 
   retval = strm.write_ulong (value_tag);
   if (!retval)
@@ -254,6 +255,16 @@ CORBA_DefaultValueRefCountBase::_refcount_value (void)
   return this->_tao_refcount_value ();
 }
 
+
+// some constants
+
+const CORBA::ULong TAO_OBV_GIOP_Flags::Value_tag_base    = 0x7fffff00L;
+const CORBA::ULong TAO_OBV_GIOP_Flags::Value_tag_sigbits = 0xffffff00L;
+const CORBA::ULong TAO_OBV_GIOP_Flags::Codebase_url      = 1;
+const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_sigbits = 0x00000006L;
+const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_none    = 0;
+const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_single  = 2;
+const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_list    = 6;
 
 
 #endif /* TAO_HAS_VALUETYPE */

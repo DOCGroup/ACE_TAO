@@ -1,3 +1,14 @@
+Fri May 14 12:20:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ValueBase.h:
+	* tao/ValueBase.i:
+	* tao/ValueBase.cpp:
+	  Added new patches from Torsten Kuepper, this should eliminate
+	  the warnings about enums.
+
+	* */Makefile:
+	  Updated all the dependencies
+
 Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Integrated scheduling back into the EC, this is still
