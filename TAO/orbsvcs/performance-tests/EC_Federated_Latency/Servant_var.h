@@ -12,7 +12,7 @@
 
 #include "ace/config-all.h"
 
-template<typename SERVANT>
+template<class SERVANT>
 class Servant_var
 {
 public:
