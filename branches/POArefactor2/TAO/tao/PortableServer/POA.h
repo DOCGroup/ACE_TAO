@@ -96,10 +96,6 @@ namespace TAO
 
 namespace PortableServer
 {
-  class ServantActivator;
-
-  typedef ServantActivator *ServantActivator_ptr;
-  typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
 }
 
 /**

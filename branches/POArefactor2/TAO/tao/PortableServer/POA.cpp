@@ -29,7 +29,6 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/AdapterActivatorC.h"
-#include "tao/PortableServer/ServantActivatorC.h"
 #include "Non_Servant_Upcall.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PolicyC.h"

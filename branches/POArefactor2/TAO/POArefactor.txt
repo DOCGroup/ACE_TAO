@@ -1,3 +1,8 @@
+Tue Oct 26 11:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Removed all ServantActivator stuff from the POA
+
 Tue Oct 26 10:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
