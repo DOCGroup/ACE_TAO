@@ -1,4 +1,5 @@
 #
+# $Id$
 # Makefile for building the ACE tests
 #
 
@@ -107,7 +108,12 @@ NAMES = \
 	UPIPE_SAP_Test \
 	XtReactor_Test
 
-DIRS = RMCast
+!ifdef SSL_ROOT
+DIRS =  RMCast \
+	SSL
+!else
+DIRS =  RMCast
+!endif
 
 MAKEFILES = DLL_Test.bor Service_Config_DLL.bor
 

@@ -1,3 +1,21 @@
+Thu Dec 20 11:43:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL: New directory for ACE_SSL tests.
+
+        * tests/SSL/dummy.pem:
+        * tests/SSL/key.pem:
+        * tests/SSL/Makefile:
+        * tests/SSL/Makefile.bor: Structure support for new tests.
+
+        * tests/Thread_Pool_Reactor_SSL_Test.(h cpp): Tests the ACE_TP_Reactor
+          with ACE_SSL wrappers. Thank you to Robert Handl
+          <Robert.Handl@era.ericsson.se> for contributing this test.
+
+        * tests/Makefile:
+        * tests/Makefile.bor: Add SSL to build dirs if building with SSL.
+
+        * THANKS: Added Robert Handl to the Hall of Fame.
+
 Thu Dec 20 11:34:51 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_SOCK_Acceptor.(h cpp i):
