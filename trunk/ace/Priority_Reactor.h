@@ -70,7 +70,7 @@ private:
   // A small helper to initialize the bucket.
 
   typedef ACE_Unbounded_Queue<ACE_Event_Tuple> QUEUE;
-  QUEUE** bucket;
+  QUEUE** bucket_;
   // There is a queue per-priority, which simply holds the
   // Event_Handlers until we knwo who goes first.
 

@@ -1,3 +1,8 @@
+Mon Oct 13 13:44:40 1997    <irfan@TWOSTEP>
+
+	* ace/Priority_Reactor: Fixed a gross violation of ACE coding
+	  standard. Changed bucket to bucket_.
+
 Mon Oct 13 12:58:01 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i: moved ACE_OS::strcasecmp () definition after
