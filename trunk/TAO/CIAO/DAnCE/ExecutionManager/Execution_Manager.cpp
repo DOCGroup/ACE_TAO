@@ -102,14 +102,17 @@ write_IOR(const char* ior)
   return 0;
 }
 
-int
+bool
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
-                  CIAO::ExecutionManagerDaemon_ptr obj)
+                  CIAO::ExecutionManagerDaemon_ptr obj
+                  ACE_ENV_ARG_DECL)
 {
   // Naming Service related operations
   CORBA::Object_var naming_context_object =
-    orb->resolve_initial_references ("NameService");
+    orb->resolve_initial_references ("NameService"
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
 
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -118,12 +121,15 @@ register_with_ns (const char * name_context,
   CosNaming::Name name (1);
   name.length (1);
   // Register the name with the NS
-  name[0].id = CORBA::string_dup (name_context);
+  name[0].id = name_context;
 
   // Register the servant with the Naming Service
-  naming_context->bind (name, obj);
+  naming_context->bind (name,
+                        obj
+                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
 
-  return 0;
+  return true;
 }
 
 int
@@ -131,6 +137,8 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      // @@ Error checking is very bad! Need to be fixed!
+      // -- bala
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
@@ -158,7 +166,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
+        IORTable::Table::_narrow (table_object.in ()
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (adapter.in ()))
@@ -174,14 +183,18 @@ main (int argc, char *argv[])
 
       // Implicit activation
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
-      CIAO::ExecutionManagerDaemon_var daemon = daemon_servant->_this ();
+      CIAO::ExecutionManagerDaemon_var daemon =
+        daemon_servant->_this ();
 
       // Now register daemon with IOR table and write its IOR.
-      CORBA::String_var str = orb->object_to_string (daemon.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var str =
+        orb->object_to_string (daemon.in ()
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      adapter->bind ("ExecutionManager", str.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind ("ExecutionManager",
+                     str.in ()
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (write_to_ior_)
@@ -189,10 +202,17 @@ main (int argc, char *argv[])
       else if (register_with_ns_)
         {
           // Register this name with the Naming Service
-          register_with_ns (name, orb.in (), daemon.in ());
+          (void) register_with_ns (name,
+                                   orb.in (),
+                                   daemon.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
 
-      ACE_DEBUG ((LM_INFO, "CIAO_ExecutionMananger IOR: %s\n", str.in ()));
+#if 0
+      ACE_DEBUG ((LM_INFO,
+                  "CIAO_ExecutionMananger IOR: %s\n", str.in ()));
+#endif /*if 0*/
 
       // Activate POA manager
       PortableServer::POAManager_var mgr

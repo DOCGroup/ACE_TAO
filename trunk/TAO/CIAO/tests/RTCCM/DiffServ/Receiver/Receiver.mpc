@@ -19,8 +19,8 @@ project(DiffServ_Receiver_stub): ciao_client {
 
 project(DiffServ_Receiver_svnt) : ciao_servant {
   after += DiffServ_svnt DiffServ_Receiver_stub
-  sharedname  = DoffServ_Receiver_svnt
-  libs    += Receiver_stub DiffServ_stub DiffServ_svnt
+  sharedname  = DiffServ_Receiver_svnt
+  libs    += DiffServ_Receiver_stub DiffServ_stub DiffServ_svnt
   
   idlflags  +=  -Wb,export_macro=RECEIVER_SVNT_Export -Wb,export_include=Receiver_svnt_export.h
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
@@ -43,8 +43,8 @@ project(DiffServ_Receiver_svnt) : ciao_servant {
 
 project(DiffServ_Receiver_exec) : ciao_component {
   after   += DiffServ_Receiver_svnt
-  sharedname = DoffServ_Receiver_exec
-  libs      += Receiver_stub Receiver_svnt DiffServ_stub DiffServ_svnt
+  sharedname = DiffServ_Receiver_exec
+  libs      += DiffServ_Receiver_stub DiffServ_Receiver_svnt DiffServ_stub DiffServ_svnt
   
   idlflags  +=  -Wb,export_macro=RECEIVER_EXEC_Export -Wb,export_include=Receiver_exec_export.h
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
