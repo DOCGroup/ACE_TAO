@@ -442,7 +442,7 @@ ACE_Object_Node::dump (void) const
 
 ACE_Object_Node::ACE_Object_Node (const ACE_TCHAR *path,
                                   const ACE_TCHAR *obj_name)
-  : object_name_ (obj_name ? ACE::strnew (obj_name) : 0)
+  : object_name_ (obj_name ? ACE::ldname (obj_name) : 0)
 {
   ACE_TRACE ("ACE_Object_Node::ACE_Object_Node");
   this->pathname (path ? ACE::strnew (path) : 0);
@@ -503,7 +503,7 @@ ACE_Function_Node::dump (void) const
 
 ACE_Function_Node::ACE_Function_Node (const ACE_TCHAR *path,
                                       const ACE_TCHAR *func_name)
-  : function_name_ (func_name ? ACE::strnew (func_name) : 0)
+  : function_name_ (func_name ? ACE::ldname (func_name) : 0)
 {
   ACE_TRACE ("ACE_Function_Node::ACE_Function_Node");
   this->pathname (path);

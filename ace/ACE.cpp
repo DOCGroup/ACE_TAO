@@ -949,6 +949,42 @@ ACE::ldopen (const ACE_TCHAR *filename,
     return ACE_OS::fopen (buf, type);
 }
 
+ACE_TCHAR *
+ACE::ldname (const ACE_TCHAR *entry_point)
+{
+  ACE_TRACE ("ACE::ldname");
+
+#if defined (__BORLANDC__)
+  size_t size =
+    1 // leading '_'
+    + ACE_OS::strlen (entry_point)
+    + 1;
+
+  ACE_TCHAR *new_name;
+  ACE_NEW_RETURN (new_name,
+                  ACE_TCHAR[size],
+                  0);
+
+  ACE_OS::strcpy (new_name, ACE_TEXT ("_"));
+  ACE_OS::strcat (new_name, entry_point);
+
+  return new_name;
+#else /* __BORLANDC__ */
+  size_t size =
+    ACE_OS::strlen (entry_point)
+    + 1;
+
+  ACE_TCHAR *new_name;
+  ACE_NEW_RETURN (new_name,
+                  ACE_TCHAR[size],
+                  0);
+
+  ACE_OS::strcpy (new_name, entry_point);
+
+  return new_name;
+#endif /* __BORLANDC__ */
+}
+
 int
 ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 {
