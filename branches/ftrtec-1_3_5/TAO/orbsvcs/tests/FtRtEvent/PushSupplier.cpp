@@ -158,16 +158,21 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
   event[0].data.any_value <<= seq_no_;
   bool final = (num_iterations_ == (int) seq_no_++);
 
+  ACE_DECLARE_NEW_CORBA_ENV ;
+
   ACE_TRY_NEW_ENV {
     if (!final) {
       consumer_->push(event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
     else {
+      consumer_->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       ACE_CString ior("file://");
       ior += proxy_consumer_file_;
       CORBA::Object_var obj = orb_->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK
       RtecEventComm::PushConsumer_var consumer = 
         RtecEventComm::PushConsumer::_narrow(obj.in());
       ACE_OS::sleep(1);
