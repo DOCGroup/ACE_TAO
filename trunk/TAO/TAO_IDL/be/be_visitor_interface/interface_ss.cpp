@@ -92,7 +92,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
           << "{" << be_idt_nl // idt = 1
           << "ACE_UNUSED_ARG (obj);" << be_nl
-          << "return "
+          << "return ::"
           << node->full_strategized_proxy_broker_name ()
           << "::" <<"the"
           << node->strategized_proxy_broker_name ()
