@@ -1,3 +1,34 @@
+Mon Jul 17 13:37:12 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/examples/Security/README:
+	* orbsvcs/examples/Security/Send_File/Makefile:
+	* orbsvcs/examples/Security/Send_File/README:
+	* orbsvcs/examples/Security/Send_File/Send_File.dsw:
+	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+	* orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+	* orbsvcs/examples/Security/Send_File/cacert.pem:
+	* orbsvcs/examples/Security/Send_File/client.conf:
+	* orbsvcs/examples/Security/Send_File/client.cpp:
+	* orbsvcs/examples/Security/Send_File/client_cert.pem:
+	* orbsvcs/examples/Security/Send_File/client_key.pem:
+	* orbsvcs/examples/Security/Send_File/client_key_nopasswd.pem:
+	* orbsvcs/examples/Security/Send_File/client_nopasswd.conf:
+	* orbsvcs/examples/Security/Send_File/run_test.pl:
+	* orbsvcs/examples/Security/Send_File/server.conf:
+	* orbsvcs/examples/Security/Send_File/server.cpp:
+	* orbsvcs/examples/Security/Send_File/server_cert.pem:
+	* orbsvcs/examples/Security/Send_File/server_key.pem:
+	* orbsvcs/examples/Security/Send_File/server_key_nopasswd.pem:
+	* orbsvcs/examples/Security/Send_File/server_none.conf:
+	* orbsvcs/examples/Security/Send_File/server_nopasswd.conf:
+	* orbsvcs/examples/Security/Send_File/test.idl:
+	* orbsvcs/examples/Security/Send_File/test_i.cpp:
+	* orbsvcs/examples/Security/Send_File/test_i.h:
+	* orbsvcs/examples/Security/Send_File/test_i.i:
+
+	  Integrated SSLIOP Send_File example from the TAO_Security
+	  distribution into TAO's orbsvcs examples.
+
 Mon Jul 17 13:26:53 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Transport.cpp:
