@@ -158,21 +158,35 @@ sub cleanup {
 ######## the official release directory.
 ########
 sub check_workspace () {
-  if ("$controlled_files") {
-    my @out_of_date = ();
-    open (CVS, "$cvs -nq update $controlled_files |")  ||
-      die "$0: unable to open $cvs\n";
-    while (<CVS>) {
-      next if m%/tests/log/%;
-      push (@out_of_date, $_) if "$_";
-    }
-    close CVS;
+  my $module;
 
-    if (! "$exec_prefix"  &&  @out_of_date) {
-      warn "ERROR: workspace must be updated or cleaned:\n  " .
-           join ("\n  ", @out_of_date) . "\n";
-      return 1;
-    }
+  if ($kit =~ /^ace/) {
+    chdir '..'  ||  die "$0: unable to chdir ..\n";
+    $module = 'ACE_wrappers';
+  } elsif ($kit =~ /tao/) {
+    chdir '../..'  ||  die "$0: unable to chdir ../..\n";
+    $module = 'ACE_wrappers/TAO';
+  }
+
+  my @out_of_date = ();
+  open (CVS, "$cvs -nq checkout $module |")  ||
+    die "$0: unable to open $cvs\n";
+  while (<CVS>) {
+    next if m%^U %;    #### Allow others to update the repository.
+    push (@out_of_date, $_) if "$_";
+  }
+  close CVS;
+
+  if ($kit =~ /^ace/) {
+    chdir 'ACE_wrappers'  ||  die "$0: unable to chdir ACE_wrappers\n";
+  } elsif ($kit =~ /tao/) {
+    chdir 'ACE_wrappers/TAO'  ||  die "$0: unable to chdir ACE_wrappers/TAO\n";
+  }
+
+  if (! "$exec_prefix"  &&  @out_of_date) {
+    warn "ERROR: workspace must be updated or cleaned:\n  " .
+         join ("\n  ", @out_of_date) . "\n";
+    return 1;
   }
 
   0;
