@@ -1,3 +1,8 @@
+Sun Nov 22 13:57:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Makefile: Added Env_Value_T to the TEMPLATE_FILES macro in
+ 	  the Makefile.  Thanks to Ossama for reporting this.
+
 Sat Nov 21 14:32:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/DLL: Cleaned up the DLL logic to handle "close on

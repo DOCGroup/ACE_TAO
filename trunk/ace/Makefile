@@ -157,6 +157,7 @@ TEMPLATE_FILES = \
            Containers_T \
            Dump_T \
            Dynamic_Service \
+	   Env_Value_T \
            Event_Handler_T \
            Free_List \
            Functor_T \
