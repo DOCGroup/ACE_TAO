@@ -56,6 +56,7 @@ FILES = \
   PortableGroup/PG_Default_Property_Validator \
   PortableGroup/PG_Factory_Map \
   PortableGroup/PG_Factory_Set \
+  PortableGroup/PG_Group_Guard \
   PortableGroup/PG_GenericFactory \
   PortableGroup/PG_Location_Equal_To \
   PortableGroup/PG_Location_Hash \
@@ -66,8 +67,16 @@ FILES = \
   PortableGroup/PG_Operators \
   PortableGroup/PG_PropertyManager \
   PortableGroup/PG_Property_Utils \
+  PortableGroup/PG_Null_Property_Validator \
+  PortableGroup/PG_FactoryRegistry \
+  PortableGroup/PG_Group_Factory \
+  PortableGroup/PG_Object_Group \
+  PortableGroup/PG_Object_Group_Manipulator \
+  PortableGroup/PG_Properties_Encoder \
+  PortableGroup/PG_Properties_Support \
+  PortableGroup/PG_Property_Set \
+  PortableGroup/PG_Utils \
   PortableGroup_Simple_DSC
-
 
 
 DEFS  = $(addsuffix .h,$(FILES))
