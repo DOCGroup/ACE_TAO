@@ -1,34 +1,38 @@
 Tue Feb  9 16:12:42 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/{010|011}/task.{h|cpp} : barrier_ doesn't need to be a
-	pointer since Doug moved n_threads to the ctor.  Minor typos
-	corrected also.
+        * docs/tutorials/{010|011}/task.{h|cpp} : barrier_ doesn't need to be a
+        pointer since Doug moved n_threads to the ctor.  Minor typos
+        corrected also.
 
-	* docs/tutorials/010/message_queue.cpp :  Typos...
+        * docs/tutorials/010/message_queue.cpp :  Typos...
 
-	* docs/tutorials/002/server.cpp: Added call to notify() in the
-	signal handler so that ^C will exit as expected.
+        * docs/tutorials/002/server.cpp: Added call to notify() in the
+        signal handler so that ^C will exit as expected.
 
 Tue Feb 09 13:57:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/DLList_Test.cpp (main): The test should log the result to
-	  DLList_Test.log, not ACE_DLList_Test.log.
+        * tests/DLList_Test.cpp (main): The test should log the result to
+          DLList_Test.log, not ACE_DLList_Test.log.
 
-	* tests/run_tests.{sh,vxworks,psosim}: Added DLList_Test.
+        * tests/run_tests.{sh,vxworks,psosim}: Added DLList_Test.
 
-	* tests/run_tests.bat: Removed DLL_Test.
+        * tests/run_tests.bat: Removed DLL_Test.
 
-	* ace/ACE.cpp (ldfind): Win32 only.  Made sure we always look for
-	  the DLL at the current directory first on Win32 which is the
-	  default behavior on Win32.
+        * ace/ACE.cpp (ldfind): Win32 only.  Made sure we always look for
+          the DLL at the current directory first on Win32 which is the
+          default behavior on Win32.
 
-	* ace/ace_{dll,lib}.dsp: Removed entries of Service_Record.{h,i}.
-	  Thanks to David for noticing this.
+        * ace/ace_{dll,lib}.dsp: Removed entries of Service_Record.{h,i}.
+          Thanks to David for noticing this.
 
 Tue Feb 09 10:21:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * Service_Types.{i,cpp},README: removed obsolete references to
+        * ace/Service_Types.{i,cpp},README: removed obsolete references to
           Service_Record.
+
+        * include/makeinclude/wrapper_macros.GNU: added BUILD line with both
+          shared_libs and static_libs enabled, so that individual Makefiles
+          don't need a BUILD line.
 
 Mon Feb 08 14:32:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
