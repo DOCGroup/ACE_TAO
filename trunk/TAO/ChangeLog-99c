@@ -1,3 +1,10 @@
+Fri May  7 20:57:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added Sequence_T.cpp and Object_Adapter.h to the
+	  projects.
+
 Fri May  7 20:39:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.i:
