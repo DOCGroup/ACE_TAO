@@ -2378,6 +2378,15 @@ typedef short ACE_pri_t;
     {
     public:
       ACE_U_LongLong (u_long lo = 0, u_long hi = 0) : hi_ (hi), lo_ (lo) {}
+      ACE_U_LongLong (const ACE_U_LongLong &);
+      ACE_U_LongLong &operator= (const ACE_U_LongLong &);
+      ~ACE_U_LongLong () {}
+
+      int operator== (const ACE_U_LongLong &) const;
+      int operator< (const ACE_U_LongLong &) const;
+      int operator<= (const ACE_U_LongLong &) const;
+      int operator> (const ACE_U_LongLong &) const;
+      int operator>= (const ACE_U_LongLong &) const;
 
       ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
       ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
