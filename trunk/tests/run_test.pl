@@ -62,7 +62,7 @@ sub record_resources ()
         else {
             $user = $ENV{'LOGNAME'};
         }
-  
+
         $start_test_resources=`ipcs | egrep $user`;
     }
 }
@@ -73,7 +73,7 @@ sub check_resources ()
 {
     if ($config_list->check_config ('CHECK_RESOURCES')) {
         $end_test_resources=`ipcs | egrep $user`;
- 
+
         if ("$start_test_resources" ne "$end_test_resources") {
             print STDERR "Warning: the ACE tests _may_ have leaked OS ".
                          "resources!\n";
@@ -98,7 +98,7 @@ sub run_program ($)
     ### Try to run the program
 
     if (! -x $P->Executable ()) {
-        print STDERR "Error: " . $P->Executable () . 
+        print STDERR "Error: " . $P->Executable () .
                      " does not exist or is not runnable\n";
         return;
     }
@@ -110,9 +110,9 @@ sub run_program ($)
 
     if ($status == -1) {
         print STDERR "Error: $program FAILED (time out)\n";
-        $P->Kill (); 
+        $P->Kill ();
         $P->TimedWait (1);
-    } 
+    }
     elsif ($status != 0) {
         print STDERR "Error: $program FAILED with exit status $status\n";
     }
@@ -124,7 +124,7 @@ sub run_program ($)
 
 sub purify_program ($)
 {
-    ### @todo  
+    ### @todo
 
     my $program = shift;
 
@@ -160,31 +160,31 @@ sub check_log ($$)
 
     if (! -e $log ) {
         print STDERR "Error: No log file ($log) is present\n";
-    } 
+    }
     else {
         if (open (LOG, "<".$log) == 0) {
             print STDERR "Error: Cannot open log file $log\n";
-        } 
+        }
         else {
             my $print_log = 0;
             my $starting_matched = 0;
             my $ending_matched = 0;
-            
+
             while (<LOG>) {
                 chomp;
-                
+
                 if (m/Starting/) {
                     $starting_matched = 1;
                 }
-                
+
                 if (m/Ending/) {
                     $ending_matched = 1;
                 }
-                
+
                 if (/LM\_ERROR\@(.*)$/) {
                     print STDERR "Error: ($log): $1\n";
                     $print_log = 1;
-                } 
+                }
                 if (/LM\_WARNING\@(.*)$/) {
                     print STDERR "Warning: ($log): $1\n";
                     $print_log = 1;
@@ -197,7 +197,7 @@ sub check_log ($$)
                 print STDERR "Error ($log): no line with 'starting'\n";
                 $print_log = 1;
             }
-            
+
             if ($ending_matched == 0) {
                 print STDERR "Error ($log): no line with 'Ending'\n";
                 $print_log = 1;
@@ -207,7 +207,7 @@ sub check_log ($$)
                 print STDERR "======= Begin Log File \n";
                 if (open (LOG, "<".$log) == 0) {
                     print STDERR "Error: Cannot open log file $log\n";
-                } 
+                }
                 else {
                     my @log = <LOG>;
                     print STDERR @log;
@@ -238,12 +238,8 @@ sub delete_temp_files ()
     }
     closedir (DIR);
 
-    push @files, glob ('backing_store_*');
-
-    foreach $file (@files) {
-      unlink $file;
-    }
-
+    PerlACE::check_n_cleanup_files ('MEM_Acceptor_*');
+    PerlACE::check_n_cleanup_files ('backing_store_*');
 }
 
 ################################################################################
@@ -262,7 +258,7 @@ if (!getopts ('dht') || $opt_h) {
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
-    print "Possible Configs: CHECK_RESOURCES Purify", 
+    print "Possible Configs: CHECK_RESOURCES Purify",
            $config_list->list_configs (), "\n";
     exit (1);
 }
@@ -284,7 +280,7 @@ if (defined $opt_t) {
 }
 else {
     @tests = $config_list->valid_entries ();
-} 
+}
 
 if (defined $opt_d) {
     $config_list->dump ();
