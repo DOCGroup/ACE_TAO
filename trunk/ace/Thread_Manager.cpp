@@ -833,7 +833,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 #if defined (VXWORKS)
   if (tid && ACE_OS::strncmp (tid, "==ace_t==", 9) == 0)
     {
-      delete tid;
+      delete [] tid;
     }
 #endif /* VXWORKS */
 
