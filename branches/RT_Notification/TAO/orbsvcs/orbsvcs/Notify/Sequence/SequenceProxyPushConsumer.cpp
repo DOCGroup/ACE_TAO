@@ -98,7 +98,7 @@ TAO_NS_SequenceProxyPushConsumer::push_structured_events (const CosNotification:
 
       TAO_NS_Method_Request_Lookup_No_Copy request (&event, this);
 
-      this->worker_task ()->execute (request ACE_ENV_ARG_DECL);
+      this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
     }
 }
 

@@ -34,7 +34,7 @@ TAO_NS_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant servant
 void
 TAO_NS_RT_StructuredProxyPushSupplier::push (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
 {
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
       event->push (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -53,7 +53,7 @@ TAO_NS_RT_StructuredProxyPushSupplier::push (const TAO_NS_Event* event ACE_ENV_A
 void
 TAO_NS_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
 {
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
       event->push_no_filtering (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

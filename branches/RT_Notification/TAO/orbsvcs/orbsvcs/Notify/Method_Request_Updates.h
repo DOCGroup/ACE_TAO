@@ -75,7 +75,7 @@ public:
   ~TAO_NS_Method_Request_Updates_No_Copy ();
 
   /// Create a copy of this object.
-  TAO_NS_Method_Request* copy (void);
+  virtual TAO_NS_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);

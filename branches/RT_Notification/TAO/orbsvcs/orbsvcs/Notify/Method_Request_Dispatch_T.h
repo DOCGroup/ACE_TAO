@@ -35,7 +35,7 @@ public:
   TAO_NS_Method_Request_Dispatch_T (EVENT_PARAM event, PROXY_PARAM proxy, CORBA::Boolean filtering);
 
   /// Destructor
-  ~TAO_NS_Method_Request_Dispatch_T ();
+  virtual ~TAO_NS_Method_Request_Dispatch_T ();
 
   /// Execute the dispatch operation.
   int execute_i (ACE_ENV_SINGLE_ARG_DECL);

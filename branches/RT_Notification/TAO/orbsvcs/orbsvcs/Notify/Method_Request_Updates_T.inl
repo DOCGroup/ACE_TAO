@@ -1,5 +1,7 @@
 // $Id$
 
+#include "Peer.h"
+
 template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM> ACE_INLINE int
 TAO_NS_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {

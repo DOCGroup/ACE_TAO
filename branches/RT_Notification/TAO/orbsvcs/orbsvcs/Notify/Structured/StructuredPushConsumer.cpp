@@ -2,7 +2,6 @@
 #include "StructuredPushConsumer.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "../Event.h"
-#include "c:/Program Files/Rational/Quantify/pure.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "StructuredPushConsumer.inl"
@@ -60,7 +59,5 @@ TAO_NS_StructuredPushConsumer::push (const CORBA::Any& event ACE_ENV_ARG_DECL)
 void
 TAO_NS_StructuredPushConsumer::push (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL)
 {
-  QuantifyStopRecordingData ();
   this->push_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
-  QuantifyStartRecordingData ();
 }

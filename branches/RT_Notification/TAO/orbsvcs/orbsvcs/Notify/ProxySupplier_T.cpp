@@ -40,7 +40,7 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::admin_types_changed (const CosNotification
 }
 
 template <class SERVANT_TYPE> void
-TAO_NS_ProxySupplier_T<SERVANT_TYPE>::forward_structured (const CosNotification::StructuredEvent& notification ACE_ENV_ARG_DECL_NOT_USED)
+TAO_NS_ProxySupplier_T<SERVANT_TYPE>::forward_structured (const CosNotification::StructuredEvent& notification ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -49,7 +49,7 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::forward_structured (const CosNotification:
 
   TAO_NS_Method_Request_Dispatch_No_Copy request (&event, this, 1);
 
-  this->worker_task ()->execute (request ACE_ENV_ARG_DECL);
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
@@ -62,11 +62,11 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::forward_structured_no_filtering (const Cos
 
   TAO_NS_Method_Request_Dispatch_No_Copy request (&event, this, 0);
 
-  this->worker_task ()->execute (request ACE_ENV_ARG_DECL);
+  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void
-TAO_NS_ProxySupplier_T<SERVANT_TYPE>::forward_any (const CORBA::Any & any ACE_ENV_ARG_DECL_NOT_USED)
+TAO_NS_ProxySupplier_T<SERVANT_TYPE>::forward_any (const CORBA::Any & any ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

@@ -10,7 +10,7 @@ ACE_RCSID(Notify, TAO_NS_ProxyPushConsumer, "$id$")
 
 #include "tao/debug.h"
 #include "../AdminProperties.h"
-#include "../Method_request_Lookup.h"
+#include "../Method_Request_Lookup.h"
 #include "../Worker_Task.h"
 #include "AnyEvent.h"
 #include "PushSupplier.h"

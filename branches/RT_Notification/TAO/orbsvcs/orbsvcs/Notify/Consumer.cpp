@@ -30,7 +30,7 @@ TAO_NS_Consumer::proxy (void)
 }
 
 void
-TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->is_suspended_ == 1)
     return; // Do nothing if we're suspended.
@@ -45,15 +45,15 @@ TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   TAO_NS_ProxySupplier* proxy_supplier = this->proxy_supplier ();
 
-  TAO_NS_Event_var event; 
+  TAO_NS_Event_var event;
 
   while (!event_collection_copy.is_empty ())
     {
       if (event_collection_copy.dequeue_head (event) == 0)
         {
-          proxy_supplier->push_no_filtering (event);
+          proxy_supplier->push_no_filtering (event ACE_ENV_ARG_PARAMETER);
         }
-    } 
+    }
 }
 
 void

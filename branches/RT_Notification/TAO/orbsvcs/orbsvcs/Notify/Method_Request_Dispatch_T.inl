@@ -1,5 +1,6 @@
 // $Id$
 
+#include "Admin.h"
 
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM> ACE_INLINE int
 TAO_NS_Method_Request_Dispatch_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::execute_i (ACE_ENV_SINGLE_ARG_DECL)
@@ -17,7 +18,7 @@ TAO_NS_Method_Request_Dispatch_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::execut
                                                                   ACE_ENV_ARG_PARAMETER);
 
       if (TAO_debug_level > 1)
-        ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",this->proxy_supplier_ , val));
+        ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",&this->proxy_supplier_ , val));
 
       // Filter failed - do nothing.
       if (val == 0)
