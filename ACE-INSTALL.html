@@ -2712,6 +2712,20 @@ Flag             Description
 ----             -----------
 debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 exceptions       Enable exception handling (not supported by all platforms).
+include_env      Support old-style ACE_TRY_ENV declarations in methods.
+                 This switch is necessary for compiling TAO applications
+                 in the native exception configuration that were written 
+                 for TAO versions before 1.2.2.
+                 In TAO 1.2.2, new macros were introduced that supercede
+                 the direct ACE_TRY_ENV declarations. These are the 
+                 ACE_ENV_ARG macros that are defined in ace/CORBA_macros.h
+                 and are documented in docs/exceptions.html.
+                 This switch only affects the exceptions=1 configuration.
+                 It is for backward compatibility only.
+                 There will be warnings about unused _ACE_environment_variable
+                 parameters when using include_env=1.
+                 If possible, do not use it, but instead change your TAO
+                 applications to use the ACE_ENV_ARG macros.
 fast             Enable -fast option, e.g., with Sun C++.
 inline           Enable ACE inlining.  Some platforms enable inlining by
                    default, others do not.

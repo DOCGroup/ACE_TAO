@@ -33,8 +33,8 @@ Vinoski</A>.  Likewise, we recommend that you read the Error Handling chapter fr
   <li><a href="#nutshell">ACE Try Macros in a Nutshell</a>
   <li><a href="#examples">Examples</a>
   <li><a href="#general">General Guidelines for Exception Handling</a>
-  <li><a href="#transition">Transition from TAO try macros to ACE try
-      macros</a>
+  <li><a href="#transition">Transition from ACE_TRY_ENV usage to the
+      ACE_ENV_ARG macros</a>
   <li><a href="#caveats">Some Caveats</a>
 </ul>
 
@@ -81,7 +81,7 @@ macros.
         usage is a bit peculiar -<br>
         Example: a CORBA IDL defined method
         <pre>
-        void mymethod (boolean b);
+        void mymethod (in boolean b);
         </pre>
         may be declared as follows in C++:
         <pre>
@@ -149,7 +149,7 @@ macros.
         comma is already part of the macro definition. For example,
         the CORBA IDL method
         <pre>
-        void mymethod (boolean b);
+        void mymethod (in boolean b);
         </pre>
         would be invoked as follows:
         <pre>
@@ -542,74 +542,68 @@ macros discussed here.
 </ul>
 
 <HR><P>
-<H3><a name="transition">Transition from TAO try macros to ACE try macros</h3>
+<H3><a name="transition">Transition from ACE_TRY_ENV usage
+    to the ACE_ENV_ARG macros</h3>
 
-This list tries to give a comprehensive list of mapping between TAO
-try macros and ACE try macros.  It's sole purpose is to provide hints
-in the converting the use of TAO try macros to ACE try macros and is
-by no mean complete.
+<P>Before TAO version 1.2.2, IDL defined methods were declared using
+direct mentions of <code>CORBA::Environment ACE_TRY_ENV</code>.
+The problem with this approach was that the ACE_TRY_ENV had 
+to be passed into ORB core method calls even when native exceptions
+are supported. The TAO internal usage of the ACE_ENV_ARG family of
+macros fixes this.</p>
 
-<OL>
-  <li><P>Rename all <code>CORBA_Environment</code> variables to
-      <code>ACE_TRY_ENV</code>. </P>
+<P>CORBA applications that do not need support for emulated exceptions
+can use direct C++ exception handling and omit the CORBA::Environment
+parameter entirely.<BR>
+On the other hand, applications that shall support environments without
+C++ exceptions (such as all applications that are part of to TAO itself)
+should use the ACE_ENV_ARG macros.<BR>
+The script <code>$ACE_ROOT/bin/subst_env.pl</code> can assist in the
+conversion from the direct ACE_TRY_ENV usage to the ACE_ENV_ARG macros.
+Here is a list of the substitutions that the script does. For context,
+two sample IDL methods are used:
+<PRE>
+        void noargs ();
+        void withargs (in boolean b);
+</pre>
+At each example, first the <em>old usage</em> is given, then its
+<code>subsitution</code>.
+</p>
+
+<H4>Method declaration</h4>
+
+<UL>
+  <li><P><em>void noargs (CORBA::Environment &amp;);</em></P>
+      <P><code>void noargs (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);</code></P>
   </li>
-
-  <li><P>Replace <code>TAO_TRY</code> <code>TAO_TRY_VAR</code> with
-      <code>ACE_TRY</code>.  Added
-      <code>ACE_DECLARE_NEW_CORBA_ENV</code> if necessary.</p>
+  <li><P><em>void noargs (CORBA::Environment &amp;ACE_TRY_ENV);</em></P>
+      <P><code>void noargs (ACE_ENV_SINGLE_ARG_DECL);</code></P>
   </li>
-
-  <li><p>Replace <code>TAO_TRY_EX</code> <code>TAO_TRY_VAR_EX</code>
-      with <code>ACE_TRY_EX</code>.</p>
+  <li><P><em>void noargs (CORBA::Environment &amp;ACE_TRY_ENV = TAO_default_environment ());</em></P>
+      <P><code>void noargs (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);</code></P>
   </li>
-
-  <li><p>Replace <code>TAO_CHECK_RETURN</code> and
-      <code>TAO_CHECK_RETURN_VOID</code> with <code>ACE_CHECK_RETURN</code>
-      and <code>ACE_CHECK</code>. These macros are used
-      <em>outside</em> of TRY/CATCH blocks.</P>
+  <li><P><em>void withargs (CORBA::Boolean b, CORBA::Environment &amp;);</em></P>
+      <P><code>void withargs (CORBA::Boolean b ACE_ENV_ARG_DECL_NOT_USED);</code></P>
   </li>
-
-  <li><P>Replace <code>TAO_THROW</code>, <code>TAO_THROW_ENV</code>,
-      <code>TAO_THROW_RETURN</code>, <code>TAO_THROW_ENV_RETURN</code>
-      with <code>ACE_THROW</code> and
-      <code>ACE_THROW_RETURN</code>. </p>
+  <li><P><em>void withargs (CORBA::Boolean b, CORBA::Environment &amp;ACE_TRY_ENV);</em></P>
+      <P><code>void withargs (CORBA::Boolean b ACE_ENV_ARG_DECL);</code></P>
   </li>
-
-  <li><P>Replace <code>ACE_NEW_THROW</code>,
-      <code>ACE_NEW_THROW_RETURN</code>,
-      <code>ACE_TRY_NEW_THROW</code> with
-      <code>ACE_NEW_THROW_EX</code> and appropriate
-      <code>ACE_CHECK*</code> macros. aformention</P>
-
-  <li><p>Replace <code>TAO_CHECK_ENV</code> and
-      <code>TAO_CHECK_ENV_EX</code> with <code>ACE_TRY_CHECK</code>
-      and <code>ACE_TRY_CHECK_EX</code>.</p>
+  <li><P><em>void withargs (CORBA::Boolean b, CORBA::Environment &amp;
+         ACE_TRY_ENV = TAO_default_environment ());</em></P>
+      <P><code>void withargs (CORBA::Boolean b ACE_ENV_ARG_DECL_WITH_DEFAULTS);</code></P>
   </li>
+</ul>
 
-  <li><p>Replace <code>TAO_TRY_THOW</code> and
-      <code>TAO_TRY_THROW_EX</code> with <code>ACE_TRY_THROW</code>
-      and <code>ACE_TRY_THROW_EX</code>.  Notice that you can also use
-      <code>ACE_TRY_THROW*</code> within CATCH blocks.</p>
-  </li>
+<H4>Method invocation</h4>
 
-  <li><p>Replace <code>TAO_RETHROW</code>,
-      <code>TAO_RETHROW_RETURN</code>,
-      <code>TAO_RETHROW_RETURN_VOID</code> with
-      <code>ACE_RETHROW</code>.</p>
+<UL>
+  <li><P><em>noargs (ACE_TRY_ENV);</em></P>
+      <P><code>noargs (ACE_ENV_SINGLE_ARG_PARAMETER);</code></P>
   </li>
-
-  <li><p>Replace <code>TAO_CATCH</code>, <code>TAO_CATCHANY</code>,
-      and <code>TAO_CATCHALL</code> with <code>ACE_CATCH</code>,
-      <code>ACE_CATCHANY</code> and <code>ACE_CATCHALL</code>
-      respectively. </p>
+  <li><P><em>withargs (bparam, ACE_TRY_ENV);</em></P>
+      <P><code>withargs (bparam ACE_ENV_ARG_PARAMETER);</code></P>
   </li>
-
-  <li><p>Replace <code>TAO_ENDTRY</code> with <code>ACE_ENDTRY</code>
-      followed by an appropriate CHECK macro (<code>ACE_CHECK</code>,
-      <code>ACE_CHECK_RETURN</code>, <code>ACE_TRY_CHECK</code>, or
-      <code>ACE_TRY_CHECK_EX</code>.)</P>
-  </li>
-</ol>
+</ul>
 
 <HR><P>
 <H3><a name="caveats">Caveats</H3>
