@@ -1451,11 +1451,14 @@ TAO_ORB_Core::reactor (void)
           tss->reactor_ = this->resource_factory ()->get_reactor ();
           tss->owns_reactor_ = 1;
         }
-      else if (this->reactor_ == 0)
+      else
         {
-          // @@ Double checked locking!
-          this->reactor_ =
-            this->resource_factory ()->get_reactor ();
+          if (this->reactor_ == 0)
+            {
+              // @@ Double checked locking!
+              this->reactor_ =
+                this->resource_factory ()->get_reactor ();
+            }
           tss->reactor_ = this->reactor_;
         }
     }

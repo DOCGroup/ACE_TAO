@@ -1,3 +1,9 @@
+Thu Jun 17 11:54:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Fixed problem with the ORB reactor initialization on
+	  multi-threaded programs with global resources.
+
 Thu Jun 17 11:17:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_generator.cpp:
