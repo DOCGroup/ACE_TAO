@@ -120,8 +120,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 {
   // Define the static services.  This macro call creates static
   // service descriptors that are used for initialization below.
-#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER) && \
-  defined (ACE_HAS_WCHAR)
+#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER) 
   ACE_STATIC_SVC_DEFINE (ACE_Naming_Context_initializer,
                          ACE_TEXT ("ACE_Naming_Context"),
                          ACE_SVC_OBJ_T,
@@ -142,8 +141,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 
   // Initialize the static service objects using the descriptors created
   // above.
-#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER) && \
-  defined (ACE_HAS_WCHAR)
+#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
   ace_svc_desc_ACE_Naming_Context =
     ace_svc_desc_ACE_Naming_Context_initializer;
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
