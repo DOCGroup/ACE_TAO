@@ -5,7 +5,7 @@
 = Abstract
 
         The current implementation of TAO's real-time Event Channel
-has proven to be efficient, generally reliable and in general does bug
+has proven to be efficient, generally reliable and in general bug
 free; but it was designed to solve the forces in one problem domain
 (hard real-time avionics), so performance considerations (latency)
 were the main concern over other requirements.  
@@ -28,8 +28,8 @@ syntactic problems of this architecture, the relation between the
 modules have semantic significance and they cannot simply be organized
 in an arbitrary way; even more, we have found that only a few
 operations on each module need to be strategized, and that using
-Template Methods or strategies on each module would be a better
-solution than to replace the module wholesale.
+Template Method or Strategy on each module would be a better solution
+than to replace the module wholesale.
 
         The new Event Channel will consist of the following
 components:
@@ -89,8 +89,8 @@ components:
   similar features.  Notice that providing the Supplier with a
   Null_Filter moves all the filtering responsability 
 
-- The ProxyPushConsumer object can be subclassed to provide different
-  strategies to handle filtering, for instance:
+- The ProxyPushConsumer object is strategized to provide different
+  ways to handle (close to the supplier) filtering, for example:
      + Each one keeps track of the consumers possibly interested in
        the events published here.
      + Use the global consumer list to find objects interested in the
@@ -98,12 +98,6 @@ components:
      + Use a global list for each type of event.
      + Do not use a global list and let the consumers do filtering (if
        they want to)
-  [NOTE: we are considering if this features should be implemented as
-   strategies instead of template method, if implemented as factory
-   methods we may need to use decorators to handle other sources of
-   variation, such as event counting; using an strategy decreases the 
-   performance (slightly) in the common case where no other features
-   are required]
 
 - The Timer_Module: this is used by the EC_Filter_Builder to create
   per-consumer timeout events.
@@ -144,3 +138,15 @@ components:
     data that is owned by the filter (and thus require no copying) and
     one for external data; this will be used in the dispatching module
     to minimize data copying too.
+  - Features that are not important for production code can be plugged 
+    out, for example: timestamping (for performance analysis) can be
+    implemented as a Decorator on the ProxyPushConsumer and the
+    Dispatching classes.  Similarly the configuration runs require
+    that the EC call the scheduler with the subscription and
+    correlation information, this calls can be completely removed for
+    the production code.
+
+	In general we expect that the performance of the new real-time 
+Event Service will be equal or better than the previous
+implementation. Initial experiments suggest that this is going to be
+the case.
