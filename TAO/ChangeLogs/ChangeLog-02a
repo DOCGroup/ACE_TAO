@@ -1,3 +1,8 @@
+Thu Aug 31 16:26:21 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* examples/Simulator/Event_Supplier/Makefile: 
+	  Updated dependencies.
+
 Thu Aug 31 16:03:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp : 
