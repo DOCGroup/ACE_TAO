@@ -1,3 +1,8 @@
+Mon Jul 12 14:18:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/ValueFactory_Map.cpp:
+	  Added some inits to 0 to avert Linux/egcs warnings.
+
 Mon Jul 12 13:54:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.cpp (TAO_ORB_Core): fixed MVS "from" codeset
