@@ -94,7 +94,7 @@ private:
   ACE_SupplierQOS_Factory supplier_qos_;
   // The Supplier QOS.
 
-  EventChannel_i ec_i_;
+  TAO_CosEC_EventChannel_i ec_i_;
   // The servant object of the COS Event Channel.
 
   CosEventChannelAdmin::EventChannel_ptr cos_ec_;

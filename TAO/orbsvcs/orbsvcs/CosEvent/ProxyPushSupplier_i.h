@@ -24,9 +24,9 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 
-class PushConsumerWrapper;
+class TAO_CosEC_PushConsumerWrapper;
 
-class TAO_ORBSVCS_Export ProxyPushSupplier_i : public POA_CosEventChannelAdmin::ProxyPushSupplier
+class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushSupplier_i : public POA_CosEventChannelAdmin::ProxyPushSupplier
 {
   // = TITLE
   //   class ProxyPushSupplier-i implements the ProxyPushConsumer interface.
@@ -36,11 +36,11 @@ class TAO_ORBSVCS_Export ProxyPushSupplier_i : public POA_CosEventChannelAdmin::
   //   RtecEventChannelAdmin::ProxyPushSupplier.
 public:
   // = Initialization and termination methods.
-  ProxyPushSupplier_i (const RtecEventChannelAdmin::ConsumerQOS &qos,
-                       RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);
+  TAO_CosEC_ProxyPushSupplier_i (const RtecEventChannelAdmin::ConsumerQOS &qos,
+                                 RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);
   // Constructor.
 
-  ~ProxyPushSupplier_i (void);
+  ~TAO_CosEC_ProxyPushSupplier_i (void);
   // Destructor.
 
   virtual void disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV);
@@ -58,10 +58,10 @@ private:
   const RtecEventChannelAdmin::ConsumerQOS &qos_;
   // The ConsumerQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps_;
+  RtecEventChannelAdmin::ProxyPushSupplier_var pps_;
   // The Rtec ProxyPushSupplier specified by the user of this class.
 
-  PushConsumerWrapper *wrapper_;
+  TAO_CosEC_PushConsumerWrapper *wrapper_;
   // The Rtec PushConsumer wrapper used by the Rtec ProxyPushSupplier.
 };
 

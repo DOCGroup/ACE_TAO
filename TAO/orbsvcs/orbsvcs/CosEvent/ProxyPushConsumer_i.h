@@ -18,34 +18,36 @@
 //
 // ================================================================
 
-#if !defined (_PROXYPUSHCONSUMER_H)
-#define _PROXYPUSHCONSUMER_H
+#if !defined (_PROXYPUSHCONSUMER_I_H)
+#define _PROXYPUSHCONSUMER_I_H
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 
-// @@ Pradeep, all your classes should have a prefix, to avoid
-// namespace pollution (think about a user trying to name his class
-// PushSupplierWrapper). Something like TAO_CosEC_
-class PushSupplierWrapper;
+class TAO_CosEC_PushSupplierWrapper;
 
-class TAO_ORBSVCS_Export ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
+class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
   // = TITLE
-  //   class ProxyPushConsumer_i implements the ProxyPushConsumer
+  //   class TAO_CosEC_ProxyPushConsumer_i implements the ProxyPushConsumer
   //   interface.
   //
   // = DESCRIPTION
   //   This implementation of the ProxyPushConsumer uses the
   //   RtecEventChannelAdmin::ProxyPushConsumer.
   //
+  //   NOTE:  RtecEventChannelAdmin::ProxyPushConsumer::push method is
+  //   passed a RtecEventComm::EventSet.The <EventHeader> field in that is
+  //   initialized using the  the 1st <publications> from the <SupplierQOS>.
+  //   so we assume that publications[0] is initialized.
+  //
 public:
   // = Initialization and termination methods.
-  ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
-                       RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc);
+  TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
+                                 RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc);
   // Constructor.
 
-  ~ProxyPushConsumer_i (void);
+  ~TAO_CosEC_ProxyPushConsumer_i (void);
   // Destructor.
 
   virtual void push (const CORBA::Any &data,
@@ -67,11 +69,11 @@ private:
   const RtecEventChannelAdmin::SupplierQOS &qos_;
   // The SupplierQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc_;
+  RtecEventChannelAdmin::ProxyPushConsumer_var ppc_;
   // The Rtec ProxyPushConsumer specified by the user of this class.
 
-  PushSupplierWrapper *wrapper_;
+  TAO_CosEC_PushSupplierWrapper *wrapper_;
   // The Rtec PushSupplier wrapper used by the Rtec ProxyPushConsumer.
 };
 
-#endif /* _PROXYPUSHCONSUMER_H */
+#endif /* _PROXYPUSHCONSUMER_I_H */

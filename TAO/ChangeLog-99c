@@ -1,3 +1,18 @@
+Fri Jan  8 18:06:11 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent:
+	  These changes are across all the files in this directory...
+	  1. prefixed each class name with TAO_CosEC_
+	  2. changed all member *_ptr to *_var, removed calls to <release>.
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+	  1. <push> now uses an <EventSet> that does not own the buffer.
+	  2. ACE_NEW replaced with ACE_NEW_THROW.
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+	  ACE_NEW replaced with ACE_NEW_THROW.
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.h:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
+	  Changed EventChannel_i to TAO_CosEC_EventChannel_i.
+
 Fri Jan  8 15:05:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao_idl/be/be_visitor_union_branch/public_ci.cpp:
