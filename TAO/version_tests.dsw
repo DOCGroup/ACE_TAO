@@ -54,19 +54,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
 
@@ -126,9 +114,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -147,9 +132,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -167,9 +149,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -249,9 +228,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -270,9 +246,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -290,9 +263,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -327,15 +297,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TradingLib
     End Project Dependency
     Begin Project Dependency
@@ -369,19 +330,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
 
@@ -395,15 +344,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name IDL_Cubit Client
     End Project Dependency
@@ -450,9 +390,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -486,15 +423,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
@@ -509,15 +437,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
@@ -534,15 +453,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
@@ -557,15 +467,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
@@ -582,15 +483,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
@@ -605,15 +497,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
@@ -735,15 +618,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TradingLib
     End Project Dependency
     Begin Project Dependency
@@ -762,9 +636,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -782,9 +653,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -894,9 +762,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -914,9 +779,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -936,8 +798,23 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO DLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "idl_test"=".\tests\IDL_Test\idl_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -956,9 +833,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -993,15 +867,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TradingLib
     End Project Dependency
     Begin Project Dependency
@@ -1019,9 +884,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1041,9 +903,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1062,9 +921,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1082,9 +938,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1119,9 +972,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1139,9 +989,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1161,9 +1008,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1182,9 +1026,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1202,9 +1043,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1254,9 +1092,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1274,9 +1109,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1386,9 +1218,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1406,9 +1235,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1458,9 +1284,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1478,9 +1301,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1500,9 +1320,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1520,9 +1337,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1542,9 +1356,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1563,9 +1374,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1583,9 +1391,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1635,9 +1440,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1655,9 +1457,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1677,9 +1476,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1698,19 +1494,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
 
@@ -1724,9 +1508,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1746,9 +1527,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1766,9 +1544,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1803,15 +1578,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name POA Generic Servant DLL
     End Project Dependency
 }}}
@@ -1826,9 +1592,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1848,9 +1611,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1868,9 +1628,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1890,9 +1647,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1910,9 +1664,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1932,9 +1683,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -1953,15 +1701,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name POA Generic Servant DLL
     End Project Dependency
 }}}
@@ -1976,9 +1715,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -1998,9 +1734,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2018,9 +1751,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2040,15 +1770,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name POA Generic Servant DLL
     End Project Dependency
 }}}
@@ -2063,9 +1784,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2085,9 +1803,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2106,15 +1821,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name POA Generic Servant DLL
     End Project Dependency
 }}}
@@ -2129,9 +1835,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2151,15 +1854,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name POA Generic Servant DLL
     End Project Dependency
 }}}
@@ -2175,15 +1869,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name POA Generic Servant DLL
     End Project Dependency
 }}}
@@ -2198,9 +1883,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2220,9 +1902,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2240,9 +1919,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2262,9 +1938,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2282,9 +1955,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2304,9 +1974,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2324,9 +1991,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2361,9 +2025,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2381,9 +2042,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2478,9 +2136,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2498,9 +2153,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2520,9 +2172,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2540,9 +2189,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2667,19 +2313,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
 
@@ -2814,15 +2448,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
@@ -2838,19 +2463,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
 
@@ -2895,19 +2508,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
 
@@ -2937,9 +2538,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2957,9 +2555,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -2979,9 +2574,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -2999,9 +2591,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -3021,9 +2610,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -3041,9 +2627,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -3063,9 +2646,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -3083,9 +2663,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -3105,15 +2682,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
@@ -3128,9 +2696,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -3150,15 +2715,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name Simple Time Date Library
     End Project Dependency
 }}}
@@ -3173,9 +2729,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -3195,15 +2748,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name Simple Time Date Library
     End Project Dependency
 }}}
@@ -3218,9 +2762,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -3393,19 +2934,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
     End Project Dependency
 }}}
 
@@ -3450,12 +2979,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
     Begin Project Dependency
@@ -3473,12 +2996,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
@@ -3542,15 +3059,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ORB Services DLL
     End Project Dependency
