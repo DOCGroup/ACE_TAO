@@ -1133,7 +1133,8 @@ IDL_GlobalData::update_prefix (char *filename)
   // file, so we push a blank prefix on the stack, which may
   // possibly be changed later.
   if (this->seen_include_file_before (filename) != 0
-      || ACE_OS::strcmp (filename, main_filename) == 0)
+      || ACE_OS::strcmp (filename, main_filename) == 0
+      || ACE_OS::strcmp (filename, this->pd_filename->get_string ()) != 0)
     {
       char *trash = 0;
       this->pragma_prefixes_.pop (trash);
