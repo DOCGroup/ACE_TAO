@@ -159,6 +159,10 @@ ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
   endif # rmcast
 endif # ACE_HAS_GNUG_PRE_2_8
 
+ifneq ($(ssl),0)
+  DIRS += SSL
+endif # ssl
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
