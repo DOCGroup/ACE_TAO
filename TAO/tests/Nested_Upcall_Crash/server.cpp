@@ -196,8 +196,9 @@ int
 Sleeper::handle_timeout (ACE_Time_Value const & ,
                          void const *)
 {
+  // ACE_DEBUG((LM_DEBUG, "(%P|%t) - Sleeper::handle_timeout()\n"));
   ACE_Time_Value clk_tck (0, 1000000 / HZ);
-  this->orb_->run(clk_tck);
+  this->orb_->perform_work(clk_tck);
 
   return 0;
 }

@@ -194,37 +194,43 @@ int
 TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                            ACE_Reactor_Mask rm)
 {
-  // @@ Alex: we need to figure out if the transport decides to close
-  //    us or something else.  If it is something else (for example
-  //    the cached connector trying to make room for other
-  //    connections) then we should let the transport know, so it can
-  //    in turn take appropiate action (such as sending exceptions to
-  //    all waiting reply handlers).
-  if (TAO_debug_level)
-  ACE_DEBUG  ((LM_DEBUG,
-               ACE_LIB_TEXT ("TAO (%P|%t) ")
-               ACE_LIB_TEXT ("IIOP_Connection_Handler::handle_close ")
-               ACE_LIB_TEXT ("(%d, %d)\n"),
-               handle,
-               rm));
+  ACE_HANDLE my_handle = this->get_handle ();
 
+  if (TAO_debug_level)
+    {
+      ACE_DEBUG  ((LM_DEBUG,
+                   "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_close, "
+                   "(%d, %d)\n",
+                   my_handle, handle, rm));
+    }
+
+  if(my_handle == ACE_INVALID_HANDLE)
+    {
+      return 0;
+    }
+
+  // Just close the socket irrespective of what the upcall count is,
+  // we need to cleanup OS resources ASAP.
+  this->peer().close ();
+
+  // Set the handle to be INVALID_HANDLE
+  this->set_handle (ACE_INVALID_HANDLE);
+
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+
+  // @@ TODO All this code dealing with upcalls is fishy, upcalls are
+  //    incremented/decremented in handle_input_i(), and only
+  //    decremented here!  Also: the reference count is decremented
+  //    here, while it is incremented in a selected few other places,
+  //    in a very confusing ways.
   long upcalls = this->decr_pending_upcalls ();
 
+  // @@ TODO This is just bogus, a reference count below zero
+  //    indicates a bug, should be ACE_ASSERT'ed and crash the ORB
+  //    during testing!
   // Just return incase the upcall count goes below 0.
   if (upcalls < 0)
     return 0;
-
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Just close the socket irrespective of what the upcall count
-      // is.
-      this->peer().close ();
-
-      // Set the handle to be INVALID_HANDLE
-      this->set_handle (ACE_INVALID_HANDLE);
-    }
-
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
   // If the upcall count is zero start the cleanup.
   if (upcalls == 0)

@@ -121,7 +121,7 @@ main (int argc, char *argv[])
 
       Timer timer(local_peer.in (), peer.in ());
 
-      ACE_Time_Value interval(0, 100000);
+      ACE_Time_Value interval(0, 50 * 1000000 / HZ);
       ACE_Reactor * reactor = orb->orb_core()->reactor();
       reactor->schedule_timer(&timer, 0, interval, interval);
 

@@ -159,12 +159,11 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref
 {
   ACE_TRY
     {
-      Coffee_out out (this->out_.out ());
-
-      this->ret_ = objref->test_objref (this->in_.in (),
-                                        this->inout_.inout (),
-                                        out
-                                        ACE_ENV_ARG_PARAMETER);
+      this->ret_ =
+        objref->test_objref (this->in_.in (),
+                             this->inout_.inout (),
+                             this->out_.out ()
+                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;
@@ -191,7 +190,10 @@ Test_ObjRef::check_validity (void)
           || CORBA::is_nil (this->inout_.in ())
           || CORBA::is_nil (this->out_.in ())
           || CORBA::is_nil (this->ret_.in ()))
-        return 0;
+        {
+          ACE_ERROR ((LM_ERROR, "Nil object references returned\n"));
+          return 0;
+        }
       Coffee::Desc_var in_desc =
         this->in_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -223,7 +225,7 @@ Test_ObjRef::check_validity (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Retriving description");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Retrieving description");
       return 0;
     }
   ACE_ENDTRY;
@@ -243,31 +245,47 @@ Test_ObjRef::print_values (void)
   // Env. variable
   ACE_DECLARE_NEW_CORBA_ENV;
 
+  Coffee::Desc_var in_desc;
+  Coffee::Desc_var inout_desc;
+  Coffee::Desc_var out_desc;
   Coffee::Desc_var ret_desc;
   const char *in = 0;
   const char *out = 0;
   const char *inout = 0;
+  const char *ret = 0;
   ACE_TRY
     {
-      Coffee::Desc_var in_desc =
-        this->in_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      in = in_desc->name.in ();
+      if (!CORBA::is_nil (this->in_.in ()))
+        {
+          in_desc =
+            this->in_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          in = in_desc->name.in ();
+        }
 
-      Coffee::Desc_var inout_desc =
-        this->inout_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (this->inout_.in ()))
+        {
+          inout_desc =
+            this->inout_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          inout = inout_desc->name.in ();
+        }
 
-      inout = inout_desc->name.in ();
+      if (!CORBA::is_nil (this->out_.in ()))
+        {
+          out_desc =
+            this->out_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          out = out_desc->name.in ();
+        }
 
-      Coffee::Desc_var out_desc =
-        this->out_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      out = out_desc->name.in ();
-
-      ret_desc = this->out_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (this->ret_.in ()))
+        {
+          ret_desc =
+            this->ret_->description (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          ret = ret_desc->name.in ();
+        }
     }
   ACE_CATCHANY
     {
@@ -277,7 +295,6 @@ Test_ObjRef::print_values (void)
   ACE_ENDTRY;
   ACE_CHECK;
 
-  const char* ret = ret_desc->name.in ();
 
 
   ACE_DEBUG ((LM_DEBUG,
@@ -286,8 +303,9 @@ Test_ObjRef::print_values (void)
               "inout = %s, "
               "out = %s, "
               "ret = %s*=*=*=*=*=\n",
-              in,
-              inout,
-              out,
-              ret));
+              in?in:"ERROR(null string)",
+              inout?inout:"ERROR(null string)",
+              out?out:"ERROR(null string)",
+              ret?ret:"ERROR(null string)"
+              ));
 }

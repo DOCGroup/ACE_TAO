@@ -167,37 +167,33 @@ int
 TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
-  // @@ Alex: we need to figure out if the transport decides to close
-  //    us or something else.  If it is something else (for example
-  //    the cached connector trying to make room for other
-  //    connections) then we should let the transport know, so it can
-  //    in turn take appropiate action (such as sending exceptions to
-  //    all waiting reply handlers).
+  // @@ TODO this too similar to IIOP_Connection_Handler::handle_close,
+  //    in fact, even the comments were identical.  IMHO needs
+  //    re-factoring.
+  ACE_HANDLE my_handle = this->get_handle ();
+
   if (TAO_debug_level)
-    ACE_DEBUG  ((LM_DEBUG,
-                 ACE_LIB_TEXT ("TAO (%P|%t) ")
-                 ACE_LIB_TEXT ("SHMIOP_Connection_Handler::handle_close ")
-                 ACE_LIB_TEXT ("(%d, %d)\n"),
-                 handle,
-                 rm));
+    {
+      ACE_DEBUG  ((LM_DEBUG,
+                   "TAO (%P|%t) - SMHIOP_Connection_Handler[%d]::handle_close, "
+                   "(%d, %d)\n",
+                   my_handle, handle, rm));
+    }
 
-  long upcalls =  this->decr_pending_upcalls ();
+  if(my_handle == ACE_INVALID_HANDLE)
+    {
+      return 0;
+    }
+  this->peer().close ();
 
-  // Just return incase the upcall count goes below 0.
+  this->set_handle (ACE_INVALID_HANDLE);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+
+  long upcalls = this->decr_pending_upcalls ();
+
   if (upcalls < 0)
     return 0;
 
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Just close the socket irrespective of what the upcall count
-      // is.
-      this->peer().close ();
-
-      // Set the handle to be INVALID_HANDLE
-      this->set_handle (ACE_INVALID_HANDLE);
-    }
-
-  // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
     this->decr_refcount ();
 
