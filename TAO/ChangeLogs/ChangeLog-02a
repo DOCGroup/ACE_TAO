@@ -1,97 +1,103 @@
+Mon Jun 19 14:22:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Simulator/Event_Supplier/Makefile:
+          The special rule to generate the NavWeap.idl files did not
+          include a dependency on the IDL compiler.
+
 Mon Jun 19 14:42:13 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Invocation.cpp (start):
+        * tao/Invocation.cpp (start):
 
-	  Added client portion of the RTCORBA::CLIENT_PROPAGATED priority
-	  model support.
+          Added client portion of the RTCORBA::CLIENT_PROPAGATED priority
+          model support.
 
-	* tao/Profile.cpp
-	* tao/RT_Policy_i.cpp:
+        * tao/Profile.cpp
+        * tao/RT_Policy_i.cpp:
 
-	  Added @@ comments regarding bugs in the code for Angelo.
+          Added @@ comments regarding bugs in the code for Angelo.
 
-	* tao/RT_Policy_i.h
-	* tao/RT_Policy_i.i:
-	  Added TAO_PriorityModelPolicy::get_priority_model () efficient
-	  accessor.
+        * tao/RT_Policy_i.h
+        * tao/RT_Policy_i.i:
+          Added TAO_PriorityModelPolicy::get_priority_model () efficient
+          accessor.
 
 Mon Jun 19 13:29:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Load_Balancing_persistent/README (Usage): Updated the
-	  README file with more information.
+        * examples/Load_Balancing_persistent/README (Usage): Updated the
+          README file with more information.
 
 Mon Jun 19 11:29:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Content_Server: Added README files for the
-	  various examples.
+        * examples/Content_Server: Added README files for the
+          various examples.
 
 Mon Jun 19 03:27:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/AMI_Observer/Push_Web_Server_i.h:
+        * examples/Content_Server/AMI_Observer/Push_Web_Server_i.h:
 
-	  Removed this vestigial file.
+          Removed this vestigial file.
 
 Mon Jun 19 03:21:20 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/AMI_Iterator/Callback.cpp:
+        * examples/Content_Server/AMI_Iterator/Callback.cpp:
         * examples/Content_Server/AMI_Iterator/Callback.h:
 
-	  Removed these files.  They didn't belong in this example.
+          Removed these files.  They didn't belong in this example.
 
 Mon Jun 19 02:40:37 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
-	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
-	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
-	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
-	* examples/Content_Server/SMI_Iterator/Makefile:
-	* examples/Content_Server/SMI_Iterator/Web_Server.dsw:
-	* examples/Content_Server/SMI_Iterator/Web_Server.idl:
-	* examples/Content_Server/SMI_Iterator/client.cpp:
-	* examples/Content_Server/SMI_Iterator/client.dsp:
-	* examples/Content_Server/SMI_Iterator/server.cpp:
-	* examples/Content_Server/SMI_Iterator/server:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
+        * examples/Content_Server/SMI_Iterator/Makefile:
+        * examples/Content_Server/SMI_Iterator/Web_Server.dsw:
+        * examples/Content_Server/SMI_Iterator/Web_Server.idl:
+        * examples/Content_Server/SMI_Iterator/client.cpp:
+        * examples/Content_Server/SMI_Iterator/client.dsp:
+        * examples/Content_Server/SMI_Iterator/server.cpp:
+        * examples/Content_Server/SMI_Iterator/server:
 
-	  Example that demonstrates use of Iterator pattern using
-	  synchronous method invocations to retrieve "chunks" of data from
-	  a content server.
+          Example that demonstrates use of Iterator pattern using
+          synchronous method invocations to retrieve "chunks" of data from
+          a content server.
 
-	* examples/Content_Server/AMI_Iterator/Callback.cpp:
-	* examples/Content_Server/AMI_Iterator/Callback.h:
-	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
-	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
-	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
-	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
-	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
-	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
-	* examples/Content_Server/AMI_Iterator/Makefile:
-	* examples/Content_Server/AMI_Iterator/Web_Server.idl:
-	* examples/Content_Server/AMI_Iterator/client.cpp:
-	* examples/Content_Server/AMI_Iterator/server.cpp:
+        * examples/Content_Server/AMI_Iterator/Callback.cpp:
+        * examples/Content_Server/AMI_Iterator/Callback.h:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+        * examples/Content_Server/AMI_Iterator/Makefile:
+        * examples/Content_Server/AMI_Iterator/Web_Server.idl:
+        * examples/Content_Server/AMI_Iterator/client.cpp:
+        * examples/Content_Server/AMI_Iterator/server.cpp:
 
-	  Example that demonstrates use of AMI to improve
-	  performance/responsiveness on the client side, without making
-	  any changes to the server code from the above SMI_Iterator
-	  example.
+          Example that demonstrates use of AMI to improve
+          performance/responsiveness on the client side, without making
+          any changes to the server code from the above SMI_Iterator
+          example.
 
-	* examples/Content_Server/AMI_Observer/Callback.cpp:
-	* examples/Content_Server/AMI_Observer/Callback.h:
-	* examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
-	* examples/Content_Server/AMI_Observer/Callback_Handler.h:
-	* examples/Content_Server/AMI_Observer/Makefile:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
-	* examples/Content_Server/AMI_Observer/Push_Web_Server.idl:
-	* examples/Content_Server/AMI_Observer/Push_Web_Server_i.h:
-	* examples/Content_Server/AMI_Observer/client.cpp:
-	* examples/Content_Server/AMI_Observer/server.cpp:
+        * examples/Content_Server/AMI_Observer/Callback.cpp:
+        * examples/Content_Server/AMI_Observer/Callback.h:
+        * examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+        * examples/Content_Server/AMI_Observer/Callback_Handler.h:
+        * examples/Content_Server/AMI_Observer/Makefile:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+        * examples/Content_Server/AMI_Observer/Push_Web_Server.idl:
+        * examples/Content_Server/AMI_Observer/Push_Web_Server_i.h:
+        * examples/Content_Server/AMI_Observer/client.cpp:
+        * examples/Content_Server/AMI_Observer/server.cpp:
 
-	  Example that demonstrates use of Observer pattern with AMI.  The
-	  server pushes chunks of data asynchronously (using AMI) to a
-	  client callback.  AMI is used both on the client and the server
-	  side.
+          Example that demonstrates use of Observer pattern with AMI.  The
+          server pushes chunks of data asynchronously (using AMI) to a
+          client callback.  AMI is used both on the client and the server
+          side.
 
 Sun Jun 18 20:59:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -52,7 +52,7 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) \
             -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-NavWeapC.h: ../NavWeap.idl
+NavWeapC.h: ../NavWeap.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $< -o .
 
 Event_Sup: $(addprefix $(VDIR),$(EVENT_SUP_OBJS))
