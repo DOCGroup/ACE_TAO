@@ -219,7 +219,7 @@ static void clear_child(int sig)
  *--------------------------------------------------------------
  */
 
-void main(int argc, char ** argv)
+int main(int argc, char ** argv)
 {
 
   int mark;
@@ -464,4 +464,6 @@ void main(int argc, char ** argv)
   mainPid = getpid();
 
   CTRmain();
+
+  return 0;
 }

@@ -36,8 +36,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-LDFLAGS += -lmpeg_client -lmpeg_shared -lmpeg_mib -L/project/doc/pkg/X11/lib/ -lXm -lXt -lXext -lSM -lICE -lX11 -L/project/doc/pkg/X11/lib -lsocket -lnsl -ldl
-CPPFLAGS += -I../mpeg_client/ -DSH_MEM -DNDEBUG -DSunOS -DSTAT -I/project/doc/pkg/X11/include
+LDFLAGS +=  -lmpeg_shared -lmpeg_mib -lmpeg_client -lXm  -lXext -lXt -lSM -lICE  -lX11  -lsocket -lnsl -ldl
+CPPFLAGS += -i -I../mpeg_client/ -DSH_MEM -DNDEBUG -DSunOS -DSTAT -I/project/doc/pkg/X11/include -L../mpeg_client/ -L/project/doc/pkg/X11/lib
 
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
