@@ -653,3 +653,82 @@ CORBA_Any_var::operator= (const CORBA::Any_var& r)
   this->ptr_ = new CORBA::Any (*r.ptr_);
   return *this;
 }
+
+// = Debugging method.
+
+// Prints the type and the value of the any value. Dumping is
+// supported only for standard data types.
+
+void
+CORBA_Any::dump (const CORBA::Any any_value) 
+{
+  // Get the type.
+  CORBA::TypeCode_ptr type = any_value.type ();
+  
+  if (type == CORBA::_tc_null) 
+    ACE_DEBUG ((LM_DEBUG,"Null\n"));
+
+  else if (type == CORBA::_tc_void)
+    ACE_DEBUG ((LM_DEBUG,"Void\n"));
+  
+  else if (type == CORBA::_tc_short) 
+    {
+      CORBA::Short s;
+      any_value >>= s;
+      ACE_DEBUG ((LM_DEBUG,"Short %d\n",s));
+    }
+  else if (type == CORBA::_tc_long)
+    {
+      CORBA::Long l;
+      any_value >>= l;
+      ACE_DEBUG ((LM_DEBUG,"Long %d\n", l));
+    }
+  else if (type == CORBA::_tc_ushort)
+    {
+      CORBA::UShort s;
+      any_value >>= s;
+      ACE_DEBUG ((LM_DEBUG,"UShort %d\n", s));
+    }
+  else if (type == CORBA::_tc_ulong)
+    {
+      CORBA::ULong l;
+      any_value >>= l;
+      ACE_DEBUG ((LM_DEBUG,"ULong %d\n", l));
+    }
+  else if (type == CORBA::_tc_float)
+    {
+      CORBA::Float f;
+      any_value >>= f;
+      ACE_DEBUG ((LM_DEBUG,"Float %f\n", f));
+    }
+  else if (type == CORBA::_tc_double)
+    {
+      CORBA::Double d;
+      any_value >>= d;
+      ACE_DEBUG ((LM_DEBUG,"Double %f\n", d));
+    }
+  else if (type == CORBA::_tc_boolean)
+    {
+      CORBA::Boolean b;
+      any_value >>= (to_boolean)b;
+      if (b == CORBA::B_TRUE)
+        ACE_DEBUG ((LM_DEBUG, "Boolean B_TRUE\n"));
+      else
+        ACE_DEBUG ((LM_DEBUG, "Boolean B_FALSE\n"));
+    }
+  else if (type  == CORBA::_tc_char)
+    {
+      CORBA::Char ch;
+      any_value >>= to_char (ch);
+      ACE_DEBUG ((LM_DEBUG,"Char %c\n", ch));
+    }
+  else if (type == CORBA::_tc_string)
+    {
+       CORBA::String str;
+       any_value >>= str;
+       ACE_DEBUG ((LM_DEBUG, "String %s\n", str));
+    }
+  else 
+    ACE_DEBUG ((LM_DEBUG, "TCKind %d", type->kind_));
+} 
+               
