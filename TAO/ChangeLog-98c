@@ -1,3 +1,13 @@
+Thu Nov  6 23:59:45 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/params.cpp: Moved all the inlined methods out of the header
+ 	  file and put them in the *.cpp file.  I hope this doesn't cause
+ 	  problems for GCC on VxWorks.
+
+	* tests/Thruput_test/client.cpp: Fixed a mistake with how
+	  the long string constant was defined.  The scheme being
+	  used wasn't portable.
+
 Thu Nov 06 20:58:52 1997    <irfan@TWOSTEP>
 
 	* tao/connect.cpp: Made sure that TAO_Server_Connection_Handler
@@ -10,25 +20,12 @@ Thu Nov  6 19:06:59 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 	* docs/releasenotes/index.html: Updated status of Naming Service
  	port to TAO.
 
+	* TAO_IDL/be/be_exception.cpp (gen_client_header):
+	removed warning for unused variable.
+
 Thu Nov  6 17:07:58 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/tao_internals.i: Added missing #include file.
-
-Thu Nov  6 14:51:22 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
-
-	* TAO_IDL/Makefile: Renamed libutil to libtao_idl_util. libutil is
-	a system library on NetBSD. Updated TAO_IDL/util/Makefile to be
-	compatible with this.
-
-Thu Nov 06 14:47:15 1997  David L. Levine  <levine@cs.wustl.edu>
-
-        * tao/params.[hi]: inlined some functions in the class declaration
-          because g++ for VxWorks couldn't deal with them in the .i file.
-
-        * tao/tao_internals.*,orbobj.cpp: fixed replacement of orbinit_lock_
-          and service_lock_ with ACE_Static_Object_Lock::instance ().
-
-Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/tao_internals.i: Change lock used as monitor for service
  	count to use ACE_Static_Object_Lock::instance().  This pleases
@@ -53,54 +50,41 @@ Thu Nov  6 10:38:47 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	* tao/params.h: Changed LOCAL_INLINE macro to TAO_LOCAL_INLINE to
  	avoid possible collisions with application macros.
 
-Thu Nov  6 02:34:54 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+Thu Nov  6 14:51:22 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* TAO_IDL/be/be_exception.cpp (gen_client_header):
-	removed warning for unused variable.
-
-Thu Nov 06 02:17:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* TAO version 0.0.23, released Thu Nov 06 02:17:02 1997.
-
-Thu Nov  6 02:15:21 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+	* TAO_IDL/Makefile: Renamed libutil to libtao_idl_util. libutil is
+	a system library on NetBSD. Updated TAO_IDL/util/Makefile to be
+	compatible with this.
 
 	* TAO_IDL/be/be_codegen.cpp (server_header): Changed ::toupper to
 	be toupper, since toupper is a macro on some platforms (like
 	netbsd).
 
-Thu Nov  6 02:15:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* tests/Thruput_test/client.cpp: Fixed a mistake with how
-	  the long string constant was defined.  The scheme being
-	  used wasn't portable.
-
-Thu Nov 06 02:08:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* TAO version 0.0.23, released Thu Nov 06 02:08:26 1997.
-
-Thu Nov  6 02:04:32 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
-
 	* TAO_IDL/driver/{drv_preproc.cpp, drv_fork.cpp}: NetBSD has
 	sys/wait.h, instead of wait.h. Added #define to fix it.
-
-Thu Nov  6 01:40:29 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tao/tao_internals.h: #defined ACE_Thread_Mutex to be
 	ACE_Null_Mutex for NetBSD.
 
-Thu Nov  6 01:36:43 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
-
 	* tao/orbconf.h: Added NetBSD to the #define around HAVE_WIDEC_H.
-
-Thu Nov  6 01:34:49 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tao/orb_core.cpp: #defined around some thread-specific template
 	instantiations which are not needed on NetBSD.
 
-Thu Nov  6 01:31:06 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
-
 	* tao/except.h: Undefined "minor" and "major, since these are
 	defined in NetBSD.
+
+Thu Nov 06 14:47:15 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/params.[hi]: inlined some functions in the class declaration
+          because g++ for VxWorks couldn't deal with them in the .i file.
+
+        * tao/tao_internals.*,orbobj.cpp: fixed replacement of orbinit_lock_
+          and service_lock_ with ACE_Static_Object_Lock::instance ().
+
+Thu Nov 06 02:17:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.23, released Thu Nov 06 02:17:02 1997.
 
 Wed Nov  5 23:44:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
