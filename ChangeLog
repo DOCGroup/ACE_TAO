@@ -1,3 +1,8 @@
+Wed Feb 16 12:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace_rmcast.doxygen:
+          Fixed typo in INPUT
+
 Tue Feb 15 18:10:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
