@@ -1,3 +1,11 @@
+Thu Aug 23 01:54:42 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tests/DLL_ORB/Test_Client_Module.bor:
+        * tests/DLL_ORB/Test_Server_Module.bor:
+        * tests/DLL_ORB/client.bor:
+        * tests/DLL_ORB/server.bor:
+          Fixed Borland makefiles to build the DLL_ORB test correctly.
+
 Wed Aug 22 17:20:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:

@@ -9,12 +9,12 @@ OBJFILES = \
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
-        $(TAO_CFLAGS)
+	$(TAO_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
-        $(TAO_LIB) \
-        $(BINDIR)\test_server_module$(LIB_DECORATOR)
+	$(TAO_LIB) \
+	$(CORE_BINDIR)\Test_Server_Module$(LIB_DECORATOR)
 
 CPPDIR = .
 

@@ -13,8 +13,8 @@ CFLAGS = \
 
 LIBFILES = \
 	$(ACE_LIB) \
-        $(TAO_LIB) \
-        $(BINDIR)\test_client_module$(LIB_DECORATOR)
+	$(TAO_LIB) \
+	$(CORE_BINDIR)\Test_Client_Module$(LIB_DECORATOR)
 
 CPPDIR = .
 
