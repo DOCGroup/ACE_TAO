@@ -1,3 +1,7 @@
+Thu Feb 10 02:51:19 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Release: Added *.vcw files to the tar distribution.
+
 Thu Feb 10 08:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:

@@ -88,6 +88,7 @@ RELEASE_FILES = \
         ACE_wrappers/*.dsw \
         ACE_wrappers/*.sln \
         ACE_wrappers/*.bor \
+        ACE_wrappers/*.vcw \
 	ACE_wrappers/Makefile.in \
 	ACE_wrappers/configure \
 	ACE_wrappers/aclocal.m4 \
