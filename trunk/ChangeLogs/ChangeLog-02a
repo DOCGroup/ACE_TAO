@@ -1,3 +1,10 @@
+Sat May 27 20:41:14 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Hash_Map_Manager_T.h:
+
+	  Added missing include for "ace/Log_Msg.h."  This fixes a
+	  compile-time error on Tru64.
+
 Sat May 27 17:09:03 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added const to example
