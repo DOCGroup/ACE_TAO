@@ -270,7 +270,7 @@ private:
 namespace TAO
 {
   // Hand crafted. Not forward declared, but used by PortableServer.
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits<TAO_ORBInitInfo>
   {
     static TAO_ORBInitInfo_ptr duplicate (

@@ -536,7 +536,6 @@ template<class T> class TAO_Unbounded_Sequence;
 // The template itself requires this file so every user of the
 // template should also see the specialization.
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class TAO_Unbounded_Sequence<CORBA::Octet>
  *
@@ -549,6 +548,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * Specializing the TAO_Unbounded_Sequence<T> parametric
  * class, is an excellent way to achieve this optimizations.
  */
+template<>
 class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet>
   : public TAO_Unbounded_Base_Sequence
 {

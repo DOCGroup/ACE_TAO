@@ -403,7 +403,7 @@ namespace CORBA
 
 namespace TAO
 {
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_Export Arg_Traits<CORBA::Object>
     : public Object_Arg_Traits_T<CORBA::Object_ptr,
                                  CORBA::Object_var,
@@ -412,7 +412,7 @@ namespace TAO
   {
   };
 
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits<CORBA::Object>
   {
     static CORBA::Object_ptr duplicate (CORBA::Object_ptr);
@@ -428,7 +428,7 @@ namespace TAO
    * @brief Specialization for CORBA::Object, necessitated since we
    *  don't have an Any insertion operator for Object.
    */
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_Export Ret_Object_Argument_T <CORBA::Object_ptr, CORBA::Object_var>
     : public Argument
   {
