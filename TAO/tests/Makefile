@@ -16,6 +16,7 @@ DIRS  =	Cubit \
 	Thruput \
 	CDR \
 	OctetSeq \
+	Quoter
 
 # The following tests have not been updated yet
 # 	Demux_Test
