@@ -1,3 +1,9 @@
+Mon Nov 20 11:49:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/EndPoint_Per_Priority/server.conf
+	  Changed back to the original version. It got committed in 
+	  the previous commit unintentionally.
+
 Mon Nov 20 11:35:56 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/EndPoint_Per_Priority/server.dsp
