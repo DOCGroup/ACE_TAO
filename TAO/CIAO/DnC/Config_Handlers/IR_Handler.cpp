@@ -99,6 +99,10 @@ namespace CIAO
            node = this->iter_->nextNode())
         {
           XStr node_name (node->getNodeName());
+	  /*
+	   *  CAUTION: This class is the base class of ImplementationRequirement.
+	   *  The parser implementation duplicated there.
+	   */
           if (node_name == XStr (ACE_TEXT ("name")))
             {
               // Fetch the text node which contains the "label"
@@ -108,8 +112,10 @@ namespace CIAO
 	    }
 	  else if (node_name == XStr (ACE_TEXT ("resourceType")))
             {
-	      // TODO: How to implement this?
-	      // Sequence of string ???
+	      // Fetch the text node which containst the "resourceType"
+	      node = this->iter_->nextNode();
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+	      this->process_resourceType (text->getNodeValue(), req);
             }
           else
             {
@@ -127,6 +133,16 @@ namespace CIAO
       if (name)
         {
           req.name = XMLString::transcode (name);
+        }
+    }
+
+    /// handle resourceType attribute
+    void Req_Handler::process_resourceType
+      (const XMLCh* name, ::Deployment::Requirement &req)
+    {
+      if (name)
+        {
+          req.resourceType = XMLString::transcode (name);
         }
     }
 
@@ -167,6 +183,10 @@ namespace CIAO
            node = this->iter_->nextNode())
         {
           XStr node_name (node->getNodeName());
+	  /*
+	   *  CAUTION: These name and resource types are derived from the Requirement class,
+	   *  The parser implementation duplicated here.
+	   */
           if (node_name == XStr (ACE_TEXT ("name")))
             {
               // Fetch the text node which contains the "label"
@@ -176,9 +196,37 @@ namespace CIAO
 	    }
 	  else if (node_name == XStr (ACE_TEXT ("resourceType")))
             {
-	      // TODO: How to implement this?
-	      // Sequence of string ???
+              // Fetch the text node which contains the "resourceType"
+	      node = this->iter_->nextNode();
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_resourceType (text->getNodeValue(), ir);
             }
+	  /////////////////////////////////////////////////////////
+	  else if (node_name == XStr (ACE_TEXT ("resourceUsage")))
+            {
+	      // increase the length of the sequence
+	      CORBA::ULong i (ir.resourceUsage.length ());
+	      ir.resourceUsage.length (i + 1);
+
+	      // delegate the populating process
+	      ResourceUsageKind_Handler::process_ResourceUsageKind (this->iter,
+								    ir.resourceUsage[i]);
+            }
+	  else if (node_name == XStr (ACE_TEXT ("resourcePort")))
+            {
+              // Fetch the text node which contains the "resourcePort"
+	      node = this->iter_->nextNode();
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_resourcePort (text->getNodeValue(), ir);
+            }
+	  else if (node_name == XStr (ACE_TEXT ("componentPort")))
+            {
+              // Fetch the text node which contains the "componentPort"
+	      node = this->iter_->nextNode();
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_componentPort (text->getNodeValue(), ir);
+            }
+
           else
             {
               // ??? How did we get here ???
@@ -188,23 +236,17 @@ namespace CIAO
       return;
     }
 
-    /// handle resourceUsage attribute
-    void IR_Handler::process_resourceUsage
-      (const XMLCh* resourceUsage, ::Deployment::ImplementationRequirement &ir)
-    {
-      if (resourceUsage)
-        {
-          ir.name = XMLString::transcode (resourceUsage);
-        }
-    }
-
     /// handle resourcePort attribute
     void IR_Handler::process_resourcePort
       (const XMLCh* resourcePort, ::Deployment::ImplementationRequirement &ir)
     {
       if (resourcePort)
         {
-          ir.name = XMLString::transcode (resourcePort);
+	  // increase the length of the sequence
+	  CORBA::ULong i (ir.resourcePort.length ());
+	  ir.resourcePort.length (i + 1);
+
+          ir.resurcePort[i] = XMLString::transcode (resourcePort);
         }
     }
 
@@ -214,7 +256,35 @@ namespace CIAO
     {
       if (componentPort)
         {
-          ir.name = XMLString::transcode (componentPort);
+	  // increase the length of the sequence
+	  CORBA::ULong i (ir.componentPort.length ());
+	  ir.componentPort.length (i + 1);
+
+          ir.componentPort[i] = XMLString::transcode (componentPort);
+        }
+    }
+
+    /*
+     * Derived from Requirement
+     */
+
+    /// handle name attribute
+    void IR_Handler::process_name
+      (const XMLCh* name, ::Deployment::ImplementationRequirement &ir)
+    {
+      if (name)
+        {
+          ir.name = XMLString::transcode (name);
+        }
+    }
+
+    /// handle resourceType attribute
+    void Req_Handler::process_resourceType
+      (const XMLCh* name, ::Deployment::ImplementationRequirement &ir)
+    {
+      if (name)
+        {
+          ir.resourceType = XMLString::transcode (name);
         }
     }
 

@@ -524,6 +524,9 @@ module Deployment {
     ::CORBA::StringSeq resourcePort;
     ::CORBA::StringSeq componentPort;
     ResourceUsageKinds resourceUsage;
+    // Inherited attributes from requirement
+    string resourceType;
+    string name;
   };
 
   typedef sequence < ImplementationRequirement > ImplementationRequirements; 

@@ -92,7 +92,6 @@ namespace CIAO
 
     };
 
-    // TODO: This class suppose to derive drom Req_Handler?
     class IR_Handler
     {
     public:
@@ -117,6 +116,16 @@ namespace CIAO
 
       /// Process the componentPort attribute
       void process_componentPort (const XMLCh* name, ::Deployment::ImplementationRequirement &ir);
+
+      /*
+       * Derived from Requirement
+       */
+
+      /// Process the label attribute
+      void process_name (const XMLCh* name, ::Deployment::Requirement &req);
+
+      /// Process the label attribute
+      void process_resourceType (const XMLCh* name, ::Deployment::Requirement &req);
 
     private:
 
