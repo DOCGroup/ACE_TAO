@@ -73,6 +73,7 @@ public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
   TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
+                                     const ACE_Time_Value &relative_timeout,
                                      TAO_CEC_EventChannel *event_channel,
                                      CORBA::ORB_ptr orb);
 
@@ -90,6 +91,9 @@ private:
 
   /// The polling rate
   ACE_Time_Value rate_;
+
+  /// The relative timeout
+  ACE_Time_Value relative_timeout_;
 
   /// The event channel
   TAO_CEC_EventChannel *event_channel_;

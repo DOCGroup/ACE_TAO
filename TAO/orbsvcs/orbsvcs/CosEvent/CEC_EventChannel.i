@@ -192,3 +192,8 @@ TAO_CEC_EventChannel::disconnect_callbacks (void) const
   return this->disconnect_callbacks_;
 }
 
+ACE_INLINE TAO_CEC_EventChannel::ServantRetryMap&
+TAO_CEC_EventChannel::get_servant_retry_map (void)
+{
+  return this->retry_map_;
+}

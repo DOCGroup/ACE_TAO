@@ -1,3 +1,33 @@
+Wed Sep  1 10:42:38 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * docs/cec_options.html:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp:
+
+          Added a configurator option to determine the number of retries
+          before removing an unresponsive consumer or supplier from the
+          CosEvent Service.  This option is fully documented in
+          docs/cec_options.html.
+
 Wed Sep  1 11:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Policy_Set.h:
@@ -11,7 +41,7 @@ Wed Sep  1 06:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 31 17:53:30 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
           Update after Portable Server refactor changes.
 

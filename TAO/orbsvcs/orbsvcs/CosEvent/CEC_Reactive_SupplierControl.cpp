@@ -13,6 +13,8 @@
 
 #include "CEC_ProxyPullConsumer.h"
 
+#include "orbsvcs/Time_Utilities.h"
+
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 
@@ -29,10 +31,12 @@ ACE_RCSID (CosEvent,
 TAO_CEC_Reactive_SupplierControl::
      TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                        const ACE_Time_Value &timeout,
+                                       unsigned int retries,
                                        TAO_CEC_EventChannel *ec,
                                        CORBA::ORB_ptr orb)
   : rate_ (rate),
     timeout_ (timeout),
+    retries_ (retries),
     adapter_ (this),
     event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
@@ -51,10 +55,12 @@ TAO_CEC_Reactive_SupplierControl::
 TAO_CEC_Reactive_SupplierControl::
      TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                        const ACE_Time_Value &timeout,
+                                       unsigned int retries,
                                        TAO_CEC_TypedEventChannel *ec,
                                        CORBA::ORB_ptr orb)
   : rate_ (rate),
     timeout_ (timeout),
+    retries_ (retries),
     adapter_ (this),
     typed_event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
@@ -106,6 +112,37 @@ TAO_CEC_Reactive_SupplierControl::query_suppliers (
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 }
 
+bool
+TAO_CEC_Reactive_SupplierControl::need_to_disconnect (
+                                    PortableServer::ServantBase* proxy)
+{
+  bool disconnect = true;
+  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry;
+  if (this->event_channel_->
+      get_servant_retry_map ().find (proxy, entry) == 0)
+    {
+      ++entry->int_id_;
+      if (entry->int_id_ <= this->retries_)
+        {
+          disconnect = false;
+        }
+    }
+
+  return disconnect;
+}
+
+void
+TAO_CEC_Reactive_SupplierControl::successful_transmission (
+                                    PortableServer::ServantBase* proxy)
+{
+  TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry;
+  if (this->event_channel_->
+      get_servant_retry_map ().find (proxy, entry) == 0)
+    {
+      entry->int_id_ = 0;
+    }
+}
+
 void
 TAO_CEC_Reactive_SupplierControl::handle_timeout (
       const ACE_Time_Value &,
@@ -127,9 +164,17 @@ TAO_CEC_Reactive_SupplierControl::handle_timeout (
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Query the state of the suppliers...
-      this->query_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_EX (query)
+        {
+          // Query the state of the suppliers...
+          this->query_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (query);
+        }
+      ACE_CATCHANY
+        {
+          // Ignore all exceptions
+        }
+      ACE_ENDTRY;
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE
@@ -165,8 +210,12 @@ TAO_CEC_Reactive_SupplierControl::activate (void)
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-	  // Timeout for polling state (default = 10 msec)
-      TimeBase::TimeT timeout = timeout_.usec() * 10;
+      // Pre-compute the policy list to the set the right timeout
+      // value...
+      // We need to convert the relative timeout into 100's of nano seconds.
+      TimeBase::TimeT timeout;
+      ORBSVCS_Time::Time_Value_to_TimeT (timeout,
+                                         this->timeout_);
       CORBA::Any any;
       any <<= timeout;
 
@@ -275,18 +324,11 @@ TAO_CEC_Reactive_SupplierControl::system_exception (
 {
   ACE_TRY
     {
-      // The current implementation is very strict, and kicks out a
-      // client on the first system exception. We may
-      // want to be more lenient in the future, for example,
-      // this is TAO's minor code for a failed connection.
-      //
-      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
-      //     && exception->minor () == 0x54410085)
-      //   return;
-
-      // Anything else is serious, including timeouts...
-      proxy->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (this->need_to_disconnect (proxy))
+        {
+          proxy->disconnect_pull_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
@@ -338,18 +380,11 @@ TAO_CEC_Ping_Push_Supplier::work (TAO_CEC_ProxyPushConsumer *consumer
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
-      // The current implementation is very strict, and kicks out a
-      // client on the first system exception. We may
-      // want to be more lenient in the future, for example,
-      // this is TAO's minor code for a failed connection.
-      //
-      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
-      //     && exception->minor () == 0x54410085)
-      //   return;
-
-      // Anything else is serious, including timeouts...
-      this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (this->control_->need_to_disconnect (consumer))
+        {
+          this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
@@ -385,18 +420,11 @@ TAO_CEC_Ping_Typed_Push_Supplier::work (TAO_CEC_TypedProxyPushConsumer *consumer
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
-      // The current implementation is very strict, and kicks out a
-      // client on the first system exception. We may
-      // want to be more lenient in the future, for example,
-      // this is TAO's minor code for a failed connection.
-      //
-      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
-      //     && exception->minor () == 0x54410085)
-      //   return;
-
-      // Anything else is serious, including timeouts...
-      this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (this->control_->need_to_disconnect (consumer))
+        {
+          this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
@@ -432,18 +460,11 @@ TAO_CEC_Ping_Pull_Supplier::work (TAO_CEC_ProxyPullConsumer *consumer
     }
   ACE_CATCH (CORBA::TRANSIENT, transient)
     {
-      // The current implementation is very strict, and kicks out a
-      // client on the first system exception. We may
-      // want to be more lenient in the future, for example,
-      // this is TAO's minor code for a failed connection.
-      //
-      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
-      //     && exception->minor () == 0x54410085)
-      //   return;
-
-      // Anything else is serious, including timeouts...
-      this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (this->control_->need_to_disconnect (consumer))
+        {
+          this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {

@@ -27,10 +27,13 @@ TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* ec)
 
   this->default_POA_ =
     this->event_channel_->supplier_poa ();
+
+  this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 
 TAO_CEC_ProxyPullSupplier::~TAO_CEC_ProxyPullSupplier (void)
 {
+  this->event_channel_->get_servant_retry_map ().unbind (this);
   this->event_channel_->destroy_supplier_lock (this->lock_);
 }
 

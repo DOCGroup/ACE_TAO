@@ -20,6 +20,7 @@ TAO_CEC_Default_Factory::TAO_CEC_Default_Factory (void)
      consumer_control_period_ (TAO_CEC_DEFAULT_CONSUMER_CONTROL_PERIOD),
      supplier_control_period_ (TAO_CEC_DEFAULT_SUPPLIER_CONTROL_PERIOD),
      consumer_control_timeout_ (0, TAO_CEC_DEFAULT_CONSUMER_CONTROL_TIMEOUT),
-     supplier_control_timeout_ (0, TAO_CEC_DEFAULT_SUPPLIER_CONTROL_TIMEOUT)
+     supplier_control_timeout_ (0, TAO_CEC_DEFAULT_SUPPLIER_CONTROL_TIMEOUT),
+     proxy_disconnect_retries_ (TAO_CEC_DEFAULT_PROXY_DISCONNECT_RETRIES)
 {
 }
