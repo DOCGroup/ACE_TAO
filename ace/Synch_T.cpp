@@ -40,36 +40,7 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
 {
 }
 
-template <class ACE_LOCK, class TYPE> ACE_LOCK &
-ACE_Atomic_Op<ACE_LOCK, TYPE>::mutex (void)
-{
-// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::mutex");
-  return this->mutex_;
-}
 
-template <class ACE_LOCK, class TYPE> void
-ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
-{
-// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-template <class ACE_LOCK, class TYPE>
-ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (void)
-  : value_ (0)
-{
-// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
-}
-
-template <class ACE_LOCK, class TYPE>
-ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c)
-  : value_ (c)
-{
-// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
-}
 
 // ****************************************************************
 // ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
