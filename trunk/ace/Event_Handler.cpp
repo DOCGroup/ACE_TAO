@@ -116,27 +116,6 @@ ACE_Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
   return -1;
 }
 
-int
-ACE_Event_Handler::handle_input_complete (ACE_Message_Block *, long)
-{
-  ACE_TRACE ("ACE_Event_Handler::handle_input_complete");
-  return -1;
-}
-
-int
-ACE_Event_Handler::handle_output_complete (ACE_Message_Block *, long)
-{
-  ACE_TRACE ("ACE_Event_Handler::handle_input_complete");
-  return -1;
-}
-
-ACE_Message_Block *
-ACE_Event_Handler::get_message (void)
-{
-  ACE_TRACE ("ACE_Event_Handler::get_message");
-  return 0;
-}
-
 void 
 ACE_Event_Handler::reactor (ACE_Reactor *reactor)
 {
