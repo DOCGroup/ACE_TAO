@@ -1,3 +1,17 @@
+Thu Jul 24 16:22:27 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * CIAO/examples/handcrafted/BasicSP/*.*:
+        * CIAO/examples/handcrafted/BasicSP/BMClosedED/*.*:
+        * CIAO/examples/handcrafted/BasicSP/BMDevice/*.*:
+        * CIAO/examples/handcrafted/BasicSP/BMDisplay/*.*:
+        * CIAO/examples/handcrafted/BasicSP/descriptors/*.*:
+        * CIAO/examples/handcrafted/BasicSP/EC/*.*:
+
+        Modified BasicSP example to use TAO's RT event channel for
+        event propagation. This involved modifications to each component's
+        servant header and source files, which are normally generated
+        by the CIDL compiler.
+
 Sun Jul 13 20:14:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* README: Updated information on MPC tools.  ACE/TAO are in
