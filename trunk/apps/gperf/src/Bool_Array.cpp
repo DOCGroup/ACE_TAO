@@ -30,43 +30,50 @@ ACE_RCSID(src, Bool_Array, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 // Prints out debugging diagnostics.
+
 Bool_Array::~Bool_Array (void)
 {
   if (option[DEBUG])
-    fprintf (stderr, "\ndumping boolean array information\n"
-             "size = %d\niteration number = %d\nend of array dump\n",
-             size, generation_number);
+    ACE_DEBUG ((LM_DEBUG,
+                "\ndumping boolean array information\n"
+                "size = %d\niteration number = %d\nend of array dump\n",
+                size_, 
+                generation_number_));
 }
 
 Bool_Array::Bool_Array (void)
-  : storage_array (0),
-    generation_number (0),
-    size (0)
+  : storage_array_ (0),
+    generation_number_ (0),
+    size_ (0)
 {
 }
 
 void
 Bool_Array::init (STORAGE_TYPE *buffer, STORAGE_TYPE s)
 {
-  size = s;
-  generation_number = 1;
-  storage_array    = buffer;
+  size_ = s;
+  generation_number_ = 1;
+  storage_array_ = buffer;
 
-  memset (storage_array, 0, s * sizeof *storage_array);
+  ACE_OS::memset (storage_array_,
+                  0,
+                  s * sizeof *storage_array_);
 
   if (option[DEBUG])
-    fprintf (stderr, "\nbool array size = %d, total bytes = %d\n",
-             size, size * (int) sizeof *storage_array);
+    ACE_DEBUG ((LM_DEBUG,
+                "\nbool array size = %d, total bytes = %d\n",
+                size_,
+                size_ * (int) sizeof *storage_array_));
 }
 
 int
 Bool_Array::find (int index)
 {
-  if (storage_array[index] == generation_number)
+  if (storage_array_[index] == generation_number_)
     return 1;
   else
     {
-      storage_array[index] = generation_number;
+      storage_array_[index] = generation_number_;
       return 0;
     }
 }
@@ -74,22 +81,20 @@ Bool_Array::find (int index)
 void
 Bool_Array::reset (void)
 {
-  if (++generation_number == 0)
+  if (++generation_number_ == 0)
     {
       if (option[DEBUG])
-        {
-          fprintf (stderr, "(re-initializing bool_array)...");
-          fflush (stderr);
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "(re-initializing bool_array)..."));
 
-      generation_number = 1;
-      memset (storage_array, 0, size * sizeof *storage_array);
+      generation_number_ = 1;
+      ACE_OS::memset (storage_array_,
+                      0,
+                      size_ * sizeof *storage_array_);
 
       if (option[DEBUG])
-        {
-          fprintf (stderr, "done\n");
-          fflush (stderr);
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "done\n"));
     }
 }
 
