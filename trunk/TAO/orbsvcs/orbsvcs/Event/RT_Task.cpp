@@ -27,7 +27,7 @@ static const char *TAO_RT_Task_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_RT_TASK_START_EXECUTE = 5200,
   TAO_RT_TASK_END_EXECUTE,
   TAO_RT_TASK_SYNCH_THREADS_PRIORITY_REQUESTED,
@@ -131,7 +131,7 @@ ACE_RT_Task::svc (void)
       ACE_hthread_t self;
       ACE_OS::thr_self (self);
 
-      int priority;
+      int priority = 0;
       if (ACE_OS::thr_getprio (self, priority) == 0)
         ACE_DEBUG ((LM_DEBUG, "EC (%t) new thread priority = %d.\n", priority));
 
@@ -338,7 +338,7 @@ ACE_RT_Task::synch_threads (size_t threads)
                                                     ACE_SCOPE_THREAD);
 
                   ACE_DEBUG ((LM_DEBUG,
-			      "EC (%t) task activation at priority %d "
+                              "EC (%t) task activation at priority %d "
                               "with flags 0x%X failed; retry at priority %d "
                               "with flags 0x%X\n",
                               thread_priority,
