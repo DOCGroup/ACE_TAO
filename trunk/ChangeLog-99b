@@ -1,3 +1,8 @@
+Mon Dec 27 13:03:50 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/QoS_Session_Impl.cpp: fixed the "pragma once is obsolete"
+	  warning thrown by Sung++.
+
 Mon Dec 27 12:27:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/run_tests.bat: Changed to allow _Borland 4_ users to set
