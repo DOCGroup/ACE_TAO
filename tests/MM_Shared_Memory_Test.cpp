@@ -156,7 +156,9 @@ spawn (void)
                        ASYS_TEXT ("thread create failed")),
                       1);
   ACE_Thread_Manager::instance ()->wait ();
+  ACE_UNUSED_ARG (process_synchronizer);
 #else
+  ACE_UNUSED_ARG (process_synchronizer);
   ACE_ERROR_RETURN ((LM_ERROR,
                      ASYS_TEXT ("only one thread may be run in a process on this platform\n")),
                     1);
