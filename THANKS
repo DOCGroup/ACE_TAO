@@ -579,7 +579,6 @@ Alexey Gadzhiev <alg@null.ru>
 Francois Bernier <fbernier@gel.ulaval.ca>
 Bill Rizzi <rizzi@softserv.com>
 Peter Windle <peterw@ugsolutions.com>
-Andy Alvarez <axab@eci.esys.com>
 Jaepil Kim <jpkim@lgsoft.com>
 Dmitry Goldshtain <goldstein@arcormail.de>
 Carl Grinstead <grinstea@tsunami.com>
@@ -1508,6 +1507,7 @@ Amir Kunst <amir@fats.co.il>
 Daniel Garrido <dgarrido@lcc.uma.es>
 Andy Alvarez <andy_alvarez@baxter.com>
 Soeren Gerlach <soeren.gerlach@gmx.de>
+Vitaly Prapirny <marl@mebius.net>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
