@@ -527,7 +527,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_SS:
       return new be_compiled_visitor_operation_ss (new_ctx);
 	case TAO_CodeGen::TAO_OPERATION_IS:
-      return new be_visitor_operation_is (new_ctx);	 
+      return new be_visitor_operation_is (new_ctx);
 	 case TAO_CodeGen::TAO_OPERATION_IH:
       return new be_visitor_operation_ih (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH:
