@@ -1,7 +1,12 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.4
+PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.5
+====================================================
+
+. Support for shared libraries with VxWorks
+
+USER VISIBLE CHANGES BETWEEN ACE-5.4.3 and ACE-5.4.4
 ====================================================
 
 . The ace-config script has been replaced by pkg-config metadata files
