@@ -35,13 +35,12 @@ ECT_Driver::Latency_Stats::dump_results (const char *description,
     this->sum2_ / (this->n_ - 1)
     - (this->sum_ / this->n_) * (this->sum_ / (this->n_ - 1));
 
-  double min_usec = ACE_CU64_TO_CU32 (this->min_ / 1000);
-  double max_usec = ACE_CU64_TO_CU32 (this->max_ / 1000);
-  double avg_usec = ACE_CU64_TO_CU32 (avg / 1000);
-  double dev_usec = ACE_CU64_TO_CU32 (dev / 1000);
+  double min_usec = ACE_CU64_TO_CU32 (this->min_) / 1000.0;
+  double max_usec = ACE_CU64_TO_CU32 (this->max_) / 1000.0;
+  double avg_usec = ACE_CU64_TO_CU32 (avg) / 1000.0;
+  double dev_usec = ACE_CU64_TO_CU32 (dev) / 1000.0;
   ACE_DEBUG ((LM_DEBUG,
               "%s (%s): %.2f/%.2f/%.2f/%.2f (min/avg/max/dev2) [usecs]\n",
               description, desc2,
               min_usec, avg_usec, max_usec, dev_usec));
 }
-
