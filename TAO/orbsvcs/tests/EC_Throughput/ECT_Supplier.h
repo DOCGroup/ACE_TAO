@@ -14,6 +14,7 @@
 #define ECT_SUPPLIER_H
 
 #include "ace/Task.h"
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
 
 class ECTS_Driver;
@@ -34,9 +35,12 @@ public:
   // Run the test, just forwards to the driver
 
   void connect (const char* name,
+                int burst_count,
+                int burst_size,
+                int event_size,
+		int burst_pause,
 		int event_a,
 		int event_b,
-		int event_period,
 		RtecEventChannelAdmin::EventChannel_ptr ec,
 		CORBA::Environment& _env);
   // This method connects the supplier to the EC.
@@ -54,6 +58,9 @@ public:
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 
+  void dump_results (const char* name);
+  // Dump the results...
+
 private:
   ECTS_Driver *driver_;
   // Class we forward to.
@@ -70,6 +77,17 @@ private:
   ACE_PushSupplier_Adapter<Test_Supplier> supplier_;
   // We also connect to the EC as a consumer so we can receive the
   // timeout events.
+
+  ACE_High_Res_Timer timer_;
+  // Measure the elapsed time spent while sending the events.
+
+  int burst_count_;
+  int burst_size_;
+  int event_size_;
+  int burst_pause_;
+  int event_a_;
+  int event_b_;
+  // The test data.
 };
 
 class ECTS_Driver
@@ -90,19 +108,6 @@ public:
   int run (int argc, char* argv[]);
   // Execute the test.
 
-  int supplier_task (Test_Supplier *supplier,
-		     void *supplier_cookie);
-  // This method is run by the supplier task.
-
-  void push_supplier (void* supplier_cookie,
-		      RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-		      const RtecEventComm::EventSet &events,
-		      CORBA::Environment &);
-  // Callback method for suppliers, we push for them to their
-  // consumers and take statistics on the way.
-  // It is possible that we ignore the <consumer> parameter when
-  // testing the short-circuit case.
-
 private:
   int parse_args (int argc, char* argv[]);
   // parse the command line args
@@ -114,6 +119,9 @@ private:
 
   void activate_suppliers (CORBA::Environment &_env);
   // Activate the suppliers, i.e. they start generating events.
+
+  void dump_results (void);
+  // Dump the results for each supplier.
 
 private:
   Test_Supplier* suppliers_[ECTS_Driver::MAX_SUPPLIERS];

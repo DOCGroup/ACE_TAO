@@ -183,11 +183,14 @@ public:
       return 0;
     }
 
+#if 0
+  // @@ Memory allocators
   void *operator new (size_t /* nbytes */)
     { return ::new char[sizeof (Shutdown_Consumer)]; }
 
   void operator delete (void *buf)
     { ::delete [] ACE_static_cast(char*,buf); }
+#endif /* 0 */
 
   // The module that we report to.
   ACE_ES_Consumer_Module *consumer_module_;
@@ -211,11 +214,14 @@ public:
       return 0;
     }
 
+#if 0
+  // @@ Memory allocators
   void *operator new (size_t /* nbytes */)
     { return ::new char[sizeof (Shutdown_Channel)]; }
 
   void operator delete (void *buf)
     { ::delete [] ACE_static_cast(char*,buf); }
+#endif
 
   ACE_EventChannel *channel_;
 };
@@ -303,6 +309,8 @@ ACE_ES_Event_Container::operator== (const ACE_ES_Event_Container &event)
   return event1 == event2;
 }
 
+#if 0
+// @@ Memory allocators
 void *
 ACE_ES_Event_Container::operator new (size_t nbytes)
 {
@@ -315,6 +323,7 @@ ACE_ES_Event_Container::operator delete (void *mem)
 {
   ACE_ES_Memory_Pools::delete_Event_Container (mem);
 }
+#endif
 
 void
 dump_event (const RtecEventComm::Event &event)
