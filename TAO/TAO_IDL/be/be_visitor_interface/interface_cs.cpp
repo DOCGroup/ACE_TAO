@@ -201,15 +201,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // generate code for the elements of the interface
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for scope failed\n"), -1);
-    }
-
   // generate the is_a method.  _is_a is not supported on local objects.
   if (! node->is_local ())
     {
@@ -268,6 +259,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
+
+  // generate code for the elements of the interface
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for scope failed\n"), -1);
+    }
+
   // Interceptor classes
 
   be_visitor_context ctx (*this->ctx_);
