@@ -17,6 +17,11 @@ Thu Apr 29 15:58:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           before doing so. Also added some files to the server
           MSVC project for convenience.
 
+Thu Apr 29 13:59:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Context.cpp: replaced # that was inadvertantly
+          removed by last change.
+
 Thu Apr 29 13:57:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Context.cpp:
