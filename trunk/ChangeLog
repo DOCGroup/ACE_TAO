@@ -1,3 +1,8 @@
+Mon Jun  9 13:16:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/performance_stats.sh: The sequence<> latency tests will also
+	  be  monitored on a daily basis.
+
 Mon Jun  9 08:27:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.ace:
