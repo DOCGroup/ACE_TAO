@@ -1,0 +1,86 @@
+-*- indented-text -*-
+
+$Id$
+
+			      BACKGROUND
+			      ==========
+
+This example tests the scenario of nested upcalls in TAO.  For
+example, a particular process may need to act in both the role of
+client and server.  This interaction is common in situations where the
+process makes a twoway invocation on a remote servant, passing a local
+object reference 'o' to that servant.  In the process of servicing
+that invocation, the servant makes a twoway invocation on 'o'.
+
+This example illustrates an interaction that should be familiar to
+anyone who's used ACE: the process of registering a handler with a
+Reactor.  The EventHandler is the local object reference, and the
+Reactor the remote servant.  NOTE: This example in no way should be
+construed as testimony that remote Reactors make sense or are in any
+way useful.  It is merely a motivating example!
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+The client and server by default make use of the Naming Service.  The
+cubit server now has its own NamingServer implementation and hence you
+don't have to start the NamingService before starting the client and
+server.
+
+	You just have to use the -s flags on both the server and
+client if you don't want to use the naming service.
+
+			      EXECUTION
+			      =========
+
+server:
+-------
+
+% server [-d] [-s] [-ORBhost <serverhost>] [-ORBport <portnum>]
+ 	   [-o <ior_output_file>] 
+
+Options:
+-------
+-s       Tells the server not to use the Naming Service.
+
+-d       Debug flag (It is additive more -d flags will give debugging).
+
+-o      Outputs the ior file to the file
+
+Using -d turns on debugging messages.  It is additive, i.e., the more
+-d options provided, the more debugging you can get.  At the moment,
+only 2 levels of debugging are implemented, and more than 2 -d options
+are ignored.
+
+
+client:
+-------
+
+% client [-d] [-s] [-x] <-f ior_file> <-k ior>  -n <iterations> 
+
+Options:
+-------
+	d	Debug flag
+	s	Don't Use the Naming Service
+	x 	Tells the server to shutdown.
+	f	Reads the ior from the file
+	k	Reads the ior from commandline
+	
+	There are 3 ways of giving the IOR to the client:
+
+	1. From a file using the -f option. (This file can be produced using 
+		the -o option of the server.)
+	
+	2. Directly on the commandline using the -k option.
+	
+	3. Get it from the Naming Service (which is the default client
+       	   behavior).  
+
+NestedUpCalls_Test:
+------------------
+
+        This is a simple test program which tests the server and
+client using the default options of the server and client. To test
+using this just run
+
+        % NestedUpCalls_Test       
