@@ -104,7 +104,8 @@ namespace CORBA
 
   public:  // otherwise these cannot be called from a static function
 
-    virtual void *_tao_obv_narrow (ptrdiff_t) = 0;
+    // @@@ (JP) TODO - remove this.
+    virtual void *_tao_obv_narrow (ptrdiff_t) {return 0;}
 
     /// during marshal jump to the most derived part
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) = 0;
