@@ -145,7 +145,7 @@ TAO_Bounded_Base_Sequence::length (void) const
 ACE_INLINE void
 TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 {
-  if (this->length_ == 0)
+  if (this->buffer_ == 0)
     {
       this->_allocate_buffer (this->maximum_);
       this->release_ = 1;
