@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:323
 
 
 #include "Messaging_RT_PolicyC.h"
@@ -43,46 +43,47 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_Timeout[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d657373),
-  ACE_NTOHL (0x6167696e),
-  ACE_NTOHL (0x672f5469),
-  ACE_NTOHL (0x6d656f75),
-  ACE_NTOHL (0x743a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d657373), 
+  ACE_NTOHL (0x6167696e), 
+  ACE_NTOHL (0x672f5469), 
+  ACE_NTOHL (0x6d656f75), 
+  ACE_NTOHL (0x743a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Messaging/Timeout:1.0
     8,
-  ACE_NTOHL (0x54696d65),
+  ACE_NTOHL (0x54696d65), 
   ACE_NTOHL (0x6f757400),  // name = Timeout
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x54696d65),
-    ACE_NTOHL (0x42617365),
-    ACE_NTOHL (0x2f54696d),
-    ACE_NTOHL (0x65543a31),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x42617365), 
+    ACE_NTOHL (0x2f54696d), 
+    ACE_NTOHL (0x65543a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x54696d65), 
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
@@ -104,7 +105,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for Messaging::RelativeRoundtripTimeoutPolicy.
 
@@ -144,7 +145,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*Messaging__TAO_RelativeRoundtripTimeoutPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -155,7 +156,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
 Messaging::RelativeRoundtripTimeoutPolicy::~RelativeRoundtripTimeoutPolicy (void)
 {}
 
-void
+void 
 Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   RelativeRoundtripTimeoutPolicy *_tao_tmp_pointer =
@@ -173,10 +174,27 @@ Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
     {
       return RelativeRoundtripTimeoutPolicy::_nil ();
     }
-
+  
   RelativeRoundtripTimeoutPolicy_ptr proxy =
     dynamic_cast<RelativeRoundtripTimeoutPolicy_ptr> (_tao_objref);
+  
+  return RelativeRoundtripTimeoutPolicy::_duplicate (proxy);
+}
 
+Messaging::RelativeRoundtripTimeoutPolicy_ptr
+Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return RelativeRoundtripTimeoutPolicy::_nil ();
+    }
+  
+  RelativeRoundtripTimeoutPolicy_ptr proxy =
+    dynamic_cast<RelativeRoundtripTimeoutPolicy_ptr> (_tao_objref);
+  
   return RelativeRoundtripTimeoutPolicy::_duplicate (proxy);
 }
 
@@ -187,7 +205,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (RelativeRoundtripTimeoutP
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -236,7 +254,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_RelativeRoundtripTimeoutPolicy[] =
 {
@@ -283,7 +301,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -352,7 +370,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
