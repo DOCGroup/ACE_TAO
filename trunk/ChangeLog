@@ -1,3 +1,8 @@
+Fri Jan 25 14:45:00 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+	 
+	* bin/auto_run_tests.lst: 
+	  Added Two_Objects test to the list.
+	
 Fri Jan 25 14:40:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/common/Exception.cpp:
