@@ -1,3 +1,24 @@
+Tue Jun  3 01:26:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BasicSP.dsw:
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/Display/HUDisplay_stub.dsp:
+        * examples/OEP/Display/HUDisplay_svnt.dsp:
+
+	  Updated settings in these files.
+
+        * examples/OEP/BasicSP/NOTE.txt:
+
+          Fixed typos.
+
+        * examples/OEP/BasicSP/descriptors/daemon.ior:
+
+	  Removed this file from the repository - it's just a temporary.
+
 Mon Jun 02 23:36:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* exampels/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:

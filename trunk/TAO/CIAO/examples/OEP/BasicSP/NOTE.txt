@@ -62,7 +62,7 @@ Step 1:
 
   and on Windows
 
-    %CIAO_ROOT%/tools/Daemon/CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/ComponentServer/ComponentServer
+    %CIAO_ROOT%\tools\Daemon\CIAO_Daemon  -ORBEndpoint iiop://localhost:10000 -n ../../../../tools/ComponentServer/ComponentServer
 
   Note that the environment variable CIAO_ROOT must be set 
   (to TAO_ROOT/CIAO).
@@ -78,7 +78,7 @@ Step 2:
 
   or
 
-    %CIAO_ROOT%/tools/Assembly_Deployer/Assembly_Manager -o ior -c test.dat
+    %CIAO_ROOT%\tools\Assembly_Deployer\Assembly_Manager -o ior -c test.dat
 
 Step 3:
 =======
@@ -90,7 +90,7 @@ Step 3:
 
   or
 
-    %CIAO_ROOT%/tools/Assembly_Deployer/Assembly_Deployer -k file://ior  -a BasicSP.cad
+    %CIAO_ROOT%\tools\Assembly_Deployer\Assembly_Deployer -k file://ior  -a BasicSP.cad
 
 Step 4:
 =======
