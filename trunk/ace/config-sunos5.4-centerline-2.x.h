@@ -56,9 +56,6 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Platform contains <poll.h>.
 #define ACE_HAS_POLL
 

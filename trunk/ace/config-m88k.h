@@ -118,9 +118,6 @@ struct ip_mreq
 #define ACE_HAS_ALLOCA_H
 #endif  /* m88k */
 
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Platform contains <poll.h>.
 #define ACE_HAS_POLL
 

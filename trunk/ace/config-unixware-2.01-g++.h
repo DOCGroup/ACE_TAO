@@ -29,7 +29,6 @@
 #define ACE_HAS_MSG
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 // Not yet sure about threads
-#define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_OSF1_GETTIMEOFDAY
 #define ACE_HAS_POLL

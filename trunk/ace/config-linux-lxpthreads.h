@@ -67,8 +67,6 @@
 #define ACE_HAS_REENTRANT_FUNCTIONS
 // getprotobyname_r have a different signature!
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-//Sockets may be called in multi-threaded programs
-#define ACE_HAS_MT_SAFE_SOCKETS
 // uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif

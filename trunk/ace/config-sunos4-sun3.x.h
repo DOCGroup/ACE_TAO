@@ -31,9 +31,6 @@
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Header files lack t_errno for ACE_TLI.
 // #define ACE_LACKS_T_ERRNO
 

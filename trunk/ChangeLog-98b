@@ -1,24 +1,13 @@
-Fri Sep 04 15:24:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Sep  4 16:45:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.i: Here, we should use ASYS_INLINE which is always
-	  defined as inline on most platforms.
-
-Fri Sep  4 14:16:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ace: Removed all traces of ACE_HAS_MT_SAFE_SOCKETS -- this was a
+ 	  vestige from Solaris 2.2!  Thanks to Ossama Othman
+ 	  <othman@astrosun.tn.cornell.edu> for suggesting this.
 
 	* ace/Service_Config: Changed the default value of
  	  ACE_Service_Config::debug_ from 1 to 0.  Thus, debugging is
  	  DISABLED by default.  If you want to enable debugging, pass the
  	  -d option to the constructor of ACE_Service_Config.
-
-Fri Sep 04 13:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/Log_Msg.h (ACE_Log_Msg): Added a new ACE_DEBUG format
-	  character 'A' which prints out an ACE_timer_t value.  This is
-	  most useful when you want to print out the timers in
-	  ACE_Profile_Timer::ACE_Elapse_Time.  Thanks to Naga for
-	  providing the brilliant idea.
-	  
-Fri Sep  4 13:53:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Naming_Context.cpp,
 	  ace/Service_Config.cpp,
@@ -31,8 +20,17 @@ Fri Sep  4 13:53:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/Service_Config: Moved the debug() stuff from here and put it
  	  into class ACE so that it will be more globally visible.
 
-Fri Sep 04 11:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Sep 04 15:24:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/ACE.i: Here, we should use ASYS_INLINE which is always
+	  defined as inline on most platforms.
+
+	* ace/Log_Msg.h (ACE_Log_Msg): Added a new ACE_DEBUG format
+	  character 'A' which prints out an ACE_timer_t value.  This is
+	  most useful when you want to print out the timers in
+	  ACE_Profile_Timer::ACE_Elapse_Time.  Thanks to Naga for
+	  providing the brilliant idea.
+	  
         * tests/XtReactor_Test.cpp (main): Removed '.cpp' from
           ACE_START_TEST title string.  Thanks to Ossama for reporting
           this.
@@ -174,7 +172,7 @@ Wed Sep 02 16:31:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.h: Make sure ACE_NO_INLINE is not defined before defining
           it to avoid double defining the macro.  Thanks to Ossama Othman
-          <othman@astrosun.tn.cornell.edu> for suggestion this.
+          <othman@astrosun.tn.cornell.edu> for suggesting this.
 
 Wed Sep  2 11:10:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

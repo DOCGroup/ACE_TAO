@@ -58,9 +58,6 @@
 // Green Hills doesn't give a preprocessor symbol for long double
 #define ACE_SIZEOF_LONG_DOUBLE 8
 
-// Sockets may be called in multi-threaded programs.
-#define ACE_HAS_MT_SAFE_SOCKETS
-
 // Platform contains <poll.h>.
 #define ACE_HAS_POLL
 
