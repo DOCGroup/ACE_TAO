@@ -1,3 +1,14 @@
+Mon Sep 06 16:13:00 2004  Gan Deng <gan.deng@vanderbilt.edu>
+
+        * CIAO_EventService_Factory_impl.cpp
+        * CIAO_EventService_Factory_impl.h
+        * CIAO_RTEvent.cpp
+        * CIAO_RTEvent.h
+
+          Modify the files in order to add support for 
+          Event Channel service configuration file and
+          for RT_QoS for both supplier and consumers.
+
 Mon Sep 06 13:35:00 2004  Gan Deng <gan.deng@vanderbilt.edu>
 
         * DAnCE/ciao/CCM_Component.idl
@@ -17,6 +28,13 @@ Mon Sep 06 13:35:00 2004  Gan Deng <gan.deng@vanderbilt.edu>
         
           Added implementation of the interface  
           ::CIAO::ContainerEventService to this class.
+          
+        * DAnCE/ciao/NodeApplication_Impl.h
+        * DAnCE/ciao/NodeApplication_Impl.cpp
+        * DAnCE/ciao/NodeApplication_Impl.inl
+                
+          Added implementation of get_event_service() operation which was
+          added to the NodeApplication IDL interface.
 
         * DAnCE/ciao/CCM_Core.mpc
         
