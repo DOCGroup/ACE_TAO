@@ -1,3 +1,19 @@
+Thu May 17 18:52:42 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/POA/Loader/Servant_Activator.cpp (ServantLocator_i):   
+	* examples/POA/Loader/Servant_Locator.cpp (ServantLocator_i):
+          Generalize this code so that it works on BCB.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
+  
+	* tests/Object_Loader/run_test.pl: The Object_Loader test
+	  dynamically loads a DLL, and for this to work the DLL needs to
+ 	  be put on the path.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for reporting this.
+
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp (obtain_servant): 
+	  Corrected a botched patch.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for reporting this.
+
 Thu May 17 20:28:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
@@ -6,11 +22,11 @@ Thu May 17 20:28:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
 
           The change in the IDL compiler of the handling of undefined
-          forward declared interfaces necessitated a change in
-          tao_ifr's handling of forward declared interfaces (defined
-          or otherwise) and of interface members. Thanks to
-          Philippe Merle <Philippe.Merle@lifl.fr> for uncovering this
-          bug in his CorbaScript testing efforts.
+ 	  forward declared interfaces necessitated a change in tao_ifr's
+ 	  handling of forward declared interfaces (defined or otherwise)
+ 	  and of interface members. Thanks to Philippe Merle
+ 	  <Philippe.Merle@lifl.fr> for uncovering this bug in his
+ 	  CorbaScript testing efforts.
 
 Thu May 17 17:00:39 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
