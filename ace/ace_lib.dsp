@@ -1431,6 +1431,63 @@ SOURCE=.\Log_Msg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log_Msg_Backend.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_Callback.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_IPC.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log_Record.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -2059,6 +2116,25 @@ SOURCE=.\OS.cpp
 # Begin Source File
 
 SOURCE=.\OS_Dirent.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
 
@@ -4475,6 +4551,18 @@ SOURCE=.\Log_Msg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log_Msg_Backend.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_Callback.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log_Msg_IPC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log_Priority.h
 # End Source File
 # Begin Source File
@@ -4644,6 +4732,10 @@ SOURCE=.\OS.h
 # Begin Source File
 
 SOURCE=.\OS_Dirent.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.h
 # End Source File
 # Begin Source File
 
@@ -5604,6 +5696,10 @@ SOURCE=.\OS.i
 # Begin Source File
 
 SOURCE=.\OS_Dirent.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_Log_Msg_Attributes.inl
 # End Source File
 # Begin Source File
 

@@ -1791,7 +1791,7 @@ ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
 {
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   attributes.seh_except_selector_ = selector;
-  attributes.handler_ = handler;
+  attributes.seh_except_handler_ = handler;
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
   if (ACE_Log_Msg::exists ())
     {
