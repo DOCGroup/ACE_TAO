@@ -32,7 +32,7 @@ TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
     {
       this->prev_->next_ = this->next_;
     }
-  else
+  else if(head == this)
     {
       head = this->next_;
     }
@@ -41,7 +41,7 @@ TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
     {
       this->next_->prev_ = this->prev_;
     }
-  else
+  else if(tail == this)
     {
       tail = this->prev_;
     }
