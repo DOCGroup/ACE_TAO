@@ -2,6 +2,7 @@
 
 project(*IDL3) {
   requires += cidl
+  sharedname =
   staticname = IDL3
   includes += ../..
   Source_Files {
