@@ -65,12 +65,18 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::destroy (void)
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::destroy");
 
   // Only delete ourselves if we've been allocated dynamically.
-  if (this->dynamic_)
-    // Will call the destructor, which automatically calls <shutdown>.
-    // Note that if we are *not* allocated dynamically then the
-    // destructor will call <shutdown> automatically when it gets run
-    // during cleanup.
-    delete this; 
+  if (this->dynamic_ && this->closing_ == 0)
+    {
+      // We're closing down now, so make sure not to call ourselves
+      // recursively...
+      this->closing_ = 1;
+
+      // Will call the destructor, which automatically calls <shutdown>.
+      // Note that if we are *not* allocated dynamically then the
+      // destructor will call <shutdown> automatically when it gets run
+      // during cleanup.
+      delete this; 
+    }
 }
 
 template <PR_ST_1, ACE_SYNCH_1> void
@@ -80,7 +86,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::operator delete (void *obj)
   ::delete obj;
 }
 
-/* Default constructor */
+// Default constructor.
 
 template <PR_ST_1, ACE_SYNCH_1> 
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
@@ -100,6 +106,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
   // work correctly in multi-threaded programs by using our ACE_TSS
   // class.
   this->dynamic_ = ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->is_dynamic (this);
+  this->closing_ = 0;
 }
 
 // Default behavior for a ACE_Svc_Handler object is to be registered with
@@ -194,7 +201,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::~ACE_Svc_Handler (void)
 }
 
 template <PR_ST_1, ACE_SYNCH_1> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_close (ACE_HANDLE, 
+						     ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::handle_close");
 

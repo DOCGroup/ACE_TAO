@@ -509,7 +509,7 @@ private:
 #if defined (ACE_HAS_TYPENAME_KEYWORD)
 #define ACE_TYPENAME typename
 #else
-#deifne ACE_TYPENAME
+#define ACE_TYPENAME
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
 
 // The following is necessary since many C++ compilers don't support

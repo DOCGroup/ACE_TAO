@@ -6,6 +6,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Task_T.h"
+#include "ace/Module.h"
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)

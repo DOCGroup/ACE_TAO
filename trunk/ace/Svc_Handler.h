@@ -129,6 +129,10 @@ private:
   char dynamic_;
   // Have we been dynamically created?
 
+  char closing_;
+  // Keeps track of whether we are in the process of closing (required
+  // to avoid circular calls to <handle_close>).
+
 #if defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_Thread_Mutex ace_svc_handler_lock_;
   // Lock the creation of the Singleton.

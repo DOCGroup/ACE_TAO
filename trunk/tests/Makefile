@@ -10,6 +10,7 @@
 
 BIN = 	Barrier_Test \
 	Buffer_Stream_Test \
+	Conn_Test \
 	Future_Test \
 	Handle_Set_Test \
 	IOStream_Test \
