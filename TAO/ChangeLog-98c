@@ -1,3 +1,13 @@
+Wed Oct 28 21:47:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Fixed <<= operators (copying version) to be
+          leak-free and consistent (now all use ACE_NEW
+          and return immediately if it fails).
+
 Wed Oct 28 20:44:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/Any.cpp:
