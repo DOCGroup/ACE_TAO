@@ -17,7 +17,7 @@ Wed Apr 28 21:16:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Explicit_Activation/server.cpp (main): Added the
 	  use of SINGLE_THREAD_MODEL POA policy.  This helps in MT
-	  debugging of the PAO.
+	  debugging of the POA.
 
 Wed Apr 28 19:03:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
