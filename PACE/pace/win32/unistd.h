@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/unistd.h
+ *    pace/win32/unistd.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -144,7 +144,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/unistd.inl"
+# include "pace/win32/unistd.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_UNISTD_H */

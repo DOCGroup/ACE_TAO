@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/stdlib.inl
+ *    pace/win32/stdlib.inl
  *
  * = AUTHOR
  *    Luther Baker

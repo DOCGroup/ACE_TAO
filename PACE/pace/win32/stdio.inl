@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/stdio.inl
+ *    pace/win32/stdio.inl
  *
  * = AUTHOR
  *    Luther Baker

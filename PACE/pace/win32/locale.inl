@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/locale.inl
+ *    pace/win32/locale.inl
  *
  * = AUTHOR
  *    Joe Hoffert

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/termios.c
+ *    pace/win32/termios.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/sys/termios.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/termios.inl"
+# include "pace/win32/termios.inl"
 #endif /* ! PACE_HAS_INLINE */

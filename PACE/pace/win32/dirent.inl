@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/dirent.inl
+ *    pace/win32/dirent.inl
  *
  * = AUTHOR
  *    Luther Baker

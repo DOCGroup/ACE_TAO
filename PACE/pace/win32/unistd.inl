@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/unistd.inl
+ *    pace/win32/unistd.inl
  *
  * = AUTHOR
  *    Luther Baker

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/locale.h
+ *    pace/win32/locale.h
  *
  * = AUTHOR
  *    Joe Hoffert
@@ -27,7 +27,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/locale.inl"
+# include "pace/win32/locale.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_LOCALE_H */
