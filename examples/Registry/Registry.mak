@@ -30,8 +30,9 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-CPP=cl.exe
+# PROP Target_Last_Scanned "update - Win32 Debug"
 RSC=rc.exe
+CPP=cl.exe
 
 !IF  "$(CFG)" == "iterator - Win32 Debug"
 
@@ -65,7 +66,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /YX /c
 CPP_OBJS=.\debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -124,7 +125,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_AFXDLL" /YX /c
 CPP_OBJS=.\debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -152,9 +153,10 @@ LINK32_OBJS= \
 
 !ENDIF 
 
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /D "_AFXDLL" /Fp"$(INTDIR)/iterator.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c\
- 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\STL" /D "WIN32" /D "_DEBUG"\
+ /D "_CONSOLE" /D "_AFXDLL" /Fp"$(INTDIR)/iterator.pch" /YX /Fo"$(INTDIR)/"\
+ /Fd"$(INTDIR)/" /c 
+
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
 
@@ -184,7 +186,11 @@ SOURCE=.\test_registry_iterator.cpp
 DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
@@ -224,7 +230,11 @@ SOURCE=.\test_registry_update.cpp
 DEP_CPP_TEST_R=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
