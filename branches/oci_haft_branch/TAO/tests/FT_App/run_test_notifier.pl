@@ -25,7 +25,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #           client for TestReplica interface.
 #           client for PullMonitorable.
 #
-# Test Scenario:
+# Test Scenario (Testing: marks behavior being tested):
 #   Phase 1:
 #     Start two FT_Replicas
 #       FT_Replicas write TestReplica IORs (FR#1 and FR#2) to files
@@ -39,24 +39,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #      StubNotifier writes FaultNotifier IOR (FN) to a file.
 #   Phase 3:
 #     Wait for IOR: FN
-#     Start FT_Client giving it IORS: FR#1 and FR#2, and FN. [1]
+#     Start FT_Client giving it IORS: FR#1 and FR#2. [1]
 #       FT_Client interacts with FR#1.
 #       FT_Client asks FR#1 to fault.  It does so.
 #       FT_Client notices fault and switches to FR#2. [1]
-#       Test: FD#1 notices fault and notifies StubNotifier
-#       Test: FD#1 terminates
+#       Testing: FD#1 notices fault and notifies StubNotifier
+#       Testing: FD#1 terminates
 #       FT_Client interacts with FR#2.
 #       FT_Client asks FR#2 to shut down.
 #       FT_Client shuts down.
-#       Test: FD#2 notices FR2 is gone, interprets this
+#       Testing: FD#2 notices FR2 is gone, interprets this
 #         as a fault, and notifies StubNotifier.
-#       Test: FD#2 terminates.
-#       Test: FDF is idle, so it terminates.
+#       Testing: FD#2 terminates.
+#       Testing: FDF is idle, so it terminates.
 #       StubNotifier sees FDF terminate, so it terminates
 #     Phase 4:
-#       Wait for StubNotifier termination.
-#       Check for Client termination.
-
+#       Wait for all processes to terminate.
+#       Check termination status.
+#       Delete temp files.
+#
+# [1] Client mediated fault tolerance.  These points will 
+#     change when IOGR support is available.
 use lib '../../../bin';
 use PerlACE::Run_Test;
 
