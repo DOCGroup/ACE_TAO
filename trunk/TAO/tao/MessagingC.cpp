@@ -1518,6 +1518,9 @@ static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
     0U,
 
 };
+
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 static CORBA::TypeCode _tc_TAO_tc_Messaging_ExceptionHolder (CORBA::tk_struct, sizeof (_oc_Messaging_ExceptionHolder), (char *) &_oc_Messaging_ExceptionHolder, 0, sizeof (Messaging::ExceptionHolder));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Messaging)
@@ -1675,6 +1678,7 @@ const char* Messaging::ReplyHandler::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/ReplyHandler:1.0";
 }
 
+#if (TAO_HAS_SMART_PROXIES == 1)
 Messaging::TAO_Messaging_ReplyHandler_Default_Proxy_Factory::TAO_Messaging_ReplyHandler_Default_Proxy_Factory (int register_proxy_factory)
 {
   if (register_proxy_factory)
@@ -1798,6 +1802,8 @@ Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
   #pragma instantiate ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
   #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_SMART_PROXIES */
+
     static const CORBA::Long _oc_Messaging_ReplyHandler[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
@@ -1809,6 +1815,9 @@ Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
   TAO_NAMESPACE_BEGIN (Messaging)
   TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyHandler, &_tc_TAO_tc_Messaging_ReplyHandler)
   TAO_NAMESPACE_END
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
 {
@@ -2142,6 +2151,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
   return 0;
 }
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -2208,6 +2219,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_
   #  pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
 #define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
@@ -2320,6 +2332,8 @@ CORBA::Boolean operator>> (
 }
 
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 #if !defined _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_CPP_
 #define _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_CPP_
 
@@ -2387,5 +2401,7 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_CPP_ */
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

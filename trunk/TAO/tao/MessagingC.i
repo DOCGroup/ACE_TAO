@@ -71,14 +71,14 @@ Messaging::RebindPolicy_var::operator= (const ::Messaging::RebindPolicy_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RebindPolicy_var::operator const ::Messaging::RebindPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::RebindPolicy_var::operator ::Messaging::RebindPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::RebindPolicy_var::operator ::Messaging::RebindPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -170,7 +170,7 @@ Messaging::RebindPolicy_out::operator= (RebindPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RebindPolicy_out::operator ::Messaging::RebindPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -257,14 +257,14 @@ Messaging::SyncScopePolicy_var::operator= (const ::Messaging::SyncScopePolicy_va
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::SyncScopePolicy_var::operator const ::Messaging::SyncScopePolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::SyncScopePolicy_var::operator ::Messaging::SyncScopePolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::SyncScopePolicy_var::operator ::Messaging::SyncScopePolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -356,7 +356,7 @@ Messaging::SyncScopePolicy_out::operator= (SyncScopePolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::SyncScopePolicy_out::operator ::Messaging::SyncScopePolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -467,13 +467,13 @@ Messaging::PriorityRange_var::operator const ::Messaging::PriorityRange &() cons
 }
 
 ACE_INLINE
-Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() // cast 
+Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() const // cast 
+Messaging::PriorityRange_var::operator ::Messaging::PriorityRange &() const // cast
 {
   return *this->ptr_;
 }
@@ -490,7 +490,7 @@ Messaging::PriorityRange_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::Messaging::PriorityRange &
 Messaging::PriorityRange_var::out (void)
 {
@@ -571,14 +571,14 @@ Messaging::RequestPriorityPolicy_var::operator= (const ::Messaging::RequestPrior
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RequestPriorityPolicy_var::operator const ::Messaging::RequestPriorityPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::RequestPriorityPolicy_var::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::RequestPriorityPolicy_var::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -670,7 +670,7 @@ Messaging::RequestPriorityPolicy_out::operator= (RequestPriorityPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RequestPriorityPolicy_out::operator ::Messaging::RequestPriorityPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -753,14 +753,14 @@ Messaging::ReplyPriorityPolicy_var::operator= (const ::Messaging::ReplyPriorityP
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyPriorityPolicy_var::operator const ::Messaging::ReplyPriorityPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::ReplyPriorityPolicy_var::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::ReplyPriorityPolicy_var::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -852,7 +852,7 @@ Messaging::ReplyPriorityPolicy_out::operator= (ReplyPriorityPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyPriorityPolicy_out::operator ::Messaging::ReplyPriorityPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -939,14 +939,14 @@ Messaging::RequestStartTimePolicy_var::operator= (const ::Messaging::RequestStar
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RequestStartTimePolicy_var::operator const ::Messaging::RequestStartTimePolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::RequestStartTimePolicy_var::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::RequestStartTimePolicy_var::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1038,7 +1038,7 @@ Messaging::RequestStartTimePolicy_out::operator= (RequestStartTimePolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RequestStartTimePolicy_out::operator ::Messaging::RequestStartTimePolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -1125,14 +1125,14 @@ Messaging::RequestEndTimePolicy_var::operator= (const ::Messaging::RequestEndTim
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RequestEndTimePolicy_var::operator const ::Messaging::RequestEndTimePolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::RequestEndTimePolicy_var::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::RequestEndTimePolicy_var::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1224,7 +1224,7 @@ Messaging::RequestEndTimePolicy_out::operator= (RequestEndTimePolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RequestEndTimePolicy_out::operator ::Messaging::RequestEndTimePolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -1311,14 +1311,14 @@ Messaging::ReplyStartTimePolicy_var::operator= (const ::Messaging::ReplyStartTim
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyStartTimePolicy_var::operator const ::Messaging::ReplyStartTimePolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::ReplyStartTimePolicy_var::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::ReplyStartTimePolicy_var::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1410,7 +1410,7 @@ Messaging::ReplyStartTimePolicy_out::operator= (ReplyStartTimePolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyStartTimePolicy_out::operator ::Messaging::ReplyStartTimePolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -1497,14 +1497,14 @@ Messaging::ReplyEndTimePolicy_var::operator= (const ::Messaging::ReplyEndTimePol
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyEndTimePolicy_var::operator const ::Messaging::ReplyEndTimePolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::ReplyEndTimePolicy_var::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::ReplyEndTimePolicy_var::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1596,7 +1596,7 @@ Messaging::ReplyEndTimePolicy_out::operator= (ReplyEndTimePolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyEndTimePolicy_out::operator ::Messaging::ReplyEndTimePolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -1683,14 +1683,14 @@ Messaging::RelativeRequestTimeoutPolicy_var::operator= (const ::Messaging::Relat
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RelativeRequestTimeoutPolicy_var::operator const ::Messaging::RelativeRequestTimeoutPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::RelativeRequestTimeoutPolicy_var::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::RelativeRequestTimeoutPolicy_var::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1782,7 +1782,7 @@ Messaging::RelativeRequestTimeoutPolicy_out::operator= (RelativeRequestTimeoutPo
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RelativeRequestTimeoutPolicy_out::operator ::Messaging::RelativeRequestTimeoutPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -1869,14 +1869,14 @@ Messaging::RelativeRoundtripTimeoutPolicy_var::operator= (const ::Messaging::Rel
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RelativeRoundtripTimeoutPolicy_var::operator const ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::RelativeRoundtripTimeoutPolicy_var::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::RelativeRoundtripTimeoutPolicy_var::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1968,7 +1968,7 @@ Messaging::RelativeRoundtripTimeoutPolicy_out::operator= (RelativeRoundtripTimeo
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RelativeRoundtripTimeoutPolicy_out::operator ::Messaging::RelativeRoundtripTimeoutPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -2079,13 +2079,13 @@ Messaging::RoutingTypeRange_var::operator const ::Messaging::RoutingTypeRange &(
 }
 
 ACE_INLINE
-Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() // cast 
+Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() const // cast 
+Messaging::RoutingTypeRange_var::operator ::Messaging::RoutingTypeRange &() const // cast
 {
   return *this->ptr_;
 }
@@ -2102,7 +2102,7 @@ Messaging::RoutingTypeRange_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::Messaging::RoutingTypeRange &
 Messaging::RoutingTypeRange_var::out (void)
 {
@@ -2183,14 +2183,14 @@ Messaging::RoutingPolicy_var::operator= (const ::Messaging::RoutingPolicy_var &p
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RoutingPolicy_var::operator const ::Messaging::RoutingPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::RoutingPolicy_var::operator ::Messaging::RoutingPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::RoutingPolicy_var::operator ::Messaging::RoutingPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2282,7 +2282,7 @@ Messaging::RoutingPolicy_out::operator= (RoutingPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::RoutingPolicy_out::operator ::Messaging::RoutingPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -2369,14 +2369,14 @@ Messaging::MaxHopsPolicy_var::operator= (const ::Messaging::MaxHopsPolicy_var &p
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::MaxHopsPolicy_var::operator const ::Messaging::MaxHopsPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::MaxHopsPolicy_var::operator ::Messaging::MaxHopsPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::MaxHopsPolicy_var::operator ::Messaging::MaxHopsPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2468,7 +2468,7 @@ Messaging::MaxHopsPolicy_out::operator= (MaxHopsPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::MaxHopsPolicy_out::operator ::Messaging::MaxHopsPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -2555,14 +2555,14 @@ Messaging::QueueOrderPolicy_var::operator= (const ::Messaging::QueueOrderPolicy_
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::QueueOrderPolicy_var::operator const ::Messaging::QueueOrderPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::QueueOrderPolicy_var::operator ::Messaging::QueueOrderPolicy_ptr &() // cast 
+ACE_INLINE
+Messaging::QueueOrderPolicy_var::operator ::Messaging::QueueOrderPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2654,7 +2654,7 @@ Messaging::QueueOrderPolicy_out::operator= (QueueOrderPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::QueueOrderPolicy_out::operator ::Messaging::QueueOrderPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -2744,20 +2744,20 @@ Messaging::PolicyValue_var::operator const ::Messaging::PolicyValue &() const //
 }
 
 ACE_INLINE
-Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() // cast 
+Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() const // cast 
+Messaging::PolicyValue_var::operator ::Messaging::PolicyValue &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-Messaging::PolicyValue_var::operator ::Messaging::PolicyValue *&() // cast 
+Messaging::PolicyValue_var::operator ::Messaging::PolicyValue *&() // cast
 {
   return this->ptr_;
 }
@@ -2774,7 +2774,7 @@ Messaging::PolicyValue_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::Messaging::PolicyValue *&
 Messaging::PolicyValue_var::out (void)
 {
@@ -2835,7 +2835,7 @@ Messaging::PolicyValue_out::operator= (PolicyValue *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::PolicyValue_out::operator ::Messaging::PolicyValue *&() // cast
 {
   return this->ptr_;
@@ -2936,20 +2936,20 @@ Messaging::PolicyValue::_tao_seq_Octet_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::PolicyValue::_tao_seq_Octet_var::operator const ::Messaging::PolicyValue::_tao_seq_Octet &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::PolicyValue::_tao_seq_Octet_var::operator ::Messaging::PolicyValue::_tao_seq_Octet &() // cast 
+ACE_INLINE
+Messaging::PolicyValue::_tao_seq_Octet_var::operator ::Messaging::PolicyValue::_tao_seq_Octet &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::PolicyValue::_tao_seq_Octet_var::operator ::Messaging::PolicyValue::_tao_seq_Octet &() const // cast 
+ACE_INLINE
+Messaging::PolicyValue::_tao_seq_Octet_var::operator ::Messaging::PolicyValue::_tao_seq_Octet &() const // cast
 {
   return *this->ptr_;
 }
@@ -2972,7 +2972,7 @@ Messaging::PolicyValue::_tao_seq_Octet_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::Messaging::PolicyValue::_tao_seq_Octet *&
 Messaging::PolicyValue::_tao_seq_Octet_var::out (void)
 {
@@ -3033,7 +3033,7 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator= (_tao_seq_Octet *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::PolicyValue::_tao_seq_Octet_out::operator ::Messaging::PolicyValue::_tao_seq_Octet *&() // cast
 {
   return this->ptr_;
@@ -3062,7 +3062,7 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_MESSAGING_POLICYVALUESEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_MESSAGING_POLICYVALUESEQ_CI_
 
@@ -3075,24 +3075,24 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
     ACE_NEW_RETURN (retval, Messaging::PolicyValue[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::freebuf (Messaging::PolicyValue *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -3101,7 +3101,7 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq (const _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq &rhs)
   // Copy constructor.
@@ -3111,10 +3111,10 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
     {
       Messaging::PolicyValue *tmp1 = _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (this->maximum_);
       Messaging::PolicyValue * const tmp2 = ACE_reinterpret_cast (Messaging::PolicyValue * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -3122,14 +3122,14 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq &
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::operator= (const _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -3142,18 +3142,18 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     Messaging::PolicyValue *tmp1 = ACE_reinterpret_cast (Messaging::PolicyValue *, this->buffer_);
     Messaging::PolicyValue * const tmp2 = ACE_reinterpret_cast (Messaging::PolicyValue * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE Messaging::PolicyValue &
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::operator[] (CORBA::ULong i)
@@ -3163,7 +3163,7 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
     Messaging::PolicyValue* tmp = ACE_reinterpret_cast(Messaging::PolicyValue*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const Messaging::PolicyValue &
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::operator[] (CORBA::ULong i) const
   // operator []
@@ -3172,9 +3172,9 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
     Messaging::PolicyValue * const tmp = ACE_reinterpret_cast (Messaging::PolicyValue* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE Messaging::PolicyValue *
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::get_buffer (CORBA::Boolean orphan)
   {
@@ -3207,13 +3207,13 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
     }
     return result;
   }
-  
+
   ACE_INLINE const Messaging::PolicyValue *
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const Messaging::PolicyValue * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   Messaging::_TAO_Unbounded_Sequence_Messaging_PolicyValueSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -3230,11 +3230,11 @@ Messaging::PolicyValue::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_MESSAGING_POLICYVALUESEQ_CI_)
 #define _MESSAGING_POLICYVALUESEQ_CI_
@@ -3299,27 +3299,27 @@ Messaging::PolicyValueSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::PolicyValueSeq_var::operator const ::Messaging::PolicyValueSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() // cast 
+ACE_INLINE
+Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() const // cast 
+ACE_INLINE
+Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq *&() // cast 
+Messaging::PolicyValueSeq_var::operator ::Messaging::PolicyValueSeq *&() // cast
 {
   return this->ptr_;
 }
@@ -3342,7 +3342,7 @@ Messaging::PolicyValueSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::Messaging::PolicyValueSeq *&
 Messaging::PolicyValueSeq_var::out (void)
 {
@@ -3403,7 +3403,7 @@ Messaging::PolicyValueSeq_out::operator= (PolicyValueSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::PolicyValueSeq_out::operator ::Messaging::PolicyValueSeq *&() // cast
 {
   return this->ptr_;
@@ -3430,6 +3430,8 @@ Messaging::PolicyValueSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder () // default constructor
 {}
@@ -3438,7 +3440,7 @@ ACE_INLINE
 Messaging::ExceptionHolder::~ExceptionHolder () // destructor
 {}
 
-ACE_INLINE const char* 
+ACE_INLINE const char*
 Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Messaging/ExceptionHolder:1.0";
@@ -3467,7 +3469,7 @@ Messaging::ExceptionHolder_var::ExceptionHolder_var (const Messaging::ExceptionH
   : ptr_ (ACE_const_cast(Messaging::ExceptionHolder*, p))
 {}
 
-ACE_INLINE Messaging::ExceptionHolder* 
+ACE_INLINE Messaging::ExceptionHolder*
 Messaging::ExceptionHolder_var::ptr (void) const
 {
   return this->ptr_;
@@ -3507,19 +3509,19 @@ Messaging::ExceptionHolder_var::operator= (const Messaging::ExceptionHolder_var 
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ExceptionHolder_var::operator const Messaging::ExceptionHolder* () const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder* () // cast 
+ACE_INLINE
+Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder* () // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder* 
+ACE_INLINE Messaging::ExceptionHolder*
 Messaging::ExceptionHolder_var::operator-> (void) const
 {
   return this->ptr_;
@@ -3545,7 +3547,7 @@ Messaging::ExceptionHolder_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder* 
+ACE_INLINE Messaging::ExceptionHolder*
 Messaging::ExceptionHolder_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -3608,7 +3610,7 @@ Messaging::ExceptionHolder_out::operator= (Messaging::ExceptionHolder* p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ExceptionHolder_out::operator Messaging::ExceptionHolder* &() // cast
 {
   return this->ptr_;
@@ -3620,7 +3622,7 @@ Messaging::ExceptionHolder_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::ExceptionHolder* 
+ACE_INLINE Messaging::ExceptionHolder*
 Messaging::ExceptionHolder_out::operator-> (void)
 {
   return this->ptr_;
@@ -3696,14 +3698,14 @@ Messaging::ReplyHandler_var::operator= (const ::Messaging::ReplyHandler_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyHandler_var::operator const ::Messaging::ReplyHandler_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::ReplyHandler_var::operator ::Messaging::ReplyHandler_ptr &() // cast 
+ACE_INLINE
+Messaging::ReplyHandler_var::operator ::Messaging::ReplyHandler_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3795,7 +3797,7 @@ Messaging::ReplyHandler_out::operator= (ReplyHandler_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::ReplyHandler_out::operator ::Messaging::ReplyHandler_ptr &() // cast
 {
   return this->ptr_;
@@ -3816,6 +3818,10 @@ Messaging::ReplyHandler_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+
+#if (TAO_HAS_AMI_POLLER == 1)
+
 ACE_INLINE
 Messaging::Poller::Poller () // default constructor
 {}
@@ -3824,7 +3830,7 @@ ACE_INLINE
 Messaging::Poller::~Poller () // destructor
 {}
 
-ACE_INLINE const char* 
+ACE_INLINE const char*
 Messaging::Poller::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Messaging/Poller:1.0";
@@ -3853,7 +3859,7 @@ Messaging::Poller_var::Poller_var (const Messaging::Poller* p)
   : ptr_ (ACE_const_cast(Messaging::Poller*, p))
 {}
 
-ACE_INLINE Messaging::Poller* 
+ACE_INLINE Messaging::Poller*
 Messaging::Poller_var::ptr (void) const
 {
   return this->ptr_;
@@ -3893,19 +3899,19 @@ Messaging::Poller_var::operator= (const Messaging::Poller_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::Poller_var::operator const Messaging::Poller* () const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-Messaging::Poller_var::operator Messaging::Poller* () // cast 
+ACE_INLINE
+Messaging::Poller_var::operator Messaging::Poller* () // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::Poller* 
+ACE_INLINE Messaging::Poller*
 Messaging::Poller_var::operator-> (void) const
 {
   return this->ptr_;
@@ -3931,7 +3937,7 @@ Messaging::Poller_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::Poller* 
+ACE_INLINE Messaging::Poller*
 Messaging::Poller_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -3994,7 +4000,7 @@ Messaging::Poller_out::operator= (Messaging::Poller* p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 Messaging::Poller_out::operator Messaging::Poller* &() // cast
 {
   return this->ptr_;
@@ -4006,7 +4012,7 @@ Messaging::Poller_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE Messaging::Poller* 
+ACE_INLINE Messaging::Poller*
 Messaging::Poller_out::operator-> (void)
 {
   return this->ptr_;
@@ -4014,6 +4020,8 @@ Messaging::Poller_out::operator-> (void)
 
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::PriorityRange &_tao_aggregate)
 {
@@ -4024,7 +4032,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::Prio
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PriorityRange &_tao_aggregate)
@@ -4036,7 +4044,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PriorityRan
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::RoutingTypeRange &_tao_aggregate)
@@ -4048,7 +4056,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::Rout
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::RoutingTypeRange &_tao_aggregate)
@@ -4060,7 +4068,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::RoutingType
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -4087,7 +4095,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Messaging::Poli
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValue &_tao_aggregate)
@@ -4099,7 +4107,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Messaging::PolicyValue
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -4116,6 +4124,8 @@ CORBA::Boolean TAO_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_I_ */
+
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 ACE_INLINE CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const Messaging::ExceptionHolder *_tao_valuetype)
@@ -4142,7 +4152,7 @@ OBV_Messaging::ExceptionHolder::_tao_marshal_state (TAO_OutputCDR &strm)
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean
@@ -4156,7 +4166,7 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean
@@ -4208,6 +4218,10 @@ operator>> (
   return 0;
 }
 
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+
+#if (TAO_HAS_AMI_POLLER == 1)
+
 ACE_INLINE CORBA::Boolean
 operator<< (TAO_OutputCDR &strm, const Messaging::Poller *_tao_valuetype)
 {
@@ -4232,7 +4246,7 @@ OBV_Messaging::Poller::_tao_marshal_state (TAO_OutputCDR &strm)
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean
@@ -4245,6 +4259,7 @@ OBV_Messaging::Poller::_tao_unmarshal_state (TAO_InputCDR &strm)
     return 1;
   else
     return 0;
-  
+
 }
 
+#endif /* TAO_HAS_AMI_POLLER == 1 */
