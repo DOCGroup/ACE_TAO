@@ -1,3 +1,92 @@
+Tue Jun 17 15:49:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/aio.h:
+        * ace/os_include/assert.h:
+        * ace/os_include/complex.h:
+        * ace/os_include/cpio.h:
+        * ace/os_include/ctype.h:
+        * ace/os_include/dirent.hd:
+        * ace/os_include/lfcn.h:
+        * ace/os_include/errno.h:
+        * ace/os_include/fcntl.h:
+        * ace/os_include/fenv.h:
+        * ace/os_include/float.h:
+        * ace/os_include/fmtmsg.h:
+        * ace/os_include/fnmatch.h:
+        * ace/os_include/ftw.h:
+        * ace/os_include/glob.h:
+        * ace/os_include/grp.h:
+        * ace/os_include/iconv.h:
+        * ace/os_include/inttypes.h:
+        * ace/os_include/iso646.h:
+        * ace/os_include/langinfo.h:
+        * ace/os_include/libgen.h:
+        * ace/os_include/limits.h:
+        * ace/os_include/local.h:
+        * ace/os_include/math.h:
+        * ace/os_include/monetary.h:
+        * ace/os_include/mqueue.h:
+        * ace/os_include/ndbm.h:
+        * ace/os_include/netdb.h:
+        * ace/os_include/nl_types.h:
+        * ace/os_include/poll.h:
+        * ace/os_include/pthread.h:
+        * ace/os_include/pwd.h:
+        * ace/os_include/regex.h:
+        * ace/os_include/sched.h:
+        * ace/os_include/search.h:
+        * ace/os_include/semaphore.h:
+        * ace/os_include/setjmp.h:
+        * ace/os_include/signal.h:
+        * ace/os_include/spawn.h:
+        * ace/os_include/stdarg.h:
+        * ace/os_include/stdbool.h:
+        * ace/os_include/stddef.h:
+        * ace/os_include/stdint.h:
+        * ace/os_include/stdio.h:
+        * ace/os_include/stdlib.h:
+        * ace/os_include/string.h:
+        * ace/os_include/strings.h:
+        * ace/os_include/stropts.h:
+        * ace/os_include/syslog.h:
+        * ace/os_include/tar.h:
+        * ace/os_include/termios.h:
+        * ace/os_include/tgmath.h:
+        * ace/os_include/time.h:
+        * ace/os_include/trace.h:
+        * ace/os_include/ucontext.h:
+        * ace/os_include/ulimit.h:
+        * ace/os_include/unistd.h:
+        * ace/os_include/utime.h:
+        * ace/os_include/utmpx.h:
+        * ace/os_include/wchar.h:
+        * ace/os_include/wctype.h:
+        * ace/os_include/wordexp.h:
+        * ace/os_include/arpa/inet.h:
+        * ace/os_include/net/if.h:
+        * ace/os_include/netinet/in.h:
+        * ace/os_include/netinet/tcp.h:
+        * ace/os_include/sys/ipc.h:
+        * ace/os_include/sys/mman.h:
+        * ace/os_include/sys/msg.h:
+        * ace/os_include/sys/resource.h:
+        * ace/os_include/sys/select.h:
+        * ace/os_include/sys/sem.h:
+        * ace/os_include/sys/shm.h:
+        * ace/os_include/sys/socket.h:
+        * ace/os_include/sys/stat.h:
+        * ace/os_include/sys/statvfs.h:
+        * ace/os_include/sys/timeb.h:
+        * ace/os_include/sys/time.h:
+        * ace/os_include/sys/times.h:
+        * ace/os_include/sys/types.h:
+        * ace/os_include/sys/uio.h:
+        * ace/os_include/sys/un.h:
+        * ace/os_include/sys/utsname.h:
+        * ace/os_include/sys/wait.h:
+          Removed these file--they were replaced by the ones below with
+          the "os_" prefix.
+
 Tue Jun 17 15:21:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Merged in the following subsetting changes.
