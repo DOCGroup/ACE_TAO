@@ -1,9 +1,20 @@
+Thu Oct 30 10:08:11 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs\tests\FaultTolerance\IOGRManipulation\FaultTolerance_IOGRManipulation.mpc:
+          Case sensitive file name: s/Messaging/messaging/.
+
+        These changes were made in the oci_haft branch.
+
 Wed Oct 29 18:20:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
-	  
-	  Made a simple mistake while trying to look at the number of
-	  arguments. 
+  * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+
+    Made a simple mistake while trying to look at the number of
+    arguments.
+
+
+        These changes were made in the oci_haft branch.
+
 
 Wed Oct 29 13:52:36 2003  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -19,7 +30,7 @@ Wed Oct 29 13:52:36 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_Replica.idl:
           Remove commented out GenericFactory declaration (it's in PortableGroup.idl)
-          
+
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
           Add debug messages.
 
