@@ -11,6 +11,18 @@ ACE_RCSID(tao, Object_Table, "$Id$")
 # include "tao/Object_Table.i"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_Object_Table::TAO_Object_Table (TAO_Object_Table_Impl *impl,
+                                    int delete_impl)
+  : impl_ (impl),
+    delete_impl_ (delete_impl)
+{
+  if (this->impl_ == 0)
+    {
+      this->impl_ = TAO_ORB_Core_instance ()->server_factory ()->create_object_table ();
+      this->delete_impl_ = 1;
+    }
+}
+  
 int
 TAO_Object_Table_Impl::find (const PortableServer::Servant servant,
 			     PortableServer::ObjectId_out id)
@@ -341,10 +353,29 @@ TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
                                             CORBA::ULong &generation)
 {
   const char *buffer = (const char *) &id[0];
+#if 0
   ::sscanf (buffer, 
             "%8x%8x",
             &index, 
             &generation);
+#else
+  index = ((CORBA::ULong)ACE::hex2byte (id[0]) << 28)
+    + ((CORBA::ULong)ACE::hex2byte (id[1]) << 24)
+    + ((CORBA::ULong)ACE::hex2byte (id[2]) << 20)
+    + ((CORBA::ULong)ACE::hex2byte (id[3]) << 16)
+    + ((CORBA::ULong)ACE::hex2byte (id[4]) << 12)
+    + ((CORBA::ULong)ACE::hex2byte (id[5]) <<  8)
+    + ((CORBA::ULong)ACE::hex2byte (id[6]) <<  4)
+    + ((CORBA::ULong)ACE::hex2byte (id[7]));
+  generation = ((CORBA::ULong)ACE::hex2byte (id[8]) << 28)
+    + ((CORBA::ULong)ACE::hex2byte (id[9])  << 24)
+    + ((CORBA::ULong)ACE::hex2byte (id[10]) << 20)
+    + ((CORBA::ULong)ACE::hex2byte (id[11]) << 16)
+    + ((CORBA::ULong)ACE::hex2byte (id[12]) << 12)
+    + ((CORBA::ULong)ACE::hex2byte (id[13]) <<  8)
+    + ((CORBA::ULong)ACE::hex2byte (id[14]) <<  4)
+    + ((CORBA::ULong)ACE::hex2byte (id[15]));
+#endif
   return 0;
 }
 
