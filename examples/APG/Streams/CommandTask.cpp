@@ -27,7 +27,7 @@ int CommandTask::put (ACE_Message_Block *message,
 int CommandTask::process (Command *)
 {
   ACE_TRACE (ACE_TEXT ("CommandTask::process()"));
-  return Command::FAILURE;
+  return Command::RESULT_FAILURE;
 }
 // Listing 04
 
@@ -114,19 +114,19 @@ int CommandTask::svc (void)
                       command->command_,
                       result));
 
-          if (result == Command::FAILURE)
+          if (result == Command::RESULT_FAILURE)
             {
               command->numeric_result_ = -1;
             }
           // Listing 063
           // Listing 064 code/ch18
-          else if (result == Command::PASS)
+          else if (result == Command::RESULT_PASS)
             {
               this->put_next (message->duplicate ());
             }
           // Listing 064
           // Listing 065 code/ch18
-          else // result == Command::SUCCESS
+          else // result == Command::RESULT_SUCCESS
             {
               if (this->is_writer ())
                 {
