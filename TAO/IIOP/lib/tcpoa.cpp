@@ -50,6 +50,23 @@ static pthread_mutex_t	tcpoa_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_attr_t	thread_attr;
 #endif	// _POSIX_THREADS
 
+#ifdef	_POSIX_THREADS
+//
+// Use the TSD key set up as part of OA initialization to get the
+// thread-specific data describing this invocation
+//
+#define	request_tsd \
+	((GIOP::RequestHeader *) pthread_getspecific (request_key))
+
+#else
+
+//
+// This emulates "thread specific data" to hold data about the request
+// that the thread is processing.  It needs to be accessed for a variety
+// of purposes in the course of request processing.
+//
+static GIOP::RequestHeader	*request_tsd;
+#endif	// _POSIX_THREADS
 //
 // Dispatch routine that provides most of the IIOP glue ... constructs
 // a dynamic ServerRequest and any reply message that's needed.
@@ -233,7 +250,6 @@ TCP_OA::TCP_OA (CORBA_ORB_ptr owning_orb,
   clientAcceptor_.acceptor().get_local_addr(addr);
 
   if (env.exception () != 0)  {
-    dmsg2 ("TCP OA:  '%s', port %u", namebuf, port);
     the_oa = this;
   }
 }
@@ -364,25 +380,6 @@ TCP_OA::get_key (
     env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
     return 0;
 }
-
-
-#ifdef	_POSIX_THREADS
-//
-// Use the TSD key set up as part of OA initialization to get the
-// thread-specific data describing this invocation
-//
-#define	request_tsd \
-	((GIOP::RequestHeader *) pthread_getspecific (request_key))
-
-#else
-
-//
-// This emulates "thread specific data" to hold data about the request
-// that the thread is processing.  It needs to be accessed for a variety
-// of purposes in the course of request processing.
-//
-static GIOP::RequestHeader	*request_tsd;
-#endif	// _POSIX_THREADS
 
 
 //
