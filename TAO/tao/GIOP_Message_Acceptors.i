@@ -76,38 +76,6 @@ TAO_GIOP_Message_Acceptors::
 }
 
 
-ACE_INLINE int
-TAO_GIOP_Message_Acceptors::
-  validate_version (TAO_GIOP_Message_State *state)
-{
-  char *buf = state->cdr.rd_ptr (); 
-  CORBA::Octet incoming_major = 
-    buf[this->major_version_offset ()];
-  CORBA::Octet incoming_minor = 
-    buf[this->minor_version_offset ()];
-
-  if (this->implementations_.check_revision (incoming_major,
-                                             incoming_minor) == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t|%N|%l) bad version <%d.%d>\n"),
-                    incoming_major, incoming_minor));
-      return -1;
-    }
-
-  // Sets the version
-  // @@Bala Need to remove this as redundant data
-  state->giop_version.minor = incoming_minor;
-  state->giop_version.major = incoming_major;
-
-  // Sets the state
-  this->set_state (incoming_major,
-                   incoming_minor);
-  
-  return 0;
-}
-
 ACE_INLINE void
 TAO_GIOP_Message_Acceptors::
 set_state (CORBA::Octet def_major,
