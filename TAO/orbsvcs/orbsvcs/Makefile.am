@@ -3696,8 +3696,7 @@ nobase_include_HEADERS += \
   FaultTolerance/FT_Endpoint_Selector_Factory.h \
   FaultTolerance/FT_Invocation_Endpoint_Selectors.h \
   FaultTolerance/FT_Service_Callbacks.h \
-  FaultTolerance/FT_ClientPolicy_i.inl \
-  FaultTolerance/FT_Service_Callbacks.i
+  FaultTolerance/FT_ClientPolicy_i.inl
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_ACE_UUID

@@ -107,9 +107,5 @@ private:
   CORBA::Boolean group_component_flag_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "FT_Service_Callbacks.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /*TAO_FT_CALLBACKS_H*/
