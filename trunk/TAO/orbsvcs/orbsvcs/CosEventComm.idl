@@ -1,5 +1,26 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    CosEventComm.idl
+//
+// = DESCRIPTION
+//    EVENT SERVICE - described in CORBAservices: Common Object Services
+//    Specification, chapter 4.
+//    CosEventComm Module, page 4-8 includes the following interfaces:
+//    PushConsumer, PushSupplier, PullSupplier, PullConsumer
+//    The Event service description can be downloaded from
+//    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
+//
+// = AUTHOR
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ============================================================================
+
 #ifndef TAO_EVENTCOMM_IDL
 #define TAO_EVENTCOMM_IDL
 
@@ -11,7 +32,7 @@ module CosEventComm
   //   IDL module for the Corba Object Service for Event
   //   Communication.
 
-  exception Disconnected 
+  exception Disconnected
     {
       // = TITLE
       // If the event communication has already been disconnected, the
