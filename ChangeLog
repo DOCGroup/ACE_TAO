@@ -1,3 +1,10 @@
+Tue Sep 19 17:40:04 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-win32-common.h,
+	  ace/config-sunos5.4-centerline-2.x.h: Removed the nonsensical
+ 	  ACE_HAS_SVR5_GETTIMEOFDAY macro.  Thanks to Jeff Grief for
+ 	  reporting this.
+
 Mon Sep 18 12:39:39 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.i (cuserid):
