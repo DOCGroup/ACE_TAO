@@ -10,17 +10,6 @@
 #error "You need to use a compiler-specific .h file - they include this file"
 #endif
 
-// These should be removed.
-
-// Fixes a problem with HP/UX not wrapping the mmap(2) header files
-// with extern "C".
-// #define ACE_HAS_BROKEN_MMAP_H
-
-// Header files lack t_errno for ACE_TLI.
-// #define ACE_LACKS_T_ERRNO
-
-
-
 // Compiling for HPUX.
 #if !defined (HPUX)
 #define HPUX
