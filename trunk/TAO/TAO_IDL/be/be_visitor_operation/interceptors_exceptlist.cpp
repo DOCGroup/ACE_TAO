@@ -116,16 +116,15 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
   *os << be_uidt_nl << "};" << be_nl;
 
   long excp_count = (node->exceptions())->length ();
-  *os << be_nl << "CORBA::ULong len = 0;" << be_nl
+  *os << be_nl
+      << "exception_list->length (" << excp_count << ");" << be_nl
       << "for (CORBA::ULong i = 0; i < " << excp_count << "; ++i)"
       << be_idt_nl
       << "{" << be_idt_nl
       << "CORBA::TypeCode_ptr tcp = _tao_" << node->flat_name ()
       << "_exceptiondata[i].tc;" << be_nl
-      << "len = exception_list->length ();" << be_nl
-      << "exception_list->length (len + 1);"<<be_nl
       << "TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);" << be_nl
-      << "(*exception_list)[len] = tcp_object;" << be_uidt_nl
+      << "(*exception_list)[i] = tcp_object;" << be_uidt_nl
       << "}\n" << be_uidt;
 
 return 0;

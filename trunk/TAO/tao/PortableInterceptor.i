@@ -185,6 +185,19 @@ receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   // point.  Interceptors are invoked in the same order they were
   // pushed on to the flow stack.
 
+  if (this->len_ != this->stack_size_)
+    {
+      // This method (i.e. the receive_request() interception point)
+      // should only be invoked if all of the interceptors registered
+      // with the ORB were pushed on to the flow stack by one of the
+      // starting endpoints (such as
+      // receive_request_service_contexts()).  If the above condition
+      // evaluates to "true," then it is likely that a starting
+      // interception point was never invoked.  This is of course, an
+      // internal error that must be corrected.
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
   for (size_t i = 0; i < this->stack_size_; ++i)
     {
       this->interceptors_[i]->receive_request (ri

@@ -397,19 +397,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << "ri.reply_status (PortableInterceptor::SUCCESSFUL);"
-      << be_nl;
-
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      *os << "_tao_vfr.send_other (&ri, ACE_TRY_ENV);"<< be_nl
+  *os << "ri.reply_status (PortableInterceptor::SUCCESSFUL);" << be_nl
+      << "_tao_vfr.send_reply (&ri, ACE_TRY_ENV);"<< be_nl
           << "ACE_TRY_CHECK;" << be_uidt_nl;
-    }
-  else
-    {
-      *os << "_tao_vfr.send_reply (&ri, ACE_TRY_ENV);"<< be_nl
-          << "ACE_TRY_CHECK;" << be_uidt_nl;
-    }
 
   *os << "}" << be_uidt_nl
       << "ACE_CATCH (PortableInterceptor::ForwardRequest, exc)"
