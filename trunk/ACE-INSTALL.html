@@ -1179,6 +1179,14 @@ for the pointer to the STL fixes.
       run-time libraries even you are using ACE as a static library.
       That's the default behavior.<BR><BR>
 
+  <li>ACE DLL and LIB naming scheme:<br>
+      <br>
+      We use the following rules to name the DLL and LIB files in ACE
+      when using MSVC.<br>
+      <br>
+      "Library/DLL name" + (Is static library ? "s" : "") + (Support Unicode ? "u" : "") + (Is Debugging enable ? "d" : "") + {".dll"|".lib"}<br>
+      <br>
+
   <li><a href="http://www.torus-software.com/">Barry
       Hoggard</a> maintains a <a
       href="http://www.torus-software.com/corba/">CORBA Page</a>
