@@ -27,7 +27,7 @@ TAO_NAMESPACE  POA_TAO_IOP
 {
   class TAO_IOR_Manipulation;
   typedef TAO_IOR_Manipulation *TAO_IOR_Manipulation_ptr;
-  class  TAO_IOR_Manipulation :  public virtual TAO_Local_ServantBase
+  class TAO_Export  TAO_IOR_Manipulation :  public virtual TAO_Local_ServantBase
   {
   protected:
     TAO_IOR_Manipulation (void);
@@ -123,7 +123,7 @@ TAO_NAMESPACE  POA_TAO_IOP
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION___COLLOCATED_SH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION___COLLOCATED_SH_
 
-  class  _tao_collocated_TAO_IOR_Manipulation     : public virtual TAO_IOP::TAO_IOR_Manipulation
+  class TAO_Export  _tao_collocated_TAO_IOR_Manipulation     : public virtual TAO_IOP::TAO_IOR_Manipulation
   {
   public:
     _tao_collocated_TAO_IOR_Manipulation (
