@@ -1,3 +1,8 @@
+Mon Nov 29 16:45:00 2004 Huang-Ming Huang <hh1@cse.wustl.edu>
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp
+          Fixed problem when the immediate successor of the primary crashes. Thanks
+          to Thia Chang Chao <tchangch@dso.org.sg> for reporting the bug.
+
 Mon Nov 29 14:44:16 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Admin.h:
