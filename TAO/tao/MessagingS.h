@@ -1653,20 +1653,44 @@ private:
     virtual const char* _interface_repository_id (void) const;
   };
 
-  class TAO_Export _tao_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
+
+  class  _tao_thru_poa_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
   {
   public:
-    _tao_collocated_ReplyHandler (
+    _tao_thru_poa_collocated_ReplyHandler (
+        TAO_Stub *stub
+      );
+    virtual CORBA::Boolean _is_a(
+        const CORBA::Char *logical_type_id,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      );
+    
+    virtual CORBA::Boolean _non_existent(
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      );
+    
+  };
+
+
+  class  _tao_direct_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
+  {
+  public:
+    _tao_direct_collocated_ReplyHandler (
         ReplyHandler_ptr  servant,
         TAO_Stub *stub
       );
-    ReplyHandler_ptr _get_servant (void) const;
-    virtual CORBA::Boolean _is_a (
-        const char *logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
+    virtual CORBA::Boolean _is_a(
+        const CORBA::Char *logical_type_id,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
       );
-
+    
+    ReplyHandler_ptr _get_servant (void) const;
+    
+    virtual CORBA::Boolean _non_existent(
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      );
+    
+      
   private:
     ReplyHandler_ptr servant_;
   };
