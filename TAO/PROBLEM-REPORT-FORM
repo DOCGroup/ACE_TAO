@@ -29,8 +29,8 @@
 To: tao-bugs@cs.wustl.edu
 Subject: [area]: [synopsis]
 
-    TAO VERSION: 1.0.10
-    ACE VERSION: 5.0.10
+    TAO VERSION: 1.0.11
+    ACE VERSION: 5.0.11
 
     HOST MACHINE and OPERATING SYSTEM:
     TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
