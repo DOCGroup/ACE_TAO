@@ -1,3 +1,42 @@
+Mon May 24 16:32:25 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	Moving towards having a single Connection Handler. Abstracted out
+	their code to the Wait_Strategies. Right now, the ST and RW
+	connection handlers are gone. 
+
+	* tao/Client_Strategy_Factory.cpp
+	* tao/Client_Strategy_Factory.h
+
+	Introduced factory methods for Request_Mux_Strategies and
+	Wait_Strategies. 
+
+	* tao/default_client.cpp
+	* tao/default_client.h
+	
+	Changed the factory method <make_svc-handler>.
+	Creating hte unique <TAO_Client_Connection_Handler>s instead of ST
+	and RW ones. 
+
+	* tao/Connect.cpp
+	* tao/Connect.h
+
+	Gone the RW and ST connection handler code.
+
+	* tao/IIOP_Transport.cpp
+	* tao/IIOP_Transport.h
+
+	New methods (such as register_handler, resume_handler,
+	handle_input etc) for mediating between Wait_Strategies and
+	Connection Handler.
+
+	* tao/Invocation.cpp
+	* tao/Pluggable.cpp
+	* tao/Pluggable.h
+	* tao/Wait_Strategy.cpp
+	* tao/Wait_Strategy.h
+	
+	Related changes.
+
 Thu May 20 22:56:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Reply_Dispatcher.cpp
