@@ -271,11 +271,31 @@ sub parse_known {
       $status = 0;
     }
   }
-  elsif ($line =~ /^(feature)\s*\(([^\)]+)\)\s*{$/) {
-    my($type)  = $1;
-    my($name)  = $2;
-    my(@names) = split(/\s*,\s*/, $name);
-    push(@values, $type, \@names);
+  elsif ($line =~ /^(feature)\s*\(([^\)]+)\)\s*(:.*)?\s*{$/) {
+    my($type)    = $1;
+    my($name)    = $2;
+    my($parents) = $3;
+    my(@names)   = split(/\s*,\s*/, $name);
+
+    if (defined $parents) {
+      my(@parents) = ();
+      $parents =~ s/^://;
+      foreach my $parent (split(',', $parents)) {
+        $parent =~ s/^\s+//;
+        $parent =~ s/\s+$//;
+        if ($parent ne '') {
+          push(@parents, $parent);
+        }
+      }
+      if (!defined $parents[0]) {
+        ## The : was used, but no parents followed.  This
+        ## is an error.
+        $errorString = 'ERROR: No parents listed';
+        $status = 0;
+      }
+      $parents = \@parents;
+    }
+    push(@values, $type, \@names, $parents);
   }
   elsif (!$self->{$self->{'type_check'}}) {
     $errorString = "ERROR: No $type was defined";

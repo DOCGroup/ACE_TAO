@@ -158,7 +158,6 @@ sub new {
   $self->{'feature_defined'}       = 0;
   $self->{'project_info'}          = [];
   $self->{'reading_parent'}        = [];
-  $self->{'feature_definitions'}   = [];
   $self->{'dexe_template_input'}   = undef;
   $self->{'lexe_template_input'}   = undef;
   $self->{'lib_template_input'}    = undef;
@@ -249,6 +248,90 @@ sub get_assignment_for_modification {
 }
 
 
+sub begin_project {
+  my($self)    = shift;
+  my($parents) = shift;
+  my($status)  = 1;
+  my($error)   = undef;
+
+  ## Deal with the inheritance hiearchy first
+  ## Add in the base projects from the command line
+  if (!$self->{'reading_global'} &&
+      !defined $self->{'reading_parent'}->[0]) {
+    my($baseprojs) = $self->get_baseprojs();
+
+    if (defined $parents) {
+      foreach my $base (@$baseprojs) {
+        my($found) = 0;
+        foreach my $parent (@$parents) {
+          if ($base eq $parent) {
+            $found = 1;
+            last;
+          }
+        }
+        if (!$found) {
+          push(@$parents, $base);
+        }
+      }
+    }
+    else {
+      $parents = $baseprojs;
+    }
+  }
+
+  if (defined $parents) {
+    foreach my $parent (@$parents) {
+      ## Read in the parent onto ourself
+      my($file) = $self->search_include_path(
+                           "$parent.$BaseClassExtension");
+      if (!defined $file) {
+        $file = $self->search_include_path(
+                             "$parent.$ProjectCreatorExtension");
+      }
+
+      if (defined $file) {
+        foreach my $currently (@{$self->{'reading_parent'}}) {
+          if ($currently eq $file) {
+            $status = 0;
+            $error = 'ERROR: Cyclic inheritance detected: ' .
+                     $parent;
+          }
+        }
+
+        if ($status) {
+          if (!defined $self->{'parents_read'}->{$file}) {
+            $self->{'parents_read'}->{$file} = 1;
+            ## Begin reading the parent
+            push(@{$self->{'reading_parent'}}, $file);
+            $status = $self->parse_file($file);
+            pop(@{$self->{'reading_parent'}});
+
+            if (!$status) {
+              $error = "ERROR: Invalid parent: $parent";
+            }
+          }
+        }
+      }
+      else {
+        $status = 0;
+        $error = "ERROR: Unable to locate parent: $parent";
+      }
+    }
+  }
+
+  ## Copy each value from global_assign into assign
+  if (!$self->{'reading_global'}) {
+    foreach my $key (keys %{$self->{'global_assign'}}) {
+      if (!defined $self->{'assign'}->{$key}) {
+        $self->{'assign'}->{$key} = $self->{'global_assign'}->{$key};
+      }
+    }
+  }
+
+  return $status, $error;
+}
+
+
 sub parse_line {
   my($self)   = shift;
   my($ih)     = shift;
@@ -331,7 +414,6 @@ sub parse_line {
             $self->{'type_specific_assign'} = {};
             $self->{'flag_overrides'}       = {};
             $self->{'parents_read'}         = {};
-            $self->{'feature_definitions'}  = [];
             $self->reset_generating_types();
           }
         }
@@ -339,101 +421,33 @@ sub parse_line {
       }
       else {
         ## Project Beginning
-        ## Deal with the inheritance hiearchy first
-        my($parents) = $values[2];
+        ($status, $errorString) = $self->begin_project($values[2]);
 
-        ## Add in the base projects from the command line
-        if (!$self->{'reading_global'} &&
-            !defined $self->{'reading_parent'}->[0]) {
-          my($baseprojs) = $self->get_baseprojs();
-
-          if (defined $parents) {
-            foreach my $base (@$baseprojs) {
-              my($found) = 0;
-              foreach my $parent (@$parents) {
-                if ($base eq $parent) {
-                  $found = 1;
-                  last;
-                }
-              }
-              if (!$found) {
-                push(@$parents, $base);
-              }
-            }
-          }
-          else {
-            $parents = $baseprojs;
-          }
-        }
-
-        if (defined $parents) {
-          foreach my $parent (@$parents) {
-            ## Read in the parent onto ourself
-            my($file) = $self->search_include_path(
-                                 "$parent.$BaseClassExtension");
-            if (!defined $file) {
-              $file = $self->search_include_path(
-                                   "$parent.$ProjectCreatorExtension");
-            }
-
-            if (defined $file) {
-              foreach my $currently (@{$self->{'reading_parent'}}) {
-                if ($currently eq $file) {
-                  $status = 0;
-                  $errorString = 'ERROR: Cyclic inheritance detected: ' .
-                                 $parent;
-                }
-              }
-
-              if ($status) {
-                if (!defined $self->{'parents_read'}->{$file}) {
-                  $self->{'parents_read'}->{$file} = 1;
-                  ## Begin reading the parent
-                  push(@{$self->{'reading_parent'}}, $file);
-                  $status = $self->parse_file($file);
-                  pop(@{$self->{'reading_parent'}});
-
-                  if (!$status) {
-                    $errorString = "ERROR: Invalid parent: $parent";
-                  }
-                }
-              }
+        ## Set up the default project name
+        if ($status) {
+          if (defined $name) {
+            if ($name =~ /[\/\\]/) {
+              $status = 0;
+              $errorString = 'ERROR: Projects can not have a slash ' .
+                             'or a back slash in the name';
             }
             else {
-              $status = 0;
-              $errorString = "ERROR: Unable to locate parent: $parent";
+              $name =~ s/^\(\s*//;
+              $name =~ s/\s*\)$//;
+              $name = $self->transform_file_name($name);
+
+              ## Replace any *'s with the default name
+              my($def) = $self->get_default_project_name();
+              $name = $self->fill_type_name($name, $def);
+
+              $self->set_project_name($name);
             }
           }
         }
 
-        ## Set up some initial values
-        if (defined $name) {
-          if ($name =~ /[\/\\]/) {
-            $status = 0;
-            $errorString = 'ERROR: Projects can not have a slash ' .
-                           'or a back slash in the name';
-          }
-          else {
-            $name =~ s/^\(\s*//;
-            $name =~ s/\s*\)$//;
-            $name = $self->transform_file_name($name);
-
-            ## Replace any *'s with the default name
-            my($def) = $self->get_default_project_name();
-            $name = $self->fill_type_name($name, $def);
-
-            $self->set_project_name($name);
-          }
-        }
-        $self->{$typecheck} = 1;
-
-        ## Copy each value from global_assign into assign
-        if (!$self->{'reading_global'}) {
-          foreach my $key (keys %{$self->{'global_assign'}}) {
-            if (!defined $self->{'assign'}->{$key}) {
-              $self->{'assign'}->{$key} = $self->{'global_assign'}->{$key};
-            }
-          }
+        if ($status) {
+          ## Signify that we have a valid project
+          $self->{$typecheck} = 1;
         }
       }
     }
@@ -512,7 +526,7 @@ sub parse_line {
     }
     elsif ($values[0] eq 'feature') {
       $self->{'feature_defined'} = 1;
-      $self->process_feature($ih, $values[1]);
+      $self->process_feature($ih, $values[1], $values[2]);
       if ($self->{'feature_defined'}) {
         $errorString = "ERROR: Did not find the end of the feature";
         $status = 0;
@@ -732,11 +746,12 @@ sub parse_verbatim {
 
 
 sub process_feature {
-  my($self)   = shift;
-  my($fh)     = shift;
-  my($names)  = shift;
-  my($status) = 1;
-  my($error)  = '';
+  my($self)    = shift;
+  my($fh)      = shift;
+  my($names)   = shift;
+  my($parents) = shift;
+  my($status)  = 1;
+  my($error)   = '';
 
   my($requires) = '';
   my($avoids)   = '';
@@ -759,8 +774,11 @@ sub process_feature {
     ## The required features are enabled, so we say that
     ## a project has been defined and we allow the parser to
     ## find the data held within the feature.
-    $self->{'feature_defined'} = 0;
-    $self->{$self->{'type_check'}} = 1;
+    ($status, $error) = $self->begin_project($parents);
+    if ($status) {
+      $self->{'feature_defined'} = 0;
+      $self->{$self->{'type_check'}} = 1;
+    }
   }
   else {
     ## Otherwise, we read in all the lines until we find the
