@@ -1,0 +1,17 @@
+# 
+# Makefile for building the example executables
+#
+
+TAO_IDL = $(ACE_ROOT)\bin\tao_idl -g \
+	$(ACE_ROOT)\bin\gperf.exe
+
+CFLAGS = -I$(ACE_ROOT) -I$(ACE_ROOT)\tao -I$(ACE_ROOT)\tao\orbsvcs \
+	$(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_CFLAGS)
+
+LIBFILES = \
+	$(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib \
+	$(ACE_ROOT)\bin\tao$(LIB_DECORATOR).lib \
+	$(ACE_ROOT)\bin\orbsvcs$(LIB_DECORATOR).lib
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

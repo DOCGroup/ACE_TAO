@@ -1,0 +1,21 @@
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG 
+!endif
+      
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif
+     
+!ifdef PASCAL
+PASCAL_FLAG = -DPASCAL
+!endif
+     
+FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
+ 
+all:
+        cd $(ACE_ROOT)\apps\JAWS\clients\Blobby
+        $(MAKE) -f Makefile.bor $(FLAGS)
+        cd $(ACE_ROOT)\apps\JAWS\clients\Caching
+        $(MAKE) -f Makefile.bor $(FLAGS)
+

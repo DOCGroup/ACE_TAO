@@ -1,0 +1,35 @@
+
+!ifdef DEBUG
+DEBUGFLAG=-DDEBUG
+!endif
+
+!ifdef STATIC
+STATICFLAG=-DSTATIC
+!endif
+
+!ifdef PASCAL
+PASCALFLAG=-DPASCAL
+!endif
+
+!ifndef CFLAGS
+CFLAGS=-I$(ACE_ROOT) $(ACE_CFLAGS)
+!endif
+
+!ifndef CPPDIR
+CPPDIR=.
+!endif
+
+!ifndef BINDIR
+BINDIR=.\bor\bin
+!endif
+
+!ifndef BASE_OBJDIR
+BASE_OBJDIR=.\bor\obj
+!endif
+
+!ifndef LIBFILES
+LIBFILES= $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+!endif
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
