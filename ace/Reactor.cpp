@@ -127,7 +127,7 @@ ACE_Reactor::close_singleton (void)
 }
 
 int
-ACE_Reactor::check_reconfiguration (void *)
+ACE_Reactor::check_reconfiguration (ACE_Reactor *)
 {
 #if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_SVCCONF)
   if (ACE_Service_Config::reconfig_occurred ())
@@ -151,7 +151,7 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
     {
       int result = this->implementation_->handle_events ();
 
-      if (eh != 0 && (*eh)(0))
+      if (eh != 0 && (*eh)(this))
         continue;
       else if (result == -1 && this->implementation_->deactivated ())
         return 0;
@@ -174,7 +174,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
     {
       int result = this->implementation_->alertable_handle_events ();
 
-      if (eh != 0 && (*eh)(0))
+      if (eh != 0 && (*eh)(this))
         continue;
       else if (result == -1 && this->implementation_->deactivated ())
         return 0;
@@ -198,7 +198,7 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
     {
       int result = this->implementation_->handle_events (tv);
 
-      if (eh != 0 && (*eh) (0))
+      if (eh != 0 && (*eh) (this))
         continue;
       else if (result == -1)
         {
@@ -240,7 +240,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (ACE_Time_Value &tv,
     {
       int result = this->implementation_->alertable_handle_events (tv);
 
-      if (eh != 0 && (*eh)(0))
+      if (eh != 0 && (*eh)(this))
         continue;
       else if (result == -1 && this->implementation_->deactivated ())
         return 0;

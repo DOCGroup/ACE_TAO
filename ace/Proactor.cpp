@@ -368,7 +368,7 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events ();
 
-      if (eh != 0 && (*eh) (this,0))
+      if (eh != 0 && (*eh) (this))
         continue;
 
       if (ACE_Service_Config::reconfig_occurred ())
@@ -398,7 +398,7 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
 // Handle events for -tv- time.  handle_events updates -tv- to reflect
 // time elapsed, so do not return until -tv- == 0, or an error occurs.
 int
-ACE_Proactor::proactor_run_event_loop (ACE_Time_Value & tv,
+ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
                                        PROACTOR_EVENT_HOOK eh)
 {
   ACE_TRACE ("ACE_Proactor::proactor_run_event_loop");
@@ -428,7 +428,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value & tv,
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events (tv);
 
-      if (eh != 0 && (*eh) (this,0))
+      if (eh != 0 && (*eh) (this))
         continue;
 
       if (ACE_Service_Config::reconfig_occurred ())

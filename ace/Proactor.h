@@ -213,7 +213,7 @@ public:
    * handle_events.  If it is -1, the the proactor_run_event_loop will return
    * (pre-maturely.)
    */
-  typedef int (*PROACTOR_EVENT_HOOK)(ACE_Proactor *, void *);
+  typedef int (*PROACTOR_EVENT_HOOK)(ACE_Proactor *);
 
   // These methods work with an instance of a proactor.
   /**
