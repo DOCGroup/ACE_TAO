@@ -1,3 +1,10 @@
+Thu May 20 17:46:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Fixed Alpha configurations.  Thanks to
+	  Schuderer Christian <Christian.Schuderer@erl9.siemens.de> for
+	  reporting this.
+
 Thu May 20 15:35:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/TkReactor_Test.cpp:
