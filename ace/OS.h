@@ -3603,6 +3603,9 @@ public:
   static char *strtok_r (char *s,
 			 const char *tokens,
 			 char **lasts);
+  static char *strsplit_r (char *s,
+                           const char *token,
+                           char *&next_start);
   static long strtol (const char *s,
 		      char **ptr,
 		      int base);
