@@ -1,3 +1,14 @@
+Thu Jan 27 20:01:21 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+	  Fix for [BUGID 2038]. Please see
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2038
+
+	  for details and thanks to Torsten Kuepper
+	  <torsten.kuepper@nokia.com> for reporting the problem.
+
 Thu Jan 27 11:39:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/.../*.{cpp,h,i,inl}:
@@ -29,10 +40,10 @@ Wed Jan 26 17:20:05 2005  Huang-Ming Huang  <hh1@cse.wustul.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/IOGR_Maker.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/Replication_Service.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/FtEventServiceInterceptor
-        Fixed incorrect object_group_ref_version problem. Thanks to Thia Chang Chao
-        <tchangch@dso.org.sg> for reporting the problem.
-
-
+          
+          Fixed incorrect object_group_ref_version problem. Thanks to 
+          Thia Chang Chao <tchangch@dso.org.sg> for reporting the problem.
+             
 Tue Jan 25 14:15:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
