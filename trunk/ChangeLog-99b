@@ -1,3 +1,11 @@
+Sat Jul  3 22:12:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Object_Manager.cpp (get_singleton_lock): 
+	  Fixed one of the ACE_Thread_Mutex version of this method. One of 
+	  the braces after an if() statement got "accidentaly" removed;
+	  binding the "else" part of the statement to the previous if()
+	  instead.
+
 Sat Jul  3 18:54:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/RB_Tree.cpp:
