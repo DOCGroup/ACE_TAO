@@ -18,10 +18,9 @@ TAO_MProfile::cleanup (void)
       for (TAO_PHandle i = 0; i < this->last_; ++i)
         if (this->pfiles_[i])
           this->pfiles_[i]->_decr_refcnt ();
+      delete [] this->pfiles_;
+      this->pfiles_ = 0;
     }
-
-  delete [] this->pfiles_;
-  this->pfiles_ = 0;
 
   this->current_ = 0;
   this->size_ = 0;
@@ -38,8 +37,7 @@ TAO_MProfile::set (CORBA::ULong sz)
     }
 
   // See if we already have an existing profile list or if we need to
-  // get ridof what we have.  @@ Fred, please be consistent with your
-  // use of this-> as a prefix for data members.
+  // get ridof what we have.  
   if (this->size_ != 0)
     {
       // Release all of our profiles.
@@ -77,20 +75,8 @@ TAO_MProfile::set (CORBA::ULong sz)
   this->last_ = 0;
   this->current_ = 0;
 
-#if 0
-  // @@ Fred: this does *not* work, the literal 0 is the null pointer,
-  //    but the bit representation may be something else.
-  ACE_OS::memset (this->pfiles_,
-                  0,
-                  sizeof (TAO_Profile_ptr) * sz);
-#else
   for (TAO_PHandle i = 0; i != this->size_; ++i)
     this->pfiles_[i] = 0;
-#endif
-
-  // @@ since we are being reset, get rid of forward references!
-  // if (forward_from_)
-  // delete forward_from_;
 
   return this->size_;
 }
@@ -119,14 +105,6 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
       if (this->pfiles_[h] != 0)
         this->pfiles_[h]->_incr_refcnt ();
     }
-
-  //
-  // @@ Fred: here was a gross violation of the invariants for this
-  //    class: if the forward_from_ is owned by us (we call delete all
-  //    the time on it) we cannot share it with mprofile.
-  //
-  // if (mprofile->forward_from_)
-  // this->forward_from_ = mprofile->forward_from_;
 
   return 1;
 }
