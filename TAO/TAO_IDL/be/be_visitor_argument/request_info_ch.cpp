@@ -329,8 +329,23 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const " << this->type_name (node) << " &";
-          break;
+          {
+            if (bt->is_nested () 
+                && (scope->node_type () == AST_Decl::NT_interface
+                    || scope->node_type () == AST_Decl::NT_union ))
+              {
+                *os << "const ACE_NESTED_CLASS (";
+                *os << scope->name () << ",";
+                *os << bt->local_name ();
+	              *os  << ") &";
+              }
+            else
+              {
+                *os << "const " << this->type_name (node) << " &";
+              }
+
+            break;
+          }
         case AST_Argument::dir_INOUT:
           *os << this->type_name (node) << " &";
           break;

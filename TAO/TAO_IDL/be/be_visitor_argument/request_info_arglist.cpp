@@ -360,8 +360,27 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const " << this->type_name (node) << " &";
-          break;
+          {
+            if (bt->is_nested ()
+                && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+              {
+                *os << "const ACE_NESTED_CLASS (";
+	              *os << scope->name () << ",";
+	              *os << bt->local_name ();
+	              *os << ")" << " &";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
+              }
+            else
+              {
+                *os << this->type_name (node) << " &";
+              }
+
+            break;
+          }
         case AST_Argument::dir_INOUT:
           *os << this->type_name (node) << " &";
           break;
