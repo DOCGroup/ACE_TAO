@@ -1,23 +1,29 @@
+Thu Jan 11 17:24:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Makefile:
+          Add new target 'Core' to quickly compile the basic ACE+TAO
+          components.
+
 Thu Jan 11 09:56:43 2001  Frank  <fhunleth@cs.wustl.edu>
 
         * ACE version 5.1.12 released.
 
 Thu Jan 11 05:38:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp: Reverted the change that was made for SPRO
-	  5.1 compilers. The change that was reverted is this
-	
-          Thu Jan  4 17:14:33 2001  Balachandran Natarajan
-	  <bala@cs.wustl.edu> 
+        * ace/TP_Reactor.cpp: Reverted the change that was made for SPRO
+          5.1 compilers. The change that was reverted is this
 
-	* ace/Handle_Set.cpp: Changed the macro 
-	  
-	  ACE_DIV_BY_WORDSIZE(x) ((x) >> (ACE_Handle_Set::WORDSIZE)) to 
-	  
-	  ACE_DIV_BY_WORDSIZE(x) ((x) >> ((int)
-	  ACE_Handle_Set::WORDSIZE)). This seems to be a better
-	  fix. Thanks to David Allen <dallen@storm.com> for suggesting
-	  this. 
+          Thu Jan  4 17:14:33 2001  Balachandran Natarajan
+          <bala@cs.wustl.edu>
+
+        * ace/Handle_Set.cpp: Changed the macro
+
+          ACE_DIV_BY_WORDSIZE(x) ((x) >> (ACE_Handle_Set::WORDSIZE)) to
+
+          ACE_DIV_BY_WORDSIZE(x) ((x) >> ((int)
+          ACE_Handle_Set::WORDSIZE)). This seems to be a better
+          fix. Thanks to David Allen <dallen@storm.com> for suggesting
+          this.
 
 Tue Jan  9 09:53:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
