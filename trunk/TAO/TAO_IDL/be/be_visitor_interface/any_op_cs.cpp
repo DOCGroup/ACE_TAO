@@ -63,7 +63,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << ") const" << be_uidt_nl
           << "{" << be_idt_nl
           << "_tao_elem = CORBA::Object::_duplicate (this->value_);" << be_nl
-          << "return 1;" << be_uidt_nl
+          << "return true;" << be_uidt_nl
           << "}";
     }
 
@@ -80,7 +80,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "_tao_elem = CORBA::AbstractBase::_duplicate (this->value_);"
           << be_nl
-          << "return 1;" << be_uidt_nl
+          << "return true;" << be_uidt_nl
           << "}";
     }
 
