@@ -90,6 +90,12 @@ acquire_release (void)
 int
 main (int argc, char *argv[])
 {
+#if defined (ACE_LACKS_FORK)
+  ACE_START_TEST ("Process_Mutex_Test");
+  ACE_ERROR ((LM_ERROR, "fork is not supported on this platform\n"));
+  ACE_END_TEST;
+#else  /* ! ACE_LACKS_FORK */
+
   parse_args (argc, argv);
 
   // Child process code
@@ -138,6 +144,7 @@ main (int argc, char *argv[])
 
       ACE_END_TEST;
     }
+#endif /* ! ACE_LACKS_FORK */
 
   return 0;
 }
