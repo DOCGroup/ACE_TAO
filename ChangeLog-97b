@@ -1,3 +1,11 @@
+Fri Nov 14 17:06:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Moved the ACE_ALLOCATOR* stuff from Malloc_T.h to
+ 	  OS.h, which is where it belongs.
+
+	* examples/Reactor/Dgram: Reformatted some of the example
+	  code to make it more readable.
+
 Fri Nov 14 14:08:00 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added definitions to work around VxWorks' lack of
@@ -6,11 +14,6 @@ Fri Nov 14 14:08:00 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
  	  appear to work just fine.  For now this is only in effect when
  	  compiling with the Green Hills (ghs) environment, but it should
  	  probably be used for others (such as g++) as well.
-
-Fri Nov 14 10:35:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* examples/Reactor/Dgram: Reformatted some of the example
-	  code to make it more readable.
 
 Fri Nov 14 01:10:33 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
