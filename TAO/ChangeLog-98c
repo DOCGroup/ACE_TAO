@@ -13,6 +13,11 @@ Sat May  2 09:58:41 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	MSVC++ accepts the generated code or not OR whether it needs the
 	ACE_NESTED_CLASS macro. I am waiting for reports on this.
 
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}:(init): Due to
+	application of patches, the signature of the
+	TAO_Naming_Server::init got reverted to the older and buggy
+	version. This is now fixed.
+
 Fri May 01 17:56:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved #include of
