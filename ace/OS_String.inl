@@ -176,17 +176,15 @@ ACE_OS_String::strcmp (const char *s, const char *t)
 #endif /* ACE_HAS_PACE */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
-ACE_OS_String::strcmp (const wchar_t *s, const wchar_t *t)
+ACE_OS_String::strcmp (const ACE_WCHAR_T *s, const ACE_WCHAR_T *t)
 {
-#  if defined (ACE_LACKS_WCSCMP)
+#  if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSCMP)
   return ACE_OS_String::wcscmp_emulation (s, t);
-#  else /* ACE_LACKS_WCSCMP */
+#  else /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCMP */
   return ::wcscmp (s, t);
-#  endif /* ACE_LACKS_WCSCMP */
+#  endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCMP */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS_String::strcpy (char *s, const char *t)
@@ -254,17 +252,15 @@ ACE_OS_String::strlen (const char *s)
 #endif /* ACE_HAS_PACE */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE size_t
-ACE_OS_String::strlen (const wchar_t *s)
+ACE_OS_String::strlen (const ACE_WCHAR_T *s)
 {
-# if defined (ACE_LACKS_WCSLEN)
+# if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSLEN)
   return ACE_OS_String::wcslen_emulation (s);
-# else  /* ACE_LACKS_WCSLEN */
+# else  /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
   return ::wcslen (s);
-# endif /* ACE_LACKS_WCSLEN */
+# endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS_String::strncat (char *s, const char *t, size_t len)
@@ -298,17 +294,15 @@ ACE_OS_String::strncmp (const char *s, const char *t, size_t len)
 #endif /* ACE_HAS_PACE */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
-ACE_OS_String::strncmp (const wchar_t *s, const wchar_t *t, size_t len)
+ACE_OS_String::strncmp (const ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 {
-#  if defined (ACE_LACKS_WCSNCMP)
+#  if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCMP)
   return ACE_OS_String::wcsncmp_emulation (s, t, len);
-#  else /* ACE_LACKS_WCSNCMP */
+#  else /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCMP */
   return ::wcsncmp (s, t, len);
-#  endif /* ACE_LACKS_WCSNCMP */
+#  endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCMP */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS_String::strncpy (char *s, const char *t, size_t len)
@@ -320,17 +314,15 @@ ACE_OS_String::strncpy (char *s, const char *t, size_t len)
 #endif /* ACE_HAS_PACE */
 }
 
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE wchar_t *
-ACE_OS_String::strncpy (wchar_t *s, const wchar_t *t, size_t len)
+ACE_INLINE ACE_WCHAR_T *
+ACE_OS_String::strncpy (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 {
-#  if defined (ACE_LACKS_WCSNCPY)
+#  if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCPY)
   return ACE_OS_String::wcsncpy_emulation (s, t, len);
-#  else /* ACE_LACKS_WCSNCPY */
+#  else /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCPY */
   return ::wcsncpy (s, t, len);
-#  endif /* ACE_LACKS_WCSNCPY */
+#  endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCPY */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE const char *
 ACE_OS_String::strpbrk (const char *s1, const char *s2)
@@ -619,14 +611,12 @@ ACE_OS_String::strnchr (char *s, int c, size_t len)
 #endif
 }
 
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE wchar_t *
-ACE_OS_String::strnchr (wchar_t *s, wint_t c, size_t len)
+ACE_INLINE ACE_WCHAR_T *
+ACE_OS_String::strnchr (ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
 {
-  return ACE_const_cast (wchar_t *,
-    ACE_OS_String::strnchr (ACE_static_cast (const wchar_t *, s), c, len));
+  return ACE_const_cast (ACE_WCHAR_T *,
+    ACE_OS_String::strnchr (ACE_static_cast (const ACE_WCHAR_T *, s), c, len));
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
@@ -663,14 +653,12 @@ ACE_OS_String::strnstr (char *s, const char *t, size_t len)
 #endif
 }
 
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE wchar_t *
-ACE_OS_String::strnstr (wchar_t *s, const wchar_t *t, size_t len)
+ACE_INLINE ACE_WCHAR_T *
+ACE_OS_String::strnstr (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 {
-  return ACE_const_cast (wchar_t *,
-    ACE_OS_String::strnstr (ACE_static_cast (const wchar_t *, s), t, len));
+  return ACE_const_cast (ACE_WCHAR_T *,
+    ACE_OS_String::strnstr (ACE_static_cast (const ACE_WCHAR_T *, s), t, len));
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE char *
 ACE_OS_String::strtok_r (char *s, const char *tokens, char **lasts)

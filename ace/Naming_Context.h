@@ -113,8 +113,8 @@ public:
   ACE_Name_Options *name_options (void);
 
   /// Bind a new name to a naming context (Wide character strings).
-  int bind (const ACE_WString &name_in,
-            const ACE_WString &value_in,
+  int bind (const ACE_NS_WString &name_in,
+            const ACE_NS_WString &value_in,
             const char *type_in = "");
 
   /// Bind a new name to a naming context ( character strings).
@@ -127,8 +127,8 @@ public:
    * ACE_Naming_Context or bind a new name to the context, if it
    * didn't exist yet. (Wide charcter strings interface).
    */
-  int rebind (const ACE_WString &name_in,
-              const ACE_WString &value_in,
+  int rebind (const ACE_NS_WString &name_in,
+              const ACE_NS_WString &value_in,
               const char *type_in = "");
 
   /**
@@ -142,7 +142,7 @@ public:
 
   /// Delete a name from a ACE_Naming_Context (Wide charcter strings
   /// Interface).
-  int unbind (const ACE_WString &name_in);
+  int unbind (const ACE_NS_WString &name_in);
 
   /// Delete a name from a ACE_Naming_Context (character strings
   /// interface).
@@ -150,8 +150,8 @@ public:
 
   /// Get value and type of a given name binding (Wide chars).  The
   /// caller is responsible for deleting both <value_out> and <type_out>!
-  int resolve (const ACE_WString &name_in,
-               ACE_WString &value_out,
+  int resolve (const ACE_NS_WString &name_in,
+               ACE_NS_WString &value_out,
                char *&type_out);
 
   /**
@@ -160,7 +160,7 @@ public:
    * <type_out>!
    */
   int resolve (const char *name_in,
-               ACE_WString &value_out,
+               ACE_NS_WString &value_out,
                char *&type_out);
 
   /// Get value and type of a given name binding ( chars ).  The caller
@@ -172,7 +172,7 @@ public:
   /// Get a set of names matching a specified pattern (wchars). Matching
   /// means the names must begin with the pattern string.
   int list_names (ACE_PWSTRING_SET &set_out,
-                  const ACE_WString &pattern_in);
+                  const ACE_NS_WString &pattern_in);
 
   /// Get a set of names matching a specified pattern (chars). Matching
   /// means the names must begin with the pattern string.
@@ -182,7 +182,7 @@ public:
   /// Get a set of values matching a specified pattern (wchars). Matching
   /// means the values must begin with the pattern string.
   int list_values (ACE_PWSTRING_SET &set_out,
-                   const ACE_WString &pattern_in);
+                   const ACE_NS_WString &pattern_in);
 
   /// Get a set of values matching a specified pattern (chars). Matching
   /// means the values must begin with the pattern string.
@@ -192,7 +192,7 @@ public:
   /// Get a set of types matching a specified pattern (wchars). Matching
   /// means the types must begin with the pattern string.
   int list_types (ACE_PWSTRING_SET &set_out,
-                  const ACE_WString &pattern_in);
+                  const ACE_NS_WString &pattern_in);
 
   /// Get a set of types matching a specified pattern (chars). Matching
   /// means the types must begin with the pattern string.
@@ -205,7 +205,7 @@ public:
    * complete binding associated each pattern match.
    */
   virtual int list_name_entries (ACE_BINDING_SET &set_out,
-                                 const ACE_WString &pattern_in);
+                                 const ACE_NS_WString &pattern_in);
 
   /**
    * Get a set of names matching a specified pattern (wchars). Matching
@@ -221,7 +221,7 @@ public:
    * complete binding associated each pattern match.
    */
   virtual int list_value_entries (ACE_BINDING_SET &set_out,
-                                  const ACE_WString &pattern_in);
+                                  const ACE_NS_WString &pattern_in);
 
   /**
    * Get a set of values matching a specified pattern (wchars). Matching
@@ -237,7 +237,7 @@ public:
    * complete binding associated each pattern match.
    */
   virtual int list_type_entries (ACE_BINDING_SET &set_out,
-                                 const ACE_WString &pattern_in);
+                                 const ACE_NS_WString &pattern_in);
 
   /**
    * Get a set of types matching a specified pattern (wchars). Matching
