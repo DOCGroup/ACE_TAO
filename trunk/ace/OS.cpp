@@ -3317,8 +3317,10 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 
 #   if defined (ACE_HAS_STDARG_THR_DEST)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
-#   elif defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+#   elif defined (ACE_HAS_PTHREADS_DRAFT4)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#   elif defined (ACE_HAS_PTHREADS_DRAFT6)
+    ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #   else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          ace_result_),
