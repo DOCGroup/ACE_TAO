@@ -32,6 +32,8 @@ class TAO_Notify_EventChannelFactory;
 class TAO_Notify_EventChannel;
 class TAO_Notify_SupplierAdmin;
 class TAO_Notify_ConsumerAdmin;
+class TAO_Notify_ProxyConsumer;
+class TAO_Notify_ProxySupplier;
 class TAO_Notify_FilterFactory;
 class TAO_Notify_Object;
 

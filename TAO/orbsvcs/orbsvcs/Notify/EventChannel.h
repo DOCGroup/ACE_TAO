@@ -27,6 +27,8 @@
 class TAO_Notify_ConsumerAdmin;
 class TAO_Notify_SupplierAdmin;
 class TAO_Notify_EventChannelFactory;
+class TAO_Notify_ProxyConsumer;
+class TAO_Notify_ProxySupplier;
 template <class TYPE> class TAO_Notify_Container_T;
 
 #if defined(_MSC_VER)
@@ -87,7 +89,7 @@ public:
                                                    ACE_ENV_ARG_DECL);
   virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
 
-  virtual TAO_Notify_Object_Id get_id () const {return id();}
+  virtual TAO_Notify_Object::ID get_id () const {return id();}
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_NOTIFY::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_NOTIFY::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
