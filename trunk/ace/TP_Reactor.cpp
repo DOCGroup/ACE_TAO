@@ -350,7 +350,7 @@ int
 ACE_TP_Reactor::register_handler (ACE_Event_Handler *eh,
                                   ACE_HANDLE h)
 {
-  retrun ACE_Select_Reactor::register_handler (eh,
+  return ACE_Select_Reactor::register_handler (eh,
                                                h);
 }
 
