@@ -1,3 +1,7 @@
+Wed Dec 09 23:07:46 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.2.43 released.
+
 Wed Dec 09 22:43:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Callback_Quoter/Consumer_Input_Handler.h:
