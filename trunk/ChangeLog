@@ -1,3 +1,8 @@
+Tue Sep 11 06:41:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp: Fixed a
+	  typo. This should fix most of the rrors in the scoreboard.
+
 Mon Sep 10 18:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* apps/Gateway/Peer/Peer.cpp (nonblk_put): 
