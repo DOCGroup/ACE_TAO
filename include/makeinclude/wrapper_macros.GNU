@@ -81,7 +81,17 @@ VSHDIR		= .shobj/
 ifdef SHLIBA
 VLDLIBS :=$(VLDLIBS) -lACEshr $(LIBS)
 else
+ifdef MVSLIB
+  # Special for MVS in order to build .x files
+  VLDLIBS :=$(VLDLIBS:$(VSHDIR)%.so=$(VDIR)%.o)
+  ifeq ($(findstring .x,$(MVSLIB)),.x)
+    VLDLIBS :=$(VLDLIBS:-l%=$(WRAPPER_ROOT)/ace/lib%.x) $(MVSLIB)
+  else
+    LDLIBS :=$(VLDLIBS) $(MVSLIB)
+  endif
+else
 VLDLIBS :=$(VLDLIBS) -lACE $(LIBS)
+endif
 endif
 YACC		= yacc
 
