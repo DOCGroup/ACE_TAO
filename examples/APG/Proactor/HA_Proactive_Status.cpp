@@ -90,8 +90,8 @@ HA_Proactive_Service::handle_write_stream
 int
 HA_Proactive_Acceptor::validate_connection
 (const ACE_Asynch_Accept::Result&,
- const ACE_INET_Addr& remote,
- const ACE_INET_Addr& local)
+ const ACE_INET_Addr&,
+ const ACE_INET_Addr&)
 {
   return 0;
 }
