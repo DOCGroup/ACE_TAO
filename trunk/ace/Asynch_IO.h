@@ -96,16 +96,17 @@ public:
 
   u_long offset (void) const;
   u_long offset_high (void) const;
-  // This really make sense only when doing file I/O. 
+  // This really makes sense only when doing file I/O. 
   // 
   // On WIN32, these are represented in the OVERLAPPED datastructure.
   //
-  // @@ On POSIX4-Unix, offset_high should be supported using aiocb64.
+  // @@ On POSIX4-Unix, offset_high should be supported using
+  //    aiocb64.
 
   int priority (void) const;
   // Priority of the operation. 
   //
-  // On POSIX4-Unix, this is supported. Works like <nice> in
+  // On POSIX4-Unix, this is supported. Priority works like <nice> in   
   // Unix. Negative values are not allowed. 0 means priority of the
   // operation same as the process priority. 1 means priority of the
   // operation is one less than process. And so forth.
@@ -163,12 +164,41 @@ public:
   // correct handle.
 
   int cancel (void);
-  // On Win32, this cancels all pending accepts operations that were
-  // issued by the calling thread.  The function does not cancel
-  // asynchronous operations issued by other threads.
+  // (Attempts to) cancel the asynchronous operation pending against
+  // the <handle> registered with this Operation.
+  // 
+  // All completion notifications for the I/O operations will occur
+  // normally.
   //
-  // @@ POSIX: please implement me.
-
+  // = Return Values:
+  //
+  // -1 : Operation failed. (can get only in POSIX).
+  //  0 : All the operations were cancelled.
+  //  1 : All the operations were already finished in this
+  //      handle. Unable to cancel them.
+  //  2 : Atleast one of the requested operations cannot be
+  //      cancelled.
+  //
+  // There is slight difference in the semantics between NT and POSIX
+  // platforms which is given below.
+  // 
+  // = Win32 :
+  // 
+  //   cancels all pending accepts operations that were issued by the
+  //   calling thread.  The function does not cancel asynchronous
+  //   operations issued by other threads.
+  //   All I/O operations that are canceled will complete with the
+  //   error ERROR_OPERATION_ABORTED.
+  // 
+  // = POSIX:
+  // 
+  //   Attempts to cancel one or more asynchronous I/O requests
+  //   currently outstanding against the <handle> registered in this 
+  //   operation.
+  //   For requested operations that are successfully canceled, the
+  //   associated  error  status is set to ECANCELED.
+  
+  
   // = Access methods.
 
   ACE_Proactor* proactor (void) const;
@@ -242,7 +272,7 @@ public:
   // supported. Works like <nice> in Unix. Negative values are not
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
-  // process. And so forth. On Win32, this is a no-op.
+  // process. And so forth. On Win32, <priority> is a no-op.
   // <signal_number> is the POSIX4 real-time signal number to be used 
   // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
   // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
@@ -350,7 +380,7 @@ public:
   // supported. Works like <nice> in Unix. Negative values are not
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
-  // process. And so forth. On Win32, this is a no-op.
+  // process. And so forth. On Win32, this argument is a no-op.
   // <signal_number> is the POSIX4 real-time signal number to be used 
   // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
   // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
@@ -464,7 +494,7 @@ public:
   // supported. Works like <nice> in Unix. Negative values are not
   // allowed. 0 means priority of the operation same as the process
   // priority. 1 means priority of the operation is one less than
-  // process. And so forth. On Win32, this is a no-op.
+  // process. And so forth. On Win32, this argument is a no-op.
   // <signal_number> is the POSIX4 real-time signal number to be used 
   // for the operation. <signal_number> ranges from ACE_SIGRTMIN to
   // ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems. 
