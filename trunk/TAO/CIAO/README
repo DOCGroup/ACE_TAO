@@ -2,12 +2,23 @@
 BUILDING CIAO
 ========================
 
-* Compile ACE and TAO:
+* Supported platform:
+
+  We have tried CIAO examples on Win32 using MSVC 6.0 and above and on
+  Linux.
+
+* Documentation:
+
+  Various documents are available under $(CIAO_ROOT)/docs/
+  Commments and suggestions for improving these documents are
+  extremely welcome.
+
+* Preparation - Compiling ACE and TAO:
 
   CIAO depends on many CORBA features to function properly so you need
-to compile them first.  Here is a non-exhaustive list:
+  to compile them first.  Here is a non-exhaustive list:
 
-        ACEXML,
+        ACEXML_Parser,
 
         Valuetype
         IORInterceptor
@@ -18,19 +29,15 @@ to compile them first.  Here is a non-exhaustive list:
 
 and also the libraries they depends on.
 
-  - I have the following defined in my platform_macros.GNU:
+  - On Linux, try defining these in the platform_macros.GNU
 
      exceptions=1
-     rt_corba=1
-     smart_proxies=1
      interface_repo=1
-     interceptors=1
      ssl=1
 
-    Apparently, not all of them are needed to compile CIAO, but that's
-    what I'm using.
+* Compiling CIAO core libraries and tools:
 
-* Assuming CIAO_ROOT = ACE_wrappers/TAO/CIAO/
+  Assuming CIAO_ROOT = ACE_wrappers/TAO/CIAO/
 
   Compile the following directories:
 
@@ -67,7 +74,7 @@ and also the libraries they depends on.
      This is a single component example.  Check out run_test.pl to see
      how you can instantiate a single component using CIAO.
 
-  - $CIAO_ROOT/examples/handcrafted/Display
+  - $CIAO_ROOT/examples/OEP/Display
 
      This is a multiple-component example.  RateGen component
      subdirectory contains a run_test.pl that you can use to
@@ -80,11 +87,17 @@ and also the libraries they depends on.
      distributed application using the Assembly_Deployer.  Change
      directory to
 
-        $CIAO_ROOT/examples/handcrafted/Display/descriptors
+        $CIAO_ROOT/examples/OEP/Display/descriptors
 
      and take a look at the file: NOTE.txt.  This file describes the
      steps to compose the application using various different
      configurations and composition specs.
+
+  - $CIAO_ROOT/examples/OEP/BasicSP
+
+    This is a new multi-component example.  It has the similar
+    struture as the Dsiplay example above.
+
 
 * If you can not find the
   Makefiles for unix platform you are using, you can use mwc to create
