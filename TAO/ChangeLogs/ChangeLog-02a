@@ -1,3 +1,9 @@
+Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/Naming_Service/Naming_Server_static.dsw:
+
+          Including the wrong project file.
+
 Fri Jun 16 10:02:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
