@@ -11,84 +11,87 @@
 <CENTER><B><FONT SIZE=+2>Passing chunks of data through an ACE_Message_Queue</FONT></B></CENTER>
 
 
-<HR WIDTH="100%">
 <P>
+<HR WIDTH="100%">
 
 We'll look first at <A HREF="message_queue.cpp">main()</A>.
 <P>
 
 <HR WIDTH="100%">
 <PRE>
-/*
-   To illustrate the ACE_Message_Queue, we use a derivative of ACE_Task<>.  We
+
+<font color=red>// $Id$</font>
+
+<font color=red>/*
+   To illustrate the ACE_Message_Queue, we use a derivative of ACE_Task&lt;>.  We
    also derive from ACE_Message_Block to show that we don't have memory leaks. 
- */
-#include "task.h"
-#include "block.h"
+ */</font>
+<font color=blue>#include</font> "<font color=green>task.h</font>"
+<font color=blue>#include</font> "<font color=green>block.h</font>"
 
 int run_test( int iterations, int threads )
 {
-  /*
+  <font color=red>/*
      Create and open an instance of our Task object.  I've overridden the
      open() method to make it look more like other ACE objects. 
-   */
+   */</font>
   Task task;
 
   if (task.open (threads) == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
   }
 
-  /*
+  <font color=red>/*
      Give the threads a moment to open.  This isn't really necessary but if we
      don't we find that all of our blocks are constructed and enqueued before
      any of the threads get created. Basically, the sleep() makes the output
      look more interesting.       
-   */
-  ACE_OS::sleep (ACE_Time_Value (1));
+   */</font>
+  <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (1));
 
   int i;
-  for (i = 0; i < iterations; ++i)
+  for (i = 0; i &lt; iterations; ++i)
   {
-    /*
+    <font color=red>/*
        Create a new message block to hold our data.  Here, we ask for a block
        that has 128 bytes of data space. 
-     */
+     */</font>
     Block *message = new Block (128);
 
-    /*
-       Grab the "write pointer".  This is a pointer into the data area where we 
+    <font color=red>/*
+       Grab the "<font color=green>write pointer</font>".  This is a pointer into the data area where we 
        can write our data.  After writting the data you have to increment the
        wr_ptr() so that subsequent writes won't clobber what you've put there. 
-     */
-    ACE_OS::sprintf (message->wr_ptr (), "This is message %d.", i);
+     */</font>
+    <font color=#008888>ACE_OS::sprintf</font> (message->wr_ptr (), "<font color=green>This is message %d.</font>", i);
     message->wr_ptr (strlen (message->rd_ptr ()));
 
-    /*
+    <font color=red>/*
        Put the message block into the queue.  One of the threads in the Task
-       object will pick up the block and "do work" on it. 
-     */
+       object will pick up the block and "<font color=green>do work</font>" on it. 
+     */</font>
     if (task.putq (message) == -1)
     {
       break;
     }
   }
 
-  /*
+  <font color=red>/*
      Once we're done, we have to signal the Task objects to shut down. There
      are several choices including: - Send a message of zero length - Send a
      message with a special content I don't like these choices because they're
      likely to interfere with application logic.  Instead, I use the message
-     type feature to send a message of type "hangup".  The default type is
+     type feature to send a message of type "<font color=green>hangup</font>".  The default type is
      MB_DATA, so when the tasks get a MB_HANGUP type, they know to go away. 
-   */
+   */</font>
   Block *message = new Block ();
-  message->msg_type (ACE_Message_Block::MB_HANGUP);
+  message->msg_type (<font color=#008888>ACE_Message_Block::MB_HANGUP</font>);
   task.putq (message);
 
-  /*
+  <font color=red>/*
      Wait for the threads in our task object to go away. 
-   */
+   */</font>
   task.wait ();
   
   return(0);
@@ -96,18 +99,18 @@ int run_test( int iterations, int threads )
 
 int main (int argc, char *argv[])
 {
-  /*
+  <font color=red>/*
      Set the number of iterations through our putq() loop and the number of
-     threads to use in our Task<> derivative. 
-   */
+     threads to use in our Task&lt;> derivative. 
+   */</font>
   int iterations = argc > 1 ? atoi (argv[1]) : 9;
   int threads = argc > 2 ? atoi (argv[2]) : 2;
   
   (void)run_test(iterations,threads);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Application exiting\n"));
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Application exiting\n</font>"));
   
-  exit(0);
+  return(0);
 }
 </PRE>
 <HR WIDTH="100%">
@@ -123,10 +126,5 @@ that in the next tutorial, let's stick with the basics first.
 <P>
 On the next page we'll take a look at our Block object...
 <P>
-<HR WIDTH="100%">
-
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>

@@ -42,7 +42,7 @@ public:
 
   /*
     This is where the coolness lies.  Most C++ folks are familiar
-    with "cout << some-data".  It's a very handy and easy way to
+    with "cout << some-data."  It's a very handy and easy way to
     toss data around.  By adding these method calls, we're able
     to do the same thing with a socket connection.
    */
@@ -223,13 +223,13 @@ int main (int argc, char *argv[])
   /*
     Use the basic constructor since the other isn't really very safe.
    */
-  Client server;
+  Client peer;
   
   /*
     Open the server connection.  Notice how this is simpler than Tutorial 3
     since we only have to provide a host name and port value.
    */
-  if( server.open(server_host,server_port) == -1 )
+  if( peer.open(server_host,server_port) == -1 )
   {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   }
@@ -240,12 +240,12 @@ int main (int argc, char *argv[])
       Tell the server which iteration we're on.  No more mucking aroudn with
       sprintf at this level!  It's all hidden from us.
      */
-    server << "message = " << i+1;
+    peer << "message = " << i+1;
 
     /*
       Everything OK?
      */
-    if ( server.error() )
+    if ( peer.error() )
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
     }
@@ -255,7 +255,7 @@ int main (int argc, char *argv[])
     }
   }
 
-  if (server.close () == -1)
+  if (peer.close () == -1)
   {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
   }

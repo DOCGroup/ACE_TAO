@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-21 20:42 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-01-24 15:11 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/008'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -16,11 +16,11 @@
 #   2769 -rw-rw-r-- page01.pre
 #    416 -rw-rw-r-- page02.pre
 #    345 -rw-rw-r-- page03.pre
-#    486 -rw-rw-r-- page04.pre
+#    481 -rw-rw-r-- page04.pre
 #    578 -rw-rw-r-- page05.pre
 #    952 -rw-rw-r-- page02.pst
 #    367 -rw-rw-r-- page03.pst
-#    987 -rw-rw-r-- page04.pst
+#   1173 -rw-rw-r-- page04.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -67,7 +67,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh23902; then
+if mkdir _sh23993; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -286,25 +286,25 @@ In <A HREF="broadcast_client.cpp">broadcast_client.cpp</A> we
 find out how to send a single datagram to every host on our (sub)network.&nbsp;
 I have to say <I>(sub)network</I> because broadcast datagrams typically
 are not passed through routers.&nbsp; So, if your network admin has divided
-up your network into subnets, your broadcasts will likey only stay on the
+up your network into subnets, your broadcasts will likey stay on the
 subnet you're a part of.
 X
 <P>I've only commented the parts that are different from the directed_client.
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121154099 'page04.pre' &&
+  $shar_touch -am 0124144899 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-3578f6334323b7eb43c473661a2d38df  page04.pre
+8811bded669a7a7be85a4878d5076190  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 486 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '486,' 'current size' "$shar_count!"
+    test 481 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '481,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -439,22 +439,27 @@ like this:&nbsp; <I>ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not
 enable for this interface.: Unknown error</I>.&nbsp; There are some interfaces
 (ppp, slip) that don't support broadcast datagrams.&nbsp; That's what you're
 seeing here.</BLOCKQUOTE>
+Ok, one more warning:
+<blockquote>If you happen to have multiple servers running on your
+network when you invoke this client, the resopnse could come from any
+one of them.
+</blockquote>
 X
 SHAR_EOF
-  $shar_touch -am 0121153899 'page04.pst' &&
+  $shar_touch -am 0124145199 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pst:' 'MD5 check failed'
-af9341d0c565a98b7e752efe92b10fac  page04.pst
+0f46660ee6a9e96fe30b7d4901fbdbbe  page04.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pst'`"
-    test 987 -eq "$shar_count" ||
-    $echo 'page04.pst:' 'original size' '987,' 'current size' "$shar_count!"
+    test 1173 -eq "$shar_count" ||
+    $echo 'page04.pst:' 'original size' '1173,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh23902
+rm -fr _sh23993
 exit 0

@@ -1,7 +1,8 @@
 
 // $Id$
 
-#include "data.h"
+#include "block.h"
+#include "work.h"
 #include "task.h"
 
 /*

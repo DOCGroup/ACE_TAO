@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-17 14:31 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-01-24 11:50 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/004'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -14,7 +14,7 @@
 #    591 -rw-rw-r-- hdr
 #     18 -rw-rw-r-- bodies
 #    702 -rw-rw-r-- page01.pre
-#    963 -rw-rw-r-- page01.pst
+#    961 -rw-rw-r-- page01.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -61,7 +61,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh00408; then
+if mkdir _sh21744; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -146,21 +146,21 @@ was born.)
 Kirthika says:
 <UL>
 The cool thing about this "cooler" client is how we use a C++ trick for
-streaming incoming data by using the operator<<() metod. Also the
+streaming incoming data by using the operator<<() method. Also the
 Connector portion is wrapped in the open() method which now takes in the 
-server hostname and port. The result is a cleaner-looking client which
-successfully interacts with the server, when connection is established.
+server hostname and port. The result is a cleaner looking client which
+successfully interacts with the server when connection is established.
 </UL>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117142999 'page01.pre' &&
+  $shar_touch -am 0124114799 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-74d3999cd710b35c8e6c26e558a926cb  page01.pre
+b1fef664f58233e14943041ed2765830  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
@@ -179,7 +179,7 @@ X
 <P>Ok, now we're done with that.  As you can see, it really isn't
 so hard to create an object that makes sending data much more "natural"
 than the typical send() or send_n() invocation.  You can even build
-up arbitrary objects &amp; do some neat tricks with C++ templates to stream
+up arbitrary objects and do some neat tricks with C++ templates to stream
 their data out as well.  (We may go into that a little later.) 
 Of course, writting the full implementation such that these streams are
 interchangable with the standard C++ ostreams is quite a bit more difficult. 
@@ -197,20 +197,20 @@ settings</A>.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0117142999 'page01.pst' &&
+  $shar_touch -am 0124114999 'page01.pst' &&
   chmod 0664 'page01.pst' ||
   $echo 'restore of' 'page01.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pst:' 'MD5 check failed'
-c17e7bf6d06005bb1932f1790f8929fc  page01.pst
+63a7bcf418c9dd35d92caa17a6a4af7b  page01.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pst'`"
-    test 963 -eq "$shar_count" ||
-    $echo 'page01.pst:' 'original size' '963,' 'current size' "$shar_count!"
+    test 961 -eq "$shar_count" ||
+    $echo 'page01.pst:' 'original size' '961,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh00408
+rm -fr _sh21744
 exit 0

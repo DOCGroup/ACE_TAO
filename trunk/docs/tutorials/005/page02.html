@@ -24,7 +24,7 @@ This tutorial is a re-cap of the client-server hookup tutorial with much
  cleaner code (for instance: use of destroy() to delete objects and
 process() which does the task of reading in data from the client).
 <P>
-We again enroll the services of the reactor to handle events. Everything
+We again enroll the services of the ACE_Reactor to handle events. Everything
 occurs in a single thread. 
 <P>
 This tutorial is a stepping stone towards a mutithreaded server model.
@@ -135,7 +135,7 @@ int main (int argc, char *argv[])
      signal handler catches something, the finished flag will be set and we'll
      exit.  Conveniently enough, handle_events() is also interrupted by signals 
      and will exit back to the while() loop.  (If you want your event loop to
-     not be interrupted by signals, checkout the &lt;i>restart&lt;/i> flag on the
+     not be interrupted by signals, checkout the 'restart' flag on the
      open() method of ACE_Reactor if you're interested.)    
    */</font>
   while (!finished)

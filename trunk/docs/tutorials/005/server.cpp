@@ -101,7 +101,7 @@ int main (int argc, char *argv[])
      signal handler catches something, the finished flag will be set and we'll
      exit.  Conveniently enough, handle_events() is also interrupted by signals 
      and will exit back to the while() loop.  (If you want your event loop to
-     not be interrupted by signals, checkout the <i>restart</i> flag on the
+     not be interrupted by signals, checkout the 'restart' flag on the
      open() method of ACE_Reactor if you're interested.)    
    */
   while (!finished)

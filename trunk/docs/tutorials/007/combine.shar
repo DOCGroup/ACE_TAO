@@ -3,17 +3,17 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-21 15:59 EST by <jcej@beta.mobsec.com>.
-# Source directory was `/projects/home/jcej/projects/ACE_wrappers/docs/tutorials/007'.
+# Made on 1999-01-24 15:37 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/007'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
 # This shar contains:
 # length mode       name
 # ------ ---------- ------------------------------------------
-#    575 -rw-rw-r-- hdr
+#    576 -rw-rw-r-- hdr
 #    123 -rw-rw-r-- bodies
-#   3153 -rw-rw-r-- page01.pre
+#   3385 -rw-rw-r-- page01.pre
 #     87 -rw-rw-r-- page02.pre
 #    120 -rw-rw-r-- page03.pre
 #    171 -rw-rw-r-- page04.pre
@@ -74,7 +74,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh32671; then
+if mkdir _sh24460; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -108,12 +108,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'hdr:' 'MD5 check failed'
-8c1e8f73c777567099ea4e11a860ea56  hdr
+151b1b4bda96cc1e3ef55356e819ca42  hdr
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
-    test 575 -eq "$shar_count" ||
-    $echo 'hdr:' 'original size' '575,' 'current size' "$shar_count!"
+    test 576 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '576,' 'current size' "$shar_count!"
   fi
 fi
 # ============= bodies ==============
@@ -214,20 +214,25 @@ This tutorial gives us a flavour of implementing a server with a
 thread-pool strategy and how it can be managed using the ACE_Task class,
 which provides an OO approach to thread-creation and implementation.
 </UL>
+<font size=-1>* The additions to this tutorial make use of
+ACE_Message_Queue which is discussed in depth in 
+<A HREF="../010/page01.html">Tutorial 10</A>.  Feel free to read ahead 
+if you get lost in the message queue stuff.
+</font>
 SHAR_EOF
-  $shar_touch -am 0121153399 'page01.pre' &&
+  $shar_touch -am 0124153799 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-ec4906ec2d89c587a2f8b520fa2b6edb  page01.pre
+555176fa726c723dda37c4256f29165b  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 3153 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '3153,' 'current size' "$shar_count!"
+    test 3385 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '3385,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -672,5 +677,5 @@ SHAR_EOF
     $echo 'page07.pst:' 'original size' '97,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh32671
+rm -fr _sh24460
 exit 0

@@ -19,7 +19,7 @@ In <A HREF="broadcast_client.cpp">broadcast_client.cpp</A> we
 find out how to send a single datagram to every host on our (sub)network.&nbsp;
 I have to say <I>(sub)network</I> because broadcast datagrams typically
 are not passed through routers.&nbsp; So, if your network admin has divided
-up your network into subnets, your broadcasts will likey only stay on the
+up your network into subnets, your broadcasts will likey stay on the
 subnet you're a part of.
 
 <P>I've only commented the parts that are different from the directed_client.
@@ -115,6 +115,11 @@ like this:&nbsp; <I>ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not
 enable for this interface.: Unknown error</I>.&nbsp; There are some interfaces
 (ppp, slip) that don't support broadcast datagrams.&nbsp; That's what you're
 seeing here.</BLOCKQUOTE>
+Ok, one more warning:
+<blockquote>If you happen to have multiple servers running on your
+network when you invoke this client, the resopnse could come from any
+one of them.
+</blockquote>
 
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>
