@@ -56,7 +56,7 @@ namespace CORBA
   class Environment;
 
   TAO_NAMESPACE_INLINE_FUNCTION void release (Context_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr );
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr);
 
   TAO_NAMESPACE_INLINE_FUNCTION void release (ContextList_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ContextList_ptr );

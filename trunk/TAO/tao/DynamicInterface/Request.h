@@ -38,6 +38,12 @@
 
 namespace CORBA
 {
+  class Request;
+  typedef Request *Request_ptr;
+
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Request_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Request_ptr);
+
   /**
    * @class Request
    *
