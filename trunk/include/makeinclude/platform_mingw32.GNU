@@ -44,7 +44,7 @@ rwho = 0
 
 # MinGW has wfmo and registry
 wfmo = 1
-win32registry = 1
+winregistry = 1
 
 # Disable auto-import warnings. The MingW linker has a problem with imports
 # See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435

@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(win32registry) {
-  requires += win32registry
-}
