@@ -279,12 +279,19 @@ Server::activate_high_servant (ACE_Thread_Manager *serv_thr_mgr)
                 "(%P|%t) %p\n"
                 "\thigh_priority_task->activate failed"));
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, 
+			    ready_mon, 
+			    GLOBALS::instance ()->ready_mtx_,
+			    -1)
+	  );
+
   // wait on the condition variable for the high priority client to
   // finish parsing the arguments.
   while (!GLOBALS::instance ()->ready_)
     GLOBALS::instance ()->ready_cnd_.wait ();
 
+  // default return success.
+  return 0;
 }
 
 int
@@ -361,6 +368,8 @@ Server::activate_low_servants (ACE_Thread_Manager *serv_thr_mgr)
                                                                    ACE_SCOPE_THREAD);
         }
     } /* end of for() */
+
+  // default return success.
   return 0;
 }
 
@@ -370,17 +379,22 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
   ACE_NEW_RETURN (this->cubits_,
                   CORBA::String [GLOBALS::instance ()->num_of_objs],
                   -1);
+
   // Do the preliminary argument processing for options -p and -h.  
   this->prelim_args_process ();
+
   // Find the priority for the high priority servant.
   this->init_high_priority ();
+
   // activate the high priority servant task
   if (this->activate_high_servant (serv_thr_mgr) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failure in activating high priority servant\n"),
                       -1);
+
   // initialize the priority of the low priority servants.
   this->init_low_priority ();
+
   // activate the low priority servants.
   if (this->activate_low_servants (serv_thr_mgr) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
