@@ -1,3 +1,26 @@
+Fri Aug 24 16:54:02 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.h (recv_i):
+
+	  Added a timeout parameter.  See below for details.
+
+	* ace/SSL/SSL_SOCK_Stream.i (recv_i):
+
+	  Perform an SSL_read() before attempting to block on select()
+	  with a timeout.  OpenSSL may buffer more data than requested
+	  since it is a record-oriented protocol.  Fixes a problem where
+	  subsequent calls to ACE_SSL_SOCK_Stream::recv() could timeout
+	  when needlessly blocking on select() because the expected data
+	  has already been buffered by OpenSSL.  Thanks to Martin
+	  Krumpolec <krumpo@pobox.sk> for reporting and diagnosing the
+	  problem.  [Bug 1006]
+
+	* ace/SSL/SSL_SOCK_Stream.cpp (recv):
+
+	  Moved the timed recv() code to the lower level recv_i() method
+	  since timeout support must now be more tightly integrated with
+	  do/while(SSL_pending()) SSL_read() loop.
+
 Fri Aug 24 18:33:09 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Parse_Node.cpp (ACE_Function_Node): Make sure to dynamically

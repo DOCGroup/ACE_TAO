@@ -132,20 +132,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  if (timeout == 0)
-    return this->recv (buf, n, flags);
-
-  int val = 0;
-  if (ACE::enter_recv_timedwait (this->get_handle (),
-                                 timeout,
-                                 val) == -1)
-    return -1;
-
-  ssize_t bytes_transferred = this->recv (buf, n, flags);
-
-  ACE::restore_non_blocking_mode (this->get_handle (), val);
-
-  return bytes_transferred;
+  return this->recv_i (buf, n, flags, timeout);
 }
 
 
