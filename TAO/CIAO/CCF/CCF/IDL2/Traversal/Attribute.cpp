@@ -13,7 +13,6 @@ namespace CCF
       // Attribute
       //
       //
-
       void Attribute::
       traverse (Type& a)
       {
@@ -59,6 +58,7 @@ namespace CCF
         pre (a);
         belongs (a);
         name (a);
+        get_raises (a);
         post (a);
       }
 
@@ -85,9 +85,60 @@ namespace CCF
       }
 
       void ReadAttribute::
+      get_raises (Type& a, EdgeDispatcherBase& d)
+      {
+        iterate_and_traverse (a.get_raises_begin (), a.get_raises_end (), d);
+      }
+
+      void ReadAttribute::
+      get_raises (Type& a)
+      {
+        Type::GetRaisesIterator
+          b (a.get_raises_begin ()),
+          e (a.get_raises_end ());
+
+        if (b != e)
+        {
+          get_raises_pre (a);
+          iterate_and_traverse (b,
+                                e,
+                                edge_traverser (),
+                                *this,
+                                &ReadAttribute::comma,
+                                a);
+          get_raises_post (a);
+        }
+        else
+        {
+          get_raises_none (a);
+        }
+      }
+
+      void ReadAttribute::
+      get_raises_pre (Type&)
+      {
+      }
+
+      void ReadAttribute::
+      get_raises_post (Type&)
+      {
+      }
+
+      void ReadAttribute::
+      get_raises_none (Type&)
+      {
+      }
+
+      void ReadAttribute::
       post (Type&)
       {
       }
+
+      void ReadAttribute::
+      comma (Type&)
+      {
+      }
+
 
       // ReadWriteAttribute
       //
@@ -98,6 +149,8 @@ namespace CCF
         pre (a);
         belongs (a);
         name (a);
+        get_raises (a);
+        set_raises (a);
         post (a);
       }
 
@@ -124,7 +177,102 @@ namespace CCF
       }
 
       void ReadWriteAttribute::
+      get_raises (Type& a, EdgeDispatcherBase& d)
+      {
+        iterate_and_traverse (a.get_raises_begin (), a.get_raises_end (), d);
+      }
+
+      void ReadWriteAttribute::
+      get_raises (Type& a)
+      {
+        Type::GetRaisesIterator
+          b (a.get_raises_begin ()),
+          e (a.get_raises_end ());
+
+        if (b != e)
+        {
+          get_raises_pre (a);
+          iterate_and_traverse (b,
+                                e,
+                                edge_traverser (),
+                                *this,
+                                &ReadWriteAttribute::comma,
+                                a);
+          get_raises_post (a);
+        }
+        else
+        {
+          get_raises_none (a);
+        }
+      }
+
+      void ReadWriteAttribute::
+      get_raises_pre (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      get_raises_post (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      get_raises_none (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      set_raises (Type& a, EdgeDispatcherBase& d)
+      {
+        iterate_and_traverse (a.set_raises_begin (), a.set_raises_end (), d);
+      }
+
+      void ReadWriteAttribute::
+      set_raises (Type& a)
+      {
+        Type::SetRaisesIterator
+          b (a.set_raises_begin ()),
+          e (a.set_raises_end ());
+
+        if (b != e)
+        {
+          set_raises_pre (a);
+          iterate_and_traverse (b,
+                                e,
+                                edge_traverser (),
+                                *this,
+                                &ReadWriteAttribute::comma,
+                                a);
+          set_raises_post (a);
+        }
+        else
+        {
+          set_raises_none (a);
+        }
+      }
+
+      void ReadWriteAttribute::
+      set_raises_pre (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      set_raises_post (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      set_raises_none (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
       post (Type&)
+      {
+      }
+
+      void ReadWriteAttribute::
+      comma (Type&)
       {
       }
     }

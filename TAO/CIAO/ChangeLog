@@ -1,3 +1,19 @@
+Thu Mar 31 09:45:07 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Attribute.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Attribute.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Attribute.hpp:
+	* CCF/CCF/IDL2/Traversal/Attribute.cpp:
+	* CCF/CCF/IDL2/Traversal/Attribute.hpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	Added support for raises-specification in attributes.
+
 Wed Mar 30 21:48:14 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* DAnCE/Config_Handlers/Deployment.hpp: Made the function
@@ -37,10 +53,10 @@ Wed Mar 30 22:03:23 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* docs/schema/xsc-banner.cpp
 	* docs/schema/xsc-banner.h
-	
-	These files are the banners that should be included at 
+
+	These files are the banners that should be included at
 	the top of XSC generated code.
-	
+
 Wed Mar 30 13:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ciao/ComponentsC.h:
