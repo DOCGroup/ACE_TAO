@@ -46,14 +46,37 @@ public:
                      int protocol_family = PF_INET,
                      int backlog = ACE_DEFAULT_BACKLOG,
                      int protocol = 0);
-    // Initiate a passive mode socket.
+  // Initialize a passive-mode BSD-style acceptor socket (no QoS).
+
+  ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+                     ACE_Protocol_Info *protocolinfo,
+                     ACE_SOCK_GROUP g,
+                     u_long flags,
+                     int reuse_addr,
+                     int protocol_family,
+                     int backlog = ACE_DEFAULT_BACKLOG,
+                     int protocol = 0);
+  // Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
+  // on success and -1 on failure.
 
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_INET,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
-  // Initiate a passive mode socket.
+  // Initialize a passive-mode BSD-style acceptor socket (no QoS).
+  // Returns 0 on success and -1 on failure.
+
+  int open (const ACE_Addr &local_sap,
+            ACE_Protocol_Info *protocolinfo,
+            ACE_SOCK_GROUP g,
+            u_long flags,
+            int reuse_addr,
+            int protocol_family,
+            int backlog = ACE_DEFAULT_BACKLOG,
+            int protocol = 0);
+  // Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
+  // on success and -1 on failure.
 
   ~ACE_SOCK_Acceptor (void);
   // Default dtor.
@@ -74,7 +97,7 @@ public:
               ACE_Time_Value *timeout = 0,
               int restart = 1,
               int reset_new_handle = 0) const;
-  // Accept a new <ACE_SOCK_Stream> connection using the RVSP QoS
+  // Accept a new <ACE_SOCK_Stream> connection using the QoS
   // information in <qos_params>.  A <timeout> of 0 means block
   // forever, a <timeout> of {0, 0} means poll.  <restart> == 1 means
   // "restart if interrupted," i.e., if errno == EINTR.

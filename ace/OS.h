@@ -4007,6 +4007,18 @@ struct sigaction
 #   define ACE_LACKS_IP_ADD_MEMBERSHIP
 # endif /* IP_ADD_MEMBERSHIP */
 
+# if !defined (IP_DEFAULT_MULTICAST_TTL)
+#   define IP_DEFAULT_MULTICAST_TTL 0
+# endif /* IP_DEFAULT_MULTICAST_TTL */
+
+# if !defined (IP_DEFAULT_MULTICAST_LOOP)
+#   define IP_DEFAULT_MULTICAST_LOOP 0
+# endif /* IP_DEFAULT_MULTICAST_LOOP */
+
+# if !defined (IP_MAX_MEMBERSHIPS)
+#   define IP_MAX_MEMBERSHIPS 0
+# endif /* IP_MAX_MEMBERSHIP */
+
 # if !defined (SIOCGIFBRDADDR)
 #   define SIOCGIFBRDADDR 0
 # endif /* SIOCGIFBRDADDR */
@@ -4782,7 +4794,6 @@ private:
 #endif /* ACE_MT_SAFE */
   int error_;
 };
-
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #if defined (ACE_HAS_WINSOCK2_GQOS)
