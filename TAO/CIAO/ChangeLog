@@ -1,3 +1,9 @@
+Mon Aug 16 22:09:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* performance-tests/Protocols/Sender/Sender.mpc:
+
+	  Fix for link errors on the scoreboard.
+
 Mon Aug 16 21:01:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* performance-tests/Benchmark/Benchmark.mpc:
