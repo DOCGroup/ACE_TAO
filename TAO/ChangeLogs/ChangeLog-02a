@@ -1,3 +1,10 @@
+Wed Jun 20 09:38:40 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tests/RTCORBA/Thread_Pool/client.dsp:
+
+          Fixed typo.
+          
+
 Wed Jun 20 09:29:20 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/RTCORBA/RT_ORB_Loader.h:
