@@ -1008,9 +1008,9 @@ CORBA_ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
                             ACE_OS::strlen (port_ptr.in ()) +
                             2);
 
-      ACE_OS::strcpy (def_init_ref, prefix);
-      ACE_OS::strcat (def_init_ref, port_ptr.in ());
-      ACE_OS::strcat (def_init_ref, "::");
+      ACE_OS::strcpy (def_init_ref.out (), prefix);
+      ACE_OS::strcat (def_init_ref.out (), port_ptr.in ());
+      ACE_OS::strcat (def_init_ref.out (), "::");
 
       CORBA::String_var default_init_ref =
              this->orb_core_->orb_params ()->default_init_ref ();

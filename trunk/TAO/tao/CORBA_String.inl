@@ -32,13 +32,6 @@ CORBA_String_var::operator[] (CORBA::ULong slot) const
   return this->ptr_[slot];
 }
 
-/// TAO-specific.
-ACE_INLINE
-CORBA_String_var::operator char *()
-{
-  return this->ptr_;
-}
-
 ACE_INLINE
 CORBA_String_var::operator char *&()
 {
