@@ -25,7 +25,7 @@ FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
 }
 
 int
-FTP_Server_FlowEndPoint::get_callback (const char *flowname,
+FTP_Server_FlowEndPoint::get_callback (const char *,
                                        TAO_AV_Callback *&callback)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::get_sfp_callback\n"));
@@ -273,12 +273,18 @@ main (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,"SERVER::run failed\n"),1);
 }
 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <Server,ACE_Null_Mutex>;
-template class TAO_AV_Endpoint_Reactive_Strategy_B <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy_B<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+template class TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>;
+template class TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Server,ACE_Null_Mutex>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy <FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_B, TAO_VDev, AV_Null_MediaCtrl>;
+#pragma instantiate TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>;
+#pragma instantiate TAO_FDev<TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
