@@ -2,7 +2,7 @@
 
 #include "tao/Profile.h"
 #include "tao/Object_KeyC.h"
-#include "tao/PolicyC.h"
+
 #include "tao/MessagingC.h"
 #include "tao/Policy_Factory.h"
 
@@ -16,16 +16,22 @@ ACE_RCSID(tao, Profile, "$Id$")
 
 TAO_Profile::~TAO_Profile (void)
 {
+  if (policy_list_.ptr() != 0)
+    {
+      for (CORBA::ULong i = 0; i < policy_list_->length(); i++)
+        policy_list_[i]->destroy();
+    }
 }
 
 
-/////////////////////////////////////////////////////////////////////
-//          set_policies 
-//
-void TAO_Profile::set_policies(const CORBA::PolicyList *policy_list)
+void 
+TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
+  
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+  
   ACE_ASSERT(policy_list != 0);
-  this->policy_list_ = ACE_const_cast(CORBA::PolicyList *, policy_list);
+  this->policy_list_ = policy_list;
   
   Messaging::PolicyValue *pv_ptr;
   Messaging::PolicyValueSeq policy_value_seq;
@@ -42,9 +48,9 @@ void TAO_Profile::set_policies(const CORBA::PolicyList *policy_list)
   for (size_t i = 0; i < policy_list_->length(); i++)
   {
     ACE_NEW(pv_ptr, Messaging::PolicyValue);
-    pv_ptr->ptype = (*policy_list_)[i]->policy_type();
+    pv_ptr->ptype = (policy_list_)[i]->policy_type();
     
-    (*policy_list_)[i]->_tao_encode(outCDR);
+    (policy_list_)[i]->_tao_encode(outCDR);
 
     length = outCDR.total_length();
     pv_ptr->pvalue.length(length);
@@ -91,15 +97,17 @@ void TAO_Profile::set_policies(const CORBA::PolicyList *policy_list)
   // member variable.
   tagged_components_.set_component(tagged_component);
   are_policies_parsed_ = 1;
+
+#endif
 }
 
 
-/////////////////////////////////////////////////////////////////////
-//          get_policies 
-//
-const CORBA::PolicyList* 
-TAO_Profile::get_policies()
+CORBA::PolicyList&
+TAO_Profile::policies ()
 {
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
   if(!are_policies_parsed_)
   {
     IOP::TaggedComponent tagged_component;
@@ -124,9 +132,17 @@ TAO_Profile::get_policies()
       // Here we extract the Messaging::PolicyValue out of the sequence
       // and we convert those into the proper CORBA::Policy
       
-      CORBA::Policy *policy;
+      CORBA::Policy *policy = 0;
+      CORBA::ULong length = policy_value_seq.length ();
+      CORBA::PolicyList *plp = 0;
       
-      for (CORBA::ULong i = 0; i < policy_value_seq.length(); i++)
+      _create_policy_list (length);
+      
+      this->policy_list_ = plp;
+
+      policy_list_->length (length);
+      
+      for (CORBA::ULong i = 0; i < length; i++)
       {
         policy = Policy_Factory::create_policy(policy_value_seq[i].ptype);
         if (policy != 0)
@@ -138,7 +154,7 @@ TAO_Profile::get_policies()
 
           policy->_tao_decode(inCDR);
 
-          (*policy_list_)[i] = policy;
+          (policy_list_)[i] = policy;
         }
         else
         {
@@ -146,9 +162,30 @@ TAO_Profile::get_policies()
         }
       }
     }
-    
+    else // Create an empty list
+      {
+        _create_policy_list (1);
+        policy_list_->length(0);
+      }
+        
   }
-  return this->policy_list_;
+
+  return policy_list_;
+
+#else
+  _create_policy_list (1);
+  policy_list_->length(0);
+
+#endif
+}
+
+void 
+TAO_Profile::_create_policy_list (int length) 
+{
+  CORBA::PolicyList *plist = 0;
+  ACE_NEW (plist, CORBA::PolicyList (length));
+  policy_list_ = plist;
+  policy_list_->length(length);
 }
 
 // ****************************************************************

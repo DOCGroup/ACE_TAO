@@ -372,15 +372,47 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
 // Method for serialization support.
 
 CORBA::Boolean 
-TAO_TCP_Properties::_tao_encode(TAO_OutputCDR &)
+TAO_TCP_Properties::_tao_encode(TAO_OutputCDR & out_cdr)
 {
+  if( !(out_cdr << send_buffer_size_) )
+    return 0;
   
+  if( !(out_cdr << recv_buffer_size_) )
+    return 0;
+
+  if( !(out_cdr << keep_alive_) )
+    return 0;
+  
+  if( !(out_cdr << dont_route_) )
+    return 0;
+
+  if( !(out_cdr << no_delay_) )
+    return 0;
+
   return 1;
 }
 
 CORBA::Boolean 
-TAO_TCP_Properties::_tao_decode(TAO_InputCDR &)
+TAO_TCP_Properties::_tao_decode(TAO_InputCDR &in_cdr)
 {
+  if( !(in_cdr >> this->send_buffer_size_) )
+    return 0;
+  
+  if( !(in_cdr >> this->recv_buffer_size_) )
+    return 0;
+
+  
+  
+  if (in_cdr.read_boolean(this->keep_alive_))
+    return 0;
+  
+  if( in_cdr.read_boolean(this->dont_route_) )
+    return 0;
+
+  if( in_cdr.read_boolean(this->no_delay_) )
+    return 0;
+  
+
   return 1;
 }
 
@@ -447,23 +479,67 @@ TAO_ServerProtocolPolicy::destroy (CORBA::Environment &)
 ///////////////////////////////////////////////////////
 // Method for serialization support.
 
-TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy()
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (void)
 {
 
 }
 
 
 CORBA::Boolean 
-TAO_ServerProtocolPolicy::_tao_encode(TAO_OutputCDR &)
+TAO_ServerProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
-  return 1;
+  
+  CORBA::Boolean is_write_ok = out_cdr << protocols_.length();
+    
+  for (CORBA::ULong i = 0; ( i < protocols_.length() ) && is_write_ok; i++)
+    {
+      is_write_ok = out_cdr << protocols_[i].protocol_type;
+      
+      if (is_write_ok)
+        is_write_ok = protocols_[i].orb_protocol_properties->_tao_encode(out_cdr);
+      
+      if (is_write_ok)
+        is_write_ok = protocols_[i].transport_protocol_properties->_tao_encode(out_cdr);
+    }
+  
+  return is_write_ok;
 }
 
 CORBA::Boolean 
-TAO_ServerProtocolPolicy::_tao_decode(TAO_InputCDR &)
+TAO_ServerProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return 1;
+  CORBA::ULong length;
+  CORBA::Boolean is_read_ok = in_cdr >> length;
+  
+  protocols_.length(length);
+  
+ for (CORBA::ULong i = 0; ( i < length ) && is_read_ok; i++)
+   {
+     IOP::ProfileId id;
+     is_read_ok = in_cdr >> id;     
+     
+     protocols_[i].orb_protocol_properties = 
+       TAO_ProtocolPropertiesFactory::create_orb_protocol_property (id);     
+     
+     protocols_[i].transport_protocol_properties =
+       TAO_ProtocolPropertiesFactory::create_orb_protocol_property (id);
+
+     if (is_read_ok)
+       {
+         if (is_read_ok && (protocols_[i].orb_protocol_properties.ptr () == 0))
+           is_read_ok = protocols_[i].orb_protocol_properties->_tao_decode(in_cdr);
+     
+         if (is_read_ok && (protocols_[i].transport_protocol_properties.ptr () == 0))
+           is_read_ok = protocols_[i].transport_protocol_properties->_tao_decode(in_cdr);
+       }
+   }
+
+ return is_read_ok; 
 }
+
+
+
+
 
 // ****************************************************************
 
@@ -523,5 +599,37 @@ TAO_ClientProtocolPolicy::destroy (CORBA::Environment &)
 {
 }
 
+TAO_GIOP_Properties::TAO_GIOP_Properties ( )
+{
+
+}
+
+TAO_GIOP_Properties::~TAO_GIOP_Properties ( )
+{
+
+}
+
+
+RTCORBA::ProtocolProperties*
+TAO_ProtocolPropertiesFactory::create_transport_protocol_property (IOP::ProfileId id)
+{
+ RTCORBA::ProtocolProperties* property = 0;
+
+  if (id == IOP::TAG_INTERNET_IOP)
+    ACE_NEW_RETURN (property, TAO_TCP_Properties, 0);
+
+  return property;
+}
+
+RTCORBA::ProtocolProperties* 
+TAO_ProtocolPropertiesFactory::create_orb_protocol_property (IOP::ProfileId id)
+{
+  RTCORBA::ProtocolProperties* property = 0;
+ 
+  if (id == IOP::TAG_INTERNET_IOP)
+    ACE_NEW_RETURN (property, TAO_GIOP_Properties, 0);
+  
+  return property;
+}
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

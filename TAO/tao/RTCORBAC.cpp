@@ -773,6 +773,22 @@ void *RTCORBA::ProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
   return retv;
 }
 
+//////////////////////////////////////////////////////
+// CDR Encoding Support 
+
+CORBA::Boolean
+RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
+{
+  return 1;
+}
+
+CORBA::Boolean
+RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
+{
+  return 1;
+}
+
+
 const char* RTCORBA::ProtocolProperties::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/ProtocolProperties:1.0";
