@@ -603,7 +603,7 @@ typedef void (*ACE_THR_DEST)(void *);
     // vxWorks.h.
     // Also, be sure that these #includes come _after_ the key_t typedef, and
     // before the #include of time.h.
-#     include "ace/os_inlcude/os_stdarg.h"
+#     include "ace/os_include/os_stdarg.h"
 #   endif /* ghs */
 
 #   include /**/ <vxWorks.h>

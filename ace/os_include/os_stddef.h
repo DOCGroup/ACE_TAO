@@ -29,7 +29,7 @@
 // @todo move this to a windows config file
 // Add new macro ACE_LACKS_STDDEF_H
 #if defined (ACE_HAS_WINCE) && _WIN32_WCE < 400
-#  if !define (ACE_LACKS_STDDEF_H)
+#  if !defined (ACE_LACKS_STDDEF_H)
 #    define ACE_LACKS_STDDEF_H
 #    define ACE_LACKS_PTRDIFF_T
 #  endif /* !ACE_LACKS_STDDEF_H */
