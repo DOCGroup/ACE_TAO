@@ -1,3 +1,9 @@
+Mon Jan  3 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connection_Handler.cpp (open):
+          Added missing space in debug statement to get the same format as
+          used in the other debug messages
+
 Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* orbsvcs/examples/FaultTolerance/RolyPoly: Changed the use of
@@ -7,7 +13,7 @@ Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Sun Jan  2 21:26:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
-        
+
           Moved the location of the check for the preprocessor
           definition of TAO_IDL_INCLUDE_DIR to come after the
           checks for TAO_ROOT and ACE_ROOT. This move changes
