@@ -684,8 +684,15 @@ ACE_OS::uname (struct utsname *name)
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (name);
-  ACE_NOTSUP_RETURN (-1);
+  const unsigned long buflen(64);
+  char buf[buflen];
+  unsigned long len;
+  sys_info(PSOS_VERSION,(void *)buf,buflen,&len);
+  ACE_OS::strcpy (name->sysname, "pSOS");
+  ACE_OS::strcpy (name->release, "???");
+  ACE_OS::strcpy (name->version, buf);
+  ACE_OS::strcpy (name->machine, "PPC 405");  // a bit of a hack
+
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_WIN32 || VXWORKS */
@@ -4670,6 +4677,25 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 {
   return !(*this == rhs);
 }
+
+// All other platforms have this inlined in OS.i
+#if defined (ACE_PSOS)
+char *
+ACE_OS::inet_ntoa (const struct in_addr addr)
+{
+  ACE_TRACE ("ACE_OS::inet_ntoa");
+
+  char *addrstr = new char[17];
+  unsigned long ipaddr = ntohl(addr.s_addr);
+  //printf("Socket address %X, IP address %X.\n",addr.s_addr,ipaddr);
+  sprintf(addrstr, "%d.%d.%d.%d",
+          ((ipaddr & 0xff000000) >> 24) & 0x000000ff,
+          (ipaddr & 0x00ff0000) >> 16,
+          (ipaddr & 0x0000ff00) >> 8,
+          (ipaddr & 0x000000ff));
+  return addrstr;
+}
+#endif /* defined (ACE_PSOS) */
 
 int
 ACE_OS::inet_aton (const ACE_TCHAR *host_name, struct in_addr *addr)
