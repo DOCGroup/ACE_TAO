@@ -178,7 +178,8 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       // Step 3: Generate actual code for the method
       *os << be_nl << "{" << be_idt_nl
           << "this->_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" 
-          << be_nl << be_nl;
+          << be_nl
+          << "ACE_CHECK;" << be_nl << be_nl;
 
       this->marshal_params (node);
 
