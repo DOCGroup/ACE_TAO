@@ -12,6 +12,7 @@ TAO_Naming_Service::TAO_Naming_Service (void)
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
+    base_address_ (TAO_NAMING_BASE_ADDR),
     time_ (0)
 {
 }
@@ -24,6 +25,7 @@ TAO_Naming_Service::TAO_Naming_Service (int argc,
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
+    base_address_ (TAO_NAMING_BASE_ADDR),
     time_ (0)
 {
   this->init (argc, argv);
@@ -33,9 +35,10 @@ int
 TAO_Naming_Service::parse_args (int argc,
                                 char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:p:s:t:f:");
+  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:");
   int c;
-  int size, time;
+  int size, time, result;
+  long address;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -68,6 +71,16 @@ TAO_Naming_Service::parse_args (int argc,
         if (time >= 0)
           this->time_ = time;
         break;
+      case 'b':
+        result = ::sscanf (get_opts.optarg,
+                           "%ld",
+                           &address);
+        if (result == 0 || result == EOF)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to process <-b> option"),
+                            -1);
+        this->base_address_ = (void *) address;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -76,6 +89,7 @@ TAO_Naming_Service::parse_args (int argc,
                            "-o <ior_output_file> "
                            "-p <pid_file_name> "
                            "-f <persistence_file_name> "
+                           "-b <base_address> "
                            "\n",
                            argv [0]),
                           -1);
@@ -170,7 +184,8 @@ TAO_Naming_Service::init (int argc,
                                              context_size_,
                                              0,
                                              0,
-                                             persistence_file_name_);
+                                             persistence_file_name_,
+                                             base_address_);
       if (result == -1)
         return result;
     }

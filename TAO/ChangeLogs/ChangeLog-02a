@@ -1,9 +1,28 @@
+Sat May 27 18:58:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h
+	* orbsvcs/Naming/Naming_Service.h
+	* orbsvcs/Naming/Naming_Service.cpp
+	* orbsvcs/Naming/README
+	* tao/orbconf.h:
+	  Added ways to control the memory address used by TAO's
+	  persistent Naming Service to map its file:
+	  1) "-b" command line option to the Naming Service
+	  2) TAO_NAMING_BASE_ADDR in orbconf.h
+	  Both are described in the README file mentioned above.  Thanks
+	  to Detlef Becker for pointing out the need for control.
+
+	* tao/IOP.pidl:
+	  Updated comment.
+
 Sat May 27 01:07:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/AV_Core.h:
 
           Removed the semicolon after the macro usage, since it was moved
-          into the macro itself.  This should get rid of a unneeded 
+          into the macro itself.  This should get rid of a unneeded
           semicolon warning.
 
 Fri May 26 21:04:38 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
