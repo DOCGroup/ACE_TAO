@@ -296,22 +296,15 @@ Gen_Perf::open (void)
   return 0;
 }
 
-// Does the hard stuff....  Initializes the Bool Array, and attempts
-// to find a perfect function that will hash all the key words without
-// getting any duplications.  This is made much easier since we aren't
-// attempting to generate *minimum* functions, only perfect ones.  If
-// we can't generate a perfect function in one pass *and* the user
-// hasn't enabled the DUP option, we'll inform the user to try the
-// randomization option, use -D, or choose alternative key positions.
-// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
-// exponential in the number of keys.
+int
+Gen_Perf::compute_binary_search (void)
+{
+  return 0;
+}
 
 int
-Gen_Perf::run (void)
+Gen_Perf::compute_perfect_hash (void)
 {
-  if (this->open () == -1)
-    return 1;
-
   List_Node *curr;
 
   for (curr = this->key_list.head; 
@@ -326,7 +319,7 @@ Gen_Perf::run (void)
         if (ptr->hash_value == curr->hash_value)
           {
             if (this->change (ptr, curr) == -1)
-              return 1;
+              return -1;
             break;
           }
       num_done++;
@@ -352,8 +345,38 @@ Gen_Perf::run (void)
                       "\nInternal error, duplicate value %d:\n"
                       "try options -D or -r, or use new key positions.\n\n",
                       this->hash (curr)));
-          return 1;
+          return -1;
         }
+
+  return 0;
+}
+
+// Does the hard stuff....  Initializes the Bool Array, and attempts
+// to find a perfect function that will hash all the key words without
+// getting any duplications.  This is made much easier since we aren't
+// attempting to generate *minimum* functions, only perfect ones.  If
+// we can't generate a perfect function in one pass *and* the user
+// hasn't enabled the DUP option, we'll inform the user to try the
+// randomization option, use -D, or choose alternative key positions.
+// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
+// exponential in the number of keys.
+
+int
+Gen_Perf::run (void)
+{
+  if (this->open () == -1)
+    return 1;
+
+  if (option[BINARYSEARCH])
+    {
+      if (this->compute_binary_search () != 0)
+        return 1;
+    }
+  else
+    {
+      if (this->compute_perfect_hash () != 0)
+        return 1;
+    }
 
   // Sorts the key word list by hash value, and then outputs the list.
   // The generated hash table code is only output if the early stage

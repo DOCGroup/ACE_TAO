@@ -49,6 +49,8 @@ private:
   int open (void);
   int change (List_Node *prior, List_Node *curr);
   int affects_prev (char c, List_Node *curr);
+  int compute_perfect_hash (void);
+  int compute_binary_search (void);
   static int hash (List_Node *key_node);
   static int compute_disjoint_union (char *s1, char *s2, char *s3);
   static void sort_set (char *union_set, int len);
