@@ -89,12 +89,6 @@ private:
   void operator= (const TAO_ObjectKey_var &);
 };
 
-extern TAO_Export int operator== (const TAO_ObjectKey &l,
-                                  const TAO_ObjectKey &r);
-
-extern TAO_Export int operator!= (const TAO_ObjectKey &l,
-                                  const TAO_ObjectKey &r);
-
 #if defined (__ACE_INLINE__)
 #include "tao/Object_KeyC.i"
 #endif /* __ACE_INLINE__ */

@@ -400,3 +400,28 @@ void TAO_Unbounded_Sequence<CORBA::Octet>::_deallocate_buffer (void)
 }
 
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
+
+////////////////////////////////////////////////////////////////////////////////
+
+int
+operator== (const TAO_Unbounded_Sequence<CORBA::Octet> &lhs,
+            const TAO_Unbounded_Sequence<CORBA::Octet> &rhs)
+{
+  if (rhs.length () != lhs.length ())
+    return 0;
+
+  for (CORBA::ULong i = 0;
+       i < rhs.length ();
+       ++i)
+    if (rhs[i] != lhs[i])
+      return 0;
+
+  return 1;
+}
+
+int
+operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &lhs,
+            const TAO_Unbounded_Sequence<CORBA::Octet> &rhs)
+{
+  return !(lhs == rhs);
+}

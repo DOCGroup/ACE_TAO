@@ -49,26 +49,3 @@ CORBA::TypeCode_ptr TAO_tc_ObjectKey = &_tc_TAO_tc_TAO_ObjectKey;
 
 
 // ****************************************************************
-
-int
-operator== (const TAO_ObjectKey &lhs,
-            const TAO_ObjectKey &rhs)
-{
-  if (rhs.length () != lhs.length ())
-    return 0;
-
-  for (CORBA::ULong i = 0;
-       i < rhs.length ();
-       ++i)
-    if (rhs[i] != lhs[i])
-      return 0;
-
-  return 1;
-}
-
-int
-operator!= (const TAO_ObjectKey &lhs,
-            const TAO_ObjectKey &rhs)
-{
-  return !(lhs == rhs);
-}

@@ -110,16 +110,6 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// Comparison of Object Ids. Defined in Stub.cpp for TAO_opaque (an
-// alias of PortableServer::ObjectId).
-extern TAO_Export int operator== (const PortableServer::ObjectId &l,
-                                  const PortableServer::ObjectId &r);
-
-extern TAO_Export int operator!= (const PortableServer::ObjectId &l,
-                                  const PortableServer::ObjectId &r);
-
-////////////////////////////////////////////////////////////////////////////////
-
 #if defined (__ACE_INLINE__)
 # include "tao/Key_Adapters.i"
 #endif /* __ACE_INLINE__ */
