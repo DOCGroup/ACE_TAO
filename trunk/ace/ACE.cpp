@@ -2532,6 +2532,8 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #endif /* !ACE_WIN32 && ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
 #if defined (ACE_WIN32)
+  // Winsock is different - it sets the exception bit for failed connect,
+  // unlike other platforms, where the read bit is set.
   ACE_Handle_Set ex_handles;
   ex_handles.set_bit (h);
 #endif /* ACE_WIN32 */
@@ -2540,7 +2542,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 
 #if defined (ACE_WIN32)
   int n = ACE_OS::select (int (h) + 1,
-                          rd_handles,
+                          0,
                           wr_handles,
                           ex_handles,
                           timeout);
@@ -2572,8 +2574,15 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // ready for writing, which may indicate a problem.  But we need to
   // make sure...
 #if defined (ACE_WIN32)
-  ACE_UNUSED_ARG (is_tli);
-  need_to_check = rd_handles.is_set (h) || ex_handles.is_set (h);
+  if (ex_handles.is_set (h))
+    h = ACE_INVALID_HANDLE;
+  else
+    // There's a funky time window on some Win32 versions (pre-Win2000)
+    // where the socket is marked complete, but operations will still
+    // fail. We need to find if this is one of those and return an error
+    // if so - the caller will then need to decide to ignore it or sleep
+    // and retry (see SOCK_Connector.cpp)
+    need_to_check = 1;
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);
 

@@ -298,9 +298,6 @@ typedef unsigned long long ACE_UINT64;
 
 #define ACE_LACKS_KEY_T
 
-// Platform support for non-blocking connects is broken
-#define ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS
-
 // No system support for replacing any previous mappings.
 #define ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
