@@ -1,20 +1,26 @@
+Sun Nov 14 16:51:28 2004  Martin Corino  <mcorino@remedy.nl>
+
+ 	* tao/PortableServer/Object_Adapter.cpp:
+	  Removed leftover ACE_ENV_ARG_DECL from
+          TAO_Object_Adapter::get_collocated_servant().
+
 Sun Nov 14 05:11:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Utils/RIR_Narrow.cpp: 
+	* tao/Utils/RIR_Narrow.cpp:
 
-	  Fixed a simple compilation error when exceptions are turned off. 
+	  Fixed a simple compilation error when exceptions are turned off.
 
 Sun Nov 14 05:01:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableServer/Object_Adapter.cpp:
 	* tao/PortableServer/Object_Adapter.h:
 
-	  Fix for Bug 1535. Please see 
+	  Fix for Bug 1535. Please see
 
 	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1535
 
 	  for details.
-	
+
 	* tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
 	* tests/Bug_1535_Regression/Test.idl:
 	* tests/Bug_1535_Regression/bug_1535_regression.cpp:
@@ -25,28 +31,28 @@ Sun Nov 14 05:01:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Nov 12 14:51:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-        
+
           Changed behavior of typecode generation for exceptions
           to always be in the *C.cpp file. Since exceptions always
           depend on their typecodes, this gives us an opportunity
           to link the exception's typecode without linking the
-          correspoding Any operators. 
+          correspoding Any operators.
 
 Fri Nov 12 14:15:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
-        
+
           In the generated _this() method for the AMH class, added
           generation of auto pointer for the created stub class, to
           make the code exception safe, similarly to what is done
-          in the corresponding skeleton class. Thanks again to 
+          in the corresponding skeleton class. Thanks again to
           Johnny Willemsen <jwillemsen@remedy.nl> for pointing
           this out.
 
 Fri Nov 12 08:40:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
-        
+
           Added missing ACE_CHECK in generated code for operations
           of the AMH response handler. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for pointing out the oversight.
