@@ -1,3 +1,8 @@
+Sun Nov 09 09:27:24 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Thread_manager.cpp (wait): removed unused local,
+          threads_waited_on.
+
 Sun Nov  9 02:07:02 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.h: Moved the TAO-specific #defines into TAO, where they
