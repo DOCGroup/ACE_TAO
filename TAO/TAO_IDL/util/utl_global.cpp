@@ -102,7 +102,16 @@ IDL_GlobalData::IDL_GlobalData()
       pd_parse_state(PS_NoState),
       pd_idl_src_file (0),
       export_macro_ (0),
-      export_include_ (0)
+      export_include_ (0),
+      client_hdr_ending_ (ACE_OS::strdup ("C.h")),
+      client_stub_ending_ (ACE_OS::strdup ("C.cpp")),
+      client_inline_ending_ (ACE_OS::strdup ("C.i")),
+      server_hdr_ending_ (ACE_OS::strdup ("S.h")),
+      server_template_hdr_ending_ (ACE_OS::strdup ("S_T.h")),
+      server_skeleton_ending_ (ACE_OS::strdup ("S.cpp")),
+      server_template_skeleton_ending_ (ACE_OS::strdup ("S_T.cpp")),
+      server_inline_ending_ (ACE_OS::strdup ("S.i")),
+      server_template_inline_ending_ (ACE_OS::strdup ("S_T.i"))
 {
   // empty
 }
@@ -527,55 +536,64 @@ be_change_idl_file_extension (String* idl_file,
 const char *
 IDL_GlobalData::be_get_client_hdr (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "C.h");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->client_hdr_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_client_stub (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "C.cpp");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->client_stub_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_client_inline (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "C.i");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->client_inline_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_server_hdr (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "S.h");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->server_hdr_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_server_template_hdr (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "S_T.h");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->server_template_hdr_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_server_skeleton (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "S.cpp");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->server_skeleton_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_server_template_skeleton (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "S_T.cpp");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->server_template_skeleton_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_server_inline (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "S.i");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->server_inline_ending ());
 }
 
 const char *
 IDL_GlobalData::be_get_server_template_inline (String *idl_file_name)
 {
-  return be_change_idl_file_extension (idl_file_name, "S_T.i");
+  return be_change_idl_file_extension (idl_file_name,
+                                       idl_global->server_template_inline_ending ());
 }
 
 const char *
@@ -632,24 +650,159 @@ IDL_GlobalData::be_get_server_template_inline_fname ()
   return be_get_server_template_inline (idl_global->idl_src_file ());
 }
 
-const char* IDL_GlobalData::export_macro (void) const
+const char*
+IDL_GlobalData::export_macro (void) const
 {
   if (this->export_macro_ == 0)
     return "";
   return this->export_macro_;
 }
 
-void IDL_GlobalData::export_macro (const char *s)
+void 
+IDL_GlobalData::export_macro (const char *s)
 {
   this->export_macro_ = ACE_OS::strdup (s);
 }
 
-const char* IDL_GlobalData::export_include (void) const
+const char* 
+IDL_GlobalData::export_include (void) const
 {
   return this->export_include_;
 }
 
-void IDL_GlobalData::export_include (const char *s)
+void
+IDL_GlobalData::export_include (const char *s)
 {
   this->export_include_ = ACE_OS::strdup (s);
 }
+
+// Set the client_hdr_ending.   
+void
+IDL_GlobalData::client_hdr_ending (const char* s)
+{
+  delete this->client_hdr_ending_;
+  this->client_hdr_ending_  = ACE_OS::strdup (s);
+}
+
+// Get the client_hdr_ending.
+const char*
+IDL_GlobalData::client_hdr_ending (void) const
+{
+  return this->client_hdr_ending_;
+}
+
+void
+IDL_GlobalData::client_inline_ending  (const char* s)
+{
+  delete this->client_inline_ending_;
+  this->client_inline_ending_  = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::client_inline_ending (void) const
+{
+  return this->client_inline_ending_;
+}
+
+// Set the client_stub_ending.
+void 
+IDL_GlobalData::client_stub_ending (const char* s)
+{
+  delete this->client_stub_ending_;
+  this->client_stub_ending_ = ACE_OS::strdup (s);
+}  
+  
+const char*
+IDL_GlobalData::client_stub_ending (void) const
+{
+  return this->client_stub_ending_;
+}
+
+void 
+IDL_GlobalData::server_hdr_ending (const char* s)
+{
+  delete this->server_hdr_ending_;
+  this->server_hdr_ending_ = ACE_OS::strdup (s);
+}
+
+const char* 
+IDL_GlobalData::server_hdr_ending (void) const
+{
+  return this->server_hdr_ending_;
+}
+
+void 
+IDL_GlobalData::server_template_hdr_ending (const char* s)
+{
+  delete this->server_template_hdr_ending_;
+  this->server_template_hdr_ending_ = ACE_OS::strdup (s);
+}
+  
+const char* 
+IDL_GlobalData::server_template_hdr_ending (void) const
+{
+  return this->server_template_hdr_ending_;
+}
+  
+void 
+IDL_GlobalData::server_skeleton_ending (const char* s) 
+{
+  delete this->server_skeleton_ending_;
+  this->server_skeleton_ending_ = ACE_OS::strdup (s);
+}
+  
+const char* 
+IDL_GlobalData::server_skeleton_ending (void) const
+{
+  return this->server_skeleton_ending_;
+}
+
+void 
+IDL_GlobalData::server_template_skeleton_ending (const char* s)
+{
+  delete this->server_template_skeleton_ending_;
+  this->server_template_skeleton_ending_ = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::server_template_skeleton_ending (void) const
+{
+  return this->server_template_skeleton_ending_;
+}
+  
+void 
+IDL_GlobalData::server_inline_ending (const char* s)
+{
+  delete this->server_inline_ending_;
+  this->server_inline_ending_ = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::server_inline_ending (void) const
+{
+  return this->server_inline_ending_;
+}
+
+void 
+IDL_GlobalData::server_template_inline_ending (const char* s)
+{
+  delete this->server_template_inline_ending_;
+  this->server_template_inline_ending_ = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::server_template_inline_ending (void) const
+{
+  return this->server_template_inline_ending_;
+}
+
+
+
+
+
+
+
+
+
+
+
