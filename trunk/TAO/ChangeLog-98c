@@ -1,3 +1,9 @@
+Thu Mar 26 10:07:02 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* orbsvcs/tests/Simulator/DOVEMIB: Checked in a first draft
+	  of the DOVE Management Information Base (DOVE MIB). A README
+	  will be available with further details.
+
 Thu Mar 26 08:31:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.yy: We were setting the name of a sequence (named
