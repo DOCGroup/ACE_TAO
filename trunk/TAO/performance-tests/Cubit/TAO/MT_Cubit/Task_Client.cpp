@@ -353,8 +353,8 @@ Client::get_high_priority_jitter (void)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  JITTER_ARRAY_ITERATOR iterator (*this->ts_->global_jitter_array_[0]);
-  //    this->ts_->global_jitter_array_[0]->begin (); @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
+  JITTER_ARRAY_ITERATOR iterator  = 
+    this->ts_->global_jitter_array_[0]->begin (); 
 
   // latency in usecs.
   ACE_timer_t *latency = 0;
@@ -412,8 +412,8 @@ Client::get_low_priority_jitter (void)
     {
       ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j])); // ????
 
-      JITTER_ARRAY_ITERATOR iterator ( *this->ts_->global_jitter_array_[j]);
-	//        this->ts_->global_jitter_array_ [j]->begin (); @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
+      JITTER_ARRAY_ITERATOR iterator =
+	this->ts_->global_jitter_array_ [j]->begin (); 
 
       ACE_timer_t number_of_calls =
         this->ts_->count_ [j] / this->ts_->granularity_;
@@ -459,8 +459,8 @@ Client::get_jitter (u_int id)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
 
-  JITTER_ARRAY_ITERATOR iterator ( *this->ts_->global_jitter_array_[id]);
-    //    this->ts_->global_jitter_array_ [id]->begin (); @@ Remove this line until I know whether UnBounded_Queue can have begin(). Sergio. 09/28/98
+  JITTER_ARRAY_ITERATOR iterator =
+    this->ts_->global_jitter_array_ [id]->begin ();
 
   ACE_timer_t number_of_calls =
     this->ts_->count_[id] / this->ts_->granularity_;
@@ -829,7 +829,11 @@ Client::svc (void)
   // Perform the tests.
   result = this->run_tests ();
   if (result != 0)
-    return result;
+    {
+      ACE_ERROR ((LM_ERROR, "(%t) Error occurred in run_test ()\n"));
+      return result;
+    }
+
   // release the semaphore
   if (this->ts_->thread_per_rate_ == 1
       && this->id_ == this->ts_->thread_count_ - 1)
@@ -855,6 +859,7 @@ Client::svc (void)
       TAO_TRY_ENV.print_exception ("shutdown() call failed.\n");
     }
   TAO_ENDTRY;
+
   // Delete dynamic memory
   CORBA::release (this->cubit_);
   return 0;
@@ -1186,7 +1191,7 @@ Client::do_test (void)
         }
       this->num_ = i;
       // make a request to the server object depending on the datatype.
-      int result = this->make_request ();
+      result = this->make_request ();
       if (result != 0)
         return 2;
 
