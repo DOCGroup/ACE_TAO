@@ -41,6 +41,12 @@ namespace CORBA
   class Object;
   typedef Object *Object_ptr;
 
+  class OperationDef;
+  typedef OperationDef *OperationDef_ptr;
+
+  class NVList;
+  typedef NVList *NVList_ptr;
+
   class Environment;
 };
 
@@ -82,6 +88,13 @@ public:
       CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     ) = 0;
+
+  virtual void create_operation_list (
+               CORBA::ORB_ptr orb,
+               CORBA::OperationDef_ptr,
+               CORBA::NVList_ptr&
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS
+             ) = 0;
 };
 
 #include /**/ "ace/post.h"

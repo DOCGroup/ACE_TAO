@@ -1,0 +1,7 @@
+project(Bug_1334_client) : namingexe {
+  exename  = client
+  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs $(TAO_ROOT)/tao/IORTable $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/Valuetype $(TAO_ROOT)/tao/ObjRefTemplate $(ACE_ROOT)/ace $(TAO_ROOT)/tao
+  Source_Files {
+    client.cpp
+  }
+}

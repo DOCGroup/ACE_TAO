@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
+#include "tao/NVList.h"
 
 ACE_RCSID (IFR_Client,
            IFR_Client_Adapter_Impl,
@@ -137,6 +138,77 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
   ACE_ENDTRY;
 
   return _tao_retval.retn ();
+}
+
+void
+TAO_IFR_Client_Adapter_Impl::create_operation_list (
+    CORBA::ORB_ptr orb,
+    CORBA::OperationDef_ptr opDef,
+    CORBA::NVList_ptr& result
+    ACE_ENV_ARG_DECL
+  )
+{
+   // Create an empty NVList.
+   //
+   orb->create_list (0, result);
+
+   // Get the parameters (if any) from the OperationDef, and for each
+   // parameter add a corresponding entry to the result.
+   //
+   CORBA::ParDescriptionSeq* params = opDef->params();
+   CORBA::ULong paramCount = params->length();
+   if (paramCount > 0)
+   {
+      for (CORBA::ULong i = 0; i < paramCount; i++)
+      {
+         CORBA::ParameterDescription* param = &((*params)[i]);
+
+         // Get name.
+         //
+         char* name = CORBA::string_dup (param->name);
+
+         // Create an any using the parameter's TypeCode.
+         //
+         CORBA::Any* value;
+         ACE_NEW_THROW_EX (value,
+                           CORBA::Any (),
+                           CORBA::NO_MEMORY (
+                           CORBA::SystemException::_tao_minor_code (
+                               TAO_DEFAULT_MINOR_CODE,
+                               ENOMEM),
+                              CORBA::COMPLETED_NO));
+         ACE_CHECK;
+
+         value->_tao_set_typecode ((param->type).in());
+
+         // Get mode.
+         //
+         CORBA::Flags flags;
+         switch (param->mode)
+         {
+         case CORBA::PARAM_IN:
+            flags = CORBA::ARG_IN;
+            break;
+         case CORBA::PARAM_OUT:
+            flags = CORBA::ARG_OUT;
+            break;
+         case CORBA::PARAM_INOUT:
+            flags = CORBA::ARG_INOUT;
+            break;
+         default:
+            // Shouldn't happen.
+            //
+            ACE_THROW (CORBA::INTERNAL());
+            break;
+         }
+
+         // Add an argument to the result list. The list takes ownership
+         // of name and value.
+         //
+         result->add_value_consume (name, value, flags);
+      }
+   }
+
 }
 
 // *********************************************************************

@@ -113,13 +113,13 @@ main (int argc, char *argv[])
       int ntoks = 0;
       char *toks[20];
       while ((cp = ACE_OS::strtok (bp, "/")) != 0)
-	{
+        {
           toks[ntoks] = cp;
           ntoks++;
           if (cp == 0)
             break;
           bp = 0; // way strtok works
-	}
+        }
 
       // now assign name = toks[ntoks]
       char lastname[BUFSIZ];
@@ -127,11 +127,31 @@ main (int argc, char *argv[])
       // search for '.' in name; if exists then the part after '.' is the kind
       char *kind = ACE_OS::strchr (lastname, '.');
       if (kind != 0)
-	{
+        {
           *kind = 0;
           kind++;
-	}
-          
+        }
+
+      // Create any necessary subcontexts.
+      for (CORBA::Long subs = 1; subs < ntoks; subs++)
+      {
+        ACE_TRY_EX(inner)
+        {
+          CosNaming::Name the_context (subs);
+          the_context.length (subs);
+          for (CORBA::Long i=0; i<subs; i++)
+          {
+            the_context[i].id = CORBA::string_dup (toks[i]);
+          }
+          root_nc->bind_new_context(the_context);
+          ACE_TRY_CHECK_EX(inner);
+        }
+        ACE_CATCHANY
+        {
+        }
+        ACE_ENDTRY;
+      }
+
       ACE_TRY_CHECK;
       CosNaming::Name the_name (ntoks);
       the_name.length (ntoks);

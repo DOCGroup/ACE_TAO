@@ -45,6 +45,9 @@ public:
 
   virtual int visit_scope (UTL_Scope *node);
   // Visit the scope.
+
+  virtual int visit_root (AST_Root *node);
+  // Visit the root.
 };
 
 #endif /* TAO_IFR_REMOVING_VISITOR_H */
