@@ -156,7 +156,7 @@ ACE_Overlapped_IO::operator ACE_OVERLAPPED * (void)
 }
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
-  : completion_port_ (ACE_INVALID_HANDLE),
+  : completion_port_ (0), // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
     number_of_threads_ (number_of_threads),
     timer_queue_ (tq)
 {
@@ -176,7 +176,7 @@ ACE_Proactor::~ACE_Proactor (void)
 int
 ACE_Proactor::close (void)
 {
-  if (this->completion_port_ != ACE_INVALID_HANDLE)
+  if (this->completion_port_ != 0)
     ACE_OS::close (this->completion_port_);
 
   // @@ Should we call shared_event_.remove ()?
@@ -189,10 +189,6 @@ ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
   ACE_TRACE ("ACE_Proactor::handle_signal");
 
   ACE_Time_Value timeout (0, 0);
-
-  // Reset the handle to a non-signaled state.
-  if (shared_event_.reset () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "ResetEvent failed.\n"), -1);
 
   // Perform a non-blocking "poll" for all the I/O events that have
   // completed in the I/O completion queue.
@@ -240,36 +236,24 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   ACE_HANDLE io_handle = ACE_INVALID_HANDLE;
   int timeout = how_long == 0 ? INFINITE : how_long->msec ();
 
-  // If completion_port_ is not set, then we can't wait in
-  // GetQueueCompletionStatus.  This approach is a total hack; there
-  // should be a better way.  The drawback to this sleep is that
-  // there's no way to wake up the sleep to register new events.
-  if (completion_port_ == ACE_INVALID_HANDLE)
-    {
-      ACE_OS::sleep (timeout);
-      error = ACE_TIMEOUT_OCCURRED;
-    }
-  else
-    {
-      // When we port this to use Posix async I/O, this call will be
-      // replace will a generic ACE_OS call.
-      BOOL result;
+  // When we port this to use Posix async I/O, this call will be
+  // replace will a generic ACE_OS call.
+  BOOL result;
  
-      result = ::GetQueuedCompletionStatus (completion_port_,
-					    &bytes_transferred,
-					    (u_long *) &io_handle,
-					    (ACE_OVERLAPPED **) &overlapped,
-					    timeout);
+  result = ::GetQueuedCompletionStatus (completion_port_,
+					&bytes_transferred,
+					(u_long *) &io_handle,
+					(ACE_OVERLAPPED **) &overlapped,
+					timeout);
 
-      // Check for a failed dequeue.  This can happen either because
-      // of problems with the IO completion port (in which case
-      // overlapped == 0) or due to problems with the completion
-      // operation (in which case overlapped != 0).  In either case,
-      // we'll stash the error value so that we can update errno
-      // appropriate later on.
-      if (result == FALSE)
-	error = ::GetLastError ();
-    }
+  // Check for a failed dequeue.  This can happen either because
+  // of problems with the IO completion port (in which case
+  // overlapped == 0) or due to problems with the completion
+  // operation (in which case overlapped != 0).  In either case,
+  // we'll stash the error value so that we can update errno
+  // appropriate later on.
+  if (result == FALSE)
+    error = ::GetLastError ();
 
   // Check for any timers that can be handled before we dispatch the
   // dequeued event.  Note that this is done irrespective of whether
