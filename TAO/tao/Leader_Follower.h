@@ -159,7 +159,7 @@ public:
   ACE_Reactor *reactor (void);
 
   /// Called when we are out of leaders.
-  virtual void no_leaders_available (void);
+  void no_leaders_available (void);
 
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
