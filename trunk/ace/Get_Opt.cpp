@@ -89,22 +89,21 @@ ACE_Get_Opt::operator () (void)
   if (this->nextchar_ == 0 || *this->nextchar_ == '\0')
     { 
       // Update scanning pointer.
-
-      if (this->optind >= this->argc_ 
-	  || *(this->nextchar_ = this->argv_[this->optind]) != '-') 
-	{
-	  this->nextchar_ = ASYS_TEXT ("");
-	  return EOF;
-	}
-
-      if (this->nextchar_[1] != 0
-	  && *++this->nextchar_ == '-') 
-	{	
-	  // Found "--".
+ 
+      if (this->optind >= this->argc_)
+ 	{
+ 	  this->nextchar_ = ASYS_TEXT ("");
+ 	  return EOF;
+ 	}
+ 
+      // skip non-options and "--"
+      if ((*(this->nextchar_ = this->argv_[this->optind]) != '-')
+          || (this->nextchar_[1] != 0 && *++this->nextchar_ == '-'))
+ 	{	
 	  ++this->optind;
-	  this->nextchar_ = ASYS_TEXT ("");
-	  return EOF;
-	}
+ 	  this->nextchar_ = ASYS_TEXT ("");
+ 	  return '?';
+ 	}
     }			
 
   // Option letter okay? 

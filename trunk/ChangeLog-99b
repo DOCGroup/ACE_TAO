@@ -1,3 +1,15 @@
+Thu Mar 11 20:11:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Get_Opt.cpp (operator): When the getopt encountered an
+ 	  unknown option or an option with a missing required argument, it
+ 	  returned '?' and continues to allow processing with the next
+ 	  argument (no problem so far).  However, if it encountered an
+ 	  argument that is not an option (i.e. no '-' in front) or if it
+ 	  encounters a double dash (i.e. '--') it returns EOF which
+ 	  disallows further processing.  Now, it returns a '?'  after
+ 	  advancing optind to allow further processing.  Thanks to Mark
+ 	  Laffoon <mark.laffoon@centraxcorp.com> for reporting this.
+
 Thu Mar 11 15:34:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.cpp: removed unnecessary #includes of ace/IPC_SAP.h,
