@@ -85,7 +85,7 @@ close EGREP;
 if ($#output > -1) {
 
   if ("$mail_recipients") {
-    open (MAIL, "| $mail -s 'ACE+TAO build results' $mail_recipients")  ||
+    open (MAIL, "| $mail $mail_recipients")  ||
       die "$0: unable to open pipe to $mail\n";
     select MAIL;
   }
