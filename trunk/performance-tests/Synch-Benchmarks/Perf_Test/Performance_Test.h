@@ -1,12 +1,15 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #ifndef ACE_PERFORMANCE_TEST_H
 #define ACE_PERFORMANCE_TEST_H
 
-#include "Synch_Lib/Benchmark_Base.h"
+#include "ace/svc_export.h"
 
 #if defined (ACE_HAS_THREADS)
+
+#include "Synch_Lib/Benchmark_Base.h"
 
 class ACE_Svc_Export Performance_Test : public Benchmark_Method_Base
 {
