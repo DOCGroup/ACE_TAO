@@ -119,6 +119,16 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "Reliable Oneways Client - Win32 Release"
 
+USERDEP__TEST_="..\..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
+InputPath=.\test.idl
+InputName=test
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	tao_idl -Ge 1 $(InputName).idl
+
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "Reliable Oneways Client - Win32 Debug"
 
 USERDEP__TEST_="..\..\..\..\..\bin\tao_idl.exe"	
