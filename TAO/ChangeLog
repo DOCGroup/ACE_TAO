@@ -1,3 +1,8 @@
+Fri Dec 10 09:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Fixed wrong reference between parts of this document
+
 Fri Dec 10 08:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao_targets.GNU:
