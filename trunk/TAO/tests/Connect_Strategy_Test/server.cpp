@@ -3,7 +3,7 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Hello,
+ACE_RCSID (Connect_Strategy_Test,
            server,
            "$Id$")
 
