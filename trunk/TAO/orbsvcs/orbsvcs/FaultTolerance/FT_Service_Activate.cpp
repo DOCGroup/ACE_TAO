@@ -21,7 +21,6 @@ TAO_FT_Service_Activate::init (int /*argc*/,
 {
   ACE_UNUSED_ARG (argv);
 
-  cout << "Did we get here " <<endl;
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
@@ -45,7 +44,6 @@ TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
 {
   TAO_FT_Service_Callbacks *ft_service_callback = 0;
 
-  cout << "Did we get here 1" <<endl;
   // Construct service callback object
   ACE_NEW_RETURN (ft_service_callback,
                   TAO_FT_Service_Callbacks (orb_core),
