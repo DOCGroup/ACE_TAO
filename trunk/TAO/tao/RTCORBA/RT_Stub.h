@@ -114,11 +114,11 @@ private:
   // parse the MProfile's policy list each time we
   // are asked about a given policy.
 
-  CORBA::Policy *priority_model_policy_;
+  CORBA::Policy_var priority_model_policy_;
 
-  CORBA::Policy *priority_banded_connection_policy_;
+  CORBA::Policy_var priority_banded_connection_policy_;
 
-  CORBA::Policy *client_protocol_policy_;
+  CORBA::Policy_var client_protocol_policy_;
 
   CORBA::Boolean are_policies_parsed_;
 
