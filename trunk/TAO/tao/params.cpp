@@ -9,6 +9,8 @@
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : name_service_ior_ (0),
     name_service_port_ (0),
+    trading_service_ior_ (0),
+    trading_service_port_ (0),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     cdr_memcpy_tradeoff_ (TAO_DEFAULT_CDR_MEMCPY_TRADEOFF)
