@@ -3926,7 +3926,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 {
   // ACE_TRACE ("ACE_OS::thr_cancel");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_STHREADS))
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cancel (thr_id), 
 				       ace_result_), 
 		     int, -1);
