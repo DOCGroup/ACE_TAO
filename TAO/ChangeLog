@@ -1,3 +1,8 @@
+Mon Dec 29 17:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/Messaging/Twoway_Asynch_Invocation.{h,cpp,i}:
+	  Removed these files from the repo, they are not needed.
+
 Mon Dec 29 11:44:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTPortableServer/diffs/RTPortableServer.diff:
@@ -9,7 +14,7 @@ Mon Dec 29 11:44:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/RTPortableServer/diffs/RTPortableServerC.cpp.diff:
 	* tao/RTPortableServer/diffs/RTPortableServerC.i.diff:
 
-	  Consolidated all the diffs into a single file. 
+	  Consolidated all the diffs into a single file.
 
 Mon Dec 29 11:35:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -18,25 +23,25 @@ Mon Dec 29 11:35:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/RTPortableServer/RTPortableServerC.h:
 	* tao/RTPortableServer/RTPortableServerC.i:
 
-	  Regenerated the code and improved comments in the pidl file. 
+	  Regenerated the code and improved comments in the pidl file.
 
 	* tao/RTPortableServer/RTPortableServerA.cpp:
 	* tao/RTPortableServer/RTPortableServerA.h:
 
-	  Moved the Any's to a new file. 
+	  Moved the Any's to a new file.
 
 	* tao/RTPortableServer/Makefile.bor:
 	* tao/RTPortableServer/Makefile:
 
 	  Added the new file generated for Any's into the Makefiles for
 	  our daily builds.
-	  
+
 	* tao/RTScheduling/RTSchedulerC.cpp:
 	* tao/RTScheduling/RTSchedulerC.h:
 	* tao/RTScheduling/RTSchedulerC.i:
 
 	  Code regeneration here again.
-	
+
 Mon Dec 29 11:15:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1670_Regression/Makefile:
@@ -50,7 +55,7 @@ Mon Dec 29 11:15:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Regression test for Bug 1670 which  was also fixed long
 	  back. Thanks to Carlos O'Ryan for providing this test.
-	
+
 	* tests/Makefile:
 	* tests/Makefile.bor:
 
@@ -62,7 +67,7 @@ Mon Dec 29 11:02:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Bug_1568_Regression/client.bor:
 	* tests/Bug_1568_Regression/server.bor:
 	* tests/Makefile.bor:
-	
+
 	  Updated borland files.
 
 Mon Dec 29 10:52:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -107,7 +112,7 @@ Mon Dec 29 15:10:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
           Fixed Synch[_T].h fuzz errors by removing #include Synch[_T].h
           and refactoring includes.
-        
+
         * tao/Messaging/Asynch_Invocation.cpp:
           Fixed explicit template instatiation to use
           TAO::Utils::Auto_Functor<> instead of auto_ptr<>.
