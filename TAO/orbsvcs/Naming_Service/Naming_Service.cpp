@@ -21,6 +21,7 @@
 // Default Constructor.
 
 Naming_Service::Naming_Service (void)
+  :ior_output_file_ (0)
 {
 }
 
@@ -28,26 +29,69 @@ Naming_Service::Naming_Service (void)
 
 Naming_Service::Naming_Service (int argc,
 				char** argv)
+  :ior_output_file_ (0)
 {
    this->init (argc,argv);
 }
 
-// Initialize the state of the Naming_Service object
+int
+Naming_Service::parse_args (int argc,
+                            char **argv)
+{
+  ACE_Get_Opt get_opts (argc,argv,"o:");
+  int c;
 
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'o': // outputs the naming service ior to a file.
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        if (this->ior_output_file_ == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " [-d]"
+                           " [-n] <num of cubit objects>"
+                           " [-o] <ior_output_file>"
+                           " [-s]"
+                           "\n",
+                           argv [0]),
+                          -1);
+        break;
+      }
+  return 0;
+}
+
+// Initialize the state of the Naming_Service object
 int
 Naming_Service::init (int argc,
 		      char** argv)
 {
+  int result;
+  CORBA::ORB_var orb;
+  PortableServer::POA_var child_poa;
+
   TAO_TRY
     {
-      this->init_child_poa (argc,
-			    argv,
-			    "child_poa",
-			    TAO_TRY_ENV);
+      this->orb_manager_.init_child_poa (argc,
+                                     argv,
+                                     "child_poa",
+                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      this->my_naming_server_.init (this->orb_,
-				    this->child_poa_);
+      orb = this->orb_manager_.orb ();
+      child_poa = this->orb_manager_.child_poa ();
+      
+      result = this->my_naming_server_.init (orb,
+                                             child_poa);
+      TAO_CHECK_ENV;
+      if (result < 0)
+        return result;
     }
   TAO_CATCHANY
     {
@@ -55,6 +99,22 @@ Naming_Service::init (int argc,
       return -1;
     }
   TAO_ENDTRY;
+
+  // Check the non-ORB arguments.
+  result = this->parse_args (argc,
+                             argv);
+
+  if (result < 0)
+    return result;
+  if (this->ior_output_file_ != 0) 
+    {
+      CORBA::String_var str =
+        this->my_naming_server_.naming_service_ior ();
+      ACE_OS::fprintf (this->ior_output_file_,
+                       "%s",
+                       str.in ());
+      ACE_OS::fclose (this->ior_output_file_);
+    }
   return 0;
 }
 
@@ -63,7 +123,7 @@ Naming_Service::init (int argc,
 int
 Naming_Service::run (CORBA_Environment& env)
 {
-  return TAO_ORB_Manager::run (env);
+  return this->orb_manager_.run (env);
 }
 
 // Destructor.
