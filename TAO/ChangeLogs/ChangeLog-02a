@@ -1,3 +1,9 @@
+Fri Jun 22 07:06:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
+	  dependencies.  
+
 Fri Jun 22 08:14:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/RTCorba/*.bor
