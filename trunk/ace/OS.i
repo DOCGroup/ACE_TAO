@@ -8147,9 +8147,15 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
 # elif defined (ACE_WIN32)
+#   if !defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
-                                          ASYS_ONLY_MULTIBYTE_STRING (symbolname)),
+                                          symbolname),
                         void *, 0);
+#   else  /* ACE_HAS_WINCE */
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
+                                          ACE_WIDE_STRING (symbolname)),
+                        void *, 0);
+#   endif /* ACE_HAS_WINCE */
 # elif defined (__hpux)
 
   void *value;
