@@ -66,19 +66,36 @@ public:
   // The parameter <base_name_only> set to 0 (no base name, but full
   // name with output dir path, is useful, when I just want just the
   // base name to use in #include's etc.
-  static const char  *be_get_client_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_client_stub_fname (void);
-  static const char  *be_get_client_inline_fname (int base_name_only = 0);
-  static const char  *be_get_server_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_implementation_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_implementation_skel_fname (int base_name_only = 0);
-  static const char  *be_get_server_template_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_server_skeleton_fname (void);
-  static const char  *be_get_implementation_skeleton_fname (void);
-  //  static const char  *be_get_implementation_hdr_fname (void);
-  static const char  *be_get_server_template_skeleton_fname (int base_name_only = 0);
-  static const char  *be_get_server_inline_fname (int base_name_only = 0);
-  static const char  *be_get_server_template_inline_fname (int base_name_only = 0);
+  static const char *be_get_client_hdr_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_client_stub_fname (void);
+  static const char *be_get_client_inline_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_server_hdr_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_implementation_hdr_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_implementation_skel_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_server_template_hdr_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_server_skeleton_fname (void);
+  static const char *be_get_implementation_skeleton_fname (void);
+  static const char *be_get_server_template_skeleton_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_server_inline_fname (
+      int base_name_only = 0
+    );
+  static const char *be_get_server_template_inline_fname (
+      int base_name_only = 0
+    );
 
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
@@ -99,247 +116,255 @@ public:
   static const char *be_get_server_template_hdr (UTL_String *idl_file_name,
                                                  int base_name_only = 0);
   static const char *be_get_server_skeleton (UTL_String *idl_file_name);
-  static const char *be_get_server_template_skeleton (UTL_String *idl_file_name,
-                                                      int base_name_only = 0);
+  static const char *be_get_server_template_skeleton (
+      UTL_String *idl_file_name,
+      int base_name_only = 0
+    );
   static const char *be_get_server_inline (UTL_String *idl_file_name,
                                            int base_name_only = 0);
   static const char *be_get_server_template_inline (UTL_String *idl_file_name,
                                                     int base_name_only = 0);
 
-  virtual const char* skel_export_macro (void) const;
+  const char* skel_export_macro (void) const;
   // returns the macro name for exporting server side classes in Win32
   // DLL.
 
-  virtual void skel_export_macro (const char* s);
+  void skel_export_macro (const char* s);
   // set the macro name for export server side classes in Win32 DLL.
 
-  virtual const char* skel_export_include (void) const;
+  const char* skel_export_include (void) const;
   // returns the name of the include file that contains the server
   // side export macro definition.
 
-  virtual void skel_export_include (const char* s);
+  void skel_export_include (const char* s);
   // set the name of the include file that contains the server side
   // export macro definition.
 
-  virtual const char* stub_export_macro (void) const;
+  const char* stub_export_macro (void) const;
   // returns the macro name for exporting client side classes in Win32
   // DLL.
 
-  virtual void stub_export_macro (const char* s);
+  void stub_export_macro (const char* s);
   // set the macro name for export client side classes in Win32 DLL.
 
-  virtual const char* stub_export_include (void) const;
+  const char* stub_export_include (void) const;
   // returns the name of the include file that contains the client
   // side export macro definition.
 
-  virtual void stub_export_include (const char* s);
+  void stub_export_include (const char* s);
   // set the name of the include file that contains the client side
   // export macro definition.
 
-  virtual const char* pch_include (void) const;
+  const char* pch_include (void) const;
   // returns the name of the include file to be used for precompiled
   // header support.
 
-  virtual void pch_include (const char* s);
+  void pch_include (const char* s);
   // set the name of the include file to be used for precompiled
   // header support.
 
-  virtual const char* pre_include (void) const;
+  const char* pre_include (void) const;
   // returns the name of the include file to be put at the top of
   // every header file.
 
-  virtual void pre_include (const char* s);
+  void pre_include (const char* s);
   // set the name of the include file to be put at the top of every
   // header file.
 
-  virtual const char* post_include (void) const;
+  const char* post_include (void) const;
   // returns the name of the include file to be put at the bottom of
   // every header file.
 
-  virtual void post_include (const char* s);
+  void post_include (const char* s);
   // set the name of the include file to be put at the bottom of every
   // header file.
 
   // = Set and get methods for different file name endings.
 
-  virtual void client_hdr_ending (const char* s);
+  void client_hdr_ending (const char* s);
   // Set the client_hdr_ending.
 
-  virtual const char* client_hdr_ending (void) const;
+  const char* client_hdr_ending (void) const;
   // Get the client_hdr_ending.
 
-  virtual void client_inline_ending (const char* s);
+  void client_inline_ending (const char* s);
   // Set the client_inline_ending.
 
-  virtual const char* client_inline_ending (void) const;
+  const char* client_inline_ending (void) const;
   // Get the client_inline_ending.
 
-  virtual void  client_stub_ending (const char* s);
+  void  client_stub_ending (const char* s);
   // Set the client_stub_ending.
 
-  virtual const char* client_stub_ending (void) const;
+  const char* client_stub_ending (void) const;
   // Get the client_stub_ending.
 
-  virtual void server_hdr_ending (const char* s);
+  void server_hdr_ending (const char* s);
   // Set the server_hdr_ending.
 
-  virtual const char* server_hdr_ending (void) const;
+  const char* server_hdr_ending (void) const;
   // Get the server_hdr_ending.
 
-  virtual void implementation_hdr_ending (const char* s);
+  void implementation_hdr_ending (const char* s);
   // Set the implementation_hdr_ending.
 
-  virtual void impl_class_prefix (const char* s);
+  void impl_class_prefix (const char* s);
   // Set the implementation class prefix.
 
-  virtual void impl_class_suffix (const char* s);
+  void impl_class_suffix (const char* s);
   // Set the implementation class suffix.
 
-  virtual void implementation_skel_ending (const char* s);
+  void implementation_skel_ending (const char* s);
   // Set the implementation_skel_ending.
 
-  virtual const char* implementation_hdr_ending (void) const;
+  const char* implementation_hdr_ending (void) const;
   // Get the implementation_hdr_ending.
 
-  virtual const char* impl_class_prefix (void) const;
+  const char* impl_class_prefix (void) const;
   //Get implementation class prefix
 
-  virtual const char* impl_class_suffix (void) const;
+  const char* impl_class_suffix (void) const;
   //Get implementation class suffix
 
-  virtual const char* implementation_skel_ending (void) const;
+  const char* implementation_skel_ending (void) const;
   // Get the implementation_skel_ending.
 
-  virtual void server_template_hdr_ending (const char* s);
+  void server_template_hdr_ending (const char* s);
   // Set the server_template_hdr_ending.
 
-  virtual const char* server_template_hdr_ending (void) const;
+  const char* server_template_hdr_ending (void) const;
   // Get the server_template_hdr_ending.
 
-  virtual void server_skeleton_ending (const char* s);
+  void server_skeleton_ending (const char* s);
   // Set the server_skeleton_ending.
 
-  virtual const char* server_skeleton_ending (void) const;
+  const char* server_skeleton_ending (void) const;
   // Get the server_skeleton_ending.
 
-  virtual void server_template_skeleton_ending (const char* s);
+  void server_template_skeleton_ending (const char* s);
   // Set the server_template_skeleton_ending.
 
-  virtual const char* server_template_skeleton_ending (void) const;
+  const char* server_template_skeleton_ending (void) const;
   // Get the server_template_skeleton_ending.
 
-  virtual void server_inline_ending (const char* s);
+  void server_inline_ending (const char* s);
   // Set the server_inline_ending.
 
-  virtual const char* server_inline_ending (void) const;
+  const char* server_inline_ending (void) const;
   // Get the server_inline_ending.
 
-  virtual void server_template_inline_ending (const char* s);
+  void server_template_inline_ending (const char* s);
   //  Set the server_template_inline_ending.
 
-  virtual const char* server_template_inline_ending (void) const;
+  const char* server_template_inline_ending (void) const;
   // Get the server_template_inline_ending.
 
-  virtual void output_dir (const char* s);
+  void output_dir (const char* s);
   // Set the directory where all the IDL-Compiler-Generated files are
   // to be kept. Default  is current directory from which the
   // <tao_idl> is called.
 
-  virtual const char* output_dir (void) const;
+  const char* output_dir (void) const;
   // Get the directory where all the IDL-Compiler-Generated files are
   // to be kept. Default  is current directory from which the
   // <tao_idl> is called.
 
-  virtual void any_support (idl_bool);
+  void any_support (idl_bool);
   // Set any support.
 
-  virtual idl_bool any_support (void);
+  idl_bool any_support (void) const;
   // Check Any support.
 
-  virtual void tc_support (idl_bool);
+  void tc_support (idl_bool);
   // Set TypeCode support.
 
-  virtual idl_bool tc_support (void);
+  idl_bool tc_support (void) const;
   // Check TypeCode support
 
-  virtual void obv_opt_accessor (idl_bool);
+  void obv_opt_accessor (idl_bool);
   // Set optimized valuetype member accessor generation.
 
-  virtual idl_bool obv_opt_accessor (void);
+  idl_bool obv_opt_accessor (void) const;
   // Check optimized valuetype member accessor generation.
 
-  virtual void gen_impl_files (idl_bool);
+  void gen_impl_files (idl_bool);
   // Set generation of implementation files.
 
-  virtual idl_bool gen_impl_files (void);
+  idl_bool gen_impl_files (void) const;
   // Check if we want to generate implementation files.
 
-  virtual void gen_copy_ctor (idl_bool);
+  void gen_copy_ctor (idl_bool);
   // Set generation of copy constructor.
 
-  virtual idl_bool gen_copy_ctor (void);
+  idl_bool gen_copy_ctor (void) const;
   // Check if we want to generate the copy constructor.
 
-  virtual void gen_assign_op (idl_bool);
+  void gen_assign_op (idl_bool);
   // Set the generation of the assignment operator.
 
-  virtual idl_bool gen_assign_op (void);
+  idl_bool gen_assign_op (void) const;
   // Check if we want to generate the assignment operator.
 
-  virtual void gen_thru_poa_collocation (idl_bool);
+  void gen_thru_poa_collocation (idl_bool);
   // Set whether we want to generate Thru_POA collocation stubs.
 
-  virtual idl_bool gen_thru_poa_collocation (void);
+  idl_bool gen_thru_poa_collocation (void) const;
   // Check if we want to generate Thru_POA collocation stubs.
 
-  virtual void gen_direct_collocation (idl_bool);
+  void gen_direct_collocation (idl_bool);
   // Set whether we want to generate Direct collocation stubs.
 
-  virtual idl_bool gen_direct_collocation (void);
+  idl_bool gen_direct_collocation (void) const;
   // Check if we want to generate Direct collocation stubs.
 
-  virtual void exception_support (idl_bool);
+  void exception_support (idl_bool);
   // Set real C++ exception support.
 
-  virtual idl_bool exception_support (void);
+  idl_bool exception_support (void) const;
   // Check if real C++ exception support is enabled.
 
-  virtual void use_raw_throw (idl_bool);
+  void use_raw_throw (idl_bool);
   // Set replacement of 'ACE_THROW_SPEC' with 'throw'.
 
-  virtual idl_bool use_raw_throw (void);
+  idl_bool use_raw_throw (void) const;
   // Check if raw 'throw' generation option is set.
 
-  virtual void opt_tc (idl_bool);
+  void opt_tc (idl_bool);
   // Set optimized typecodes.
 
-  virtual idl_bool opt_tc (void);
+  idl_bool opt_tc (void) const;
   // Check if TypeCodes are optimized.
 
-  virtual void ami_call_back (idl_bool value);
+  void ami_call_back (idl_bool value);
   // To enable or disable AMI call back feature of the Messaging
   // specification in the generated code.
 
-  virtual idl_bool ami_call_back (void);
+  idl_bool ami_call_back (void) const;
   // Return the flag.
 
-  virtual void gen_amh_classes (idl_bool value);
+  void gen_amh_classes (idl_bool value);
   // To enable or disable AMH in the generated code.
 
-  virtual idl_bool gen_amh_classes (void);
+  idl_bool gen_amh_classes (void) const;
   // Return the flag.
 
-  virtual void gen_tie_classes (idl_bool value);
+  void gen_tie_classes (idl_bool value);
   // Set the generation of tie classes and files.
 
-  virtual idl_bool gen_tie_classes (void);
+  idl_bool gen_tie_classes (void) const;
   // Return the flag.
 
-  virtual void gen_smart_proxies (idl_bool value);
+  void gen_smart_proxies (idl_bool value);
   // To enable or disable AMI call back feature of the Messaging
   // specification in the generated code.
 
-  virtual idl_bool gen_smart_proxies (void);
+  idl_bool gen_smart_proxies (void) const;
+  // Return the flag.
+
+  void gen_inline_constants (idl_bool value);
+  // Set the flag.
+
+  idl_bool gen_inline_constants (void) const;
   // Return the flag.
 
   void lookup_strategy (LOOKUP_STRATEGY s);
@@ -349,7 +374,7 @@ public:
   // Return the enumerated value for the lookup strategy. Default is
   // perfect hashing.
 
-  virtual void destroy (void);
+  void destroy (void);
   // Cleanup function.
 
   ACE_Unbounded_Queue<be_interface *> non_local_interfaces;
@@ -469,6 +494,10 @@ private:
   idl_bool gen_smart_proxies_;
   // Flag to indicate whether smart proxies classes will be generated
   // or not.
+
+  idl_bool gen_inline_constants_;
+  // Flag to indicate whether we are using an inline form of constant
+  // generation that pleases the C++ compiler better on some platforms.
 
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.

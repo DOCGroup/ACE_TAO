@@ -70,6 +70,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_amh_classes_ (I_FALSE),
     gen_tie_classes_ (I_TRUE),
     gen_smart_proxies_ (I_FALSE),
+    gen_inline_constants_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH)
 {
 }
@@ -664,7 +665,7 @@ BE_GlobalData::any_support (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::any_support (void)
+BE_GlobalData::any_support (void) const
 {
   return this->any_support_;
 }
@@ -676,7 +677,7 @@ BE_GlobalData::tc_support (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::tc_support (void)
+BE_GlobalData::tc_support (void) const
 {
   return this->tc_support_;
 }
@@ -688,7 +689,7 @@ BE_GlobalData::obv_opt_accessor (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::obv_opt_accessor (void)
+BE_GlobalData::obv_opt_accessor (void) const
 {
   return this->obv_opt_accessor_;
 }
@@ -700,7 +701,7 @@ BE_GlobalData::gen_impl_files (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_impl_files (void)
+BE_GlobalData::gen_impl_files (void) const
 {
   return this->gen_impl_files_;
 }
@@ -712,7 +713,7 @@ BE_GlobalData::gen_copy_ctor (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_copy_ctor (void)
+BE_GlobalData::gen_copy_ctor (void) const
 {
   return this->gen_copy_ctor_;
 }
@@ -724,7 +725,7 @@ BE_GlobalData::gen_assign_op (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_assign_op (void)
+BE_GlobalData::gen_assign_op (void) const
 {
   return this->gen_assign_op_;
 }
@@ -736,7 +737,7 @@ BE_GlobalData::gen_thru_poa_collocation (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_thru_poa_collocation (void)
+BE_GlobalData::gen_thru_poa_collocation (void) const
 {
   return this->gen_thru_poa_collocation_;
 }
@@ -748,7 +749,7 @@ BE_GlobalData::gen_direct_collocation (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_direct_collocation (void)
+BE_GlobalData::gen_direct_collocation (void) const
 {
   return this->gen_direct_collocation_;
 }
@@ -760,7 +761,7 @@ BE_GlobalData::exception_support (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::exception_support (void)
+BE_GlobalData::exception_support (void) const
 {
   return this->exception_support_;
 }
@@ -772,7 +773,7 @@ BE_GlobalData::use_raw_throw (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::use_raw_throw (void)
+BE_GlobalData::use_raw_throw (void) const
 {
   return this->use_raw_throw_;
 }
@@ -784,7 +785,7 @@ BE_GlobalData::opt_tc (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::opt_tc (void)
+BE_GlobalData::opt_tc (void) const
 {
   return this->opt_tc_;
 }
@@ -796,7 +797,7 @@ BE_GlobalData::ami_call_back (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::ami_call_back (void)
+BE_GlobalData::ami_call_back (void) const
 {
   return this->ami_call_back_;
 }
@@ -808,7 +809,7 @@ BE_GlobalData::gen_amh_classes (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_amh_classes (void)
+BE_GlobalData::gen_amh_classes (void) const
 {
   return this->gen_amh_classes_;
 }
@@ -820,7 +821,7 @@ BE_GlobalData::gen_tie_classes (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_tie_classes (void)
+BE_GlobalData::gen_tie_classes (void) const
 {
   return this->gen_tie_classes_;
 }
@@ -832,9 +833,21 @@ BE_GlobalData::gen_smart_proxies (idl_bool val)
 }
 
 idl_bool
-BE_GlobalData::gen_smart_proxies (void)
+BE_GlobalData::gen_smart_proxies (void) const
 {
   return this->gen_smart_proxies_;
+}
+
+void
+BE_GlobalData::gen_inline_constants (idl_bool val)
+{
+  this->gen_inline_constants_ = val;
+}
+
+idl_bool
+BE_GlobalData::gen_inline_constants (void) const
+{
+  return this->gen_inline_constants_;
 }
 
 void

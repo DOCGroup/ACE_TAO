@@ -146,7 +146,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
 			                      UTL_ScopedName *n)
   : AST_Decl (nt,
               n),
-	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_constant_value (v),
 	  pd_et (t),
     ifr_added_ (0)
 {
@@ -158,10 +158,25 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
 			                      UTL_ScopedName *n)
   : AST_Decl (AST_Decl::NT_const,
               n),
-	  pd_constant_value (idl_global->gen ()->create_expr (v, t)),
+	  pd_constant_value (v),
 	  pd_et (t),
     ifr_added_ (0)
 {
+  // Avoids a truncation warning on MSVC when assigning a decimal
+  // literal to a float constant.
+  if (t == AST_Expression::EV_float)
+    {
+      AST_Expression::AST_ExprValue *ev = 
+        this->pd_constant_value->ev ();
+      ev->et = t;
+      ev->u.fval = (float) ev->u.dval;
+    }
+  // Allows the enum value string name to be used in generating the
+  // rhs of the constant assignment.
+  else if (t == AST_Expression::EV_any)
+    {
+      this->pd_constant_value->ev ()->et = t;
+    }
 }
 
 AST_Constant::~AST_Constant (void)
@@ -174,7 +189,7 @@ AST_Constant::~AST_Constant (void)
 void
 AST_Constant::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "const " << exprtype_to_string (pd_et) << " ";
+  o << "const " << exprtype_to_string (this->pd_et) << " ";
 
   this->local_name ()->dump (o);
 
