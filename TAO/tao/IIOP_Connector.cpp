@@ -164,15 +164,11 @@ TAO_IIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
   if (this->orb_core ()->transport_cache ().find_transport (desc,
                                                             base_transport) == 0)
     {
-      // We have found a connection and a transport
-      svc_handler =
-        ACE_dynamic_cast (TAO_IIOP_Connection_Handler *,
-                          base_transport->connection_handler ());
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                    ACE_TEXT ("got an existing connection on HANDLE %d\n"),
-                    svc_handler->peer ().get_handle ()));
+                    ACE_TEXT ("got an existing transport with id %d\n"),
+                    base_transport->id ()));
     }
   else
     {

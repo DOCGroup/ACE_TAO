@@ -201,9 +201,13 @@ public:
    * If any data is to be sent it blocks until the queue is completely
    * drained.
    *
+   * This method serializes on handler_lock_, guaranteeing that only
+   * thread can execute it on the same instance concurrently.
+   *
    * @todo: this routine will probably go away as part of the
    * reorganization to support non-blocking writes.
    */
+  // @@ lockme
   ssize_t send_or_buffer (TAO_Stub *stub,
                           int two_way,
                           const ACE_Message_Block *mblk,
@@ -228,6 +232,7 @@ public:
   void buffering_timeout_value (const ACE_Time_Value &time);
 
   /// Send any messages that have been buffered.
+  // @@ lockme
   ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
 
   /**
@@ -242,6 +247,14 @@ public:
   virtual int bidirectional_flag (void) const;
   virtual void bidirectional_flag (int flag);
 
+  /// Fill in a handle_set with any associated handler's reactor handle.
+  /**
+   * Called by the cache when the cache is closing in order to fill
+   * in a handle_set in a lock-safe manner.
+   * @param handle_set the ACE_Handle_Set into which the transport should place any handle registered with the reactor
+   */
+  void provide_handle (ACE_Handle_Set &handle_set);
+
   /// @@ Bala: you must document this function!!
   /// @@ Bala: from the implementation in IIOP_Transport it looks more
   //         like it process the list of listening endpoints, or it is
@@ -253,6 +266,19 @@ public:
    * @todo: shouldn't this be automated?
    */
   void dequeue_all (void);
+
+  /// Register the handler with the reactor.
+  /**
+   * This method is used by the Wait_On_Reactor strategy. The
+   * transport must register its event handler with the ORB's Reactor.
+   *
+   * @todo: I think this method is pretty much useless, the
+   * connections are *always* registered with the Reactor, except in
+   * thread-per-connection mode.  In that case putting the connection
+   * in the Reactor would produce unpredictable results anyway.
+   */
+  // @@ lockme
+  int register_handler (void);
 
   /**
    * @name Control connection lifecycle
@@ -270,8 +296,80 @@ public:
   /// now.
   virtual int idle_after_reply (void);
 
+  /// Call the corresponding connection handler's <close>
+  /// method.
+  virtual void close_connection (void);
+
   //@}
 
+  /// Write the complete Message_Block chain to the connection.
+  /**
+   * This method serializes on handler_lock_, guaranteeing that only
+   * thread can execute it on the same instance concurrently.
+   *
+   * Often the implementation simply forwards the arguments to the
+   * underlying ACE_Svc_Handler class. Using the code factored out
+   * into ACE.
+   *
+   * Be careful with protocols that perform non-trivial
+   * transformations of the data, such as SSLIOP or protocols that
+   * compress the stream.
+   *
+   * @param mblk contains the data that must be sent.  For each
+   * message block in the cont() chain all the data between rd_ptr()
+   * and wr_ptr() should be delivered to the remote peer.
+   *
+   * @param timeout is the maximum time that the application is
+   * willing to wait for the data to be sent, useful in platforms that
+   * implement timed writes.
+   * The timeout value is obtained from the policies set by the
+   * application.
+   *
+   * @param bytes_transferred should return the total number of bytes
+   * successfully transferred before the connection blocked.  This is
+   * required because in some platforms and/or protocols multiple
+   * system calls may be required to send the chain of message
+   * blocks.  The first few calls can work successfully, but the final
+   * one can fail or signal a flow control situation (via EAGAIN).
+   * In this case the ORB expects the function to return -1, errno to
+   * be appropriately set and this argument to return the number of
+   * bytes already on the OS I/O subsystem.
+   *
+   * This call can also fail if the transport instance is no longer
+   * associated with a connection (e.g., the connection handler closed
+   * down).  In that case, it returns -1 and sets errno to
+   * <code>ENOENT</code>.
+   */
+  ssize_t send (const ACE_Message_Block *mblk,
+                const ACE_Time_Value *timeout = 0,
+                size_t *bytes_transferred = 0);
+
+  /// Read len bytes from into buf.
+  /**
+   * This method serializes on handler_lock_, guaranteeing that only
+   * thread can execute it on the same instance concurrently.
+   *
+   * @param buffer ORB allocated buffer where the data should be
+   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
+   * not clear this this is the best place to specify this.  The actual
+   * timeout values will be kept in the Policies.
+   */
+  ssize_t recv (char *buffer,
+                size_t len,
+                const ACE_Time_Value *timeout = 0);
+
+
+  /// Return the identifier for this transport instance.
+  /**
+   * If not set, this will return an integer representation of
+   * the <code>this</code> pointer for the instance on which
+   * it's called.
+   */
+  int id (void) const;
+  /// Set the identifier for this transport instance.
+  void id (int id);
+
+protected:
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -280,22 +378,6 @@ public:
    * following methods with the semantics documented below.
    */
   //@{
-
-  /// Call the corresponding connection handler's <close>
-  /// method.
-  virtual void close_connection (void);
-
-  /// Return the file descriptor used for this connection.
-  /**
-   * @todo Someday we should be able to support protocols that do not
-   * have or use file descriptors. But this will require implementing
-   * non-reactive concurrency models for some connections.  Really
-   * hard to do.  Meanwhile, look at the SHMIOP protocol for an
-   * example on how to use file descriptors for signalling while the
-   * actual data is transfer via shared memory (where there are no
-   * file descriptors.)
-   */
-  virtual ACE_HANDLE handle (void) = 0;
 
   /// Return the event handler used to receive notifications from the
   /// Reactor.
@@ -312,7 +394,9 @@ public:
    * will reduce footprint and simplify the process of implementing a
    * pluggable protocol.
    */
-  virtual ACE_Event_Handler *event_handler (void) = 0;
+  // @@ this is broken once we add the lock b/c it returns the thing
+  // we're trying to lock down! (CJC)
+  virtual ACE_Event_Handler *event_handler_i (void) = 0;
 
   /// Write the complete Message_Block chain to the connection.
   /**
@@ -345,9 +429,9 @@ public:
    * bytes already on the OS I/O subsystem.
    *
    */
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *timeout = 0,
-                        size_t *bytes_transferred = 0) = 0;
+  virtual ssize_t send_i (const ACE_Message_Block *mblk,
+                          const ACE_Time_Value *timeout = 0,
+                          size_t *bytes_transferred = 0) = 0;
 
   // Read len bytes from into buf.
   /**
@@ -356,15 +440,17 @@ public:
    * not clear this this is the best place to specify this.  The actual
    * timeout values will be kept in the Policies.
    */
-  virtual ssize_t recv (char *buffer,
-                        size_t len,
-                        const ACE_Time_Value *timeout = 0) = 0;
+  virtual ssize_t recv_i (char *buffer,
+                          size_t len,
+                          const ACE_Time_Value *timeout = 0) = 0;
 
+public:
   /// Fill into <output> the right headers to make a request.
   /**
    * @todo Bala: in the good old days it was decided that the
    * pluggable protocol framework would not raise exceptions.
    */
+  // @nolock
   virtual void start_request (TAO_ORB_Core *orb_core,
                               TAO_Target_Specification &spec,
                               TAO_OutputCDR &output,
@@ -377,6 +463,7 @@ public:
    * @todo Bala: in the good old days it was decided that the
    * pluggable protocol framework would not raise exceptions.
    */
+  // @@nolock
   virtual void start_locate (TAO_ORB_Core *orb_core,
                              TAO_Target_Specification &spec,
                              TAO_Operation_Details &opdetails,
@@ -410,6 +497,7 @@ public:
    * @todo This is generic code, it should be factored out into the
    * Transport class.
    */
+  // @nolock b/c this calls send_or_buffer
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
@@ -439,6 +527,7 @@ public:
    *
    * @todo Another generic method, move to TAO_Transport.
    */
+  // @@ lockme
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
                             int twoway = 1,
@@ -463,9 +552,11 @@ public:
    * @param block Is deprecated and ignored.
    *
    */
+  // @@ lockme
   virtual int read_process_message (ACE_Time_Value *max_wait_time = 0,
                                     int block = 0) = 0;
 
+protected:
   /// Register the handler with the reactor.
   /**
    * This method is used by the Wait_On_Reactor strategy. The
@@ -476,8 +567,20 @@ public:
    * thread-per-connection mode.  In that case putting the connection
    * in the Reactor would produce unpredictable results anyway.
    */
-  virtual int register_handler (void) = 0;
+  // @@ lockme
+  virtual int register_handler_i (void) = 0;
 
+  /// Called by <code>connection_handler_closing()</code> to signal
+  /// that the protocol-specific transport should dissociate itself
+  /// with the protocol-specific connection handler.
+  /**
+   * Typically, this just sets the pointer to the associated connection
+   * handler to zero, although it could also clear out any additional
+   * resources associated with the handler association.
+   */
+  virtual void transition_handler_state_i (void) = 0;
+
+public:
   /// Indicates whether the reactor is used by the protocol for
   /// signalling.
   /**
@@ -491,10 +594,27 @@ public:
   /// Method for the connection handler to signify that it
   /// is being closed and destroyed.
   virtual void connection_handler_closing (void);
-  virtual void transition_handler_state (void) = 0;
 
-  // Access the connection handler
-  virtual TAO_Connection_Handler* connection_handler (void) const;
+  /// Register the associated connection handler with the reactor
+  /// for a timer.
+  /**
+   * At this point, only <code>TAO_Eager_Buffering_Sync_Strategy::timer_check()</code>
+   * uses this, and it's unclear whether it needs to stay around.  But, it's here
+   * because it uses the associated protocol-specific connection handler, and accesses
+   * to that must be serialized on the internal lock.
+   *
+   * @param arg argument passed to the handle_timeout() method of the event handler
+   * @param delay  time interval after which the timer will expire
+   * @param interval  time interval after which the timer will be automatically rescheduled
+   * @return -1 on failure, a Reactor timer_id value on success
+   *
+   * @see ACE_Reactor::schedule_timer()
+   * @see TAO_Eager_Buffering_Sync_Strategy::timer_check()
+   */
+  long register_for_timer_event (const void* arg,
+                                 const ACE_Time_Value &delay,
+                                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+
 
   // Maintain reference counting with these
   static TAO_Transport* _duplicate (TAO_Transport* transport);
@@ -514,6 +634,7 @@ public:
   int make_idle (void);
 
 protected:
+  // @@ see if one of these calls send_message()
   /// Remove the first message from the outgoing queue.
   void dequeue_head (void);
 
@@ -531,6 +652,7 @@ protected:
   void reset_message (ACE_Message_Block *message_block,
                       size_t bytes_delivered,
                       int queued_message);
+
 private:
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
@@ -584,6 +706,28 @@ protected:
    * if the server receives the info.
    */
   int bidirectional_flag_;
+
+  /// Lock that insures that activities that *might* use handler-related
+  /// resources (such as a connection handler) get serialized.
+  /**
+   * This is an <code>ACE_Lock</code> that gets initialized from
+   * <code>TAO_ORB_Core::resource_factory()->create_cached_connection_lock ()</code>.
+   * This way, one can use a lock appropriate for the type of system, i.e.,
+   * a null lock for single-threaded systems, and a real lock for
+   * multi-threaded systems.
+   */
+  ACE_Lock *handler_lock_;
+
+  /// A unique identifier for the transport.
+  /**
+   * This never *never*
+   * changes over the lifespan, so we don't have to worry
+   * about locking it.
+   *
+   * HINT: Protocol-specific transports that use connection handler
+   * might choose to set this to the handle for their connection.
+   */
+  int id_;
 };
 
 #if defined (__ACE_INLINE__)
