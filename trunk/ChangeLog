@@ -1,3 +1,9 @@
+Sat Feb 10 15:29:08 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Message_Block.h:
+          Improved documentation for the lenth(), size() and space()
+          methods.
+
 Sat Feb 10 07:19:37 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * include/makeinclude/outputdir.bor:
@@ -10,28 +16,28 @@ Sat Feb 10 07:19:37 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Fri Feb  9 16:47:44 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* ace/Makefile.am:
-	  Removed references to the AQoSA files.
+        * ace/Makefile.am:
+          Removed references to the AQoSA files.
 
 Fri Feb  9 16:42:10 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* examples/QOS/client.dsp:
-	* examples/QOS/server.dsp:
-	  Updated the corrected project files. 
-	  Thanks to Darrell for pointing this out.
-	
+        * examples/QOS/client.dsp:
+        * examples/QOS/server.dsp:
+          Updated the corrected project files.
+          Thanks to Darrell for pointing this out.
+
 Thu Feb  8 19:25:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* performance-tests/RPC/run_test.pl:
-	* performance-tests/TCP/run_test.pl:
-	* performance-tests/UDP/run_test.pl:
-	  Add driver strings
+        * performance-tests/RPC/run_test.pl:
+        * performance-tests/TCP/run_test.pl:
+        * performance-tests/UDP/run_test.pl:
+          Add driver strings
 
 Thu Feb 08 19:18:36 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Removed comment from Exposed Policies test. The test has been fixed.
+          Removed comment from Exposed Policies test. The test has been fixed.
 
 Thu Feb  8 14:11:36 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -53,7 +59,7 @@ Thu Feb  8 14:11:36 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/SOCK_Connect.cpp:
 
-          Changed get_ip_interfaces to remove a memory error.  Thanks to 
+          Changed get_ip_interfaces to remove a memory error.  Thanks to
           Viatcheslav Batenine <slavikb@infra2000.com> for helping out with
           this.
 
@@ -68,58 +74,58 @@ Thu Feb  8 14:11:36 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Feb  8 00:34:57 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_g++.GNU: Added support for
-	  -fno-exception when exceptions=0 is given to the Makefile.
-  	  Thanks to Christian v. Mueffling <cvm@aiss.de> for reporting
- 	  this.
+        * include/makeinclude/platform_sunos5_g++.GNU: Added support for
+          -fno-exception when exceptions=0 is given to the Makefile.
+          Thanks to Christian v. Mueffling <cvm@aiss.de> for reporting
+          this.
 
 Wed Feb  7 23:02:46 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SUN_Proactor.cpp: Fixed the cancel_aiocb() method and added a
-	  new overridden cancel_aio() method.  Thanks to Alexander Libman
- 	  <Alibman@baltimore.com> for contributing this.
+        * ace/SUN_Proactor.cpp: Fixed the cancel_aiocb() method and added a
+          new overridden cancel_aio() method.  Thanks to Alexander Libman
+          <Alibman@baltimore.com> for contributing this.
 
 Thu Feb  8 02:09:05 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* examples/QOS/Makefile:
-	* examples/QOS/client.dsp:
-	* examples/QOS/server.dsp:
-	  Modified to use the ACE_QoS lib.
-	* Receiver_QoS_Event_Handler.cpp:
-	* Sender_QoS_Event_Handler.cpp:
-	  Added missing Log_Msg.h for ACE_DEBUG.
-	  Other files were modified to reflect changed directory location
-	  of AQosA imclude files.
+        * examples/QOS/Makefile:
+        * examples/QOS/client.dsp:
+        * examples/QOS/server.dsp:
+          Modified to use the ACE_QoS lib.
+        * Receiver_QoS_Event_Handler.cpp:
+        * Sender_QoS_Event_Handler.cpp:
+          Added missing Log_Msg.h for ACE_DEBUG.
+          Other files were modified to reflect changed directory location
+          of AQosA imclude files.
 
 Thu Feb  8 00:17:43 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* ace/QoS_Decorator.cpp:
-	* ace/QoS_Session_Factory.cpp:
-	* ace/SOCK_Dgram_Mcast_QoS.cpp:
-	* ace/QoS_Decorator.h:
-	* ace/QoS_Session_Factory.h:
-	* ace/SOCK_Dgram_Mcast_QoS.h:
-	* ace/QoS_Manager.cpp:
-	* ace/QoS_Session_Impl.cpp:
-	* ace/SOCK_Dgram_Mcast_QoS.i:
-	* ace/QoS_Manager.h:
-	* ace/QoS_Session_Impl.h:
-	* ace/QoS_Session_Impl.i:
-	  Moved the AQoSA classes to ace/QoS directory.
+        * ace/QoS_Decorator.cpp:
+        * ace/QoS_Session_Factory.cpp:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/QoS_Decorator.h:
+        * ace/QoS_Session_Factory.h:
+        * ace/SOCK_Dgram_Mcast_QoS.h:
+        * ace/QoS_Manager.cpp:
+        * ace/QoS_Session_Impl.cpp:
+        * ace/SOCK_Dgram_Mcast_QoS.i:
+        * ace/QoS_Manager.h:
+        * ace/QoS_Session_Impl.h:
+        * ace/QoS_Session_Impl.i:
+          Moved the AQoSA classes to ace/QoS directory.
 
-	* ace/Makefile:
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	  Removed the QoS related files, added QoS directory to build.
+        * ace/Makefile:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Removed the QoS related files, added QoS directory to build.
 
-	* ace/Qos/Makefile
-	* ace/QoS/ACE_QoS.dsw:
-	* ace/QoS/ACE_QoS.dsp:
-	* ace/QoS/ACE_QoS_Lib.dsp:
-	* ace/QoS/ACE_QoS_Export.h:
-	  Added Makefile and MSVC project files.
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for suggesting this
-	  change and providing the patch.
+        * ace/Qos/Makefile
+        * ace/QoS/ACE_QoS.dsw:
+        * ace/QoS/ACE_QoS.dsp:
+        * ace/QoS/ACE_QoS_Lib.dsp:
+        * ace/QoS/ACE_QoS_Export.h:
+          Added Makefile and MSVC project files.
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for suggesting this
+          change and providing the patch.
 
 Wed Feb  7 11:34:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -128,15 +134,15 @@ Wed Feb  7 11:34:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed Feb  7 09:03:22 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptors): Fixed
-	  incorrect if/else branching.  Thanks to Lu Yunhai
- 	  <luyunhai@huawei.com> for reporting this.
+        * apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptors): Fixed
+          incorrect if/else branching.  Thanks to Lu Yunhai
+          <luyunhai@huawei.com> for reporting this.
 
 Tue Feb  6 23:43:49 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* apps/Gateway/Peer/Peer.cpp (await_events): Fixed the use of
-	  %s to be %*s since the string may not be nul terminated!  Thanks
- 	  to Lu Yunhai <luyunhai@huawei.com> for reporting this.
+        * apps/Gateway/Peer/Peer.cpp (await_events): Fixed the use of
+          %s to be %*s since the string may not be nul terminated!  Thanks
+          to Lu Yunhai <luyunhai@huawei.com> for reporting this.
 
 Tue Feb  6 20:11:28 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -191,8 +197,8 @@ Tue Feb 06 17:16:43 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Feb  5 16:19:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/ACE.cpp: ACE_TRACE ("ACE::basename") should be ACE_TRACE ("ACE::diname").
-	  Thanks to Lu Yunhai <luyunhai@huawei.com> for reporting this.
+        * ace/ACE.cpp: ACE_TRACE ("ACE::basename") should be ACE_TRACE ("ACE::diname").
+          Thanks to Lu Yunhai <luyunhai@huawei.com> for reporting this.
 
         * ace/Basic_Types.h: Changed the ACE_BIG_ENDIAN and ACE_LITTLE_ENDIAN
           macros to use the form 0x0123 rather than 0123X.  Thanks to
