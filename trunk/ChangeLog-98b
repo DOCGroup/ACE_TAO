@@ -1,3 +1,9 @@
+Tue Aug 11 17:30:32 1998  Steve Huston  <shuston@riverace.com>
+
+	* tests/test_config.h: Fixed ACE_Test_Output to get torn down clean
+	  in all cases by changing it from a static to an ACE_Singleton.
+	  Re-enabled it for Win32, non-WinCE.
+
 Tue Aug 11 15:51:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/XtReactor.h (ACE_XtReactor): Changed the constructor so that
