@@ -92,14 +92,14 @@ module Event_Comm
 
     // = The following operations are intended for Consumers.
 
-    void subscribe (in Consumer Consumer,
+    void subscribe (in Consumer subscriber,
                     in string filtering_criteria) raises (CannotSubscribe);
     // Subscribe the <Consumer> to receive events that match the
     // regular expresssion <filtering_criteria> applied by the
     // <Notifier>.  If <filtering_criteria> is "" then all events are
     // matched.
 
-    void unsubscribe (in Consumer Consumer,
+    void unsubscribe (in Consumer unsubscriber,
                       in string filtering_criteria) raises (CannotUnsubscribe);
     // Unsubscribe the <Consumer> that matches the filtering criteria.
     // If <filtering_criteria> is "" then all <Consumers> with the
