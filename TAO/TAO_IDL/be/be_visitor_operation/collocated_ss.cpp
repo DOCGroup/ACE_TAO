@@ -136,40 +136,44 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
          " == TAO_ORB_Core::THRU_POA)" << be_idt_nl
       << "{\n" << be_idt;
 
-  // Declare a return type
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (bt->accept (visitor) == -1))
+  if (!idl_global->exception_support ())
     {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_collocated_ss::"
-                         "visit_operation - "
-                         "codegen for return var decl failed\n"),
-                        -1);
-    }
-
-  if (!this->void_return_type (bt))
-    {
-      os->indent ();
-      *os << "ACE_UNUSED_ARG (";
+      // Declare a return type
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (bt->accept (visitor) == -1))
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_collocated_cs::"
-                             "gen_check_exception - "
-                             "codegen failed\n"),
+                             "(%N:%l) be_visitor_operation_collocated_ss::"
+                             "visit_operation - "
+                             "codegen for return var decl failed\n"),
                             -1);
         }
-      *os << ");\n";
+
+      if (!this->void_return_type (bt))
+        {
+          os->indent ();
+          *os << "ACE_UNUSED_ARG (";
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (bt->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_collocated_cs::"
+                                 "gen_check_exception - "
+                                 "codegen failed\n"),
+                                -1);
+            }
+          *os << ");\n";
+        }
     }
 
   os->indent ();
+
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()"
@@ -177,9 +181,13 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
       << ");" << be_uidt_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "this->_object_key ()," << be_nl
-      << "\"" << node->local_name () << "\"," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");\n" << be_uidt;
+      << "\"" << node->local_name () << "\"";
+  if (!idl_global->exception_support ())
+    *os << "," << be_nl
+        << "ACE_TRY_ENV" << be_uidt_nl
+        << ");\n" << be_uidt;
+  else
+    *os << be_uidt_nl << ");\n" << be_uidt;
 
   // check if there is an exception
   if (!idl_global->exception_support ())

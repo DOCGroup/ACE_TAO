@@ -113,6 +113,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
       << "if (this->_stubobj ()->orb_core ()->get_collocation_strategy ()"
          " == TAO_ORB_Core::THRU_POA)" << be_idt_nl
       << "{" << be_idt_nl;
+
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "*this->_stubobj ()->"
@@ -157,6 +158,7 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
       << "if (this->_stubobj ()->orb_core ()->get_collocation_strategy ()"
          " == TAO_ORB_Core::THRU_POA)" << be_idt_nl
       << "{" << be_idt_nl;
+
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "*this->_stubobj ()->"
