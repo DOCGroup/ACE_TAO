@@ -63,7 +63,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
+  $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -136,7 +137,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(ACE_ROOT)/ace/Get_Opt.i testC.h \
+  $(ACE_ROOT)/ace/Get_Opt.i \
+  testC.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
@@ -214,7 +216,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -233,15 +235,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -255,8 +259,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i testC.i \
-  interceptors.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  testC.i interceptors.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
@@ -264,17 +268,51 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_QoS.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
   Client_ORBInitializer.h \
   $(TAO_ROOT)/tao/ORBInitializer_Registry.h
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+  $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -368,8 +406,9 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.inl test_i.h testS.h \
-  testC.h $(TAO_ROOT)/tao/ORB.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  test_i.h testS.h testC.h \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(TAO_ROOT)/tao/orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
@@ -442,7 +481,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -458,6 +497,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
@@ -466,7 +507,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i testC.i \
+  $(TAO_ROOT)/tao/ORB.i \
+  testC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -489,10 +531,43 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_QoS.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
@@ -500,7 +575,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/ORBInitializer_Registry.h
 
 .obj/Client_ORBInitializer.o .obj/Client_ORBInitializer.so .shobj/Client_ORBInitializer.o .shobj/Client_ORBInitializer.so: Client_ORBInitializer.cpp \
-  Client_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
+  Client_ORBInitializer.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -613,14 +689,19 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
@@ -632,18 +713,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -660,25 +734,23 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  interceptors.h $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/objectid.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
@@ -686,10 +758,58 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_QoS.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  interceptors.h
 
 .obj/Server_ORBInitializer.o .obj/Server_ORBInitializer.so .shobj/Server_ORBInitializer.o .shobj/Server_ORBInitializer.so: Server_ORBInitializer.cpp \
-  Server_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
+  Server_ORBInitializer.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -802,14 +922,19 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
@@ -821,18 +946,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -849,25 +967,23 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  interceptors.h $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/objectid.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
@@ -875,7 +991,54 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_QoS.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  interceptors.h
 
 .obj/interceptors.o .obj/interceptors.so .shobj/interceptors.o .shobj/interceptors.so: interceptors.cpp interceptors.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -991,14 +1154,19 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
@@ -1010,18 +1178,11 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -1038,25 +1199,23 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/objectid.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
@@ -1065,8 +1224,52 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/os_include/net/os_if.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_QoS.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
   $(TAO_ROOT)/tao/ORB_Constants.h
 
 .obj/test_i.o .obj/test_i.so .shobj/test_i.o .shobj/test_i.so: test_i.cpp test_i.h testS.h testC.h \
@@ -1199,7 +1402,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -1220,15 +1423,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -1242,7 +1447,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i testC.i \
+  $(TAO_ROOT)/tao/ORB.i \
+  testC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1391,7 +1597,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -1412,15 +1618,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -1434,7 +1642,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i testC.i \
+  $(TAO_ROOT)/tao/ORB.i \
+  testC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -1638,7 +1847,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
@@ -1659,15 +1868,17 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -1681,7 +1892,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(TAO_ROOT)/tao/ORB.i testC.i \
+  $(TAO_ROOT)/tao/ORB.i \
+  testC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1833,8 +2045,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/Manual_Event.inl \
   $(ACE_ROOT)/ace/Mutex.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Semaphore.h \
@@ -1866,6 +2076,9 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/Tagged_Profile.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -1951,9 +2164,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
   $(TAO_ROOT)/tao/Object_T.h \
   $(TAO_ROOT)/tao/Object_T.cpp \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
-  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/DynamicC.h \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Basic_Arguments.h \
@@ -1969,6 +2179,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
-  $(ACE_ROOT)/ace/Dynamic_Service.cpp
+  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+  $(ACE_ROOT)/ace/Malloc_Allocator.h \
+  $(ACE_ROOT)/ace/Malloc_Allocator.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -52,10 +52,14 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp Smart_Proxies.h \
   $(ACE_ROOT)/ace/pre.h \
   smartproxies_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -83,7 +87,6 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -131,6 +134,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
@@ -170,7 +174,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
@@ -190,15 +194,17 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
@@ -240,8 +246,6 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Manual_Event.inl \
   $(ACE_ROOT)/ace/Mutex.h \
   $(ACE_ROOT)/ace/Mutex.inl \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   $(ACE_ROOT)/ace/Null_Barrier.h \
   $(ACE_ROOT)/ace/Null_Condition.h \
   $(ACE_ROOT)/ace/Null_Mutex.h \

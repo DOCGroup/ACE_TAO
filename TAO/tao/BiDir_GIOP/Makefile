@@ -73,14 +73,17 @@ endif
 .obj/BiDirGIOP.o .obj/BiDirGIOP.so .shobj/BiDirGIOP.o .shobj/BiDirGIOP.so: BiDirGIOP.cpp BiDirGIOP.h \
   $(ACE_ROOT)/ace/pre.h \
   bidirgiop_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -133,6 +136,7 @@ endif
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
@@ -144,20 +148,23 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -196,7 +203,6 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -299,7 +305,7 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -313,10 +319,23 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
@@ -326,7 +345,6 @@ endif
   $(TAO_ROOT)/tao/Resource_Factory.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/params.h \
-  $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/params.i \
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
@@ -350,14 +368,6 @@ endif
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
-  $(ACE_ROOT)/ace/Functor_T.i \
-  $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
@@ -409,22 +419,22 @@ endif
   $(ACE_ROOT)/ace/Lock_Adapter_T.h \
   $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
-  $(TAO_ROOT)/tao/ORB_Core.i \
-  $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/OBV_Constants.h \
-  $(TAO_ROOT)/tao/ORB.i
+  $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/BiDirPolicyC.o .obj/BiDirPolicyC.so .shobj/BiDirPolicyC.o .shobj/BiDirPolicyC.so: BiDirPolicyC.cpp BiDirGIOP.h \
   $(ACE_ROOT)/ace/pre.h \
   bidirgiop_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -477,6 +487,7 @@ endif
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
@@ -488,20 +499,23 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -540,7 +554,6 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -643,7 +656,7 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -654,10 +667,14 @@ endif
 .obj/BiDir_ORBInitializer.o .obj/BiDir_ORBInitializer.so .shobj/BiDir_ORBInitializer.o .shobj/BiDir_ORBInitializer.so: BiDir_ORBInitializer.cpp BiDir_ORBInitializer.h \
   $(ACE_ROOT)/ace/pre.h \
   bidirgiop_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -685,7 +702,6 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -733,6 +749,7 @@ endif
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
@@ -762,14 +779,19 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
@@ -781,18 +803,11 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -809,32 +824,23 @@ endif
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  BiDir_PolicyFactory.h BiDirGIOP.h \
-  $(TAO_ROOT)/tao/BiDir_Adapter.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
@@ -842,29 +848,11 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Service_Config.h \
-  $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Node.h \
-  $(ACE_ROOT)/ace/Node.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Unbounded_Set.inl \
-  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
-  $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/String_Base.h \
-  $(ACE_ROOT)/ace/String_Base_Const.h \
-  $(ACE_ROOT)/ace/String_Base.i \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -889,6 +877,50 @@ endif
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  BiDir_PolicyFactory.h BiDirGIOP.h \
+  $(TAO_ROOT)/tao/BiDir_Adapter.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/String_Base.cpp \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -906,10 +938,14 @@ endif
 .obj/BiDir_PolicyFactory.o .obj/BiDir_PolicyFactory.so .shobj/BiDir_PolicyFactory.o .shobj/BiDir_PolicyFactory.so: BiDir_PolicyFactory.cpp BiDir_PolicyFactory.h \
   $(ACE_ROOT)/ace/pre.h \
   bidirgiop_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
   $(TAO_ROOT)/tao/PI_ForwardC.h \
   $(TAO_ROOT)/tao/OctetSeqC.h \
@@ -937,7 +973,6 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -985,6 +1020,7 @@ endif
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/Seq_Var_T.h \
   $(TAO_ROOT)/tao/Seq_Var_T.inl \
@@ -1014,14 +1050,19 @@ endif
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/VarOut_T.h \
   $(TAO_ROOT)/tao/VarOut_T.inl \
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object_Argument_T.h \
@@ -1033,18 +1074,11 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
-  $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -1061,32 +1095,23 @@ endif
   $(ACE_ROOT)/ace/OS_NS_errno.h \
   $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
-  $(TAO_ROOT)/tao/LocalObject.i \
-  BiDirGIOP.h \
-  $(TAO_ROOT)/tao/BiDir_Adapter.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Atomic_Op.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.h \
-  $(ACE_ROOT)/ace/Atomic_Op_T.i \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
@@ -1094,29 +1119,11 @@ endif
   $(ACE_ROOT)/ace/RW_Mutex.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
-  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Atomic_Op.i \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Service_Config.h \
-  $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Node.h \
-  $(ACE_ROOT)/ace/Node.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Unbounded_Set.inl \
-  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
-  $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/String_Base.h \
-  $(ACE_ROOT)/ace/String_Base_Const.h \
-  $(ACE_ROOT)/ace/String_Base.i \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -1141,6 +1148,50 @@ endif
   $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
   $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  BiDirGIOP.h \
+  $(TAO_ROOT)/tao/BiDir_Adapter.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/os_include/os_dlfcn.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/String_Base.cpp \
   $(ACE_ROOT)/ace/Auto_Ptr.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -1158,15 +1209,18 @@ endif
 .obj/BiDir_Policy_i.o .obj/BiDir_Policy_i.so .shobj/BiDir_Policy_i.o .shobj/BiDir_Policy_i.so: BiDir_Policy_i.cpp BiDir_Policy_i.h \
   $(ACE_ROOT)/ace/pre.h \
   bidirgiop_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   BiDirGIOP.h \
   $(TAO_ROOT)/tao/BiDir_Adapter.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -1219,6 +1273,7 @@ endif
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
@@ -1230,20 +1285,23 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -1282,7 +1340,6 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -1385,7 +1442,7 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1414,10 +1471,14 @@ endif
   BiDirPolicy_Validator.h \
   $(ACE_ROOT)/ace/pre.h \
   bidirgiop_export.h \
+  $(ACE_ROOT)/ace/config-all.h \
+  $(ACE_ROOT)/ace/config.h \
+  $(ACE_ROOT)/ace/$(ACE_PLATFORM_CONFIG) \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/OS_main.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
   $(TAO_ROOT)/tao/Policy_Validator.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -1441,7 +1502,6 @@ endif
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -1482,6 +1542,7 @@ endif
   $(ACE_ROOT)/ace/os_include/os_string.h \
   $(ACE_ROOT)/ace/os_include/os_ctype.h \
   $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/os_include/os_search.h \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
   $(ACE_ROOT)/ace/OS_NS_signal.inl \
@@ -1493,20 +1554,23 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_time.h \
   $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
   $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
   $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.i \
@@ -1539,7 +1603,6 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -1642,7 +1705,7 @@ endif
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Arg_Traits_T.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Dynamic_ParameterC.inl \
+  $(TAO_ROOT)/tao/Dynamic_ParameterC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1704,10 +1767,14 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/OBV_Constants.h \
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(TAO_ROOT)/tao/TC_Constants_Forward.h \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
-  $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
