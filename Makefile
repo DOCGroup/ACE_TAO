@@ -69,6 +69,7 @@ CORE_DIRS= \
 	apps/gperf/src \
 	TAO/tao \
 	TAO/TAO_IDL \
+	Kokyu \
 	TAO/orbsvcs/orbsvcs \
 	TAO/orbsvcs/Naming_Service
 

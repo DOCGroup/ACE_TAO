@@ -1,3 +1,9 @@
+Fri Aug  8 10:42:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Makefile: Added Kokyu to CORE_DIRS list since
+	  TAO/orbsvcs/orbsvcs is in core build and
+	  TAO/orbsvcs/orbsvcs/Event/*Kokyu* depends on Kokyu framework.
+
 Fri Aug  8 13:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
