@@ -1,3 +1,10 @@
+Tue Jan 20 21:53:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/TAO_IDL_templates.cpp: 
+	  Added missing template instantiations, they go into their own
+	  file because I could not think of a "natural" place to put them.
+
 Tue Jan 20 20:25:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/sequence.h: 
