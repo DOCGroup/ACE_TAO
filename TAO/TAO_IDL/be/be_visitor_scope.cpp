@@ -114,25 +114,6 @@ be_visitor_scope::visit_scope (be_scope *node)
       delete si;
     } // end of if
 
-
-#if 0
-  // For debugging the prefix...
-  be_decl* decl = node->decl ();
-  ACE_DEBUG ((LM_DEBUG, "Enter scope <%s> : [%s]\n",
-              decl->full_name (), decl->prefix ()));
-  if (decl->pragmas () != 0)
-    {
-      for (UTL_StrlistActiveIterator i(decl->pragmas ());
-           !i.is_done ();
-           i.next ())
-        {
-          String* s = i.item ();
-
-          ACE_DEBUG ((LM_DEBUG, "  pragma = <%s>\n", s->get_string ()));
-        }
-    }
-#endif
-
   return 0;
 }
 
