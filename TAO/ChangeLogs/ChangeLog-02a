@@ -49,12 +49,12 @@ Sat Mar 30 13:38:10 2002  Ossama Othman  <ossama@uci.edu>
 	  Initialize the underlying hash map's size to be equal to the
 	  maximum number of handles allowed for the current process.  This
 	  addresses a potential problem where more connections may be
-	  opened then the Transport_Cache_Manager is able to contain since
-	  the underlying hash map cannot be resized once it has been
-	  opened.  Furthermore, it reduces the memory requirements for
-	  processes that have a maximum handle limit less than
-	  ACE_DEFAULT_MAP_SIZE, which was the previous default hash map
-	  size.
+	  opened then the Transport_Cache_Manager with a default size
+	  (ACE_DEFAULT_MAP_SIZE) is able to contain since the underlying
+	  hash map cannot be resized once it has been opened.
+	  Furthermore, it reduces the memory requirements for processes
+	  that have a maximum handle limit less than ACE_DEFAULT_MAP_SIZE,
+	  which was the previous default hash map size.
 
 	  (ACE_Hash_Map_Manager):
 
