@@ -526,7 +526,7 @@ ACE_INET_Addr::get_host_name (char hostname[],
 #  endif /* ! _UNICOS */
       int error = 0;
 
-#if defined (CHORUS)
+#if defined (CHORUS) || (defined (DIGITAL_UNIX) && defined (__GNUC__))
       hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
                                            a_len,
                                            this->addr_type_);
