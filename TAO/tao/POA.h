@@ -420,6 +420,9 @@ public:
   virtual CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid,
                                              CORBA::Environment &env);
 
+  virtual void forward_object (const PortableServer::ObjectId &oid,
+                               CORBA::Object_ptr forward_to,
+                               CORBA::Environment &env);
 
   // Utility functions for the other 
   static void encode_sequence_to_string (CORBA::String &str,
@@ -544,6 +547,10 @@ protected:
 
   virtual CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
                                                CORBA::Environment &env);
+
+  virtual void forward_object_i (const PortableServer::ObjectId &oid,
+                                 CORBA::Object_ptr forward_to,
+                                 CORBA::Environment &env);
 
   virtual ACE_Lock &lock (void);
 

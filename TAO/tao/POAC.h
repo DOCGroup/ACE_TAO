@@ -297,8 +297,8 @@ typedef POA *POA_ptr;
 
   class ForwardRequest;
   typedef ForwardRequest *ForwardRequest_ptr;
-
-#endif // end #if !defined
+  
+#endif /* end #if !defined */
 
 
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
@@ -309,16 +309,23 @@ typedef POA *POA_ptr;
   public:
     ForwardRequest (void); // default ctor
     ForwardRequest (const ForwardRequest &); // copy ctor
-    ~ForwardRequest(void); // dtor
-    ForwardRequest(const CORBA::Object_ptr&);
+    ~ForwardRequest (void); // dtor
+    ForwardRequest(
+      const CORBA::Object_ptr  _tao_forward_reference);
+
     ForwardRequest &operator= (const ForwardRequest &);
     static ForwardRequest *_narrow (CORBA::Exception *);
     CORBA::Object_var forward_reference;
-  };
-    static CORBA::TypeCode_ptr _tc_ForwardRequest;
+    // the alloc method. This is TAO extension
+    static CORBA::Exception *_alloc (void);
+  }; // exception PortableServer::ForwardRequest
+    friend void operator<<= (CORBA::Any &, const ForwardRequest &); // copying version
+  friend void operator<<= (CORBA::Any &, ForwardRequest*); // noncopying version
+  friend CORBA::Boolean operator>>= (const CORBA::Any &, ForwardRequest *&);
+static CORBA::TypeCode_ptr _tc_ForwardRequest;
 
 
-#endif // end #if !defined
+#endif /* end #if !defined */
 
   enum ThreadPolicyValue
   {

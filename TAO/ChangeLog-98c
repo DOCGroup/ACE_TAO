@@ -1,3 +1,28 @@
+Tue May 12 17:13:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/POA/Forwarding/: Added new test that shows the forwarding
+ 	  features in TAO.
+
+	* tao/default_server.cpp (concurrency_strategy): Made sure that
+ 	  the reactive strategy is returned if no concurrency_strategy has
+ 	  been explicitly set by the user.  This should allow servers to
+ 	  work without a svc.conf file.
+
+	* tao/Server_Request.cpp (set_result and set_exception): These
+ 	  should not raise exceptions if this->exception_ is set.
+
+	* tao/Servant_Base.cpp: Removed implementation for
+ 	  TAO_ServantBase::_dispatch() and made it pure virtual.  Also,
+ 	  passed the system environment to the DSI implementation class.
+
+	* tao/POAC.cpp (ForwardRequest): Fixed old IDL code for this
+ 	  exception.
+
+	* tao/Forwarding_Servant: New DSI servant used by the POA for
+ 	  forwarding.
+
+	* tao/POA.cpp (forward_object): Adding forward support to the POA.
+
 Tue May 12 17:34:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/OctetSeq/OctetSeq.cpp: 
