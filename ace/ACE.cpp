@@ -1901,7 +1901,13 @@ ACE::set_handle_limit (int new_limit)
       return 0;
 #endif /* ACE_LACKS_RLIMIT */
     }
+
+#if defined (__sgi)
+  // Irix complains without this return statement.  DEC cxx
+  // (correctly) says that it's not reachable.  ACE_NOTREACHED won't
+  // work here, because it handles both platforms the same.
   return 0;
+#endif /* __sgi */
 }
 
 // Flags are file status flags to turn on.
