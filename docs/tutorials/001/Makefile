@@ -37,6 +37,17 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
+HTML : #
+	[ -f hdr ] || $(MAKE) UNSHAR
+	perl ../combine *.pre ; chmod +r *.html
+
+SHAR : #
+	[ ! -f combine.shar ] || exit 1
+	shar -T hdr bodies *.pre *.pst > combine.shar && rm -f hdr bodies *.pre *.pst
+
+UNSHAR : #
+	sh combine.shar
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------

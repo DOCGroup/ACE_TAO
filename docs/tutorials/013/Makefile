@@ -47,7 +47,7 @@ Indent : #
 	done
 
 Depend : depend
-	perl ../007/fix.Makefile
+	perl ../fix.Makefile
 
 HTML : #
 	[ -f hdr ] || $(MAKE) UNSHAR
