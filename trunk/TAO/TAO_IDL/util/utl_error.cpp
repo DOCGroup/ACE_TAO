@@ -64,13 +64,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-// utl_error.cc - Implementation of error reporting object for IDL
-//                compiler program
+// utl_err.cc - Implementation of error reporting object for IDL
+//              compiler program
 
 #include        "idl.h"
 #include        "idl_extern.h"
 
-ACE_RCSID(util, utl_error, "$Id$")
+ACE_RCSID(util, utl_err, "$Id$")
 
 /*
  * Helper functions to do:
@@ -523,7 +523,7 @@ UTL_Error::warning0 (UTL_Error::ErrorCode c)
 }
 
 void
-UTL_Error::warning1 (UTL_Error::ErrorCode c, 
+UTL_Error::warning1 (UTL_Error::ErrorCode c,
                      AST_Decl *d)
 {
   idl_error_header(c, d->line(), d->file_name());
@@ -531,8 +531,8 @@ UTL_Error::warning1 (UTL_Error::ErrorCode c,
 }
 
 void
-UTL_Error::warning2 (UTL_Error::ErrorCode c, 
-                     AST_Decl *d1, 
+UTL_Error::warning2 (UTL_Error::ErrorCode c,
+                     AST_Decl *d1,
                      AST_Decl *d2)
 {
   idl_error_header(c, d1->line(), d1->file_name());

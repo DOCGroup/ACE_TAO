@@ -80,7 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "idl_global.h"          // Class IDL_GlobalData
 
-#include        "utl_error.h"           // class UTL_Error
+#include        "utl_err.h"             // class UTL_Error
 
 #include        "utl_indenter.h"        // class UTL_Indenter
 
