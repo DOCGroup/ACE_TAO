@@ -21,6 +21,11 @@
 #include "tao/Sequence_T.h"
 #include "tao/Any.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  include "tao/Object.h"
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION || ACE_HAS_TEMPLATE_INSTANTIATION_PRAGM */
+
+
 ACE_RCSID (tao, 
            PredefinedType_Seq_Tmplinst, 
            "$Id$")

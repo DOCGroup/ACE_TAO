@@ -14,7 +14,7 @@
 #ifndef TAO_PI_CURRENT_ORB_INITIALIZER_H
 #define TAO_PI_CURRENT_ORB_INITIALIZER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -77,6 +77,6 @@ public:
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PI_CURRENT_ORB_INITIALIZER_H */

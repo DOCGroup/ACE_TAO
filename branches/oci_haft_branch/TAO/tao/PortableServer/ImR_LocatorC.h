@@ -30,7 +30,7 @@
 
 #ifndef _TAO_IDL_ORIG_IMR_LOCATORC_H_
 #define _TAO_IDL_ORIG_IMR_LOCATORC_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -623,5 +623,5 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, Implementat
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

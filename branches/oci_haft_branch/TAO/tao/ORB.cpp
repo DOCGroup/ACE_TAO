@@ -25,11 +25,13 @@ ACE_RCSID (tao,
 #include "default_ports.h"
 #include "ORBInitInfo.h"
 #include "ORBInitializer_Registry.h"
+#include "TAO_Singleton_Manager.h"
+#include "Policy_Manager.h"
+#include "Valuetype_Adapter.h"
 
 #include "CodecFactory_ORBInitializer.h"
 
 #include "TypeCodeFactory_Adapter.h"
-#include "Valuetype_Adapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
@@ -121,7 +123,7 @@ CORBA::ORB::InvalidName::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::ORB::InvalidName::_raise ()
+void CORBA::ORB::InvalidName::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -148,7 +150,6 @@ CORBA::ORB::ORB (TAO_ORB_Core *orb_core)
   : lock_ ()
   , refcount_ (1)
   , orb_core_ (orb_core)
-  , valuetype_adapter_ (0)
   , use_omg_ior_format_ (1)
   , timeout_ (0)
 {
@@ -2048,15 +2049,15 @@ CORBA::ORB::register_value_factory (const char *repository_id,
   // %! guard, and ACE_Null_Mutex in the map
   // do _add_ref here not in map->rebind
 
-  if (this->valuetype_adapter_ == 0)
+  if (this->orb_core ()->valuetype_adapter () == 0)
     {
 
-     this->valuetype_adapter_ =
+     this->orb_core ()->valuetype_adapter () =
        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
             TAO_ORB_Core::valuetype_adapter_name ()
          );
 
-      if (this->valuetype_adapter_ == 0)
+      if (this->orb_core ()->valuetype_adapter () == 0)
         {
           ACE_THROW_RETURN (CORBA::INTERNAL (),
                             0);
@@ -2064,7 +2065,7 @@ CORBA::ORB::register_value_factory (const char *repository_id,
     }
 
   int result =
-    this->valuetype_adapter_->vf_map_rebind (repository_id,
+    this->orb_core ()->valuetype_adapter ()->vf_map_rebind (repository_id,
                                              factory);
 
   if (result == 0)              // No previous factory found
@@ -2084,10 +2085,10 @@ void
 CORBA::ORB::unregister_value_factory (const char *repository_id
                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (this->valuetype_adapter_)
+  if (this->orb_core ()->valuetype_adapter ())
     {
       // Dont care whther it was successful or not!
-      (void) this->valuetype_adapter_->vf_map_unbind (repository_id);
+      (void) this->orb_core ()->valuetype_adapter ()->vf_map_unbind (repository_id);
     }
 }
 
@@ -2095,19 +2096,31 @@ CORBA::ValueFactory
 CORBA::ORB::lookup_value_factory (const char *repository_id
                                   ACE_ENV_ARG_DECL)
 {
-  if (this->valuetype_adapter_ == 0)
+  if (this->orb_core ()->valuetype_adapter () == 0)
     {
-      this->valuetype_adapter_ =
+      this->orb_core ()->valuetype_adapter () =
         ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
             TAO_ORB_Core::valuetype_adapter_name ()
           );
 
-      if (this->valuetype_adapter_ == 0)
+      if (this->orb_core ()->valuetype_adapter () == 0)
         {
           ACE_THROW_RETURN (CORBA::INTERNAL (),
                             0);
         }
     }
 
-  return this->valuetype_adapter_->vf_map_find (repository_id);
+  return this->orb_core ()->valuetype_adapter ()->vf_map_find (repository_id);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_Pseudo_Var_T<CORBA::ORB>;
+template class TAO_Pseudo_Out_T<CORBA::ORB, CORBA::ORB_var>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Pseudo_Var_T<CORBA::ORB>
+#pragma instantiate TAO_Pseudo_Out_T<CORBA::ORB, CORBA::ORB_var>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

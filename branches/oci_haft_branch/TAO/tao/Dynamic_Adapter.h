@@ -13,7 +13,7 @@
 
 #ifndef TAO_DYNAMIC_ADAPTER_H
 #define TAO_DYNAMIC_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -78,5 +78,5 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_H */

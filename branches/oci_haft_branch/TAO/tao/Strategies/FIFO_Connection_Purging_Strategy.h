@@ -10,7 +10,7 @@
 
 #ifndef TAO_FIFO_PURGING_STRATEGY_H
 #define TAO_FIFO_PURGING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "strategies_export.h"
 #include "tao/Connection_Purging_Strategy.h"
@@ -50,5 +50,5 @@ private:
   unsigned long order_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_FIFO_PURGING_STRATEGY_H */

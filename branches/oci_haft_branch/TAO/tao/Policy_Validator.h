@@ -14,7 +14,7 @@
 
 #ifndef TAO_POLICY_VALIDATOR_H
 #define TAO_POLICY_VALIDATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Policy_ForwardC.h"
@@ -97,5 +97,5 @@ private:
   static TAO_Policy_Validator *last_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POLICY_VALIDATOR_H_ */

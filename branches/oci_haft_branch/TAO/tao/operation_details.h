@@ -13,7 +13,7 @@
 #ifndef TAO_OPERATION_DETAILS_H
 #define TAO_OPERATION_DETAILS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -136,6 +136,6 @@ private:
 # include "operation_details.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_OPERATION_DETAILS_H */

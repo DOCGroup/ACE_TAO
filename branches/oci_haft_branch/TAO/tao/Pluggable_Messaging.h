@@ -16,7 +16,7 @@
 //
 #ifndef TAO_PLUGGABLE_MESSAGING_H
 #define TAO_PLUGGABLE_MESSAGING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/Exception.h"
@@ -172,5 +172,5 @@ public:
 # include "tao/Pluggable_Messaging.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_PLUGGABLE_MESSAGING_H*/

@@ -15,7 +15,7 @@
 #ifndef TAO_CORBA_STRING_H
 #define TAO_CORBA_STRING_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Managed_Types.h"
@@ -283,6 +283,6 @@ operator>> (istream &, CORBA::WString_out &);
 #endif /* ! __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_CORBA_STRING_H */

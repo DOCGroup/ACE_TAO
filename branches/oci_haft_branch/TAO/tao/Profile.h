@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,7 +12,9 @@
 
 #ifndef TAO_PROFILE_H
 #define TAO_PROFILE_H
-#include "ace/pre.h"
+
+#include /**/ "ace/pre.h"
+
 #include "tao/Tagged_Components.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -20,9 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Version.h"
-#include "ace/Synch.h"
 #include "tao/Refcounted_ObjectKey.h"
 
+class ACE_Lock;
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
@@ -263,6 +265,12 @@ protected:
   /// tagged_components.
   void set_tagged_components (TAO_OutputCDR &cdr);
 
+  /// Helper method that tries determining the equivalent profiles for
+  /// different services.
+  CORBA::Boolean is_profile_equivalent_i (const TAO_Profile *);
+
+  CORBA::ULong hash_service_i (CORBA::ULong m);
+
 private:
 
   /// this object keeps ownership of this object
@@ -384,5 +392,6 @@ private:
 # include "Profile.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
+
 #endif  /* TAO_PROFILE_H */

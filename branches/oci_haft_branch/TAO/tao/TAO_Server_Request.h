@@ -19,7 +19,7 @@
 
 #ifndef TAO_GIOP_SERVER_REQUEST_H
 #define TAO_GIOP_SERVER_REQUEST_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -304,5 +304,5 @@ private:
 # include "TAO_Server_Request.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_GIOP_SERVER_REQUEST_H */

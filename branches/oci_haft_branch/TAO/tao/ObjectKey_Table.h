@@ -1,4 +1,3 @@
-
 // -*- C++ -*-
 
 //=============================================================================
@@ -12,7 +11,7 @@
 //=============================================================================
 #ifndef TAO_OBJECTKEY_TABLE_H
 #define TAO_OBJECTKEY_TABLE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/RB_Tree.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -20,7 +19,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
+#include "tao/Object_KeyC.h"
 #include "ace/Functor.h"
+#include "ace/Null_Mutex.h"
 
 
 // Forward declarations
@@ -31,8 +32,6 @@ namespace TAO
 {
 
   // Forward declarations within the namespace..
-
-  class ObjectKey;
   class Refcounted_ObjectKey;
 
   /**
@@ -138,5 +137,5 @@ namespace TAO
 }
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_OBJECT_KEY_TABLE_H*/

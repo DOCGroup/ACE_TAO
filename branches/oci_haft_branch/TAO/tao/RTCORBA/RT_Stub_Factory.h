@@ -17,7 +17,7 @@
 #ifndef TAO_RT_STUB_FACTORY_H_
 #define TAO_RT_STUB_FACTORY_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -57,5 +57,5 @@ ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Stub_Factory)
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_STUB_FACTORY_H_ */

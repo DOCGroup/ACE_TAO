@@ -12,7 +12,7 @@
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Codeset_Translator_Factory.h"
 
@@ -75,5 +75,5 @@ private:
 #pragma implementation ("Codeset_Translator_Factory_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Codeset_Translator_Factory_T */

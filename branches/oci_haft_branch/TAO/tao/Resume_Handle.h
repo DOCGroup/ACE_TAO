@@ -12,7 +12,7 @@
 
 #ifndef TAO_RESUME_HANDLE_H
 #define TAO_RESUME_HANDLE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -86,5 +86,5 @@ private:
 # include "Resume_Handle.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_RESUME_HANDLE*/

@@ -14,7 +14,7 @@
 #ifndef TAO_BASE_CONNECTION_PROPERTY_H
 #define TAO_BASE_CONNECTION_PROPERTY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport_Descriptor_Interface.h"
 
@@ -68,5 +68,5 @@ public:
 # include "tao/Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_BASE_CONNECTION_PROPERTY_H*/

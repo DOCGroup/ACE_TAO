@@ -4,16 +4,18 @@
 #define TAO_SEQUENCE_T_C
 
 #include "tao/Sequence_T.h"
-#include "tao/Typecode.h"
-#include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Sequence_T.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_Memory.h"
+
+
 ACE_RCSID (tao, 
            Sequence_T, 
            "$Id$")
+
 
 template <typename T>
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (
@@ -184,7 +186,7 @@ template <typename T>
 T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i)
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
   T * tmp = ACE_reinterpret_cast (T *,
                                   this->buffer_);
   return tmp[i];
@@ -196,7 +198,7 @@ template <typename T>
 const T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
 {
-  ACE_ASSERT (i < this->maximum_);
+  TAO_SEQUENCE_ASSERT (i, this->maximum_);
   T * const tmp = ACE_reinterpret_cast (T * ACE_CAST_CONST, 
                                         this->buffer_);
   return tmp[i];
@@ -1978,7 +1980,7 @@ template<size_t MAX>
 TAO_SeqElem_String_Manager
 TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   char ** const tmp = ACE_reinterpret_cast  (char ** ACE_CAST_CONST,
                                            this->buffer_);
   return TAO_SeqElem_String_Manager (tmp + slot,
@@ -2068,7 +2070,7 @@ TAO_Bounded_String_Sequence<MAX>::replace (CORBA::ULong length,
                                            char ** data,
                                            CORBA::Boolean release)
 {
-  ACE_ASSERT (length < this->maximum_);
+  TAO_SEQUENCE_ASSERT (length, this->maximum_);
   this->_deallocate_buffer ();
   this->length_ = length;
 
@@ -2175,7 +2177,7 @@ template<size_t MAX>
 TAO_SeqElem_WString_Manager
 TAO_Bounded_WString_Sequence<MAX>::operator[] (CORBA::ULong slot) const
 {
-  ACE_ASSERT (slot < this->maximum_);
+  TAO_SEQUENCE_ASSERT (slot, this->maximum_);
   CORBA::WChar ** const tmp =
     ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
                           this->buffer_);
@@ -2268,7 +2270,7 @@ TAO_Bounded_WString_Sequence<MAX>::replace (CORBA::ULong length,
                                             CORBA::WChar ** data,
                                             CORBA::Boolean release)
 { 
-  ACE_ASSERT (length < this->maximum_);
+  TAO_SEQUENCE_ASSERT (length, this->maximum_);
   this->_deallocate_buffer ();
   this->length_ = length;
 

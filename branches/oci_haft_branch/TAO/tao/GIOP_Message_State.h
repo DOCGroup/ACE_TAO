@@ -16,7 +16,7 @@
 //=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
 #define TAO_GIOP_MESSAGE_STATE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/GIOP_Message_Version.h"
 
 
@@ -133,5 +133,5 @@ const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 # include "tao/GIOP_Message_State.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_STATE_H*/

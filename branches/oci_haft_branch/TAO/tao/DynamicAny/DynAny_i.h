@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// =========================================================================
-//
-// = LIBRARY
-//    TAO_DynamicAny
-//
-// = FILENAME
-//    DynAny_i.h
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// =========================================================================
+//=============================================================================
+/**
+ *  @file    DynAny_i.h
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNANY_I_H
 #define TAO_DYNANY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "DynamicAny.h"
 
@@ -128,5 +125,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DYNANY_I_H */

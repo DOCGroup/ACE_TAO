@@ -15,7 +15,7 @@
 
 #ifndef TAO_RTSCHEDULER_LOADER_H
 #define TAO_RTSCHEDULER_LOADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtscheduler_export.h"
 
@@ -46,5 +46,5 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTScheduler, TAO_RTScheduler_Loader)
 ACE_FACTORY_DECLARE (TAO_RTScheduler, TAO_RTScheduler_Loader)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RTSCHEDULER_LOADER_H */

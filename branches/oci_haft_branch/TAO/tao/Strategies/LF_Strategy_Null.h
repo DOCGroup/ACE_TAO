@@ -12,7 +12,7 @@
 
 #ifndef TAO_LF_STRATEGY_NULL_H
 #define TAO_LF_STRATEGY_NULL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "strategies_export.h"
 #include "tao/LF_Strategy.h"
@@ -52,5 +52,5 @@ public:
 # include "LF_Strategy_Null.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_LF_STRATEGY_NULL_H */

@@ -15,7 +15,7 @@
 #ifndef TAO_RESOURCE_FACTORY_H
 #define TAO_RESOURCE_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -238,6 +238,6 @@ protected:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_RESOURCE_FACTORY_H */

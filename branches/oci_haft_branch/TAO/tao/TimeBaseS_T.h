@@ -22,7 +22,7 @@
 #ifndef _TAO_IDL_ORIG_TIMEBASES_T_H_
 #define _TAO_IDL_ORIG_TIMEBASES_T_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -49,5 +49,5 @@
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

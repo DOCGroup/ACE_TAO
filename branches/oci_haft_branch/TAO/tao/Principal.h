@@ -16,7 +16,7 @@
 
 #ifndef TAO_PRINCIPAL_H
 #define TAO_PRINCIPAL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -25,7 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "OctetSeqC.h"
-#include "ace/Synch_T.h"
+#include "ace/Thread_Mutex.h"
+#include "Pseudo_VarOut_T.h"
 
 namespace CORBA
 {
@@ -104,5 +105,5 @@ operator>> (TAO_InputCDR &, CORBA::Principal *&);
 # include "tao/Principal.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PRINCIPAL_H */

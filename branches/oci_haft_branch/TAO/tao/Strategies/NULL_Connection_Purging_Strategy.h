@@ -10,7 +10,7 @@
 
 #ifndef TAO_NULL_PURGING_STRATEGY_H
 #define TAO_NULL_PURGING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "strategies_export.h"
 
@@ -45,5 +45,5 @@ public:
   virtual int cache_maximum (void) const;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NULL_PURGING_STRATEGY_H */

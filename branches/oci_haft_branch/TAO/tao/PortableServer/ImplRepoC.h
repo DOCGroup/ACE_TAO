@@ -30,7 +30,7 @@
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOC_H_
 #define _TAO_IDL_ORIG_IMPLREPOC_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -409,7 +409,7 @@ TAO_NAMESPACE  ImplementationRepository
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void);
+    virtual void _raise (void) const;
 
     virtual void _tao_encode (
         TAO_OutputCDR &
@@ -458,7 +458,7 @@ TAO_NAMESPACE  ImplementationRepository
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void);
+    virtual void _raise (void) const;
 
     virtual void _tao_encode (
         TAO_OutputCDR &
@@ -513,7 +513,7 @@ TAO_NAMESPACE  ImplementationRepository
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void);
+    virtual void _raise (void) const;
 
     virtual void _tao_encode (
         TAO_OutputCDR &
@@ -1991,5 +1991,5 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, Implementat
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

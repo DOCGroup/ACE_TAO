@@ -15,7 +15,7 @@
 
 #ifndef TAO_RTSCHEDULER_H_
 #define TAO_RTSCHEDULER_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtscheduler_export.h"
 #include "tao/corbafwd.h"
@@ -37,7 +37,7 @@ static TAO_RTScheduler_Initializer TAO_RTScheduler_initializer;
 #include "RTSchedulerC.h"
 #undef TAO_RTSCHEDULER_SAFE_INCLUDE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RTSCHEDULER_H_ */
 
 

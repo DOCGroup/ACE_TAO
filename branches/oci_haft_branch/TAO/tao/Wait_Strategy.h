@@ -13,7 +13,7 @@
 
 #ifndef TAO_WAIT_STRATEGY_H
 #define TAO_WAIT_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -82,5 +82,5 @@ protected:
 # include "Wait_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_WAIT_STRATEGY_H */

@@ -19,7 +19,7 @@
 
 #ifndef TAO_RT_POA_H
 #define TAO_RT_POA_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtportableserver_export.h"
 
@@ -329,5 +329,5 @@ protected:
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POA_H */

@@ -15,7 +15,7 @@
 #ifndef TAO_DII_CLIENT_REQUEST_INFO_H
 #define TAO_DII_CLIENT_REQUEST_INFO_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/ClientRequestInfo_i.h"
 
@@ -78,6 +78,6 @@ private:
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_DII_CLIENT_REQUEST_INFO_H */

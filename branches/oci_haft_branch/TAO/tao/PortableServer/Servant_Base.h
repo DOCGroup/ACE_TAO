@@ -12,7 +12,7 @@
 
 #ifndef TAO_SERVANT_BASE_H
 #define TAO_SERVANT_BASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PortableServerC.h"
 #include "tao/Abstract_Servant_Base.h"
@@ -272,5 +272,5 @@ protected:
 # include "Servant_Base.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SERVANT_BASE_H */

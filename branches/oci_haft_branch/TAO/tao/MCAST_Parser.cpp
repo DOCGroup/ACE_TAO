@@ -3,6 +3,7 @@
 #include "Object_Loader.h"
 #include "Object.h"
 #include "ORB_Core.h"
+#include "ORB.h"
 #include "Exception.h"
 #include "Environment.h"
 #include "debug.h"
@@ -320,10 +321,10 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
         }
         if (result == -1)
           {
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("\nmulticast discovery of %s failed.\n"),
                         service_name));
-                       
+
             if (ACE_OS::strcasecmp (service_name,
                                     "NameService") == 0)
              {
@@ -334,7 +335,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
              }
           }
     }
-        
+
   // Clean up.
   stream.close ();
   dgram.close ();

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,7 +8,6 @@
  *
  *   Keep track of profile lists
  *
- *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================
@@ -16,15 +15,17 @@
 
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
-#include "ace/pre.h"
-#include "ace/Synch.h"
+
+#include /**/ "ace/pre.h"
+
+#include "ace/Recursive_Thread_Mutex.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PolicyC.h"
+#include "tao/Policy_ForwardC.h"
 
 class TAO_Profile;
 
@@ -234,5 +235,6 @@ private:
 # include "tao/MProfile.i"
 #endif /*__ACE_INLINE__ */
 
-#include "ace/post.h"
-#endif /*TAO_MPROFILE_H */
+#include /**/ "ace/post.h"
+
+#endif  /* TAO_MPROFILE_H */

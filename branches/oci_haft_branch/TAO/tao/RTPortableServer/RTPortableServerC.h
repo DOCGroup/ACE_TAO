@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 #define _TAO_IDL_ORIG_RTPORTABLESERVERC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "rtportableserver_export.h"
 
 #include "tao/PortableServer/PortableServerC.h"
@@ -270,6 +270,6 @@ TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPo
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

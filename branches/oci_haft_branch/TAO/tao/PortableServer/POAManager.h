@@ -16,7 +16,7 @@
 
 #ifndef TAO_POAMANAGER_H
 #define TAO_POAMANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PortableServerC.h"
 
@@ -160,5 +160,5 @@ protected:
 # include "POAManager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POAMANAGER_H */

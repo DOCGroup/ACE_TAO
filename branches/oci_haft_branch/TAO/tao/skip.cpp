@@ -170,6 +170,13 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
             case CORBA::tk_alias:
             case CORBA::tk_except:
             case CORBA::tk_value:
+            case CORBA::tk_value_box:
+            case CORBA::tk_native:
+            case CORBA::tk_abstract_interface:
+            case CORBA::tk_local_interface:
+            case CORBA::tk_component:
+            case CORBA::tk_home:
+            case CORBA::tk_event:
               {
                 CORBA::ULong length;
 
@@ -324,7 +331,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
 
       retval = TAO_Marshal_Object::perform_skip (param.in (),
                                                  stream
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -703,7 +710,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
           continue_skipping =
             TAO_Marshal_Object::perform_skip (tc2.in (),
                                               stream
-                                               ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
         }
       break;
@@ -831,7 +838,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
 
   retval = TAO_Marshal_Object::perform_skip (tc2.in (),
                                              stream
-                                              ACE_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   //  tc2->_decr_refcnt ();

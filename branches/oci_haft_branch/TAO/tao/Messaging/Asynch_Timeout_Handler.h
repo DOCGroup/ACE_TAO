@@ -16,7 +16,7 @@
 
 #ifndef TAO_ASYNCH_TIMEOUT_HANDLER_H
 #define TAO_ASYNCH_TIMEOUT_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "messaging_export.h"
 
@@ -75,5 +75,5 @@ public:
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1)*/
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_TIMEOUT_HANDLER_H */

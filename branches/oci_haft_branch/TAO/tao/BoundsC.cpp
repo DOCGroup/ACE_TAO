@@ -112,7 +112,7 @@ CORBA::Bounds::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::Bounds::_raise (void)
+void CORBA::Bounds::_raise (void) const
 {
   TAO_RAISE (*this);
 }

@@ -16,7 +16,7 @@
 
 #ifndef TAO_DII_REPLY_DISPATCHER_H
 #define TAO_DII_REPLY_DISPATCHER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -67,5 +67,5 @@ private:
   const CORBA::Request_ptr req_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_REPLY_DISPATCHER_H */

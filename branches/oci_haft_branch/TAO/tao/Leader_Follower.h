@@ -14,12 +14,13 @@
 #ifndef TAO_LEADER_FOLLOWER_H
 #define TAO_LEADER_FOLLOWER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/LF_Follower.h"
 #include "tao/ORB_Core.h"
 #include "tao/New_Leader_Generator.h"
 #include "ace/Intrusive_List.h"
+#include "ace/Reverse_Lock_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -279,6 +280,6 @@ private:
 # include "tao/Leader_Follower.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_LEADER_FOLLOWER_H */

@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_OBJECTREFERENCETEMPLATEC_H_
 #define _TAO_IDL_ORIG_OBJECTREFERENCETEMPLATEC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ort_export.h"
 #include "tao/PI_ForwardC.h"
 
@@ -491,6 +491,6 @@ TAO_ORT_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

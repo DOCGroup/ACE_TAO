@@ -16,7 +16,7 @@
 
 #ifndef TAO_POA_POLICIES_H
 #define TAO_POA_POLICIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PortableServerC.h"
 #include "tao/LocalObject.h"
@@ -289,5 +289,5 @@ protected:
 # include "POA_Policies.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POA_POLICIES_H */

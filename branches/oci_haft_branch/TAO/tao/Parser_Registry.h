@@ -15,7 +15,7 @@
 #ifndef TAO_PARSER_REGISTRY_H
 #define TAO_PARSER_REGISTRY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -80,5 +80,5 @@ private:
 #include "tao/Parser_Registry.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PARSER_REGISTRY_H */

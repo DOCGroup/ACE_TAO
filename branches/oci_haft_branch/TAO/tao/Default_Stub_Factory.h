@@ -16,7 +16,7 @@
 #ifndef TAO_DEFAULT_STUB_FACTORY_H_
 #define TAO_DEFAULT_STUB_FACTORY_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Stub_Factory.h"
 #include "ace/Service_Config.h"
@@ -52,5 +52,5 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Stub_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Stub_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_STUB_FACTORY_H_ */

@@ -150,13 +150,11 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
       if (tph != 0)
         {
-          const char protocol[] = "sciop";
-          const char * protocol_type = protocol;
 
           int result =
             tph->update_client_protocol_properties (stub,
-                                                    this->connection_handler_,
-                                                    protocol_type);
+						    this,
+                                                    "sciop");
 
           if (result == -1)
             return -1;

@@ -16,7 +16,7 @@
 
 #ifndef TAO_DEFAULT_PORTS_H
 #define TAO_DEFAULT_PORTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -73,5 +73,5 @@
 #define TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT 10021
 #endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_DEFAULT_PORTS_H*/

@@ -14,7 +14,7 @@
 //=============================================================================
 #ifndef TAO_SYNCH_REFCOUNTABLE_H
 #define TAO_SYNCH_REFCOUNTABLE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Refcountable.h"
 
@@ -53,5 +53,5 @@ protected:
 # include "Synch_Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_SYNCH_REFCOUNTABLE*/

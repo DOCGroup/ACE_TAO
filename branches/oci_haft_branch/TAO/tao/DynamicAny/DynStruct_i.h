@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ========================================================================
-//
-// = LIBRARY
-//    TAO_DynamicAny
-//
-// = FILENAME
-//    DynStruct_i.h
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    DynStruct_i.h
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNSTRUCT_I_H
 #define TAO_DYNSTRUCT_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "DynamicAny.h"
 
@@ -34,31 +31,30 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_DynStruct_i
+ *
+ * Implementation of Dynamic Any type for Structs
+ */
 class TAO_DynamicAny_Export TAO_DynStruct_i
   : public virtual DynamicAny::DynStruct,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //    TAO_DynStruct_i
-  //
-  // = DESCRIPTION
-  //    Implementation of Dynamic Any type for Structs
-  //
 public:
+  /// Constructor.
   TAO_DynStruct_i (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_DynStruct_i (void);
-  // Destructor.
 
+  /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc
              ACE_ENV_ARG_DECL);
-  // Initialize using just a TypeCode.
 
+  /// Initialize using an Any.
   void init (const CORBA::Any& any
              ACE_ENV_ARG_DECL);
-  // Initialize using an Any.
 
   // = LocalObject methods.
   static TAO_DynStruct_i *_narrow (
@@ -164,16 +160,16 @@ public:
     ));
 
 private:
-  // Check if the typecode is acceptable.
+  /// Check if the typecode is acceptable.
   void check_typecode (CORBA::TypeCode_ptr tc
                        ACE_ENV_ARG_DECL);
 
-  // Code common to the constructor from an Any arg and the member
-  // function from_any().
+  /// Code common to the constructor from an Any arg and the member
+  /// function from_any().
   void set_from_any (const CORBA::Any &any
                      ACE_ENV_ARG_DECL);
 
-  // Called by both versions of init().
+  /// Called by both versions of init().
   void init_common (void);
 
   // = Use copy() or assign() instead of these.
@@ -181,13 +177,13 @@ private:
   TAO_DynStruct_i &operator= (const TAO_DynStruct_i &src);
 
 private:
+  /// Each component is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
-  // Each component is also a DynAny.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DYNSTRUCT_I_H */

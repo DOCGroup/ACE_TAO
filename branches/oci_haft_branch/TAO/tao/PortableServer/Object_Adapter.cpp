@@ -15,6 +15,7 @@
 // -- TAO Include --
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
+#include "tao/TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
@@ -628,6 +629,16 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // destroyed yet or not.
   this->root_->_add_ref ();
 
+  // Lock access for the duration of this transaction.
+  TAO_POA_Guard poa_guard (*this->root_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  this->root_->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   // Release the POA_Manager_var since we got here without error.  The
   // TAO_POA object takes ownership of the POA_Manager object
   // (actually it shares the ownership with its peers).
@@ -805,24 +816,28 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   ACE_TRY
     {
       TAO_ServantBase *sb =
-        this->get_collocated_servant (stub,
-                                      mp
+        this->get_collocated_servant (mp
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (sb)
-        {
-          CORBA::Object_ptr x;
-          ACE_NEW_RETURN (x,
-                          CORBA::Object (stub,
-                                         1,
-                                         sb),
-                          CORBA::Object::_nil ());
+      // Set the servant ORB.  Do not duplicate the ORB here since
+      // TAO_Stub::servant_orb() duplicates it.
+      stub->servant_orb (this->orb_core_.orb ());
 
-          // Here we set the strategized Proxy Broker.
-          x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
-          return x;
-        }
+      // It is ok to create a collocated object even when <sb> is
+      // zero.
+      CORBA::Object_ptr x;
+      ACE_NEW_RETURN (x,
+                      CORBA::Object (stub,
+                                     1,
+                                     sb),
+                      CORBA::Object::_nil ());
+
+      // Here we set the strategized Proxy Broker.
+      x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+
+      // Success.
+      return x;
     }
   ACE_CATCHANY
     {
@@ -830,7 +845,8 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
     }
   ACE_ENDTRY;
 
-  return 0;
+  // Failure.
+  return CORBA::Object::_nil ();
 }
 
 CORBA::Long
@@ -847,20 +863,23 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
   ACE_TRY
     {
       TAO_ServantBase *sb =
-        this->get_collocated_servant (stub,
-                                      mp
+        this->get_collocated_servant (mp
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (sb)
-        {
-          obj->set_collocated_servant (sb);
+      // Set the servant ORB.  Do not duplicate the ORB here since
+      // TAO_Stub::servant_orb() duplicates it.
+      stub->servant_orb (this->orb_core_.orb ());
 
-          // Here we set the strategized Proxy Broker.
-          obj->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+      // It is ok to set the object as a collocated object even when
+      // <sb> is zero.
+      obj->set_collocated_servant (sb);
 
-          return 0;
-        }
+      // Here we set the strategized Proxy Broker.
+      obj->_proxy_broker (the_tao_strategized_object_proxy_broker ());
+
+     // Success.
+     return 0;
     }
   ACE_CATCHANY
     {
@@ -868,12 +887,12 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
     }
   ACE_ENDTRY;
 
+  // Failure.
   return -1;
 }
 
 TAO_ServantBase *
-TAO_Object_Adapter::get_collocated_servant (TAO_Stub *stub,
-                                            const TAO_MProfile &mp
+TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp
                                             ACE_ENV_ARG_DECL)
 {
   for (TAO_PHandle j = 0;
@@ -890,29 +909,14 @@ TAO_Object_Adapter::get_collocated_servant (TAO_Stub *stub,
 
       TAO_ServantBase *servant = 0;
 
-      TAO_SERVANT_LOCATION servant_location =
-        this->find_servant (objkey.in (),
-                            servant
-                            ACE_ENV_ARG_PARAMETER);
+      this->find_servant (objkey.in (),
+                          servant
+                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      if (servant_location != TAO_SERVANT_NOT_FOUND)
-        {
-          // Found collocated object.  Perhaps we can get around
-          // by simply setting the servant_orb, but let get this
-          // to work first.
-
-          // There could only be one ORB which is us.
-
-          // @@ Do not duplicate the ORB here!
-          //    TAO_Stub::servant_orb()  duplicates it.
-          //       -Ossama
-          stub->servant_orb (this->orb_core_.orb ());
-
-          return servant;
-        }
-
+      return servant;
     }
+
   return 0;
 }
 
@@ -999,9 +1003,10 @@ TAO_Object_Adapter::Active_Hint_Strategy::~Active_Hint_Strategy (void)
 }
 
 int
-TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (const poa_name &system_name,
-                                                               TAO_POA *&poa
-                                                               ACE_ENV_ARG_DECL)
+TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (
+  const poa_name &system_name,
+  TAO_POA *&poa
+  ACE_ENV_ARG_DECL)
 {
   poa_name folded_name;
   int result = this->persistent_poa_system_map_.recover_key (system_name,
@@ -1014,13 +1019,15 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (const poa_name &s
       if (result != 0
           || folded_name != poa->folded_name ())
         {
-          result = this->object_adapter_->persistent_poa_name_map_->find (folded_name,
-                                                                          poa);
+          result =
+            this->object_adapter_->persistent_poa_name_map_->find (folded_name,
+                                                                   poa);
           if (result != 0)
             {
-              result = this->object_adapter_->activate_poa (folded_name,
-                                                            poa
-                                                            ACE_ENV_ARG_PARAMETER);
+              result =
+                this->object_adapter_->activate_poa (folded_name,
+                                                     poa
+                                                     ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
             }
         }
@@ -1030,9 +1037,10 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (const poa_name &s
 }
 
 int
-TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (const poa_name &folded_name,
-                                                               TAO_POA *poa,
-                                                               poa_name_out system_name)
+TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (
+  const poa_name &folded_name,
+  TAO_POA *poa,
+  poa_name_out system_name)
 {
   poa_name name = folded_name;
   int result = this->persistent_poa_system_map_.bind_modify_key (poa,
@@ -1056,8 +1064,9 @@ TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (const poa_name &f
 }
 
 int
-TAO_Object_Adapter::Active_Hint_Strategy::unbind_persistent_poa (const poa_name &folded_name,
-                                                                 const poa_name &system_name)
+TAO_Object_Adapter::Active_Hint_Strategy::unbind_persistent_poa (
+  const poa_name &folded_name,
+  const poa_name &system_name)
 {
   int result = this->persistent_poa_system_map_.unbind (system_name);
 
@@ -1073,12 +1082,14 @@ TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy (void)
 }
 
 int
-TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (const poa_name &system_name,
-                                                           TAO_POA *&poa
-                                                           ACE_ENV_ARG_DECL)
+TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (
+  const poa_name &system_name,
+  TAO_POA *&poa
+  ACE_ENV_ARG_DECL)
 {
-  int result = this->object_adapter_->persistent_poa_name_map_->find (system_name,
-                                                                      poa);
+  int result =
+    this->object_adapter_->persistent_poa_name_map_->find (system_name,
+                                                           poa);
   if (result != 0)
     {
       result =
@@ -1092,9 +1103,10 @@ TAO_Object_Adapter::No_Hint_Strategy::find_persistent_poa (const poa_name &syste
 }
 
 int
-TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (const poa_name &folded_name,
-                                                           TAO_POA *poa,
-                                                           poa_name_out system_name)
+TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (
+  const poa_name &folded_name,
+  TAO_POA *poa,
+  poa_name_out system_name)
 {
   int result =
     this->object_adapter_->persistent_poa_name_map_->bind (folded_name,
@@ -1107,17 +1119,17 @@ TAO_Object_Adapter::No_Hint_Strategy::bind_persistent_poa (const poa_name &folde
 }
 
 int
-TAO_Object_Adapter::No_Hint_Strategy::unbind_persistent_poa (const poa_name &folded_name,
-                                                             const poa_name &system_name)
+TAO_Object_Adapter::No_Hint_Strategy::unbind_persistent_poa (
+  const poa_name & folded_name,
+  const poa_name & /* system_name */)
 {
-  ACE_UNUSED_ARG (system_name);
-
   return this->object_adapter_->persistent_poa_name_map_->unbind (folded_name);
 }
 
-TAO_Object_Adapter::poa_name_iterator::poa_name_iterator (int begin,
-                                                          CORBA::ULong size,
-                                                          const CORBA::Octet *folded_buffer)
+TAO_Object_Adapter::poa_name_iterator::poa_name_iterator (
+  int begin,
+  CORBA::ULong size,
+  const CORBA::Octet *folded_buffer)
   : size_ (size),
     folded_buffer_ (folded_buffer),
     last_separator_ ((CORBA::ULong) ~0)
@@ -1180,7 +1192,8 @@ TAO_Object_Adapter::poa_name_iterator::operator++ (void)
   return *this;
 }
 
-TAO_Object_Adapter::iteratable_poa_name::iteratable_poa_name (const poa_name &folded_name)
+TAO_Object_Adapter::iteratable_poa_name::iteratable_poa_name (
+  const poa_name &folded_name)
   : folded_name_ (folded_name)
 {
 }
@@ -1259,7 +1272,8 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
           ACE_CATCHANY
             {
               // Ignore exceptions
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA::~complete_destruction_i");
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                   "TAO_POA::complete_destruction_i");
             }
           ACE_ENDTRY;
         }
@@ -1293,10 +1307,11 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)
 }
 
 int
-TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO::ObjectKey &key,
-                                                        const char *operation,
-                                                        CORBA::Object_out forward_to
-                                                        ACE_ENV_ARG_DECL)
+TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (
+  const TAO::ObjectKey &key,
+  const char *operation,
+  CORBA::Object_out forward_to
+  ACE_ENV_ARG_DECL)
 {
   while (1)
     {
@@ -1313,13 +1328,12 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO::ObjectKey &ke
       if (result == TAO_Adapter::DS_FAILED &&
           wait_occurred_restart_call)
         {
-          // We ended up waiting on a condition variable, the POA
+          // We ended up waiting on a condition variable.  The POA
           // state may have changed while we are waiting.  Therefore,
           // we need to call prepare_for_upcall_i() again.  We also
-          // need to cleanup the state of the upcall object.
-          // Therefore, invoke the upcall destructor before
+          // need to cleanup the state of the upcall object before
           // continuing.
-          this->~Servant_Upcall ();
+          this->upcall_cleanup ();
           continue;
         }
       else
@@ -1330,11 +1344,12 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO::ObjectKey &ke
 }
 
 int
-TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall_i (const TAO::ObjectKey &key,
-                                                          const char *operation,
-                                                          CORBA::Object_out forward_to,
-                                                          int &wait_occurred_restart_call
-                                                          ACE_ENV_ARG_DECL)
+TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall_i (
+  const TAO::ObjectKey &key,
+  const char *operation,
+  CORBA::Object_out forward_to,
+  int &wait_occurred_restart_call
+  ACE_ENV_ARG_DECL)
 {
   // Acquire the object adapter lock first.
   int result = this->object_adapter_->lock ().acquire ();
@@ -1350,7 +1365,8 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall_i (const TAO::ObjectKey &
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
-  this->object_adapter_->wait_for_non_servant_upcalls_to_complete (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->object_adapter_->wait_for_non_servant_upcalls_to_complete (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
   // Locate the POA.
@@ -1439,32 +1455,37 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall_i (const TAO::ObjectKey &
 }
 
 void
-TAO_Object_Adapter::Servant_Upcall::pre_invoke_remote_request (TAO_ServerRequest &req
-                                                               ACE_ENV_ARG_DECL)
+TAO_Object_Adapter::Servant_Upcall::pre_invoke_remote_request (
+  TAO_ServerRequest &req
+  ACE_ENV_ARG_DECL)
 {
-  this->object_adapter_->servant_dispatcher_->pre_invoke_remote_request (this->poa (),
-                                                                         this->priority (),
-                                                                         req,
-                                                                         this->pre_invoke_state_
-                                                                         ACE_ENV_ARG_PARAMETER);
+  this->object_adapter_->servant_dispatcher_->pre_invoke_remote_request (
+    this->poa (),
+    this->priority (),
+    req,
+    this->pre_invoke_state_
+    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_Object_Adapter::Servant_Upcall::pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Object_Adapter::Servant_Upcall::pre_invoke_collocated_request (
+  ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->object_adapter_->servant_dispatcher_->pre_invoke_collocated_request (this->poa (),
-                                                                             this->priority (),
-                                                                             this->pre_invoke_state_
-                                                                             ACE_ENV_ARG_PARAMETER);
+  this->object_adapter_->servant_dispatcher_->pre_invoke_collocated_request (
+    this->poa (),
+    this->priority (),
+    this->pre_invoke_state_
+    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_Object_Adapter::Servant_Upcall::post_invoke (void)
 {
-  this->object_adapter_->servant_dispatcher_->post_invoke (this->poa (),
-                                                           this->pre_invoke_state_);
+  this->object_adapter_->servant_dispatcher_->post_invoke (
+    this->poa (),
+    this->pre_invoke_state_);
 }
 
 TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State (void)
@@ -1492,7 +1513,8 @@ TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO::ObjectKey &key
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
-  this->object_adapter_->wait_for_non_servant_upcalls_to_complete (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->object_adapter_->wait_for_non_servant_upcalls_to_complete (
+    ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Locate the POA.
@@ -1505,7 +1527,13 @@ TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO::ObjectKey &key
   return this->poa_;
 }
 
-TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
+TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall (void)
+{
+  this->upcall_cleanup ();
+}
+
+void
+TAO_Object_Adapter::Servant_Upcall::upcall_cleanup (void)
 {
   this->post_invoke ();
 
@@ -1786,6 +1814,12 @@ TAO_POA_Current_Impl::setup (TAO_POA *p,
 
   // Setup is complete.
   this->setup_done_ = 1;
+}
+
+TAO_POA_Current_Impl *
+TAO_POA_Current_Impl::previous (void) const
+{
+  return this->previous_current_impl_;
 }
 
 void

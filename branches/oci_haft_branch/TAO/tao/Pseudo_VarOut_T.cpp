@@ -9,12 +9,11 @@
 #include "tao/Pseudo_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Pseudo_VarOut_T, 
+ACE_RCSID (tao,
+           Pseudo_VarOut_T,
            "$Id$")
 
 template <typename T>
-ACE_INLINE
 TAO_Pseudo_Var_T<T> &
 TAO_Pseudo_Var_T<T>::operator= (const TAO_Pseudo_Var_T<T> & p)
 {

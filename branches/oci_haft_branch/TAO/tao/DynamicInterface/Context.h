@@ -16,7 +16,7 @@
 #ifndef TAO_CONTEXT_H
 #define TAO_CONTEXT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "dynamicinterface_export.h"
 
@@ -187,6 +187,6 @@ namespace CORBA
 # include "Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CONTEXT_H */

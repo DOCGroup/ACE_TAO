@@ -15,7 +15,7 @@
 
 #ifndef TAO_THREAD_PER_CONNECTION_HANDLER_H
 #define TAO_THREAD_PER_CONNECTION_HANDLER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -72,5 +72,5 @@ private:
   TAO_Connection_Handler *ch_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_THREAD_PER_CONNECTION_HANDLER_H*/

@@ -5,8 +5,11 @@
 
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/Marshal.h"
-#include "tao/debug.h"
+#include "tao/CORBA_String.h"
+#include "tao/Environment.h"
+#include "tao/CDR.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any_Dual_Impl_T.inl"
@@ -118,6 +121,9 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
           return 1;
         }
 
+      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
       T *empty_value = 0;
       ACE_NEW_RETURN (empty_value,
                       T,
@@ -128,7 +134,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                                                any_tc,
                                                empty_value),
                       0);
-                      
+
       auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
 
       TAO_InputCDR cdr (mb->data_block (),
@@ -136,14 +142,10 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
-      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      impl->assign_translator (kind,
-                               &cdr);
+      impl->assign_translator (kind, &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)
@@ -151,18 +153,21 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
           _tao_elem = replacement->value_;
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
-          return result;
+          return 1;
         }
+
+      // Duplicated by Any_Impl base class constructor.
+      CORBA::release (any_tc);
     }
   ACE_CATCHANY
     {
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
-template<typename T> 
+template<typename T>
 void
 TAO::Any_Dual_Impl_T<T>::free_value (void)
 {
@@ -172,11 +177,12 @@ TAO::Any_Dual_Impl_T<T>::free_value (void)
       this->value_destructor_ = 0;
     }
 
+  CORBA::release (this->type_);
   this->value_ = 0;
 }
 
-template<typename T> 
-void 
+template<typename T>
+void
 TAO::Any_Dual_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
                                       ACE_ENV_ARG_DECL)
 {
@@ -187,4 +193,3 @@ TAO::Any_Dual_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
 }
 
 #endif /* TAO_ANY_DUAL_IMPL_T_C */
-

@@ -2,7 +2,7 @@
 
 #ifndef TAO_POA_MACROS_H
 #define TAO_POA_MACROS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/CORBA_macros.h"
 #include "tao/orbconf.h"
 
@@ -34,5 +34,5 @@
   ACE_UNUSED_ARG (poa_guard); \
   ACE_CHECK_RETURN (RETURN)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POA_MACROS_H */

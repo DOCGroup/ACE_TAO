@@ -16,7 +16,7 @@
 
 #ifndef TAO_DEFAULT_ACCEPTOR_FILTER_H
 #define TAO_DEFAULT_ACCEPTOR_FILTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 #include "tao/Acceptor_Filter.h"
@@ -65,5 +65,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POA_H */

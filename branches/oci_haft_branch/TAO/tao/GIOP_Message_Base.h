@@ -13,7 +13,7 @@
 
 #ifndef TAO_GIOP_MESSAGE_BASE_H
 #define TAO_GIOP_MESSAGE_BASE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Pluggable_Messaging.h"
 
 
@@ -247,5 +247,5 @@ protected:
 # include "tao/GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_BASE_H*/

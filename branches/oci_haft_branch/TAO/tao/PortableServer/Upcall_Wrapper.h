@@ -13,7 +13,7 @@
 
 #ifndef TAO_UPCALL_WRAPPER_H
 #define TAO_UPCALL_WRAPPER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
@@ -63,5 +63,5 @@ private:
   void * servant_upcall_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_UPCALL_WRAPPER_H */

@@ -4,6 +4,7 @@
 #include "ValueBase.h"
 #include "ValueFactory.h"
 #include "tao/Stub.h"
+#include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/debug.h"
 

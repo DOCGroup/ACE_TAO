@@ -371,7 +371,7 @@ template class TAO_Unbounded_Object_Sequence<PortableServer::POA,
     return result;
   }
 
-  void PortableServer::ForwardRequest::_raise (void)
+  void PortableServer::ForwardRequest::_raise (void) const
   {
     TAO_RAISE (*this);
   }
@@ -561,7 +561,7 @@ PortableServer::NotAGroupObject::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::NotAGroupObject::_raise (void)
+void PortableServer::NotAGroupObject::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -3186,7 +3186,7 @@ PortableServer::POAManager::AdapterInactive::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POAManager::AdapterInactive::_raise (void)
+void PortableServer::POAManager::AdapterInactive::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -4479,7 +4479,7 @@ PortableServer::POA::AdapterAlreadyExists::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::AdapterAlreadyExists::_raise (void)
+void PortableServer::POA::AdapterAlreadyExists::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -4616,7 +4616,7 @@ PortableServer::POA::AdapterNonExistent::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::AdapterNonExistent::_raise (void)
+void PortableServer::POA::AdapterNonExistent::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -4754,7 +4754,7 @@ PortableServer::POA::InvalidPolicy::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::InvalidPolicy::_raise (void)
+void PortableServer::POA::InvalidPolicy::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -4910,7 +4910,7 @@ PortableServer::POA::NoServant::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::NoServant::_raise (void)
+void PortableServer::POA::NoServant::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -5044,7 +5044,7 @@ PortableServer::POA::ObjectAlreadyActive::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::ObjectAlreadyActive::_raise (void)
+void PortableServer::POA::ObjectAlreadyActive::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -5180,7 +5180,7 @@ PortableServer::POA::ObjectNotActive::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::ObjectNotActive::_raise (void)
+void PortableServer::POA::ObjectNotActive::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -5314,7 +5314,7 @@ PortableServer::POA::ServantAlreadyActive::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::ServantAlreadyActive::_raise (void)
+void PortableServer::POA::ServantAlreadyActive::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -5451,7 +5451,7 @@ PortableServer::POA::ServantNotActive::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::ServantNotActive::_raise (void)
+void PortableServer::POA::ServantNotActive::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -5586,7 +5586,7 @@ PortableServer::POA::WrongAdapter::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::WrongAdapter::_raise (void)
+void PortableServer::POA::WrongAdapter::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -5719,7 +5719,7 @@ PortableServer::POA::WrongPolicy::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::POA::WrongPolicy::_raise (void)
+void PortableServer::POA::WrongPolicy::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -6084,7 +6084,7 @@ PortableServer::Current::NoContext::_tao_duplicate (void) const
   return result;
 }
 
-void PortableServer::Current::NoContext::_raise (void)
+void PortableServer::Current::NoContext::_raise (void) const
 {
   TAO_RAISE (*this);
 }

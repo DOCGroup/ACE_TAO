@@ -12,7 +12,7 @@
 
 #ifndef TAO_SYNCH_QUEUED_MESSAGE_H
 #define TAO_SYNCH_QUEUED_MESSAGE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Queued_Message.h"
 
@@ -88,5 +88,5 @@ private:
   ACE_Message_Block *current_block_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_QUEUED_MESSAGE_H */

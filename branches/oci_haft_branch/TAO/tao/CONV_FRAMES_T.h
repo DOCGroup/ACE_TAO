@@ -16,7 +16,7 @@
 
 #ifndef TAO_CONV_FRAMES_T_H
 #define TAO_CONV_FRAMES_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -44,5 +44,5 @@
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CONV_FRAMES_T_H */

@@ -22,7 +22,7 @@
 #ifndef TAO_CORBA_SERVER_REQUEST_H
 #define TAO_CORBA_SERVER_REQUEST_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -164,6 +164,6 @@ namespace CORBA
 # include "Server_Request.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CORBA_SERVER_REQUEST_H */

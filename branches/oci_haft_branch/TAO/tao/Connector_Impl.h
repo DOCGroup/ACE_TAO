@@ -12,7 +12,7 @@
 
 #ifndef TAO_CONNECTOR_IMPL_H
 #define TAO_CONNECTOR_IMPL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 
@@ -115,5 +115,5 @@ private:
 #pragma implementation ("Connector_Impl.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_CONNECTOR_IMPL_H*/

@@ -14,7 +14,7 @@
 
 #ifndef TAO_BIDIR_GIOP_H
 #define TAO_BIDIR_GIOP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "bidirgiop_export.h"
 
@@ -93,5 +93,5 @@ TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 #include "BiDirPolicyC.h"
 #undef TAO_BIDIRGIOP_SAFE_INCLUDE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DYNAMICANY_H */

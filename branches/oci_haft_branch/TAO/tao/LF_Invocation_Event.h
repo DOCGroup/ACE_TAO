@@ -12,7 +12,7 @@
 
 #ifndef TAO_LF_INVOCATION_EVENT_H
 #define TAO_LF_INVOCATION_EVENT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "LF_Event.h"
 
@@ -80,5 +80,5 @@ private:
 # include "LF_Invocation_Event.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_LF_INVOCATION_EVENT_H */

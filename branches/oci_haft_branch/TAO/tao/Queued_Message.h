@@ -12,7 +12,7 @@
 
 #ifndef TAO_QUEUED_MESSAGE_H
 #define TAO_QUEUED_MESSAGE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -216,5 +216,5 @@ private:
 # include "Queued_Message.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_QUEUED_MESSAGE_H */

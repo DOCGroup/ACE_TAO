@@ -16,7 +16,7 @@
 
 #ifndef TAO_GIOP_MESSAGE_LOCATE_HEADER_H
 #define TAO_GIOP_MESSAGE_LOCATE_HEADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Tagged_Profile.h"
 
@@ -75,5 +75,5 @@ private:
 # include "tao/GIOP_Message_Locate_Header.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_LOCATE_HEADER_H*/

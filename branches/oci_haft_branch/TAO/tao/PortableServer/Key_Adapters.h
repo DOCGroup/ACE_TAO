@@ -13,7 +13,7 @@
 
 #ifndef TAO_KEY_ADAPTERS_H
 #define TAO_KEY_ADAPTERS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PortableServerC.h"
 #include "tao/corbafwd.h"
@@ -120,5 +120,5 @@ public:
 # include "Key_Adapters.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_KEY_ADAPTERS_H */

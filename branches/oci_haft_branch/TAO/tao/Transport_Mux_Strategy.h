@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,10 @@
 
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
 #define TAO_TRANSPORT_MUX_STRATEGY_H
-#include "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include /**/ "ace/pre.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -88,5 +89,6 @@ protected:
   ACE_Lock *lock_;
 };
 
-#include "ace/post.h"
-#endif /* TRANSPORT_MUX_STRATEGY_H */
+#include /**/ "ace/post.h"
+
+#endif  /* TRANSPORT_MUX_STRATEGY_H */

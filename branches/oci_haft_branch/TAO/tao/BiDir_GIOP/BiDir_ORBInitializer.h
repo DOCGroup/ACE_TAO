@@ -11,7 +11,7 @@
 // ===================================================================
 #ifndef TAO_BIDIR_ORB_INITIALIZER_H
 #define TAO_BIDIR_ORB_INITIALIZER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "bidirgiop_export.h"
 
@@ -64,6 +64,6 @@ private:
 
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_BIDIR_ORB_INITIALIZER_H */
