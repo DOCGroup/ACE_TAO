@@ -449,35 +449,31 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
   // Reset the message type
   msg.reset ();
 
-  static CORBA::Octet magic[] =
+  CORBA::Octet header[12] =
   {
     // The following works on non-ASCII platforms, such as MVS (which
     // uses EBCDIC).
     0x47, // 'G'
     0x49, // 'I'
     0x4f, // 'O'
-    0x50, // 'P'
+    0x50  // 'P'
   };
 
-  static int magic_size = sizeof (magic) / sizeof (magic[0]);
-
-  msg.write_octet_array (magic, magic_size);
-  msg.write_octet (this->generator_parser_->major_version ());
-  msg.write_octet (this->generator_parser_->minor_version ());
+  header[4] = this->generator_parser_->major_version ();
+  header[5] = this->generator_parser_->minor_version ();
 
   // We are putting the byte order. But at a later date if we support
   // fragmentation and when we want to use the other 6 bits in this
   // octet we can have a virtual function do this for us as the
   // version info , Bala
-  msg.write_octet (TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
+  header[6] = (TAO_ENCAP_BYTE_ORDER ^ msg.do_byte_swap ());
 
-  msg.write_octet ((CORBA::Octet) t);
+  header[7] = CORBA::Octet(t);
 
-  // Write a dummy <size> later it is set to the right value...
-  CORBA::ULong size = 0;
-  msg.write_ulong (size);
+  static int header_size = sizeof (header) / sizeof (header[0]);
+  msg.write_octet_array (header, header_size);
 
-  return 1;
+  return msg.good_bit ();
 }
 
 int
