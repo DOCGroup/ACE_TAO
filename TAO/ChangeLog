@@ -1,3 +1,11 @@
+Wed Mar 12 17:03:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+
+	  Added separators '\' that are somehow left out in just
+	  a few places by make depend.
+
 Wed Mar 12 13:35:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * */Makefile*:
