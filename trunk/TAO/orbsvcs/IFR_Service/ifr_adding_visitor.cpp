@@ -1,13 +1,36 @@
 /* -*- c++ -*- */
 // $Id$
 
+#include "ast_array.h"
+#include "ast_attribute.h"
+#include "ast_constant.h"
+#include "ast_enum.h"
+#include "ast_exception.h"
+#include "ast_expression.h"
+#include "ast_field.h"
+#include "ast_interface.h"
+#include "ast_interface_fwd.h"
+#include "ast_module.h"
+#include "ast_native.h"
+#include "ast_operation.h"
+#include "ast_predefined_type.h"
+#include "ast_root.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_structure.h"
+#include "ast_union.h"
+#include "utl_identifier.h"
+#include "utl_string.h"
+
 #include "ifr_adding_visitor.h"
 #include "ifr_adding_visitor_operation.h"
 #include "ifr_adding_visitor_structure.h"
 #include "ifr_adding_visitor_exception.h"
 #include "ifr_adding_visitor_union.h"
 
-ACE_RCSID(IFR_Service, ifr_adding_visitor, "$Id$")
+ACE_RCSID (IFR_Service, 
+           ifr_adding_visitor, 
+           "$Id$")
 
 ifr_adding_visitor::ifr_adding_visitor (AST_Decl *scope)
   : scope_ (scope)
@@ -225,7 +248,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
     }
 
   // If the node is really a valuetype, go there instead.
-  if (node->is_valuetype ())
+  if (node->node_type () == AST_Decl::NT_valuetype)
     {
       return this->visit_valuetype (node);
     }

@@ -65,8 +65,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /I "..\..\TAO_IDL\include" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /I "..\..\\" /I "..\..\..\\" /I "..\..\TAO_IDL\include" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -91,15 +91,7 @@ SOURCE=.\drv_args_ifr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\drv_init_ifr.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\drv_preproc_ifr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\drv_private_ifr.cpp
 # End Source File
 # Begin Source File
 
@@ -112,10 +104,6 @@ SOURCE=.\tao_ifr.cpp
 # Begin Source File
 
 SOURCE=.\drv_extern_ifr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\drv_private_ifr.h
 # End Source File
 # End Group
 # End Target

@@ -19,7 +19,9 @@
 
 #include "be_global.h"
 
-ACE_RCSID(IFR_Service, be_global, "$Id$")
+ACE_RCSID (IFR_Service, 
+           be_global, 
+           "$Id$")
 
 TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 

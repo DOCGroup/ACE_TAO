@@ -3,7 +3,9 @@
 
 #include "ifr_visitor.h"
 
-ACE_RCSID(IFR_Service, ifr_visitor, "$Id$")
+ACE_RCSID (IFR_Service, 
+           ifr_visitor, 
+           "$Id$")
 
 ifr_visitor::ifr_visitor (void)
   : lock_ (0)
@@ -72,13 +74,29 @@ ifr_visitor::visit_interface_fwd (AST_InterfaceFwd *)
 }
 
 int 
-ifr_visitor::visit_valuetype (AST_Interface *)
+ifr_visitor::visit_valuetype (AST_ValueType *)
 {
   return 0;
 }
 
 int 
-ifr_visitor::visit_valuetype_fwd (AST_InterfaceFwd *)
+ifr_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *)
+{
+  return 0;
+}
+
+ifr_visitor::visit_component (AST_Component *)
+{
+  return 0;
+}
+
+int 
+ifr_visitor::visit_component_fwd (AST_ComponentFwd *)
+{
+  return 0;
+}
+
+ifr_visitor::visit_home (AST_Home *)
 {
   return 0;
 }
@@ -91,6 +109,12 @@ ifr_visitor::visit_factory (AST_Factory *)
 
 int 
 ifr_visitor::visit_structure (AST_Structure *)
+{
+  return 0;
+}
+
+int 
+ifr_visitor::visit_structure_fwd (AST_StructureFwd *)
 {
   return 0;
 }
@@ -139,6 +163,12 @@ ifr_visitor::visit_attribute (AST_Attribute *)
 
 int 
 ifr_visitor::visit_union (AST_Union *)
+{
+  return 0;
+}
+
+int 
+ifr_visitor::visit_union_fwd (AST_UnionFwd *)
 {
   return 0;
 }
