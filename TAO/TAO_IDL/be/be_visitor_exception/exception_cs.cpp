@@ -21,8 +21,8 @@
 #include "idl.h"
 #include "idl_extern.h"
 #include "be.h"
+
 #include "be_visitor_exception.h"
-#include "be_visitor_typecode/typecode_defn.h"
 
 ACE_RCSID(be_visitor_exception, exception_cs, "$Id$")
 
@@ -87,16 +87,18 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
+      be_visitor *visitor = 0;
 
       if (node->nmembers () > 0)
         {
           *os << be_idt;
 
-          be_visitor_exception_ctor_assign cc_visitor (&ctx);
+          // Assign each individual member.
+          visitor = tao_cg->make_visitor (&ctx);
 
-          // Visits scope and generates assignment line in copy constructor.
-          if (cc_visitor.visit_exception (node) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
+              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_exception_cs::"
                                  "visit_exception -"
@@ -104,6 +106,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                                 -1);
             }
 
+          delete visitor;
           *os << be_uidt;
           os->decr_indent ();
         }
@@ -122,11 +125,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       // Assign each individual member.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
-      be_visitor_exception_ctor_assign ao_visitor (&ctx);
+      visitor = tao_cg->make_visitor (&ctx);
 
-      // Visits scope and generates line in assignment operator.
-      if (ao_visitor.visit_exception (node) == -1)
+      if (!visitor || (node->accept (visitor) == -1))
         {
+          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cs::"
                              "visit_exception -"
@@ -134,18 +137,22 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                             -1);
         }
 
+      delete visitor;
       os->indent ();
       *os << "return *this;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-      *os << "void "
-          << node->name ()
-          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-          << "{" << be_idt_nl
-          << node->local_name () << " *tmp = ACE_static_cast ("
-          << node->local_name () << "*, _tao_void_pointer);" << be_nl
-          << "delete tmp;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+      if (!node->is_local ())
+        {
+          *os << "void "
+              << node->name ()
+              << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+              << "{" << be_idt_nl
+              << node->local_name () << " *tmp = ACE_static_cast ("
+              << node->local_name () << "*, _tao_void_pointer);" << be_nl
+              << "delete tmp;" << be_uidt_nl
+              << "}" << be_nl << be_nl;
+        }
 
       *os << node->name () << " *" << be_nl;
       *os << node->name () << "::_downcast (CORBA::Exception *exc)" << be_nl;
@@ -284,9 +291,9 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           // Generate the signature.
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_CS);
-          be_visitor_exception_ctor con_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
-          if (con_visitor.visit_exception (node) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_exception::"
@@ -294,6 +301,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                                  "codegen for ctor failed\n"),
                                 -1);
             }
+
+          delete visitor;
 
           *os << "  : CORBA_UserException "
               << "(\"" << node->repoID () << "\")" << be_uidt_nl;
@@ -306,12 +315,13 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           // Indicate that the special ctor is being generated.
           ctx.exception (1);
 
-          be_visitor_exception_ctor_assign ca_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
           *os << be_idt;
 
-          if (ca_visitor.visit_exception (node) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
+              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_exception_cs::"
                                  "visit_exception -"
@@ -319,18 +329,23 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                                 -1);
             }
 
+          delete visitor;
           os->decr_indent ();
           *os << "}\n\n";
         }
 
-      if (be_global->tc_support ())
+      if (!node->is_local ())
         {
+          // By using a visitor to declare and define the TypeCode, we
+          // have the added advantage to conditionally not generate
+          // any code. This will be based on the command line
+          // options. This is still TO-DO.
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
           ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-          be_visitor_typecode_defn tc_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
-          if (tc_visitor.visit_exception (node) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_exception_cs::"
@@ -340,7 +355,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
             }
         }
 
-      if (be_global->tc_support ())
+      if (!node->is_local () && be_global->tc_support ())
         {
           *os << "\n// TAO extension - the virtual _type method." << be_nl;
           *os << "CORBA::TypeCode_ptr " << node->name ()

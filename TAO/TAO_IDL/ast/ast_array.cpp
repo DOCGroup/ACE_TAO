@@ -182,8 +182,6 @@ void
 AST_Array::set_base_type (AST_Type *nbt)
 {
   this->pd_base_type = nbt;
-
-  this->is_local_ = nbt->is_local ();
 }
 
 void

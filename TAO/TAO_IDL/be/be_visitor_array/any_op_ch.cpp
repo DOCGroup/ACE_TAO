@@ -19,9 +19,10 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
+
 #include "be_visitor_array.h"
 
 ACE_RCSID(be_visitor_array, any_op_ch, "$Id$")
@@ -31,9 +32,8 @@ ACE_RCSID(be_visitor_array, any_op_ch, "$Id$")
 // Array visitor for generating Any operator declarations in the client header
 // ***************************************************************************
 
-be_visitor_array_any_op_ch::be_visitor_array_any_op_ch (
-    be_visitor_context *ctx
-  )
+be_visitor_array_any_op_ch::be_visitor_array_any_op_ch
+(be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
@@ -46,9 +46,7 @@ int
 be_visitor_array_any_op_ch::visit_array (be_array *node)
 {
   if (node->cli_hdr_any_op_gen () || node->imported ())
-    {
-      return 0;
-    }
+    return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
 

@@ -18,9 +18,10 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
+
 #include "be_visitor_valuetype.h"
 
 ACE_RCSID(be_visitor_valuetype, any_op_cs, "$Id$")
@@ -54,7 +55,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
   os->indent ();
 
-  // Generate the Any <<= and >>= operator declarations.
+  // Generate the Any <<= and >>= operator declarations
 
   *os << be_global->stub_export_macro () << " void" << be_nl
       << "operator<<= (CORBA::Any &any, " << node->name ()
@@ -154,5 +155,6 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */\n\n";
 
   node->cli_stub_any_op_gen (1);
+
   return 0;
 }

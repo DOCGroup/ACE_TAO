@@ -30,9 +30,7 @@
 // stubs file
 // ***************************************************************************
 
-be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
@@ -44,14 +42,8 @@ be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs (void)
 int
 be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 {
-  if (node->is_local ())
-    {
-      return 0;
-    }
-
-  // Retrieve the base type.
+  // retrieve the base type
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

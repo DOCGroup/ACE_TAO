@@ -42,9 +42,8 @@ private:
 };
 
 Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
-    be_visitor_typecode_defn* customer
-  )
-  :customer_ (customer)
+    be_visitor_typecode_defn* customer)
+    :customer_ (customer)
 {
   if (customer_ != 0)
     {
@@ -3443,7 +3442,7 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
   if (be_global->opt_tc ())
     {
       *os << "1, 0x0,";
-      *os << " // name = " << node->original_local_name ();
+      *os << " // name = " << node->local_name ();
       // size of the name field
       this->tc_offset_ += (2 * sizeof (ACE_CDR::ULong));
     }
@@ -3451,12 +3450,10 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
     {
       ACE_CDR::ULong *arr, i, arrlen;
 
-      *os << (ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1)
+      *os << (ACE_OS::strlen (node->local_name ()->get_string ()) + 1)
           << "," << be_nl;
 
-      (void) this->tc_name2long (node->original_local_name ()->get_string (), 
-                                 arr, 
-                                 arrlen);
+      (void) this->tc_name2long (node->local_name ()->get_string (), arr, arrlen);
 
       for (i = 0; i < arrlen; i++)
         {
@@ -3468,7 +3465,7 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
             }
         }
 
-      *os << " // name = " << node->original_local_name ();
+      *os << " // name = " << node->local_name ();
 
       // size of the name field.
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
@@ -3548,7 +3545,7 @@ be_visitor_typecode_defn::name_encap_len (be_decl *node)
   else
     {
       ACE_CDR::ULong slen =
-        ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1;
+        ACE_OS::strlen (node->local_name ()->get_string ()) + 1;
 
       // the number of bytes to hold the string must be a multiple of 4 since this
       // will be represented as an array of longs
@@ -3613,11 +3610,9 @@ be_visitor_typecode_defn::pop (ACE_CDR::Long &val)
 }
 
 const be_visitor_typecode_defn::QNode *
-be_visitor_typecode_defn::queue_insert (
-    ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
-    be_type *node, 
-    ACE_CDR::Long offset
-  )
+be_visitor_typecode_defn::
+queue_insert (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
+              be_type *node, ACE_CDR::Long offset)
 {
   be_visitor_typecode_defn::QNode *qnode;
 
@@ -3639,10 +3634,9 @@ be_visitor_typecode_defn::queue_insert (
 }
 
 const be_visitor_typecode_defn::QNode *
-be_visitor_typecode_defn::queue_lookup (
-    ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
-    be_type *node
-  )
+be_visitor_typecode_defn::
+queue_lookup (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
+              be_type *node)
 {
   for (ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode *> 
          iter (queue);

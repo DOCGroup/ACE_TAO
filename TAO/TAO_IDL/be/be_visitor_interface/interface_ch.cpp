@@ -18,11 +18,11 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
+
 #include "be_visitor_interface.h"
-#include "be_visitor_typecode/typecode_decl.h"
 
 ACE_RCSID(be_visitor_interface, interface_ch, "$Id$")
 
@@ -92,20 +92,19 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_ch::"
                              "visit_interface - "
-                             "codegen for _out failed\n"),
-                            -1);
+                             "codegen for _out failed\n"), -1);
         }
 
       // Generate the endif macro.
       os->gen_endif ();
 
-      *os << "// *************************************************************"
-          << be_nl
-          << "// " << node->name () << be_nl
-          << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl
-          << "// *************************************************************"
-          << be_nl << be_nl;
+      // The above code could have been executed by the forward declaration
+      // as long as it wasn't imported. The code below can only be
+      // executed by an interface definition, also non-imported.
+      if (node->imported ())
+        {
+          return 0;
+        }
 
       // Now the interface definition itself.
       os->gen_ifdef_macro (node->flat_name ());
@@ -196,7 +195,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "_ptr)0;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
+      // No Any operator for local interfaces.
+      if (! node->is_local ())
+        {
+          *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
+        }
 
       // Generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
@@ -289,20 +292,25 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // Generate the embedded RequestInfo classes per operation.
       // This is to be used by interceptors.
+      be_visitor *visitor = 0;
       be_visitor_context ctx (*this->ctx_);
 
       // Interceptor related classes.
       ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH);
-      be_visitor_interface_interceptors_ch interceptor_visitor (&ctx);
+      visitor = tao_cg->make_visitor (&ctx);
 
-      if (node->accept (&interceptor_visitor) == -1)
+      if (!visitor || (node->accept (visitor) == -1))
         {
+          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_ch::"
                              "visit_interface - "
                              "codegen for interceptor classes failed\n"),
                             -1);
         }
+
+      delete visitor;
+      visitor = 0;
 
       ctx = *this->ctx_;
 
@@ -314,10 +322,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           // Smart Proxy related classes.
           ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
-          be_visitor_interface_smart_proxy_ch sp_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
-          if (node->accept (&sp_visitor) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
+              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "be_visitor_interface_ch::"
                                  "visit_interface - "
@@ -325,13 +334,21 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                                 -1);
             }
 
+          delete visitor;
+          visitor = 0;
+        }
+
+      if (!node->is_local ())
+        {
           // Proxy Implementation Declaration.
+          visitor = 0;
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH);
-          be_visitor_interface_proxy_impls_ch spi_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
-          if (node->accept (&spi_visitor) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
+              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "be_visitor_interface_ch::"
                                  "visit_interface - "
@@ -339,29 +356,39 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                                 -1);
             }
 
+          delete visitor;
+        }
+
+      if (!node->is_local ())
+        {
           // Proxy Broker Declaration.
+          visitor = 0;
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CH);
-          be_visitor_interface_proxy_brokers_ch pb_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
-          if (node->accept (&pb_visitor) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
+              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "be_visitor_interface_ch::"
                                  "visit_interface - "
                                  "codegen for Proxy Broker classes failed\n"),
                                 -1);
             }
+
+          delete visitor;
         }
 
       os->gen_endif ();
 
-      if (be_global->tc_support ())
+      if (!node->is_local ())
         {
+          visitor = 0;
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          be_visitor_typecode_decl td_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
-          if (node->accept (&td_visitor) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_interface_ch::"

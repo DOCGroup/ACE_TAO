@@ -2540,9 +2540,7 @@ idl_parse_line_and_file (char *buf)
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
     }
-  else if (is_main_filename 
-           && idl_global->pragma_prefixes ().size () > 1
-           && idl_global->scopes ()->depth () == 1)
+  else if (is_main_filename && idl_global->pragma_prefixes ().size () > 1)
     {
       // If we're here, we have come to the end of an included file, so we
       // pop its prefix.
