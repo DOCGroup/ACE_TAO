@@ -746,3 +746,59 @@ RTCosScheduling_ServerScheduler_i::resources(
 }
 
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Map<ACE_String_Base<char>, int>;
+template class ACE_Hash_Map_Manager_Ex<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> >, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int>, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Map<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char> >;
+template class ACE_Map_Manager_Adapter<ACE_String_Base<char>, int, ACE_Noop_Key_Generator<ACE_String_Base<char> > >;
+template class ACE_Map_Manager<ACE_String_Base<char>, int, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex_Adapter<int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int>, ACE_Noop_Key_Generator<int> >;
+template class ACE_Map<int, TAO::PCP_Manager *>;
+template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<int const, TAO::PCP_Manager *>, int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int> >;
+template class ACE_Hash_Map_Entry<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char> >;
+template class ACE_Hash_Map_Entry<int, TAO::PCP_Manager *>;
+template class ACE_Iterator_Impl<ACE_Reference_Pair<int const, TAO::PCP_Manager *> >;
+template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<int const, TAO::PCP_Manager *>, int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int> >;
+template class ACE_Hash_Map_Manager_Ex_Adapter<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> >, ACE_Noop_Key_Generator<TAO_Pseudo_Var_T<CORBA::Object> > >;
+
+template class ACE_Iterator_Impl<ACE_Reference_Pair<ACE_String_Base<char> const, int> >;
+template class ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<ACE_String_Base<char> const, int> >;
+template class ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<ACE_String_Base<char> const, int>, ACE_String_Base<char>, int>;
+template class ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<ACE_String_Base<char> const, int>, ACE_String_Base<char>, int>;
+template class ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<int const, TAO::PCP_Manager *> >;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> >, ACE_Null_Mutex>;
+template class ACE_Iterator_Impl<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> > >;
+template class ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> > >;
+template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> >, TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> > >;
+template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> >, TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> > >;
+template class ACE_Map_Iterator_Base<ACE_String_Base<char>, int, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int>, ACE_Null_Mutex>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map<ACE_String_Base<char>, int>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> >, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_String_Base<char>, int, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Map<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char> >
+#pragma instantiate ACE_Map_Manager_Adapter<ACE_String_Base<char>, int, ACE_Noop_Key_Generator<ACE_String_Base<char> > >
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int>, ACE_Noop_Key_Generator<int> >
+#pragma instantiate ACE_Map<int, TAO::PCP_Manager *>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<int const, TAO::PCP_Manager *>, int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int> >
+#pragma instantiate ACE_Hash_Map_Entry<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char> >
+#pragma instantiate ACE_Hash_Map_Entry<int, TAO::PCP_Manager *>
+#pragma instantiate ACE_Iterator_Impl<ACE_Reference_Pair<int const, TAO::PCP_Manager *> >
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<int const, TAO::PCP_Manager *>, int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int> >
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> >, ACE_Noop_Key_Generator<TAO_Pseudo_Var_T<CORBA::Object> > >
+#pragma instantiate ACE_Iterator_Impl<ACE_Reference_Pair<ACE_String_Base<char> const, int> >
+#pragma instantiate ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<ACE_String_Base<char> const, int> >
+#pragma instantiateACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<ACE_String_Base<char> const, int>, ACE_String_Base<char>, int>
+#pragma instantiate ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<int const, TAO::PCP_Manager *> >
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> >, ACE_Null_Mutex>
+#pragma instantiate ACE_Iterator_Impl<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> > >
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> >, TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> > >
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> >, TAO_Pseudo_Var_T<CORBA::Object>, ACE_String_Base<char>, TAO::CosSchedulingObjectMap_Hash_Key, ACE_Equal_To<TAO_Pseudo_Var_T<CORBA::Object> > >
+#pragma instantiate ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<TAO_Pseudo_Var_T<CORBA::Object> const, ACE_String_Base<char> > >
+#pragma instantiate ACE_Map_Iterator_Base<ACE_String_Base<char>, int, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<int, TAO::PCP_Manager *, TAO::CosSchedulingInvocation_Hash_key, ACE_Equal_To<int>, ACE_Null_Mutex>
+#endif
