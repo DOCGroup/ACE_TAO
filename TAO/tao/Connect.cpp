@@ -151,7 +151,7 @@ TAO_Server_Connection_Handler::svc (void)
 
   // Inheriting the ORB_Core stuff from the parent thread.
 
-  TAO_ORB_Core_instance ()->root_poa (this->parent_->root_poa ());
+  TAO_ORB_Core_instance ()->inherit_from_parent_thread (this->parent_);
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
