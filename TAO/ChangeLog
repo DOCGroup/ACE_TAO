@@ -1,3 +1,40 @@
+Fri Jul 18 10:18:41 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO/tests/OBV/Supports/Client.dsp:
+        * TAO/tests/OBV/Supports/Server.dsp:
+        * TAO/tests/OBV/Supports/README:
+        * TAO/tests/OBV/Supports/Supports_Test.idl:
+        * TAO/tests/OBV/Supports/Supports_Test_impl.h:
+        * TAO/tests/OBV/Supports/Supports_Test_impl.cpp:
+        * TAO/tests/OBV/Supports/Client/client.cpp:
+        * TAO/tests/OBV/Supports/Server/server.cpp:
+        * TAO/tests/OBV/Supports/Server/svc.conf:
+        * TAO/tests/OBV/Supports/run_test.pl:
+
+        Enhanced Supports example to test valuetype functionality in
+        a multi-threaded environment. Added a run_test.pl script to run
+        the tests conveniently.
+
+        * TAO/docs/releasenotes/OBV.html:
+
+        Updated documentation to reflect recent additions and corrections
+        to TAO's OBV support, most importantly 1) changes that ensure
+        the correct factory types are generated in all cases, and 2) changes
+        that allow valuetypes to correctly support concrete interfaces.
+
+        * TAO/TAO_IDL/be/be_Visitor_valuetype/valuetype_ch.cpp:
+        * TAO/TAO_IDL/be/be_Visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO/TAO_IDL/be/be_Visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO/TAO_IDL/be/be_Visitor_valuetype/valuetype_init_ch.cpp:
+
+        Changed constructors for valuetype factories to be public or
+        protected in the right situations. Added protected constructor
+        and destructor for abstract OBV_ classes.
+
+        * TAO/TAO_IDL/be/be_Visitor_valuetype/arglist.cpp:
+
+        Fixed indentation problem in generated code.
+
 Fri Jul 18 00:42:12 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tests/RTScheduling/VoidData/test_client.cpp: 

@@ -62,7 +62,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib TAO_Valuetyped.lib TAO_Strategiesd.lib /nologo /version:1.0 /subsystem:console /debug /machine:I386 /libpath:"C:\ACE_wrappers\ace" /libpath:"C:\ACE_wrappers\TAO\tao" /libpath:"C:\ACE_wrappers\TAO\tao\Valuetype" /libpath:"C:\ACE_wrappers\TAO\tao\PortableServer" /libpath:"C:\ACE_wrappers\TAO\tao\IFR_Client" /libpath:"C:\ACE_wrappers\TAO\orbsvcs\orbsvcs" /libpath:"C:\ACE_wrappers\TAO\tao\IORInterceptor" /libpath:"C:\ACE_wrappers\TAO\orbsvcs\IFR_Service" /libpath:"C:\ACE_wrappers\TAO\tao\Strategies"
+# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib TAO_Valuetyped.lib TAO_Strategiesd.lib /nologo /version:1.0 /subsystem:console /debug /machine:I386 /libpath:"../../../../ace" /libpath:"../../../tao" /libpath:"../../../tao/Valuetype" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/Strategies"
 # SUBTRACT LINK32 /pdb:none /incremental:no /force
 
 !ENDIF 
@@ -180,7 +180,7 @@ InputPath=.\Supports_Test.idl
 InputName=Supports_Test
 
 BuildCmds= \
-	$(ACE_ROOT)\bin\tao_idl -o . -Sc $(InputPath)
+	%ACE_ROOT%\bin\tao_idl -o . -Sc $(InputPath) -Gt -Gv
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -203,6 +203,14 @@ BuildCmds= \
 
 !ENDIF 
 
+# End Source File
+# End Group
+# Begin Group "Documentation"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\README
 # End Source File
 # End Group
 # End Target
