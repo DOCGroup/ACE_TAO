@@ -1,3 +1,12 @@
+Fri Jun 11 16:20:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/run_test.pl:
+	  Added an unlink $iorfile at the beginning so the client won't
+	  get the wrong IOR if the file already exists. This was 
+	  causing the first test to show CORBA::TRANSIENT exceptions
+	  on NT. Thanks to Carlos for suggesting a better fix than the
+	  one I had.
+
 Fri Jun 11 12:27:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO_IDL/fe/lex.yy.cpp.diff: Updated the diff output to handle
