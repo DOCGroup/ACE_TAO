@@ -37,6 +37,9 @@ public:
   static TYPE *instance (TYPE*);
   // Set the Singleton instance.
 
+  static void cleanup (void *object, void *);
+  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
+
   static void dump (void);
   // Dump the state of the object.
 
@@ -68,6 +71,9 @@ class ACE_TSS_Singleton
 public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
+
+  static void cleanup (void *object, void *);
+  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
 
   static void dump (void);
   // Dump the state of the object.
