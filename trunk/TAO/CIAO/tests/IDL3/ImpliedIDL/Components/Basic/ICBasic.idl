@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file Basic.idl
+ * @file ICBasic.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
  * Tests implied idl functionality of basic components.

@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file EventSink.idl
+ * @file ICEventSink.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
  * Tests implied idl features of event sinks

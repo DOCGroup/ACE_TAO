@@ -1,3 +1,37 @@
+Wed Aug  4 11:16:47 2004  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Components/ComplexComponent/Attributes/Attributes.idl:
+	* Homes/Attributes/HomeAttributes.idl:
+	* ImpliedIDL/Components/Basic/ICBasic.idl:
+	* Homes/Finder/Finder.idl:
+	* ImpliedIDL/Components/EventSink/ICEventSink.idl:
+	* ImpliedIDL/Components/EventSource/ICEventSource.idl:
+	* ImpliedIDL/Components/Receptacles/ICReceptacles.idl:
+
+	  Addressed some build errors on the Fuzz build.
+	
+	* Components/ComplexComponent/Attributes/AttributesS.cpp:
+	* Components/ComplexComponent/EventSink/EventSinkS.cpp:
+	* Components/ComplexComponent/EventSource/EventSourceS.cpp:
+	* Components/ComplexComponent/Facets/FacetsS.cpp:
+	* Components/ComplexComponent/Receptacles/ReceptaclesS.cpp:
+	* Components/SimpleComponent/SimpleComponentS.cpp:
+	* Events/Abstract/AbstractS.cpp:
+	* Events/Regular/RegularS.cpp:
+	* Homes/Attributes/HomeAttributesS.cpp:
+	* Homes/Basic/BasicS.cpp:
+	* Homes/Factory/FactoryS.cpp:
+	* Homes/Finder/FinderS.cpp:
+	* Homes/Inheritance/InheritanceS.cpp:
+	* ImpliedIDL/Components/Basic/ICBasicS.cpp:
+	* ImpliedIDL/Components/EventSink/ICEventSinkS.cpp:
+	* ImpliedIDL/Components/EventSource/ICEventSourceS.cpp:
+	* ImpliedIDL/Components/Receptacles/ICReceptaclesS.cpp:
+	* ImpliedIDL/Events/EventsS.cpp:
+	* ImpliedIDL/Homes/HomesS.cpp:
+
+	  Removed a bunch of generated code from the repository.
+
 Tue Aug  3 20:18:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/schema/cid.xsd:
