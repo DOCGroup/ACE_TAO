@@ -1,3 +1,14 @@
+Fri Jun 28 10:08:56 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/LongUpcalls/Manager.cpp:
+	* tests/LongUpcalls/AMI_Manager.cpp:
+	  Add validate_connections() trick to avoid TRANSIENT exceptions
+	  at run-time.  Check the following bugzilla entries for more
+	  info:
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1241
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=189
+
 Fri Jun 28 07:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Nested_Upcall_Crash/server.bor:

@@ -6,6 +6,30 @@
 
 ACE_RCSID(LongUpcalls, Manager, "$Id$")
 
+static void
+validate_connection(Test::Controller_ptr controller
+                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC (())
+{
+  ACE_TRY
+    {
+#if (TAO_HAS_MESSAGING == 1)
+      CORBA::PolicyList_var unused;
+      controller->validate_connection(unused
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+#else
+      controller->_is_a("Not_an_IDL_Type"
+                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+#endif
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
+}
+
 Manager::Manager (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -15,10 +39,14 @@ void
 Manager::start_workers (CORBA::Short worker_count,
                         CORBA::Long milliseconds,
                         Test::Controller_ptr controller
-                        ACE_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Thread_Manager thread_manager;
+
+  validate_connection(controller
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
   Worker worker (&thread_manager,
@@ -55,6 +83,10 @@ Worker::svc (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      validate_connection(this->controller_.in()
+                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
       this->controller_->worker_started (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
