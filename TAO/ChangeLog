@@ -1,9 +1,15 @@
+Sun Nov 16 13:23:42 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo.bor:
+	* orbsvcs/ImplRepo_Service/ImR_Activator.bor:
+	  Fixed these BCB makefiles
+
 Sat Nov 15 16:18:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynEnum_i.cpp:
         * tao/DynamicAny/DynUnion_i.cpp:
 
-          Added checks for 0 ACE_Message_Block return value from call to 
+          Added checks for 0 ACE_Message_Block return value from call to
           _tao_get_cdr() on an Any, and alternate method of extraction
           if the message block is 0. This closes [BUGID:1645].
 
