@@ -16,7 +16,7 @@ $exclude_ace = 0;
 $exclude_tao = 0;
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
-$dot_path = '/usr/local/bin';
+$dot_path = '/usr/bin';
 @ACE_DOCS = ('ace',
              'ace_man',
              'ace_rmcast',
