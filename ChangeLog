@@ -1,3 +1,10 @@
+Tue Jan 13 22:42:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Makefile (RELEASE_FILES):
+
+	  Added `aclocal.m4' and `Makefile.in' to the list of files to be
+	  included in releases/kits.  This should be the last of them.
+
 Tue Jan 13 21:39:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile (CONTROLLED_FILES):
