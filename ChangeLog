@@ -1,3 +1,11 @@
+Thu Jun 14 14:35:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * bin/msvc_auto_compile.pl:
+
+          Added Strategies, RTCORBA, and RTPortableServer to the core build
+          list so that they get built before the tests that use them on
+          the Win32 static builds.
+
 Thu Jun 14 08:24:03 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/Makefile.bor:
