@@ -1,3 +1,12 @@
+Sun Dec 28 10:31:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Valuetype/ValueBase.cpp:
+	* tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+
+	  Fixed a memory leak that was associated with typecode pointer
+	  initializations.  Thanks to Roland Meub <roland.meub@gmx.de> for
+	  reporting and motivating to fix this problem.
+
 Sun Dec 28 16:19:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any_Basic_Impl_T.h:
