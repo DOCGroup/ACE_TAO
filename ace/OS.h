@@ -325,6 +325,10 @@
 #   define ACE_MAX_DGRAM_SIZE 8192
 # endif /* ACE_MAX_DGRAM_SIZE */
 
+#if !defined (ACE_DEFAULT_ARGV_BUFSIZ)
+#define ACE_DEFAULT_ARGV_BUFSIZ 1024 * 4
+#endif /* ACE_DEFAULT_ARGV_BUFSIZ */
+
 // Because most WinCE APIs use wchar strings, many of ACE functions
 // must adapt to this change also.  For backward compatibility (most
 // platforms still use ASCII char APIs even if they support UNICODE,)
