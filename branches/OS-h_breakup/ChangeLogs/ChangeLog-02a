@@ -1,10 +1,22 @@
+Tue May  7 09:21:50 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/ace_stdio.h:
+
+	  Commented out ifdef that include cstdio.  This was mistakenly
+	  copied from config-all.h.  If this cleans up the sun builds, it will
+	  be removed completely.
+
+	* ace/Array_Base.inl:
+
+	  Added include of Trace.h.
+	
 Mon May  6 19:11:05 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Sched_Params.cpp:
 
 	  Added include of OS.h when ACE_HAS_PRIOCNTL && ACE_HAS_STHREADS
 	  are defined.
-
+	
 Mon May  6 15:53:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Array_Base.cpp:

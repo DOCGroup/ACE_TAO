@@ -25,6 +25,9 @@
 #   include /**/ <stdarg.h> // LynxOS requires this before stdio.h 
 # endif /* !ACE_LACKS_STDARG_H */
 
+#if 0
+// turn this off for now.  it came from config-all.h when ACE_HAS_VERBOSE_NOTSUP
+// turned on.
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cstdio>
 # else
@@ -32,6 +35,11 @@
 #     include /**/ <stdio.h>
 #   endif /* !ACE_LACKS_STDIO_H */
 # endif
+#else /* 0 */
+# if !defined (ACE_LACKS_STDIO_H)
+#   include /**/ <stdio.h>
+# endif /* !ACE_LACKS_STDIO_H */
+#endif /* 0 */
 
 # if defined (ACE_HAS_CHARPTR_SPRINTF)
 #   define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
