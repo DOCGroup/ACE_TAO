@@ -352,6 +352,11 @@ ACE_Log_Msg::disable_debug_messages (ACE_Log_Priority priority)
   i->priority_mask (i->priority_mask () & ~priority);
 }
 
+const ACE_TCHAR *
+ACE_Log_Msg::program_name (void)
+{
+  return ACE_Log_Msg::program_name_;
+}
 // Name of the local host.
 const ACE_TCHAR *ACE_Log_Msg::local_host_ = 0;
 
@@ -662,6 +667,14 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
                               ACE_OS::strdup (prog_name),
                               -1);
       }
+    }
+  else if (ACE_Log_Msg::program_name_ == 0)
+    {
+      // Stop heap checking, block will be freed by the destructor.
+      ACE_NO_HEAP_CHECK;
+      ACE_ALLOCATOR_RETURN (ACE_Log_Msg::program_name_,
+                            ACE_OS::strdup (ACE_LIB_TEXT ("<unknown>")),
+                            -1);
     }
 
   int status = 0;

@@ -180,6 +180,8 @@ public:
   /// Returns non-null if an ACE_Log_Msg exists for the calling thread.
   static int exists (void);
 
+  /// Returns the current program name used for logging.
+  static const ACE_TCHAR * program_name (void);
   /// Clears the flag from the default priority mask used to
   /// initialize ACE_Log_Msg instances.
   static void disable_debug_messages (ACE_Log_Priority priority = LM_DEBUG);

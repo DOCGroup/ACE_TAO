@@ -30,15 +30,15 @@ ACE_Log_Msg_UNIX_Syslog::~ACE_Log_Msg_UNIX_Syslog (void)
 }
 
 int
-ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * /*logger_key*/)
+ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * logger_key)
 {
-  // Initialize the UNIX syslog facility.  Default the ID to "ACE", as
-  // the ACE_DEBUG statement can insert a more unique id in its string
-  // (via %n).  Also, default the syslog options LOG_CONS and LOG_PID.
-  // These really should be logging strategy options, but we'll take
-  // the easy way out for now..
+  ACE_UNUSED_ARG (logger_key);
 
-  openlog (ACE_LIB_TEXT("ACE"),
+  // Initialize the UNIX syslog facility.  Default the syslog log options
+  // LOG_CONS and LOG_PID to be set.  There really should be a logging
+  // strategy option to control the syslog log options, however, we'll
+  // take the easy way out for now.
+  openlog (ACE_Log_Msg::program_name (),
            LOG_CONS|LOG_PID,
            ACE_DEFAULT_SYSLOG_FACILITY);
 
