@@ -348,9 +348,6 @@ public:
   /// @todo, remove this, everything should just use the strategies, not peeking atthe policies
   TAO::Portable_Server::Cached_Policies &cached_policies (void);
 
-  /// Accessor for active policy strategies.
-  TAO::Portable_Server::Active_Policy_Strategies &active_policy_strategies (void);
-
   /// This method gives the policies that are exposed to the client.
   /// These policies are shipped within the IOR.
   virtual CORBA::PolicyList *client_exposed_policies (
@@ -523,6 +520,9 @@ public:
     ACE_ENV_ARG_DECL);
 
 protected:
+
+  /// Accessor for active policy strategies.
+  TAO::Portable_Server::Active_Policy_Strategies &active_policy_strategies (void);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   int enter (void);
