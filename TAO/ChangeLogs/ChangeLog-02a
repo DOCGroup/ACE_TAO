@@ -1,3 +1,12 @@
+Wed Mar 13 14:48:12 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Scalability/*:
+	* orbsvcs/performance-tests/EC_Latency/*:
+	* orbsvcs/performance-tests/EC_Federated_Latency/*:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/*:
+	  Removed old versions of the tests, the new tests in RTEvent are
+	  more featured and share more code in the RTEvent/lib directory.
+
 Wed Mar 13 10:02:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
