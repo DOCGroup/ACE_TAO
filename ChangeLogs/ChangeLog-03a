@@ -1,3 +1,10 @@
+Sun Jan 14 16:53:11 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Configuration.{h,cpp}: Fixed a memory leak that occurred
+	  with transient heaps.  Also added a list of current limitations
+ 	  to import/export routine.  Thanks to Chris Hafey
+ 	  <chafey@stentor.com> for contributing this stuff.
+
 Fri Jan 12 20:46:05 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
