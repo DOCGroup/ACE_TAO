@@ -102,7 +102,7 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 
 LDADD = $(top_builddir)/ace/libACE.la
 
-noinst_SCRIPTS = run_tests.sh                  run_tests.psosim                  run_tests.check                  run_tests.vxworks                  run_tests.bat
+noinst_SCRIPTS =    run_tests.sh   run_tests.psosim   run_tests.check   run_tests.vxworks   run_tests.bat
 
 @COMPILE_XTREACTOR_TEST_TRUE@XTREACTOR_TEST = XtReactor_Test
 @COMPILE_XTREACTOR_TEST_FALSE@XTREACTOR_TEST = 
@@ -111,12 +111,14 @@ noinst_LTLIBRARIES = libDLL_Test.la
 libDLL_Test_la_LDFLAGS = -module
 libDLL_Test_la_SOURCES = $(DLL_Test_SOURCES)
 
-check_PROGRAMS =          Aio_Platform_Test         Atomic_Op_Test         Barrier_Test         Basic_Types_Test         Buffer_Stream_Test 	Cache_Map_Manager_Test         Cached_Conn_Test         CDR_Test         Collection_Test         Conn_Test         DLL_Test         DLList_Test         Dynamic_Priority_Test         Enum_Interfaces_Test         Env_Value_Test         Future_Test         Handle_Set_Test         High_Res_Timer_Test         IOStream_Test         MM_Shared_Memory_Test         MT_Reactor_Timer_Test         MT_SOCK_Test         Map_Manager_Test         Map_Test         Mem_Map_Test         Message_Block_Test         Message_Queue_Notifications_Test         Message_Queue_Test         New_Fail_Test         Notify_Performance_Test         OrdMultiSet_Test         Pipe_Test         Priority_Buffer_Test         Priority_Reactor_Test         Priority_Task_Test         Process_Mutex_Test         Process_Strategy_Test         RB_Tree_Test         Reactor_Exceptions_Test         Reactor_Notify_Test         Reactor_Performance_Test         Reactor_Timer_Test         Reactors_Test         Reader_Writer_Test         Recursive_Mutex_Test         Reverse_Lock_Test         SOCK_Connector_Test         SOCK_Test         SPIPE_Test         SString_Test         SV_Shared_Memory_Test         Semaphore_Test         Service_Config_Test         Sigset_Ops_Test         Simple_Message_Block_Test         TSS_Test         Task_Test         Thread_Manager_Test         Thread_Mutex_Test         Thread_Pool_Test         Time_Service_Test         Time_Value_Test         Timeprobe_Test         Timer_Queue_Test         UPIPE_SAP_Test         Upgradable_RW_Test 		Naming_Test 	        FlReactor_Test 	Thread_Pool_Reactor_Test         TkReactor_Test $(XTREACTOR_TEST)
+check_PROGRAMS =    Aio_Platform_Test   Atomic_Op_Test   Auto_IncDec_Test   Barrier_Test   Basic_Types_Test   Buffer_Stream_Test   Cache_Map_Manager_Test   Cached_Conn_Test   Capabilities_Test   CDR_Test   Collection_Test   Conn_Test   DLL_Test   DLList_Test   Dynamic_Priority_Test   Enum_Interfaces_Test   Env_Value_Test   Future_Test   Handle_Set_Test   High_Res_Timer_Test   IOStream_Test   MM_Shared_Memory_Test   MT_Reactor_Timer_Test   MT_SOCK_Test   Map_Manager_Test   Map_Test   Mem_Map_Test   Message_Block_Test   Message_Queue_Notifications_Test   Message_Queue_Test   New_Fail_Test   Notify_Performance_Test   OrdMultiSet_Test   Pipe_Test   Priority_Buffer_Test   Priority_Reactor_Test   Priority_Task_Test   Process_Manager_Test   Process_Mutex_Test   Process_Strategy_Test   RB_Tree_Test   Reactor_Exceptions_Test   Reactor_Notify_Test   Reactor_Performance_Test   Reactor_Timer_Test   Reactors_Test   Reader_Writer_Test   Recursive_Mutex_Test   Reverse_Lock_Test   SOCK_Connector_Test   SOCK_Test   SPIPE_Test   SString_Test   SV_Shared_Memory_Test   Semaphore_Test   Service_Config_Test   Sigset_Ops_Test   Simple_Message_Block_Test   TSS_Test   Task_Test   Thread_Manager_Test   Thread_Mutex_Test   Thread_Pool_Test   Time_Service_Test   Time_Value_Test   Timeprobe_Test   Timer_Queue_Test   UPIPE_SAP_Test   Upgradable_RW_Test     Naming_Test     FlReactor_Test   Thread_Pool_Reactor_Test   TkReactor_Test $(XTREACTOR_TEST)
 
 
 Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp
 
 Atomic_Op_Test_SOURCES = Atomic_Op_Test.cpp
+
+Auto_IncDec_Test_SOURCES = Auto_IncDec_Test.cpp
 
 Barrier_Test_SOURCES = Barrier_Test.cpp
 
@@ -132,6 +134,8 @@ Cached_Conn_Test_SOURCES = Cached_Conn_Test.cpp
 
 Cache_Map_Manager_Test_SOURCES = Cache_Map_Manager_Test.cpp                                  Cache_Map_Manager_Test.h
 
+
+Capabilities_Test_SOURCES = Capabilities_Test.cpp
 
 Collection_Test_SOURCES = Collection_Test.cpp
 
@@ -192,6 +196,8 @@ Priority_Reactor_Test_SOURCES = Priority_Reactor_Test.cpp                       
 
 
 Priority_Task_Test_SOURCES = Priority_Task_Test.cpp
+
+Process_Manager_Test_SOURCES = Process_Manager_Test.cpp
 
 Process_Mutex_Test_SOURCES = Process_Mutex_Test.cpp
 
@@ -271,7 +277,7 @@ XtReactor_Test_LDADD = $(top_builddir)/ace/libACE.la @XTREACTOR_TEST_XLIBS@
 
 noinst_HEADERS = test_config.h
 
-noinst_DATA =  	TkReactor_Test.tcl 		UNIXserver.conf         UNIXclerk.conf         UNIXtokens.conf         Win32server.conf         Win32clerk.conf         Win32tokens.conf
+noinst_DATA =    Capabilities.cfg     TkReactor_Test.tcl     UNIXserver.conf   UNIXclerk.conf   UNIXtokens.conf   Win32server.conf   Win32clerk.conf   Win32tokens.conf
 
 @ACE_CROSS_COMPILED_TRUE@TESTS = 
 @ACE_CROSS_COMPILED_FALSE@TESTS = $(check_PROGRAMS)
@@ -301,6 +307,10 @@ Atomic_Op_Test_OBJECTS =  Atomic_Op_Test.o
 Atomic_Op_Test_LDADD = $(LDADD)
 Atomic_Op_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
 Atomic_Op_Test_LDFLAGS = 
+Auto_IncDec_Test_OBJECTS =  Auto_IncDec_Test.o
+Auto_IncDec_Test_LDADD = $(LDADD)
+Auto_IncDec_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
+Auto_IncDec_Test_LDFLAGS = 
 Barrier_Test_OBJECTS =  Barrier_Test.o
 Barrier_Test_LDADD = $(LDADD)
 Barrier_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
@@ -321,6 +331,10 @@ Cached_Conn_Test_OBJECTS =  Cached_Conn_Test.o
 Cached_Conn_Test_LDADD = $(LDADD)
 Cached_Conn_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
 Cached_Conn_Test_LDFLAGS = 
+Capabilities_Test_OBJECTS =  Capabilities_Test.o
+Capabilities_Test_LDADD = $(LDADD)
+Capabilities_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
+Capabilities_Test_LDFLAGS = 
 CDR_Test_OBJECTS =  CDR_Test.o
 CDR_Test_LDADD = $(LDADD)
 CDR_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
@@ -435,6 +449,10 @@ Priority_Task_Test_OBJECTS =  Priority_Task_Test.o
 Priority_Task_Test_LDADD = $(LDADD)
 Priority_Task_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
 Priority_Task_Test_LDFLAGS = 
+Process_Manager_Test_OBJECTS =  Process_Manager_Test.o
+Process_Manager_Test_LDADD = $(LDADD)
+Process_Manager_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
+Process_Manager_Test_LDFLAGS = 
 Process_Mutex_Test_OBJECTS =  Process_Mutex_Test.o
 Process_Mutex_Test_LDADD = $(LDADD)
 Process_Mutex_Test_DEPENDENCIES =  $(top_builddir)/ace/libACE.la
@@ -601,11 +619,11 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 TAR = tar
 GZIP_ENV = --best
 DEP_FILES =  .deps/Aio_Platform_Test.P .deps/Atomic_Op_Test.P \
-.deps/Barrier_Test.P .deps/Basic_Types_Test.P \
+.deps/Auto_IncDec_Test.P .deps/Barrier_Test.P .deps/Basic_Types_Test.P \
 .deps/Buffer_Stream_Test.P .deps/CDR_Test.P \
 .deps/Cache_Map_Manager_Test.P .deps/Cached_Conn_Test.P \
-.deps/Collection_Test.P .deps/Conn_Test.P .deps/DLL_Test.P \
-.deps/DLList_Test.P .deps/Dynamic_Priority_Test.P \
+.deps/Capabilities_Test.P .deps/Collection_Test.P .deps/Conn_Test.P \
+.deps/DLL_Test.P .deps/DLList_Test.P .deps/Dynamic_Priority_Test.P \
 .deps/Enum_Interfaces_Test.P .deps/Env_Value_Test.P \
 .deps/FlReactor_Test.P .deps/Future_Test.P .deps/Handle_Set_Test.P \
 .deps/High_Res_Timer_Test.P .deps/IOStream_Test.P \
@@ -617,13 +635,14 @@ DEP_FILES =  .deps/Aio_Platform_Test.P .deps/Atomic_Op_Test.P \
 .deps/Notify_Performance_Test.P .deps/OrdMultiSet_Test.P \
 .deps/Pipe_Test.P .deps/Priority_Buffer_Test.P \
 .deps/Priority_Reactor_Test.P .deps/Priority_Task_Test.P \
-.deps/Process_Mutex_Test.P .deps/Process_Strategy_Test.P \
-.deps/RB_Tree_Test.P .deps/Reactor_Exceptions_Test.P \
-.deps/Reactor_Notify_Test.P .deps/Reactor_Performance_Test.P \
-.deps/Reactor_Timer_Test.P .deps/Reactors_Test.P \
-.deps/Reader_Writer_Test.P .deps/Recursive_Mutex_Test.P \
-.deps/Reverse_Lock_Test.P .deps/SOCK_Connector_Test.P .deps/SOCK_Test.P \
-.deps/SPIPE_Test.P .deps/SString_Test.P .deps/SV_Shared_Memory_Test.P \
+.deps/Process_Manager_Test.P .deps/Process_Mutex_Test.P \
+.deps/Process_Strategy_Test.P .deps/RB_Tree_Test.P \
+.deps/Reactor_Exceptions_Test.P .deps/Reactor_Notify_Test.P \
+.deps/Reactor_Performance_Test.P .deps/Reactor_Timer_Test.P \
+.deps/Reactors_Test.P .deps/Reader_Writer_Test.P \
+.deps/Recursive_Mutex_Test.P .deps/Reverse_Lock_Test.P \
+.deps/SOCK_Connector_Test.P .deps/SOCK_Test.P .deps/SPIPE_Test.P \
+.deps/SString_Test.P .deps/SV_Shared_Memory_Test.P \
 .deps/Semaphore_Test.P .deps/Service_Config_Test.P \
 .deps/Sigset_Ops_Test.P .deps/Simple_Message_Block_Test.P \
 .deps/TSS_Test.P .deps/Task_Test.P .deps/Thread_Manager_Test.P \
@@ -632,8 +651,8 @@ DEP_FILES =  .deps/Aio_Platform_Test.P .deps/Atomic_Op_Test.P \
 .deps/Time_Value_Test.P .deps/Timeprobe_Test.P .deps/Timer_Queue_Test.P \
 .deps/TkReactor_Test.P .deps/UPIPE_SAP_Test.P \
 .deps/Upgradable_RW_Test.P .deps/XtReactor_Test.P
-SOURCES = $(libDLL_Test_la_SOURCES) $(Aio_Platform_Test_SOURCES) $(Atomic_Op_Test_SOURCES) $(Barrier_Test_SOURCES) $(Basic_Types_Test_SOURCES) $(Buffer_Stream_Test_SOURCES) $(Cache_Map_Manager_Test_SOURCES) $(Cached_Conn_Test_SOURCES) $(CDR_Test_SOURCES) $(Collection_Test_SOURCES) $(Conn_Test_SOURCES) $(DLL_Test_SOURCES) $(DLList_Test_SOURCES) $(Dynamic_Priority_Test_SOURCES) $(Enum_Interfaces_Test_SOURCES) $(Env_Value_Test_SOURCES) $(Future_Test_SOURCES) $(Handle_Set_Test_SOURCES) $(High_Res_Timer_Test_SOURCES) $(IOStream_Test_SOURCES) $(MM_Shared_Memory_Test_SOURCES) $(MT_Reactor_Timer_Test_SOURCES) $(MT_SOCK_Test_SOURCES) $(Map_Manager_Test_SOURCES) $(Map_Test_SOURCES) $(Mem_Map_Test_SOURCES) $(Message_Block_Test_SOURCES) $(Message_Queue_Notifications_Test_SOURCES) $(Message_Queue_Test_SOURCES) $(New_Fail_Test_SOURCES) $(Notify_Performance_Test_SOURCES) $(OrdMultiSet_Test_SOURCES) $(Pipe_Test_SOURCES) $(Priority_Buffer_Test_SOURCES) $(Priority_Reactor_Test_SOURCES) $(Priority_Task_Test_SOURCES) $(Process_Mutex_Test_SOURCES) $(Process_Strategy_Test_SOURCES) $(RB_Tree_Test_SOURCES) $(Reactor_Exceptions_Test_SOURCES) $(Reactor_Notify_Test_SOURCES) $(Reactor_Performance_Test_SOURCES) $(Reactor_Timer_Test_SOURCES) $(Reactors_Test_SOURCES) $(Reader_Writer_Test_SOURCES) $(Recursive_Mutex_Test_SOURCES) $(Reverse_Lock_Test_SOURCES) $(SOCK_Connector_Test_SOURCES) $(SOCK_Test_SOURCES) $(SPIPE_Test_SOURCES) $(SString_Test_SOURCES) $(SV_Shared_Memory_Test_SOURCES) $(Semaphore_Test_SOURCES) $(Service_Config_Test_SOURCES) $(Sigset_Ops_Test_SOURCES) $(Simple_Message_Block_Test_SOURCES) $(TSS_Test_SOURCES) $(Task_Test_SOURCES) $(Thread_Manager_Test_SOURCES) $(Thread_Mutex_Test_SOURCES) $(Thread_Pool_Test_SOURCES) $(Time_Service_Test_SOURCES) $(Time_Value_Test_SOURCES) $(Timeprobe_Test_SOURCES) $(Timer_Queue_Test_SOURCES) $(UPIPE_SAP_Test_SOURCES) $(Upgradable_RW_Test_SOURCES) $(Naming_Test_SOURCES) $(FlReactor_Test_SOURCES) $(Thread_Pool_Reactor_Test_SOURCES) $(TkReactor_Test_SOURCES) $(XtReactor_Test_SOURCES)
-OBJECTS = $(libDLL_Test_la_OBJECTS) $(Aio_Platform_Test_OBJECTS) $(Atomic_Op_Test_OBJECTS) $(Barrier_Test_OBJECTS) $(Basic_Types_Test_OBJECTS) $(Buffer_Stream_Test_OBJECTS) $(Cache_Map_Manager_Test_OBJECTS) $(Cached_Conn_Test_OBJECTS) $(CDR_Test_OBJECTS) $(Collection_Test_OBJECTS) $(Conn_Test_OBJECTS) $(DLL_Test_OBJECTS) $(DLList_Test_OBJECTS) $(Dynamic_Priority_Test_OBJECTS) $(Enum_Interfaces_Test_OBJECTS) $(Env_Value_Test_OBJECTS) $(Future_Test_OBJECTS) $(Handle_Set_Test_OBJECTS) $(High_Res_Timer_Test_OBJECTS) $(IOStream_Test_OBJECTS) $(MM_Shared_Memory_Test_OBJECTS) $(MT_Reactor_Timer_Test_OBJECTS) $(MT_SOCK_Test_OBJECTS) $(Map_Manager_Test_OBJECTS) $(Map_Test_OBJECTS) $(Mem_Map_Test_OBJECTS) $(Message_Block_Test_OBJECTS) $(Message_Queue_Notifications_Test_OBJECTS) $(Message_Queue_Test_OBJECTS) $(New_Fail_Test_OBJECTS) $(Notify_Performance_Test_OBJECTS) $(OrdMultiSet_Test_OBJECTS) $(Pipe_Test_OBJECTS) $(Priority_Buffer_Test_OBJECTS) $(Priority_Reactor_Test_OBJECTS) $(Priority_Task_Test_OBJECTS) $(Process_Mutex_Test_OBJECTS) $(Process_Strategy_Test_OBJECTS) $(RB_Tree_Test_OBJECTS) $(Reactor_Exceptions_Test_OBJECTS) $(Reactor_Notify_Test_OBJECTS) $(Reactor_Performance_Test_OBJECTS) $(Reactor_Timer_Test_OBJECTS) $(Reactors_Test_OBJECTS) $(Reader_Writer_Test_OBJECTS) $(Recursive_Mutex_Test_OBJECTS) $(Reverse_Lock_Test_OBJECTS) $(SOCK_Connector_Test_OBJECTS) $(SOCK_Test_OBJECTS) $(SPIPE_Test_OBJECTS) $(SString_Test_OBJECTS) $(SV_Shared_Memory_Test_OBJECTS) $(Semaphore_Test_OBJECTS) $(Service_Config_Test_OBJECTS) $(Sigset_Ops_Test_OBJECTS) $(Simple_Message_Block_Test_OBJECTS) $(TSS_Test_OBJECTS) $(Task_Test_OBJECTS) $(Thread_Manager_Test_OBJECTS) $(Thread_Mutex_Test_OBJECTS) $(Thread_Pool_Test_OBJECTS) $(Time_Service_Test_OBJECTS) $(Time_Value_Test_OBJECTS) $(Timeprobe_Test_OBJECTS) $(Timer_Queue_Test_OBJECTS) $(UPIPE_SAP_Test_OBJECTS) $(Upgradable_RW_Test_OBJECTS) $(Naming_Test_OBJECTS) $(FlReactor_Test_OBJECTS) $(Thread_Pool_Reactor_Test_OBJECTS) $(TkReactor_Test_OBJECTS) $(XtReactor_Test_OBJECTS)
+SOURCES = $(libDLL_Test_la_SOURCES) $(Aio_Platform_Test_SOURCES) $(Atomic_Op_Test_SOURCES) $(Auto_IncDec_Test_SOURCES) $(Barrier_Test_SOURCES) $(Basic_Types_Test_SOURCES) $(Buffer_Stream_Test_SOURCES) $(Cache_Map_Manager_Test_SOURCES) $(Cached_Conn_Test_SOURCES) $(Capabilities_Test_SOURCES) $(CDR_Test_SOURCES) $(Collection_Test_SOURCES) $(Conn_Test_SOURCES) $(DLL_Test_SOURCES) $(DLList_Test_SOURCES) $(Dynamic_Priority_Test_SOURCES) $(Enum_Interfaces_Test_SOURCES) $(Env_Value_Test_SOURCES) $(Future_Test_SOURCES) $(Handle_Set_Test_SOURCES) $(High_Res_Timer_Test_SOURCES) $(IOStream_Test_SOURCES) $(MM_Shared_Memory_Test_SOURCES) $(MT_Reactor_Timer_Test_SOURCES) $(MT_SOCK_Test_SOURCES) $(Map_Manager_Test_SOURCES) $(Map_Test_SOURCES) $(Mem_Map_Test_SOURCES) $(Message_Block_Test_SOURCES) $(Message_Queue_Notifications_Test_SOURCES) $(Message_Queue_Test_SOURCES) $(New_Fail_Test_SOURCES) $(Notify_Performance_Test_SOURCES) $(OrdMultiSet_Test_SOURCES) $(Pipe_Test_SOURCES) $(Priority_Buffer_Test_SOURCES) $(Priority_Reactor_Test_SOURCES) $(Priority_Task_Test_SOURCES) $(Process_Manager_Test_SOURCES) $(Process_Mutex_Test_SOURCES) $(Process_Strategy_Test_SOURCES) $(RB_Tree_Test_SOURCES) $(Reactor_Exceptions_Test_SOURCES) $(Reactor_Notify_Test_SOURCES) $(Reactor_Performance_Test_SOURCES) $(Reactor_Timer_Test_SOURCES) $(Reactors_Test_SOURCES) $(Reader_Writer_Test_SOURCES) $(Recursive_Mutex_Test_SOURCES) $(Reverse_Lock_Test_SOURCES) $(SOCK_Connector_Test_SOURCES) $(SOCK_Test_SOURCES) $(SPIPE_Test_SOURCES) $(SString_Test_SOURCES) $(SV_Shared_Memory_Test_SOURCES) $(Semaphore_Test_SOURCES) $(Service_Config_Test_SOURCES) $(Sigset_Ops_Test_SOURCES) $(Simple_Message_Block_Test_SOURCES) $(TSS_Test_SOURCES) $(Task_Test_SOURCES) $(Thread_Manager_Test_SOURCES) $(Thread_Mutex_Test_SOURCES) $(Thread_Pool_Test_SOURCES) $(Time_Service_Test_SOURCES) $(Time_Value_Test_SOURCES) $(Timeprobe_Test_SOURCES) $(Timer_Queue_Test_SOURCES) $(UPIPE_SAP_Test_SOURCES) $(Upgradable_RW_Test_SOURCES) $(Naming_Test_SOURCES) $(FlReactor_Test_SOURCES) $(Thread_Pool_Reactor_Test_SOURCES) $(TkReactor_Test_SOURCES) $(XtReactor_Test_SOURCES)
+OBJECTS = $(libDLL_Test_la_OBJECTS) $(Aio_Platform_Test_OBJECTS) $(Atomic_Op_Test_OBJECTS) $(Auto_IncDec_Test_OBJECTS) $(Barrier_Test_OBJECTS) $(Basic_Types_Test_OBJECTS) $(Buffer_Stream_Test_OBJECTS) $(Cache_Map_Manager_Test_OBJECTS) $(Cached_Conn_Test_OBJECTS) $(Capabilities_Test_OBJECTS) $(CDR_Test_OBJECTS) $(Collection_Test_OBJECTS) $(Conn_Test_OBJECTS) $(DLL_Test_OBJECTS) $(DLList_Test_OBJECTS) $(Dynamic_Priority_Test_OBJECTS) $(Enum_Interfaces_Test_OBJECTS) $(Env_Value_Test_OBJECTS) $(Future_Test_OBJECTS) $(Handle_Set_Test_OBJECTS) $(High_Res_Timer_Test_OBJECTS) $(IOStream_Test_OBJECTS) $(MM_Shared_Memory_Test_OBJECTS) $(MT_Reactor_Timer_Test_OBJECTS) $(MT_SOCK_Test_OBJECTS) $(Map_Manager_Test_OBJECTS) $(Map_Test_OBJECTS) $(Mem_Map_Test_OBJECTS) $(Message_Block_Test_OBJECTS) $(Message_Queue_Notifications_Test_OBJECTS) $(Message_Queue_Test_OBJECTS) $(New_Fail_Test_OBJECTS) $(Notify_Performance_Test_OBJECTS) $(OrdMultiSet_Test_OBJECTS) $(Pipe_Test_OBJECTS) $(Priority_Buffer_Test_OBJECTS) $(Priority_Reactor_Test_OBJECTS) $(Priority_Task_Test_OBJECTS) $(Process_Manager_Test_OBJECTS) $(Process_Mutex_Test_OBJECTS) $(Process_Strategy_Test_OBJECTS) $(RB_Tree_Test_OBJECTS) $(Reactor_Exceptions_Test_OBJECTS) $(Reactor_Notify_Test_OBJECTS) $(Reactor_Performance_Test_OBJECTS) $(Reactor_Timer_Test_OBJECTS) $(Reactors_Test_OBJECTS) $(Reader_Writer_Test_OBJECTS) $(Recursive_Mutex_Test_OBJECTS) $(Reverse_Lock_Test_OBJECTS) $(SOCK_Connector_Test_OBJECTS) $(SOCK_Test_OBJECTS) $(SPIPE_Test_OBJECTS) $(SString_Test_OBJECTS) $(SV_Shared_Memory_Test_OBJECTS) $(Semaphore_Test_OBJECTS) $(Service_Config_Test_OBJECTS) $(Sigset_Ops_Test_OBJECTS) $(Simple_Message_Block_Test_OBJECTS) $(TSS_Test_OBJECTS) $(Task_Test_OBJECTS) $(Thread_Manager_Test_OBJECTS) $(Thread_Mutex_Test_OBJECTS) $(Thread_Pool_Test_OBJECTS) $(Time_Service_Test_OBJECTS) $(Time_Value_Test_OBJECTS) $(Timeprobe_Test_OBJECTS) $(Timer_Queue_Test_OBJECTS) $(UPIPE_SAP_Test_OBJECTS) $(Upgradable_RW_Test_OBJECTS) $(Naming_Test_OBJECTS) $(FlReactor_Test_OBJECTS) $(Thread_Pool_Reactor_Test_OBJECTS) $(TkReactor_Test_OBJECTS) $(XtReactor_Test_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
@@ -707,6 +726,10 @@ Atomic_Op_Test: $(Atomic_Op_Test_OBJECTS) $(Atomic_Op_Test_DEPENDENCIES)
 	@rm -f Atomic_Op_Test
 	$(CXXLINK) $(Atomic_Op_Test_LDFLAGS) $(Atomic_Op_Test_OBJECTS) $(Atomic_Op_Test_LDADD) $(LIBS)
 
+Auto_IncDec_Test: $(Auto_IncDec_Test_OBJECTS) $(Auto_IncDec_Test_DEPENDENCIES)
+	@rm -f Auto_IncDec_Test
+	$(CXXLINK) $(Auto_IncDec_Test_LDFLAGS) $(Auto_IncDec_Test_OBJECTS) $(Auto_IncDec_Test_LDADD) $(LIBS)
+
 Barrier_Test: $(Barrier_Test_OBJECTS) $(Barrier_Test_DEPENDENCIES)
 	@rm -f Barrier_Test
 	$(CXXLINK) $(Barrier_Test_LDFLAGS) $(Barrier_Test_OBJECTS) $(Barrier_Test_LDADD) $(LIBS)
@@ -726,6 +749,10 @@ Cache_Map_Manager_Test: $(Cache_Map_Manager_Test_OBJECTS) $(Cache_Map_Manager_Te
 Cached_Conn_Test: $(Cached_Conn_Test_OBJECTS) $(Cached_Conn_Test_DEPENDENCIES)
 	@rm -f Cached_Conn_Test
 	$(CXXLINK) $(Cached_Conn_Test_LDFLAGS) $(Cached_Conn_Test_OBJECTS) $(Cached_Conn_Test_LDADD) $(LIBS)
+
+Capabilities_Test: $(Capabilities_Test_OBJECTS) $(Capabilities_Test_DEPENDENCIES)
+	@rm -f Capabilities_Test
+	$(CXXLINK) $(Capabilities_Test_LDFLAGS) $(Capabilities_Test_OBJECTS) $(Capabilities_Test_LDADD) $(LIBS)
 
 CDR_Test: $(CDR_Test_OBJECTS) $(CDR_Test_DEPENDENCIES)
 	@rm -f CDR_Test
@@ -838,6 +865,10 @@ Priority_Reactor_Test: $(Priority_Reactor_Test_OBJECTS) $(Priority_Reactor_Test_
 Priority_Task_Test: $(Priority_Task_Test_OBJECTS) $(Priority_Task_Test_DEPENDENCIES)
 	@rm -f Priority_Task_Test
 	$(CXXLINK) $(Priority_Task_Test_LDFLAGS) $(Priority_Task_Test_OBJECTS) $(Priority_Task_Test_LDADD) $(LIBS)
+
+Process_Manager_Test: $(Process_Manager_Test_OBJECTS) $(Process_Manager_Test_DEPENDENCIES)
+	@rm -f Process_Manager_Test
+	$(CXXLINK) $(Process_Manager_Test_LDFLAGS) $(Process_Manager_Test_OBJECTS) $(Process_Manager_Test_LDADD) $(LIBS)
 
 Process_Mutex_Test: $(Process_Mutex_Test_OBJECTS) $(Process_Mutex_Test_DEPENDENCIES)
 	@rm -f Process_Mutex_Test
