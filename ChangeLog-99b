@@ -1,6 +1,10 @@
 Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/POSIX_Asynch_IO.i: 
+
 	rTagged the ACE_wrappers repository with <before_proactor>
-	After these changes rtagged the repository with <after_proactor>
+	After the following changes rtagged the repository with
+	<after_proactor> 
 
 	* ace/
 		Proactor.h
