@@ -1,7 +1,9 @@
 // $Id$
 
-#if !defined (LOCK_SOCK_ACCEPTOR_CPP)
-#define LOCK_SOCK_ACCEPTOR_CPP
+#if !defined (ACE_LOCK_SOCK_ACCEPTOR_CPP)
+#define ACE_LOCK_SOCK_ACCEPTOR_CPP
+
+#include /**/ "ace/Synch.h"
 
 template <class ACE_LOCK> int
 ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::accept (ACE_SOCK_Stream &stream,
@@ -25,4 +27,4 @@ ACE_LOCK_SOCK_Acceptor<ACE_LOCK>::lock (void)
   return this->lock_;
 }
 
-#endif /* LOCK_SOCK_ACCEPTOR_CPP */
+#endif /* ACE_LOCK_SOCK_ACCEPTOR_CPP */

@@ -1,3 +1,9 @@
+Thu Oct 30 01:03:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/LOCK_SOCK_Acceptor.cpp: Added a #include of "ace/Synch.h" so
+ 	  that the Conn_Test.cpp will compile on HP/UX.  Thanks to Stephen
+ 	  Coy <stevec@magna.com.au> for reporting this.
+
 Wed Oct 29 22:55:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/config-vxworks5.x-g++.h:
