@@ -5,6 +5,7 @@
 #include "Stock_Consumer.h"
 #include <orbsvcs/CosNamingC.h>
 #include <orbsvcs/Event_Utilities.h>
+#include "ace/streams.h"
 
 int main (int argc, char* argv[])
 {

@@ -6,10 +6,6 @@
 #include "ace/String_Base.h"
 #include "ace/Auto_Ptr.h"
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-# include "ace/streams.h"
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-
 #if !defined (__ACE_INLINE__)
 #include "ace/String_Base.i"
 #endif /* __ACE_INLINE__ */

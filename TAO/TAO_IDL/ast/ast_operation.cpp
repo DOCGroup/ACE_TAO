@@ -86,6 +86,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_strlist.h"
 #include "global_extern.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_operation, 

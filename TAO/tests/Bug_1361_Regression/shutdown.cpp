@@ -2,6 +2,7 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 
 ACE_RCSID(Bug_1270_Regression, shutdown, "$Id$")
 

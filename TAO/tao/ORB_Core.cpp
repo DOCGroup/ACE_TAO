@@ -53,6 +53,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/streams.h"
 
 #include "Codeset_Manager.h"
 
