@@ -1,18 +1,32 @@
+Thu Dec 28 16:02:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/sandbox.cpp:
+          This program executes a child process (and its children), in a
+          new session and process group.  If the process tree does not
+          finish before a given timeout (the first argument) the whole
+          tree is terminated.
+          The program is useful for test scripts and programs,
+          occasionally they hang the whole auto build.
+
+        * bin/auto_compile:
+          Add new options '-sandbox' and '-sandbox_timeout' to support the
+          sandbox program.
+
 Thu Dec 28 16:10:59 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* performance-tests/UDP/udp_test.cpp:
-	* performance-tests/Server_Concurrency/Latency_Stats.h:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp
-	* performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp
-	  Fixed compile problems under VxWorks when handling 
-	  64 bit integers.  Basically, truncated the 64 bit integers
-	  to 32 bit integers for operations not supported by 
-	  ACE_U_LongLong.
+        * performance-tests/UDP/udp_test.cpp:
+        * performance-tests/Server_Concurrency/Latency_Stats.h:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp
+          Fixed compile problems under VxWorks when handling
+          64 bit integers.  Basically, truncated the 64 bit integers
+          to 32 bit integers for operations not supported by
+          ACE_U_LongLong.
 
 Wed Dec 27 15:32:43 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
- 	* examples/Reactor/WFMO_Reactor/test_network_events.cpp:
-	  Added missing ;
+        * examples/Reactor/WFMO_Reactor/test_network_events.cpp:
+          Added missing ;
 
 Wed Dec 27 11:11:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
