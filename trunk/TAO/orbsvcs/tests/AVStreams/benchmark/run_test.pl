@@ -1,8 +1,9 @@
-# $Id$
-# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
+
+# $Id$
+# -*- perl -*-
 
 $tao_root = $ENV{TAO_ROOT};
 # This is a Perl script that runs the Naming Service, client and servers
@@ -21,7 +22,7 @@ $nsport = 20000 + uniqueid ();
 sub name_server
 {
     my $args = "-ORBnameserviceport $nsport";
-    my $prog = "$tao_root/orbsvcs/Naming_Service/Naming_Service"
+    my $prog = "$tao_root/orbsvcs/Naming_Service/Naming_Service "
 	.$Process::EXE_EXT;
     print ("\nNaming_Service: $prog$Process::EXE_EXT $args\n");
     $NS = Process::Create ($prog, $args);
@@ -32,7 +33,7 @@ sub server
 {
     my $args = "-ORBnameserviceport $nsport";
     print ("\nServer: server$Process::EXE_EXT $args\n");
-    $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", $args);
+    $SV = Process::Create ('.' . $DIR_SEPARATOR . "server " .$Process::EXE_EXT . $args);
 }
 
 
@@ -40,7 +41,7 @@ sub client
 {
     my $args = "-ORBnameserviceport $nsport";
     print ("\nclient: client $args\n");
-    $CL = Process::Create ($EXEPREFIX."client$Process::EXE_EXT", $args);
+    $CL = Process::Create ('.' . $DIR_SEPARATOR . "client " .$Process::EXE_EXT . $args);
 }
 
 name_server ();
