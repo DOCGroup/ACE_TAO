@@ -52,6 +52,9 @@
 // Locking
 #include "ace/Synch.h"
 
+// OctetSeq
+#include "tao/OctetSeqC.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
@@ -585,6 +588,9 @@ public:
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongPolicy));
 
+  CORBA::OctetSeq *id (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 #if (TAO_HAS_RT_CORBA == 1)
 
   CORBA::Object_ptr create_reference_with_priority (const char * intf,
@@ -875,6 +881,8 @@ protected:
 
   void set_folded_name (void);
 
+  void set_id (void);
+
   TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 
   int is_poa_generated_id (const PortableServer::ObjectId &id);
@@ -957,6 +965,8 @@ protected:
   TAO_Object_Adapter::poa_name folded_name_;
 
   TAO_Object_Adapter::poa_name_var system_name_;
+
+  CORBA::OctetSeq id_;
 
   TAO_POA_Manager &poa_manager_;
 

@@ -16,6 +16,7 @@ OBJFILES = \
 	$(OBJDIR)\Object_Adapter.obj \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
+	$(OBJDIR)\ImplRepo_i.obj \
 	$(OBJDIR)\POA.obj \
 	$(OBJDIR)\POAManager.obj \
 	$(OBJDIR)\PolicyS.obj \

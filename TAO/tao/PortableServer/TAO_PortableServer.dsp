@@ -200,6 +200,10 @@ SOURCE=.\Operation_Table.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepo_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORB_Manager.cpp
 # End Source File
 # Begin Source File
@@ -309,6 +313,10 @@ SOURCE=.\Object_Adapter.h
 # Begin Source File
 
 SOURCE=.\Operation_Table.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepo_i.h
 # End Source File
 # Begin Source File
 

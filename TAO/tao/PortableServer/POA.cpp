@@ -6,8 +6,9 @@
 // ImplRepo related.
 //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-# include "ImplRepoS.h"
-# include "ImplRepoC.h"
+# include "tao/PortableServer/ImplRepoS.h"
+# include "tao/PortableServer/ImplRepoC.h"
+# include "tao/PortableServer/ImplRepo_i.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #include "tao/ORB_Core.h"
@@ -21,65 +22,11 @@
 
 #include "tao/RT_Policy_i.h"
 
-
 #include "Default_Acceptor_Filter.h"
 #include "RT_Acceptor_Filters.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
-
-//
-// ImplRepo related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-// @@ Darrell: could you move this to some other file?  It is kind of
-// ugly around here.  Also: we probably want this "optional",
-// i.e. some kind of hook that creates this object only when IMR is
-// enabled, we should talk about it.
-class ServerObject_i
-  : public POA_ImplementationRepository::ServerObject,
-    public PortableServer::RefCountServantBase
-{
-  // = TITLE
-  //    IMR Server Object Implementation
-  //
-  // = DESCRIPTION
-  //    Implementation Repository uses this to communicate with the IMR
-  //    registered server.
-public:
-  ServerObject_i (CORBA::ORB_ptr orb)
-    : orb_ (orb) {}
-
-  virtual void ping (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-    }
-
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      this->orb_->shutdown (0, ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-private:
-  CORBA::ORB_ptr orb_;
-};
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if !defined (__ACE_INLINE__)
 # include "POA.i"
@@ -208,14 +155,18 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
       ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
 
+  // Set the id for this POA.
+  this->set_id ();
+
   // Finally everything is fine.  Make sure to take ownership away
   // from the auto pointer.
   this->active_object_map_ = new_active_object_map.release ();
 
-//
-// ImplRepo related.
-//
+  //
+  // ImplRepo related.
+  //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
+
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
     {
       int temp = this->use_imr_;
@@ -565,11 +516,11 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       ACE_CHECK;
     }
 
-
   //
   // ImplRepo related.
   //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
+
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
     {
       this->imr_notify_shutdown ();
@@ -577,19 +528,37 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       if (this->server_object_)
         {
-          TAO_POA *root_poa = this->object_adapter ().root_poa ();
+          TAO_POA *tao_poa = 0;
+
+          PortableServer::POA_var poa =
+            this->server_object_->_default_POA (ACE_TRY_ENV);
+          ACE_CHECK;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+          RTPortableServer::POA_var rt_poa =
+            RTPortableServer::POA::_narrow (poa.in ());
+          ACE_CHECK;
+
+          tao_poa =
+            ACE_dynamic_cast (TAO_POA *, rt_poa.in ());
+
+#else
+
+          tao_poa =
+            ACE_dynamic_cast (TAO_POA *, poa.in ());
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
           PortableServer::ObjectId_var id =
-            root_poa->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
+            tao_poa->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
           ACE_CHECK;
 
-          root_poa->deactivate_object_i (id.in (), ACE_TRY_ENV);
-          ACE_CHECK;
-
-          this->server_object_->_remove_ref (ACE_TRY_ENV);
+          tao_poa->deactivate_object_i (id.in (), ACE_TRY_ENV);
           ACE_CHECK;
         }
     }
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // When a POA is destroyed, any requests that have started execution
@@ -1362,15 +1331,16 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // When a POA manager is in the discarding state, the associated
       // POAs will discard all incoming requests (whose processing has
       // not yet begun). When a request is discarded, the TRANSIENT
-      // system exception must be returned to the client-side to
-      // indicate that the request should be re-issued. (Of course, an
-      // ORB may always reject a request for other reasons and raise
-      // some other system exception.)
+      // system exception, with standard minor code 1, must be
+      // returned to the client-side to indicate that the request
+      // should be re-issued. (Of course, an ORB may always reject a
+      // request for other reasons and raise some other system
+      // exception.)
       ACE_THROW (
         CORBA::TRANSIENT (
           CORBA_SystemException::_tao_minor_code (
             TAO_POA_DISCARDING,
-            0),
+            1),
           CORBA::COMPLETED_NO));
     }
 
@@ -1380,17 +1350,17 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // POAs will queue incoming requests. The number of requests
       // that can be queued is an implementation limit. If this limit
       // is reached, the POAs may discard requests and return the
-      // TRANSIENT system exception to the client to indicate that the
-      // client should reissue the request. (Of course, an ORB may
-      // always reject a request for other reasons and raise some
-      // other system exception.)
+      // TRANSIENT system exception, with standard minor code 1, to
+      // the client to indicate that the client should reissue the
+      // request. (Of course, an ORB may always reject a request for
+      // other reasons and raise some other system exception.)
 
       // Since there is no queuing in TAO, we immediately raise a
       // TRANSIENT exception.
       ACE_THROW (CORBA::TRANSIENT (
         CORBA_SystemException::_tao_minor_code (
           TAO_POA_HOLDING,
-          0),
+          1),
         CORBA::COMPLETED_NO));
     }
 
@@ -1405,9 +1375,13 @@ TAO_POA::check_poa_manager_state (CORBA::Environment &ACE_TRY_ENV)
       // CloseConnection message are examples of mechanisms that could
       // be used to indicate the rejection. If the client is
       // co-resident in the same process, the ORB could raise the
-      // OBJ_ADAPTER exception to indicate that the object
-      // implementation is unavailable.
-      ACE_THROW (CORBA::OBJ_ADAPTER ());
+      // OBJ_ADAPTER system exception, with standard minor code 1, to
+      // indicate that the object implementation is unavailable.
+      ACE_THROW (CORBA::OBJ_ADAPTER (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_POA_INACTIVE,
+          1),
+        CORBA::COMPLETED_NO));
     }
 }
 
@@ -2124,6 +2098,13 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
     }
 }
 
+CORBA::OctetSeq *
+TAO_POA::id (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new CORBA::OctetSeq (this->id_);
+}
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 int
@@ -2666,6 +2647,40 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
 TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
+  // Calculate the space required for the key.
+  CORBA::ULong buffer_size =
+    this->id_.length () +
+    id.length ();
+
+  // Create the buffer for the key.
+  CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
+
+  // First copy the POA id into the key.
+  ACE_OS::memcpy (&buffer[0],
+                  this->id_.get_buffer (),
+                  this->id_.length ());
+
+  // Then copy the object id into the key.
+  ACE_OS::memcpy (&buffer[this->id_.length ()],
+                  id.get_buffer (),
+                  id.length ());
+
+  // Create the key, giving the ownership of the buffer to the
+  // sequence.
+  TAO_ObjectKey *key = 0;
+  ACE_NEW_RETURN (key,
+                  TAO_ObjectKey (buffer_size,
+                                 buffer_size,
+                                 buffer,
+                                 1),
+                  0);
+
+  return key;
+}
+
+void
+TAO_POA::set_id (void)
+{
   // Calculate the prefix size.
   CORBA::ULong prefix_size = 0;
   prefix_size += TAO_OBJECTKEY_PREFIX_SIZE;
@@ -2706,17 +2721,17 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
     }
 #endif /* POA_NO_TIMESTAMP */
 
-  // Calculate the space required for the key.
+  // Calculate the space required for the POA id.
   CORBA::ULong buffer_size =
     prefix_size +
     this->root_key_type_length () +
     this->system_id_key_type_length () +
     creation_time +
-    poa_name +
-    id.length ();
+    poa_name;
 
-  // Create the buffer for the key.
-  CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
+  // Create the buffer for the POA id.
+  this->id_.length (buffer_size);
+  CORBA::Octet *buffer = &this->id_[0];
 
   // Keeps track of where the next infomation goes; start at 0 byte.
   CORBA::ULong starting_at = 0;
@@ -2769,23 +2784,6 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
                       this->system_name_->length ());
       starting_at += this->system_name_->length ();
     }
-
-  // Then copy the object id into the key.
-  ACE_OS::memcpy (&buffer[starting_at],
-                  id.get_buffer (),
-                  id.length ());
-
-  // Create the key, giving the ownership of the buffer to the
-  // sequence.
-  TAO_ObjectKey *key = 0;
-  ACE_NEW_RETURN (key,
-                  TAO_ObjectKey (buffer_size,
-                                 buffer_size,
-                                 buffer,
-                                 1),
-                  0);
-
-  return key;
 }
 
 int
@@ -4025,6 +4023,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
   // ImplRepo related.
   //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
+
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   if (this->use_imr_
@@ -4094,6 +4093,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
     }
 
 orbkey:
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_Stub *data =
@@ -4305,13 +4305,17 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   if (CORBA::is_nil (imr.in ()))
     return;
 
+  TAO_POA *root_poa = this->object_adapter ().root_poa ();
   ACE_NEW_THROW_EX (this->server_object_,
-                    ServerObject_i (this->orb_core_.orb ()),
+                    ServerObject_i (this->orb_core_.orb (),
+                                    root_poa),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
+  PortableServer::ServantBase_var safe_servant (this->server_object_);
+  ACE_UNUSED_ARG (safe_servant);
+
   // Activate the servant in the root poa.
-  TAO_POA *root_poa = this->object_adapter ().root_poa ();
   PortableServer::ObjectId_var id =
     root_poa->activate_object_i (this->server_object_,
                                  TAO_INVALID_PRIORITY,
@@ -4389,7 +4393,6 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Successfully notified IMR of Startup\n"));
-
 }
 
 void

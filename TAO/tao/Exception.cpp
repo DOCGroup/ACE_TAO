@@ -420,6 +420,9 @@ CORBA_SystemException::_info (void) const
         case TAO_POA_HOLDING:
           location = "poa in holding state";
           break;
+        case TAO_POA_INACTIVE:
+          location = "poa in inactive state";
+          break;
         case TAO_UNHANDLED_SERVER_CXX_EXCEPTION:
           location = "unhandled c++ exception in server side";
           break;
