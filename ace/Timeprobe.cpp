@@ -73,15 +73,19 @@ ACE_Timeprobe<ACE_LOCK>::reset (void)
   this->current_size_ = 0;
 }
 
-template <class ACE_LOCK> void
+template <class ACE_LOCK> int
 ACE_Timeprobe<ACE_LOCK>::event_descriptions (const char **descriptions,
                                              u_long minimum_id)
 {
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+
   Event_Descriptions events;
   events.descriptions_ = descriptions;
   events.minimum_id_ = minimum_id;
 
   this->event_descriptions_.insert (events);
+
+  return 0;
 }
 
 template <class ACE_LOCK> void
