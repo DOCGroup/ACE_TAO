@@ -2,13 +2,49 @@
 
 #include "ComponentServer_Task.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
-#include "ComponentServer_Impl.h"
+#include "RTServer_Impl.h"
 #include "Server_init.h"
 #include "CIAO_ServersC.h"
+#include "../XML_Helpers/XML_Utils.h"
+#include "RTPortableServer/RTPortableServer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ComponentServer_Task.inl"
 #endif /* __ACE_INLINE__ */
+
+void
+add_rtcad_configs (const char *rtcadfile,
+                   Components::ConfigValues &configs
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+{
+  CIAO::RTConfiguration::RTORB_Resource_Info resources;
+  CIAO::RTConfiguration::Policy_Sets psets;
+
+  if (CIAO::XML_Utils::parse_rtcad_extension (rtcadfile,
+                                              resources,
+                                              psets) == 0)
+    {
+      // Successfully parse the rtcad file.
+
+      CORBA::ULong len = configs.length ();
+      configs.length (len+2);
+
+      Components::ConfigValue *newconfig
+        = new OBV_Components::ConfigValue;
+
+      newconfig->name ((const char *) "CIAO-RTResources");
+      newconfig->value () <<= resources;
+      configs[len] = newconfig;
+
+      ++len;
+      newconfig = new OBV_Components::ConfigValue;
+      newconfig->name ((const char *) "CIAO-RTPolicySets");
+      newconfig->value () <<= psets;
+      configs[len] = newconfig;
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "Done adding RTCAD config\n"));
+}
 
 int
 CIAO::ComponentServer_Task::svc ()
@@ -43,11 +79,12 @@ CIAO::ComponentServer_Task::svc ()
       ACE_TRY_CHECK;
 
       // ...
-      CIAO::ComponentServer_Impl *comserv_servant;
+      CIAO::RTServer::RTComponentServer_Impl *comserv_servant;
 
       ACE_NEW_RETURN (comserv_servant,
-                      CIAO::ComponentServer_Impl (this->orb_.in (),
-                                                  root_poa.in ()),
+                      CIAO::RTServer::RTComponentServer_Impl (this->orb_.in (),
+                                                              rt_orb.in (),
+                                                              root_poa.in ()),
                       -1);
 
       PortableServer::ServantBase_var safe_servant (comserv_servant);
@@ -56,7 +93,18 @@ CIAO::ComponentServer_Task::svc ()
       // But it's not sure to me where exactly we can get the
       // ConfigValues needed by the init method at this moment.
 
-      // comserv_servant->init (config ACE_ENV_ARG_PARAMETER);
+      // @@ Manually add config values here.
+
+      Components::ConfigValues configs;
+      if (this->options_.rtcad_filename_.length () != 0)
+        add_rtcad_configs (this->options_.rtcad_filename_.c_str (),
+                           configs
+                           ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      comserv_servant->init (configs
+                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Configuring ComponentServer.
       PortableServer::ObjectId_var cs_oid
@@ -78,9 +126,11 @@ CIAO::ComponentServer_Task::svc ()
                            "Unable to activate RTComponentServer object\n"),
                           -1);
 
-
       Components::Deployment::ServerActivator_var activator;
-      Components::ConfigValues_var config;
+
+      // We are just storing the original configuration here.
+      // Currently, we don't really use this ConfigValues direclty.
+      Components::ConfigValues_var more_config;
 
       if (this->options_.use_callback_)
         {
@@ -93,7 +143,7 @@ CIAO::ComponentServer_Task::svc ()
                                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          Components::ConfigValues_out config_out (config.out ());
+          Components::ConfigValues_out config_out (more_config.out ());
 
           activator
             = act_callback->register_component_server (comserv_obj.in (),
@@ -103,7 +153,7 @@ CIAO::ComponentServer_Task::svc ()
         }
 
       comserv_servant->set_objref (activator.in (),
-                                   config.in (),
+                                   more_config.in (),
                                    comserv_obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

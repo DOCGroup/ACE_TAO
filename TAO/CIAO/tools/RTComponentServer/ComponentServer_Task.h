@@ -43,7 +43,7 @@ namespace CIAO
       // default ctor.
       _options () : use_callback_ (1) {}
 
-     // The name of the file to write stringified IOR to.
+      // The name of the file to write stringified IOR to.
       ACE_CString ior_output_filename_;
 
       // Stringified IOR of a CIAO's callback object.
@@ -52,6 +52,9 @@ namespace CIAO
       // CIAO ComponentServer uses the callback object to pass it's
       // own object reference back to ServerActivator.
       int use_callback_;
+
+      // RTCAD extension filename.
+      ACE_CString rtcad_filename_;
     } Options;
 
     ComponentServer_Task (ACE_Thread_Manager &thread_manager,

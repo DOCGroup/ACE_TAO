@@ -54,6 +54,9 @@ CIAO::Deployment_Configuration::init (const char *filename)
 const char *
 CIAO::Deployment_Configuration::get_activator_ior (const char *name)
 {
+  if (name == 0)
+    return get_default_activator_ior ();
+
   ACE_Hash_Map_Entry
     <ACE_CString,
     CIAO::Deployment_Configuration::Activator_Info> *entry;
@@ -77,6 +80,9 @@ Components::Deployment::ServerActivator_ptr
 CIAO::Deployment_Configuration::get_activator (const char *name
                                                ACE_ENV_ARG_DECL)
 {
+  if (name == 0)
+    return get_default_activator (ACE_ENV_SINGLE_ARG_PARAMETER);
+
   ACE_Hash_Map_Entry
     <ACE_CString,
     CIAO::Deployment_Configuration::Activator_Info> *entry;
@@ -102,7 +108,7 @@ CIAO::Deployment_Configuration::get_activator (const char *name
 }
 
 Components::Deployment::ServerActivator_ptr
-CIAO::Deployment_Configuration::get_default_activator (void)
+CIAO::Deployment_Configuration::get_default_activator (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->default_activator_.activator_.in ()))
     {

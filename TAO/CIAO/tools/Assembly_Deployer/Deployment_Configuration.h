@@ -75,7 +75,8 @@ namespace CIAO
     int init (const char *filename);
 
     /**
-     * @retval 0 if no valid name were found.
+     * @retval 0 if no valid name were found.  When @c name = 0, then
+     * this function behave exactly as get_default_activator_ior.
      */
     virtual const char *get_activator_ior (const char *name);
 
@@ -87,13 +88,14 @@ namespace CIAO
      *
      * @retval 0 if no valid daemon is configured.
      */
-    virtual const char *get_default_activator_ior (void);
+    virtual const char *get_default_activator_ior ();
 
     /**
      * @retval nil if no valid name were found.
      */
     virtual Components::Deployment::ServerActivator_ptr
-    get_activator (const char *name);
+    get_activator (const char *name
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /**
      * Return the reference to the default ServerActivator the
@@ -102,7 +104,7 @@ namespace CIAO
      * @retval nil if no valid daemon is configured.
      */
     virtual Components::Deployment::ServerActivator_ptr
-    get_default_activator (void);
+    get_default_activator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   protected:
     CORBA::ORB_var orb_;

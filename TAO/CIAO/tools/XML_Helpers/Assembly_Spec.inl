@@ -91,6 +91,8 @@ CIAO::Assembly_Placement::homeplacement::componentfileref (const char *ref)
 ACE_INLINE const char *
 CIAO::Assembly_Placement::homeplacement::rtpolicyset_ref (void) const
 {
+  if (this->rtpolicyset_ref_.length () == 0)
+    return 0;
   return this->rtpolicyset_ref_.c_str ();
 }
 
@@ -127,6 +129,8 @@ CIAO::Assembly_Placement::processcollocation::rtcad_filename (const char *fn)
 ACE_INLINE const char *
 CIAO::Assembly_Placement::processcollocation::rtcad_filename () const
 {
+  if (this->rtcad_filename_.length () == 0)
+    return 0;
   return this->rtcad_filename_.c_str ();
 }
 

@@ -12,6 +12,7 @@ project(RTComponentServer): ciao_server,rt_server {
     ComponentServer_Task.cpp
     RTComponentServer.cpp
     RTConfig_Manager.cpp
+    RTServer_Impl.cpp
   }
 }
 
