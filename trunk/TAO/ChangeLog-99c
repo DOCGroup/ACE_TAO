@@ -1,219 +1,226 @@
+Wed Apr 28 09:09:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Event_Service/Makefile,
+          orbsvcs/tests/EC_Mcast/Makefile,
+          orbsvcs/tests/EC_Throughput/Makefile:
+          require Event2 TAO_ORBSVCS component, instead of Event.
+
 Wed Apr 28 03:20:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Exception.{h,i,cpp}: Added a new class
- 	  CORBA_ExceptionList_var and changed the class
- 	  CORBA_ExceptionList to enable reference counting.  Fixed the
- 	  constructor's signature of all CORBA_SystemException's derived
- 	  classes.  Thanks to Ian Pepper <ian@aptest.ie> for reporting
- 	  this.
+        * tao/Exception.{h,i,cpp}: Added a new class
+          CORBA_ExceptionList_var and changed the class
+          CORBA_ExceptionList to enable reference counting.  Fixed the
+          constructor's signature of all CORBA_SystemException's derived
+          classes.  Thanks to Ian Pepper <ian@aptest.ie> for reporting
+          this.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Added a typedef
-	  TAO_EC_Unlock to avoid MSVC errors.
-	  (reactive_push_to_consumer): Declared reverse_lock as
-	  TAO_EC_Unlock.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Added a typedef
+          TAO_EC_Unlock to avoid MSVC errors.
+          (reactive_push_to_consumer): Declared reverse_lock as
+          TAO_EC_Unlock.
 
-	* tao/corbafwd.h: Added typedef of ExceptionList_ptr and
-	  ExceptionList_var in CORBA's namespace.
-	  Added a macro definition TAO_DEFAULT_MINOR_CODE.
+        * tao/corbafwd.h: Added typedef of ExceptionList_ptr and
+          ExceptionList_var in CORBA's namespace.
+          Added a macro definition TAO_DEFAULT_MINOR_CODE.
 
-	* orbsvcs/orbsvcs/Trader/Locking.h: Changed system exception
-	  initialization signature using TAO_DEFAULT_MINOR_CODE.
+        * orbsvcs/orbsvcs/Trader/Locking.h: Changed system exception
+          initialization signature using TAO_DEFAULT_MINOR_CODE.
 
-	* lots of *.cpp files: Fixed system exception instantiations.
+        * lots of *.cpp files: Fixed system exception instantiations.
 
 Wed Apr 28 02:07:42 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* created the directories orbsvcs/examples/CosEC/Factory
-	* added the following files:
-	   orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
-	    idl definition of the CosEventChannelFactory module.
-	   orbsvcs/examples/CosEC/FactoryCosEventChannelFactory_i.h:
-	   orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
-	    servant implementation of the CosEC Factory.
-	   orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.h:
-	   orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
-	    Decorator for the CosEventChannelAdmin::EventChannel servant.
-	   orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
-	    Client to test the Factory.
-	   orbsvcs/examples/CosEC/Factory/Makefile
+        * created the directories orbsvcs/examples/CosEC/Factory
+        * added the following files:
+           orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+            idl definition of the CosEventChannelFactory module.
+           orbsvcs/examples/CosEC/FactoryCosEventChannelFactory_i.h:
+           orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+            servant implementation of the CosEC Factory.
+           orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.h:
+           orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
+            Decorator for the CosEventChannelAdmin::EventChannel servant.
+           orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+            Client to test the Factory.
+           orbsvcs/examples/CosEC/Factory/Makefile
 
 Wed Apr 28 01:45:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/Generic_Servant/MyFooServant.cpp (timed_operation):
-	  Added a timed operation.  This can be used to see how the POA
-	  dispatches multiple upcalls simultaneously.
+        * examples/POA/Generic_Servant/MyFooServant.cpp (timed_operation):
+          Added a timed operation.  This can be used to see how the POA
+          dispatches multiple upcalls simultaneously.
 
-	* examples/POA/Reference_Counted_Servant/server.cpp
-	  (Reference_Counted_Foo): There is no need to completely redefine
-	  Reference_Counted_Foo.  Simply use the magic of multiple
-	  inheritance and inherit from PortableServer::RefCountServantBase
-	  and MyFooServant.
+        * examples/POA/Reference_Counted_Servant/server.cpp
+          (Reference_Counted_Foo): There is no need to completely redefine
+          Reference_Counted_Foo.  Simply use the magic of multiple
+          inheritance and inherit from PortableServer::RefCountServantBase
+          and MyFooServant.
 
 Wed Apr 28 00:44:59 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.{h,cpp}:
-	   modified to use the new RtEC.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.{h,cpp}:
+           modified to use the new RtEC.
 
 Tue Apr 27 23:32:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): Added
-	  new methods to deactivate the servant.
+        * tao/TAO.cpp (deactivate_under_child_poa and deactivate): Added
+          new methods to deactivate the servant.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp
-	  (~Cubit_Server): Deactivate servant before deleting it.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp
+          (~Cubit_Server): Deactivate servant before deleting it.
 
 Tue Apr 27 23:01:30 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
         Added the directory $TAO_ROOT/performance-tests/POA/Demux and the
-	following files for the POA Demux tests.
+        following files for the POA Demux tests.
 
-	* Makefile
-	* README
-	* client.cpp : client for the tests.
-	* demux_stats.cpp : To calculate statistics out of the timeprobe
-	  data generated.
-	* demux_test.idl : IDL used for the test.
-	* demux_test_client.cpp : Makes calls on the remote objects
-	  parameterized by the no. of POAs, servants and operations.
-	* demux_test_client.h:
-	* demux_test_client.i: Helper class for the client.
-	* demux_test_i.cpp : Servant Implementation.
-	* demux_test_i.h:
-	* demux_test_macros.h: Some #defines for the test.
-	* demux_test_server.cpp: Server for the test. Parameterized by the
-	  POA ID policy, lifespan policy, no. of servants, operations.
-	* demux_test_server.h
-	* names_file: Names used by the servants.
-	* poa_names_100.dat: Names used by the POAs.
-	* server.cpp : server main program.
-	* write_names.cpp : generates the names_file.
+        * Makefile
+        * README
+        * client.cpp : client for the tests.
+        * demux_stats.cpp : To calculate statistics out of the timeprobe
+          data generated.
+        * demux_test.idl : IDL used for the test.
+        * demux_test_client.cpp : Makes calls on the remote objects
+          parameterized by the no. of POAs, servants and operations.
+        * demux_test_client.h:
+        * demux_test_client.i: Helper class for the client.
+        * demux_test_i.cpp : Servant Implementation.
+        * demux_test_i.h:
+        * demux_test_macros.h: Some #defines for the test.
+        * demux_test_server.cpp: Server for the test. Parameterized by the
+          POA ID policy, lifespan policy, no. of servants, operations.
+        * demux_test_server.h
+        * names_file: Names used by the servants.
+        * poa_names_100.dat: Names used by the POAs.
+        * server.cpp : server main program.
+        * write_names.cpp : generates the names_file.
 
 Tue Apr 27 22:35:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp: Fixed template instantiations and
-	  constructor initialization order problems.
+        * tao/Object_Adapter.cpp: Fixed template instantiations and
+          constructor initialization order problems.
 
 Tue Apr 27 21:46:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Eliminated priority inversion in the reactive dispatcher, we
-	  release the lock during the upcall to limit the time during
-	  which it is held.
+        * Eliminated priority inversion in the reactive dispatcher, we
+          release the lock during the upcall to limit the time during
+          which it is held.
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
-	  Use the "reactive_push_to_consumer()" method in the
-	  ProxyPushSupplier to ensure that the lock is released during the
-	  upcall.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+          Use the "reactive_push_to_consumer()" method in the
+          ProxyPushSupplier to ensure that the lock is released during the
+          upcall.
 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
-	  The timeout "filters" need direct access to the
-	  ProxyPushSupplier.
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+          The timeout "filters" need direct access to the
+          ProxyPushSupplier.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
-	  Added a new callback method to the ProxyPushSupplier used by the
-	  Timeout filters to correctly grab the lock before dispatching
-	  the timeout.
-	  We need to control access to this kind of callback interfaces,
-	  possibly using helper classes with "friend" access.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+          Added a new callback method to the ProxyPushSupplier used by the
+          Timeout filters to correctly grab the lock before dispatching
+          the timeout.
+          We need to control access to this kind of callback interfaces,
+          possibly using helper classes with "friend" access.
 
-	* orbsvcs/tests/EC_Throughput/ec.conf:
-	* orbsvcs/Event_Service/svc.conf:
-	  By default use a regular mutex in the ProxyPushSupplier, it is
-	  more efficient and works correctly.
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/Event_Service/svc.conf:
+          By default use a regular mutex in the ProxyPushSupplier, it is
+          more efficient and works correctly.
 
 Tue Apr 27 17:27:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/LSOCK_Acceptor.{h,cpp}:
-	* tao/LSOCK_Connector.{h,cpp}:
-	* tao/LSOCK_Profile.{h,i,cpp}:
-	* tao/LSOCK_Transport.{h,cpp}:
+        * tao/LSOCK_Acceptor.{h,cpp}:
+        * tao/LSOCK_Connector.{h,cpp}:
+        * tao/LSOCK_Profile.{h,i,cpp}:
+        * tao/LSOCK_Transport.{h,cpp}:
 
-	  These are the Unix Domain Socket pluggable protocol files for TAO.
-	  They are not operational yet, but getting them under CVS
-	  control at this point seems like a good thing to do.
+          These are the Unix Domain Socket pluggable protocol files for TAO.
+          They are not operational yet, but getting them under CVS
+          control at this point seems like a good thing to do.
 
 Tue Apr 27 16:48:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA:
+        * tao/POA:
 
-	  - destroy_i: If the <wait_for_completion> parameter is TRUE, the
-	    destroy operation will return only after all requests in
-	    process have completed and all invocations of etherealize have
-	    completed. Otherwise, the destroy operation returns after
-	    destroying the POAs.
+          - destroy_i: If the <wait_for_completion> parameter is TRUE, the
+            destroy operation will return only after all requests in
+            process have completed and all invocations of etherealize have
+            completed. Otherwise, the destroy operation returns after
+            destroying the POAs.
 
-	    If a servant manager is associated with the POA,
-	    ServantLocator::etherealize will be invoked with the oid and
-	    the servant. (The deactivate_object operation does not wait
-	    for the etherealize operation to complete before
-	    deactivate_object returns.)
+            If a servant manager is associated with the POA,
+            ServantLocator::etherealize will be invoked with the oid and
+            the servant. (The deactivate_object operation does not wait
+            for the etherealize operation to complete before
+            deactivate_object returns.)
 
-	    If the POA has no ServantActivator associated with it, the POA
-	    implementation calls _remove_ref when all operation
-	    invocations have completed. If there is a ServantActivator,
-	    the Servant is consumed by the call to
-	    ServantActivator::etherealize instead.
+            If the POA has no ServantActivator associated with it, the POA
+            implementation calls _remove_ref when all operation
+            invocations have completed. If there is a ServantActivator,
+            the Servant is consumed by the call to
+            ServantActivator::etherealize instead.
 
-	* tao/Object_Adapter:
+        * tao/Object_Adapter:
 
-	  - Non_Servant_Upcall: This class helps us with a recursive
-	    thread lock without using a recursive thread lock.
-	    Non_Servant_Upcall has a magic constructor and destructor.  We
-	    unlock the Object_Adapter lock for the duration of the
-	    non-servant (i.e., adapter activator and servant activator)
-	    upcalls; reacquiring once the upcalls complete.  Even though
-	    we are releasing the lock, other threads will not be able to
-	    make progress since
-	    <Object_Adapter::non_servant_upcall_in_progress_> has been
-	    set.
+          - Non_Servant_Upcall: This class helps us with a recursive
+            thread lock without using a recursive thread lock.
+            Non_Servant_Upcall has a magic constructor and destructor.  We
+            unlock the Object_Adapter lock for the duration of the
+            non-servant (i.e., adapter activator and servant activator)
+            upcalls; reacquiring once the upcalls complete.  Even though
+            we are releasing the lock, other threads will not be able to
+            make progress since
+            <Object_Adapter::non_servant_upcall_in_progress_> has been
+            set.
 
-	  - Outstanding_Requests: This class helps us by increasing
-	    <POA::outstanding_requests_> for the duration of the servant
-	    upcall. Outstanding_Requests has a magic constructor and
-	    destructor.  We increment <POA::outstanding_requests_> in the
-	    constructor.  We decrement <POA::outstanding_requests_> in the
-	    destructor.  Note that the lock is released after
-	    <POA::outstanding_requests_> is increased and
-	    <POA::outstanding_requests_> is decreased after the lock has
-	    been reacquired.
+          - Outstanding_Requests: This class helps us by increasing
+            <POA::outstanding_requests_> for the duration of the servant
+            upcall. Outstanding_Requests has a magic constructor and
+            destructor.  We increment <POA::outstanding_requests_> in the
+            constructor.  We decrement <POA::outstanding_requests_> in the
+            destructor.  Note that the lock is released after
+            <POA::outstanding_requests_> is increased and
+            <POA::outstanding_requests_> is decreased after the lock has
+            been reacquired.
 
-	* tao/Active_Object_Map:
+        * tao/Active_Object_Map:
 
-	  - Added <deactivated_> flag to each entry in the map. This flag
-	    is needed because there is a period of time between an
-	    object's deactivation and the etherealization (during which
-	    outstanding requests are being processed) in which arriving
-	    requests on that object should not be passed to its
-	    servant. During this period, requests targeted for such an
-	    object act as if the POA were in holding state until
-	    etherealize completes. If etherealize is called as a
-	    consequence of a deactivate call with a etherealize_objects
-	    parameter of TRUE, incoming requests are rejected.
+          - Added <deactivated_> flag to each entry in the map. This flag
+            is needed because there is a period of time between an
+            object's deactivation and the etherealization (during which
+            outstanding requests are being processed) in which arriving
+            requests on that object should not be passed to its
+            servant. During this period, requests targeted for such an
+            object act as if the POA were in holding state until
+            etherealize completes. If etherealize is called as a
+            consequence of a deactivate call with a etherealize_objects
+            parameter of TRUE, incoming requests are rejected.
 
-	  - bind_using_system_id(): Removed extra code: entry->system_id_
-	    = entry->user_id_; this was already happening in
-	    TAO_Active_Hint_Strategy::bind().
+          - bind_using_system_id(): Removed extra code: entry->system_id_
+            = entry->user_id_; this was already happening in
+            TAO_Active_Hint_Strategy::bind().
 
-	  - unbind_using_user_id(): Only unbind servant if non-zero.
+          - unbind_using_user_id(): Only unbind servant if non-zero.
 
-	* tao/Servant_Base.h (TAO_ServantBase): Change reference count
-	  from ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> to
-	  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>.  This way we can utilize
-	  the InterlockedIncrement / InterlockedDecrement specializations
-	  for Atomic_Op on NT.
+        * tao/Servant_Base.h (TAO_ServantBase): Change reference count
+          from ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> to
+          ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>.  This way we can utilize
+          the InterlockedIncrement / InterlockedDecrement specializations
+          for Atomic_Op on NT.
 
-	* tao/ORB_Core.cpp (create_and_set_root_poa): Fixed POA
-	  constructor call.
+        * tao/ORB_Core.cpp (create_and_set_root_poa): Fixed POA
+          constructor call.
 
-	* tao/default_server.cpp (enable_poa_locking): Changed server
-	  factory to simply inform Object Adapter if POA locking should be
-	  enabled.  The Object Adapter will create the proper lock.
+        * tao/default_server.cpp (enable_poa_locking): Changed server
+          factory to simply inform Object Adapter if POA locking should be
+          enabled.  The Object Adapter will create the proper lock.
 
 Tue Apr 27 16:40:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -223,169 +230,169 @@ Tue Apr 27 16:40:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Apr 27 15:04:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	  Removed an incorrect "var" string appended to the
-	  local member name in the case where a union contains
-	  another union. Was causing a compile error in fooC.i.
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+          Removed an incorrect "var" string appended to the
+          local member name in the case where a union contains
+          another union. Was causing a compile error in fooC.i.
           Thanks to Srikumar Kareti <skareti@htc.honeywell.com>
           for reporting this.
 
 Tue Apr 27 12:01:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Service.cpp (main): Changed to use
-	  TAO_EC_Default_Factory::init_svcs () to add the static service
-	  into service configurator.
+        * orbsvcs/Event_Service/Event_Service.cpp (main): Changed to use
+          TAO_EC_Default_Factory::init_svcs () to add the static service
+          into service configurator.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp (init):
-	  Added ACE_NOTREACHED macros.  KAI compiler is pretty good at
-	  figuring out unreachable statements.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp (init):
+          Added ACE_NOTREACHED macros.  KAI compiler is pretty good at
+          figuring out unreachable statements.
 
 Mon Apr 26 16:49:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/fe/lex.yy.cpp: Redefined TAO_YY_BREAK as ACE_NOTREACHED
-	  (break;) and made sure it is used properly in the file.
+        * TAO_IDL/fe/lex.yy.cpp: Redefined TAO_YY_BREAK as ACE_NOTREACHED
+          (break;) and made sure it is used properly in the file.
 
 Mon Apr 26 10:44:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  Added helper method to register the default factory with the
-	  service configurator. This is needed on NT where the
-	  export/import madness does no allow us to use the static service
-	  declaration from outside the DLL.
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          Added helper method to register the default factory with the
+          service configurator. This is needed on NT where the
+          export/import madness does no allow us to use the static service
+          declaration from outside the DLL.
 
- 	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Added the new Event Channel files.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added the new Event Channel files.
 
 Mon Apr 26 09:16:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.i:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
-	  Encapsulated throughput measurements in a helper class.
-	  Added support for accumulating several latency measurements.
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.i:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+          Encapsulated throughput measurements in a helper class.
+          Added support for accumulating several latency measurements.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  Added support for accumulated throughput and per-consumer
-	  latency.
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          Added support for accumulated throughput and per-consumer
+          latency.
 
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
-	  Fine tuned.
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+          Fine tuned.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
-	  We should not raise an exception when removing a supplier,
-	  because we would need to filter out supplier removal too. It is
-	  enough to raise the exception from the SupplierAdmin module.
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+          We should not raise an exception when removing a supplier,
+          because we would need to filter out supplier removal too. It is
+          enough to raise the exception from the SupplierAdmin module.
 
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	  Added debugging messages (currently commented out).
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Added debugging messages (currently commented out).
 
-	* orbsvcs/orbsvcs/Event/EC_Filter.cpp:
-	  Added some @@ comments.
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+          Added some @@ comments.
 
 Mon Apr 26 05:35:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_Internal.{h,cpp}: Changed *_args to of type const char
-	  *.  Thanks to Andy for reporting this.
+        * tao/TAO_Internal.{h,cpp}: Changed *_args to of type const char
+          *.  Thanks to Andy for reporting this.
 
-	* tao/TAO_Internal.{i,cpp} (default_svc_conf_entries): Moved to
-	  .cpp file and remove TAO_Internal.i from repository.
+        * tao/TAO_Internal.{i,cpp} (default_svc_conf_entries): Moved to
+          .cpp file and remove TAO_Internal.i from repository.
 
 Sun Apr 25 16:59:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/fe/lex.yy.cpp: Added ACE_NOTREACHED to two redundant
-	  break statements.
+        * TAO_IDL/fe/lex.yy.cpp: Added ACE_NOTREACHED to two redundant
+          break statements.
 
-	* TAO_IDL/ast/ast_expression.cpp (coerce_value): Removed a
-	  redundant return statement.
+        * TAO_IDL/ast/ast_expression.cpp (coerce_value): Removed a
+          redundant return statement.
 
 Sun Apr 25 16:05:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	  The EC_Factories create a Supplier_Filter_Builder now. This
-	  simplifies some of the memory managment in the system: now the
-	  EC must handle the builder and the builder handles the object it
-	  creates.  I was able to lift a restriction of the factories
-	  implemented so far: they can be used from multile ECs now.
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+          The EC_Factories create a Supplier_Filter_Builder now. This
+          simplifies some of the memory managment in the system: now the
+          EC must handle the builder and the builder handles the object it
+          creates.  I was able to lift a restriction of the factories
+          implemented so far: they can be used from multile ECs now.
 
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.i:
-	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	  The EC_Factory creates a factory object for the supplier-side
-	  filters. Analogous to the consumer-side filter builder.
-	  The ProxyPushConsumer uses this object to create its filter, but
-	  the creation is deferred until the user connects to the
-	  ProxyConsumer (as it is done in the consumer side).
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+          The EC_Factory creates a factory object for the supplier-side
+          filters. Analogous to the consumer-side filter builder.
+          The ProxyPushConsumer uses this object to create its filter, but
+          the creation is deferred until the user connects to the
+          ProxyConsumer (as it is done in the consumer side).
 
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
-	  Moved the trivial supplier-side filter to its own filter. Added
-	  a builder for it.
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+          Moved the trivial supplier-side filter to its own filter. Added
+          a builder for it.
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	  Fixed some problems with late registration of
-	  suppliers/consumers.
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+          Fixed some problems with late registration of
+          suppliers/consumers.
 
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	  Fixed several bugs during consumer/supplier match. Also added a
-	  supplier filter builder for this type.
-	  The EC_Default_Factory has support for it too.
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+          Fixed several bugs during consumer/supplier match. Also added a
+          supplier filter builder for this type.
+          The EC_Default_Factory has support for it too.
 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
-	  Fixed comments.
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+          Fixed comments.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  Use the new EC by default.
-	  Start the threads at the right priority.
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          Use the new EC by default.
+          Start the threads at the right priority.
 
-	* orbsvcs/tests/EC_Throughput/ec.conf:
-	  Enabled the per-supplier filters by default.
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+          Enabled the per-supplier filters by default.
 
-	* Updated many makefiles.
+        * Updated many makefiles.
 
 Sat Apr 24 22:57:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	  Fixed a typo that was causing a derived interface's
-	  _set_xxx_skel method to call the base class'
-	  _get_xxx_skel method. Thanks to Kris Johnson
-	  <kjohnson@gardnersys.com> for pointing this out.
+        * TAO_IDL/be/be_interface.cpp:
+          Fixed a typo that was causing a derived interface's
+          _set_xxx_skel method to call the base class'
+          _get_xxx_skel method. Thanks to Kris Johnson
+          <kjohnson@gardnersys.com> for pointing this out.
 
 Sat Apr 24 08:51:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Factory.cpp:
-	  IRIX required an extra #include
+        * orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+          IRIX required an extra #include
 
 Sat Apr 24 07:21:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
