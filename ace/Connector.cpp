@@ -375,9 +375,9 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_i
   int use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
 
   if (use_reactor)
-    timeout = (ACE_Time_Value *) &ACE_Time_Value::zero;
+    timeout = const_cast<ACE_Time_Value *> (&ACE_Time_Value::zero);
   else
-    timeout = (ACE_Time_Value *) synch_options.time_value ();
+    timeout = const_cast<ACE_Time_Value *> (synch_options.time_value ());
 
   int result;
   if (sh_copy == 0)
