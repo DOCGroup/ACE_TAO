@@ -99,14 +99,14 @@ while ($line = <>)
 sub find_match
 {
     $key = $_[0].'\s*<\s*(.*)>\s*';
-    if ($line =~ /$template_instantiation $key$end_of_template_instantiation$/)
+    if ($line =~ /$template_instantiation \s*$key$end_of_template_instantiation$/)
     {
         $match = 1;
         $template_parameters = $1;
         $instantiation = $template_instantiation;
         $end_of_instantiation = $end_of_template_instantiation;
     }
-    elsif ($line =~ /$pragma_instantiation $key$end_of_pragma_instantiation$/)
+    elsif ($line =~ /$pragma_instantiation \s*$key$end_of_pragma_instantiation$/)
     {
         $match = 1;
         $template_parameters = $1;
