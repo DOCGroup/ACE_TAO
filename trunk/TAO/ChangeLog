@@ -1,3 +1,10 @@
+Thu Oct 30 10:21:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/ServerRequest.h:
+
+          Added missing redefinition of TAO_EXPORT_MACRO.
+
 Thu Oct 30 22:02:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP.dsp:
