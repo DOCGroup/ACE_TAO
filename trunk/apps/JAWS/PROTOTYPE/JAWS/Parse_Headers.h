@@ -4,12 +4,13 @@
 #if !defined (JAWS_PARSE_HEADERS_H)
 #define JAWS_PARSE_HEADERS_H
 
+#include "JAWS/Export.h"
 #include "ace/Singleton.h"
 #include "ace/Message_Block.h"
 
 #include "Headers.h"
 
-class JAWS_Header_Info
+class JAWS_Export JAWS_Header_Info
 {
 public:
   JAWS_Header_Info (void);
@@ -80,7 +81,7 @@ private:
   JAWS_Headers table_;
 };
 
-class JAWS_Parse_Headers
+class JAWS_Export JAWS_Parse_Headers
 {
 public:
 

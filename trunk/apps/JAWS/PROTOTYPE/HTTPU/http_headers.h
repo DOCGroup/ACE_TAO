@@ -63,65 +63,63 @@ public:
     APPENDTO_HEADER = 8  // Concatenate data to existing header value
   };
 
-  static HTTP_Hdr_Node
-    HTTP,
-    ACCEPT,
-    ACCEPTCHARSET,
-    ACCEPTENCODING,
-    ACCEPTLANGUAGE,
-    ACCEPTRANGES,
-    AGE,
-    ALLOW,
-    AUTHORIZATION,
-    CACHECONTROL,
-    CONNECTION,
-    CONTENTENCODING,
-    CONTENTLENGTH,
-    CONTENTLOCATION,
-    CONTENTMD5,
-    CONTENTRANGE,
-    CONTENTTYPE,
-    DATE,
-    ETAG,
-    EXPECT,
-    EXPIRES,
-    FROM,
-    HOST,
-    IFMATCH,
-    IFMODIFIEDSINCE,
-    IFNONEMATCH,
-    IFRANGE,
-    IFUNMODIFIEDSINCE,
-    LASTMODIFIED,
-    LOCATION,
-    MAXFORWARDS,
-    PRAGMA,
-    PROXYAUTHENTICATE,
-    PROXYAUTHORIZATION,
-    RANGE,
-    REFERER,
-    RETRYAFTER,
-    SERVER,
-    TE,
-    TRAILER,
-    TRANSFERENCODING,
-    UPGRADE,
-    USERAGENT,
-    VARY,
-    VIA,
-    WARNING,
-    WWWAUTHENTICATE,
-    GET,
-    HEAD,
-    POST,
-    PUT,
-    QUIT,
-    DUNNO,
-    META,
-    A,
-    SCRIPT,
-    APPLET
-  ;
+  static HTTP_Hdr_Node HTTP;
+  static HTTP_Hdr_Node ACCEPT;
+  static HTTP_Hdr_Node ACCEPTCHARSET;
+  static HTTP_Hdr_Node ACCEPTENCODING;
+  static HTTP_Hdr_Node ACCEPTLANGUAGE;
+  static HTTP_Hdr_Node ACCEPTRANGES;
+  static HTTP_Hdr_Node AGE;
+  static HTTP_Hdr_Node ALLOW;
+  static HTTP_Hdr_Node AUTHORIZATION;
+  static HTTP_Hdr_Node CACHECONTROL;
+  static HTTP_Hdr_Node CONNECTION;
+  static HTTP_Hdr_Node CONTENTENCODING;
+  static HTTP_Hdr_Node CONTENTLENGTH;
+  static HTTP_Hdr_Node CONTENTLOCATION;
+  static HTTP_Hdr_Node CONTENTMD5;
+  static HTTP_Hdr_Node CONTENTRANGE;
+  static HTTP_Hdr_Node CONTENTTYPE;
+  static HTTP_Hdr_Node DATE;
+  static HTTP_Hdr_Node ETAG;
+  static HTTP_Hdr_Node EXPECT;
+  static HTTP_Hdr_Node EXPIRES;
+  static HTTP_Hdr_Node FROM;
+  static HTTP_Hdr_Node HOST;
+  static HTTP_Hdr_Node IFMATCH;
+  static HTTP_Hdr_Node IFMODIFIEDSINCE;
+  static HTTP_Hdr_Node IFNONEMATCH;
+  static HTTP_Hdr_Node IFRANGE;
+  static HTTP_Hdr_Node IFUNMODIFIEDSINCE;
+  static HTTP_Hdr_Node LASTMODIFIED;
+  static HTTP_Hdr_Node LOCATION;
+  static HTTP_Hdr_Node MAXFORWARDS;
+  static HTTP_Hdr_Node PRAGMA;
+  static HTTP_Hdr_Node PROXYAUTHENTICATE;
+  static HTTP_Hdr_Node PROXYAUTHORIZATION;
+  static HTTP_Hdr_Node RANGE;
+  static HTTP_Hdr_Node REFERER;
+  static HTTP_Hdr_Node RETRYAFTER;
+  static HTTP_Hdr_Node SERVER;
+  static HTTP_Hdr_Node TE;
+  static HTTP_Hdr_Node TRAILER;
+  static HTTP_Hdr_Node TRANSFERENCODING;
+  static HTTP_Hdr_Node UPGRADE;
+  static HTTP_Hdr_Node USERAGENT;
+  static HTTP_Hdr_Node VARY;
+  static HTTP_Hdr_Node VIA;
+  static HTTP_Hdr_Node WARNING;
+  static HTTP_Hdr_Node WWWAUTHENTICATE;
+  static HTTP_Hdr_Node GET;
+  static HTTP_Hdr_Node HEAD;
+  static HTTP_Hdr_Node POST;
+  static HTTP_Hdr_Node PUT;
+  static HTTP_Hdr_Node QUIT;
+  static HTTP_Hdr_Node DUNNO;
+  static HTTP_Hdr_Node META;
+  static HTTP_Hdr_Node A;
+  static HTTP_Hdr_Node SCRIPT;
+  static HTTP_Hdr_Node APPLET;
 
   static const int &NUM_HEADER_STRINGS;
 

@@ -4,6 +4,7 @@
 #if !defined (JAWS_HEADERS_H)
 #define JAWS_HEADERS_H
 
+#include "JAWS/Export.h"
 #include "ace/Containers.h"
 
 // Use scenario --
@@ -19,7 +20,7 @@
 // done and is ready to be inserted into the Headers data structure.
 // At this point, the header value is strdup'd.
 
-class JAWS_Header_Data
+class JAWS_Export JAWS_Header_Data
 {
 public:
   JAWS_Header_Data (const char *name, const char *value = 0, int type = 0);
@@ -43,7 +44,7 @@ private:
 typedef ACE_DLList<JAWS_Header_Data> JAWS_Header_Table;
 typedef ACE_DLList_Iterator<JAWS_Header_Data> JAWS_Header_Table_Iterator;
 
-class JAWS_Headers : public JAWS_Header_Table
+class JAWS_Export JAWS_Headers : public JAWS_Header_Table
 {
 public:
   JAWS_Headers (void);
