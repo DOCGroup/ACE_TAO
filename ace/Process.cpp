@@ -116,16 +116,16 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // process group, try to set our pgid to it. (This will allow
   // Process_Manager to wait for Processes by process-group.)
   if (options.getgroup () != ACE_INVALID_PID 
-      && this->child_id_ == 0)
-    ACE_OS::setpgid (0,
-                     options.getgroup ());
+      && this->child_id_ == 0
+      && ACE_OS::setpgid (0, options.getgroup ()) < 0)
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("%p.\n"),
+                  ASYS_TEXT ("ACE_Process::spawn: setpgid failed.")));
 
-  if (this->child_id_ == 0) {
-      child ( ACE_OS::getppid () );
-  } else
-  if (this->child_id_ != -1) {
-      parent (this->child_id_);
-  }
+  if (this->child_id_ == 0) 
+    child (ACE_OS::getppid ());
+  else if (this->child_id_ != -1) 
+    parent (this->child_id_);
   
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (),

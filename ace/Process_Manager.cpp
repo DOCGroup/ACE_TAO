@@ -168,6 +168,15 @@ ACE_Process_Manager::open (size_t size,
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
+  // Set up a process group so that the thread that opened this
+  // Manager will be able to put children into its own group and wait
+  // for them.
+   if (ACE_OS::setpgid (0, 0) == -1)
+     ACE_ERROR ((LM_WARNING,
+                 ASYS_TEXT ("%p.\n"),
+                 ASYS_TEXT ("ACE_Process_Manager::open: can't create a "
+                            "process group; some wait functions may fail")));
+
   if (r)
     {
       ACE_Event_Handler::reactor (r);
@@ -420,8 +429,6 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options)
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
 
-  options.setgroup (ACE_OS::getpid ());
-
   return spawn (process, options);
 }
 
@@ -432,6 +439,9 @@ ACE_Process_Manager::spawn (ACE_Process *process,
                             ACE_Process_Options &options)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn");
+
+  if (options.getgroup () == ACE_INVALID_PID)
+    options.setgroup (ACE_OS::getpid ());
 
   pid_t pid = process->spawn (options);
 
