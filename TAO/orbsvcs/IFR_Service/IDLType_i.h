@@ -10,7 +10,7 @@
 //    IDLType_i.h
 //
 // = DESCRIPTION
-//    IR::IDLType servant class.
+//    IR_IDLType servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>

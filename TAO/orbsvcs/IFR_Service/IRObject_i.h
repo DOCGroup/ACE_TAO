@@ -52,7 +52,7 @@ public:
   virtual ~TAO_IRObject_i (void);
   // Destructor.
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )

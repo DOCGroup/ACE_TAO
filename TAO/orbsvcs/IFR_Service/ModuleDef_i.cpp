@@ -18,11 +18,11 @@ TAO_ModuleDef_i::~TAO_ModuleDef_i (void)
 {
 }
 
-IR::DefinitionKind
+IR_DefinitionKind
 TAO_ModuleDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return IR::dk_Module;
+  return dk_Module;
 }
 
 void 
@@ -47,7 +47,7 @@ TAO_ModuleDef_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-IR::Contained::Description *
+IR_Contained::Description *
 TAO_ModuleDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -56,22 +56,22 @@ TAO_ModuleDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR::Contained::Description *
+IR_Contained::Description *
 TAO_ModuleDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IR::Contained::Description *desc_ptr = 0;
+  IR_Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
-                    IR::Contained::Description,
+                    IR_Contained::Description,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  IR::Contained::Description_var retval = desc_ptr;
+  IR_Contained::Description_var retval = desc_ptr;
 
   retval->kind = this->def_kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  IR::ModuleDescription md;
+  IR_ModuleDescription md;
 
   md.name = this->name_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);

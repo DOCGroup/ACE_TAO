@@ -10,7 +10,7 @@
 //    ComponentRepository_i.h
 //
 // = DESCRIPTION
-//    IR::ComponentRepository servant class.
+//    IR_ComponentRepository servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -52,47 +52,47 @@ public:
   virtual ~TAO_ComponentRepository_i (void);
   // Destructor.
 
-  virtual IR::ComponentDef_ptr create_component (
+  virtual IR_ComponentDef_ptr create_component (
       const char *id,
       const char *name,
       const char *version,
-      IR::ComponentDef_ptr base_component,
-      const IR::InterfaceDefSeq & supports_interfaces,
+      IR_ComponentDef_ptr base_component,
+      const IR_InterfaceDefSeq & supports_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ComponentDef_ptr create_component_i (
+  IR_ComponentDef_ptr create_component_i (
       const char *id,
       const char *name,
       const char *version,
-      IR::ComponentDef_ptr base_component,
-      const IR::InterfaceDefSeq & supports_interfaces,
+      IR_ComponentDef_ptr base_component,
+      const IR_InterfaceDefSeq & supports_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::HomeDef_ptr create_home (
+  virtual IR_HomeDef_ptr create_home (
       const char *id,
       const char *name,
       const char *version,
-      IR::HomeDef_ptr base_home,
-      IR::ComponentDef_ptr managed_component,
-      IR::ValueDef_ptr primary_key,
+      IR_HomeDef_ptr base_home,
+      IR_ComponentDef_ptr managed_component,
+      IR_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::HomeDef_ptr create_home_i (
+  IR_HomeDef_ptr create_home_i (
       const char *id,
       const char *name,
       const char *version,
-      IR::HomeDef_ptr base_home,
-      IR::ComponentDef_ptr managed_component,
-      IR::ValueDef_ptr primary_key,
+      IR_HomeDef_ptr base_home,
+      IR_ComponentDef_ptr managed_component,
+      IR_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

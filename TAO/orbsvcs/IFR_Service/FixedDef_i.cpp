@@ -17,11 +17,11 @@ TAO_FixedDef_i::~TAO_FixedDef_i (void)
 {
 }
 
-IR::DefinitionKind
+IR_DefinitionKind
 TAO_FixedDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return IR::dk_Fixed;
+  return dk_Fixed;
 }
 
 void 

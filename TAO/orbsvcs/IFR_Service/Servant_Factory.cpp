@@ -20,9 +20,9 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR::DefinitionKind, def_kind))
+  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
   {
-    case IR::dk_Interface:
+    case dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -33,7 +33,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Alias:
+    case dk_Alias:
     {
       TAO_AliasDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -44,7 +44,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Struct:
+    case dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -55,7 +55,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Union:
+    case dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -66,7 +66,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Enum:
+    case dk_Enum:
     {
       TAO_EnumDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -77,7 +77,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Primitive:
+    case dk_Primitive:
     {
       TAO_PrimitiveDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -88,7 +88,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_String:
+    case dk_String:
     {
       TAO_StringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -99,7 +99,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Sequence:
+    case dk_Sequence:
     {
       TAO_SequenceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -110,7 +110,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Array:
+    case dk_Array:
     {
       TAO_ArrayDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -121,7 +121,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Wstring:
+    case dk_Wstring:
     {
       TAO_WstringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -132,7 +132,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Fixed:
+    case dk_Fixed:
     {
       TAO_FixedDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -143,7 +143,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Value:
+    case dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -154,7 +154,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_ValueBox:
+    case dk_ValueBox:
     {
       TAO_ValueBoxDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -165,7 +165,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Native:
+    case dk_Native:
     {
       TAO_NativeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -176,7 +176,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Component:
+    case dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -187,7 +187,7 @@ IFR_Servant_Factory::create_idltype (ACE_Configuration_Section_Key servant_key,
 
       return impl;
     }
-    case IR::dk_Home:
+    case dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -214,9 +214,9 @@ IFR_Servant_Factory::create_contained (
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR::DefinitionKind, def_kind))
+  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
   {
-    case IR::dk_Interface:
+    case dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -227,7 +227,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Alias:
+    case dk_Alias:
     {
       TAO_AliasDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -238,7 +238,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Struct:
+    case dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -249,7 +249,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Union:
+    case dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -260,7 +260,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Enum:
+    case dk_Enum:
     {
       TAO_EnumDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -271,7 +271,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Module:
+    case dk_Module:
     {
       TAO_ModuleDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -282,7 +282,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Exception:
+    case dk_Exception:
     {
       TAO_ExceptionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -293,7 +293,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Constant:
+    case dk_Constant:
     {
       TAO_ConstantDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -304,7 +304,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_ValueMember:
+    case dk_ValueMember:
     {
       TAO_ValueMemberDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -315,7 +315,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Uses:
+    case dk_Uses:
     {
       TAO_UsesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -326,7 +326,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Provides:
+    case dk_Provides:
     {
       TAO_ProvidesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -337,7 +337,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_PrimaryKey:
+    case dk_PrimaryKey:
     {
       TAO_PrimaryKeyDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -348,7 +348,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Emits:
+    case dk_Emits:
     {
       TAO_EmitsDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -359,7 +359,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Publishes:
+    case dk_Publishes:
     {
       TAO_PublishesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -370,7 +370,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Consumes:
+    case dk_Consumes:
     {
       TAO_ConsumesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -381,7 +381,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Attribute:
+    case dk_Attribute:
     {
       TAO_AttributeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -392,7 +392,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Operation:
+    case dk_Operation:
     {
       TAO_OperationDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -403,7 +403,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Value:
+    case dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -414,7 +414,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_ValueBox:
+    case dk_ValueBox:
     {
       TAO_ValueBoxDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -425,7 +425,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Native:
+    case dk_Native:
     {
       TAO_NativeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -436,7 +436,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Component:
+    case dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -447,7 +447,7 @@ IFR_Servant_Factory::create_contained (
 
       return impl;
     }
-    case IR::dk_Home:
+    case dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -474,9 +474,9 @@ IFR_Servant_Factory::create_container (
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR::DefinitionKind, def_kind))
+  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
   {
-    case IR::dk_Interface:
+    case dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -487,7 +487,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case IR::dk_Struct:
+    case dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -498,7 +498,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case IR::dk_Union:
+    case dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -509,7 +509,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case IR::dk_Module:
+    case dk_Module:
     {
       TAO_ModuleDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -520,7 +520,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case IR::dk_Exception:
+    case dk_Exception:
     {
       TAO_ExceptionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -531,7 +531,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case IR::dk_Value:
+    case dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -542,7 +542,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case IR::dk_Component:
+    case dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -553,7 +553,7 @@ IFR_Servant_Factory::create_container (
 
       return impl;
     }
-    case IR::dk_Home:
+    case dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -579,9 +579,9 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
                                              "def_kind",
                                              def_kind);
 
-  switch (ACE_static_cast (IR::DefinitionKind, def_kind))
+  switch (ACE_static_cast (IR_DefinitionKind, def_kind))
   {
-    case IR::dk_Attribute:
+    case dk_Attribute:
     {
       TAO_AttributeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -603,7 +603,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Constant:
+    case dk_Constant:
     {
       TAO_ConstantDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -625,7 +625,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Exception:
+    case dk_Exception:
     {
       TAO_ExceptionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -647,7 +647,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Interface:
+    case dk_Interface:
     {
       TAO_InterfaceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -669,7 +669,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Module:
+    case dk_Module:
     {
       TAO_ModuleDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -691,7 +691,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Operation:
+    case dk_Operation:
     {
       TAO_OperationDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -713,7 +713,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Alias:
+    case dk_Alias:
     {
       TAO_AliasDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -735,7 +735,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Struct:
+    case dk_Struct:
     {
       TAO_StructDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -757,7 +757,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Union:
+    case dk_Union:
     {
       TAO_UnionDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -779,7 +779,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Enum:
+    case dk_Enum:
     {
       TAO_EnumDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -801,7 +801,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Primitive:
+    case dk_Primitive:
     {
       TAO_PrimitiveDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -823,7 +823,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_String:
+    case dk_String:
     {
       TAO_StringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -845,7 +845,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Sequence:
+    case dk_Sequence:
     {
       TAO_SequenceDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -867,7 +867,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Array:
+    case dk_Array:
     {
       TAO_ArrayDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -889,7 +889,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Wstring:
+    case dk_Wstring:
     {
       TAO_WstringDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -911,7 +911,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Fixed:
+    case dk_Fixed:
     {
       TAO_FixedDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -933,7 +933,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Value:
+    case dk_Value:
     {
       TAO_ValueDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -955,7 +955,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_ValueBox:
+    case dk_ValueBox:
     {
       TAO_ValueBoxDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -977,7 +977,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_ValueMember:
+    case dk_ValueMember:
     {
       TAO_ValueMemberDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -999,7 +999,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Native:
+    case dk_Native:
     {
       TAO_NativeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1021,7 +1021,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Component:
+    case dk_Component:
     {
       TAO_ComponentDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1043,7 +1043,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Home:
+    case dk_Home:
     {
       TAO_HomeDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1065,7 +1065,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Factory:
+    case dk_Factory:
     {
       TAO_FactoryDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1087,7 +1087,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Finder:
+    case dk_Finder:
     {
       TAO_FinderDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1109,7 +1109,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_PrimaryKey:
+    case dk_PrimaryKey:
     {
       TAO_PrimaryKeyDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1131,7 +1131,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Emits:
+    case dk_Emits:
     {
       TAO_EmitsDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1153,7 +1153,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Publishes:
+    case dk_Publishes:
     {
       TAO_PublishesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1175,7 +1175,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Consumes:
+    case dk_Consumes:
     {
       TAO_ConsumesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1197,7 +1197,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Provides:
+    case dk_Provides:
     {
       TAO_ProvidesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1219,7 +1219,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
       safety.release ();
       return impl_tie;
     }
-    case IR::dk_Uses:
+    case dk_Uses:
     {
       TAO_UsesDef_i *impl = 0;
       ACE_NEW_THROW_EX (impl,
@@ -1247,7 +1247,7 @@ IFR_Servant_Factory::create_tie (ACE_Configuration_Section_Key servant_key,
 }
 
 CORBA::Object_ptr 
-IFR_Servant_Factory::create_objref (IR::DefinitionKind def_kind,
+IFR_Servant_Factory::create_objref (IR_DefinitionKind def_kind,
                                     const char *obj_id,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1259,97 +1259,97 @@ IFR_Servant_Factory::create_objref (IR::DefinitionKind def_kind,
 
   switch (def_kind)
   {
-    case IR::dk_Attribute:
+    case dk_Attribute:
       repo_id += "AttributeDef:";
       break;
-    case IR::dk_Constant:
+    case dk_Constant:
       repo_id += "ConstantDef:";
       break;
-    case IR::dk_Exception:
+    case dk_Exception:
       repo_id += "ExceptionDef:";
       break;
-    case IR::dk_Interface:
+    case dk_Interface:
       repo_id += "InterfaceDef:";
       break;
-    case IR::dk_Module:
+    case dk_Module:
       repo_id += "ModuleDef:";
       break;
-    case IR::dk_Operation:
+    case dk_Operation:
       repo_id += "OperationDef:";
       break;
-    case IR::dk_Typedef:
+    case dk_Typedef:
       repo_id += "TypedefDef:";
       break;
-    case IR::dk_Alias:
+    case dk_Alias:
       repo_id += "AliasDef:";
       break;
-    case IR::dk_Struct:
+    case dk_Struct:
       repo_id += "StructDef:";
       break;
-    case IR::dk_Union:
+    case dk_Union:
       repo_id += "UnionDef:";
       break;
-    case IR::dk_Enum:
+    case dk_Enum:
       repo_id += "EnumDef:";
       break;
-    case IR::dk_Primitive:
+    case dk_Primitive:
       repo_id += "PrimitiveDef:";
       break;
-    case IR::dk_String:
+    case dk_String:
       repo_id += "StringDef:";
       break;
-    case IR::dk_Sequence:
+    case dk_Sequence:
       repo_id += "SequenceDef:";
       break;
-    case IR::dk_Array:
+    case dk_Array:
       repo_id += "ArrayDef:";
       break;
-    case IR::dk_Wstring:
+    case dk_Wstring:
       repo_id += "WstringDef:";
       break;
-    case IR::dk_Fixed:
+    case dk_Fixed:
       repo_id += "FixedDef:";
       break;
-    case IR::dk_Value:
+    case dk_Value:
       repo_id += "ValueDef:";
       break;
-    case IR::dk_ValueBox:
+    case dk_ValueBox:
       repo_id += "ValueBoxDef:";
       break;
-    case IR::dk_ValueMember:
+    case dk_ValueMember:
       repo_id += "ValueMemberDef:";
       break;
-    case IR::dk_Native:
+    case dk_Native:
       repo_id += "NativeDef:";
       break;
-    case IR::dk_Component:
+    case dk_Component:
       repo_id += "ComponentDef:";
       break;
-    case IR::dk_Home:
+    case dk_Home:
       repo_id += "HomeDef:";
       break;
-    case IR::dk_Factory:
+    case dk_Factory:
       repo_id += "FactoryDef:";
       break;
-    case IR::dk_Finder:
+    case dk_Finder:
       repo_id += "FinderDef:";
       break;
-    case IR::dk_PrimaryKey:
+    case dk_PrimaryKey:
       repo_id += "PrimaryKeyDef:";
       break;
-    case IR::dk_Emits:
+    case dk_Emits:
       repo_id += "EmitsDef:";
       break;
-    case IR::dk_Publishes:
+    case dk_Publishes:
       repo_id += "PublishesDef:";
       break;
-    case IR::dk_Consumes:
+    case dk_Consumes:
       repo_id += "ConsumesDef:";
       break;
-    case IR::dk_Provides:
+    case dk_Provides:
       repo_id += "ProvidesDef:";
       break;
-    case IR::dk_Uses:
+    case dk_Uses:
       repo_id += "UsesDef:";
       break;
     default:

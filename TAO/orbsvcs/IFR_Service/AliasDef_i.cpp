@@ -21,11 +21,11 @@ TAO_AliasDef_i::~TAO_AliasDef_i (void)
 {
 }
 
-IR::DefinitionKind
+IR_DefinitionKind
 TAO_AliasDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return IR::dk_Alias;
+  return dk_Alias;
 }
 
 CORBA::TypeCode_ptr 
@@ -78,16 +78,16 @@ TAO_AliasDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
                                                       ACE_TRY_ENV);
 }
 
-IR::IDLType_ptr 
+IR_IDLType_ptr 
 TAO_AliasDef_i::original_type_def (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR_IDLType::_nil ());
 
   return this->original_type_def_i (ACE_TRY_ENV);
 }
 
-IR::IDLType_ptr 
+IR_IDLType_ptr 
 TAO_AliasDef_i::original_type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -107,21 +107,21 @@ TAO_AliasDef_i::original_type_def_i (CORBA::Environment &ACE_TRY_ENV)
                                              "def_kind",
                                              kind);
 
-  IR::DefinitionKind def_kind = 
-    ACE_static_cast (IR::DefinitionKind, kind);
+  IR_DefinitionKind def_kind = 
+    ACE_static_cast (IR_DefinitionKind, kind);
 
   CORBA::Object_var obj = 
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     original_type.c_str (),
                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR::IDLType::_nil ());
+  ACE_CHECK_RETURN (IR_IDLType::_nil ());
 
-  return IR::IDLType::_narrow (obj.in (),
+  return IR_IDLType::_narrow (obj.in (),
                                ACE_TRY_ENV);
 }
 
 void 
-TAO_AliasDef_i::original_type_def (IR::IDLType_ptr original_type_def,
+TAO_AliasDef_i::original_type_def (IR_IDLType_ptr original_type_def,
                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -132,7 +132,7 @@ TAO_AliasDef_i::original_type_def (IR::IDLType_ptr original_type_def,
 }
 
 void 
-TAO_AliasDef_i::original_type_def_i (IR::IDLType_ptr original_type_def,
+TAO_AliasDef_i::original_type_def_i (IR_IDLType_ptr original_type_def,
                                      CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -10,7 +10,7 @@
 //    FactoryDef_i.h
 //
 // = DESCRIPTION
-//    IR::FactoryDef servant class.
+//    IR_FactoryDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -49,7 +49,7 @@ public:
   virtual ~TAO_FactoryDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -69,14 +69,14 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::Contained::Description *describe (
+  virtual IR_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR::Contained::Description *describe_i (
+  virtual IR_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

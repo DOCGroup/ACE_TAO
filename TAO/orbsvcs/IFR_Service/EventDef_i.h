@@ -10,7 +10,7 @@
 //    EventDef_i.h
 //
 // = DESCRIPTION
-//    IR::EventDef servant class.
+//    IR_EventDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -63,14 +63,14 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::Contained::Description *describe (
+  virtual IR_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR::Contained::Description *describe_i (
+  virtual IR_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -91,13 +91,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::ValueDef_ptr event (
+  virtual IR_ValueDef_ptr event (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ValueDef_ptr event_i (
+  IR_ValueDef_ptr event_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
