@@ -89,13 +89,7 @@ Hello *get_hello (void)
 typedef Hello *(*TC) (void);
 
 // Protection against this test being run individually.
-#if defined (ACE_WIN32)
-#define RUN_MAIN  
-#elif defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#define RUN_MAIN  
-#endif
-
-#if defined RUN_MAIN
+#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 int
 main (int argc, char *argv[])
 {
@@ -130,7 +124,7 @@ main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* RUN_MAIN */
+#endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class auto_ptr <Hello>;
