@@ -253,7 +253,6 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
         this->orb_core ()->connection_cache ().cache_handler (prop,
                                                               svc_handler);
 
-
       if (retval != 0 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -261,10 +260,6 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                       ACE_TEXT ("added the new  connection to Cache \n")));
         }
     }
-
-
-  // Make the handler ready for use
-  svc_handler->make_idle ();
 
   transport = svc_handler->transport ();
   return 0;
