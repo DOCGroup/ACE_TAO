@@ -25,12 +25,16 @@ public:
 
   static char * HTTP_decode_string (char *path);
 
+  static char * HTTP_decode_base64 (char *data);
+  static char * HTTP_encode_base64 (char *data);
+
 private:
 
   static int fixyear (int year);
 
 private:
   static const char * const months_[12];
+  static char const * alphabet_;
 
 #if !defined (ACE_HAS_REENTRANT_LIBC)
 #if defined (ACE_HAS_THREADS)  
