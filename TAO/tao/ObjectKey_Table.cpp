@@ -77,12 +77,10 @@ TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
       return this->bind_i (key,
                            key_new);
 
-    // Do a sanity comparison check and increment the refcount.
-    // Place for optimization by removing the comparison.
     (void) key_new->incr_refcount ();
   }
 
-  return 0;
+  return retval;
 }
 
 int
@@ -93,6 +91,7 @@ TAO::ObjectKey_Table::unbind (TAO::Refcounted_ObjectKey *&key_new)
                     ace_mon,
                     *this->lock_,
                     0);
+
   // If the refcount has dropped to 1, just go ahead and unbind it
   // from the table.
   if (key_new->decr_refcount () == 1)
@@ -118,7 +117,7 @@ TAO::ObjectKey_Table::destroy (void)
         {
           TABLE::ENTRY &ent = (*start);
 
-          (void) ent.item ()->decr_refcount ();
+          ent.item ()->decr_refcount ();
           this->table_.unbind (&ent);
         }
     }
@@ -138,9 +137,13 @@ TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
                                    key_new);
 
   if (retval != -1)
-    key_new->incr_refcount ();
+    {
+      key_new->incr_refcount ();
+    }
   else
-    key_new->decr_refcount ();
+    {
+      key_new->decr_refcount ();
+    }
 
   return retval;
 }
@@ -148,11 +151,12 @@ TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
 int
 TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 {
-  (void) this->table_.unbind (key_new->object_key (),
-                              key_new);
-
-  // Remove our refcount on the ObjectKey
-  (void) key_new->decr_refcount ();
+  if (this->table_.unbind (key_new->object_key ()) != -1)
+    {
+      // @@ Cant do much if the unbind fails.
+      // Remove our refcount on the ObjectKey
+      (void) key_new->decr_refcount ();
+    }
 
   return 0;
 }
