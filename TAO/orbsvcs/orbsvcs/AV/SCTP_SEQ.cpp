@@ -58,7 +58,7 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
   // For the most part this was copied from GIOP::send_request and
   // friends.
 
-  ACE_Time_Value timeout (5);
+  //  ACE_Time_Value timeout;
 
   iovec iov[ACE_IOV_MAX];
   int iovcnt = 0;
@@ -85,8 +85,8 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
           if (iovcnt == ACE_IOV_MAX)
             {
               n = this->handler_->peer ().sendv_n ((const iovec *) iov,
-                                                   iovcnt,
-						   &timeout);
+                                                   iovcnt);
+	      //&timeout);
               if (n < 1)
                 return n;
 
@@ -112,18 +112,18 @@ TAO_AV_SCTP_SEQ_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *
 
 ssize_t
 TAO_AV_SCTP_SEQ_Transport::send (const char *buf,
-                            size_t len,
-                            ACE_Time_Value *)
+				 size_t len,
+				 ACE_Time_Value *)
 {
   return this->handler_->peer ().send_n (buf, len);
 }
 
 ssize_t
 TAO_AV_SCTP_SEQ_Transport::send (const iovec *iov,
-                          int iovcnt,
-                          ACE_Time_Value *)
+				 int iovcnt,
+				 ACE_Time_Value *)
 {
-  return this->handler_->peer ().sendv_n ((const iovec *) iov,
+  return this->handler_->peer ().sendv_n (iov,
                                           iovcnt);
 }
 
@@ -208,7 +208,10 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
       ACE_DEBUG ((LM_DEBUG,
 		  "%s\n",
 		  addrs [i]));
-      ip_addr.set (addrs [i]);
+
+      ACE_CString addr_str (addrs[i]);
+      addr_str += ":";
+      ip_addr.set (addr_str.c_str ());
       local_ip_addr [i] = ip_addr.get_ip_address ();
     }
 
@@ -218,22 +221,40 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
 		local_addr.get_host_name ()));
 		
   ACE_Multihomed_INET_Addr multi_addr;
-//   multi_addr.set (local_addr.get_port_number (),
-// 		  local_addr.get_host_addr (),
-// 		  1,
-// 		  AF_INET,
-// 		  (const char**) entry->get_local_sec_addr (),
-// 		  entry->num_local_sec_addrs ());
+  //   multi_addr.set (local_addr.get_port_number (),
+  // 		  local_addr.get_host_addr (),
+  // 		  1,
+  // 		  AF_INET,
+  // 		  (const char**) entry->get_local_sec_addr (),
+  // 		  entry->num_local_sec_addrs ());
 
   multi_addr.set (local_addr.get_port_number (),
 		  local_addr.get_ip_address (),
 		  1,
 		  local_ip_addr,
 		  entry->num_local_sec_addrs ());
+
+  size_t size = 5;
+  ACE_INET_Addr* peer_addrs;
+  ACE_NEW_RETURN (peer_addrs, ACE_INET_Addr[size], -1);
+  multi_addr.get_secondary_addresses (peer_addrs, size);
+  char buf[BUFSIZ];
+  for (unsigned int i=0; i < size;i++)
+    {
+      peer_addrs [i].addr_to_string (buf,
+				      BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Local Secondary Addresses %s %d\n",
+		  buf,
+		  size));
+    }
+
   
   int result = this->open (multi_addr,reactor);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_Base_Acceptor::open failed\n"),-1);
+
+  
   return 0;
 }
 
@@ -245,6 +266,8 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&
     return result;
   handler->reactor (this->reactor_);
   this->entry_->handler (handler);
+
+
   return 0;
 }
 
@@ -291,10 +314,10 @@ TAO_AV_SCTP_SEQ_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&sctp_
 
 int
 TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
-                           TAO_AV_Core *av_core,
-                           TAO_FlowSpec_Entry *entry,
-                           TAO_AV_Flow_Protocol_Factory *factory,
-                           TAO_AV_Core::Flow_Component flow_comp)
+				TAO_AV_Core *av_core,
+				TAO_FlowSpec_Entry *entry,
+				TAO_AV_Flow_Protocol_Factory *factory,
+				TAO_AV_Core::Flow_Component flow_comp)
 {
   this->flow_protocol_factory_ = factory;
 
@@ -329,7 +352,6 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   //Add code for reading multihomed addresses and pass the multihomed
   //addr to the following method. ACE_Multihomed_addr derives from
   //ACE_INET_Addr, hence this should not be an issue.
-  
   int result = this->acceptor_.acceptor_open (this,
 					      av_core->reactor (),
 					      *inet_addr,
@@ -340,6 +362,8 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                       -1);
   
   entry->set_local_addr (address);
+
+
   return 0;
 }
 
@@ -430,10 +454,9 @@ TAO_AV_SCTP_SEQ_Base_Connector::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *
 
 int
 TAO_AV_SCTP_SEQ_Base_Connector::connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
-						   const ACE_INET_Addr &remote_addr,
-						   const ACE_INET_Addr &local_addr)
+						   const ACE_Multihomed_INET_Addr &remote_addr,
+						   const ACE_Multihomed_INET_Addr &local_addr)
 {
-  
   int result = this->connect (handler,
 			      remote_addr,
 			      0,
@@ -517,7 +540,12 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
   char** addrs = entry->get_local_sec_addr ();
   for (int i = 0; i < entry->num_local_sec_addrs (); i++)
     {
-      ip_addr.set (addrs[i]);
+      ACE_DEBUG ((LM_DEBUG,
+		  "In the for loop remote %s \n",
+		  addrs[i]));
+      ACE_CString addr_str (addrs[i]);
+      addr_str += ":";
+      ip_addr.set (addr_str.c_str ());
       remote_ip_addr [i] = ip_addr.get_ip_address ();
     }  
   
@@ -548,7 +576,9 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
       char** addrs = entry->get_peer_sec_addr ();
       for (int i = 0; i < entry->num_peer_sec_addrs (); i++)
 	{
-	  ip_addr.set (addrs[i]);
+	  ACE_CString addr_str (addrs[i]);
+	  addr_str += ":";
+	  ip_addr.set (addr_str.c_str ());
 	  local_ip_addr [i] = ip_addr.get_ip_address ();
 	}  
       
@@ -558,15 +588,35 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 		      1,
 		      local_ip_addr,
 		      entry->num_peer_sec_addrs ());
-      ACE_DEBUG ((LM_DEBUG,
-		  "Local Sec Addrs\n"));
 
-      for (int i = 0; i < entry->num_peer_sec_addrs (); i++)
-	ACE_DEBUG ((LM_DEBUG,
-		    "%s\n",
-		    (entry->get_peer_sec_addr ())[i]));
     }
   
+  size_t size = 5;
+  ACE_INET_Addr* peer_addrs;
+  ACE_NEW_RETURN (peer_addrs, ACE_INET_Addr[size], -1);
+  remote_multi_addr.get_secondary_addresses (peer_addrs, size);
+  char buf[BUFSIZ];
+  for (unsigned int i=0; i < size;i++)
+    {
+      peer_addrs [i].addr_to_string (buf,
+				      BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Remote Secondary Address %s %d\n",
+		  buf,
+		  size));
+    }
+
+  local_addr.get_secondary_addresses (peer_addrs, size);
+  for (unsigned int i=0; i < size;i++)
+    {
+      peer_addrs [i].addr_to_string (buf,
+				     BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Local Secondary Address %s %d\n",
+		  buf,
+		  size));
+    }
+
   int result = this->connector_.connector_connect (handler,
 						   remote_multi_addr,
 						   local_addr);
@@ -574,6 +624,29 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SCTP_SEQ_connector::connect failed\n"),-1);
   entry->handler (handler);
   transport = handler->transport ();
+
+  handler->peer ().get_local_addrs (peer_addrs, size);
+  for (unsigned int i=0; i < size;i++)
+    {
+      peer_addrs [i].addr_to_string (buf,
+				      BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "%s %d\n",
+		  buf,
+		  size));
+    }
+  size = 3;
+  handler->peer ().get_remote_addrs (peer_addrs, size);
+  for (unsigned int i=0; i < size;i++)
+    {
+      peer_addrs [i].addr_to_string (buf,
+				     BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "%s %d\n",
+		  buf,
+		  size));
+    }
+
   return 0;
 }
 
@@ -762,6 +835,23 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("unable to register client handler")),
                       -1);
+
+  size_t size = 5;
+  ACE_INET_Addr* peer_addrs;
+  ACE_NEW_RETURN (peer_addrs, ACE_INET_Addr[size], -1);
+  
+  char buf [BUFSIZ];
+  this->peer ().get_local_addrs (peer_addrs, size);
+  for (unsigned int i=0; i < size;i++)
+    {
+      peer_addrs [i].addr_to_string (buf,
+				     BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "%s %d\n",
+		  buf,
+		  size));
+    }
+  
   return 0;
 }
 
