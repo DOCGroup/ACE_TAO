@@ -1,3 +1,17 @@
+Tue Feb 15 19:53:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+	  Changes needed to handle the new nested module use case
+	  recently added to IDL_Test.
+
 Tue Feb 15 16:55:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
