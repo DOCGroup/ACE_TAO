@@ -1,3 +1,10 @@
+Thu Aug 21 14:23:00 2003  Stuart Jones <jones_s@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp
+
+	  Added additonal checks for various error conditions.
+
 Thu Aug 21 11:51:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Special_Impl_T.cpp (extract):
