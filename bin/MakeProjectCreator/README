@@ -109,8 +109,8 @@ includes	Specifies 1 or more locations to find include files
 libs		Specifies 1 or more libraries to link into the exe or library
 defaultlibs	Specifies 1 or more default libraries to link in
 depends         Specifies 1 or more project names upon which this project depends
-dllflags	(Windows Only) Specifies preprocessor flags needed for dll's
-libflags	(Windows Only) Specifies preprocessor flags needed for lib's
+dllflags	Specifies preprocessor flags needed for dll's
+libflags	Specifies preprocessor flags needed for lib's
 
 verbatim        This allows arbitrary information to be place in a generated
                 project file.  The syntax is as follows:
