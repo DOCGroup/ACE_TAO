@@ -17,10 +17,10 @@ static size_t n_iterations = 1000;
 static size_t n_threads = 4;
 
 // Explain usage and exit.
-static void 
+static void
 print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "usage: %n [-t n_threads] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
@@ -28,11 +28,11 @@ print_usage_and_die (void)
 // Parse the command-line arguments and set options.
 
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:t:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:t:"));
 
-  int c; 
+  int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -50,12 +50,12 @@ parse_args (int argc, char *argv[])
 }
 
 static void
-recursive_worker (size_t nesting_level, 
+recursive_worker (size_t nesting_level,
 		  ACE_Recursive_Thread_Mutex *rm)
 {
   if (nesting_level < n_iterations)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) = trying to acquire, nesting = %d, thread id = %u\n",
 		  rm->get_nesting_level (), rm->get_thread_id ()));
       {
@@ -77,7 +77,7 @@ recursive_worker (size_t nesting_level,
 static void *
 worker (void *arg)
 {
-  ACE_Recursive_Thread_Mutex *rm 
+  ACE_Recursive_Thread_Mutex *rm
     = (ACE_Recursive_Thread_Mutex *) arg;
 
   recursive_worker (0, rm);
@@ -85,26 +85,26 @@ worker (void *arg)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
   parse_args (argc, argv);
   ACE_Recursive_Thread_Mutex rm;
 
-  ACE_Thread_Manager::instance ()->spawn_n (n_threads, 
-					   ACE_THR_FUNC (worker), 
+  ACE_Thread_Manager::instance ()->spawn_n (n_threads,
+					   ACE_THR_FUNC (worker),
 					   (void *) &rm);
 
   ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
-		     "ACE doesn't support support process mutexes on this platform (yet)\n"), 
+  ACE_ERROR_RETURN ((LM_ERROR,
+		     "ACE doesn't support support process mutexes on this platform (yet)\n"),
 		    -1);
 }
 #endif /* ACE_WIN32 */

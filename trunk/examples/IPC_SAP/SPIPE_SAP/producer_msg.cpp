@@ -14,10 +14,10 @@ const int DEFAULT_SIZE = 4 * 1024;
 const int DEFAULT_COUNT = 100;
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  int size = argc > 1 ? atoi (argv[1]) : DEFAULT_SIZE;
-  int iterations = argc > 2 ? atoi (argv[2]) : DEFAULT_COUNT;
+  int size = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_SIZE;
+  int iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_COUNT;
   char *buf;
 
   ACE_NEW_RETURN (buf, char[size], -1);
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

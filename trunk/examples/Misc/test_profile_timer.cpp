@@ -8,7 +8,7 @@ ACE_RCSID(Misc, test_profile_timer, "$Id$")
 static const int DEFAULT_ITERATIONS = 100000000;
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
   int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS;
@@ -28,7 +28,7 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
 
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
 	      (et.real_time / double (iterations)) * 1000000));
   return 0;
 }

@@ -48,7 +48,7 @@ WFMO_Test::svc (void)
 {
   while(1)
     {
-      int result = ::WaitForMultipleObjects (2, this->sema_handles_, 
+      int result = ::WaitForMultipleObjects (2, this->sema_handles_,
 					     FALSE, INFINITE);
       if (result == WAIT_OBJECT_0)
         {
@@ -82,8 +82,8 @@ WFMO_Test::svc (void)
   return 0;
 }
 
-int 
-main (int argc, char *argv[])
+int
+main (int argc, ACE_TCHAR *argv[])
 {
   int thread_count = THREAD_COUNT;
 
@@ -111,9 +111,9 @@ main (int argc, char *argv[])
       ACE_OS::sleep (1);
 
       // Add one for the other thread that was signaled.
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "semaphore_count_ = %d  (should have been %d).\n",
-		  wfmo_test.semaphore_count_, 
+		  wfmo_test.semaphore_count_,
 		  2)); // Two semaphores should have been released.
     }
 
@@ -123,7 +123,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG, "this test only runs on Win32\n"));
 }

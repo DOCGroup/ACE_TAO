@@ -5,8 +5,8 @@
 
 ACE_RCSID(Misc, test_sstring, "$Id$")
 
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_CString s1 ("hello");
   ACE_CString s2 ("world");
@@ -14,7 +14,7 @@ main (int, char *[])
   ACE_WString s4 ("hello");
   ACE_WString s5 ("world");
   ACE_WString s6 ("el");
-  
+
   ACE_ASSERT (s1 != s2);
   ACE_ASSERT (s1.strstr (s2) == -1);
   ACE_ASSERT (s1.strstr (s2) == -1);

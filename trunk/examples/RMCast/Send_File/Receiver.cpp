@@ -17,7 +17,7 @@ public:
   int status (void) const;
 
   /// Initialize the module
-  int init (const char *filename);
+  int init (const ACE_TCHAR *filename);
 
   int close (void);
   int data (ACE_RMCast::Data &data);
@@ -33,7 +33,7 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 3)
     {
@@ -43,7 +43,7 @@ main (int argc, char *argv[])
                         1);
     }
 
-  const char *filename = argv[1];
+  const ACE_TCHAR *filename = argv[1];
 
   File_Module file_module;
   if (file_module.init (filename) == -1)
@@ -108,7 +108,7 @@ File_Module::status (void) const
 }
 
 int
-File_Module::init (const char * filename)
+File_Module::init (const ACE_TCHAR * filename)
 {
   ACE_HANDLE handle = ACE_OS::open (filename,
                                     O_WRONLY|O_BINARY|O_CREAT,

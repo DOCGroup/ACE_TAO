@@ -74,13 +74,13 @@ writer (void *arg)
 }
 
 int
-main (int argc, char **argv)
+main (int argc, ACE_TCHAR **argv)
 {
   // Shared data: set by writer, read by reader.
   int data;
 
   // Work time for writer.
-  work_time = argc == 2 ? atoi (argv[1]) : 5;
+  work_time = argc == 2 ? ACE_OS::atoi (argv[1]) : 5;
 
   // threads manager
   ACE_Thread_Manager& tm = *ACE_Thread_Manager::instance ();
@@ -111,7 +111,7 @@ template class ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>;
 
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

@@ -15,7 +15,7 @@ worker (int iterations)
 {
   for (int i = 0; i < iterations; i++)
     {
-      if ((i % 10) == 0 
+      if ((i % 10) == 0
 		  && (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0))
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%t) has been cancelled before iteration!\n", i));
@@ -30,7 +30,7 @@ static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
 static const int DEFAULT_ITERATIONS = 100000;
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon;
 
@@ -66,8 +66,8 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "threads not supported on this platform\n"), -1);
 }
