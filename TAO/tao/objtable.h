@@ -13,8 +13,6 @@
 // 
 // ============================================================================
 
-// @@ Can you please document all the methods and classes in this file?
-
 #if !defined (TAO_OBJTABLE_H)
 #  define TAO_OBJTABLE_H
 

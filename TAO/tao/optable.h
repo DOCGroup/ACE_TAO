@@ -13,8 +13,6 @@
 // 
 // ============================================================================
 
-// @@ Can you please comment all the classes and methods in the file?
-
 #if !defined (TAO_OPTABLE_H)
 #define TAO_OPTABLE_H
 
