@@ -548,10 +548,6 @@ namespace CORBA
     /// Resolve the POA.
     CORBA::Object_ptr resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL);
 
-    /// Initialize the ORB globals correctly, i.e., only when they
-    /// haven't been initialized yet.
-    static void init_orb_globals (ACE_ENV_SINGLE_ARG_DECL);
-
     // Reference counting...
     CORBA::ULong _incr_refcnt (void);
     CORBA::ULong _decr_refcnt (void);
@@ -644,13 +640,6 @@ namespace CORBA
     /// ORB.
     CORBA::ULong refcount_;
 
-    /// Count of the number of times that @c ORB_init() has been
-    /// called.
-    /**
-     * This must be protected by @c ACE_Static_Object_Lock.
-     */
-    static int orb_init_count_;
-
     /// The ORB_Core that created us....
     TAO_ORB_Core *orb_core_;
 
@@ -666,6 +655,17 @@ namespace CORBA
 
   };
 }  // End namespace CORBA
+
+namespace TAO
+{
+  namespace ORB
+  {
+    /// Initialize the ORB globals correctly, i.e., only when they
+    /// haven't been initialized yet.
+    void init_orb_globals (ACE_ENV_SINGLE_ARG_DECL);
+  }
+}
+
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"
