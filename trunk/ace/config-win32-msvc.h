@@ -46,7 +46,9 @@
 # endif  /* ACE_LD_DECORATOR_STR */
 #endif  /* _MSC_VER >= 1200 */
 
-#if (_MSC_VER >= 1300)
+#if (_MSC_VER >= 1400)
+# include "ace/config-win32-msvc-8.h"
+#elif (_MSC_VER >= 1300)
 # include "ace/config-win32-msvc-7.h"
 #elif (_MSC_VER >= 1200)
 # include "ace/config-win32-msvc-6.h"

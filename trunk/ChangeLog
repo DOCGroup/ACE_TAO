@@ -1,3 +1,12 @@
+Fri Aug  6 08:03:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * ace/config-win32-msvc-8.h:
+          Added this file for msvc8, is a copy of msvc7 but this will change as
+          things are tested for msvc8.
+
+        * ace/config-win32-msvc.h:
+          If msvc_ver >= 1400 then we are including the msvc-8 file.
+
 Thu Aug  5 23:50:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/ec_use_typed_events.mpb:
