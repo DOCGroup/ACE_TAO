@@ -11,7 +11,7 @@ Fri Jan 19 17:41:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Renamed all foo::bar::_tao_setup_collocation() functions
           as foo::bar::foo_bar_setup_collocation(). This eliminates
           the need for the ACE_NESTED_CLASS macro and for the the typedef
-          that were in the original fix. Thanks to Jonathan Stockdale 
+          that was in the original fix. Thanks to Jonathan Stockdale 
           <Jonathan.Stockdale@locusdialogue.com> for letting us know
           that it still wasn't fixed, and for the example code that
           clarified the problem.
