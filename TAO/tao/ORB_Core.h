@@ -81,6 +81,7 @@ class TAO_Client_Priority_Policy_Selector;
 class TAO_Message_State_Factory;
 class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
+class TAO_BiDir_Adapter;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -902,6 +903,10 @@ protected:
   /// Obtain and cache the IORManipulation factory object reference.
   void resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV);
 
+  /// Search the Dynamic service list for BiDirectional options that
+  /// can be dynamically loaded.
+  int bidirectional_giop_init (void);
+
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.
   void services_callbacks_init (void);
@@ -1200,6 +1205,9 @@ protected:
 
   /// TAO's connection cache.
   TAO_Transport_Cache_Manager transport_cache_;
+
+  /// BiDirectional GIOP factory
+  TAO_BiDir_Adapter *bidir_adapter_;
 
   /// Bir Dir GIOP policy value
   CORBA::Boolean bidir_giop_policy_;
