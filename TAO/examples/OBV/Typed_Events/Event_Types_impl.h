@@ -48,8 +48,7 @@ class Event_impl : public virtual OBV_Event,
   Event_impl ();
   virtual ~Event_impl ();
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
   // Implementation of the do_print () operation the valuetype should have.
   // All operations in valuetypes are virtual.
 
@@ -120,8 +119,7 @@ public:
 
   virtual ~Temperature_impl ();
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
   // Overrides Event_impl::do_print (). Note that a new declaration
   // in IDL in a derived class is not allowed.
 };
@@ -147,22 +145,15 @@ public:
   Position_impl (Point &p);
   virtual ~Position_impl ();
 
-  virtual CORBA::Float x (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException )); 
-  virtual void x (CORBA::Float ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException )); 
-  virtual CORBA::Float y (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException )); 
-  virtual void y (CORBA::Float ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException )); 
-  virtual CORBA::Float z (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException )); 
-  virtual void z (CORBA::Float ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException )); 
+  virtual CORBA::Float x (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void x (CORBA::Float ACE_ENV_ARG_DECL);
+  virtual CORBA::Float y (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void y (CORBA::Float ACE_ENV_ARG_DECL);
+  virtual CORBA::Float z (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void z (CORBA::Float ACE_ENV_ARG_DECL);
   //These are the attributes
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 class Position_factory : public CORBA::ValueFactoryBase
@@ -187,8 +178,7 @@ public:
   Log_Msg_impl (CORBA::Short urgency_p, const char *message_p);
   virtual ~Log_Msg_impl ();
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 class Log_Msg_factory : public CORBA::ValueFactoryBase
@@ -209,7 +199,7 @@ class Event_List_Link_factory;
 class Event_List_Iterator;
 
 class Event_List_Link_impl : public virtual OBV_Event_List_Link,
-                         public virtual CORBA::DefaultValueRefCountBase
+                             public virtual CORBA::DefaultValueRefCountBase
 {
   friend class Event_List_Link_factory;
   friend class Event_List;
@@ -220,15 +210,12 @@ class Event_List_Link_impl : public virtual OBV_Event_List_Link,
   Event_List_Link_impl (Event *e);
   virtual ~Event_List_Link_impl ();
 
-  Event *get_event (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  Event *get_event (ACE_ENV_SINGLE_ARG_DECL);
 
  private:
-  Event_List_Link *get_next_link (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC(( CORBA::SystemException ));
+  Event_List_Link *get_next_link (ACE_ENV_SINGLE_ARG_DECL);
 
-  void attach_next_link (Event_List_Link * chain ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC(( CORBA::SystemException ));
+  void attach_next_link (Event_List_Link * chain ACE_ENV_ARG_DECL);
   // Attach a chain at the end.
 };
 
@@ -252,8 +239,7 @@ class Event_List_impl : public virtual OBV_Event_List,
   Event_List_impl ();
   virtual ~Event_List_impl ();
 
-  void store_event (Event* e ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC(( CORBA::SystemException ));
+  void store_event (Event* e ACE_ENV_ARG_DECL);
 
   Event_List_Link *get_first_link(ACE_ENV_SINGLE_ARG_DECL);
   // The iterator needs it.
@@ -331,11 +317,9 @@ public:
 
   virtual ~Temperature_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 class Temperature_Criterion_factory : public CORBA::ValueFactoryBase
@@ -360,11 +344,9 @@ public:
                            Position *tr);
   virtual ~Position_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 class Position_Criterion_factory : public CORBA::ValueFactoryBase
@@ -385,11 +367,9 @@ public:
   Log_Msg_Criterion_impl ();
   virtual ~Log_Msg_Criterion_impl ();
 
-  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  CORBA::Boolean is_critical (Event* e ACE_ENV_ARG_DECL);
 
-  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL) 
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  virtual void do_print (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 class Log_Msg_Criterion_factory : public CORBA::ValueFactoryBase
@@ -408,10 +388,8 @@ class Criterion_List_impl : public virtual OBV_Criterion_List,
   Criterion_List_impl ();
   virtual ~Criterion_List_impl ();
 
-  void store_criterion (Criterion *c ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
-  CORBA::Boolean is_critical (Event *e ACE_ENV_ARG_DECL)
-	  ACE_THROW_SPEC (( CORBA::SystemException ));
+  void store_criterion (Criterion *c ACE_ENV_ARG_DECL);
+  CORBA::Boolean is_critical (Event *e ACE_ENV_ARG_DECL);
 };
 
 
