@@ -123,6 +123,7 @@
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MKTEMP
 #define ACE_LACKS_STRRCHR
+#define ACE_LACKS_BSEARCH
 
 // @@ Followings are used to keep existing programs happy.
 
