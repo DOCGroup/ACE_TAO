@@ -288,7 +288,7 @@ typedef ACE_UINT16 ACE_USHORT16;
 # define ACE_CU64_TO_CU32(n) ((n).lo ())
 #else  /* ! ACE_LACKS_LONGLONG_T */
 # define ACE_U64_TO_U32(n) (ACE_static_cast (ACE_UINT32, (n)))
-# define ACE_CU64_TO_CU32(n) (ACE_static_cast (const ACE_UINT32, (n)))
+# define ACE_CU64_TO_CU32(n) (ACE_static_cast (ACE_CAST_CONST ACE_UINT32, (n)))
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
 // The number of bytes in a void *.
