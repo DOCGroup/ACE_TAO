@@ -1,6 +1,6 @@
 Mon Nov 13 11:19:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed a compiler
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed a compile
 	  error. Thanks to Christopher Kohloff for reporting this. For
 	  some strange reasons this was missed by the SunCC5 compiler. 
 
