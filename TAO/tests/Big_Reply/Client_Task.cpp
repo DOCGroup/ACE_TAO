@@ -22,6 +22,23 @@ Client_Task::svc (void)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
+
+  // Try to setup a connection to the remote server, ignoring all the
+  // exceptions  that are expected (see bug 189 on why it is so). We
+  // could use a a validate_connection for it . But we wantthis test
+  // to work with Minimum CORBA builds too..
+  ACE_TRY
+    {
+      for (int i = 0; i != 100; ++i)
+        {
+          this->reply_gen_->ping (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY {}
+  ACE_ENDTRY;
+
+  // Now get the big replies..
   ACE_TRY
     {
       for (int i = 0; i != this->event_count_; ++i)
@@ -32,6 +49,8 @@ Client_Task::svc (void)
     }
   ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception Caught \n");
       return -1;
     }
   ACE_ENDTRY;

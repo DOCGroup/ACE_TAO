@@ -17,7 +17,7 @@ Test::Octet_Seq *
 Big_Reply_i::get_big_reply (CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Test::Octet_Seq_var reply_mesg = 
+  Test::Octet_Seq_var reply_mesg =
     new Test::Octet_Seq (this->length_);
 
   reply_mesg->length (this->length_);
@@ -25,6 +25,11 @@ Big_Reply_i::get_big_reply (CORBA::Environment & /*ACE_TRY_ENV*/)
   return reply_mesg._retn ();
 }
 
+void
+Big_Reply_i::ping (CORBA::Environment & /*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
 
 void
 Big_Reply_i::shutdown (CORBA::Environment & /*ACE_TRY_ENV*/)
