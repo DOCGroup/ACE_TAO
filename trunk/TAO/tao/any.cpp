@@ -327,7 +327,11 @@ CORBA_Any::operator= (const CORBA_Any &src)
       return *this;
     }
 
-  this->Release (); // release any value + typecode we may have
+  if (this->orb_owns_data_)
+    {
+      DEEP_FREE (this->type_, this->value_, 0, env);
+    }
+  //  this->Release (); // release any value + typecode we may have
 
   // now copy the contents of the source to ourselves
   this->type_ = (src.type_) != 0 ? src.type_ : CORBA::_tc_null;
