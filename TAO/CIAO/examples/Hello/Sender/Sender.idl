@@ -1,4 +1,4 @@
-//$Id$:
+//$Id$
 /**
  * @file Sender.idl
  *
@@ -13,10 +13,10 @@
 
 module Hello
 {
-
   /* This is a Sender specific interface which will be used to get the
    * process start.
    */
+  
   interface trigger
   {
     void start ();
@@ -26,6 +26,7 @@ module Hello
   {
     provides message push_message;
     publishes timeout click_out;
+    attribute string local_message;
   };
 
   home SenderHome manages Sender

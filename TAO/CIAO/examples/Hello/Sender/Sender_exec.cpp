@@ -1,4 +1,4 @@
-//$Id$:
+//$Id$
 /*
  * @file Sender_exec.cpp
  *
@@ -7,29 +7,49 @@
 
 #include "Sender_exec.h"
 
-MyImpl::Sender_exec_i::Sender_exec_i ()
-  : message_ ("Sender's Data")
+void
+MyImpl::message_impl::set_message (const char * message)
 {
+  message_ = CORBA::string_dup(message);
+}
+
+char *
+MyImpl::message_impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Sender sending out message. \n"));
+  //return CORBA::string_dup(this->message_.in ());
+  return CORBA::string_dup (this->message_.in ());
 }
 
 MyImpl::Sender_exec_i::~Sender_exec_i ()
 {
+  delete message_impl_i;
+}
+
+void
+MyImpl::Sender_exec_i::local_message (const char * local_message
+		       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  message_ = local_message;
+  this->message_impl_i->set_message (local_message) ;
+}
+
+char *
+MyImpl::Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return CORBA::string_dup(message_);
 }
 
 Hello::CCM_message_ptr
 MyImpl::Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return Hello::CCM_message::_duplicate (this);
-}
-
-char *
-MyImpl::Sender_exec_i::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "Sender sending out message. \n"));
-  return CORBA::string_dup(this->message_.in ());
+  //return Hello::CCM_message::_duplicate (this);
+  return Hello::CCM_message::_duplicate(this->message_impl_i);
 }
 
 
