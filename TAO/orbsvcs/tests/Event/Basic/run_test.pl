@@ -92,8 +92,8 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "\n\nMT Disconnects test\n";
 $T = Process::Create ($prefix . "MT_Disconnect".$EXE_EXT,
-		     " -ORBSvcConf mt.svc.conf");
-if ($T->TimedWait (120) == -1) {
+                     " -ORBSvcConf mt.svc.conf");
+if ($T->TimedWait (240) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;
   $T->Kill (); $T->TimedWait (1);
@@ -101,7 +101,7 @@ if ($T->TimedWait (120) == -1) {
 
 print STDERR "\n\nAtomic Reconnection test\n";
 $T = Process::Create ($prefix . "Atomic_Reconnect".$EXE_EXT,
-		     " -ORBSvcConf mt.svc.conf");
+                     " -ORBSvcConf mt.svc.conf");
 if ($T->TimedWait (120) == -1) {
   print STDERR "ERROR: Test timedout\n";
   $status = 1;

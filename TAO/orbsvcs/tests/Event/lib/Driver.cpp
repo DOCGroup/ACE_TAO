@@ -159,6 +159,14 @@ EC_Driver::run_cleanup (CORBA::Environment &ACE_TRY_ENV)
   this->cleanup_suppliers ();
   this->cleanup_consumers ();
   this->cleanup_ec ();
+
+  this->root_poa_->destroy (0, 0, ACE_TRY_ENV);
+  ACE_CHECK;
+  this->root_poa_ = PortableServer::POA::_nil ();
+
+  this->orb_->destroy (ACE_TRY_ENV);
+  ACE_CHECK;
+  this->orb_ = CORBA::ORB::_nil ();
 }
 
 void
@@ -657,6 +665,9 @@ EC_Driver::execute_test (CORBA::Environment &ACE_TRY_ENV)
 int
 EC_Driver::allocate_tasks (void)
 {
+  if (this->tasks_ != 0)
+    return 0;
+
   ACE_NEW_RETURN (this->tasks_,
                   ACE_Task_Base*[this->n_suppliers_],
                   -1);
@@ -696,8 +707,6 @@ EC_Driver::activate_tasks (CORBA::Environment &)
 
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->tasks_[i] = this->allocate_task (i);
-
       if (this->tasks_[i]->activate (this->thr_create_flags_,
                                      1, 0, priority) == -1)
         {
@@ -712,6 +721,8 @@ EC_Driver::activate_tasks (CORBA::Environment &)
 void
 EC_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
+  if (this->suppliers_ == 0)
+    return;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       this->suppliers_[i]->disconnect (ACE_TRY_ENV);
@@ -724,6 +735,8 @@ EC_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 void
 EC_Driver::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
+  if (this->consumers_ == 0)
+    return;
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       this->consumers_[i]->disconnect (ACE_TRY_ENV);
@@ -736,6 +749,8 @@ EC_Driver::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
 void
 EC_Driver::shutdown_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
+  if (this->suppliers_ == 0)
+    return;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       this->suppliers_[i]->shutdown (ACE_TRY_ENV);
@@ -748,6 +763,8 @@ EC_Driver::shutdown_suppliers (CORBA::Environment &ACE_TRY_ENV)
 void
 EC_Driver::shutdown_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
+  if (this->consumers_ == 0)
+    return;
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       this->consumers_[i]->shutdown (ACE_TRY_ENV);
