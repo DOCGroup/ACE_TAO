@@ -210,7 +210,26 @@ public:
   IIOP::Profile profile;
   // Profile for this object.
 
+  IIOP::Profile *get_fwd_profile (void);
+  // THREAD-SAFE.  Returns the current forwarding profile.
+
+  IIOP::Profile *get_fwd_profile_i (void);
+  // NON-THREAD-SAFE.  Returns the current forwarding profile.
+
+  IIOP::Profile *set_fwd_profile (IIOP::Profile *new_profile);
+  // THREAD-SAFE.  Sets a new value for the forwarding profile and
+  // returns the current value.
+
+  ACE_SYNCH_MUTEX &get_fwd_profile_lock (void);
+  // Gives reference to the lock guarding the forwarding profile.
+
 private:
+  IIOP::Profile *fwd_profile_;
+  // Store the forwarding profile
+
+  ACE_SYNCH_MUTEX fwd_profile_lock_;
+  // Mutex to protect access to the forwarding profile
+  
   ACE_SYNCH_MUTEX IUnknown_lock_;
   // Mutex to protect <IUnknown>-related stuff.
 

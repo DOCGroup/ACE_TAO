@@ -690,9 +690,24 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   // Determine the object key and the address to which we'll need a
   // connection.
-  ACE_INET_Addr *server_addr_p =
-    &data_->profile.object_addr ();
+  const TAO_opaque *key;
+  ACE_INET_Addr *server_addr_p = 0;    
 
+  {
+    ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, guard, data_->get_fwd_profile_lock ()));
+
+    if (data_->get_fwd_profile_i () != 0)
+      {
+        key = &data_->get_fwd_profile_i ()->object_key;
+        server_addr_p = &data_->get_fwd_profile_i ()->object_addr ();
+      }
+    else
+      {
+        key = &data_->profile.object_key;
+        server_addr_p = &data_->profile.object_addr ();
+      }
+  }
+  
   if (server_addr_p == 0)
     {
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -781,7 +796,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   this->out_stream_ << svc_ctx;
   this->out_stream_.write_ulong (this->my_request_id_);
   this->out_stream_.write_boolean (this->do_rsvp_);
-  this->out_stream_ << this->data_->profile.object_key;
+  this->out_stream_ << *key;
   this->out_stream_.write_string (this->opname_);
   this->out_stream_ << anybody;
 
@@ -905,17 +920,14 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // resource being reclaimed might also have been the process,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
-      // @@ Michael
-      /*
       {
+        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->get_fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 
-        // Keep this around in case forwarding is ever implemented
-        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 
-        IIOP::Profile *old = data_->fwd_profile_i (0);
+        IIOP::Profile *old = data_->set_fwd_profile (0); 
         delete old;
-
-      */
+        // sets the forwarding profile to 0 and deletes the old one;
+      }
       this->handler_->close ();
       this->handler_ = 0;
       return TAO_GIOP_LOCATION_FORWARD;
@@ -1131,9 +1143,7 @@ TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
   // reply body contains and object reference to the new object.
   // This object pointer will be now extracted.
 
-  // @@ Memory leak examination: Michael
   CORBA::Object_ptr object_ptr = 0;
-  //CORBA::Object_ptr object_ptr = object_var.inout();
 
   if (this->inp_stream_.decode (CORBA::_tc_Object,
                                 &(object_ptr),
@@ -1172,15 +1182,15 @@ TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
   // be recorded here. (This is just an optimization, and is not
   // related to correctness.)
 
-  // a copy operator for IIOP::Profile is defined, so don't worry
-  data_->profile = iIOP_Object_ptr->profile;
-
+  // the copy method on IIOP::Profile will be used to copy the content
+  data_->set_fwd_profile (&iIOP_Object_ptr->profile);
+  // store the new profile in the forwarding profile 
+  // note: this has to be and is thread safe
 
   // Release the IIOP_Object
   iIOP_Object_ptr->Release ();
 
   env.clear ();
-
 
   // We may not need to do this since TAO_GIOP_Invocations
   // get created on a per-call basis. For now we'll play it safe.
@@ -1282,16 +1292,14 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
       // resource being reclaimed might also have been the process,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
-      // @@ Michael
-      /*
       {
-         // Keep this around in case forwarding is ever implemented
-        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
+        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->get_fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 
 
-        IIOP::Profile *old = data_->fwd_profile_i (0);
+        IIOP::Profile *old = data_->set_fwd_profile (0); 
         delete old;
-      */
+        // sets the forwarding profile to 0 and deletes the old one;
+      }
 
       this->handler_->close ();
       this->handler_ = 0;
