@@ -1,3 +1,11 @@
+Fri Jan 16 15:52:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/IOStream.h (ACE_Streambuf): 
+	* ace/config-win32-common.h: 
+	* ace/iosfwd.h: 
+	* ace/streams.h: Applied IOStream patches from James CE Johnson
+ 	  <jcej@chiroptera.tragus.org>.
+
 Fri Jan 16 01:42:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SString.h: Added the correct export macros.
