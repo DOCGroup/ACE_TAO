@@ -534,28 +534,32 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
   {
     "NameServiceIOR",
     "TradingServiceIOR",
-    "ImplRepoServiceIOR"
+    "ImplRepoServiceIOR",
+    "InterfaceRepoServiceIOR"
   };
 
   const char * env_service_port [] =
   {
     "NameServicePort",
     "TradingServicePort",
-    "ImplRepoServicePort"
+    "ImplRepoServicePort",
+    "InterfaceRepoServicePort"
   };
 
  u_short default_service_port [] =
  {
    TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
    TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
-   TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT
+   TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT,
+   TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT
  };
 
  const char * service_objid [] =
  {
    TAO_OBJID_NAMESERVICE,
    TAO_OBJID_TRADINGSERVICE,
-   TAO_OBJID_IMPLREPOSERVICE
+   TAO_OBJID_IMPLREPOSERVICE,
+   TAO_OBJID_INTERFACEREP
  };
 
  CORBA_Object_var return_value = CORBA_Object::_nil ();
@@ -961,6 +965,9 @@ CORBA_ORB::resolve_initial_references (const char *name,
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
     return this->resolve_service (IMPLREPOSERVICE, timeout, ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
+    return this->resolve_service (INTERFACEREPOSERVICE, timeout, ACE_TRY_ENV);
 
   else
     ACE_THROW_RETURN (CORBA::ORB::InvalidName (), CORBA::Object::_nil ());
