@@ -4,6 +4,10 @@ Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	  Changed the paramether passed to the server and the client.
 
+	* tests/RTCORBA/Banded_Connections/bands.unix:
+
+	  Changed the bands to be adjacent.
+
 	* tests/RTCORBA/Banded_Connections/bands.nt:
 
 	  Changed the priority bands to cover all the available priority
