@@ -251,6 +251,9 @@
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
 
+// SunOS 5.5.x does not support mkstemp
+#define ACE_LACKS_MKSTEMP
+
 // Platform has posix getpwnam_r
 #if (defined (_POSIX_C_SOURCE) && _POSIX_C_SOURCE - 0 >= 199506L) || \
     defined(_POSIX_PTHREAD_SEMANTICS)
