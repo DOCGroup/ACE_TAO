@@ -4,6 +4,11 @@ Sun Dec  1 12:06:46 1996  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Dec  1 00:15:45 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* ace/OS.h: ACE_NEW_RETURN and ACE_NEW were reverted back to the
+	  old implementation.  This is temporary till the infinite loop
+	  problem with ACE_ERROR, ACE_DEBUG and ACE_TRACE being called
+	  from ACE_Log_Msg::instance() is fixed.
+
 	* ace/Synch.h: Repositioned ACE_Semaphore such that there are no
 	  problems in compiling ACE_Process_Semaphore under Win32. 
 
