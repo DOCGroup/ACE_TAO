@@ -11,8 +11,10 @@
 #----------------------------------------------------------------------------
 
 DIRS  = CDR \
+        DynAny_Test \
         OctetSeq \
         Param_Test \
+        InterOp-Naming \
         NestedUpcall \
         Multiple_Inheritance \
 	MT_Client \
