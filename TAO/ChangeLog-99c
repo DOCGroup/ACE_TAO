@@ -1,3 +1,23 @@
+Fri Jun 18 11:50:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Native_Exceptions/Makefile:
+	* tests/Native_Exceptions/README:
+	* tests/Native_Exceptions/run_test.pl:
+	* tests/Native_Exceptions/client.cpp:
+	* tests/Native_Exceptions/server.cpp:
+	* tests/Native_Exceptions/test.idl:
+	* tests/Native_Exceptions/test_i.h:
+	* tests/Native_Exceptions/test_i.i:
+	* tests/Native_Exceptions/test_i.cpp:
+	  Added new test that shows how to write applications using native 
+	  C++ exceptions, without any of the ACE_TRY macros.
+
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+	  Added missing template instantiations.
+
+	* tests/CDR/basic_types.cpp:
+	  Fixed const char* warnings...
+
 Fri Jun 18 11:32:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object_Adapter.h (prepare_for_upcall): Added default
