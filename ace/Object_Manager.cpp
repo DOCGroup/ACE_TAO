@@ -7,7 +7,9 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 #include "ace/Filecache.h"
+#include "ace/Token_Manager.h"
 #include "ace/Synch.h"
+#include "ace/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Object_Manager.i"
@@ -102,6 +104,8 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex, ACE_SIG_HANDLER_LOCK)
+  ACE_PREALLOCATE_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                          ACE_TOKEN_MANAGER_CREATION_LOCK)
   ACE_PREALLOCATE_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 
@@ -192,6 +196,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                   ACE_SIG_HANDLER_LOCK)
+  ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                                  ACE_TOKEN_MANAGER_CREATION_LOCK)
   ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
