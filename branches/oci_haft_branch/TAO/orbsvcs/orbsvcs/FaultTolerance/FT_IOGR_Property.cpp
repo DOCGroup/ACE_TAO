@@ -48,6 +48,9 @@ TAO_FT_IOGR_Property::set_property (
     this->encode_properties (cdr,
                              tagged_components);
 
+  if (retval == 0)
+    return retval;
+
   // Go through every profile and set the TaggedComponent field
   for (CORBA::ULong i = 0; i < count ; i++)
     {
@@ -254,21 +257,30 @@ TAO_FT_IOGR_Property::encode_properties (
     TAO_OutputCDR &cdr,
     IOP::TaggedComponent &tagged_components)
 {
+  if (this->ft_group_tagged_component_ == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "TAO-FT (%P|%t) - The group tagged component ",
+                           "is null \n"),
+                          0);
+    }
+
   // the version info
   CORBA::Boolean status =
-    cdr << this->ft_group_tagged_component_.version;
+    cdr << this->ft_group_tagged_component_->version;
 
   // the domain id
   status = status &&
-    cdr << this->ft_group_tagged_component_.ft_domain_id.in ();
+    cdr << this->ft_group_tagged_component_->ft_domain_id.in ();
 
   // Object group id
   status = status &&
-    cdr << this->ft_group_tagged_component_.object_group_id;
+    cdr << this->ft_group_tagged_component_->object_group_id;
 
   // Object group reference version
   status = status &&
-    cdr << this->ft_group_tagged_component_.object_group_ref_version;
+    cdr << this->ft_group_tagged_component_->object_group_ref_version;
 
   // Get the length of the CDR stream
   CORBA::ULong length = ACE_static_cast (CORBA::ULong,
@@ -323,6 +335,58 @@ TAO_FT_IOGR_Property::get_primary_profile (
         }
     }
   return 0;
+}
+
+
+CORBA::Boolean
+TAO_FT_IOGR_Property::get_tagged_component (
+    const CORBA::Object_ptr iogr,
+    FT::TagFTGroupTaggedComponent &fgtc) const
+{
+  TAO_Stub *stub =
+    iogr->_stubobj ();
+
+  if (stub == 0)
+    return 0;
+
+  // Get the MProfile
+  TAO_MProfile &mprofile =
+    iogr->_stubobj ()->base_profiles ();
+
+  // Looking for a tagged component with a TAG_FT_GROUP flag.
+  IOP::TaggedComponent tc;
+  tc.tag = IOP::TAG_FT_GROUP;
+
+  for (CORBA::ULong i = 0;
+       i < mprofile.profile_count ();
+       i++)
+    {
+      // Get the Tagged Components
+      const TAO_Tagged_Components &pfile_tagged =
+        mprofile.get_profile (i)->tagged_components ();
+
+      // Look for the primary
+      if (pfile_tagged.get_component (tc) == 1)
+        {
+          TAO_InputCDR cdr (ACE_reinterpret_cast (
+                                const char*,
+                                tc.component_data.get_buffer ()
+                                ),
+                            tc.component_data.length ());
+          CORBA::Boolean byte_order;
+
+          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+            return 0;
+
+          cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+
+          if ((cdr >> fgtc) == 0)
+            return 0;
+        }
+    }
+
+  // Success
+  return 1;
 }
 
 CORBA::Boolean

@@ -5,6 +5,7 @@
 #include "FT_ORBInitializer.h"
 #include "FT_PolicyFactory.h"
 #include "FT_ClientRequest_Interceptor.h"
+#include "FT_ServerRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 
@@ -96,10 +97,23 @@ TAO_FT_ORBInitializer::register_policy_factories (
 
 void
 TAO_FT_ORBInitializer::register_server_request_interceptors (
-    PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ORBInitInfo_ptr info
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  PortableInterceptor::ServerRequestInterceptor_ptr sri =
+    PortableInterceptor::ServerRequestInterceptor::_nil ();
+
+  ACE_NEW_THROW_EX (sri,
+                    TAO::FT_ServerRequest_Interceptor,
+                    CORBA::NO_MEMORY ());
+
+  PortableInterceptor::ServerRequestInterceptor_var
+    server_interceptor = sri;
+
+  info->add_server_request_interceptor (server_interceptor.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
@@ -113,7 +127,7 @@ TAO_FT_ORBInitializer::register_client_request_interceptors (
     PortableInterceptor::ClientRequestInterceptor::_nil ();
 
   ACE_NEW_THROW_EX (cri,
-                    TAO_FT_ClientRequest_Interceptor,
+                    TAO::FT_ClientRequest_Interceptor,
                     CORBA::NO_MEMORY ());
 
   PortableInterceptor::ClientRequestInterceptor_var
