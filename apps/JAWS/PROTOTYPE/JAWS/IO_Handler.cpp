@@ -299,7 +299,7 @@ JAWS_Asynch_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result
 
   result.message_block ().release ();
 
-  if (result.act () == (void *) CONFIRMATION)
+  if (result.act () == (void *) JAWS_Asynch_IO::CONFIRMATION)
     this->handler ()->confirmation_message_complete ();
   else
     this->handler ()->error_message_complete ();
