@@ -1,3 +1,8 @@
+Fri Dec 17 12:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+          Also on VxWorks include os_un.h
+
 Fri Dec 17 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.inl:
