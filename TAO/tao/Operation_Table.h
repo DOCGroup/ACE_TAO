@@ -43,7 +43,8 @@ class TAO_Export TAO_Operation_Table
   //     operation names.
 public:
   virtual int find (const char *opname,
-                   TAO_Skeleton &skelfunc) = 0;
+                    TAO_Skeleton &skelfunc,
+                    const unsigned int length = 0) = 0;
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
@@ -141,7 +142,8 @@ public:
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
   virtual int find (const char *opname,
-                    TAO_Skeleton &skelfunc);
+                    TAO_Skeleton &skelfunc,
+                    const unsigned int length = 0);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
@@ -172,7 +174,8 @@ public:
   // Destructor.
 
   virtual int find (const char *opname,
-                    TAO_Skeleton &skel_ptr);
+                    TAO_Skeleton &skel_ptr,
+                    const unsigned int length = 0);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
@@ -218,7 +221,8 @@ public:
   // destructor.
 
   virtual int find (const char *opname,
-                    TAO_Skeleton &skel_ptr);
+                    TAO_Skeleton &skel_ptr,
+                    const unsigned int length = 0);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
@@ -259,7 +263,8 @@ public:
   // Do nothing destrctor.
 
   virtual int find (const char *opname,
-                    TAO_Skeleton &skelfunc);
+                    TAO_Skeleton &skelfunc,
+                    const unsigned int length = 0);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.
@@ -297,7 +302,8 @@ public:
   // Do nothing destrctor.
 
   virtual int find (const char *opname,
-                    TAO_Skeleton &skelfunc);
+                    TAO_Skeleton &skelfunc,
+                    const unsigned int length = 0);
   // Uses <{opname}> to look up the skeleton function and pass it back
   // in <{skelfunc}>.  Returns non-negative integer on success, or -1
   // on failure.

@@ -72,10 +72,11 @@ TAO_ServantBase::_is_a (const char* logical_type_id,
 
 int
 TAO_ServantBase::_find (const char *opname,
-                        TAO_Skeleton& skelfunc)
+                        TAO_Skeleton& skelfunc,
+                        const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return optable_->find (opname, skelfunc);
+  return optable_->find (opname, skelfunc, length);
 }
 
 int
