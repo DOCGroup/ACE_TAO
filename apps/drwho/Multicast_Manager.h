@@ -48,7 +48,7 @@ private:
   static hostent *get_host_entry (const char *host);
 
   static int received_host_count;
-  static char *host_names[];
+  static const char *host_names[];
   static Host_Elem *drwho_list;
   static Host_Elem *current_ptr;
 };
