@@ -1,3 +1,19 @@
+Tue Oct 22 13:11:42 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (DllMain): Added code to invoke
+	  DisableThreadLibraryCalls during PROCESS_ATTACH when
+	  ACE_DISABLES_THREAD_LIBRARY_CALLS is defined to 1 as described
+	  below.  This should enhance performance of applications that
+	  spawn a lot of threads.  Thanks to Patrick McNerthney
+	  <pat@mcnerthney.com> for suggesting the change.
+
+	  We should probably apply the same optimization for the core TAO
+	  libraries.
+
+	* ace/config-win32-common.h: Defined a Win32-only new macros
+	  ACE_DISABLES_THREAD_LIBRARY_CALLS which is default to 0 if not
+	  defined by users.
+
 Mon Oct 21 17:26:15 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SPIPE_Acceptor.cpp:   Modified
@@ -18,7 +34,7 @@ Mon Oct 21 20:13:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* examples/C++NPv2/Reactor_Logging_Server_T.cpp:
 	* examples/C++NPv1/Logging_Server.cpp:
 	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
-	* examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp: 
+	* examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
 	* examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
 	  Fix for compile errors on Lynx platform. Thanks to Craig
 	  Rodrigues for supplying the patches.
