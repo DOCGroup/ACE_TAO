@@ -24,7 +24,10 @@ USA.  */
 #if !defined (OPTIONS_H)
 #define OPTIONS_H
 
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
+
+#if defined (ACE_HAS_GPERF)
 
 // Enumerate the potential debugging Options.
 
@@ -173,5 +176,7 @@ extern Options option;
 #if defined (__GNUC__)
 #define LARGE_STACK_ARRAYS
 #endif /* LARGE_STACK_ARRAYS */
+
+#endif /* ACE_HAS_GPERF */
 
 #endif /* OPTIONS_H */

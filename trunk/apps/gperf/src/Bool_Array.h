@@ -24,7 +24,10 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #if !defined (BOOL_ARRAY_H)
 #define BOOL_ARRAY_H
 
+#include "ace/OS.h"
 #include "Options.h"
+
+#if defined (ACE_HAS_GPERF)
 
 #if defined (LO_CAL)
 // If we are on a memory diet then we'll only make these use a limited
@@ -62,4 +65,6 @@ private:
   // Keep track of array size. 
 };
 
+#endif /* ACE_HAS_GPERF */
 #endif /* BOOL_ARRAY_H */
+

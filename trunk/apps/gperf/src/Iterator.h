@@ -24,8 +24,10 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 #if !defined (ITERATOR_H)
 #define ITERATOR_H
 
+#include "ace/OS.h"
 #include "Options.h"
 
+#if defined (ACE_HAS_GPERF)
 class Iterator 
 {
   // = TITLE
@@ -69,4 +71,5 @@ private:
   // Smallest possible value, inclusive. 
 };
 
+#endif /* ACE_HAS_GPERF */
 #endif /* ITERATOR_H */

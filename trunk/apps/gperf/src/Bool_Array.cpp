@@ -20,10 +20,13 @@ You should have received a copy of the GNU General Public License
 along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111, USA.  */
 
+
+
 #include "Bool_Array.h"
 
-// Prints out debugging diagnostics.
+#if defined (ACE_HAS_GPERF)
 
+// Prints out debugging diagnostics.
 Bool_Array::~Bool_Array (void)
 {
   if (option[DEBUG])
@@ -87,3 +90,4 @@ Bool_Array::reset (void)
     }
 }
 
+#endif /* ACE_HAS_GPERF */

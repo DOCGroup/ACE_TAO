@@ -22,8 +22,11 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#include "ace/Get_Opt.h"
 #include "Options.h"
+
+#if defined (ACE_HAS_GPERF)
+
+#include "ace/Get_Opt.h"
 #include "Iterator.h"
 
 // Global option coordinator for the entire program.
@@ -672,3 +675,5 @@ Options::get_total_switches (void)
 {
   return total_switches;
 }
+
+#endif /* ACE_HAS_GPERF */

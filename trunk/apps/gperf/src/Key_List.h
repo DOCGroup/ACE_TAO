@@ -24,8 +24,11 @@ USA.  */
 #if !defined (KEY_LIST_H)
 #define KEY_LIST_H
 
+#include "ace/OS.h"
 #include "Options.h"
 #include "List_Node.h"
+
+#if defined (ACE_HAS_GPERF)
 
 class Key_List 
 {
@@ -117,4 +120,5 @@ private:
   // Total number of keys, counting duplicates.
 };
 
+#endif /* ACE_HAS_GPERF */
 #endif /* KEY_LIST_H */

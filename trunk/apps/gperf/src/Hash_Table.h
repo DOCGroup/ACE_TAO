@@ -24,9 +24,11 @@ USA.  */
 #if !defined (HASH_TABLE_H)
 #define HASH_TABLE_H
 
+#include "ace/OS.h"
 #include "Options.h"
 #include "List_Node.h"
 
+#if defined (ACE_HAS_GPERF)
 // @@ This class should be replaced by something in ACE, e.g.,
 // ACE_Hash_Map_Manager.  Perhaps we should implement a new
 // ACE_Hash_Map that uses double hashing, however!
@@ -56,4 +58,5 @@ private:
   // Find out how well our double hashing is working!
 };
 
+#endif /* ACE_HAS_GPERF */
 #endif /* HASH_TABLE_H */

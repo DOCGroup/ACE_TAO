@@ -23,9 +23,12 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA  02111, USA. */
 #if !defined (GEN_PERF_H)
 #define GEN_PERF_H 
 
+#include "ace/OS.h"
 #include "Options.h"
 #include "Key_List.h"
 #include "Bool_Array.h"
+
+#if defined (ACE_HAS_GPERF)
 
 class Gen_Perf
 {
@@ -60,5 +63,7 @@ private:
   // List of the keys we're trying to map into a perfect hash
   // function.
 };
+
+#endif /* ACE_HAS_GPERF */
 
 #endif /* GEN_PERF_H */

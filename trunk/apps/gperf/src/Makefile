@@ -5,6 +5,7 @@
 #----------------------------------------------------------------------------
 
 BIN     = gperf
+INSBIN  = $ACE_ROOT/bin/gperf		
 LIB     = libGperf.a
 SHLIB   = libGperf.$(SOEXT)
 
@@ -25,7 +26,9 @@ LDLIBS  = -lGperf
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD   = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BUILD   = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)							
+
+INSTALL = $(VBIN=$(INSBIN)/%)		
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
