@@ -1,6 +1,11 @@
+Thu Feb 3 08:43:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Only generate CIAO_ROOT when we are generating a project for CIAO
+
 Thu Feb 3 08:43:37 2005  Martin Corino  <mcorino@remedy.nl>
 
-        * test/Proactor_Test_IPV6:
+        * test/Proactor_Test_IPV6.cpp:
 
 	  Fixed incorrect logfile name in cases where this test is unsupported
 	  leading to falsely reported testfailures.
