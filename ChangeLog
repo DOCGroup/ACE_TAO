@@ -1,3 +1,12 @@
+Wed Mar 31 17:31:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Modified grep test for linker output so it will run correctly on
+          Solaris.  Thanks to Andrew G. Harvey <agh@cisco.com> for
+          discovering the problem and providing work arounds.  Also, thanks
+          to Kitty for <kitty@dre.vanderbilt.edu> for recommending which
+          one to use. 
+
 Wed Mar 31 14:43:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * ace/OS_NS_Thread.inl:
