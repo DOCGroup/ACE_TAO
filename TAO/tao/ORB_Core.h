@@ -168,6 +168,9 @@ public:
   CORBA::Boolean using_collocation (void);
   // Check if we are optimizing collocation objects.
 
+  CORBA::Boolean using_collocation (CORBA::Boolean);
+  // Set if we want to use optimized collocation objects.
+
   int add_to_collocation_table (void);
   // Added this ORB into collocation table.
 
