@@ -1,3 +1,19 @@
+Mon Jun  9 13:51:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+
+          Added context state initialization to the visitor created
+          to traverse the interface inheritance graph when generating
+          code for the implementation classes. Thanks to 
+          Tommy Andreasen <Tommy.Andreasen@Radiometer.dk> for reporting the
+          bug. Also added annotation generation and fixed indentation.
+
+        * TAO_IDL/be/be_visitor_operation/operation_ih.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+
+          Added annotation and fixed indentation of generated code.
+
 Mon Jun  9 12:33:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Strategies/SCIOP_Endpoint.cpp: 
