@@ -273,7 +273,8 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
           && errno != ENOTSUP)
         return -1;
       else
-        qos_session->qos (*(qos_params.socket_qos ()));
+	if (qos_params.socket_qos () != 0)
+	  qos_session->qos (*(qos_params.socket_qos ()));
 
       return 0;
     }
