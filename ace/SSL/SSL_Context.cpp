@@ -84,11 +84,8 @@ ACE_SSL_Context::ssl_library_init (void)
       ::CRYPTO_set_locking_callback (ACE_SSL_locking_callback);
 #endif  /* ACE_HAS_THREADS */
 
-
-      ::SSL_library_init ();
-      ::SSL_load_error_strings ();
       ::SSLeay_add_ssl_algorithms ();
-
+      ::SSL_load_error_strings ();
 
       // Seed the random number generator.  Note that the random
       // number generator can be seeded more than once to "stir" its

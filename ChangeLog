@@ -1,3 +1,11 @@
+Fri May 03 08:38:27 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Context.cpp (ssl_library_init):
+
+	  Removed extraneous "SSL_library_init()" call.
+	  SSLeay_add_ssl_algorithms(), which is an alias for
+	  SSL_library_init(), is already called.
+
 Thu May 02 16:33:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (mmap): On Win32, check for both ERROR_INVALID_NAME and
