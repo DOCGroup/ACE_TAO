@@ -1,3 +1,9 @@
+Wed Nov 17 17:36:25 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.x-hpc++.h: Added
+          ACE_LACKS_PLACEMENT_OPERATOR_DELETE for aC++. This is a known bug by
+          HP, at least at aC++ A.03.10.
+
 Wed Nov 17 16:33:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Makefile.am:
