@@ -96,6 +96,14 @@
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_NETINET_TCP_H
 
+// Typedefs which we expect DMC to do, but they don't do that
+typedef long o_uid_t;
+typedef long o_gid_t;
+
+#include "io.h"
+#undef umask;
+#undef tell;
+
 # if !defined (ACE_LD_DECORATOR_STR) && defined (_DEBUG)
 #  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
 # endif
