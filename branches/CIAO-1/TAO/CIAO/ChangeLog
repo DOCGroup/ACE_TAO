@@ -1,3 +1,10 @@
+Mon Mar 24 16:17:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	  Added implementation for servant factory methods.  Thanks to
+	  Andrey Nechypurenko <andreynech@yahoo.com> for reporting this.
+
 Fri Mar 21 15:51:57 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/new_components.html: Revised naming convention for

@@ -838,3 +838,23 @@ CIAO_GLUE_HUDisplay::GPSHome_Servant::remove_component (Components::CCMObject_pt
   this->_ciao_passivate_component (_ciao_comp.in ()
                                    ACE_ENV_ARG_PARAMETER);
 }
+
+extern "C" GPS_SVNT_Export ::PortableServer::Servant
+createGPSHome_Servant (::Components::HomeExecutorBase_ptr p,
+                       CIAO::Session_Container *c
+                       ACE_ENV_ARG_DECL)
+{
+  if (p == 0)
+    return 0;
+
+  HUDisplay::CCM_GPSHome_var x
+    = HUDisplay::CCM_GPSHome::_narrow (p
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (CORBA::is_nil (x.in ()))
+    return 0;
+
+  return new CIAO_GLUE_HUDisplay::GPSHome_Servant (x.in (),
+                                                   c);
+}
