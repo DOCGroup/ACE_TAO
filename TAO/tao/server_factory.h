@@ -45,6 +45,12 @@ public:
   virtual ~TAO_Server_Strategy_Factory(void);
   // Destructor.
 
+  virtual int open (void);
+  // Call <open> on various strategies.  This is not performed in
+  // <init> so that the other portions of the ORB have a chance to
+  // "settle" in their initialization since the streategies herein
+  // might need some of that information.
+  
   // = Server-side factory types.
   typedef ACE_Creation_Strategy<TAO_Server_Connection_Handler>
           CREATION_STRATEGY;
