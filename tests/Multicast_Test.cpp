@@ -547,7 +547,7 @@ MCT_Event_Handler::handle_close (ACE_HANDLE /*fd*/,
   return 0;
 }
 
-int
+ACE_HANDLE
 MCT_Event_Handler::get_handle (void) const
 {
   return this->mcast_.get_handle ();
