@@ -31,14 +31,15 @@
 #ifndef TAO_EC_PROXYSUPPLIER_H
 #define TAO_EC_PROXYSUPPLIER_H
 
+#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_Dispatching;
-class TAO_EC_Filter_Builder;
+class TAO_EC_Event_Channel;
+class TAO_EC_ProxyPushConsumer;
 
 class TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelAdmin::ProxyPushSupplier, public TAO_EC_Filter
 {
@@ -85,20 +86,20 @@ public:
   // The QoS (subscription) used to connect to the EC.
 
   virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
-			  CORBA::Environment &env);
+			  CORBA::Environment &env) = 0;
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
-			     CORBA::Environment &env);
+			     CORBA::Environment &env) = 0;
   // Concrete implementations can use this methods to keep track of
   // the suppliers that publish its events.
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-			  CORBA::Environment &env) = 0;
+			  CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-			     CORBA::Environment &env) = 0;
+			     CORBA::Environment &env);
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  void set_default_poa (PortableServer::POA_ptr poa);
+  void set_default_POA (PortableServer::POA_ptr poa);
   // Set this servant's default POA
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
@@ -122,7 +123,7 @@ public:
                      CORBA::Environment& env); 
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (RtecEventComm::EventHeaderSet& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
 
 private:
   TAO_EC_Event_Channel* event_channel_;
@@ -139,6 +140,9 @@ private:
 
   PortableServer::POA_var default_POA_;
   // Store the default POA.
+
+private:
+  TAO_EC_Filter* child_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -2,6 +2,10 @@
 
 #include "EC_Event_Channel.h"
 #include "EC_Factory.h"
+#include "EC_Dispatching.h"
+#include "EC_ConsumerAdmin.h"
+#include "EC_SupplierAdmin.h"
+#include "Timer_Module.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Event_Channel.i"
@@ -49,12 +53,12 @@ TAO_EC_Event_Channel::activate (CORBA::Environment& ACE_TRY_ENV)
   PortableServer::POA_var supplier_poa =
     this->factory_->supplier_poa (ACE_TRY_ENV);
   ACE_CHECK;
-  this->supplier_admin_->set_default_poa (supplier_poa);
+  this->supplier_admin_->set_default_POA (supplier_poa.in ());
 
   PortableServer::POA_var consumer_poa =
     this->factory_->consumer_poa (ACE_TRY_ENV);
   ACE_CHECK;
-  this->consumer_admin_->set_default_poa (consumer_poa);
+  this->consumer_admin_->set_default_POA (consumer_poa.in ());
 }
 
 void
