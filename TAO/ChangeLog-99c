@@ -1,3 +1,7 @@
+Wed Mar 24 16:39:03 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * examples/Quoter/Quoter_i.cpp: Fixed a warning with copy ().
+
 Wed Mar 24 15:07:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAO_IDL/Makefile: Hardcoded our specialized yacc path in
