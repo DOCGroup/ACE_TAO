@@ -140,23 +140,23 @@ public:
            0);
         head->cont (temp);
 
-        // Demarshal the type
+        // Extract the type
         ACE_CDR::Long *lp;
-        lp = ACE_static_cast
+        lp = ACE_reinterpret_cast
           (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp;
         temp->wr_ptr (sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
-        // Demarshal the pid
-        lp = ACE_static_cast
+        // Extract the pid
+        lp = ACE_reinterpret_cast
           (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp;
         temp->wr_ptr (sizeof (ACE_CDR::Long));
         temp = temp->cont ();
 
-        // Demarshal the time (2 Longs)
-        lp = ACE_static_cast
+        // Extract the timestamp (2 Longs)
+        lp = ACE_reinterpret_cast
           (ACE_CDR::Long*, temp->wr_ptr ());
         cdr >> *lp; ++lp; cdr >> *lp;
         temp->wr_ptr (2 * sizeof (ACE_CDR::Long));
