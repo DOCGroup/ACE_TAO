@@ -5751,7 +5751,8 @@ public:
                          int flags = 0,
                          LPCTSTR name = 0,
                          mode_t perms = 0);
-  static int flock_destroy (ACE_OS::ace_flock_t *lock);
+  static int flock_destroy (ACE_OS::ace_flock_t *lock,
+                            int unlink_file = 1);
 # if defined (ACE_WIN32)
   static void adjust_flock_params (ACE_OS::ace_flock_t *lock,
                                    short whence,
