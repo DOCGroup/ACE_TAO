@@ -283,10 +283,9 @@ CORBA::UserException::_info (void) const
 
 // ****************************************************************
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 namespace CORBA
 {
-  TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnknownUserException, 0)
+  CORBA::TypeCode_ptr _tc_UnknownUserException = 0;
 }
 
 // ****************************************************************
