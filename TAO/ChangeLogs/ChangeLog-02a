@@ -1,3 +1,58 @@
+Tue Apr 24 19:42:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.h.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.i.diff:
+        * tao/DynamicAny/diffs/DynamicAnyC.cpp.diff:
+        * tao/DynamicAny/diffs/DynamicAnyC.h.diff:
+        * tao/DynamicAny/diffs/DynamicAnyC.i.diff:
+        * tao/IORManipulation/diffs/IORC.cpp.diff:
+        * tao/IORManipulation/diffs/IORC.h.diff:
+        * tao/IORTable/diffs/IORTableC.cpp.diff:
+        * tao/IORTable/diffs/IORTableC.h.diff:
+        * tao/IORTable/diffs/IORTableC.i.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.inl.diff:
+        * tao/diffs/CurrentC.cpp.diff:
+        * tao/diffs/CurrentC.h.diff:
+        * tao/diffs/CurrentC.i.diff:
+        * tao/diffs/DomainC.cpp.diff:
+        * tao/diffs/DomainC.h.diff:
+        * tao/diffs/DomainC.i.diff:
+        * tao/diffs/IOPC.cpp.diff:
+        * tao/diffs/IOPC.h.diff:
+        * tao/diffs/IOPC.i.diff:
+        * tao/diffs/ImplRepoC.cpp.diff:
+        * tao/diffs/ImplRepoC.h.diff:
+        * tao/diffs/ImplRepoC.i.diff:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/MessagingC.h.diff:
+        * tao/diffs/MessagingC.i.diff:
+        * tao/diffs/PolicyC.cpp.diff:
+        * tao/diffs/PolicyC.h.diff:
+        * tao/diffs/PolicyC.i.diff:
+        * tao/diffs/PollableC.cpp.diff:
+        * tao/diffs/PollableC.h.diff:
+        * tao/diffs/PollableC.i.diff:
+        * tao/diffs/PortableInterceptorC.cpp.diff:
+        * tao/diffs/PortableInterceptorC.h.diff:
+        * tao/diffs/PortableInterceptorC.i.diff:
+        * tao/diffs/PortableServerC.cpp.diff:
+        * tao/diffs/PortableServerC.h.diff:
+        * tao/diffs/PortableServerC.i.diff:
+        * tao/diffs/RTCORBAC.cpp.diff:
+        * tao/diffs/RTCORBAC.h.diff:
+        * tao/RTPortableServerC.cpp.diff:
+        * tao/diffs/RTPortableServerC.h.diff:
+        * tao/diffs/RTPortableServerC.i.diff:
+        * tao/diffs/TAOC.cpp.diff:
+        * tao/diffs/TAOC.h.diff:
+        * tao/diffs/TAOC.i.diff:
+
+          Regenerated all pertinent .diff files after change
+          to generated code in the entry below.
+
 Tue Apr 24 18:35:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_root/root_ch.cpp:
