@@ -25,11 +25,13 @@
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Typecode, "$Id$")
+ACE_RCSID (tao,
+           Typecode,
+           "$Id$")
 
 
 CORBA_TypeCode::Bounds::Bounds (void)
-  : CORBA_UserException ("IDL:omg.orb/CORBA/TypeCode/Bounds:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0")
 {
 }
 
@@ -56,7 +58,7 @@ void CORBA_TypeCode::Bounds::_tao_decode (TAO_InputCDR &,
 CORBA_TypeCode::Bounds*
 CORBA_TypeCode::Bounds::_downcast (CORBA_Exception *ex)
 {
-  if (ex->_is_a ("IDL:omg.orb/CORBA/TypeCode/Bounds:1.0"))
+  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0"))
     return ACE_dynamic_cast (CORBA_TypeCode::Bounds*, ex);
   return 0;
 }
@@ -65,13 +67,13 @@ int
 CORBA_TypeCode::Bounds::_is_a (const char* interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
-                          "IDL:omg.orb/CORBA/TypeCode/Bounds:1.0")
+                          "IDL:omg.org/CORBA/TypeCode/Bounds:1.0")
             == 0)
           || CORBA_UserException::_is_a (interface_id));
 }
 
 CORBA_TypeCode::BadKind::BadKind (void)
-  : CORBA_UserException ("IDL:omg.orb/CORBA/TypeCode/BadKind:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0")
 {
 }
 
@@ -98,7 +100,7 @@ void CORBA_TypeCode::BadKind::_tao_decode (TAO_InputCDR &,
 CORBA_TypeCode::BadKind*
 CORBA_TypeCode::BadKind::_downcast (CORBA_Exception *ex)
 {
-  if (ex->_is_a ("IDL:omg.orb/CORBA/TypeCode/BadKind:1.0"))
+  if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0"))
     return ACE_dynamic_cast (CORBA_TypeCode::BadKind*, ex);
   return 0;
 }
@@ -107,7 +109,7 @@ int
 CORBA_TypeCode::BadKind::_is_a (const char* interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
-                          "IDL:omg.orb/CORBA/TypeCode/BadKind:1.0")
+                          "IDL:omg.org/CORBA/TypeCode/BadKind:1.0")
             == 0)
           || CORBA_UserException::_is_a (interface_id));
 }
