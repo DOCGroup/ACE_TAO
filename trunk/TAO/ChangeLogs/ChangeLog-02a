@@ -1,3 +1,9 @@
+Sun Apr  2 15:13:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp (dump_msg): Added support to dump GIOP
+	  messages. Thanks to Carlos <coryan@uci.edu> for pointing out
+	  that I had missed this.
+
 Sun Apr  2 12:43:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/examples/Notify/Filter/Makefile:

@@ -365,6 +365,12 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                   message_name,
                   *id));
 
+      if (TAO_debug_level >= 10)
+        ACE_HEX_DUMP ((LM_DEBUG,
+                       (const char *) ptr,
+                       len,
+                       ASYS_TEXT ("GIOP message")));
+
 
     }
 }
