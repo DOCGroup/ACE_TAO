@@ -37,21 +37,23 @@ class ACE_Cached_Mem_Pool_Node
   //    compiler portability problems.
 {
 public:
-  T *addr (void) { return &this->obj_; }
-  // return the address of free memory
+  T *addr (void);
+  // return the address of free memory.
 
-  ACE_Cached_Mem_Pool_Node<T> *get_next (void) { return this->next_; }
-  // get the next Mem_Pool_Node
+  ACE_Cached_Mem_Pool_Node<T> *get_next (void);
+  // get the next ACE_Cached_Mem_Pool_Node in a list.
 
-  void set_next (ACE_Cached_Mem_Pool_Node<T> *ptr) { this->next_ = ptr; }
-  // set the next Mem_Pool_Node 
+  void set_next (ACE_Cached_Mem_Pool_Node<T> *ptr);
+  // set the next ACE_Cached_Mem_Pool_Node.
 
 private:
   union
   {
     T obj_;
     ACE_Cached_Mem_Pool_Node<T> *next_;
-  } ;
+  };
+  // Since memory is not used when placed in a free list, 
+  // we can use it to maintain the structure of  free list.
 };
 
 template <class T, class LOCK>
@@ -63,18 +65,21 @@ public:
   // each with sizeof (TYPE) size.  
 
   ~ACE_Cached_Allocator (void);
-  // clear things up
+  // clear things up.
 
   void* malloc (size_t);
-  // get a chunk of memory
+  // get a chunk of memory from free store.
 
   void free (void *);
-  // return a chunk of memory
+  // return a chunk of memory back to free store.
 
 private:
   T *pool_;
+  // remember how we allocate the memory in the first place so
+  // we can clear things up later.
 
   ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, LOCK> free_list_;
+  // Maintain a cached memory free list.
 };
 
 template <class MALLOC>

@@ -87,7 +87,7 @@ public:
   // Returns the current size of the free list.
 
   virtual void resize (size_t newsize);
-  // Resizes the free list to <newsize>
+  // Resizes the free list to <newsize>.
 
   LOCK &get_mutex (void); 
   // Returns a reference to the mutex.
@@ -97,20 +97,20 @@ public:
 
 protected:
   virtual void alloc (size_t n);
-  // Allocates <n> extra nodes for the freelist
+  // Allocates <n> extra nodes for the freelist.
 
   virtual void dealloc (size_t n);
-  // Removes and frees <n> nodes from the freelist
+  // Removes and frees <n> nodes from the freelist.
 
   int mode_;
   // Free list operation mode, either ACE_FREE_LIST_WITH_POOL or
   // ACE_PURE_FREE_LIST.
 
   T *free_list_;
-  // Pointer to the first node in the freelist
+  // Pointer to the first node in the freelist.
 
   size_t lwm_;
-  // Low water mark
+  // Low water mark.
 
   size_t hwm_;
   // High water mark.
