@@ -198,6 +198,8 @@ Thread_Pool::open (void *)
 
   ACE_DEBUG ((LM_DEBUG, "\n(%t) end loop, dump of task:\n"));
   this->dump ();
+
+  return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
