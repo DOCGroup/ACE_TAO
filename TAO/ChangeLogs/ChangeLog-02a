@@ -1,8 +1,9 @@
 Tue Sep  4 11:19:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/client.cpp: Changed the 'oflag' arguments for the
-	  file so that it works in our daily builds. This should fix the
-	  exception problems seen in our daily builds.
+	  file so that it works in our daily builds. We only pass the
+	  O_RDONLY value to the remote call. This should fix the exception
+	  problems seen in our daily builds. 
 
 Tue Sep  4 11:06:55 2001  Chad Elliott <elliott_c@ociweb.com>
 
