@@ -1,3 +1,11 @@
+Tue Apr 29 12:17:03 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ace/Message_Queue_T.cpp:
+	  Fixed a bug in Dynamic_Message_Queue::enqueue method. The
+	  current number of bytes was getting decremented when a message
+	  was enqueued. Thanks to Michael Kircher
+	  (Michael.Kircher@siemens.com) for reporting this bug.
+
 Tue Apr 29 11:21:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/common/AttributesImpl.cpp:
