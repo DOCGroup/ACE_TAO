@@ -834,6 +834,12 @@ namespace
     }
 
     virtual void
+    receives_none (SemanticGraph::Operation&)
+    {
+      os << " ()";
+    }
+
+    virtual void
     raises_pre (SemanticGraph::Operation&)
     {
       os << " raises (";
@@ -886,6 +892,12 @@ namespace
     }
 
     virtual void
+    receives_none (SemanticGraph::HomeFactory&)
+    {
+      os << " ()";
+    }
+
+    virtual void
     raises_pre (SemanticGraph::HomeFactory&)
     {
       os << " raises (";
@@ -934,6 +946,12 @@ namespace
     receives_post (SemanticGraph::HomeFinder&)
     {
       os << ")";
+    }
+
+    virtual void
+    receives_none (SemanticGraph::HomeFinder&)
+    {
+      os << " ()";
     }
 
     virtual void
