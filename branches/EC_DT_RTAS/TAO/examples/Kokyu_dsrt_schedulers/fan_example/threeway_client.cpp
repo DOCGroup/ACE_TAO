@@ -15,8 +15,8 @@
 #include "cpuload.h"
 
 #if defined (ACE_HAS_DSUI)
-#include "dt_oneway_config.h"
-#include "dt_oneway_dsui_families.h"
+#include "fan_config.h"
+#include "fan_dsui_families.h"
 #include <dsui.h>
 #include <cstdlib>
 #endif 
@@ -197,7 +197,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway_Client", "../edf_example/dt_enable.dsui");
+  ds_control ds_cntrl ("DT_Oneway_Client", "fan_enable.dsui");
   ACE_High_Res_Timer non_dsui_timer;
   non_dsui_timer.calibrate ();
   non_dsui_timer.start();

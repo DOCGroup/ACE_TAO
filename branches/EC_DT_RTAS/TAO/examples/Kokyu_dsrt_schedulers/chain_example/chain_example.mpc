@@ -23,7 +23,7 @@ project(chain_client_and_server): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_sched
   }
 }
 
-project(dt_two_prio_client): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_client {
+project(chain_client): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_client {
   exename = chain_client
   libs += TAO_Svc_Utils wrappers
   

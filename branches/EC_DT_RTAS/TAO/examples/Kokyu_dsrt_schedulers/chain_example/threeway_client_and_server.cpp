@@ -82,7 +82,7 @@ Task_Stats task_stats;
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway_Middle", "../edf_example/dt_enable.dsui");
+  ds_control ds_cntrl ("DT_Oneway_Middle", "chain_enable.dsui");
 
   EDF_Scheduler* scheduler = 0;
   RTScheduling::Current_var current;

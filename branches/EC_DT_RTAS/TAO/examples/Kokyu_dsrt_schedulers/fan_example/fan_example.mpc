@@ -1,0 +1,33 @@
+project(fan_server): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_server {
+  exename = fan_server
+  libs += wrappers
+
+  Source_Files {
+    work_i.cpp
+    threeway_server.cpp
+    fan_dsui_vars.cpp
+  }
+}
+
+project(fan_server2): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_server {
+  exename = fan_server2
+  libs += wrappers
+
+  Source_Files {
+    work_i.cpp
+    threeway_server2.cpp
+    fan_dsui_vars.cpp
+  }
+}
+
+project(fan_client): orbsvcslib, kokyu, svc_utils, kokyu_dsrt_scheduler_client {
+  exename = fan_client
+  libs += TAO_Svc_Utils wrappers
+  
+  Source_Files {
+    workC.cpp
+    cpuload.cpp
+    threeway_client.cpp
+    fan_dsui_vars.cpp
+  }
+}
