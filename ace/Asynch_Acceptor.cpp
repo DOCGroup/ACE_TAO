@@ -17,10 +17,6 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Asynch_Acceptor.i"
-#endif /* __ACE_INLINE__ */
-
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
   : listen_handle_ (ACE_INVALID_HANDLE),
