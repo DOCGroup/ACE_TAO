@@ -34,16 +34,21 @@ main (int argc, LPTSTR [], LPTSTR envp[])
 {
   if (argc == 1)
     {
+      int status;
+
       // No arguments means we're the initial test
       ACE_Process_Options options (1);
-      options.setenv (envp);
+      status = options.setenv (envp);
+      ACE_ASSERT (status == 0);
 
       options.command_line (__TEXT ("Env_Value_Test run_as_test"));
 
-      options.setenv(__TEXT ("TEST_VALUE_POSITIVE"), __TEXT ("%s"), 
-                     __TEXT ("10.2"));
-      options.setenv(__TEXT ("TEST_VALUE_NEGATIVE"), __TEXT ("%s"), 
-                     __TEXT ("-10.2"));
+      status = options.setenv(__TEXT ("TEST_VALUE_POSITIVE"), __TEXT ("%s"),
+                              __TEXT ("10.2"));
+      ACE_ASSERT (status == 0);
+      status = options.setenv(__TEXT ("TEST_VALUE_NEGATIVE"), __TEXT ("%s"),
+                              __TEXT ("-10.2"));
+      ACE_ASSERT (status == 0);
 
       ACE_Process p;
       pid_t result = p.spawn (options);
