@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "quoter_client"=.\quoter_client.dsp - Package Owner=<4>
+Project: "Quoter_Client"=.\Quoter_Client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "quoter_server"=.\quoter_server.dsp - Package Owner=<4>
+Project: "Quoter_Server"=.\Quoter_Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
