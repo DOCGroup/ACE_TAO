@@ -1,3 +1,10 @@
+Sat Mar 08 15:27:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/orbconf.h: The #define for ACE_NESTED_CLASS was busted. The
+	  workaround should be applied on platforms where
+	  ACE_HAS_BROKEN_NAMESPACES is defined instead of just
+	  Win32. Thanks to Johnny Willemsen fo rcatching this.
+
 Fri Mar  7 17:20:24 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp
