@@ -13,11 +13,12 @@ bgcolor="#ffffff">
 
 This <A HREF="http://www.cs.wustl.edu/~schmidt/ACE-bin/">directory</A>
 contains versions of the freely available <A
-HREF="http://www.dscpl.com.au/">OSE</A> tools modified by Karlheinz
-Dorn (kdorn@erlh.siemens.de).  I (<A
-HREF="http://www.cs.wustl.edu/~schmidt">Doug Schmidt</a>) am grateful
-to him for contributing his efforts to help improve ACE.  You can
-obtain these files via the <A HREF="ACE-obtain.html">ACE</A>
+HREF="http://www.dscpl.com.au/">OSE</A> tools modified by <A
+HREF="mailto:kdorn@erlh.siemens.de">Karlheinz Dorn</A>, which were
+originally written by <A HREF="mailto:grahamd@nms.otc.com.au"> Graham
+Dumpleton</A> I (<A HREF="http://www.cs.wustl.edu/~schmidt">Doug
+Schmidt</a>) am very grateful to Graham and Karlheinz for these tools.
+You can obtain these files via the <A HREF="ACE-obtain.html">ACE</A>
 release. <P>
 
 The primary goal of the modifications was to create a <EM>class</EM>.hxx and
@@ -28,13 +29,21 @@ files, but keeping the ACE *.h file untouched. <P>
 
 This helps when making product documentation using commercial
 documentation tools (e.g., <A HREF="http://www.k2.co.uk">George</A>,
-<A HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</a>,
+<A
+HREF="http://www.zib.de/Visual/software/doc++/index.html">doc++</a>,
 etc.)  by feeding in these newly created files with a customizable
-layout.  The modifications should be an upgrade to the original
-OSE-tools, but many bug-fixes are also done for the OSE-tool files
-(some are listed below). <P>
+layout.  The modifications are an upgrade to the original OSE-tools,
+but many bug-fixes are also done for the OSE-tool files (some are
+listed below). <P>
 
-This extensions make it very easy to include new ACE versions into
+Incidentally, the Classinfo tools in OSE have evolved independently
+since the copies in ACE were made and they support new features not
+supported in the ACE version of the tools.  Certain subtle changes
+were also made in the ACE copies for indicating sections,
+<em>etc.</em>, which makes them different from the OSE
+documentation. <P>
+
+Karlheinz's extensions make it easy to include new ACE versions into
 commercial documentations without doing any painful modifications of
 the deltas within a frozen ACE-version or directly within ACE source
 files when a new release arises. <P>
