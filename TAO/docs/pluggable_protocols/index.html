@@ -72,8 +72,12 @@ Washington University at St.Louis
 </UL>
 </UL>
 <LI><A NAME="TOC_SECTION300" HREF="#SECTION300">Notes From a ``Real World'' Pluggable Protocol Implementation</A>
-<LI><A NAME="TOC_SECTION400" HREF="#SECTION400">Using a Pluggable Protocol</A>
-<LI><A NAME="TOC_SECTION500" HREF="#SECTION500">Bibliography</A>
+<LI><A NAME="TOC_SECTION400" HREF="#SECTION400">Additional Implementation Information</A>
+<UL>
+<LI><A NAME="TOC_SECTION410" HREF="#SECTION410">Tags</A></LI>
+</UL>
+<LI><A NAME="TOC_SECTION500" HREF="#SECTION500">Using a Pluggable Protocol</A>
+<LI><A NAME="TOC_SECTION600" HREF="#SECTION600">Bibliography</A>
 </UL>
 <!-- End of Table of Contents -->
 <BR><HR>
@@ -234,7 +238,7 @@ Context</A>
 A server can accept connections at one or more endpoints, potentially using
 the same protocol for all endpoints. The set of protocols that an ORB uses to
 play the client role need not match the set of protocols used for the server
-role. Moreover, the ORB can even be a ``pure client'', <I>i.e.</I>, a client
+role. Moreover, the ORB can even be a ``pure client,'' <I>i.e.</I>, a client
 that only makes requests, in which case it can use several protocols to make
 requests, but receive no requests from other clients.
 
@@ -571,14 +575,18 @@ the <TT>TAO_IIOP_Acceptor</TT> constructor implementation is:
 }</DD>
 </DL>
 <P>
-Note that initializing the <TT>TAO_Acceptor</TT> base class with <I>tag</I>
-value is required. Tags are assigned by the OMG.In this case, <TT>TAO_TAG_IIOP_PROFILE</TT>
-is defined to be the OMG assigned tag for the CORBA IIOP protocol. Until a tag
-that uniquely identifies the protocol is assigned, a tag value that isn't used
-by any other protocol can be used.
+Note that initializing the <TT>TAO_Acceptor</TT> base class with a
+<I>tag</I> value is required. Additional information about tags is
+available in the
+<A HREF="#SECTION410">tags section</A>
+of this document.  In this case,
+<TT>TAO_TAG_IIOP_PROFILE</TT> is defined to be the OMG assigned tag
+for the CORBA IIOP protocol. Until a tag that uniquely
+identifies the protocol is assigned, a tag value that isn't
+used by any other protocol can be used in the meantime.
 </DL>
-<P>
- 
+
+<P> 
 <DL>
 <DT><STRONG><TT><A NAME="TAO_Acceptor::open">open</A></TT>.</STRONG></DT>
 <DD>The <TT>open</TT> method initializes the acceptor, i.e. sets
@@ -3015,7 +3023,50 @@ HREF="mailto:btrask@contactsystems.com">btrask@contactsystems.com</A>
 <HR>
 <P>
 
-<H1><A NAME="SECTION400" HREF="#TOC_SECTION400">
+<H1>
+<A NAME="SECTION400" HREF="#TOC_SECTION400">
+Additional Implementation Information
+</A>
+</H1>
+
+<P>
+This section covers additional information not necessarily related to
+TAO's pluggable protocol framework but may still be of interest to
+pluggable protocol and ORB developers, nevertheless.
+
+<H2>
+<A NAME="SECTION410" HREF="#TOC_SECTION410">
+Tags
+</A>
+</H2>
+
+Tags are used to uniquely identify certain parts of an ORB, including
+the following:
+<P>
+<UL>
+<LI>vendor</LI>
+<LI>profile</LI>
+<LI>service</LI>
+<LI>component</LI>
+<LI>ORB type</LI>
+</UL>
+<P>
+A list of current <A HREF="http://www.omg.org/">OMG</A> assigned tags
+is available at:
+<BLOCKQUOTE>
+<A HREF="ftp://ftp.omg.org/pub/docs/ptc/99-05-02.txt">ftp://ftp.omg.org/pub/docs/ptc/99-05-02.txt</A>
+</BLOCKQUOTE>
+<P>
+For information about tags and tag allocation see:
+<BLOCKQUOTE>
+<A HREF="http://www.omg.org/cgi-bin/doc?ptc/99-02-01">http://www.omg.org/cgi-bin/doc?ptc/99-02-01</A>
+</BLOCKQUOTE>
+
+<P>
+<HR>
+<P>
+
+<H1><A NAME="SECTION500" HREF="#TOC_SECTION500">
 Using a Pluggable Protocol</A>
 </H1>
 
@@ -3097,7 +3148,7 @@ All ORB options are described <A HREF="../Options.html">here</A>.
 <HR>
 <P>
 
-<H2><A NAME="SECTION500" HREF="#TOC_SECTION500">
+<H2><A NAME="SECTION600" HREF="#TOC_SECTION600">
 Bibliography</A>
 </H2><DL COMPACT><DD><P></P><DT><A NAME="Schmidt:97c">1</A>
 <DD>
@@ -3144,7 +3195,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Fri Dec 17 15:04:23 CST 1999
+Last modified: Fri Dec 17 15:38:53 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
