@@ -418,7 +418,7 @@ ACE_DLList::is_full (void) const
 }
 
 template <class T> ACE_INLINE void 
-ACE_DLList::eset (void)
+ACE_DLList::reset (void)
 {
   ACE_Double_Linked_List< ACE_DLList_Node<T> >::reset (); 
 }
