@@ -157,12 +157,7 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 #include "tao/Align.h"
 
 // CORBA class.
-#include "tao/CORBA_Cls.h"
-
-#include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
-
-#include "tao/Object_KeyC.h"
+#include "tao/ORB.h"
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
@@ -178,7 +173,6 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/Exception.h"
 #include "tao/NVList.h"
 #include "tao/Object.h"
-#include "tao/ORB.h"
 #include "tao/Principal.h"
 #include "tao/Request.h"
 #include "tao/Server_Request.h"
@@ -244,7 +238,6 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/default_client.i"
 #include "tao/default_server.i"
 #include "tao/Connect.i"
-#include "tao/CORBA_Cls.i"
 #include "tao/Request.i"
 #endif /* __ACE_INLINE__ */
 
