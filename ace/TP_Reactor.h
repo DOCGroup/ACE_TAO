@@ -121,6 +121,9 @@ public:
   static void no_op_sleep_hook (void *);
   // Called from handle events
 
+  virtual void wakeup_all_threads (void);
+  // Wake up all threads in waiting in the event loop
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
