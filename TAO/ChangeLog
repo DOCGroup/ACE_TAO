@@ -1,3 +1,12 @@
+Tue Oct 22 17:18:34 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/util/utl_identifier.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  Fixed a bug in handling the 'Object' keyword when it is
+	  escaped. Thanks to Ole Husgaard <osh@sparre.dk> for reporting
+	  the bug. This closes [BUGID:1324].
+
 Tue Oct 22 15:11:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV.dsp:

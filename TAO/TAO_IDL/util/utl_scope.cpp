@@ -1186,6 +1186,11 @@ UTL_Scope::call_add (void)
 AST_Decl *
 UTL_Scope::lookup_pseudo (Identifier *e)
 {
+  if (e->escaped ())
+    {
+      return 0;
+    }
+
   Identifier *item_name = 0;
   AST_Decl *d = 0;
   UTL_ScopeActiveIterator *i = 0;
@@ -1893,7 +1898,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
   // First, make sure there's no clash between e, that was
   // just declared, and some other identifier referenced
   // in this scope.
-  for (; i > 0; i--, tmp++)
+  for (; i > 0; --i, ++tmp)
     {
       // A local declaration doesn't use a scoped name.
       ref_name = (*tmp)->local_name ();
