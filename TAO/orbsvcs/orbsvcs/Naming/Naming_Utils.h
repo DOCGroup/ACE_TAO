@@ -25,7 +25,7 @@
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/IOR_Multicast.h"
-#include "CosNaming_i.h"
+#include "Naming_Context.h"
 
 class TAO_ORBSVCS_Export TAO_Naming_Server
 {
@@ -67,7 +67,7 @@ public:
   ~TAO_Naming_Server (void);
   // Destructor.
 
-  TAO_NamingContext &get_naming_context (void);
+  TAO_Naming_Context &get_naming_context (void);
   // Returns the "NameService" NamingContext implementation object
   // reference.
 
@@ -83,7 +83,7 @@ protected:
                        size_t context_size);
   // Initialize a new name server under the given ORB and POA.
 
-  TAO_NamingContext *naming_context_impl_;
+  TAO_Naming_Context *naming_context_impl_;
   // Naming context implementation for "NameService".
 
   CosNaming::NamingContext_var naming_context_;

@@ -1,0 +1,38 @@
+// $Id:
+
+CONTENT
+
+This directory contains files implementing CosNaming idl interface
+from CORBA COSS, as well as a few utilities.
+
+
+ARCHITECTURE
+
+The architecture of the Naming Service (i.e., CosNaming)
+implementation follows the Bridge pattern.
+Below is the list of player classes:
+
+ * TAO_Naming_Context (in Naming_Context.h) - this class inherits from
+   POA skeleton, and plays the role of 'Abstraction' (aka 'Interface') -
+   it forwards all client requests to a 'ConcreteImplementor' through an
+   'Implementor' pointer.
+
+ * TAO_Naming_Context_Impl (in Naming_Context.h) - this is an abstract base class for all
+   concrete implementations of NamingContext functionality (i.e., 'Implementor').
+
+ * TAO_Hash_Naming_Context (in Hash_Naming_Context.h) - this
+   class inherits from TAO_Naming_Context_Impl.  It is a
+   'ConcreteImplementor' which uses ACE_Hash_Map_Manager to implement
+   NamingContext functionality.
+
+The class structure described above makes it easy to:
+
+1) Create and plug different Naming Service implementations by
+   subclassing TAO_Naming_Context_Impl.
+
+2) Dynamically load an appropriate Naming Service implementation at
+   run-time based on the config file entry by making TAO_Naming_Context_Impl
+   inherit from ACE_Service_Object, etc.
+
+
+PERSISTENCE
