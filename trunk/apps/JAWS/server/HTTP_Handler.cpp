@@ -57,15 +57,6 @@ HTTP_Handler::open (ACE_HANDLE handle,
         perror ("SO_SNDBUF");
       }
 
-    struct protoent *p = ACE_OS::getprotobyname ("tcp");
-    if (p && stream_.set_option (p->p_proto,
-				 TCP_NODELAY,
-				 (char *)& one, 
-				 sizeof (one))) {
-      perror("tcp_nodelay");
-
-
-  }
 
   this->handle_ = handle;
   this->io_.handle (this->handle_);
