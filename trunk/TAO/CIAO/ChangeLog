@@ -1,3 +1,10 @@
+Tue Feb  1 18:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+        * DAnCE/ciao/CCM_Core.mpc:
+          Removed some ciaoversion based projects I missed during my checkin
+          below
+
 Tue Feb  1 13:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/CCM_Core.mpc:
