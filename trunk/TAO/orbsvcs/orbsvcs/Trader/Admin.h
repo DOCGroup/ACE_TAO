@@ -21,6 +21,10 @@
 
 #include "Attributes_T.h"
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 template <class TRADER>
 class TAO_Admin : 
   public TAO_Trader_Components <POA_CosTrading::Admin>,
@@ -191,5 +195,8 @@ private:
 #include "Admin.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* TAO_ADMIN_H */
