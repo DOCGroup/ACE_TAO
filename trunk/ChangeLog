@@ -1,3 +1,10 @@
+Sun Jun 20 13:03:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/loadbalancing.mpb:
+
+	  TAO's load balancing service requries AMI support, not just the
+	  messaging library.  Added missing "requires += ami".
+
 Sun Jun 20 12:33:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ftrteventchannel.mpb:
