@@ -19,7 +19,7 @@ TAO_Client_Strategy_Factory::create_profile_lock (void)
 }
 
 TAO_Transport_Mux_Strategy *
-TAO_Client_Strategy_Factory::create_transport_mux_strategy (TAO_ORB_Core *)
+TAO_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *)
 {
   return 0;
 }

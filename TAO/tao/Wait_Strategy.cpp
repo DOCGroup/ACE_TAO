@@ -566,15 +566,16 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
       && !leader_follower.is_leader_thread ())
     {
       // = Wait as a follower.
-      
-      if (TAO_debug_level >= 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - wait (follower) on <%x>\n",
-                    this->transport_));
 
       // Grab the condtion variable.
       ACE_SYNCH_CONDITION* cond =
         orb_core->leader_follower_condition_variable ();
+
+      if (TAO_debug_level >= 5)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - wait (follower) on Transport <%x>, cond <%x>\n",
+                    this->transport_,
+                    cond));
 
       // Add ourselves to the list, do it only once because we can
       // wake up multiple times from the CV loop. And only do it if

@@ -47,7 +47,7 @@ public:
   // the TAO_GIOP_Invocation::location_forward and the
   // TAO_GIOP_Invocation::start
 
-  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_ORB_Core *orb_core);
+  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
   // Create the correct client request muxing strategy.
 
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);

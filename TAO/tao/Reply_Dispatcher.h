@@ -51,7 +51,7 @@ public:
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Get the Message State into which the reply has been read.
 
-  virtual void leader_follower_condition_variable (TAO_Transport *);
+  virtual int leader_follower_condition_variable (TAO_Transport *);
   // Obtain the condition variable used in the Leader Follower Wait
   // Strategy. This is valid only for the synchronous reply dispatcher
   // and only when the Leader Follower wait strategy is used.
@@ -105,7 +105,7 @@ public:
   // reply will be dispatched as soon as it is available and the
   // dispatcher will go away immediately after that. 
 
-  virtual void leader_follower_condition_variable (TAO_Transport *);
+  virtual int leader_follower_condition_variable (TAO_Transport *);
   // Obtain the condition variable used in the Leader Follower Wait
   // Strategy.
 
