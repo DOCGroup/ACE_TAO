@@ -43,7 +43,7 @@
 
   // The Base_Sequence functions, please see tao/Sequence.h
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::ValueDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (length);
@@ -65,7 +65,7 @@
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -79,13 +79,13 @@
     this->buffer_ = 0;
   }
   
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (void)
   {
     this->_deallocate_buffer ();
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+ _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     CORBA::ValueDef **tmp = ACE_reinterpret_cast (CORBA::ValueDef**, this->buffer_);
     
@@ -96,7 +96,7 @@
     }
   }
   void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_downcast (
+ _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_downcast (
       void* target,
       CORBA_Object *src,
       CORBA_Environment &ACE_TRY_ENV
@@ -108,7 +108,7 @@
   }
 
   CORBA_Object*
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_upcast (void *src) const
+ _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_upcast (void *src) const
   {
     CORBA::ValueDef **tmp = ACE_static_cast (CORBA::ValueDef**, src);
     return *tmp;
@@ -1527,13 +1527,13 @@ _TAO_FixedDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::FixedDef::FixedDef (int collocated)
+CORBA_FixedDef::CORBA_FixedDef (int collocated)
 {
   this->CORBA_FixedDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::FixedDef::~FixedDef (void)
+CORBA_FixedDef::~CORBA_FixedDef (void)
 {}
 
 void
@@ -1997,7 +1997,7 @@ void CORBA::ValueMember::_tao_any_destructor (void *x)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_VALUEMEMBERSEQ_CS_
 
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::ValueMember* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (length);
@@ -2017,7 +2017,7 @@ void CORBA::ValueMember::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -2028,7 +2028,7 @@ void CORBA::ValueMember::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   } 
   
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::~_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (void) // Dtor.
+  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::~_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
@@ -2934,13 +2934,13 @@ _TAO_ValueMemberDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::ValueMemberDef::ValueMemberDef (int collocated)
+CORBA_ValueMemberDef::CORBA_ValueMemberDef (int collocated)
 {
   this->CORBA_ValueMemberDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::ValueMemberDef::~ValueMemberDef (void)
+CORBA_ValueMemberDef::~CORBA_ValueMemberDef (void)
 {}
 
 void
@@ -6603,13 +6603,13 @@ _TAO_ValueDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::ValueDef::ValueDef (int collocated)
+CORBA_ValueDef::CORBA_ValueDef (int collocated)
 {
   this->CORBA_ValueDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::ValueDef::~ValueDef (void)
+CORBA_ValueDef::~CORBA_ValueDef (void)
 {}
 
 void
@@ -10145,13 +10145,13 @@ _TAO_ValueBoxDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::ValueBoxDef::ValueBoxDef (int collocated)
+CORBA_ValueBoxDef::CORBA_ValueBoxDef (int collocated)
 {
   this->CORBA_ValueBoxDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::ValueBoxDef::~ValueBoxDef (void)
+CORBA_ValueBoxDef::~CORBA_ValueBoxDef (void)
 {}
 
 void

@@ -2491,7 +2491,7 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_local_interface::
 
   // The Base_Sequence functions, please see tao/Sequence.h
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::InterfaceDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (length);
@@ -2513,7 +2513,7 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_local_interface::
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -2527,13 +2527,13 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_local_interface::
     this->buffer_ = 0;
   }
   
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void)
   {
     this->_deallocate_buffer ();
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+ _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     CORBA::InterfaceDef **tmp = ACE_reinterpret_cast (CORBA::InterfaceDef**, this->buffer_);
     
@@ -2544,7 +2544,7 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_local_interface::
     }
   }
   void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_downcast (
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_downcast (
       void* target,
       CORBA_Object *src,
       CORBA_Environment &ACE_TRY_ENV
@@ -2556,7 +2556,7 @@ CORBA::Container::TAO_ClientRequestInfo_CORBA_Container_create_local_interface::
   }
 
   CORBA_Object*
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_upcast (void *src) const
+  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_upcast (void *src) const
   {
     CORBA::InterfaceDef **tmp = ACE_static_cast (CORBA::InterfaceDef**, src);
     return *tmp;
@@ -2621,7 +2621,7 @@ void CORBA_InterfaceDefSeq::_tao_any_destructor (void *x)
 
   // The Base_Sequence functions, please see tao/Sequence.h
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::AbstractInterfaceDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::allocbuf (length);
@@ -2643,7 +2643,7 @@ void CORBA_InterfaceDefSeq::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -2657,13 +2657,13 @@ void CORBA_InterfaceDefSeq::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   }
   
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void)
   {
     this->_deallocate_buffer ();
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     CORBA::AbstractInterfaceDef **tmp = ACE_reinterpret_cast (CORBA::AbstractInterfaceDef**, this->buffer_);
     
@@ -2674,7 +2674,7 @@ void CORBA_InterfaceDefSeq::_tao_any_destructor (void *x)
     }
   }
   void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_downcast (
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_downcast (
       void* target,
       CORBA_Object *src,
       CORBA_Environment &ACE_TRY_ENV
@@ -2686,7 +2686,7 @@ void CORBA_InterfaceDefSeq::_tao_any_destructor (void *x)
   }
 
   CORBA_Object*
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_upcast (void *src) const
+  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq::_upcast (void *src) const
   {
     CORBA::AbstractInterfaceDef **tmp = ACE_static_cast (CORBA::AbstractInterfaceDef**, src);
     return *tmp;
@@ -2751,7 +2751,7 @@ void CORBA_AbstractInterfaceDefSeq::_tao_any_destructor (void *x)
 
   // The Base_Sequence functions, please see tao/Sequence.h
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::LocalInterfaceDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::allocbuf (length);
@@ -2773,7 +2773,7 @@ void CORBA_AbstractInterfaceDefSeq::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -2787,13 +2787,13 @@ void CORBA_AbstractInterfaceDefSeq::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   }
   
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void)
   {
     this->_deallocate_buffer ();
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     CORBA::LocalInterfaceDef **tmp = ACE_reinterpret_cast (CORBA::LocalInterfaceDef**, this->buffer_);
     
@@ -2804,7 +2804,7 @@ void CORBA_AbstractInterfaceDefSeq::_tao_any_destructor (void *x)
     }
   }
   void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_downcast (
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_downcast (
       void* target,
       CORBA_Object *src,
       CORBA_Environment &ACE_TRY_ENV
@@ -2816,7 +2816,7 @@ void CORBA_AbstractInterfaceDefSeq::_tao_any_destructor (void *x)
   }
 
   CORBA_Object*
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_upcast (void *src) const
+  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq::_upcast (void *src) const
   {
     CORBA::LocalInterfaceDef **tmp = ACE_static_cast (CORBA::LocalInterfaceDef**, src);
     return *tmp;
@@ -4152,13 +4152,13 @@ _TAO_Repository_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::Repository::Repository (int collocated)
+CORBA_Repository::CORBA_Repository (int collocated)
 {
   this->CORBA_Repository_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::Repository::~Repository (void)
+CORBA_Repository::~CORBA_Repository (void)
 {}
 
 void
@@ -5067,13 +5067,13 @@ _TAO_ModuleDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::ModuleDef::ModuleDef (int collocated)
+CORBA_ModuleDef::CORBA_ModuleDef (int collocated)
 {
   this->CORBA_ModuleDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::ModuleDef::~ModuleDef (void)
+CORBA_ModuleDef::~CORBA_ModuleDef (void)
 {}
 
 void
@@ -6103,13 +6103,13 @@ _TAO_ConstantDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::ConstantDef::ConstantDef (int collocated)
+CORBA_ConstantDef::CORBA_ConstantDef (int collocated)
 {
   this->CORBA_ConstantDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::ConstantDef::~ConstantDef (void)
+CORBA_ConstantDef::~CORBA_ConstantDef (void)
 {}
 
 void
@@ -7020,13 +7020,13 @@ _TAO_StructDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::StructDef::StructDef (int collocated)
+CORBA_StructDef::CORBA_StructDef (int collocated)
 {
   this->CORBA_StructDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::StructDef::~StructDef (void)
+CORBA_StructDef::~CORBA_StructDef (void)
 {}
 
 void
@@ -8223,13 +8223,13 @@ _TAO_UnionDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::UnionDef::UnionDef (int collocated)
+CORBA_UnionDef::CORBA_UnionDef (int collocated)
 {
   this->CORBA_UnionDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::UnionDef::~UnionDef (void)
+CORBA_UnionDef::~CORBA_UnionDef (void)
 {}
 
 void
@@ -9175,13 +9175,13 @@ _TAO_EnumDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::EnumDef::EnumDef (int collocated)
+CORBA_EnumDef::CORBA_EnumDef (int collocated)
 {
   this->CORBA_EnumDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::EnumDef::~EnumDef (void)
+CORBA_EnumDef::~CORBA_EnumDef (void)
 {}
 
 void
@@ -9890,13 +9890,13 @@ _TAO_AliasDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::AliasDef::AliasDef (int collocated)
+CORBA_AliasDef::CORBA_AliasDef (int collocated)
 {
   this->CORBA_AliasDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::AliasDef::~AliasDef (void)
+CORBA_AliasDef::~CORBA_AliasDef (void)
 {}
 
 void
@@ -10293,13 +10293,13 @@ _TAO_NativeDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::NativeDef::NativeDef (int collocated)
+CORBA_NativeDef::CORBA_NativeDef (int collocated)
 {
   this->CORBA_NativeDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::NativeDef::~NativeDef (void)
+CORBA_NativeDef::~CORBA_NativeDef (void)
 {}
 
 void
@@ -10706,13 +10706,13 @@ _TAO_PrimitiveDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::PrimitiveDef::PrimitiveDef (int collocated)
+CORBA_PrimitiveDef::CORBA_PrimitiveDef (int collocated)
 {
   this->CORBA_PrimitiveDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::PrimitiveDef::~PrimitiveDef (void)
+CORBA_PrimitiveDef::~CORBA_PrimitiveDef (void)
 {}
 
 void
@@ -11318,13 +11318,13 @@ _TAO_StringDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::StringDef::StringDef (int collocated)
+CORBA_StringDef::CORBA_StringDef (int collocated)
 {
   this->CORBA_StringDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::StringDef::~StringDef (void)
+CORBA_StringDef::~CORBA_StringDef (void)
 {}
 
 void
@@ -12004,13 +12004,13 @@ _TAO_WstringDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::WstringDef::WstringDef (int collocated)
+CORBA_WstringDef::CORBA_WstringDef (int collocated)
 {
   this->CORBA_WstringDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::WstringDef::~WstringDef (void)
+CORBA_WstringDef::~CORBA_WstringDef (void)
 {}
 
 void
@@ -13162,13 +13162,13 @@ _TAO_SequenceDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::SequenceDef::SequenceDef (int collocated)
+CORBA_SequenceDef::CORBA_SequenceDef (int collocated)
 {
   this->CORBA_SequenceDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::SequenceDef::~SequenceDef (void)
+CORBA_SequenceDef::~CORBA_SequenceDef (void)
 {}
 
 void
@@ -14541,13 +14541,13 @@ _TAO_ArrayDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::ArrayDef::ArrayDef (int collocated)
+CORBA_ArrayDef::CORBA_ArrayDef (int collocated)
 {
   this->CORBA_ArrayDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::ArrayDef::~ArrayDef (void)
+CORBA_ArrayDef::~CORBA_ArrayDef (void)
 {}
 
 void
@@ -15611,13 +15611,13 @@ _TAO_ExceptionDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::ExceptionDef::ExceptionDef (int collocated)
+CORBA_ExceptionDef::CORBA_ExceptionDef (int collocated)
 {
   this->CORBA_ExceptionDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::ExceptionDef::~ExceptionDef (void)
+CORBA_ExceptionDef::~CORBA_ExceptionDef (void)
 {}
 
 void
@@ -16024,7 +16024,7 @@ void CORBA::ExceptionDescription::_tao_any_destructor (void *x)
 
   // The Base_Sequence functions, please see tao/Sequence.h
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::ExceptionDef **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (length);
@@ -16046,7 +16046,7 @@ void CORBA::ExceptionDescription::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -16060,13 +16060,13 @@ void CORBA::ExceptionDescription::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   }
   
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::~_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (void)
   {
     this->_deallocate_buffer ();
   }
   
   void
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+ _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     CORBA::ExceptionDef **tmp = ACE_reinterpret_cast (CORBA::ExceptionDef**, this->buffer_);
     
@@ -16077,7 +16077,7 @@ void CORBA::ExceptionDescription::_tao_any_destructor (void *x)
     }
   }
   void 
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_downcast (
+ _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_downcast (
       void* target,
       CORBA_Object *src,
       CORBA_Environment &ACE_TRY_ENV
@@ -16089,7 +16089,7 @@ void CORBA::ExceptionDescription::_tao_any_destructor (void *x)
   }
 
   CORBA_Object*
-  CORBA::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_upcast (void *src) const
+  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_upcast (void *src) const
   {
     CORBA::ExceptionDef **tmp = ACE_static_cast (CORBA::ExceptionDef**, src);
     return *tmp;
@@ -16153,7 +16153,7 @@ void CORBA_ExceptionDefSeq::_tao_any_destructor (void *x)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_EXCDESCRIPTIONSEQ_CS_
 
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::ExceptionDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (length);
@@ -16173,7 +16173,7 @@ void CORBA_ExceptionDefSeq::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -16184,7 +16184,7 @@ void CORBA_ExceptionDefSeq::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   } 
   
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (void) // Dtor.
+  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
@@ -17090,13 +17090,13 @@ _TAO_AttributeDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::AttributeDef::AttributeDef (int collocated)
+CORBA_AttributeDef::CORBA_AttributeDef (int collocated)
 {
   this->CORBA_AttributeDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::AttributeDef::~AttributeDef (void)
+CORBA_AttributeDef::~CORBA_AttributeDef (void)
 {}
 
 void
@@ -17641,7 +17641,7 @@ void CORBA::ParameterDescription::_tao_any_destructor (void *x)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_PARDESCRIPTIONSEQ_CS_
 
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::ParameterDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (length);
@@ -17661,7 +17661,7 @@ void CORBA::ParameterDescription::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_deallocate_buffer (void)
+ _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -17672,7 +17672,7 @@ void CORBA::ParameterDescription::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   } 
   
-  CORBA::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (void) // Dtor.
+  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
@@ -19564,13 +19564,13 @@ _TAO_OperationDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::OperationDef::OperationDef (int collocated)
+CORBA_OperationDef::CORBA_OperationDef (int collocated)
 {
   this->CORBA_OperationDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::OperationDef::~OperationDef (void)
+CORBA_OperationDef::~CORBA_OperationDef (void)
 {}
 
 void
@@ -20600,7 +20600,7 @@ void CORBA_RepositoryIdSeq::_tao_any_destructor (void *x)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_OPDESCRIPTIONSEQ_CS_
 
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::OperationDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (length);
@@ -20620,7 +20620,7 @@ void CORBA_RepositoryIdSeq::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -20631,7 +20631,7 @@ void CORBA_RepositoryIdSeq::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   } 
   
-  CORBA::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (void) // Dtor.
+  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
@@ -20695,7 +20695,7 @@ void CORBA_OpDescriptionSeq::_tao_any_destructor (void *x)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_ATTRDESCRIPTIONSEQ_CS_
 
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_allocate_buffer (CORBA::ULong length)
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_allocate_buffer (CORBA::ULong length)
   {
     CORBA::AttributeDescription* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (length);
@@ -20715,7 +20715,7 @@ void CORBA_OpDescriptionSeq::_tao_any_destructor (void *x)
   }
   
   void
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_deallocate_buffer (void)
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
@@ -20726,7 +20726,7 @@ void CORBA_OpDescriptionSeq::_tao_any_destructor (void *x)
     this->buffer_ = 0;
   } 
   
-  CORBA::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Dtor.
+  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::~_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
@@ -21870,13 +21870,13 @@ _TAO_InterfaceDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::InterfaceDef::InterfaceDef (int collocated)
+CORBA_InterfaceDef::CORBA_InterfaceDef (int collocated)
 {
   this->CORBA_InterfaceDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::InterfaceDef::~InterfaceDef (void)
+CORBA_InterfaceDef::~CORBA_InterfaceDef (void)
 {}
 
 void
@@ -23641,13 +23641,13 @@ _TAO_AbstractInterfaceDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::AbstractInterfaceDef::AbstractInterfaceDef (int collocated)
+CORBA_AbstractInterfaceDef::CORBA_AbstractInterfaceDef (int collocated)
 {
   this->CORBA_AbstractInterfaceDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::AbstractInterfaceDef::~AbstractInterfaceDef (void)
+CORBA_AbstractInterfaceDef::~CORBA_AbstractInterfaceDef (void)
 {}
 
 void
@@ -23909,13 +23909,13 @@ _TAO_LocalInterfaceDef_Remote_Proxy_Broker::select_proxy (
 
 
 // default constructor
-CORBA::LocalInterfaceDef::LocalInterfaceDef (int collocated)
+CORBA_LocalInterfaceDef::CORBA_LocalInterfaceDef (int collocated)
 {
   this->CORBA_LocalInterfaceDef_setup_collocation (collocated);
 }
 
 // destructor
-CORBA::LocalInterfaceDef::~LocalInterfaceDef (void)
+CORBA_LocalInterfaceDef::~CORBA_LocalInterfaceDef (void)
 {}
 
 void
