@@ -1,95 +1,100 @@
+Mon Aug 10 22:46:39 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp: updated template
+          instantiations to reflect Memory_Pools.h changes.
+
 Mon Aug 10 20:02:45 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/README
-	  Added info about the perl script command line args and a note
-	  to the effect that there are still problems with objref.
+        * Param_Test/README
+          Added info about the perl script command line args and a note
+          to the effect that there are still problems with objref.
 
 Mon Aug 10 19:10:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* Param_Test/*.{h,cpp}:
-	  Had moved many #includes to corresponding .h files. I've
-	  been advised that this is not always a good idea, so I 
-	  moved them back.
+        * Param_Test/*.{h,cpp}:
+          Had moved many #includes to corresponding .h files. I've
+          been advised that this is not always a good idea, so I
+          moved them back.
 
 Mon Aug 10 17:03:12 1998  Jeff Parsons  <jp4@cs.wustl.edu>
 
-	* Param_Test/bd_string.cpp:
-	  Opname was being set to "test_unbounded_string" (oops).
+        * Param_Test/bd_string.cpp:
+          Opname was being set to "test_unbounded_string" (oops).
 
 Mon Aug 10 16:54:12 1998  Jeff Parsons  <jp4@cs.wustl.edu>
 
-	* Param_Test/run_test.pl:
-	  Added run-through for typecodes (it was missing) and increased wait
-	  between server and client startup to 5 (first time you run server, it 
-	  takes a little longer to get going and the first test was getting
-	  skipped).
+        * Param_Test/run_test.pl:
+          Added run-through for typecodes (it was missing) and increased wait
+          between server and client startup to 5 (first time you run server, it
+          takes a little longer to get going and the first test was getting
+          skipped).
 
 Mon Aug 10 16:46:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Fixed an error
-	  where "not all control paths return a value" in init ().
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Fixed an error
+          where "not all control paths return a value" in init ().
 
 Mon Aug 10 15:56:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
-	  The memory pools are global from some time now, but they did not
-	  have the right kind of lock; this lead to memory corruption
-	  problems when sending events at a very high rate. Thanks to
-	  "Mark L. Boriack" <mboriack@std.saic.com> for reporting this
-	  problem.
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+          The memory pools are global from some time now, but they did not
+          have the right kind of lock; this lead to memory corruption
+          problems when sending events at a very high rate. Thanks to
+          "Mark L. Boriack" <mboriack@std.saic.com> for reporting this
+          problem.
 
 Mon Aug 10 13:59:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/tests/ImplRepo/Impl_Repo.idl:
-	* orbsvcs/tests/ImplRepo/client.dsp:
-	* orbsvcs/tests/ImplRepo/client_impl.cpp:
-	* orbsvcs/tests/ImplRepo/implrepo.dsp:
-	* orbsvcs/tests/ImplRepo/ir_implrepo_impl.cpp:
-	* orbsvcs/tests/ImplRepo/ir_implrepo_impl.h:
-	* orbsvcs/tests/ImplRepo/ir_server.cpp:
-	* orbsvcs/tests/ImplRepo/server.dsp:
-	* orbsvcs/tests/ImplRepo/server_impl.cpp:
-	* orbsvcs/tests/ImplRepo/server_impl.h:
-	* orbsvcs/tests/ImplRepo/svc.conf:
-	  The server now registers itself with the IR.
+        * orbsvcs/tests/ImplRepo/Impl_Repo.idl:
+        * orbsvcs/tests/ImplRepo/client.dsp:
+        * orbsvcs/tests/ImplRepo/client_impl.cpp:
+        * orbsvcs/tests/ImplRepo/implrepo.dsp:
+        * orbsvcs/tests/ImplRepo/ir_implrepo_impl.cpp:
+        * orbsvcs/tests/ImplRepo/ir_implrepo_impl.h:
+        * orbsvcs/tests/ImplRepo/ir_server.cpp:
+        * orbsvcs/tests/ImplRepo/server.dsp:
+        * orbsvcs/tests/ImplRepo/server_impl.cpp:
+        * orbsvcs/tests/ImplRepo/server_impl.h:
+        * orbsvcs/tests/ImplRepo/svc.conf:
+          The server now registers itself with the IR.
 
 Mon Aug 10 13:33:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Added suspend_connection/resume_connection calls to the
-	  PushConsumerProxy interface ala Notification Service, using this
-	  methods a Consumer can temporarly disable the reception of
-	  events; the events are dropped on the Event Service side, thus
-	  minimizing network traffic (but the EC still has to do some
-	  computation).
+        * orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Added suspend_connection/resume_connection calls to the
+          PushConsumerProxy interface ala Notification Service, using this
+          methods a Consumer can temporarly disable the reception of
+          events; the events are dropped on the Event Service side, thus
+          minimizing network traffic (but the EC still has to do some
+          computation).
 
-	* orbsvcs/tests/Simple_Naming/Makefile: 
-	  Updated dependencies.
+        * orbsvcs/tests/Simple_Naming/Makefile:
+          Updated dependencies.
 
 Mon Aug 10 12:45:01 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Added extra code to
-	  test the "logv ()" method.
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp: Added extra code to
+          test the "logv ()" method.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: Added new method
-	  "init_new_naming ()" which creates a new naming service. Modified
-	  "init ()" to try and resolve a preexisting NameService before
-	  calling "init_new_naming ()" 
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: Added new method
+          "init_new_naming ()" which creates a new naming service. Modified
+          "init ()" to try and resolve a preexisting NameService before
+          calling "init_new_naming ()"
 
-	* orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}: Implemented new "logv ()"
-	  method 
+        * orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}: Implemented new "logv ()"
+          method
 
-	* orbsvcs/orbsvcs/Logger.idl (Logger): Added new method "logv ()"
-	  which allows logging with a specified verbosity level.
-	
+        * orbsvcs/orbsvcs/Logger.idl (Logger): Added new method "logv ()"
+          which allows logging with a specified verbosity level.
+
 Mon Aug 10 10:51:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/client.cpp: 
-	  Removed signed/unsigned comparison, thanks to David for pointing
-	  this out.
+        * tests/Cubit/TAO/DII_Cubit/client.cpp:
+          Removed signed/unsigned comparison, thanks to David for pointing
+          this out.
 
 Mon Aug 10 09:13:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
