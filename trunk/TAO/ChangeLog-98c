@@ -1,46 +1,53 @@
+Tue Jun 16 15:39:43 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/ss: use perl instead of cut to
+          extract uid and NameService IOR.  It no longer extracted
+          the NameService IOR.  The new method is based on regular
+          expressions instead of character counts, so is more resilient.
+
 Tue Jun 16 15:14:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (inherit_from_parent_thread): Also inherit the orb
-	  from the spawning thread.
+        * tao/ORB_Core.cpp (inherit_from_parent_thread): Also inherit the orb
+          from the spawning thread.
 
 Tue Jun 16 13:50:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/test/AVStreams/mpeg/source/server/augmented_server.{h,cpp}:
-	This new version of the AVStreams demo server, augmented_server,
- 	exports an offer to the Trading Service containing a reference to the
- 	MMDevice and a number of properties describing the MMDevice. 
+        * orbsvcs/test/AVStreams/mpeg/source/server/augmented_server.{h,cpp}:
+        This new version of the AVStreams demo server, augmented_server,
+        exports an offer to the Trading Service containing a reference to the
+        MMDevice and a number of properties describing the MMDevice.
 
-	* orbsvcs/test/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}:
-	* orbsvcs/test/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}:
-	Dynamic Property callback handlers that supply values 
-	for AV server machine performance, and the names and descriptions
-	of movies offered by the AV server.
+        * orbsvcs/test/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}:
+        * orbsvcs/test/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}:
+        Dynamic Property callback handlers that supply values
+        for AV server machine performance, and the names and descriptions
+        of movies offered by the AV server.
 
-	* orbsvcs/test/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}:
-	Utility to make it simpler for the augmented_server to export an
-	offer to the Trading Service.
-	
+        * orbsvcs/test/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}:
+        Utility to make it simpler for the augmented_server to export an
+        offer to the Trading Service.
+
 Tue Jun 16 14:44:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	*orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
-	Added acceptor code to accept connection from the java GUI.
-	Added code to read the MMDevice ior and movie name from the
-	socket to java GUI.
-	
+        *orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+        Added acceptor code to accept connection from the java GUI.
+        Added code to read the MMDevice ior and movie name from the
+        socket to java GUI.
+
 1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_command.h, CC_client.cpp
-	  Removed errors detected by DU cxx
+        * orbsvcs/tests/Concurrency/CC_command.h, CC_client.cpp
+          Removed errors detected by DU cxx
 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.{h,cpp}
-	  Cleaned up debugging code.
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.{h,cpp}
+          Cleaned up debugging code.
 
 Tue Jun 16 14:01:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.cpp:
-	  Fixed potential inifinite loop in buffer growth if the initial
-	  buffer size was 0. Thanks to Stuart Myles
-	  <smyles@wsj.dowjones.com> for detecting this.
+        * tao/CDR.cpp:
+          Fixed potential inifinite loop in buffer growth if the initial
+          buffer size was 0. Thanks to Stuart Myles
+          <smyles@wsj.dowjones.com> for detecting this.
 
 Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
