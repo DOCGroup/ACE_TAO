@@ -1,0 +1,27 @@
+Mon Dec 15 17:02:28 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_Generator_Parser_Impl.inl:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.inl:
+	* tao/IIOP_Transport.cpp:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/Pluggable_Messaging.h:
+	* tao/Transport.cpp:
+	* tao/Transport.h:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.h:
+
+	  Brought these changes back in order to start work on weeding out
+	  the dynamic allocation on the critical path.
+	
+

@@ -1,6 +1,0 @@
-project(Bug_1635_Client): taoexe {
-  Source_Files {
-    client.cpp
-  }
-}
-
