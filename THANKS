@@ -1328,7 +1328,7 @@ Tino Schwarze <tino.schwarze@informatik.tu-chemnitz.de>
 Don Hinton <dhinton@ieee.org>
 Gergely Timar <timarok@elender.hu>
 Peter Phillips <pphillip@opentext.com>
-Kuznesov Yury <yury@newst.net>
+Yury Kuznesov <yury@newst.net>
 Daniel Manfis <dany_100@yahoo.com>
 Massimo Pichini <massimo@webbridges.it>
 Eyal Neuman <eyal@tradertools.com>
@@ -1836,8 +1836,10 @@ Kevin Bryan <bryank@cs.uri.edu>
 Zvika Ashani <zvika@aspectusvi.com>
 Dom Monteiro <d.monteiro@netia.net>
 Jean-Marc Prud'homme <JPrudhomme@interstarinc.com>
+Yury Osadchy <Yuryo@maxbill.com>
 Pavan Mandalkar <pm2@cs.wustl.edu>
 Gabriele Trombetti <gabtromb@isis.vanderbilt.edu>
+Scott Willey <scott@sanasecurity.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
