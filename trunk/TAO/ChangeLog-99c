@@ -1,3 +1,8 @@
+Fri Jul  9 12:59:05 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/grid/Grid_i.cpp :Fixed a warning on
+	  HP_UX. Thanks to Carlos for reporting this.
+	
 Fri Jul  9 11:14:03 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
