@@ -1,3 +1,10 @@
+Thu Jun 28 15:30:53 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
+
+	  Fixed memory leak that appeared as a result of the downcast
+	  fixes for the TAO_ORBInitInfo class.
+
 Thu Jun 28 15:01:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:

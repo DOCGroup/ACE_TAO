@@ -25,11 +25,11 @@ TAO_Security_ORBInitializer::pre_init (
   //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // allocate_tss_slot_id() TAO extension.
-  TAO_ORBInitInfo *tao_info = TAO_ORBInitInfo::_narrow (info,
-                                                        ACE_TRY_ENV);
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info,
+                                                           ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (tao_info == 0)
+  if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
