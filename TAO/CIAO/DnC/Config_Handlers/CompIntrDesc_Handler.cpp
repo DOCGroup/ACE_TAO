@@ -11,6 +11,8 @@
 #include "Requirement_Handler.h"
 #include "PCI_Handler.h"
 #include "CompIntrDesc_Handler.h"
+#include "CompPropDesc_Handler.h"
+#include "CompPortDesc_Handler.h"
 
 #include <iostream>
 
