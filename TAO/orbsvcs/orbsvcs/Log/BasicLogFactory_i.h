@@ -33,9 +33,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export BasicLogFactory_i :
-public POA_DsLogAdmin::BasicLogFactory,
-public LogMgr_i
+class TAO_Log_Export BasicLogFactory_i : public POA_DsLogAdmin::BasicLogFactory,
+                                         public LogMgr_i
 {
   // = TITLE
   //   BasicLogFactory_i

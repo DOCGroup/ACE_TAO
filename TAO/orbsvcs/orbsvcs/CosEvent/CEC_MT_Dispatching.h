@@ -28,7 +28,7 @@
 
 class TAO_CEC_EventChannel;
 
-class TAO_ORBSVCS_Export TAO_CEC_MT_Dispatching : public TAO_CEC_Dispatching
+class TAO_Event_Export TAO_CEC_MT_Dispatching : public TAO_CEC_Dispatching
 {
   // = TITLE
   //   Dispatching strategy that minimizes mt inversion.

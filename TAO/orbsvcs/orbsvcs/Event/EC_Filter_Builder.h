@@ -27,6 +27,7 @@
 #define TAO_EC_FILTER_BUILDER_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +36,7 @@
 class TAO_EC_Filter;
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_EC_Filter_Builder
+class TAO_RTEvent_Export TAO_EC_Filter_Builder
 {
   // = TITLE
   //   Abstract base class for the filter builders.
@@ -62,7 +63,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_RTEvent_Export TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   A simple implementation of the filter builder.

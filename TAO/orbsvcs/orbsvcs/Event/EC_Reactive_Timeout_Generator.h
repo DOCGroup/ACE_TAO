@@ -33,7 +33,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_EC_Reactive_Timeout_Generator : public TAO_EC_Timeout_Generator
+class TAO_RTEvent_Export TAO_EC_Reactive_Timeout_Generator : public TAO_EC_Timeout_Generator
 {
   // = TITLE
   //   A simple implementation of the Timeout_Generator based on the

@@ -29,7 +29,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_Notify_Filter_i : public POA_CosNotifyFilter::Filter
+class TAO_Notify_Export TAO_Notify_Filter_i : public POA_CosNotifyFilter::Filter
 {
   // = TITLE
   //   TAO_Notify_Filter_i

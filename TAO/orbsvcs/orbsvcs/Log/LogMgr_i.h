@@ -22,8 +22,9 @@
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/BasicLog_i.h"
+#include "log_export.h"
 
-class LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
+class TAO_Log_Export LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
 {
   // = TITLE
   //   LogMgr_i

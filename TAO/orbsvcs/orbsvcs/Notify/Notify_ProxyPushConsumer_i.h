@@ -34,7 +34,7 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_ProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::ProxyPushConsumer>, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_ProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::ProxyPushConsumer>, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_ProxyPushConsumer_i
@@ -92,7 +92,7 @@ virtual void disconnect_push_consumer (
  // The supplier connected to us.
 };
 
-class TAO_ORBSVCS_Export TAO_Notify_CosEC_ProxyPushConsumer_i : public virtual POA_CosEventChannelAdmin::ProxyPushConsumer, public virtual PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushConsumer_i : public virtual POA_CosEventChannelAdmin::ProxyPushConsumer, public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_CosEC_ProxyPushConsumer_i

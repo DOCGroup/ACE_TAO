@@ -29,13 +29,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosConcurrencyControlC.h"
+#include "concurrency_export.h"
 
 #define NUMBER_OF_LOCK_MODES 5
 // This constant defines the number of lock modes. There is really no
 // way to set this constant dynamically because the nuber of lock
 // modes are not stated as part of the IDL.
 
-class TAO_ORBSVCS_Export CC_Lock
+class TAO_Concurrency_Export CC_Lock
 {
   // = TITLE
   //     CC_Lock
@@ -104,7 +105,7 @@ private:
   // Defines the compatibility of the locks.
 };
 
-class TAO_ORBSVCS_Export CC_LockModeIterator
+class TAO_Concurrency_Export CC_LockModeIterator
 {
   // = TITLE
   //     CC_LockModeIterator

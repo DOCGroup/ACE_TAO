@@ -24,8 +24,9 @@
 #include "tao/TAO.h"
 #include "orbsvcs/TimeServiceS.h"
 #include "TAO_UTO.h"
+#include "time_export.h"
 
-class TAO_ORBSVCS_Export TAO_TIO : public POA_CosTime::TIO
+class TAO_Time_Export TAO_TIO : public POA_CosTime::TIO
 {
   // = TITLE
   //    Time Interval Object Implementation.

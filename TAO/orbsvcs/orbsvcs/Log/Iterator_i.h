@@ -35,8 +35,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class Iterator_i : public POA_DsLogAdmin::Iterator,
-                   public virtual PortableServer::RefCountServantBase
+class TAO_Log_Export Iterator_i : public POA_DsLogAdmin::Iterator,
+                                  public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Iterator_i

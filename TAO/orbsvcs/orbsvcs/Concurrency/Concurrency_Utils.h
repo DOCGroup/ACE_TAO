@@ -27,8 +27,9 @@
 #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "CC_LockSetFactory.h"
+#include "concurrency_export.h"
 
-class TAO_ORBSVCS_Export TAO_Concurrency_Server
+class TAO_Concurrency_Export TAO_Concurrency_Server
 {
   // = TITLE
   //    Defines a wrapper class for the implementation of the

@@ -20,11 +20,11 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "Event/event_export.h"
 
 typedef void (*TAO_EC_Event_Initializer) (RtecEventComm::Event&);
 
-class TAO_ORBSVCS_Export ACE_ConsumerQOS_Factory
+class TAO_RTEvent_Export ACE_ConsumerQOS_Factory
 {
   // = TITLE
   //    Consumer QOS Factory.
@@ -219,7 +219,7 @@ private:
 
 // ************************************************************
 
-class TAO_ORBSVCS_Export ACE_SupplierQOS_Factory
+class TAO_RTEvent_Export ACE_SupplierQOS_Factory
 {
 public:
   ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0);

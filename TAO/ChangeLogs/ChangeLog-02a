@@ -1,3 +1,404 @@
+Sun Mar 19 15:33:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        First, some miscellaneous changes:
+
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
+          
+          Not all paths were returning a value in main.  Added a return 0;
+          to fix it.
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          
+          Some template definitions macros were using TAO_ORBSVCS still, 
+          changed to TAO_AV.
+
+        * orbsvcs/tests/Trading/Simple_Dynamic.h:
+          
+          Still some inheritance by dominance warnings hanging around. 
+          Disabled in MSVC.
+
+        * orbsvcs/examples/CosEC/Factory/Factory.dsw:
+
+          Added a dependency between client and server.
+
+
+        Now, the big stuff.  I broke up the orbsvcs library in MSVC into
+        separate libraries for each component.  THIS BREAKS CURRENT PROJECT 
+        FILES.  I fixed all of them in TAO, but any external projects that 
+        use orbsvcs must change the link libraries to the specific ones 
+        listed below.
+
+        So now we have:
+
+        TAO_AV (already there)
+        TAO_CosConcurrency
+        TAO_CosEvent
+        TAO_CosLifeCycle
+        TAO_CosNaming
+        TAO_CosNotification
+        TAO_CosProperty
+        TAO_CosTime
+        TAO_CosTrading
+        TAO_DSLogAdmin
+        TAO_RTEvent
+        TAO_RTSched
+        TAO_Svc_Utils
+
+        Each library has both the client and server code.  Each one had
+        to have its TAO_ORBSVCS_Export macro removed and replaced with a
+        library specific version, and many files were changed to include
+        the appropriate *_export.h file.
+
+        There are several reasons for this change.  
+        
+        - Orbsvcs was too brittle.  If one thing failed to build, the whole
+          library was lost.
+        - Orbsvcs was too big.  This didn't reduce the size, but it is more
+          manageable since only what is needed can be included.  So this has
+          a positive effect on footprint also.  For example, if the project
+          was only using the Naming Service, it had to link in a 9MB 
+          orbsvcsd.dll, whereas now it only needs a 360k TAO_CosNamingd.dll
+          library.
+        - Subsetting wasn't supported with MSVC project files.  This isn't
+          exactly subsetting, but it is more flexible and has the same
+          benefits.
+        - I just found out Minimum CORBA was useless with MSVC since not
+          all of orbsvcs can be used with a Minimum TAO.
+
+        There are some files still in TAO/orbsvcs/orbsvcs/ that really
+        should be in the subdirectories.  A later time, perhaps, let's
+        see how this is handled on the Makefile side first.  But if I 
+        remember correctly, this will probably be the path taken by the
+        AutoCompile scripts.
+
+        Note, this is ONLY with MSVC.  The makefiles will still support
+        the old subset technique until someone else feels inclined to 
+        change it.  This does depend on the fact that the export macros
+        expand to nothing in Unix.  Oh well, we'll see how correct I am
+        soon, after I do a test run on Unix after checking in.
+
+        And also Note: The release builds of several projects give warnings
+        because libraries had to be linked in to succeed, but then the linker
+        determined the library wasn't actually needed.  I couldn't find an 
+        easy fix, so I just left them for now.  
+
+        And finally Note: This only applies to the DLL Debug and Release 
+        versions.  The Alpha versions have pretty much been deprecated, and
+        the static versions are missing.  The static versions will be added
+        later, and I'm hoping to find an easy way to generate them from
+        the DLL versions.  The same applies to the MFC versions.  And I'm
+        unsure about Borland, but that will be fixed also.
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp: (removed)
+        * orbsvcs/orbsvcs/AV.dsp
+        * orbsvcs/orbsvcs/CosConcurrency.dsp: (added)
+        * orbsvcs/orbsvcs/CosEvent.dsp: (added)
+        * orbsvcs/orbsvcs/CosLifeCycle.dsp: (added)
+        * orbsvcs/orbsvcs/CosNaming.dsp: (added)
+        * orbsvcs/orbsvcs/CosNotification.dsp: (added)
+        * orbsvcs/orbsvcs/CosProperty.dsp: (added)
+        * orbsvcs/orbsvcs/CosTime.dsp: (added)
+        * orbsvcs/orbsvcs/CosTrading.dsp: (added)
+        * orbsvcs/orbsvcs/DSLogAdmin.dsp: (added)
+        * orbsvcs/orbsvcs/RTEvent.dsp: (added)
+        * orbsvcs/orbsvcs/RTSched.dsp: (added)
+        * orbsvcs/orbsvcs/Svc_Utils.dsp: (added)
+
+          Removed the orbsvcs.dsp file, and replaced with separate
+          projects.  Also modified AV.dsp a little to be consistent.
+
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * TAOACE.dsw:
+          
+          Changed these workspaces to use the new projects.  TAOACE
+          only includes CosNaming and Svc_utils though.
+
+        * orbsvcs/orbsvcs/svc_utils_export.h: (added)
+        * orbsvcs/orbsvcs/Concurrency/concurrency_export.h: (added)
+        * orbsvcs/orbsvcs/CosEvent/event_export.h: (added)
+        * orbsvcs/orbsvcs/Event/event_export.h: (added)
+        * orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h: (added)
+        * orbsvcs/orbsvcs/Log/log_export.h: (added)
+        * orbsvcs/orbsvcs/Naming/naming_export.h: (added)
+        * orbsvcs/orbsvcs/Notify/notify_export.h: (added)
+        * orbsvcs/orbsvcs/Property/property_export.h: (added)
+        * orbsvcs/orbsvcs/Sched/sched_export.h: (added)
+        * orbsvcs/orbsvcs/Time/time_export.h: (added)
+        * orbsvcs/orbsvcs/Trader/trading_export.h: (added)
+
+          Since each library needs its own Export macros, they each
+          needed their own export file.  orbsvcs_export is still around
+          for backwards compatibility (so the makefiles work).
+
+        * orbsvcs/orbsvcs/CosEvent_Utilities.h:
+        * orbsvcs/orbsvcs/Event_Utilities.h:
+        * orbsvcs/orbsvcs/IOR_Multicast.h:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/orbsvcs/Scheduler_Factory.h:
+        * orbsvcs/orbsvcs/Scheduler_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        * orbsvcs/orbsvcs/AV/RTP.h:
+        * orbsvcs/orbsvcs/AV/TCP.h:
+        * orbsvcs/orbsvcs/AV/UDP.h:
+        * orbsvcs/orbsvcs/AV/sfp.h:
+        * orbsvcs/orbsvcs/AV/source.i:
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.h:
+        * orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/Event/BCU.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Scheduling.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Prefix_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_UDP_Admin.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Manip.h:
+        * orbsvcs/orbsvcs/Event/Fast_Reactor.h:
+        * orbsvcs/orbsvcs/Event/GPlot_File.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/Module_Factory.h:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
+        * orbsvcs/orbsvcs/Event/ReactorTask.h:
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Naming/Entries.h:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Types.h:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.h:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.h:
+        * orbsvcs/orbsvcs/Sched/Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.h:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
+        * orbsvcs/orbsvcs/Time/TAO_TIO.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.h:
+        * orbsvcs/orbsvcs/Time/TAO_UTO.h:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+
+          All these were changed to use the new library specific export 
+          macros and *_export files.
+
+        * examples/Buffered_Oneways/client.dsp:
+        * examples/Callback_Quoter/Consumer.dsp:
+        * examples/Callback_Quoter/Notifier.dsp:
+        * examples/Callback_Quoter/Supplier.dsp:
+        * examples/Event_Comm/Consumer.dsp:
+        * examples/Event_Comm/Notifier.dsp:
+        * examples/Event_Comm/Supplier.dsp:
+        * examples/OBV/Typed_Events/client.dsp:
+        * examples/OBV/Typed_Events/server.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Second_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
+        * examples/Quoter/Factory_Finder.dsp:
+        * examples/Quoter/Generic_Factory.dsp:
+        * examples/Quoter/client.dsp:
+        * examples/Quoter/server.dsp:
+        * examples/Simple/bank/client.dsp:
+        * examples/Simple/bank/server.dsp:
+        * examples/Simple/echo/client.dsp:
+        * examples/Simple/echo/server.dsp:
+        * examples/Simple/grid/client.dsp:
+        * examples/Simple/grid/server.dsp:
+        * examples/Simple/time/client.dsp:
+        * examples/Simple/time/server.dsp:
+        * examples/Simple/time-date/Time_Date.dsp:
+        * examples/Simple/time-date/client.dsp:
+        * examples/Simulator/DOVEMIB/DOVEMIB.dsp:
+        * examples/Simulator/DOVEMIB/DOVEMIBx.dsp:
+        * examples/Simulator/DOVEMIB/TestClient.dsp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Event_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.dsp:
+        * examples/mfc/client.dsp:
+        * examples/mfc/server.dsp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.dsp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.dsp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.dsp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.dsp:
+        * orbsvcs/Event_Service/Event_Service.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
+        * orbsvcs/Time_Service/Time_Service_Clerk.dsp:
+        * orbsvcs/Time_Service/Time_Service_Server.dsp:
+        * orbsvcs/Trading_Service/Trading_Service.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Consumer.dsp:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Service.dsp:
+        * orbsvcs/examples/RtEC/Simple/EC_Simple_Supplier.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
+        * orbsvcs/tests/Concurrency/CC_client.dsp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/BCast.dsp:
+        * orbsvcs/tests/Event/Basic/Bitmask.dsp:
+        * orbsvcs/tests/Event/Basic/Complex.dsp:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Gateway.dsp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Negation.dsp:
+        * orbsvcs/tests/Event/Basic/Observer.dsp:
+        * orbsvcs/tests/Event/Basic/Reconnect.dsp:
+        * orbsvcs/tests/Event/Basic/Schedule.dsp:
+        * orbsvcs/tests/Event/Basic/Shutdown.dsp:
+        * orbsvcs/tests/Event/Basic/Timeout.dsp:
+        * orbsvcs/tests/Event/Basic/Wildcard.dsp:
+        * orbsvcs/tests/Event/Performance/Connect.dsp:
+        * orbsvcs/tests/Event/Performance/Throughput.dsp:
+        * orbsvcs/tests/Event/lib/ECTest.dsp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * orbsvcs/tests/Property/server.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * orbsvcs/tests/Time/Time_Service_Test.dsp:
+        * orbsvcs/tests/Trading/Colocated_Test.dsp:
+        * orbsvcs/tests/Trading/Export_Test.dsp:
+        * orbsvcs/tests/Trading/Import_Test.dsp:
+        * tests/InterOp-Naming/client.dsp:
+        * tests/InterOp-Naming/server.dsp:
+        * tests/NestedUpcall/MT_Client_Test/client.dsp:
+        * tests/NestedUpcall/MT_Client_Test/server.dsp:
+        * tests/NestedUpcall/Triangle_Test/initiator.dsp:
+        * tests/NestedUpcall/Triangle_Test/server_A.dsp:
+        * tests/NestedUpcall/Triangle_Test/server_B.dsp:
+        * utils/NamingViewer/NamingViewer.dsp:
+        * utils/catior/catior.dsp:
+        * utils/nslist/nslist.dsp:
+
+          All these projects used the orbsvcs library, so all had to be 
+          changed to use the specific libraries instead.  This was a good 
+          chance to go through all the different projects and make sure 
+          they work, a few did need some updating with release configurations,
+          since they are not run that regularly here.
+
 Sun Mar 19 16:48:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.i:

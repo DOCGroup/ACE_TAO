@@ -33,7 +33,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_CosEC_ConsumerAdmin_i :
+class TAO_Event_Export TAO_CosEC_ConsumerAdmin_i :
   public virtual POA_CosEventChannelAdmin::ConsumerAdmin,
   public virtual PortableServer::RefCountServantBase
 {

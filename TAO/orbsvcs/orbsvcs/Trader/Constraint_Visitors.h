@@ -18,7 +18,8 @@
 #include "ace/pre.h"
 #define TAO_CONSTRAINT_VISITOR_H
 
-#include "orbsvcs/orbsvcs/Trader/Interpreter_Utils.h"
+#include "orbsvcs/Trader/Interpreter_Utils.h"
+#include "orbsvcs/Trader/trading_export.h"
 
 class TAO_Constraint;
 class TAO_Unary_Constraint;
@@ -27,7 +28,7 @@ class TAO_Literal_Constraint;
 class TAO_Property_Constraint;
 class TAO_Noop_Constraint;
 
-class TAO_Constraint_Visitor
+class TAO_Trading_Export TAO_Constraint_Visitor
 {
   //
   // = TITLE
@@ -85,7 +86,7 @@ public:
 
 #include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
 
-class TAO_Constraint_Validator : public TAO_Constraint_Visitor
+class TAO_Trading_Export TAO_Constraint_Validator : public TAO_Constraint_Visitor
 {
   //
   // = TITLE
@@ -194,7 +195,7 @@ private:
   TAO_Constraint_Validator& operator= (const TAO_Constraint_Validator&);
 };
 
-class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
+class TAO_Trading_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
   //
   // = TITLE

@@ -36,9 +36,9 @@
 #define TAO_EC_UDP_ADMIN_H
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin::AddrServer
+class TAO_RTEvent_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
   // = TITLE
   //   TAO Real-time Event Service; a simple UDP address server.

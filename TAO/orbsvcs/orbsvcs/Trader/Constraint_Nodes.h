@@ -20,6 +20,7 @@
 
 #include "Constraint_Tokens.h"
 #include "tao/corba.h"
+#include "orbsvcs/Trader/trading_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -31,7 +32,7 @@
 class TAO_Constraint_Visitor;
 typedef unsigned short TAO_Expression_Type;
 
-class TAO_Constraint
+class TAO_Trading_Export TAO_Constraint
 //
 // = TITLE
 //     TAO_Constraint is the base class of all nodes on the
@@ -165,7 +166,7 @@ private:
   // The operand of the expression
 };
 
-class TAO_Property_Constraint : public TAO_Constraint
+class TAO_Trading_Export TAO_Property_Constraint : public TAO_Constraint
 //
 // = TITLE
 //      TAO_Property_Constraint represents a property whose
@@ -194,7 +195,7 @@ private:
   // The name of the property.
 };
 
-class TAO_Literal_Constraint : public TAO_Constraint
+class TAO_Trading_Export TAO_Literal_Constraint : public TAO_Constraint
 //
 // = TITLE
 //     TAO_Literal_Constraint represents a literal occuring in

@@ -35,7 +35,7 @@ class TAO_CEC_ConsumerAdmin;
 class TAO_CEC_SupplierControl;
 class TAO_CEC_Reactive_Pulling_Strategy;
 
-class TAO_ORBSVCS_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
+class TAO_Event_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
 {
   // = TITLE
   //   Forwards timeout events to the Reactive Pulling Strategy
@@ -60,7 +60,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_Pulling_Strategy
+class TAO_Event_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_Pulling_Strategy
 {
   // = TITLE
   //   Dispatch using the caller thread.

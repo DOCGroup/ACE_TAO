@@ -30,7 +30,7 @@
 // Forward decl;
 class TAO_Persistent_Context_Index;
 
-class TAO_ORBSVCS_Export TAO_Naming_Server
+class TAO_Naming_Export TAO_Naming_Server
 {
   // = TITLE
   //    Defines a wrapper class that holds the root Naming Context.
@@ -130,7 +130,7 @@ protected:
   // desired.
 };
 
-class TAO_ORBSVCS_Export TAO_Naming_Client
+class TAO_Naming_Export TAO_Naming_Client
 {
   // = TITLE
   //    This class is intended to simplify programs that want to play

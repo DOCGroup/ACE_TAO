@@ -19,6 +19,7 @@
 #define TAO_CEC_PROXYPUSHSUPPLIER_H
 
 #include "orbsvcs/CosEventChannelAdminS.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +28,7 @@
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
 
-class TAO_ORBSVCS_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelAdmin::ProxyPushSupplier
+class TAO_Event_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelAdmin::ProxyPushSupplier
 {
   // = TITLE
   //   ProxyPushSupplier

@@ -43,7 +43,7 @@ typedef char
 typedef ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX>
         _ACE_Dispatch_Request_Allocator;
 
-class TAO_ORBSVCS_Export ACE_ES_Dispatch_Request_Allocator : public _ACE_Dispatch_Request_Allocator
+class TAO_RTEvent_Export ACE_ES_Dispatch_Request_Allocator : public _ACE_Dispatch_Request_Allocator
 // = TITLE
 //     Dispatch Request Allocator
 //
@@ -59,7 +59,7 @@ public:
 
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> ACE_ES_Event_Allocator;
 
-class TAO_ORBSVCS_Export ACE_ES_Memory_Pools
+class TAO_RTEvent_Export ACE_ES_Memory_Pools
 // = TITLE
 //     Event Service Memory Pools.
 //

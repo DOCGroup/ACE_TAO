@@ -20,11 +20,12 @@
 
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
+#include "orbsvcs/Trader/trading_export.h"
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
 
-class TAO_Interpreter
+class TAO_Trading_Export TAO_Interpreter
 {
   // = TITLE
   //      TAO_Interpreter is the superclass for all interpreters. Its

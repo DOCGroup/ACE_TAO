@@ -19,8 +19,9 @@
 
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/DsLogAdminC.h"
+#include "log_export.h"
 
-class TAO_Log_Constraint_Evaluator : public TAO_Constraint_Evaluator
+class TAO_Log_Export TAO_Log_Constraint_Evaluator : public TAO_Constraint_Evaluator
 {
  public:
   TAO_Log_Constraint_Evaluator (DsLogAdmin::LogRecord &rec);

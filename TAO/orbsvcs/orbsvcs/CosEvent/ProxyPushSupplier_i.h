@@ -24,6 +24,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
+#include "event_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -34,7 +35,7 @@
 
 class TAO_CosEC_PushConsumerWrapper;
 
-class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushSupplier_i :
+class TAO_Event_Export TAO_CosEC_ProxyPushSupplier_i :
   public POA_CosEventChannelAdmin::ProxyPushSupplier,
   public virtual PortableServer::RefCountServantBase
 {

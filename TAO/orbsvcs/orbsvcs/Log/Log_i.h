@@ -23,6 +23,7 @@
 #include "orbsvcs/Log/LogRecordStore.h"
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
+#include "log_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +34,7 @@
 using DsLogAdmin::wrap;
 #endif /* (_MSC_VER) && (_MSC_VER == 1100) */
 
-class Log_i : public virtual POA_DsLogAdmin::Log
+class TAO_Log_Export Log_i : public virtual POA_DsLogAdmin::Log
 {
   // = TITLE
   //   Used to log events to a logging server

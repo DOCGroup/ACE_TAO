@@ -1027,7 +1027,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       CORBA::Any_var flows_any;
       flows_any = sep_a->get_property_value ("Flows", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      AVStreams::flowSpec_ptr temp_flows;
+      AVStreams::flowSpec *temp_flows;
       flows_any.in () >>= temp_flows;
       a_flows = *temp_flows;
       flows_any = sep_b->get_property_value ("Flows", ACE_TRY_ENV);
@@ -1689,7 +1689,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
             responder->get_property_value ("AvailableProtocols", ACE_TRY_ENV);
           ACE_TRY_CHECK_EX (available_protocols);
           AVStreams::protocolSpec peer_protocols;
-          AVStreams::protocolSpec_ptr temp_protocols;
+          AVStreams::protocolSpec *temp_protocols;
           protocols_any.in () >>= temp_protocols;
           peer_protocols = *temp_protocols;
           for (u_int i=0;i<peer_protocols.length ();i++)
@@ -4239,7 +4239,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep,
       // since formats are same, check for a common protocol
       CORBA::Any_var AvailableProtocols_ptr;
       AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-      AVStreams::protocolSpec_ptr temp_protocols;;
+      AVStreams::protocolSpec *temp_protocols;;
 
       exception_message =
         "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols";
@@ -4345,7 +4345,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
       break;
     }
   AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-  AVStreams::protocolSpec_ptr temp_protocols;
+  AVStreams::protocolSpec *temp_protocols;
   CORBA::Any_var AvailableProtocols_ptr =
     peer_fep->get_property_value ("AvailableProtocols",
                                   ACE_TRY_ENV);

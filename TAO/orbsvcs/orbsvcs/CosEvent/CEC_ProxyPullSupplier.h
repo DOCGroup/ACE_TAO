@@ -25,11 +25,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Message_Queue.h"
+#include "event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPullConsumer;
 
-class TAO_ORBSVCS_Export TAO_CEC_ProxyPullSupplier : public POA_CosEventChannelAdmin::ProxyPullSupplier
+class TAO_Event_Export TAO_CEC_ProxyPullSupplier : public POA_CosEventChannelAdmin::ProxyPullSupplier
 {
   // = TITLE
   //   ProxyPullSupplier

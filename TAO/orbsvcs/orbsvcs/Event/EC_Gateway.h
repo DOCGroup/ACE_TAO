@@ -37,9 +37,9 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Gateway : public POA_RtecEventChannelAdmin::Observer
+class TAO_RTEvent_Export TAO_EC_Gateway : public POA_RtecEventChannelAdmin::Observer
 {
   // = TITLE
   //   Event Channel Gateway
@@ -76,7 +76,7 @@ private:
 };
 
 // ****************************************************************
-class TAO_ORBSVCS_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
+class TAO_RTEvent_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
 //
 // = TITLE
 //   Event Channel Gateway using IIOP.

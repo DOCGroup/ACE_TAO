@@ -26,6 +26,7 @@
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
+#include "log_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +34,7 @@
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 30
 
-class LogRecordStore
+class TAO_Log_Export LogRecordStore
 {
   // = TITLE
   //     A container class for storing DsLogAdmin::LogRecord *'s

@@ -34,12 +34,13 @@
 
 #include "orbsvcs/Event/EC_Proxy_Collection.h"
 #include "orbsvcs/Event/EC_Worker.h"
+#include "event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
 class TAO_CEC_ProxyPullConsumer;
 
-class TAO_ORBSVCS_Export TAO_CEC_SupplierAdmin : public POA_CosEventChannelAdmin::SupplierAdmin
+class TAO_Event_Export TAO_CEC_SupplierAdmin : public POA_CosEventChannelAdmin::SupplierAdmin
 {
   // = TITLE
   //   ProxyPushSupplier

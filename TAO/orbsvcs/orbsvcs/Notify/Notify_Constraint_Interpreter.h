@@ -23,11 +23,12 @@
 #include "orbsvcs/Trader/Constraint_Nodes.h"
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/Interpreter.h"
-#include "orbsvcs/CosNotifyFilterS.h"
+#include "orbsvcs/CosNotifyFilterS.h" 
+#include "notify_export.h"
 
 class TAO_Constraint_Evaluator;
 
-class TAO_ORBSVCS_Export TAO_Notify_Constraint_Interpreter : public TAO_Interpreter
+class TAO_Notify_Export TAO_Notify_Constraint_Interpreter : public TAO_Interpreter
 {
   //
   // = TITLE

@@ -34,7 +34,7 @@ class TAO_EC_Event_Channel;
 
 class TAO_EC_Reactive_ConsumerControl;
 
-class TAO_ORBSVCS_Export TAO_EC_ConsumerControl_Adapter : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_EC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
   // = TITLE
   //   Forwards timeout events to the Reactive ConsumerControl
@@ -57,7 +57,7 @@ private:
   // The adapted object
 };
 
-class TAO_ORBSVCS_Export TAO_EC_Reactive_ConsumerControl : public TAO_EC_ConsumerControl
+class TAO_RTEvent_Export TAO_EC_Reactive_ConsumerControl : public TAO_EC_ConsumerControl
 {
   // = TITLE
   //   ConsumerControl

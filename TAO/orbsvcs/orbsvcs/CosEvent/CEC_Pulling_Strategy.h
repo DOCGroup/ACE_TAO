@@ -20,13 +20,13 @@
 #include "ace/pre.h"
 #define TAO_CEC_PULLING_STRATEGY_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/CosEvent/event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_CEC_Pulling_Strategy
+class TAO_Event_Export TAO_CEC_Pulling_Strategy
 {
   // = TITLE
   //   Define the interface for the pulling strategies.

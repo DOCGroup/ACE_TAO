@@ -41,7 +41,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Property_Evaluator
+class TAO_Trading_Export TAO_Property_Evaluator
 {
   // = TITLE
   //   This class abstracts away the details of obtaining property
@@ -116,7 +116,7 @@ private:
   TAO_Property_Evaluator& operator= (const TAO_Property_Evaluator&);
 };
 
-class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
+class TAO_Trading_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 {
   // = TITLE
   //    This class extends the TAO_Property_Evaluator to allow lookups
@@ -171,7 +171,7 @@ private:
   // constructor.
 };
 
-class TAO_ORBSVCS_Export TAO_Dynamic_Property : public virtual POA_CosTradingDynamic::DynamicPropEval, public virtual PortableServer::RefCountServantBase
+class TAO_Trading_Export TAO_Dynamic_Property : public virtual POA_CosTradingDynamic::DynamicPropEval, public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   Little helper class that you can extend to have your dynamic
@@ -471,7 +471,7 @@ private:
   // For the validating identifier names.
 };
 
-class TAO_ORBSVCS_Export TAO_Policy_Creator
+class TAO_Trading_Export TAO_Policy_Creator
 {
   // = TITLE
   //

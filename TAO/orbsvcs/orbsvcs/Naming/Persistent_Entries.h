@@ -21,12 +21,13 @@
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
+#include "naming_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_Persistent_IntId
+class TAO_Naming_Export TAO_Persistent_IntId
 {
   // = TITLE
   //     Helper class for TAO_Persistent_Bindings_Map: unifies several
@@ -68,7 +69,7 @@ public:
   // Binding type for <ref_>.
 };
 
-class TAO_ORBSVCS_Export TAO_Persistent_ExtId
+class TAO_Naming_Export TAO_Persistent_ExtId
 {
   // = TITLE
   //     Helper class for TAO_Persistent_Bindings_Map: unifies several
@@ -130,7 +131,7 @@ public:
   const char * kind (void);
 };
 
-class TAO_ORBSVCS_Export TAO_Persistent_Index_IntId
+class TAO_Naming_Export TAO_Persistent_Index_IntId
 {
   // = TITLE
   //     Helper class for TAO_Persistent_Context_Index: unifies several
@@ -173,7 +174,7 @@ public:
   // Pointer to a Persistent Naming Context's hash map.
 };
 
-class TAO_ORBSVCS_Export TAO_Persistent_Index_ExtId
+class TAO_Naming_Export TAO_Persistent_Index_ExtId
 {
   // = TITLE
   //    Helper class for TAO_Persistent_Context_Index: holds

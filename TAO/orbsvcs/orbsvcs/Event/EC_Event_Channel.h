@@ -36,7 +36,7 @@
 #include "EC_Defaults.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
-class TAO_ORBSVCS_Export TAO_EC_Event_Channel_Attributes
+class TAO_RTEvent_Export TAO_EC_Event_Channel_Attributes
 {
   // = TITLE
   //   Defines the construction time attributes for the Event
@@ -94,7 +94,7 @@ private:
   // The POAs
 };
 
-class TAO_ORBSVCS_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
+class TAO_RTEvent_Export TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
 {
   // = TITLE
   //   The RtecEventChannelAdmin::EventChannel implementation.

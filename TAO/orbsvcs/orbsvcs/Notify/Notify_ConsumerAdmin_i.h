@@ -24,6 +24,7 @@
 #include "Notify_Types.h"
 #include "Notify_Listeners.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "notify_export.h"
 
 class TAO_Notify_EventChannel_i;
 class TAO_Notify_Resource_Manager;
@@ -36,7 +37,7 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannelAdmin::ConsumerAdmin, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannelAdmin::ConsumerAdmin, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_ConsumerAdmin_i

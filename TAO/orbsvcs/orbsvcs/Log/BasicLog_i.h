@@ -22,6 +22,7 @@
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
+#include "log_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,9 +42,9 @@ class LogMgr_i;
 using DsLogAdmin::wrap;
 #endif /* (_MSC_VER) && (_MSC_VER == 1100) */
 
-class BasicLog_i : public Log_i,
-                   public POA_DsLogAdmin::BasicLog,
-                   public virtual PortableServer::RefCountServantBase
+class TAO_Log_Export BasicLog_i : public Log_i,
+                                  public POA_DsLogAdmin::BasicLog,
+                                  public virtual PortableServer::RefCountServantBase
 {
   // = TITLE
   //   BasicLog_i

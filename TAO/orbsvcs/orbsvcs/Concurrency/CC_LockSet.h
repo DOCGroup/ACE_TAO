@@ -44,6 +44,7 @@
 
 #include "ace/Token.h"
 #include "orbsvcs/CosConcurrencyControlS.h"
+#include "concurrency_export.h"
 
 #define NUMBER_OF_LOCK_MODES 5
 // This constant defines the number of lock modes. There is really no
@@ -57,7 +58,7 @@ typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
 // in the internal representation, and secondly it is possible to
 // indicate a 'non-mode' (CC_EM)
 
-class TAO_ORBSVCS_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
+class TAO_Concurrency_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
 {
   // = TITLE
   //     CC_LockSet

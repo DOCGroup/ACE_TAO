@@ -23,8 +23,9 @@
 #include "Notify_Types.h"
 #include "orbsvcs/CosNotifyFilterS.h"
 #include "ace/Hash_Map_Manager.h"
+#include "notify_export.h"
 
-class TAO_ORBSVCS_Export TAO_Notify_FilterAdmin_i
+class TAO_Notify_Export TAO_Notify_FilterAdmin_i
 {
   // = TITLE
   //   TAO_Notify_FilterAdmin_i

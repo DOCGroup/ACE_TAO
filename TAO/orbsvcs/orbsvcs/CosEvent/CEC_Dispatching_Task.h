@@ -25,12 +25,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/CosEvent/event_export.h"
 #include "tao/corba.h"
 
 class TAO_CEC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
+class TAO_Event_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
   //   Implement the dispatching queues for FIFO and Priority
@@ -59,7 +59,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_CEC_Dispatch_Command : public ACE_Message_Block
+class TAO_Event_Export TAO_CEC_Dispatch_Command : public ACE_Message_Block
 {
 public:
   TAO_CEC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
@@ -78,7 +78,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispatch_Command
+class TAO_Event_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispatch_Command
 {
 public:
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
@@ -90,7 +90,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_CEC_Push_Command : public TAO_CEC_Dispatch_Command
+class TAO_Event_Export TAO_CEC_Push_Command : public TAO_CEC_Dispatch_Command
 {
 public:
   TAO_CEC_Push_Command (TAO_CEC_ProxyPushSupplier* proxy,

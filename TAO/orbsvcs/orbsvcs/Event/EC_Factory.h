@@ -26,7 +26,7 @@
 #include "ace/pre.h"
 #define TAO_EC_FACTORY_H
 
-#include "orbsvcs/orbsvcs_export.h"
+#include "orbsvcs/Event/event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,7 +56,7 @@ class TAO_EC_SupplierControl;
 typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushConsumer> TAO_EC_ProxyPushConsumer_Collection;
 typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier> TAO_EC_ProxyPushSupplier_Collection;
 
-class TAO_ORBSVCS_Export TAO_EC_Factory : public ACE_Service_Object
+class TAO_RTEvent_Export TAO_EC_Factory : public ACE_Service_Object
 {
   // = TITLE
   //   Abstract base class for the Event Channel components.

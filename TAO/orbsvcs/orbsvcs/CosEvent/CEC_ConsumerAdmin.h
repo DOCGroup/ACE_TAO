@@ -26,13 +26,14 @@
 
 #include "orbsvcs/Event/EC_Proxy_Collection.h"
 #include "orbsvcs/Event/EC_Worker.h"
+#include "event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushSupplier;
 class TAO_CEC_ProxyPullSupplier;
 class TAO_CEC_ProxyPushConsumer;
 
-class TAO_ORBSVCS_Export TAO_CEC_ConsumerAdmin : public POA_CosEventChannelAdmin::ConsumerAdmin
+class TAO_Event_Export TAO_CEC_ConsumerAdmin : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
   // = TITLE
   //   ConsumerAdmin
