@@ -1,19 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    sequence.i
-//
-// = AUTHOR
-//    Carlos O'Ryan and Aniruddha Gokhale
-//
-// ============================================================================
-
 // Operations on the unbounded sequence class.
 
 ACE_INLINE
@@ -210,8 +197,6 @@ TAO_Unbounded_WString_Sequence (CORBA::ULong maximum,
 
 // ****************************************************************
 
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
-
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (CORBA::ULong size)
@@ -229,7 +214,9 @@ TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (CORBA::Octet *buffer)
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE
 TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (void)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   :  mb_ (0)
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 {
 }
 
@@ -237,8 +224,10 @@ ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE
 TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum,
-                                 TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (maximum)),
-    mb_ (0)
+                                 TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (maximum))
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+  ,  mb_ (0)
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 {
 }
 
@@ -248,8 +237,10 @@ TAO_Unbounded_Sequence<CORBA::Octet>::TAO_Unbounded_Sequence (CORBA::ULong maxim
                                                    CORBA::ULong length,
                                                    CORBA::Octet *data,
                                                    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release),
-    mb_ (0)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+  , mb_ (0)
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 {
 }
 
@@ -283,6 +274,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
             ACE_reinterpret_cast (CORBA::Octet*,this->buffer_);
         }
     }
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   else if (this->mb_ != 0) // (orphan == 1)
     {
       // We must create a copy anyway:
@@ -306,6 +298,21 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       this->buffer_ = 0;
       this->release_ = 0;
     }
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+  else
+    {
+      result = ACE_reinterpret_cast (CORBA::Octet*,this->buffer_);
+      if (this->release_ != 0)
+        {
+          // We set the state back to default and relinquish
+          // ownership.
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
+    }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   /* else
      // Oops, it's not our buffer to relinquish...
      return 0;
@@ -331,6 +338,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i) const
   return tmp[i];
 }
 
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE ACE_Message_Block*
 TAO_Unbounded_Sequence<CORBA::Octet>::mb (void) const
@@ -351,6 +359,8 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
   this->release_ = 0;
 }
 
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+
 ACE_TEMPLATE_METHOD_SPECIALIZATION
 ACE_INLINE void
 TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
@@ -360,12 +370,16 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
 {
   this->maximum_ = max;
   this->length_ = length;
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   if (this->mb_ != 0)
     {
       ACE_Message_Block::release (this->mb_);
       this->mb_ = 0;
     }
-  else if (this->buffer_ && this->release_ == 1)
+  else
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+    if (this->buffer_ && this->release_ == 1)
     {
       CORBA::Octet* tmp = ACE_reinterpret_cast(CORBA::Octet*,this->buffer_);
       TAO_Unbounded_Sequence<CORBA::Octet>::freebuf (tmp);
@@ -373,5 +387,3 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
   this->buffer_ = data;
   this->release_ = release;
 }
-
-#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */

@@ -1371,7 +1371,7 @@ CORBA::Boolean operator<< (
   {
     // encode all elements
 
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::TaggedProfile::_tao_seq_Octet *)&_tao_sequence);
@@ -1381,10 +1381,10 @@ CORBA::Boolean operator<< (
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }
@@ -1401,7 +1401,7 @@ CORBA::Boolean operator>> (
     _tao_sequence.length (_tao_seq_len);
     // retrieve all the elements
 
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
@@ -1414,10 +1414,10 @@ CORBA::Boolean operator>> (
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }
@@ -1466,7 +1466,7 @@ CORBA::Boolean operator<< (
   {
     // encode all elements
 
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::TaggedComponent::_tao_seq_Octet *)&_tao_sequence);
@@ -1476,10 +1476,10 @@ CORBA::Boolean operator<< (
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }
@@ -1496,7 +1496,7 @@ CORBA::Boolean operator>> (
     _tao_sequence.length (_tao_seq_len);
     // retrieve all the elements
 
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
@@ -1509,10 +1509,10 @@ CORBA::Boolean operator>> (
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }
@@ -1561,7 +1561,7 @@ CORBA::Boolean operator<< (
   {
     // encode all elements
 
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_dynamic_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::ServiceContext::_tao_seq_Octet *)&_tao_sequence);
@@ -1571,10 +1571,10 @@ CORBA::Boolean operator<< (
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }
@@ -1591,7 +1591,7 @@ CORBA::Boolean operator>> (
     _tao_sequence.length (_tao_seq_len);
     // retrieve all the elements
 
-#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
       TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
@@ -1604,10 +1604,10 @@ CORBA::Boolean operator>> (
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }

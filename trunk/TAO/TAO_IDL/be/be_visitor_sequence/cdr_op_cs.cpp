@@ -303,7 +303,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
 
   if (node->pt () == AST_PredefinedType::PT_octet && sequence->unbounded ())
     {
-      *os << "\n#if defined (TAO_NO_COPY_OCTET_SEQUENCES)" << be_nl;
+      *os << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl;
       switch (this->ctx_->sub_state ())
         {
         case TAO_CodeGen::TAO_CDR_INPUT:
@@ -350,7 +350,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                              "bad sub state\n"),
                             -1);
         }
-      *os << "\n#else /* TAO_NO_COPY_OCTET_SEQUENCES */" << be_nl;
+      *os << "\n#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */" << be_nl;
     }
 
   *os << "return strm.";
@@ -452,7 +452,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   *os << "_tao_sequence.length ());" << be_uidt_nl;
 
   if (node->pt () == AST_PredefinedType::PT_octet && sequence->unbounded ())
-    *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCES */" << be_nl;
+    *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */" << be_nl;
   return 0;
 }
 
