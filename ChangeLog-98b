@@ -1,3 +1,35 @@
+Tue Sep 01 12:58:02 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * ace/ACE.cpp
+          ace/Basic_Types.cp
+          ace/Containers.{cpp, h}
+          ace/Filecache.{cpp, h}
+          ace/Hash_Map_Manager.{cpp, h}
+          ace/INET_Addr.cpp
+          ace/Local_Tokens.cpp
+          ace/Log_Record.cpp
+          ace/Map_Manager.{cpp, h}
+          ace/Message_Block.cpp
+          ace/Name_Request_Reply.{cpp, h}
+          ace/OS.{cpp, h, i}
+          ace/Object_Manager.h
+          ace/Process.cpp
+          ace/Remote_Name_Space.cpp
+          ace/SOCK_Dgram_Mcast.{cpp, h}
+          ace/Service_Types.cpp
+          ace/Signal.cpp
+          ace/Synch_T.{cpp, h, i}
+          ace/Time_Hash.cpp
+          ace/Token_Request_Reply.h
+          ace/UPIPE_Stream.cpp
+          ace/config-psos-diab.h
+          ace/config-psos-tm.h: 
+
+          pSOS port of ACE for the Diab 4.2 and Trimedia cross compilers. 
+          Thanks to Jin Lu of Philips Research for completing the ACE pSOS port
+          on the Trimedia cross compiler and contributing the changes back to 
+          the ACE distribution.
+
 Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-linux-common.h,
