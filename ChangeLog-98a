@@ -33,6 +33,8 @@ Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
         * tests/Time_Value_Test.cpp (test_ace_u_longlong_): added test of
           operator+, and one simple test of operator/.
 
+        * ace/Filecache.h: removed extra , in enum ACE_Filecache_Flag definition.
+
 Tue Dec 30 20:32:03 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Map_Manager.{h,cpp}: Added STL-styled iterator function.
