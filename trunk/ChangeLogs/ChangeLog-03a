@@ -1,3 +1,39 @@
+Tue Dec 18 18:50:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/README: Added entry for new macro, ACE_HAS_NEW_NOTHROW.
+          This setting should be enabled if the compiler offers
+          new (nothrow). It enables nothrow variants of operator new
+          where that operator is defined on ACE classes.
+
+        * ace/config-hpux-11.00.h: Added ACE_HAS_NEW_NOTHROW for aCC.
+
+        * ace/config-all.h: Changed ACE_NEW[_RETURN] for HP aC++ to use
+          new(nothrow) rather than trying to catch exceptions, which
+          works particularly poorly when exceptions are disabled. Even
+          if they're disabled at compiler time, the run-time will still
+          throw an exception if allocation fails.
+          Fix decision making for how to do this correctly for both
+          HP-UX 10.20 and 11.x.
+          Correct ACE_throw_bad_alloc to compile correctly.
+
+        * ace/Configuration.cpp (create_index_helper, value_open_helper,
+          section_open_helper):
+        * ace/Local_Name_Space_T.cpp (create_manager_i):
+        * ace/Malloc_Allocator.cpp (ACE_Allocator::instance):
+          Use naked placement new rather than ACE_NEW_RETURN. Placement
+          new does not work with new(nothrow) and a placement new won't
+          throw an exception that the ACE_NEW_* macros would catch anyway.
+
+        * ace/Svc_Handler.(h cpp): Added a nothrow version of operator
+          new if ACE_HAS_NEW_NOTHROW is defined.
+
+        * ace/config-hpux-11.x-hpc++.h: As promised before ACE 5.1, this
+          file is removed. config-hpux-11.00.h is the HP-UX 11.x config.
+
+        * ace/config-aix-3.2.5.h:
+        * ace/config-hpux-9.x.h: Removed. These are hopelessly out of date
+          and the compilers don't support them any longer.
+
 Tue Dec 18 17:47:44 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Caching_Utility_T.cpp: Added #include "ace/Recyclable.h"

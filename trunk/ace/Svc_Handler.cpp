@@ -63,6 +63,35 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
     }
 }
 
+#if defined (ACE_HAS_NEW_NOTHROW)
+template <PR_ST_1, ACE_SYNCH_DECL> void *
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n,
+                                                       const nothrow_t&)
+{
+  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new(nothrow)");
+
+  ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
+
+  if (dynamic_instance == 0)
+    {
+      // If this ACE_ASSERT fails, it may be due to running of out TSS
+      // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
+      // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
+      ACE_ASSERT (dynamic_instance != 0);
+
+      return 0;
+    }
+  else
+    {
+      // Allocate the memory and store it (usually in thread-specific
+      // storage, depending on config flags).
+      dynamic_instance->set ();
+
+      return ::new(nothrow) char[n];
+    }
+}
+#endif /* ACE_HAS_NEW_NOTHROW */
+
 template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::destroy (void)
 {
