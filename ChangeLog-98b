@@ -15,6 +15,11 @@ Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
           is only used to call empty, non-virtual destructors (in
           Containers.cpp, Hash_Map_Manager.cpp, and Map_Manager.cpp).
 
+        * include/makeinclude/platform_lynxos.GNU: added LynxOS Version 3.0.0
+          support.  It's optional at this point:  add VERSION=3.0.0 to your
+          make invocation to enable.  Disabled -Wall with LynxOS 3.0.0.
+          Enabled optimization.
+
 Thu May 28 07:47:41 1998  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Connector_Test.cpp: Changed the "should succeed" test
