@@ -2928,26 +2928,33 @@ extern "C"
 #define h_addr h_addr_list[0]   /* the first address */
   };
 #else
+#if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+#define queue _Queue_
+#endif /* ACE_HAS_STL_QUEUE_CONFLICT */
+#include /**/ <netdb.h>
+#if defined (ACE_HAS_STL_QUEUE_CONFLICT)
+#undef queue
+#endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #include /**/ <netdb.h>
 #endif /* VXWORKS */
 
 // This part if to avoid STL name conflict with the map structure
 // in net/if.h.
-#ifdef ACE_HAS_STL_MAP_CONFLICT
+#if defined (ACE_HAS_STL_MAP_CONFLICT)
 #define map _Resource_Allocation_Map_
-#endif
+#endif /* ACE_HAS_STL_MAP_CONFLICT */
 #include /**/ <net/if.h>
-#ifdef ACE_HAS_STL_MAP_CONFLICT
+#if defined (ACE_HAS_STL_MAP_CONFLICT)
 #undef map
-#endif
+#endif /* ACE_HAS_STL_MAP_CONFLICT */
 
-#ifdef ACE_HAS_STL_MAP_CONFLICT
+#if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #define queue _Queue_
-#endif
+#endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #include /**/ <netinet/in.h>
-#ifdef ACE_HAS_STL_MAP_CONFLICT
+#if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #undef queue
-#endif
+#endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 
 #if defined(VXWORKS) && defined(ghs)
 // Works around a lack of proper prototypes for these functions on VxWorks
@@ -3648,13 +3655,13 @@ typedef int ucontext_t;
 #endif /* SA_RESTART */
 
 #if defined (ACE_HAS_TIMOD_H)
-#ifdef ACE_HAS_STL_MAP_CONFLICT
+#if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #define queue _Queue_
-#endif
+#endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #include /**/ <sys/timod.h>
-#ifdef ACE_HAS_STL_MAP_CONFLICT
+#if defined (ACE_HAS_STL_QUEUE_CONFLICT)
 #undef queue
-#endif
+#endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #elif defined (ACE_HAS_OSF_TIMOD_H)
 #include /**/ <tli/timod.h>
 #endif /* ACE_HAS_TIMOD_H */

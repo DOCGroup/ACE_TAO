@@ -1,3 +1,10 @@
+Wed Apr  1 13:48:00 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/OS.h: Changed ACE_HAS_STL_MAP_CONFLICT to
+ 	  ACE_HAS_STL_QUEUE_CONFLICT for the appropriate cases in ACE.
+  	  Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
+ 	  reporting this.
+
 Wed Apr  1 11:27:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/CORBA_Handler.cpp (ACE_CORBA_Handler): The reference_count_
