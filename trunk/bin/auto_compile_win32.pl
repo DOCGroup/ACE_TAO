@@ -46,6 +46,7 @@
 ace/ace.dsw, ACE DLL:
 apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO DLL:
+TAO/tao/TAO.dsw, PortableServer:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, Svc Utils:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosConcurrency:
@@ -268,6 +269,7 @@ EOD
 ace/ace.dsw, ACE DLL:
 apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO DLL:
+TAO/tao/TAO.dsw, PortableServer:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, Svc Utils:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosConcurrency:
