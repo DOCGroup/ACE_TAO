@@ -37,12 +37,8 @@ CORBA_AbstractBase::CORBA_AbstractBase (void)
     concrete_stubobj_ (0),
     is_collocated_ (0),
     servant_ (0),
-    is_local_ (0),
-    refcount_ (1),
-    refcount_lock_ (0)
+    is_local_ (0)
 {
-  ACE_NEW (this->refcount_lock_,
-           TAO_SYNCH_MUTEX);
 }
 
 CORBA_AbstractBase::CORBA_AbstractBase (const CORBA_AbstractBase &rhs)
@@ -50,22 +46,11 @@ CORBA_AbstractBase::CORBA_AbstractBase (const CORBA_AbstractBase &rhs)
     concrete_stubobj_ (rhs.concrete_stubobj_),
     is_collocated_ (rhs.is_collocated_),
     servant_ (rhs.servant_),
-    is_local_ (rhs.is_local_),
-    refcount_ (1),
-    refcount_lock_ (0)
+    is_local_ (rhs.is_local_)
 {
   if (this->concrete_stubobj_ != 0)
     {
       (void) this->concrete_stubobj_->_incr_refcnt ();
-
-      // Only instantiate a lock if the object is unconstrained.
-      // Locality-constrained objects have no-op reference counting by
-      // default.  Furthermore locality-constrained objects may be
-      // instantiated in the critical path.  Instantiating a lock for
-      // unconstrained objects alone optimizes instantiation of such
-      // locality-constrained objects.
-      ACE_NEW (this->refcount_lock_,
-               TAO_SYNCH_MUTEX);
     }
 }
 
@@ -76,22 +61,11 @@ CORBA_AbstractBase::CORBA_AbstractBase (TAO_Stub * protocol_proxy,
     concrete_stubobj_ (protocol_proxy),
     is_collocated_ (collocated),
     servant_ (servant),
-    is_local_ (protocol_proxy == 0 ? 1 : 0),
-    refcount_ (1),
-    refcount_lock_ (0)
+    is_local_ (protocol_proxy == 0 ? 1 : 0)
 {
   if (this->concrete_stubobj_ != 0)
     {
       (void) this->concrete_stubobj_->_incr_refcnt ();
-
-      // Only instantiate a lock if the object is unconstrained.
-      // Locality-constrained objects have no-op reference counting by
-      // default.  Furthermore locality-constrained objects may be
-      // instantiated in the critical path.  Instantiating a lock for
-      // unconstrained objects alone optimizes instantiation of such
-      // locality-constrained objects.
-      ACE_NEW (this->refcount_lock_,
-               TAO_SYNCH_MUTEX);
     }
 }
 
@@ -101,8 +75,6 @@ CORBA_AbstractBase::~CORBA_AbstractBase (void)
     {
       (void) this->concrete_stubobj_->_decr_refcnt ();
     }
-
-  delete this->refcount_lock_;
 }
 
 void *
@@ -126,35 +98,17 @@ CORBA_AbstractBase::_tao_QueryInterface (ptr_arith_t type)
   return retv;
 }
 
+// These are non-pure virtual no-ops so we can instantiate the
+// class in the CDR extraction operator. The actual management
+// of the refcount will always be done in the derived class.
 void
 CORBA_AbstractBase::_add_ref (void)
 {
-  if (this->refcount_lock_ != 0)
-    {
-      ACE_GUARD (TAO_SYNCH_MUTEX, mon, *this->refcount_lock_);
-
-      this->refcount_++;
-    }
 }
 
 void
 CORBA_AbstractBase::_remove_ref (void)
 {
-  if (this->refcount_lock_ != 0)
-    {
-      {
-        ACE_GUARD (TAO_SYNCH_MUTEX, mon, *this->refcount_lock_);
-
-        this->refcount_--;
-
-        if (this->refcount_ != 0)
-          {
-            return;
-          }
-      }
-
-      delete this;
-    }
 }
 
 CORBA::Object_ptr

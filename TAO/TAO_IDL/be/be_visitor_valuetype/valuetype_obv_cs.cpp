@@ -57,11 +57,15 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << node->full_obv_skel_name () << "::~"
+      << node->full_obv_skel_name () << " (void)" << be_nl
+      << "{}";
+
   // OBV_ class has no accessors or modifiers if we are optimizing
   // or the valuetype is abstract.
   if (!node->opt_accessor ())
     {
-      *os << "CORBA::Boolean" << be_nl
+      *os << be_nl << be_nl << "CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_marshal__" << node->flat_name ()
           <<    " (TAO_OutputCDR &strm)" << be_nl
@@ -90,7 +94,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       // we have to add this to avoid ambiguity.
       if (node->supports_abstract ())
         {
-          *os << be_nl << "void" << be_nl
+          *os << be_nl << be_nl << "void" << be_nl
               << node->full_obv_skel_name () 
               << "::_add_ref (void)" << be_nl
               << "{" << be_idt_nl
