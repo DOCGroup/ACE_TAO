@@ -1100,6 +1100,11 @@ ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
 ACE_LACKS_MEMBER_TEMPLATES              Compiler does not support
                                         member template feature.
 
+ACE_LACKS_DEPRECATED_MACROS             When this define is set, macros which
+                                        are deprecated are not defined. Usefull
+                                        to check whether deprecated macros are
+                                        not used anymore.
+
 ----------------------------------------
 
 The following macros determine the svc.conf file format ACE uses.
