@@ -16,11 +16,9 @@ IOR_Multicast::get_handle (void) const
 
 IOR_Multicast::IOR_Multicast (char * ior,
 			      u_short port, 
-			      const char *mcast_addr,
-			      u_short response_port)
-  : ior_ (ior),
-    mcast_addr_ (port, mcast_addr),
-    SERVICE_RESPONSE_UDP_PORT_ (response_port),
+			      const char *mcast_addr)
+  : mcast_addr_ (port, mcast_addr),
+    ior_ (ior),
     response_ (response_addr_)
 {
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
@@ -37,7 +35,7 @@ IOR_Multicast::~IOR_Multicast (void)
 
 int
 IOR_Multicast::handle_timeout (const ACE_Time_Value &,
-                               const void *arg)
+                               const void *)
 {
   return 0;
 }
@@ -58,13 +56,25 @@ IOR_Multicast::handle_input (ACE_HANDLE)
   // @@ validate data string received is from a valid client here
   // @@ Probably not needed
 
-  this->remote_addr_.set_port_number (this->SERVICE_RESPONSE_UDP_PORT_);
+  if (retcode != sizeof (CORBA::Short))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, 
+			 "Reply to multicast not sent. Received %d bytes, expected %d.", 
+			 retcode, 
+			 sizeof(CORBA::Short)), -1);
+    }
+
+  this->remote_addr_.set_port_number (*(CORBA::Short *)this->buf_);
   retcode = response_.send (this->ior_, 
 			    ACE_OS::strlen (this->ior_) + 1, 
 			    this->remote_addr_, 
 			    0);
 
-  ACE_DEBUG ((LM_ERROR, "ior_ '%s' sent.\nretcode=%d\n", this->ior_, retcode));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "ior_ '%s' sent through port %d.\nretcode=%d\n", 
+	      this->ior_, 
+	      this->remote_addr_.get_port_number (), 
+	      retcode));
 
   if (retcode == -1)
     return -1;  
@@ -117,13 +127,26 @@ main (int argc, char ** argv)
 
 #if defined (ACE_HAS_IP_MULTICAST)
   // get reactor instance from TAO
-  ACE_Reactor *reactor = TAO_ORB_Core_instance()->reactor();
+  ACE_Reactor *reactor = TAO_ORB_Core_instance ()->reactor ();
   
+  // First, see if the user has given us a multicast port number
+  // for the name service on the command-line;
+  u_short port = TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+  if (port == 0)
+    {
+      const char *port_number = ACE_OS::getenv ("NameServicePort");
+
+      if (port_number != 0)
+	port = ACE_OS::atoi (port_number);
+    }
+
+  if (port == 0)
+    port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
+
   // Instantiate a server which will receive requests for an ior
   IOR_Multicast ior_multicast (str,
-			       TAO_DEFAULT_NAME_SERVER_REQUEST_PORT, 
-			       ACE_DEFAULT_MULTICAST_ADDR,
-			       TAO_DEFAULT_NAME_SERVER_REPLY_PORT); 
+			       port,
+			       ACE_DEFAULT_MULTICAST_ADDR);
 
   // register event handler for the ior multicast.
   if (reactor->register_handler (&ior_multicast,

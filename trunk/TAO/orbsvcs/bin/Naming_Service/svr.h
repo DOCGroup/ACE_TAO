@@ -28,28 +28,45 @@
 class IOR_Multicast : public ACE_Event_Handler
 {
 public:
+  // constructor
   IOR_Multicast (char * ior,
 		u_short port,
-		const char *mcast_addr,
-		u_short response_port);
+		const char *mcast_addr);
+
+  // destructor
   ~IOR_Multicast (void);
 
+  // call back when input is received on the handle.
   virtual int handle_input (ACE_HANDLE fd);
+  
+  // callback when a timeout has occurred.
   virtual int handle_timeout (const ACE_Time_Value &tv,
 			      const void *arg);
 
+  // returns the internal handle used to receive multicast
   virtual ACE_HANDLE get_handle (void) const;
 
 private:
   char buf_[BUFSIZ];
+  // temporary buffer
 
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
+  // multicast endpoint of communication
+
   ACE_INET_Addr remote_addr_;
+  // remote address that sent multicast
+
   ACE_INET_Addr mcast_addr_;
+  // multicast address
+
   char * ior_;
-  const u_short SERVICE_RESPONSE_UDP_PORT_;
+  // object reference to send in response to the multicast
+
   ACE_INET_Addr response_addr_;
+  // address of response.
+
   ACE_SOCK_Dgram response_;
+  // socket for response to the multicast
 };
 
 #endif /* SVR_H */

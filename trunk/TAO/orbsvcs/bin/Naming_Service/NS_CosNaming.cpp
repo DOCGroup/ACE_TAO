@@ -58,8 +58,8 @@ NS_ExtId::NS_ExtId (void)
 
 NS_ExtId::NS_ExtId (const char *id, 
 		    const char *kind)
-  : id_ (id),
-    kind_ (kind)
+  : kind_ (kind),
+    id_ (id)
 {
 }
 
