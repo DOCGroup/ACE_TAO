@@ -10,7 +10,7 @@
 
 // Listing 011 code/ch18
 AnswerCallModule::AnswerCallModule (ACE_SOCK_Stream *peer)
-  : CommandModule ("AnswerCall Module",
+  : CommandModule (ACE_TEXT ("AnswerCall Module"),
                    new AnswerCallDownstreamTask (),
                    new AnswerCallUpstreamTask (),
                    peer)
@@ -56,7 +56,7 @@ int AnswerCallUpstreamTask::process (Command *)
 // Listing 021 code/ch18
 RetrieveCallerIdModule::RetrieveCallerIdModule
   (ACE_SOCK_Stream *peer)
-    : CommandModule ("RetrieveCallerId Module",
+    : CommandModule (ACE_TEXT ("RetrieveCallerId Module"),
                      new RetrieveCallerIdDownstreamTask (),
                      new RetrieveCallerIdUpstreamTask (),
                      peer)
@@ -95,14 +95,14 @@ int RetrieveCallerIdUpstreamTask::process (Command *command)
   module->peer ().get_remote_addr (remote_addr);
   ACE_TCHAR remote_addr_str[256];
   remote_addr.addr_to_string (remote_addr_str, 256);
-  command->result_ = ACE_CString (remote_addr_str);
+  command->result_ = ACE_TString (remote_addr_str);
 
   return Command::RESULT_SUCCESS;
 }
 // Listing 023
 
 PlayMessageModule::PlayMessageModule (ACE_SOCK_Stream *peer)
-  : CommandModule ("PlayMessage Module",
+  : CommandModule (ACE_TEXT ("PlayMessage Module"),
                    new PlayMessageDownstreamTask (),
                    new PlayMessageUpstreamTask (),
                    peer)
@@ -156,13 +156,13 @@ int PlayMessageUpstreamTask::process (Command *command)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Outgoing message (%s) sent\n"),
-              ACE_TEXT (addr->get_path_name ())));
+              addr->get_path_name ()));
 
   return Command::RESULT_SUCCESS;
 }
 
 RecordMessageModule::RecordMessageModule (ACE_SOCK_Stream *peer)
-  : CommandModule ("RecordMessage Module",
+  : CommandModule (ACE_TEXT ("RecordMessage Module"),
                    new RecordMessageDownstreamTask (),
                    new RecordMessageUpstreamTask (),
                    peer)

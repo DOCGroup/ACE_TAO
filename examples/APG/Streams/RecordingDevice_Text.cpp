@@ -159,7 +159,7 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
       return c->numeric_result_;
     }
 
-  ACE_FILE_Addr temp ("/tmp/outgoing_message.text");
+  ACE_FILE_Addr temp (ACE_TEXT ("/tmp/outgoing_message.text"));
   ACE_FILE_IO *file;
   if (type->is_audio ())
     file = Util::audio_to_text (addr, temp);

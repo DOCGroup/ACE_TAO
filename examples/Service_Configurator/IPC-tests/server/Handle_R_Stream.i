@@ -26,7 +26,7 @@ Handle_R_Stream::open (const ACE_INET_Addr &sia, int async)
     return 0;
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_R_Stream::info (char **strp, size_t length) const
 {
   char buf[BUFSIZ];
@@ -34,7 +34,7 @@ Handle_R_Stream::info (char **strp, size_t length) const
 
   if (this->get_local_addr (sa) == -1)
     return -1;
-  
+
   ACE_OS::sprintf (buf,
                    "%d/%s %s",
                    sa.get_port_number (),
@@ -57,17 +57,17 @@ Handle_R_Stream::init (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
-       case 'p': 
+       case 'p':
 	 sis.set (ACE_OS::atoi (get_opt.opt_arg ()));
 	 break;
        default:
 	 break;
        }
-  
+
   if (this->open (sis) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
-  else if (ACE_Reactor::instance ()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "registering service with ACE_Reactor\n"),
@@ -75,20 +75,20 @@ Handle_R_Stream::init (int argc, char *argv[])
   return 0;
 }
 
-ACE_INLINE int 
-Handle_R_Stream::fini (void) 
+ACE_INLINE int
+Handle_R_Stream::fini (void)
 {
-  return ACE_Reactor::instance ()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE ACE_HANDLE
 Handle_R_Stream::get_handle (void) const
-{ 
-  return ACE_SOCK_Acceptor::get_handle (); 
+{
+  return ACE_SOCK_Acceptor::get_handle ();
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 Handle_R_Stream::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
@@ -119,23 +119,25 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
     return -1;
 
   ACE_DEBUG ((LM_INFO,
-              "accepted from host %s at port %d\n", 
+              "accepted from host %s at port %d\n",
               sa.get_host_name (),
               sa.get_port_number ()));
 
-  ACE_OS::puts ("----------------------------------------");
+  ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
 
   while ((bytes = this->new_remote_stream.recv (buf, sizeof buf)) > 0)
     ACE_OS::write (ACE_STDOUT, buf, bytes);
 
-  ACE_OS::puts ("----------------------------------------");
+  ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
 
   time_t t = ACE_OS::time (0L);
-  char *cs = ACE_OS::ctime (&t);
+  ACE_TCHAR *cs = ACE_OS::ctime (&t);
 
   if (this->new_remote_stream.send (4,
-				    Handle_R_Stream::login_name, ACE_OS::strlen (Handle_R_Stream::login_name),
-				    cs, ACE_OS::strlen (cs)) == -1)
+				    Handle_R_Stream::login_name,
+                                    ACE_OS::strlen (Handle_R_Stream::login_name),
+				    cs,
+                                    ACE_OS::strlen (cs)) == -1)
     return -1;
 
   if (this->new_remote_stream.close () == -1)

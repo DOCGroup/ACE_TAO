@@ -92,15 +92,17 @@ Handle_Broadcast::handle_input (ACE_HANDLE)
   if (n== -1)
     return -1;
   else
-    ACE_DEBUG ((LM_INFO, "received broadcast datagram from host %s\n", sa.get_host_name ()));
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("received broadcast datagram from host %s\n"),
+                sa.get_host_name ()));
 
-  ACE_OS::puts ("----------------------------------------");
+  ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
   ACE_OS::write (ACE_STDOUT, buf, n);
 
   if (buf[n - 1] != '\n')
     putchar ('\n');
 
-  ACE_OS::puts ("----------------------------------------");
+  ACE_OS::puts (ACE_TEXT ("----------------------------------------"));
 
   return 0;
 }

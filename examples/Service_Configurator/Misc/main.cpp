@@ -53,7 +53,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("argc = %d\n"),
-              ACE_TEXT (args.argc ())));
+              args.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
   for (int i = 0; i < args.argc (); i++)

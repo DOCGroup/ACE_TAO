@@ -49,25 +49,25 @@ int CommandStream::open (void *arg,
   if (this->push (answerCallModule) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Failed to push %p\n"),
-                       ACE_TEXT (answerCallModule->name())),
+                       ACE_TEXT_CHAR_TO_TCHAR (answerCallModule->name())),
                       -1);
 
   if (this->push (retrieveCallerIdModule) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Failed to push %p\n"),
-                       ACE_TEXT (retrieveCallerIdModule->name())),
+                       ACE_TEXT_CHAR_TO_TCHAR (retrieveCallerIdModule->name())),
                       -1);
 
   if (this->push (playMessageModule) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Failed to push %p\n"),
-                       ACE_TEXT (playMessageModule->name())),
+                       ACE_TEXT_CHAR_TO_TCHAR (playMessageModule->name())),
                       -1);
 
   if (this->push (recordMessageModule) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Failed to push %p\n"),
-                       ACE_TEXT (recordMessageModule->name())),
+                       ACE_TEXT_CHAR_TO_TCHAR (recordMessageModule->name())),
                       -1);
   // Listing 03
   return 0;

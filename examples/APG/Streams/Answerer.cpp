@@ -82,7 +82,7 @@ protected:
   ACE_FILE_Addr get_outgoing_message (Message *)
   {
     // Exclude 23
-    return ACE_FILE_Addr ("/tmp/outgoing_message");
+    return ACE_FILE_Addr (ACE_TEXT ("/tmp/outgoing_message"));
     // Exclude 23
   }
 };

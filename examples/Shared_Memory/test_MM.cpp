@@ -48,16 +48,16 @@ server (void)
 int
 main (int, char *[])
 {
-  if (ACE_OS::mktemp (shm_key) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
+  if (ACE_OS::mktemp (ACE_TEXT_CHAR_TO_TCHAR (shm_key)) == 0 || (ACE_OS::unlink (shm_key) == -1 && errno == EPERM))
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", shm_key), 1);
 
   switch (ACE_OS::fork ())
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "fork"), 1);
-    case 0: 
+    case 0:
       // Make sure the server starts up first.
-      ACE_OS::sleep (1); 
+      ACE_OS::sleep (1);
       client ();
       break;
     default:
@@ -66,4 +66,3 @@ main (int, char *[])
     }
   return 0;
 }
-
