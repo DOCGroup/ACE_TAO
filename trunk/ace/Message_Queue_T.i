@@ -129,6 +129,15 @@ ACE_Message_Queue<ACE_SYNCH_USE>::message_count (void)
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue<ACE_SYNCH_USE>::deactivate ()
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate");
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
+
+  return this->deactivate_i (0);   // Not a pulse
+}
+
+template <ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Message_Queue<ACE_SYNCH_USE>::activate (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::activate");
@@ -138,12 +147,12 @@ ACE_Message_Queue<ACE_SYNCH_USE>::activate (void)
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int
-ACE_Message_Queue<ACE_SYNCH_USE>::deactivate (int pulse)
+ACE_Message_Queue<ACE_SYNCH_USE>::pulse ()
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivate");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::pulse");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  return this->deactivate_i (pulse);
+  return this->deactivate_i (1);   // Just a pulse
 }
 
 template <ACE_SYNCH_DECL> ACE_INLINE int
@@ -152,6 +161,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivated");
 
   return this->state_ == ACE_Message_Queue_Base::DEACTIVATED;
+}
+
+template <ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue<ACE_SYNCH_USE>::state (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::state");
+
+  return this->state_;
 }
 
 #if 0
@@ -269,6 +286,14 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_count (void)
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate");
+
+  return this->queue_.deactivate ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::activate (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::activate");
@@ -277,11 +302,11 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::activate (void)
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
-ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate (int pulse)
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::pulse (void)
 {
-  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate");
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::pulse");
 
-  return this->queue_.deactivate (pulse);
+  return this->queue_.pulse ();
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int

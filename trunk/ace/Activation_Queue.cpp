@@ -4,6 +4,7 @@
 #include "ace/Activation_Queue.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
 ACE_RCSID (ace,
@@ -11,13 +12,13 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-void 
+void
 ACE_Activation_Queue::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_LIB_TEXT ("delete_queue_ = %d\n"),
-	      this->delete_queue_));
+              ACE_LIB_TEXT ("delete_queue_ = %d\n"),
+              this->delete_queue_));
   ACE_DEBUG ((LM_INFO, ACE_LIB_TEXT ("queue_: \n")));
   if (this->queue_)
     this->queue_->dump();
@@ -28,7 +29,7 @@ ACE_Activation_Queue::dump (void) const
 
 ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue,
                                             ACE_Allocator *alloc,
-                                            ACE_Allocator *db_alloc) 
+                                            ACE_Allocator *db_alloc)
   : delete_queue_ (0)
   , allocator_(alloc)
   , data_block_allocator_(db_alloc)
@@ -46,7 +47,7 @@ ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_qu
     }
 }
 
-ACE_Activation_Queue::~ACE_Activation_Queue (void) 
+ACE_Activation_Queue::~ACE_Activation_Queue (void)
 {
   if (this->delete_queue_ != 0)
     delete this->queue_;
@@ -72,9 +73,9 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
     return 0;
 }
 
-int 
+int
 ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
-			       ACE_Time_Value *tv)
+                               ACE_Time_Value *tv)
 {
   ACE_Message_Block *mb;
 
@@ -106,5 +107,3 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
 
   return result;
 }
-
-

@@ -190,15 +190,21 @@ int AC_Output_Handler::open (void *connector) {
 }
 
 int AC_Output_Handler::put (ACE_Message_Block *mb,
-                            ACE_Time_Value *timeout)
-{ return putq (mb, timeout); }
+                            ACE_Time_Value *timeout) {
+  int retval;
+  while ((retval = putq (mb, timeout)) == -1) {
+    if (msg_queue ()->state () != ACE_Message_Queue_Base::PULSED)
+      break;
+  }
+  return retval;
+}
 
 int AC_Output_Handler::handle_input (ACE_HANDLE h) {
   peer ().close ();
   reactor ()->remove_handler
     (h, ACE_Event_Handler::READ_MASK
         | ACE_Event_Handler::DONT_CALL);
-  msg_queue ()->deactivate (1);
+  msg_queue ()->pulse ();
   return 0;
 }
 
