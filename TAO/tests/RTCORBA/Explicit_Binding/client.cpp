@@ -165,7 +165,7 @@ main (int argc, char *argv[])
       
       if (status)
       ACE_DEBUG ((LM_DEBUG,
-                  "ERROR: <validate_connection> returned TRUE\n"));
+                  ACE_TEXT ("<validate_connection> returned TRUE\n")));
 
       if (pols.ptr () != 0
           && pols->length () == 1
