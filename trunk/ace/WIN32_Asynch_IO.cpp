@@ -2537,8 +2537,8 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
            result->set_error (errno);
 
            ACE_ERROR_RETURN ((LM_ERROR,
-                              ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: ")
-                              ACE_LIB_TEXT (" ACE_OS::bind failed\n")),
+                              ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect_i: %p\n"),
+                              ACE_LIB_TEXT ("ACE_OS::bind")),
                              -1);
         }
     }
