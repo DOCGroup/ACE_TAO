@@ -3,6 +3,17 @@ Tue Sep 22 10:58:04 1998  Ossama Othman <othman@astrosun.tn.cornell.edu>
         * ace/OS.i (ACE_cond_t::waiters): only define this function if
           ACE_HAS_THREADS.
 
+          Testing the autoconf integration on a Linux libc5 system w/o
+          threads caused me problems since ACE_LACKS_COND_T gets
+          defined by the configure script automatically since no
+          condition variable support was found.  The ACE_cond_t class
+          appears to only get defined if ACE_HAS_THREADS is defined,
+          otherwise ACE_cond_t is typedefed to an int.  For
+          this reason, I thought that it would be a good idea to make
+          the above modification to prevent compile time errors on
+          platforms without threads and when ACE_LACKS_COND_T is
+          defined on those platforms.
+
 Tue Sep 22 03:09:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.41 released.
