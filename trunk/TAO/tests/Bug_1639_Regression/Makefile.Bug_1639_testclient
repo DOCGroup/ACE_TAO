@@ -9,9 +9,9 @@
 # this file will be lost the next time it is generated.
 #
 #----------------------------------------------------------------------------
-MAKEFILE        = Makefile.Bug_1639_testclient
-DEPENDENCY_FILE = .depend.Makefile.Bug_1639_testclient
-BIN_UNCHECKED   = client
+MAKEFILE         = Makefile.Bug_1639_testclient
+DEPENDENCY_FILE  = .depend.Makefile.Bug_1639_testclient
+BIN_UNCHECKED    = client
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -50,11 +50,25 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
+OUTPUT_DIRECTORY = .
+all: $(OUTPUT_DIRECTORY)
 
+$(OUTPUT_DIRECTORY):
+	-@mkdir -p "$(OUTPUT_DIRECTORY)"
+
+
+ifeq ($(exceptions),1)
 BIN    = $(BIN_UNCHECKED)
+else
+  all: require_warning
+endif
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
+ifneq (,$(RC))
+  FILES += $(RESOURCES)
+endif
+
 
 ifneq ($(BIN),)
 all: idl_stubs
@@ -85,8 +99,9 @@ TAO_IDLFLAGS += -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
-.:
-	-@mkdir -p "."
+require_warning:
+	@echo This project will not be built due to one of the following missing features:
+	@echo exceptions
 
 
 ADDITIONAL_IDL_TARGETS =
