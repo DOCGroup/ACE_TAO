@@ -2,14 +2,15 @@ Fri Jan  2 11:56:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
         * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
-        Added a new sub-directory Manage_Object_Group to be compiled.
+        
+	  Added a new sub-directory Manage_Object_Group to be compiled.
 
 Fri Jan  2 11:37:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
-        Made changes to fix the CannotMeetCriteria exception being
-        thrown in some builds.
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+
+          Made changes to fix the CannotMeetCriteria exception being
+          thrown in some builds.
 
 Fri Jan  2 10:00:48 2004  Chad Elliott  <elliott_c@ociweb.com>
 
