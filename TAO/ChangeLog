@@ -1,12 +1,18 @@
+Wed May 21 19:57:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Acceptor.cpp (open_i): Changed to use the
+	  new init_buffer_size in ACE_MEM_Stream to set the initial
+	  MEM_Stream buffer size.
+
 Tue May 20 21:49:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/Request.cpp (invoke): Added an extra check 
+	* tao/DynamicInterface/Request.cpp (invoke): Added an extra check
 	  for null Any_Impl pointers before going ahead with the
 	  _tao_decode () call.
 
 Tue May 20 16:56:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp: Added explicit template instantiation. 
+	* tao/ObjectKey_Table.cpp: Added explicit template instantiation.
 
 Tue May 20 13:56:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -743,6 +749,15 @@ Wed May  7 22:49:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Wed May 07 22:32:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
+<<<<<<< ChangeLog
+	* tao/Connection_Handler.cpp (svc_i): Incremented the refcount of
+	  the connection handler before calling the handle_input_i () on
+	  the transport. The pattern should be the same as that in
+	  TAO_Connection_Handler::handle_input_eh (), where the transport
+	  is updated and the refcount on the handler is incremented. This
+	  change should fix problems with servers crashing if remote peers
+	  dissappears under thread-per-connection strategy.
+=======
         * tao/Connection_Handler.cpp (svc_i): Incremented the refcount of
           the connection handler before calling the handle_input_i () on
           the transport. The pattern should be the same as that in
@@ -750,6 +765,7 @@ Wed May 07 22:32:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           is updated and the refcount on the handler is incremented. This
           change should fix problems with servers crashing if remote peers
           dissappears under thread-per-connection strategy.
+>>>>>>> 1.1798
 
           Thanks to Ira Burton <imburton@micron.com> for reporting this
           problem.
