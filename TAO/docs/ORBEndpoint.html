@@ -66,7 +66,7 @@
       An endpoint-specific option is used as follows:
     <BLOCKQUOTE>
       <CODE>
-	-ORBEndpoint iiop://foo:1234/option=value
+        -ORBEndpoint iiop://foo:1234/option=value
       </CODE>
     </BLOCKQUOTE>
     <P>
@@ -74,7 +74,7 @@
       with an ampersand '<CODE>&amp;</CODE>' as follows:
     <BLOCKQUOTE>
       <CODE>
-	-ORBEndpoint 'iiop://foo:1234/option1=value1&option2=value2'
+        -ORBEndpoint 'iiop://foo:1234/option1=value1&option2=value2'
       </CODE>
     </BLOCKQUOTE>
     <P>
@@ -95,39 +95,39 @@
       TAO supports the following options that are common to all
       pluggable protocol endpoints:
       <TABLE BORDER="2" CELLSPACING="2" CELLPADDING= "0">
-	<TR>
-	  <TH>Option</TH>
-	  <TH>Description</TH>
-	</TR>
-	<TR>
-	  <TD>
-	    <CODE>priority</CODE>
-	  </TD>
-	  <TD>
-	    The <CODE>priority</CODE> option allows a given
-	    <STRONG>CORBA</STRONG> priority to be assigned to the
-	    endpoint.  This is useful when utilizing TAO's real-time
-	    CORBA support.  The format for the <CODE>priority</CODE>
-	    is:
-	    <BLOCKQUOTE>
-	      <CODE>priority=</CODE><I>value</I>
-	    </BLOCKQUOTE>
-	    where <I>value</I> is a priority in the range
-	    <CODE>0</CODE> to <CODE>32767</CODE>.
-	    <P>
-	      The native operating system priority to which the CORBA
-	      priority is mapped to depends on the platform, and on
-	      the priority mapping method TAO is configured with
-	      (e.g. <I>direct</I> or <I>linear</I>).  By default TAO
-	      maps CORBA priorities to native priorities linearly.
-	    <P>
-	      It is not always possible to achieve a one-to-one
-	      mapping of the CORBA priority to the native operating
-	      system priority.  As such, it is possible for more than
-	      one CORBA priority to correspond to the same native
-	      operating system priority.
-	  </TD>
-	</TR>
+        <TR>
+          <TH>Option</TH>
+          <TH>Description</TH>
+        </TR>
+        <TR>
+          <TD>
+            <CODE>priority</CODE>
+          </TD>
+          <TD>
+            The <CODE>priority</CODE> option allows a given
+            <STRONG>CORBA</STRONG> priority to be assigned to the
+            endpoint.  This is useful when utilizing TAO's real-time
+            CORBA support.  The format for the <CODE>priority</CODE>
+            is:
+            <BLOCKQUOTE>
+              <CODE>priority=</CODE><I>value</I>
+            </BLOCKQUOTE>
+            where <I>value</I> is a priority in the range
+            <CODE>0</CODE> to <CODE>32767</CODE>.
+            <P>
+              The native operating system priority to which the CORBA
+              priority is mapped to depends on the platform, and on
+              the priority mapping method TAO is configured with
+              (e.g. <I>direct</I> or <I>linear</I>).  By default TAO
+              maps CORBA priorities to native priorities linearly.
+            <P>
+              It is not always possible to achieve a one-to-one
+              mapping of the CORBA priority to the native operating
+              system priority.  As such, it is possible for more than
+              one CORBA priority to correspond to the same native
+              operating system priority.
+          </TD>
+        </TR>
       </TABLE>
 
     <hr>
@@ -141,15 +141,15 @@
       IIOP endpoints in TAO have the form:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://V.v@hostname1:port1,...,W.w@hostname2:port2
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://V.v@hostname1:port1,...,W.w@hostname2:port2
+        </CODE>
     </BLOCKQUOTE>
     <P>
       Where "<CODE>V.v</CODE>" and "<CODE>W.w</CODE>" are the IIOP
       protocol versions associated with the given address
       (hostname:port pair).  Currently supported versions are
-      <CODE>1.0</CODE> and <CODE>1.1</CODE>.
+      <CODE>1.0</CODE>, <CODE>1.1</CODE>, and <CODE>1.2</CODE>.
 
     <P>
       Options are separated from the addresses by a forward slash
@@ -158,9 +158,9 @@
       endpoint specification could be used
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://hostname:port/priority=50
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://hostname:port/priority=50
+        </CODE>
     </BLOCKQUOTE>
     <P>
     <h3>IIOP Address Format</h3>
@@ -183,16 +183,16 @@
       the following endpoint specification could be used:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://foo2
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://foo2
+        </CODE>
     </BLOCKQUOTE>
     or:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://foo2.bar.baz
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://foo2.bar.baz
+        </CODE>
     </BLOCKQUOTE>
     <P>
       TAO will attempt to ensure that the fully qualified domain name is
@@ -206,9 +206,9 @@
       of the form:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://foo2:1234
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://foo2:1234
+        </CODE>
     </BLOCKQUOTE>
     <P>
       where <CODE>1234</CODE> is the TCP port the endpoint will be
@@ -223,9 +223,9 @@
       endpoint to be opened on the port associated with that service:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://foo2:my_protocol
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://foo2:my_protocol
+        </CODE>
     </BLOCKQUOTE>
     <P>
       Port numbers range from <CODE>0</CODE> (causes port to be chosen
@@ -240,9 +240,9 @@
       specification as follows:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://
+        </CODE>
     </BLOCKQUOTE>
     <P>
       In this case, an endpoint will be set up on each network
@@ -261,9 +261,9 @@
       achieved by using an endpoint specification of the form:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint iiop://:1234
-	</CODE>
+        <CODE>
+          -ORBEndpoint iiop://:1234
+        </CODE>
     </BLOCKQUOTE>
     <P>
       This will create endpoints on each detected network interface,
@@ -273,6 +273,59 @@
       interpret <CODE>1234</CODE> as a port.  Without the colon, TAO
       would interpret <CODE>1234</CODE> as a hostname associated with
       a given network interface.
+
+    <P>
+    <h3>IIOP Endpoint-Specific Options</h3>
+    <P>
+    TAO supports the following endpoint-specific options that apply only
+    to IIOP endpoints:
+
+      <TABLE BORDER="2" CELLSPACING="2" CELLPADDING= "0">
+        <TR>
+          <TH>Option</TH>
+          <TH>Availability</TH>
+          <TH>Description</TH>
+        </TR>
+        <TR>
+          <TD>
+            <CODE>portspan</CODE>
+          </TD>
+          <TD>
+            <CODE>TAO 1.1.15</CODE>
+          </TD>
+          <TD>
+            The <CODE>portspan</CODE> option specifies that an IIOP endpoint
+            should be opened on the first available port within a
+            specified span of port numbers, beginning with a specified
+            initial port.  This option is useful when one or more servers
+            may be restricted to using ports within a given range.  The
+            intention is that the behavior should be similar to using
+            ephemeral ports except within a restricted user-defined
+            range.
+            <P>
+            The format for <CODE>ORBEndpoint</CODE> with the
+            <CODE>portspan</CODE> option is:
+            <BLOCKQUOTE>
+              <CODE>-ORBEndpoint iiop://[</CODE><I>hostname</I><CODE>]:</CODE><I
+>initialPort</I><CODE>/portspan=</CODE><I>span</I>
+            </BLOCKQUOTE>
+            where <I>initialPort</I> is the initial port number in the
+            range of allowable ports, and <I>span</I> is an integer
+            value indicating the size of the span of allowable ports.
+            Valid values for <I>initialPort</I> include any valid port
+            number.  Valid values for <I>span</I> are in the
+            range <CODE>1</CODE> to <CODE>65535</CODE>.  The
+            <I>hostname</I> (in <CODE>[ ]</CODE>)is optional.
+            <P>
+            The server's ORB will attempt to create a listening endpoint
+            beginning with the initial port.  If that fails, it will try
+            the next port in the range.  It will continue to try each
+            port in the range until it
+            is able to successfully open one for listening or until it                      has exhausted the range
+            <CODE>[initialPort:initialPort+span-1]</CODE> at which point it                 fails with a <CODE>CORBA::BAD_PARAM</CODE> system exception.
+          </TD>
+        </TR>
+      </TABLE>
 
     <P>
     <h3>IIOP Endpoint Examples</h3>
@@ -287,6 +340,7 @@
       <LI><CODE>-ORBEndpoint iiop://1.1@</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.1@:1234</CODE>
       <LI><CODE>-ORBEndpoint iiop://1.1@,1.0@:1234,1.1@</CODE>
+      <LI><CODE>-ORBEndpoint iiop://1.1@foo:2020/portspan=30</CODE>
     </UL>
 
     <hr>
@@ -301,9 +355,9 @@
       SHMIOP endpoints in TAO have the form:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint shmiop://V.v@port1,...,W.w@port2
-	</CODE>
+        <CODE>
+          -ORBEndpoint shmiop://V.v@port1,...,W.w@port2
+        </CODE>
     </BLOCKQUOTE>
     <P>
       Where "<CODE>V.v</CODE>" and "<CODE>W.w</CODE>" are the SHMIOP
@@ -318,9 +372,9 @@
       endpoint specification could be used
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint shmiop://port/priority=50
-	</CODE>
+        <CODE>
+          -ORBEndpoint shmiop://port/priority=50
+        </CODE>
     </BLOCKQUOTE>
     <P>
     <h3>SHMIOP Address Format</h3>
@@ -340,9 +394,9 @@
       specification as follows:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint shmiop://
-	</CODE>
+        <CODE>
+          -ORBEndpoint shmiop://
+        </CODE>
     </BLOCKQUOTE>
     <P>
       In this case, an SHMIOP endpoint will be set up on a port chosen
@@ -375,9 +429,9 @@
       UIOP endpoints in TAO have the form:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint uiop://V.v@rendezvous_point1,...,W.w@rendezvous_point2
-	</CODE>
+        <CODE>
+          -ORBEndpoint uiop://V.v@rendezvous_point1,...,W.w@rendezvous_point2
+        </CODE>
     </BLOCKQUOTE>
     <P>
       Where "<CODE>V.v</CODE>" and "<CODE>W.w</CODE>" are the UIOP
@@ -392,9 +446,9 @@
       endpoint specification could be used
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint 'uiop://1.0@/tmp/my_rendezvous_point|priority=50'
-	</CODE>
+        <CODE>
+          -ORBEndpoint 'uiop://1.0@/tmp/my_rendezvous_point|priority=50'
+        </CODE>
     </BLOCKQUOTE>
     <P>
       Notice that the endpoint is quoted to prevent the shell from
@@ -416,9 +470,9 @@
       path could be:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint uiop:///tmp/foobar
-	</CODE>
+        <CODE>
+          -ORBEndpoint uiop:///tmp/foobar
+        </CODE>
     </BLOCKQUOTE>
     In this example, the optional protocol version and
     endpoint-specific options have been omitted.  The rendezvous point
@@ -428,7 +482,7 @@
       path could be:
     <BLOCKQUOTE>
       <P>
-	<CODE>-ORBEndpoint uiop://foobar</CODE> <FONT COLOR=RED>(DISCOURAGED)</FONT>
+        <CODE>-ORBEndpoint uiop://foobar</CODE> <FONT COLOR=RED>(DISCOURAGED)</FONT>
     </BLOCKQUOTE>
     <P>
       Again, rendezvous points with relative paths are discouraged
@@ -440,9 +494,9 @@
       the rendezvous point from the endpoint specification as follows:
     <BLOCKQUOTE>
       <P>
-	<CODE>
-	  -ORBEndpoint uiop://
-	</CODE>
+        <CODE>
+          -ORBEndpoint uiop://
+        </CODE>
     </BLOCKQUOTE>
     <P>
       This will cause an endpoint to be setup in system temporary

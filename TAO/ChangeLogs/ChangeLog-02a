@@ -3,6 +3,12 @@ Wed May 16 16:41:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 	* tao/RT_ORB_Loader.cpp:
 	  Fixed fuzz errors.
 
+Wed May 16 16:40:42 2001  Steve Totten  <totten_s@ociweb.com>
+
+	* docs/ORBEndpoint.html:
+	  Added documentation for using the portspan feature for IIOP
+	  endpoints.
+
 Wed May 16 16:35:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/GIOP_Message_NonReactive_Handler.h:
