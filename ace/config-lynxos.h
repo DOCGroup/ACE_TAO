@@ -33,6 +33,10 @@
 #elif defined (__powerpc__)
   // This doesn't work on LynxOS 3.0.0, because it resets the TimeBaseRegister.
   // # define ACE_HAS_POWERPC_TIMER
+
+  // For unknown reasons, fork () doesn't seem to work well on
+  // LynxOS/PowerPC.
+  #define ACE_LACKS_FORK
 #endif /* __x86__ || __powerpc__ */
 
 // System include files are not in sys/, this gets rid of warning.
