@@ -41,6 +41,61 @@ What it amounts to is using the ACE_Select_Reactor for all platforms.
 Win32 defaults to ACE_WFMO_Reactor and that seems to be causing some
 or all of the problems.
 <P>
+Kirthika's abstract:
+<UL>
+The Protocol Stream model consists of a stream layer which pushes the
+data towards the underlying SOCK_Stream thru the stages of encryption
+and compression. This data is received at the other end of the
+SOCK_Stream and sent up to its Protocol_Stream layer via the stages of
+decompression and decryption and an optional Reader task. This is very
+similar to the model of the TCP/IP stack (specifically the datalink to
+physical layer portion).
+<P>
+ACE_Message_Blocks are used to communicate between the client and the
+server across the Protocol Stream, which abstracts the protocol
+conformance details. The underlying SOCK_Stream is used to set up the
+connection using the ACE_SOCK_Connector class. Once the connector
+completes its job, the SOCK_Stream pointer is passed on to the
+Protocol Stream which now takes over. The Client has put() and get()
+methods to send and receive data from the server. 
+<P>
+The server is implemented using the ACE_Acceptor to listen at the port
+for connections and a reactor for delegating events to the appropriate
+event handler. The handle_input () method of the handler simply allows
+the stream to receive the data and hand it over to the Handler_Task (a
+derivative of the ACE_Task) which will then process it.
+<P>
+The implementation of this Protocol Stream model is done using the
+ACE_Module class. The module for Xmit/Recv is shoved in first
+into the stream, followed by the compression and encryption modules. The
+optional Reader if defined is bundled with a dummy task
+(ACE_Thru_Task class) into a module. The get() and put() methods do
+the job of reading and writing to the Stream. Each module is made up
+of a pair of Protocol Tasks. A Protocol Task is a derivative of the
+ACE_Task and whose recv() and send() methods need to be filled to
+perform the appropriate task.
+<P>
+The Xmit object derives from the Protocol task and has a send() method
+which does the task of transmitting data to the underlying
+SOCK_Stream. Keeping the fragmentation and reassembly issues in mind,
+block-size is also sent across with the block of data.
+The Recv object uses a dummy Message Block to provoke the Protocol
+Task object to call the recv() on it. This is done by being
+foresighted about the use of mutliple threads instead of a single
+thread.
+<P>
+The compression/decompression is bundled in a single Protocol Task
+object with the send () method doing the compression and the recv()
+doing the decompression. Similarly, the encrption/decryption is done
+using a single Protocol Task object.
+<P>
+This tutorial provides a glimpse on how to design and implement a
+protocol in layers and also revises a lot of what has been learnt until
+now from the previous tutorials.
+(for instance, Message_Block, Task, Acceptor, Connector, Event_Handler
+etc.)
+</UL>
+<P>
 <font size=-1>* Ok, I didn't really implement encryption and
         compression objects.  I'll leave that as a thought
         exercise!</font>

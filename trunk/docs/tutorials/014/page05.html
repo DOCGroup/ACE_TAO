@@ -63,16 +63,12 @@ typedef ACE_Stream&lt;ACE_MT_SYNCH> Stream;
 
 int main(int argc, char *argv[])
 {
-  cerr &lt;&lt; __LINE__ &lt;&lt; endl;
-
   int numberOfMessages = argc > 1 ? <font color=#008888>ACE_OS::atoi</font>(argv[1]) : 3;
   <font color=red>// unless otherwise specified, just send three messages</font>
   <font color=red>// down the stream.</font>
 
   Stream theStream;
   <font color=red>// the ACE_Stream itself.</font>
-
-  cerr &lt;&lt; __LINE__ &lt;&lt; endl;
 
   <font color=red>// Now, we instantiate 4 different Tasks.  These do not</font>
   <font color=red>// need to be all the same class, but they do need to</font>
@@ -115,14 +111,12 @@ int main(int argc, char *argv[])
   <font color=red>// so we'll only actually install a Task into the write</font>
   <font color=red>// side of the module, effectively downstream.</font>
 
-  cerr &lt;&lt; __LINE__ &lt;&lt; endl;
   moduleOne = new Module("<font color=green>Module No. 1</font>", taskOne);
   moduleTwo = new Module("<font color=green>Module No. 2</font>", taskTwo);
   moduleThree = new Module("<font color=green>Module No. 3</font>", taskThree);
   moduleFour = new Module("<font color=green>Module No. 4</font>", taskFour);
   moduleEnd = new Module("<font color=green>Module End</font>", taskEnd);
 
-  cerr &lt;&lt; __LINE__ &lt;&lt; endl;
   <font color=red>// Now we push the Modules onto the Stream.</font>
   <font color=red>// Pushing adds the module to the head, or </font>
   <font color=red>// otherwise prepends it to whatever modules</font>
@@ -135,7 +129,6 @@ int main(int argc, char *argv[])
            ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   } 
 
-  cerr &lt;&lt; __LINE__ &lt;&lt; endl;
   if (theStream.push(moduleFour) == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   }
@@ -159,7 +152,6 @@ int main(int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>push</font>"), -1);
   }
 
-  cerr &lt;&lt; __LINE__ &lt;&lt; endl;
   <font color=red>// Now that the Modules are open, the Tasks threads should</font>
   <font color=red>// be launching and entering their svc() loop, so we send</font>
   <font color=red>// some messages down the Stream.</font>

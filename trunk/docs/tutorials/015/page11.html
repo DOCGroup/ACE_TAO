@@ -54,7 +54,7 @@ typedef ACE_Thru_Task&lt;ACE_MT_SYNCH> Thru_Task;
 }
 
 <font color=red>/* Even opening the stream is rather simple.  The important thing to
-   rememer is that the modules you push onto the stream first will be
+   remember is that the modules you push onto the stream first will be
    at the tail (eg -- most downstream) end of things when you're
    done.
  */</font>
@@ -92,7 +92,7 @@ int
   <font color=red>// will be sent through here last.  Server applications will</font>
   <font color=red>// typically use this task to do the actual processing of data.</font>
   <font color=red>// Note the use of Thru_Task.  Since a module must always have a</font>
-  <font color=red>// pair of tasks we use this on the writter side as a no-op.</font>
+  <font color=red>// pair of tasks we use this on the writer side as a no-op.</font>
   if (reader)
     {
       if (stream ().push (new Module ("<font color=green>Reader</font>",

@@ -115,6 +115,7 @@ int Work::fini (void)
 {
     while (state_.value () < 3)
     {
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) 0x%x Work::fini() state %d\n", (void *) this,state_.value()));
         if (this->process () == -1)
         {
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process"), -1);

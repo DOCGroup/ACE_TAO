@@ -26,16 +26,12 @@ typedef ACE_Stream<ACE_MT_SYNCH> Stream;
 
 int main(int argc, char *argv[])
 {
-  cerr << __LINE__ << endl;
-
   int numberOfMessages = argc > 1 ? ACE_OS::atoi(argv[1]) : 3;
   // unless otherwise specified, just send three messages
   // down the stream.
 
   Stream theStream;
   // the ACE_Stream itself.
-
-  cerr << __LINE__ << endl;
 
   // Now, we instantiate 4 different Tasks.  These do not
   // need to be all the same class, but they do need to
@@ -78,14 +74,12 @@ int main(int argc, char *argv[])
   // so we'll only actually install a Task into the write
   // side of the module, effectively downstream.
 
-  cerr << __LINE__ << endl;
   moduleOne = new Module("Module No. 1", taskOne);
   moduleTwo = new Module("Module No. 2", taskTwo);
   moduleThree = new Module("Module No. 3", taskThree);
   moduleFour = new Module("Module No. 4", taskFour);
   moduleEnd = new Module("Module End", taskEnd);
 
-  cerr << __LINE__ << endl;
   // Now we push the Modules onto the Stream.
   // Pushing adds the module to the head, or 
   // otherwise prepends it to whatever modules
@@ -98,7 +92,6 @@ int main(int argc, char *argv[])
            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), -1);
   } 
 
-  cerr << __LINE__ << endl;
   if (theStream.push(moduleFour) == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), -1);
   }
@@ -122,7 +115,6 @@ int main(int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), -1);
   }
 
-  cerr << __LINE__ << endl;
   // Now that the Modules are open, the Tasks threads should
   // be launching and entering their svc() loop, so we send
   // some messages down the Stream.

@@ -12,11 +12,7 @@
 
 <P>
 <HR WIDTH="100%">
-And now the implementation of the Protocol_Stream.  There are more
-lines of code here than we've seen so far but it still isn't
-complicated.  The basic idea is to construct the ACE_Stream with our
-set of protocol objects that will manipulate the data.  Our primary
-concern in this file is to get everything in the correct order!
+A quick look at the Protocol_Task header...
 <HR>
 <PRE>
 <font color=red>// $Id$</font>
@@ -74,7 +70,7 @@ protected:
     return this->thr_count () != 0;
   }
 
-  <font color=red>// Tasks on the writter (downstream) side of the stream are called</font>
+  <font color=red>// Tasks on the writer (downstream) side of the stream are called</font>
   <font color=red>// upon to send() data that will ultimately go to the peer.</font>
   virtual int send (ACE_Message_Block *message,
                     ACE_Time_Value *timeout);

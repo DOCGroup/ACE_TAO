@@ -1,3 +1,13 @@
+Wed Feb 10 22:19:33 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/014/stream.cpp : Removed the __LINE__ displays.
+	* docs/tutorials/014/page01.html : Added Kirthika's abstract
+	
+	* docs/tutorials/015/page01.html : Added Kirthika's abstract
+	* docs/tutorials/015/page12.html : Oops... Wrong intro text.
+	* docs/tutorials/015/Protocol_Stream.cpp : Typos fixed
+	* docs/tutorials/015/Protocol_Task.cpp : Typos fixed
+
 Wed Feb 10 15:04:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Makefile: added Pair_T.cpp and Template_Instantiations.cpp
