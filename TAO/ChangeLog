@@ -1,3 +1,21 @@
+Tue Feb 17 16:06:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+        
+          Removed the check for 'already referenced' when adding
+          a forward declared interface to the module. A forward
+          declared interface may be redeclared any number of times
+          in the same scope, referenced or not.
+          
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        
+          Added code to make sure that the propagation of a prefix to
+          nested scopes doesn't get skipped. Thanks to John Fletcher
+          <john.fletcher@rd.bbc.co.uk> for sending in a complex
+          example of 5 IDL files that stress-tested this feature
+          enough to reveal the bug.
+
 Tue Feb 17 13:04:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
