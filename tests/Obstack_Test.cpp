@@ -16,10 +16,10 @@
 //
 // ============================================================================
 
+#include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Obstack.h"
 #include "ace/Log_Msg.h"
-#include "test_config.h"
 
 ACE_RCSID(tests, Obstack_Test, "$Id$")
 

@@ -14,6 +14,7 @@
 //
 // ============================================================================
 
+#include "tests/test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
