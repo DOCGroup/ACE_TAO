@@ -89,6 +89,39 @@ AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
            UTL_Scope(AST_Decl::NT_module),
            pd_has_nested_valuetype (0)
 {
+  if (!ACE_OS::strcmp (local_name ()->get_string (), "CORBA"))
+    {
+      AST_PredefinedType *pdt;
+      
+      pdt = idl_global->gen ()->create_predefined_type (
+                                  AST_PredefinedType::PT_pseudo,
+                                  new UTL_ScopedName (
+                                    new Identifier ("TypeCode", 
+                                                    1, 
+                                                    0, 
+                                                    I_FALSE), 
+                                    NULL),
+                                  NULL);
+
+      this->fe_add_predefined_type (pdt);
+
+# ifdef IDL_HAS_VALUETYPE
+      if (idl_global->obv_support ())
+        {
+          pdt = idl_global->gen()->create_predefined_type (
+                                     AST_PredefinedType::PT_pseudo,
+                                     new UTL_ScopedName (
+                                       new Identifier ("ValueBase", 
+                                                       1, 
+                                                       0, 
+                                                       I_FALSE), 
+                                       NULL),
+                                     NULL);
+
+          this->fe_add_predefined_type (pdt);
+        }
+# endif /* IDL_HAS_VALUETYPE */
+    }
 }
 
 /*
