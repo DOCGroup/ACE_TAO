@@ -22,9 +22,9 @@ public class DOVEBrowser {
     super (); 
   }
   
-  public void init (String nameServiceIOR) {
+  public void init (String nameServiceIOR, String[] args) {
 
-    demoCore_ = new DemoCore (nameServiceIOR, null); 
+    demoCore_ = new DemoCore (nameServiceIOR, args, null); 
     demoCore_.show ();
     demoCore_.run ();
   }
@@ -39,7 +39,7 @@ public class DOVEBrowser {
     } 
     
     DOVEBrowser doveBrowser = new DOVEBrowser();
-    doveBrowser.init (nameServiceIOR);
+    doveBrowser.init (nameServiceIOR, args);
   }  
 }
   
