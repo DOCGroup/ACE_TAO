@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/default_resource.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -28,9 +27,7 @@
 # include "tao/default_resource.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID(tao, default_resource, "$Id$")
-
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_tss_resources_ (0),
@@ -717,21 +714,11 @@ ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
-template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> >;
-
-
 template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
 template class ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
 template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>
-
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>
 #pragma instantiate ACE_Lock_Adapter< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
