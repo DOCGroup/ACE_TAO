@@ -164,6 +164,25 @@ case "$host_os" in
         # FIXME: insert proper C++ library support
         ld_shlibs=no
         ;;
+      cxx)
+        # Compaq C++
+        archive_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-soname $wl$soname -o $lib'
+        archive_expsym_cmds='$CC -shared $libobjs $deplibs $linker_flags ${wl}-retain-symbols-file $wl$export_symbols'
+
+        runpath_var=LD_RUN_PATH
+        hardcode_libdir_flag_spec='-rpath $libdir'
+        hardcode_libdir_separator=:
+
+        # Commands to make compiler produce verbose output that lists
+        # what "hidden" libraries, object files and flags are used when
+        # linking.
+        #
+        # There doesn't appear to be a way to prevent this compiler from
+        # explicitly linking system object files so we need to strip them
+        # from the output so that they don't get included in the library
+        # dependencies.
+        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | grep "ld"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld .*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+          ;;
       *)
         # GNU C++ compiler
         if test "$with_gcc" = yes; then
@@ -175,8 +194,10 @@ case "$host_os" in
           export_dynamic_flag_spec='${wl}--export-dynamic'
 
           # ancient GNU ld didn't support --whole-archive et. al.
-          if $LD --help 2>&1 | egrep 'no-whole-archive' > /dev/null; then
+          if eval "$CC -print-prog-name=ld --help 2>&1" | \
+                egrep 'no-whole-archive' > /dev/null; then
             whole_archive_flag_spec="$wlarc"'--whole-archive$convenience '"$wlarc"'--no-whole-archive'
+
           else
             whole_archive_flag_spec=
           fi
@@ -214,10 +235,19 @@ case "$host_os" in
     ld_shlibs=no
     ;;
   osf3*)
-    # FIXME: insert proper C++ library support
-    ld_shlibs=no
-    ;;
-  osf4* | osf5*)
+    if test "$with_gcc" = yes; then
+      allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
+      archive_cmds='$CC -shared -nostdlib ${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $compiler_flags ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` ${wl}-update_registry ${wl}${objdir}/so_locations -o $lib'
+
+      hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
+      hardcode_libdir_separator=:
+
+      # Commands to make compiler produce verbose output that lists
+      # what "hidden" libraries, object files and flags are used when
+      # linking.
+      output_verbose_link_cmds='$CC $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
+    fi
+
     case "$CXX" in
       KCC)
         # KAI C++ Compiler 3.3f
@@ -230,8 +260,11 @@ case "$host_os" in
         ld_shlibs=no
         ;;
       cxx)
-        # FIXME: insert proper C++ library support
-        ld_shlibs=no
+        allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
+        archive_cmds='$CC -shared${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $linker_flags ${wl}-soname $soname `test -n "$verstring" && echo ${wl}-set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
+        
+        hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
+        hardcode_libdir_separator=:
 
         # Commands to make compiler produce verbose output that lists
         # what "hidden" libraries, object files and flags are used when
@@ -241,7 +274,55 @@ case "$host_os" in
         # explicitly linking system object files so we need to strip them
         # from the output so that they don't get included in the library
         # dependencies.
-        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | grep "ld" | grep -v "ld:"`; templist=`echo $templist | sed 's/\(^.*ld.*\)\( .*ld.*$\)/\1/'`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | grep "ld" | grep -v "ld:"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld.*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+        ;;
+      *)
+        # FIXME: insert proper C++ library support
+        ld_shlibs=no
+        ;;
+    esac
+    ;;
+  osf4* | osf5*)
+    if test "$with_gcc" = yes; then
+      allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
+      archive_cmds='$CC -shared -nostdlib ${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $compiler_flags ${wl}-msym ${wl}-soname ${wl}$soname `test -n "$verstring" && echo ${wl}-set_version ${wl}$verstring` ${wl}-update_registry ${wl}${objdir}/so_locations -o $lib'
+
+      hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
+      hardcode_libdir_separator=:
+
+      # Commands to make compiler produce verbose output that lists
+      # what "hidden" libraries, object files and flags are used when
+      # linking.
+      output_verbose_link_cmds='$CC $CFLAGS -v conftest.$objext 2>&1 | egrep "\-L"'
+    fi
+
+    case "$CXX" in
+      KCC)
+        # KAI C++ Compiler 3.3f
+        # FIXME: insert proper C++ library support
+        ld_shlibs=no
+        ;;
+      RCC)
+        # Rational C++ 2.4.1
+        # FIXME: insert proper C++ library support
+        ld_shlibs=no
+        ;;
+      cxx)
+        allow_undefined_flag=' ${wl}-expect_unresolved ${wl}\*'
+        archive_cmds='$CC -shared${allow_undefined_flag} $predeps $libobjs $deplibs $postdeps $linker_flags ${wl}-msym ${wl}-soname $soname `test -n "$verstring" && echo ${wl}-set_version $verstring` -update_registry ${objdir}/so_locations -o $lib'
+        
+        hardcode_libdir_flag_spec='${wl}-rpath ${wl}$libdir'
+        hardcode_libdir_separator=:
+
+        # Commands to make compiler produce verbose output that lists
+        # what "hidden" libraries, object files and flags are used when
+        # linking.
+        #
+        # There doesn't appear to be a way to prevent this compiler from
+        # explicitly linking system object files so we need to strip them
+        # from the output so that they don't get included in the library
+        # dependencies.
+        output_verbose_link_cmds='templist=`$CC $CFLAGS -v conftest.$objext 2>&1 | grep "ld" | grep -v "ld:"`; templist=`echo $templist | sed "s/\(^.*ld.*\)\( .*ld.*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
         ;;
       *)
         # FIXME: insert proper C++ library support
@@ -290,14 +371,19 @@ case "$host_os" in
         no_undefined_flag=' -ztext'
         archive_cmds='$CC -G${allow_undefined_flag} -nolib -h$soname -o $lib $predeps $libobjs $deplibs $postdeps $linker_flags'
         archive_expsym_cmds='$echo "{ global:" > $lib.exp~cat $export_symbols | sed -e "s/\(.*\)/\1;/" >> $lib.exp~$echo "local: *; };" >> $lib.exp~
-        $CC -G${allow_undefined_flag} -nolib -Qoption ld -M,$lib.exp -h$soname -o $lib $predeps $libobjs $deplibs $postdeps $linker_flags~$rm $lib.exp'
+        $CC -G${allow_undefined_flag} -nolib ${wl}-M ${wl}$lib.exp -h$soname -o $lib $predeps $libobjs $deplibs $postdeps $linker_flags~$rm $lib.exp'
 
         hardcode_libdir_flag_spec='-R$libdir'
         hardcode_shlibpath_var=no
         case "$host_os" in
           solaris2.[0-5] | solaris2.[0-5].*) ;;
-          *) # Supported since Solaris 2.6 (maybe 2.5.1?)
-            whole_archive_flag_spec='-z allextract$convenience -z defaultextract' ;;
+          *)
+            # The C++ compiler is used as linker so we must use $wl
+            # flag to pass the commands to the underlying system
+            # linker.
+            # Supported since Solaris 2.6 (maybe 2.5.1?)
+            whole_archive_flag_spec='${wl}-z ${wl}allextract$convenience ${wl}-z ${wl}defaultextract'
+            ;;
         esac
         link_all_deplibs=yes
 
@@ -538,8 +624,15 @@ else
     linux*)
       case "$CXX" in
         KCC)
-         # KAI C++ Compiler
+          # KAI C++ Compiler
           ac_cv_prog_cc_pic='-fPIC'
+          ;;
+        cxx)
+          # Compaq C++
+          # Make sure the PIC flag is empty.  It appears that all Alpha
+          # Linux and Compaq Tru64 Unix objects are PIC.
+          ac_cv_prog_cc_pic=
+          ac_cv_prog_cc_static='-non_shared'
           ;;
         *)
           ;;
@@ -570,6 +663,11 @@ else
           ac_cv_prog_cc_pic='-pic'
           ;;
         cxx)
+          # Digital/Compaq C++
+          ac_cv_prog_cc_wl='-Wl,'
+          # Make sure the PIC flag is empty.  It appears that all Alpha
+          # Linux and Compaq Tru64 Unix objects are PIC.
+          ac_cv_prog_cc_pic=
           ac_cv_prog_cc_static='-non_shared'
           ;;
         *)
@@ -593,7 +691,7 @@ else
           # Sun C++ 4.2, 5.x and Centerline C++
           ac_cv_prog_cc_pic='-KPIC'
           ac_cv_prog_cc_static='-Bstatic'
-          ac_cv_prog_cc_wl='-Wl,'
+          ac_cv_prog_cc_wl='-Qoption ld '
           ;;
         gcx)
           # Green Hills C++ Compiler

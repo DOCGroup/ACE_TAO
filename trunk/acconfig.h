@@ -218,11 +218,6 @@
 #undef ACE_SIZEOF_LONG_DOUBLE
 
 
-/* Missing prototypes:  These prototypes should only be enabled if the
-   function actually exists on the platform. */
-
-
-
 /* typedef for ACE_UINT64 */
 /*
    We only make the typedef if ACE_UINT64_TYPEDEF is defined.  Otherwise,

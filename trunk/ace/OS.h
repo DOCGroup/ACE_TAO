@@ -3928,6 +3928,10 @@ extern int t_errno;
 #   endif /* ACE_HAS_ALLOCA_H */
 
 #   if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI) || defined (ACE_HAS_FORE_ATM_XTI)
+#     if defined (ACE_HAS_BROKEN_XTI_MACROS)
+#       undef TCP_NODELAY
+#       undef TCP_MAXSEG
+#     endif /* ACE_HAS_BROKEN_XTI_MACROS */
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 extern "C" {
 #     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
@@ -3939,19 +3943,13 @@ extern "C" {
 #       include /**/ <fore_xti/ans.h>
 #     elif defined (ACE_HAS_TIUSER_H)
 #       include /**/ <tiuser.h>
-#     else
-#       if defined (ACE_HAS_BROKEN_XTI_MACROS)
-#         undef TCP_NODELAY
-#         undef TCP_MAXSEG
-#       endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#       if defined ACE_HAS_SYS_XTI_H
+#     elif defined (ACE_HAS_SYS_XTI_H)
 #         define class ace_xti_class
 #         include /**/ <sys/xti.h>
 #         undef class
-#       else
+#     else
 #         include /**/ <xti.h>
-#       endif /* ACE_HAS_SYS_XTI_H */
-#     endif /* ACE_HAS_TIUSER_H */
+#     endif /* ACE_HAS_FORE_ATM_XTI */
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 }
 #     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
