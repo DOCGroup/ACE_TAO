@@ -1,3 +1,15 @@
+Sat Nov 29 13:34:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/stub.i (STUB_Object): 
+	  No need to release type_id, since it is a String_var now. Thanks
+	  to Wei Chiang <chiang@tele.nokia.fi> for pointing this out.
+
+	* giop.cpp: 
+	  If things go wrong TAO_GIOP::send_request will close the
+	  handler and set it to zero, but only a temporary was
+	  affected, I decided to set the original value to zero also;
+	  based on the return value.
+
 Wed Nov 26 23:24:57 1997    <cleeland@cs.wustl.edu>
 
 	* TAO version 0.0.41, released Wed Nov 26 23:24:57 1997.
@@ -56,6 +68,7 @@ Tue Nov 25 20:49:24 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tao/orbobj.h: 
 	* tao/orbobj.cpp: 
+	* tao/orb_core.cpp: 
 	* tao/params.h: 
 	* tao/params.cpp: 
 	  Removed the parameters to specify the event service and schedule
