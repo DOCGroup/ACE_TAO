@@ -1,3 +1,23 @@
+Mon Jan 15 19:28:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_interface/base_proxy_broker_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_global.h:
+
+          Previous fix
+            Mon Jan 15 14:04:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+          doesn't work for interfaces defined inside a module or nested
+          modules, since the proxy broker factory function pointers
+          must be declared globally. The above changes move the 
+          declaration(s) to a point in the client header file just
+          after the close of any namespace(s) that may have been declared
+          in the IDL file.
+
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+
+          Cosmetic changes.
+
 Mon Jan 15 19:26:30 2001  Priyanka Gontla <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp: 
