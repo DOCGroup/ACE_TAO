@@ -10,7 +10,7 @@ LSRC = Basic_Logging_Service.cpp
 
 LOG_OBJS=$(LSRC:.cpp=.o)
 
-LDLIBS = -lTAO_DsLogAdmin -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
+LDLIBS = -lTAO_DsLogAdmin -lTAO_ETCL -lTAO_CosNaming -lTAO_IORTable -lTAO_DynamicAny -lTAO_Messaging -lTAO_PortableServer -lTAO -lACE
 
 BIN2 = Basic_Logging_Service
 
