@@ -1,3 +1,7 @@
+Fri Sep 18 22:50:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/run_tests.bat: Added DLList_Test.
+
 Fri Sep 18 18:06:19 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/Asynch_IO.h:
