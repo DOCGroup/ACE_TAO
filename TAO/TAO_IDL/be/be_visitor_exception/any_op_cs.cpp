@@ -56,26 +56,44 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   *os << "void operator<<= (CORBA::Any &_tao_any, const "
       << node->name () << " &_tao_elem) // copying" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", new "
-      << node->name () << "(_tao_elem), 1, _tao_env);" << be_uidt_nl
+      << node->name () << " *_tao_any_val = new " << node->name ()
+      << " (_tao_elem);" << be_nl
+      << "if (!_tao_any_val) return;" << be_nl
+      << "TAO_TRY" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_any.replace (" << node->tc_name () << ", _tao_any_val, "
+      << "1, TAO_TRY_ENV);" << be_nl
+      << "TAO_CHECK_ENV;" << be_uidt_nl
+      << "}" << be_nl
+      << "TAO_CATCHANY " << be_nl
+      << "{" << be_idt_nl
+      << "delete _tao_any_val;" << be_uidt_nl
+      << "}" << be_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n" << be_nl;
 
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->name () << " *_tao_elem) // non copying" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
+      << "TAO_TRY" << be_nl
+      << "{" << be_idt_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem, 1, _tao_env); // consume it" << be_uidt_nl
+      << "_tao_elem, 1, TAO_TRY_ENV); // consume it" << be_nl
+      << "TAO_CHECK_ENV;" << be_uidt_nl
+      << "}" << be_nl
+      << "TAO_CATCHANY {}" << be_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
       << node->name () << " *&_tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::Environment _tao_env;" << be_nl
+      << "TAO_TRY" << be_nl
+      << "{" << be_idt_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
       << "if (!type->equal (" << node->tc_name ()
-      << ", _tao_env)) return 0; // not equal" << be_nl
+      << ", TAO_TRY_ENV)) return 0; // not equal" << be_nl
+      << "TAO_CHECK_ENV;" << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
       << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
@@ -83,12 +101,13 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
       << be_nl
       << "if (stream.decode (" << node->tc_name ()
-      << ", _tao_elem, 0, _tao_env)" << be_nl
+      << ", _tao_elem, 0, TAO_TRY_ENV)" << be_nl
       << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl
       << "((CORBA::Any *)&_tao_any)->replace ("
-      << node->tc_name () << ", _tao_elem, 1, _tao_env);" << be_nl
-      << "  return 1;" << be_uidt_nl
+      << node->tc_name () << ", _tao_elem, 1, TAO_TRY_ENV);" << be_nl
+      << "TAO_CHECK_ENV;" << be_nl
+      << "return 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // decode failed
       << "{" << be_idt_nl
@@ -101,8 +120,14 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "_tao_elem = (" << node->name () << " *)_tao_any.value ();"
       << be_nl
       << "return 1;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_nl
+      << "TAO_CATCHANY" << be_nl
+      << "{" << be_idt_nl
+      << "delete _tao_elem;" << be_nl
       << "return 0;" << be_uidt_nl
+      << "}" << be_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n\n";
 
 
