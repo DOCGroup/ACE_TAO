@@ -24,7 +24,7 @@ TAO_RTScheduler_Current::TAO_RTScheduler_Current (void)
 
 void
 TAO_RTScheduler_Current::init (TAO_ORB_Core* orb 
-			       ACE_ENV_ARG_DECL)
+			                         ACE_ENV_ARG_DECL)
 {
   this->orb_ = orb;
   
