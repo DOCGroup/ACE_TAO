@@ -516,6 +516,7 @@ int
 ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
 {
   // ACE_TRACE ("ACE_OS::set_sched_params");
+
 #if defined (ACE_HAS_STHREADS)
   // Set priority class, priority, and quantum of this LWP or process as
   // specified in scheduling_params.
@@ -564,6 +565,31 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
     {
       return ACE_OS::last_error ();
     }
+
+
+#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+  // Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+  // providing this code for 1003.1C PThreads
+
+  struct sched_param param;
+  int policy, result;
+  ACE_hthread_t my_thread_id;
+  ACE_OS::thr_self (my_thread_id);
+
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_id, &policy, &param),
+                                result),
+              int, -1, result);
+  if (result == -1)
+    return result; // error in pthread_getschedparam
+
+  param.sched_priority =
+           scheduling_params.priority ().os_default_thread_priority ();
+  policy = scheduling_params.priority ().os_priority_class ();
+
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id, policy,&param),
+                                       result),
+                     int, -1);
+
 
 #elif defined (ACE_WIN32)
 
