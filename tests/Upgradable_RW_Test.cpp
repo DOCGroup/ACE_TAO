@@ -411,7 +411,7 @@ main (int argc, ASYS_TCHAR *argv[])
                       Writer_Task (time_Calculation,
                                   barrier),
                       -1);
-      writer_tasks[i]->activate (THR_BOUND | ACE_SCHED_FIFO,
+      writer_tasks[i]->activate (THR_BOUND | THR_SCHED_FIFO,
                                  1,
                                  0,
                                  ACE_DEFAULT_THREAD_PRIORITY);
