@@ -1,3 +1,13 @@
+Mon Dec  6 12:50:17 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+
+        * tests/TestUtils/TestCombinedThreads.h:
+        * tests/TestUtils/TestCombinedThreads.cpp:
+        * tests/TestUtils/TestUtils.mpc:
+
+          Removed my TestUtils library as it is completely out-of-date and
+          no longer useful.
+
 Mon Dec  6 10:23:31 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * interop-tests/wchar/client.cpp:
