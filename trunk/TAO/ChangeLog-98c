@@ -1,3 +1,8 @@
+Mon Aug 31 07:50:23 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp (dump_schedule):
+          ooops, the 64-to-32 bit cast had to be const.
+
 Sun Aug 30 22:17:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp (dump_schedule):
