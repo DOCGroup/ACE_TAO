@@ -37,7 +37,6 @@ namespace CIAO
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "i am inside get home objref \n"));
     return this->the_home_servant_POA ()->servant_to_reference (p
        ACE_ENV_ARG_PARAMETER);
   }
@@ -108,7 +107,6 @@ namespace CIAO
      Dynamic_Component_Servant_Base* servant
      ACE_ENV_ARG_DECL)
   {
-    ACE_DEBUG ((LM_DEBUG, "i am in add servant map\n"));
     this->dsa_->add_servant_map (oid, servant);
   }
 
@@ -117,7 +115,6 @@ namespace CIAO
     (PortableServer::ObjectId &oid
      ACE_ENV_ARG_DECL)
   {
-    ACE_DEBUG ((LM_DEBUG, "i am in delete servant map\n"));
     this->dsa_->delete_servant_map (oid);
   }
 
