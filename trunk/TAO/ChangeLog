@@ -2,8 +2,11 @@ Wed Sep 10 13:19:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
 
-          Added explicit template instantiation of
-          TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>.
+          Added explicit template instantiations of
+          TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>,
+          TAO_IFR_Generic_Utils<CORBA::InitializerSeq>,
+          POA_CORBA::ExtValueDef_tie<TAO_ExtValueDef_i>, and
+          POA_CORBA::ComponentIR::ModuleDef_tie<TAO_ModuleDef_i>.
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
 
