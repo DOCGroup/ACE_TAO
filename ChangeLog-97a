@@ -1,5 +1,8 @@
 Wed Jan 29 09:03:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.h: moved ACE_id_t and ACE_pri_t typedefs out of the
+	  ACE_HAS_THREADS section.
+
 	* ace/OS.cpp: fixed ACE_OS::set_sched_params on Win32 and VxWorks.
 
 	* ace/Scheduling_Parameters.*, ace/Thread_Priority.*: updated
@@ -9,6 +12,8 @@ Wed Jan 29 09:03:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	  added context switch timing test.  Currently only works on Suns
 	  because that's the only platform for which ACE has a high-
 	  resolution timer.
+
+	* Makefile: added chmod of VERSION file in TIMESTAMP macro.
 
 Wed Jan 29 00:59:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
