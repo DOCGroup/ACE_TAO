@@ -260,7 +260,8 @@ ACE_ENDTRY;
 ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
 
-_tao_server_request.init_reply ();
+_tao_server_request.init_reply (ACE_TRY_ENV);
+ACE_CHECK;
 TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
 if (!(
   (_tao_out << _tao_retval.in ())
@@ -286,7 +287,8 @@ void POA_CORBA_DomainManager::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply ();
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
     ACE_THROW (CORBA::MARSHAL ());
@@ -303,7 +305,8 @@ void POA_CORBA_DomainManager::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply ();
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
     ACE_THROW (CORBA::MARSHAL ());
@@ -820,7 +823,8 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  _tao_server_request.init_reply ();
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
 #else
   ACE_UNUSED_ARG (_tao_server_request);
   ACE_UNUSED_ARG (_tao_object_reference);
@@ -845,7 +849,8 @@ void POA_CORBA_ConstructionPolicy::_is_a_skel (
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply ();
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
     ACE_THROW (CORBA::MARSHAL ());
@@ -862,7 +867,8 @@ void POA_CORBA_ConstructionPolicy::_non_existent_skel (
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
-  _tao_server_request.init_reply ();
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
     ACE_THROW (CORBA::MARSHAL ());

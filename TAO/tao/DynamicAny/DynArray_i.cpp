@@ -429,12 +429,10 @@ TAO_DynArray_i::to_any (CORBA::Environment& ACE_TRY_ENV)
        i < this->da_members_.size ();
        i++)
     {
-      // @@@ (JP) This is a workaround until we implement the default
-      // intial values defined in CORBA 2.3.1.
+      // Each component must have been initialized.
       if (!this->da_members_[i].in ())
         {
-          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 
-                            0);
+          ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (), 0);
         }
 
       // Recursive step

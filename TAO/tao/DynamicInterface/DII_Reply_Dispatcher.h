@@ -28,10 +28,10 @@
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "dynamicinterface_export.h"
-#include "tao/Asynch_Reply_Dispatcher.h"
+#include "tao/Reply_Dispatcher.h"
 
 class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
-  : public TAO_Asynch_Reply_Dispatcher_Base
+  : public TAO_Reply_Dispatcher
 {
   // = TITLE
   //    TAO_DII_Deferred_Reply_Dispatcher
@@ -46,18 +46,51 @@ public:
   virtual ~TAO_DII_Deferred_Reply_Dispatcher (void);
   // Destructor.
 
+  CORBA::ULong reply_status (void) const;
+  // Get the reply status.
+
+  const TAO_GIOP_Version& version (void) const;
+  // Get the GIOP version
+
+  void transport (TAO_Transport *t);
+  // Sets the transport for this invocation.
+
   // = The Reply_Dispatcher methods
   virtual int dispatch_reply (CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
                               IOP::ServiceContextList& reply_ctx,
-                              TAO_GIOP_Message_State *message_state);
-
+                              TAO_GIOP_Message_State* message_state);
+  virtual TAO_GIOP_Message_State *message_state (void);
+  virtual void dispatcher_bound (TAO_Transport*);
   virtual void connection_closed (void);
 
+protected:
+  IOP::ServiceContextList reply_service_info_;
+  // The service context list
+  // Note, that this is not a reference as in
+  // the synchronous case. We own the reply_service_info
+  // because our TAO_Asynch_Invocation will go out
+  // of scope before we are done.
+
 private:
+  CORBA::ULong reply_status_;
+  // Reply or LocateReply status.
+
+  TAO_GIOP_Message_State *message_state_;
+  // CDR stream for reading the input.
+  // @@ Carlos : message_state should go away. All we need is the reply
+  //    cdr. Is that right? (Alex).
+
   const CORBA::Request_ptr req_;
   // Where the reply needs to go.
+
+  TAO_Transport *transport_;
+  // This invocation is using this transport, may change...
 };
+
+#if defined (__ACE_INLINE__)
+#  include "DII_Reply_Dispatcher.inl"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"

@@ -48,13 +48,6 @@ CORBA_Request::_decr_refcnt (void)
   return 0;
 }
 
-// The pseudo-object _nil method.
-CORBA_Request_ptr
-CORBA_Request::_nil (void)
-{
-  return (CORBA_Request_ptr)0;
-}
-
 // DII Request class implementation
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
@@ -112,10 +105,10 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 
   this->exceptions_ = tmp;
 
-  ACE_NEW (this->args_,
+  ACE_NEW (this->args_, 
            CORBA::NVList);
 
-  ACE_NEW (this->result_,
+  ACE_NEW (this->result_, 
            CORBA::NamedValue);
 }
 
@@ -140,13 +133,10 @@ CORBA_Request::~CORBA_Request (void)
 void
 CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
-
-  TAO_GIOP_DII_Invocation call (this->target_->_stubobj (),
-                                this->opname_,
-                                ACE_OS::strlen (this->opname_),
-                                argument_flag,
-                                this->orb_->orb_core ());
+  TAO_GIOP_Twoway_Invocation call (this->target_->_stubobj (),
+                                   this->opname_,
+                                   ACE_OS::strlen (this->opname_),
+                                   this->orb_->orb_core ());
 
   // Loop as needed for forwarding.
   for (;;)
@@ -156,7 +146,7 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 
       CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
-      call.prepare_header (ACE_static_cast (CORBA::Octet,
+      call.prepare_header (ACE_static_cast (CORBA::Octet, 
                                             flag),
                            ACE_TRY_ENV);
       ACE_CHECK;
@@ -168,7 +158,7 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK;
 
       // Make the call ... blocking for the response.
-      int status = call.invoke (this->exceptions_.in (),
+      int status = call.invoke (this->exceptions_.in (), 
                                 ACE_TRY_ENV);
       ACE_CHECK;
 
@@ -219,12 +209,9 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 void
 CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
-
   TAO_GIOP_Oneway_Invocation call (this->target_->_stubobj (),
                                    this->opname_,
                                    ACE_OS::strlen (this->opname_),
-                                   argument_flag,
                                    this->orb_->orb_core ());
 
   // Loop as needed for forwarding.
@@ -286,11 +273,8 @@ CORBA_Request::send_deferred (CORBA::Environment &ACE_TRY_ENV)
     this->response_received_ = 0;
   }
 
-  CORBA::Boolean argument_flag = this->args_->count () ? 1: 0;
-
   TAO_GIOP_DII_Deferred_Invocation call (this->target_->_stubobj (),
                                          this->orb_->orb_core (),
-                                         argument_flag,
                                          this);
 
   // Loop as needed for forwarding.

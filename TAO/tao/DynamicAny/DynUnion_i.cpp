@@ -578,12 +578,11 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
                        CORBA::SystemException
       ))
 {
-  // @@@ (JP) This is a workaround until we implement the default
-  // intial values defined in CORBA 2.3.1.
+  // Both Dynanys must have been initialied.
   if (this->member_.in () == 0
       || this->discriminator_.in () == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
+      ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
                         0);
     }
 

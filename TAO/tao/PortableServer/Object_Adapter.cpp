@@ -1461,13 +1461,6 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
       // request.
       if (original_priority_ != target_priority)
         {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("RTCORBA::CLIENT_PROPAGATED processing")
-                        ACE_TEXT (" (%P|%t): original thread priority %d")
-                        ACE_TEXT (" temporarily changed to %d\n"),
-                        original_priority_, target_priority));
-
           if (poa_.orb_core ().set_thread_priority (target_priority) == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 

@@ -17,90 +17,20 @@ ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 # include "DII_Invocation.inl"
 #endif /* ! __ACE_INLINE__ */
 
-int
-TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
-                                 CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException, CORBA::UnknownUserException))
+void
+TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int retval = this->invoke_i (0,
-                               ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
+  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // A TAO_INVOKE_EXCEPTION status, but no exception raised means that
-  // we have a user exception.
-  // @@ This is a bit brittle, think about a better implementation.
-  if (retval == TAO_INVOKE_EXCEPTION)
-    {
-      // Match the exception interface repository id with the
-      // exception in the exception list.
-      // This is important to decode the exception.
-
-      CORBA::String_var buf;
-
-      TAO_InputCDR tmp_stream (this->inp_stream (),
-                               this->inp_stream ().start ()->length (),
-                               0);
-
-      // Pull the exception ID out of the marshaling buffer.
-      if (tmp_stream.read_string (buf.inout ()) == 0)
-        {
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                            CORBA::COMPLETED_YES),
-                            TAO_INVOKE_EXCEPTION);
-        }
-
-      for (CORBA::ULong i = 0;
-           exceptions != 0 && i < exceptions->count ();
-           i++)
-        {
-          CORBA::TypeCode_ptr tcp = exceptions->item (i, 
-                                                      ACE_TRY_ENV);
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          const char *xid = tcp->id (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          if (ACE_OS::strcmp (buf.in (), xid) != 0)
-            {
-              continue;
-            }
-
-          const ACE_Message_Block* cdr = this->inp_stream ().start ();
-
-          CORBA_Any any (tcp, 
-                         0,
-                         this->inp_stream ().byte_order (),
-                         cdr);
-
-          CORBA_Exception *exception = 0;
-
-          ACE_NEW_THROW_EX (exception,
-                            CORBA_UnknownUserException (any),
-                            CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                              CORBA::COMPLETED_YES));
-          ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-          // @@ Think about a better way to raise the exception here,
-          //    maybe we need some more macros?
-          ACE_TRY_ENV.exception (exception);  // We can not use ACE_THROW here.
-          return TAO_INVOKE_EXCEPTION;
-        }
-
-      // If we couldn't find the right exception, report it as
-      // CORBA::UNKNOWN.
-
-      // @@ It would seem that if the remote exception is a
-      //    UserException we can assume that the request was
-      //    completed.
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                        CORBA::COMPLETED_YES),
-                        TAO_INVOKE_EXCEPTION);
-    }
-
-  return retval;
+  this->target_spec_.target_specifier (this->profile_->object_key ());
+  this->transport_->start_request (this->orb_core_,
+                                   this->target_spec_,
+                                   this->out_stream_,
+                                   ACE_TRY_ENV);
+  ACE_CHECK;
 }
-
-//***************************************************************************
 
 int
 TAO_GIOP_DII_Deferred_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)

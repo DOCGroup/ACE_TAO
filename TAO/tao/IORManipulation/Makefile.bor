@@ -9,14 +9,13 @@ OBJFILES = \
 	$(OBJDIR)\IORManip_Loader.obj \
 	$(OBJDIR)\IORManipulation.obj \
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IORMANIP_CFLAGS) \
-	-DTAO_IORMANIP_BUILD_DLL
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DTAO_IORMANIP_BUILD_DLL
 
 CPPDIR = .
 
 INCDIR_NAME = tao/IORManipulation
 INCLUDES = \
-	*.h *.i
+         *.h *.i
 
 LIBFILES = $(TAO_LIB) $(ACE_LIB)
 

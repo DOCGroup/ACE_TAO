@@ -156,6 +156,7 @@ TAO_ORB_Manager::init_child_poa (int& argc,
       policy->destroy (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
+
   return 0;
 }
 

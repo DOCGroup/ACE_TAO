@@ -532,12 +532,6 @@ TAO_POA::create_reference_with_priority (const char * intf,
   this->validate_policies (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        0);
-    }
-
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
@@ -556,12 +550,6 @@ TAO_POA::create_reference_with_id_and_priority (const PortableServer::ObjectId &
 {
   this->validate_policies (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        0);
-    }
 
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);

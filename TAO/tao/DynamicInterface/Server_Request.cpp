@@ -81,12 +81,6 @@ void
 CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  // arguments() must be called before either of these.
-  if (this->params_ != 0 || this->exception_ != 0)
-    {
-      ACE_THROW (CORBA::BAD_INV_ORDER (7, CORBA::COMPLETED_NO));
-    }
-
   // Save params for later use when marshaling the reply.
   this->params_ = list;
 
@@ -102,17 +96,17 @@ CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list,
 }
 
 // Store the result value.  There's either an exception, or a result,
-// but not both of them.  Results can be reported (at most once)
+// but not both of them.  Results (and exceptions) can be reported
 // only after the parameter list has been provided (maybe empty).
 void
 CORBA_ServerRequest::set_result (const CORBA::Any &value,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   // Setting a result when another result already exists or if an exception
-  // exists or before the args have been processeed is an error.
-  if (this->retval_ != 0 || this->exception_ != 0 || this->params_ == 0)
+  // exists is an error.
+  if (this->retval_ != 0 || this->exception_ != 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (8, CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
     }
 
   ACE_NEW_THROW_EX (this->retval_,
@@ -121,25 +115,14 @@ CORBA_ServerRequest::set_result (const CORBA::Any &value,
   ACE_CHECK;
 }
 
-  // NOTE: if "ACE_TRY_ENV" is set, there has been a system exception,
-  // and it will take precedence over exceptions reported using the
-  // set_exception() mechanism of the ServerRequest, which we assume
-  // the application writer will use to report only user exceptions.
-  // If both types of exception happen on the same invocation, the user
-  // exception will be lost.
-
 // Store the exception value.
 void
 CORBA_ServerRequest::set_exception (const CORBA::Any &value,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TypeCode_var tc = value.type ();
-
-  // set_exception() can be called at any time, but the Any arg MUST
-  // contain an exception.
-  if (tc->kind () != CORBA::tk_except)
+  if (this->retval_ != 0 || this->exception_ != 0)
     {
-      ACE_THROW (CORBA::BAD_PARAM (21, CORBA::COMPLETED_MAYBE));
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
     }
 
   ACE_NEW_THROW_EX (this->exception_,
@@ -148,6 +131,20 @@ CORBA_ServerRequest::set_exception (const CORBA::Any &value,
   ACE_CHECK;
 
   this->orb_server_request_.exception_type (TAO_GIOP_USER_EXCEPTION);
+
+  if (value.value ())
+    {
+      // @@ TODO - Change this to use <<=, now that we have it
+      // for CORBA_Exception.
+      CORBA_Exception* x = (CORBA_Exception*)value.value ();
+
+      if (CORBA_SystemException::_downcast (x) != 0)
+        {
+          this->orb_server_request_.exception_type (
+                                        TAO_GIOP_SYSTEM_EXCEPTION
+                                      );
+        }
+    }
 }
 
 // This method will be utilized by the DSI servant to marshal outgoing
@@ -155,56 +152,59 @@ CORBA_ServerRequest::set_exception (const CORBA::Any &value,
 void
 CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->orb_server_request_.exception_type () == TAO_GIOP_NO_EXCEPTION)
+  // NOTE: if "env" is set, it takes precedence over exceptions
+  // reported using the mechanism of the ServerRequest.  Only system
+  // exceptions are reported that way ...
+  //
+  // XXX Exception reporting is ambiguous; it can be cleaner than
+  // this.  With both language-mapped and dynamic/explicit reporting
+  // mechanisms, one of must be tested "first" ... so an exception
+  // reported using the other mechanism could be "lost".  Perhaps only
+  // the language mapped one should be used for system exceptions.
+
+  // If there wasn't any exception, we proceed.
+  if (this->orb_server_request_.exception_type () == TAO_GIOP_NO_EXCEPTION 
+      && CORBA::is_nil (this->orb_server_request_.forward_location ()))
     {
-      // In DSI, we can't rely on the skeleton to do this.
-      if (this->retval_ == 0 && this->params_ == 0)
-        {
-          this->orb_server_request_.argument_flag (0);
-        }
-
-      this->orb_server_request_.init_reply ();
-
       // Send the return value, if any.
       if (this->retval_ != 0)
         {
-          this->retval_->_tao_encode (
-                             this->orb_server_request_.outgoing (),
-                             this->orb_server_request_.orb_core (),
-                             ACE_TRY_ENV
-                           );
-          ACE_CHECK;
+          if (this->retval_->any_owns_data ())
+            {
+              this->retval_->_tao_encode (
+                                 this->orb_server_request_.outgoing (),
+                                 this->orb_server_request_.orb_core (),
+                                 ACE_TRY_ENV
+                               );
+              ACE_CHECK;
+            }
+          else
+            {
+              CORBA::TypeCode_var tc = this->retval_->type ();
+
+              TAO_InputCDR cdr (this->retval_->_tao_get_cdr (),
+                                this->retval_->_tao_byte_order ());
+
+              (void) TAO_Marshal_Object::perform_append (
+                         tc.in (),
+                         &cdr,
+                         &this->orb_server_request_.outgoing (),
+                         ACE_TRY_ENV
+                       );
+              ACE_CHECK;
+            }
         }
 
       // Send the "inout" and "out" parameters.
       if (this->params_ != 0)
         {
-          this->params_->_tao_encode (
-                             this->orb_server_request_.outgoing (),
-                             this->orb_server_request_.orb_core (),
-                             CORBA::ARG_INOUT | CORBA::ARG_OUT,
-                             ACE_TRY_ENV
-                           );
+          this->params_->_tao_encode (this->orb_server_request_.outgoing (),
+                                      this->orb_server_request_.orb_core (),
+                                      CORBA::ARG_INOUT | CORBA::ARG_OUT,
+                                      ACE_TRY_ENV);
           ACE_CHECK;
         }
     }
-  else
-    {
-      // This defaults to 1, but just to be safe...
-      this->orb_server_request_.argument_flag (1);
-
-      // Write the reply header to the ORB request's outgoing CDR stream.
-      this->orb_server_request_.init_reply ();
-
-      this->exception_->_tao_encode (
-                            this->orb_server_request_.outgoing (),
-                            this->orb_server_request_.orb_core (),
-                            ACE_TRY_ENV
-                          );
-      ACE_CHECK;
-    }
-
-  this->orb_server_request_.tao_send_reply ();
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

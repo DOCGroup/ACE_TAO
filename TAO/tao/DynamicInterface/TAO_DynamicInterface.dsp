@@ -232,23 +232,27 @@ SOURCE=.\Server_Request.h
 # PROP Default_Filter "i"
 # Begin Source File
 
-SOURCE=.\Context.inl
+SOURCE=.\Context.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\DII_Invocation.inl
+SOURCE=.\DII_Invocation.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\ExceptionList.inl
+SOURCE=.\DII_Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request.inl
+SOURCE=.\ExceptionList.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Server_Request.inl
+SOURCE=.\Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_Request.i
 # End Source File
 # End Group
 # End Target
