@@ -1,3 +1,10 @@
+Tue Apr 24 10:11:08 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Invocation.cpp:
+
+          Release the transport prior to calling connect on the connection
+          registry.  Thanks to Dayisi <dayisi@163.com> for reporting this.
+
 Tue Apr 24 10:03:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Priority_Mapping_Manager.h:

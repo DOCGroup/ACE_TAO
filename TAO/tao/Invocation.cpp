@@ -261,6 +261,11 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+      // Release the transport prior to connecting.
+      // In most cases the transport_ will already be zero.
+      TAO_Transport::release (this->transport_);
+      this->transport_ = 0;
+
       // Obtain a connection.
       int result = conn_reg->connect (desc,
                                       this->transport_,
