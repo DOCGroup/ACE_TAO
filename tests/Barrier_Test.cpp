@@ -48,6 +48,10 @@ tester (Tester_Args *args)
 {
   ACE_NEW_THREAD;
 
+#if defined (VXWORKS)
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
+#endif /* VXWORKS */
+
   for (int iterations = 1; 
        iterations <= args->n_iterations_;
        iterations++)
@@ -99,6 +103,11 @@ main (int, char *[])
 	   thread_handles) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
+#if defined (VXWORKS)
+      // VxWorks doesn't support thr_join() semantics...  Someday
+      // we'll fix this.
+      ACE_Thread_Manager::instance ()->wait ();
+#else
       // Wait for all the threads to reach their exit point and then join
       // with all the exiting threads.
       for (int i = 0;
@@ -106,8 +115,9 @@ main (int, char *[])
 	   i++)
 	if (ACE_Thread::join (thread_handles[i]) == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
+#endif /* VXWORKS */     
     }
-       
+  
   ACE_DEBUG ((LM_DEBUG, "test done\n"));
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
