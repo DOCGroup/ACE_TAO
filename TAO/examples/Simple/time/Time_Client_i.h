@@ -1,5 +1,6 @@
 // -*- C++ -*-
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -12,8 +13,8 @@
 //    This class implements the  interface calls for RMI.
 //
 // = AUTHOR
+// @@ Bala, please update the author!
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
 //
 // ============================================================================
 
@@ -29,24 +30,19 @@ class Time_Client_i
   //   Time_Client interface subclass.
   //
   // = DESCRIPTION
-  //   This class implements the interface between the 
-  //   interface objects and the client .
+  //   This class implements the interface between the interface
+  //   objects and the client .
 
- public:
-
+public:
   // = Initialization and termination methods.
-
   Time_Client_i (void);
   // Constructor
 
   ~Time_Client_i (void);
   // Destructor
 
-  virtual int  run (int, char** );
+  virtual int run (int, char** );
   // Execute the methods
-
- private:
- 
 };
 
 #endif /* TIME_CLIENT_I_H */
