@@ -269,9 +269,10 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
       // not found, report unknown
       status = TAO_GIOP_UNKNOWN_OBJECT;
 
-      // @@ Michael: Now we marshall the exceptions here
-      // and send them over the wire. I think we don't need
-      // to remove the exception here.
+      // the locate_servant call might have thrown an exception
+      // but we don't want to marshal it because it is no failure.
+      // The proper Locacte_Reply will tell the client what is going on.
+
       // // Remove the exception
       // env.clear ();
     }
