@@ -2,7 +2,7 @@
 default:
 	program
 	:debuglevel=multi
-../cubit.cpp
+../TAO/clnt.cpp
 	C++
-../clnt.cpp
+cubitC.cpp
 	C++

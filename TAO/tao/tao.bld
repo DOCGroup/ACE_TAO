@@ -6,8 +6,9 @@ any.cpp
 	C++
 boa.cpp
 	C++
-	:cx_e_option=noremark
 cdr.cpp
+	C++
+client_factory.cpp
 	C++
 connect.cpp
 	C++
@@ -19,11 +20,15 @@ decode.cpp
 	C++
 deep_copy.cpp
 	C++
+deep_free.cpp
+	C++
+default_client.cpp
+	C++
+default_server.cpp
+	C++
 encode.cpp
 	C++
 except.cpp
-	C++
-factories.cpp
 	C++
 giop.cpp
 	C++
@@ -55,11 +60,11 @@ request.cpp
 	C++
 roa.cpp
 	C++
+server_factory.cpp
+	C++
 svrrqst.cpp
 	C++
 tc_const.cpp
 	C++
 typecode.cpp
-	C++
-deep_free.cpp
 	C++

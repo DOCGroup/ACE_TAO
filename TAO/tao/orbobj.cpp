@@ -26,6 +26,7 @@
 
 #include "tao/corba.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Repository.h"
 
 extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA::Environment &env);
@@ -126,8 +127,8 @@ CORBA_ORB::Release (void)
 inline static void
 argvec_shift (int& argc, char *const *argv, int numslots)
 {
-  ACE_OS::memmove (&argv[0],
-		   &argv[numslots],
+  ACE_OS::memmove ((void *) &argv[0],
+		   (void *) &argv[numslots],
 		   (argc - numslots) * sizeof argv[0]);
   argc -= numslots;
 }

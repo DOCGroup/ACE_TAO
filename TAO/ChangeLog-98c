@@ -1,3 +1,31 @@
+Tue Sep 02 18:32:12 1997  Brian Mendel  <brian.r.mendel@boeing.com>
+
+   * tao/orbobj.cpp:  Added include for Service_Repository.h to orbobj.h
+   
+   * tao/debug.cpp:  Removed the TAO_NEEDS_UNUSED_VARIABLES #defines 
+     around the debug_stream declaration.  debug_stream is used by 
+     dmsg_filter in debug.cpp.  Changed SYSTEM_EXCEPTION to 
+     CORBA::SYSTEM_EXCEPTION. 
+
+   * tao/default_client.cpp: Removed extra parameter from ACE_Hash_Map_Entry
+     #pragma instantiate statement.
+
+   * tao/objtable.cpp:  Deleted pragmas for instantiating ACE_Guard,
+     ACE_Read_Guard, and ACE_Write_Guard to eliminate duplicate
+     instantiations.  Also, removed the instantiations from 
+     ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for the same reason.
+
+   * tao/orbobj.cpp: Added a typecast to void * in argvec_shift method.
+
+   * tao/default.bld - Modified VxWorks Build File to change template instantiation
+     modes.
+
+   * tao/tao.bld - Added default_client.cpp, default_server.cpp, client_factory.cpp, and
+     server_factory.cpp to the VxWorks build file.
+
+   * tao/tao.dsp - Added default_client.cpp, default_server.cpp, client_factory.cpp, and 
+     server_factory.cpp to the Win NT project file.
+
 Tue Sep  2 07:31:45 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orbobj.cpp (ORB_init): VxWorks doesn't use
