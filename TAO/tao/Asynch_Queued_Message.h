@@ -42,7 +42,8 @@ public:
    *       cannot block waiting for the message to be delivered.
    */
   TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
-                             ACE_Allocator *alloc = 0);
+                             ACE_Allocator *alloc = 0,
+                             int is_heap_allocated = 0);
 
 
   /// Destructor
