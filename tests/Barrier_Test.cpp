@@ -117,6 +117,8 @@ main (int, char *[])
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "join"), -1);
 #endif /* VXWORKS */     
     }
+
+  delete [] thread_handles;
   
   ACE_DEBUG ((LM_DEBUG, "test done\n"));
 #else
