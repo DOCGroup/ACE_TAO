@@ -1,8 +1,0 @@
-#
-# Configuration of the TAO distribution
-#
-
-TAO_COMPILER="@CXX@"
-TAO_LIBDIR="@TAO_LIBDIR@"
-TAO_INCLUDEDIR="@TAO_INCLUDEDIR@ @CXXFLAGS@"
-TAO_LIBS="@TAO_LIBS@"
