@@ -80,8 +80,6 @@ main (int argc, char *argv[])
   ttcp_sequence_ptr     ttcp_seq = 0;  // obj reference to TTCP object
   CORBA::Environment    env;       // environment
 
-  FILE * ior_file;
-
   ACE_UNUSED_ARG (objkey);
 
   // parse the arguments
