@@ -1,3 +1,9 @@
+Wed Aug 23 13:21:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.dsp:
+
+	  Fixed some settings I had overlooked.
+
 Wed Aug 23 13:16:27 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/Naming/Naming_Loader.cpp:
