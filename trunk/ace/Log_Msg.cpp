@@ -9,16 +9,7 @@
 #endif /* ACE_NTRACE */
 #define ACE_NTRACE 1
 
-// This must come first to avoid "order of include" problems...
-
-#if !defined (ACE_HAS_INLINED_OSCALLS) && !defined(ACE_HAS_ONE_DEFINITION_RULE)
-# define ACE_HAS_INLINED_OSCALLS
-# include "ace/ACE.h"
-# undef ACE_HAS_INLINED_OSCALLS
-#else
-# include "ace/ACE.h"
-#endif /* !ACE_HAS_INLINED_OSCALLS */
-
+#include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
 #include "ace/OS.h"
 
@@ -336,7 +327,7 @@ int ACE_Log_Msg::msg_off_ = 0;
 
 // Default per-thread priority mask
 // By default, no priorities are enabled.
-u_long ACE_Log_Msg::default_priority_mask_ = 0; 
+u_long ACE_Log_Msg::default_priority_mask_ = 0;
 
 // Default per-process priority mask
 // By default, all priorities are enabled.
