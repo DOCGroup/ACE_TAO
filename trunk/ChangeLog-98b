@@ -1,3 +1,13 @@
+Fri Dec 11 15:09:43 1998  Ossama Othman  <ossama@debian.org>
+
+	* tests/Time_Value_Test.cpp: define ACE_DISABLE_AUTOCONF_LONGLONG
+	  before including ace/inc_user_config.h.  This will prevent
+	  an automatically generated ACE Configuration Project config.h
+	  header from defining ACE_UINT64, and thus allowing
+	  Time_Value_Test.cpp to compile on platforms that define
+ 	  ACE_HAS_STHREADS.  Please read the comment in Time_Value_Test.cpp.
+	  ACE_DISABLE_AUTOCONF_LONGLONG is not meant for general use!
+
 Fri Dec 11 14:05:11 1998  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_Reactor_Timer_Test.(cpp h): Replaced the multithread
