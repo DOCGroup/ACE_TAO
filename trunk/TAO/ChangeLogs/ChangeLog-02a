@@ -1,117 +1,123 @@
+Thu Jan 20 07:11:16 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile: updated dependencies, in
+          a workspace that had Notify (and all of the other
+          orbsvcs) built.
+
 Wed Jan 19 17:51:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_check.cpp:
-	  Added update of AST_Decl's filename pointer before
-	  outputting a 'forward declaration not defined' error.
-	  In certain cases, #xxxx statements in the IDL file
-	  cause the preprocessor to add #<line number> "<filename>"
-	  statements where <filename> is a repeat of the main
-	  file name. This would invalidate
-	  the filename pointer held deep down in a forward
-	  declared interface node. If a forward declared interface
-	  is found not to have a full definition, the error 
-	  function that is called tries to use this filename
-	  pointer, causing a crash. Thanks to
-	  Hessel Idzenga <idzenga@lucent.com> for sending in
-	  the example file that uncovered this bug.
+        * TAO_IDL/ast/ast_check.cpp:
+          Added update of AST_Decl's filename pointer before
+          outputting a 'forward declaration not defined' error.
+          In certain cases, #xxxx statements in the IDL file
+          cause the preprocessor to add #<line number> "<filename>"
+          statements where <filename> is a repeat of the main
+          file name. This would invalidate
+          the filename pointer held deep down in a forward
+          declared interface node. If a forward declared interface
+          is found not to have a full definition, the error
+          function that is called tries to use this filename
+          pointer, causing a crash. Thanks to
+          Hessel Idzenga <idzenga@lucent.com> for sending in
+          the example file that uncovered this bug.
 
 Wed Jan 19 15:44:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Uninlined union destructor. In certain cases
-	  where the union in nested inside other structs
-	  and/or unions, Dec Unix picks up on the fact that
-	  the inner union's destructor is called before
-	  it is defined inline. Although he didn't report
-	  this bug, thanks to Hugh Arnold <harnold@itginc.com>
-	  for sending in the example IDL file that rooted it
-	  out.
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Uninlined union destructor. In certain cases
+          where the union in nested inside other structs
+          and/or unions, Dec Unix picks up on the fact that
+          the inner union's destructor is called before
+          it is defined inline. Although he didn't report
+          this bug, thanks to Hugh Arnold <harnold@itginc.com>
+          for sending in the example IDL file that rooted it
+          out.
 
 Wed Jan 19 12:07:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
-	  Fixed demarshaling for unions having members with
-	  multiple case labels. Thanks to
-	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting
-	  the bug.
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+          Fixed demarshaling for unions having members with
+          multiple case labels. Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for reporting
+          the bug.
 
 Tue Jan 18 20:45:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Timed_Buffered_Oneways/run_test.pl:
-	  TAO/tests/Timed_Buffered_Oneways is timing out on our HPUX_aCC
-	  auto compile.  Added extra timing information to narrow down
-	  this problem.
+        * tests/Timed_Buffered_Oneways/run_test.pl:
+          TAO/tests/Timed_Buffered_Oneways is timing out on our HPUX_aCC
+          auto compile.  Added extra timing information to narrow down
+          this problem.
 
 Tue Jan 18 20:26:11 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Transport_Mux_Strategy.cpp
-	  (TAO_Exclusive_TMS::dispatch_reply): The following change to
-	  this method was incorrect:
+        * tao/Transport_Mux_Strategy.cpp
+          (TAO_Exclusive_TMS::dispatch_reply): The following change to
+          this method was incorrect:
 
-	  Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+          Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	  This method is not the correct place mark the transport as being
-	  available for reuse.  If we do so here, another thread can start
-	  using the transport and reset the message state before we have
-	  had a chance of reading the reply.  However, we still need to
-	  find a place to safely mark the transport as idle otherwise we
-	  will not end up reusing network connections.  Note that this was
-	  not a problem for Oneway, Twoway, and Locate Request invocations
-	  since their destructors were setting the transport to idle
-	  anyway.  The problem was for DII and Asynch invocations since
-	  their destructors were (correctly) not setting the transport to
-	  idle.
+          This method is not the correct place mark the transport as being
+          available for reuse.  If we do so here, another thread can start
+          using the transport and reset the message state before we have
+          had a chance of reading the reply.  However, we still need to
+          find a place to safely mark the transport as idle otherwise we
+          will not end up reusing network connections.  Note that this was
+          not a problem for Oneway, Twoway, and Locate Request invocations
+          since their destructors were setting the transport to idle
+          anyway.  The problem was for DII and Asynch invocations since
+          their destructors were (correctly) not setting the transport to
+          idle.
 
-	  Solution: First we revived
-	  <Transport_Mux_Strategy::idle_after_reply> which was there but
-	  commented out. <TAO_Exclusive_TMS::idle_after_reply> idles the
-	  transport while <TAO_Muxed_TMS::idle_after_reply> is a no-op.
-	  Note that this is the opposite of how <idle_after_send> works.
+          Solution: First we revived
+          <Transport_Mux_Strategy::idle_after_reply> which was there but
+          commented out. <TAO_Exclusive_TMS::idle_after_reply> idles the
+          transport while <TAO_Muxed_TMS::idle_after_reply> is a no-op.
+          Note that this is the opposite of how <idle_after_send> works.
 
-	  Second we make <~TAO_Asynch_Reply_Dispatcher> and
-	  <~TAO_DII_Deferred_Reply_Dispatcher> call
-	  <Transport_Mux_Strategy::idle_after_reply>.  These reply
-	  dispatchers are told about their transports when
-	  <Invocation::invoke_i> has succeeded.
+          Second we make <~TAO_Asynch_Reply_Dispatcher> and
+          <~TAO_DII_Deferred_Reply_Dispatcher> call
+          <Transport_Mux_Strategy::idle_after_reply>.  These reply
+          dispatchers are told about their transports when
+          <Invocation::invoke_i> has succeeded.
 
-	  Third we change Oneway, Twoway, and Locate Request invocations
-	  to call <idle_after_reply> instead of <idle> in their
-	  destructors.  This will prevent double idling of the transports
-	  when used with the TAO_Muxed_TMS strategy.
+          Third we change Oneway, Twoway, and Locate Request invocations
+          to call <idle_after_reply> instead of <idle> in their
+          destructors.  This will prevent double idling of the transports
+          when used with the TAO_Muxed_TMS strategy.
 
-	* examples/Buffered_AMI/client.cpp (main): Checking
+        * examples/Buffered_AMI/client.cpp (main): Checking
           <message_count == -1> was not a effective trick since the
-	  <(iterations % message_count) != 0> failed.  Therefore,
-	  introduced a new variable <setup_buffering> to simplify this
-	  madness.
+          <(iterations % message_count) != 0> failed.  Therefore,
+          introduced a new variable <setup_buffering> to simplify this
+          madness.
 
 Tue Jan 18 18:45:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_union.cpp:
-	  Increased the signed long default discriminator
-	  value by 1. It was being set to ACE_INT32_MIN,
-	  which is -2147483648. The literal constant is
-	  generated in the _default() method, and when
-	  MSVC sees the line
-		this->disc_ = -2147483648;
-	  it outputs the warning "unary minus operator applied to
-	  unsigned type, result still unsigned". If the line is
-		this->disc_ = -2147483647;
-	  we get no warning.
+        * TAO_IDL/be/be_union.cpp:
+          Increased the signed long default discriminator
+          value by 1. It was being set to ACE_INT32_MIN,
+          which is -2147483648. The literal constant is
+          generated in the _default() method, and when
+          MSVC sees the line
+                this->disc_ = -2147483648;
+          it outputs the warning "unary minus operator applied to
+          unsigned type, result still unsigned". If the line is
+                this->disc_ = -2147483647;
+          we get no warning.
 
 Tue Jan 18 17:26:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/deep_free.cpp:
-	  Fixed a memory leak in recursive unions. The fix also
-	  removes leaks in unions that contain anonymous
-	  sequences. Thanks to
-	  Lothar Werzinger <werzinger.lothar@krones.de> for
-	  reporting this leak and sending in an example IDL
-	  file.
-	* tao/DynStruct_i.cpp:
-	  Fixed some mismatched forms of ACE_CHECK that I added
-	  earlier today.
+        * tao/deep_free.cpp:
+          Fixed a memory leak in recursive unions. The fix also
+          removes leaks in unions that contain anonymous
+          sequences. Thanks to
+          Lothar Werzinger <werzinger.lothar@krones.de> for
+          reporting this leak and sending in an example IDL
+          file.
+        * tao/DynStruct_i.cpp:
+          Fixed some mismatched forms of ACE_CHECK that I added
+          earlier today.
 
 Tue Jan 18 13:04:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
