@@ -204,6 +204,11 @@ oneway		return IDL_ONEWAY;
 		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
+"'"\\[xX]([0-9a-fA-F]{1,2})"'"	{
+		  // hexadecimal character constant
+		  yylval.cval = idl_escape_reader(ace_yytext + 1);
+		  return IDL_CHARACTER_LITERAL;
+		}
 "'"\\."'"	{
 		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
