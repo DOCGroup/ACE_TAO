@@ -111,7 +111,6 @@
 #define	ACE_HAS_UCONTEXT_T
 
 #define	ACE_NEEDS_SYSTIME_H
-#define ACE_HAS_INLINED_OSCALLS
 
 #define	ACE_HAS_STRBUF_T
 #define	ACE_HAS_STREAMS
@@ -138,6 +137,7 @@
 #define ACE_LACKS_CONDATTR_PSHARED
 
 #define	ACE_HAS_POSIX_TIME
+#define ACE_HAS_IP_MULTICAST
 
 #include <pthread.h>
 

@@ -97,6 +97,7 @@
 #define	ACE_HAS_UCONTEXT_T
 
 #define	ACE_NEEDS_SYSTIME_H
-#define ACE_HAS_INLINED_OSCALLS
+
+#define ACE_HAS_IP_MULTICAST
 
 #endif /* ACE_CONFIG_H */
