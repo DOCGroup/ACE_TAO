@@ -39,7 +39,7 @@ endif
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
-HPMODEL := $(shell uname -m))
+HPMODEL := $(shell uname -m)
 HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc

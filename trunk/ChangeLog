@@ -1,8 +1,35 @@
+Fri Feb 25 07:08:35 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/SOCK_Dgram_Bcast.cpp:
+
+          Added !defined(__APPLE__) to conditional so sockaddr.sa_len
+          version of the code will be used.  Fixes SOCK_Bcast_Dgram_Test
+          failures.
+
+        * bin/MakeProjectCreator/config/event_serv.mpb:
+
+          The CosEvent_Serv library requires the CosNaming library.
+
+        * bin/auto_run_tests.pl:
+
+          Put a space between my and $ to avoid problems with older version
+          of perl.
+
+        * bin/tao_other_tests.lst:
+
+          Don't run the XML_Persistence or Reconnecting Notify tests from
+          static builds.
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          Removed an extra closing parenthesis from the line that determined
+          the HP-UX model.
+
 Fri Feb 25 12:55:37 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Link.h:
-	* protocols/ace/RMCast/Link.cpp: Overrode recv() from
-	Out_Element. This should clear warnings on BCB and HP C++.
+        * protocols/ace/RMCast/Link.h:
+        * protocols/ace/RMCast/Link.cpp: Overrode recv() from
+        Out_Element. This should clear warnings on BCB and HP C++.
 
 Fri Feb 25 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -13,120 +40,120 @@ Fri Feb 25 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 24 21:05:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Socket.h:
-	* protocols/ace/RMCast/Socket.cpp: Removed class-scope
-	  using-declaration for VxWorks can't handle it.
+        * protocols/ace/RMCast/Socket.h:
+        * protocols/ace/RMCast/Socket.cpp: Removed class-scope
+          using-declaration for VxWorks can't handle it.
 
 Thu Feb 24 12:37:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_Acceptor.cpp (accept): Use ==, not =, to check a value.
-	  This is why constants work better on the left-hand side...
+        * ace/Asynch_Acceptor.cpp (accept): Use ==, not =, to check a value.
+          This is why constants work better on the left-hand side...
 
-	* ace/POSIX_Asynch_IO.{h cpp} (ACE_POSIX_Asynch_Result):
-	* ace/WIN32_Asynch_IO.{h cpp} (ACE_WIN32_Asynch_Result): Changed
-	  the handler_proxy_ from a Proxy_Ptr& to a Proxy_Ptr. This causes
-	  the reference count to be incremented properly, avoiding premature
-	  deletion of the ACE_Handler. Fixes weird errors and crashes with
-	  Proactor_Test.
+        * ace/POSIX_Asynch_IO.{h cpp} (ACE_POSIX_Asynch_Result):
+        * ace/WIN32_Asynch_IO.{h cpp} (ACE_WIN32_Asynch_Result): Changed
+          the handler_proxy_ from a Proxy_Ptr& to a Proxy_Ptr. This causes
+          the reference count to be incremented properly, avoiding premature
+          deletion of the ACE_Handler. Fixes weird errors and crashes with
+          Proactor_Test.
 
 Wed Feb 23 13:53:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/acedefaults.mpb:
-	* bin/MakeProjectCreator/config/taodefaults.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
 
-	  Add automake specific am_version variable.
+          Add automake specific am_version variable.
 
 Wed Feb 23 19:56:01 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Stack.h: Added export macros.
+        * protocols/ace/RMCast/Stack.h: Added export macros.
 
 Wed Feb 23 19:48:59 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Bits.h:
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Socket.cpp:
-	* protocols/ace/RMCast/Socket.h: Replaced auto_ptr with
-	  ACE_Auto_Ptr.
+        * protocols/ace/RMCast/Bits.h:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Socket.h: Replaced auto_ptr with
+          ACE_Auto_Ptr.
 
 Tue Feb 22 18:03:41 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Ping_Socket.cpp: Rather than try to use struct ip, which can
-	  change subtly between platforms, use the well-known layout of the
-	  IP header to pick off the length field. This avoids a maze of
-	  #if blocks to use the platform struct properly at the cost of
-	  using low-level details.
+        * ace/Ping_Socket.cpp: Rather than try to use struct ip, which can
+          change subtly between platforms, use the well-known layout of the
+          IP header to pick off the length field. This avoids a maze of
+          #if blocks to use the platform struct properly at the cost of
+          using low-level details.
 
 Tue Feb 22 21:30:04 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Link.cpp: Replaced assignment of auto_ptr's
-	  with a call to reset() in search for a way around VxWorks' broken
-	  implementation.
+        * protocols/ace/RMCast/Link.cpp: Replaced assignment of auto_ptr's
+          with a call to reset() in search for a way around VxWorks' broken
+          implementation.
 
 Tue Feb 22 21:20:22 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Stack.cpp:
-	* protocols/ace/RMCast/Stack.h: Moved implementation of functions
-	  from .h to .cpp. This should get rid of warnings in VC7.1 build.
+        * protocols/ace/RMCast/Stack.cpp:
+        * protocols/ace/RMCast/Stack.h: Moved implementation of functions
+          from .h to .cpp. This should get rid of warnings in VC7.1 build.
 
 Mon Feb 21 18:18:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Added a check for the need to add _NO_BITFIELDS to
-	  compile macros. This is needed to prevent compile errors on
-	  Visual Age C++ on AIX. Without it, the check for need to alter
-	  TCP header file includes gets the wrong answer, then the build
-	  tries the wrong thing. This gets around having to know the
-	  TCP header issue apriori like we do with the hand config.h.
+        * configure.ac: Added a check for the need to add _NO_BITFIELDS to
+          compile macros. This is needed to prevent compile errors on
+          Visual Age C++ on AIX. Without it, the check for need to alter
+          TCP header file includes gets the wrong answer, then the build
+          tries the wrong thing. This gets around having to know the
+          TCP header issue apriori like we do with the hand config.h.
 
-	  Changed the ACE_HAS_DEV_POLL test from a check for the /dev/poll
-	  file to a run-test to be able to open it. The file is there on
-	  HP-UX, but not useable til some patches are installed.
+          Changed the ACE_HAS_DEV_POLL test from a check for the /dev/poll
+          file to a run-test to be able to open it. The file is there on
+          HP-UX, but not useable til some patches are installed.
 
-	  Fixed a missing set of quotes on $ace_user_with_ssl.
+          Fixed a missing set of quotes on $ace_user_with_ssl.
 
-	* ace/Asynch_Acceptor.cpp (ACE_Asynch_Accept::handle_accept): Don't
-	  try to restart an accept if the listen socket is closed. Together
-	  with closing the socket in the destructor, prevents errors at
-	  destructor time from trying to restart an accept.
+        * ace/Asynch_Acceptor.cpp (ACE_Asynch_Accept::handle_accept): Don't
+          try to restart an accept if the listen socket is closed. Together
+          with closing the socket in the destructor, prevents errors at
+          destructor time from trying to restart an accept.
 
-	* ace/Dev_Poll_Reactor.cpp: Include <sys/devpoll.h> if not on
-	  Linux, not only if on Solaris. Allows this to work on other
-	  /dev/poll-enabled platforms.
+        * ace/Dev_Poll_Reactor.cpp: Include <sys/devpoll.h> if not on
+          Linux, not only if on Solaris. Allows this to work on other
+          /dev/poll-enabled platforms.
 
 Mon Feb 21 12:43:41 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_IO.{h cpp} (ACE_Asynch_Accept): Added an optional
-	  addr_family parameter to ACE_Asych_Accept. Defaults to AF_INET
-	  (IPv4) to maintain current functionality.
-	  Doxygen-ized the comments for accept().
+        * ace/Asynch_IO.{h cpp} (ACE_Asynch_Accept): Added an optional
+          addr_family parameter to ACE_Asych_Accept. Defaults to AF_INET
+          (IPv4) to maintain current functionality.
+          Doxygen-ized the comments for accept().
 
-	* ace/Asynch_IO_Impl.h (ACE_Asynch_Accept_Impl): Pass the new
-	  addr_family arugment along to the implementation classes.
+        * ace/Asynch_IO_Impl.h (ACE_Asynch_Accept_Impl): Pass the new
+          addr_family arugment along to the implementation classes.
 
-	* ace/POSIX_Asynch_IO.{h cpp}:
-	* ace/WIN32_Asynch_IO.{h cpp} (ACE_WIN32_Asynch_Accept::accept): Use
-	  the new addr_family parameter to open a new accept handle if needed.
-	  It is up to the caller to make sure that addr_family matches the
-	  family used when the listen socket was opened.
-	  Also use the address family to scale the required size
-	  of the address area in the specified message block.
+        * ace/POSIX_Asynch_IO.{h cpp}:
+        * ace/WIN32_Asynch_IO.{h cpp} (ACE_WIN32_Asynch_Accept::accept): Use
+          the new addr_family parameter to open a new accept handle if needed.
+          It is up to the caller to make sure that addr_family matches the
+          family used when the listen socket was opened.
+          Also use the address family to scale the required size
+          of the address area in the specified message block.
 
-	* Asynch_Acceptor.{h cpp}: Added a new addr_family_ member to remember
-	  the in-use address family from open(). Use this value to calculate
-	  the space needed for addresses, as well as passing it to
-	  ACE_Asynch_Accept::accept() to open the correct type of handle
-	  when needed.
-	  Marked the address_size() method deprecated. It assumes use of
-	  IPv4 addresses and since it's static, it can't use the addr_family_
-	  knowledge. Replaced all internal uses of this with the proper
-	  adjustment based on the address family in use.
-	  Close the listen_handle_ when this object is destroyed.
+        * Asynch_Acceptor.{h cpp}: Added a new addr_family_ member to remember
+          the in-use address family from open(). Use this value to calculate
+          the space needed for addresses, as well as passing it to
+          ACE_Asynch_Accept::accept() to open the correct type of handle
+          when needed.
+          Marked the address_size() method deprecated. It assumes use of
+          IPv4 addresses and since it's static, it can't use the addr_family_
+          knowledge. Replaced all internal uses of this with the proper
+          adjustment based on the address family in use.
+          Close the listen_handle_ when this object is destroyed.
 
 Mon Feb 21 09:32:21 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Ping_Socket.h: Removed extraneous ',' to fix compiler warning.
+        * ace/Ping_Socket.h: Removed extraneous ',' to fix compiler warning.
 
-	* m4/config_h.m4: Added AH_TEMPLATE for ACE_LACKS_INET_ATON
-	* configure.ac: Added check for ACE_LACKS_INET_ATON.
+        * m4/config_h.m4: Added AH_TEMPLATE for ACE_LACKS_INET_ATON
+        * configure.ac: Added check for ACE_LACKS_INET_ATON.
 
 Mon Feb 21 15:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -145,26 +172,26 @@ Sun Feb 20 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Feb 19 10:32:29 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* examples/RMCast/Send_Msg/Receiver.cpp: Added explicit
-	  return statements from ACE_TMAIN.
+        * examples/RMCast/Send_Msg/Receiver.cpp: Added explicit
+          return statements from ACE_TMAIN.
 
 Sat Feb 19 00:54:22 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Select_Reactor_T.inl (deactivate):
+        * ace/Select_Reactor_T.inl (deactivate):
 
-	  Fixed a potential race when trying to update deactivated_ flag.
+          Fixed a potential race when trying to update deactivated_ flag.
 
 Fri Feb 18 20:05:53 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Signal.{h,inl}: Make the destructor of ACE_Sig_Handler virtual
-	  to silence warnings.  Thanks to Lothar <lothar@xcerla.com> for
- 	  reporting this.
+        * ace/Signal.{h,inl}: Make the destructor of ACE_Sig_Handler virtual
+          to silence warnings.  Thanks to Lothar <lothar@xcerla.com> for
+          reporting this.
 
 Fri Feb 18 19:54:33 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* tests/Max_Default_Port_Test.cpp:
+        * tests/Max_Default_Port_Test.cpp:
 
-	  Fixed a bug because I forgot an #if/#endif bracket:-(
+          Fixed a bug because I forgot an #if/#endif bracket:-(
 
 Fri Feb 18 18:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -205,20 +232,20 @@ Thu Feb 17 18:23:33 2005  Steve Huston  <shuston@riverace.com>
 
 Thu Feb 17 14:26:28 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* examples/RMCast/Send_Msg/Sender.cpp:
-	* examples/RMCast/Send_Msg/Receiver.cpp: Changed to use
+        * examples/RMCast/Send_Msg/Sender.cpp:
+        * examples/RMCast/Send_Msg/Receiver.cpp: Changed to use
           ACE_TMAIN and ACE_TCHAR instead of main and char.
 
 
 Thu Feb 17 14:15:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Protocol.h: Removed accidental use
+        * protocols/ace/RMCast/Protocol.h: Removed accidental use
           of C++ exceptions plus changes to make VC6 happy.
 
-	* protocols/ace/RMCast/RMCast.mpc: Removed `exceptions'
+        * protocols/ace/RMCast/RMCast.mpc: Removed `exceptions'
           from the list of prerequisites.
 
-	* examples/RMCast/Send_Msg/Receiver.cpp: Got rid of
+        * examples/RMCast/Send_Msg/Receiver.cpp: Got rid of
           repetitive `i' uses in for-loops. VC6 can't handle that.
 
 Thu Feb 17 09:48:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>

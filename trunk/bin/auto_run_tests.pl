@@ -67,7 +67,7 @@ push (@file_list, "/bin/tao_orb_tests.lst") if -d "$ACE_ROOT/TAO";
 push (@file_list, "/bin/tao_other_tests.lst") if -d "$ACE_ROOT/TAO";
 }
 
-foreach my$test_lst (@file_list) {
+foreach my $test_lst (@file_list) {
 
     my $config_list = new PerlACE::ConfigList;
     $config_list->load ($ACE_ROOT.$test_lst);
