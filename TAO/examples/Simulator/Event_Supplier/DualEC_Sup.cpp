@@ -179,7 +179,8 @@ DualEC_Supplier::init ()
   {
     // Connect to the RootPOA.
     CORBA::Object_var poaObject_var =
-      TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA");
+      TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (poaObject_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -199,7 +200,10 @@ DualEC_Supplier::init ()
 
     // Get the Naming Service object reference.
     CORBA::Object_var namingObj_var =
-      TAO_ORB_Core_instance()->orb()->resolve_initial_references ("NameService");
+      TAO_ORB_Core_instance()->orb()->resolve_initial_references (
+          "NameService",
+          ACE_TRY_ENV);
+    ACE_TRY_CHECK;
 
     if (CORBA::is_nil (namingObj_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
