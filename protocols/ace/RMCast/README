@@ -1,57 +1,22 @@
-# $Id$
+RMCast is a reliable source-ordered multicast protocol implementation
+for message-oriented multi-sender group communication built on top of
+IPv4 multicast. It uses sequence numbers for re-ordering, duplicate
+suppression and loss detection. Negative acknowledgments (NAK) with
+retransmissions are used to recover from losses.
 
-	This directory will contain a simple, small-scale reliable
-multicast framework for ACE.  The framework is based on the ASX
-components of the ACE library: the protocol is implemented as a stack
-of interchangeable "modules", each one in charge of a very small task.
-For example, one module implements fragmentation and reassembly, other
-modules implement retransmission, send ACK and NAK messages, and
-maintain receiver membership.
+One new and interesting idea implemented in this protocol is history
+transmission (dubbed negative retransmission). In a nutshell, each
+sender, along with normal payload, transmits a list of other sender's
+IDs along with sequence numbers of last messages received from those
+senders by this member. This, in some sense, builds a pyramid of
+information: each subsequent message carries some information for a
+number of previous messages (from other senders). This helps other
+receivers detect losses.
 
-	The modules are replaced to achieve different levels of
-reliability.  For example, the retransmission module can be either the
-"Best_Effort", "Semi_Reliable" or "Reliable" implementation.  In the
-first case no retransmissions are performed, but lost messages are
-detected and reported to the receiver.  The "Semi_Reliable" case
-messages are held for a pre-specified amount of time, and
-re-transmited if requested, but it is possible to loose some messages
-if multiple re-transmissions fail.  As in the "Best_Effort" case the
-lost messages are detected and flagged to the application.  Finally
-in the "Reliable" mode the senders are flowed controlled until enough
-messages are successfully transmitted.
+The protocol does not track group membership. Messages are retained
+for retransmission for a predefined amount of time. The "last message
+or lost message" dilemma is solved by periodic history transmissions
+in cases when there is no useful traffic (idle network).
 
-	In general the stack looks like this:
-
-
-SENDER:
-
-----------------------------------------------------------------
-Buffering	:	Save lost messages
-Retransmission	:	Retransmit 
-----------------------------------------------------------------
-Fragmentation   :	Fragment messages in smaller chunks
-Reassembly	:	and ensure that the IOVMAX limit is not
-		:	reached
-----------------------------------------------------------------
-Transport	:	Encapsulate the specific transport media
-		:	such as TCP/IP, ATM, or shared memory
-		:	Demuxes incoming data to the right chain
-		:	Change control messages and data messages
-		:	to the right dynamic types.
-----------------------------------------------------------------
-
-RECEIVER:
-
-----------------------------------------------------------------
-Lost detection	:	Detect lost messages and send control
-		:	messages back
-----------------------------------------------------------------
-Reassembly	:	Reassemble messages, fragment control
-Fragmentation	:	data
-----------------------------------------------------------------
-Transport	:	Group membership, ACT reception,
-		:	handle keep-alive messages...
-----------------------------------------------------------------
-
-
-@@ TODO: Piggybacking...
+--
+Boris Kolpackov <boris@kolpackov.net>

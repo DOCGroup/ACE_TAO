@@ -1,0 +1,7 @@
+//  -*- MPC -*-
+// $Id$
+
+project(RMCast) : acelib, core {
+  sharedname   = ACE_RMCast
+  dynamicflags = ACE_RMCAST_BUILD_DLL
+}
