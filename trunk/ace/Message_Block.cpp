@@ -394,39 +394,63 @@ ACE_Data_Block::~ACE_Data_Block (void)
 }
 
 ACE_Data_Block *
-ACE_Data_Block::release (void)
+ACE_Data_Block::release_i (void)
+{
+  ACE_TRACE ("ACE_Data_Block::release_i");
+  
+  ACE_ASSERT (this->reference_count_ > 0);
+  
+  ACE_Data_Block *result = 0;
+
+  // decrement reference count
+  this->reference_count_--;
+  
+  if (this->reference_count_ == 0)
+    // this will cause deletion of this
+    result = 0;
+  else 
+    result = this;
+
+  return result;
+}
+
+ACE_Data_Block *
+ACE_Data_Block::release (ACE_Lock *lock)
 {
   ACE_TRACE ("ACE_Data_Block::release");
 
-  ACE_Data_Block *result;
+  ACE_Data_Block *result = 0;
+  ACE_Lock *lock_to_be_used = 0;
+
+  // Check if we were passed in a lock
+  if (lock != 0)
+    {
+      // Make sure that the lock passed in and our lock are the same
+      if (lock == this->locking_strategy_)
+	// In this case no locking is required.
+	lock_to_be_used = 0;
+
+      // The lock passed in does not match our lock
+      else
+	// Lock to be used is our lock
+	lock_to_be_used = this->locking_strategy_;
+    }
+  // This is the case when no lock was passed in
+  else
+    // Lock to be used is our lock
+    lock_to_be_used = this->locking_strategy_;
 
   // If there's a locking strategy then we need to acquire the lock
   // before decrementing the count.
-  if (this->locking_strategy_)
+  if (lock_to_be_used != 0)
     {
-      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
-
-      ACE_ASSERT (this->reference_count_ > 0);
+      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock_to_be_used, 0);
       
-      this->reference_count_--;
-
-      if (this->reference_count_ == 0)
-	result = 0;
-      else 
-	result = this;
+      result = this->release_i ();
     }
   else
-    {
-      ACE_ASSERT (this->reference_count_ >= 0);
-      
-      this->reference_count_--;
-
-      if (this->reference_count_ == 0)
-	result = 0;
-      else 
-	result = this;
-    }
-  
+    result = this->release_i ();
+    
   // We must delete this outside the scope of the locking_strategy_
   // since otherwise we'd be trying to "release" through a deleted
   // pointer!
@@ -440,14 +464,56 @@ ACE_Message_Block *
 ACE_Message_Block::release (void)
 {
   ACE_TRACE ("ACE_Message_Block::release");
+  
+  ACE_Message_Block *result = 0;
+  ACE_Lock *lock = 0;
+  
+  // Do we have a valid data block
+  if (this->data_block ())
+    {
+      // Grab the lock that belongs to my data block
+      lock = this->data_block ()->locking_strategy ();
+      
+      // if we have a lock
+      if (lock != 0)
+	{
+	  // One guard for all
+	  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *lock, 0);      
+	  
+	  // Call non-guarded release with <lock>
+	  result = this->release_i (lock);
+	}
+      // This is the case when we have a valid data block but no lock
+      else
+	// Call non-guarded release with no lock 
+	result = this->release_i (0);   
+    }
+  else
+    // This is the case when we don't even have a valid data block
+    result = this->release_i (0);
+  
+  return 0;
+}
+
+ACE_Message_Block *
+ACE_Message_Block::release_i (ACE_Lock *lock)
+{
+  ACE_TRACE ("ACE_Message_Block::release_i");  
 
   // Free up all the continuation messages.
   if (this->cont_)
     {
-      this->cont_->release ();
+      this->cont_->release_i (lock);
       this->cont_ = 0;
     }
 
+  if (this->data_block ())
+    {
+      this->data_block ()->release (lock);
+      this->data_block_ = 0;
+    }
+  
+  // We will now commit suicide: this object *must* have come from the heap
   delete this;
 
   return 0;
