@@ -46,48 +46,6 @@ public:
 };
 
 template <class T, class LOCK>
-class ACE_Locked_Simple_Free_List : public ACE_Free_List<T>
-// = TITLE
-//      Implement a simple free list.
-//
-// = DESCRIPTION
-//      This class maintains a free list.  It is different from
-//      ACE_Locked_Free_List in that it does not allocate or
-//      deallocate elements in free lists when there are too many/few
-//      of them.  It also depends on the type T having get_next () and
-//      set_next () method.  
-{
-public:
-  ACE_Locked_Simple_Free_List (void);
-  // Create a Memory free list
-  
-  virtual T *remove (void);
-  // get next element in the free list.  Return NULL if the list is empty
-
-  virtual void add (T *);
-  // insert an element into the free list
-
-  virtual ~ACE_Locked_Simple_Free_List ();
-  // Destructor - does *not* delete elements it holds
-
-  virtual size_t size (void);
-  // Returns the current size of the free list
-
-  virtual void resize (size_t);
-  // This operation doesn't have any meaning here
-
-private:
-  size_t size_ ;
-  // Maintian the current size of the free list.
-
-  LOCK lock_;
-  // Integrity keeper.
-
-  T *head_;
-  // Free list head;
-};
-
-template <class T, class LOCK>
 class ACE_Locked_Free_List : public ACE_Free_List<T> 
   // = TITLE
   //      Implements a free list
@@ -98,7 +56,19 @@ class ACE_Locked_Free_List : public ACE_Free_List<T>
   //      a mutex so the freelist can be used in a multithreaded program .
 {
 public:
-  ACE_Locked_Free_List (size_t prealloc = ACE_DEFAULT_FREE_LIST_PREALLOC, 
+  enum ACE_Free_List_Op_Mode
+  {
+    ACE_FREE_LIST_WITH_POOL,
+    ACE_PURE_FREE_LIST
+  };
+  // Free list operation mode, 
+  // ACE_FREE_LIST_WITH_POOL: A free list which create more elements when
+  //                          there aren't enough elements.
+  // ACE_PURE_FREE_LIST: A simple free list which doen't allocate/deallocate
+  //                     elements.  
+
+  ACE_Locked_Free_List (ACE_Free_List_Op_Mode mode = ACE_FREE_LIST_WITH_POOL,
+			size_t prealloc = ACE_DEFAULT_FREE_LIST_PREALLOC, 
                         size_t lwm = ACE_DEFAULT_FREE_LIST_LWM, 
                         size_t hwm = ACE_DEFAULT_FREE_LIST_HWM, 
                         size_t inc = ACE_DEFAULT_FREE_LIST_INC,
@@ -134,6 +104,9 @@ protected:
 
   virtual void dealloc (size_t n);
   // Removes and frees <n> nodes from the freelist
+
+  ACE_Free_List_Op_Mode mode_;
+  // Free list operation mode, see enum declaration above.
 
   T *free_list_;
   // Pointer to the first node in the freelist
