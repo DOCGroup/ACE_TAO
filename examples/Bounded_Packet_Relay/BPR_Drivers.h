@@ -37,7 +37,6 @@
 
 #include "ace/Reactor.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
 
 // forward declarations
 class Input_Device_Wrapper_Base;

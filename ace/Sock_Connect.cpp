@@ -32,7 +32,6 @@ extern "C" {
 
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_HAS_THREADS)
-#    include "ace/Synch.h"
 #    include "ace/Object_Manager.h"
 #  endif /* ACE_HAS_THREADS */
 

@@ -52,6 +52,7 @@
 #endif /* __ACE_INLINE__ */
 
 // Include the templates here.
+// FUZZ: disable check_for_synch_include
 #include "ace/Synch_T.h"
 
 #if defined (ACE_LEGACY_MODE)

@@ -7,7 +7,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
-#include "ace/Synch.h"
 
 ACE_RCSID(Threads, recursive_mutex, "$Id$")
 

@@ -1,3 +1,8 @@
+Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/tests/Notify/lib/LookupManager.cpp:
+          Added #include OS_NS_string.h.
+
 Sat Nov  8 22:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/diffs/TAO.diff:

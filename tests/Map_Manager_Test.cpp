@@ -25,7 +25,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
 #include "ace/Profile_Timer.h"
-#include "ace/Synch.h"
 #include "ace/Hash_Cache_Map_Manager_T.h"
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Pair_T.h"

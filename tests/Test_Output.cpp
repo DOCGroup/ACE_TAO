@@ -23,7 +23,6 @@
 #include "ace/Object_Manager.h"
 #include "ace/streams.h"
 #include "ace/Framework_Component.h"
-#include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 

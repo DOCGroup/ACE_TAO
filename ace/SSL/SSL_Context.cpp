@@ -8,7 +8,6 @@
 #include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"

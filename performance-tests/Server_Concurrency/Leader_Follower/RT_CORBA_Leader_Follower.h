@@ -24,7 +24,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Synch_T.h"
 #include "ace/Manual_Event.h"
 
 enum DEBUGGING_RANGE

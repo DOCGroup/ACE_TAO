@@ -6,7 +6,6 @@
 #define ACE_TEST_UPIPE_H
 
 #include "ace/Svc_Handler.h"
-#include "ace/Synch.h"
 #include "ace/UPIPE_Stream.h"
 
 typedef ACE_Svc_Handler <ACE_UPIPE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;

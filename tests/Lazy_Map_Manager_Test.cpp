@@ -21,7 +21,6 @@
 #include "test_config.h"
 #include "ace/Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
-#include "ace/Synch.h"
 #include "ace/streams.h"
 
 ACE_RCSID(tests, Map_Manager_Test, "$Id$")

@@ -30,7 +30,6 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Synch_T.h"
 
 #define ACE_CLASSIX_STREAM ACE_CLASSIX_Stream, ACE_CLASSIX_Addr
 #define ACE_CLASSIX_CO_CONNECTOR ACE_CLASSIX_CO_Connector, ACE_CLASSIX_Port
