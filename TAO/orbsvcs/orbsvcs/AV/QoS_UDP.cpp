@@ -1,6 +1,9 @@
 // $Id$
 
 #include "QoS_UDP.h"
+
+#if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
+
 #include "UDP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/MCast.h"
@@ -1497,3 +1500,5 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
+
+#endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */

@@ -1,3 +1,29 @@
+Tue Jul  9 07:14:38 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
+        * orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+
+          Only compile the contents of these files if there is a valid
+          session factory defines.
+
+        * orbsvcs/orbsvcs/Security/MechanismPolicy.h:
+
+          Change the return value of the mechanisms() method to match
+          the implementation.
+
+        * orbsvcs/tests/Sched/DynSched_Test.cpp:
+
+          Change the #include of Strategy_Scheduler.h to one relative to
+          orbsvcs (like most other #includes).
+
+
+        * tao/PortableServer/Key_Adapters.h:
+
+          #include ace/Map_T.h instead of ace/Map.h.  All ace/Map.h does is
+          #include ace/Map_T.h.
+
 Tue Jul  9 13:09:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/AbstractBase.cpp:

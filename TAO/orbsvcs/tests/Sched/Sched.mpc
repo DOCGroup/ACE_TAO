@@ -1,0 +1,5 @@
+project(Sched): server, namingexe {
+  depends += RTSched
+  libs    += TAO_RTSched
+  exename  = Sched
+}
