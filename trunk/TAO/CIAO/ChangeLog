@@ -1,12 +1,18 @@
+Tue Mar 16 10:36:21 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIAO-INSTALL.html:
+
+	  Added the support for CIDL with MPC on Linux.
+
 2004-03-15  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
 
-	* docs/static_config_example.html: 
-	* docs/static_ciao_contents.html: 
-	* docs/static_ciao_toc.html: 
+	* docs/static_config_example.html:
+	* docs/static_ciao_contents.html:
+	* docs/static_ciao_toc.html:
 
 	  Made some modifications to include an example run.
-	
-	* docs/index.html: 
+
+	* docs/index.html:
 
 	  Added link from the CIAO main page to the static config
 	  documentation.
