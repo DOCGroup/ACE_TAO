@@ -95,6 +95,9 @@ inline char *__yytext()
 #endif /* 0 */
 %}
 
+/* SO we don't choke on files that use \r\n */
+NL [\r?\n]
+
 %array
 %option never-interactive
 
@@ -213,27 +216,27 @@ oneway		return IDL_ONEWAY;
 		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
-^#[ \t]*pragma[ \t].*\n	{/* remember pragma */
+^#[ \t]*pragma[ \t].*{NL}	{/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		  idl_store_pragma(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*\n		{
+^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*" ""\""[^\"]*"\""\n		{
+^#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#line[ \t]*[0-9]*" ""\""[^\"]*"\""\n		{
+^#line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#[ \t]*[0-9]*\n {
+^#[ \t]*[0-9]*{NL} {
 		  idl_parse_line_and_file(ace_yytext);
 	        }
-^#[ \t]*ident.*\n	{
+^#[ \t]*ident.*{NL}	{
 		  /* ignore cpp ident */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-\/\/.*\n	{
+\/\/.*{NL}	{
 		  /* ignore comments */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
@@ -252,7 +255,7 @@ oneway		return IDL_ONEWAY;
 	          }
 	        }
 [ \t]*		;
-\n		{
+{NL}		{
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
 .		return ace_yytext [0];
