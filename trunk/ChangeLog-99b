@@ -1,3 +1,27 @@
+Thu Jun 24 21:33:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Caching_Strategies_T.{h, cpp} (class ACE_FIFO_Caching_Strategy): 
+	* ace/Caching_Strategies_T.{h, cpp} (class ACE_LRU_Caching_Strategy):
+	* ace/Caching_Strategies_T.{h, cpp} (class ACE_LFU_Caching_Strategy):
+	  Removed the overloaded clear_cache () method with entries as an
+	  formal argument.
+
+	* ace/Caching_Strategy_Utility_T.{h,i,cpp}: Renamed as
+	  Caching_Utiltity.{h, i, cpp}. Also, removed <entries> formal
+	  argument from the clear_cache() method, and made purge_percent
+	  of type double instead of unsigned int.
+
+	* tests/Cache_Map_Manager_Test.cpp: Changed the purge_test and
+	  added a test for the Cache_Map_Manager using the Map_Manager.
+
+	* tests/Map_Manager_Test.cpp: Changed the template instantiation
+	  in vein with the changes to the names of the Caching_Utility
+	  classes.
+
+	* tests/Cache_Map_Manager_test.dsp:
+	* tests/tests.dsw:
+	  Made NT project for the test and added it to the tests workspace.
+	
 Thu Jun 24 20:43:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor/test_multithreading.cpp
