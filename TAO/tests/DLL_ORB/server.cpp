@@ -27,18 +27,12 @@ main (int, char *[])
   //
   // In the process of doing this, the Test CORBA object will be
   // activated, and the ORB will be run.
-  //
-  // Note that the Resource_Factory is loaded before the test server
-  // module.  This forces the Resource_Factory to exist long enough
-  // for the ORB to be properly destroyed.  The ORB requires that the
-  // Resource_Factory exist during ORB destruction.
-  if (ACE_Service_Config::process_directive ("dynamic Resource_Factory Service_Object * TAO:_make_TAO_Default_Resource_Factory() \"\"") != 0
-      || ACE_Service_Config::process_directive ("dynamic Server_Module Service_Object * Test_Server_Module:_make_Test_Server_Module() \"\"") != 0)
+  if (ACE_Service_Config::process_directive ("dynamic Server_Module Service_Object * Test_Server_Module:_make_Test_Server_Module() \"\"") != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "ERROR: Server unable to process the "
-                         "Service Configurator directive(s)"),
+                         "Service Configurator directive"),
                         -1);
     }
 
