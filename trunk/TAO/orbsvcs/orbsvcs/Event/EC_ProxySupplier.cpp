@@ -42,7 +42,7 @@ CORBA::ULong
 TAO_EC_ProxyPushSupplier::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0); 
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;
@@ -259,7 +259,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event
       RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
 
     // The refcount cannot be zero, because we have at least two
-    // references, 
+    // references,
   }
 
   consumer->push (event, ACE_TRY_ENV);
@@ -343,3 +343,9 @@ TAO_EC_ProxyPushSupplier::_remove_ref (CORBA::Environment &)
 {
   this->_decr_refcnt ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -140,8 +140,6 @@ Test_Supplier::svc ()
 
   TAO_TRY
     {
-      ACE_Time_Value tv (0, this->burst_pause_);
-
       ACE_Message_Block mb (this->event_size_);
       mb.wr_ptr (this->event_size_);
 
@@ -180,11 +178,15 @@ Test_Supplier::svc ()
               TAO_CHECK_ENV;
             }
           this->throughput_.sample ();
+          ACE_Time_Value tv (0, this->burst_pause_);
           ACE_OS::sleep (tv);
         }
 
       // Send one event shutdown from each supplier
       event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
+      ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
+                                     now);
       this->consumer_proxy ()->push(event, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       this->throughput_.sample ();

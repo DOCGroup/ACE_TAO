@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
+#include "ace/High_Res_Timer.h"
 
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -62,6 +63,10 @@ ECT_Throughput::run (int argc, char* argv[])
 {
   TAO_TRY
     {
+      // Calibrate the high resolution timer *before* starting the
+      // test.
+      ACE_High_Res_Timer::calibrate ();
+
       this->orb_ =
         CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
       TAO_CHECK_ENV;
