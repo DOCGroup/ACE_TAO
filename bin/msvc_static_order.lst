@@ -2,6 +2,7 @@
 #
 # This file lists the project files that must be build first in a static
 # build using msvc_static_compile.pl
+
 ace/ace.dsp
 Kokyu/Kokyu.dsp
 ACEXML/parser/parser/ACEXML_Parser.dsp
@@ -55,6 +56,7 @@ TAO/orbsvcs/orbsvcs/PortableGroup.dsp
 TAO/orbsvcs/orbsvcs/FaultTolerance.dsp
 TAO/orbsvcs/orbsvcs/CosLoadBalancing.dsp
 TAO/orbsvcs/orbsvcs/IFRService.dsp
+TAO/orbsvcs/orbsvcs/RTCORBAEvent.dsp
 TAO/orbsvcs/orbsvcs/RT_Notification.dsp
 TAO/orbsvcs/Naming_Service/Naming_Service.dsp
 TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Lib.dsp
@@ -63,6 +65,7 @@ TAO/orbsvcs/tests/Event/lib/Event_Test_Lib.dsp
 TAO/orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.dsp
 TAO/orbsvcs/tests/Trading/Trading_Test_Lib.dsp
 TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.dsp
+TAO/orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf.dsp
 TAO/tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation_TestStubsLib.dsp
 TAO/tests/Collocation/Collocation_Test_Stub.dsp
 TAO/examples/POA/Generic_Servant/POA_Generic_Servant_Lib.dsp
@@ -73,3 +76,4 @@ tests/Test_Output.dsp
 performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Lib.dsp
 examples/Service_Configurator/Misc/Service_Configurator_Misc_Timer.dsp
 ASNMP/asnmp/asnmp_lib.dsp
+
