@@ -662,6 +662,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -748,21 +751,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ACEXML_Parser DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Kokyu_DLL"=..\Kokyu\Kokyu.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
     End Project Dependency
 }}}
 
@@ -1054,33 +1042,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name DsLogAdmin
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTEvent
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "RTKokyuEvent"=.\orbsvcs\orbsvcs\RTKokyuEvent.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name Kokyu_DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTSched
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RTEvent
