@@ -2392,8 +2392,10 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Win32 structured exception exiting thread\n")));
+#endif /* 0 */
   return (DWORD) ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION;
 }
 
