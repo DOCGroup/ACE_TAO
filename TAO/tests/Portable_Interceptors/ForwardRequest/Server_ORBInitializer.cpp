@@ -11,7 +11,7 @@ ACE_RCSID (ForwardRequest,
 #include "Server_Request_Interceptor.h"
 
 Server_ORBInitializer::Server_ORBInitializer (void)
-  : server_interceptor_ (0)
+  : server_interceptor_ ()
 {
 }
 
@@ -31,8 +31,9 @@ Server_ORBInitializer::post_init (
 {
   TAO_ENV_ARG_DEFN;
 
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor;
   // Install the server request interceptor.
-  ACE_NEW_THROW_EX (this->server_interceptor_,
+  ACE_NEW_THROW_EX (interceptor,
                     Server_Request_Interceptor,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
@@ -41,18 +42,19 @@ Server_ORBInitializer::post_init (
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
 
-  PortableInterceptor::ServerRequestInterceptor_var
-    server_interceptor = this->server_interceptor_;
+  this->server_interceptor_ = interceptor;
 
-  info->add_server_request_interceptor (server_interceptor.in ()
+  info->add_server_request_interceptor (interceptor
                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
-Server_Request_Interceptor *
+PortableInterceptor::ServerRequestInterceptor_ptr
 Server_ORBInitializer::server_interceptor (void)
 {
-  return this->server_interceptor_;
+  return
+    PortableInterceptor::ServerRequestInterceptor::_duplicate (
+      this->server_interceptor_.in ());
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
