@@ -6724,7 +6724,9 @@ ACE_OS::mmap (void *addr,
   // We do support it by creating a hidden shared memory object, and using
   // that for the mapping.
   if (!file_mapping  ||
-      (*file_mapping = ::shm_open (name, O_RDWR | O_CREAT | O_TRUNC, 0600)) == -1)
+      (*file_mapping = ::shm_open (name,
+                                   O_RDWR | O_CREAT | O_TRUNC,
+                                   ACE_DEFAULT_FILE_PERMS)) == -1)
     {
       return MAP_FAILED;
     }
