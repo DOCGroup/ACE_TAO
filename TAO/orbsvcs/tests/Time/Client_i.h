@@ -27,11 +27,10 @@ class Client_i
   //     Client implementation to access the Time Service server.
   //
   // = DESCRIPTION
-  //     Class wrapper for a client that gets the IOR of the clerk running
-  //     on its machine and uses it to get the globally synchronized time
-
+  //     Class wrapper for a client that gets the IOR of the clerk
+  //     running on its machine and uses it to get the globally
+  //     synchronized time
 public:
-
   // = Initialization and termination methods.
   Client_i (void);
   // Constructor.
@@ -47,8 +46,8 @@ public:
 
   void Client_i::test_for_secure_universal_time (void);
   // This test throws an exception that the operation
-  // secure_universal_time () has not been currently implemented
-  // in the given server.
+  // <secure_universal_time> has not been currently implemented in the
+  // given server.
 
   void test_for_universal_time (void);
   // Tests if the server returns a valid time.
