@@ -18,6 +18,7 @@ DIRS  = Default_Servant \
 	NewPOA \
 	On_Demand_Activation \
 	RootPOA \
+	Identity \
 	TIE
 
 # The following test hasn't been updated yet
