@@ -245,13 +245,16 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::activate_svc_handler
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
     return -1;
-  else if (svc_handler->open ((void *) this) == -1)
+  
+  if (svc_handler->open ((void *) this) == -1)
     {
       svc_handler->close (0);
       return -1;
     }
   else
     return 0;
+  
+  return 0;
 }
 
 // Template Method that makes a SVC_HANDLER (using the appropriate

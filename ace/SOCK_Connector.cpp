@@ -89,6 +89,10 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
     {
       // If everything succeeded transfer ownership to <new_stream>.
       new_stream.set_handle (this->get_handle ());
+
+      // Start out with non-blocking disabled on the <new_stream>.
+      new_stream.disable (ACE_NONBLOCK);
+
       this->set_handle (ACE_INVALID_HANDLE);
     }
   else if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
