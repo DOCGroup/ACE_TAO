@@ -140,7 +140,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
       this->private_state_->tc_size_ = sizeof (CORBA::WChar);
       break;
     case CORBA::tk_TypeCode:
-      this->private_state_->tc_size_ = sizeof (CORBA::TypeCode);
+      this->private_state_->tc_size_ = sizeof (CORBA::TypeCode_ptr);
       break;
     case CORBA::tk_Principal:
       this->private_state_->tc_size_ = sizeof (CORBA::Principal);
