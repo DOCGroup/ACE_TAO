@@ -1409,7 +1409,9 @@ options (CL::Description& d)
 
 
 void ExecutorMappingGenerator::
-generate (CommandLine const& cl, TranslationUnit& tu, fs::path file_path)
+generate (CommandLine const& cl,
+          TranslationUnit& tu,
+          fs::path const& file_path)
 {
   fs::ofstream ofs;
 

@@ -28,7 +28,7 @@ public:
   void
   generate (CommandLine const& cl,
             CCF::CIDL::SemanticGraph::TranslationUnit&,
-            fs::path file);
+            fs::path const& file);
 };
 
 #endif // EXECUTOR_MAPPING_GENERATOR_HPP
