@@ -4,7 +4,8 @@ Tue Jun 29 22:33:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed warnings in green hills and possibly othre EDG-based
 	  compilers.
 
-	* tests/run_tests.sh: 
+	* tests/run_tests.sh:
+	* tests/run_tests.vxworks:
 	  Take Future_Set_Test out, it does not work in too many
 	  platforms.
 
