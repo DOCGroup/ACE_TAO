@@ -37,9 +37,9 @@ namespace TAO
   {
     class ThreadPolicyValue;
 
-    class TAO_PortableServer_Export POA_ThreadPolicy :
-      public virtual ::PortableServer::ThreadPolicy,
-      public virtual TAO_Local_RefCounted_Object
+    class TAO_PortableServer_Export POA_ThreadPolicy
+      : public virtual ::PortableServer::ThreadPolicy,
+        public virtual TAO_Local_RefCounted_Object
     {
     public:
       POA_ThreadPolicy ();

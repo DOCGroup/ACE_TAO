@@ -30,8 +30,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Retain_Servant_Retention_Strategy :
-       public virtual Non_Retain_Servant_Retention_Strategy
+    class TAO_PortableServer_Export Retain_Servant_Retention_Strategy
+       : public virtual Non_Retain_Servant_Retention_Strategy
     {
     public:
       Retain_Servant_Retention_Strategy (void);

@@ -35,9 +35,9 @@ namespace TAO
   {
     class IdUniquenessPolicyValue;
 
-    class TAO_PortableServer_Export IdUniquenessPolicy :
-      public virtual ::PortableServer::IdUniquenessPolicy,
-      public virtual TAO_Local_RefCounted_Object
+    class TAO_PortableServer_Export IdUniquenessPolicy
+      : public virtual ::PortableServer::IdUniquenessPolicy,
+        public virtual TAO_Local_RefCounted_Object
     {
     public:
       IdUniquenessPolicy ();

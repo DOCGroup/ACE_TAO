@@ -24,7 +24,8 @@
 #include "tao/Adapter_Factory.h"
 #include "ace/Service_Config.h"
 
-class TAO_PortableServer_Export TAO_Object_Adapter_Factory : public TAO_Adapter_Factory
+class TAO_PortableServer_Export TAO_Object_Adapter_Factory
+  : public TAO_Adapter_Factory
 {
 public:
   /// Constructor

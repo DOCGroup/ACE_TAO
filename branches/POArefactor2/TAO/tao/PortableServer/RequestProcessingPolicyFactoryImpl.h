@@ -29,8 +29,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export RequestProcessingPolicyFactoryImpl :
-       public virtual RequestProcessingPolicyFactory
+    class TAO_PortableServer_Export RequestProcessingPolicyFactoryImpl
+      : public virtual RequestProcessingPolicyFactory
     {
     public:
       virtual ~RequestProcessingPolicyFactoryImpl (void);

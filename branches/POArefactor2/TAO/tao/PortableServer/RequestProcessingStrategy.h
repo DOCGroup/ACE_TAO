@@ -50,8 +50,8 @@ namespace TAO
   {
     class ServantRetentionStrategy;
 
-    class TAO_PortableServer_Export RequestProcessingStrategy :
-       public virtual Policy_Strategy
+    class TAO_PortableServer_Export RequestProcessingStrategy
+      : public virtual Policy_Strategy
     {
     public:
       virtual ~RequestProcessingStrategy (void);

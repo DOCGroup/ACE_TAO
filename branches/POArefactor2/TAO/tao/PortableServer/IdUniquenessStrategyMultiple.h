@@ -25,8 +25,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Multiple_Id_Uniqueness_Strategy :
-       public virtual IdUniquenessStrategy
+    class TAO_PortableServer_Export Multiple_Id_Uniqueness_Strategy
+      : public virtual IdUniquenessStrategy
     {
     public:
       virtual ~Multiple_Id_Uniqueness_Strategy (void);

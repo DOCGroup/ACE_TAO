@@ -29,8 +29,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ImplicitActivationPolicyFactoryImpl :
-       public virtual ImplicitActivationPolicyFactory
+    class TAO_PortableServer_Export ImplicitActivationPolicyFactoryImpl
+      : public virtual ImplicitActivationPolicyFactory
     {
     public:
       virtual ~ImplicitActivationPolicyFactoryImpl (void);

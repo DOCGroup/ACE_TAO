@@ -29,8 +29,8 @@ namespace TAO
   {
     class Temporary_Creation_Time;
 
-    class TAO_PortableServer_Export LifespanStrategy :
-       public virtual Policy_Strategy
+    class TAO_PortableServer_Export LifespanStrategy
+      : public virtual Policy_Strategy
     {
     public:
       LifespanStrategy (void);

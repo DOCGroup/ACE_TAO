@@ -37,9 +37,9 @@ namespace TAO
   {
     class ImplicitActivationPolicyValue;
 
-    class TAO_PortableServer_Export ImplicitActivationPolicy :
-      public virtual ::PortableServer::ImplicitActivationPolicy,
-      public virtual TAO_Local_RefCounted_Object
+    class TAO_PortableServer_Export ImplicitActivationPolicy
+      : public virtual ::PortableServer::ImplicitActivationPolicy,
+        public virtual TAO_Local_RefCounted_Object
     {
     public:
       ImplicitActivationPolicy ();

@@ -31,8 +31,8 @@ namespace TAO
   {
     class ImplicitActivationStrategy;
 
-    class TAO_PortableServer_Export ImplicitActivationStrategyFactory :
-       public virtual StrategyFactory
+    class TAO_PortableServer_Export ImplicitActivationStrategyFactory
+      : public virtual StrategyFactory
     {
     public:
       /// Create a new servant retention strategy

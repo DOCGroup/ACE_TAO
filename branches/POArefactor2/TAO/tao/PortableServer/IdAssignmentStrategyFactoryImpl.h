@@ -27,8 +27,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export IdAssignmentStrategyFactoryImpl :
-       public virtual IdAssignmentStrategyFactory
+    class TAO_PortableServer_Export IdAssignmentStrategyFactoryImpl
+      : public virtual IdAssignmentStrategyFactory
     {
     public:
       virtual ~IdAssignmentStrategyFactoryImpl (void);

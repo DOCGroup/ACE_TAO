@@ -64,7 +64,8 @@ namespace TAO
  *
  * This class will be used as a facade for the POAs in a server
  */
-class TAO_PortableServer_Export TAO_Object_Adapter : public TAO_Adapter
+class TAO_PortableServer_Export TAO_Object_Adapter
+  : public TAO_Adapter
 {
 public:
 

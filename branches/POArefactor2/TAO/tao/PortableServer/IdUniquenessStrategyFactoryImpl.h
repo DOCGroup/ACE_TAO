@@ -27,8 +27,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export IdUniquenessStrategyFactoryImpl :
-       public virtual IdUniquenessStrategyFactory
+    class TAO_PortableServer_Export IdUniquenessStrategyFactoryImpl
+      : public virtual IdUniquenessStrategyFactory
     {
     public:
       virtual ~IdUniquenessStrategyFactoryImpl (void);

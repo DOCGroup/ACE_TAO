@@ -27,8 +27,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Policy_Strategy :
-       public virtual ACE_Service_Object
+    class TAO_PortableServer_Export Policy_Strategy
+      : public virtual ACE_Service_Object
     {
     public:
       virtual ~Policy_Strategy (void) {};

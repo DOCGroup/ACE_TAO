@@ -26,8 +26,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export System_Id_Assignment_Strategy :
-       public virtual IdAssignmentStrategy
+    class TAO_PortableServer_Export System_Id_Assignment_Strategy
+      : public virtual IdAssignmentStrategy
     {
     public:
       virtual ~System_Id_Assignment_Strategy (void);

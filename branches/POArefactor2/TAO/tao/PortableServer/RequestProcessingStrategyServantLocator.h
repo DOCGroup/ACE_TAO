@@ -41,8 +41,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Servant_Locator_Request_Processing_Strategy :
-       public virtual Servant_Manager_Request_Processing_Strategy
+    class TAO_PortableServer_Export Servant_Locator_Request_Processing_Strategy
+      : public virtual Servant_Manager_Request_Processing_Strategy
     {
     public:
       Servant_Locator_Request_Processing_Strategy (void);

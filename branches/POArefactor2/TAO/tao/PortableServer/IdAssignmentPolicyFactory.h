@@ -27,8 +27,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export IdAssignmentPolicyFactory :
-       public virtual PolicyFactory
+    class TAO_PortableServer_Export IdAssignmentPolicyFactory
+      : public virtual PolicyFactory
     {
     public:
       /// Create a new id uniqueness policy

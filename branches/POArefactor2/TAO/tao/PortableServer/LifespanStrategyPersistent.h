@@ -28,8 +28,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Persistent_Lifespan_Strategy :
-       public virtual LifespanStrategy
+    class TAO_PortableServer_Export Persistent_Lifespan_Strategy
+      : public virtual LifespanStrategy
     {
     public:
       Persistent_Lifespan_Strategy ();

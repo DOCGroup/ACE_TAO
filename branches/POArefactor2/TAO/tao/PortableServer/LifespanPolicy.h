@@ -35,9 +35,9 @@ namespace TAO
   {
     class LifespanPolicyValue;
 
-    class TAO_PortableServer_Export POA_LifespanPolicy :
-      public virtual ::PortableServer::LifespanPolicy,
-      public virtual TAO_Local_RefCounted_Object
+    class TAO_PortableServer_Export POA_LifespanPolicy
+      : public virtual ::PortableServer::LifespanPolicy,
+        public virtual TAO_Local_RefCounted_Object
     {
     public:
       POA_LifespanPolicy ();

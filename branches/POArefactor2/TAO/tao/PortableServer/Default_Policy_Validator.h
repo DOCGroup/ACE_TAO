@@ -24,7 +24,8 @@
 
 #include "tao/Policy_Validator.h"
 
-class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator : public TAO_Policy_Validator
+class TAO_PortableServer_Export TAO_POA_Default_Policy_Validator
+  : public TAO_Policy_Validator
 {
 public:
 

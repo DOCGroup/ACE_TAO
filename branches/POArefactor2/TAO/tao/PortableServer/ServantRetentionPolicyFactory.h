@@ -29,8 +29,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ServantRetentionPolicyFactory :
-       public virtual PolicyFactory
+    class TAO_PortableServer_Export ServantRetentionPolicyFactory
+       : public virtual PolicyFactory
     {
     public:
       /// Create a new servant retention policy

@@ -33,8 +33,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export AOM_Only_Request_Processing_Strategy :
-       public virtual RequestProcessingStrategy
+    class TAO_PortableServer_Export AOM_Only_Request_Processing_Strategy
+      : public virtual RequestProcessingStrategy
     {
     public:
       AOM_Only_Request_Processing_Strategy (void);

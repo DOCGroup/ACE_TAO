@@ -27,8 +27,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export LifespanPolicyFactoryImpl :
-       public virtual LifespanPolicyFactory
+    class TAO_PortableServer_Export LifespanPolicyFactoryImpl
+      : public virtual LifespanPolicyFactory
     {
     public:
       virtual ~LifespanPolicyFactoryImpl (void);

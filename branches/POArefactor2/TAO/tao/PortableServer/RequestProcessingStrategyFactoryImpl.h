@@ -29,8 +29,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export RequestProcessingStrategyFactoryImpl :
-       public virtual RequestProcessingStrategyFactory
+    class TAO_PortableServer_Export RequestProcessingStrategyFactoryImpl
+      : public virtual RequestProcessingStrategyFactory
     {
     public:
       virtual ~RequestProcessingStrategyFactoryImpl (void);

@@ -27,8 +27,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Transient_Lifespan_Strategy :
-       public virtual LifespanStrategy
+    class TAO_PortableServer_Export Transient_Lifespan_Strategy
+      : public virtual LifespanStrategy
     {
     public:
       Transient_Lifespan_Strategy (void);

@@ -29,8 +29,8 @@ namespace TAO
   {
     class LifespanStrategy;
 
-    class TAO_PortableServer_Export LifespanStrategyFactory :
-       public virtual StrategyFactory
+    class TAO_PortableServer_Export LifespanStrategyFactory
+      : public virtual StrategyFactory
     {
     public:
       /// Create a new servant retention strategy

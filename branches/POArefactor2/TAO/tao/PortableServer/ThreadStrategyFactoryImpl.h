@@ -29,8 +29,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ThreadStrategyFactoryImpl :
-       public virtual ThreadStrategyFactory
+    class TAO_PortableServer_Export ThreadStrategyFactoryImpl
+       : public virtual ThreadStrategyFactory
     {
     public:
       virtual ~ThreadStrategyFactoryImpl (void);

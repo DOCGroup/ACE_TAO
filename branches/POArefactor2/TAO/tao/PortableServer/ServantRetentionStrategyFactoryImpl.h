@@ -29,8 +29,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ServantRetentionStrategyFactoryImpl :
-       public virtual ServantRetentionStrategyFactory
+    class TAO_PortableServer_Export ServantRetentionStrategyFactoryImpl
+       : public virtual ServantRetentionStrategyFactory
     {
     public:
       virtual ~ServantRetentionStrategyFactoryImpl (void);

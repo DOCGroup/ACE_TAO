@@ -35,9 +35,9 @@ namespace TAO
   {
     class IdAssignmentPolicyValue;
 
-    class TAO_PortableServer_Export IdAssignmentPolicy :
-      public virtual ::PortableServer::IdAssignmentPolicy,
-      public virtual TAO_Local_RefCounted_Object
+    class TAO_PortableServer_Export IdAssignmentPolicy
+      : public virtual ::PortableServer::IdAssignmentPolicy,
+        public virtual TAO_Local_RefCounted_Object
     {
     public:
       IdAssignmentPolicy ();

@@ -37,7 +37,8 @@ class TAO_Acceptor;
  * Default strategy for populating mprofile: all available
  * endpoints are included.
  */
-class TAO_PortableServer_Export TAO_Default_Acceptor_Filter : public TAO_Acceptor_Filter
+class TAO_PortableServer_Export TAO_Default_Acceptor_Filter
+  : public TAO_Acceptor_Filter
 {
 public:
   TAO_Default_Acceptor_Filter (void);
