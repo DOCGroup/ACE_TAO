@@ -1,3 +1,8 @@
+Fri Feb 27 12:08:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orb_core.h (TAO_Resource_Factory): Changed to use
+ 	  TAO_Default_Reactor class in TAO_Resource_Factory.
+
 Fri Feb 27 11:10:24 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
 	* test/NestedUpcall/{eh_i,reactor_i}.cpp: Changed debug statements
