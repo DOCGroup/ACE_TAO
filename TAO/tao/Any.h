@@ -346,9 +346,6 @@ namespace TAO
     virtual void assign_translator (CORBA::TCKind,
                                     TAO_InputCDR *cdr);
 
-    ACE_Char_Codeset_Translator *char_translator (void);
-    ACE_WChar_Codeset_Translator *wchar_translator (void);
-
   private:
     ACE_Message_Block *cdr_;
     int byte_order_;
