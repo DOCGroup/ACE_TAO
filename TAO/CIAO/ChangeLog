@@ -1,3 +1,25 @@
+Sat Feb 26 14:38:46 2005  Arvind S. Krishna  <arvindk@tango.dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/BasicSP_EC/EC/EC.mpc:
+	* examples/handcrafted/BasicSP_EC/BasicSP.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/BasicSP_EC2/EC/EC.mpc:
+	* examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService.mpc:
+	* examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
+
+	  Replaced all occurances of "dummy" with "dummy_label"
+
+	* bin/replace_dummy_with_dummylabel.sh:
+	  
+	  Shell script that can be used to do this. In case people find it
+	  useful. 
+	
+
 Tue Feb 22 09:55:51 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
