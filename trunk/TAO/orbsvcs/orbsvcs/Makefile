@@ -37,6 +37,7 @@ ifndef TAO_ORBSVCS
                    CosEvent \
                    RTOLDEvent \
                    RTSchedEvent \
+		   RTKokyuEvent \
                    EventLog \
                    RTEventLog \
                    NotifyLog
