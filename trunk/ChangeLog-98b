@@ -1,3 +1,9 @@
+Wed Sep 02 16:31:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Make sure ACE_NO_INLINE is not defined before defining
+	  it to avoid double defining the macro.  Thanks to Ossama Othman
+	  <othman@astrosun.tn.cornell.edu> for suggestion this.
+
 Wed Sep  2 11:10:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task.cpp (activate): Remmber to decrement the thr_count_ if
