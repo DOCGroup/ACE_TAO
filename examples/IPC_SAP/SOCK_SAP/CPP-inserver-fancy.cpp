@@ -1,4 +1,4 @@
-// $Id$
+ // $Id$
 
 // This example tests the features of the <ACE_SOCK_Acceptor>,
 // <ACE_SOCK_Stream>, and <ACE_Svc_Handler> classes.  If the platform
@@ -523,9 +523,9 @@ Handler_Factory::handle_events (void)
   fd_set handles;
 
   FD_ZERO (&handles);
-  FD_SET (this->twoway_acceptor_.get_handle (),
+  FD_SET ((ACE_SOCKET) this->twoway_acceptor_.get_handle (),
           &handles);
-  FD_SET (this->oneway_acceptor_.get_handle (),
+  FD_SET ((ACE_SOCKET) this->oneway_acceptor_.get_handle (),
           &handles);
 
   // Performs the iterative server activities.
@@ -549,12 +549,12 @@ Handler_Factory::handle_events (void)
                     "(%P|%t) select timed out\n"));
       else
         {
-          if (FD_ISSET (this->twoway_acceptor_.get_handle (),
+          if (FD_ISSET ((ACE_SOCKET) this->twoway_acceptor_.get_handle (),
                         &temp))
             this->create_handler (this->twoway_acceptor_,
                                   &Handler_Factory::make_twoway_handler,
                                   "twoway");
-          if (FD_ISSET (this->oneway_acceptor_.get_handle (),
+          if (FD_ISSET ((ACE_SOCKET) this->oneway_acceptor_.get_handle (),
                         &temp))
             this->create_handler (this->oneway_acceptor_,
                                   &Handler_Factory::make_oneway_handler,

@@ -14,7 +14,8 @@ PSRC    = $(addsuffix .cpp,$(BIN))
 
 BIN2 = test_non_existent \
        test_writers \
-       test_multiple_contexts
+       test_multiple_contexts \
+       test_open
 
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.

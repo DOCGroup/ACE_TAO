@@ -34,7 +34,7 @@ while( the_variable != some_desired_state_or_value )
 the_mutex.release();
 </PRE>
 Note that when <i>the_condition</i> is created, it must be given a
-reference to the mutex.  That's because the wait() method will release
+reference to the mutex.  That's because the wait() method will implicitly release
 the mutex before waiting and reacquire it after being signaled.
 </UL>
 <P>
@@ -44,6 +44,7 @@ the mutex before waiting and reacquire it after being signaled.
 the_mutex.acquire();
 the_variable = some_new_value_or_state;
 the_condition.signal() <i>OR</i> the_condition.broadcast()
+the_mutex.release();
 </pre>
 </UL>
 </UL>
