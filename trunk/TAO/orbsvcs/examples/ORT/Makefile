@@ -55,9 +55,11 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifeq ($(interceptors), 1)
-BIN = $(BIN_UNCHECKED)
-endif # interceptors
+ifeq ($(corba_messaging),1)
+  ifeq ($(interceptors), 1)
+BIN=$(BIN_UNCHECKED)
+  endif # interceptors
+endif # corba_messaging
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
