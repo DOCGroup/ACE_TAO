@@ -1,4 +1,7 @@
-Tue Nov 11 08:12:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/UNIXclerk.conf: Changed "merengue" to "localhost." 
+	  Thanks to Steve Coy for this suggestion.
 
 	* ace/config-lynxos.h (getopt): Missing 't' from const => see
  	  getopt prototype parameter list.  Thanks to Manojkumar Acharya
