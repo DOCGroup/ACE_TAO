@@ -98,18 +98,25 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
                            const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
-  if (flags) ACE_NOTSUP_RETURN (-1);
+
+  if (flags)
+    ACE_NOTSUP_RETURN (-1);
 
   // Mimics <ACE::send>.
   if (timeout == 0)
     return this->send (buf, len);
 
-  int val;
-  if (this->enter_send_timedwait (timeout, val) == -1)
+  int val = 0;
+  if (ACE::enter_send_timedwait (this->get_handle (),
+                                 timeout,
+                                 val) == -1)
     return -1;
-  ssize_t bytes_written = this->send (buf, len);
-  this->leave_send_timedwait (timeout, val);
-  return bytes_written;
+  else
+    {
+      ssize_t bytes_transferred = this->send (buf, len);
+      ACE::restore_non_blocking_mode (this->get_handle (), val);
+      return bytes_transferred;
+    }
 }
 
 ssize_t
@@ -121,7 +128,8 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
   // Mimics code in <ACE::recv>.
-  int peek;
+  int peek = 0;
+
   if (flags)
     {
       if ((flags | MSG_PEEK) == MSG_PEEK)
@@ -129,14 +137,22 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
       else
         ACE_NOTSUP_RETURN (-1);
     }
+
   if (timeout == 0)
     return this->recv (buf, n, flags);
-  int val = 0;
-  if (this->enter_recv_timedwait (timeout, val) == -1)
-    return -1;
-  ssize_t bytes_recv = this->recv (buf, n, flags);
-  this->leave_recv_timedwait (timeout, val);
-  return bytes_recv;
+  {
+    int val = 0;
+    if (ACE::enter_recv_timedwait (this->get_handle (),
+                                   timeout,
+                                   val) == -1)
+      return -1;
+    else
+      {
+        ssize_t bytes_transferred = this->recv (buf, n, flags);
+        ACE::restore_non_blocking_mode (this->get_handle (), val);
+        return bytes_transferred;
+      }
+  }
 }
 
 
@@ -199,7 +215,9 @@ ACE_SSL_SOCK_Stream::recv (size_t n,
 }
 
 ssize_t
-ACE_SSL_SOCK_Stream::send_n (const void *buf, size_t len, int flags,
+ACE_SSL_SOCK_Stream::send_n (const void *buf,
+                             size_t len,
+                             int flags,
                              const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send_n");
@@ -210,31 +228,49 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, size_t len, int flags,
 
   /* This code mimics ACE::send_n */
   // Total number of bytes written.
-  size_t bytes_written;
+  size_t bytes_transferred = 0;
 
   // Actual number of bytes written in each <send> attempt
-  ssize_t n;
+  ssize_t n = 0;
 
-  for (bytes_written = 0;
-       bytes_written < len;
-       bytes_written += n)
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
     {
-      n = this->send ((const char*) buf + bytes_written,
-                      len - bytes_written,
+      n = this->send ((const char*) buf + bytes_transferred,
+                      len - bytes_transferred,
                       flags,
                       timeout);
+//       if (n == -1)
+//         if (errno == EWOULDBLOCK)
+//           n = 0; // Keep trying to send
+//         else
+//           return -1;
       if (n == -1)
-        if (errno == EWOULDBLOCK)
-          n = 0; // Keep trying to send
-        else
+        {
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
           return -1;
+        }
+      else if (n == 0)
+        return 0;
     }
-  return bytes_written;
+
+  return bytes_transferred;
 }
 
 ssize_t
-ACE_SSL_SOCK_Stream::recv_n (void *buf, size_t len, int flags,
-			 const ACE_Time_Value *timeout) const
+ACE_SSL_SOCK_Stream::recv_n (void *buf,
+                             size_t len,
+                             int flags,
+                             const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_n");
 
@@ -243,56 +279,88 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, size_t len, int flags,
        if ((flags | MSG_PEEK) != MSG_PEEK)
         ACE_NOTSUP_RETURN (-1);
     }
-  size_t bytes_received;
 
-  ssize_t n;
+  size_t bytes_transferred = 0;
+  ssize_t n = 0;
 
-  for (bytes_received = 0;
-       bytes_received < len;
-       bytes_received += n)
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
     {
-      n = this->recv ((char*) buf + bytes_received,
-                      len - bytes_received,
+      n = this->recv ((char*) buf + bytes_transferred,
+                      len - bytes_transferred,
                       flags,
                       timeout);
-      if (n == -1 || n == 0)
-        break;
+//       if (n == -1 || n == 0)
+//         break;
+      if (n == -1)
+        {
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
+        }
+      else if (n == 0)
+        return 0;
     }
-  return bytes_received;
+
+  return bytes_transferred;
 }
 
 ssize_t
 ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_n");
+
   if (flags != 0)
     {
       if ((flags | MSG_PEEK) != MSG_PEEK)
         ACE_NOTSUP_RETURN (-1);
     }
-  ssize_t bytes_received;
 
-  ssize_t n;
+  ssize_t bytes_transferred = 0;
+  ssize_t n = 0;
 
-  for (bytes_received = 0;
-       bytes_received < len;
-       bytes_received += n)
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
     {
-      n = this->recv ((char*) buf + bytes_received,
-                      len - bytes_received,
+      n = this->recv ((char*) buf + bytes_transferred,
+                      len - bytes_transferred,
                       flags);
+//       if (n == -1)
+//         {
+//           if (errno == EWOULDBLOCK)
+//             n = 0; //Keep trying
+//           else
+//             return -1;
+//         }
+//       else if (n == 0)
+//         break;
       if (n == -1)
         {
+          // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0; //Keep trying
-          else
-            return -1;
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
         }
       else if (n == 0)
-        break;
+        return 0;
     }
 
-  return bytes_received;
+  return bytes_transferred;
 }
 
 ssize_t
@@ -305,25 +373,41 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
     ACE_NOTSUP_RETURN (-1);
 
   /*  The following code mimics <ACE::send_n> */
-  size_t bytes_written;
-  ssize_t n;
+  size_t bytes_transferred = 0;
+  ssize_t n = 0;
 
-  for (bytes_written = 0;
-       bytes_written < (size_t) len;
-       bytes_written += n)
+  for (bytes_transferred = 0;
+       bytes_transferred < (size_t) len;
+       bytes_transferred += n)
     {
-      n = this->send ((const char*) buf + bytes_written,
-                      len - bytes_written,
+      n = this->send ((const char*) buf + bytes_transferred,
+                      len - bytes_transferred,
                       flags);
+//       if (n == -1)
+//         {
+//           if (errno == EWOULDBLOCK)
+//             n = 0; //Keep trying to send.
+//           else
+//             return -1;
+//         }
       if (n == -1)
         {
+          // If blocked, try again.
           if (errno == EWOULDBLOCK)
-            n = 0; //Keep trying to send.
-          else
-            return -1;
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
         }
+      else if (n == 0)
+        return 0;
     }
-  return bytes_written;
+
+  return bytes_transferred;
 }
 
 
@@ -456,152 +540,6 @@ ACE_SSL_SOCK_Stream::disable (int value) const
       return -1;
     }
   return 0;
-}
-
-
-
-
-// The following four functions are copied straight from ACE::.
-int
-ACE_SSL_SOCK_Stream::enter_recv_timedwait (const ACE_Time_Value *timeout,
-                                           int &val) const
-{
-  // Give value a default value to keep Purify happy!
-  val = 0;
-  ACE_HANDLE handle = this->get_handle ();
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  struct pollfd fds;
-
-  fds.fd = handle;
-  fds.events = POLLIN;
-  fds.revents = 0;
-
-  int a = ACE_OS::poll (&fds, 1, *timeout);
-
-#else
-  ACE_Handle_Set handle_set;
-  handle_set.set_bit (handle);
-
-  // Wait for input to arrive or for the timeout to elapse.
-  int a = ACE_OS::select (int (handle) + 1,
-                          (fd_set *) handle_set, // read_fds.
-                          (fd_set *) 0, // write_fds.
-                          (fd_set *) 0, // exception_fds.
-                          timeout);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
-   switch ( a )
-   {
-   case 0:  // Timer expired.  return -1
-      errno = ETIME;
-      /* FALLTHRU */
-   case -1: // we got here directly - select() returned -1.
-      return -1;
-   case 1: // OK to read now.
-      /* FALLTHRU */
-   default: // default is case a > 0; return a
-      // really should assert if a != 1
-      //assert( a == 1 );
-      // We need to record whether we are already *in* nonblocking
-      // mode, so that we can correctly reset the state when we're
-      // done.
-      val = ACE::get_flags (handle);
-
-      if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
-        // Set the handle into non-blocking mode if it's not
-        // already in it.
-        ACE::set_flags (handle, ACE_NONBLOCK);
-      return a;
-   }
-}
-
-void
-ACE_SSL_SOCK_Stream::leave_recv_timedwait (const ACE_Time_Value *timeout,
-                                           int val) const
-{
-  if (timeout != 0
-      && ACE_BIT_DISABLED (val,
-                           ACE_NONBLOCK))
-    {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-      // originally.
-      ACE::clr_flags (this->get_handle (), ACE_NONBLOCK);
-    }
-}
-
-int
-ACE_SSL_SOCK_Stream::enter_send_timedwait (const ACE_Time_Value* timeout,
-                                           int &val) const
-{
-  // Give value a default value to keep Purify happy!
-  val = 0;
-  ACE_HANDLE handle = this->get_handle ();
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  struct pollfd fds;
-
-  fds.fd = handle;
-  fds.events = POLLOUT;
-  fds.revents = 0;
-
-  int a = ACE_OS::poll (&fds, 1, *timeout);
-
-#else
-  ACE_Handle_Set handle_set;
-  handle_set.set_bit (handle);
-
-  // On timed writes we always go into select(); only if the
-  // handle is available for writing within the specified amount
-  // of time do we put it in non-blocking mode
-
-  int a = ACE_OS::select (int (handle) + 1,
-                          (fd_set *) 0,
-                          (fd_set *) handle_set,
-                          (fd_set *) 0,
-                          timeout);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
-   switch ( a )
-   {
-   case 0: // Timer expired.
-      errno = ETIME;
-      /* FALLTHRU */
-   case -1: // we got here directly - select() returned -1.
-      return -1;
-   case 1: // Ok to write now.
-      /* FALLTHRU */
-   default: // default is case a > 0; return a
-      // really should assert if a != 1
-      //assert( a == 1 );
-      // We need to record whether we are already *in* nonblocking
-      // mode, so that we can correctly reset the state when we're
-      // done.
-      val = ACE::get_flags (handle);
-
-      if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
-        // Set the handle into non-blocking mode if it's not
-        // already in it.
-        ACE::set_flags (handle, ACE_NONBLOCK);
-      return a;
-    }
-}
-
-void
-ACE_SSL_SOCK_Stream::leave_send_timedwait (const ACE_Time_Value *timeout,
-                                           int val) const
-{
-  if (timeout != 0
-      && ACE_BIT_DISABLED (val, ACE_NONBLOCK))
-    {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-      // originally.
-      ACE::clr_flags (this->get_handle (), ACE_NONBLOCK);
-    }
 }
 
 #endif /* ACE_HAS_SSL */
