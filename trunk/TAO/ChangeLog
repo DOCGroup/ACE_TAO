@@ -1,8 +1,14 @@
+Mon Jul 07 06:06:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTScheduling/RTScheduler.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+          Fixed fuzz errors about incorrect doxygen file tag
+
 Sun Jul 06 17:40:19 2003  Pradeep Gore  <pradeep@oomworks.com>
-	
+
 	* orbsvcs/tests/Notify/lib:
 	* orbsvcs/tests/Notify/RT_lib:
-	  
+
 	  Changed all instances of "TAO_NS_" with "TAO_Notify_Tests_" because of
 	  conflicting namespace with the Notify orbsvcs library classes.
 	  This was causing some programs to crash on Win2k.
@@ -11,33 +17,33 @@ Sun Jul 06 17:40:19 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/Notify_Service/Notify_Service.cpp:
 
 	  Changed all instances of "TAO_NS_" with "TAO_Notify_" as "NS" is
-	  easily confused with the Naming Service. 
-	  
+	  easily confused with the Naming Service.
+
 	* orbsvcs/examples/Notify/Lanes/Supplier.h:
 	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
 	* orbsvcs/examples/Notify/Lanes/Consumer.h:
 	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
-	
+
 	  Appended "Lanes" word to the Supplier and Consumer class
 	  declarations to avoid namespace conflict with the Notify library.
 
 	* orbsvcs/tests/Notify/Lanes/supplier.conf:
 	* orbsvcs/tests/Notify/Lanes/consumer.conf:
 	* orbsvcs/tests/Notify/Lanes/notify.conf:
- 	  
+
 	  Commented out directive to use SCHED_FIFO. Using the default
 	  SCHED_OTHER will enable the test to run on solaris and windows
-	  without being root. 
-	
+	  without being root.
+
 	* orbsvcs/tests/Notify/lib/Driver.cpp:
-	  
+
 	  Added a check in the <init> method for available priority
 	  levels and exit gracefully if only 1 level is available.
 	  Thanks to Irfan for code borrowed from his RTCORBA tests.
-	
+
 	* orbsvcs/examples/Notify/Filter/run_test.pl:
 	* orbsvcs/examples/Notify/Subscribe/run_test.pl:
-	  
+
 	  Added for convenience.
 
 Sun Jul 6 19:31:01 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>

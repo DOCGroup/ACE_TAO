@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file NS_Periodic_Supplier.h
+ *  @file Periodic_Supplier.h
  *
  *  $Id$
  *
