@@ -1,3 +1,14 @@
+Thu Aug 27 15:47:34 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Proactor.cpp (handle_signal): Fixed code for looping around
+ 	  handle_events().  Thanks to Marc Penner <mpenner@rst.inri.com>
+ 	  for pointing out the problem.
+
+	* ace/OS.cpp (ACE_Countdown_Time::stop): Removed the setting of
+ 	  errno to ETIME when we have used all of timeout.  This was
+ 	  necessary since this errno was interfering with errno being set
+ 	  by other parts of ACE.
+
 Thu Aug 27 13:45:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h:  Added /**/ between "#include" and
