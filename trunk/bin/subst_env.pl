@@ -9,56 +9,52 @@
 # Typical usage would be as follows:
 #   perl subst_env.pl file_with_acetryenv.cpp >file_with_taoenvarg.cpp
 #
+$linenum = 0;
 $last="";
-$envdecl = "CORBA(::|_)Environment *& *ACE_TRY_ENV";
-$default = " *= *TAO_default_environment";
+$corbaenv = 'CORBA(::|_)Environment';
+$envdecl = 'CORBA(::|_)Environment *& *\w*[Ee][Nn][Vv]\w*';
+$default = '(TAO_|CORBA\::Environment\::)default_environment *\(\)';
+$envvar = '(ACE|TAO)_TRY_ENV';
 while (($l = <>)) {
-  if ($l =~ /ACE_TRY_ENV/) {
-    if ($l =~ /$envdecl/) {
-      if ($l =~ /^\s*$envdecl/) {
-        my $single = "SINGLE_";
-        if ($last =~ /,\s*$/) {
-            $last =~ s/,\s*$/\n/;
-            $single = "";
-        }
-        if ($l =~ /$default/) {
-          $l =~ s/$envdecl${default} *\(\)/ACE_ENV_${single}ARG_DECL_WITH_DEFAULTS/;
-        } else {
-          $l =~ s/$envdecl/ACE_ENV_${single}ARG_DECL/;
-        }
-      } elsif ($l =~ /,\s*$envdecl/) {
-        if ($l =~ /$default/) {
-          $l =~ s/,\s*$envdecl${default} *\(\)/ ACE_ENV_ARG_DECL_WITH_DEFAULTS/;
-        } else {
-          $l =~ s/,\s*$envdecl/ ACE_ENV_ARG_DECL/;
-        }
-      } else {
-        if ($l =~ /$default/) {
-          $l =~ s/$envdecl${default} *\(\)/ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS/;
-        } else {
-          $l =~ s/$envdecl/ACE_ENV_SINGLE_ARG_DECL/;
-        }
-      }
-    } elsif ($l =~ /^\s*ACE_TRY_ENV/) {
+  $linenum++;
+  if ($l =~ /$corbaenv/) {
+    my $single = "SINGLE_";
+    if ($last =~ /,\s*$/) {
       $last =~ s/,\s*$/\n/;
-      $l =~ s/ACE_TRY_ENV/ACE_ENV_ARG_PARAMETER/;
-    } elsif ($l =~ /, *ACE_TRY_ENV/) {
-      $l =~ s/, *ACE_TRY_ENV/ ACE_ENV_ARG_PARAMETER/;
+      $single = "";
+    } elsif ($l =~ /,\s*$corbaenv/) {
+      $l =~ s/,\s*$corbaenv/  CORBA_Environment/;  # Preparation.
+      $single = "";
+    }
+    unless ($l =~ /${corbaenv}.*\)/) {  # Need the method's closing paren.
+      chop $l;
+      my $nxt = <>;
+      $linenum++;
+      $nxt =~ s/^\s+//;
+      $l .= $nxt;
+    }
+    if ($l =~ /$envdecl/) {
+      if ($l =~ /$envdecl *= *$default/) {
+        $l =~ s/$envdecl *= *$default/ACE_ENV_${single}ARG_DECL_WITH_DEFAULTS/;
+      } else {
+        $l =~ s/$envdecl/ACE_ENV_${single}ARG_DECL/;
+      }
     } else {
-      $l =~ s/ACE_TRY_ENV/ACE_ENV_SINGLE_ARG_PARAMETER/;
+      $l =~ s/$corbaenv *& */ACE_ENV_${single}ARG_DECL_NOT_USED/;
     }
     print $last;
     print $l;
     $last = "";
-  } elsif ($l =~ /CORBA(::|_)Environment *&/) {
-    if ($l =~ /^\s*CORBA(::|_)Environment *&/) {
+  } elsif ($l =~ /$envvar/) {
+    my $single = "SINGLE_";
+    if ($last =~ /,\s*$/) {
       $last =~ s/,\s*$/\n/;
-      $l =~ s/CORBA(::|_)Environment *&/ACE_ENV_ARG_DECL_NOT_USED/;
-    } elsif ($l =~ /,\s*CORBA(::|_)Environment *&/) {
-      $l =~ s/,\s*CORBA(::|_)Environment *&/ ACE_ENV_ARG_DECL_NOT_USED/;
-    } else {
-      $l =~ s/CORBA(::|_)Environment *&/ACE_ENV_SINGLE_ARG_DECL_NOT_USED/;
+      $single = "";
+    } elsif ($l =~ /,\s*$envvar/) {
+      $l =~ s/,\s*$envvar/  ACE_TRY_ENV/;  # Preparation.
+      $single = "";
     }
+    $l =~ s/$envvar/ACE_ENV_${single}ARG_PARAMETER/;
     print $last;
     print $l;
     $last = "";
