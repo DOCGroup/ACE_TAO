@@ -31,7 +31,7 @@ CORBA::Boolean POA_CORBA::Current::_is_a (
   )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Current:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Current:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
       return 1;
     else
@@ -42,7 +42,7 @@ void* POA_CORBA::Current::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/Current:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Current:1.0") == 0)
     return ACE_static_cast (POA_CORBA::Current_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
@@ -51,7 +51,7 @@ void* POA_CORBA::Current::_downcast (
 
 const char* POA_CORBA::Current::_interface_repository_id (void) const
 {
-  return "IDL:CORBA/Current:1.0";
+  return "IDL:omg.org/CORBA/Current:1.0";
 }
 
 POA_CORBA::_tao_collocated_Current::_tao_collocated_Current (
