@@ -9,7 +9,7 @@
 //    catior.cpp
 //
 // = DESCRIPTION
-//    Reads stringified IORs and outputs the encoded information
+//    Reads stringified IORs and outputs the encoded information.
 //
 // = AUTHORS
 //      Jeff Hopper <jhopper@nosc.mil>
@@ -22,9 +22,9 @@
 #include <tao/Typecode.h>
 #include <tao/IIOP_Object.h>
 
+#if 0 /* not currently used */
 // Destringify URL style IIOP objref.
 
-#if 0 /* not currently used */
 static CORBA::Object_ptr
 iiop_string_to_object (CORBA::String string,
                        CORBA::Environment &env)
@@ -132,9 +132,9 @@ iiop_string_to_object (CORBA::String string,
 }
 #endif /* 0 */
 
-CORBA::Boolean
+static CORBA::Boolean
 catior (CORBA::String str,
-       CORBA::Environment &env)
+        CORBA::Environment &env)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
@@ -502,5 +502,6 @@ main (int argc, char *argv[])
                              1);
         }
     }
+
   return 0;
 }
