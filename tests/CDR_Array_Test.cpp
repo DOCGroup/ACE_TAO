@@ -148,8 +148,8 @@ public:
   static T checkval(int i);
 
 private:
-  CDR_Test (const CDR_Test&);
-  CDR_Test& operator= (const CDR_Test&);
+  CDR_Test (const CDR_Test<T, H>&);
+  CDR_Test<T, H>& operator= (const CDR_Test<T, H>&);
 };
 
 static ACE_UINT32 seal = 0xdeadbeef;
