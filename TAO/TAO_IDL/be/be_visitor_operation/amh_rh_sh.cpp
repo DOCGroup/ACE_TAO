@@ -63,7 +63,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
+                         "(%N:%l) be_visitor_amh_rh_operation_sh::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -99,7 +99,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_amh_sh::"
+                         "(%N:%l) be_visitor_operation_amh_rh_sh::"
                          "visit_operation - "
                          "Bad visitor to return type\n"),
                         -1);
@@ -109,7 +109,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
+                         "(%N:%l) be_visitor_operation_amh_rh_sh::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);

@@ -45,7 +45,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
+                         "(%N:%l) be_visitor_amh_rh_operation_ss::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -81,7 +81,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_amh_sh::"
+                         "(%N:%l) be_visitor_amh_rh_operation_ss::"
                          "visit_operation - "
                          "Bad visitor to return type\n"),
                         -1);
@@ -91,7 +91,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
+                         "(%N:%l) be_visitor_amh_rh_operation_ss::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
@@ -101,11 +101,11 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 
   // Step 3: Generate actual code for the method
   *os << "{" << be_idt_nl
-      << "this->init_reply ();" << be_nl << be_nl;
+      << "this->_tao_rh_init_reply ();" << be_nl << be_nl;
 
   marshal_params (node);
 
-  *os << "this->send_reply ();" << be_uidt_nl
+  *os << "this->_tao_rh_send_reply ();" << be_uidt_nl
       << "}" << be_nl;
 
   return 0;
@@ -140,7 +140,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
         {
           delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_ss::"
+                             "(%N:%l) be_visitor_amh_rh_operation_ss::"
                              "gen_demarshal_params - "
                              "codegen for demarshal failed\n"),
                             -1);
