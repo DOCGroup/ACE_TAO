@@ -457,30 +457,30 @@ int
 JAWS_File::acquire (void)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_DEBUG ((LM_DEBUG, "[%t] acquiring: %s\n", this->tempname_));
 
   if (this->reference_count_++ == 0)
     {
       if (this->error_ == OKIE_DOKIE)
         // load file into memory
-        switch (this->action ())
+        switch (this->action_)
           {
           case JAWS_File::IDLE:
             this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
 
             if (this->handle_ == ACE_INVALID_HANDLE)
-	      this->error (JAWS_File::OPEN_FAILED,
-			   "JAWS_File::acquire: open");
+              this->error_i (JAWS_File::OPEN_FAILED,
+                             "JAWS_File::acquire: open");
             else if (this->mmap_.map (this->handle_, -1,
                                       PROT_READ, MAP_PRIVATE) != 0)
               {
-                this->error (JAWS_File::MEMMAP_FAILED,
-                             "JAWS_File::acquire: map");
+                this->error_i (JAWS_File::MEMMAP_FAILED,
+                               "JAWS_File::acquire: map");
                 ACE_OS::close (this->handle_);
                 this->handle_ = ACE_INVALID_HANDLE;
               }
-
             else
-	      this->action (JAWS_File::READING);
+              this->action_ = JAWS_File::READING;
             break;
 
           case JAWS_File::WRITING:
@@ -489,30 +489,29 @@ JAWS_File::acquire (void)
 					  W_MASK);
 
             if (this->handle_ == ACE_INVALID_HANDLE)
-	      this->error (JAWS_File::OPEN_FAILED,
-			   "JAWS_File::acquire: open");
-
+              this->error_i (JAWS_File::OPEN_FAILED,
+                             "JAWS_File::acquire: open");
             else if (ACE_OS::lseek (this->handle_,
-				    this->size_ - 1,
-				    SEEK_SET) == -1)
+                                    this->size_ - 1,
+                                    SEEK_SET) == -1)
               {
-                this->error (JAWS_File::OPEN_FAILED,
-                             "JAWS_File::acquire: lseek");
+                this->error_i (JAWS_File::OPEN_FAILED,
+                               "JAWS_File::acquire: lseek");
                 ACE_DEBUG ((LM_DEBUG, "hey--> %d, %u, %d\n",
                             this->handle_, this->size_, SEEK_SET));
                 ACE_OS::close (this->handle_);
               }
             else if (ACE_OS::write (this->handle_, "", 1) != 1)
               {
-                this->error (JAWS_File::WRITE_FAILED,
-                             "JAWS_File::acquire: write");
+                this->error_i (JAWS_File::WRITE_FAILED,
+                               "JAWS_File::acquire: write");
                 ACE_OS::close (this->handle_);
               }
             else if (this->mmap_.map (this->handle_, this->size_,
                                       PROT_RDWR, MAP_SHARED) != 0)
               {
-                this->error (JAWS_File::MEMMAP_FAILED,
-                             "JAWS_File::acquire: map");
+                this->error_i (JAWS_File::MEMMAP_FAILED,
+                               "JAWS_File::acquire: map");
                 ACE_OS::close (this->handle_);
               }
             break;
@@ -524,6 +523,7 @@ JAWS_File::acquire (void)
           }
     }
 
+  ACE_DEBUG ((LM_DEBUG, "[%t] acquired: %s\n", this->tempname_));
   return this->reference_count_;
 }
 
@@ -531,18 +531,19 @@ int
 JAWS_File::release (void)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  ACE_DEBUG ((LM_DEBUG, "[%t] releasing: %s\n", this->tempname_));
 
   if (--this->reference_count_ == 0)
     {
       if (this->error_ == OKIE_DOKIE)
         // Free file from memory if reference count is zero.
-        switch (this->action ())
+        switch (this->action_)
           {
           case JAWS_File::READING:
             this->mmap_.unmap ();
             ACE_OS::close (this->handle_);
             this->handle_ = ACE_INVALID_HANDLE;
-            this->action (JAWS_File::IDLE);
+            this->action_ = JAWS_File::IDLE;
             break;
 
           case JAWS_File::WRITING:
@@ -565,7 +566,7 @@ JAWS_File::release (void)
                 this->mmap_.unmap ();
                 ACE_OS::close (this->handle_);
                 this->handle_ = ACE_INVALID_HANDLE;
-                this->action (JAWS_File::IDLE);
+                this->action_ = JAWS_File::IDLE;
               }
             while (0);
             break;
@@ -576,6 +577,7 @@ JAWS_File::release (void)
           }
     }
 
+  ACE_DEBUG ((LM_DEBUG, "[%t] released: %s\n", this->tempname_));
   return this->reference_count_;
 }
 
@@ -604,6 +606,12 @@ int
 JAWS_File::error (int error_value, const char * s)
 {
   ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
+  return this->error_i (error_value, s);
+}
+
+int
+JAWS_File::error_i (int error_value, const char * s)
+{
   ACE_ERROR ((LM_ERROR, "%p.\n", s));
   this->error_ = error_value;
   return error_value;

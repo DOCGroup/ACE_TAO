@@ -1,3 +1,8 @@
+Wed Jul  2 22:33:52 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* JAWS_File.{h,cpp}: Fixed deadlock bug, since RW_MUTEX's are not
+	  recursive (drat!).
+
 Wed Jul  2 21:03:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* Made a major pass through all the code and made the style

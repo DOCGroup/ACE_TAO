@@ -200,6 +200,9 @@ protected:
 
   void init (void);
 
+private:
+  int error_i (int error_value, const char * s = "JAWS_File");
+
 public:
 
   enum 
