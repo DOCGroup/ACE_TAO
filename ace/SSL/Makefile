@@ -50,7 +50,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 
 .obj/SSL_Context.o .obj/SSL_Context.so .shobj/SSL_Context.o .shobj/SSL_Context.so: SSL_Context.cpp \
- SSL_Context.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -89,6 +89,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -103,12 +107,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- SSL_Export.h \
- SSL_Context.i \
- sslconf.h
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.i \
+ $(ACE_ROOT)/ace/SSL/sslconf.h
 
 .obj/SSL_SOCK.o .obj/SSL_SOCK.so .shobj/SSL_SOCK.o .shobj/SSL_SOCK.so: SSL_SOCK.cpp \
- SSL_SOCK.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -141,11 +145,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- SSL_Export.h \
- SSL_SOCK.i
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.i
 
 .obj/SSL_SOCK_Acceptor.o .obj/SSL_SOCK_Acceptor.so .shobj/SSL_SOCK_Acceptor.o .shobj/SSL_SOCK_Acceptor.so: SSL_SOCK_Acceptor.cpp \
- SSL_SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -185,7 +189,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- SSL_SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
@@ -197,6 +201,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -204,10 +212,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- SSL_SOCK.h \
- SSL_Export.h \
- SSL_SOCK.i \
- SSL_Context.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -219,12 +227,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- SSL_Context.i \
- SSL_SOCK_Stream.i \
- SSL_SOCK_Acceptor.i
+ $(ACE_ROOT)/ace/SSL/SSL_Context.i \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.i
 
 .obj/SSL_SOCK_Connector.o .obj/SSL_SOCK_Connector.so .shobj/SSL_SOCK_Connector.o .shobj/SSL_SOCK_Connector.so: SSL_SOCK_Connector.cpp \
- SSL_SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -264,7 +272,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- SSL_SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
@@ -276,6 +284,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -283,10 +295,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- SSL_SOCK.h \
- SSL_Export.h \
- SSL_SOCK.i \
- SSL_Context.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -298,9 +310,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- SSL_Context.i \
- SSL_SOCK_Stream.i \
- SSL_SOCK_Connector.i
+ $(ACE_ROOT)/ace/SSL/SSL_Context.i \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Connector.i
 
 .obj/SSL_SOCK_Stream.o .obj/SSL_SOCK_Stream.so .shobj/SSL_SOCK_Stream.o .shobj/SSL_SOCK_Stream.so: SSL_SOCK_Stream.cpp \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -328,7 +340,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Handle_Set.i \
- SSL_SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -353,6 +365,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
@@ -360,10 +376,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- SSL_SOCK.h \
- SSL_Export.h \
- SSL_SOCK.i \
- SSL_Context.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.h \
+ $(ACE_ROOT)/ace/SSL/SSL_Export.h \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK.i \
+ $(ACE_ROOT)/ace/SSL/SSL_Context.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -375,7 +391,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- SSL_Context.i \
- SSL_SOCK_Stream.i
+ $(ACE_ROOT)/ace/SSL/SSL_Context.i \
+ $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -305,6 +305,7 @@ libACE_Svcconf_la_SOURCES = \
   Svc_Conf_y.cpp
 
 libACE_Streams_la_SOURCES = \
+  CDR_Base.cpp \
   CDR_Stream.cpp \
   Codeset_IBM1047.cpp \
   Message_Block.cpp \
@@ -491,6 +492,7 @@ HEADER_FILES = \
   Based_Pointer_Repository.h \
   Based_Pointer_T.h \
   Basic_Types.h \
+  CDR_Base.h \
   CDR_Stream.h \
   CORBA_Handler.h \
   CORBA_Ref.h \
@@ -756,6 +758,7 @@ INLINE_FILES = \
   Auto_Ptr.i \
   Based_Pointer_T.i \
   Basic_Types.i \
+  CDR_Base.i \
   CDR_Stream.i \
   CORBA_Handler.i \
   Cache_Map_Manager_T.i \

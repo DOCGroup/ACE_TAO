@@ -1,10 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
 //
 // = LIBRARY
-//    ace
+//    ACE
 //
 // = FILENAME
 //    Basic_Types.h
@@ -46,11 +47,21 @@
 
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
+
 # include "ace/pre.h"
+
+# include "ace/config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// Pull in definitions
+# include /**/ <limits.h>   // Integer limits
+# include /**/ <float.h>    // Floating point limits
+# include /**/ <stdlib.h>   // Other types
+
+# include "ace/ACE_export.h"
 
 // A char always has 1 byte, by definition.
 # define ACE_SIZEOF_CHAR 1
@@ -62,7 +73,7 @@
 #     define ACE_SIZEOF_WCHAR 2
 #   else /* ACE_WIN32 */
 // 0 so the Basic_Types test will catch this.
-#     define ACE_SIZEOF_WCHAR 0 
+#     define ACE_SIZEOF_WCHAR 0
 #   endif /* ACE_WIN32 */
 # endif /* ACE_HAS_WCHAR */
 

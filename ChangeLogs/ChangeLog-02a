@@ -1,3 +1,38 @@
+Tue Sep 19 17:12:29 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.h:
+
+	  Added missing include of `ace/config-all.h' and
+	  `ace/ACE_export.h'.
+
+	  Explicitly include `limits.h', `float.h' and `stdlib.h' to pull
+	  in basic type limits (e.g. UINT_MAX) and typedefs
+	  (e.g. ptr_arith_t).  This allows `ace/Basic_Types.h' to be
+	  included as a stand-alone header.  Previously, `ace/OS.h'
+	  must have been included at least indirectly before
+	  `ace/Basic_Types.h'.
+
+	* ace/CDR_Base.h:
+	* ace/CDR_Base.i:
+	* ace/CDR_Base.cpp:
+
+	  Moved base ACE_CDR class to separate set of files.  This reduces
+	  inter-header dependencies for sources that only require the CDR
+	  types.
+
+	* ace/CDR_Stream.h:
+
+	  Forward declared ACE_CString, and moved inclusion of
+	  `ace/SString.h' to the `.cpp' file to reduce inter-header
+	  dependencies.
+
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
+
+	  Moved ACE_CString related methods to the `.cpp' file since the
+	  ACE_CString method is now forward declared in the
+	  `ace/CDR_Stream.h' header.
+
 Tue Sep 19 17:40:04 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/config-win32-common.h,
