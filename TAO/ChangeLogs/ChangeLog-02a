@@ -44,9 +44,6 @@ Wed May  2 16:52:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  that we dont have problems when the message blocks loose
 	  ownership to other threads.
 
-	  We have one more release in the critical path that can be
-	  removed. Once that is removed we can close #871.
-
 Wed May  2 15:14:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/CDR.h (TAO_InputCDR):
