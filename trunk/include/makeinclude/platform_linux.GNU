@@ -7,7 +7,7 @@
 # optimize = 1
 
 ifndef exceptions
-  exceptions = 0
+  exceptions = 1
 endif
 ifeq (,$(debug))
   debug = 1
