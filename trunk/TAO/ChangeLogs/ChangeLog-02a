@@ -1,3 +1,16 @@
+Fri Nov 16 23:11:33 2001  Ossama Othman  <ossama@uci.edu>
+
+ 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h (ssl_component):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.i (ssl_component):
+
+	  New accessor method for the SSLIOP::SSL structure associated
+	  with the acceptor.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (get_listen_point):
+
+	  Place the SSLIOP port into the listen point, not the IIOP port.
+	  Fixes a problem with bidirectional GIOP over SSLIOP.
+
 Fri Nov 16 16:41:45 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report):  Moved code
