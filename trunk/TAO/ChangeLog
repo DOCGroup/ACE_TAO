@@ -1,4 +1,10 @@
-Wed Jun 24 18:29:12 2004  Irfan Pyarali  <irfan@oomworks.com>
+Fri Jun 25 07:38:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.{h,cpp}:
+          Moved include of ace/Null_Condition.h from cpp to h file to
+          fix compile errors in our HPUX aCC build.
+
+Thu Jun 24 18:29:12 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests/Protocols:
 
