@@ -1,3 +1,11 @@
+Wed Sep 17 07:13:04 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Utils/Utils.mpc:
+
+          The best way to set the dependency upon the PorableServer library
+          is to inherit from the portableserver base project.  This will
+          give you all of the needed dependencies.
+
 Tue Sep 16 20:21:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp (visit_sequence):
@@ -11,9 +19,9 @@ Tue Sep 16 20:21:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Sep 16 12:23:45 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/Utils/Utils.mpc:
+        * tao/Utils/Utils.mpc:
 
-	  Corrected dependency on PortableServer library.
+          Corrected dependency on PortableServer library.
 
 Mon Sep 15 16:03:25 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
@@ -30,13 +38,13 @@ Mon Sep 15 13:22:37 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
 Mon Sep 15 15:50:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/RTScheduler.pidl: 
-	* tao/RTScheduling/RTSchedulerC.h: 
-	* tao/RTScheduling/RTSchedulerC.cpp: 
-	* tests/RTScheduling/Scheduler.h: 
-	* tests/RTScheduling/Scheduler.cpp: 	
-	
-	  Added send_poll operation to Scheduler interface.
+        * tao/RTScheduling/RTScheduler.pidl:
+        * tao/RTScheduling/RTSchedulerC.h:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tests/RTScheduling/Scheduler.h:
+        * tests/RTScheduling/Scheduler.cpp:
+
+          Added send_poll operation to Scheduler interface.
 
 Mon Sep 15 11:58:35 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
@@ -52,7 +60,7 @@ Mon Sep 15 11:25:37 MST 2003 Trevor Fields <fields_t@ociweb.com>
         * orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
 
           Changed the case of the "after +="  ECMcastTests_lib
-          value.  This should make the Debian_Full mpc build in 
+          value.  This should make the Debian_Full mpc build in
           the correct order.
 
 Mon Sep 15 12:06:47 2003  George Edwards <g.edwards@vanderbilt.edu>
@@ -65,15 +73,15 @@ Mon Sep 15 12:06:47 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Mon Sep 15 11:16:51 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTScheduling/Request_Interceptor.cpp :
+        * tao/RTScheduling/Request_Interceptor.cpp :
 
-	  In send_reply when the DT is cancelled the method should return
-	  and not continue as it used to before. Also corrected the
-	  updation of previous current in TSS. 
+          In send_reply when the DT is cancelled the method should return
+          and not continue as it used to before. Also corrected the
+          updation of previous current in TSS.
 
-	  Changed the incorrect call to receive_reply on the scheduler in
-	  send_poll to send_poll call on the scheduler.
-	
+          Changed the incorrect call to receive_reply on the scheduler in
+          send_poll to send_poll call on the scheduler.
+
 Mon Sep 15 07:05:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/RTCORBA/RTCORBA.mpc:
