@@ -201,7 +201,7 @@ int Counter64::valid() const
 //----------[ return ASCII format ]-------------------------
 // TODO:  Fix up to do real 64bit decimal value printing...
 //        For now, print > 32-bit values in hex
-char * Counter64::to_string()
+const char * Counter64::to_string()
 {
   if ( high() != 0 )
     sprintf(output_buffer, "0x%X%08X",

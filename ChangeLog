@@ -1,3 +1,28 @@
+Mon Aug 25 22:03:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ASNMP/asnmp/address.cpp:
+        * ASNMP/asnmp/address.h:
+        * ASNMP/asnmp/ctr64.cpp:
+        * ASNMP/asnmp/ctr64.h:
+        * ASNMP/asnmp/integer.cpp:
+        * ASNMP/asnmp/integer.h:
+        * ASNMP/asnmp/target.cpp:
+        * ASNMP/asnmp/target.h:
+        * ASNMP/asnmp/timetick.cpp:
+        * ASNMP/asnmp/timetick.h:
+          Fixed additional const compilation errors.
+
+        * ASNMP/tests/tests.mpc:
+          Added new mpc file.
+
+        * ASNMP/tests/Address_Test.cpp:
+        * ASNMP/tests/Target_Test.cpp:
+          Removed unused variables to quash warnings.
+
+        * ASNMP/tests/test_config.h:
+          Added #include streams.h and removed old style headers; changed
+          use of open() flags to correct type.
+
 Mon Aug 25 11:51:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* COPYING:

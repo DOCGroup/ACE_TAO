@@ -109,7 +109,7 @@ TimeTicks::operator unsigned long()
 
 
 // ASCII format return
-char * TimeTicks::to_string()
+const char * TimeTicks::to_string()
      /* Should do something nicer like days:hours:minutes... */
 {
   unsigned long tt, hseconds, seconds, minutes, hours, days;
