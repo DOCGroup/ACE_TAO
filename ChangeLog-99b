@@ -1,9 +1,14 @@
+Wed Aug 11 13:10:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h,README: added ACE_HAS_MUTABLE_KEYWORD support.
+          Thanks to Jody Hagins <jody@atdesk.com> for providing it.
+
 Wed Aug 11 12:55:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Svc_Handler.cpp:
-	* ace/Future.cpp:
-	  The throw expressions require a constructor, not just the type,
-	  thanks to David for pointing this out.
+        * ace/Svc_Handler.cpp:
+        * ace/Future.cpp:
+          The throw expressions require a constructor, not just the type,
+          thanks to David for pointing this out.
 
 Wed Aug 11 10:12:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
