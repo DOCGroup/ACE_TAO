@@ -1,3 +1,8 @@
+Tue Mar 20 09:34:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Improved error checking for Queued_Message allocations.
+
 Sat Mar 17 17:52:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
