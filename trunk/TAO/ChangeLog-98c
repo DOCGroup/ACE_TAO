@@ -1,3 +1,8 @@
+Mon Aug 10 16:46:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Fixed an error
+	  where "not all control paths return a value" in init ().
+
 Mon Aug 10 15:56:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
