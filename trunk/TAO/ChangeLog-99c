@@ -1,3 +1,11 @@
+Mon May 24 15:58:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CDR_Interpreter.cpp:
+	  Committed a fix to calc_seq_attributes() sent to me
+	  by Andy Gokhale <gokhale@research.bell-labs.com>,
+	  which corrected a problem with recursive structs.
+	  Thanks, Andy!
+
 Mon May 24 15:35:57 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
