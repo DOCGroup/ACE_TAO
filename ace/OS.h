@@ -3039,13 +3039,6 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     endif /* __BORLANDC__ */
 #   endif /* ACE_HAS_WINCE */
 
-#   if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
-// Prototype of win32 structured exception handler functions.
-// They are used to get the exception handling expression or
-// as exception handlers.
-#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-
 // The "null" device on Win32.
 #   define ACE_DEV_NULL "nul"
 

@@ -164,13 +164,23 @@ class ACE_Export ACE_Log_Msg_Attributes
   //   The attributes are encapsulated in this class to simplify their
   //   manipulation and destruction.
 public:
-  ACE_Log_Msg_Attributes (void);
+  ACE_Log_Msg_Attributes (
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                          ACE_SEH_EXCEPT_HANDLER selector = 0
+                          , ACE_SEH_EXCEPT_HANDLER handler = 0
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                          );
   // Constructor
 
   ~ACE_Log_Msg_Attributes (void);
   // Destructor
 
-  static void init_hook (void *&attributes);
+  static void init_hook (void *&attributes
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                         , ACE_SEH_EXCEPT_HANDLER selector = 0
+                         , ACE_SEH_EXCEPT_HANDLER handler = 0
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                         );
   // Init hook, create a Log_Msg_Attribute object, initialize its
   // attributes from the TSS Log_Msg and save the object in the
   // <attributes> argument
