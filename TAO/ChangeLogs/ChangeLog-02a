@@ -1,3 +1,20 @@
+Thu Jun  8 19:09:31 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs.dsw: (removed)
+        * orbsvcs/services.dsw: (added)
+
+          During a conversation on the list with Tom Ziomek 
+          <tomz@cc.comm.mot.com> he mentioned that he expected that
+          this project builds the library and the server executables.
+          And I know Irfan has also pointed out that this has been
+          broken (so he must have tried it).
+
+          I originally intended on removing this file after I got
+          msvc_auto_compile.pl working, but I think it would be 
+          useful to keep this around as something just to compile
+          the service programs themselves.  And to make the name a bit 
+          more descriptive, I changed it to services.dsw.
+
 Thu Jun  8 18:07:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.cpp:
