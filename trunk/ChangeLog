@@ -1,3 +1,10 @@
+Fri Oct 18 16:25:09 2002  Yuanfang Zhang <yfzhang@cse.wustl.edu>
+
+        * tests/RB_Tree_Test.h:
+        * tests/RB_Tree_Test.cpp:
+          
+          add a new method to test forward and reverse partial tree traversal.
+          
 Fri Oct 18 21:01:25 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* examples/C++NPv1/Makefile: Fix comment.
@@ -226,7 +233,7 @@ Wed Oct 16 14:02:27 2002  Yuanfang Zhang <yfzhang@cse.wustl.edu>
 	* ace/RB_Tree.h:
 
 	  forward and reverse partial tree traversal.
-	  Changed the find_i method.
+	  Changed the find_i method by adding a parameter "find_Exact".
 
 Wed Oct 16 12:18:03 2002  Stephen Torri <storri@cse.wustl.edu>
 
