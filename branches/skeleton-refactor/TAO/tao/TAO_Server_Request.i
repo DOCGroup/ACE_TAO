@@ -168,6 +168,12 @@ TAO_ServerRequest::is_dsi (void)
   this->is_dsi_ = 1;
 }
 
+ACE_INLINE TAO_Operation_Details const *
+TAO_ServerRequest::operation_details (void) const
+{
+  return this->operation_details_;
+}
+
 ACE_INLINE void
 TAO_ServerRequest::dsi_nvlist_align (ptrdiff_t alignment)
 {

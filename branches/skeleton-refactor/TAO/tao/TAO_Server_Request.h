@@ -211,6 +211,8 @@ public:
   /// Set the member.
   void dsi_nvlist_align (ptrdiff_t alignment);
 
+  TAO_Operation_Details const * operation_details (void) const;
+
   /// Get/Set operations for the argument_flag
   void argument_flag (CORBA::Boolean flag);
   CORBA::Boolean argument_flag (void);
@@ -277,6 +279,9 @@ private:
   /// 0: anything else
   CORBA::Boolean sync_with_server_;
 
+  /// Did we get passed to a CORBA::ServerRequest?
+  CORBA::Boolean is_dsi_;
+
   //  TAO_GIOP_ReplyStatusType exception_type_;
   /// Exception type (will be NO_EXCEPTION in the majority of the cases).
   CORBA::ULong exception_type_;
@@ -298,11 +303,10 @@ private:
   /// Identifies the requester.
   CORBA::OctetSeq_var requesting_principal_;
 
-  /// Did we get passed to a CORBA::ServerRequest?
-  CORBA::Boolean is_dsi_;
-
   /// Used to pad CDR stream if we have used DSI.
   ptrdiff_t dsi_nvlist_align_;
+
+  TAO_Operation_Details const * const operation_details_;
 
   /**
    * An argument flag to indicate whether there is any data that is

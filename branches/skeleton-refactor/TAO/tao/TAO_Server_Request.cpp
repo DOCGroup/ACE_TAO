@@ -56,14 +56,15 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     response_expected_ (false),
     deferred_reply_ (false),
     sync_with_server_ (false),
+    is_dsi_ (false),
     // @@ We shouldn't be using GIOP specific types here. Need to be revisited.
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (0),
     profile_ (orb_core),
     requesting_principal_ (0),
-    is_dsi_ (false),
     dsi_nvlist_align_ (0),
+    operation_details_ (0),
     argument_flag_ (1)
 #if TAO_HAS_INTERCEPTORS == 1
     , interceptor_count_ (0)
@@ -97,13 +98,14 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
     sync_with_server_ (false),
+    is_dsi_ (false),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (request_id),
     profile_ (orb_core),
     requesting_principal_ (0),
-    is_dsi_ (false),
     dsi_nvlist_align_ (0),
+    operation_details_ (0),
     argument_flag_ (true)
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
@@ -129,13 +131,14 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
                         || details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_TARGET)),
     deferred_reply_ (false),
     sync_with_server_ (details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)),
+    is_dsi_ (false),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (0),
     profile_ (orb_core),
     requesting_principal_ (0),
-    is_dsi_ (false),
     dsi_nvlist_align_ (0),
+    operation_details_ (&details),
     argument_flag_ (false)
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
