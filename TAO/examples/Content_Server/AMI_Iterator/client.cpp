@@ -5,7 +5,7 @@
 
 #include "ace/Process_Manager.h"
 #include "ace/OS_NS_unistd.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "Web_ServerC.h"
 #include "Iterator_Handler.h"
 

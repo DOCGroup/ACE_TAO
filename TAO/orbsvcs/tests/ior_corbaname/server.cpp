@@ -1,7 +1,7 @@
 // $Id$
 
 #include "status_i.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 int main (int argc, char* argv[])
 {

@@ -18,17 +18,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RTEventLogAdminS.h"
+#include "orbsvcs/RTEventLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include "RTEventLog_i.h"
 #include "rteventlog_export.h"

@@ -26,8 +26,8 @@
 
 #include "SSLIOP_OwnCredentials.h"
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
-#include "orbsvcs/orbsvcs/SecurityC.h"
+#include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SecurityC.h"
 
 #include "tao/IIOP_Endpoint.h"
 #include "ace/INET_Addr.h"

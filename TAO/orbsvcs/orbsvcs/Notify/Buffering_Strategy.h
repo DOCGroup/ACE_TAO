@@ -23,7 +23,7 @@
 #include "ace/Null_Condition.h"
 #include "ace/Message_Queue.h"
 
-#include "orbsvcs/orbsvcs/TimeBaseC.h"
+#include "orbsvcs/TimeBaseC.h"
 
 #include "Property.h"
 #include "Property_T.h"

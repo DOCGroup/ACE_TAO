@@ -3,7 +3,7 @@
 #include "BCast.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/INET_Addr.h"

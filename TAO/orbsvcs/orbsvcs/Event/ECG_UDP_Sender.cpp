@@ -9,8 +9,8 @@
  *
  */
 
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event_Utilities.h"
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)

@@ -24,8 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "CC_tests.h"
 #include "CC_naming_service.h"
 #include "CC_command.h"

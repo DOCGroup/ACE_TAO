@@ -7,7 +7,7 @@
 #endif // _MSC_VER > 1000
 // BindNewContext.h : header file
 //
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 /////////////////////////////////////////////////////////////////////////////
 // CBindNewContext dialog
 

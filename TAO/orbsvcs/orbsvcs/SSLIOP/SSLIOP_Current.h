@@ -23,7 +23,7 @@
 
 #include "SSLIOP_Current_Impl.h"
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
 #include "tao/ORB_Core.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

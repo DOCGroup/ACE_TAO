@@ -19,8 +19,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/PortableGroupS.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/PortableGroupS.h"
+#include "orbsvcs/CosNamingC.h"
 #include "portablegroup_export.h"
 
 #include "ace/Vector_T.h"

@@ -8,9 +8,9 @@
 
 #include "tao/ORB_Core.h"
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "Notify_SequencePushSupplier.h"
 #include "goS.h"
 

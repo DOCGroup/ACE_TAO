@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/LB_ORTC.h"
+#include "orbsvcs/LB_ORTC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +28,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 
 #include "ace/Array_Base.h"
 #include "ace/Hash_Map_Manager_T.h"

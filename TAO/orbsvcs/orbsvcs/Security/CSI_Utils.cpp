@@ -1,7 +1,7 @@
 // $Id$
 
 #include "CSI_Utils.h"
-#include "orbsvcs/orbsvcs/CSIC.h"
+#include "orbsvcs/CSIC.h"
 
 #include "tao/CDR.h"
 

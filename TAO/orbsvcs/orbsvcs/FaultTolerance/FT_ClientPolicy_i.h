@@ -14,7 +14,7 @@
 #define TAO_FT_CLIENTPOLICY_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

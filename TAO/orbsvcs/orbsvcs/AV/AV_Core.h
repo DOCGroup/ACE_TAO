@@ -15,8 +15,8 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/orbsvcs/AVStreamsC.h"
-#include "orbsvcs/orbsvcs/AV/AV_export.h"
+#include "orbsvcs/AVStreamsC.h"
+#include "orbsvcs/AV/AV_export.h"
 
 #include "ace/Singleton.h"
 #include "ace/Unbounded_Set.h"

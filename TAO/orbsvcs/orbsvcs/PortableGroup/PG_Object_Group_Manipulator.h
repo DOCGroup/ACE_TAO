@@ -15,7 +15,7 @@
 #define TAO_PG_OBJECT_GROUP_MANIPULATOR_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/orbsvcs/PortableGroupS.h"
+#include "orbsvcs/PortableGroupS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Event/Dispatching_Modules.h"
-#include "orbsvcs/orbsvcs/Event/Timer_Module.h"
-#include "orbsvcs/orbsvcs/Event/Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/Module_Factory.h"
+#include "orbsvcs/Event/Dispatching_Modules.h"
+#include "orbsvcs/Event/Timer_Module.h"
+#include "orbsvcs/Event/Event_Channel.h"
+#include "orbsvcs/Event/Module_Factory.h"
 
 #include "tao/ORB_Core.h"
 

@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/NotifyExtC.h"
 
 #include "Consumer_T.h"
 

@@ -11,11 +11,11 @@ ACE_RCSID (SSLIOP,
 //#include "SSLIOP_IORInterceptor.h"
 #include "SSLIOP_CredentialsAcquirerFactory.h"
 
-#include "orbsvcs/orbsvcs/Security/SL3_SecurityCurrent.h"
-#include "orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h"
+#include "orbsvcs/Security/SL3_SecurityCurrent.h"
+#include "orbsvcs/Security/SL3_CredentialsCurator.h"
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
-#include "orbsvcs/orbsvcs/CSIIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/CSIIOPC.h"
 
 #include "tao/Exception.h"
 #include "tao/ORBInitInfo.h"

@@ -11,7 +11,7 @@ ACE_RCSID (RT_Notify,
            "$Id$")
 
 #include "ace/Auto_Ptr.h"
-#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Subscription_Change_Worker.h"
 #include "Proxy.h"
 #include "EventChannel.h"

@@ -20,7 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Arg_Shifter.h"
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotificationC.h"
 
 /**
  * @class TAO_Notify_Tests_Options_Parser

@@ -2,7 +2,7 @@
 #ifndef DT_CREATOR_H
 #define DT_CREATOR_H
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "tao/RTScheduling/RTScheduler.h"

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/CosConcurrencyControlC.h"
 
 #ifndef _CC_TEST_UTILS_H_
 #define _CC_TEST_UTILS_H_

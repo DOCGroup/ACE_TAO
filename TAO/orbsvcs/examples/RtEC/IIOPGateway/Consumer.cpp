@@ -1,10 +1,10 @@
 // $Id$
 
 #include "Consumer.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
 

@@ -22,7 +22,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosConcurrencyControlC.h"
+#include "orbsvcs/CosConcurrencyControlC.h"
 #include "CC_LockSetFactory.h"
 #include "concurrency_export.h"
 

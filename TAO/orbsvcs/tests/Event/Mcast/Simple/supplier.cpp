@@ -1,9 +1,9 @@
 // $Id$
 
 #include "Constants.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/RtecEventCommC.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Log_Msg.h"
 
 void

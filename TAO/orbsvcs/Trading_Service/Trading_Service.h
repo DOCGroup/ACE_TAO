@@ -24,10 +24,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/IOR_Multicast.h"
-#include "orbsvcs/orbsvcs/Trader/Trader.h"
-#include "orbsvcs/orbsvcs/Trader/Service_Type_Repository.h"
-#include "orbsvcs/orbsvcs/Trader/Trading_Loader.h"
+#include "orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Service_Type_Repository.h"
+#include "orbsvcs/Trader/Trading_Loader.h"
 
 class Trading_Service;
 

@@ -17,14 +17,14 @@
 #define TAO_PERSIST_STORE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/DsLogAdminS.h"
 #include "tao/Typecode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/DsLogAdminC.h"
 #include "ace/Mutex.h"
 
 #define PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN 250

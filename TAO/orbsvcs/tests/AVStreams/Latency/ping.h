@@ -16,9 +16,9 @@
 #ifndef TAO_PING_H
 #define TAO_PING_H
 
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/orbsvcs/AV/Policy.h"
-#include "orbsvcs/orbsvcs/AV/Flows_T.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/AV/Flows_T.h"
 #include "ace/OS_NS_time.h"
 
 class Ping_Recv_Callback : public TAO_AV_Callback

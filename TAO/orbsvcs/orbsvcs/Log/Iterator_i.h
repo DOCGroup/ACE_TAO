@@ -19,13 +19,13 @@
 #define TAO_TLS_ITERATOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Log/LogRecordStore.h"
+#include "orbsvcs/Log/LogRecordStore.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

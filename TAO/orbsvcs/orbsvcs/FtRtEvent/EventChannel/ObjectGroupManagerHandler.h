@@ -12,7 +12,7 @@
 #ifndef OBJECTGROUPMANAGERHANDLER_H
 #define OBJECTGROUPMANAGERHANDLER_H
 
-#include "orbsvcs/orbsvcs/FTRT_GroupManagerS.h"
+#include "orbsvcs/FTRT_GroupManagerS.h"
 #include "ace/Auto_Event.h"
 
 class ObjectGroupManagerHandler : public POA_FTRT::AMI_ObjectGroupManagerHandler

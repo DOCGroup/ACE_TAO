@@ -15,8 +15,8 @@
 #include "Auto_Disconnect.h"
 #include "Loopback.h"
 
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
 ACE_RCSID (TAO_RTEC_Perf, 
            Peer_Base, 

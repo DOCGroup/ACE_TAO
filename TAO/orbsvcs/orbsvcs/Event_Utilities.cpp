@@ -1,12 +1,12 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/orbsvcs/Event_Utilities.i"
+#include "orbsvcs/Event_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (orbsvcs, 

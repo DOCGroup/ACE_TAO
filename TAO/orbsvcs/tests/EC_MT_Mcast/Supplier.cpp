@@ -2,8 +2,8 @@
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
 ACE_RCSID(EC_MT_Mcast,
           Supplier,

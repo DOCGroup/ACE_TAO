@@ -18,7 +18,7 @@
 
 #include "ace/config-all.h"
 
-#include "orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h"
+#include "orbsvcs/LoadBalancing/LoadBalancing_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

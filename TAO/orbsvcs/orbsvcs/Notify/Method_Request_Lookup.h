@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 #include "Method_Request.h"
 #include "ProxyConsumer.h"
 #include "Consumer_Map.h"

@@ -9,8 +9,8 @@
 #define TAO_PERF_RTEC_CONSUMER_H
 
 #include "rtec_perf_export.h"
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 
 #include "ace/Sample_History.h"
 

@@ -7,9 +7,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "controlC.h"
 #include "Notify_Push_Consumer.h"
 #include "Notify_Test_Client.h"

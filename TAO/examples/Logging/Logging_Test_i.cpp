@@ -2,7 +2,7 @@
 
 #include "LoggerC.h"
 #include "Logging_Test_i.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "tao/debug.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"

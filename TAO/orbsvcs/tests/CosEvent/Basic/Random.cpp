@@ -1,8 +1,8 @@
 // $Id$
 
 #include "Random.h"
-#include "orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"

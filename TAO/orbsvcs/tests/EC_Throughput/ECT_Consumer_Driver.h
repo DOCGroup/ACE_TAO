@@ -20,8 +20,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ECT_Consumer.h"
-#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
 

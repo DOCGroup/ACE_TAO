@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h"
+#include "orbsvcs/ESF/ESF_Peer_Admin.h"
 
 #include /**/ "event_export.h"
 

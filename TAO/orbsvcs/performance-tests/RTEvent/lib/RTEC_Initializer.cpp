@@ -9,9 +9,9 @@
 #include "RTEC_Initializer.h"
 #include "RTCORBA_Setup.h"
 
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_RTCORBA_Factory.h"
 
 #include "ace/Dynamic_Service.h"
 

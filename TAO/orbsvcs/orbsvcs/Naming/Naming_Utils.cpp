@@ -6,7 +6,7 @@
 #include "Storable_Naming_Context.h"
 #include "Storable_Naming_Context_Activator.h"
 #include "Flat_File_Persistence.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include "tao/debug.h"
 #include "tao/default_ports.h"

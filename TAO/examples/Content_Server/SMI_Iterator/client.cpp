@@ -5,7 +5,7 @@
 
 #include "ace/FILE_Connector.h"
 #include "ace/Process_Manager.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "Web_ServerC.h"
 #include "ace/OS_NS_strings.h"
 

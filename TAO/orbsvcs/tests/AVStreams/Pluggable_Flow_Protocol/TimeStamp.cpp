@@ -1,5 +1,5 @@
 #include "TimeStamp.h"
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/High_Res_Timer.h"
 
 // $Id$

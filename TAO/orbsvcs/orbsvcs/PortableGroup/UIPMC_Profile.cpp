@@ -12,8 +12,8 @@
 #include "tao/target_specification.h"
 #include "ace/os_include/os_ctype.h"
 
-#include "orbsvcs/orbsvcs/miopC.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/miopC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 ACE_RCSID (PortableGroup,
            UIPMC_Profile,

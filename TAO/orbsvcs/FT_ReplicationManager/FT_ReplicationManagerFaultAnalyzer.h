@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
-#include "orbsvcs/orbsvcs/FT_CORBAC.h"
+#include "orbsvcs/FT_CORBAC.h"
 
 // Forward declarations.
 template <class T> class ACE_Unbounded_Set;

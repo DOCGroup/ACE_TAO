@@ -4,7 +4,7 @@
 
 #include "FT_ServerPolicyFactory.h"
 #include "FT_ServerPolicy_i.h"
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/PolicyC.h"
 
 

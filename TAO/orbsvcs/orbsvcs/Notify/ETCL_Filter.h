@@ -22,7 +22,7 @@
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Atomic_Op.h"
-#include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
+#include "orbsvcs/CosNotifyFilterS.h"
 #include "Notify_Constraint_Interpreter.h"
 #include "ace/Null_Mutex.h"
 

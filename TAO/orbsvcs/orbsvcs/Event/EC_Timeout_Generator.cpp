@@ -2,7 +2,7 @@
 
 #include "EC_Timeout_Generator.h"
 #include "EC_Timeout_Filter.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Timeout_Generator.i"

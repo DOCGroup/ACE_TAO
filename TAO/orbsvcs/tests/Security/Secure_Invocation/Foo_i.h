@@ -16,7 +16,7 @@
 #define SECURE_INVOCATION_FOO_I_H
 
 #include "FooS.h"
-#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
+#include "orbsvcs/SecurityLevel3C.h"
 
 class Foo_i : public virtual POA_Foo::Bar
             , public virtual PortableServer::RefCountServantBase

@@ -9,9 +9,8 @@ project(muf_server): kokyu_dsrt_scheduler_server {
   }
 }
 
-project(muf_client): orbsvcsexe, kokyu_dsrt_scheduler_client {
+project(muf_client): orbsvcsexe, svc_utils, kokyu_dsrt_scheduler_client {
   exename = muf_client
-  libs += TAO_Svc_Utils
   Source_Files {
     testC.cpp
     client.cpp

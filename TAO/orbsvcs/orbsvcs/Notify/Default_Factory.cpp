@@ -10,8 +10,8 @@ ACE_RCSID (Notify,
            TAO_Notify_Default_Factory, 
            "$Id$")
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h"
-#include "orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h"
+#include "orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 
 #include "EventChannelFactory.h"
 #include "EventChannel.h"
