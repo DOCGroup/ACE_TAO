@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // The following configuration file is designed to work for QNX RTP 621 
@@ -36,7 +37,6 @@
 #define ACE_HAS_MT_SAFE_MKTIME
 #define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-#define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
@@ -90,9 +90,6 @@
 #define ACE_LACKS_RPC_H
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SOCKET_BUFSIZ
-#define ACE_LACKS_SOCKETPAIR     // Even if the QNX RTP docs says that socket pair are
-                                 // available, there is actually no implementation of
-				 // soket-pairs.
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_STRRECVFD
