@@ -44,7 +44,7 @@ ACE_Timer_Heap::ACE_Timer_Heap (size_t size,
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
   // array.
-  for (int i = 0; i < size; i++)
+  for (size_t i = 0; i < size; i++)
     this->timer_ids_[i] = -(i + 1);
 
   if (preallocate)
@@ -53,7 +53,7 @@ ACE_Timer_Heap::ACE_Timer_Heap (size_t size,
 	       ACE_Timer_Node[size]);
       
       // Form the freelist by linking the next_ pointers together.
-      for (int j = 1; j < size; j++)
+      for (size_t j = 1; j < size; j++)
 	this->preallocated_nodes_[j - 1].next_ = 
 	  &this->preallocated_nodes_[j];
 
@@ -206,7 +206,7 @@ ACE_Timer_Heap::reheap_down (ACE_Timer_Node *moved_node,
 
   // Restore the heap property after a deletion.
 
-  for (int child = child_index; 
+  for (size_t child = child_index; 
        child < this->cur_size_;
        child += child + 1) // Multiple child by 2 and add 1.
     {
@@ -410,7 +410,7 @@ ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
 
   // Try to locate the ACE_Timer_Node that matches the timer_id.
 
-  for (int i = 0; 
+  for (size_t i = 0; 
        i < this->cur_size_;
        )
     {
