@@ -32,8 +32,7 @@ extern "C" {
 
 #ifndef PACE_SIGSET_T
 #define PACE_SIGSET_T
-  typedef struct sigset_t
-  {
+  typedef struct /* sigset_t */ {
     /* signal set type */
     unsigned int sigbits_[4];
   } pace_sigset_t;
@@ -42,7 +41,7 @@ extern "C" {
 #ifndef PACE_SIGACTION_S
 #define PACE_SIGACTION_S
   typedef void (__cdecl *pace_sig_pf)(int);
-  typedef struct sigaction {
+  typedef struct /* sigaction */ {
     int sa_flags;
     pace_sig_pf sa_handler;
     pace_sigset_t sa_mask;
@@ -51,8 +50,8 @@ extern "C" {
 
 #ifndef PACE_SIGINFO_T
 #define PACE_SIGINFO_T
-  typedef struct siginfo_t
-  {
+  typedef struct /* siginfo_t */ {
+
     PACE_HANDLE si_handle_;
     // Win32 HANDLE that has become signaled.
 
