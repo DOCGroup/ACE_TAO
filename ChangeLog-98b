@@ -1,3 +1,9 @@
+Sat May 23 00:18:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_ce_dll.dsp: Updated settings for MIPS CPU.
+
+	* tests/WinCE/*.dsp: Updated settings for MIPS CPU.
+
 Fri May 22 16:00:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tests/MT_SOCK_Test.cpp (spawn): We must check for !defined
