@@ -2,6 +2,9 @@ Fri May 15 08:25:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Service_Config.cpp: fixed and added template instantations.
 
+        * ace/Svc_Conf_y.cpp,etc/Svc_Conf_y.cpp.diff: removed compile
+          warnings.
+
 Fri May 15 02:47:35 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.5 released.
