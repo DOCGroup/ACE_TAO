@@ -9,6 +9,7 @@ Object_Manager_Test
 CDR_Array_Test
 CDR_File_Test
 CDR_Test
+Dirent_Test
 Semaphore_Test
 TSS_Test
 Log_Msg_Test
