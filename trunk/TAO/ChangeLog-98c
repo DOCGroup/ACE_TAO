@@ -1,3 +1,8 @@
+Thu Oct  1 23:31:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Updated the dependencies in all the Makefiles due to the DynAny
+	  changes.
+
 Thu Oct  1 22:05:39 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/DynAny.pidl:
