@@ -16,9 +16,9 @@
 #ifndef PACE_CONFIG_CONSTANTS_H
 #define PACE_CONFIG_CONSTANTS_H
 
-#define ACE_ONE_SECOND_IN_MSECS 1000L
-#define ACE_ONE_SECOND_IN_USECS 1000000L
-#define ACE_ONE_SECOND_IN_NSECS 1000000000L
+#define PACE_ONE_SECOND_IN_MSECS 1000L
+#define PACE_ONE_SECOND_IN_USECS 1000000L
+#define PACE_ONE_SECOND_IN_NSECS 1000000000L
 
 /* ============================================================================
  * Posix minimum values
