@@ -14,6 +14,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Stub.h"
+#include "tao/PortableInterceptor.h"
 
 #if !defined (__ACE_INLINE__)
 #include "DomainS.i"
@@ -212,17 +213,15 @@ void POA_CORBA_DomainManager::get_domain_policy_skel (
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
-    _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
+    _tao_vfr (_tao_server_request.orb_core ()->server_request_interceptors ());
   ACE_CHECK;
   // @@ CORBA::Object_var _tao_objref;
     POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy  ri ("get_domain_policy",
 _tao_server_request.service_info ()    ,  policy_type    ,
     ACE_TRY_ENV);
-if (_tao_vfr.valid ())
-    {
-      // @@ _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
-      ACE_CHECK;
-    }
+
+    // @@ _tao_objref = _tao_server_request.objref (ACE_TRY_ENV);
+    ACE_CHECK;
 
   ACE_TRY
     {
@@ -542,7 +541,7 @@ CORBA::Policy_ptr POA_CORBA__tao_direct_collocated_DomainManager::get_domain_pol
 POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (const char *_tao_operation,
 IOP::ServiceContextList &_tao_service_context_list,CORBA::PolicyType& policy_type,
 CORBA::Environment &)
-  : TAO_ServerRequest_Info (_tao_operation, _tao_service_context_list),policy_type_ (policy_type)
+  : TAO_ServerRequestInfo (_tao_operation, _tao_service_context_list),policy_type_ (policy_type)
 {}
 
 Dynamic::ParameterList *

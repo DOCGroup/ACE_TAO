@@ -4,7 +4,6 @@
 #include "tao/Object_KeyC.h"
 
 #include "tao/MessagingC.h"
-#include "tao/Policy_Factory.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
 
@@ -149,46 +148,76 @@ TAO_Profile::policies (void)
           // Here we extract the Messaging::PolicyValue out of the sequence
           // and we convert those into the proper CORBA::Policy
 
-          CORBA::Policy *policy = 0;
+          CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
           CORBA::ULong length = policy_value_seq.length ();
 
           // Set the policy list length.
           policies->length (length);
 
-          for (CORBA::ULong i = 0; i < length; i++)
+          for (CORBA::ULong i = 0; i < length; ++i)
             {
-              // @@ Angelo: please check my comments on this stuff in
-              // the Policy_Factory.h file.
-              policy =
-                TAO_Policy_Factory::create_policy (policy_value_seq[i].ptype);
-              if (policy != 0)
+              ACE_TRY_NEW_ENV
                 {
-                  buf = policy_value_seq[i].pvalue.get_buffer ();
+                  // @@ Angelo: please check my comments on this stuff
+                  //            in the Policy_Factory.h file.
+                  // @@ I updated this code to use the standard
+                  //    ORB::create_policy () which now queries the
+                  //    policy factory registry.
+                  //       -Ossama
 
-                  TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
-                                       policy_value_seq[i].pvalue.length ());
+                  // We don't need to pass any policy construction
+                  // value to the RT policies.
+                  CORBA::Any dummy_any;
+                  policy =
+                    this->orb_core_->orb ()->create_policy (
+                      policy_value_seq[i].ptype,
+                      dummy_any,
+                      ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
 
-                  in_cdr >> ACE_InputCDR::to_boolean (byte_order);
-                  in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+                  if (!CORBA::is_nil (policy))
+                    {
+                      buf = policy_value_seq[i].pvalue.get_buffer ();
 
-                  policy->_tao_decode (in_cdr);
-                  (*policies)[i] = policy;
+                      TAO_InputCDR in_cdr (
+                        ACE_reinterpret_cast (const char*, buf),
+                        policy_value_seq[i].pvalue.length ());
+
+                      in_cdr >> ACE_InputCDR::to_boolean (byte_order);
+                      in_cdr.reset_byte_order (ACE_static_cast(int,
+                                                               byte_order));
+
+                      policy->_tao_decode (in_cdr);
+                      (*policies)[i] = policy;
+                    }
+                  else
+                    {
+                      // This case should occure when in the IOR are
+                      // embedded policies that TAO doesn't support,
+                      // so as specified by the RT-CORBA
+                      // spec. ptc/99-05-03 we just ignore these
+                      // un-understood policies.
+
+                      if (TAO_debug_level >= 5)
+                        ACE_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("The IOR contains Unsupported Policies.\n")));
+                    }
                 }
-              else
+              ACE_CATCHANY
                 {
-                  // This case should occure when in the IOR are embedded
-                  // policies that TAO doesn't support, so as specified
-                  // by the RT-CORBA spec. ptc/99-05-03 we just ignore
-                  // this un-understood policies.
+                  // This case should occure when in the IOR are
+                  // embedded policies that TAO doesn't support, so as
+                  // specified by the RT-CORBA spec. ptc/99-05-03 we
+                  // just ignore these un-understood policies.
 
                   if (TAO_debug_level >= 5)
-                    ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("The IOR contains Unsupported Policies.\n")));
-
+                    ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION,
+                                        ACE_TEXT ("IOR contains ")
+                                        ACE_TEXT ("unsupported policies."));
                 }
+              ACE_ENDTRY;
             }
         }
-
     }
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */

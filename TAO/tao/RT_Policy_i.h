@@ -42,8 +42,6 @@
 #endif /* _MSC_VER */
 
 
-class Policy_Factory;
-
 class TAO_Export TAO_PriorityModelPolicy :  public RTCORBA::PriorityModelPolicy, public TAO_Local_RefCounted_Object
 {
   // = TITLE
@@ -101,9 +99,9 @@ public:
 
 protected:
 
-  friend class TAO_Policy_Factory;
+  friend class TAO_RT_PolicyFactory;
   TAO_PriorityModelPolicy (void);
-  // This constructor is used by TAO_Policy_Factory when decoding
+  // This constructor is used by TAO_RT_PolicyFactory when decoding
   // policies from tagged components in an IOR.
 
 private:
@@ -249,9 +247,9 @@ public:
 
 protected:
 
-  friend class TAO_Policy_Factory;
+  friend class TAO_RT_PolicyFactory;
   TAO_PriorityBandedConnectionPolicy (void);
-  // This constructor is used by TAO_Policy_Factory when decoding
+  // This constructor is used by TAO_RT_PolicyFactory when decoding
   // policies from tagged components in an IOR.
 
 private:
@@ -364,9 +362,9 @@ public:
 
 protected:
 
-  friend class TAO_Policy_Factory;
+  friend class TAO_RT_PolicyFactory;
   TAO_ClientProtocolPolicy (void);
-  // This constructor is used by TAO_Policy_Factory when decoding
+  // This constructor is used by TAO_RT_PolicyFactory when decoding
   // policies from tagged components in an IOR.
 
 private:

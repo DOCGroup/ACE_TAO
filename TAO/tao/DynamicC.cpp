@@ -25,7 +25,7 @@
 #include "DynamicC.i"
 #endif /* !defined INLINE */
 
-#include "tao/StringSeq.h"
+#include "tao/StringSeqC.h"
 
 static const CORBA::Long _oc_Dynamic_ParameterMode[] =
 {

@@ -139,7 +139,13 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     svc_config_argc_ (0),
     svc_config_argv_ (0),
     refcount_ (1),
-    handle_set_ ()
+    handle_set_ (),
+    policy_factory_registry_ (this),  // @@ Should not have to pass "this!"
+#if (TAO_HAS_INTERCEPTORS == 1)
+    client_request_interceptors_ (),
+    server_request_interceptors_ (),
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+    parser_registry_ ()
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);

@@ -68,6 +68,9 @@ public:
       const CORBA::Any &val,
       CORBA::Environment &ACE_TRY_ENV);
   // Create a CORBA::Policy object
+  // @@ This method should go away in favor of the policy factory
+  //    registration support provided by the Portable Interceptor
+  //    spec.
 
   virtual void service_context_list (TAO_Stub *&stub,
                                      IOP::ServiceContextList &service_list,

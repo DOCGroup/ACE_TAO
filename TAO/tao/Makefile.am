@@ -126,7 +126,7 @@ ORB_CORE_FILES = \
   PortableInterceptorC.cpp \
   DynamicC.cpp \
   OctetSeqC.cpp \
-  StringSeq.cpp \
+  StringSeqC.cpp \
   Smart_Proxies.cpp \
   ORB_Core.cpp \
   ORB_Table.cpp \
@@ -329,7 +329,7 @@ HEADER_FILES = \
   PortableInterceptorC.h \
   DynamicC.h \
   OctetSeqC.h \
-  StringSeq.h \
+  StringSeqC.h \
   Smart_Proxies.h \
   ORB_Core.h \
   ORB_Table.h \
@@ -472,8 +472,8 @@ INLINE_FILES = \
   PortableInterceptor.i \
   PortableInterceptorC.i \
   DynamicC.i \
-  OctetSeqC.inl \
-  StringSeq.inl \
+  OctetSeqC.i \
+  StringSeqC.i \
   Smart_Proxies.i \
   ORB_Core.i \
   ORB_Table.inl \

@@ -499,6 +499,25 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientRequestInfo.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1354,6 +1373,25 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor_List.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterfaceC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1563,7 +1601,45 @@ SOURCE=.\Marshal.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_ORBInitializer.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_PolicyFactory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -1867,6 +1943,44 @@ SOURCE=.\ORB_Table.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORBInitializer_Registry.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORBInitInfo.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\params.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1962,25 +2076,6 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Factory.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Policy_Manager.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2001,6 +2096,25 @@ SOURCE=.\Policy_Manager.cpp
 # Begin Source File
 
 SOURCE=.\PolicyC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyFactory_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -2323,25 +2437,6 @@ SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Info.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2418,7 +2513,45 @@ SOURCE=.\RT_ORB.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_ORBInitializer.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Policy_i.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_PolicyFactory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -2798,7 +2931,7 @@ SOURCE=.\Smart_Proxies.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\StringSeq.cpp
+SOURCE=.\StringSeqC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3504,6 +3637,10 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientRequestInfo.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
@@ -3688,6 +3825,14 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Interceptor_List.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Interceptor_List.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
@@ -3732,7 +3877,15 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_PolicyFactory.h
 # End Source File
 # Begin Source File
 
@@ -3804,6 +3957,18 @@ SOURCE=.\orbconf.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORBInitializer_Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORBInitializer_Registry.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORBInitInfo.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\params.h
 # End Source File
 # Begin Source File
@@ -3816,15 +3981,15 @@ SOURCE=.\Pluggable.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Factory.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Policy_Manager.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\PolicyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyFactory_Registry.h
 # End Source File
 # Begin Source File
 
@@ -3892,10 +4057,6 @@ SOURCE=.\request.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Info.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.h
 # End Source File
 # Begin Source File
@@ -3912,7 +4073,15 @@ SOURCE=.\RT_ORB.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_Policy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_PolicyFactory.h
 # End Source File
 # Begin Source File
 
@@ -3996,11 +4165,7 @@ SOURCE=.\Smart_Proxies.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\StringSeq.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\StringSeq.inl
+SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
 
@@ -4440,10 +4605,6 @@ SOURCE=.\POAManager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Policy_Factory.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Policy_Manager.i
 # End Source File
 # Begin Source File
@@ -4569,6 +4730,10 @@ SOURCE=.\Single_Reactor.i
 # Begin Source File
 
 SOURCE=.\Smart_Proxies.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeqC.i
 # End Source File
 # Begin Source File
 
