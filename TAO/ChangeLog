@@ -1,8 +1,14 @@
+Fri Oct 10 11:58:25 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTScheduling/Common_IDL_Gen.dsp: 
+
+	  Added custom build command for idl compilation in release
+	  configuration to clear build MSVC release build errors.
+
 Fri Oct 10 11:51:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp: 
 	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp: 
-	* examples/RTScheduling/Starter.dsp: 
 	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp:
 	  
 	  Added custom build command for idl compilation and updated
