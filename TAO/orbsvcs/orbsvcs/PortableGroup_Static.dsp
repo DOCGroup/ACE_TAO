@@ -91,6 +91,88 @@ LIB32=link.exe -lib
 # PROP Default_Filter "idl"
 # Begin Source File
 
+SOURCE=.\miop.idl
+
+!IF  "$(CFG)" == "PortableGroup_Static - Win32 Static Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\miop.idl
+InputName=miop
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup\portablegroup_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "PortableGroup_Static - Win32 Static Debug"
+
+# Begin Custom Build
+InputPath=.\miop.idl
+InputName=miop
+
+BuildCmds= \
+	..\..\..\bin\tao_idl_static -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup\portablegroup_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup.idl
 
 !IF  "$(CFG)" == "PortableGroup_Static - Win32 Static Release"
@@ -179,6 +261,14 @@ BuildCmds= \
 # PROP Default_Filter "i;inl"
 # Begin Source File
 
+SOURCE=.\miopC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\miopS.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\PG_Location_Equal_To.inl
 # End Source File
 # Begin Source File
@@ -199,7 +289,15 @@ SOURCE=.\PortableGroupS.i
 # PROP Default_Filter "h"
 # Begin Source File
 
+SOURCE=.\miopC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\miopconf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\miopS.h
 # End Source File
 # Begin Source File
 
@@ -341,6 +439,14 @@ SOURCE=.\PortableGroup\UIPMC_Wait_Never.h
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp"
+# Begin Source File
+
+SOURCE=.\miopC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\miopS.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\PortableGroup\PG_Default_Property_Validator.cpp
