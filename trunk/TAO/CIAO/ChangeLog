@@ -1,3 +1,69 @@
+Sun Mar 20 10:09:14 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	* DAnCE/Config_Handlers/Basic_Handler.cpp
+	* DAnCE/Config_Handlers/Basic_Handler.h
+	* DAnCE/Config_Handlers/CAD_Handler.cpp
+	* DAnCE/Config_Handlers/CAD_Handler.h
+	* DAnCE/Config_Handlers/CPK_Handler.cpp
+	* DAnCE/Config_Handlers/CPK_Handler.h
+	* DAnCE/Config_Handlers/CPR_Handler.cpp
+	* DAnCE/Config_Handlers/CPR_Handler.h
+	* DAnCE/Config_Handlers/Cap_Handler.cpp
+	* DAnCE/Config_Handlers/Cap_Handler.h
+	* DAnCE/Config_Handlers/CompImplDesc_Handler.cpp
+	* DAnCE/Config_Handlers/CompImplDesc_Handler.h
+	* DAnCE/Config_Handlers/CompIntrDesc_Handler.cpp
+	* DAnCE/Config_Handlers/CompIntrDesc_Handler.h
+	* DAnCE/Config_Handlers/CompPkgDesc_Handler.cpp
+	* DAnCE/Config_Handlers/CompPkgDesc_Handler.h
+	* DAnCE/Config_Handlers/Config.h
+	* DAnCE/Config_Handlers/Config_Error_Handler.cpp
+	* DAnCE/Config_Handlers/Config_Error_Handler.h
+	* DAnCE/Config_Handlers/Config_Handler_export.h
+	* DAnCE/Config_Handlers/DT_Handler.cpp
+	* DAnCE/Config_Handlers/DT_Handler.h
+	* DAnCE/Config_Handlers/Domain_Handler.cpp
+	* DAnCE/Config_Handlers/Domain_Handler.h
+	* DAnCE/Config_Handlers/IAD_Handler.cpp
+	* DAnCE/Config_Handlers/IAD_Handler.h
+	* DAnCE/Config_Handlers/IR_Handler.cpp
+	* DAnCE/Config_Handlers/IR_Handler.h
+	* DAnCE/Config_Handlers/MID_Handler.cpp
+	* DAnCE/Config_Handlers/MID_Handler.h
+	* DAnCE/Config_Handlers/NIA_Handler.cpp
+	* DAnCE/Config_Handlers/NIA_Handler.h
+	* DAnCE/Config_Handlers/PCI_Handler.cpp
+	* DAnCE/Config_Handlers/PCI_Handler.h
+	* DAnCE/Config_Handlers/PC_Handler.cpp
+	* DAnCE/Config_Handlers/PC_Handler.h
+	* DAnCE/Config_Handlers/Plan_Handler.cpp
+	* DAnCE/Config_Handlers/Plan_Handler.h
+	* DAnCE/Config_Handlers/Process_Element.cpp
+	* DAnCE/Config_Handlers/Process_Element.h
+	* DAnCE/Config_Handlers/Process_Element_T.cpp
+	* DAnCE/Config_Handlers/Process_Element_T.h
+	* DAnCE/Config_Handlers/RS_Handler.cpp
+	* DAnCE/Config_Handlers/RS_Handler.h
+	* DAnCE/Config_Handlers/RUK_Handler.cpp
+	* DAnCE/Config_Handlers/RUK_Handler.h
+	* DAnCE/Config_Handlers/Requirement_Handler.cpp
+	* DAnCE/Config_Handlers/Requirement_Handler.h
+	* DAnCE/Config_Handlers/SPK_Handler.cpp
+	* DAnCE/Config_Handlers/SPK_Handler.h
+	* DAnCE/Config_Handlers/SP_Handler.cpp
+	* DAnCE/Config_Handlers/SP_Handler.h
+	* DAnCE/Config_Handlers/TPD_Handler.cpp
+	* DAnCE/Config_Handlers/TPD_Handler.h
+	* DAnCE/Config_Handlers/Utils.cpp
+	* DAnCE/Config_Handlers/Utils.h
+	* DAnCE/Config_Handlers/XercesString.cpp
+	* DAnCE/Config_Handlers/XercesString.h
+
+	  Removed files unused by the new config handlers.
+	
+	* DAnCE/Config_Handlers/Config_Handlers.mpc
+	 
+	  Enabled the config handlers build.
+	
 Sat Mar 19 18:19:34 2005  Will Otte <wotte@dre.vanderbilt.edu>
         
 	* DAnCE/Config_Handlers/XMLSchema/Traversal.hpp
