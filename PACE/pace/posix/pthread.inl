@@ -62,8 +62,12 @@ int
 pace_pthread_attr_getinheritsched (const pace_pthread_attr_t * attr,
                                    int * inheritsched)
 {
+#if PACE_LYNXOS == 0x300
+  return pthread_attr_getinheritsched (PACE_NONCONST_ARG_CAST (pace_pthread_attr_t *) attr);
+#else
   return pthread_attr_getinheritsched (PACE_NONCONST_ARG_CAST (pace_pthread_attr_t *) attr,
                                        inheritsched);
+#endif /* PACE_LYNXOS != 0x300 */
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -113,8 +117,12 @@ int
 pace_pthread_attr_getstacksize (const pace_pthread_attr_t * attr,
                                 size_t * stacksize)
 {
+#if PACE_LYNXOS == 0x300
+  return pthread_attr_getstacksize (PACE_NONCONST_ARG_CAST (pace_pthread_attr_t *) attr);
+#else
   return pthread_attr_getstacksize (PACE_NONCONST_ARG_CAST (pace_pthread_attr_t *) attr,
                                     stacksize);
+#endif /* PACE_LYNXOS != 0x300 */
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -230,7 +238,11 @@ int
 pace_pthread_cond_init (pace_pthread_cond_t * cond,
                         const pace_pthread_condattr_t * attr)
 {
+#if PACE_LYNXOS == 0x300
+  return pthread_cond_init (cond, *attr);
+#else
   return pthread_cond_init (cond, attr);
+#endif /* PACE_LYNXOS != 0x300 */
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -335,7 +347,11 @@ pace_pthread_create (pace_pthread_t * thread,
                      void * (*start_routine) (void*),
                      void * arg)
 {
+#if PACE_LYNXOS == 0x300
+  return pthread_create (thread, *attr, start_routine, arg);
+#else
   return pthread_create (thread, attr, start_routine, arg);
+#endif /* PACE_LYNXOS != 0x300 */
 }
 # endif /*! PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_NONUOF_FUNCS */
@@ -345,7 +361,11 @@ PACE_INLINE
 int
 pace_pthread_detach (pace_pthread_t thread)
 {
+#if PACE_LYNXOS == 0x300
+  return pthread_detach (&thread);
+#else
   return pthread_detach (thread);
+#endif /* PACE_LYNXOS != 0x300 */
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -384,7 +404,15 @@ PACE_INLINE
 void *
 pace_pthread_getspecific (pace_pthread_key_t key)
 {
+#if PACE_LYNXOS == 0x300
+  void *value;
+  if (pthread_getspecific (key, &value) != 0)
+    return 0;
+
+  return value;
+#else
   return pthread_getspecific (key);
+#endif /* PACE_LYNXOS != 0x300 */
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 
@@ -469,7 +497,11 @@ int
 pace_pthread_mutex_init (pace_pthread_mutex_t * mutex,
                          const pace_pthread_mutexattr_t * attr)
 {
+#if PACE_LYNXOS == 0x300
+  return pthread_mutex_init (mutex, *attr);
+#else
   return pthread_mutex_init (mutex, attr);
+#endif /* PACE_LYNXOS != 0x300 */
 }
 #endif /* PACE_HAS_NONUOF_FUNCS */
 

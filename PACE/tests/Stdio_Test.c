@@ -29,6 +29,7 @@ const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
 const int SLEEPTIME = 20;
 
+#if PACE_LYNXOS != 0x300
 int
 main (int argc, char **argv)
 {
@@ -46,8 +47,6 @@ main (int argc, char **argv)
       return -1;
     }
 
-  printf("pace_fopen %s\n", success);
-
   /* Test writing to a file. */
   retval = pace_fputs (string1,
                        file);
@@ -57,8 +56,6 @@ main (int argc, char **argv)
       return -1;
     }
 
-  printf("pace_fputs %s\n", success);
-
   /* Test flushing a file. */
   retval = pace_fflush (file);
   if (retval != 0)
@@ -66,8 +63,6 @@ main (int argc, char **argv)
       printf("pace_fflush %s\n", failure);
       return -1;
     }
-
-  printf("pace_fflush %s\n", success);
 
   /* Test seeking in a file. */
   retval = pace_fseek (file,
@@ -79,8 +74,6 @@ main (int argc, char **argv)
       return -1;
     }
 
-  printf("pace_fseek %s\n", success);
-
   /* Test reading from a file. */
   retval2 = pace_fgets (buffer,
                         sizeof(buffer),
@@ -91,15 +84,11 @@ main (int argc, char **argv)
       return -1;
     }
 
-  printf("pace_fgets %s\n", success);
-
   if (pace_strcmp(buffer, string1) != 0)
     {
       printf("strcmp of pace_fgets %s\n", failure);
       return -1;
     }
-
-  printf("strcmp of pace_fgets %s\n", success);
 
   /* Test closing a file. */
   retval = pace_fclose (file);
@@ -109,16 +98,21 @@ main (int argc, char **argv)
       return -1;
     }
 
-  printf("pace_fclose %s\n", success);
 
-
-  /* use this to pause the program to test the size of the exe
-  *  Cntr-Alt-Del and then look at the task manager to
-  *  find the size
-  */
+  /* uncomment this line to pause the program to test the size
+   * of the exe Cntr-Alt-Del and then look at the task manager to
+   *  find the size
   pace_sleep (SLEEPTIME);
+   */
 
   PACE_UNUSED_ARG (argc);
   PACE_UNUSED_ARG (argv);
   return 0;
 }
+#else
+int
+main (int argc, char **argv)
+{
+  printf("PACE does not support LynxOS 3.0.0.\n");
+}
+#endif /* PACE_LYNXOS == 0x300 */
