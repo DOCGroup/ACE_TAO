@@ -101,7 +101,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Add another argument.  This only works in the <ITERATIVE> state.
-  /// Returns -1 on failure and 0 on success.
+  /// Note that this method does not copy <next_arg>, but instead
+  /// assumes ownership of it.  Returns -1 on failure and 0 on success.
   int add (const ACE_TCHAR *next_arg);
 
   /**
