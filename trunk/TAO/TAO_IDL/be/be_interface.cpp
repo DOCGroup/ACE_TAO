@@ -933,8 +933,16 @@ be_interface::gen_operation_table (void)
 
         // Generate the skeleton for the is_a method.
         ss->indent ();
-        *ss << "_is_a" << ",\t&" << this->full_skel_name () << "::_is_a_skel\n";
+        *ss << "_is_a" << ", &"
+	    << this->full_skel_name ()
+	    << "::_is_a_skel\n";
         this->skel_count_++;
+
+	ss->indent ();
+	*ss << "_non_existent, &"
+	    << this->full_skel_name ()
+	    << "::_non_existent_skel\n";
+	this->skel_count_++;
 
         // Input to the gperf is ready. Run gperf and get things done.
         gen_perfect_hash_optable ();
