@@ -39,6 +39,7 @@ public:
          
   // = Initialization and termination methods.
   TAO_NamingContext (PortableServer::POA_ptr poa,
+                     const char *poa_id,
 		     size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE,
 		     int root = 0);
 
@@ -174,6 +175,12 @@ protected:
 
   u_long counter_;
   // This counter is used to generate names for children
+
+  size_t hash_table_size_;
+  // Hash table size
+
+  ACE_CString poa_id_;
+  // My POA Id
 };
 
 class TAO_ORBSVCS_Export TAO_BindingIterator : public POA_CosNaming::BindingIterator

@@ -1,5 +1,9 @@
 Mon Oct 05 18:54:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Naming/CosNaming_i: Fixed the POA id generation
+	  to take into account the name of the parent.  Otherwise everyone
+	  was using the same "namespace".
+
 	* performance-tests/Cubit/TAO/IDL_Cubit: Added the testing of
 	  sequences of structs.
 

@@ -86,7 +86,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 				    PortableServer::POA_ptr poa)
 {
   ACE_NEW_RETURN (this->naming_context_impl_, 
-                  TAO_NamingContext (poa, 
+                  TAO_NamingContext (poa,
+                                     "root", 
                                      ACE_DEFAULT_MAP_SIZE,
                                      1),
                   -1);
