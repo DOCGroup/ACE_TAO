@@ -86,7 +86,7 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 static int logflag  = 0; // 0 STDERR, 1 FILE
 static int loglevel = 0; // 0 full , 1 only errors
 
-static char * data =
+static char data[] =
   "GET / HTTP/1.1\r\n"
   "Accept: */*\r\n"
   "Accept-Language: C++\r\n"
@@ -989,26 +989,6 @@ set_proactor_type (const char *ptype)
       proactor_type = 3;
       return 1;
 #endif /* sun */
-    default:
-      break;
-    }
-  return 0;
-}
-
-static int
-set_log (const char * ltype)
-{
-  if (! ltype)
-    return 0;
-
-  switch (toupper (* ltype))
-    {
-    case 'C':
-      logflag = 0;
-      return 1;
-    case 'F':
-      logflag = 1;
-      return 1;
     default:
       break;
     }
