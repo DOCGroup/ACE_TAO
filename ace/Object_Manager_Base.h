@@ -28,27 +28,12 @@
 #include "ace/Cleanup.h"
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_signal.h"
-//#include "ace/OS_NS_netdb.h"
-//#include "ace/OS_NS_unistd.h"
-//#include "ace/OS_NS_time.h"
-//#include "ace/OS_NS_stdlib.h"
-namespace ACE_OS {
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-int netdb_acquire (void);
-int netdb_release (void);
-# endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-ssize_t pread(ACE_HANDLE, void*, size_t, off_t);
-ssize_t pwrite(ACE_HANDLE, const void*, size_t, off_t);
-time_t mktime(tm*);
-int atexit(void (*)());
-}
+
 class ACE_Object_Manager;
 class ACE_OS_Object_Manager_Manager;
 class ACE_TSS_Cleanup;
 class ACE_TSS_Emulation;
 class ACE_Log_Msg;
-//void ACE_OS_Object_Manager_Internal_Exit_Hook ();
-
 class ACE_Thread_Hook;
 
 /**
@@ -255,14 +240,6 @@ public:
   static void print_error_message (u_int line_number, const ACE_TCHAR *message);
 
   /// This class is for internal use by ACE_OS, etc., only.
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-  friend int ACE_OS::netdb_acquire (void);
-  friend int ACE_OS::netdb_release (void);
-# endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-  friend ssize_t ACE_OS::pread(ACE_HANDLE, void*, size_t, off_t);
-  friend ssize_t ACE_OS::pwrite(ACE_HANDLE, const void*, size_t, off_t);
-  friend time_t ACE_OS::mktime(tm*);
-  friend int ACE_OS::atexit(void (*)());
   friend class ACE_Object_Manager;
   friend class ACE_OS_Object_Manager_Manager;
   friend class ACE_TSS_Cleanup;

@@ -11,6 +11,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/IIOP_EndpointsC.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (DIOP,
            DIOP_Profile,

@@ -1,3 +1,25 @@
+Mon Nov  3 03:04:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Barrier.h:
+        * ace/Managed_Object.h:
+        * ace/Object_Manager.h:
+        * tests/Priority_Reactor_Test.cpp:
+          Added #included needed when not inlining due to recent
+          subsetting.
+
+        * ace/OS_NS_Thread.inl:
+          Added #ifdef ACE_MT_SAFE around ACE_OS_Thread_Mutex_Guard
+          implementation.
+
+        * ace/Object_Manager_Base.h:
+          Removed ACE_OS friend statements and redundant method
+          declarations (which were problematic on Windows).
+
+        * ace/Token.cpp:
+          Moved #include of Token.i outside of ACE_HAS_THREADS #ifdef
+          since ACE_Noop_Token is there and required in single threaded
+          builds.
+
 Sun Nov  2 15:58:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/ace.mpc:

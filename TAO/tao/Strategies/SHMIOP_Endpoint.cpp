@@ -18,6 +18,8 @@ ACE_RCSID (Strategies,
 # include "SHMIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/os_include/os_netdb.h"
+
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
                                           int use_dotted_decimal_addresses)
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
