@@ -220,6 +220,8 @@ Scheduler::status_t
 Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> 
                                &anomaly_set)
 {
+  ACE_UNUSED_ARG (anomaly_set);
+
   ACE_Guard<LOCK> ace_mon (lock_);
 
   // here goes . . .

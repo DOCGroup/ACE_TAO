@@ -30,6 +30,8 @@ TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& TAO_IN_ENV)
                    CosTrading::UnknownServiceType,
                    CosTradingRepos::ServiceTypeRepository::HasSubTypes))
 {
+  ACE_UNUSED_ARG (TAO_IN_ENV);
+
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::removing all"
               " types from the Repository.\n"));
 
