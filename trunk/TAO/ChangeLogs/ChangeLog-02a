@@ -1,7 +1,8 @@
 Fri Mar  3 11:01:32 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (my_factory): fixed a bug. Thanks to
-	Rob Ruff <rruff@scires.com> and Sandro ? <doro.s@flashnet.it> for reporting it.
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (my_factory): fixed a bug. The constructor was not
+	making a duplicate when assigning to a _var. Thanks to Rob Ruff <rruff@scires.com>
+	and Sandro Doro <doro.s@flashnet.it> for reporting it.
 
 Fri Mar  3 01:06:49 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
