@@ -1,3 +1,10 @@
+Tue Sep  7 14:10:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        * TAO/tao/Utils/Server_Main.cpp
+          ACE_Time_Value class is used without necessary first including its
+          definition in some build environments. Ensure that this class's
+          header is included if it hasn't been so before this use here.
+
 Mon Sep  6 22:59:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
