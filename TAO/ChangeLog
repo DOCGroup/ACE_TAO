@@ -1,3 +1,10 @@
+Thu Nov 13 21:02:31 2003  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Queued_Message.cpp:
+	  Made the remove_from_list() operation safe if called multiple
+	  times.  This fixes:
+	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1614
+
 Fri Nov 14 00:26:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/RTScheduling/Scheduling_Interceptor/Makefile:
