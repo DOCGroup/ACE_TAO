@@ -89,7 +89,10 @@ AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
            UTL_Scope(AST_Decl::NT_module),
            pd_has_nested_valuetype (0)
 {
-  if (!ACE_OS::strcmp (local_name ()->get_string (), "CORBA"))
+  static int CORBA_module_added = 0;
+
+  if (!ACE_OS::strcmp (local_name ()->get_string (), "CORBA") &&
+      !CORBA_module_added)
     {
       AST_PredefinedType *pdt;
       
@@ -121,6 +124,7 @@ AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
           this->fe_add_predefined_type (pdt);
         }
 # endif /* IDL_HAS_VALUETYPE */
+      CORBA_module_added = 1;
     }
 }
 
