@@ -2,8 +2,8 @@ Mon Sep 15 15:50:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/RTScheduler.pidl: 
 	* tao/RTScheduling/RTSchedulerC.h: 
-	* tao/RTScheduling/RTSchedulerC.h: 
-	* tests/RTScheduling/Scheduler.cpp: 
+	* tao/RTScheduling/RTSchedulerC.cpp: 
+	* tests/RTScheduling/Scheduler.h: 
 	* tests/RTScheduling/Scheduler.cpp: 	
 	
 	  Added send_poll operation to Scheduler interface.
