@@ -13,7 +13,8 @@
 //    The CORBA IDL module for distributed event notification.
 //
 // = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu)
+//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
+//    Pradeep Gore (pradeep@cs.wustl.edu)
 //
 // ============================================================================
 

@@ -102,15 +102,15 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 		   ACE_OS::strdup (""));
   else
   {
-	#if defined (ACE_HAS_REGEX)
+#if defined (ACE_HAS_REGEX)
     // Compile the regular expression (the 0's cause ACE_OS::compile
     // to allocate space).
     compile_buffer = ACE_OS::compile (filtering_criteria, 0, 0);
-	#else
-	// Win32 does not support regular expression functions such as compile.
-	ACE_ALLOCATOR (compile_buffer,
+#else
+    // Win32 does not support regular expression functions such as compile.
+    ACE_ALLOCATOR (compile_buffer,
 		   ACE_OS::strdup (""));
-	#endif // #if defined (ACE_HAS_REGEX)
+#endif // #if defined (ACE_HAS_REGEX)
   }
 
   // Should throw an exception here!
@@ -138,11 +138,12 @@ Notifier_i::Notifier_i (size_t size)
 // if platforms (such as win32) do not support the REGEXP functions
 // such as <compile> and <step> then warn the user that the regular
 // expression feature is not available.
-	#ifndef ACE_HAS_REGEX
-	ACE_DEBUG ((LM_DEBUG, "\n WARNING: This platform does not support the functions\
-	for regular expressions.\n\
-	The filtering criteria will not work.\n"));
-	#endif //#ifndef ACE_HAS_REGEX
+#ifndef ACE_HAS_REGEX
+  ACE_DEBUG ((LM_DEBUG, "\n WARNING: This platform does not support\
+the functions\
+for regular expressions.\n\
+The filtering criteria will not work.\n"));
+#endif //#ifndef ACE_HAS_REGEX
 }
 
 // Add a new consumer to the table, being careful to check for
@@ -289,7 +290,7 @@ Notifier_i::disconnect (const char *reason,
        mi.advance ())
     {
       Event_Comm::Consumer_ptr consumer_ref =
-        me->ext_id_; //int_id_->consumer ();
+        me->ext_id_;
 
       ACE_ASSERT (consumer_ref != 0);
       ACE_DEBUG ((LM_DEBUG,
@@ -344,13 +345,13 @@ Notifier_i::push (const Event_Comm::Event &event,
       const char *criteria = me->int_id_->criteria ();
       ACE_ASSERT (criteria);
 
-	#if defined (ACE_HAS_REGEX)
-	  // Do a regular expression comparison to determine matching.
+#if defined (ACE_HAS_REGEX)
+      // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
 	  || ACE_OS::step (event.tag_, regexp) != 0)
-	#endif // #if defined (ACE_HAS_REGEX)
-	  // if ACE_HAS_REGEX	has not been defined,
-	  // let everything through.
+#endif // #if defined (ACE_HAS_REGEX)
+        // if ACE_HAS_REGEX has not been defined,
+        // let everything through.
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %x\n",

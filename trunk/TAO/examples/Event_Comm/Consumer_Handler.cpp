@@ -42,8 +42,9 @@ Consumer_Handler::init (int argc,
       TAO_CHECK_ENV;
 
       // Save the Shutdown callback.
-      this->consumershutdown = _consumershutdown; 
-      // Set the ConsumerShutdown callback object.
+      this->consumershutdown = _consumershutdown;
+      // Set the ConsumerShutdown callback object
+      // in the Consumer object implementation.
       this->receiver_i_.set (_consumershutdown);
 
       // Start the servant.

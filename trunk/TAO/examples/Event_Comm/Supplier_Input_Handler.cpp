@@ -7,8 +7,7 @@
 ACE_RCSID(Supplier, Supplier_Input_Handler, "$Id$")
 
 Supplier_Input_Handler::Supplier_Input_Handler ()
-  : //handle_ (0),
-    notifier_ (0)
+  : notifier_ (0)
 {
   // No-Op.
 }
@@ -28,11 +27,12 @@ Supplier_Input_Handler::close (void)
 
   // Make sure to cleanup the STDIN handler.
    if (ACE_Event_Handler::remove_stdin_handler
-      (TAO_ORB_Core_instance ()->reactor (),
+      (
+       ACE_Reactor::instance (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-		       "%p\n",
-		       "remove_stdin_handler"));
+     ACE_ERROR ((LM_ERROR,
+                 "%p\n",
+                 "remove_stdin_handler"));
    return 0;
 }
 
@@ -45,7 +45,7 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
 
   if (ACE_Event_Handler::register_stdin_handler
       (this,
-       TAO_ORB_Core_instance ()->reactor (),
+       ACE_Reactor::instance (),
        TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
@@ -67,7 +67,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
 
   if (ACE_OS::fgets (buf,
 		     sizeof buf - 1,
-			 stdin) == 0)
+                     stdin) == 0)
     {
       ACE_OS::strcpy (buf,
 		      "quit");
@@ -91,7 +91,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
   Event_Comm::Notifier *notifier = this->notifier_->notifier ();
   ACE_ASSERT (notifier != 0);
 
-  if (ACE_OS::strcmp (buf, "quit") == 0)
+  if (ACE_OS::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.
     ACE_Reactor::end_event_loop ();
   else

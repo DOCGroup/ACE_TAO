@@ -6,8 +6,7 @@
 ACE_RCSID(Consumer, Consumer_Input_Handler, "$Id$")
 
 Consumer_Input_Handler::Consumer_Input_Handler (void)
-  : //handle_ (0),
-    receiver_handler_ (0),
+  : receiver_handler_ (0),
     consumer_initiated_shutdown_ (0)
 {
   // No-Op.
@@ -111,9 +110,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
     }
   else
     {
-      ACE_OS::strcpy (buf, "quit");
-      ACE_DEBUG ((LM_DEBUG,
-                  "shutting down Input_Handler\n"));
+      // If nothing is read, do nothing.
       return 0;
     }
 

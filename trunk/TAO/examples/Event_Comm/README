@@ -35,7 +35,7 @@ Supplier:
            To run the supplier type:
            supplier
 
-           To exit the supplier type CTRL-C.
+           To exit the supplier type CTRL-C or type "quit".
            To send strings to the Consumers, type the string on the prompt
            and press ENTER.
 
@@ -88,10 +88,10 @@ To run the tests do the following:
    from a Consumer to all other Consumers by typing messages in a
    Consumer window.
 
-   Note that if you type "quit",  ^C in a Consumer window the
+   Note that if you type "quit" or  ^C in a Consumer window the
    Consumer will unsubscribe and shutdown its handlers and exit.
    Likewise, if you type  ^C in the Notifier window
    the Notifier will disconnect all of its Consumers and exit.
 
 6. When you want to terminate a Consumer or a Supplier, just type ^C
-   and the process will shut down gracefully.
+   or "quit" and the process will shut down gracefully.
