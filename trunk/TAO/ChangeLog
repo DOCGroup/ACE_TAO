@@ -1,3 +1,17 @@
+Thu Sep 30 07:19:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+
+	  Removed references to taoConf.
+
+	* configure.ac:
+
+	  Removed taoConf.sh from AC_CONFIG_FILES.
+
+	* taoConf.sh.in:
+
+	  Removed file.
+
 Wed Sep 29 21:17:51 MST 2004  Trevor Fields <fields_t@ociweb.com>
 
         * tao/PortableServer/ImplRepo.pidl:
@@ -25,7 +39,7 @@ Wed Sep 29 21:17:51 MST 2004  Trevor Fields <fields_t@ociweb.com>
 
 Wed Sep 29 18:27:32 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\Protocols\altq.conf: 
+	* performance-tests\Protocols\altq.conf:
 
 	  File for setting priority queuing on a ALTQ router for DiffServ
 	  testing.
@@ -38,7 +52,7 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  library. Protocol properties is part of RTCORBA.  Protocol
 	  properties for IIOP were implemented poorly and if the same
 	  model was followed for the other protocols, it would create a
-	  coupling of the RTCORBA and the Strategies libraries.  
+	  coupling of the RTCORBA and the Strategies libraries.
 
 	  The other major change here is how policies are retrieved.  The
 	  Policy Set implementation is nice and powerful, providing quick
@@ -49,12 +63,12 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  Also a lot of policy related code - what policies are set, when
 	  they are set and when they are evaluated - was also fixed.
 
-	* tao/RTCORBA/RTCORBA.pidl: 
+	* tao/RTCORBA/RTCORBA.pidl:
 
-	  Added these two local interfaces: 
+	  Added these two local interfaces:
 
 	  # UserDatagramProtocolProperties
-	  # StreamControlProtocolProperties.  
+	  # StreamControlProtocolProperties.
 
 	  Updated SharedMemoryProtocolProperties to include all the TCP
 	  related parameters.  The implementation was also changed
@@ -67,16 +81,16 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  # create_shared_memory_protocol_properties()
 	  # create_user_datagram_protocol_properties()
 	  # create_stream_control_protocol_properties()
-	
+
   	* tao/RTCORBA/RTCORBAC.{h,cpp}:
 
 	  Added code to match the changes in the pidl file.
 
-	* RTCORBA/RT_ORB.{h,cpp}: 
+	* RTCORBA/RT_ORB.{h,cpp}:
 
 	  Added code for implementing changes in the pidl file.
 
-	* tao/RTCORBA/RT_Policy_i.{h,cpp}: 
+	* tao/RTCORBA/RT_Policy_i.{h,cpp}:
 
 	  To make things consistent, TAO_TCP_Properties,
 	  TAO_Unix_Domain_Properties, and TAO_SMEM_Properties were renamed
@@ -97,13 +111,13 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  TAO_ServerProtocolPolicy::hook() and
 	  TAO_ClientProtocolPolicy::hook() were removed.
 
-	* tao/RTCORBA/RT_Protocols_Hooks.{h,cpp}: 
-	* tao/Default_Protocols_Hooks.{h,cpp): 
-	* tao/Protocols_Hooks.{h,cpp}: 
+	* tao/RTCORBA/RT_Protocols_Hooks.{h,cpp}:
+	* tao/Default_Protocols_Hooks.{h,cpp):
+	* tao/Protocols_Hooks.{h,cpp}:
 
 	  - Removed client_protocols_hook and server_protocols_hook.
 	  These 'hooks' were trying to be generic across protocols, but
-	  really were specific to IIOP.  
+	  really were specific to IIOP.
 
 	  - Removed update_client_protocol_properties and
 	  update_server_protocol_properties since they were very poorly
@@ -121,7 +135,7 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  ignored.  Therefore, this method was removed.  This method was
 	  also removed from ORB_Core::init().
 
-	  - Added the following methods and classes were added: 
+	  - Added the following methods and classes were added:
 
 	  # TAO_IIOP_Protocol_Properties
 	  # TAO_UIOP_Protocol_Properties
@@ -141,10 +155,10 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	  # set_client_network_priority()
 	  # set_server_network_priority()
-	
+
 	* tao/ORB_Core.{h,cpp}:
 
-	  Added the following methods: 
+	  Added the following methods:
 
 	  # get_policy() - Get a policy; first, check the ORB-level Policy
 	  Manager, then check the ORB defaults.
@@ -180,13 +194,13 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  # RTCORBA/RT_Invocation_Endpoint_Selectors.cpp
 	  # RTPortableServer/RT_Servant_Dispatcher.cpp
 
-	* tao/Remote_Invocation.cpp: 
+	* tao/Remote_Invocation.cpp:
 
 	  In send_message(), we figure out if we need to set dscp on the
 	  client produced network packets.  Then we ask the Connection
 	  Handler to go ahead and set the dscp on the socket if needed.
 
-	* tao/IIOP_Transport.cpp: 
+	* tao/IIOP_Transport.cpp:
 
 	  The following is how things used to happen:
 
@@ -204,7 +218,7 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  All these are now down in one place:
 	  Remote_Invocation::send_message().
 
-	* tao/IIOP_Connection_Handler.{h,cpp}: 
+	* tao/IIOP_Connection_Handler.{h,cpp}:
 
 	  # TAO_IIOP_Properties class was removed since the
 	  IIOP_Properties are no longer being passed from the Connector
@@ -225,28 +239,28 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	* tao/Connector_Impl.{h,cpp}:
 	* tao/IIOP_Acceptor.{h,cpp}:
 	* tao/IIOP_Connector.{h,cpp}:
-	
+
 	  - The void * arg parameter that was being passed to
 	  TAO_Creation_Strategy is no longer necessary.  Service handlers
 	  now figure out protocol properties when they are created.
 
-	* tao/Connection_Handler.h (set_dscp_codepoint): 
+	* tao/Connection_Handler.h (set_dscp_codepoint):
 
 	  Made set_dscp_codepoint() a pure virtual method in the base
 	  class.  Super classes for remote protocols (e.g., IIOP)
 	  implement this method; for local protocols this is a no-op.
 
-	* tao/Object.{h,cpp}: 
-	* tao/LocalObject.{h,cpp}: 
+	* tao/Object.{h,cpp}:
+	* tao/LocalObject.{h,cpp}:
 	* tao/RTCORBA/RT_Stub.{h,cpp}:
-	
+
 	  _get_cached_policy() has added and _get_client_policy() was removed.
-	
+
 	* tao/Stub.{h,cpp}:
 
 	  Removed the following methods since they can be easily replace
 	  with one new method get_cached_policy():
-	
+
 	  # relative_roundtrip_timeout()
 	  # sync_scope()
 	  # buffering_constraint()
@@ -257,7 +271,7 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao/RTCORBA/RT_Stub.{h,cpp}:
 
-	  effective_priority_banded_connection() and 
+	  effective_priority_banded_connection() and
 	  effective_client_protocol() were made private.  The user should
 	  simply use the get_policy() or the get_cached_policy()
 	  interface.  All the necessary smarts of returning the correct
@@ -271,19 +285,19 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  and call to client_protocol() was replaced by
 	  TAO_Stub::get_cached_policy(TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL).
 
-	* tao/RTPortableServer/RT_POA.cpp (server_protocol): 
+	* tao/RTPortableServer/RT_POA.cpp (server_protocol):
 
 	  This method was removed.  ORB level policies are already
 	  included in the POA policy set when the POA is created.
 	  Therefore, there is no need to check at the ORB level.
 
 	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp
-	  (pre_invoke_remote_request): 
+	  (pre_invoke_remote_request):
 
 	  Special treatment of IIOP was removed.  The code for setting up
 	  dscp was generalized to work with any protocol.
 
-	* tao/orbconf.h: 
+	* tao/orbconf.h:
 
 	  Removed several unused lierals, including
 	  TAO_CLIENT_PRIORITY_POLICY_TYPE,
@@ -300,13 +314,13 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  not be here though; We should find a different way to handle the
 	  check in the Policy Set.
 
-	* tao/Messaging/Messaging_PolicyFactory.cpp (create_policy): 
-	* tao/Messaging/Messaging_ORBInitializer.cpp (register_policy_factories): 
-	  
+	* tao/Messaging/Messaging_PolicyFactory.cpp (create_policy):
+	* tao/Messaging/Messaging_ORBInitializer.cpp (register_policy_factories):
+
 	  TAO_BUFFERING_CONSTRAINT_POLICY_TYPE was replaced by
 	  TAO::BUFFERING_CONSTRAINT_POLICY_TYPE.
 
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp: 
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
 
 	  Call to TAO_RT_Endpoint_Utils::client_protocol_policy() was
 	  replaced by
@@ -322,12 +336,12 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  Call to rt_stub->private_connection() was replaced by
 	  rt_stub->get_cached_policy(TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION).
 
-	* tao/RTCORBA/RT_Endpoint_Utils.{h,cpp}: 
+	* tao/RTCORBA/RT_Endpoint_Utils.{h,cpp}:
 
 	  priority_bands_policy() and client_protocol_policy() were
 	  replaced by one general policy() method.
 
-	* tao/Messaging/Messaging_Policy_i.cpp (TAO_RelativeRoundtripTimeoutPolicy::hook): 
+	* tao/Messaging/Messaging_Policy_i.cpp (TAO_RelativeRoundtripTimeoutPolicy::hook):
 
 	  Call to orb_core->stubless_relative_roundtrip_timeout() was
 	  replaced by
@@ -335,29 +349,29 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  and stub->relative_roundtrip_timeout() was replaced by
 	  stub->get_cached_policy(TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT).
 
-	* tao/Messaging/Messaging_Policy_i.cpp (TAO_Sync_Scope_Policy::hook): 
+	* tao/Messaging/Messaging_Policy_i.cpp (TAO_Sync_Scope_Policy::hook):
 
 	  Call to orb_core->stubless_sync_scope() was replaced by
 	  orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_SYNC_SCOPE)
 	  and call to stub->sync_scope() was replaced by
 	  stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE).
 
-	* tao/Messaging/Connection_Timeout_Policy_i.cpp (hook): 
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp (hook):
 
 	  Call to orb_core->stubless_connection_timeout() was replaced by
 	  orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_CONNECTION_TIMEOUT)
 	  and stub->connection_timeout() was replaced by
 	  stub->get_cached_policy(TAO_CACHED_POLICY_CONNECTION_TIMEOUT).
 
-	* tao/Sync_Strategies.cpp (buffering_constraints_reached): 
+	* tao/Sync_Strategies.cpp (buffering_constraints_reached):
 
 	  Call to stub->buffering_constraint() was replaced by
 	  stub->get_cached_policy(TAO_CACHED_POLICY_BUFFERING_CONSTRAINT).
 
-	* tao/Strategies/DIOP_Connection_Handler.{h,cpp}: 
-	* tao/Strategies/SCIOP_Connection_Handler.{h,cpp}: 
-	* tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}: 
-	* tao/Strategies/UIOP_Connection_Handler.{h,cpp}: 
+	* tao/Strategies/DIOP_Connection_Handler.{h,cpp}:
+	* tao/Strategies/SCIOP_Connection_Handler.{h,cpp}:
+	* tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}:
+	* tao/Strategies/UIOP_Connection_Handler.{h,cpp}:
 
 	  TAO_{Protocol Name}_Properties was removed.  <arg> parameter
 	  that was used to pass information between acceptor/connector and
@@ -367,21 +381,21 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 	  enable_network_priority() and update_protocol_properties() were
 	  removed.
 
-	* tao/Strategies/DIOP_Connector.{h,cpp}: 
-	* tao/Strategies/SCIOP_Connector.{h,cpp}: 
-	* tao/Strategies/SHMIOP_Connector.{h,cpp}: 
-	* tao/Strategies/UIOP_Connector.{h,cpp}: 
-	* tao/Strategies/DIOP_Acceptor.{h,cpp}: 
-	* tao/Strategies/SCIOP_Acceptor.{h,cpp}: 
-	* tao/Strategies/SHMIOP_Acceptor.{h,cpp}: 
-	* tao/Strategies/UIOP_Acceptor.{h,cpp}: 
+	* tao/Strategies/DIOP_Connector.{h,cpp}:
+	* tao/Strategies/SCIOP_Connector.{h,cpp}:
+	* tao/Strategies/SHMIOP_Connector.{h,cpp}:
+	* tao/Strategies/UIOP_Connector.{h,cpp}:
+	* tao/Strategies/DIOP_Acceptor.{h,cpp}:
+	* tao/Strategies/SCIOP_Acceptor.{h,cpp}:
+	* tao/Strategies/SHMIOP_Acceptor.{h,cpp}:
+	* tao/Strategies/UIOP_Acceptor.{h,cpp}:
 
 	  Removed init_tcp_properties.  Removed {Protocol Name}_Properties
 	  from both the Connector and Acceptor.  Removed passing of the
 	  protocol properties from the Connector and Acceptor to the
 	  service handler.
 
-	* tao/Strategies/SCIOP_Connector.{h,cpp}: 
+	* tao/Strategies/SCIOP_Connector.{h,cpp}:
 
 	  We need to specify an empty ACE_Multihomed_INET_Addr to
 	  connect() for it to succeed.
@@ -416,7 +430,7 @@ Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 Wed Sep 29 19:09:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	  
+
 	  Added generation of exception specification for
 	  ciao_postactivate () and ciao_preactivate (). This should fix
 	  compilation errors in the scoreboard.
@@ -429,8 +443,8 @@ Wed Sep 29 12:09:40 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 Wed Sep 29 13:12:27 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
-          
-          There is no specific need for make_secure_profile () 
+
+          There is no specific need for make_secure_profile ()
           to be virtual.
 
 Wed Sep 29 10:12:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>

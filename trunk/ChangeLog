@@ -1,3 +1,13 @@
+Thu Sep 30 07:19:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Removed aceConf.sh.in from AC_CONFIG_FILES.
+
+	* aceConf.sh.in:
+
+	  Removed file.
+
 Thu Sep 30 01:26:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
