@@ -1,3 +1,9 @@
+Tue Aug 25 01:38:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Aio_Platform_Test.cpp: Removed the forward decls
+	  so that don't conflict with the use of "static" later on.
+	  Thanks to David Levine for reporting this.
+
 Mon Aug 24 22:23:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp: removed unnecessary
