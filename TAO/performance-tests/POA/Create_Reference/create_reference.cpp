@@ -99,15 +99,11 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::PolicyList policies(2); policies.length (2);
+      CORBA::PolicyList policies(1); policies.length (1);
 
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID,
                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      policies[1] =
-        root_poa->create_implicit_activation_policy (PortableServer::NO_IMPLICIT_ACTIVATION,
-                                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
@@ -116,7 +112,7 @@ main (int argc, char *argv[])
                               policies,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       ACE_Sample_History creation (niterations);
 
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
