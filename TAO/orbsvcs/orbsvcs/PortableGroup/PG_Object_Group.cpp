@@ -193,7 +193,7 @@ void TAO::PG_Object_Group::add_member (
 
   // Convert new member back to a (non group) ior.
   CORBA::Object_var member_ior =
-    this->orb_->string_to_object (member_ior_string
+    this->orb_->string_to_object (member_ior_string.in ()
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -415,7 +415,9 @@ int TAO::PG_Object_Group::increment_version ()
 void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
 {
   // assume internals is locked
-  CORBA::String_var iogr = this->orb_->object_to_string (this->reference_.in() ACE_ENV_ARG_PARAMETER);
+  CORBA::String_var iogr =
+    this->orb_->object_to_string (this->reference_.in()
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 //  size_t n_rep = 0; // for dump_ior below
@@ -431,7 +433,8 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
     // TAO-FT (2996|976) - Wrong version information within the interceptor [1 | 0]
     // TAO_Perfect_Hash_OpTable:find for operation 'tao_update_object_group' (length=23) failed
     // back to using _narrow
-    PortableGroup::TAO_UpdateObjectGroup_var uog = PortableGroup::TAO_UpdateObjectGroup::_narrow ( info->member_.in ());
+    PortableGroup::TAO_UpdateObjectGroup_var uog =
+      PortableGroup::TAO_UpdateObjectGroup::_narrow ( info->member_.in ());
     if (! CORBA::is_nil (uog.in ()) )
     {
       ACE_TRY_NEW_ENV
@@ -448,7 +451,10 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_SINGLE_ARG_DECL)
 //        dump_ior ("group", "iogr", this->tagged_component_.object_group_ref_version, iogr);
 //        CORBA::String_var replica_ior = this->orb_->object_to_string(uog.in() ACE_ENV_ARG_PARAMETER);
 //        dump_ior (info->location_[0].id, "ior", (this->tagged_component_.object_group_ref_version * 100) + n_rep++, replica_ior);
-        uog->tao_update_object_group (iogr, this->tagged_component_.object_group_ref_version, info->is_primary_ ACE_ENV_ARG_PARAMETER);
+        uog->tao_update_object_group (iogr.in (),
+                                      this->tagged_component_.object_group_ref_version,
+                                      info->is_primary_
+                                      ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
       }
@@ -598,15 +604,20 @@ void TAO::PG_Object_Group::create_member (
         ACE_CHECK;
 
         // convert the new member to a stringified IOR to avoid contamination with group info
-        CORBA::String_var member_ior_string = orb_->object_to_string (member.in () ACE_ENV_ARG_PARAMETER);
+        CORBA::String_var member_ior_string =
+          orb_->object_to_string (member.in ()
+                                  ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        PortableGroup::ObjectGroup_var new_reference = this->add_member_to_iogr (member.in ()
+        PortableGroup::ObjectGroup_var new_reference =
+          this->add_member_to_iogr (member.in ()
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         // Convert new member back to a (non group) ior.
-        CORBA::Object_var member_ior = this->orb_->string_to_object (member_ior_string ACE_ENV_ARG_PARAMETER);
+        CORBA::Object_var member_ior =
+          this->orb_->string_to_object (member_ior_string.in ()
+                                        ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         MemberInfo * info = 0;
@@ -684,16 +695,22 @@ void TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // convert the new member to a stringified IOR to avoid contamination with group info
-          CORBA::String_var member_ior_string = orb_->object_to_string (member.in () ACE_ENV_ARG_PARAMETER);
+          // convert the new member to a stringified IOR to avoid
+          // contamination with group info
+          CORBA::String_var member_ior_string =
+            orb_->object_to_string (member.in ()
+                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          PortableGroup::ObjectGroup_var new_reference = this->add_member_to_iogr (member.in ()
-            ACE_ENV_ARG_PARAMETER);
+          PortableGroup::ObjectGroup_var new_reference =
+            this->add_member_to_iogr (member.in ()
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Convert new member back to a (non group) ior.
-          CORBA::Object_var member_ior = this->orb_->string_to_object (member_ior_string ACE_ENV_ARG_PARAMETER);
+          CORBA::Object_var member_ior =
+            this->orb_->string_to_object (member_ior_string.in ()
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           MemberInfo * info = 0;
