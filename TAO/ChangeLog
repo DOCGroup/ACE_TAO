@@ -17,6 +17,13 @@ Tue Apr 29 12:56:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           for derived value types, so that ValueBase can be used in the
           TAO_Unbounded_Valuetype_Sequence template class.
 
+        * tao/TAO.dsp:
+        * tao/Makefile.tao:
+        * tao/Makefile.bor:
+        * tao/Makefile.am:
+
+          Added new file to project and makefiles.
+
 Tue Apr 29 10:58:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:

@@ -529,25 +529,7 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # Begin Source File
 
 SOURCE=.\IOP_CodecC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
 # ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-# ADD CPP /GR
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -787,6 +769,10 @@ SOURCE=.\PollableC.cpp
 
 SOURCE=.\PortableInterceptorC.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\PredefinedType_Seq_Tmplinst.cpp
 # End Source File
 # Begin Source File
 
