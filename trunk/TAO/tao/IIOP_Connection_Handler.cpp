@@ -1,7 +1,3 @@
-
-// $Id$
-
-
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -17,11 +13,10 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
-
-
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
+
 
 ACE_RCSID (tao,
            IIOP_Connection_Handler,
@@ -54,7 +49,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
           TAO_IIOP_Transport (this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
-  this->transport(specific_transport);
+  this->transport (specific_transport);
   TAO_Transport::release (specific_transport);
 }
 
@@ -432,25 +427,27 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 }
 
 void
-TAO_IIOP_Connection_Handler::update_protocol_properties (int send_buffer_size,
-							 int recv_buffer_size,
-							 int no_delay,
-							 int enable_network_priority)
+TAO_IIOP_Connection_Handler::update_protocol_properties (
+  int send_buffer_size,
+  int recv_buffer_size,
+  int no_delay,
+  int enable_network_priority)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"TAO_IIOP_Connection_Handler::update_protocol_properties \n enable_network_priority = %d\n",
+		"TAO_IIOP_Connection_Handler::update_protocol_properties\n"
+                "enable_network_priority = %d\n",
 		enable_network_priority));
-  
+
   if (this->tcp_properties_.send_buffer_size != send_buffer_size)
     this->tcp_properties_.send_buffer_size = send_buffer_size;
-  
+
   if (this->tcp_properties_.recv_buffer_size != recv_buffer_size)
     this->tcp_properties_.recv_buffer_size = recv_buffer_size;
-  
+
   if (this->tcp_properties_.no_delay != no_delay)
     this->tcp_properties_.no_delay = no_delay;
-  
+
   if (this->tcp_properties_.enable_network_priority != enable_network_priority)
     this->tcp_properties_.enable_network_priority = enable_network_priority;
 
@@ -462,23 +459,40 @@ TAO_IIOP_Connection_Handler::enable_network_priority (void)
   return this->tcp_properties_.enable_network_priority;
 }
 
-int 
+int
 TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
 {
   int tos;
   if (this->enable_network_priority ())
     {
-      TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY
+        {
+          TAO_Protocols_Hooks *tph =
+            this->orb_core ()->get_protocols_hooks (
+              ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (tph != 0)
+            {
+              CORBA::Long codepoint =
+                tph->get_dscp_codepoint ();
+
+              tos = (int)(codepoint ) << 2;
+            }
+        }
+      ACE_CATCHANY
+        {
+          if (TAO_debug_level > 0)
+            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                 "TAO_IIOP_Connection_Handler::"
+                                 "set_dscp_codepoint - "
+                                 "get_protocol_hooks");
+
+          return -1;
+        }
+      ACE_ENDTRY;
       ACE_CHECK_RETURN (-1);
-
-      if (tph != 0)
-	{
-	  CORBA::Long codepoint =
-	    tph->get_dscp_codepoint ();
-	  
-
-	  tos = (int)(codepoint ) << 2;
-	}
     }
   else
     {
@@ -487,19 +501,23 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
 
   if (tos != this->dscp_codepoint_)
     {
-      int ret = this->peer ().set_option(IPPROTO_IP, IP_TOS, (int *)&tos , (int)sizeof(tos));
-      
-      if (ret < 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Failed to set Diffserv codepoint - try running as superuser\n"));
+      int ret = this->peer ().set_option (IPPROTO_IP,
+                                          IP_TOS,
+                                          (int *) &tos ,
+                                          (int) sizeof (tos));
 
       if(TAO_debug_level)
 	{
+          ACE_DEBUG ((LM_DEBUG,
+                      "Failed to set Diffserv codepoint - "
+                      "try running as superuser\n"));
+
 	  ACE_DEBUG((LM_DEBUG, "(%N,%l) set tos: ret: %d %x\n", ret, tos));
 	}
+
       this->dscp_codepoint_ = tos;
     }
-  
+
   return 0;
 }
 
