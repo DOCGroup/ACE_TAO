@@ -1,3 +1,8 @@
+Tue Aug 17 13:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+        * ace/Asynch_Connector.h
+          Revertion of change to this file as it breaks the windows build and
+          changed the public interface of the template class.
+
 Tue Aug 17 10:03:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * ace/ACE.cpp:
