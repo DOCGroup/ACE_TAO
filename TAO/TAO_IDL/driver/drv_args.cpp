@@ -157,9 +157,11 @@ DRV_parse_args(long ac, char **av)
 	strcat(idl_global->local_escapes(), s);
 	strcat(idl_global->local_escapes(), " ");
 	break;
-
+        
         // Perfect hashing-Operation lookup strategy.
       case 'P':
+        ACE_DEBUG ((LM_DEBUG, 
+                    "IDL Compiler : Using Perfect Hashing Operation Lookup Strategy\n"));
         cg->lookup_strategy (TAO_CodeGen::TAO_PERFECT_HASH);
         break;
 
