@@ -1,3 +1,23 @@
+Thu Apr 17 07:05:50 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Escape the project name before using it within a regular
+          expression.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+
+          Default the stack setting and allow the user to override it on the
+          command line:
+
+          mpc.pl -type em3 -value_template stack=/stack:0x10000,0x1000
+
+          Thanks to Steve Huston for bringing about this change.
+
 Thu Apr 17 03:54:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/g++_metric.sh:
@@ -12,17 +32,17 @@ Thu Apr 17 03:54:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Apr 16 13:35:34 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Basic_Types.h (ACE_WINT_T, ACE_WCHAR_T):
-	* ace/CDR_Base.h (WChar):
-	* ace/OS.h (WChar):
+        * ace/Basic_Types.h (ACE_WINT_T, ACE_WCHAR_T):
+        * ace/CDR_Base.h (WChar):
+        * ace/OS.h (WChar):
 
-	  Cleaned up redundant and inconsistent wide character related
-	  typedefs.  The ACE_OS::WChar and ACE_CDR::WChar types are now
-	  based on the ACE_WCHAR_T type defined in ace/Basic_Types.h
-	  rather than using a set of preprocessor conditionals to set
-	  them.  In particular, the preprocessor conditionals are now
-	  localized in ace/Basic_Types.h.  This reduces maintenance burden
-	  since a single location need be modified instead of multiple.
+          Cleaned up redundant and inconsistent wide character related
+          typedefs.  The ACE_OS::WChar and ACE_CDR::WChar types are now
+          based on the ACE_WCHAR_T type defined in ace/Basic_Types.h
+          rather than using a set of preprocessor conditionals to set
+          them.  In particular, the preprocessor conditionals are now
+          localized in ace/Basic_Types.h.  This reduces maintenance burden
+          since a single location need be modified instead of multiple.
 
 Wed Apr 16 19:27:29 UTC 2003  Don Hinton  <dhinton@drestystems.com>
 
@@ -67,28 +87,28 @@ Wed Apr 16 19:27:29 UTC 2003  Don Hinton  <dhinton@drestystems.com>
 
 Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\OS:
+        * ace\OS:
 
-	  - thr_setprio(): Streamlined code to only call
-	  pthread_getschedparam() when <policy> is -1.
+          - thr_setprio(): Streamlined code to only call
+          pthread_getschedparam() when <policy> is -1.
 
-	  - thr_getprio(): Added a new function so that the user can
-	  retrieve scheduling policy information in addition to the
-	  priority of a thread. This makes the thr_getprio() function
-	  consistent with the changes to thr_setprio().
+          - thr_getprio(): Added a new function so that the user can
+          retrieve scheduling policy information in addition to the
+          priority of a thread. This makes the thr_getprio() function
+          consistent with the changes to thr_setprio().
 
-	* ace\Thread: Made changes to the thr_setprio() and thr_getprio()
-	  functions to make them similar to the ACE_OS functions.
+        * ace\Thread: Made changes to the thr_setprio() and thr_getprio()
+          functions to make them similar to the ACE_OS functions.
 
 Wed Apr 16 11:34:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/auto_run_tests.pl: Fixed a typo.
+        * bin/auto_run_tests.pl: Fixed a typo.
 
 Wed Apr 16 08:41:27 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SString.h:
+        * ace/SString.h:
 
-	  Include "ace/OS.h" to pull in functions in the "ACE_OS" scope.
+          Include "ace/OS.h" to pull in functions in the "ACE_OS" scope.
 
 Wed Apr 16 09:07:26 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1100,26 +1120,26 @@ Sat Mar 29 16:34:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Fri Mar 28 16:04:28 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.{h,i,cpp} (string_to_argv): Use ACE_LIB_TEXT around characters
-	  to make them compare correctly when ACE_USES_WCHAR. Fixes this
-	  method for use with CE. Obviates the need for ACE_CE_ARGV, which
-	  is now gone. Users of ACE_CE_ARGV should use ACE_ARGV, which does
-	  the same thing as ACE_CE_ARGV.
-	  Also added /**/ to #include <sys/mman.h> to prevent warnings from
-	  Visual C++.
+        * ace/OS.{h,i,cpp} (string_to_argv): Use ACE_LIB_TEXT around characters
+          to make them compare correctly when ACE_USES_WCHAR. Fixes this
+          method for use with CE. Obviates the need for ACE_CE_ARGV, which
+          is now gone. Users of ACE_CE_ARGV should use ACE_ARGV, which does
+          the same thing as ACE_CE_ARGV.
+          Also added /**/ to #include <sys/mman.h> to prevent warnings from
+          Visual C++.
 
-	* ace/config-win32-common.h: Corrected the Winsock 2, WinCE checks to
-	  check for UNDER_CE >= 400, not == 4.
+        * ace/config-win32-common.h: Corrected the Winsock 2, WinCE checks to
+          check for UNDER_CE >= 400, not == 4.
 
-	* ace/Makefile.ace:
-	* docs/ACE-subsets.html: Moved ARGV and Argv_Type_Converter from UTILS
-	  to OS; getting command lines correct is needed for basic OS function.
+        * ace/Makefile.ace:
+        * docs/ACE-subsets.html: Moved ARGV and Argv_Type_Converter from UTILS
+          to OS; getting command lines correct is needed for basic OS function.
 
-	* bin/PerlACE/Process_Win32.pm: Move the pocketcontroller-required
-	  sleep from after each test to before it. This accounts for the
-	  need to sleep after copying the initial DLLs and test files down
-	  before beginning the test runs. The copying does a reset, requiring
-	  some delay before attempting the first test.
+        * bin/PerlACE/Process_Win32.pm: Move the pocketcontroller-required
+          sleep from after each test to before it. This accounts for the
+          need to sleep after copying the initial DLLs and test files down
+          before beginning the test runs. The copying does a reset, requiring
+          some delay before attempting the first test.
 
 Fri Mar 28 10:18:48 2003  Steve Huston  <shuston@riverace.com>
 

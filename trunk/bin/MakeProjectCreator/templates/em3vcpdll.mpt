@@ -7,6 +7,7 @@ type_is_dynamic       = 1
 common_defines        = UNICODE _UNICODE
 ssl_libs              = libeay32 ssleay32
 pdb                   = 1
+stack                 =
 
 WCE x86 {
   type_code   = 0x8302

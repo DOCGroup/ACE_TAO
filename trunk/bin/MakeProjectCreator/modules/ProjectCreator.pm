@@ -768,7 +768,8 @@ sub generate_default_target_names {
 sub generate_default_pch_filenames {
   my($self)  = shift;
   my($files) = shift;
-  my($pname) = $self->get_assignment('project_name');
+  my($pname) = $self->escape_regex_special(
+                       $self->get_assignment('project_name'));
 
   if (!defined $self->get_assignment('pch_header')) {
     my($count)    = 0;
