@@ -1,3 +1,10 @@
+Fri Jul 12 12:37:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/DLL_Manager.cpp:
+        * ace/Parse_Node.cpp: g++ complains that ISO C++ won't allow cast
+          from void * to func ptr... so cast void * to ptrdiff_t, then to
+          func ptr.
+
 Fri Jul 12 12:15:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Heap_T.cpp (grow_heap): Fix compile warning.
