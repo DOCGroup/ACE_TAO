@@ -969,8 +969,7 @@ CORBA::string_copy (const CORBA::Char *str)
   // This allocates an extra byte for the '\0';
   CORBA::String copy = CORBA::string_alloc (len);
 
-  ACE_OS::memcpy (copy, str, len);
-  copy[len] = '\0';
+  ACE_OS::memcpy (copy, str, len + 1);
   return copy;
 }
 
