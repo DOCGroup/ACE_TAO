@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 5.2 platforms using the GreenHills 1.8.8 compiler.
+// 5.2/5.3 platforms using the GreenHills 1.8.8 (not 1.8.7!!!!) compiler.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -13,6 +13,7 @@
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_GREENHILLS_SOCKETS
+#define ACE_HAS_INLINED_OSCALLS
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_POSIX_NONBLOCK
@@ -47,14 +48,17 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
-typedef int key_t;
-// GreenHills 1.8.8 needs the stdarg.h #include early:  it shouldn't
-// hurt other compilers.
-#include /**/ <stdarg.h>
-#include /**/ <vxWorks.h>
-
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
+// vxWorks.h must be included before time.h, and key_t must be
+// defined early also:  these are here
+// because Time_Value.h #includes ace/config.h, but not ace/OS.h.
+// Also, GreenHills 1.8.8 needs the stdarg.h #include early.
+typedef int key_t;
+#include /**/ <stdarg.h>
+#include /**/ <vxWorks.h>
+
 
 #endif /* ACE_CONFIG_H */
