@@ -21,13 +21,14 @@
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 #  exceptions       Enable exception handling (not supported by all platforms).
 #  include_env      Enable usage of CORBA::Environment parameters that is
-#                     compatible with TAO versions before 1.2.2.  Default:
-#                     disabled.  Has no effect when building with exceptions=0
+#                   compatible with TAO versions before 1.2.2.  Default:
+#                   disabled.  Has no effect when building with exceptions=0
 #  minimum_corba    Enable minimumCORBA support.  (Documented here, but
-#                     implemented in TAO/rules.TAO.GNU.)
+#                   implemented in TAO/rules.TAO.GNU.)
 #  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
-#                     default, others do not.
+#                   default, others do not. If platform_macros.GNU does not
+#                   set this, inline is enabled.
 #  templates	    Type of template instantiation to perform. Can be one of
 # 		    automatic, used, explicit. Defaults to automatic if the
 #                   platform/compiler combination supports it, otherwise is
@@ -38,13 +39,13 @@
 #  purify           Purify all executables.  purify must be in user's PATH!
 #  quantify         Quantify all executables.  quantify must be in user's PATH!
 #  repo             Use GNU template repository (g++ with repo patches and
-#                     egcs only).
+#                   egcs only).
 #  rtti             Enable run-time type identification.  On some platforms,
-#                     it is enabled by default, so this is ignored.
+#                   it is enabled by default, so this is ignored.
 #  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 #  static_libs      Build static libraries. Ignored if shared_libs_only is set.
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
-#                     specified by the Makefile, as in performance-tests/Misc.
+#                   specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
 #  threads          Build with thread support.
 #  xt_reactor       Build the XtReactor.
@@ -720,9 +721,7 @@ ifneq ($(profile),)
   CCFLAGS += $(PCCFLAGS)
 endif # profile
 
-ifndef inline
-  inline ?=
-endif
+inline ?= 1
 ifeq ($(inline),0)
   CPPFLAGS += -DACE_NO_INLINE
 else

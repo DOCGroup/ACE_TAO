@@ -6,6 +6,7 @@
 #include "ace/TLI.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_TLI.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Auto_Ptr.h"
@@ -127,11 +128,19 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
   // Assume this will fit in the requested size.
   struct t_optmgmt req, ret;
   ACE_NEW_RETURN (req.opt.buf, char[sizeof (struct t_opthdr) + optlen], -1);
+#  if (_XOPEN_SOURCE - 0 >= 500)
+  auto_ptr<void> req_opt_buf_p (req.opt.buf);
+#  else
   ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
+#  endif /* XPG5 vs XPG4 */
   struct t_opthdr *opthdr =
     ACE_reinterpret_cast (struct t_opthdr *, req.opt.buf);
   ACE_NEW_RETURN (ret.opt.buf, char[sizeof (struct t_opthdr) + optlen], -1);
+#  if (_XOPEN_SOURCE - 0 >= 500)
+  auto_ptr<void> ret_opt_buf_p (ret.opt.buf);
+#  else
   ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
+#  endif /* XPG5 vs XPG4 */
 
   req.flags = T_NEGOTIATE;
   req.opt.len = sizeof *opthdr + optlen;
@@ -184,11 +193,19 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
   // ret will get the option requested in req.
   struct t_optmgmt req, ret;
   ACE_NEW_RETURN (req.opt.buf, char[sizeof (struct t_opthdr)], -1);
+#  if (_XOPEN_SOURCE - 0 >= 500)
+  auto_ptr<void> req_opt_buf_p (req.opt.buf);
+#  else
   ACE_Auto_Array_Ptr<char> req_opt_buf_p (req.opt.buf);
+#  endif /* XPG5 vs XPG4 */
   struct t_opthdr *opthdr =
     ACE_reinterpret_cast (struct t_opthdr *, req.opt.buf);
   ACE_NEW_RETURN (ret.opt.buf, char[sizeof (struct t_opthdr) + optlen], -1);
+#  if (_XOPEN_SOURCE - 0 >= 500)
+  auto_ptr<void> ret_opt_buf_p (ret.opt.buf);
+#  else
   ACE_Auto_Array_Ptr<char> ret_opt_buf_p (ret.opt.buf);
+#  endif /* XPG5 vs XPG4 */
 
   req.flags = T_CURRENT;
   req.opt.len = sizeof *opthdr;
