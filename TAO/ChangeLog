@@ -1,3 +1,15 @@
+Tue Oct 21 21:58:31 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          The ReplicationManager now registers its IOR with the
+          IORTable with the key-string "ReplicationManager" so clients
+          can access it using resolve_initial_references() and
+          something like:
+
+          -ORBInitRef ReplicationManager=corbaloc::host:port/ReplicationManager
+
+        These changes were made in the oci_haft branch.
+
 Tue Oct 21 09:49:51 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
