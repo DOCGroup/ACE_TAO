@@ -305,9 +305,9 @@ void
 dump_map(ACE_Hash_Map_Manager<EXT_ID,INT_ID,ACE_Null_Mutex>& hashmap)
 {
   FILE* fp = stderr;
-  fprintf(fp, "Dumping hash map at 0x%08X (cur_size_=%d,total_size_=%d,table_=0x%08x)\n",
+  fprintf(fp, "Dumping hash map at 0x%p (cur_size_=%d,total_size_=%d,table_=0x%p)\n",
 	 &hashmap, hashmap.cur_size_, hashmap.total_size_, hashmap.table_);
-  for (int slot = 0; slot < hashmap.total_size_; slot++)
+  for (size_t slot = 0; slot < hashmap.total_size_; slot++)
     {
       if (hashmap.table_[slot] == hashmap.sentinel_)
 	continue;
@@ -321,10 +321,10 @@ dump_map(ACE_Hash_Map_Manager<EXT_ID,INT_ID,ACE_Null_Mutex>& hashmap)
 	  EXT_ID& key = temp->ext_id_;
 	  INT_ID& val = temp->int_id_;
 
-	  fprintf(fp,"(%s,%d,%sin use,0x%08X), ",
+	  fprintf(fp,"(%s,%d,%sin use,0x%p), ",
 		 key.get_host_name(), key.get_port_number(), val->in_use() ? "" : "not ", val);
 	}
-      fprintf(fp,"SENTINEL(0x%08x)\n", hashmap.sentinel_);
+      fprintf(fp,"SENTINEL(0x%p)\n", hashmap.sentinel_);
     }
   fprintf(fp,"End of dump\n");
 }
