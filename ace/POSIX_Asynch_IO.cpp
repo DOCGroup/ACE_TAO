@@ -896,7 +896,8 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                  ACE_HANDLE accept_handle,
                                  const void *act,
                                  int priority,
-                                 int signal_number)
+                                 int signal_number,
+                                 int addr_family)
 {
   ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::accept\n"));
 
@@ -911,10 +912,14 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
 
     // Sanity check: make sure that enough space has been allocated by
     // the caller.
-    size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
-    size_t space_in_use = message_block.wr_ptr () - message_block.base ();
-    size_t total_size = message_block.size ();
-    size_t available_space = total_size - space_in_use;
+    size_t address_size = sizeof (sockaddr_in);
+#if defined (ACE_HAS_IPV6)
+    if (addr_family == AF_INET6)
+      address_size = sizeof (sockaddr_in6);
+#else
+    ACE_UNUSED_ARG (addr_family);
+#endif
+    size_t available_space = message_block.space ();
     size_t space_needed = bytes_to_read + 2 * address_size;
 
     if (available_space < space_needed)

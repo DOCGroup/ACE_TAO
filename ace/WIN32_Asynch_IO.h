@@ -1103,7 +1103,8 @@ public:
               ACE_HANDLE accept_handle,
               const void *act,
               int priority,
-              int signal_number = 0);
+              int signal_number = 0,
+              int addr_family = AF_INET);
 
   /// Destructor.
   ~ACE_WIN32_Asynch_Accept (void);
