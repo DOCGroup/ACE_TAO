@@ -52,6 +52,8 @@ CORBA::string_alloc (CORBA::ULong len)
                   char[size_t (len + 1)],
                   0);
 
+  s[0]= '\0';
+
   return s;
 }
 
