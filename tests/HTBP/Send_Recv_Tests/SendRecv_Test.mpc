@@ -1,9 +1,11 @@
 // -*- MPC -*-
 //
 // $Id$
+//
 
-project: htbptest {
+project: aceexe, htbp {
   exename = SendRecv_Test
+  libs += Test_Output
 
   Source_Files {
      SendRecv_Test.cpp
