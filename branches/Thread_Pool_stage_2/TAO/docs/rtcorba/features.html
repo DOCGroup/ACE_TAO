@@ -83,14 +83,14 @@ scheduling policy the ORB will use. (This method does not allow the
 specification of user-defined mappings.) Config file should contain
 the following options:<br>
 
-<CODE><br> static Resource_Factory &quot;-ORBPriorityMapping
-<em>mapping_type</em> -ORBSchedPolicy <i> sched_policy</i>&quot;<br>
-<br>
+<CODE><br>static RT_ORB_Loader "-ORBPriorityMapping
+<em>mapping_type</em> -ORBSchedPolicy <i> sched_policy</i>"<br>
+<br> </CODE>
 
-</CODE>where valid values for <i> mapping_type</i> are
-<CODE>linear</CODE> and <CODE>direct,</CODE> and<em> </em>valid values
-for <i> sched_policy</i> are <CODE>SCHED_OTHER</CODE>,
-<CODE>SCHED_FIFO</CODE> and <CODE>SCHED_RR</CODE>.<br> </li>
+where valid values for <i> mapping_type</i> are <CODE>linear</CODE>
+and <CODE>direct,</CODE> and<em> </em>valid values for <i>
+sched_policy</i> are <CODE>SCHED_OTHER</CODE>, <CODE>SCHED_FIFO</CODE>
+and <CODE>SCHED_RR</CODE>.<br> </li>
 
 <li><i>TAO::PriorityMappingManager</i> can be used to 1) override the
 default priority mapping and scheduling policy with another
