@@ -201,7 +201,7 @@ Server_Repository::remove (const ACE_TString POA_name)
 
 // Returns a new iterator that travels over the repository.
 
-HASH_IR_ITER *
+Server_Repository::HASH_IR_ITER *
 Server_Repository::new_iterator ()
 {
   HASH_IR_ITER *hash_iter;
@@ -215,7 +215,7 @@ Server_Repository::new_iterator ()
 // Returns the number of entries in the repository.
 
 size_t 
-get_repository_size ()
+Server_Repository::get_repository_size ()
 {
   return this->repository_.current_size ();
 }
