@@ -2,9 +2,9 @@ Mon Sep 22 07:11:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Message_Block.cpp (clone): check this block's cont ()
 	  instead of the new block's cont_ when cloning the continuation
-	  messages.  Thanks to Eric <ecn@smart.net> for tracking down
-	  this problem with failing to clong continuation blocks, and
-	  for providing the fix.
+	  messages.  Thanks to Eric Newton <ecn@smart.net> for tracking
+	  down this problem with failing to clone continuation blocks,
+	  and for providing the fix.
 
 Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
