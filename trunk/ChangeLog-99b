@@ -1,8 +1,15 @@
+Tue Jan 26 14:38:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: expanded
+          the information on the PERL_PATH environment variable for
+          NT hosts.  Thanks to Peter <weatp@syntron.com> for reporting
+          this.
+
 Tue Jan 26 13:40:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/High_Res_Timer.cpp (elapsed_time_incr): Rearranged the
-	  formula to avoid compilation errors for platforms without
-	  ULONGLONG.  Thanks to David for the tip.
+        * ace/High_Res_Timer.cpp (elapsed_time_incr): Rearranged the
+          formula to avoid compilation errors for platforms without
+          ULONGLONG.  Thanks to David for the tip.
 
 Tue Jan 26 12:01:19 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -18,10 +25,10 @@ Tue Jan 26 12:01:19 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jan 26 10:55:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Active_Map_Manager.h:
-	  The _T.h file has to be included *after* the inclusion of the .i
-	  file, otherwise the template may not see the inline functions;
-	  the problem only showed up on IRIX.
+        * ace/Active_Map_Manager.h:
+          The _T.h file has to be included *after* the inclusion of the .i
+          file, otherwise the template may not see the inline functions;
+          the problem only showed up on IRIX.
 
 Mon Jan 25 22:11:36 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
