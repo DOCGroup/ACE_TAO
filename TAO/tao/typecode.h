@@ -446,4 +446,60 @@ public:
 
 };
 
+class TAO_Export CORBA_TypeCode_var
+{
+  //
+  // = TITLE
+  //   A smart pointer for TypeCodes.
+  //
+  // = DESCRIPTION
+  //   Implements the _var class for the TypeCode pseudo object.
+  //
+public:
+  CORBA_TypeCode_var (void); // default constructor
+  CORBA_TypeCode_var (CORBA_TypeCode_ptr);
+  CORBA_TypeCode_var (const CORBA_TypeCode_var &); // copy constructor
+  ~CORBA_TypeCode_var (void); // destructor
+
+  CORBA_TypeCode_var &operator= (CORBA_TypeCode_ptr);
+  CORBA_TypeCode_var &operator= (const CORBA_TypeCode_var &);
+  CORBA_TypeCode_ptr operator-> (void) const;
+
+  operator const CORBA_TypeCode_ptr &() const;
+  operator CORBA_TypeCode_ptr &();
+  // in, inout, out, _retn
+  CORBA_TypeCode_ptr in (void) const;
+  CORBA_TypeCode_ptr &inout (void);
+  CORBA_TypeCode_ptr &out (void);
+  CORBA_TypeCode_ptr _retn (void);
+  CORBA_TypeCode_ptr ptr (void) const;
+
+private:
+  CORBA_TypeCode_ptr ptr_;
+};
+
+class TAO_Export CORBA_TypeCode_out
+{
+  //
+  // = TITLE
+  //   The _out class for TypeCode.
+  //
+  // = DESCRIPTION
+  //   Implements the _out class for the TypeCode pseudo object.
+  //
+public:
+  CORBA_TypeCode_out (CORBA_TypeCode_ptr &);
+  CORBA_TypeCode_out (CORBA_TypeCode_var &);
+  CORBA_TypeCode_out (CORBA_TypeCode_out &);
+  CORBA_TypeCode_out &operator= (CORBA_TypeCode_out &);
+  CORBA_TypeCode_out &operator= (const CORBA_TypeCode_var &);
+  CORBA_TypeCode_out &operator= (CORBA_TypeCode_ptr);
+  operator CORBA_TypeCode_ptr &();
+  CORBA_TypeCode_ptr &ptr (void);
+  CORBA_TypeCode_ptr operator-> (void);
+
+private:
+  CORBA_TypeCode_ptr &ptr_;
+};
+
 #endif /* TAO_TYPECODE_H */

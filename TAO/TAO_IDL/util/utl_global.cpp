@@ -502,6 +502,20 @@ be_change_idl_file_extension (String* idl_file,
     return 0;
 
   ACE_OS::strncpy (fname, string, base - string);
+  // Turn '\' and '\\' into '/'.
+  char* i = fname;
+  for (char* j = fname; *j != 0; ++i, ++j)
+    {
+      if (*j == '\\')
+	{
+	  *i = '/';
+	  if (*(j+1) == '\\')
+	    ++j;
+	}
+      else
+	*i = *j;
+    }
+  *i = 0;
   ACE_OS::strcat (fname, new_extension);
   return fname;
 }
