@@ -1,3 +1,14 @@
+Mon Apr 23 10:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/svc.conf:
+          Without connection muxing the test runs out of resources pretty
+          fast, plus flushing does not work exactly as expected.
+
+        * tests/AMI_Buffering/Client_Task.h:
+        * tests/AMI_Buffering/Client_Task.cpp:
+          Add thread on the client to invoke the reply handler.  Without
+          this feature the ORB would soon dead-lock.
+
 Mon Apr 23 10:03:31 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
