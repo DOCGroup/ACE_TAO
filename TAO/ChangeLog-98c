@@ -1,5 +1,8 @@
 Tue Sep  1 09:37:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* utils/catior/catior.cpp (main): Fixed a minor printing bug
+	  -- a loop wasn't breaking out when '\n' or EOF was reached...
+	
 	* utils/catior: Added several new tests for Jeff Hopper's catior
  	  program, as well as a new version of his program.  Thanks Jeff.
 
