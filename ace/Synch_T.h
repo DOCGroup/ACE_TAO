@@ -268,8 +268,7 @@ public:
 
   TYPE *ts_object (TYPE *);
   // Set the thread-specific object for the key associated with this
-  // object.  Returns 0 if the data has never been initialized,
-  // otherwise returns a pointer to the previous value for the data.
+  // object.
 
   TYPE *operator-> () const;
   // Use a "smart pointer" to get the thread-specific object
@@ -293,6 +292,9 @@ protected:
   TYPE *ts_get (void) const;
   // Actually implements the code that retrieves the object from
   // thread-specific storage.
+
+  int ts_init (void) const;
+  // Factors out common code for initializing TSS.
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   TYPE *type_;
