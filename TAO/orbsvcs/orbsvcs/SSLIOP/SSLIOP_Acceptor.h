@@ -76,8 +76,7 @@ public:
   virtual int is_collocated (const TAO_Endpoint* endpoint);
 
 private:
-  int open_i (TAO_ORB_Core* orb_core,
-              const ACE_INET_Addr& addr);
+  int ssliop_open_i (TAO_ORB_Core *orb_core, const ACE_INET_Addr& addr);
   // Implement the common part of the open*() methods.
 
   int parse_options (const char *options);

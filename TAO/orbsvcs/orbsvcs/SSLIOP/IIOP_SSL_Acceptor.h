@@ -41,7 +41,7 @@
  * See the TAO_IIOP_SSL_Server_Connection_Handler notes for details.
  */
 class TAO_SSLIOP_Export TAO_IIOP_SSL_Acceptor
-  : public TAO_IIOP_Acceptor 
+  : public TAO_IIOP_Acceptor
 {
 public:
 

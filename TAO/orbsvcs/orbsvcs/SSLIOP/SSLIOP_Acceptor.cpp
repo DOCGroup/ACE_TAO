@@ -381,7 +381,7 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   ACE_INET_Addr addr (this->ssl_component_.port,
                       this->addrs_[0].get_host_addr ());
 
-  return this->open_i (orb_core, addr);
+  return this->ssliop_open_i (orb_core, addr);
 }
 
 int
@@ -417,12 +417,12 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                 1) != 0)
     return -1;
 
-  return this->open_i (orb_core, addr);
+  return this->ssliop_open_i (orb_core, addr);
 }
 
 int
-TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
-                             const ACE_INET_Addr& addr)
+TAO_SSLIOP_Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
+                                    const ACE_INET_Addr& addr)
 {
   this->orb_core_ = orb_core;
 
@@ -445,7 +445,7 @@ TAO_SSLIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                   -1);
 
   if (this->ssl_acceptor_.open (addr,
-                                orb_core->reactor (this),
+                                this->orb_core_->reactor (this),
                                 this->creation_strategy_,
                                 this->accept_strategy_,
                                 this->concurrency_strategy_) == -1)
