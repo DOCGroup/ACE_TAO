@@ -23,6 +23,7 @@
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, UPIPE_SAP_Test, "$Id$")
 

@@ -28,6 +28,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, MM_Shared_Memory_Test, "$Id$")
 

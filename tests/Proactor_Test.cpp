@@ -42,6 +42,7 @@ ACE_RCSID (tests,
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)

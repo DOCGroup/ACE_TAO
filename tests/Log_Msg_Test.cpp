@@ -29,6 +29,10 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_Memory.h"
 
 ACE_RCSID(tests, Log_Msg_Test, "$Id$")
 

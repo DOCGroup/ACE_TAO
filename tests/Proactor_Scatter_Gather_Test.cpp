@@ -41,6 +41,8 @@
 #include "ace/Min_Max.h"
 #include "ace/OS_NS_math.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "ace/SOCK_Connector.h"
 

@@ -86,7 +86,7 @@ template class ACE_Write_Guard<ACE_File_Lock>;
 #pragma instantiate ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Write_Guard<ACE_File_Lock>
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
 template ACE_Singleton<Options, ACE_Null_Mutex> *
   ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;

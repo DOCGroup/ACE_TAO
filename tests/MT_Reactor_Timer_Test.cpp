@@ -22,6 +22,7 @@
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, MT_Reactor_Timer_Test, "$Id$")
 

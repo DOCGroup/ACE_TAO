@@ -25,6 +25,7 @@
 #include "ace/Process.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Time_Service_Test, "$Id$")
 
