@@ -37,9 +37,8 @@ main (int argc, char ** argv)
       TAO_CHECK_ENV;
 
       // Using naming server.
-      TAO_Naming_Server my_name_server;
-      if (my_name_server.init (m.orb (),
-                               m.child_poa ()) < 0)
+      TAO_Naming_Client my_name_client;
+      if (my_name_client.init (m.orb (), argc, argv) < 0)
         return 1;
 
       ACE_DEBUG ((LM_DEBUG, "Name init done\n"));
@@ -56,16 +55,17 @@ main (int argc, char ** argv)
       CosNaming::Name propsetdef_name (1);
       propsetdef_name.length (1);
       propsetdef_name[0].id = CORBA::string_dup ("PropertySetDef");
-      my_name_server->bind (propsetdef_name,
+      my_name_client->bind (propsetdef_name,
                             propsetdef.in (),
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
-      // Make this IOR as one of the properties in there.
       CORBA::Any any_val;
+#if 0
+      // Make this IOR as one of the properties in there.
+   
       any_val <<= propsetdef_impl->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+#endif  
 #if 0
       // Make this IOR as one of the properties in there.
       CORBA::Object_var ior = propsetdef_impl->_this (TAO_TRY_ENV);
@@ -96,7 +96,7 @@ main (int argc, char ** argv)
       CosNaming::Name propset_factory_name (1);
       propset_factory_name.length (1);
       propset_factory_name[0].id = CORBA::string_dup ("PropertySetFactory");
-      my_name_server->bind (propset_factory_name,
+      my_name_client->bind (propset_factory_name,
                             propset_factory.in (),
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;

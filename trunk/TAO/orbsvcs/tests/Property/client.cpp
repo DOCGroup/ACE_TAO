@@ -3,16 +3,16 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/CosPropertyService
+//    TAO/orbsvcs/tests/Property
 //
 // = FILENAME
 //    client.cpp
 //
 // = DESCRIPTION
-//    Test client for the CosPropertyService.
+//    Test client for the Property Service.
 //
 // = AUTHORS
-//    Alexander  Babu Arulanthu <alex@cs.wustl.edu>
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -20,7 +20,7 @@
 
 ACE_RCSID(CosPropertyService, client, "$Id$")
 
-Client::Client (void)
+  Client::Client (void)
 {
 }
 
@@ -42,25 +42,22 @@ Client::init (int argc,
   // Open the ORB.
   manager_.orb ()->open ();
 
-  // Naming service.
-  CORBA::Object_var naming_obj =
-    manager_.orb ()->resolve_initial_references ("NameService");
-  if (CORBA::is_nil (naming_obj.in ()))
+  // Initialize the naming services
+  if (my_name_client_.init (manager_.orb(),
+			    argc,
+			    argv) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Name Service.\n"),
+                       " (%P|%t) Unable to initialize "
+                       "the TAO_Naming_Client. \n"),
                       -1);
-  CosNaming::NamingContext_var naming_context =
-    CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                       env);
-  TAO_CHECK_ENV_RETURN (env, 1);
 
   // Bind PropertySetDef Object.
 
   CosNaming::Name propsetdef_name (1);
   propsetdef_name.length (1);
   propsetdef_name [0].id = CORBA::string_dup ("PropertySetDef");
-  CORBA::Object_var propsetdef_obj = naming_context->resolve (propsetdef_name,
-                                                              env);
+  CORBA::Object_var propsetdef_obj = my_name_client_->resolve (propsetdef_name,
+							       env);
   TAO_CHECK_ENV_RETURN (env, 1);
 
   ACE_DEBUG ((LM_DEBUG, "Naming resolve done\n"));
@@ -158,8 +155,8 @@ Client::test_define_property (CORBA::Environment &env)
               "Main : Char ch = %c\n",
               ch));
   this->propsetdef_->define_property ("char_property",
-                                           anyval,
-                                           env);
+				      anyval,
+				      env);
 
   // Check if that is an user exception, if so, print it out.
   if ((env.exception () != 0) &&
@@ -179,8 +176,8 @@ Client::test_define_property (CORBA::Environment &env)
               "Main : Short s = %d\n",
               s));
   propsetdef_->define_property ("short_property",
-                                     anyval,
-                                     env);
+				anyval,
+				env);
 
   // Check if that is an user exception, if so, print it out.
   if ((env.exception () != 0) &&
@@ -200,8 +197,8 @@ Client::test_define_property (CORBA::Environment &env)
               l));
   CORBA::Any newany(anyval);
   propsetdef_->define_property ("long_property",
-                                     anyval,
-                                     env);
+				anyval,
+				env);
 
   // Check if that is an user exception, if so, print it out.
   if ((env.exception () != 0) &&
@@ -220,8 +217,8 @@ Client::test_define_property (CORBA::Environment &env)
               "Main : Float f = %f\n",
               f));
   propsetdef_->define_property ("float_property",
-                                     anyval,
-                                     env);
+				anyval,
+				env);
 
   // Check if that is an user exception, if so, print it out.
   if ((env.exception () != 0) &&
@@ -243,8 +240,8 @@ Client::test_define_property (CORBA::Environment &env)
               strvar.in (),
               newstr));
   propsetdef_->define_property ("string_property",
-                                     anyval,
-                                     env);
+				anyval,
+				env);
 
   // Check if that is an user exception, if so, print it out.
   if ((env.exception () != 0) &&
@@ -454,7 +451,7 @@ Client::test_delete_properties (CORBA::Environment &env)
               prop_names.length (),
               prop_names.maximum ()));
   this->propsetdef_->delete_properties (prop_names,
-                                   env);
+					env);
   TAO_CHECK_ENV_RETURN (env, 0);
 
   return 0;
@@ -714,9 +711,9 @@ Client::test_define_property_with_mode (CORBA::Environment &env)
               l));
   CORBA::Any newany(anyval);
   propsetdef_->define_property_with_mode ("long_property",
-                                     anyval,
-                                     CosPropertyService::fixed_normal,
-                                     env);
+					  anyval,
+					  CosPropertyService::fixed_normal,
+					  env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
 
@@ -729,9 +726,9 @@ Client::test_define_property_with_mode (CORBA::Environment &env)
               "Main : Float f = %f\n",
               f));
   propsetdef_->define_property_with_mode ("float_property",
-                                     anyval,
-                                     CosPropertyService::fixed_readonly,
-                                     env);
+					  anyval,
+					  CosPropertyService::fixed_readonly,
+					  env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
   // Prepare a String and "define" that in the PropertySet.
