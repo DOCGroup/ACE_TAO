@@ -1599,12 +1599,10 @@ main (int argc, char *argv [])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
-template class ACE_Condition<ACE_Thread_Mutex>;
 template class ACE_PushConsumer_Adapter<Test_Supplier>;
 template class auto_ptr<POA_RtecScheduler::Scheduler>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
 #pragma instantiate ACE_PushConsumer_Adapter<Test_Supplier>
 #pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

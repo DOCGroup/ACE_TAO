@@ -149,6 +149,9 @@ CORBA_ORB::open (void)
   if (ocp->acceptor ()->acceptor ().get_local_addr (ocp->addr ()) == -1)
     return -1;
 
+  if (ocp->acceptor ()->acceptor ().enable (F_SETFD) == -1)
+    return -1;
+
   ocp->orb_params ()->addr (ocp->addr ());
   ocp->add_to_collocation_table ();
 

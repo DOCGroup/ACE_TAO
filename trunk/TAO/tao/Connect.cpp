@@ -90,7 +90,7 @@ TAO_Server_Connection_Handler::open (void*)
     return -1;
 #endif /* TCP_NODELAY */
 
-  (void) ACE_OS::fcntl (this->peer ().get_handle (), F_SETFD, 1);
+  (void) this->peer ().enable (F_SETFD);
   // Set the close-on-exec flag for that file descriptor. If the
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
@@ -542,7 +542,7 @@ TAO_Client_Connection_Handler::open (void *)
                                 sizeof (nodelay)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "NODELAY failed\n"), -1);
 
-  (void) ACE_OS::fcntl (this->peer ().get_handle (), F_SETFD, 1);
+  (void) this->peer ().enable (F_SETFD);
   // Set the close-on-exec flag for that file descriptor. If the
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).

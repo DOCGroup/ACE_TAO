@@ -355,7 +355,7 @@ private:
 
   int ready_;
   ACE_SYNCH_MUTEX ready_mtx_;
-  ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
+  ACE_SYNCH_CONDITION ready_cnd_;
   // Before accepting any events the suppliers must wait for the test
   // to setup all the consumers.
   // The suppliers wait on the condition variable.

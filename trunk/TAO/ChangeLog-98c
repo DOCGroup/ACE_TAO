@@ -1,3 +1,19 @@
+Thu Jul 16 15:20:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.cpp: 
+	* tao/ORB.cpp: 
+	  Set the close-on-exec flag using the new IPC_SAP interfaces.
+
+	* tao/ORB_Core.cpp: 
+	* orbsvcs/orbsvcs/Event/RT_Task.h: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
+	  Use ACE_SYNCH_CONDITION instead of
+	  ACE_Condition<ACE_Thread_Mutex> some template instantiations are
+	  removed.
+
 Thu Jul 16 15:15:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/Makefile:

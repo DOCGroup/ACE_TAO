@@ -78,9 +78,6 @@ public:
 
 // ************************************************************
 
-// In Synch_T.h:
-// #define ACE_MT_SYNCH ACE_Thread_Mutex,ACE_Condition_Thread_Mutex
-
 typedef ACE_Task<ACE_SYNCH> ACE_ES_TASK;
 
 // quick hack to test dynamic queue performance (to be replaced soon)
