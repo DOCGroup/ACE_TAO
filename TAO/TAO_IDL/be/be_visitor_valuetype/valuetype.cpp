@@ -805,7 +805,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 
   os = this->ctx_->stream ();
 
-  *os << "class " << be_global->skel_export_macro ()
+  *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ()
       << "_init : public CORBA_ValueFactoryBase" << be_nl;
 
