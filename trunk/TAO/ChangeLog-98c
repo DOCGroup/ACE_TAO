@@ -1,3 +1,9 @@
+Wed Sep 09 22:33:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Don't warn about
+ 	  undefined ACE_ROOT on Win32 at all.  It is not used and we don't
+ 	  use gperf on NT for now.
+
 Wed Sep  9 15:28:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/Connect.cpp:
