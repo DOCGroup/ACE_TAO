@@ -103,10 +103,10 @@ public:
   bool operator< (long rhs) const;
 
   /// Atomically assign rhs to <value_>.
-  void operator= (long rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (long rhs);
 
   /// Atomically assign <rhs> to <value_>.
-  void operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
 
   /// Explicitly return <value_>.
   long value (void) const;
