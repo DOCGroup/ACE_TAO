@@ -86,7 +86,7 @@ Task_Stats task_stats;
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway", "../edf_example/dt_enable.dsui");
+  ds_control ds_cntrl ("DT_Oneway_Server2", "fan_enable.dsui");
 
   ACE_DEBUG((LM_DEBUG,"I AM BEGINNING\n"));
   EDF_Scheduler* scheduler = 0;
