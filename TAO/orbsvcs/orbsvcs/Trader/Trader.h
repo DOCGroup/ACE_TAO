@@ -51,8 +51,6 @@ class TAO_ORBSVCS_Export TAO_Trader_Factory
 //   the correct interface support, locking, and policy settings.
 {
 public:
-
-  enum Conformance { QUERY, SIMPLE, STANDALONE, LINKED };
   
   typedef TAO_Trader_Base TAO_TRADER;
 
@@ -77,6 +75,11 @@ public:
   // -TSmax_follow_policy {always,if_no_local,local_only}, default is always
 
 private:
+
+  enum Conformance { TAO_TRADER_QUERY,
+                     TAO_TRADER_SIMPLE,
+                     TAO_TRADER_STANDALONE,
+                     TAO_TRADER_LINKED };
   
   TAO_Trader_Factory (int& argc, char** argv);
 

@@ -620,7 +620,7 @@ TAO_Trader_Factory::create_trader (int& argc, char** argv)
 }
 
 TAO_Trader_Factory::TAO_Trader_Factory (int& argc, char** argv)
-  : conformance_ (LINKED),
+  : conformance_ (TAO_TRADER_LINKED),
     threadsafe_ (CORBA::B_FALSE),
     supports_dynamic_properties_ (CORBA::B_TRUE),
     supports_modifiable_properties_ (CORBA::B_TRUE),
@@ -650,13 +650,13 @@ TAO_Trader_Factory::manufacture_trader (void)
   TAO_TRADER* return_value = 0;
   int components = ACE_static_cast (int, TAO_TRADER::LOOKUP);
 
-  if (this->conformance_ >= SIMPLE)
+  if (this->conformance_ >= TAO_TRADER_SIMPLE)
     components |= ACE_static_cast (int, TAO_TRADER::REGISTER);
   
-  if (this->conformance_ >= STANDALONE)
+  if (this->conformance_ >= TAO_TRADER_STANDALONE)
     components |= ACE_static_cast (int, TAO_TRADER::ADMIN);
 
-  if (this->conformance_ >= LINKED)
+  if (this->conformance_ >= TAO_TRADER_LINKED)
     components |= ACE_static_cast (int, TAO_TRADER::LINK);
 
   if (this->threadsafe_)
@@ -717,13 +717,13 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
               char* conformance_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (conformance_str, "Linked") == 0)
-                this->conformance_ = LINKED;
+                this->conformance_ = TAO_TRADER_LINKED;
               else if (ACE_OS::strcasecmp (conformance_str, "Query") == 0)
-                this->conformance_ = QUERY;
+                this->conformance_ = TAO_TRADER_QUERY;
               else if (ACE_OS::strcasecmp (conformance_str, "Simple") == 0)
-                this->conformance_ = SIMPLE;
+                this->conformance_ = TAO_TRADER_SIMPLE;
               else if (ACE_OS::strcasecmp (conformance_str, "Standalone") == 0)
-                this->conformance_ = STANDALONE;
+                this->conformance_ = TAO_TRADER_STANDALONE;
 
               arg_shifter.consume_arg ();
             }
