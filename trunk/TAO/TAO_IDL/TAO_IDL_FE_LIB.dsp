@@ -547,7 +547,7 @@ SOURCE=.\include\nr_extern.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\TAO_IDL_FE_Export.h
+SOURCE=.\include\TAO_IDL_FE_Export.h
 # End Source File
 # Begin Source File
 

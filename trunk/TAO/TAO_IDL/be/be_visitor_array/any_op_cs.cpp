@@ -173,7 +173,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
 
   *os << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
-      << "{" << be_idt_nl
+      << "{" << be_nl
       << "}" << be_nl
       << "ACE_ENDTRY;"
       << be_nl << be_nl << "return 0;"
