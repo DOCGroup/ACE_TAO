@@ -54,6 +54,16 @@ the IFR service, plus the IFR_Service executable itself.
 Test code for tao_ifr can be found in
 ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo/Application_Test.
 
+tao_ifr can also handle the -ORBxxx parameters. The one most 
+frequently used would probably be 
+
+'-ORBInitRef InterfaceRepository=file://<filename>'
+
+which will enable the IFR service to be resolved by getting 
+its IOR from <filename>. By default, the IFR service stores
+its IOR in the file 'if_repo.ior', but that can be modified
+by starting the IFR service using the -o option (see above).
+
 
 More information about the Interface Repository and tao_ifr can 
 be found in ACE_ROOT/TAO/docs/releasenotes/index.html.

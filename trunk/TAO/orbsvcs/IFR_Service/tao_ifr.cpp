@@ -194,10 +194,11 @@ DRV_drive (const char *s)
 
 // main LOGIC:
 
-// 1. Initialize compiler driver
-// 2. Parse command line args
-// 3. If more than one file to parse, fork
-// 4. Otherwise, for the single file, invoke DRV_drive
+// 1. Initialize compiler driver.
+// 2. Initialize ORB and resolve Interface Repository.
+// 3. Parse command line args.
+// 4. If more than one file to parse, fork.
+// 5. Otherwise, for the single file, invoke DRV_drive.
 
 int
 main (int argc, char *argv[])
@@ -205,8 +206,21 @@ main (int argc, char *argv[])
   // Initialize driver and global variables.
   DRV_init ();
 
+  // Initialize our ORB and resolve the Interface Repository.
+  // Since CORBA::ORB_init strips any -ORBxxx xxx arguments
+  // it finds, we must do this first. DRV_parse_args cannot
+  // deal with them.
+  int init_status = BE_ifr_init (argc, 
+                                 argv);
+
+  if (init_status != 0)
+    {
+      ACE_OS::exit (init_status);
+    }
+
   // Parse arguments.
-  DRV_parse_args (argc, argv);
+  DRV_parse_args (argc, 
+                  argv);
 
   // If a usage message is requested, give it and exit.
   if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
@@ -215,8 +229,8 @@ main (int argc, char *argv[])
       ACE_OS::exit (0);
     }
 
-  // Fork off a process for each file to process. Fork only if
-  // there is more than one file to process.
+  // Fork off a process for each file to process, only if
+  // there is more than one.
   if (DRV_nfiles > 1)
     {
       // DRV_fork never returns.
