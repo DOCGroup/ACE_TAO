@@ -130,11 +130,14 @@ worker (void *c)
       tss_error->flags (count);
 
       {
+        ACE_hthread_t handle;
+        ACE_Thread::self (handle);
+
 	// Use the guard to serialize access to printf...
 	ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0);
 
-	printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
-		ACE_Thread::self (), tss_error->error (), tss_error->line (),
+	ACE_OS::printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
+		handle, tss_error->error (), tss_error->line (),
 		tss_error->flags () );
       }
       key = ACE_OS::NULL_key;
