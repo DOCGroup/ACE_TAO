@@ -52,9 +52,9 @@ Trading_Service::Trading_Service (void)
       localhost.get_host_name (host_name,
                                MAXHOSTNAMELEN);
       ACE_OS::sprintf (trader_name,
-                       "%s_%d",
+                       "%s_%ld",
                        host_name,
-                       ACE_OS::getpid ());
+                       ACE_static_cast (long, ACE_OS::getpid ()));
 
       for (char *dot = 0;
            (dot = ACE_OS::strchr (trader_name, '.')) != 0;

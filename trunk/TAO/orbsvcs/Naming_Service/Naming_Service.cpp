@@ -114,7 +114,7 @@ TAO_Naming_Service::init (int argc,
       ACE_TRY_CHECK;
 
       // Get the POA_Manager.
-      PortableServer::POAManager_var poa_manager = 
+      PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -198,8 +198,8 @@ TAO_Naming_Service::init (int argc,
       if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,
-                           "%d\n",
-                           ACE_OS::getpid ());
+                           "%ld\n",
+                           ACE_static_cast (long, ACE_OS::getpid ()));
           ACE_OS::fclose (pidf);
         }
     }
