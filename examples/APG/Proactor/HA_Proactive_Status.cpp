@@ -9,6 +9,8 @@
 #include "ace/Proactor.h"
 #include "ace/os_include/arpa/os_inet.h"
 
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+
 // Listing 1 code/ch08
 void
 HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
@@ -152,3 +154,16 @@ template class ACE_Asynch_Acceptor<HA_Proactive_Service>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Asynch_Acceptor<HA_Proactive_Service>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
+
+#else
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "This example does not work on this platform.\n"));
+  return 1;
+}
+
+#endif /* (ACE_WIN32 && != ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS*/
+
