@@ -1,3 +1,8 @@
+Thu May 30 11:53:05 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/DLL_Manager.cpp:  Fixed Fuzz errors.  Thanks to Johnny 
+	  Willemsen for pointing this out.
+
 Thu May 30 11:40:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_DLL.bor:
