@@ -1153,8 +1153,12 @@ TAO_Stub::sync_strategy (void)
           scope == Messaging::SYNC_WITH_TARGET)
         return this->orb_core_->transport_sync_strategy ();
 
-      if (scope == Messaging::SYNC_NONE)
-        return this->orb_core_->none_sync_strategy ();
+      if (scope == Messaging::SYNC_NONE ||
+          scope == Messaging::SYNC_EAGER_BUFFERING)
+        return this->orb_core_->eager_buffering_sync_strategy ();
+
+      if (scope == Messaging::SYNC_DELAYED_BUFFERING)
+        return this->orb_core_->delayed_buffering_sync_strategy ();
     }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

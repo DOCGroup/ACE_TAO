@@ -55,7 +55,8 @@ class TAO_Priority_Mapping;
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-class TAO_None_Sync_Strategy;
+class TAO_Eager_Buffering_Sync_Strategy;
+class TAO_Delayed_Buffering_Sync_Strategy;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -331,8 +332,9 @@ public:
 
   TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
 
-  TAO_None_Sync_Strategy &none_sync_strategy (void);
-  // This strategy will buffer messages.
+  // = This strategy will buffer messages.
+  TAO_Eager_Buffering_Sync_Strategy &eager_buffering_sync_strategy (void);
+  TAO_Delayed_Buffering_Sync_Strategy &delayed_buffering_sync_strategy (void);
 
   TAO_RelativeRoundtripTimeoutPolicy *stubless_relative_roundtrip_timeout (void);
   // Access to the RoundtripTimeoutPolicy policy set on the thread or
@@ -591,7 +593,10 @@ protected:
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  TAO_None_Sync_Strategy *none_sync_strategy_;
+  TAO_Eager_Buffering_Sync_Strategy *eager_buffering_sync_strategy_;
+  // This strategy will buffer messages.
+
+  TAO_Delayed_Buffering_Sync_Strategy *delayed_buffering_sync_strategy_;
   // This strategy will buffer messages.
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

@@ -204,10 +204,16 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-ACE_INLINE TAO_None_Sync_Strategy &
-TAO_ORB_Core::none_sync_strategy (void)
+ACE_INLINE TAO_Eager_Buffering_Sync_Strategy &
+TAO_ORB_Core::eager_buffering_sync_strategy (void)
 {
-  return *this->none_sync_strategy_;
+  return *this->eager_buffering_sync_strategy_;
+}
+
+ACE_INLINE TAO_Delayed_Buffering_Sync_Strategy &
+TAO_ORB_Core::delayed_buffering_sync_strategy (void)
+{
+  return *this->delayed_buffering_sync_strategy_;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

@@ -941,8 +941,10 @@ int
 TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT
-      || this->sync_scope_ == TAO::SYNC_NONE)
+  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT ||
+      this->sync_scope_ == TAO::SYNC_NONE ||
+      this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING ||
+      this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
       return TAO_GIOP_Invocation::invoke (0,
                                           ACE_TRY_ENV);
