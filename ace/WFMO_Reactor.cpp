@@ -600,7 +600,10 @@ ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
       this->wfmo_reactor_.wakeup_all_threads ();
     }
   else
-    return -1;
+    {
+      errno = EMFILE;   // File descriptor table is full (better than nothing)
+      return -1;
+    }
 
   return 0;
 }
