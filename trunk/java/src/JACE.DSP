@@ -174,10 +174,6 @@ SOURCE=.\ParseNode.java
 # End Source File
 # Begin Source File
 
-SOURCE=.\parser.java
-# End Source File
-# Begin Source File
-
 SOURCE=.\ProfileTimer.java
 # End Source File
 # Begin Source File
@@ -258,10 +254,6 @@ SOURCE=.\SvcHandler.java
 # End Source File
 # Begin Source File
 
-SOURCE=.\sym.java
-# End Source File
-# Begin Source File
-
 SOURCE=.\Task.java
 # End Source File
 # Begin Source File
@@ -295,10 +287,6 @@ SOURCE=.\TimeValue.java
 # Begin Source File
 
 SOURCE=.\Token.java
-# End Source File
-# Begin Source File
-
-SOURCE=.\Yylex.java
 # End Source File
 # End Target
 # End Project
