@@ -249,9 +249,13 @@ ACE_OS::uname (struct utsname *name)
   {
     // Get information from the two structures
     ACE_OS::sprintf (name->release,
-                    __TEXT ("Windows NT %d.%d"),
-                    vinfo.dwMajorVersion,
-                    vinfo.dwMinorVersion);
+#if defined (ACE_HAS_WINCE)
+                     __TEXT ("Windows CE %d.%d"),
+#else
+                     __TEXT ("Windows NT %d.%d"),
+#endif /* ACE_HAS_WINCE */
+                     vinfo.dwMajorVersion,
+                     vinfo.dwMinorVersion);
     ACE_OS::sprintf (name->version,
                      __TEXT ("Build %d %s"),
                      vinfo.dwBuildNumber,
@@ -264,7 +268,7 @@ ACE_OS::uname (struct utsname *name)
     // Some changes should be made in winbase.h...
     switch (sinfo.s.wProcessorArchitecture)
 #else
-      switch (sinfo.wProcessorArchitecture)
+    switch (sinfo.wProcessorArchitecture)
 #endif /* __BORLAND__ */
     {
     case PROCESSOR_ARCHITECTURE_INTEL:
@@ -304,6 +308,9 @@ ACE_OS::uname (struct utsname *name)
         ACE_OS::strcpy (subtype, __TEXT ("620"));
       break;
     case PROCESSOR_ARCHITECTURE_UNKNOWN:
+    default:
+      // @@ We could provide WinCE specific info here.  But let's
+      //    defer that to some later point.
       ACE_OS::strcpy (processor, __TEXT ("Unknown"));
       break;
     }
@@ -597,6 +604,22 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
 
 #if defined (ACE_HAS_UNICODE)
 #if defined (ACE_WIN32)
+
+int
+ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::fprintf");
+#if defined (ACE_HAS_WINCE)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  int result = 0;
+  va_list ap;
+  va_start (ap, format);
+  ACE_OSCALL (::vfwprintf (fp, format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+#endif /* ACE_HAS_WINCE */
+}
 
 int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)

@@ -779,12 +779,30 @@ ACE_OS::umask (mode_t cmask)
 ACE_INLINE int
 ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 {
-#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::fstat");
+#if defined (ACE_HAS_WINCE)
+  BY_HANDLE_FILE_INFORMATION fdata;
+  
+  if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else if (fdata.nFileSizeHigh != 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  else
+    {
+      stp->st_size = fdata.nFileSizeLow;
+      stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
+      stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+    }
+  return 0;
+#else
   int fd = ::_open_osfhandle ((long) handle, 0);
   ACE_OSCALL_RETURN (::_fstat (fd, (struct _stat *) stp), int, -1);
-#else
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -857,20 +875,18 @@ ACE_OS::gettimeofday (void)
     return ACE_Time_Value (tv);
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::stat (const char *file, struct stat *stp)
 {
   // ACE_TRACE ("ACE_OS::stat");
 #if defined (VXWORKS)
   ACE_OSCALL_RETURN (::stat ((char *) file, stp), int, -1);
-#elif !defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #else
-  ACE_UNUSED_ARG (file);
-  ACE_UNUSED_ARG (stp);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #endif /* VXWORKS */
 }
+#endif /* ACE_HAS_WINCE */
 
 ACE_INLINE time_t
 ACE_OS::time (time_t *tloc)
@@ -1198,16 +1214,13 @@ ACE_OS::strdup (const char *s)
 #endif /* VXWORKS */
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
 {
-  // @@ We'll probably need this on WinCE.
-#if !defined (ACE_HAS_WINCE)
   return ACE_SPRINTF_ADAPTER (::vsprintf (buffer, format, argptr));
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_WINCE */
 }
+#endif /* ACE_HAS_WINCE */
 
 ACE_INLINE size_t
 ACE_OS::strlen (const char *s)
@@ -4281,28 +4294,27 @@ ACE_OS::sendmsg (ACE_HANDLE handle, const struct msghdr *msg, int flags)
 #endif /* ACE_HAS_MSG */
 }
 
-// @@ Let's find out how many functions are not supported fist
-// and then learn how to deal with all these craziness.
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE int
 ACE_OS::fclose (FILE *fp)
 {
+#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::fclose");
   ACE_OSCALL_RETURN (::fclose (fp), int, -1);
+#else
+  // On CE, FILE * == void * == HANDLE
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL(::CloseHandle (fp), ace_result_),
+                        int, -1);
+#endif /* !ACE_HAS_WINCE */
 }
 
+#if !defined (ACE_HAS_WINCE)
+// Here are functions that CE doesn't support at all.
+// Notice that some of them might have UNICODE version.
 ACE_INLINE char *
 ACE_OS::fgets (char *buf, int size, FILE *fp)
 {
   // ACE_TRACE ("ACE_OS::fgets");
   ACE_OSCALL_RETURN (::fgets (buf, size, fp), char *, 0);
-}
-
-ACE_INLINE int
-ACE_OS::fflush (FILE *fp)
-{
-  // ACE_TRACE ("ACE_OS::fflush");
-  ACE_OSCALL_RETURN (::fflush (fp), int, -1);
 }
 
 ACE_INLINE FILE *
@@ -4311,12 +4323,43 @@ ACE_OS::fopen (const char *filename, const char *mode)
   // ACE_TRACE ("ACE_OS::fopen");
   ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
 }
+#endif /* ACE_HAS_WINCE */
+
+ACE_INLINE int
+ACE_OS::fflush (FILE *fp)
+{
+#if !defined (ACE_HAS_WINCE)
+  // ACE_TRACE ("ACE_OS::fflush");
+  ACE_OSCALL_RETURN (::fflush (fp), int, -1);
+#else
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL(::FlushFileBuffers (fp),
+                                         ace_result_),
+                        int, -1);
+#endif /* ! ACE_HAS_WINCE */  
+}
 
 ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 {
   // ACE_TRACE ("ACE_OS::fread");
-#if defined (ACE_LACKS_POSIX_PROTOTYPES)
+#if defined (ACE_HAS_WINCE)
+  DWORD len = 0;
+  size_t tlen = size * nelems;
+
+  if (::ReadFile (fp, ptr, tlen, &len, NULL) == FALSE)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else if (tlen != len)
+    {
+      // only return length of multiple of <size>
+      len = (len / size) * size ;
+      // then rewind file pointer.
+      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT); 
+    }
+  return len;
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fread ((char *) ptr, size, nelems, fp), int, 0);
 #else
   ACE_OSCALL_RETURN (::fread (ptr, size, nelems, fp), int, 0);
@@ -4327,13 +4370,29 @@ ACE_INLINE size_t
 ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 {
   // ACE_TRACE ("ACE_OS::fwrite");
-#if defined (ACE_LACKS_POSIX_PROTOTYPES)
+#if defined (ACE_HAS_WINCE)
+  DWORD len = 0;
+  size_t tlen = size * nitems;
+
+  if (::WriteFile (fp, ptr, tlen, &len, NULL) == FALSE)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else if (tlen != len)
+    {
+      // only return length of multiple of <size>
+      len = (len / size) * size ;
+      // then rewind file pointer.
+      ::SetFilePointer (fp, (len - tlen), 0, FILE_CURRENT); 
+    }
+  return len;
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fwrite ((const char *) ptr, size, nitems, fp), int, 0);
 #else
   ACE_OSCALL_RETURN (::fwrite (ptr, size, nitems, fp), int, 0);
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
-#endif /* ! ACE_HAS_WINCE */
 
 // Accessors to PWD file.
 
@@ -4626,17 +4685,14 @@ ACE_OS::last_error (int error)
 #endif /* ACE_HAS_WIN32 */
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE void
 ACE_OS::perror (const char *s)
 {
-#if !defined (ACE_HAS_WINCE)
   // ACE_TRACE ("ACE_OS::perror");
   ::perror (s);
-#else
-  ACE_UNUSED_ARG (s);
-  // @@ How to print out not supporting error message here?
-#endif /* ! ACE_HAS_WINCE */
 }
+#endif /* ! ACE_HAS_WINCE */
 
 // @@ Do we need to implement puts on WinCE???
 #if !defined (ACE_HAS_WINCE)
@@ -5550,8 +5606,8 @@ ACE_OS::rewind (FILE *fp)
   // ACE_TRACE ("ACE_OS::rewind");
   ::rewind (fp);
 #else
-  // @@ We should be able to simulate this using Win32 API easily.
-  ACE_UNUSED_ARG (fp);
+  // In WinCE, "FILE *" is actually a HANDLE.
+  ::SetFilePointer (fp, 0L, 0L, FILE_BEGIN);
 #endif /* ! ACE_HAS_WINCE */
 }
 
@@ -7429,11 +7485,11 @@ ACE_OS::execvp (const char *file, char *const argv[])
 #endif /* ACE_WIN32 */
 }
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 {
   // ACE_TRACE ("ACE_OS::fdopen");
-#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
@@ -7458,13 +7514,8 @@ ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 #else
   ACE_OSCALL_RETURN (::fdopen (handle, mode), FILE *, 0);
 #endif /* ACE_WIN32 */
-#else  /* ! ACE_HAS_WINCE */
-  // @@ this function has to be implemented???
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (0);
-#endif /* ! ACE_HAS_WINCE */
 }
+#endif /* ! ACE_HAS_WINCE */
 
 ACE_INLINE int
 ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
@@ -8403,29 +8454,124 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 #if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wfopen (filename, mode), FILE *, 0);
 #else
-  // @@ Should be able to emulate this using Win32 APIS.
-  ACE_UNUSED_ARG (filename);
+  DWORD creation;
+
+  switch (mode[0])
+    {
+    case (TCHAR) 'r':
+      creation = OPEN_EXISTING;
+      break;
+    case (TCHAR) 'a':
+      creation = OPEN_ALWAYS;
+      break;
+    case (TCHAR) 'w':
+      creation = CREATE_ALWAYS;
+      break;
+    default:
+      errno = EINVAL;
+      return ACE_INVALID_HANDLE;
+    }
+  HANDLE retv = ::CreateFile (filename,
+                              GENERIC_READ | GENERIC_WRITE,
+                              FILE_SHARE_READ | FILE_SHARE_WRITE,
+                              NULL,
+                              creation,
+                              FILE_ATTRIBUTE_NORMAL,
+                              NULL);
+  if (retv == INVALID_HANDLE_VALUE)
+    errno = ::GetLastError ();
+  // Move the file pointer to EOF if we are opening the file in append mode.
+  else if (creation == OPEN_ALWAYS)
+    {
+      ::SetFilePointer (retv, 0, 0, FILE_END);
+    }
+  return retv;
+#endif /* ACE_HAS_WINCE */
+}
+
+ACE_INLINE FILE *
+ACE_OS::fdopen (ACE_HANDLE handle, const wchar_t *mode)
+{
+  // ACE_TRACE ("ACE_OS::fdopen");
+#if !defined (ACE_HAS_WINCE)
+  // kernel file handle -> FILE* conversion...
+  // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
+
+  FILE *file = 0;
+
+  int crt_handle = ::_open_osfhandle ((long) handle, 0);
+
+  if (crt_handle != -1)
+    {
+#if defined(__BORLANDC__) // VSB
+      //      file = ::_fdopen (crt_handle, (wchar_t *) mode);
+      // @@ Comment out the following line if you don't think you
+      // want to deal with this.
+#error "Please correct me!"
+#else
+      file = ::_wfdopen (crt_handle, mode);
+#endif /* __BORLANDC__ */
+
+      if (!file)
+        ::_close (crt_handle);
+    }
+
+  return file;
+#else  /* ! ACE_HAS_WINCE */
+  // @@ this function has to be implemented???
+  // Okey, don't know how to implement it on CE.
+  ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE */
+#endif /* ! ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
 ACE_OS::stat (const wchar_t *file, struct stat *stp)
 {
   // ACE_TRACE ("ACE_OS::stat");
-#if !defined (ACE_HAS_WINCE)
-#if defined (__BORLANDC__)
+#if defined (ACE_HAS_WINCE)
+  WIN32_FIND_DATA fdata;
+  HANDLE fhandle;
+  
+  fhandle = ::FindFirstFile (file, &fdata);
+  if (fhandle == INVALID_HANDLE_VALUE)
+    {
+      errno = ::GetLastError ();
+      return -1;
+    }
+  else if (fdata.nFileSizeHigh != 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  else
+    {
+      stp->st_size = fdata.nFileSizeLow;
+      stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
+      stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+    }
+  return 0;
+#elif defined (__BORLANDC__)
   ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
 #else
   ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
-#endif /* __BORLANDC__ */
-#else
-  ACE_UNUSED_ARG (file);
-  ACE_UNUSED_ARG (stp);
-  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WINCE */
 }
+
+ACE_INLINE void
+ACE_OS::perror (const wchar_t *s)
+{
+  // ACE_TRACE ("ACE_OS::perror");
+#if !defined (ACE_HAS_WINCE)
+  ::_wperror (s);
+#else
+  // @@ Let's leave this to some later point.
+  ACE_UNUSED_ARG (s);
+  ACE_NOTSUP_RETURN ();
+#endif /* ! ACE_HAS_WINCE */
+}
+
 
 ACE_INLINE int
 ACE_OS::system (const wchar_t *command)
