@@ -13,6 +13,11 @@ Mon Apr 07 08:05:03 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
 	  suggesting this.
 
+	* ace/ config-sunos5.4-g++.h: enabled ACE_HAS_BROKEN_RANDR and
+	  disabled ACE_HAS_SVR4_SIGNAL_T.  Thanks to Joey Zhu
+	  <joey.zhu@wcom.com> for reporting these problems and testing
+	  the fix.
+
 Sun Apr 06 22:51:02 1997    <irfan@TWOSTEP>
 
 	* ace/Proactor: Complete rewrite of Proactor that pushes all the
