@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_FixedSeq_Var_T
+ * @class TAO_Seq_Var_Base_T
  *
  * @brief Parametrized implementation of _var base class for sequences
  *
@@ -78,7 +78,6 @@ public:
   TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T,T_elem> &);
   
   T_elem & operator[] (CORBA::ULong index);
-  const T_elem & operator[] (CORBA::ULong index) const;
   
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T & operator= (const T &);

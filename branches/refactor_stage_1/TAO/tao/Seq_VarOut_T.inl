@@ -145,15 +145,7 @@ ACE_INLINE
 T_elem &
 TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
 {
-  return (T_elem &) this->ptr_->operator[] (index);
-}
-
-template<typename T, typename T_elem>
-ACE_INLINE
-const T_elem &
-TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index) const
-{
-  return (const T_elem &) this->ptr_->operator[] (index));
+  return this->ptr_->operator[] (index);
 }
 
 // ***************************************************************

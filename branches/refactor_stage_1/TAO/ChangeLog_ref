@@ -1,3 +1,12 @@
+Wed Apr 16 15:28:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Seq_VarOut_T.h:
+	* tao/Seq_VarOut_T.inl: Removed the const version of [] for
+	  Seq_var since the spec doesnt mandate them.
+
+	* tao/DomainC.i: Removed a bunch of code that shoudlnt have been
+	  there in the first place.
+
 Wed Apr 16 000:14:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
