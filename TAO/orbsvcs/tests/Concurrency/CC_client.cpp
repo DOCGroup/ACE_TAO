@@ -183,51 +183,50 @@ int
 CC_Client::check_extended_test_params(char *params)
 {
   // Format (regexp): [0-9]+;.*;.*
-  int index = 0;
   int no_of_params = 0;
   char *cp = params; // pointer to walk along the string
-  enum {START, NUMBER, ARG, ERROR} state = START;
+  enum {TAO_START, TAO_NUMBER, TAO_ARG, TAO_ERROR} state = TAO_START;
 
   while(*cp!='\0')
     {
       switch(state)
         {
-        case START:
+        case TAO_START:
           if(isdigit(*cp))
-            state = NUMBER;
+            state = TAO_NUMBER;
           else
-            state = ERROR;
+            state = TAO_ERROR;
           break;
 
-        case NUMBER:
+        case TAO_NUMBER:
           if((*cp)==';')
             {
-              state = ARG;
+              state = TAO_ARG;
               no_of_params++;
             }
           else
             if(!isdigit(*cp))
-              state = ERROR;
+              state = TAO_ERROR;
           break;
 
-        case ARG:
+        case TAO_ARG:
           if((*cp)==';')
             {
               no_of_params++;
             }
           break;
 
-        case ERROR:
+        case TAO_ERROR:
           return -1;
-          break;
+          // break;
 
-        otherwise:
+        default:
           ACE_ERROR_RETURN((LM_ERROR,
                             "CC_Client::check_extended_test_params\n"), -1);
         }
       cp++;
     }
-  if (state==ERROR) // there was only one character given and it was wrong
+  if (state==TAO_ERROR) // there was only one character given and it was wrong
     return -1;
   else
     return no_of_params;
