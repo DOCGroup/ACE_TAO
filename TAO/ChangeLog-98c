@@ -1,9 +1,9 @@
 Mon Jul 27 12:44:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Invocation.cpp (start): Modified the code in
-	  TAO_ARL_USES_SAME_CONNECTOR_PORT so the connect always binds to
-	  the host IP address specified in the ORB Core.  Thanks to Fred
-	  Kuhns <fredk@arl.wustl.edu> for pointing this out.  
+	  TAO_ARL_USES_SAME_CONNECTOR_PORT so the connector always binds
+ 	  to the host IP address specified in the ORB Core.  Thanks to
+ 	  Fred Kuhns <fredk@arl.wustl.edu> for pointing this out.
 
 Sun Jul 26 21:01:09 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
