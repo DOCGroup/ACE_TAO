@@ -1,3 +1,11 @@
+Sat May  1 22:37:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Makefile:
+	* GNUMakefile:
+
+	  Renamed "Makefile" to "GNUMakefile" to make it obvious to
+	  users that GNU Make is required to parse the file.
+
 Fri Apr 30 17:46:09 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
