@@ -208,11 +208,11 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
       if (fp != NULL)
         {
           size_t verbose_msg_len = ACE_OS::strlen (verbose_msg);
-          int fwrite_result = ACE_OS::fwrite (verbose_msg,
-                                              1,
-                                              verbose_msg_len,
-                                              fp);
-
+          size_t fwrite_result = ACE_OS::fwrite (verbose_msg,
+                                                 1,
+                                                 verbose_msg_len,
+                                                 fp);
+          
           // We should have written everything
           if (fwrite_result != verbose_msg_len)
             {
