@@ -11,6 +11,16 @@
 ##     naming scheme.
 ##   * Selectively build some specific configs from command line.
 
+## Available command line switches
+##   * -k : Ignore error.  Compile all projects in a collection regardless
+##          of errors.
+##   * -a : Build Alpha collections.
+##   * -D : Build DLLs only.
+##   * -L : Build LIBs only.
+##   * -d : Debug the script.  No compilation will occur.
+##   * -v : Verbose mode.
+##   * -r : Rebuild all.  (Default is Build.)
+
 @Win32_Lists= ("Win32 Debug",
                "Win32 Release",
                "Win32 Unicode Debug",
