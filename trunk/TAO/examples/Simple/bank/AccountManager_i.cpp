@@ -12,6 +12,12 @@ AccountManager_i::AccountManager_i (void)
   // no-op
 }
 
+AccountManager_i::AccountManager_i (AccountManager_i &foo)
+  : POA_Bank::AccountManager (foo)
+{
+  // old g++ fooler.
+}
+
 // Destructor
 
 AccountManager_i::~AccountManager_i (void)
@@ -115,7 +121,7 @@ AccountManager_i::close (Bank::Account_ptr account,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unable to close Account\n");
     }
   ACE_ENDTRY;
