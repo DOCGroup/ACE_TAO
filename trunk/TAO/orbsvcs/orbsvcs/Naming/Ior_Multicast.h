@@ -27,14 +27,15 @@
 
 class TAO_ORBSVCS_Export IOR_Multicast : public ACE_Event_Handler
 {
-// @@ Naga, can you please add the standard comments to this class and
-// make sure that all the comments for each method go underneath the
-// method name?
+  // @@ Naga, can you please add the standard comments to this class and
+  // make sure that all the comments for each method go underneath the
+  // method name?
 public:
    // constructor
   IOR_Multicast (char * ior,
-		u_short port,
-		const char *mcast_addr);
+		 u_short port,
+		 const char *mcast_addr,
+		 TAO_Service_ID service_id);
 
   // destructor
   ~IOR_Multicast (void);
@@ -53,6 +54,9 @@ private:
   char buf_[BUFSIZ];
   // temporary buffer
 
+  TAO_Service_ID service_id_;
+  // Service id that we're waiting for. 
+  
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
   // multicast endpoint of communication
 
