@@ -208,7 +208,7 @@ be_exception::gen_client_inline (void)
       *ci << "// default constructor" << nl;
       *ci << "ACE_INLINE" << nl;
       *ci << this->name () << "::" << this->local_name () << " (void)" << nl;
-      *ci << "\t: CORBA_UserException (ACE_CORBA_3 (TypeCode, _duplicate) (" <<
+      *ci << "\t: CORBA_UserException (CORBA::TypeCode::_duplicate (" <<
         this->tc_name () << "))\n";
       *ci << "{" << nl;
       *ci << "}\n\n";
@@ -266,8 +266,8 @@ be_exception::gen_client_stubs (void)
       *cs << "// copy constructor" << nl;
       *cs << this->name () << "::" << this->local_name () << "(const " <<
         this->name () << " &_tao_excp)" << nl;
-      *cs << "\t:ACE_CORBA_1 (UserException) (" <<
-        "ACE_CORBA_3 (TypeCode, _duplicate) (_tao_excp.type ()))" << nl;
+      *cs << "\t:CORBA_UserException (" <<
+        "CORBA::TypeCode::_duplicate (_tao_excp.type ()))" << nl;
       *cs << "{\n";
       cs->incr_indent ();
       // assign each individual member
@@ -289,7 +289,7 @@ be_exception::gen_client_stubs (void)
       *cs << "{\n";
       cs->incr_indent ();
       *cs << "this->type_ = " <<
-        "ACE_CORBA_3 (TypeCode, _duplicate) (_tao_excp.type ());\n";
+        "CORBA::TypeCode::_duplicate (_tao_excp.type ());\n";
       // assign each individual member
       if (be_scope::gen_client_stubs () == -1)
         {
@@ -323,7 +323,7 @@ be_exception::gen_client_stubs (void)
           *cs  << ")" << nl;
 
           *cs << "\t: CORBA_UserException " <<
-            "(ACE_CORBA_3 (TypeCode, _duplicate) (" << this->tc_name () <<
+            "(CORBA::TypeCode::_duplicate (" << this->tc_name () <<
             "))" << nl;
           *cs << "{\n";
           cs->incr_indent ();

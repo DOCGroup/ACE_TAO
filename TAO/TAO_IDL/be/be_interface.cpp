@@ -220,7 +220,7 @@ int be_interface::gen_client_header (void)
         {
           // we do not inherit from anybody, hence we do so from the base
           // CORBA::Object class
-          *ch << ": public virtual ACE_CORBA_1 (Object)" << nl;
+          *ch << ": public virtual CORBA::Object" << nl;
         }
 
       // generate the body
@@ -432,7 +432,7 @@ int be_interface::gen_client_stubs (void)
   *cs << "\treturn 1; // success using local knowledge\n";
   cs->decr_indent ();
   *cs << "else" << nl;
-  *cs << "\treturn ACE_CORBA_3 (Object, _is_a) (value, env); // remote call\n";
+  *cs << "\treturn this->CORBA_Object::_is_a (value, env); // remote call\n";
   cs->decr_indent ();
   *cs << "}\n\n";
 
@@ -718,7 +718,7 @@ be_interface::gen_client_inline (void)
   *ci << "ACE_INLINE" << nl;
   *ci << this->name () << "::" << this->local_name () <<
     " (STUB_Object *objref) // constructor" << nl;
-  *ci << "\t: ACE_CORBA_1 (Object) (objref)" << nl;
+  *ci << "\t: CORBA_Object (objref)" << nl;
   *ci << "{}" << nl << nl;
 
   *ci << "ACE_INLINE" << nl;
