@@ -1,68 +1,74 @@
+Fri Mar 23 21:19:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Connection_Handler.cpp (activate):
+          Under Win32 the handle() has to be cast before setting the id()
+          field on TAO_Transport.
+
 Fri Mar 23 18:15:58 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/GIOP_Message_Base.cpp:
         * tao/GIOP_Message_Lite.cpp:
         * tao/GIOP_Utils.cpp:
 
-	  Changed uses of TAO_Tranport::handle() to TAO_Transport::id()
-	  the uses were for debug/informational message purposes.
+          Changed uses of TAO_Tranport::handle() to TAO_Transport::id()
+          the uses were for debug/informational message purposes.
 
         * tao/IIOP_Connector.cpp:
         * tao/Strategies/UIOP_Connector.cpp:
         * tao/Strategies/SHMIOP_Connector.cpp:
         * tao/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
-	  Changed debug message accesses to the transport's handler's
-	  handle, and replaced with calls to TAO_Transport::id().
-	
+          Changed debug message accesses to the transport's handler's
+          handle, and replaced with calls to TAO_Transport::id().
+
         * tao/Sync_Strategies.cpp (timer_check): Eliminated direct
- 	  references to the transport's event handler and used the new
-	  TAO_Transport::register_for_timer_event method to do this in a
-	  lock-safe manner.
+          references to the transport's event handler and used the new
+          TAO_Transport::register_for_timer_event method to do this in a
+          lock-safe manner.
 
-        * tao/Transport_Cache_Manager.cpp (make_idle_i): Protected against 
-	  being passed a zero pointer as argument.
+        * tao/Transport_Cache_Manager.cpp (make_idle_i): Protected against
+          being passed a zero pointer as argument.
 
-	* tao/Transport_Cache_Manager.cpp (close_i): Added back code to
-	  fill in an ACE_Handle_Set of all transports' associated handlers 
-	  which are registered with the reactor.  This is necessary to
-	  perform an orderly close and unloading of the ORB.
-	
+        * tao/Transport_Cache_Manager.cpp (close_i): Added back code to
+          fill in an ACE_Handle_Set of all transports' associated handlers
+          which are registered with the reactor.  This is necessary to
+          perform an orderly close and unloading of the ORB.
+
         * tao/Transport.cpp:
         * tao/Transport.h:
 
-	  Added an ACE_Lock, initialized identically to the way that the
- 	  TAO_Transport_Cache_Manager's lock is initialized, to lock
- 	  accesses to or through the protocol-specific transport's
- 	  handler.  Although the handler doesn't exist in the generic
- 	  TAO_Transport, the lock does so that the framework handles all
- 	  the tedious locking issues and the pluggable protocol
- 	  implementor only needs to override methods which are called in
- 	  lock-safe manner.  Note that since the lock is initialized from
- 	  the resource factory, single-threaded implementations need not
- 	  pay locking penalties.
+          Added an ACE_Lock, initialized identically to the way that the
+          TAO_Transport_Cache_Manager's lock is initialized, to lock
+          accesses to or through the protocol-specific transport's
+          handler.  Although the handler doesn't exist in the generic
+          TAO_Transport, the lock does so that the framework handles all
+          the tedious locking issues and the pluggable protocol
+          implementor only needs to override methods which are called in
+          lock-safe manner.  Note that since the lock is initialized from
+          the resource factory, single-threaded implementations need not
+          pay locking penalties.
 
-	  Added provide_handle method to permit the Sync Strategies to
- 	  fill in an ACE_Handle_Set without violating locking and
- 	  encapsulation.
+          Added provide_handle method to permit the Sync Strategies to
+          fill in an ACE_Handle_Set without violating locking and
+          encapsulation.
 
-	  Made the following methods lock-safe and created corresponding
- 	  _i methods which assume that the lock is already held--send,
- 	  recv, register_handler, event_handler, transtion_handler_state.
-  	  The corresponding _i methods are protected.
+          Made the following methods lock-safe and created corresponding
+          _i methods which assume that the lock is already held--send,
+          recv, register_handler, event_handler, transtion_handler_state.
+          The corresponding _i methods are protected.
 
-	  Eliminated service_handler and connection_handler accessors
- 	  since all they did was confuse the issue.  Moreover, gaining
- 	  access to these would have violated the locking protocol.  They
- 	  weren't necessary, so they're gone.
+          Eliminated service_handler and connection_handler accessors
+          since all they did was confuse the issue.  Moreover, gaining
+          access to these would have violated the locking protocol.  They
+          weren't necessary, so they're gone.
 
-	  Added an id_ data member and getter/setter methods.  Formerly,
- 	  the connection's handle was used for identifying the
- 	  transport--especially in debug messages--but the need for
- 	  lock-safety made that unreliable.  Now, the id() is used
- 	  instead, and transport-savvy connection handlers can feel free
- 	  to change the id to anything they desire such as, say, the
- 	  handle_. :-)
+          Added an id_ data member and getter/setter methods.  Formerly,
+          the connection's handle was used for identifying the
+          transport--especially in debug messages--but the need for
+          lock-safety made that unreliable.  Now, the id() is used
+          instead, and transport-savvy connection handlers can feel free
+          to change the id to anything they desire such as, say, the
+          handle_. :-)
 
         * tao/IIOP_Transport.cpp:
         * tao/IIOP_Transport.h:
@@ -72,35 +78,35 @@ Fri Mar 23 18:15:58 2001  Chris Cleeland  <cleeland_c@ociweb.com>
         * tao/Strategies/UIOP_Transport.h:
         * tao/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
         * tao/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Transport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
 
-	  Updated all of these to reflect the changes outlined for the
- 	  TAO_Transport base class.
+          Updated all of these to reflect the changes outlined for the
+          TAO_Transport base class.
 
         * tao/IIOP_Connection_Handler.cpp (activate):
         * tao/Strategies/UIOP_Connection_Handler.cpp (activate):
         * tao/Strategies/SHMIOP_Connection_Handler.cpp (activate):
         * tao/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (activate):
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp (activate):
-	
-	  Added code to set the transport's id to the handler's handle,
- 	  thus making debug messages referring to that (which are
- 	  everywhere!) more useful.
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp (activate):
 
-	  Thanks to Carlos, Bala, Chad, and my family for all their help
- 	  on this change!
+          Added code to set the transport's id to the handler's handle,
+          thus making debug messages referring to that (which are
+          everywhere!) more useful.
+
+          Thanks to Carlos, Bala, Chad, and my family for all their help
+          on this change!
 
 Fri Mar 23 15:16:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp (deactivate_all_objects_i):
-	  Yesterday's change to
-	  Active_Object_Map::find_servant_and_system_id_using_user_id()
-	  broke POA::deactivate_all_objects_i() because this method was
-	  trying to find entries in the map that don't have valid
-	  servants.  To fix this, I added a new method
-	  POA::deactivate_map_entry() that does not require looking up the
-	  entry in the map again.
+        * tao/PortableServer/POA.cpp (deactivate_all_objects_i):
+          Yesterday's change to
+          Active_Object_Map::find_servant_and_system_id_using_user_id()
+          broke POA::deactivate_all_objects_i() because this method was
+          trying to find entries in the map that don't have valid
+          servants.  To fix this, I added a new method
+          POA::deactivate_map_entry() that does not require looking up the
+          entry in the map again.
 
 Fri Mar 23 10:06:10 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -111,7 +117,7 @@ Fri Mar 23 11:58:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/tests/ImplRepo/NameService/Makefile: Fixed
           dependencies. Thanks to Thomas Groth <groth.th@nord-com.net> for
-          reporting this. 
+          reporting this.
 
 Fri Mar 23 09:42:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 
