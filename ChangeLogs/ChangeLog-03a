@@ -1,3 +1,10 @@
+Thu Mar 14 11:26:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Misc/context_switch_time.cpp: Renamed the
+	  internally used macro, DEBUG, to ACE_DEBUG_CST to avoid clashing
+	  with the compiler defined macro.  Thanks to Allan S Iverson
+	  <allaniverson@sprynet.com> for motivating the fix.
+
 Thu Mar 14 09:17:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (activate_svc_handler): Added a call to
@@ -9,7 +16,7 @@ Thu Mar 14 09:17:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  <jlsysinc@ix.netcom.com> for the fix.
 
 	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp (ACE_TMAIN): Added
-	  '\n' to the end of command strings so that the client won't hang.  Thanks to 
+	  '\n' to the end of command strings so that the client won't hang.  Thanks to
 	  Marc M Adkins <Marc.M.Adkins@doorways.org> for this fix.
 
 Wed Mar 13 15:55:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
