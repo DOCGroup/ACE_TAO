@@ -104,7 +104,7 @@ public class Condition
    */
   public void broadcast ()
   {
-    for (long i = waiters_; i > 0; i--)
+    for (int i = waiters_; i > 0; i--)
       semaphore_.release ();
   }
 
@@ -117,7 +117,7 @@ public class Condition
     return mutex_;
   }
 
-  private long waiters_;  
+  private int waiters_;  
   private Semaphore semaphore_ = new Semaphore (0);
   private Mutex mutex_;
 
