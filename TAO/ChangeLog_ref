@@ -1,3 +1,12 @@
+Mon Aug 11 08:56:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ClientRequestInterceptor_Adapter.h:
+
+          Moved #include of Interceptor_List.h up to be above the check
+          for TAO_HAS_INTERCEPTORS. Otherewise the only include before that
+          line in config-all.h, and so TAO_HAS_INTERCEPTORS is not yet 
+          defined.
+
 Sun Aug 10 22:40:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ClientRequestInfo_i.h:
