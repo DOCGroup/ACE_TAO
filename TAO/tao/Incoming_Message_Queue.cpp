@@ -184,6 +184,95 @@ TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
 {
 }
 
+
+/*!
+  \brief Allocate and return a new empty message block of size \a new_size mimicking parameters of \a mb.
+
+  This function allocates a new aligned message block using the same
+  allocators and flags as found in \a mb.  The size of the new message
+  block is at least \a new_size; the size may be adjusted up in order
+  to accomodate alignment requirements and still fit \a new_size bytes
+  into the aligned buffer.
+  
+  \param mb message block whose parameters should be mimicked
+  \param new_size size of the new message block (will be adjusted for proper alignment)
+  \return an aligned message block with rd_ptr sitting at correct alignment spot, 0 on failure
+
+  \author Thanks to Rich Seibel for helping implement with the public API for ACE_Message_Block!
+ */
+static ACE_Message_Block*
+clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
+{
+  // Calculate the required size of the cloned block with alignment
+  size_t aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
+
+  // Get the allocators
+  ACE_Allocator *data_allocator;
+  ACE_Allocator *data_block_allocator;
+  ACE_Allocator *message_block_allocator;
+  mb->access_allocators (data_allocator, 
+                         data_block_allocator, 
+                         message_block_allocator);
+
+  // Create a new Message Block
+  ACE_Message_Block *nb;
+  ACE_NEW_MALLOC_RETURN (nb,
+                         ACE_static_cast(ACE_Message_Block*,
+                                         message_block_allocator->malloc (
+                                           sizeof (ACE_Message_Block))),
+                         ACE_Message_Block(aligned_size,
+                                           mb->msg_type(),
+                                           mb->cont(),
+                                           0, //we want the data block created
+                                           data_allocator,
+                                           mb->locking_strategy(),
+                                           mb->msg_priority(),
+                                           mb->msg_execution_time (),
+                                           mb->msg_deadline_time (),
+                                           data_block_allocator,
+                                           message_block_allocator),
+                         0);
+
+  ACE_CDR::mb_align (nb);
+
+  // Do whatever with the flags
+  nb->set_flags (mb->flags());
+  nb->set_self_flags (mb->self_flags());
+  //  nb->clr_flags (mask);
+
+  return nb;
+}
+
+/*!
+  \brief Copy data from \a src->rd_ptr to \a dst->wr_ptr, of at most \a span_size bytes.
+
+  (This is similar to memcpy, although with message blocks we can be a
+  little smarter.)  This function assumes that \a dst has enough space
+  for \a span_size bytes, and that \a src has at least \a span_size
+  bytes available to copy.  When everything is copied \a dst->wr_ptr
+  gets updated accordingly, but \a src->rd_ptr is left to the caller
+  to update.
+
+  \param dst the destination message block
+  \param src the source message block
+  \param span_size size of the maximum span of bytes to be copied
+  \return 0 on failure, otherwise \a dst
+ */
+static ACE_Message_Block*
+copy_mb_span (ACE_Message_Block *dst, ACE_Message_Block *src, size_t span_size)
+{
+  // @todo check for enough space in dst, and src contains at least span_size
+
+  if (src == 0 || dst == 0)
+    return 0;
+
+  if (span_size == 0)
+    return dst;
+
+  dst->copy (src->rd_ptr (), span_size);
+  return dst;
+}
+
 /*static*/
 TAO_Queued_Data *
 TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
@@ -191,6 +280,7 @@ TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
                                            ACE_Allocator *alloc)
 {
   TAO_Queued_Data *new_qd = 0;
+  const size_t HDR_LEN = msging_obj.header_length ();
 
   // Validate arguments.
   if (mb == 0)
@@ -213,40 +303,56 @@ TAO_Queued_Data::make_uncompleted_message (ACE_Message_Block *mb,
       else
         {
           new_qd->current_state_ = WAITING_TO_COMPLETE_PAYLOAD;
-          new_qd->msg_block_ = mb;
           msging_obj.set_queued_data_from_message_header (new_qd, *mb);
+
+          // missing_data_bytes_ now has the full GIOP message size, so we allocate
+          // a new message block of that size, plus the header.
+          new_qd->msg_block_ = clone_mb_nocopy_size  (mb,
+                                                      new_qd->missing_data_bytes_ +
+                                                      HDR_LEN);
+          // Of course, we don't have the whole message (if we did, we
+          // wouldn't be here!), so we copy only what we've got, i.e., whatever's
+          // in the message block.
+          if (copy_mb_span (new_qd->msg_block_, mb, mb->length ()) == 0)
+            goto failure;
+
           // missing_data_bytes_ now has the full GIOP message size, but
           // there might still be stuff in mb.  Therefore, we have to adjust
           // missing_data_bytes_, i.e., decrease it by the number of "actual
           // payload bytes" in mb.
           //
           // "actual payload bytes" :== length of mb (which included the header) - header length
-          new_qd->missing_data_bytes_ -= (mb->length () - msging_obj.header_length ());
-          //???          mb->rd_ptr (msging_obj.header_length ());
+          new_qd->missing_data_bytes_ -= (mb->length () - HDR_LEN);
+          mb->rd_ptr (mb->length ());
         }
     }
   else
     {
       new_qd->current_state_ = WAITING_TO_COMPLETE_HEADER;
-      new_qd->msg_block_ = mb;
+      new_qd->msg_block_ = clone_mb_nocopy_size (mb, HDR_LEN);
+      if (new_qd->msg_block_ == 0 ||
+          copy_mb_span (new_qd->msg_block_, mb, mb->length ()) == 0)
+        goto failure;
       new_qd->missing_data_bytes_ = msging_obj.header_length () - mb->length ();
+      mb->rd_ptr (mb->length ());
     }
 
   ACE_ASSERT (new_qd->current_state_ != INVALID);
   if (TAO_debug_level > 7)
     {
       const char* s = "?unk?";
-      switch (new_qd->current_state_) {
-      case WAITING_TO_COMPLETE_HEADER: s = "WAITING_TO_COMPLETE_HEADER"; break;
-      case WAITING_TO_COMPLETE_PAYLOAD: s = "WAITING_TO_COMPLETE_PAYLOAD"; break;
-      case INVALID: s = "INVALID"; break;
-      case COMPLETED: s = "COMPLETED"; break;
-      }
+      switch (new_qd->current_state_)
+        {
+        case WAITING_TO_COMPLETE_HEADER: s = "WAITING_TO_COMPLETE_HEADER"; break;
+        case WAITING_TO_COMPLETE_PAYLOAD: s = "WAITING_TO_COMPLETE_PAYLOAD"; break;
+        case INVALID: s = "INVALID"; break;
+        case COMPLETED: s = "COMPLETED"; break;
+        }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Queued_Data::make_uncompleted_message: ")
                   ACE_TEXT ("made uncompleted message from %u bytes into qd=%-08x:")
                   ACE_TEXT ("state=%s,missing_data_bytes=%u\n"),
-                  mb->length(), new_qd, s, new_qd->missing_data_bytes_));
+                  new_qd->msg_block_->length(), new_qd, s, new_qd->missing_data_bytes_));
     }
   return new_qd;
 
@@ -262,6 +368,7 @@ failure:
   return 0;
 }
 
+#if 0
 /*!
   \brief Act like ACE_Message_Block::clone, but only clone the part btw. rd_ptr and wr_ptr.
  */
@@ -384,6 +491,7 @@ clone_span (/*const*/ ACE_Message_Block *the_mb, size_t span_size, ACE_Message_B
     }
   return nb;
 }
+#endif
 
 /*static*/
 TAO_Queued_Data *
@@ -423,9 +531,11 @@ TAO_Queued_Data::make_completed_message (ACE_Message_Block &mb,
     goto failure;
 
   // Make a copy of the relevant portion of mb and hang on to it
-  if ((new_qd->msg_block_ = clone_span (&mb, total_msg_len)) == 0)
+  if ((new_qd->msg_block_ = clone_mb_nocopy_size (&mb, total_msg_len)) == 0)
     goto failure;
 
+  if (copy_mb_span (new_qd->msg_block_, &mb, total_msg_len) == 0)
+    goto failure;
   
   // Update missing data and the current state
   new_qd->missing_data_bytes_ = 0;

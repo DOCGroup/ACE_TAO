@@ -1315,7 +1315,8 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
 
   // The buffer on the stack which will be used to hold the input
   // messages
-  char buf [TAO_MAXBUFSIZE];
+  //  char buf [TAO_MAXBUFSIZE];
+  char buf[2 * TAO_MAXBUFSIZE];
 
 #if defined (ACE_HAS_PURIFY)
   (void) ACE_OS::memset (buf,
@@ -1339,7 +1340,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
 
   // We'll loop trying to complete the message this number of times,
   // and that's it.
-  unsigned int number_of_read_attempts = 2;
+  unsigned int number_of_read_attempts = TAO_MAX_TRANSPORT_REREAD_ATTEMPTS;
 
   // Align the message block
   ACE_CDR::mb_align (&message_block);
@@ -1487,7 +1488,7 @@ read_from_the_connection:
                                   this->uncompleted_message_->missing_data_bytes_));
                     }
 
-                  // Continue the loop...(?to where?)
+                  // Continue the loop...
                   continue;
                 }
               else
@@ -1560,6 +1561,7 @@ read_from_the_connection:
       while (message_block.length() != 0 && this->uncompleted_message_);
     }
 
+#if !defined(LOOP_READ_OPTIMIZATION_LATE)
   // If, at the end, we're still waiting to complete the message,
   // we should effectively return.
   //
@@ -1589,6 +1591,12 @@ read_from_the_connection:
                           number_of_read_attempts));
             }
 
+          // We're about to go back and try to read, but we need to insure
+          // that there's space available in the message block to read!
+          // We'll reset the message block...
+          ACE_ASSERT (message_block.space() == 0);
+          message_block.reset ();
+
           // Yes, this uses the much-maligned "goto"; get over it.  TCP
           // implementations use them, too, for just the same sort of
           // situation.
@@ -1615,6 +1623,7 @@ read_from_the_connection:
           return 1;
         }
     }
+#endif
 
   // At this point, there should be nothing in uncompleted_message_.
   // We now need to chop up the bytes in message_block and store any
@@ -1656,17 +1665,78 @@ read_from_the_connection:
     {
       // duplicate message_block remainder into this->uncompleted_message_
       ACE_ASSERT (this->uncompleted_message_ == 0);
-      ACE_Message_Block *queueable_mb = message_block.clone ();
-      ACE_ASSERT (queueable_mb != 0);
-      message_block.rd_ptr (message_block.length ());
       this->uncompleted_message_ =
-        TAO_Queued_Data::make_uncompleted_message (queueable_mb,
+        TAO_Queued_Data::make_uncompleted_message (&message_block,
                                                    *this->messaging_object ());
+      ACE_ASSERT (this->uncompleted_message_ != 0);
     }
 
   // We should have consumed ALL the bytes by now.
   ACE_ASSERT (message_block.length () == 0);
 
+#if defined(LOOP_READ_OPTIMIZATION_LATE)
+  // If, at the end, we're still waiting to complete the message,
+  // we should effectively return.
+  //
+  // @@BALA: Returning here will reduce the throughput. We shold try
+  // reading again to see if we could get more data..
+  //
+  // @@CJC: Good point; maybe we can go to the top again, but only try
+  // to read at most 2-3 times before we just go on.  Obviously, if we
+  // complete the message (i.e., there's no uncompleted message), then
+  // we go on to the next step.
+  if (this->uncompleted_message_)
+    {
+      if (number_of_read_attempts--)
+        {
+          // We try to read again just in case more data arrived while
+          // we were doing the stuff above.  This way, we can increase
+          // throughput without much of a penalty.
+
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Transport[%d]::handle_input_i: "
+                          "still have an uncompleted message; "
+                          "will try %d more times before letting "
+                          "somebody else have a chance.\n",
+                          this->id (),
+                          number_of_read_attempts));
+            }
+
+          // We're about to go back and try to read, but we need to insure
+          // that there's space available in the message block to read!
+          // We'll reset the message block...
+          ACE_ASSERT (message_block.space() == 0);
+          message_block.reset ();
+
+          // Yes, this uses the much-maligned "goto"; get over it.  TCP
+          // implementations use them, too, for just the same sort of
+          // situation.
+          goto read_from_the_connection;
+        }
+      else
+        {
+          // The queue should be empty because it should have been processed
+          // above.  But I wonder if I should put a check in here anyway.
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Transport[%d]::handle_input_i: "
+                          "giving up reading for now and returning "
+                          "with incoming queue length = %d\n",
+                          this->id (),
+                          this->incoming_message_queue_.queue_length ()));
+              if (this->uncompleted_message_)
+                ACE_DEBUG ((LM_DEBUG,
+                            "(%P|%t) Transport[%d]::handle_input_i: "
+                            "missing bytes from uncompleted message = %u\n",
+                            this->uncompleted_message_->missing_data_bytes_));
+            }
+          return 1;
+        }
+    }
+#endif
   // **** END   CJC PMG CHANGES ****
 
   // Process the message
