@@ -23,6 +23,8 @@ pace_asctime_r (const struct tm * time, char * buf)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return asctime_r (time, buf);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (time);
+  PACE_UNUSED_ARG (buf);
   PACE_ERRNO_NO_SUPPORT ();
   return 0;
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
@@ -36,6 +38,8 @@ pace_clock_getres (clockid_t clock_id,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return clock_getres (clock_id, res);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (res);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -48,6 +52,8 @@ pace_clock_gettime (clockid_t clock_id,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return clock_gettime (clock_id, tp);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (tp);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -60,6 +66,8 @@ pace_clock_settime (clockid_t clock_id,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return clock_settime (clock_id, tp);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (tp);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -71,6 +79,8 @@ pace_ctime_r (const time_t * clock, char * buf)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return ctime_r (clock, buf);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (clock);
+  PACE_UNUSED_ARG (buf);
   PACE_ERRNO_NO_SUPPORT ();
   return 0;
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
@@ -83,6 +93,8 @@ pace_gmtime_r (const time_t * clock, struct tm * result)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return gmtime_r (clock, result);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (clock);
+  PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT ();
   return 0;
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
@@ -95,6 +107,8 @@ pace_localtime_r (const time_t * clock, struct tm * result)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return localtime_r (clock, result);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (clock);
+  PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT ();
   return 0;
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
@@ -108,6 +122,8 @@ pace_nanosleep (const struct timespec * rqtp,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return nanosleep (rqtp, rmtp);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (rqtp);
+  PACE_UNUSED_ARG (rmtp);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -119,6 +135,7 @@ pace_time (time_t * tloc)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return time (tloc);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (tloc);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -132,6 +149,9 @@ pace_timer_create (clockid_t clock_id,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return timer_create (clock_id, evp, timerid);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (clock_id);
+  PACE_UNUSED_ARG (evp);
+  PACE_UNUSED_ARG (timerid);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -143,6 +163,7 @@ pace_timer_delete (timer_t timerid)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return timer_delete (timerid);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (timerid);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -154,6 +175,7 @@ pace_timer_getoverrun (timer_t timerid)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return timer_getoverrun (timerid);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (timerid);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -166,6 +188,8 @@ pace_timer_gettime (timer_t timerid,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return timer_gettime (timerid, value);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (timerid);
+  PACE_UNUSED_ARG (value);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -180,6 +204,10 @@ pace_timer_settime (timer_t timerid,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return timer_settime (timerid, flags, value, ovalue);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (timerid);
+  PACE_UNUSED_ARG (flags);
+  PACE_UNUSED_ARG (value);
+  PACE_UNUSED_ARG (ovalue);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
