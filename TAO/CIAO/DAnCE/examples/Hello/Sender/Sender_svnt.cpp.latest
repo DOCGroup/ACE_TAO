@@ -96,7 +96,6 @@ namespace Sender_Impl
       ctx_svnt_base (home, c, sv),
       upgradeable_ctx_svnt_base (home, c, sv)
     {
-      ACE_DEBUG ((LM_DEBUG, "created the context\n"));
     }
 
     Sender_Context::~Sender_Context (void)
@@ -262,10 +261,7 @@ namespace Sender_Impl
       : ACE_NESTED_CLASS (CIAO, Servant_Impl_Base (h, home_servant, c)),
       comp_svnt_base (exe, h, home_servant, c)
     {
-      ACE_DEBUG ((LM_DEBUG, "creating the context\n"));
       this->context_ = new Sender_Context (h, c, this);
-
-      ACE_DEBUG ((LM_DEBUG, "created the context\n"));
 
       ACE_TRY_NEW_ENV
       {
