@@ -670,6 +670,10 @@ public:
   int set_grp (ACE_Task_Base *task, int grp_id);
   int get_grp (ACE_Task_Base *task, int &grp_id);
 
+  int count_threads (void) const;
+  // Return a count of the current number of threads active in the
+  // <Thread_Manager>.
+
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   int at_exit (ACE_At_Thread_Exit* cleanup);
   // Register an At_Thread_Exit hook and the ownership is acquire by
