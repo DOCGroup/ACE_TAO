@@ -1,8 +1,12 @@
+Tue Mar 16 16:35:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: never use TRUE, true, FALSE, false, etc.
+
 Tue Mar 16 15:58:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (close): Don't call the
-	  ace_yy_delete_parse_buffer for now.  It is causing access
-	  violation.
+        * ace/Service_Config.cpp (close): Don't call the
+          ace_yy_delete_parse_buffer for now.  It is causing access
+          violation.
 
 Tue Mar 16 15:15:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
 
