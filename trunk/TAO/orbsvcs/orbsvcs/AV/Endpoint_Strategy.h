@@ -30,7 +30,10 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Strategy
 public:
   TAO_AV_Endpoint_Strategy (void);
   // Constructor
-  
+
+  virtual ~TAO_AV_Endpoint_Strategy (void);
+  // Destructor
+
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
                         CORBA::Environment &env);
@@ -65,6 +68,9 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy
   TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
   // Constructor. The process_options contain the name and arguments
   // for the process to be created
+
+  virtual ~TAO_AV_Endpoint_Process_Strategy (void);
+  // Destructor.
 
   virtual int activate (void);
   // creates a new child process, and waits on a semaphore
@@ -103,6 +109,9 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_A
   TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
   // Constructor
 
+  virtual ~TAO_AV_Endpoint_Process_Strategy_A (void);
+  // Destructor.
+
  protected:  
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
@@ -125,6 +134,9 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
   TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
   // Constructor
 
+  virtual ~TAO_AV_Endpoint_Process_Strategy_B (void);
+  // Destructor.
+
  protected:
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev,
@@ -146,6 +158,9 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
  protected:
   TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager);
   // Constructor
+
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy (void);
+  // Destructor.
 
   virtual int activate (void);
   // creates and activates the streamendpoint, vdev, and mediacontrol
@@ -187,6 +202,9 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
   TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager);
   // Constructor
 
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy_A (void);
+  // Destructor.
+
   virtual int activate_stream_endpoint (CORBA::Environment &env);
   // Overrides the base class stream_endpoint activator, to activate
   // an "A" type endpoint
@@ -202,13 +220,16 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
-  : public TAO_AV_Endpoint_Reactive_Strategy <class T_StreamEndpoint,
-    class T_Vdev, class T_MediaCtrl>
+  : public TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_Vdev, T_MediaCtrl>
 // = DESCRIPTION
 //    Reactive strategy
 {
  public:
   TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *);
+  // Constructor.
+
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy_B (void);
+  // Destructor.
 
   virtual int activate_stream_endpoint (CORBA::Environment &env);
   // Overrides the base class stream_endpoint activator, to activate
@@ -231,7 +252,7 @@ public:
   TAO_AV_Child_Process ();
   // Constructor
 
-  ~TAO_AV_Child_Process ();
+  virtual ~TAO_AV_Child_Process ();
   // Destructor
 
   int init (int argc, char **argv);
@@ -305,8 +326,11 @@ class TAO_ORBSVCS_Export TAO_AV_Child_Process_A
 //    Helper class for the child process created in TAO_AV_Child_Process
 {
 public:
-  TAO_AV_Child_Process_A ();
+  TAO_AV_Child_Process_A (void);
+  // Constructor.
 
+  virtual ~TAO_AV_Child_Process_A (void);
+  // Destructor.
 };
 
 // ----------------------------------------------------------------------
@@ -318,8 +342,11 @@ class TAO_ORBSVCS_Export TAO_AV_Child_Process_B
 //    Helper class for the child process created in TAO_AV_Child_Process
 {
 public:
-  TAO_AV_Child_Process_B ();
+  TAO_AV_Child_Process_B (void);
+  // Constructor.
 
+  virtual ~TAO_AV_Child_Process_B (void);
+  // Destructor.
 };
 
 #endif /* TAO_AV_ENDPOINT_STRATEGY_H */

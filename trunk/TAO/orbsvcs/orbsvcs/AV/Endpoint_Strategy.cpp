@@ -27,6 +27,20 @@ TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy (void)
 {
 }
 
+// Destructor.
+TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
+{
+  if (CORBA::is_nil (this->stream_endpoint_a_) == CORBA::B_FALSE)
+    CORBA::release (this->stream_endpoint_a_);
+
+  if (CORBA::is_nil (this->stream_endpoint_b_) == CORBA::B_FALSE)
+    CORBA::release (this->stream_endpoint_b_);
+
+  if (CORBA::is_nil (this->stream_endpoint_b_) == CORBA::B_FALSE)
+    CORBA::release (this->vdev_);
+
+}
+
 // The base class defines the "failure" case, so that unless the
 // subclasses override this, the call will fail. This is done so that
 // subclasses need only define the calls that they want to support,
@@ -63,6 +77,11 @@ TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endp
 // Constructor
 TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options)
   : process_options_ (process_options)
+{
+}
+
+// Destructor.
+TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy (void)
 {
 }
 
@@ -218,6 +237,11 @@ TAO_AV_Endpoint_Process_Strategy_A::TAO_AV_Endpoint_Process_Strategy_A (ACE_Proc
 {
 }
 
+// Destructor
+TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A (void)
+{
+}
+
 // the "A" type endpoint creator
 int
 TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
@@ -278,6 +302,11 @@ TAO_AV_Endpoint_Process_Strategy_B::TAO_AV_Endpoint_Process_Strategy_B (ACE_Proc
 {
 }
 
+// Destructor
+TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B (void)
+{
+}
+
 // Creates and returns a "B" type endpoint
 int
 TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
@@ -334,6 +363,13 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager)
   : orb_manager_ (orb_manager)
 {
+}
+
+template <class T_StreamEndpoint, class T_VDev, class T_MediaCtrl>
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy (void)
+{
+  if (this->orb_manager_ != 0)
+    delete this->orb_manager_;
 }
 
 // Create, activate the objects with the POA
@@ -463,6 +499,12 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO
 {
 }
 
+// Destructor
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_A (void)
+{
+}
+
 // Creates an "A" type streamendpoint, and a vdev and returns the
 // object references
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
@@ -512,6 +554,12 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *orb_manager)
   : TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl> (orb_manager)
+{
+}
+
+// Destructor
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_B (void)
 {
 }
 
@@ -879,6 +927,11 @@ TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pr
   this->stream_endpoint_name_ [0].id = CORBA::string_dup ("Stream_Endpoint_A");
 }
 
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_A ()
+{
+}
+
 // ----------------------------------------------------------------------
 // TAO_AV_Child_Process_B
 // ----------------------------------------------------------------------
@@ -890,4 +943,9 @@ TAO_AV_Child_Process_B  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pr
 {  
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup ("Stream_Endpoint_B");
+}
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+TAO_AV_Child_Process_B  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_B ()
+{
 }
