@@ -1770,7 +1770,7 @@ sig_handler (int sig_num, siginfo_t *, ucontext_t *)
 }
 
 int
-ACE_POSIX_SIG_Proactor::setup_signal_handler (int ) const
+ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
 {
   // Set up the specified signal so that signal information will be
   // passed to sigwaitinfo/sigtimedwait. Don't change the default
@@ -1795,6 +1795,7 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int ) const
                        "Error:%p\n",
                        "Proactor couldnt do sigaction for the RT SIGNAL"),
                       -1);
+#else
   ACE_UNUSED_ARG(signal_number);
 #endif
   return 0;
