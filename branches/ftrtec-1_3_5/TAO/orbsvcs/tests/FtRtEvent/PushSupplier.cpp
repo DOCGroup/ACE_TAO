@@ -52,6 +52,7 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
                             const Options& options
                             ACE_ENV_ARG_DECL)
 {
+  ACE_DEBUG((LM_DEBUG, "PushSupplier_impl::init\n"));
   orb_ = orb;
   num_iterations_ = options.num_iterations;
   reactor_task_.timer_interval_ = options.timer_interval;

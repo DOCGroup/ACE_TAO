@@ -92,15 +92,19 @@ FtRtEvent_Test_Base::get_event_channel(ACE_ENV_SINGLE_ARG_DECL)
     name.length(1);
     name[0].id = CORBA::string_dup("FT_EventService");
 
+    ACE_DEBUG((LM_DEBUG, "Getting FT_EventService from Naming Service\n"));
+
     CosNaming::NamingContext_var naming_context =
       resolve_init<CosNaming::NamingContext>(orb_.in(), "NameService"
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
+
     channel  = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
       name
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
+    ACE_DEBUG((LM_DEBUG, "Got FT_EventService\n"));
   }
 
   if (use_gateway_)
