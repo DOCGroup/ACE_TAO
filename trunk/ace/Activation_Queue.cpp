@@ -46,7 +46,7 @@ ACE_Activation_Queue::~ACE_Activation_Queue (void)
     delete this->queue_;
 }
 
-ACE_Method_Object *
+ACE_Method_Request *
 ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
 {
   ACE_Message_Block *mb;
@@ -56,7 +56,7 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
     {
 
       // Get the method object.
-      ACE_Method_Object *mo = (ACE_Method_Object *) mb->base ();
+      ACE_Method_Request *mo = (ACE_Method_Request *) mb->base ();
 
       // Delete the message block.
       mb->release ();
@@ -67,7 +67,7 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
 }
 
 int 
-ACE_Activation_Queue::enqueue (ACE_Method_Object *mo,
+ACE_Activation_Queue::enqueue (ACE_Method_Request *mo,
 			       ACE_Time_Value *tv)
 {
   ACE_Message_Block *mb;

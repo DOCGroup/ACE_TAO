@@ -20,7 +20,7 @@
 
 #include "ace/Synch_T.h"
 #include "ace/Message_Queue.h"
-#include "ace/Method_Object.h"
+#include "ace/Method_Request.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,7 +33,7 @@ class ACE_Export ACE_Activation_Queue
   //     represent necessary state and behavior.
   //
   // = DESCRIPTION
-  //     A <Method_Object> is inserted in the <Activation_Queue>, where
+  //     A <Method_Request> is inserted in the <Activation_Queue>, where
   //     it is subsequently removed by the <Scheduler> and invoked.
 public:
   // = Initialization and termination methods.
@@ -49,12 +49,12 @@ public:
   // or if the time specified in timeout elapses, (in which case errno
   // = EWOULDBLOCK).
 
-  ACE_Method_Object *dequeue (ACE_Time_Value *tv = 0);
-  // Dequeue the next available <Method_Object>.
+  ACE_Method_Request *dequeue (ACE_Time_Value *tv = 0);
+  // Dequeue the next available <Method_Request>.
 
-  int enqueue (ACE_Method_Object *new_method_object, 
+  int enqueue (ACE_Method_Request *new_method_object, 
 	       ACE_Time_Value *tv = 0);
-  // Enqueue the <Method_Object>.
+  // Enqueue the <Method_Request>.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -64,7 +64,7 @@ public:
 
 protected:
   ACE_Message_Queue<ACE_SYNCH> *queue_;
-  // Stores the <Method_Objects>.
+  // Stores the <Method_Requests>.
   
   int delete_queue_;
   // Keeps track of whether we need to delete the queue.

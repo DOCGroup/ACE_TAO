@@ -32,7 +32,7 @@ OBJFILES = obj\ACED.obj obj\ACE.obj obj\Activation_Queue.obj obj\Acceptor.obj ob
   obj\LSOCK_Connector.obj obj\LSOCK_Dgram.obj obj\LSOCK_Stream.obj obj\Malloc.obj \
   obj\Malloc_T.obj obj\Managed_Object.obj obj\Map_Manager.obj obj\Mem_Map.obj \
   obj\Memory_Pool.obj obj\Message_Block.obj obj\Message_Queue.obj \
-  obj\Method_Object.obj obj\Module.obj obj\Msg_WFMO_Reactor.obj \
+  obj\Method_Request.obj obj\Module.obj obj\Msg_WFMO_Reactor.obj \
   obj\Multiplexor.obj obj\Name_Proxy.obj obj\Name_Request_Reply.obj \
   obj\Name_Space.obj obj\Naming_Context.obj obj\Object_Manager.obj \
   obj\Obstack.obj obj\OS.obj obj\Parse_Node.obj obj\Pipe.obj \

@@ -82,7 +82,7 @@ USEUNIT("Mem_Map.cpp");
 USEUNIT("Memory_Pool.cpp");
 USEUNIT("Message_Block.cpp");
 USEUNIT("Message_Queue.cpp");
-USEUNIT("Method_Object.cpp");
+USEUNIT("Method_Request.cpp");
 USEUNIT("Module.cpp");
 USEUNIT("Msg_WFMO_Reactor.cpp");
 USEUNIT("Multiplexor.cpp");

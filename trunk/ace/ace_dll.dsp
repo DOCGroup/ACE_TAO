@@ -472,7 +472,7 @@ DEP_CPP_ACTIV=\
 	".\Message_Queue.cpp"\
 	".\Message_Queue.h"\
 	".\Message_Queue.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -4132,7 +4132,7 @@ SOURCE=.\Message_Queue.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Method_Object.cpp
+SOURCE=.\Method_Request.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
@@ -4159,7 +4159,7 @@ DEP_CPP_METHO=\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
-	".\Method_Object.h"\
+	".\Method_Request.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -12506,7 +12506,7 @@ SOURCE=.\Message_Queue_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Method_Object.h
+SOURCE=.\Method_Request.h
 # End Source File
 # Begin Source File
 
