@@ -140,11 +140,13 @@ public:
   int unbind (const EXT_ID &ext_id);
   // Unbind (remove) the <ext_id> from the map.  Don't return the
   // <int_id> to the caller (this is useful for collections where the
-  // <int_id>s are *not* dynamically allocated...)
+  // <int_id>s are *not* dynamically allocated...)  Returns 0 if
+  // successful, else -1.
 
   int unbind (const EXT_ID &ext_id, INT_ID &int_id);
-  // Break any association of <ext_id>.  Returns the value of <int_id> in
-  // case the caller needs to deallocate memory.
+  // Break any association of <ext_id>.  Returns the value of <int_id>
+  // in case the caller needs to deallocate memory.  Returns 0 if
+  // successful, else -1.
 
   size_t current_size (void);
   // Return the current size of the map.
