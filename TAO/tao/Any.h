@@ -477,9 +477,6 @@ public:
   /// assignment from a CORBA_Any
   CORBA_Any_out &operator= (CORBA_Any *p);
 
-  /// assignment from a const CORBA_Any
-  CORBA_Any_out &operator= (const CORBA_Any *p);
-
   /// cast
   operator CORBA_Any *&();
 
