@@ -1,3 +1,11 @@
+Sun Jun 24 17:26:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/default_resource.cpp (init): Disabled the lock that is used
+	  by the data_blocks during reference counting for single threaded
+	  builds. This is now sort of hacked. We disable the lock if the
+	  transport cache lock is disabled. The right way to do this would
+	  be to revisit this when we fix bug #940.
+
 Sun Jun 24 16:48:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.h: 
