@@ -161,7 +161,6 @@ else  # ! CROSS-COMPILE
 
   ifeq ($(findstring g++,$(CXX)),g++)
     CCFLAGS += -Wno-switch
-    PIC = -fPIC
   endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife -DCPP_LOCATION=\"$(CXX)\" \
