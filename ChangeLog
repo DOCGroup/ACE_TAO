@@ -1,6 +1,11 @@
+Tue Sep 18 10:50:15 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * html/index.html:
+          Add COS Event and COS Notification services to the index.
+
 Mon Sep 17 19:00:00 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-        * ace/OS.h: 
+        * ace/OS.h:
 
           - THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM were not defined
             for NT.  Added them.
@@ -16,15 +21,15 @@ Mon Sep 17 19:00:00 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             THR_SCOPE_PROCESS
 
         * ace/OS.cpp: LinuxThreads do not have support for
-	  PTHREAD_SCOPE_PROCESS; only PTHREAD_SCOPE_SYSTEM is supported.
-	  Therefore, PTHREAD_SCOPE_PROCESS is ignored when setting the
-	  thread scheduling scope.
+          PTHREAD_SCOPE_PROCESS; only PTHREAD_SCOPE_SYSTEM is supported.
+          Therefore, PTHREAD_SCOPE_PROCESS is ignored when setting the
+          thread scheduling scope.
 
         * ace/Sample_History.cpp: Added accessors for <sample_count> and
-	  <max_samples>.
+          <max_samples>.
 
         * bin/auto_run_tests.lst: Added new RTCORBA tests.  Removed
-	  Minimum CORBA dependency on these tests.
+          Minimum CORBA dependency on these tests.
 
 Mon Sep 17 13:49:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
