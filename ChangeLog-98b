@@ -2,6 +2,8 @@ Mon Dec 28 02:34:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/server_test.cpp
 	  (main):  Allow loading in static services in this application.
+	  Thanks to Peter J. Maso <peterm@fl.net.a???> for reporting
+	  this.
 
 	* ace/Service_Config.{h,i,cpp} (ACE_Service_Config): Changed the
 	  default value of <ignore_static_svcs> to 1.  Otherwise, it is
