@@ -356,6 +356,7 @@ ifneq ($(INSTALL_CHECK),.)
 <%if(exename)%>
   INSBIN  = $(INSTALL_CHECK)
   INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(EXEEXT))
 <%endif%>
 endif
 endif
