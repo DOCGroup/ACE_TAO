@@ -1,3 +1,10 @@
+Thu Nov 20 20:05:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentsS.h:
+	* ciao/ComponentsS_T.h:
+
+	  Removed wrong includes.
+
 Thu Nov 20 17:50:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/RTComponentServer/RTComponentServer.mpc:
