@@ -45,8 +45,6 @@ Task_State::Task_State (void)
     high_priority_loop_count_ (0),
     semaphore_ (0),
     use_multiple_priority_ (0),
-    utilization_task_started_ (0),
-    util_time_ (0),
     ready_ (0),
     ready_cnd_ (ready_mtx_),
     remote_invocations_ (1),
@@ -81,7 +79,7 @@ Task_State::parse_args (int argc,char *argv[])
       break;
     case 'u':
       use_utilization_test_ = 1;
-      loop_count_ = util_time_ = ACE_OS::atoi (opts.optarg);
+      loop_count_ = ACE_OS::atoi (opts.optarg);
       break;
     case 'f':
       ior_file_ = ACE_OS::strdup (opts.optarg);
@@ -623,7 +621,6 @@ Client::init_orb (void)
 int
 Client::get_cubit (void)
 {
-  int result;
   CORBA::Object_var objref (0);
 
   TAO_TRY
@@ -643,10 +640,6 @@ Client::get_cubit (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Must specify valid ior filename with -f option\n"),
                           -1);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) The ior I'm using is: \"%s\"\n",
-                  my_ior));
 
       objref = this->orb_->string_to_object (my_ior,
                                              TAO_TRY_ENV);
@@ -683,7 +676,7 @@ Client::get_cubit (void)
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) CUBIT OBJECT connected <%s>\n",
+                  "(%t) CUBIT OBJECT connected to <%s>\n",
                   str.in ()));
     }
   TAO_CATCHANY
@@ -706,8 +699,7 @@ Client::svc (void)
   // Find the frequency of CORBA requests based on thread id.
   this->find_frequency ();
 
-  // Get the cubit object either from naming service or from the ior
-  // file.
+  // Get the cubit object from the file.
   result = this->get_cubit ();
   if (result != 0)
     return result;
@@ -1147,10 +1139,7 @@ Client::run_tests (void)
   ACE_NEW_RETURN (this->my_jitter_array_,
                   JITTER_ARRAY,
                   -1);
-  // Time to wait for utilization tests to know when to stop.
-  ACE_Time_Value max_wait_time (this->ts_->util_time_,
-                                0);
-  ACE_Countdown_Time countdown (&max_wait_time);
+
   ACE_NEW_RETURN (this->timer_,
                   MT_Cubit_Timer (this->ts_->granularity_),
                   -1);
@@ -1169,9 +1158,7 @@ Client::run_tests (void)
   if (this->ts_->use_utilization_test_ == 1)
     {
       this->timer_->stop ();
-      ACE_timer_t util_time =
-        this->timer_->get_elapsed ();
-      this->ts_->util_test_time_ = util_time;
+      this->ts_->util_test_time_ = this->timer_->get_elapsed ();
     }
 
   // Print the latency results.
