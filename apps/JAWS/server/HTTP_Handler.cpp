@@ -32,30 +32,27 @@ HTTP_Handler::open (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
 
-  int sockbufsize = 64*1024;
+  // James, please define a macro for this (e.g., ACE_MAX_SOCKBUF).
+  int sockbufsize = 64 * 1024;
   int result = ACE_OS::setsockopt (handle,
                                    SOL_SOCKET,
                                    SO_RCVBUF,
                                    (char *) &sockbufsize,
-                                   sizeof (sockbufsize));
+                                   sizeof sockbufsize);
 
-  if (result < 0)
-    {
-      perror ("SO_RCVBUF");
-    }
+  if (result == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "SO_RCVBUF"));
 
-  int sendsockbufsize = 64*1024;
+  // James, please define a macro for this (e.g., ACE_MAX_SOCKBUF).
+  sockbufsize = 64 * 1024;
 
   result = ACE_OS::setsockopt (handle,
                                SOL_SOCKET,
                                SO_SNDBUF,
-                               (char *) &sendsockbufsize,
-                               sizeof (sendsockbufsize));
-  if (result < 0)
-    {
-      perror ("SO_SNDBUF");
-    }
-
+                               (char *) &sockbufsize,
+                               sizeof sockbufsize);
+  if (result == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "SO_SNDBUF"));
 
   this->handle_ = handle;
   this->io_.handle (this->handle_);
@@ -171,10 +168,12 @@ HTTP_Handler::transmit_file_complete (void)
 void 
 HTTP_Handler::transmit_file_error (int result)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) %s error in transmitting file\n",
+  ACE_DEBUG ((LM_DEBUG,
+	      " (%t) %s error in transmitting file\n",
               request_.uri ()));
 
   int status_code;
+
   switch (result)
     {
     case JAWS_File::ACCESS_FAILED:
@@ -191,6 +190,7 @@ HTTP_Handler::transmit_file_error (int result)
       status_code = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
       break;
     }
+
   this->response_.error_response (status_code, "error in transmitting file");
 }
 
@@ -287,5 +287,4 @@ Asynch_HTTP_Handler_Factory::create_http_handler (void)
 {
   return 0;
 }
-
 #endif /* ACE_WIN32 */

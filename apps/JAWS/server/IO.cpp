@@ -35,7 +35,6 @@ JAWS_IO::handler (JAWS_IO_Handler *handler)
 }
 
 JAWS_Synch_IO::JAWS_Synch_IO (void)
-  : JAWS_IO ()
 {
 }
 
@@ -45,11 +44,13 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 }
 
 void 
-JAWS_Synch_IO::read (ACE_Message_Block& mb, int size)
+JAWS_Synch_IO::read (ACE_Message_Block &mb,
+		     int size)
 {
   ACE_SOCK_Stream stream;
   stream.set_handle (this->handle_);
   int result = stream.recv (mb.wr_ptr (), size);
+
   if (result <= 0)
     this->handler_->read_error ();
   else 
@@ -65,9 +66,9 @@ JAWS_Synch_IO::receive_file (const char *filename,
 			     int initial_data_length,
 			     int entire_length)
 {
-  JAWS_File_Handle jf (filename, entire_length);
+  JAWS_File_Handle handle (filename, entire_length);
 
-  int result = jf.error ();
+  int result = handle.error ();
 
   if (result == JAWS_File::OKIE_DOKIE)
     {
@@ -75,11 +76,11 @@ JAWS_Synch_IO::receive_file (const char *filename,
       stream.set_handle (this->handle_);
 
       int bytes_to_memcpy = ACE_MIN (entire_length, initial_data_length);
-      ACE_OS::memcpy (jf.address (), initial_data, bytes_to_memcpy);
+      ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
       
       int bytes_to_read = entire_length - bytes_to_memcpy;
       
-      int bytes = stream.recv_n ((char *) jf.address () + initial_data_length,
+      int bytes = stream.recv_n ((char *) handle.address () + initial_data_length,
 				 bytes_to_read);
       if (bytes == bytes_to_read)
 	this->handler_->receive_file_complete ();
@@ -98,23 +99,23 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 			      const char *trailer, 
 			      int trailer_size)
 {
-  JAWS_File_Handle jf (filename);
+  JAWS_File_Handle handle (filename);
 
-  int result = jf.error ();
+  int result = handle.error ();
 
   if (result == JAWS_File::OKIE_DOKIE)
     {
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
       
-      if ((stream.send_n (header, header_size) == header_size) &&
-	  ((unsigned long) stream.send_n (jf.address (), jf.size ())
-           == jf.size ()) &&
-	  (stream.send_n (trailer, trailer_size) == trailer_size))
+      if ((stream.send_n (header, header_size) == header_size) 
+	  && ((u_long) stream.send_n (handle.address (), handle.size ()) == handle.size ()) 
+	  && (stream.send_n (trailer, trailer_size) == trailer_size))
 	this->handler_->transmit_file_complete ();
       else
 	result = -1;      
     }
+
   if (result != JAWS_File::OKIE_DOKIE)    
     this->handler_->transmit_file_error (result);
 }
@@ -148,7 +149,6 @@ JAWS_Synch_IO::send_message (const char *buffer,
 #if defined (ACE_WIN32)
 
 JAWS_Asynch_IO::JAWS_Asynch_IO (void)
-  : JAWS_IO ()
 {
 }
 
@@ -158,35 +158,37 @@ JAWS_Asynch_IO::~JAWS_Asynch_IO (void)
 }
 
 void 
-JAWS_Asynch_IO::read (ACE_Message_Block& mb, int size)
+JAWS_Asynch_IO::read (ACE_Message_Block& mb,
+		      int size)
 {
   ACE_Asynch_Read_Stream ar;
-  if (ar.open (*this, this->handle_) == -1 || 
-      ar.read (mb, size) == -1)
+
+  if (ar.open (*this, this->handle_) == -1 
+      || ar.read (mb, size) == -1)
     this->handler_->read_error ();
 }
 
-// This method will be called when an asynchronous read completes on a stream. 
+// This method will be called when an asynchronous read completes on a
+// stream.
+
 void
 JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {  
+  // This callback is for this->receive_file()
   if (result.act () != 0)
-    // This callback is for this->receive_file()
     {      
       int code = 0;
       if (result.success () && result.bytes_transferred () != 0)
 	{
-	  if (result.message_block ().length ()
-              == result.message_block ().size ())
+	  if (result.message_block ().length () == result.message_block ().size ())
 	    code = JAWS_File::OKIE_DOKIE;
 	  else
 	    {
 	      ACE_Asynch_Read_Stream ar;
-	      if (ar.open (*this, this->handle_) == -1 || 
-		  ar.read (result.message_block (), 
-			   result.message_block ().size ()
-                           - result.message_block ().length (), 
-			   result.act ()) == -1)
+	      if (ar.open (*this, this->handle_) == -1 
+		  || ar.read (result.message_block (), 
+			      result.message_block ().size () - result.message_block ().length (), 
+			      result.act ()) == -1)
 		code = -1;
 	      else
 		return;
@@ -206,7 +208,8 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
   else
     {
       // This callback is for this->read()
-      if (result.success () && result.bytes_transferred () != 0)
+      if (result.success () 
+	  && result.bytes_transferred () != 0)
 	this->handler_->read_complete (result.message_block ());
       else
 	this->handler_->read_error ();    
@@ -220,20 +223,38 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 			      int entire_length)
 {
   ACE_Message_Block *mb = 0;
-  JAWS_File_Handle *jfp = new JAWS_File_Handle (filename, entire_length);
+  JAWS_File_Handle *handle;
 
-  int result = jfp->error ();
+  // James, please fix this method so that it returns an int (i.e.,
+  // -1) if new fails.  Then replace ACE_NEW with ACE_NEW_RETURN and
+  // make sure to update all the callers.
+  ACE_NEW (handle, JAWS_File_Handle (filename, entire_length));
+
+  int result = handle->error ();
 
   if (result == JAWS_File::OKIE_DOKIE)
     {
-      ACE_OS::memcpy (jfp->address (), initial_data, initial_data_length);
+      ACE_OS::memcpy (handle->address (),
+		      initial_data,
+		      initial_data_length);
       
       int bytes_to_read = entire_length - initial_data_length;
-      mb = new ACE_Message_Block ((char *)jfp->address ()
-                                  + initial_data_length, bytes_to_read);
+
+      mb = ACE_Message_Block ((char *)handle->address ()
+			      + initial_data_length, bytes_to_read);
+  
+      if (mb == 0)
+	{
+	  delete handle;
+	  errno = ENOMEM;
+	  // James, make sure that we return -1...
+	  return;
+	}
+
       ACE_Asynch_Read_Stream ar;
+
       if (ar.open (*this, this->handle_) == -1
-          || ar.read (*mb, mb->size () - mb->length (), jfp) == -1)
+          || ar.read (*mb, mb->size () - mb->length (), handle) == -1)
 	result = -1;
     }
   
@@ -241,7 +262,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
     {
       this->handler_->receive_file_error (result);
       delete mb;
-      delete jfp;
+      delete handle;
     }
 }
 
@@ -253,27 +274,30 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 			       int trailer_size)
 {
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
-  JAWS_File_Handle *jfp = new JAWS_File_Handle (filename);
+  JAWS_File_Handle *handle = new JAWS_File_Handle (filename);
 
-  int result = jfp->error ();
+  int result = handle->error ();
 
   if (result == JAWS_File::OKIE_DOKIE)
     {
       ACE_Message_Block header_mb (header, header_size);
       ACE_Message_Block trailer_mb (trailer, trailer_size);
+
       header_and_trailer = new ACE_Asynch_Transmit_File::Header_And_Trailer
         (&header_mb, header_size, &trailer_mb, trailer_size);
+
       ACE_Asynch_Transmit_File tf;
-      if (tf.open (*this, this->handle_) == -1 ||
-	  tf.transmit_file (jfp->handle (), // file handle 
-			    header_and_trailer, // header and trailer data 
-			    0,  // bytes_to_write
-			    0,  // offset
-			    0,  // offset_high
-			    0,  // bytes_per_send
-			    0,  // flags 
-			    jfp // act
-			    ) == -1)
+
+      if (tf.open (*this, this->handle_) == -1 
+	  || tf.transmit_file (handle->handle (), // file handle 
+			       header_and_trailer, // header and trailer data 
+			       0,  // bytes_to_write
+			       0,  // offset
+			       0,  // offset_high
+			       0,  // bytes_per_send
+			       0,  // flags 
+			       handle // act
+			       ) == -1)
 	result = -1;
     }   
   
@@ -281,7 +305,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
     {
       this->handler_->transmit_file_error (result);
       delete header_and_trailer;
-      delete jfp;
+      delete handle;
     }
 }
 
@@ -318,12 +342,17 @@ JAWS_Asynch_IO::send_message (const char *buffer,
 			      int length, 
 			      int act)
 {
-  ACE_Message_Block *mb = new ACE_Message_Block (buffer, length);  
+  // James, make sure that you return -1 if new fails (and update callers?).
+
+  ACE_Message_Block *mb;
+  ACE_NEW (mb, ACE_Message_Block (buffer, length));
+
   ACE_Asynch_Write_Stream aw;
-  if (aw.open (*this, this->handle_) == -1 || 
-      aw.write (*mb, length, (void *) act) == -1)
+  if (aw.open (*this, this->handle_) == -1 
+      || aw.write (*mb, length, (void *) act) == -1)
     {
       mb->release ();
+
       if (act == CONFORMATION)
 	this->handler_->confirmation_message_complete ();
       else	
@@ -335,6 +364,7 @@ void
 JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 {  
   result.message_block ().release ();
+
   if (result.act () == (void *) CONFORMATION)
     this->handler_->confirmation_message_complete ();
   else	

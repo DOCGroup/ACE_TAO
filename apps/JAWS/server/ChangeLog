@@ -1,3 +1,8 @@
+Wed Jul  2 21:03:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Made a major pass through all the code and made the style
+	  consistent with that found in ACE.
+
 Wed Jul  2 14:33:27 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* JAWS_File.cpp: Added double check locking pattern to the fetch
