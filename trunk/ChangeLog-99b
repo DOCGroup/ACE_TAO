@@ -5,36 +5,40 @@ Thu Apr 08 13:47:03 1999  David L. Levine  <levine@cs.wustl.edu>
           to PROBLEM-REPORT-FORM.  Thanks to Thomas Lockhart
           <Thomas.G.Lockhart@jpl.nasa.gov> for suggesting this.
 
+        * docs/ACE-guidelines.html: added checklist for ACE/TAO changes,
+          including commit with a meaningful message, update a
+          ChangeLog, and ack and respond to the requestor.
+
 Thu Apr  8 13:18:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/SString.h: Updated the documentation to show that "Memory is
-	_not_ allocated/freed if <release> is 0".
+        * ace/SString.h: Updated the documentation to show that "Memory is
+        _not_ allocated/freed if <release> is 0".
 
 Wed Apr  7 20:24:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h (ACE_DECLARE_NEW_CORBA_ENV): Removed the
-	  trailing semi-column.  Thanks to Marina for the reminder.
+        * ace/CORBA_macros.h (ACE_DECLARE_NEW_CORBA_ENV): Removed the
+          trailing semi-column.  Thanks to Marina for the reminder.
 
 Wed Apr  7 19:09:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Containers_T: Replaced all Foo &Foo::operator=() with void
- 	  Foo::operator=() to avoid nasty problems with propagation of
- 	  errors.  Thanks to Chris Schleicher <chrissch@cnd.hp.com> for
- 	  reporting this.
+        * ace/Containers_T: Replaced all Foo &Foo::operator=() with void
+          Foo::operator=() to avoid nasty problems with propagation of
+          errors.  Thanks to Chris Schleicher <chrissch@cnd.hp.com> for
+          reporting this.
 
 Wed Apr 07 17:25:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* apps/Gateway/Gateway/connection_config: Changed the connection 1
-	  and 2 to use localhost since it would probably be the most
-	  common test case.
+        * apps/Gateway/Gateway/connection_config: Changed the connection 1
+          and 2 to use localhost since it would probably be the most
+          common test case.
 
-	* apps/Gateway/README: Replaced all references of proxy_config
-	  to connection_config.  Also change the example port number to
-	  10011 and 10012 which are the default port number used by the
-	  gatewayd.
+        * apps/Gateway/README: Replaced all references of proxy_config
+          to connection_config.  Also change the example port number to
+          10011 and 10012 which are the default port number used by the
+          gatewayd.
 
-	  Thanks to Sam Rhine <rmsolution20@earchlink.net> for reporting
-	  this.
+          Thanks to Sam Rhine <rmsolution20@earchlink.net> for reporting
+          this.
 
 Wed Apr  7 16:36:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -54,14 +58,14 @@ Wed Apr 07 14:25:47 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Wed Apr  7 14:20:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Basic_Types.h:
-	  Added a signed companion to David's
-	  ACE_UINT64_LITERAL, to avoid MSVC warnings. If
-	  the platform has no 8-byte integer, this is
-	  useless, but we must keep all compilers happy.
-	  Also modified ACE_INT64_MAX tp use this, and
-	  added a signed companion to
-	  ACE_UINT64_FORMAT_SPECIFIER.
+        * ace/Basic_Types.h:
+          Added a signed companion to David's
+          ACE_UINT64_LITERAL, to avoid MSVC warnings. If
+          the platform has no 8-byte integer, this is
+          useless, but we must keep all compilers happy.
+          Also modified ACE_INT64_MAX tp use this, and
+          added a signed companion to
+          ACE_UINT64_FORMAT_SPECIFIER.
 
 Wed Apr 07 13:57:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
