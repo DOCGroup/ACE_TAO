@@ -1147,8 +1147,9 @@ merge_properties (CosTrading::PropertySeq& modifies,
 
   // The properties pass inspection. Claim this memory until it's time
   // to affect changes.
-  CosTrading::Property* props_buf = modifies.get_buffer (1);
-  this->merge_props_.replace (length, length, props_buf, 1);
+  CosTrading::Property* props_buf = modifies.get_buffer (0);
+  this->merge_props_.replace (length, length, props_buf, 0);
+  this->merge_props_._allocate_buffer (length);
 
   // Merge these properties with the original set.
   for (i = 0; i < length; i++)
@@ -1180,7 +1181,7 @@ TAO_Offer_Modifier::affect_change (void)
   CORBA::ULong merge_length = this->merge_props_.length ();
   // Scrap the existing property sequence and begin a new one
   CosTrading::Property* prop_buf =
-    this->offer_->properties.get_buffer (1);
+    this->offer_->properties.get_buffer (0);
   this->offer_->properties.length (total_length);
 
   // Copy in the unaffected and modified props into the offer,

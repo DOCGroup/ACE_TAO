@@ -940,11 +940,17 @@ export (CORBA::Object_ptr reference,
   CORBA::ULong plength = properties.length ();
   ACE_NEW_RETURN (offer, CosTrading::Offer, 0);
 
-  // No copying, no memory leaks.
+  // No copying, no memory leaks. Violates the "in" parameter semantics
+  // when this object is colocated with the client, however. 
+  //  CosTrading::PropertySeq* hack_seq =
+  //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
+  //  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
+
   CosTrading::PropertySeq* hack_seq =
     ACE_const_cast (CosTrading::PropertySeq*, &properties);
-  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
-  offer->properties.replace (plength, plength, pbuf, 1);
+  CosTrading::Property* pbuf = hack_seq->get_buffer (0);
+  offer->properties.replace (plength, plength, pbuf, 0);
+  offer->properties._allocate_buffer (plength);
   offer->reference = reference->_duplicate (reference);
 
   // Insert the offer into the underlying type map.
