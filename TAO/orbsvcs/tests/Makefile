@@ -13,6 +13,7 @@ DIRS  =	Simple_Naming \
 	Event_Latency \
 	EC_Multiple \
 	EC_Throughput \
+	EC_Mcast \
 	Concurrency
 
 ifdef av

@@ -1,3 +1,8 @@
+Sat Jul 11 10:17:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Makefile: 
+	  Added EC_Mcast to the list of tests.
+
 Fri Jul 10 22:25:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.38 released.
