@@ -139,15 +139,15 @@ main (int argc, char *argv[])
            roundtrip->sendc_test_method (roundtrip_handler.in (),
                                          ACE_OS::gethrtime ()
                                          TAO_ENV_ARG_PARAMETER);
- 	  if (orb->work_pending (TAO_ENV_ARG_PARAMETER)
- 	      orb->perform_work (TAO_ENV_ARG_PARAMETER);
- 	  
+           if (orb->work_pending (TAO_ENV_ARG_PARAMETER))
+              orb->perform_work (TAO_ENV_ARG_PARAMETER);
+
            ACE_TRY_CHECK;
          }
- 
+
        ACE_Time_Value tv (0, 2000);
 
-       while (roundtrip_handler_impl->pending_callbacks ()) 
+       while (roundtrip_handler_impl->pending_callbacks ())
          {
            orb->perform_work (tv TAO_ENV_ARG_PARAMETER);
            ACE_TRY_CHECK;
