@@ -1,3 +1,8 @@
+Tue Sep 26 14:14:17 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Cache_Map_Manager_T.h: Added some comments to the find()
+          methods to say what they do and what they return.
+
 Tue Sep 26 10:09:32 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
