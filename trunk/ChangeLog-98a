@@ -14,6 +14,9 @@ Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Recursive_Mutex_Test.cpp: 50 iterations instead of 100
           on CHORUS.
 
+        * include/makeinclude/platform_chorus_ghs.GNU: added -G to
+          LDFLAGS.
+
 Thu Mar 05 12:36:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_TRACE): Added a missing right paren.
