@@ -187,11 +187,11 @@ CORBA_DynAny_ptr
 TAO_DynEnum_i::copy (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA_Any_ptr a = this->to_any (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_DynAny_ptr::_nil ());
+  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
 
   CORBA_DynAny_ptr dp = TAO_DynAny_i::create_dyn_any (*a,
                                                       ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_DynAny_ptr::_nil ());
+  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
 
   return dp;
 }
