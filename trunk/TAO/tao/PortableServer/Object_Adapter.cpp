@@ -737,6 +737,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
   ACE_TRY
     {
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
       CORBA::OctetSeq_var ocs;
       sri_adapter.tao_ft_interception_point (&ri,
                                              ocs.out ()
@@ -752,6 +753,8 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
           return TAO_Adapter::DS_OK;
         }
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+
       // The receive_request_service_contexts() interception point
       // must be invoked before the operation is dispatched to the
       // servant.

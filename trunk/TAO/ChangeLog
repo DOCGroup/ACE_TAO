@@ -1,3 +1,18 @@
+Tue Dec 23 11:04:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableInterceptorC.h:
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/ServerInterceptorAdapter.cpp:
+	* tao/PortableServer/ServerInterceptorAdapter.h:
+
+	  Added an #define TAO_HAS_EXTENDED_FT_INTERCEPTORS, to protect
+	  the extended interceptor call. The extended call is only for our
+	  FT capabilities and is proprietary. A compliant implementation
+	  of an application level PortableInterceptor will start running
+	  into trouble without this #define. This change is to protect
+	  compliant implementations of application intereceptors from
+	  having any surprises.
+
 Tue Dec 23 09:48:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/IDL_Test/Makefile:
