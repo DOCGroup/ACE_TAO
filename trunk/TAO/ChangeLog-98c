@@ -1,3 +1,17 @@
+Sat Jan 31 01:08:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: 
+	  The IDL compiler has support for NT DLLs already, I moved the
+	  tiem from the "issues" to the "new features" list.
+
+	* docs/index.html: 
+	* docs/compiler.html: 
+	  Added documentation for TAO IDL compiler behavior and options.
+
+	* TAO_IDL/be/be_init.cpp: 
+	  Print a reasonable version for the compiler back-end, it is no
+	  longer the Sun example BE and the version is (around 0.1.0).
+
 Fri Jan 30 16:27:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.1.1, released Fri Jan 30 16:27:47 1998.
