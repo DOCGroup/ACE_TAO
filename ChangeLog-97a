@@ -7,9 +7,10 @@ Tue Jan 28 09:13:00 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Memory_Pool.cpp (ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool),
 	  ace/Naming_Context.cpp (ACE_Naming_Context::open),
 	  ace/Parse_Node.cpp (ACE_Location_Node::open_handle),
-	  Registry.cpp (ACE_Predefined_Naming_Contexts::is_local_host, 
+	  ace/Registry.cpp (ACE_Predefined_Naming_Contexts::is_local_host, 
                 ACE_Registry::Binding_Iterator::Object_Iteration::next_n,
-		ACE_Registry::Binding_Iterator::Context_Iteration::next_n)
+		ACE_Registry::Binding_Iterator::Context_Iteration::next_n),
+	  tests/UPIPE_SAP_Test.cpp:
 	  changed "sizeof char" to "sizeof (char)" because g++ and Sun C++
 	  (properly) choked on it.
 
@@ -20,7 +21,7 @@ Tue Jan 28 09:13:00 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Naming_Context.cpp (both constructors): reordered
 	  initializers to match declaration order.
-
+ 
 	* include/makeinclude/platform_sunos5_g++.GNU: removed
 	  -fno-strict-prototypes because it's not needed with SunOS 5.5.1.
 
