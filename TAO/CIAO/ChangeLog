@@ -1,3 +1,9 @@
+Thu Jul 15 21:52:12 2004  Johnnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/NodeDaemon_Impl.h:
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
+          Fixed incorrect doxygen file tag
+
 Wed Jul 14 10:40:41 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
