@@ -169,11 +169,8 @@ TAO_GIOP_Message_Accept_State_10::
   hdr_status = hdr_status && input.read_octet (response_flags);
   request.response_expected ((response_flags != 0));
 
-  // The high bit of the octet has been set if the SyncScope policy
-  // value is SYNC_WITH_SERVER. This is a temporary hack until all
-  // of GIOP 1.2 is in place. Then we can check the version in the
-  // message header instead.
-  request.sync_with_server ((response_flags == 129));
+  // This is not supported now in GIOP 1.1
+  request.sync_with_server (0);
 
   // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key
@@ -428,13 +425,11 @@ TAO_GIOP_Message_Accept_State_12::
   hdr_status = hdr_status && input.read_octet (response_flags);
   
   // Need to work around the hacks
-  request.response_expected ((response_flags != 0));
+  request.response_expected ((response_flags > 1));
 
   // The high bit of the octet has been set if the SyncScope policy
-  // value is SYNC_WITH_SERVER. This is a temporary hack until all
-  // of GIOP 1.2 is in place. Then we can check the version in the
-  // message header instead.
-  request.sync_with_server ((response_flags == 129));
+  // value is SYNC_WITH_SERVER. 
+  request.sync_with_server ((response_flags == 2));
 
   // Read the discriminant of the union.
   CORBA::Short disc = 0;
