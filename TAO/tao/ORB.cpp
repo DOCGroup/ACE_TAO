@@ -45,9 +45,9 @@
 # else
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 #   include /**/ <exception>
-#   if !defined (ACE_WIN32)
+#   if !defined (_MSC_VER)
 using std::set_unexpected;
-#   endif /* ! ACE_WIN32 */
+#   endif /* !_MSC_VER */
 #  else
 #   include /**/ <exception.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
