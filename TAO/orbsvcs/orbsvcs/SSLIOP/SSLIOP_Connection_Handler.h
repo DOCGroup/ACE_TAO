@@ -26,19 +26,13 @@
 #include "ace/Reactor.h"
 
 #include "tao/corbafwd.h"
-#include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "tao/IIOP_Connection_Handler.h"
 #include "tao/IIOPC.h"
 
 #include "SSLIOP_Transport.h"
 #include "SSLIOP_Current.h"
 
-
-class TAO_SSLIOP_Connection_Handler_State;
-class TAO_SSLIOP_Connection_Handler;
-typedef TAO_SSLIOP_Connection_Handler TAO_SSLIOP_SVC_HANDLER;
-
+class TAO_IIOP_Properties;
 
 /**
  * @class TAO_SSLIOP_Connection_Handler
@@ -48,11 +42,10 @@ typedef TAO_SSLIOP_Connection_Handler TAO_SSLIOP_SVC_HANDLER;
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-class TAO_SSLIOP_Export TAO_SSLIOP_Connection_Handler
+class TAO_SSLIOP_Connection_Handler
   : public TAO_SSL_SVC_HANDLER,
     public TAO_Connection_Handler
 {
-
 public:
 
   TAO_SSLIOP_Connection_Handler (ACE_Thread_Manager* t = 0);

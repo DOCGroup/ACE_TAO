@@ -1,3 +1,58 @@
+Wed May  1 21:01:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (fini):
+
+	  Do not call "this->thread_lane_resources_manager()" since it
+	  attempts to create a thread lane resource manager if the cached
+	  pointer is zero.  Instead check if the cached pointer is zero,
+	  and then finalize the manager if the pointer is non-zero.  If
+	  the ORB was not fully initialized then there is no point in
+	  calling thread_lane_resources_manager(), have it attempt to
+	  create a new manager, and then finalize that completely unused
+	  manager.  Furthermore, if the factory method for the manager
+	  returns a zero pointer, a seg fault will occur since that method
+	  returns a dereferenced pointer.  This scenario is prone to occur
+	  when the Service Configurator is unable to initialize a
+	  service.  This change fixes a seg fault.
+
+	* tao/Asynch_Queued_Message.cpp:
+	* tao/Cleanup_Func_Registry.cpp:
+	* tao/Sequence.h:
+	* tao/Synch_Queued_Message.cpp:
+
+	  Include "ace/Log_Msg.h" to pull in the definition of the
+	  ACE_ASSERT macro.  Necessitated by inter-header dependency
+	  reductions in ACE.
+
+	* tao/Endpoint.h:
+	* tao/Principal.h:
+	* tao/ValueBase.h:
+	* tao/ValueFactory.h:
+
+	  Include "ace/Synch_T.h" to pull in the definition of the
+	  ACE_SYNCH_MUTEX macro.  Necessitated by inter-header dependency
+	  reductions in ACE.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h
+	  (TAO_SSLIOP_Connection_Handler):
+
+	  Don't export this class.  It cause an internal compiler error
+	  from MS Visual Studio .NET (MSVC++ 7) to occur.  The export
+	  wasn't really needed to begin with.
+
+	  Removed useless forward declarations and typedefs.
+
+	  No need to include "tao/IIOP_Connection_Handler.h" to pull in
+	  TAO_IIOP_Properties class.  A forward declaration is enough.
+
+	  No need to include "tao/Wait_Strategy.h".
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+
+	  Include "tao/IIOP_Connection_Handler.h" and
+	  "tao/Wait_Strategy.h" to pull in TAO_IIOP_Properties and
+	  TAO_Wait_Strategy class declarations, respectively.
+
 Wed May 01 22:56:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO.dsp:
@@ -59,7 +114,7 @@ Wed May  1 18:49:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* tests/Big_Oneways/server.cpp:
 	* tests/Big_Twoways/Session.h:
 	  Fix use of _remove_ref() to avoid "pure virtual method called"
-	  errors.  
+	  errors.
 
 Tue Apr 30 23:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 

@@ -1,14 +1,14 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "Cleanup_Func_Registry.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Cleanup_Func_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, Cleanup_Func_Registry, "$Id$")
+#include "ace/Log_Msg.h"
+
+ACE_RCSID (tao,
+           Cleanup_Func_Registry,
+           "$Id$")
 
 TAO_Cleanup_Func_Registry::TAO_Cleanup_Func_Registry (void)
   : cleanup_funcs_ ()
