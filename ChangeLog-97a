@@ -1,3 +1,10 @@
+Thu Jun 05 08:48:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Reactor.cpp: added template specializations.
+
+	* ace/Timer_Queue_T.cpp (ACE_Timer_Queue_T ctor): rearranged
+	  initializers to match declaration order.
+
 Thu Jun  5 06:08:06 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* ace/OS.i (sigaddset, sigdelset, sigismember): NSIG itself is
