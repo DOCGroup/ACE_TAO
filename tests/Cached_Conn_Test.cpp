@@ -167,7 +167,7 @@ static int listen_once = 1;
 static int iterations = 2000;
 static int user_has_specified_iterations = 0;
 static double purge_percentage = 20;
-static size_t keep_available_handles = 10;
+static size_t keep_available_handles = 1024;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 
@@ -461,6 +461,10 @@ main (int argc,
 
   Handle_Consumer handle_consumer;
   handle_consumer.consume_handles (keep_available_handles);
+
+#if defined ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+  caching_strategy_type = ACE_LRU;
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
   // Do we need to test all the strategies.  Note, that the less
   // useful null strategy is ignored in this case.
