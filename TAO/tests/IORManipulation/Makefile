@@ -43,7 +43,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-LDFLAGS =  -L$(ACE_ROOT)/ace -L$(TAO_ROOT)/tao
+LDFLAGS +=  -L$(ACE_ROOT)/ace -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 .PRECIOUS:
