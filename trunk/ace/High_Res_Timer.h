@@ -48,6 +48,14 @@ public:
   void stop_incr (void);
   // Stop incremental timing.
 
+#if defined (ACE_HAS_POSIX_TIME)
+  timespec_t &elapsed_time (void);
+  // returns the elapsed (stop - start) time in a timespec_t (sec, nsec)
+#endif /* ACE_HAS_POSIX_TIME */
+
+  unsigned long getTime ();
+  // returns the elapsed (stop - start) time in microseconds
+
   void print_total (const char *message,
 		    const int iterations = 1,
 		    ACE_HANDLE handle = ACE_STDOUT);
@@ -77,6 +85,10 @@ private:
 
   hrtime_t temp_;
   // Temp time used for incremental timing.
+
+#if defined (ACE_HAS_POSIX_TIME)
+  timespec_t elapsed_time_;
+#endif /* ACE_HAS_POSIX_TIME */
 };
 
 #if defined (__ACE_INLINE__)

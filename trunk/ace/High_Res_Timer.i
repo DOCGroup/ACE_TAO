@@ -43,4 +43,11 @@ ACE_High_Res_Timer::stop_incr (void)
 # error must have ACE_HAS_LONGLONG_T with ACE_HAS_HI_RES_TIMER
 #endif /* ACE_HAS_LONGLONG_T */
 }
+
+ACE_INLINE unsigned long
+ACE_High_Res_Timer::getTime (void)
+{
+  return (this->end_ - this->start_) / 1000;
+}
+
 #endif /* ACE_HAS_HI_RES_TIMER */
