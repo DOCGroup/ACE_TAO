@@ -4,6 +4,11 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
           LIBS += -lpthread.  Thanks to Peter Nordlund <petern@nada.kth.se>
           for reporting that it is needed.
 
+        * ace/config-irix6.x-sgic++-nothreads.h,config-irix6.x-common.h:
+          moved ACE_HAS_GPERF from SGI C++ config to common SGI C++/g++
+          config.  Thanks to Peter Nordlund <petern@nada.kth.se> for
+          recommending this.
+
         * tests/MT_Reactor_Timer_Test.cpp (handle_exception,
           handle_timeout): added ACE_UNUSED_ARG's.
 
