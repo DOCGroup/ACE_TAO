@@ -1,3 +1,13 @@
+Mon Jul 28 14:46:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO_Static.dsp:
+
+          Added new files from 
+
+          Mon Jul 28 12:34:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+          to static project.
+
 Mon Jul 28 13:05:08 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
 	* tests/Param_Test/except.cpp
