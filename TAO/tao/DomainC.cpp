@@ -107,6 +107,7 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_domain_policy",
+      17,
       istub->orb_core ()
     );
 
@@ -242,6 +243,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "make_domain_manager",
+      19,
       istub->orb_core ()
     );
 

@@ -154,6 +154,7 @@ CORBA::DefinitionKind CORBA_IRObject::def_kind (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""def_kind",
+      13,
       istub->orb_core ()
     );
 
@@ -212,6 +213,7 @@ void CORBA_IRObject::destroy (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "destroy",
+      7,
       istub->orb_core ()
     );
 
@@ -351,6 +353,7 @@ char * CORBA_Contained::id (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""id",
+      7,
       istub->orb_core ()
     );
 
@@ -410,6 +413,7 @@ void CORBA_Contained::id (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""id",
+      7,
       istub->orb_core ()
     );
 
@@ -469,6 +473,7 @@ char * CORBA_Contained::name (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""name",
+      9,
       istub->orb_core ()
     );
 
@@ -528,6 +533,7 @@ void CORBA_Contained::name (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""name",
+      9,
       istub->orb_core ()
     );
 
@@ -587,6 +593,7 @@ char * CORBA_Contained::version (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""version",
+      12,
       istub->orb_core ()
     );
 
@@ -646,6 +653,7 @@ void CORBA_Contained::version (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""version",
+      12,
       istub->orb_core ()
     );
 
@@ -705,6 +713,7 @@ CORBA_Container_ptr CORBA_Contained::defined_in (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""defined_in",
+      15,
       istub->orb_core ()
     );
 
@@ -763,6 +772,7 @@ char * CORBA_Contained::absolute_name (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""absolute_name",
+      18,
       istub->orb_core ()
     );
 
@@ -821,6 +831,7 @@ CORBA_Repository_ptr CORBA_Contained::containing_repository (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""containing_repository",
+      26,
       istub->orb_core ()
     );
 
@@ -924,6 +935,7 @@ CORBA_Contained::Description * CORBA_Contained::describe (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe",
+      8,
       istub->orb_core ()
     );
 
@@ -985,6 +997,7 @@ void CORBA_Contained::move (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "move",
+      4,
       istub->orb_core ()
     );
 
@@ -2165,6 +2178,7 @@ CORBA_Contained_ptr CORBA_Container::lookup (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "lookup",
+      6,
       istub->orb_core ()
     );
 
@@ -2232,6 +2246,7 @@ CORBA_ContainedSeq * CORBA_Container::contents (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "contents",
+      8,
       istub->orb_core ()
     );
 
@@ -2302,6 +2317,7 @@ CORBA_ContainedSeq * CORBA_Container::lookup_name (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "lookup_name",
+      11,
       istub->orb_core ()
     );
 
@@ -2579,6 +2595,7 @@ CORBA_Container::DescriptionSeq * CORBA_Container::describe_contents (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe_contents",
+      17,
       istub->orb_core ()
     );
 
@@ -2648,6 +2665,7 @@ CORBA_ModuleDef_ptr CORBA_Container::create_module (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_module",
+      13,
       istub->orb_core ()
     );
 
@@ -2719,6 +2737,7 @@ CORBA_ConstantDef_ptr CORBA_Container::create_constant (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_constant",
+      15,
       istub->orb_core ()
     );
 
@@ -2791,6 +2810,7 @@ CORBA_StructDef_ptr CORBA_Container::create_struct (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_struct",
+      13,
       istub->orb_core ()
     );
 
@@ -2863,6 +2883,7 @@ CORBA_UnionDef_ptr CORBA_Container::create_union (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_union",
+      12,
       istub->orb_core ()
     );
 
@@ -2935,6 +2956,7 @@ CORBA_EnumDef_ptr CORBA_Container::create_enum (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_enum",
+      11,
       istub->orb_core ()
     );
 
@@ -3006,6 +3028,7 @@ CORBA_AliasDef_ptr CORBA_Container::create_alias (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_alias",
+      12,
       istub->orb_core ()
     );
 
@@ -3077,6 +3100,7 @@ CORBA_InterfaceDef_ptr CORBA_Container::create_interface (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_interface",
+      16,
       istub->orb_core ()
     );
 
@@ -3154,6 +3178,7 @@ CORBA_ValueDef_ptr CORBA_Container::create_value (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_value",
+      12,
       istub->orb_core ()
     );
 
@@ -3231,6 +3256,7 @@ CORBA_ValueBoxDef_ptr CORBA_Container::create_value_box (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_value_box",
+      16,
       istub->orb_core ()
     );
 
@@ -3302,6 +3328,7 @@ CORBA_ExceptionDef_ptr CORBA_Container::create_exception (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_exception",
+      16,
       istub->orb_core ()
     );
 
@@ -3443,6 +3470,7 @@ CORBA::TypeCode_ptr CORBA_IDLType::type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type",
+      9,
       istub->orb_core ()
     );
 
@@ -3609,6 +3637,7 @@ CORBA_Contained_ptr CORBA_Repository::lookup_id (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "lookup_id",
+      9,
       istub->orb_core ()
     );
 
@@ -3674,6 +3703,7 @@ CORBA_PrimitiveDef_ptr CORBA_Repository::get_primitive (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_primitive",
+      13,
       istub->orb_core ()
     );
 
@@ -3739,6 +3769,7 @@ CORBA_StringDef_ptr CORBA_Repository::create_string (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_string",
+      13,
       istub->orb_core ()
     );
 
@@ -3804,6 +3835,7 @@ CORBA_WstringDef_ptr CORBA_Repository::create_wstring (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_wstring",
+      14,
       istub->orb_core ()
     );
 
@@ -3870,6 +3902,7 @@ CORBA_SequenceDef_ptr CORBA_Repository::create_sequence (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_sequence",
+      15,
       istub->orb_core ()
     );
 
@@ -3937,6 +3970,7 @@ CORBA_ArrayDef_ptr CORBA_Repository::create_array (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_array",
+      12,
       istub->orb_core ()
     );
 
@@ -4004,6 +4038,7 @@ CORBA_FixedDef_ptr CORBA_Repository::create_fixed (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_fixed",
+      12,
       istub->orb_core ()
     );
 
@@ -4268,6 +4303,7 @@ CORBA::TypeCode_ptr CORBA_ConstantDef::type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type",
+      9,
       istub->orb_core ()
     );
 
@@ -4326,6 +4362,7 @@ CORBA_IDLType_ptr CORBA_ConstantDef::type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type_def",
+      13,
       istub->orb_core ()
     );
 
@@ -4385,6 +4422,7 @@ void CORBA_ConstantDef::type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""type_def",
+      13,
       istub->orb_core ()
     );
 
@@ -4445,6 +4483,7 @@ CORBA_Any * CORBA_ConstantDef::value (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""value",
+      10,
       istub->orb_core ()
     );
 
@@ -4504,6 +4543,7 @@ void CORBA_ConstantDef::value (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""value",
+      10,
       istub->orb_core ()
     );
 
@@ -4820,6 +4860,7 @@ CORBA_StructMemberSeq * CORBA_StructDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -4879,6 +4920,7 @@ void CORBA_StructDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -5016,6 +5058,7 @@ CORBA::TypeCode_ptr CORBA_UnionDef::discriminator_type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""discriminator_type",
+      23,
       istub->orb_core ()
     );
 
@@ -5074,6 +5117,7 @@ CORBA_IDLType_ptr CORBA_UnionDef::discriminator_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""discriminator_type_def",
+      27,
       istub->orb_core ()
     );
 
@@ -5133,6 +5177,7 @@ void CORBA_UnionDef::discriminator_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""discriminator_type_def",
+      27,
       istub->orb_core ()
     );
 
@@ -5193,6 +5238,7 @@ CORBA_UnionMemberSeq * CORBA_UnionDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -5252,6 +5298,7 @@ void CORBA_UnionDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -5390,6 +5437,7 @@ CORBA_EnumMemberSeq * CORBA_EnumDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -5449,6 +5497,7 @@ void CORBA_EnumDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -5585,6 +5634,7 @@ CORBA_IDLType_ptr CORBA_AliasDef::original_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""original_type_def",
+      22,
       istub->orb_core ()
     );
 
@@ -5644,6 +5694,7 @@ void CORBA_AliasDef::original_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""original_type_def",
+      22,
       istub->orb_core ()
     );
 
@@ -5780,6 +5831,7 @@ CORBA::PrimitiveKind CORBA_PrimitiveDef::kind (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""kind",
+      9,
       istub->orb_core ()
     );
 
@@ -5913,6 +5965,7 @@ CORBA::ULong CORBA_StringDef::bound (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""bound",
+      10,
       istub->orb_core ()
     );
 
@@ -5972,6 +6025,7 @@ void CORBA_StringDef::bound (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""bound",
+      10,
       istub->orb_core ()
     );
 
@@ -6106,6 +6160,7 @@ CORBA::ULong CORBA_WstringDef::bound (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""bound",
+      10,
       istub->orb_core ()
     );
 
@@ -6165,6 +6220,7 @@ void CORBA_WstringDef::bound (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""bound",
+      10,
       istub->orb_core ()
     );
 
@@ -6299,6 +6355,7 @@ CORBA::UShort CORBA_FixedDef::digits (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""digits",
+      11,
       istub->orb_core ()
     );
 
@@ -6358,6 +6415,7 @@ void CORBA_FixedDef::digits (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""digits",
+      11,
       istub->orb_core ()
     );
 
@@ -6417,6 +6475,7 @@ CORBA::Short CORBA_FixedDef::scale (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""scale",
+      10,
       istub->orb_core ()
     );
 
@@ -6476,6 +6535,7 @@ void CORBA_FixedDef::scale (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""scale",
+      10,
       istub->orb_core ()
     );
 
@@ -6610,6 +6670,7 @@ CORBA::ULong CORBA_SequenceDef::bound (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""bound",
+      10,
       istub->orb_core ()
     );
 
@@ -6669,6 +6730,7 @@ void CORBA_SequenceDef::bound (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""bound",
+      10,
       istub->orb_core ()
     );
 
@@ -6728,6 +6790,7 @@ CORBA::TypeCode_ptr CORBA_SequenceDef::element_type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""element_type",
+      17,
       istub->orb_core ()
     );
 
@@ -6786,6 +6849,7 @@ CORBA_IDLType_ptr CORBA_SequenceDef::element_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""element_type_def",
+      21,
       istub->orb_core ()
     );
 
@@ -6845,6 +6909,7 @@ void CORBA_SequenceDef::element_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""element_type_def",
+      21,
       istub->orb_core ()
     );
 
@@ -6979,6 +7044,7 @@ CORBA::ULong CORBA_ArrayDef::length (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""length",
+      11,
       istub->orb_core ()
     );
 
@@ -7038,6 +7104,7 @@ void CORBA_ArrayDef::length (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""length",
+      11,
       istub->orb_core ()
     );
 
@@ -7097,6 +7164,7 @@ CORBA::TypeCode_ptr CORBA_ArrayDef::element_type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""element_type",
+      17,
       istub->orb_core ()
     );
 
@@ -7155,6 +7223,7 @@ CORBA_IDLType_ptr CORBA_ArrayDef::element_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""element_type_def",
+      21,
       istub->orb_core ()
     );
 
@@ -7213,6 +7282,7 @@ void CORBA_ArrayDef::element_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""element_type_def",
+      21,
       istub->orb_core ()
     );
 
@@ -7347,6 +7417,7 @@ CORBA::TypeCode_ptr CORBA_ExceptionDef::type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type",
+      9,
       istub->orb_core ()
     );
 
@@ -7406,6 +7477,7 @@ CORBA_StructMemberSeq * CORBA_ExceptionDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -7465,6 +7537,7 @@ void CORBA_ExceptionDef::members (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""members",
+      12,
       istub->orb_core ()
     );
 
@@ -7665,6 +7738,7 @@ CORBA::TypeCode_ptr CORBA_AttributeDef::type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type",
+      9,
       istub->orb_core ()
     );
 
@@ -7723,6 +7797,7 @@ CORBA_IDLType_ptr CORBA_AttributeDef::type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type_def",
+      13,
       istub->orb_core ()
     );
 
@@ -7782,6 +7857,7 @@ void CORBA_AttributeDef::type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""type_def",
+      13,
       istub->orb_core ()
     );
 
@@ -7841,6 +7917,7 @@ CORBA::AttributeMode CORBA_AttributeDef::mode (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""mode",
+      9,
       istub->orb_core ()
     );
 
@@ -7900,6 +7977,7 @@ void CORBA_AttributeDef::mode (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""mode",
+      9,
       istub->orb_core ()
     );
 
@@ -8702,6 +8780,7 @@ CORBA::TypeCode_ptr CORBA_OperationDef::result (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""result",
+      11,
       istub->orb_core ()
     );
 
@@ -8760,6 +8839,7 @@ CORBA_IDLType_ptr CORBA_OperationDef::result_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""result_def",
+      15,
       istub->orb_core ()
     );
 
@@ -8819,6 +8899,7 @@ void CORBA_OperationDef::result_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""result_def",
+      15,
       istub->orb_core ()
     );
 
@@ -8879,6 +8960,7 @@ CORBA_ParDescriptionSeq * CORBA_OperationDef::params (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""params",
+      11,
       istub->orb_core ()
     );
 
@@ -8938,6 +9020,7 @@ void CORBA_OperationDef::params (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""params",
+      11,
       istub->orb_core ()
     );
 
@@ -8997,6 +9080,7 @@ CORBA::OperationMode CORBA_OperationDef::mode (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""mode",
+      9,
       istub->orb_core ()
     );
 
@@ -9056,6 +9140,7 @@ void CORBA_OperationDef::mode (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""mode",
+      9,
       istub->orb_core ()
     );
 
@@ -9116,6 +9201,7 @@ CORBA_ContextIdSeq * CORBA_OperationDef::contexts (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""contexts",
+      13,
       istub->orb_core ()
     );
 
@@ -9175,6 +9261,7 @@ void CORBA_OperationDef::contexts (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""contexts",
+      13,
       istub->orb_core ()
     );
 
@@ -9294,6 +9381,7 @@ void CORBA_OperationDef::exceptions (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""exceptions",
+      15,
       istub->orb_core ()
     );
 
@@ -10149,6 +10237,7 @@ CORBA_InterfaceDefSeq * CORBA_InterfaceDef::base_interfaces (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""base_interfaces",
+      20,
       istub->orb_core ()
     );
 
@@ -10208,6 +10297,7 @@ void CORBA_InterfaceDef::base_interfaces (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""base_interfaces",
+      20,
       istub->orb_core ()
     );
 
@@ -10268,6 +10358,7 @@ CORBA::Boolean CORBA_InterfaceDef::is_a (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "is_a",
+      4,
       istub->orb_core ()
     );
 
@@ -10673,6 +10764,7 @@ CORBA_InterfaceDef::FullInterfaceDescription * CORBA_InterfaceDef::describe_inte
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe_interface",
+      18,
       istub->orb_core ()
     );
 
@@ -10736,6 +10828,7 @@ CORBA_AttributeDef_ptr CORBA_InterfaceDef::create_attribute (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_attribute",
+      16,
       istub->orb_core ()
     );
 
@@ -10812,6 +10905,7 @@ CORBA_OperationDef_ptr CORBA_InterfaceDef::create_operation (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_operation",
+      16,
       istub->orb_core ()
     );
 
@@ -11288,6 +11382,7 @@ CORBA::TypeCode_ptr CORBA_ValueMemberDef::type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type",
+      9,
       istub->orb_core ()
     );
 
@@ -11346,6 +11441,7 @@ CORBA_IDLType_ptr CORBA_ValueMemberDef::type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""type_def",
+      13,
       istub->orb_core ()
     );
 
@@ -11405,6 +11501,7 @@ void CORBA_ValueMemberDef::type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""type_def",
+      13,
       istub->orb_core ()
     );
 
@@ -11464,6 +11561,7 @@ CORBA::Visibility CORBA_ValueMemberDef::access (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""access",
+      11,
       istub->orb_core ()
     );
 
@@ -11523,6 +11621,7 @@ void CORBA_ValueMemberDef::access (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""access",
+      11,
       istub->orb_core ()
     );
 
@@ -11657,6 +11756,7 @@ CORBA_InterfaceDef_ptr CORBA_ValueDef::supported_interface (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""supported_interface",
+      24,
       istub->orb_core ()
     );
 
@@ -11716,6 +11816,7 @@ void CORBA_ValueDef::supported_interface (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""supported_interface",
+      24,
       istub->orb_core ()
     );
 
@@ -11776,6 +11877,7 @@ CORBA_InitializerSeq * CORBA_ValueDef::initializers (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""initializers",
+      17,
       istub->orb_core ()
     );
 
@@ -11835,6 +11937,7 @@ void CORBA_ValueDef::initializers (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""initializers",
+      17,
       istub->orb_core ()
     );
 
@@ -11894,6 +11997,7 @@ CORBA_ValueDef_ptr CORBA_ValueDef::base_value (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""base_value",
+      15,
       istub->orb_core ()
     );
 
@@ -11953,6 +12057,7 @@ void CORBA_ValueDef::base_value (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""base_value",
+      15,
       istub->orb_core ()
     );
 
@@ -12013,6 +12118,7 @@ CORBA_ValueDefSeq * CORBA_ValueDef::abstract_base_values (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""abstract_base_values",
+      25,
       istub->orb_core ()
     );
 
@@ -12072,6 +12178,7 @@ void CORBA_ValueDef::abstract_base_values (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""abstract_base_values",
+      25,
       istub->orb_core ()
     );
 
@@ -12131,6 +12238,7 @@ CORBA::Boolean CORBA_ValueDef::is_abstract (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""is_abstract",
+      16,
       istub->orb_core ()
     );
 
@@ -12190,6 +12298,7 @@ void CORBA_ValueDef::is_abstract (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""is_abstract",
+      16,
       istub->orb_core ()
     );
 
@@ -12249,6 +12358,7 @@ CORBA::Boolean CORBA_ValueDef::is_custom (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""is_custom",
+      14,
       istub->orb_core ()
     );
 
@@ -12308,6 +12418,7 @@ void CORBA_ValueDef::is_custom (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""is_custom",
+      14,
       istub->orb_core ()
     );
 
@@ -12367,6 +12478,7 @@ CORBA::Boolean CORBA_ValueDef::is_truncatable (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""is_truncatable",
+      19,
       istub->orb_core ()
     );
 
@@ -12426,6 +12538,7 @@ void CORBA_ValueDef::is_truncatable (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""is_truncatable",
+      19,
       istub->orb_core ()
     );
 
@@ -12486,6 +12599,7 @@ CORBA::Boolean CORBA_ValueDef::is_a (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "is_a",
+      4,
       istub->orb_core ()
     );
 
@@ -13057,6 +13171,7 @@ CORBA_ValueDef::FullValueDescription * CORBA_ValueDef::describe_value (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "describe_value",
+      14,
       istub->orb_core ()
     );
 
@@ -13120,6 +13235,7 @@ CORBA_ValueMemberDef_ptr CORBA_ValueDef::create_value_member (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_value_member",
+      19,
       istub->orb_core ()
     );
 
@@ -13193,6 +13309,7 @@ CORBA_AttributeDef_ptr CORBA_ValueDef::create_attribute (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_attribute",
+      16,
       istub->orb_core ()
     );
 
@@ -13269,6 +13386,7 @@ CORBA_OperationDef_ptr CORBA_ValueDef::create_operation (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_operation",
+      16,
       istub->orb_core ()
     );
 
@@ -13512,6 +13630,7 @@ CORBA_IDLType_ptr CORBA_ValueBoxDef::original_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""original_type_def",
+      22,
       istub->orb_core ()
     );
 
@@ -13571,6 +13690,7 @@ void CORBA_ValueBoxDef::original_type_def (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""original_type_def",
+      22,
       istub->orb_core ()
     );
 

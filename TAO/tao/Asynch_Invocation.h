@@ -46,6 +46,7 @@ class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation : public TAO_GIOP_Invocation
 public:
   TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *data,
                                      const char *operation,
+                                     CORBA::ULong opname_len_,
                                      TAO_ORB_Core* orb_core,
                                      const TAO_Reply_Handler_Skeleton &reply_handler_skel,
                                      Messaging::ReplyHandler_ptr reply_handler_ptr);
