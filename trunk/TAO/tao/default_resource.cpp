@@ -275,7 +275,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
       if (GLOBAL_ALLOCATED::instance ()->r_ == 0)
         {
           ACE_NEW_RETURN (GLOBAL_ALLOCATED::instance ()->r_,
-                          ACE_Reactor (this->allocate_reactor_impl ()),
+                          ACE_Reactor (this->allocate_reactor_impl (), 1),
                           0);
         }
       return GLOBAL_ALLOCATED::instance ()->r_;
@@ -284,7 +284,7 @@ TAO_Default_Resource_Factory::get_reactor (void)
       if (TSS_ALLOCATED::instance ()->r_ == 0)
         {
           ACE_NEW_RETURN (TSS_ALLOCATED::instance ()->r_,
-                          ACE_Reactor (this->allocate_reactor_impl ()),
+                          ACE_Reactor (this->allocate_reactor_impl (), 1),
                           0);
         }
       return TSS_ALLOCATED::instance ()->r_;
@@ -555,7 +555,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
   delete this->object_adapter_;
 
   this->c_.close ();
-  this->a_.close ();
 
   delete this->r_;
 }

@@ -1,3 +1,21 @@
+Thu May 20 15:22:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/default_resource.cpp (get_reactor): The problem was that
+	  when the reactor implementation was given to the reactor
+	  interface class, it was not instructed to delete the
+	  implementation.  Once this was fixed, the change below by Carlos
+	  was not necessary.
+
+        * tao/POA_Current: Changed the POA Current from a TSS specific
+	  object to a global object owned by the ORB.  Its state, however,
+	  is still managed by a TSS object (this new object is called
+	  TAO_POA_Current_Impl).  All the POA, Object_Adapter,
+	  TSS_Resources, and Servant Base classes were changed to use this
+	  new class.
+
+	  Also, cleaned up the POA Current implementation class.  There
+	  were many extra methods that not used in the new scheme.
+
 Thu May 20 15:00:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pluggable.h:
@@ -32,7 +50,7 @@ Thu May 20 12:17:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Any.cpp:
 	* tao/GIOP_Server_Request.cpp:
 	* tao/NVList.cpp:
-	  Changed the signature of 
+	  Changed the signature of
 
 	    void _tao_replace (CORBA::TypeCode_ptr,
                      const ACE_Message_Block *mb,
@@ -46,7 +64,7 @@ Thu May 20 12:17:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
                      const ACE_Message_Block *mb,
                      CORBA::Environment &TAO_IN_ENV =
                        CORBA::default_environment ());
-	  
+
 	  Also modified Any's copy contructor and assignment
 	  operator to set any_own_data_ to 0. In all these cases,
 	  the void* value_ is freed, but not set to anything.

@@ -28,6 +28,7 @@
 class TAO_Client_Connection_Handler;
 class TAO_POA;
 class TAO_POA_Current;
+class TAO_POA_Current_Impl;
 class TAO_POA_Manager;
 class TAO_POA_Policies;
 class TAO_Acceptor;
@@ -73,13 +74,8 @@ public:
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
 
-  TAO_POA_Current *poa_current (void);
-  // Accessor which returns a pointer to a structure containing
-  // context on the current POA upcall.
-
-  TAO_POA_Current *poa_current (TAO_POA_Current *new_current);
-  // Sets the thread-specific pointer to the new POA Current state,
-  // returning a pointer to the existing POA Current state.
+  TAO_POA_Current &poa_current (void) const;
+  // Accessor to the POA current.
 
   // = Set/get the connector registry - used to just be the connector.
   TAO_Connector_Registry *connector_registry (TAO_Connector_Registry *c);
@@ -363,6 +359,13 @@ protected:
   TAO_Policy_Manager_Impl default_policies_;
   // The default policies.
 #endif /* TAO_HAS_CORBA_MESSAGING */
+
+  TAO_POA_Current *poa_current_;
+  // POA current.
+  //
+  // Note that this is a pointer in order to reduce the include file
+  // dependencies.
+  //
 };
 
 // ****************************************************************
@@ -388,7 +391,7 @@ public:
   ACE_Reactor *reactor_;
   // Used for responding to I/O reactively
 
-  TAO_POA_Current *poa_current_;
+  TAO_POA_Current_Impl *poa_current_impl_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the
   // resource factory because it must always be held in
@@ -409,7 +412,7 @@ public:
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
-  TAO_Policy_Current* policy_current_;
+  TAO_Policy_Current *policy_current_;
   // This pointer is reset by the POA on each upcall.
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -424,6 +427,9 @@ public:
 };
 
 // ****************************************************************
+
+typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
+        TAO_ORB_CORE_TSS_RESOURCES;
 
 extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 

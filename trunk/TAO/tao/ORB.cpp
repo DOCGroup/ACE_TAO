@@ -512,13 +512,8 @@ CORBA_ORB::resolve_root_poa (CORBA::Environment &ACE_TRY_ENV,
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa_current (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Return the pointer to this thread's POACurrent.
-
-  TAO_POA_Current *poa_current = this->orb_core_->poa_current ();
-  if (poa_current == 0)
-    return CORBA_Object::_nil ();
-
-  return poa_current->_this (ACE_TRY_ENV);
+  // Return the pointer to the POA Current.
+  return this->orb_core_->poa_current ()._this (ACE_TRY_ENV);
 }
 
 CORBA_Object_ptr
