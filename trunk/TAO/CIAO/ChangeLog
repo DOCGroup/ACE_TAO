@@ -1,3 +1,9 @@
+2003-12-03  Arvind S. Krishna  <arvindk@imp.ciao-exp.pces.emulab.net>
+
+	* performance-tests/Benchmark/NOTE.txt:
+	* performance-tests/Benchmark/descriptors/NOTE.txt:
+	  Moved file to the right directory and updated name of the .cad file to the right one. Thanks to Gautam Thaker for pointing this out.
+
 Tue Dec  2 18:40:59 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/Hello/Receiver/Receiver_exec.cpp:
