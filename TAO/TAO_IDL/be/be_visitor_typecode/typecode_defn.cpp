@@ -2811,22 +2811,38 @@ be_visitor_typecode_defn::compute_encap_length (be_union_branch *node)
        i < node->label_list_length ();
        ++i)
     {
-      encap_len += 4; // case label;
-      encap_len += 
-        this->name_encap_len (node); // for name
-
-      bt = be_type::narrow_from_decl (node->field_type ());
-      this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
-      if (!bt || bt->accept (this) == -1)
+      // Has the length for this member already been calculated?
+      if (node->tc_generated () == 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR, 
-                             ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                             ASYS_TEXT ("::compute_encap_len (union branch) - ")
-                             ASYS_TEXT ("cannot compute tc size\n")),
-                            -1);
+          node->tc_generated (1);
+
+          encap_len += 4; // case label;
+          encap_len += 
+            this->name_encap_len (node); // for name
+
+          bt = be_type::narrow_from_decl (node->field_type ());
+          this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+          if (!bt || bt->accept (this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, 
+                                 ASYS_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                                 ASYS_TEXT ("::compute_encap_len (union branch) - ")
+                                 ASYS_TEXT ("cannot compute tc size\n")),
+                                -1);
+            }
+          encap_len += this->computed_tc_size_;
         }
-      encap_len += this->computed_tc_size_;
+      else
+        {
+          // This member's length has already been calculated, so we
+          // exit the loop
+          break;
+        }
     }
+
+  // If this node is involved in nesting or recursion, it will
+  // be visited again later.
+  node->tc_generated (0);
 
   this->computed_encap_len_ = encap_len;
 
