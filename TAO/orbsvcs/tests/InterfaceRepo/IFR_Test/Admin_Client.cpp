@@ -2051,10 +2051,15 @@ Admin_Client::constant_test (CORBA::Environment &ACE_TRY_ENV)
   out_any >>= out_ull_val;
 
   if (this->debug_)
+#if defined (ACE_LACKS_LONGLONG_T)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ConstantDef::value (ulonglong): %s\n"),
+                out_ull_val.as_string ().c_str ()));
+#else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ConstantDef::value (ulonglong): %Q\n"),
                 out_ull_val));
-
+#endif
   ACE_ASSERT (out_ull_val == ull_val);
 
   cvar->destroy (ACE_TRY_ENV);

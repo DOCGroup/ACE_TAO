@@ -1,3 +1,13 @@
+Fri Apr  6 08:29:44 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+        * tests/Param_Test/anyop.cpp:
+        * tests/Param_Test/ulonglong.cpp:
+
+          Remove build warnings for platforms that don't support unsigned
+          long long types.
+
 Fri Apr  6 06:42:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed stupid
