@@ -278,8 +278,8 @@ public:
   //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
   //   on Windows CE.  There is no <iostream.h> support on CE.
 
-  void msg_ostream (ostream *);
-  ostream *msg_ostream (void) const;
+  void msg_ostream (ACE_OSTREAM_TYPE *);
+  ACE_OSTREAM_TYPE *msg_ostream (void) const;
   // Set/Get the ostream that is used to print error messages.
 
   void msg_callback (ACE_Log_Msg_Callback *c);
@@ -349,11 +349,11 @@ public:
             int op_status = -1,
             int errnum = 0,
             int restart = 1,
-            ostream *os = 0,
+            ACE_OSTREAM_TYPE *os = 0,
             ACE_Log_Msg_Callback *c = 0);
   // Set the line number, file name, operational status, error number,
-  // restart flag, ostream and the callback object.  This combines all
-  // the other set methods into a single method.
+  // restart flag, ostream, and the callback object.  This combines
+  // all the other set methods into a single method.
 
   ssize_t log (ACE_Log_Priority priority, const ASYS_TCHAR *format, ...);
   // Format a message to the thread-safe ACE logging mechanism.  Valid
@@ -429,7 +429,7 @@ private:
   // Indicates whether we should restart system calls that are
   // interrupted.
 
-  ostream *ostream_;
+  ACE_OSTREAM_TYPE *ostream_;
   // The ostream where logging messages can be written.
 
   ACE_Log_Msg_Callback *msg_callback_;

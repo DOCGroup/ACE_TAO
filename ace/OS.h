@@ -4692,7 +4692,7 @@ private:
   // descriptor.
 
 # if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
-  ostream *ostream_;
+  ACE_OSTREAM_TYPE *ostream_;
   // Ostream where the new TSS Log_Msg will use.
 
   u_long priority_mask_;
