@@ -31,13 +31,13 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-//     if (this->response_expected_ == 0) //oneway ?
-//       {
-//         // if client is not expecting anything, don't send anything
-//         TAO_Transport::release (this->transport_);
-//         return;
-//       }
-
+    if (this->response_expected_ == 0) //oneway ?
+      {
+        // if client is not expecting anything, don't send anything
+        TAO_Transport::release (this->transport_);
+        return;
+      }
+    
     // If the ResponseHandler is being destroyed before a reply has
     // been sent to the client, we send a system exception
     // CORBA::NO_RESPONSE, with minor code to indicate the problem.
