@@ -9,12 +9,12 @@
 //    namespace_check.cpp
 //
 // = DESCRIPTION
-//    Contains conditional include of reopened_modulesC.cpp
-//    and reopened_modulesS.cpp, for platforms without
+//    Contains conditional include of generated code which contains
+//    reopened and/or nested modules, for platforms without
 //    namespaces.
 //
 // = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//    Jeff Parsons <parsons@cs.wustl.edu>.
 //
 // ============================================================================
 
@@ -29,5 +29,9 @@
 #include "reopen_include1S.cpp"
 #include "reopen_include2C.cpp"
 #include "reopen_include2S.cpp"
+#include "paramsC.cpp"
+#include "paramsS.cpp"
+#include "nested_scopeC.cpp"
+#include "nested_scopeS.cpp"
 
 #endif /* ACE_HAS_USING_KEYWORD */
