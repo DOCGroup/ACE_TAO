@@ -58,6 +58,10 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+#if defined (IOR)
+#undef IOR
+#endif /* IOR */
+
 TAO_NAMESPACE  IOP
 {
   typedef CORBA::ULong ProfileId;

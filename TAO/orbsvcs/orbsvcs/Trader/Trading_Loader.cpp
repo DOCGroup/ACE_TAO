@@ -36,8 +36,7 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
       // and the server's process id.
       char host_name[MAXHOSTNAMELEN + 1];
       ACE_INET_Addr localhost ((u_short) 0);
-      if (localhost.get_host_name (host_name,
-                                   sizeof (host_name) != 0))
+      if (localhost.get_host_name (host_name, sizeof (host_name)) != 0)
         {
           const char *tmp = localhost.get_host_addr ();
           if (tmp == 0)
