@@ -1,3 +1,22 @@
+Thu Aug  7 00:12:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Handle_Set.i:
+          Added several #includes required by the FD_ZERO macro on various
+          platforms, including os_string.h, os_strings.h, and bstring.h,
+          reqired by recent subsetting.
+
+        * ace/Process_Mutex.cpp:
+          Removed explicite template instantiation of
+          ACE_GUARD<ACE_Process_Mutex> that doesn't appear to be needed
+          within ACE and highlighted by recent subsetting.
+
+        * ace/TSS_T.cpp:
+          Added conditional #include TSS_Adapter.h when ACE_HAS_THR_C_DEST
+          defined and required by recent subsetting.
+
+        * ace/Timer_Queue_T.cpp:
+          Added #include Null_Mutex.h required by recent subsetting.
+
 Wed Aug  6 14:50:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please send all comments/questions about this commit to
