@@ -41,11 +41,12 @@ be_visitor_args_request_info_sh::~be_visitor_args_request_info_sh (void)
 
 int be_visitor_args_request_info_sh::visit_argument (be_argument *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  this->ctx_->node (node); // save the argument node
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
   // retrieve the type
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -55,10 +56,8 @@ int be_visitor_args_request_info_sh::visit_argument (be_argument *node)
                         -1);
     }
 
-  os->indent (); // start with current indentation level
-
   // Different types have different mappings when used as in/out or
-  // inout parameters. Let this visitor deal with the type
+  // inout parameters. Let this visitor deal with the type.
 
   if (bt->accept (this) == -1)
     {
@@ -68,13 +67,14 @@ int be_visitor_args_request_info_sh::visit_argument (be_argument *node)
                          "cannot accept visitor\n"),
                         -1);
     }
+
   // As we visit each type we print out the &.
   *os <<" "<< node->local_name () << "_;\n";
   return 0;
 }
 int be_visitor_args_request_info_sh::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
