@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_ACE_H
 #define ACE_ACE_H
@@ -30,6 +29,7 @@
 // Forward declarations.
 class ACE_Time_Value;
 class ACE_Message_Block;
+class ACE_Handle_Set;
 
 /**
  * @class ACE
@@ -401,8 +401,6 @@ public:
                                    ACE_TCHAR delim =
                                      ACE_DIRECTORY_SEPARATOR_CHAR);
 
-
-
   /**
    * Returns the current timestamp in the form
    * "hour:minute:second:microsecond."  The month, day, and year are
@@ -539,6 +537,19 @@ public:
   // = Set/get the debug level.
   static char debug (void);
   static void debug (char d);
+
+  /// Wrapper facade for <select> that uses <ACE_Handle_Set>s.
+  static int select (int width,
+                     ACE_Handle_Set *readfds,
+                     ACE_Handle_Set *writefds = 0,
+                     ACE_Handle_Set *exceptfds = 0,
+                     const ACE_Time_Value *timeout = 0);
+
+  /// Wrapper facade for the most common use of <select> that uses
+  /// <ACE_Handle_Set>s.
+  static int select (int width,
+                     ACE_Handle_Set &readfds,
+                     const ACE_Time_Value *timeout = 0);
 
   /// Timed wait for handle to get read ready.
   static int handle_read_ready (ACE_HANDLE handle,

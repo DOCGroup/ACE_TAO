@@ -1,3 +1,28 @@
+Wed Jul 18 13:15:06 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS_Dirent.cpp (scandir_emulation): Removed the calls to the
+	  ACE_ERROR_RETURN macros to avoid dependencies on ACE_Log_Msg
+ 	  from within the ACE_OS layer.  Thanks to Bala for pointing this
+ 	  out!
+
+	* ace/ACE.{h,cpp}: Added a new wrapper method for ACE_OS::select()
+	  that uses ACE_Handle_Set *'s rather than fd_set *'s.  This is
+ 	  motivated by work Steve Huston and I are doing on our new book
+ 	  "C++ Network Programming: Resolving Complexity with ACE and
+ 	  Patterns."
+
+	* ace/Malloc_T.i (release): Removed an unnecessary "else" to
+	  make gcc 2.96 happy.  Thanks to Frank Wolf <fwolf@gum.de> for
+ 	  reporting this.
+  
+        * Happy birthday to me!  
+
+Tue Jul 17 00:34:40 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SString.h (ACE_Tokenizer): Make sure that the data members
+	  are protected, not private...  Thanks to Martin Krumpolec for
+	  reporting this (again)!
+
 Wed Jul 18 16:40:56 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (program_name): Undid the following changes:
@@ -12,13 +37,23 @@ Wed Jul 18 15:59:03 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * ace/config-tru64.h:
 
           Removed _LIBC_POLLUTION_H. It seems that this macro is causing
-          problems for some users.
+ 	  problems for some users.  Thanks to Pierre Oberson
+ 	  <oberson@nagra-kudelski.ch> for prompting this fix.
 
 Tue Jul 17 13:00:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_test.lst: Enabled the MEM_Stream test on Linux.
 
 Mon Jul 16 14:59:32 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Memory_Pool.h (ACE_Shared_Memory_Pool): Added a comment
+	  that discourages developer from using the ACE_Shared_Memory_Pool
+ 	  and points them to the ACE_MMAP_Memory_Pool instead.  Thanks to
+ 	  Johnny Chen <jchen@huawei.com> for motivating this.
+
+	* ace/OS_Dirent.cpp (readdir_emulation): Fixed a handle leak
+	  in the event that errors occur.  Thanks to Kevin Burge
+ 	  <kcburge@systemware-inc.com> for reporting this.
 
 	* ace/Log_Msg_UNIX_Syslog.cpp (open): Add an ACE_const_cast()
 	  to the program name for platforms like LynxOS whose openlog()

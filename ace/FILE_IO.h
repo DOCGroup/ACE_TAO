@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_FILE_IO_H
 #define ACE_FILE_IO_H
@@ -145,7 +144,7 @@ public:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FILE_IO.i"
-#endif
+#endif /* !defined (ACE_LACKS_INLINE_FUNCTIONS) */
 
 #include "ace/post.h"
 #endif /* ACE_FILE_IO_H */
