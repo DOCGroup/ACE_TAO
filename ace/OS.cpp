@@ -4086,7 +4086,6 @@ ACE_OS::socket_init (int version_high, int version_low)
 # if defined (ACE_WIN32)
   if (ACE_OS::socket_initialized_ == 0)
     {
-      // cout << "WSAStartup" << endl;
       WORD version_requested = MAKEWORD (version_high, version_low);
       WSADATA wsa_data;
       int error = WSAStartup (version_requested, &wsa_data);
@@ -4100,7 +4099,10 @@ ACE_OS::socket_init (int version_high, int version_low)
           ::MessageBox (NULL, buf, ACE_TEXT ("WSAStartup failed!"), MB_OK);
         }
 #   else
-        cerr << "WSAStartup failed, WSAGetLastError returned " << error << endl;
+      ACE_OS::fprintf (stderr,
+                       "ACE_OS::socket_init; WSAStartup failed, "
+                         "WSAGetLastError returned %d\n",
+                       error);
 #   endif /* ACE_HAS_WINCE */
 
       ACE_OS::socket_initialized_ = 1;
@@ -4118,7 +4120,6 @@ ACE_OS::socket_fini (void)
 # if defined (ACE_WIN32)
   if (ACE_OS::socket_initialized_ != 0)
     {
-      // cout << "WSACleanup" << endl;
       if (WSACleanup () != 0)
         {
           int error = ::WSAGetLastError ();
@@ -4128,7 +4129,10 @@ ACE_OS::socket_fini (void)
           ACE_OS::sprintf (buf, fmt, ACE_TEXT ("WSACleanup"), error);
           ::MessageBox (NULL, buf , ACE_TEXT ("WSACleanup failed!"), MB_OK);
 #   else
-          cerr << "WSACleanup failed, WSAGetLastError returned " << error << endl;
+          ACE_OS::fprintf (stderr,
+                           "ACE_OS::socket_fini; WSACleanup failed, "
+                             "WSAGetLastError returned %d\n",
+                           error);
 #   endif /* ACE_HAS_WINCE */
         }
       ACE_OS::socket_initialized_ = 0;
