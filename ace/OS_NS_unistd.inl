@@ -9,6 +9,14 @@
 #include "ace/Default_Constants.h"
 #include "ace/OS_Memory.h"
 
+#if defined (ACE_LACKS_ACCESS)
+#  include "ace/OS_NS_stdio.h"
+#endif /* ACE_LACKS_ACCESS */
+
+#if defined (VXWORKS) || defined (ACE_HAS_WINCE)
+#  include "ace/os_include/os_unistd.h"
+#endif /* VXWORKS || ACE_HAS_WINCE */
+
 ACE_INLINE int
 ACE_OS::access (const char *path, int amode)
 {
