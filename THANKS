@@ -891,6 +891,7 @@ Alex Chachanashvili <achacha@panix.com>
 Gilbert Grosdidier <Gilbert.Grosdidier@in2p3.fr>
 James Briggs <James.Briggs@dsto.defence.gov.au>
 Herbert Wang <herb@nowsol.com>
+Anders Olsson <epkanol@s1.epk.ericsson.se>x
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
