@@ -242,10 +242,8 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("%p\n"),
-		ACE_TEXT (
-                  "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
-               )));
+		"%p\n",
+		ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
 }
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
@@ -279,9 +277,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("%p\n"),
-		ACE_TEXT (
-                  "ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector"
-              )));
+		"%p\n",
+                ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
 }
 

@@ -674,6 +674,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
 //   'A': print an ACE_timer_t value
 //   'a': exit the program at this point (var-argument is the exit status!)
 //   'c': print a character
+//   'C': print a character string
 //   'i', 'd': print a decimal number
 //   'I', indent according to nesting depth
 //   'e', 'E', 'f', 'F', 'g', 'G': print a double
@@ -694,7 +695,8 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
 //   't': print thread id (1 if single-threaded)
 //   'u': print as unsigned int
 //   'X', 'x': print as a hex number
-//   'W': print out a wide (Unicode) character string (currently Win32 only).
+//   'w': print a wide character
+//   'W': print out a wide character string.
 //   '%': format a single percent sign, '%'
 
 ssize_t
@@ -706,6 +708,7 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
   // Start of variable args section.
   va_list argp;
 
+
   va_start (argp, format_str);
 
   int result = this->log (format_str,
@@ -715,6 +718,31 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
   return result;
 }
+
+#if defined (ACE_HAS_WCHAR)
+/**
+ * Since this is the Anti-TCHAR version, we need to convert 
+ * the format string over.  
+ */
+ssize_t
+ACE_Log_Msg::log (ACE_Log_Priority log_priority,
+                  const ACE_ANTI_TCHAR *format_str, ...)
+{
+  ACE_TRACE ("ACE_Log_Msg::log");
+
+  // Start of variable args section.
+  va_list argp;
+
+  va_start (argp, format_str);
+
+  int result = this->log (ACE_TEXT_ANTI_TO_TCHAR (format_str),
+                          log_priority,
+                          argp);
+  va_end (argp);
+
+  return result;
+}
+#endif /* ACE_HAS_WCHAR */
 
 ssize_t
 ACE_Log_Msg::log (const ACE_TCHAR *format_str,
@@ -747,7 +775,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   // If conditional values were set and the log priority is correct,
   // then the values are actually set.
   if (conditional_values)
-    this->set (this->conditional_values_.file_,
+    this->set (this->conditional_values_.file_,   
                this->conditional_values_.line_,
                this->conditional_values_.op_status_,
                this->conditional_values_.errnum_,
@@ -846,15 +874,13 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   type = SKIP_SPRINTF;
                   break;
                 case 'N':
-                  {
                     // @@ UNICODE
-                    const ACE_TCHAR *file = this->file ();
-                    ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s"),
-                                     file ? file
-                                          : ACE_LIB_TEXT ("<unknown file>"));
-                    type = SKIP_SPRINTF;
-                    break;
-                  }
+                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s"),
+                                   this->file () ? 
+                                          ACE_TEXT_CHAR_TO_TCHAR (this->file ())
+                                        : ACE_LIB_TEXT ("<unknown file>"));
+                  type = SKIP_SPRINTF;
+                  break;
                 case 'n': // Print the name of the program.
                   type = SKIP_SPRINTF;
                   // @@ UNICODE
@@ -1121,14 +1147,54 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ACE_WIN32 */
                   break;
                 case 's':
-                  type = 1 + wpc; // 1, 2, 3
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                  type = SKIP_SPRINTF;
+                  ACE_OS::sprintf (bp, ACE_WIDE_TEXT ("%ls"), va_arg (argp, wchar_t *));
+#else /* ACE_WIN32 && ACE_USES_WCHAR */
+                  type = 1 + wpc;
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
+                  break;
+                case 'C':
+                  type = 1 + wpc; 
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                  fp[1] = 'S';
+#else /* ACE_WIN32 && ACE_USES_WCHAR */
+                  fp[1] = 's';
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
                   break;
                 case 'W':
-                  // @@ UNICODE
+                  type = 1 + wpc;
 #if defined (ACE_WIN32)
+# if defined (ACE_USES_WCHAR)
+                  fp[1] = 's';
+# else /* ACE_USES_WCHAR */
                   fp[1] = 'S';
+# endif /* ACE_USES_WCHAR */
+#elif defined (ACE_HAS_WCHAR)
+                  type = SKIP_SPRINTF;
+                  ACE_OS::sprintf (bp, ACE_WIDE_TEXT ("%ls"), va_arg (argp, wchar_t *));
+#endif /* ACE_WIN32 / ACE_HAS_WCHAR */
+                  break;
+                case 'w':
+                  type = 4 + wpc;
+#if defined (ACE_WIN32)
+# if defined (ACE_USES_WCHAR)
+                  fp[1] = 'c';
+# else /* ACE_USES_WCHAR */
+                  fp[1] = 'C';
+# endif /* ACE_USES_WCHAR */
+#elif defined (ACE_HAS_WCHAR)
+                  type = SKIP_SPRINTF;
+                  ACE_OS::sprintf (bp, ACE_WIDE_TEXT ("%lc"), va_arg (argp, wchar_t));
 #endif /* ACE_WIN32 */
-                case 'd': case 'c': case 'i': case 'o':
+                  break;
+                case 'c':
+                  type = 4 + wpc;
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                  fp[1] = 'C';  
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
+                  break;
+                case 'd': case 'i': case 'o':
                 case 'u': case 'x': case 'X':
                   type = 4 + wpc; // 4, 5, 6
                   break;
@@ -1437,7 +1503,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 }
 
 void
-ACE_Log_Msg::set (const ACE_TCHAR *filename,
+ACE_Log_Msg::set (const char *filename,
                   int line,
                   int status,
                   int err,
@@ -1456,7 +1522,7 @@ ACE_Log_Msg::set (const ACE_TCHAR *filename,
 }
 
 void
-ACE_Log_Msg::conditional_set (const ACE_TCHAR *filename,
+ACE_Log_Msg::conditional_set (const char *filename,
                               int line,
                               int status,
                               int err)
@@ -1660,17 +1726,16 @@ ACE_Log_Msg::tracing_enabled (void)
   return this->tracing_enabled_;
 }
 
-const ACE_TCHAR *
+const char *
 ACE_Log_Msg::file (void)
 {
   return this->file_;
 }
 
 void
-ACE_Log_Msg::file (const ACE_TCHAR *s)
+ACE_Log_Msg::file (const char *s)
 {
-  ACE_OS::strncpy (this->file_, s,
-                   (sizeof this->file_ / sizeof (ACE_TCHAR)));
+  ACE_OS::strncpy (this->file_, s, sizeof this->file_);
 }
 
 const ACE_TCHAR *

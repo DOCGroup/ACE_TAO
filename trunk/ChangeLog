@@ -1,3 +1,88 @@
+Mon Dec 11 00:50:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_wchar.h:
+
+          Created an ACE_ANTI_TCHAR and ACE_TEXT_ANTI_TO_TCHAR.
+          ACE_ANTI_TCHAR has the opposite behavior of ACE_TCHAR.
+
+        * ace/Process.cpp:
+        * ace/Process.h:
+        * ace/Process.i:
+
+          Added wchar_t versions of:
+          
+          - ACE_Process_Options::working_directory (wd)
+          - ACE_Process_Options::command_line (format, ...)
+
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Added wchar_t versions of:
+
+          - ACE_OS::cond_init () - 2 versions
+          - ACE_OS::mutex_init ()
+          - ACE_OS::thread_mutex_init ()
+          - ACE_OS::event_init ()
+          - ACE_OS::sema_init ()
+
+          On Win32, these should be implemented using the *W version
+          of the APIs.  On other platforms, they call the char version
+          of the same ACE_OS call with a converted string.
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+
+          Changed the first parameter to set and conditional_set from 
+          being ACE_TCHAR to just char.  We'll assume filenames are 
+          always ansi strings (since __FILE__ seems to act this way).  
+          There was actually a dangling pointer problem in the 
+          conditional_set when ACE_USES_WCHAR was defined before.
+
+          Added an ANTI_TCHAR version of log (priority, format, ...).
+          What this means is now we can use either narrow or wide
+          format strings with Log_Msg, regardless of whether ACE_USES_WCHAR
+          is defined or not.  Hopefully this means we can get rid of a lot
+          of the ACE_TEXT and ACE_LIB_TEXT's in our code.
+
+          Added a couple of more specifiers, %C and %w.  So for characters
+          and strings we have:
+
+          %c : print out an ansi character
+          %C : print out an ansi string
+          %s : print out an ACE_TCHAR * string 
+          %w : print out a wide character
+          %W : print out a wide string
+
+          An example, which will also function correctly even when 
+          ACE_USES_WCHAR is defined:
+
+          void print (char *a_str, wchar_t *w_str, ACE_TCHAR *t_str)
+          {
+            ACE_DEBUG ((LM_DEBUG, 
+                        "%C %s %W\n",
+                        a_str, 
+                        t_str, 
+                        w_str));
+          }
+
+          Unfortunately this only really takes care of the string 
+          specifiers.  There is still work to be done with the other
+          implicit string specifiers (%p, %N, etc.).
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp:
+        * ace/SSL/SSL_SOCK_Stream.i:
+
+          Removed unnecessary ACE_TEXT's to see how things go.
+
+        * docs/wchar.txt:
+
+          Updated the documentation.
+
 Fri Dec  8 13:47:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:

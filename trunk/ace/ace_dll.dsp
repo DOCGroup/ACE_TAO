@@ -924,10 +924,6 @@ SOURCE=.\Dynamic_Service_Base.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Dynamic_Service_Base.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event_Handler.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -4535,6 +4531,10 @@ SOURCE=.\Dynamic.h
 # Begin Source File
 
 SOURCE=.\Dynamic_Service.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_Service_Base.h
 # End Source File
 # Begin Source File
 
