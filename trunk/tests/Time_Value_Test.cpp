@@ -31,9 +31,9 @@
 #   undef ACE_HAS_HI_RES_TIMER
 # endif /* ACE_HAS_HI_RES_TIMER */
 
-# if defined (ACE_HAS_LONGLONG_T)
-#   undef ACE_HAS_LONGLONG_T
-# endif /* ACE_HAS_LONGLONG_T */
+# if !defined (ACE_LACKS_LONGLONG_T)
+#   define ACE_LACKS_LONGLONG_T
+# endif /* ! ACE_LACKS_LONGLONG_T */
 
   // Force inlining, in case ACE_U_LongLong member function
   // definitions are not in libACE.
@@ -105,15 +105,26 @@ test_ace_u_longlong (void)
   ++ull6;
   errors += check_ace_u_longlong ("ull6", ull6, 0xfff4, 0x20);
 
-  //  ull1.hi (1); ull1.lo (0);
-  ACE_UINT32 div = ull6 / 1;
-  if (div != 0x20)
-    {
-      ++errors;
-      ACE_ERROR ((LM_ERROR,
-                  "div: 0x%x, should be 0x20.\n",
-                  div));
-    }
+  // The hi part of ull6 will be lost in the following, because
+  // the quotient has only 32 bits.
+  errors += check_ace_u_longlong ("ull6 / 1",
+                                  (ACE_U_LongLong) (ull6 / 1),
+                                  0, 0x20);
+
+  // There's apparently a small loss in precision in
+  // ACE_U_LongLong::operator/.  It calculates
+  // ull6 / 0xd0000 as 0x13b013b4 instead of 0x13b04ec4.
+  errors += check_ace_u_longlong ("ull6 / 0x10000 / 0xd",
+                                  (ACE_U_LongLong) (ull6 / 0x10000 / 0xd),
+                                  0, 0x13b04ec4);
+
+  errors += check_ace_u_longlong ("ull6 % 5",
+                                  (ACE_U_LongLong) (ull6 % 5),
+                                  0, 1);
+
+  errors += check_ace_u_longlong ("ull6 % 0x20007",
+                                  (ACE_U_LongLong) (ull6 % 0x20007),
+                                  0, 0x3f63);
 
   return errors;
 }
