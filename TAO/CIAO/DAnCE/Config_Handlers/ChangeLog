@@ -1,3 +1,22 @@
+Tue Sep 28 15:16:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Elements.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Elements.tpp:
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.tpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.tpp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.hpp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.ipp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.tpp:
+
+	  Checked in XSCRT-0.0.5
+
 Tue Sep 28 14:43:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:

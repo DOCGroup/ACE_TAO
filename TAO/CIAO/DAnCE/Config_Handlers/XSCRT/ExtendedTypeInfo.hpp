@@ -36,6 +36,13 @@ namespace XSCRT
     friend std::ostream&
     operator << (std::ostream& os, TypeId const& t);
     */
+    
+  public:
+    char const*
+    name () const
+    {
+      return tid_->name ();
+    }
 
   private:
     std::type_info const* tid_;
