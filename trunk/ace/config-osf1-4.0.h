@@ -48,7 +48,10 @@
 # define DEC_CXX
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
-    // are enabled by platform_osf1_4.0.GNU.
+    // are enabled by platform_osf1_4.0.GNU/wrapper_macros.GNU.
+#   if defined (ACE_HAS_EXCEPTIONS)
+#     define ACE_NEW_THROWS_EXCEPTIONS
+#   endif /* ACE_HAS_EXCEPTIONS */
 #   define ACE_HAS_ANSI_CASTS
 #   if !defined (__RTTI)
 #     define ACE_LACKS_RTTI
