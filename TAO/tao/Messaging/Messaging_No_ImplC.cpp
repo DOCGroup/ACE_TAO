@@ -4790,30 +4790,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RebindPolicy,Messaging::RebindPolicy_var>;
@@ -4933,30 +4909,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RequestPriorityPolicy,Messaging::RequestPriorityPolicy_var>;
@@ -5009,30 +4961,6 @@ operator>>= (
         Messaging::_tc_ReplyPriorityPolicy,
         _tao_elem
       );
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5089,30 +5017,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RequestStartTimePolicy,Messaging::RequestStartTimePolicy_var>;
@@ -5165,30 +5069,6 @@ operator>>= (
         Messaging::_tc_RequestEndTimePolicy,
         _tao_elem
       );
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5245,30 +5125,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var>;
@@ -5323,30 +5179,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::ReplyEndTimePolicy,Messaging::ReplyEndTimePolicy_var>;
@@ -5399,30 +5231,6 @@ operator>>= (
         Messaging::_tc_RelativeRequestTimeoutPolicy,
         _tao_elem
       );
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
@@ -5544,30 +5352,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::RoutingPolicy,Messaging::RoutingPolicy_var>;
@@ -5622,30 +5406,6 @@ operator>>= (
       );
 }
 
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<Messaging::MaxHopsPolicy,Messaging::MaxHopsPolicy_var>;
@@ -5698,30 +5458,6 @@ operator>>= (
         Messaging::_tc_QueueOrderPolicy,
         _tao_elem
       );
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

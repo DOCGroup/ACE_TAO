@@ -37,6 +37,18 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Messaging/ExceptionHolder:1.0";
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ExceptionHolder>::to_value (
+    CORBA::ValueBase *&_tao_elem
+  ) const
+{
+  CORBA::add_ref (this->value_);
+  _tao_elem = this->value_;
+  return 1;
+}
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
@@ -59,6 +71,17 @@ CORBA::Boolean
 Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyHandler>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #endif /* end #if !defined */

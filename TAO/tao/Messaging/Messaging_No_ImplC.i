@@ -33,6 +33,33 @@ Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -211,6 +238,33 @@ Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -222,6 +276,33 @@ Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -241,6 +322,33 @@ Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -252,6 +360,33 @@ Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -271,6 +406,33 @@ Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -286,6 +448,33 @@ Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -297,6 +486,33 @@ Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
@@ -479,6 +695,33 @@ Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -494,6 +737,33 @@ Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
   return 0;
 }
 
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -505,6 +775,33 @@ Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
 ACE_INLINE
 CORBA::Boolean
 Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+template<>
+ACE_INLINE
+CORBA::Boolean
+TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }

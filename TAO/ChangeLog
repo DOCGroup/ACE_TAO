@@ -1,3 +1,41 @@
+Tue Mar 25 16:28:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+
+	  Moved generation of Any template specializations 
+	  to the inline file.
+
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.i:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.i:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.i:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.i:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h
+        * tao/PortableServer/PortableServerC.i:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.i:
+
+	  Fixed hand-crafted files corresponding to the changes
+	  to the IDL compiler above.
+
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+	  Added missing files to project.
+
 Tue Mar 25 14:06:58 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo.h (sync_scope):
