@@ -8,15 +8,15 @@
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
 <HR>
-<H3>ACE Tutorial Introduction</H3><P>
+<H3>
+ACE Tutorials</H3>
 
-The original audience for these tutorials was the <A
-HREF="http://www.lads.com">Automated Design Systems</A> (ADS) IPC
-team, lead by <A HREF="mailto:jcej@lads.com">James Johnson</A>. Since
-then, the scope has been changed to include anyone who wants to learn
-about the ACE framework. Hopefully, even experienced ACE programmers
-will find something new here. With a framework as encompassing as ACE,
-it is easy to become an expert in one area and know little or nothing
+<HR WIDTH="100%">The original audience for these tutorials was the <A HREF="http://www.lads.com">Automated
+Design Systems</A> (ADS) IPC team, lead by <A HREF="mailto:jcej@lads.com">James
+Johnson</A>. Since then, the scope has been changed to include anyone who
+wants to learn about the ACE framework. Hopefully, even experienced ACE
+programmers will find something new here. With a framework as encompassing
+as ACE, it is easy to become an expert in one area and know little or nothing
 about others.
 
 <P>
@@ -42,66 +42,96 @@ available UNIX implementations like <A HREF="http://www.labs.redhat.com/">Linux<
 real-time operating systems (e.g., <A HREF="http://www.lynx.com/">LynxOS</A>,
 <A HREF="http://www.wrs.com">VxWorks</A>, and <A HREF="http://www.isi.com/">PSoS</A>),
 and <A HREF="http://www.s390.ibm.com/products/oe/index.html">MVS OpenEdition</A>.
-A single <A HREF="ACE-directory.html">source tree</A> is used for all these
-platforms. There is also a <A HREF="http://www.cs.wustl.edu/~eea1/JACE.html">Java</A>
-version of ACE.<P>
-
-<HR width=50% align=left><P>
-<H3>Why Use ACE?</H3>
+A single <A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/ACE-directory.html">source
+tree</A> is used for all these platforms. There is also a <A HREF="http://www.cs.wustl.edu/~eea1/JACE.html">Java</A>
+version of ACE.
+<H3>
+Why Use ACE?</H3>
 A key reason to use ACE is simple: <I>write a multi-threaded networked
 application on one platform and quickly be able to use it on another</I>.
 This is important for many projects because it is necessary for applications
 to communicate with one another. For instance, many applications will exist
-on both UNIX and Win32 platforms within a local area network. <P>
-
-<HR width=50% align=left><P>
-<H3>What about TAO?</H3>
+on both UNIX and Win32 platforms within a local area network.
+<H3>
+What about TAO?</H3>
 In the early stages, these tutorials won't address The ACE ORB (<A HREF="http://www.cs.wustl.edu/~schmidt">TAO</A>).
 However, if you want to request a tutorial on some aspect of TAO or even
 create one yourself, I'll be glad to integrate those into these tutorials.
 It's rare when folks want to write documentation, so nothing will be refused!
+
 <P>
 <HR WIDTH="100%">
-<H3>The Tutorials</H3><P>
+<H3>
+The Tutorials</H3>
 
-The following tutorials have been designed to guide you through the
-process of learning ACE.  We will continue to add new tutorials over
-time. <P>
-
-<HR width=50% align=left><P>
-<H4>Basic Client/Server Tutorials</H4>
-
-<OL>
-<LI>
-<A HREF="001/page01.html">A Simple Server</A></LI>
-
-<LI>
-<A HREF="002/page01.html">A Simpler Server</A></LI>
-
-<LI>
-<A HREF="003/page01.html">Finally, a Client</A></LI>
-
-<LI>
-<A HREF="004/page01.html">A much <I>cooler</I> client</A></LI>
-</OL><P>
-
-<HR width=50% align=left><P>
-<H4>Concurrency Tutorials</H4>
+<UL>
+<H4>
+Your basic Client/Server hookup</H4>
+</UL>
 
 <OL>
+<OL>
 <LI>
-<A HREF="005/page01.html">No threads, nothing fancy, just do the work!</A></LI>
+<A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/001/page01.html">A
+Simple Server</A></LI>
 
 <LI>
-<A HREF="006/page01.html">I'd like to dedicate... a thread to each connection.</A></LI>
+<A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/002/page01.html">A
+Simpler Server</A></LI>
 
 <LI>
-<A HREF="007/page01.html">Let's pool our resources:&nbsp; a fixed-size pool of threads.</A></LI>
+<A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/003/page01.html">Finally,
+a Client</A></LI>
+
+<LI>
+<A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/004/page01.html">A
+much <I>cooler</I> client</A></LI>
 </OL>
 
+<H4>
+A word about concurrency</H4>
+
+<OL>
+<LI>
+<A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/005/page01.html">No
+threads, nothing fancy, just do the work!</A></LI>
+
+<LI>
+<A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/006/page01.html">I'd
+like to dedicate... a thread to each connection.</A></LI>
+
+<LI>
+<A HREF="http://localhost/~jcej/ACE/ACE_wrappers/etc/tutorials/007/page01.html">Let's
+pool our resources:&nbsp; a fixed-size pool of threads.</A></LI>
+</OL>
+
+<H4>
+Finding servers on your network</H4>
+
+<OL>
+<LI>
+<A HREF="008/page01.html">Calling
+all servers!</A></LI>
+<!--
+<LI>
+<A HREF="009/page01.html">Discriminating tastes...</A></LI>
+</OL>
+
+<H4>
+A word about ACE_Message_Queue</H4>
+
+<OL>
+<LI>
+React to this!</LI>
+
+<LI>
+putq, putq, putq...</LI>
+-->
+</OL>
+</OL>
 <HR>
 
-<P>Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-tutorials.html">ACE
+<P>Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/etc/ACE-tutorials.html">ACE
 tutorials</A> page.
 
 <P><!--<EM>

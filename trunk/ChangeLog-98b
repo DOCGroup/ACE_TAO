@@ -1,3 +1,28 @@
+Sat Sep  5 15:25:33 EDT 1998  James CE Johnson  <jcej@lads.com>
+
+	  docs/tutorials/index.html
+	  docs/tutorials/008/Makefile
+	  docs/tutorials/008/server.cpp
+	  docs/tutorials/008/broadcast_client.cpp
+	  docs/tutorials/008/directed_client.cpp
+	  docs/tutorials/008/page01.html
+	  docs/tutorials/008/page02.html
+	  docs/tutorials/008/page03.html
+	  docs/tutorials/008/page04.html
+	  docs/tutorials/008/page05.html
+	  docs/tutorials/008/CVS/Root
+	  docs/tutorials/008/CVS/Repository
+	  docs/tutorials/008/CVS/Entries
+	  docs/tutorials/009/Makefile
+	  docs/tutorials/009/broadcast_client.cpp
+	  docs/tutorials/009/directed_client.cpp
+	  docs/tutorials/009/server.cpp
+	  docs/tutorials/009/CVS/Root
+	  docs/tutorials/009/CVS/Repository
+	  docs/tutorials/009/CVS/Entries
+
+	  Began the next set of tutorials on the topic of Datagrams.
+
 Fri Sep  4 18:56:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Name_Proxy.cpp: 
