@@ -1,3 +1,10 @@
+Fri Apr 21 14:54:30 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadBalancer.h:
+	* orbsvcs/LoadBalancer/LoadBalancer.cpp (init):
+
+	  Updated to use renamed TAO load balancer classes.
+
 Fri Apr 21 14:16:15 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
