@@ -1,3 +1,11 @@
+Thu May 24 18:19:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+
+          Updated section on the Interface Repository with the
+          new tao_ifr features, and added entries to the
+          subsections Known Issues and Future Work.
+
 Thu May 24 17:45:13 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/README:
