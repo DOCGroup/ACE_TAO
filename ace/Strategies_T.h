@@ -501,9 +501,15 @@ class ACE_Hash_Addr : public ADDR_T
   //     <ACE_Cached_Connect_Strategy>.  
   //
   // = DESCRIPTION
-  //     Intended to be used as a key to an <ACE_Hash_Map>.  The
+  //     Intended to be used as a key to an <ACE_Hash_Map_Manager>.  The
   //     <SVC_HANDLER> class is expected to implement the following
-  //     methods: int in_use() const; void in_use(int is_used);
+  //     methods:
+  // = BEGIN<INDENT>
+  // = BEGIN<CODE>
+  // int in_use() const;
+  // void in_use(int is_used);
+  // = END<CODE>
+  // = END<INDENT>
   //     Likewise, the <ADDR_T> parameter/subclass is typically
   //     <ACE_INET_Addr>.
 {
@@ -545,8 +551,33 @@ private:
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
 class ACE_Cached_Connect_Strategy : public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
   // = TITLE
+  //     A connection strategy which caches connections to peers
+  //     (represented by <SVC_HANDLER> instances), thereby allowing
+  //     subsequent re-use of unused, but available, connections.
   //     
   // = DESCRIPTION
+  //     <ACE_Cached_Connect_Strategy> is intended to be used as a
+  //     plug-in connection strategy for <ACE_Strategy_Connector>.
+  //     It's added value is re-use of established connections.
+  //
+  // = USAGE
+  //     In order to use this appropriately, the user must provide
+  //     a template specialization for <ACE_Hash_Addr::compare_i()> and
+  //     <ACE_Hash_Addr::hash_i()> based on the address type and the
+  //     service handler type.  For example, a specialization using
+  //     <ACE_INET_Addr> and <My_Service_Handler> might be:
+  //     = BEGIN<NOFILL>
+  //     = BEGIN<CODE>
+  //     size_t
+  //     ACE_Hash_Addr<ACE_INET_Addr, My_Service_Handler>::hash_i(const ACE_INET_Addr &a)
+  //     {
+  //       return ...;
+  //     }
+  //     = END<CODE>
+  //     = END<NOFILL>
+  //
+  // = SEE ALSO
+  //     <ACE_Hash_Addr>.
 {
 public:
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
@@ -560,6 +591,14 @@ public:
   // connected to the <remote_addr>.  If so, we return this pointer.
   // Otherwise we establish the connection, put it into the cache, and
   // return the <SVC_HANDLER> pointer.
+  // <[NOTE]>: the <{reuse_addr}> argument does NOT control re-use of
+  // addresses in the cache.  Rather, if the underlying protocol
+  // requires a "dead time" prior to re-use of its addresses (TCP
+  // is a classic example of this), <{and}> the protocol provides a means
+  // by which to defeat the dead time, setting this argument to non-zero
+  // will defeat the dead-time requirement.  <{Dev. Note: We might want
+  // to consider enhancing the interface at some point so that this also
+  // controls re-use of the cache.}>
 
 private:
   ACE_Hash_Map_Manager <ACE_Hash_Addr <ACE_PEER_CONNECTOR_ADDR,SVC_HANDLER>, SVC_HANDLER*, MUTEX> connection_cache_;
