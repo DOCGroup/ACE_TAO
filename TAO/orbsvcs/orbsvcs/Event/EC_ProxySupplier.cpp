@@ -175,12 +175,22 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
                                   TAO_EC_QOS_Info& qos_info,
                                   CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (
+  int result = 0;
+
+  {
+    ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK_RETURN (0);
+    ACE_CHECK_RETURN (0);
 
-  return this->child_->filter (event, qos_info, ACE_TRY_ENV);
+    result =
+      this->child_->filter (event, qos_info, ACE_TRY_ENV);
+    if (this->refcount_ > 0)
+      return result;
+  }
+
+  this->event_channel_->destroy_proxy_push_supplier (this);
+  return result;
 }
 
 int
@@ -188,12 +198,22 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
                                          TAO_EC_QOS_Info& qos_info,
                                          CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (
+  int result = 0;
+
+  {
+    ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK_RETURN (0);
+    ACE_CHECK_RETURN (0);
 
-  return this->child_->filter_nocopy (event, qos_info, ACE_TRY_ENV);
+    result =
+      this->child_->filter_nocopy (event, qos_info, ACE_TRY_ENV);
+    if (this->refcount_ > 0)
+      return result;
+  }
+
+  this->event_channel_->destroy_proxy_push_supplier (this);
+  return result;
 }
 
 void
@@ -208,7 +228,8 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                                               event,
                                               qos_info,
                                               ACE_TRY_ENV);
-  this->child_->clear ();
+  if (this->child_ != 0)
+    this->child_->clear ();
 }
 
 void
@@ -223,7 +244,8 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                                                      event,
                                                      qos_info,
                                                      ACE_TRY_ENV);
-  this->child_->clear ();
+  if (this->child_ != 0)
+    this->child_->clear ();
 }
 
 void
@@ -270,9 +292,6 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     const RtecEventComm::EventSet& event,
     CORBA::Environment& ACE_TRY_ENV)
 {
-  // Just reset the refcount, increased by the push() method.
-  this->refcount_--;
-
   if (this->is_connected_i () == 0)
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
 
@@ -290,6 +309,10 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     ACE_CHECK;
     consumer->push (event, ACE_TRY_ENV);
   }
+
+  // The reference count was incremented just before delegating on the
+  // dispatching strategy, in this can we need to decrement it *now*.
+  this->refcount_--;
 }
 
 void
@@ -299,12 +322,18 @@ TAO_EC_ProxyPushSupplier::push_timeout (
     TAO_EC_QOS_Info& qos_info,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (
+  {
+    ACE_GUARD_THROW_EX (
           ACE_Lock, ace_mon, *this->lock_,
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
+    ACE_CHECK;
 
-  timeout_filter->push (event, qos_info, ACE_TRY_ENV);
+    timeout_filter->push (event, qos_info, ACE_TRY_ENV);
+    if (this->refcount_ > 0)
+      return;
+  }
+
+  this->event_channel_->destroy_proxy_push_supplier (this);
 }
 
 void

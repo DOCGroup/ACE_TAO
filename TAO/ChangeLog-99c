@@ -1,3 +1,10 @@
+Thu May  6 18:34:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Fixed problem with disconnections while pushing an event, thanks
+	  to Pradeep Gore for finding this out.
+
 Thu May  6 18:09:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
@@ -7,7 +14,7 @@ Thu May  6 18:09:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu May  6 17:52:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/README (client): 
+	* examples/Simple/echo/README (client):
           Updated Naming Service option from -s to -n.
 
 Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -16,7 +23,7 @@ Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor.cpp:
 	  Removed characters after #endif
 
-	* TAO_IDL/be/be_valuetype.cpp: 
+	* TAO_IDL/be/be_valuetype.cpp:
 	* TAO_IDL/be_include/be_valuetype.h:
 	  Function overloaded with different signature?
 
@@ -27,7 +34,7 @@ Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/ValueBase.i:
 	  No sense in passing arguments by value as const, and they gave
 	  Sun/CC 4.2 some headaches.
-	  Use unsigned quantities for enums MSVC balks at expressions like 
+	  Use unsigned quantities for enums MSVC balks at expressions like
 	  (-0x80000000L).
 
 	* tao/ValueFactory_Map.cpp:
@@ -46,9 +53,9 @@ Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h:
 	  Adjusted priorities for LynxOS.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  Use (min+max)/2 as default priority, to avoid problems on LynxOS 
+	  Use (min+max)/2 as default priority, to avoid problems on LynxOS
 	  where the lowest real-time priority is the lowest priority of
 	  the system!
 
