@@ -256,7 +256,6 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
   return 0;
 }
 
-
 int
 Dispatch_Count_Handler::verify_results (void)
 {
@@ -267,7 +266,6 @@ Dispatch_Count_Handler::verify_results (void)
   return 0;
 
 }
-
 
 int
 main (int, ASYS_TCHAR *[])
@@ -292,7 +290,7 @@ main (int, ASYS_TCHAR *[])
                         1);
 
   ACE_Time_Value no_waiting (0);
-  ssize_t events = 0;
+  size_t events = 0;
 
   while (1)
     {
@@ -311,17 +309,22 @@ main (int, ASYS_TCHAR *[])
   // All <ACE_MAX_TIMERS> + 2 I/O dispatches (one for <handle_input>
   // and the other for <handle_exception>) should be counted in
   // events.
-  if (events < ACE_MAX_TIMERS + 2) {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("expected %d events, got %d instead\n"),
-                ACE_MAX_TIMERS + 2, events));
-    ACE_ASSERT (events >= ACE_MAX_TIMERS + 2);
-  }
+  if (events < ACE_MAX_TIMERS + 2) 
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("expected %d events, got %d instead\n"),
+                  ACE_MAX_TIMERS + 2,
+                  events));
+      ACE_ASSERT (events >= ACE_MAX_TIMERS + 2);
+    }
 
   status = callback.verify_results ();
-  if (status != 0) {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Dispatch counting test failed.\n")));
-    test_result = 1;
-  }
+  if (status != 0) 
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("Dispatch counting test failed.\n")));
+      test_result = 1;
+    }
 
 #if defined (ACE_HAS_THREADS)
 
@@ -341,7 +344,9 @@ main (int, ASYS_TCHAR *[])
   if (status == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p, errno is %d\n"), "wait ()", errno));
+                  ASYS_TEXT ("%p, errno is %d\n"),
+                  "wait ()",
+                  errno));
       ACE_ASSERT (status != -1);
     }
 

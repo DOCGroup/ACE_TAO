@@ -14,7 +14,7 @@
 //    only used by Priority_Reactor_Test.cpp.
 //
 // = AUTHOR
-//    Carlos O'Ryan
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 

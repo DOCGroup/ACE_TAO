@@ -1,8 +1,23 @@
+/* -*- C++ -*- */
 // $Id$
 
-// This file has the class definitions needed for template generation in
-// Map_Test.cpp.  They have to be in a separate file so AIX xlC can
-// find them at auto-instantiate time.
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Map_Test.h
+//
+// = DESCRIPTION
+//   This file has the class definitions needed for template generation in
+//   Map_Test.cpp.  They have to be in a separate file so AIX xlC can
+//   find them at auto-instantiate time.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef ACE_MAP_TEST_H
 #define ACE_MAP_TEST_H
@@ -15,11 +30,8 @@
 #include "ace/Active_Map_Manager.h"
 #include "ace/Containers.h"
 
-
 // Key data type.
 typedef ACE_Array<char> KEY;
-
-////////////////////////////////////////////////////////////////////////////////
 
 class Key_Generator
 {
@@ -59,8 +71,6 @@ private:
   u_long counter_;
 };
 
-////////////////////////////////////////////////////////////////////////////////
-
 class Hash_Key
 {
 public:
@@ -79,8 +89,6 @@ public:
       return value;
     } 
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 class Key_Adapter
 {

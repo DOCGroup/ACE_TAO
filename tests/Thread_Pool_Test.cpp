@@ -203,9 +203,8 @@ Thread_Pool::open (void *)
                                      &this->lock_adapter_),
                   -1);
 
-  int i; // We need to define 'i' here to keep EGCS from complaining...
-
-  for (i = this->thr_count (); i > 0; i--)
+  int i = this->thr_count ();
+  while (i > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) EOF, enqueueing NULL block for thread = %d\n"),
@@ -220,6 +219,7 @@ Thread_Pool::open (void *)
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT (" (%t) %p\n"),
                     ASYS_TEXT ("put")));
+      i--;
     }
 
   mb->release ();
