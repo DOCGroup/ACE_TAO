@@ -1,3 +1,11 @@
+Tue May 30 10:41:34 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Makefile.bor:
+        * include/makeinclude/ace_flags.bor:
+
+          ACE_OS_BUILD_DLL and ACE_OS_HAS_DLL were not being set correctly
+          in Borland.
+
 Mon May 29 16:49:25 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Changed all 'ACE_Errno_Guard (errno, 0)' to
