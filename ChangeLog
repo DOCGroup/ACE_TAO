@@ -1,7 +1,13 @@
+Tue Mar 12 09:06:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * etc/Svc_Conf_l.cpp.diff:
+          Incorrect file had been checked in on prior commit.
+          This is the correct file.
+
 Tue Mar 12 08:54:00 2002  Si Mong Park  <spark@ociweb.com>
 
-	* etc/Svc_Conf_l.cpp.diff:
-	  Fixed CR/LF (DOS format) problem: no content changed.
+        * etc/Svc_Conf_l.cpp.diff:
+          Fixed CR/LF (DOS format) problem: no content changed.
 
 Tue Mar 12 13:52:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -27,11 +33,11 @@ Mon Mar 11 18:48:41 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Mar 11 17:43:00 2002  Si Mong Park  <spark@ociweb.com>
 
-	* ace/Svc_Conf_l.cpp:
-	  Minor comment change to make diff file.
+        * ace/Svc_Conf_l.cpp:
+          Minor comment change to make diff file.
 
-	* etc/Svc_Conf_l.cpp.diff:
-	  Updated diff file for Svc_Conf_l.cpp.
+        * etc/Svc_Conf_l.cpp.diff:
+          Updated diff file for Svc_Conf_l.cpp.
 
 Mon Mar 11 16:59:42 2002  Steve Huston  <shuston@riverace.com>
 
@@ -54,9 +60,9 @@ Mon Mar 11 16:27:59 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Mar 11 14:23:00 2002  Si Mong Park  <spark@ociweb.com>
 
- 	* tests/Config_Test.cpp:
- 	  Removed one of the delete statement that deletes twice and thus
- 	  causing an invalid access violation.
+        * tests/Config_Test.cpp:
+          Removed one of the delete statement that deletes twice and thus
+          causing an invalid access violation.
 
 Mon Mar 11 10:28:45 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -97,8 +103,8 @@ Mon Mar 11 11:35:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar 10 18:53:48 2002  Si Mong Park  <spark@ociweb.com>
 
-	* Svc_Conf_l.cpp:
-	  Commented out 'break' line to resolve unreachable statement warning.
+        * Svc_Conf_l.cpp:
+          Commented out 'break' line to resolve unreachable statement warning.
 
 Sun Mar 10 05:54:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -121,103 +127,103 @@ Sat Mar  9 07:52:45 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Fri Mar  8 22:29:36 2002  Si Mong Park  <spark@ociweb.com>
 
-	* Argv_Type_Converter.cpp:
-	* Argv_Type_Converter.h:
-	* Argv_Type_Converter.inl:
-	  new class to convert command line parameter type between char
-	  and wchar_t.
+        * Argv_Type_Converter.cpp:
+        * Argv_Type_Converter.h:
+        * Argv_Type_Converter.inl:
+          new class to convert command line parameter type between char
+          and wchar_t.
 
-	* Basic_Types.h:
-	  Set the endian type to 'little endian' for ARM processor -
-	  Pocket PC 2002 platform.
+        * Basic_Types.h:
+          Set the endian type to 'little endian' for ARM processor -
+          Pocket PC 2002 platform.
 
-	* Log_Record.cpp:
-	* Log_Record.h:
-	  Removed print method that uses ACE_CE_Bridge since CE_Bridge is
-	  no longer supported by ACE CE port.
+        * Log_Record.cpp:
+        * Log_Record.h:
+          Removed print method that uses ACE_CE_Bridge since CE_Bridge is
+          no longer supported by ACE CE port.
 
-	* ace_dll.dsp:
-	* ace_lib.dsp:
-	  Added Argv_Type_Converter class to the project.
+        * ace_dll.dsp:
+        * ace_lib.dsp:
+          Added Argv_Type_Converter class to the project.
 
-	* WFMO_Reactor.cpp:
-	* WFMO_Reactor.h:
-	* WFMO_Reactor.i:
-	  Updated to support WinCE.
+        * WFMO_Reactor.cpp:
+        * WFMO_Reactor.h:
+        * WFMO_Reactor.i:
+          Updated to support WinCE.
 
-	* Process.cpp:
-	  Fixed incorrect call to CreateProcess for WinCE.
+        * Process.cpp:
+          Fixed incorrect call to CreateProcess for WinCE.
 
-	* config-WinCE.h:
-	  Updated for WinCE Pocket PC 2002.
+        * config-WinCE.h:
+          Updated for WinCE Pocket PC 2002.
 
-	* ace.vcw:
-	* ace_dll.vcp:
-	* ace_os_dll.vcp:
-	  New ACE project file for WinCE Pocket PC 2002 build on eMbedded
-	  Visual C++ 3.0.
+        * ace.vcw:
+        * ace_dll.vcp:
+        * ace_os_dll.vcp:
+          New ACE project file for WinCE Pocket PC 2002 build on eMbedded
+          Visual C++ 3.0.
 
-	* Makefile:
-	* Makefile.am:
-	* Makefile.bor:
-	  Added Argv_Type_Converter file.
+        * Makefile:
+        * Makefile.am:
+        * Makefile.bor:
+          Added Argv_Type_Converter file.
 
-	* Configuration.cpp:
-	* Memory_Pool.cpp:
-	  Updated for the WinCE port.
+        * Configuration.cpp:
+        * Memory_Pool.cpp:
+          Updated for the WinCE port.
 
-	* Read_Buffer.cpp:
-	* Read_Buffer.h:
-	  Disabled Ctor with ACE_HANDLE on WinCE since ACE_HANDLE is same
-	  as FILE* on WinCE.
+        * Read_Buffer.cpp:
+        * Read_Buffer.h:
+          Disabled Ctor with ACE_HANDLE on WinCE since ACE_HANDLE is same
+          as FILE* on WinCE.
 
-	* OS.cpp:
-	* OS.h:
-	* OS.i:
-	  Updated for WinCE port.  Changes includes removal of CE Bridge
-	  added CE argv process class, enabled many file IO functions
-	  that formerly disabled on CE, bypassing QoS parts for CE, and
-	  other CE specific declarations.
+        * OS.cpp:
+        * OS.h:
+        * OS.i:
+          Updated for WinCE port.  Changes includes removal of CE Bridge
+          added CE argv process class, enabled many file IO functions
+          that formerly disabled on CE, bypassing QoS parts for CE, and
+          other CE specific declarations.
 
-	* Dynamic_Service.h:
-	* Dynamic_Service.i:
-	  Added 'instance' method uses ACE_ANTI_TCHAR type name for when
-	  ACE_TCHAR is wchar_t.
+        * Dynamic_Service.h:
+        * Dynamic_Service.i:
+          Added 'instance' method uses ACE_ANTI_TCHAR type name for when
+          ACE_TCHAR is wchar_t.
 
-	* CE_Screen_Output.cpp:
-	* CE_Screen_Output.h:
-	  screen output helper class only for WinCE platform - should
-	  not be used on any other platform.
+        * CE_Screen_Output.cpp:
+        * CE_Screen_Output.h:
+          screen output helper class only for WinCE platform - should
+          not be used on any other platform.
 
-	* OS_Memory.h:
-	* OS_String.h:
-	  Changed to skip including stddef.h for WinCE.
+        * OS_Memory.h:
+        * OS_String.h:
+          Changed to skip including stddef.h for WinCE.
 
-	* MEM_Acceptor.h:
-	* MEM_Acceptor.i:
-	* SOCK_Acceptor.cpp:
-	* SOCK_Acceptor.h:
-	* SOCK_Connector.cpp:
-	* SOCK_Connector.h:
-	* SOCK_Dgram_Mcast.h:
-	  Updated to skip QoS part on WinCE.
+        * MEM_Acceptor.h:
+        * MEM_Acceptor.i:
+        * SOCK_Acceptor.cpp:
+        * SOCK_Acceptor.h:
+        * SOCK_Connector.cpp:
+        * SOCK_Connector.h:
+        * SOCK_Dgram_Mcast.h:
+          Updated to skip QoS part on WinCE.
 
-	* Svc_Conf.l:
-	* Svc_Conf_l.cpp:
-	  Fixed a problem giving a parse error on reading carriage return
-	  token on Unicode formatted svc conf file.
+        * Svc_Conf.l:
+        * Svc_Conf_l.cpp:
+          Fixed a problem giving a parse error on reading carriage return
+          token on Unicode formatted svc conf file.
 
-	* Registry.cpp:
-	  Changed connect function for WinCE to return -1 because CE does
-	  not allow direct registry connection.
+        * Registry.cpp:
+          Changed connect function for WinCE to return -1 because CE does
+          not allow direct registry connection.
 
-	* Sock_Connect.cpp:
-	  Changed to use Iphlpapi library (standard on WinCE) on WinCE to
-	  find IP address instead of searching registry since CE has so
-	  many variations on registry settings.
+        * Sock_Connect.cpp:
+          Changed to use Iphlpapi library (standard on WinCE) on WinCE to
+          find IP address instead of searching registry since CE has so
+          many variations on registry settings.
 
-	* Log_Msg.cpp:
-	  Minor change for WinCE on stderr.
+        * Log_Msg.cpp:
+          Minor change for WinCE on stderr.
 
 Fri Mar  8 19:45:31 2002  Steve Huston  <shuston@riverace.com>
 
