@@ -1,3 +1,10 @@
+Fri Jun 11 14:17:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/include/be_extern.h:
+	  Changed several extern "C" functions to plain extern. They were
+	  actually compiled with C++ and was giving warnings under Sun/CC
+	  5.0 (and errors in other platforms).
+
 Fri Jun 11 13:01:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/MT_Client/run_test.pl:
