@@ -5,7 +5,7 @@
  * @auther Tao Lu <lu@dre.vanderbilt.edu>
  */
 
-#include "../Sender/SenderC.h"
+#include "SenderC.h"
 #include "ace/Get_Opt.h"
 
 //IOR file of the Sender
