@@ -212,7 +212,7 @@ SOURCE=.\LoadBalancing\ReplicaProxy.i
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=.\LoadBalancing\DSI_ForwardingProxy.h
+SOURCE=.\LoadBalancing\ReplicaLocator.h
 # End Source File
 # Begin Source File
 
@@ -256,7 +256,7 @@ SOURCE=.\LoadBalancing\Round_Robin_Strategy.h
 # PROP Default_Filter "cpp"
 # Begin Source File
 
-SOURCE=.\LoadBalancing\DSI_ForwardingProxy.cpp
+SOURCE=.\LoadBalancing\ReplicaLocator.cpp
 # End Source File
 # Begin Source File
 
