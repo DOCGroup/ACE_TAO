@@ -32,32 +32,31 @@ namespace CORBA
    * All the TypeCode constants
    */
   //@{
-  extern TypeCode_ptr const _tc_null;
-  extern TypeCode_ptr const _tc_void;
-  extern TypeCode_ptr const _tc_boolean;
-  extern TypeCode_ptr const _tc_char;
-  extern TypeCode_ptr const _tc_wchar;
-  extern TypeCode_ptr const _tc_short;
-  extern TypeCode_ptr const _tc_ushort;
-  extern TypeCode_ptr const _tc_long;
-  extern TypeCode_ptr const _tc_ulong;
-  extern TypeCode_ptr const _tc_longlong;
-  extern TypeCode_ptr const _tc_ulonglong;
-  extern TypeCode_ptr const _tc_float;
-  extern TypeCode_ptr const _tc_double;
-  extern TypeCode_ptr const _tc_longdouble;
-  extern TypeCode_ptr const _tc_octet;
-  extern TypeCode_ptr const _tc_any;
-  extern TypeCode_ptr const _tc_TypeCode;
-  extern TypeCode_ptr const _tc_Principal;
+  extern TAO_Export TypeCode_ptr const _tc_null;
+  extern TAO_Export TypeCode_ptr const _tc_void;
+  extern TAO_Export TypeCode_ptr const _tc_boolean;
+  extern TAO_Export TypeCode_ptr const _tc_char;
+  extern TAO_Export TypeCode_ptr const _tc_wchar;
+  extern TAO_Export TypeCode_ptr const _tc_short;
+  extern TAO_Export TypeCode_ptr const _tc_ushort;
+  extern TAO_Export TypeCode_ptr const _tc_long;
+  extern TAO_Export TypeCode_ptr const _tc_ulong;
+  extern TAO_Export TypeCode_ptr const _tc_longlong;
+  extern TAO_Export TypeCode_ptr const _tc_ulonglong;
+  extern TAO_Export TypeCode_ptr const _tc_float;
+  extern TAO_Export TypeCode_ptr const _tc_double;
+  extern TAO_Export TypeCode_ptr const _tc_longdouble;
+  extern TAO_Export TypeCode_ptr const _tc_octet;
+  extern TAO_Export TypeCode_ptr const _tc_any;
+  extern TAO_Export TypeCode_ptr const _tc_TypeCode;
+  extern TAO_Export TypeCode_ptr const _tc_Principal;
 
-  extern TypeCode_ptr const _tc_string;
-  extern TypeCode_ptr const _tc_wstring;
+  extern TAO_Export TypeCode_ptr const _tc_string;
+  extern TAO_Export TypeCode_ptr const _tc_wstring;
 
-  extern TypeCode_ptr const _tc_Object;
-  extern TypeCode_ptr const _tc_Component;
-  extern TypeCode_ptr const _tc_Home;
-
+  extern TAO_Export TypeCode_ptr const _tc_Object;
+  extern TAO_Export TypeCode_ptr const _tc_Component;
+  extern TAO_Export TypeCode_ptr const _tc_Home;
   //@}
 }
 
