@@ -303,25 +303,3 @@ TAO_OBV_GIOP_Flags::is_end_tag (CORBA::ULong tag)
   return (0x80000000L < tag  && tag <= 0xFFFFFFFFL);
 }
 
-// ===========================================================
-
-ACE_INLINE CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, 
-            const CORBA_ValueBase *_tao_valuetype)
-{
-  return CORBA_ValueBase::_tao_marshal (
-             strm,
-             ACE_const_cast (CORBA_ValueBase *, 
-                             _tao_valuetype),
-             (ptr_arith_t) &CORBA_ValueBase::_downcast
-           );
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (TAO_InputCDR &strm, 
-            CORBA_ValueBase *&_tao_valuetype)
-{
-  return CORBA_ValueBase::_tao_unmarshal (strm, 
-                                          _tao_valuetype);
-}
-

@@ -324,5 +324,26 @@ const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_none    = 0;
 const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_single  = 2;
 const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_list    = 6;
 
+// ===========================================================
+
+CORBA::Boolean
+operator<< (TAO_OutputCDR &strm, 
+            const CORBA_ValueBase *_tao_valuetype)
+{
+  return CORBA_ValueBase::_tao_marshal (
+             strm,
+             ACE_const_cast (CORBA_ValueBase *, 
+                             _tao_valuetype),
+             (ptr_arith_t) &CORBA_ValueBase::_downcast
+           );
+}
+
+CORBA::Boolean
+operator>> (TAO_InputCDR &strm, 
+            CORBA_ValueBase *&_tao_valuetype)
+{
+  return CORBA_ValueBase::_tao_unmarshal (strm, 
+                                          _tao_valuetype);
+}
 
 #endif /* TAO_HAS_VALUETYPE */
