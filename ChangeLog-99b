@@ -1,3 +1,14 @@
+Tue Jul 13 21:32:44 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+	* ltconfig:
+	* ltmain.sh:
+	* ace/Makefile.am:
+	* tests/Makefile.am:
+
+	  ACE Configuration Project updates.  Synchronized with current
+	  version of ACE in CVS repository.
+
 Tue Jul 13 15:22:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
