@@ -9,7 +9,7 @@
 //     Servant_Activator.h
 //
 // = DESCRIPTION
-//     Defines a Dir_Service_Activator class, an Servant_Manager interface which 
+//     Defines a MyFooServantActivator class, an Servant_Manager interface which 
 //     activates a servant by loading it and associates it with an object on demand.
 //
 // = AUTHOR
