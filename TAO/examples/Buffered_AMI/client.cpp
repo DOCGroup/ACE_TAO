@@ -155,18 +155,10 @@ setup_buffering_constraints (CORBA::ORB_ptr orb,
 
   // Start off with no constraints.
   TAO::BufferingConstraint buffering_constraint;
-  buffering_constraint.mode = TAO::BUFFER_FLUSH;
-  buffering_constraint.message_count = 0;
+  buffering_constraint.mode = TAO::BUFFER_MESSAGE_COUNT;
+  buffering_constraint.message_count = message_count;
   buffering_constraint.message_bytes = 0;
   buffering_constraint.timeout = 0;
-
-  // If valid <message_count>, set the implicit flushing to account
-  // for queued messages.
-  if (message_count != -1)
-    {
-      buffering_constraint.mode |= TAO::BUFFER_MESSAGE_COUNT;
-      buffering_constraint.message_count = message_count;
-    }
 
   // Setup the buffering constraint any.
   CORBA::Any buffering_constraint_any;
@@ -274,10 +266,13 @@ main (int argc, char **argv)
       AMI_testHandler_var reply_handler_object = reply_handler_servant._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Setup buffering constraints.
-      setup_buffering_constraints (orb.in (),
-                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      // If valid <message_count>, setup buffering constraints.
+      if (message_count != -1)
+        {
+          setup_buffering_constraints (orb.in (),
+                                       ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
