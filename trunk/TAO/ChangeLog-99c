@@ -1,5 +1,20 @@
 Wed Sep 29 04:01:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
+	* TAO_IDL/be/be_visitor_interface/ami_exception_holder_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp,
+	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_cs.h,
+	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_ch.h,
+	  TAO_IDL/be_include/be_visitor_interface/ami_exception_holder_ci.h:
+	  Removed these files, part of them got replaced by the 
+	  following four files.
+
+	* TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp,
+	  TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp,
+	  TAO_IDL/be_include/be_visitor_valuetype/ami_exception_holder_cs.h,
+	  TAO_IDL/be_include/be_visitor_valuetype/ami_exception_holder_ch.h:
+	  Crafted these files after the above mentioned removed files.
+
 	* TAO_IDL/tao_idl.dsp: 
 	  Added the file TAO_IDL/be_include/be_interface_strategy.h
 
