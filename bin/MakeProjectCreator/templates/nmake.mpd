@@ -48,7 +48,7 @@ OUTDIR=<%libout%>
 <%endif%>
 INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 
-ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
+ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
 
 DEPEND :
 	<%depgen("perl $(ACE_ROOT)\\bin\\depgen.pl")%><%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines macros)%> -D<%define%><%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%> -D<%staticflag%><%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
@@ -62,7 +62,7 @@ CLEAN :
 REALCLEAN : CLEAN
 <%if(pdb)%>
 <%if(exename)%>
-	-@erase "$(INSTALLDIR)\<%exename%>.pdb"
+	-@erase "$(INSTALLDIR)\<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.pdb"
 <%endif%>
 <%if(type_is_dynamic)%>
 	-@erase "$(OUTDIR)\<%sharedname%><%lib_modifier%>.pdb"
@@ -75,8 +75,8 @@ REALCLEAN : CLEAN
         -@erase "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll"
 <%endif%>
 <%if(exename)%>
-        -@erase "$(INSTALLDIR)\<%exename%>.exe"
-        -@erase "$(INSTALLDIR)\<%exename%>.ilk"
+        -@erase "$(INSTALLDIR)\<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.exe"
+        -@erase "$(INSTALLDIR)\<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.ilk"
 <%else%>
         -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.lib"
         -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.exp"
@@ -145,7 +145,7 @@ BSC32_SBRS= \
 
 <%if(type_is_binary)%>
 LINK32=link.exe
-LINK32_FLAGS=<%systemlibs("advapi32.lib user32.lib")%> /INCREMENTAL:<%incremental("NO")%> <%foreach(pure_libs)%><%pure_lib%> <%endfor%><%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> <%if(pdb)%>/pdb:"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.pdb<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.pdb<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.pdb<%endif%>" <%endif%>/machine:<%machine("I386")%> /out:"<%if(sharedname)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%if(sharedname)%> /implib:"$(OUTDIR)\<%sharedname%><%lib_modifier%>.lib"<%endif%>
+LINK32_FLAGS=<%systemlibs("advapi32.lib user32.lib")%> /INCREMENTAL:<%incremental("NO")%> <%foreach(pure_libs)%><%pure_lib%> <%endfor%><%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>" <%endfor%>/nologo /version:<%version("1.0")%> /subsystem:<%subsystem("windows")%><%if(type_is_dynamic)%> /dll<%endif%> <%debug_switch("/debug")%> <%if(pdb)%>/pdb:"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.pdb<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.pdb<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.pdb<%endif%>" <%endif%>/machine:<%machine("I386")%> /out:"<%if(sharedname)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.exe<%endif%>"<%if(sharedname)%> /implib:"$(OUTDIR)\<%sharedname%><%lib_modifier%>.lib"<%endif%>
 <%endif%>
 <%if(type_is_static)%>
 LINK32=link.exe -lib
@@ -164,7 +164,7 @@ LINK32_OBJS= \
 <%endfor%>
 <%endif%>
 
-"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%><%if(use_modifier)%><%lib_modifier%><%endif%>.exe<%endif%>" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<

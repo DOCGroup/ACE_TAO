@@ -12,6 +12,7 @@ type_is_binary        = 1
 common_defines        = UNICODE _UNICODE
 pdb                   = 1
 stack                 =
+use_modifier          =
 
 WCE x86 {
   type_code   = 0x8301

@@ -9,6 +9,7 @@ common_defines     = WIN32 _CONSOLE
 configuration_type = 1
 subsystem          = 1
 pdb                = 1
+use_modifier       =
 
 Static Release {
   optimize         = 3
