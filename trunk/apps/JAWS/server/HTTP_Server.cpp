@@ -7,17 +7,24 @@
 #include "IO.h"
 #include "HTTP_Server.h"
 
+enum { POOL = 0, PER_REQUEST = 1 };
+enum { SYNCH = 0, ASYNCH = 2 };
+
 void
 HTTP_Server::parse_args (int argc, char *argv[])
 {
   int c;
+  int thr_strategy = 0;
+  int io_strategy = 0;
   char *prog = argc > 0 ? argv[0] : "Sock_Server";
 
   // Set some defaults
   this->port_ = 0;
   this->threads_ = 0;
+  this->backlog_ = 0;
+  this->throttle_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "p:n:s:");
+  ACE_Get_Opt get_opt (argc, argv, "p:n:t:i:b:");
   while ((c = get_opt ()) != -1)
     switch (c) 
       {
@@ -27,11 +34,33 @@ HTTP_Server::parse_args (int argc, char *argv[])
       case 'n':
 	this->threads_ = ACE_OS::atoi (get_opt.optarg);
 	break;
-      case 's':
-	// 0 -> synch thread pool
-	// 1 -> thread per request
-	// 2 -> asynch thread pool
-	this->strategy_ = ACE_OS::atoi (get_opt.optarg);
+      case 't':
+	// POOL        -> thread pool
+	// PER_REQUEST -> thread per request
+	// THROTTLE    -> thread per request with throttling
+        if (ACE_OS::strcmp (get_opt.optarg, "POOL") == 0)
+          thr_strategy = POOL;
+        else if (ACE_OS::strcmp (get_opt.optarg, "PER_REQUEST") == 0)
+          {
+            thr_strategy = PER_REQUEST;
+            this->throttle_ = 0;
+          }
+        else if (ACE_OS::strcmp (get_opt.optarg, "THROTTLE") == 0)
+          {
+            thr_strategy = PER_REQUEST;
+            this->throttle_ = 1;
+          }
+	break;
+      case 'i':
+	// SYNCH  -> synchronous I/O
+	// ASYNCH -> asynchronous I/O
+        if (ACE_OS::strcmp (get_opt.optarg, "SYNCH") == 0)
+          io_strategy = SYNCH;
+        else if (ACE_OS::strcmp (get_opt.optarg, "ASYNCH") == 0)
+          io_strategy = ASYNCH;
+	break;
+      case 'b':
+	this->backlog_ = ACE_OS::atoi (get_opt.optarg);
 	break;
       default:
 	break;
@@ -39,8 +68,12 @@ HTTP_Server::parse_args (int argc, char *argv[])
   
   if (this->port_ == 0) this->port_ = 5432;
   if (this->threads_ == 0) this->threads_ = 5;
+  if (this->backlog_ == 0) this->backlog_ = this->threads_;
+
+  this->strategy_ = thr_strategy + io_strategy;
   
-  ACE_DEBUG ((LM_DEBUG, "in HTTP_Server::init, %s port = %d, number of threads = %d\n",
+  ACE_DEBUG ((LM_DEBUG,
+              "in HTTP_Server::init, %s port = %d, number of threads = %d\n",
               prog, this->port_, this->threads_));
   
 }
@@ -78,13 +111,15 @@ HTTP_Server::fini (void)
 int
 HTTP_Server::synch_thread_pool (void)
 {
-  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1, PF_INET, 30) == -1)
+  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
+                            PF_INET, this->backlog_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
   
   for (int i = 0; i < this->threads_; i++) 
     {
       Synch_Thread_Pool_Task *t;
-      ACE_NEW_RETURN (t, Synch_Thread_Pool_Task (this->acceptor_, this->tm_), -1);
+      ACE_NEW_RETURN (t, Synch_Thread_Pool_Task (this->acceptor_, this->tm_),
+                      -1);
       if (t->open () != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Pool_Task::open"), -1);
     }      
@@ -92,7 +127,8 @@ HTTP_Server::synch_thread_pool (void)
   return 0;
 }
 
-Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor, ACE_Thread_Manager &tm)
+Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
+                                                ACE_Thread_Manager &tm)
   : ACE_Task<ACE_NULL_SYNCH> (&tm), acceptor_ (acceptor)
 {
 }
@@ -103,7 +139,8 @@ Synch_Thread_Pool_Task::open (void *args)
   ACE_UNUSED_ARG (args);
 
   if (this->activate () == -1) 
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"),
+                      -1);
 
   return 0;
 }
@@ -143,8 +180,11 @@ Synch_Thread_Pool_Task::svc (void)
 int
 HTTP_Server::thread_per_request (void)
 {
+  int grp_id = -1;
+
   // thread per request
-  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1, PF_INET, 30) == -1)
+  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
+                            PF_INET, this->backlog_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
   
   for (;;) 
@@ -158,10 +198,19 @@ HTTP_Server::thread_per_request (void)
                                                   this->tm_),
                       -1);
 
-      if (t->open () != 0) 
+      if (t->open (&grp_id) != 0) 
 	ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Thread_Per_Request_Task::open"),
                           -1);
+
+      // Throttling is not allowing too many threads run away
+      // Should really use some sort of condition variable here.
+      if (! this->throttle_) continue;
+      const ACE_Time_Value wait_time (0,10);
+      while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)
+        {
+          this->tm_.wait (&wait_time);
+        }
     }
 
   // This stinks, because I am afraid that if I remove this line,
@@ -184,10 +233,19 @@ Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
 int
 Thread_Per_Request_Task::open (void *args)
 {
-  ACE_UNUSED_ARG (args);
+  int status = -1;
+  int *grp_id = &status;
 
-  if (this->activate () == -1) 
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"), -1);
+  if (args != 0) grp_id = (int *) args;
+
+  if (*grp_id == -1)
+    status = *grp_id = this->activate ();
+  else
+    status = this->activate (THR_NEW_LWP,1,0,-1,*grp_id,0);
+
+  if (*grp_id == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
+                      -1);
 
   return 0;
 }
@@ -196,7 +254,8 @@ int
 Thread_Per_Request_Task::svc (void)
 {
   ACE_Message_Block *mb;
-  ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1), -1);
+  ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
+                  -1);
   Synch_HTTP_Handler_Factory factory;
   HTTP_Handler *handler = factory.create_http_handler ();
   handler->open (this->handle_, *mb);
@@ -267,7 +326,8 @@ HTTP_Server::asynch_thread_pool (void)
 // This only works on Win32
 #if defined (ACE_WIN32)
 
-Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor, ACE_Thread_Manager &tm)
+Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
+                                                  ACE_Thread_Manager &tm)
   : ACE_Task<ACE_NULL_SYNCH> (&tm), proactor_ (proactor)
 {
 }
@@ -276,7 +336,8 @@ int
 Asynch_Thread_Pool_Task::open (void *args)
 {
   if (this->activate () == -1) 
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"),
+                      -1);
 
   return 0;
 }
@@ -286,7 +347,8 @@ Asynch_Thread_Pool_Task::svc (void)
 {
   for (;;) 
     if (this->proactor_.handle_events () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Proactor::handle_events"), -1);	
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Proactor::handle_events"),
+                        -1);
 
   return 0;
 }
