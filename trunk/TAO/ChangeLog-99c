@@ -1,3 +1,9 @@
+Wed Jul 14 21:35:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (invoke): This function
+	  also uses ORB::key_to_object.  Thanks to EGCS for pointing this
+	  out. 
+
 Wed Jul 14 21:21:35 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/README:
