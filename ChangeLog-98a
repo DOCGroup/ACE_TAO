@@ -1,3 +1,9 @@
+Tue Apr 14 20:30:53 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i (mutex_init, cond_init): Added sections to properly
+	  handle error conditions on platforms which claim
+	  ACE_HAS_PTHREADS_1003_DOT_1C.
+
 Tue Apr 14 16:39:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ACE.cpp (ldfind): Fixed a miscalculated string size.
