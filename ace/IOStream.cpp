@@ -116,7 +116,7 @@ ACE_Streambuf::underflow (void)
   // If base () is empty then this is the first time any get/put
   // operation has been attempted on the stream.
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
   if (!eback ())
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
   if (!this->base ())
@@ -232,8 +232,8 @@ ACE_Streambuf::overflow (int c)
   if (! (mode_ & ios::out))
     return EOF;
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-  if (!eback ())
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+  if (!pbase ())
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
   if (!base ())
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
