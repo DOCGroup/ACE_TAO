@@ -1,7 +1,23 @@
+Tue May 20 09:19:49 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Released version 4.2.
+
+	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU: Replaced
+ 	  the use of -lITsrv with -lorbixmt.  Thanks to Wei Chiang for
+ 	  this.
+
+	* include/makeinclude/platform_osf1_3.2.GNU: Make sure that all
+ 	  the template repositories are in the same directory to work
+ 	  around problems with the C++ compiler.  Also added -lrt to get
+ 	  the apps and tests to run.  Thanks to Tom Dobridge for this
+ 	  help.
+
 Tue May 20 08:41:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Threads/tss2.cpp: added #include of ace/Thread.h
 	  because Sun C++ 4.1 needs it.
+
+Mon May 19 16:04:32 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* bin/create_ace_build: changed startup line for compatibility
 	  with bash.  This startup line lets the script run without
@@ -9,8 +25,6 @@ Tue May 20 08:41:11 1997  David L. Levine  <levine@cs.wustl.edu>
 	  perl is on the user's PATH.
 
 Mon May 19 12:45:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* Released version 4.2.
 
 	* examples/Threads/reader_writer.cpp: Changed the code so that we
  	  don't try to treat thread ids as ints!  Thanks to Chuck Gehr for
