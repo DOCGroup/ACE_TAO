@@ -1,9 +1,15 @@
+Tue Nov 23 11:43:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Revised guidelines on "adding IDL to your
+	  project settings".  Thanks to Ben Bourner <ben@orion.no> for the
+	  suggesting this.
+
 Tue Nov 23 11:04:20 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/child.cpp: 
-	  Fixed the tests to run with the pluggable protocols framework		
-	
+	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
+	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
+	  Fixed the tests to run with the pluggable protocols framework
+
 
 Tue Nov 23 00:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
