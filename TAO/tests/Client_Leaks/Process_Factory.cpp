@@ -38,7 +38,7 @@ Process_Factory::create_new_process (CORBA::Environment &ACE_TRY_ENV)
   CORBA::String_var ior =
     this->orb_->object_to_string (startup_callback.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (Test::Process::_nil ());
-  
+
   const char* argv[3] = {
     "child",
     ior.in (),

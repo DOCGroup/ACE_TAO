@@ -1,63 +1,97 @@
+Tue Mar 27 19:27:19 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Client_Leaks/run_test.pl:
+          Increase the total run time, this is a slow test.
+
+        * tests/Client_Leaks/Client_Task.h:
+        * tests/Client_Leaks/Client_Task.cpp:
+          Use the _non_existent trick to avoid TRANSIENT exceptions during
+          startup.
+          Count the number of calls that actually work, so the test fails
+          if not enough child processes are created.
+
+        * tests/Client_Leaks/Process_Factory.cpp:
+          Cosmetic fixes
+
+        * tests/MT_Client/run_test.pl:
+          Make default configuration a little more stringent
+
+        * tests/MT_Client/MT_Client.dsw:
+        * tests/MT_Client/Makefile:
+        * tests/MT_Client/Makefile.bor:
+        * tests/MT_Client/client.bor:
+        * tests/MT_Client/orb_creation.bor:
+        * tests/MT_Client/server.bor:
+        * tests/MT_Client/simple-client.bor:
+        * tests/MT_Client/simple-client.conf:
+        * tests/MT_Client/simple-client.cpp:
+        * tests/MT_Client/simple_client.dsp:
+          Removed simple-client, the new Hello test serves the same role,
+          just much easier to read.
+
+        * tests/QtTests/svc.conf:
+          Add RCS id
+
 Tue Mar 27 19:54:49 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * utils/NamingViewer/ViewIORDialog.cpp:
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
-	* orbsvcs/tests/Notify/Basic/Events_Test.h:
-	* orbsvcs/tests/Notify/Basic/Simple.h:
-	* orbsvcs/tests/Notify/Basic/Updates.h:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
-	* orbsvcs/tests/Event_Latency/Event_Latency.h:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
-	* orbsvcs/Examples/Notify/Filter/Filter.h:
-	* orbsvcs/Examples/Notify/Subscribe/Subscribe.h:
-	* Examples/POA/Forwarding/MyFooServant.h:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+        * orbsvcs/tests/Notify/Basic/Events_Test.h:
+        * orbsvcs/tests/Notify/Basic/Simple.h:
+        * orbsvcs/tests/Notify/Basic/Updates.h:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * orbsvcs/tests/Event_Latency/Event_Latency.h:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/child.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/Examples/Notify/Filter/Filter.h:
+        * orbsvcs/Examples/Notify/Subscribe/Subscribe.h:
+        * Examples/POA/Forwarding/MyFooServant.h:
 
-	  Minor fixes to eliminate build errors on MSVC, such as adding #include 
-	  file, adding disable of MSVC inheritance via dominance warning, or
-	  adjusting a signed/unsigned mismatch.
+          Minor fixes to eliminate build errors on MSVC, such as adding #include
+          file, adding disable of MSVC inheritance via dominance warning, or
+          adjusting a signed/unsigned mismatch.
 
-	* orbsvcs/tests/Notify/Basic/Simple.dsp:
-	* orbsvcs/tests/Notify/Basic/Updates.dsp:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
-	* orbsvcs/Examples/Notify/Filter/Filter.dsp:
-	* orbsvcs/Examples/Notify/Subscribe/Subscribe.dsp:
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
-	* orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+        * orbsvcs/Examples/Notify/Filter/Filter.dsp:
+        * orbsvcs/Examples/Notify/Subscribe/Subscribe.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
 
-	  Added header files to these projects, for easier future editing.
+          Added header files to these projects, for easier future editing.
 
 Tue Mar 27 17:01:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Wait_On_Leader_Follower.cpp (wait): Reverted a change to
-	  ACE_TEXT and did as per Darrell's advise.
+        * tao/Wait_On_Leader_Follower.cpp (wait): Reverted a change to
+          ACE_TEXT and did as per Darrell's advise.
 
 Tue Mar 27 15:56:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Default_Protocols_Hooks.cpp: 
-	* tao/Protocols_Hooks.cpp: Added #includes to get it compile fine
-	  on platforms where messaging and RTCORBA has been turned off. 
+        * tao/Default_Protocols_Hooks.cpp:
+        * tao/Protocols_Hooks.cpp: Added #includes to get it compile fine
+          on platforms where messaging and RTCORBA has been turned off.
 
 Tue Mar 27 15:08:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Wait_On_Leader_Follower.cpp: Added an ACE_TEXT () wrapper
-	  for a debug statement. Thanks to Pratt Nick for poiting this
-	  out. 
-	
-	* tao/Leader_Follower.{h,cpp,i}: Reverted the changes for Bug
-	  #721. Looks like the fix is causing the ORB to crash.
+        * tao/Wait_On_Leader_Follower.cpp: Added an ACE_TEXT () wrapper
+          for a debug statement. Thanks to Pratt Nick for poiting this
+          out.
+
+        * tao/Leader_Follower.{h,cpp,i}: Reverted the changes for Bug
+          #721. Looks like the fix is causing the ORB to crash.
 
 Tue Mar 27 14:20:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Changed
-	  all the occurences of TAO_orbdebug to TAO_debug_level. That
-	  should hopefully fix the DLL Core builds. 
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Changed
+          all the occurences of TAO_orbdebug to TAO_debug_level. That
+          should hopefully fix the DLL Core builds.
 
 Tue Mar 27 08:15:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -114,8 +148,8 @@ Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * tests/CDR/makefile.bor
         * tests/makefile.bor
           Updated this BCB makefile that it builds all tests and removed
-	  all other BCB makefiles in this directory because they are not
-	  needed anymore
+          all other BCB makefiles in this directory because they are not
+          needed anymore
 
         * tests/Leader_Followers/client.bor
           Corrected these makefiles
@@ -154,7 +188,7 @@ Tue Mar 27 09:02:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/Simple/grid/*.bor
         * examples/Simple/time/*.bor
           Corrected executable names so that the perl test scripts can
-	  find the executables. 
+          find the executables.
 
 Mon Mar 26 21:34:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -182,8 +216,8 @@ Mon Mar 26 23:29:47 2001  Krishnakumar B  <kitty@cs.wustl.edu>
         * Wait_On_Leader_Follower.cpp
 
           Implemented the Leader_Follower component of the ORB to use a
-	  stack instead of a heap, using the same strategy as in
-	  ACE_Token. This fixes Bug 721.
+          stack instead of a heap, using the same strategy as in
+          ACE_Token. This fixes Bug 721.
 
 Mon Mar 26 22:34:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 

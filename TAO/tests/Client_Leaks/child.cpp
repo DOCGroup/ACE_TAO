@@ -84,8 +84,8 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+      // Do not print error messages, they only make the test output
+      // confusing.
       return 1;
     }
   ACE_ENDTRY;
