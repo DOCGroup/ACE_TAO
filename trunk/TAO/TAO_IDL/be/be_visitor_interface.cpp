@@ -69,4 +69,8 @@
 #include "be_visitor_interface/direct_proxy_impl_sh.cpp"
 #include "be_visitor_interface/direct_proxy_impl_ss.cpp"
 
+// AMH
+#include "be_visitor_interface/amh_ss.cpp"
+#include "be_visitor_interface/amh_sh.cpp"
+
 ACE_RCSID(be, be_visitor_interface, "$Id$")

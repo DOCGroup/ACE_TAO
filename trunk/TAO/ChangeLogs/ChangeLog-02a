@@ -1,3 +1,42 @@
+Wed May 16 03:15:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_operation_strategy.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp: (added)
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp: (added)
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp: (added)
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp: (added)
+        * TAO_IDL/be_include/be.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_interface_strategy.h:
+        * TAO_IDL/be_include/be_operation_strategy.h:
+        * TAO_IDL/be_include/be_visitor_amh_pre_proc.h: (added)
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be_include/be_visitor_interface/amh_sh.h: (added)
+        * TAO_IDL/be_include/be_visitor_interface/amh_ss.h: (added)
+        * TAO_IDL/be_include/be_visitor_interface/interface_sh.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/amh_ss.h: (added)
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Just checking in the beginnings of support for AMH in the 
+          TAO_IDL compiler, allowing the torch to be passed to the 
+          next person.
+
 Wed May 16 21:28:22 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (ORB_init):

@@ -77,6 +77,7 @@ be_visitor_interface::visit_attribute (be_attribute *node)
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_IH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SS:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_IS:
@@ -268,6 +269,8 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
 
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
+
       return 0; // nothing to be done
     default:
       {
@@ -380,6 +383,9 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
+
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:      
+
       return 0; // nothing to be done
     default:
       {
@@ -493,6 +499,9 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
+
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:      
+      
       return 0; // nothing to be done
     default:
       {
@@ -556,6 +565,7 @@ be_visitor_interface::visit_operation (be_operation *node)
       ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SS:
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:      
       ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_IS:
@@ -778,6 +788,8 @@ be_visitor_interface::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
 
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:      
+
       return 0; // nothing to be done
     default:
       {
@@ -892,6 +904,8 @@ be_visitor_interface::visit_union (be_union *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
 
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:      
+
       return 0; // nothing to be done
     default:
       {
@@ -1005,6 +1019,8 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
+
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:      
 
       return 0; // nothing to be done
     default:

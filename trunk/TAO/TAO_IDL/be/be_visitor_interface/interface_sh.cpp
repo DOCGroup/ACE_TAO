@@ -180,12 +180,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
-  // Print out the _this() method.
-  *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
-      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt << be_uidt_nl
-      << ");\n" << be_uidt_nl;
+  this->this_method (node);
 
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id "
@@ -303,4 +298,18 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   *os << "\n";
   return 0;
+}
+
+
+void 
+be_visitor_interface_sh::this_method (be_interface *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  
+  // Print out the _this() method.
+  *os << "::" << node->full_name () << " *_this (" << be_idt << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
+      << "TAO_default_environment ()"
+      << be_uidt << be_uidt_nl
+      << ");\n" << be_uidt_nl;
 }

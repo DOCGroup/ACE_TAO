@@ -261,3 +261,45 @@ be_operation_ami_handler_reply_stub_strategy::has_extra_code_generation (
     }
 }
 
+
+// ****************************************************************
+// AMY Strategy
+
+be_operation_amh_strategy::be_operation_amh_strategy (be_operation *node)
+  : be_operation_strategy (node, AMI_EXCEPTION_HOLDER_RAISE)
+{
+}
+
+be_operation_amh_strategy::~be_operation_amh_strategy (void)
+{
+}
+
+
+TAO_CodeGen::CG_STATE
+be_operation_amh_strategy::next_state (
+    TAO_CodeGen::CG_STATE current_state,
+    int is_extra_state
+  )
+{
+  switch (current_state)
+  {
+    case TAO_CodeGen::TAO_OPERATION_SS:
+      return TAO_CodeGen::TAO_OPERATION_AMH_SS;
+    case TAO_CodeGen::TAO_INTERFACE_SS:
+      return TAO_CodeGen::TAO_INTERFACE_AMH_SS;
+    default:
+      return current_state;
+  }
+}
+
+
+int 
+be_operation_amh_strategy::has_extra_code_generation (
+    TAO_CodeGen::CG_STATE current_state
+  )
+{
+  return 0;
+}
+
+
+

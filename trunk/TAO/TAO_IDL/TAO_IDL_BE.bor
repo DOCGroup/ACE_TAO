@@ -44,6 +44,7 @@ OBJFILES = \
 	$(OBJDIR)\be_valuetype_fwd.obj \
 	$(OBJDIR)\be_visitor.obj \
 	$(OBJDIR)\be_visitor_ami_pre_proc.obj \
+	$(OBJDIR)\be_visitor_amh_pre_proc.obj \
 	$(OBJDIR)\be_visitor_argument.obj \
 	$(OBJDIR)\be_visitor_array.obj \
 	$(OBJDIR)\be_visitor_attribute.obj \
