@@ -4,6 +4,7 @@
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Env_Value_T.h"
 
 #include "TAO_Internal.h"
 #include "default_server.h"
@@ -82,6 +83,24 @@ TAO_Internal::open_services (int &argc, char **argv)
   // Should we skip the <ACE_Service_Config::open> method, e.g., if we
   // already being configured by the ACE Service Configurator.
   int skip_service_config_open = 0;
+
+#if defined (TAO_DEBUG)
+  // Make it a little easier to debug programs using this code.
+  {
+    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
+
+    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
+
+    if (value != 0)
+      {
+        TAO_debug_level = ACE_OS::atoi (value);
+        if (TAO_debug_level <= 0)
+          TAO_debug_level = 1;
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO_debug_level == %d"), TAO_debug_level));
+      }
+  }
+#endif  /* TAO_DEBUG */
 
   // Extract the Service Configurator ORB options from the argument
   // vector.
@@ -298,8 +317,14 @@ TAO_Internal::close_services (void)
 
 template class ACE_Dynamic_Service<ACE_Service_Object>;
 
+template class ACE_Env_Value<int>;
+template class ACE_Env_Value<u_int>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Dynamic_Service<ACE_Service_Object>
+
+#pragma instantiate ACE_Env_Value<int>
+#pragma instantiate ACE_Env_Value<u_int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
