@@ -75,6 +75,8 @@ ACE_Reactor::register_handler (ACE_HANDLE io_handle,
   return result;
 }
  
+#if defined (ACE_WIN32)
+
 ACE_INLINE int 
 ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
 			       ACE_HANDLE event_handle)
@@ -88,6 +90,8 @@ ACE_Reactor::register_handler (ACE_Event_Handler *event_handler,
   return result;
 }
  
+#endif /* ACE_WIN32 */
+
 ACE_INLINE int 
 ACE_Reactor::register_handler (ACE_HANDLE event_handle,
 			       ACE_HANDLE io_handle,
