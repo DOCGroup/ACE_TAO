@@ -18,7 +18,6 @@ files =  ACE.java \
 	 TimeValue.java \
 	 EventHandler.java \
 	 ProfileTimer.java \
-	 TimerQueue.java \
 	 GetOpt.java \
 	 MessageType.java \
 	 MessageBlock.java \
