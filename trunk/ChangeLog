@@ -1,3 +1,9 @@
+Thu Jul  1 09:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.pl:
+          When Valgrind is set, don't add valgrind exe, this is done
+          in PerlACE already
+
 Wed Jun 30 10:56:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
@@ -7,10 +13,10 @@ Wed Jun 30 10:56:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Use the DnC version of the libraries for linking and related
 	  tasks instead of the regular core libraries.
-	
+
 	* bin/MakeProjectCreator/config/global.features:
 
-	  removed 'dnc = 0' nonsense. 
+	  removed 'dnc = 0' nonsense.
 
 Wed Jun 30 08:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
