@@ -46,5 +46,9 @@
 #include "be_visitor_interface/ami_interface_ch.h"
 #include "be_visitor_interface/smart_proxy_ch.h"
 #include "be_visitor_interface/smart_proxy_cs.h"
+#include "be_visitor_interface/interceptors_ch.h"
+#include "be_visitor_interface/interceptors_cs.h"
+#include "be_visitor_interface/interceptors_sh.h"
+#include "be_visitor_interface/interceptors_ss.h"
 
 #endif /* _BE_VISITOR_INTERFACE_H */
