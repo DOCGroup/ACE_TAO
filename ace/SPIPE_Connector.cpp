@@ -113,8 +113,8 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
         }
 
       // Wait for the named pipe to become available.
-      ::WaitNamedPipe (ACE_TEXT_ALWAYS_CHAR (remote_sap.get_path_name ()),
-                       time_out_value);
+      ACE_TEXT_WaitNamedPipe (remote_sap.get_path_name (),
+                              time_out_value);
 
       // Regardless of the return value, we'll do one more attempt to
       // connect to see if it is now available and to return
