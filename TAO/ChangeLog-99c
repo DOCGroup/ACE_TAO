@@ -1,3 +1,27 @@
+Fri Jun 11 22:32:46 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	Generated AMI_<interface_name>_Handler_{var, out, ptr} class
+	definitions in the ch file.
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/ TAO_IDL/ be_include/be_codegen.h::
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_interface_fwd.h:
+	* TAO_IDL/ be_include/be_visitor_interface/interface_ch.h:
+	Changes for the above.
+
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_fwd_ch.h:
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_fwd_ci.h:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ci.cpp:
+	Added these files.
+
 Thu Jun 10 13:05:17 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/arglist_ami.h:
