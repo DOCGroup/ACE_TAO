@@ -37,11 +37,13 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
                                CORBA::Environment &env)
 {
   // Convert ObjectId to String.
-
+  ACE_DEBUG ((LM_DEBUG, "objectId_to_string to happen\n"));
+              
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
-
+ ACE_DEBUG ((LM_DEBUG, "objectId_to_string happened\n"));
   // Activate and return the servant else exception.
 
+ 
   PortableServer::Servant servant =
     this->servant_manager_.obtain_servant (s.in (),
                                            poa,

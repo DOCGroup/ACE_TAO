@@ -57,6 +57,8 @@ ServantManager_i::obtain_servant (const char *str,
    PortableServer::ObjectId_var oid =
      PortableServer::string_to_ObjectId (str);
 
+   ACE_DEBUG ((LM_DEBUG,
+               "before bind\n"));
   // Make an HASH_MAP entry by binding the object_id and the dll
   // object associated with it together.
    if (this->servant_map_.bind (oid.in (), 
@@ -65,7 +67,8 @@ ServantManager_i::obtain_servant (const char *str,
                        "%p\n", 
                        "Bind failed"),
                       0);
-   
+    ACE_DEBUG ((LM_DEBUG,
+               "bind succeded\n"));
   // Now that the dll name is available we open the dll.
   if (dll->open (dllname_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -96,7 +99,7 @@ ServantManager_i::obtain_servant (const char *str,
 void 
 ServantManager_i::parse_string (const char *s)
 {
-  // The format of the object <dll:factory_function>.  This string is
+  // The format of the objectid is <dll:factory_function>.  This string is
   // parsed to obtain the dll name and the function name which will
   // create trhe servant and return it to us.
 
