@@ -28,6 +28,19 @@ TAO_RTScheduler_Current::rt_current (RTCORBA::Current_ptr rt_current)
   this->rt_current_ = RTCORBA::Current::_duplicate (rt_current);
 }
 
+TAO_ORB_Core* 
+TAO_RTScheduler_Current::orb (void)
+{
+  return this->orb_;
+}
+
+DT_Hash_Map*
+TAO_RTScheduler_Current::dt_hash (void)
+{
+  return &this->dt_hash_;
+}
+
+
 void
 TAO_RTScheduler_Current::begin_scheduling_segment(const char * name,
 						  CORBA::Policy_ptr sched_param,
@@ -221,6 +234,7 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
     ACE_static_cast (TAO_RTScheduler_Current_i *,
                      tss->rtscheduler_current_impl_);
   tss->rtscheduler_current_impl_ = new_current;
+
   return old;
 }
 

@@ -127,6 +127,9 @@ public RTScheduling::Current,
 
   TAO_RTScheduler_Current_i* implementation (TAO_RTScheduler_Current_i*);
 
+  TAO_ORB_Core* orb (void);
+
+  DT_Hash_Map* dt_hash (void);
 
   /**
    * @name Reference Related Methods
