@@ -1,3 +1,16 @@
+Thu May 22 00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/math.h:
+          Fixed a FUZZ error by disabling it in this file.
+
+        * ace/TP_Reactor.h:
+          Added using ACE_Select_Reactor::register_handler; so the virtual
+          methods that weren't reimplemented wouldn't be hidden.
+
+        * tests/DLList_Test.cpp:
+          Added missing STRLIST_REVERSE_ITERATOR typedef and fixed a few
+          function calls that were missing an argument.
+
 Wed May 21 16:05:29 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Containers_T.i (ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)):
@@ -244,7 +257,7 @@ Sun May 18 20:00:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/tests.dws:
         * tests/Test_Output.dsp:
-		  Added new project file, Test_Output.dsp, and added it to tests.dsw.
+          Added new project file, Test_Output.dsp, and added it to tests.dsw.
 
         * tests/*.dsp:
           Added Test_Output[*].lib and Main.cpp source to all projects (except dlls).
