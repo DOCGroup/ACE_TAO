@@ -49,8 +49,14 @@ PLATFORM_WX_LDFLAGS =
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
-CC      = gcc
-CXX     = g++
+ifeq ($(insure),1)
+CC  = insure
+CXX = insure
+else
+CC  = gcc
+CXX = g++
+endif
+
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
     CFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \

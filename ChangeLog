@@ -1,3 +1,19 @@
+Tue Mar 27 19:43:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_linux.GNU:
+          Add support for Insure++
+
+        * include/makeinclude/rules.local.GNU:
+          Add new macro to let developers change the default destination
+          for the dependencies.
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Let the user override the default VDIR directory, and define the
+          default values for the IDL generated code extensions.
+
+          Thanks to Jody Hagins <jody@atdesk.com> for all these
+          improvements.
+
 Tue Mar 27 19:15:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Unbounded_Queue.h:
