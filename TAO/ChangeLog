@@ -1,3 +1,9 @@
+Mon Mar 14 13:55:41 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Hang_Shutdown/*:
+
+	  A new test for testing ORB hangs during shutdowns. 
+
 Sun Mar 13 20:19:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
