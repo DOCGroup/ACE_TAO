@@ -1,0 +1,714 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Mozilla/4.5 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+<title>TAO IDL compiler User's Guide</title>
+
+<!-- $Id$ -->
+
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#CC0000">
+
+<hr>
+<h3>
+TAO IDL Compiler User's Guide</h3>
+
+<h3> Scope</h3> This document describes the options and features of
+TAO IDL compiler.  It is not a reference manual or tutorial on OMG
+IDL.  For more information on OMG IDL see the <A
+HREF="http://cgi.omg.org/library/c2indx.html">online CORBA
+specification</A> and the <A
+HREF="http://www.triodia.com/staff/michi-henning.html">Advanced CORBA
+Programming with C++</A> book.  More information on the design of
+TAO's IDL compiler is also available <A
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/ami1.pdf">online</A>.
+Finally, comprehensive documentation on TAO's IDL compiler is
+available in the OCI <A HREF="http://www.theaceorb.com/product/">TAO
+Developer's Guide</A>.<P>
+
+<HR><P>
+<h3>Generated Files</h3>
+
+The IDL compiler generates 9 files from each <tt>.idl</tt> file.  The
+file names are obtained by taking the IDL <EM>basename</EM> and
+appending the following suffixes (see the list of TAO's IDL compiler
+<A HREF="#options">options</A> on how to get different suffixes for
+these files:) <P>
+
+<UL>
+  <LI> <B><EM>Client stubs</EM></B>, <EM>i.e.</EM>, <tt>*C.h</tt>,
+      <tt>*C.i</tt>, and <tt>*C.cpp</tt>.  Pure client applications
+      only need to <code>#include</code> and link with these files.
+  <LI> <B><EM>Server skeletons</EM></B>, <EM>i.e.</EM>,  <tt>*S.h</tt>, <tt>*S.i</tt>, and
+      <tt>*S.cpp</tt>.  Servers need to <code>#include</code> and link
+      with these files.
+  <LI> <B><EM>Server skeleton templates</EM></B>, <EM>i.e.</EM>, <tt>*S_T.h</tt>, <tt>S_T.i</tt>,
+      and <tt>*S_T.cpp</tt>.  Some C++ compilers do not like template
+      and non-template code in the same files, so TAO's IDL compiler
+      generates these files separately.
+</UL>
+
+TAO's IDL compiler creates separate <TT>*.i</TT> and <TT>*S_T.*</TT>
+files to improve the performance of the generated code.  For example,
+the <TT>*.i</TT> files enable you to compile with inlining enabled or
+not, which is useful for trading-off compile-time and run-time
+performance.  Fortunately, you only need to <CODE>#include</CODE> the
+client stubs declared in the <tt>*C.h</tt> file and the skeletons in
+the <tt>*S.h</tt> file in your code. <P>
+
+<HR><P>
+<a name="idl_env"><h3>Environment Variables</h3></a>
+
+<TABLE BORDER=2 CELLSPACING=2 CELLPADDING=0>
+  <TH>Variable
+  <TH>Usage
+  <TR>
+    <TD>CPP_LOCATION
+    <TD>Deprecated in version 1.0.4 of TAO.  Please use TAO_IDL_PREPROCESSOR
+        instead.
+  <TR>
+    <TD>TAO_IDL_DEFAULT_CPP_FLAGS
+      <TD>Deprecated in version 1.0.4 of TAO.  Please use
+          TAO_IDL_PREPROCESSOR_ARGS instead.
+  <TR>
+    <TD>TAO_IDL_PREPROCESSOR
+    <TD>Used to override the program name of the preprocessor that TAO_IDL
+            uses.
+  <TR>
+    <TD>TAO_IDL_PREPROCESSOR_ARGS
+    <TD>Used to override the flags passed to the preprocessor that TAO_IDL
+        uses.  This can be used to alter the default options for the
+        preprocessor and specify things like include directories and how
+        the preprocessor is invoked.  Two flags that will always be passed to
+        the preprocessor are <CODE>-DIDL</CODE> and <CODE>-I.</CODE>.
+  <TR>
+    <TD>TAO_ROOT
+        <TD>Used to determine where <CODE>orb.idl</CODE> is located.
+  <TR>
+    <TD>ACE_ROOT
+        <TD>Used to determine where <CODE>orb.idl</CODE> is located.
+</TABLE>
+
+<P>Because TAO_IDL doesn't have any code to implement a preprocessor, it has
+to use an external one.  For convenience, it uses a built-in name for an external
+preprocessor to call.  During compilation, this is how that default is set:</P>
+
+<OL>
+  <LI>If the macro TAO_IDL_PREPROCESSOR is defined, then it will use that.
+  <LI>Else if the macro ACE_CC_PREPROCESSOR is defined, then it will use that.
+  <LI>Otherwise, it will use "cc"
+</OL>
+
+<P>And the same behavior occurs for the TAO_IDL_PREPROCESSOR_ARGS and
+ACE_CC_PREPROCESSOR_ARGS macros.</P>
+
+<P>Case 1 is used by the Makefile on most machines to specify the preprocessor.
+Case 2 is used on Windows and platforms that need special arguments passed
+to the preprocessor (MVS, HPUX, etc.).  And case 3 isn't used at all,
+but is included as a default case.</P>
+
+<P>Since the default preprocessor may not always work when TAO_IDL is moved to
+another machine or used in cross-compilation, it can be overriden at runtime
+by setting the environment variables TAO_IDL_PREPROCESSOR and
+TAO_IDL_PREPROCESSOR_ARGS.</P>
+
+<P>In previous versions, the environment variables CPP_LOCATION and
+TAO_IDL_DEFAULT_CPP_FLAGS were used for this purpose.  Both will still work,
+but TAO_IDL will display a deprecation warning if it detects one of these.
+It is possible that support for these old variables will be removed in a
+future version of TAO.</P>
+
+<P>If ACE_ROOT or TAO_ROOT are defined, then TAO_IDL
+will use them to include the $(ACE_ROOT)/TAO/tao or $(TAO_ROOT)/tao
+directories. This is to allow TAO_IDL to automatically find
+&lt;orb.idl&gt; when it is included in an IDL file.  TAO_IDL will
+display a warning message when neither is defined.</P>
+
+<HR><P>
+<h3>Operation Demuxing Strategies</h3>
+
+The server skeleton can use different demuxing strategies to match the
+incoming operation with the correct operation at the servant.  TAO's
+IDL compiler supports perfect hashing, binary search, and dynamic
+hashing demuxing strategies.  By default, TAO's IDL compiler tries to
+generate perfect hash functions, which is generally the most <A
+HREF="http://www.cs.wustl.edu/~schmidt/PDF/COOTS-99.pdf">efficient and
+predictable operation demuxing technique</A>.  To generate perfect
+hash functions, TAO's IDL compiler uses <a
+href="http://www.cs.wustl.edu/~schmidt/PDF/gperf.pdf">gperf </a>, which
+is a general-purpose perfect hash function generator. <P>
+
+To configure TAO's IDL compiler to support perfect hashing please do
+the following:
+
+<ul>
+  <LI>Enable <CODE>ACE_HAS_GPERF</CODE> when building ACE and TAO.
+      This macro has been defined for the platforms where <CODE>gperf</CODE>
+      has been tested, which includes most <A
+      HREF="http://www.cs.wustl.edu/~schmidt/ACE-versions-i.html">platforms</A>
+      that ACE runs on. <P>
+
+  <li>Build the <CODE>gperf</CODE> in $ACE_ROOT/apps/gperf.  This build
+      also leaves a copy/link of the gperf program at the $ACE_ROOT/bin
+      directory.<P>
+
+  <li>Set the environment variable $ACE_ROOT appropriately or add
+      $ACE_ROOT/bin to your search path. <P>
+
+  <li>Use the <CODE>-g</CODE> option for the TAO IDL compiler or set
+      your search path accordingly to install <CODE>gperf</CODE> in a
+      directory other than $ACE_ROOT/bin.
+</ul>
+
+Note that if you can't use perfect hashing for some reason the next
+best operation demuxing strategy is binary search, which can be
+configured using TAO's IDL compiler <A HREF="#options">options</A>.<P>
+
+<hr><p>
+<h3><a name="collocation-stubs">Collocation Strategies</a></h3>
+
+TAO_IDL can generate collocated stubs using two different collocation
+strategies.  It also allows you to supress/enable the generation of
+the stubs of a particular strategy.  To gain great flexibility at
+run-time, you can gereate stubs for both collocation strategies
+(using both '<a href="#Gp"><code>-Gp</code></a>' and '<a
+href="#Gd"><code>-Gd</code></a>' flags at the same time) and defer the
+determination of collocation strategy until run-time.  On the other
+hand, if you want to minimize the footprint of your program, you might
+want to pre-determine the collocation strategy you want and only
+generate the right collocated stubs (or not generating any at all using
+both  '<a href="#Sp"><code>-Sp</code></a>' and '<a
+href="#Sd"><code>-Sd</code></a>' flags at the same time if
+it's a pure client.)  See our <a
+href="http://www.cs.wustl.edu/~schmidt/PDF/C++-report-col18.pdf">collocation
+paper</a> for a detail discussion on the collocation support in
+TAO.<p>
+
+
+<HR><P>
+<h3><A NAME="options">TAO's IDL Compiler Options</A></h3>
+
+TAO's IDL compiler invokes your <tt>C</tt> (or <tt>C++</tt>)
+preprocessor to resolve included IDL files.  It receives the common
+options for preprocessors (such as <tt>-D</tt> or <tt>-I</tt>).  It
+also receives other options that are specific to it. <P>
+
+<table BORDER=2 CELLSPACING=2 CELLPADDING=0 >
+  <tr>
+    <th>Option</th>
+    <th>Description</th>
+    <th>Remark</th>
+  </tr>
+  <tr><a NAME="u">
+    <td><tt>-u</tt></td>
+
+    <td>The compiler prints out the options that are given below and exits
+        clean </td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr> <a NAME="V">
+    <td><tt>-V</tt></td>
+
+    <td>The compiler printouts its version and exits</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Wb">
+    <td><tt>-Wb,</tt><i>option_list</i></EM</TD></td>
+
+    <td>Pass options to the TAO IDL compiler backend.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="skel_export_macro">
+    <td></td>
+
+    <td><tt>skel_export_macro=</tt><i>macro_name</i></td>
+
+    <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
+        or <tt>extern</tt> keyword in the generated skeleton code (S
+        files,) this is needed for Windows/NT that requires
+        special directives to export symbols from DLLs, usually the definition
+        is just a space on unix platforms.&nbsp;</td>
+  </tr>
+
+  <tr><a name="skel_export_include">
+    <td></td>
+
+    <td><tt>skel_export_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of the generated server header, this is usually a good
+        place to define the server side export macro.</td>
+  </tr>
+
+  <tr><a name="stub_export_macro">
+    <td></td>
+
+    <td><tt>stub_export_macro=</tt><i>macro_name</i></td>
+
+    <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
+        or <tt>extern</tt> keyword in the generated stub code, this is
+        needed for Windows/NT that requires special directives to
+        export symbols from DLLs, usually the definition is just a
+        space on unix platforms.&nbsp;</td>
+  </tr>
+
+  <tr><a name="stub_export_include">
+    <td></td>
+
+    <td><tt>stub_export_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of the client header, this is usually a good place to define the export
+        macro.</td>
+  </tr>
+
+  <tr><a name="export_macro">
+    <td></td>
+
+    <td><tt>export_macro=</tt><i>macro_name</i></td>
+
+    <td>This option has the same effect as issuing
+        <tt>-Wb,skel_export_macro=</tt><i>macro_name</i>
+        <tt>-Wb,stub_export_macro=</tt><i>macro_name</i>.  This option
+        is useful when building a DLL containing both stubs and
+        skeletons.</td>
+  </tr>
+
+  <tr><a name="export_include">
+    <td></td>
+
+    <td><tt>export_include=</tt><i>include_path</i></td>
+
+    <td>This option has the same effect as specifying
+        <tt>-Wb,stub_export_include=</tt><i>include_path</i>.  This
+        option goes with the previous option to build DLL containing
+        both stubs and skeletons.</td>
+  </tr>
+
+  <tr><a name="pch_include">
+    <td></td>
+
+    <td><tt>pch_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of all TAO IDL compiler generated files.  This can be used with a
+        precompiled header mechanism, such as those provided by Borland
+        C++Builder or MSVC++.</td>
+  </tr>
+
+  <tr><a name="obv_opt_accessor">
+    <td></td>
+
+    <td><tt>obv_opt_accessor</tt></td>
+
+    <td>The IDL compiler will generate code to optimize access to base class data
+        for valuetypes.</td>
+  </tr>
+
+  <tr><a name="pre_include">
+    <td></td>
+
+    <td><tt>pre_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        top of the each header file, before any other include statements. For
+        example, ace/pre.h, which pushes compiler options for the Borland C++
+        Builder and MSVC++ compilers, is included in this manner in all
+        IDL-generated files in the TAO libraries and CORBA services.</td>
+  </tr>
+
+  <tr><a name="post_include">
+    <td></td>
+
+    <td><tt>post_include=</tt><i>include_path</i></td>
+
+    <td>The compiler will generate code to include <i>include_path</i> at the
+        bottom of the each header file. For example, ace/post.h, which pops 
+        compiler options for the Borland C++ Builder and MSVC++ compilers, is 
+        included in this manner in all IDL-generated files in the TAO libraries 
+        and CORBA services.</td>
+  </tr>
+
+
+  <tr><a name="E">
+    <td><tt>-E</tt></td>
+
+    <td>Only invoke the preprocessor</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Wp">
+    <td><tt>-Wp,</tt><i>option_list</i></EM</TD></td>
+
+    <td>Pass options to the preprocessor.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="d">
+    <td><tt>-d</tt></td>
+
+    <td>Causes output of a dump of the AST</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="D">
+    <td><tt>-D</tt><i>macro_definition</i></td>
+
+    <td>It is passed to the preprocessor</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="U">
+    <td><tt>-U</tt><i>macro_name</i></td>
+
+    <td>It is passed to the preprocessor</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="I">
+    <td><tt>-I</tt><i>include_path</i></td>
+
+    <td>It is passed to the preprocessor</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="A">
+    <td><tt>-A</tt><i>assertion</i></td>
+
+    <td>It is passed to the preprocessor</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Y">
+    <td><tt>-Yp,<i>path</i></tt></td>
+
+    <td>Specifies the path for the C preprocessor</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="H perfect_hash">
+    <td><tt>-H perfect_hash</tt></td>
+
+    <td>To specify the IDL compiler to generate skelton code that uses perfect
+        hashed operation demuxing strategy, which is the default strategy. Perfect
+        hashing uses <a href="http://www.cs.wustl.edu/~schmidt/PDF/gperf.pdf">gperf
+        </a>program,
+        to generate demuxing methods.&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="H dynamic_hash">
+    <td><tt>-H dynamic_hash</tt></td>
+
+    <td>To specify the IDL compiler to generate skelton code that uses dynamic
+        hashed operation demuxing strategy.&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="H binary_search">
+    <td><tt>-H binary_search</tt></td>
+
+    <td>To specify the IDL compiler to generate skelton code that uses binary
+        search based operation demuxing strategy.&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="H linear_search">
+    <td><tt>-H linear_search</tt></td>
+
+    <td>To specify the IDL compiler to generate skelton code that uses linear
+        search based operation demuxing strategy.  Note that this option is for testing purposes only and should not be used for production code since it's inefficient.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+
+  <tr><a name="in">
+    <TD><TT>-in</TT></TD>
+    <TD> To generate #include statements with <>'s for the standard
+        include files (e.g. tao/corba.h) indicating them as non-changing
+        files</TD>
+    <td>&nbsp;</td>
+  </TR>
+
+
+  <TR><A NAME="ic">
+    <TD><TT>-ic</TT></TD>
+    <TD> To generate #include statements with ""s for changing
+        standard include files (e.g. tao/corba.h). </TD>
+    <td>&nbsp;</td>
+  </TR>
+
+  <tr><a name="g">
+    <td><tt>-g</tt></td>
+
+    <td>To specify the path for the perfect hasing program (GPERF). Default
+        is $ACE_ROOT/bin/gperf.&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="o">
+    <td><tt>-o</tt></td>
+
+    <td>To specify the output directory to IDL compiler as to where all the
+        IDL-compiler-generated files are to be put. By default, all the files are
+        put in the current directory from where&nbsp;<tao_idl>is called.&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="hc">
+    <td><tt>-hc</tt></td>
+
+    <td>Client's header file name ending. Default is "C.h".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="hs">
+    <td><tt>-hs</tt></td>
+
+    <td>Server's header file name ending. Default is "S.h".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="hT">
+    <td><tt>-hT</tt></td>
+
+    <td>Server's template header file name ending. Default is "S_T.h".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="cs">
+    <td><tt>-cs</tt></td>
+
+    <td>Client stub's file name ending. Default is "C.cpp".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="ci">
+    <td><tt>-ci</tt></td>
+
+    <td>Client inline file name ending. Default is "C.i".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="ss">
+    <td><tt>-ss</tt></td>
+
+    <td>Server skeleton file name ending. Default is "S.cpp".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="sT">
+    <td><tt>-sT</tt></td>
+
+    <td>Server template skeleton file name ending. Default is "S_T.cpp".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="si">
+    <td><tt>-si</tt></td>
+
+    <td>Server inline skeleton file name ending. Default is "S.i".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="st">
+    <td><tt>-st</tt></td>
+
+    <td>Server's template inline file name ending. Default is "S_T.i".</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="t">
+    <td><tt>-t</tt></td>
+
+    <td>Temporary directory to be used by the IDL compiler. 
+    </td>
+    <td>Unix: use environment variable TEMPDIR if defined, else use /tmp/.
+        Windows 95/98/Me: use environment variable TMP or TEMP if defined 
+        and directory exists, else use current directory.  Windows NT/2000/XP:
+        use environment variable TMP or TEMP if defined, else use the 
+        Windows directory.
+    </td>
+  </tr>
+
+  <tr><a name="Cw">
+    <td><tt>-Cw</tt></td>
+
+    <td>Output a warning if two identifiers in the same scope differ in
+        spelling only by case (default is output of error message).</td>
+
+    <td>This option has been added as a nicety for dealing with legacy
+        IDL files, written when the CORBA rules for name resolution
+        were not as stringent.</td>
+  </tr>
+
+  <tr><a name="Ce">
+    <td><tt>-Ce</tt></td>
+
+    <td>Output an error if two indentifiers in the same scope differ in
+        spelling only by case (default).</td>
+
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="GC flag">
+    <td><tt>-GC </tt></td>
+
+    <td>Generate AMI stubs ("sendc_" methods, reply handler stubs,
+        etc)</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Ge flag">
+    <td><tt>-Ge </tt><i>flag</i></td>
+
+    <td>If the value of the flag is 0, tao_idl will generate code that
+        will use native C++ exceptions. If the value of the flag is 1,
+        tao_idl will generate code that will use the <CODE>CORBA::Environment</CODE> variable for
+        passing exceptions. If the value of the flag is 2, the C++ 'throw' keyword will be used
+        in place of ACE_THROW_SPEC, ACE_THROW, and ACE_RETRHOW (ACE_THROW_RETURN and
+        TAO_INTERCEPTOR_THROW will still be used). </td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Gp">
+    <td><tt>-Gp </tt></td>
+
+    <td>Generated collocated stubs that use <code>Thru_POA</code> collocation strategy (default)</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Gd">
+    <td><tt>-Gd </tt></td>
+
+    <td>Generated collocated stubs that use <code>Direct</code> collocation strategy</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Gsp">
+    <td><tt>-Gsp </tt></td>
+
+    <td>Generate client smart proxies</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Gt">
+    <td><tt>-Gt</tt></td>
+
+    <td>Generate optimized TypeCodes</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Gv">
+    <td><tt>-Gv</tt></td>
+
+    <td>Generate code that supports Object-By-Value</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>-<tt>GI</tt></td>
+
+    <td>Generate templates files for the servant implementation </td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>-GIh </tt><i>arg</i></td>
+
+    <td>Servant implementation header file name ending</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>-GIs </tt><i>arg</i></td>
+
+    <td>Servant implementation skeleton file name ending</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>-GIb </tt><i>arg</i></td>
+
+    <td>Prefix to the implementation class names</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>-GIe </tt><i>arg</i></td>
+
+    <td>Suffix to the implementation class names</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>-GIc</tt></td>
+
+    <td>Generate copy constructors in the servant implementation template files</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>-GIa</tt></td>
+
+    <td>Generate assignment operators in the servant implementation template files</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Sa">
+    <td><tt>-Sa</tt></td>
+
+    <td>Suppress generation of the Any operators</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Sp">
+    <td><tt>-Sp</tt></td>
+
+    <td>Suppress generation of collocated stubs that use <code>Thru_POA</code> collocation strategy</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Sd">
+    <td><tt>-Sd</tt></td>
+
+    <td>Suppress generation of collocated stubs that use <code>Direct</code> collocation strategy (default)</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="St">
+    <td><tt>-St</tt></td>
+
+    <td>Suppress generation of the TypeCodes</td>
+
+    <td>Also suppresses the generation of the Any operators, since the Any >>= operator needs the
+        associated typecode.</td>
+  </tr>
+
+  <tr><a name="Sc">
+    <td><tt>-Sc</tt></td>
+
+    <td>Suppress generation of the tie classes, and the *S_T.* files that contain them.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="Sv">
+    <td><tt>-Sv</tt></td>
+
+    <td>Suppress valuetype support (default).</td>
+    <td>&nbsp;</td>
+  </tr>
+
+</table> <P>
+
+<P><HR><P>
+Back to the TAO <A HREF="index.html">documentation</A>.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+
+</body>
+</html>
