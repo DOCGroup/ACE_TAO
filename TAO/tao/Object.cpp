@@ -576,8 +576,7 @@ CORBA::Object::_validate_connection (
   if (this->is_collocated_)
       return !(this->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER));
 
-  TAO::LocateRequest_Invocation_Adapter tao_call (
-                                                 this);
+  TAO::LocateRequest_Invocation_Adapter tao_call (this);
   ACE_TRY
     {
       tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);

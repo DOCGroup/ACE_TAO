@@ -46,11 +46,25 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
 
   if (client_protocol_policy_base.ptr () == 0)
     {
-      this->TAO_Default_Endpoint_Selector::select_endpoint (
-        r,
-        val
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      do
+        {
+          r->profile (r->stub ()->profile_in_use ());
+
+          int status =
+            this->endpoint_from_profile (*r,
+                                         val
+                                         ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          if (status == 1)
+            return;
+        }
+      while (r->stub ()->next_profile_retry () != 0);
+
+      // If we get here, we completely failed to find an endpoint selector
+      // that we know how to use, so throw an exception.
+      ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
+                                   CORBA::COMPLETED_NO));
     }
   else
     {
@@ -195,6 +209,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   // If the priority model policy is not set.
   if (priority_model_policy.ptr () == 0)
     {
+
       // Bands without priority model do not make sense.
       if (bands_policy.ptr () != 0)
         {
@@ -256,6 +271,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           // If there are no bands.
           if (bands_policy.ptr () == 0)
             {
+
               // Match the priority of the client thread with the
               // endpoint.
               match_priority = 1;
@@ -263,6 +279,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           // There are bands.
           else
             {
+
               // Check which band range we fall in.
               int in_range = 0;
               protocol_hooks->get_selector_bands_policy_hook (
@@ -277,6 +294,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                 {
                   if (r.inconsistent_policies ())
                     {
+
                       CORBA::PolicyList *p =
                         r.inconsistent_policies ();
                       p->length (2);

@@ -55,6 +55,10 @@ namespace TAO
 
         ACE_TRY
           {
+            resolver.init_inconsistent_policies (
+                ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
             resolver.resolve (max_wait_time
                               ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;

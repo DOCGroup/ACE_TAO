@@ -1,3 +1,16 @@
+Thu Oct 16 11:31:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/LocateRequest_Invocation_Adapter.cpp: Initialize the
+	  inconsistent policy list before making an invocation. 
+
+	* tao/Object.cpp: Cosmetic fix.
+
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h: No reason for
+	  this class to inherit from Default_Selectors. Just removed the
+	  cpuipling and made this class inherit from the root base of the
+	  invocation endpoint selectors. 
+
 Thu Oct 16 09:37:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
