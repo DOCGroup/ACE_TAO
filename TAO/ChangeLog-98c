@@ -1,4 +1,4 @@
-1998-11-22  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+Sun Nov 22 18:20:11 1998 Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
 	  Changed ACE_NEW_RETURN to ACE_NEW_THROW_RETURN in order to
@@ -11,7 +11,7 @@ Sat Nov 21 19:30:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/{client,server}.cpp: Added
 	template class, #pragma instantiate for the templates. Thanks to
-	Leif Jakobsmeier" <leif@informatik.uni-frankfurt.de for pointing
+	Leif Jakobsmeier" <leif@informatik.uni-frankfurt.de> for pointing
 	this out.
 
 Sat Nov 21 02:29:00 1998 Marina Spivak  <marina@cs.wustl.edu>
