@@ -1428,7 +1428,7 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
            pSrc++)
         // Convert to uppercase
         if (ACE_OS::ace_islower (*pSrc))
-          *pSrc = ACE_OS::to_lower (*pSrc);
+          *pSrc = ACE_OS::ace_tolower (*pSrc);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s = %s\n"),
