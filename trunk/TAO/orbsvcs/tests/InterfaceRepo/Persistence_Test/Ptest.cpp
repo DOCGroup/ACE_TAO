@@ -57,7 +57,7 @@ Ptest::init (int argc,
       if (CORBA::is_nil (this->repo_.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "IR_Repository::_narrow failed\n"),
+                             "CORBA::Repository::_narrow failed\n"),
                             -1);
         }
     }

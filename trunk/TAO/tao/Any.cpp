@@ -602,37 +602,7 @@ CORBA_Any::operator<<= (from_string s)
   TAO_OutputCDR stream;
   stream << s;
 
-  // If the inserted string is bounded, we create a typecode.
-  static CORBA::Long _oc_string [] =
-  {
-    // CDR typecode octets.
-    TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
-    0                       // ... unbounded string to start with
-  };
-
-  CORBA::TypeCode_ptr tc = 0;
-
-  if (s.bound_ > 0)
-    {
-      // Bounded string.
-      _oc_string [1] = s.bound_;
-
-      // @@ It seems like this could be leaked!
-      ACE_NEW (tc,
-               CORBA::TypeCode (CORBA::tk_string,
-                                sizeof _oc_string,
-                                (char *) &_oc_string,
-                                1,
-                                sizeof (CORBA::String_var)));
-    }
-  else
-    {
-      // Unbounded.
-      tc = CORBA::_tc_string;
-    }
-
   char *tmp;
-
   // Non-copying.
   if (s.nocopy_)
     {
@@ -643,12 +613,43 @@ CORBA_Any::operator<<= (from_string s)
       tmp = CORBA::string_dup (s.val_);
     }
 
-  this->_tao_replace (tc,
-                      TAO_ENCAP_BYTE_ORDER,
-                      stream.begin (),
-                      1,
-                      tmp,
-                      CORBA::Any::_tao_any_string_destructor);
+  if (s.bound_ > 0)
+    {
+      // If the inserted string is bounded, we create a typecode.
+      static CORBA::Long _oc_string [] =
+      {
+        TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
+        ACE_static_cast (CORBA::Long, s.bound_)
+      };
+
+      CORBA::TypeCode_ptr tc = 0;
+
+      ACE_NEW (tc,
+               CORBA::TypeCode (CORBA::tk_string,
+                                sizeof _oc_string,
+                                (char *) &_oc_string,
+                                1,
+                                sizeof (CORBA::String_var)));
+
+      this->_tao_replace (tc,
+                          TAO_ENCAP_BYTE_ORDER,
+                          stream.begin (),
+                          1,
+                          tmp,
+                          CORBA::Any::_tao_any_string_destructor);
+
+      CORBA::release (tc);
+    }
+  else
+    {
+      // Unbounded.
+      this->_tao_replace (CORBA::_tc_string,
+                          TAO_ENCAP_BYTE_ORDER,
+                          stream.begin (),
+                          1,
+                          tmp,
+                          CORBA::Any::_tao_any_string_destructor);
+    }
 }
 
 void
@@ -656,35 +657,6 @@ CORBA_Any::operator<<= (from_wstring ws)
 {
   TAO_OutputCDR stream;
   stream << ws;
-
-  // If the inserted string is bounded, we create a typecode.
-  static CORBA::Long _oc_wstring [] =
-  {
-    // CDR typecode octets.
-    TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
-    0                       // ... unbounded string to start with
-  };
-
-  CORBA::TypeCode_ptr tc = 0;
-
-  if (ws.bound_ > 0)
-    {
-      // Bounded string.
-      _oc_wstring [1] = ws.bound_;
-
-      // @@ TODO It seems like this is leaked!
-      ACE_NEW (tc,
-               CORBA::TypeCode (CORBA::tk_wstring,
-                                sizeof _oc_wstring,
-                                (char *) &_oc_wstring,
-                                1,
-                                sizeof (CORBA::WString_var)));
-    }
-  else
-    {
-      // Unbounded.
-      tc = CORBA::_tc_wstring;
-    }
 
   CORBA::WChar *tmp;
   // Non-copying.
@@ -697,12 +669,41 @@ CORBA_Any::operator<<= (from_wstring ws)
       tmp = CORBA::wstring_dup (ws.val_);
     }
 
-  this->_tao_replace (tc,
-                      TAO_ENCAP_BYTE_ORDER,
-                      stream.begin (),
-                      1,
-                      tmp,
-                      CORBA::Any::_tao_any_wstring_destructor);
+  if (ws.bound_ > 0)
+    {
+      // If the inserted string is bounded, we create a typecode.
+      static CORBA::Long _oc_wstring [] =
+      {
+        TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
+        ACE_static_cast (CORBA::Long, ws.bound_) 
+      };
+
+      CORBA::TypeCode_ptr tc = 0;
+      ACE_NEW (tc,
+               CORBA::TypeCode (CORBA::tk_wstring,
+                                sizeof _oc_wstring,
+                                (char *) &_oc_wstring,
+                                1,
+                                sizeof (CORBA::WString_var)));
+
+      this->_tao_replace (tc,
+                          TAO_ENCAP_BYTE_ORDER,
+                          stream.begin (),
+                          1,
+                          tmp,
+                          CORBA::Any::_tao_any_wstring_destructor);
+
+      CORBA::release (tc);
+    }
+  else
+    {
+      this->_tao_replace (CORBA::_tc_wstring,
+                          TAO_ENCAP_BYTE_ORDER,
+                          stream.begin (),
+                          1,
+                          tmp,
+                          CORBA::Any::_tao_any_wstring_destructor);
+    }
 }
 
 // Extraction: these are safe and hence we have to check that the

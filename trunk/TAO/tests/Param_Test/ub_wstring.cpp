@@ -62,6 +62,9 @@ Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req,
   req->add_inout_arg ("s2") <<= this->inout_;
   req->add_out_arg ("s3") <<= this->out_;
 
+  // The Any arg manages its memory but this class member does not.
+  CORBA::wstring_free (this->inout_);
+
   req->set_return_type (CORBA::_tc_wstring);
 
   req->invoke (ACE_TRY_ENV);

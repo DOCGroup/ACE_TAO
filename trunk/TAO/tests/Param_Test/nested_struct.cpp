@@ -76,17 +76,19 @@ Test_Nested_Struct::dii_req_invoke (CORBA::Request *req, CORBA::Environment &ACE
 }
 
 int
-Test_Nested_Struct::init_parameters (Param_Test_ptr /*objref*/,
-                                     CORBA::Environment &/*env*/)
+Test_Nested_Struct::init_parameters (Param_Test_ptr,
+                                     CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-
-  //ACE_UNUSED_ARG (objref);
-  //ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
+  this->in_.vs.dbl = 0.0;
+  this->in_.vs.dummy1 = CORBA::string_dup ("");
+  this->in_.vs.boole = 0;
+  this->in_.vs.dummy2 = CORBA::string_dup ("");
+  this->in_.vs.shrt = 0;
   // set the length of the sequence
   this->in_.vs.seq.length (len);
   // now set each individual element
@@ -97,6 +99,15 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr /*objref*/,
       char *str = gen->gen_string ();
       this->in_.vs.seq[i] = str;
     }
+
+  this->inout_->vs.dbl = 0.0;
+  this->inout_->vs.dummy1 = CORBA::string_dup ("");
+  this->inout_->vs.boole = 0;
+  this->inout_->vs.dummy2 = CORBA::string_dup ("");
+  this->inout_->vs.shrt = 0;
+  // set the length of the sequence
+  this->inout_->vs.seq.length (0);
+
   return 0;
 }
 
@@ -106,6 +117,15 @@ Test_Nested_Struct::reset_parameters (void)
   this->inout_ = new Param_Test::Nested_Struct; // delete the previous ones
   this->out_ = new Param_Test::Nested_Struct;
   this->ret_ = new Param_Test::Nested_Struct;
+
+  this->inout_->vs.dbl = 0.0;
+  this->inout_->vs.dummy1 = CORBA::string_dup ("");
+  this->inout_->vs.boole = 0;
+  this->inout_->vs.dummy2 = CORBA::string_dup ("");
+  this->inout_->vs.shrt = 0;
+  // set the length of the sequence
+  this->inout_->vs.seq.length (0);
+
   return 0;
 }
 
