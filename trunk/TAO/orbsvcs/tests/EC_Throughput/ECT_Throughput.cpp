@@ -343,7 +343,10 @@ ECT_Throughput::shutdown_consumer (void*,
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
   this->active_count_--;
   if (this->active_count_ <= 0)
-    this->orb_->shutdown ();
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) shutting down the ORB\n"));
+      this->orb_->shutdown ();
+    }
 }
 
 void
