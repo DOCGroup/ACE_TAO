@@ -656,7 +656,8 @@ ACE_Log_Msg::log (const char *format_str,
       // Make sure that the lock is help during all this.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock_, -1));
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR))
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR) 
+	  && abort_prog == 0) // We'll get this further down.
 	log_record.print (ACE_Log_Msg::local_host_,
 			  ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
 			  stderr);
@@ -690,11 +691,10 @@ ACE_Log_Msg::log (const char *format_str,
 
   if (abort_prog)
     {
-      // *always* print a message to stderr if we're aborting (and
-      // have not already done so).  We don't use verbose, however, to
-      // avoid recursive aborts if something is hosed.
-      if (!ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR))
-	log_record.print (ACE_Log_Msg::local_host_, 0);
+      // *Always* print a message to stderr if we're aborting.  We
+      // don't use verbose, however, to avoid recursive aborts if
+      // something is hosed.
+      log_record.print (ACE_Log_Msg::local_host_, 0);
       ACE_OS::exit (exit_value);
     }
 
