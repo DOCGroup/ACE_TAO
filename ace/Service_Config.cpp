@@ -544,8 +544,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   ACE_Log_Msg *log_msg = ACE_LOG_MSG;
 
   // Record the current log setting upon entering this thread.
-  int debugging_enabled =
-    log_msg->log_priority_enabled (LM_DEBUG);
+  u_long old_process_mask = log_msg->priority_mask
+    (ACE_Log_Msg::PROCESS);
+  u_long old_thread_mask = log_msg->priority_mask
+    (ACE_Log_Msg::THREAD);    
 
   if (ACE_Service_Config::is_initialized_ != 0)
     // Guard against reentrant processing!
@@ -647,11 +649,8 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       {
         // Reset debugging back to the way it was when we came into
         // into <open_i>.
-        if (debugging_enabled)
-          ACE_Log_Msg::enable_debug_messages ();
-        else
-          // Debugging was off when we entered <open_i>.
-          ACE_Log_Msg::disable_debug_messages ();
+        log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS); 
+        log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
       }
   }
 
