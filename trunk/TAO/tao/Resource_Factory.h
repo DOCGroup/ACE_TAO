@@ -63,7 +63,7 @@ public:
   // return a pointer to the protocol factory.
 
   void factory (TAO_Protocol_Factory *factory);
-  // set the factory pointer's valus.
+  // set the factory pointer's value.
 
 private:
   ACE_CString name_;
