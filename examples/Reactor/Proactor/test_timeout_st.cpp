@@ -20,6 +20,7 @@
 // ============================================================================
 
 #include "ace/Proactor.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(Proactor, test_timeout, "$Id$")
 
