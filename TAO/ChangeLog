@@ -1,3 +1,12 @@
+Thu May 13 13:32:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+          Increased timeout of the server, the server runs the orb for 120
+          seconds and then quits, so in the run_test.pl we now don't wait
+          120 seconds but 150, the test looks to be failing on the slower
+          windows systems but almost takes 120 seconds on my fast develoment
+          system.
+
 Thu May 13 12:50:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Crash_On_Write/client.cpp:
