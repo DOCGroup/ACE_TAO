@@ -264,6 +264,7 @@ copied instead of appended to the CDR stream.</TD></TR>
 <H3><CODE>TAO_Default_Server_Strategy_Factory</CODE><A NAME="DefaultServer"></A></H3>
 
 <p><em>Note:</em> <code>-ORBdemuxstrategy</code> flag has been changed to <code>-ORBsystemidpolicydemuxstrategy</code> and <code>-ORBuseridpolicydemuxstrategy</code>.
+<p><em>Note:</em> <code>-ORBtablesize</code> flag has been changed to <code>-ORBactiveobjectmapsize</code>.
 
 <blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
@@ -271,37 +272,37 @@ copied instead of appended to the CDR stream.</TD></TR>
 <TH>Option</TH>
 <TH>Description</TH></TR>
 <TR>
-<TD><CODE>-ORBconcurrency</CODE> <EM>which</EM></TD>
-<TD>Specify which concurrency strategy to use.  Range of values is <code>reactive</code>
+
+<TD><CODE>-ORBconcurrency</CODE> <EM>which</EM></TD> <TD>Specify which
+concurrency strategy to use.  Range of values is <code>reactive</code>
 for a purely Reactor-driven concurrency strategy or
-<code>thread-per-connection</code> for creating a new thread to service each connection.</TD></TR>
-<TR>
-<TD><CODE>-ORBtablesize</CODE> <EM>object table size</EM></TD>
-<TD>Specify the size of the object table. If not specified, the default value
-is 64.</TD></TR>
-<TR>
+<code>thread-per-connection</code> for creating a new thread to
+service each connection.</TD></TR> <TR>
+
+<TD><CODE>-ORBactiveobjectmapsize</CODE> <EM>active object map
+size</EM></TD> <TD>Specify the size of the active object map. If not
+specified, the default value is 64.</TD></TR> <TR>
 
 <TD><CODE>-ORBuseridpolicydemuxstrategy</CODE> <EM>user id policy
 based demultiplexing strategy</EM></TD> <TD>Specify the demultiplexing
 lookup strategy to be used with the user id policy.  The
-<EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE>,
-<CODE>linear</CODE>, or <CODE>user</CODE>.  This option defaults to
-use the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
+<EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE> or
+<CODE>linear</CODE>.  This option defaults to use the
+<CODE>dynamic</CODE> strategy. </TD></TR> <TR>
 
 <TD><CODE>-ORBsystemidpolicydemuxstrategy</CODE> <EM>system id policy
 based demultiplexing strategy</EM></TD> <TD>Specify the demultiplexing
 lookup strategy to be used with the system id policy. The
 <EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE>,
-<CODE>linear</CODE>, <CODE>active</CODE>, or <CODE>user</CODE>. This
-option defaults to use the <CODE>active</CODE> strategy. </TD></TR>
-<TR>
+<CODE>linear</CODE>, or <CODE>active</CODE>. This option defaults to
+use the <CODE>active</CODE> strategy. </TD></TR> <TR>
 
 <TD><CODE>-ORBuniqueidpolicyreversedemuxstrategy</CODE> <EM>unique id
 policy based reverse demultiplexing strategy</EM></TD> <TD>Specify the
 reverse demultiplexing lookup strategy to be used with the unique id
 policy. The <EM>reverse demultiplexing strategy</EM> can be one of
-<CODE>dynamic</CODE> or <CODE>user</CODE>. This option defaults to use
-the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
+<CODE>dynamic</CODE> or <CODE>linear</CODE>. This option defaults to
+use the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
 
 <TD><CODE>-ORBallowreactivationofsystemids</CODE> <EM>allows
 reactivation of system ids</EM></TD> <TD>Specify whether system ids
@@ -321,6 +322,33 @@ to larger IORs. Note that this option is disregarded
 <CODE>-ORBallowreactivationofsystemids</CODE> is set to
 <CODE>0</CODE>. The <EM>-ORBactivehintinids</EM> can be <CODE>0</CODE>
 or <CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
+<TR>
+
+<TD><CODE>-ORBpoamapsize</CODE> <EM>poa map size</EM></TD> <TD>Specify
+the size of the poa map. If not specified, the default value is
+24.</TD></TR> <TR>
+
+<TD><CODE>-ORBpersiententidpolicydemuxstrategy</CODE> <EM>persistent
+id policy based demultiplexing strategy</EM></TD> <TD>Specify the
+demultiplexing lookup strategy to be used with the persistent id
+policy.  The <EM>demultiplexing strategy</EM> can be one of
+<CODE>dynamic</CODE> or <CODE>linear</CODE>.  This option defaults to
+use the <CODE>dynamic</CODE> strategy. </TD></TR> <TR>
+
+<TD><CODE>-ORBtransientidpolicydemuxstrategy</CODE> <EM>transient id
+policy based demultiplexing strategy</EM></TD> <TD>Specify the
+demultiplexing lookup strategy to be used with the transient id
+policy. The <EM>demultiplexing strategy</EM> can be one of
+<CODE>dynamic</CODE>, <CODE>linear</CODE>, or
+<CODE>active</CODE>. This option defaults to use the
+<CODE>active</CODE> strategy. </TD></TR> <TR>
+
+<TD><CODE>-ORBactivehintinpoanames</CODE> <EM>adds an active hint in
+poa names</EM></TD> <TD>Specify whether an active hint should be added
+to poa names. With active hints, poa names can be found quickly.
+However, they lead to larger IORs. The
+<EM>-ORBactivehintinpoanames</EM> can be <CODE>0</CODE> or
+<CODE>1</CODE>. This option defaults to <CODE>1</CODE>. </TD></TR>
 <TR>
 
 <TD><CODE>-ORBthreadflags</CODE> <EM>thread flags</EM></TD>

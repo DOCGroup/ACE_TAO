@@ -17,104 +17,13 @@
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
 
-#include "tao/corbafwd.h"
-#include "tao/Servant_Base.h"
-#include "ace/Map.h"
+#include "tao/Key_Adapters.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/Servant_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-////////////////////////////////////////////////////////////////////////////////
-
-class TAO_Incremental_Key_Generator
-{
-  // = TITLE
-  //     Defines a key generator.
-  //
-  // = DESCRIPTION
-  //     This class is used in adapters of maps that do not produce keys.
-public:
-
-  TAO_Incremental_Key_Generator (void);
-
-  int operator() (PortableServer::ObjectId &id);
-
-protected:
-
-  CORBA::ULong counter_;
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-class TAO_Export TAO_ObjectId_Hash
-{
-  // = TITLE
-  //     Hashing class for Object Ids.
-  //
-  // = DESCRIPTION
-  //     Define the hash() method for Object Ids.
-public:
-
-  u_long operator () (const PortableServer::ObjectId &id) const;
-  // Returns hash value.
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-class TAO_Ignore_Original_Key_Adapter
-{
-  // = TITLE
-  //     A key adapter (encode/decode) class.
-  //
-  // = DESCRIPTION
-  //     Define the encoding and decoding methods for converting
-  //     between Object Ids and active keys.  This class ignores the
-  //     <original_key> passed to it.
-public:
-
-  int encode (const PortableServer::ObjectId &original_key,
-              const ACE_Active_Map_Manager_Key &active_key,
-              PortableServer::ObjectId &modified_key);
-
-  int decode (const PortableServer::ObjectId &modified_key,
-              ACE_Active_Map_Manager_Key &active_key);
-
-  int decode (const PortableServer::ObjectId &modified_key,
-              PortableServer::ObjectId &original_key);
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-class TAO_Preserve_Original_Key_Adapter
-{
-  // = TITLE
-  //     A key adapter (encode/decode) class.
-  //
-  // = DESCRIPTION
-  //     Define the encoding and decoding methods for converting
-  //     between Object Ids and active keys.  This class remembers the
-  //     <original_key> passed to it.
-public:
-
-  int encode (const PortableServer::ObjectId &original_key,
-              const ACE_Active_Map_Manager_Key &active_key,
-              PortableServer::ObjectId &modified_key);
-
-  int decode (const PortableServer::ObjectId &modified_key,
-              ACE_Active_Map_Manager_Key &active_key);
-
-  int decode (const PortableServer::ObjectId &modified_key,
-              PortableServer::ObjectId &original_key);
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-// Comparison of Object Ids. Defined in Stub.cpp for TAO_opaque (an
-// alias of PortableServer::ObjectId).
-extern TAO_Export int operator== (const PortableServer::ObjectId &l,
-                                  const PortableServer::ObjectId &r);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -136,7 +45,8 @@ public:
   TAO_Active_Object_Map (int user_id_policy,
                          int unique_id_policy,
                          int persistent_id_policy,
-                         const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
+                         const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
+                         CORBA_Environment &ACE_TRY_ENV);
   // Constructor.
 
   ~TAO_Active_Object_Map (void);
@@ -206,8 +116,11 @@ public:
   // Can be used with any policy.  When the SYSTEM_ID policy is used,
   // the <system_id> is identical to <user_id>.
 
-  size_t system_id_size (void);
+  static size_t system_id_size (void);
   // Can be used with any policy.
+
+  static void set_system_id_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
+  // Set the system id size.
 
   struct Map_Entry
   {
@@ -287,7 +200,7 @@ public:
   TAO_Id_Hint_Strategy *id_hint_strategy_;
   // Id hint strategy.
 
-  size_t system_id_size_;
+  static size_t system_id_size_;
   // Size of the system id produced by the map.
 };
 
@@ -587,6 +500,8 @@ class TAO_Active_Hint_Strategy : public TAO_Id_Hint_Strategy
   //     Strategy for adding active hints to ids.
 public:
 
+  TAO_Active_Hint_Strategy (CORBA::ULong map_size);
+
   virtual ~TAO_Active_Hint_Strategy (void);
   // Virtual destructor.
 
@@ -649,4 +564,4 @@ public:
 # include "tao/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_ACTIVE_OBJECT_MAP_T_H */
+#endif /* TAO_ACTIVE_OBJECT_MAP_H */

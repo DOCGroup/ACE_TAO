@@ -20,13 +20,12 @@ CFG=TAO - Win32 Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -105,13 +104,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /Gt0 /W3 /GX /O2 /I "..\..\\ /I" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD ..\\ /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\ /I" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD ..\\ /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -136,13 +135,13 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\ /I" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd ..\\ /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\ /I" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd ..\\ /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -15855,6 +15854,21 @@ SOURCE=.\IOR_LookupTable.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Key_Adapters.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -18004,6 +18018,21 @@ NODEP_CPP_OBJEC=\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Adapter.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 

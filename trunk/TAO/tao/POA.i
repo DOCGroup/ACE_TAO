@@ -92,7 +92,7 @@ TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyVal
   this->request_processing_ = value;
 }
 
-ACE_INLINE int
+ACE_INLINE CORBA::ULong
 TAO_Creation_Time::creation_time_length (void)
 {
   return 2 * sizeof (CORBA::ULong);
@@ -202,107 +202,38 @@ TAO_Temporary_Creation_Time::creation_time (const void *creation_time)
   this->time_stamp_ = (void *) creation_time;
 }
 
-ACE_INLINE TAO_POA *
-TAO_POA::clone (const TAO_POA::String &adapter_name,
-                TAO_POA_Manager &poa_manager,
-                const TAO_POA_Policies &policies,
-                TAO_POA *parent,
-                CORBA::Environment &env)
-{
-  return new TAO_POA (adapter_name,
-                      poa_manager,
-                      policies,
-                      parent,
-                      env);
-}
-
 ACE_INLINE ACE_Lock &
 TAO_POA::lock (void)
 {
-  return *this->lock_;
+  return this->lock_;
 }
 
 ACE_INLINE TAO_POA *
 TAO_POA::create_POA (const TAO_POA::String &adapter_name,
                      TAO_POA_Manager &poa_manager,
                      const TAO_POA_Policies &policies,
-                     CORBA::Environment &env)
+                     CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
   return this->create_POA_i (adapter_name,
                              poa_manager,
                              policies,
-                             env);
-}
-
-ACE_INLINE TAO_POA *
-TAO_POA::find_POA (const TAO_POA::String &adapter_name,
-                   CORBA::Boolean activate_it,
-                   CORBA::Environment &env)
-{
-  // Check if we are the POA the user is looking for
-  if (adapter_name == this->name_)
-    return this;
-
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
-
-  return this->find_POA_i_optimized (adapter_name,
-                                     activate_it,
-                                     env);
-
-}
-
-ACE_INLINE PortableServer::POA_ptr
-TAO_POA::find_POA (const char *adapter_name,
-                   CORBA::Boolean activate_it,
-                   CORBA::Environment &env)
-{
-  // Don't copy string
-  TAO_POA::String name (adapter_name, 0, 0);
-
-  TAO_POA *result = this->find_POA (name,
-                                    activate_it,
-                                    env);
-
-  if (env.exception () != 0)
-    return PortableServer::POA::_nil ();
-
-  return result->_this (env);
-}
-
-ACE_INLINE TAO_POA *
-TAO_POA::find_POA_i (const TAO_POA::String &adapter_name,
-                     CORBA::Boolean activate_it,
-                     CORBA::Environment &env)
-{
-  // Check if we are the POA the user is looking for
-  if (adapter_name == this->name_)
-    return this;
-
-  return this->find_POA_i_optimized (adapter_name,
-                                     activate_it,
-                                     env);
+                             ACE_TRY_ENV);
 }
 
 ACE_INLINE void
 TAO_POA::destroy (CORBA::Boolean etherealize_objects,
                   CORBA::Boolean wait_for_completion,
-                  CORBA::Environment &env)
+                  CORBA::Environment &ACE_TRY_ENV)
 {
-  {
-    // Lock access to the POA for the duration of this transaction
-    TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
-    this->destroy_i (etherealize_objects,
-                     wait_for_completion,
-                     env);
-  }
-
-  // Commit suicide
-  delete this;
+  this->destroy_i (etherealize_objects,
+                   wait_for_completion,
+                   ACE_TRY_ENV);
 }
 
 ACE_INLINE TAO_POA_Policies &
@@ -320,149 +251,149 @@ TAO_POA::active_object_map (void) const
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::ServantManager_ptr
-TAO_POA::get_servant_manager (CORBA::Environment &env)
+TAO_POA::get_servant_manager (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), PortableServer::ServantManager::_nil (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), PortableServer::ServantManager::_nil (), ACE_TRY_ENV);
 
-  return this->get_servant_manager_i (env);
+  return this->get_servant_manager_i (ACE_TRY_ENV);
 }
 
 ACE_INLINE void
 TAO_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->set_servant_manager_i (imgr,
-                               env);
+                               ACE_TRY_ENV);
 }
 
 ACE_INLINE PortableServer::Servant
-TAO_POA::get_servant (CORBA::Environment &env)
+TAO_POA::get_servant (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
-  return this->get_servant_i (env);
+  return this->get_servant_i (ACE_TRY_ENV);
 }
 
 ACE_INLINE void
 TAO_POA::set_servant (PortableServer::Servant servant,
-                      CORBA::Environment &env)
+                      CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->set_servant_i (servant,
-                       env);
+                       ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_POA::activate_object (PortableServer::Servant servant,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
   return this->activate_object_i (servant,
-                                  env);
+                                  ACE_TRY_ENV);
 }
 
 ACE_INLINE void
 TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                   PortableServer::Servant servant,
-                                  CORBA::Environment &env)
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->activate_object_with_id_i (id,
                                    servant,
-                                   env);
+                                   ACE_TRY_ENV);
 }
 
 ACE_INLINE void
 TAO_POA::deactivate_object (const PortableServer::ObjectId &oid,
-                            CORBA::Environment &env)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->deactivate_object_i (oid,
-                             env);
+                             ACE_TRY_ENV);
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_POA::create_reference (const char *intf,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil (), ACE_TRY_ENV);
 
   return this->create_reference_i (intf,
-                                   env);
+                                   ACE_TRY_ENV);
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
                                    const char *intf,
-                                   CORBA::Environment &env)
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), CORBA::Object::_nil (), ACE_TRY_ENV);
 
   return this->create_reference_with_id_i (id,
                                            intf,
-                                           env);
+                                           ACE_TRY_ENV);
 }
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_POA::servant_to_id (PortableServer::Servant servant,
-                        CORBA::Environment &env)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
   // If we had upgradeable locks, this would initially be a read lock
   //
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
   return this->servant_to_id_i (servant,
-                                env);
+                                ACE_TRY_ENV);
 }
 
 ACE_INLINE PortableServer::ObjectId *
 TAO_POA::servant_to_system_id (PortableServer::Servant servant,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
   return this->servant_to_system_id_i (servant,
-                                       env);
+                                       ACE_TRY_ENV);
 }
 
 ACE_INLINE PortableServer::Servant
 TAO_POA::id_to_servant (const PortableServer::ObjectId &oid,
-                        CORBA::Environment &env)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
   return this->id_to_servant_i (oid,
-                                env);
+                                ACE_TRY_ENV);
 }
 
 ACE_INLINE CORBA::Object_ptr
 TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
-  return this->id_to_reference_i (oid, env);
+  return this->id_to_reference_i (oid, ACE_TRY_ENV);
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -470,48 +401,50 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
 ACE_INLINE void
 TAO_POA::forward_object (const PortableServer::ObjectId &oid,
                          CORBA::Object_ptr forward_to,
-                         CORBA::Environment &env)
+                         CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->forward_object_i (oid,
                           forward_to,
-                          env);
+                          ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_POA::the_parent (CORBA::Environment &env)
+TAO_POA::the_parent (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->parent_ != 0)
-    return this->parent_->_this (env);
+    return this->parent_->_this (ACE_TRY_ENV);
   else
     return PortableServer::POA::_nil ();
 }
 
 ACE_INLINE PortableServer::POAManager_ptr
-TAO_POA::the_POAManager (CORBA::Environment &env)
+TAO_POA::the_POAManager (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->poa_manager_._this (env);
+  return this->poa_manager_._this (ACE_TRY_ENV);
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::AdapterActivator_ptr
-TAO_POA::the_activator (CORBA::Environment &env)
+TAO_POA::the_activator (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), PortableServer::AdapterActivator::_nil (), ACE_TRY_ENV);
 
   return PortableServer::AdapterActivator::_duplicate (this->adapter_activator_.in ());
 }
 
 ACE_INLINE void
 TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
-                        CORBA::Environment &env)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
   this->adapter_activator_ = PortableServer::AdapterActivator::_duplicate (adapter_activator);
 }
@@ -537,40 +470,40 @@ TAO_POA::persistent (void)
   return this->persistent_;
 }
 
-ACE_INLINE CORBA::String
-TAO_POA::the_name (CORBA::Environment &env)
+ACE_INLINE const ACE_CString &
+TAO_POA::name (void) const
 {
-  ACE_UNUSED_ARG (env);
+  return this->name_;
+}
+
+ACE_INLINE CORBA::String
+TAO_POA::the_name (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 
   return CORBA::string_dup (this->name_.c_str ());
 }
 
-ACE_INLINE TAO_POA::String
-TAO_POA::complete_name (void)
+ACE_INLINE const TAO_Object_Adapter::poa_name &
+TAO_POA::folded_name (void) const
 {
-  return this->complete_name_;
+  return this->folded_name_;
+}
+
+ACE_INLINE const TAO_Object_Adapter::poa_name &
+TAO_POA::system_name (void) const
+{
+  return this->system_name_.in ();
 }
 
 ACE_INLINE char
 TAO_POA::name_separator (void)
 {
-  return '/';
-}
-
-ACE_INLINE char
-TAO_POA::id_separator (void)
-{
-  return ':';
+  return '\0';
 }
 
 ACE_INLINE CORBA::ULong
 TAO_POA::name_separator_length (void)
-{
-  return sizeof (char);
-}
-
-ACE_INLINE CORBA::ULong
-TAO_POA::id_separator_length (void)
 {
   return sizeof (char);
 }
@@ -629,27 +562,11 @@ TAO_POA::system_id_key_type_length (void)
   return sizeof (char);
 }
 
-ACE_INLINE int
-TAO_POA::rfind (const TAO_ObjectKey &key,
-                char c,
-                int pos) const
-{
-  if (pos == ACE_CString::npos)
-    pos = key.length ();
-
-  for (int i = pos - 1; i >= 0; i--)
-    if (key[i] == c)
-      return i;
-
-  return TAO_POA::String::npos;
-}
-
 ACE_INLINE void
 TAO_POA_Current::clear (void)
 {
   this->poa_impl_ = 0;
   this->object_id_ = 0;
-  this->servant_ = 0;
   this->object_key_ = 0;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -658,6 +575,9 @@ TAO_POA_Current::clear (void)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+  this->orb_core_ = 0;
+  this->previous_current_ = 0;
+  this->servant_ = 0;
 }
 
 ACE_INLINE int

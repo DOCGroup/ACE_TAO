@@ -5,9 +5,9 @@
 
 #include "tao/POA.h"
 #include "tao/ORB_Core.h"
-#include "tao/Server_Request.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Environment.h"
+#include "tao/Exception.h"
 
 // Forwarding Servant class
 #include "tao/Forwarding_Servant.h"
@@ -102,59 +102,65 @@ TAO_Thread_Policy::TAO_Thread_Policy (const TAO_Thread_Policy &rhs)
 }
 
 PortableServer::ThreadPolicyValue
-TAO_Thread_Policy::value (CORBA::Environment &env)
+TAO_Thread_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Thread_Policy::copy (CORBA::Environment &env)
+TAO_Thread_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (*this));
+  TAO_Thread_Policy *thread_policy_copy = 0;
+  ACE_NEW_THROW_EX (thread_policy_copy,
+                    TAO_Thread_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  CORBA::Policy_var result = new_policy->_this (env);
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Thread_Policy> new_thread_policy (thread_policy_copy);
 
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  CORBA::Policy_var result = new_thread_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_thread_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Thread_Policy::destroy (CORBA::Environment &env)
+TAO_Thread_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
-    {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
-    }
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Commit suicide: must have been dynamically allocated
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Thread_Policy::policy_type (CORBA::Environment &env)
+TAO_Thread_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
-  return 0;
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return PortableServer::THREAD_POLICY_ID;
 }
 
 PortableServer::POA_ptr
-TAO_Thread_Policy::_default_POA (CORBA::Environment &env)
+TAO_Thread_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -175,58 +181,65 @@ TAO_Lifespan_Policy::TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs)
 }
 
 PortableServer::LifespanPolicyValue
-TAO_Lifespan_Policy::value (CORBA::Environment &env)
+TAO_Lifespan_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Lifespan_Policy::copy (CORBA::Environment &env)
+TAO_Lifespan_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  auto_ptr<TAO_Lifespan_Policy> new_policy (new TAO_Lifespan_Policy (*this));
+  TAO_Lifespan_Policy *lifespan_policy_copy = 0;
+  ACE_NEW_THROW_EX (lifespan_policy_copy,
+                    TAO_Lifespan_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Lifespan_Policy> new_lifespan_policy (lifespan_policy_copy);
+
+  CORBA::Policy_var result = new_lifespan_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_lifespan_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Lifespan_Policy::destroy (CORBA::Environment &env)
+TAO_Lifespan_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
-    {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
-    }
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Commit suicide: must have been dynamically allocated
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Lifespan_Policy::policy_type (CORBA::Environment &env)
+TAO_Lifespan_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
-  return 0;
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return PortableServer::LIFESPAN_POLICY_ID;
 }
 
 PortableServer::POA_ptr
-TAO_Lifespan_Policy::_default_POA (CORBA::Environment &env)
+TAO_Lifespan_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -245,58 +258,65 @@ TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Poli
 }
 
 PortableServer::IdUniquenessPolicyValue
-TAO_Id_Uniqueness_Policy::value (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Id_Uniqueness_Policy::copy (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  auto_ptr<TAO_Id_Uniqueness_Policy> new_policy (new TAO_Id_Uniqueness_Policy (*this));
+  TAO_Id_Uniqueness_Policy *id_uniqueness_policy_copy = 0;
+  ACE_NEW_THROW_EX (id_uniqueness_policy_copy,
+                    TAO_Id_Uniqueness_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Id_Uniqueness_Policy> new_id_uniqueness_policy (id_uniqueness_policy_copy);
+
+  CORBA::Policy_var result = new_id_uniqueness_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_id_uniqueness_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Id_Uniqueness_Policy::destroy (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
-    {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
-    }
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Commit suicide: must have been dynamically allocated
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
-  return 0;
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return PortableServer::ID_UNIQUENESS_POLICY_ID;
 }
 
 PortableServer::POA_ptr
-TAO_Id_Uniqueness_Policy::_default_POA (CORBA::Environment &env)
+TAO_Id_Uniqueness_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -315,58 +335,65 @@ TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Poli
 }
 
 PortableServer::IdAssignmentPolicyValue
-TAO_Id_Assignment_Policy::value (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Id_Assignment_Policy::copy (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  auto_ptr<TAO_Id_Assignment_Policy> new_policy (new TAO_Id_Assignment_Policy (*this));
+  TAO_Id_Assignment_Policy *id_assignment_policy_copy = 0;
+  ACE_NEW_THROW_EX (id_assignment_policy_copy,
+                    TAO_Id_Assignment_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Id_Assignment_Policy> new_id_assignment_policy (id_assignment_policy_copy);
+
+  CORBA::Policy_var result = new_id_assignment_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_id_assignment_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Id_Assignment_Policy::destroy (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
-    {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
-    }
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Commit suicide: must have been dynamically allocated
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
-  return 0;
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return PortableServer::ID_ASSIGNMENT_POLICY_ID;
 }
 
 PortableServer::POA_ptr
-TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment &env)
+TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -387,58 +414,65 @@ TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (const TAO_Implic
 }
 
 PortableServer::ImplicitActivationPolicyValue
-TAO_Implicit_Activation_Policy::value (CORBA::Environment &env)
+TAO_Implicit_Activation_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Implicit_Activation_Policy::copy (CORBA::Environment &env)
+TAO_Implicit_Activation_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  auto_ptr<TAO_Implicit_Activation_Policy> new_policy (new TAO_Implicit_Activation_Policy (*this));
+  TAO_Implicit_Activation_Policy *implicit_activation_policy_copy = 0;
+  ACE_NEW_THROW_EX (implicit_activation_policy_copy,
+                    TAO_Implicit_Activation_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Implicit_Activation_Policy> new_implicit_activation_policy (implicit_activation_policy_copy);
+
+  CORBA::Policy_var result = new_implicit_activation_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_implicit_activation_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Implicit_Activation_Policy::destroy (CORBA::Environment &env)
+TAO_Implicit_Activation_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
-    {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
-    }
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Commit suicide: must have been dynamically allocated
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Implicit_Activation_Policy::policy_type (CORBA::Environment &env)
+TAO_Implicit_Activation_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
-  return 0;
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return PortableServer::IMPLICIT_ACTIVATION_POLICY_ID;
 }
 
 PortableServer::POA_ptr
-TAO_Implicit_Activation_Policy::_default_POA (CORBA::Environment &env)
+TAO_Implicit_Activation_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -457,58 +491,65 @@ TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (const TAO_Servant_Re
 }
 
 PortableServer::ServantRetentionPolicyValue
-TAO_Servant_Retention_Policy::value (CORBA::Environment &env)
+TAO_Servant_Retention_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Servant_Retention_Policy::copy (CORBA::Environment &env)
+TAO_Servant_Retention_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  auto_ptr<TAO_Servant_Retention_Policy> new_policy (new TAO_Servant_Retention_Policy (*this));
+  TAO_Servant_Retention_Policy *servant_retention_policy_copy = 0;
+  ACE_NEW_THROW_EX (servant_retention_policy_copy,
+                    TAO_Servant_Retention_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Servant_Retention_Policy> new_servant_retention_policy (servant_retention_policy_copy);
+
+  CORBA::Policy_var result = new_servant_retention_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_servant_retention_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Servant_Retention_Policy::destroy (CORBA::Environment &env)
+TAO_Servant_Retention_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
-    {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
-    }
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Commit suicide: must have been dynamically allocated
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Servant_Retention_Policy::policy_type (CORBA::Environment &env)
+TAO_Servant_Retention_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
-  return 0;
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return PortableServer::SERVANT_RETENTION_POLICY_ID;
 }
 
 PortableServer::POA_ptr
-TAO_Servant_Retention_Policy::_default_POA (CORBA::Environment &env)
+TAO_Servant_Retention_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -527,58 +568,65 @@ TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (const TAO_Request_
 }
 
 PortableServer::RequestProcessingPolicyValue
-TAO_Request_Processing_Policy::value (CORBA::Environment &env)
+TAO_Request_Processing_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->value_;
 }
 
 CORBA::Policy_ptr
-TAO_Request_Processing_Policy::copy (CORBA::Environment &env)
+TAO_Request_Processing_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
 {
-  auto_ptr<TAO_Request_Processing_Policy> new_policy (new TAO_Request_Processing_Policy (*this));
+  TAO_Request_Processing_Policy *request_processing_policy_copy = 0;
+  ACE_NEW_THROW_EX (request_processing_policy_copy,
+                    TAO_Request_Processing_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  CORBA::Policy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return CORBA::Policy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation object
-      new_policy.release ();
-      return result._retn ();
-    }
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Request_Processing_Policy> new_request_processing_policy (request_processing_policy_copy);
+
+  CORBA::Policy_var result = new_request_processing_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_request_processing_policy.release ();
+  return result._retn ();
 }
 
 void
-TAO_Request_Processing_Policy::destroy (CORBA::Environment &env)
+TAO_Request_Processing_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   // Remove self from POA
   //
   // Note that there is no real error checking here as we can't do
   // much about errors here anyway
   //
-  PortableServer::POA_var poa = this->_default_POA (env);
-  if (env.exception () == 0)
-    {
-      PortableServer::ObjectId_var id = poa->servant_to_id (this, env);
-      if (env.exception () == 0)
-        poa->deactivate_object (id.in (), env);
-    }
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Commit suicide: must have been dynamically allocated
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
   delete this;
 }
 
 CORBA::PolicyType
-TAO_Request_Processing_Policy::policy_type (CORBA::Environment &env)
+TAO_Request_Processing_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (env);
-  return 0;
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  return PortableServer::REQUEST_PROCESSING_POLICY_ID;
 }
 
 PortableServer::POA_ptr
-TAO_Request_Processing_Policy::_default_POA (CORBA::Environment &env)
+TAO_Request_Processing_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -598,20 +646,20 @@ TAO_POA_Policies::TAO_POA_Policies (void)
 
 void
 TAO_POA_Policies::parse_policies (const CORBA::PolicyList &policies,
-                                  CORBA::Environment &env)
+                                  CORBA::Environment &ACE_TRY_ENV)
 {
   for (CORBA::ULong i = 0;
-       i < policies.length () && env.exception () == 0;
+       i < policies.length ();
        i++)
     {
-      this->parse_policy (policies[i], env);
+      this->parse_policy (policies[i],
+                          ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   if (this->validity_check () == -1)
     {
-      CORBA::Exception *exception = new PortableServer::POA::InvalidPolicy;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::InvalidPolicy ());
     }
 }
 
@@ -646,112 +694,119 @@ TAO_POA_Policies::validity_check (void)
 
 void
 TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   PortableServer::ThreadPolicy_var thread
-    = PortableServer::ThreadPolicy::_narrow (policy, env);
+    = PortableServer::ThreadPolicy::_narrow (policy,
+                                             ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (!CORBA::is_nil (thread.in ()))
     {
-      this->thread_ = thread->value (env);
+      this->thread_ = thread->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
       return;
-    }
-  else
-    {
-      env.clear ();
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   PortableServer::LifespanPolicy_var lifespan
-    = PortableServer::LifespanPolicy::_narrow (policy, env);
+    = PortableServer::LifespanPolicy::_narrow (policy,
+                                               ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (!CORBA::is_nil (lifespan.in ()))
     {
-      this->lifespan_ = lifespan->value (env);
+      this->lifespan_ = lifespan->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
       return;
-    }
-  else
-    {
-      env.clear ();
     }
 
   PortableServer::IdUniquenessPolicy_var id_uniqueness
-    = PortableServer::IdUniquenessPolicy::_narrow (policy, env);
+    = PortableServer::IdUniquenessPolicy::_narrow (policy,
+                                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (!CORBA::is_nil (id_uniqueness.in ()))
     {
-      this->id_uniqueness_ = id_uniqueness->value (env);
+      this->id_uniqueness_ = id_uniqueness->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
       return;
-    }
-  else
-    {
-      env.clear ();
     }
 
   PortableServer::IdAssignmentPolicy_var id_assignment
-    = PortableServer::IdAssignmentPolicy::_narrow (policy, env);
+    = PortableServer::IdAssignmentPolicy::_narrow (policy,
+                                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (!CORBA::is_nil (id_assignment.in ()))
     {
-      this->id_assignment_ = id_assignment->value (env);
+      this->id_assignment_ = id_assignment->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
       return;
-    }
-  else
-    {
-      env.clear ();
     }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   PortableServer::ImplicitActivationPolicy_var implicit_activation
-    = PortableServer::ImplicitActivationPolicy::_narrow (policy, env);
+    = PortableServer::ImplicitActivationPolicy::_narrow (policy,
+                                                         ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (!CORBA::is_nil (implicit_activation.in ()))
     {
-      this->implicit_activation_ = implicit_activation->value (env);
+      this->implicit_activation_ = implicit_activation->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
       return;
-    }
-  else
-    {
-      env.clear ();
     }
 
   PortableServer::ServantRetentionPolicy_var servant_retention
-    = PortableServer::ServantRetentionPolicy::_narrow (policy, env);
+    = PortableServer::ServantRetentionPolicy::_narrow (policy,
+                                                       ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (!CORBA::is_nil (servant_retention.in ()))
     {
-      this->servant_retention_ = servant_retention->value (env);
+      this->servant_retention_ = servant_retention->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
       return;
-    }
-  else
-    {
-      env.clear ();
     }
 
   PortableServer::RequestProcessingPolicy_var request_processing
-    = PortableServer::RequestProcessingPolicy::_narrow (policy, env);
+    = PortableServer::RequestProcessingPolicy::_narrow (policy,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   if (!CORBA::is_nil (request_processing.in ()))
     {
-      this->request_processing_ = request_processing->value (env);
+      this->request_processing_ = request_processing->value (ACE_TRY_ENV);
+      ACE_CHECK;
+
       return;
-    }
-  else
-    {
-      env.clear ();
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  CORBA::Exception *exception = new PortableServer::POA::InvalidPolicy;
-  env.exception (exception);
-  return;
+  ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
 
-TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
+TAO_POA::TAO_POA (const TAO_POA::String &name,
                   TAO_POA_Manager &poa_manager,
                   const TAO_POA_Policies &policies,
                   TAO_POA *parent,
-                  CORBA::Environment &env)
-  : name_ (adapter_name),
+                  ACE_Lock &lock,
+                  TAO_ORB_Core &orb_core,
+                  CORBA::Environment &ACE_TRY_ENV)
+  : name_ (name),
     poa_manager_ (poa_manager),
     policies_ (policies),
     parent_ (parent),
@@ -767,66 +822,81 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
     children_ (),
-    lock_ (0),
+    lock_ (lock),
     closing_down_ (0),
     persistent_ (policies.lifespan () == PortableServer::PERSISTENT),
     system_id_ (policies.id_assignment () == PortableServer::SYSTEM_ID),
-    creation_time_ (ACE_OS::gettimeofday ())
+    creation_time_ (ACE_OS::gettimeofday ()),
+    orb_core_ (orb_core)
 {
-  // Create a lock for ourselves
-  this->create_internal_lock ();
+  // Set the folded name of this POA.
+  this->set_folded_name ();
 
-  // Set the complete name of this POA
-  this->set_complete_name ();
+  // Create the active object map.
+  TAO_Active_Object_Map *active_object_map = 0;
+  ACE_NEW_THROW_EX (active_object_map,
+                    TAO_Active_Object_Map (!this->system_id (),
+                                           this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID,
+                                           this->persistent (),
+                                           this->orb_core_.server_factory ()->active_object_map_creation_parameters (),
+                                           ACE_TRY_ENV),
+                    CORBA::NO_MEMORY ());
 
-  // Register self with manager
-  this->poa_manager_.register_poa (this, env);
+  // Give ownership of the new map to the auto pointer.  Note, that it
+  // is important for the auto pointer to take ownership before
+  // checking for exception since we may need to delete the new map.
+  auto_ptr<TAO_Active_Object_Map> new_active_object_map (active_object_map);
 
-  // Create the active object map
-  this->create_active_object_map ();
-}
+  // Check for exception in construction of the active object map.
+  ACE_CHECK;
 
-void
-TAO_POA::create_active_object_map (void)
-{
-  ACE_NEW (this->active_object_map_,
-           TAO_Active_Object_Map (!this->system_id (),
-                                  this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID,
-                                  this->policies ().lifespan () == PortableServer::PERSISTENT,
-                                  TAO_ORB_Core_instance ()->server_factory ()->active_object_map_creation_parameters ()));
-}
+  // Register self with manager.
+  int result = this->poa_manager_.register_poa (this);
+  if (result != 0)
+    {
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
+    }
 
-void
-TAO_POA::create_internal_lock (void)
-{
-  // Ask the server factory to create the lock.  svc.conf will be
-  // consulted. If the user did not specify any preference in
-  // svc.conf, THREAD_LOCK will be the default.
-  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_poa_lock ();
+  // Add self to Object Adapter class.
+  result = this->orb_core_.object_adapter ()->bind_poa (this->folded_name_,
+                                                        this,
+                                                        this->system_name_.out ());
+  if (result != 0)
+    {
+      // Remove from POA Manager in case of errors. No checks of
+      // further errors...
+      this->poa_manager_.remove_poa (this);
+
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
+    }
+
+  // Finally everything is fine.  Make sure to take ownership away
+  // from the auto pointer.
+  this->active_object_map_ = new_active_object_map.release ();
 }
 
 TAO_POA::~TAO_POA (void)
 {
-  // Delete the active object map
+  // Delete the active object map.
   delete this->active_object_map_;
 
-  // Delete the dynamically allocated lock
-  delete this->lock_;
-
-  // Remove POA from the POAManager
-  //
   // Note: Errors are ignored here since there is nothing we can do
-  // about them
-  //
-  CORBA::Environment env;
-  this->poa_manager_.remove_poa (this, env);
+  // about them.
+
+  // Remove POA from the POAManager.
+  this->poa_manager_.remove_poa (this);
+
+  // Remove POA from the Object Adapter.
+  this->orb_core_.object_adapter ()->unbind_poa (this,
+                                                 this->folded_name_,
+                                                 this->system_name_.in ());
 }
 
 PortableServer::POA_ptr
 TAO_POA::create_POA (const char *adapter_name,
                      PortableServer::POAManager_ptr poa_manager,
                      const CORBA::PolicyList &policies,
-                     CORBA::Environment &env)
+                     CORBA::Environment &ACE_TRY_ENV)
 {
   // If any of the policy objects specified are not valid for the ORB
   // implementation, if conflicting policy objects are specified, or
@@ -835,27 +905,34 @@ TAO_POA::create_POA (const char *adapter_name,
   // InvalidPolicy exception is raised containing the index in the
   // policies parameter value of the first offending policy object.
   TAO_POA_Policies tao_policies;
-  tao_policies.parse_policies (policies, env);
-  if (env.exception () != 0)
-    return PortableServer::POA::_nil ();
+  tao_policies.parse_policies (policies,
+                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // If the poa_manager parameter is null, a new POAManager object is
   // created and associated with the new POA. Otherwise, the specified
   // POAManager object is associated with the new POA. The POAManager
   // object can be obtained using the attribute name the_POAManager.
+
+  auto_ptr<TAO_POA_Manager> new_poa_manager_impl;
   TAO_POA_Manager *poa_manager_impl = 0;
   if (CORBA::is_nil (poa_manager))
     {
-      poa_manager_impl = this->poa_manager_.clone ();
+      ACE_NEW_THROW_EX (poa_manager_impl,
+                        TAO_POA_Manager (this->orb_core_.object_adapter ()->lock ()),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+      // Give ownership to auto pointer.
+      new_poa_manager_impl = auto_ptr<TAO_POA_Manager> (poa_manager_impl);
     }
   else
     {
       PortableServer::Servant servant = poa_manager->_servant ();
       if (servant == 0)
         {
-          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return PortableServer::POA::_nil ();
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            PortableServer::POA::_nil ());
         }
 
       void *ptr = servant->_downcast (servant->_interface_repository_id ());
@@ -863,249 +940,188 @@ TAO_POA::create_POA (const char *adapter_name,
       poa_manager_impl = ACE_dynamic_cast (TAO_POA_Manager *, mgr);
     }
 
-  TAO_POA *result = this->create_POA (adapter_name,
-                                      *poa_manager_impl,
-                                      tao_policies,
-                                      env);
-  if (env.exception () != 0)
-    return PortableServer::POA::_nil ();
+  TAO_POA *poa = this->create_POA (adapter_name,
+                                   *poa_manager_impl,
+                                   tao_policies,
+                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-  return result->_this (env);
+  // Give ownership of the new poa to the auto pointer.
+  auto_ptr<TAO_POA> new_poa (poa);
+
+  PortableServer::POA_var result = new_poa->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+  // Finally everything is fine.  Make sure to take ownership away
+  // from the auto pointers.
+  new_poa.release ();
+  new_poa_manager_impl.release ();
+
+  return result._retn ();
 }
 
 TAO_POA *
 TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
                        TAO_POA_Manager &poa_manager,
                        const TAO_POA_Policies &policies,
-                       CORBA::Environment &env)
+                       CORBA::Environment &ACE_TRY_ENV)
 {
-  // If this is the leaf POA name
-  if (this->leaf_poa_name (adapter_name, env))
+  // This operaton creates a new POA as a child of the target POA. The
+  // specified name identifies the new POA with respect to other POAs
+  // with the same parent POA. If the target POA already has a child
+  // POA with the specified name, the AdapterAlreadyExists exception
+  // is raised.
+  int result = this->children_.find (adapter_name);
+
+  // Child was found
+  if (result != -1)
     {
-      // This operaton creates a new POA as a child of the target POA. The
-      // specified name identifies the new POA with respect to other POAs
-      // with the same parent POA. If the target POA already has a child
-      // POA with the specified name, the AdapterAlreadyExists exception
-      // is raised.
-      int result = this->children_.find (adapter_name);
-
-      // Child was found
-      if (result != -1)
-        {
-          CORBA::Exception *exception = new PortableServer::POA::AdapterAlreadyExists;
-          env.exception (exception);
-          return 0;
-        }
-
-      //
-      // Child was not found
-      //
-
-      // The specified policy objects are associated with the POA and used
-      // to control its behavior. The policy objects are effectively
-      // copied before this operation returns, so the application is free
-      // to destroy them while the POA is in use. Policies are not
-      // inherited from the parent POA.
-      auto_ptr<TAO_POA> new_poa (this->clone (adapter_name,
-                                              poa_manager,
-                                              policies,
-                                              this,
-                                              env));
-
-      if (env.exception () != 0)
-        return 0;
-
-      // Add to children map
-      if (this->children_.bind (adapter_name, new_poa.get ()) != 0)
-        {
-          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return 0;
-        }
-
-      // Note: Creating a POA using a POA manager that is in the active
-      // state can lead to race conditions if the POA supports preexisting
-      // objects, because the new POA may receive a request before its
-      // adapter activator, servant manager, or default servant have been
-      // initialized. These problems do not occur if the POA is created by
-      // an adapter activator registered with a parent of the new POA,
-      // because requests are queued until the adapter activator
-      // returns. To avoid these problems when a POA must be explicitly
-      // initialized, the application can initialize the POA by invoking
-      // find_POA with a TRUE activate parameter.
-
-      // Everything is fine
-      // Don't let the auto_ptr delete the implementation
-      return new_poa.release ();
+      ACE_THROW_RETURN (PortableServer::POA::AdapterAlreadyExists (),
+                        0);
     }
-  // Not the leaf POA name
-  else
+
+  //
+  // Child was not found
+  //
+
+  // The specified policy objects are associated with the POA and used
+  // to control its behavior. The policy objects are effectively
+  // copied before this operation returns, so the application is free
+  // to destroy them while the POA is in use. Policies are not
+  // inherited from the parent POA.
+  TAO_POA *poa = 0;
+  ACE_NEW_THROW_EX (poa,
+                    TAO_POA (adapter_name,
+                             poa_manager,
+                             policies,
+                             this,
+                             this->orb_core_.object_adapter ()->lock (),
+                             this->orb_core_,
+                             ACE_TRY_ENV),
+                    CORBA::NO_MEMORY ());
+
+  // Give ownership of the new map to the auto pointer.  Note, that it
+  // is important for the auto pointer to take ownership before
+  // checking for exception since we may need to delete the new map.
+  auto_ptr<TAO_POA> new_poa (poa);
+
+  // Check for exception in construction of the POA.
+  ACE_CHECK_RETURN (0);
+
+  // Add to children map
+  result = this->children_.bind (adapter_name,
+                                 new_poa.get ());
+  if (result != 0)
     {
-      // Find the topmost name
-      TAO_POA::String topmost_poa_name;
-      TAO_POA::String tail_poa_name;
-      this->parse_poa_name (adapter_name,
-                            topmost_poa_name,
-                            tail_poa_name,
-                            env);
-
-      if (env.exception () != 0)
-        return 0;
-
-      // If we are the topmost poa, let's create the tail
-      if (topmost_poa_name == this->name_)
-        {
-          return this->create_POA_i (tail_poa_name,
-                                     poa_manager,
-                                     policies,
-                                     env);
-        }
-
-      //
-      // We are not the topmost POA
-      //
-
-      // Try to find the topmost child
-      TAO_POA *child_poa = 0;
-      int result = this->children_.find (topmost_poa_name, child_poa);
-
-      // Child was not found or the topmost is us
-      if (result != 0)
-        {
-          child_poa = this->create_POA_i (topmost_poa_name,
-                                          poa_manager,
-                                          policies,
-                                          env);
-          if (env.exception () != 0)
-            return 0;
-        }
-
-      // At this point, the intermediate child POA was either found or
-      // created
-      return child_poa->create_POA (tail_poa_name,
-                                    poa_manager,
-                                    policies,
-                                    env);
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        0);
     }
+
+  // Note: Creating a POA using a POA manager that is in the active
+  // state can lead to race conditions if the POA supports preexisting
+  // objects, because the new POA may receive a request before its
+  // adapter activator, servant manager, or default servant have been
+  // initialized. These problems do not occur if the POA is created by
+  // an adapter activator registered with a parent of the new POA,
+  // because requests are queued until the adapter activator
+  // returns. To avoid these problems when a POA must be explicitly
+  // initialized, the application can initialize the POA by invoking
+  // find_POA with a TRUE activate parameter.
+
+  // Everything is fine. Don't let the auto_ptr delete the
+  // implementation.
+  return new_poa.release ();
+}
+
+PortableServer::POA_ptr
+TAO_POA::find_POA (const char *adapter_name,
+                   CORBA::Boolean activate_it,
+                   CORBA::Environment &ACE_TRY_ENV)
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+
+  TAO_POA *child = this->find_POA_i (adapter_name,
+                                     activate_it,
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+  // Give ownership of the new poa to the auto pointer.
+  auto_ptr<TAO_POA> new_child (child);
+
+  PortableServer::POA_var result = new_child->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+  // Finally everything is fine.  Make sure to take ownership away
+  // from the auto pointer.
+  new_child.release ();
+
+  return result._retn ();
 }
 
 TAO_POA *
-TAO_POA::find_POA_i_optimized (const TAO_POA::String &adapter_name,
-                               CORBA::Boolean activate_it,
-                               CORBA::Environment &env)
+TAO_POA::find_POA_i (const ACE_CString &child_name,
+                     CORBA::Boolean activate_it,
+                     CORBA::Environment &ACE_TRY_ENV)
 {
-  // If this is the leaf POA name
-  if (this->leaf_poa_name (adapter_name, env))
-    {
-      // If the target POA is the parent of a child POA with the
-      // specified name (relative to the target POA), that child POA
-      // is returned.
-      TAO_POA *child_poa = 0;
-      int result = this->children_.find (adapter_name, child_poa);
-
-      // Child was found
-      if (result != -1)
-        return child_poa;
+  TAO_POA *child;
+  int result = this->children_.find (child_name,
+                                     child);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-      //
-      // Child was not found
-      //
-
-      // If a child POA with the specified name does not exist and the
-      // value of the activate_it parameter is TRUE, the target POA's
-      // AdapterActivator, if one exists, is invoked, and, if it
-      // successfully activates the child POA, that child POA is
-      // returned.
-      if (activate_it && !CORBA::is_nil (this->adapter_activator_.in ()))
+  if (result != 0)
+    {
+      if (activate_it)
         {
-          PortableServer::POA_var self = this->_this (env);
-          // Check for exceptions
-          if (env.exception () != 0)
-            return 0;
-
-          ACE_CString null_terminated_adapter_name (adapter_name);
-
-          CORBA::Boolean success =
-            this->adapter_activator_->unknown_adapter (self.in (),
-                                                       null_terminated_adapter_name.c_str (),
-                                                       env);
-          // Check for exceptions
-          if (env.exception () != 0)
-            return 0;
-
-          // On success
-          if (success)
+          if (!CORBA::is_nil (this->adapter_activator_.in ()))
             {
-              // Search the children table again
-              result = this->children_.find (adapter_name, child_poa);
+              PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (0);
 
-              // Child was found
-              if (result != -1)
-                return child_poa;
+              CORBA::Boolean success =
+                this->adapter_activator_->unknown_adapter (self.in (),
+                                                           child_name.c_str (),
+                                                           ACE_TRY_ENV);
+              if (success)
+                {
+                  result = this->children_.find (child_name,
+                                                 child);
+                }
+              else
+                {
+                  result = -1;
+                }
+            }
+          else
+            {
+              result = -1;
             }
         }
+      else
+        {
+          result = -1;
+        }
+    }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-      // Otherwise, the AdapterNonExistent exception is raised.
-      CORBA::Exception *exception = new PortableServer::POA::AdapterNonExistent;
-      env.exception (exception);
-      return 0;
+  if (result == 0)
+    {
+      return child;
     }
-  // Not the leaf POA name
   else
     {
-      // Find the topmost name
-      TAO_POA::String topmost_poa_name;
-      TAO_POA::String tail_poa_name;
-      this->parse_poa_name (adapter_name,
-                            topmost_poa_name,
-                            tail_poa_name,
-                            env);
-
-      if (env.exception () != 0)
-        return 0;
-
-      // If we are the topmost poa, let's create the tail
-      if (topmost_poa_name == this->name_)
-        {
-          return this->find_POA_i (tail_poa_name,
-                                   activate_it,
-                                   env);
-        }
-
-      //
-      // We are not the topmost POA
-      //
-
-      // Try to find the topmost child
-      TAO_POA *child_poa;
-      int result = this->children_.find (topmost_poa_name, child_poa);
-
-      // Child was not found
-      if (result != 0)
-        {
-          child_poa = this->find_POA_i_optimized (topmost_poa_name,
-                                                  activate_it,
-                                                  env);
-          if (env.exception () != 0)
-            return 0;
-        }
-
-      // At this point, the intermediate child POA was either found or
-      // created
-      return child_poa->find_POA (tail_poa_name,
-                                  activate_it,
-                                  env);
+      // Otherwise, the AdapterNonExistent exception is raised.
+      ACE_THROW_RETURN (PortableServer::POA::AdapterNonExistent (),
+                        0);
     }
 }
 
 void
 TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                     CORBA::Boolean wait_for_completion,
-                    CORBA::Environment &env)
+                    CORBA::Environment &ACE_TRY_ENV)
 {
   this->closing_down_ = 1;
 
@@ -1117,25 +1133,25 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   // Remove POA from the parent
   if (this->parent_ != 0)
-    this->parent_->delete_child (this->name_, env);
-
-  if (env.exception () != 0)
-    return;
+    {
+      int result = this->parent_->delete_child (this->name_);
+      if (result != 0)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
 
   // Remove all children POAs
   for (CHILDREN::iterator iterator = this->children_.begin ();
-       iterator != this->children_.end ()
-         && env.exception () == 0;
+       iterator != this->children_.end ();
        ++iterator)
     {
       TAO_POA *child_poa = (*iterator).int_id_;
-      child_poa->destroy (etherealize_objects,
-                          wait_for_completion,
-                          env);
+      child_poa->destroy_i (etherealize_objects,
+                            wait_for_completion,
+                            ACE_TRY_ENV);
+      ACE_CHECK;
     }
-
-  if (env.exception () != 0)
-    return;
 
   // When a POA is destroyed, any requests that have started execution
   // continue to completion. Any requests that have not started
@@ -1162,9 +1178,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
           !CORBA::is_nil (this->servant_activator_.in ()))
         {
-          PortableServer::POA_var self = this->_this (env);
-          if (env.exception () != 0)
-            return;
+          PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
+          ACE_CHECK;
 
           while (1)
             {
@@ -1190,9 +1205,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
               // Errors.
               else if (result != 0)
                 {
-                  CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-                  env.exception (exception);
-                  return;
+                  ACE_THROW (CORBA::OBJ_ADAPTER ());
                 }
               // Successful unbind.
               else
@@ -1203,7 +1216,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                                          servant,
                                                          1,
                                                          remaining_activations,
-                                                         env);
+                                                         ACE_TRY_ENV);
+                  ACE_CHECK;
                 }
             }
         }
@@ -1219,52 +1233,41 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // destroying the POAs.
 
   ACE_UNUSED_ARG (wait_for_completion);
+
+  // Commit suicide
+  delete this;
 }
 
-void
-TAO_POA::delete_child (const TAO_POA::String &child,
-                       CORBA::Environment &env)
+int
+TAO_POA::delete_child (const TAO_POA::String &child)
 {
+  int result = 0;
+
   // If we are not closing down, we must remove this child from our
   // collection.
   if (!this->closing_down_)
     {
-      // Lock access to the POA for the duration of this transaction
-      TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
-
-      this->delete_child_i (child,
-                            env);
+      result = this->children_.unbind (child);
     }
 
   // If we are closing down, we are currently iterating over our
   // children and there is not need to remove this child from our
   // collection.
-}
 
-void
-TAO_POA::delete_child_i (const TAO_POA::String &child,
-                         CORBA::Environment &env)
-{
-  if (this->children_.unbind (child) != 0)
-    {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return;
-    }
+  return result;
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 PortableServer::ServantManager_ptr
-TAO_POA::get_servant_manager_i (CORBA::Environment &env)
+TAO_POA::get_servant_manager_i (CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the USE_SERVANT_MANAGER policy; if not
   // present, the WrongPolicy exception is raised.
   if (this->policies ().request_processing () != PortableServer::USE_SERVANT_MANAGER)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return PortableServer::ServantManager::_nil ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        PortableServer::ServantManager::_nil ());
     }
 
   // This operation returns the servant manager associated with the
@@ -1278,51 +1281,50 @@ TAO_POA::get_servant_manager_i (CORBA::Environment &env)
 
 void
 TAO_POA::set_servant_manager_i (PortableServer::ServantManager_ptr imgr,
-                                CORBA::Environment &env)
+                                CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the USE_SERVANT_MANAGER policy; if not
   // present, the WrongPolicy exception is raised.
   if (this->policies ().request_processing () != PortableServer::USE_SERVANT_MANAGER)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
   // This operation sets the default servant manager associated with
   // the POA.
   if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      this->servant_activator_ = PortableServer::ServantActivator::_narrow (imgr, env);
+      this->servant_activator_ = PortableServer::ServantActivator::_narrow (imgr,
+                                                                            ACE_TRY_ENV);
+      ACE_CHECK;
+
       if (CORBA::is_nil (this->servant_activator_.in ()))
         {
-          CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-          env.exception (exception);
-          return;
+          ACE_THROW (PortableServer::POA::WrongPolicy ());
         }
     }
   else
     {
-      this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr, env);
+      this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr,
+                                                                        ACE_TRY_ENV);
+      ACE_CHECK;
+
       if (CORBA::is_nil (this->servant_locator_.in ()))
         {
-          CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-          env.exception (exception);
-          return;
+          ACE_THROW (PortableServer::POA::WrongPolicy ());
         }
     }
 }
 
 PortableServer::Servant
-TAO_POA::get_servant_i (CORBA::Environment &env)
+TAO_POA::get_servant_i (CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the USE_DEFAULT_SERVANT policy; if not
   // present, the WrongPolicy exception is raised.
   if (this->policies ().request_processing () != PortableServer::USE_DEFAULT_SERVANT)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
   // This operation returns the default servant associated with the
@@ -1335,23 +1337,20 @@ TAO_POA::get_servant_i (CORBA::Environment &env)
     // If no servant has been associated with the POA, the NoServant
     // exception is raised.
     {
-      CORBA::Exception *exception = new PortableServer::POA::NoServant;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::NoServant (),
+                        0);
     }
 }
 
 void
 TAO_POA::set_servant_i (PortableServer::Servant servant,
-                        CORBA::Environment &env)
+                        CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the USE_DEFAULT_SERVANT policy; if not
   // present, the WrongPolicy exception is raised.
   if (this->policies ().request_processing () != PortableServer::USE_DEFAULT_SERVANT)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
   // This operation registers the specified servant with the POA as
@@ -1364,16 +1363,15 @@ TAO_POA::set_servant_i (PortableServer::Servant servant,
 
 PortableServer::ObjectId *
 TAO_POA::activate_object_i (PortableServer::Servant servant,
-                            CORBA::Environment &env)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the SYSTEM_ID and RETAIN policy; if not
   // present, the WrongPolicy exception is raised.
   if (!(this->policies ().id_assignment () == PortableServer::SYSTEM_ID &&
         this->policies ().servant_retention () == PortableServer::RETAIN))
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
   // If the POA has the UNIQUE_ID policy and the specified servant is
@@ -1382,9 +1380,8 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   if (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
       this->active_object_map ().is_servant_in_map (servant))
     {
-      CORBA::Exception *exception = new PortableServer::POA::ServantAlreadyActive;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::ServantAlreadyActive (),
+                        0);
     }
 
   // Otherwise, the activate_object operation generates an Object Id
@@ -1394,9 +1391,8 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
                                                                          user_id.out ()) == -1)
     {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        0);
     }
 
   // Everything is finally ok
@@ -1406,15 +1402,13 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
 void
 TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                     PortableServer::Servant servant,
-                                    CORBA::Environment &env)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN policy; if not present, the
   // WrongPolicy exception is raised.
   if (this->policies ().servant_retention () != PortableServer::RETAIN)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
   // If the POA has the SYSTEM_ID policy and it detects that the
@@ -1429,9 +1423,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   if (this->policies ().id_assignment () == PortableServer::SYSTEM_ID &&
       !this->is_poa_generated_id (id))
     {
-      CORBA::Exception *exception = new CORBA::BAD_PARAM (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return;
+      ACE_THROW (CORBA::BAD_PARAM ());
     }
 
   // If the CORBA object denoted by the Object Id value is already
@@ -1439,9 +1431,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // Object Map), the ObjectAlreadyActive exception is raised.
   if (this->active_object_map ().is_user_id_in_map (id))
     {
-      CORBA::Exception *exception = new PortableServer::POA::ObjectAlreadyActive;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::ObjectAlreadyActive ());
     }
 
   // If the POA has the UNIQUE_ID policy and the servant is already in
@@ -1450,9 +1440,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   if (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
       this->active_object_map ().is_servant_in_map (servant))
     {
-      CORBA::Exception *exception = new PortableServer::POA::ServantAlreadyActive;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::ServantAlreadyActive ());
     }
 
   // Otherwise, the activate_object_with_id operation enters an
@@ -1460,9 +1448,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // servant in the Active Object Map.
   if (this->active_object_map ().bind_using_user_id (servant, id) == -1)
     {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return;
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
 
   // Everything is finally ok
@@ -1470,15 +1456,13 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
 
 void
 TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
-                              CORBA::Environment &env)
+                              CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN policy; if not present, the
   // WrongPolicy exception is raised.
   if (this->policies ().servant_retention () != PortableServer::RETAIN)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
 
   // This operation causes the association of the Object Id specified
@@ -1490,9 +1474,7 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
   // Id, the operation raises an ObjectNotActive exception.
   if (result != 0)
     {
-      CORBA::Exception *exception = new PortableServer::POA::ObjectNotActive;
-      env.exception (exception);
-      return;
+      ACE_THROW (PortableServer::POA::ObjectNotActive ());
     }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -1511,9 +1493,8 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
   // active with any Id.
   if (!CORBA::is_nil (this->servant_activator_.in ()))
     {
-      PortableServer::POA_var self = this->_this (env);
-      if (env.exception () != 0)
-        return;
+      PortableServer::POA_var self = this->_this (ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Place holders....
       PortableServer::Servant servant = 0;
@@ -1527,7 +1508,8 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
                                                  servant,
                                                  0,
                                                  remaining_activations,
-                                                 env);
+                                                 ACE_TRY_ENV);
+          ACE_CHECK;
         }
     }
 
@@ -1537,15 +1519,14 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
 
 CORBA::Object_ptr
 TAO_POA::create_reference_i (const char *intf,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the SYSTEM_ID policy; if not present, the
   // WrongPolicy exception is raised.
   if (this->policies ().id_assignment () != PortableServer::SYSTEM_ID)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return CORBA::Object::_nil ();
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        CORBA::Object::_nil ());
     }
 
   // This operation creates an object reference that encapsulates a
@@ -1560,22 +1541,23 @@ TAO_POA::create_reference_i (const char *intf,
   if (this->active_object_map ().bind_using_system_id_returning_system_id (0,
                                                                            system_id.out ()) == -1)
     {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        CORBA::Object::_nil ());
     }
 
   // Create object key.
   TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
   // Ask the ORB to create you a reference
-  return TAO_ORB_Core_instance ()->orb ()->key_to_object (key.in (), intf, env);
+  return this->orb_core_.orb ()->key_to_object (key.in (),
+                                                intf,
+                                                ACE_TRY_ENV);
 }
 
 CORBA::Object_ptr
 TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                      const char *intf,
-                                     CORBA::Environment &env)
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
   // If the POA has the SYSTEM_ID policy and it detects that the
   // Object Id value was not generated by the system or for this POA,
@@ -1589,9 +1571,8 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   if (this->policies ().id_assignment () == PortableServer::SYSTEM_ID &&
       !this->is_poa_generated_id (user_id))
     {
-      CORBA::Exception *exception = new CORBA::BAD_PARAM (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return CORBA::Object::_nil ();
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                        CORBA::Object::_nil ());
     }
 
   // This operation creates an object reference that encapsulates the
@@ -1605,21 +1586,22 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   if (this->active_object_map ().find_system_id_using_user_id (user_id,
                                                                system_id.out ()) == -1)
     {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        CORBA::Object::_nil ());
     }
 
   // Create object key.
   TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
   // Ask the ORB to create you a reference
-  return TAO_ORB_Core_instance ()->orb ()->key_to_object (key.in (), intf, env);
+  return this->orb_core_.orb ()->key_to_object (key.in (),
+                                                intf,
+                                                ACE_TRY_ENV);
 }
 
 PortableServer::ObjectId *
 TAO_POA::servant_to_id_i (PortableServer::Servant servant,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN and either the UNIQUE_ID or
   // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
@@ -1628,9 +1610,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
         && (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID
             || this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)))
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
   // This operation has three possible behaviors.
@@ -1659,9 +1640,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
                                                                              user_id.out ()) == -1)
         {
-          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
         }
 
       // Everything is finally ok
@@ -1669,14 +1649,13 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
     }
 
   // Otherwise, the ServantNotActive exception is raised.
-  CORBA::Exception *exception = new PortableServer::POA::ServantNotActive;
-  env.exception (exception);
-  return 0;
+  ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
+                    0);
 }
 
 PortableServer::ObjectId *
 TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN and either the UNIQUE_ID or
   // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
@@ -1685,9 +1664,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
         && (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID
             || this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)))
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
   // This operation has three possible behaviors.
@@ -1716,9 +1694,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       if (this->active_object_map ().bind_using_system_id_returning_system_id (servant,
                                                                                system_id.out ()) == -1)
         {
-          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
         }
 
       // Everything is finally ok
@@ -1726,14 +1703,13 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
     }
 
   // Otherwise, the ServantNotActive exception is raised.
-  CORBA::Exception *exception = new PortableServer::POA::ServantNotActive;
-  env.exception (exception);
-  return 0;
+  ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
+                    0);
 }
 
 CORBA::Object_ptr
 TAO_POA::servant_to_reference (PortableServer::Servant servant,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Note: The allocation of an Object Id value and installation in
   // the Active Object Map caused by implicit activation may actually
@@ -1742,23 +1718,21 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
   PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
-                                                                env);
-
-  if (env.exception () != 0)
-    return CORBA::Object::_nil ();
+                                                                ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create object key.
   TAO_ObjectKey_var key = this->create_object_key (id.in ());
 
   // Ask the ORB to create you a reference
-  return TAO_ORB_Core_instance ()->orb ()->key_to_object (key.in (),
-                                                          servant->_interface_repository_id (),
-                                                          env);
+  return this->orb_core_.orb ()->key_to_object (key.in (),
+                                                servant->_interface_repository_id (),
+                                                ACE_TRY_ENV);
 }
 
 PortableServer::Servant
 TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN policy or the
   // USE_DEFAULT_SERVANT policy. If neither policy is present, the
@@ -1766,9 +1740,8 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   if (!(this->policies ().servant_retention () == PortableServer::RETAIN
         || this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT))
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
   // If the POA has the RETAIN policy and the specified object is
@@ -1776,36 +1749,36 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   // servant associated with that object in the Active Object Map.
   if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      TAO_ObjectKey_var key = reference->_key (env);
+      TAO_ObjectKey_var key = reference->_key (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       // If the object reference was not created by this POA, the
       // WrongAdapter exception is raised.
       PortableServer::ObjectId id;
-      TAO_POA::String poa_name;
+      TAO_Object_Adapter::poa_name poa_system_name;
       CORBA::Boolean persistent = 0;
       CORBA::Boolean system_id = 0;
       TAO_Temporary_Creation_Time poa_creation_time;
 
       int result = this->parse_key (key.in (),
-                                    poa_name,
+                                    poa_system_name,
                                     id,
                                     persistent,
                                     system_id,
                                     poa_creation_time);
       if (result != 0
-          || poa_name != this->complete_name ()
+          || poa_system_name != this->system_name ()
           || persistent != this->persistent ()
           || system_id != this->system_id ()
           || !this->persistent ()
           && poa_creation_time != this->creation_time_)
         {
-          CORBA::Exception *exception = new PortableServer::POA::WrongAdapter;
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
+                            0);
         }
 
-      // Lock access to the POA for the duration of this transaction
-      TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
       // This operation returns the active servant associated with the
       // specified system Object Id value.  If the Object Id value is
@@ -1819,9 +1792,8 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       else
         // Otherwise, the ObjectNotActive exception is raised.
         {
-          CORBA::Exception *exception = new PortableServer::POA::ObjectNotActive;
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                            0);
         }
     }
 
@@ -1832,8 +1804,8 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   // returns the default servant.
   if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
-      // Lock access to the POA for the duration of this transaction
-      TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
       if (this->default_servant_ != 0)
         {
@@ -1842,9 +1814,8 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       else
         // Otherwise, the ObjectNotActive exception is raised.
         {
-          CORBA::Exception *exception = new PortableServer::POA::ObjectNotActive;
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                            0);
         }
     }
 
@@ -1856,7 +1827,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
 
 PortableServer::ObjectId *
 TAO_POA::reference_to_id (CORBA::Object_ptr reference,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   // The WrongPolicy exception is declared to allow future extensions.
 
@@ -1867,32 +1838,33 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
-  TAO_ObjectKey_var key = reference->_key (env);
+  TAO_ObjectKey_var key = reference->_key (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   PortableServer::ObjectId id;
-  TAO_POA::String poa_name;
+  TAO_Object_Adapter::poa_name poa_system_name;
   CORBA::Boolean persistent = 0;
   CORBA::Boolean system_id = 0;
   TAO_Temporary_Creation_Time poa_creation_time;
 
   int result = this->parse_key (key.in (),
-                                poa_name,
+                                poa_system_name,
                                 id,
                                 persistent,
                                 system_id,
                                 poa_creation_time);
   if (result != 0 ||
-      poa_name != this->complete_name () ||
+      poa_system_name != this->system_name () ||
       persistent != this->persistent () ||
       system_id != this->system_id () ||
       !this->persistent () && poa_creation_time != this->creation_time_)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongAdapter;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
+                        0);
     }
 
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
   // The object denoted by the reference does not have to be active
   // for this operation to succeed.
@@ -1900,9 +1872,8 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   if (this->active_object_map ().find_user_id_using_system_id (id,
                                                                user_id) == -1)
     {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                        0);
     }
 
   return user_id._retn ();
@@ -1910,15 +1881,14 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
 
 PortableServer::Servant
 TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
-                          CORBA::Environment &env)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN policy; if not present, the
   // WrongPolicy exception is raised.
   if (this->policies ().servant_retention () != PortableServer::RETAIN)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
   // This operation returns the active servant associated with the
@@ -1932,23 +1902,21 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
   else
     // Otherwise, the ObjectNotActive exception is raised.
     {
-      CORBA::Exception *exception = new PortableServer::POA::ObjectNotActive;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                        0);
     }
 }
 
 CORBA::Object_ptr
 TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
-                            CORBA::Environment &env)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN policy; if not present, the
   // WrongPolicy exception is raised.
   if (this->policies ().servant_retention () != PortableServer::RETAIN)
     {
-      CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        CORBA::Object::_nil ());
     }
 
   // If an object with the specified Object Id value is currently
@@ -1964,17 +1932,16 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
       TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
 
       // Ask the ORB to create you a reference
-      return TAO_ORB_Core_instance ()->orb ()->key_to_object (key.in (),
-                                                              servant->_interface_repository_id (),
-                                                              env);
+      return this->orb_core_.orb ()->key_to_object (key.in (),
+                                                    servant->_interface_repository_id (),
+                                                    ACE_TRY_ENV);
     }
   else
     // If the Object Id value is not active in the POA, an
     // ObjectNotActive exception is raised.
     {
-      CORBA::Exception *exception = new PortableServer::POA::ObjectNotActive;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                        CORBA::Object::_nil ());
     }
 }
 
@@ -1983,139 +1950,48 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 void
 TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
                            CORBA::Object_ptr forward_to,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   // First, deactivate the object
-  this->deactivate_object_i (oid, env);
+  this->deactivate_object_i (oid,
+                             ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // If failure
-  if (env.exception () != 0)
-    return;
+  // Create a forwarding servant
+  TAO_Forwarding_Servant *forwarding_servant = 0;
+  ACE_NEW_THROW_EX (forwarding_servant,
+                    TAO_Forwarding_Servant (forward_to,
+                                            forward_to->_interface_repository_id ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
-  // If success, create a forwarding servant
-  TAO_Forwarding_Servant *forwarding_servant
-    = new TAO_Forwarding_Servant (forward_to,
-                                  forward_to->_interface_repository_id ());
+  // Give ownership to the auto pointer.
+  auto_ptr<TAO_Forwarding_Servant> new_forwarding_servant (forwarding_servant);
 
-  // Register the forwarding servant with the same object Id
+  // Register the forwarding servant with the same object Id.
   this->activate_object_with_id_i (oid,
                                    forwarding_servant,
-                                   env);
+                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Finally everything is fine.  Make sure to take ownership away
+  // from the auto pointer.
+  new_forwarding_servant.release ();
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-TAO_POA *
-TAO_POA::locate_poa_i (const TAO_ObjectKey &key,
-                       PortableServer::ObjectId &id,
-                       CORBA::Environment &env)
-{
-  ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_I_START);
-
-  TAO_POA::String poa_name;
-  CORBA::Boolean persistent = 0;
-  CORBA::Boolean system_id = 0;
-  TAO_Temporary_Creation_Time poa_creation_time;
-
-  int result = this->parse_key (key,
-                                poa_name,
-                                id,
-                                persistent,
-                                system_id,
-                                poa_creation_time);
-  if (result != 0)
-    {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
-    }
-
-  TAO_POA *poa = this->find_POA_i (poa_name,
-                                   persistent,
-                                   env);
-  if (env.exception () != 0)
-    return 0;
-
-  // Make sure it is not an "old" objectId
-  if (!poa->persistent () &&
-      poa->creation_time () != poa_creation_time)
-    {
-      CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
-    }
-
-  return poa;
-}
-
-int
-TAO_POA::locate_servant (const TAO_ObjectKey &key,
-                         CORBA::Environment &env)
-{
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), -1, env);
-
-  PortableServer::Servant servant = 0;
-  TAO_POA::LOCATION_RESULT result = this->locate_servant_i (key, servant, env);
-
-  switch (result)
-    {
-    case TAO_POA::FOUND:
-      // Optimistic attitude
-    case TAO_POA::DEFAULT_SERVANT:
-    case TAO_POA::SERVANT_MANAGER:
-      return 0;
-
-    case TAO_POA::NOT_FOUND:
-      return -1;
-    }
-
-  return -1;
-}
-
-PortableServer::Servant
-TAO_POA::find_servant (const TAO_ObjectKey &key,
-                       CORBA::Environment &env)
-{
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, env);
-
-  PortableServer::Servant servant = 0;
-  TAO_POA::LOCATION_RESULT result = this->locate_servant_i (key, servant, env);
-
-  switch (result)
-    {
-    case TAO_POA::FOUND:
-      return servant;
-
-    case TAO_POA::DEFAULT_SERVANT:
-    case TAO_POA::SERVANT_MANAGER:
-    case TAO_POA::NOT_FOUND:
-      return 0;
-    }
-
-  return 0;
-}
-
 TAO_POA::LOCATION_RESULT
-TAO_POA::locate_servant_i (const TAO_ObjectKey &key,
+TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                            PortableServer::Servant &servant,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::ObjectId id;
-
-  TAO_POA *poa = this->locate_poa_i (key,
-                                     id,
-                                     env);
-  if (env.exception () != 0)
-    return TAO_POA::NOT_FOUND;
-
   // If the POA has the RETAIN policy, the POA looks in the Active
   // Object Map to find if there is a servant associated with the
   // Object Id value from the request. If such a servant exists,
   // return TAO_POA::FOUND.
-  if (poa->policies ().servant_retention () == PortableServer::RETAIN &&
-      poa->active_object_map ().find_servant_using_system_id (id, servant) != -1)
+  if (this->policies ().servant_retention () == PortableServer::RETAIN &&
+      this->active_object_map ().find_servant_using_system_id (system_id, servant) != -1)
     // Success
     return TAO_POA::FOUND;
 
@@ -2125,7 +2001,7 @@ TAO_POA::locate_servant_i (const TAO_ObjectKey &key,
 
   // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
   // the OBJECT_NOT_EXIST system exception.
-  if (poa->policies ().request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
+  if (this->policies ().request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
     return TAO_POA::NOT_FOUND;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -2134,9 +2010,9 @@ TAO_POA::locate_servant_i (const TAO_ObjectKey &key,
   // has been associated with the POA, return
   // TAO_POA::DEFAULT_SERVANT. If no servant has been associated with
   // the POA, return TAO_POA::NOT_FOUND.
-  if (poa->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
+  if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
-      if (poa->default_servant_ == 0)
+      if (this->default_servant_ == 0)
         return TAO_POA::NOT_FOUND;
       else
         // Success
@@ -2147,10 +2023,10 @@ TAO_POA::locate_servant_i (const TAO_ObjectKey &key,
   // has been associated with the POA, return
   // TAO_POA::SERVANT_MANAGER. If no servant manager has been
   // associated with the POA, return TAO_POA::NOT_FOUND.
-  if (poa->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER)
+  if (this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER)
     {
-      if (CORBA::is_nil (poa->servant_activator_.in ()) &&
-          CORBA::is_nil (poa->servant_locator_.in ()))
+      if (CORBA::is_nil (this->servant_activator_.in ()) &&
+          CORBA::is_nil (this->servant_locator_.in ()))
         return TAO_POA::NOT_FOUND;
       else
         // Success
@@ -2164,33 +2040,25 @@ TAO_POA::locate_servant_i (const TAO_ObjectKey &key,
 }
 
 PortableServer::Servant
-TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
-                                   const char *operation,
-                                   PortableServer::ObjectId &system_id,
-                                   TAO_POA *&poa_impl,
-                                   TAO_ORB_Core *orb_core,
-                                   CORBA::Environment &env)
+TAO_POA::locate_servant_i (const char *operation,
+                           const PortableServer::ObjectId &system_id,
+                           TAO_POA_Current *poa_current,
+                           CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_AND_SERVANT_I_START);
-
-  poa_impl = this->locate_poa_i (key,
-                                 system_id,
-                                 env);
-  if (env.exception () != 0)
-    return 0;
+  // ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_POA_AND_SERVANT_I_START);
 
   // If the POA has the RETAIN policy, the POA looks in the Active
   // Object Map to find if there is a servant associated with the
   // Object Id value from the request. If such a servant exists, the
   // POA invokes the appropriate method on the servant.
-  if (poa_impl->policies ().servant_retention () == PortableServer::RETAIN)
+  if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
       PortableServer::Servant servant = 0;
 
       {
         ACE_FUNCTION_TIMEPROBE (TAO_POA_FIND_SERVANT_START);
 
-        if (poa_impl->active_object_map ().find_servant_using_system_id (system_id, servant) != -1)
+        if (this->active_object_map ().find_servant_using_system_id (system_id, servant) != -1)
           // Success
           return servant;
       }
@@ -2202,11 +2070,10 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
 
   // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
   // the OBJECT_NOT_EXIST system exception.
-  if (poa_impl->policies ().request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
+  if (this->policies ().request_processing () == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
     {
-      CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        0);
     }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -2216,18 +2083,17 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
   // appropriate method on that servant. If no servant has been
   // associated with the POA, the POA raises the OBJ_ADAPTER system
   // exception.
-  if (poa_impl->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
+  if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
-      if (poa_impl->default_servant_ == 0)
+      if (this->default_servant_ == 0)
         {
-          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
         }
       else
         {
           // Success
-          return poa_impl->default_servant_;
+          return this->default_servant_;
         }
     }
 
@@ -2249,39 +2115,38 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
   // ForwardRequest exception. This exception includes an object
   // reference.
   //
-  if (poa_impl->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER)
+  if (this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER)
     {
-      if (CORBA::is_nil (poa_impl->servant_activator_.in ()) &&
-          CORBA::is_nil (poa_impl->servant_locator_.in ()))
+      if (CORBA::is_nil (this->servant_activator_.in ()) &&
+          CORBA::is_nil (this->servant_locator_.in ()))
         {
-          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
         }
 
-      PortableServer::POA_var poa = poa_impl->_this (env);
-      if (env.exception () != 0)
-        return 0;
+      PortableServer::POA_var poa = this->_this (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().find_user_id_using_system_id (system_id,
                                                                    user_id.out ()) == -1)
         {
-          CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-          env.exception (exception);
-          return 0;
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
         }
 
-      if (poa_impl->policies ().servant_retention () == PortableServer::RETAIN)
+      if (this->policies ().servant_retention () == PortableServer::RETAIN)
         {
           // @@
           // Invocations of incarnate on the servant manager are serialized.
           // Invocations of etherealize on the servant manager are serialized.
           // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-          PortableServer::Servant servant = poa_impl->servant_activator_->incarnate (user_id.in (),
-                                                                                     poa.in (),
-                                                                                     env);
-          if (env.exception () != 0 || servant == 0)
+          PortableServer::Servant servant = this->servant_activator_->incarnate (user_id.in (),
+                                                                                 poa.in (),
+                                                                                 ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          if (servant == 0)
             return 0;
 
           // If the incarnate operation returns a servant that is
@@ -2290,12 +2155,11 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
           // the POA policy and is considered to be in error. The POA
           // will raise an OBJ_ADAPTER system exception for the
           // request.
-          if (poa_impl->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
-              poa_impl->active_object_map ().is_servant_in_map (servant))
+          if (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
+              this->active_object_map ().is_servant_in_map (servant))
             {
-              CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-              env.exception (exception);
-              return 0;
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                                0);
             }
 
           // The POA enters the returned Servant value into the Active
@@ -2306,9 +2170,8 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
                                                                              user_id.in (),
                                                                              system_id) == -1)
             {
-              CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-              env.exception (exception);
-              return 0;
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                                0);
             }
 
           // Success
@@ -2328,16 +2191,17 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
           // process the request, and postinvoke the object.
           //
           PortableServer::ServantLocator::Cookie cookie;
-          PortableServer::Servant servant = poa_impl->servant_locator_->preinvoke (user_id.in (),
-                                                                                   poa.in (),
-                                                                                   operation,
-                                                                                   cookie,
-                                                                                   env);
-          if (env.exception () != 0 || servant == 0)
+          PortableServer::Servant servant = this->servant_locator_->preinvoke (user_id.in (),
+                                                                               poa.in (),
+                                                                               operation,
+                                                                               cookie,
+                                                                               ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+
+          if (servant == 0)
             return 0;
 
           // Remember the cookie
-          TAO_POA_Current *poa_current = orb_core->poa_current ();
           poa_current->locator_cookie (cookie);
 
           // Success
@@ -2348,143 +2212,14 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // Failure
-  CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-  env.exception (exception);
-  return 0;
+  ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                    0);
 }
 
-void
-TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
-                           CORBA::ServerRequest &req,
-                           void *context,
-                           TAO_ORB_Core *orb_core,
-                           CORBA::Environment &env)
-{
-  ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
-
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_READ_GUARD (ACE_Lock, monitor, this->lock (), env);
-
-  this->dispatch_servant_i (key, req, context, orb_core, env);
-}
-
-void
-TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
-                             CORBA::ServerRequest &req,
-                             void *context,
-                             TAO_ORB_Core *orb_core,
-                             CORBA::Environment &env)
-{
-  PortableServer::ObjectId id;
-  TAO_POA *poa = 0;
-  const char *operation = req.operation ();
-
-  // @@ Lots on non-exception safe code here!!
-
-  // Setup for POA Current
-  TAO_POA_Current current_context;
-
-  // @@ This call changes the state, but if an exception is raised the
-  // context will not be reset, you need a helper class that can do
-  // that in the destructor, what about using the TAO_POA_Current
-  // class itself?
-
-  // Set the current context and remember the old one
-  TAO_POA_Current *previous_context = orb_core->poa_current (&current_context);
-
-  PortableServer::Servant servant = this->locate_poa_and_servant_i (key,
-                                                                    operation,
-                                                                    id,
-                                                                    poa,
-                                                                    orb_core,
-                                                                    env);
-
-  // @@ We should use the TRY macros here, notice that you detect the
-  // exception but you do not attempt to fix the problems above
-  if (env.exception () != 0 || servant == 0)
-    return;
-
-  // @@ Yet another place where you change the state without a class
-  // whose destructor will return things to normal....
-
-  // Setup for upcall
-  poa->pre_invoke (key,
-                   id,
-                   servant,
-                   &current_context,
-                   env);
-
-  {
-    ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
-
-    // Upcall
-    servant->_dispatch (req,
-                        context,
-                        env);
-  }
-
-  // @@ This shoul be done by a destructor....
-
-  // Cleanup from upcall
-  poa->post_invoke (servant,
-                    operation,
-                    &current_context,
-                    env);
-
-  // @@ this should also be done by a destructor....
-
-  // Reset old context
-  orb_core->poa_current (previous_context);
-
-}
-
-void
-TAO_POA::pre_invoke (const TAO_ObjectKey &key,
-                     const PortableServer::ObjectId &id,
-                     PortableServer::Servant servant,
-                     TAO_POA_Current *poa_current,
-                     CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (env);
-
-  poa_current->POA_impl (this);
-  poa_current->object_key (key);
-  poa_current->object_id (id);
-  poa_current->servant (servant);
-}
-
-void
-TAO_POA::post_invoke (PortableServer::Servant servant,
-                      const char *operation,
-                      TAO_POA_Current *poa_current,
-                      CORBA::Environment &env)
-{
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-  PortableServer::ServantLocator::Cookie cookie = poa_current->locator_cookie ();
-
-  if (cookie != 0)
-    {
-      PortableServer::POA_var poa = poa_current->get_POA (env);
-
-      this->servant_locator_->postinvoke (poa_current->object_id (),
-                                          poa.in (),
-                                          operation,
-                                          cookie,
-                                          servant,
-                                          env);
-    }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-  // poa_current->clear ();
-
-}
-
+/* static */
 int
 TAO_POA::parse_key (const TAO_ObjectKey &key,
-                    TAO_POA::String &poa_name,
+                    TAO_Object_Adapter::poa_name &poa_system_name,
                     PortableServer::ObjectId &id,
                     CORBA::Boolean &persistent,
                     CORBA::Boolean &system_id,
@@ -2492,18 +2227,19 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
 
-  int starting_at = 0;
+  CORBA::ULong starting_at = 0;
+  const CORBA::Octet *key_data = key.get_buffer ();
 
 #if !defined (TAO_NO_IOR_TABLE)
   // Skip the TAO Object Key Prefix.
-  starting_at = TAO_OBJECTKEY_PREFIX_SIZE;
+  starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 #endif
 
   // Check the system id indicator
-  char system_id_key_type = key[starting_at];
-  if (system_id_key_type == this->system_id_key_char ())
+  char system_id_key_type = key_data[starting_at];
+  if (system_id_key_type == TAO_POA::system_id_key_char ())
     system_id = 1;
-  else if (system_id_key_type == this->user_id_key_char ())
+  else if (system_id_key_type == TAO_POA::user_id_key_char ())
     system_id = 0;
   else
     // Incorrect key
@@ -2512,25 +2248,16 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Skip past the system id indicator
   starting_at += TAO_POA::system_id_key_type_length ();
 
-  // Try to find the last separator
-  int last_token_position = 0;
-  if (system_id)
-    // The minus one is because we want <last_token_position> to point
-    // to the separator
-    last_token_position = key.length () - this->active_object_map ().system_id_size () - 1;
-  else
-    last_token_position = this->rfind (key, TAO_POA::name_separator ());
-
-  // If not found, the name is not correct
-  if (last_token_position == TAO_POA::String::npos)
-    return -1;
+  // Assume persistent key when the POA_NO_TIMESTAMP is enabled.
+  persistent = 1;
 
 #if !defined (POA_NO_TIMESTAMP)
+
   // Check the persistence indicator
-  char persistent_key_type = key[starting_at];
-  if (persistent_key_type == this->persistent_key_char ())
+  char persistent_key_type = key_data[starting_at];
+  if (persistent_key_type == TAO_POA::persistent_key_char ())
     persistent = 1;
-  else if (persistent_key_type == this->transient_key_char ())
+  else if (persistent_key_type == TAO_POA::transient_key_char ())
     persistent = 0;
   else
     // Incorrect key
@@ -2542,7 +2269,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   if (!persistent)
     {
       // Take the creation time for the timestamp
-      poa_creation_time.creation_time (&key[starting_at]);
+      poa_creation_time.creation_time (key_data + starting_at);
 
       // Skip past the timestamp
       starting_at += TAO_Creation_Time::creation_time_length ();
@@ -2550,22 +2277,37 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
 
 #endif /* POA_NO_TIMESTAMP */
 
-  // Take the substring from <starting_at> to last_token_position for
-  // the POA name
-  int how_many = last_token_position - starting_at;
-  poa_name.set ((const char *) &key[starting_at],
-                how_many,
-                0);
+  CORBA::ULong poa_name_size = 0;
+  if (!persistent)
+    {
+      poa_name_size = TAO_Object_Adapter::transient_poa_name_size ();
+    }
+  else if (system_id)
+    {
+      poa_name_size = key.length () - starting_at - TAO_Active_Object_Map::system_id_size ();
+    }
+  else
+    {
+      ACE_OS::memcpy (&poa_name_size,
+                      key_data + starting_at,
+                      sizeof (poa_name_size));
+      ACE_NTOHL (poa_name_size);
+      starting_at += sizeof (poa_name_size);
+    }
 
-  // Take the substring from (last_token_position + separator_length)
-  // to length for the objectId
-  starting_at = last_token_position + TAO_POA::name_separator_length ();
-  how_many = key.length () - starting_at;
+  poa_system_name.replace (poa_name_size,
+                           poa_name_size,
+                           (CORBA::Octet *) key_data + starting_at,
+                           0);
+
+  starting_at += poa_name_size;
+
+  CORBA::ULong id_size = key.length () - starting_at;
 
   // Reset the Id
-  id.replace (how_many,
-              how_many,
-              (CORBA::Octet *) &key[starting_at],
+  id.replace (id_size,
+              id_size,
+              (CORBA::Octet *) key_data + starting_at,
               0);
 
   // Success
@@ -2576,10 +2318,14 @@ TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
 #if !defined (POA_NO_TIMESTAMP)
-  int creation_time_length = 0;
-  if (!this->persistent ())
-    creation_time_length = TAO_Creation_Time::creation_time_length ();
+  CORBA::ULong creation_time_length = 0;
+  if (!this->persistent_)
+    {
+      creation_time_length = TAO_Creation_Time::creation_time_length ();
+    }
 #endif /* POA_NO_TIMESTAMP */
+
+  CORBA::ULong poa_name_length = this->system_name_->length ();
 
   // Calculate the space required for the key
   int buffer_size =
@@ -2591,21 +2337,25 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
     this->persistent_key_type_length () +
     creation_time_length +
 #endif /* POA_NO_TIMESTAMP */
-    this->complete_name_.length () +
-    TAO_POA::name_separator_length () +
+    poa_name_length +
     id.length ();
 
-  // Keeps track of where the next infomation goes; start at 0 byte
-  int starting_at = 0;
+  if (this->persistent_ &&
+      !this->system_id_)
+    {
+      buffer_size += sizeof (poa_name_length);
+    }
 
   // Create the buffer for the key
   CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
 
-#if !defined (TAO_NO_IOR_TABLE)
+  // Keeps track of where the next infomation goes; start at 0 byte
+  CORBA::ULong starting_at = 0;
 
+#if !defined (TAO_NO_IOR_TABLE)
   ACE_OS::memcpy (&buffer[starting_at],
-                  &objectkey_prefix[0],
-                  TAO_OBJECTKEY_PREFIX_SIZE);
+		  &objectkey_prefix[0],
+		  TAO_OBJECTKEY_PREFIX_SIZE);
 
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 #endif
@@ -2627,17 +2377,24 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
                       creation_time_length);
       starting_at += creation_time_length;
     }
+
 #endif /* POA_NO_TIMESTAMP */
+
+  if (this->persistent_ &&
+      !this->system_id_)
+    {
+      ACE_HTONL (poa_name_length);
+      ACE_OS::memcpy (&buffer[starting_at],
+                      &poa_name_length,
+                      sizeof (poa_name_length));
+      starting_at += sizeof (poa_name_length);
+    }
 
   // Put the POA name into the buffer
   ACE_OS::memcpy (&buffer[starting_at],
-                  this->complete_name_.c_str (),
-                  this->complete_name_.length ());
-  starting_at += this->complete_name_.length ();
-
-  // Add the name separator
-  buffer[starting_at] = (CORBA::Octet) TAO_POA::name_separator ();
-  starting_at += TAO_POA::name_separator_length ();
+                  this->system_name_->get_buffer (),
+                  this->system_name_->length ());
+  starting_at += this->system_name_->length ();
 
   // Then copy the ID into the key
   ACE_OS::memcpy (&buffer[starting_at],
@@ -2646,10 +2403,15 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.
-  return new TAO_ObjectKey (buffer_size,
-                            buffer_size,
-                            buffer,
-                            1);
+  TAO_ObjectKey *key = 0;
+  ACE_NEW_RETURN (key,
+                  TAO_ObjectKey (buffer_size,
+                                 buffer_size,
+                                 buffer,
+                                 1),
+                  0);
+
+  return key;
 }
 
 int
@@ -2676,81 +2438,36 @@ TAO_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 #endif /* POA_NAME_IN_POA_GENERATED_ID */
 }
 
-int
-TAO_POA::is_poa_generated_key (const TAO_ObjectKey &key)
-{
-  // Grab the buffer
-  const char *key_buffer = (const char *) key.get_buffer ();
-
-  // Check to see if the complete POA name is the first part of the
-  // key
-  return
-    this->complete_name_.length () < key.length () &&
-    ACE_OS::strncmp (key_buffer,
-                     this->complete_name_.c_str (),
-                     this->complete_name_.length ()) == 0;
-}
-
-int
-TAO_POA::leaf_poa_name (const TAO_POA::String &adapter_name,
-                        CORBA::Environment &env)
-{
-  // This method does not throw any exceptions
-  ACE_UNUSED_ARG (env);
-
-  // Try to find the name separator
-  if (adapter_name.find (TAO_POA::name_separator ()) == TAO_POA::String::npos)
-    // If not found, the name was a leaf
-    return 1;
-  else
-    // If found, the name was not a leaf
-    return 0;
-}
-
 void
-TAO_POA::parse_poa_name (const TAO_POA::String &adapter_name,
-                         TAO_POA::String &topmost_poa_name,
-                         TAO_POA::String &tail_poa_name,
-                         CORBA::Environment &env)
+TAO_POA::set_folded_name (void)
 {
-  // Try to find the name separator
-  int token_position = adapter_name.find (TAO_POA::name_separator ());
+  CORBA::ULong length = 0;
+  CORBA::ULong parent_length = 0;
 
-  // If not found, the name was a leaf, throw exception
-  if (token_position == TAO_POA::String::npos)
-    {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return;
-    }
-  else
-    {
-      // If found, take the substring from 0 to token_position
-      int starting_at = 0;
-      int how_many = token_position - starting_at;
-      topmost_poa_name.set (&adapter_name[starting_at],
-                            how_many,
-                            0);
-
-      // Take the substring from (token_position + separator_length)
-      // to length
-      starting_at = token_position + TAO_POA::name_separator_length ();
-      how_many = adapter_name.length () - starting_at;
-      tail_poa_name.set (&adapter_name[starting_at],
-                         how_many,
-                         0);
-    }
-}
-
-void
-TAO_POA::set_complete_name (void)
-{
   if (this->parent_ != 0)
     {
-      this->complete_name_ += this->parent_->complete_name ();
-      this->complete_name_ += TAO_POA::name_separator ();
+      parent_length = this->parent_->folded_name ().length ();
+      length += parent_length;
     }
-  this->complete_name_ += this->name_;
+
+  length += this->name_.length ();
+  length += TAO_POA::name_separator_length ();
+
+  this->folded_name_.length (length);
+  CORBA::Octet *folded_name_buffer = this->folded_name_.get_buffer ();
+
+  if (this->parent_ != 0)
+    {
+      ACE_OS::memcpy (folded_name_buffer,
+                      this->parent_->folded_name ().get_buffer (),
+                      parent_length);
+    }
+
+  ACE_OS::memcpy (&folded_name_buffer[parent_length],
+                  this->name_.c_str (),
+                  this->name_.length ());
+
+  folded_name_buffer[length - TAO_POA::name_separator_length ()] = TAO_POA::name_separator ();
 }
 
 PortableServer::ObjectId *
@@ -2770,10 +2487,15 @@ TAO_POA::string_to_ObjectId (const char *string)
   ACE_OS::memcpy (buffer, string, buffer_size);
 
   // Create and return a new ID
-  return new PortableServer::ObjectId (buffer_size,
-                                       buffer_size,
-                                       buffer,
-                                       1);
+  PortableServer::ObjectId *id = 0;
+  ACE_NEW_RETURN (id,
+                  PortableServer::ObjectId (buffer_size,
+                                            buffer_size,
+                                            buffer,
+                                            1),
+                  0);
+
+  return id;
 }
 
 PortableServer::ObjectId *
@@ -2787,10 +2509,15 @@ TAO_POA::string_to_ObjectId (const char *string,
   ACE_OS::memcpy (buffer, string, size);
 
   // Create and return a new ID
-  return new PortableServer::ObjectId (size,
-                                       size,
-                                       buffer,
-                                       1);
+  PortableServer::ObjectId *id = 0;
+  ACE_NEW_RETURN (id,
+                  PortableServer::ObjectId (size,
+                                            size,
+                                            buffer,
+                                            1),
+                  0);
+
+  return id;
 }
 
 PortableServer::ObjectId *
@@ -2812,10 +2539,15 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *string)
   ACE_OS::memcpy (buffer, string, buffer_size);
 
   // Create a new ID
-  return new PortableServer::ObjectId (buffer_size,
-                                       buffer_size,
-                                       buffer,
-                                       1);
+  PortableServer::ObjectId *id = 0;
+  ACE_NEW_RETURN (id,
+                  PortableServer::ObjectId (buffer_size,
+                                            buffer_size,
+                                            buffer,
+                                            1),
+                  0);
+
+  return id;
 }
 
 CORBA::String
@@ -2854,160 +2586,188 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 
 PortableServer::ThreadPolicy_ptr
 TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var rootPOA = TAO_ORB_Core_instance ()->root_poa_reference (env);
-  // Check for exceptions
-  if (env.exception () != 0)
-    return PortableServer::ThreadPolicy::_nil ();
+  PortableServer::POA_var rootPOA = this->orb_core_.root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
 
-  auto_ptr<TAO_Thread_Policy> new_policy (new TAO_Thread_Policy (value, rootPOA.in ()));
-  PortableServer::ThreadPolicy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::ThreadPolicy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation
-      new_policy.release ();
-      return result._retn ();
-    }
+  TAO_Thread_Policy *thread_policy = 0;
+  ACE_NEW_THROW_EX (thread_policy,
+                    TAO_Thread_Policy (value,
+                                       rootPOA.in ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
+
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Thread_Policy> new_thread_policy (thread_policy);
+
+  PortableServer::ThreadPolicy_var result = new_thread_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_thread_policy.release ();
+  return result._retn ();
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 PortableServer::LifespanPolicy_ptr
 TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var rootPOA = TAO_ORB_Core_instance ()->root_poa_reference (env);
-  // Check for exceptions
-  if (env.exception () != 0)
-    return PortableServer::LifespanPolicy::_nil ();
+  PortableServer::POA_var rootPOA = this->orb_core_.root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
 
-  auto_ptr<TAO_Lifespan_Policy> new_policy (new TAO_Lifespan_Policy (value, rootPOA.in ()));
-  PortableServer::LifespanPolicy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::LifespanPolicy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation
-      new_policy.release ();
-      return result._retn ();
-    }
+  TAO_Lifespan_Policy *lifespan_policy = 0;
+  ACE_NEW_THROW_EX (lifespan_policy,
+                    TAO_Lifespan_Policy (value,
+                                       rootPOA.in ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
+
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Lifespan_Policy> new_lifespan_policy (lifespan_policy);
+
+  PortableServer::LifespanPolicy_var result = new_lifespan_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_lifespan_policy.release ();
+  return result._retn ();
 }
 
 PortableServer::IdUniquenessPolicy_ptr
 TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
-                                      CORBA::Environment &env)
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var rootPOA = TAO_ORB_Core_instance ()->root_poa_reference (env);
-  // Check for exceptions
-  if (env.exception () != 0)
-    return PortableServer::IdUniquenessPolicy::_nil ();
+  PortableServer::POA_var rootPOA = this->orb_core_.root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
 
-  auto_ptr<TAO_Id_Uniqueness_Policy> new_policy (new TAO_Id_Uniqueness_Policy (value, rootPOA.in ()));
-  PortableServer::IdUniquenessPolicy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::IdUniquenessPolicy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation
-      new_policy.release ();
-      return result._retn ();
-    }
+  TAO_Id_Uniqueness_Policy *id_uniqueness_policy = 0;
+  ACE_NEW_THROW_EX (id_uniqueness_policy,
+                    TAO_Id_Uniqueness_Policy (value,
+                                       rootPOA.in ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
+
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Id_Uniqueness_Policy> new_id_uniqueness_policy (id_uniqueness_policy);
+
+  PortableServer::IdUniquenessPolicy_var result = new_id_uniqueness_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_id_uniqueness_policy.release ();
+  return result._retn ();
 }
 
 PortableServer::IdAssignmentPolicy_ptr
 TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
-                                      CORBA::Environment &env)
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var rootPOA = TAO_ORB_Core_instance ()->root_poa_reference (env);
-  // Check for exceptions
-  if (env.exception () != 0)
-    return PortableServer::IdAssignmentPolicy::_nil ();
+  PortableServer::POA_var rootPOA = this->orb_core_.root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
 
-  auto_ptr<TAO_Id_Assignment_Policy> new_policy (new TAO_Id_Assignment_Policy (value, rootPOA.in ()));
-  PortableServer::IdAssignmentPolicy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::IdAssignmentPolicy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation
-      new_policy.release ();
-      return result._retn ();
-    }
+  TAO_Id_Assignment_Policy *id_assignment_policy = 0;
+  ACE_NEW_THROW_EX (id_assignment_policy,
+                    TAO_Id_Assignment_Policy (value,
+                                       rootPOA.in ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
+
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Id_Assignment_Policy> new_id_assignment_policy (id_assignment_policy);
+
+  PortableServer::IdAssignmentPolicy_var result = new_id_assignment_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_id_assignment_policy.release ();
+  return result._retn ();
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
-                                            CORBA::Environment &env)
+                                            CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var rootPOA = TAO_ORB_Core_instance ()->root_poa_reference (env);
-  // Check for exceptions
-  if (env.exception () != 0)
-    return PortableServer::ImplicitActivationPolicy::_nil ();
+  PortableServer::POA_var rootPOA = this->orb_core_.root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
 
-  auto_ptr<TAO_Implicit_Activation_Policy> new_policy (new TAO_Implicit_Activation_Policy (value, rootPOA.in ()));
-  PortableServer::ImplicitActivationPolicy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::ImplicitActivationPolicy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation
-      new_policy.release ();
-      return result._retn ();
-    }
+  TAO_Implicit_Activation_Policy *implicit_activation_policy = 0;
+  ACE_NEW_THROW_EX (implicit_activation_policy,
+                    TAO_Implicit_Activation_Policy (value,
+                                       rootPOA.in ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
+
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Implicit_Activation_Policy> new_implicit_activation_policy (implicit_activation_policy);
+
+  PortableServer::ImplicitActivationPolicy_var result = new_implicit_activation_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_implicit_activation_policy.release ();
+  return result._retn ();
 }
 
 PortableServer::ServantRetentionPolicy_ptr
 TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
-                                          CORBA::Environment &env)
+                                          CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var rootPOA = TAO_ORB_Core_instance ()->root_poa_reference (env);
-  // Check for exceptions
-  if (env.exception () != 0)
-    return PortableServer::ServantRetentionPolicy::_nil ();
+  PortableServer::POA_var rootPOA = this->orb_core_.root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
 
-  auto_ptr<TAO_Servant_Retention_Policy> new_policy (new TAO_Servant_Retention_Policy (value, rootPOA.in ()));
-  PortableServer::ServantRetentionPolicy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::ServantRetentionPolicy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation
-      new_policy.release ();
-      return result._retn ();
-    }
+  TAO_Servant_Retention_Policy *servant_retention_policy = 0;
+  ACE_NEW_THROW_EX (servant_retention_policy,
+                    TAO_Servant_Retention_Policy (value,
+                                       rootPOA.in ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
+
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Servant_Retention_Policy> new_servant_retention_policy (servant_retention_policy);
+
+  PortableServer::ServantRetentionPolicy_var result = new_servant_retention_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_servant_retention_policy.release ();
+  return result._retn ();
 }
 
 PortableServer::RequestProcessingPolicy_ptr
 TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
-                                           CORBA::Environment &env)
+                                           CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var rootPOA = TAO_ORB_Core_instance ()->root_poa_reference (env);
-  // Check for exceptions
-  if (env.exception () != 0)
-    return PortableServer::RequestProcessingPolicy::_nil ();
+  PortableServer::POA_var rootPOA = this->orb_core_.root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
 
-  auto_ptr<TAO_Request_Processing_Policy> new_policy (new TAO_Request_Processing_Policy (value, rootPOA.in ()));
-  PortableServer::RequestProcessingPolicy_var result = new_policy->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::RequestProcessingPolicy::_nil ();
-  else
-    {
-      // Make sure that the auto_ptr does not delete the
-      // implementation
-      new_policy.release ();
-      return result._retn ();
-    }
+  TAO_Request_Processing_Policy *request_processing_policy = 0;
+  ACE_NEW_THROW_EX (request_processing_policy,
+                    TAO_Request_Processing_Policy (value,
+                                       rootPOA.in ()),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
+
+  // Give ownership of the copy to the auto pointer.
+  auto_ptr<TAO_Request_Processing_Policy> new_request_processing_policy (request_processing_policy);
+
+  PortableServer::RequestProcessingPolicy_var result = new_request_processing_policy->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
+
+  // Make sure that the auto_ptr does not delete the implementation
+  // object.
+  new_request_processing_policy.release ();
+  return result._retn ();
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -3096,7 +2856,7 @@ TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
 CORBA::Boolean
 TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         const char *name,
-                                        CORBA::Environment &env)
+                                        CORBA::Environment &ACE_TRY_ENV)
 {
   // Default policies
   CORBA::PolicyList default_policies;
@@ -3105,34 +2865,30 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   PortableServer::POA_var child = parent->create_POA (name,
                                                       PortableServer::POAManager::_nil (),
                                                       default_policies,
-                                                      env);
+                                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
-  if (env.exception () != 0)
-    return 0;
-  else
+  ACE_TRY
     {
-      PortableServer::AdapterActivator_var activator = this->_this (env);
-      if (env.exception () != 0)
-        {
-          child->destroy (0,
-                          0,
-                          env);
-          return 0;
-        }
+      PortableServer::AdapterActivator_var activator = this->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      child->the_activator (activator.in (), env);
-
-      if (env.exception () != 0)
-        {
-          child->destroy (0,
-                          0,
-                          env);
-          return 0;
-        }
-
-      // Finally everything is fine
-      return 1;
+      child->the_activator (activator.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
+  ACE_CATCHANY
+    {
+      child->destroy (1,
+                      1,
+                      ACE_TRY_ENV);
+
+      return 0;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+
+  // Finally everything is fine
+  return 1;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -3148,14 +2904,19 @@ TAO_POA_Current::TAO_POA_Current (void)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-    servant_ (0)
+    servant_ (0),
+    operation_ (0),
+    orb_core_ (0),
+    previous_current_ (0)
 {
 }
 
 TAO_POA_Current::TAO_POA_Current (TAO_POA *impl,
                                   const TAO_ObjectKey &key,
                                   const PortableServer::ObjectId &id,
-                                  PortableServer::Servant servant)
+                                  PortableServer::Servant servant,
+                                  const char *operation,
+                                  TAO_ORB_Core &orb_core)
   : poa_impl_ (impl),
     object_id_ (&id),
     object_key_ (&key),
@@ -3166,43 +2927,77 @@ TAO_POA_Current::TAO_POA_Current (TAO_POA *impl,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-    servant_ (servant)
-{}
+    servant_ (servant),
+    operation_ (operation),
+    orb_core_ (&orb_core),
+    previous_current_ (0)
+{
+  // Set the current context and remember the old one.
+  this->previous_current_ = this->orb_core_->poa_current (this);
+}
 
 TAO_POA_Current::~TAO_POA_Current (void)
 {
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  if (this->cookie_ != 0)
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+
+      ACE_TRY
+        {
+          PortableServer::POA_var poa = this->get_POA (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          this->poa_impl_->servant_locator_->postinvoke (this->object_id (),
+                                                         poa.in (),
+                                                         this->operation_,
+                                                         this->cookie_,
+                                                         this->servant_,
+                                                         ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore errors from servant locator ....
+        }
+      ACE_ENDTRY;
+    }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // Reset the old context.
+  this->orb_core_->poa_current (this->previous_current_);
 }
 
 PortableServer::POA_ptr
-TAO_POA_Current::get_POA (CORBA::Environment &env)
+TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->context_is_valid ())
     {
-      CORBA::Exception *exception = new PortableServer::Current::NoContext;
-      env.exception (exception);
-      return PortableServer::POA::_nil ();
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        PortableServer::POA::_nil ());
     }
 
-  PortableServer::POA_var result = this->poa_impl_->_this (env);
-  if (env.exception () != 0)
-    return PortableServer::POA::_nil ();
-  else
-    return result._retn ();
+  PortableServer::POA_var result = this->poa_impl_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+  return result._retn ();
 }
 
 PortableServer::ObjectId *
-TAO_POA_Current::get_object_id (CORBA::Environment &env)
+TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
 {
   if (!this->context_is_valid ())
     {
-      CORBA::Exception *exception = new PortableServer::Current::NoContext;
-      env.exception (exception);
-      return 0;
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        0);
     }
 
   // Create a new one and pass it back
   return new PortableServer::ObjectId (*this->object_id_);
 }
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>;
@@ -3216,10 +3011,14 @@ template class ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>;
 
+template class ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>;
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 //template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_POA>;
+template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
+template class ACE_Auto_Basic_Ptr<TAO_POA_Manager>;
 template class ACE_Lock_Adapter<ACE_Null_Mutex>;
 #if defined (ACE_HAS_THREADS)
 template class ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>;
@@ -3253,10 +3052,14 @@ template class auto_ptr<TAO_Implicit_Activation_Policy>;
 template class auto_ptr<TAO_Servant_Retention_Policy>;
 template class auto_ptr<TAO_Request_Processing_Policy>;
 
+template class auto_ptr<TAO_Forwarding_Servant>;
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 //template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_POA>;
+template class auto_ptr<TAO_Active_Object_Map>;
+template class auto_ptr<TAO_POA_Manager>;
 template class ACE_Node<TAO_POA *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>
@@ -3270,10 +3073,14 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>
 
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 //#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA_Manager>
 #pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
 #if defined (ACE_HAS_THREADS)
 #pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
@@ -3307,9 +3114,13 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate auto_ptr<TAO_Servant_Retention_Policy>
 #pragma instantiate auto_ptr<TAO_Request_Processing_Policy>
 
+#pragma instantiate auto_ptr<TAO_Forwarding_Servant>
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 //#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_POA>
+#pragma instantiate auto_ptr<TAO_Active_Object_Map>
+#pragma instantiate auto_ptr<TAO_POA_Manager>
 #pragma instantiate ACE_Node<TAO_POA *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

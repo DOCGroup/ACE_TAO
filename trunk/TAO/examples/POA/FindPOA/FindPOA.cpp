@@ -28,13 +28,13 @@ main (int argc, char **argv)
 
   // Initialize the ORB
   char str[256]; // Exception message
-  ACE_TRY 
+  ACE_TRY
     {
       ACE_OS::strcpy (str, "CORBA::ORB_init");
-      
+
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Get Object reference to RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -47,15 +47,15 @@ main (int argc, char **argv)
 
       // Get a TAO_Adapter_Activator reference
       TAO_Adapter_Activator activator_impl;
-      
+
       ACE_OS::strcpy (str, "TAO_Adapter_Activator::_this");
       PortableServer::AdapterActivator_var activator =
         activator_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
-      ACE_OS::strcpy (str,"PortableServer::POA::the_activator"); 
+      ACE_OS::strcpy (str,"PortableServer::POA::the_activator");
       root_poa->the_activator (activator.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -67,7 +67,7 @@ main (int argc, char **argv)
                             1,
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-  
+
       name = "secondPOA";
       PortableServer::POA_var second_poa =
         first_poa->find_POA (name.c_str (),
@@ -91,7 +91,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n%s\n%s\n%s\n",
+                  "%s\n%s\n%s\n",
                   root_poa_name.in (),
                   first_poa_name.in (),
                   second_poa_name.in ()));

@@ -24,7 +24,7 @@ class TAO_Export TAO_ObjectKey : public TAO_Unbounded_Sequence<CORBA::Octet>
   // = DESCRIPTION
   //   The object is basically a sequence of octets, but we derive
   //   from it to create a unique type; this is useful for
-  //   overloading. 
+  //   overloading.
   //
 public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
@@ -90,6 +90,9 @@ private:
 };
 
 extern TAO_Export int operator== (const TAO_ObjectKey &l,
+                                  const TAO_ObjectKey &r);
+
+extern TAO_Export int operator!= (const TAO_ObjectKey &l,
                                   const TAO_ObjectKey &r);
 
 #if defined (__ACE_INLINE__)

@@ -815,11 +815,11 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
   // Get the table of initial references specified through -ORBInitRef.
   TAO_IOR_LookupTable *table =
     this->orb_core_->orb_params ()->ior_lookup_table ();
-  
+
   ACE_CString ior;
   ACE_CString object_id ((const char *) name);
-  
-  // Is the service name in the IOR Table.  
+
+  // Is the service name in the IOR Table.
   if (table->find_ior (object_id, ior) == 0)
     return this->string_to_object (ior.c_str (), TAO_IN_ENV);
   else
@@ -828,15 +828,15 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
       // -ORBDefaultInitRef.
       char * default_init_ref =
 	this->orb_core_->orb_params ()->default_init_ref ();
-      
+
       // Check if a DefaultInitRef was specified.
       if (ACE_OS::strlen (default_init_ref) != 0)
 	{
 	  ACE_CString list_of_profiles;
-	  
+
 	  // Used by the strtok_r.
 	  char *lasts = 0;
-	  
+
 	  // Append the given object ID to all the end-points of
 	  // Default Init Ref.
 	  for (char *str = ACE_OS::strtok_r (default_init_ref,
@@ -852,17 +852,17 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
 	      list_of_profiles += object_id;
 	      list_of_profiles += ACE_CString (",");
 	    }
-	  
+
 	  // Clean up.
 	  delete [] default_init_ref;
-	  
+
 	  // Replace the last extra comma with a null.
 	  list_of_profiles[list_of_profiles.length () - 1] = '\0';
-	  
+
 	  return this->string_to_object (list_of_profiles.c_str (),
 					 TAO_IN_ENV);
 	}
-      
+
       delete default_init_ref;
     }
 
@@ -1474,7 +1474,7 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
 
   // Count the No. of profiles in the given list.
   int profile_count = 1;
-  
+
   for (size_t i = 0;
        i < ACE_OS::strlen (list_of_profiles);
        i++)
@@ -1482,41 +1482,41 @@ CORBA_ORB::iioploc_string_to_object (const char *string,
       if (*(list_of_profiles + i) == ',')
 	profile_count++;
     }
-  
+
   TAO_MProfile mp (profile_count);
-  
+
   // Extract the comma separated profiles in the list and
   // populate the Multiple Profile.
   TAO_IIOP_Profile *pfile;
   char *lasts = 0;
-  
+
   for (char *str = ACE_OS::strtok_r (list_of_profiles, ",", &lasts);
        str != 0 ;
        str = ACE_OS::strtok_r (0, ",",&lasts))
-    
+
     {
       ACE_NEW_RETURN (pfile,
 		      TAO_IIOP_Profile (str,
    					env),
    		      CORBA::Object::_nil ());
-      
+
       // Give up ownership of the profile.
       mp.give_profile (pfile);
     }
-  
+
   // Dont need the list of profiles any more.
   ACE_OS::free (list_of_profiles);
-  
+
   // Now make the TAO_Stub ...
   TAO_Stub *data;
   ACE_NEW_RETURN (data,
                   TAO_Stub ((char *) 0, &mp, this->orb_core_),
                   CORBA::Object::_nil ());
-  
+
   // Create the CORBA level proxy.
   TAO_ServantBase *servant =
     this->_get_collocated_servant (data);
-  
+
   // This will increase the ref_count on data by one
   ACE_NEW_RETURN (obj,
                   CORBA_Object (data,
@@ -1631,22 +1631,22 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
       //      a server that is restarted with more endpoints (or
       //      less), shouldn't old, persistent IORs, still be treated
       //      as collocated?
-      TAO_POA *poa = 0;
+      TAO_Object_Adapter *object_adapter = 0;
       if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
         {
           const ACE_INET_Addr &addr =
-            ACE_dynamic_cast (TAO_IIOP_Profile*,pfile)->object_addr();
+            ACE_dynamic_cast (TAO_IIOP_Profile *, pfile)->object_addr ();
 
-          poa = this->orb_core_->get_collocated_poa (addr);
+          object_adapter = this->orb_core_->get_collocated_object_adapter (addr);
         }
       else
         ACE_ERROR ((LM_ERROR,
                     "get_collocated_poa NOT Supported for NON-IIOP profile!\n"));
 
-      if (poa != 0)
+      if (object_adapter != 0)
         {
           PortableServer::Servant servant =
-            poa->find_servant (objkey.in (), env);
+            object_adapter->find_servant (objkey.in (), env);
           if (env.exception ())
             {
 #if 0
@@ -1685,15 +1685,15 @@ CORBA_ORB::_tao_add_to_IOR_table (ACE_CString &object_id,
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Unable to add IOR to table\n"),
 		      -1);
-  
+
   CORBA::String_var string =
     this->object_to_string (obj);
-  
+
   if (string.in () == 0 || string.in ()[0] == '\0')
     return -1;
-  
+
   ACE_CString ior (string.in ());
-  
+
   if (this->lookup_table_.add_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Unable to add IOR to table\n"),
@@ -1708,14 +1708,14 @@ CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
                                    CORBA::Object_ptr &obj)
 {
   ACE_CString ior;
-  
+
   if (this->lookup_table_.find_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "No match for the given ObjectID\n"),
 		      -1);
-  
+
   obj = this->string_to_object (ior.c_str ());
-  
+
   return 0;
 }
 

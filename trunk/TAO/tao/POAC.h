@@ -233,6 +233,14 @@ TAO_NAMESPACE PortableServer{
 
 #endif /* end #if !defined */
 
+  const CORBA::PolicyType THREAD_POLICY_ID = 16;
+  const CORBA::PolicyType LIFESPAN_POLICY_ID = 17;
+  const CORBA::PolicyType ID_UNIQUENESS_POLICY_ID = 18;
+  const CORBA::PolicyType ID_ASSIGNMENT_POLICY_ID = 19;
+  const CORBA::PolicyType IMPLICIT_ACTIVATION_POLICY_ID = 20;
+  const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID = 21;
+  const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID = 22;
+
   enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,

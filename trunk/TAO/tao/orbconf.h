@@ -97,6 +97,11 @@
 # endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
 #endif /* ! TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE */
 
+// The default size of TAO's server poa map.
+#if !defined (TAO_DEFAULT_SERVER_POA_MAP_SIZE)
+#  define TAO_DEFAULT_SERVER_POA_MAP_SIZE 24
+#endif /* ! TAO_DEFAULT_SERVER_POA_MAP_SIZE */
+
 // The default number of times the ORB will attempt to get a reply
 // from a service using multicast.
 #if !defined (TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS)

@@ -1,6 +1,9 @@
 // $Id$
 
-This application demostrates explicit activation of Servant objects.
+This example is very similar to the Explicit_Activation example except
+that the POAs are deleted once the object references have been
+created. After this, an adapter activator is install in the RootPOA to
+reactivate the POAs on demand.
 
 The server program is available here. Use the Generic_Servant/client
 program to test this.

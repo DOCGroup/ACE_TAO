@@ -55,14 +55,8 @@ public:
   virtual ACE_Lock *create_poa_lock (void);
   // Creates and returns a lock for POA based on the setting for
   // <-ORBpoalock>.  A setting of <thread> returns an
-  // <ACE_Lock_Adapter\<ACE_Thread_Mutex\>>; a setting of <null>
-  // returns an <ACE_Lock_Adapter\<ACE_NULL_Mutex\>>.
-
-  virtual ACE_Lock *create_poa_mgr_lock (void);
-  // Creates and returns a lock for a POA Manager based on the setting
-  // for <-ORBpoamgrlock>.  A setting of <thread> returns an
-  // <ACE_Lock_Adapter\<ACE_Thread_Mutex\>>; a setting of <null>
-  // returns an <ACE_Lock_Adapter\<ACE_NULL_Mutex\>>.
+  // ACE_Lock_Adapter<ACE_Thread_Mutex>; a setting of <null> returns
+  // an ACE_Lock_Adapter<ACE_NULL_Mutex>.
 
   virtual ACE_Lock *create_servant_lock (void);
   // Creates and returns a lock for servants based on the setting of

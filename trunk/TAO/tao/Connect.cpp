@@ -264,43 +264,45 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 
   response_required = request.response_expected ();
 
+  const CORBA::Octet *object_key = request.object_key ().get_buffer ();
+
 #if !defined (TAO_NO_IOR_TABLE)
-  if (ACE_OS::memcmp (request.object_key ().get_buffer (),
+  if (ACE_OS::memcmp (object_key,
 		      &TAO_POA::objectkey_prefix[0],
 		      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
-      ACE_CString object_id (ACE_reinterpret_cast (const char *, request.object_key ().get_buffer ()),
+      ACE_CString object_id (ACE_reinterpret_cast (const char *, object_key),
 			     TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE,
 			     0,
 			     0);
-      
+
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
 		    "Simple Object key %s. Doing the Table Lookup ...\n",
 		    object_id.c_str ()));
-      
+
       CORBA::Object_ptr object_reference;
-      
+
       // Do the Table Lookup.
       int status =
 	this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
 							 object_reference);
-      
+
       // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
 
       if (CORBA::is_nil (object_reference) || status == -1)
 	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO), -1);
-      
+
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
 
       CORBA::Object_ptr dup = CORBA::Object::_duplicate (object_reference);
-      
+
       ACE_THROW_RETURN (PortableServer::ForwardRequest (dup), -1);
     }
 
 #endif
-  
+
   // So, we read a request, now handle it using something more
   // primitive than a CORBA2 ServerRequest pseudo-object.
 
@@ -313,11 +315,10 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
   // with a single write so that they're not accidentally interleaved
   // over the transport (as could happen using TCP).
 
-  this->orb_core_->root_poa ()->dispatch_servant (request.object_key (),
-                                                  request,
-                                                  0,
-                                                  this->orb_core_,
-                                                  ACE_TRY_ENV);
+  this->orb_core_->object_adapter ()->dispatch_servant (request.object_key (),
+                                                        request,
+                                                        0,
+                                                        ACE_TRY_ENV);
   // NEED TO CHECK FOR any errors present in <env> and set the return
   // code appropriately.
   ACE_CHECK_RETURN (-1);
@@ -350,8 +351,6 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   // exception.
   request_id = locateRequestHeader.request_id;
   response_required = 1;
-
-  TAO_POA *the_poa = this->orb_core_->root_poa ();
 
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
   TAO_OutputCDR dummy_output (repbuf, sizeof(repbuf));
@@ -406,11 +405,10 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                     this->orb_core_,
                                     env);
 
-  the_poa->dispatch_servant (serverRequest.object_key (),
-                             serverRequest,
-                             0,
-                             this->orb_core_,
-                             env);
+  this->orb_core_->object_adapter ()->dispatch_servant (serverRequest.object_key (),
+                                                        serverRequest,
+                                                        0,
+                                                        env);
 
   if (serverRequest.exception_type () == TAO_GIOP_NO_EXCEPTION
       && env.exception () == 0)
@@ -782,7 +780,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 // @@ For pluggable protocols, added a reference to the corresponding
-//    transport obj. 
+//    transport obj.
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t),
     expecting_response_ (0),
@@ -917,7 +915,7 @@ TAO_Client_Connection_Handler::check_unexpected_data (void)
       // -1 is a somewhat ugly shutdown
       //
       // Both will result in us returning -1 and this connection
-      // getting closed 
+      // getting closed
       //
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_WARNING,

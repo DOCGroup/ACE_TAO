@@ -1,227 +1,198 @@
 // $Id$
 
 #include "tao/Active_Object_Map.h"
-#include "tao/params.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
-////////////////////////////////////////////////////////////////////////////////
-
-TAO_Incremental_Key_Generator::TAO_Incremental_Key_Generator (void)
-  : counter_ (0)
-{
-}
-
-int
-TAO_Incremental_Key_Generator::operator() (PortableServer::ObjectId &id)
-{
-  // Resize to accommodate the counter.
-  id.length (sizeof this->counter_);
-
-  // Add new key data.
-  ACE_OS::memcpy (id.get_buffer (),
-                  &++this->counter_,
-                  sizeof this->counter_);
-
-  // Success.
-  return 0;
-}
+#include "ace/Auto_Ptr.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
-u_long
-TAO_ObjectId_Hash::operator () (const PortableServer::ObjectId &id) const
+/* static */
+size_t TAO_Active_Object_Map::system_id_size_ (0);
+
+void
+TAO_Active_Object_Map::set_system_id_size (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
 {
-  return ACE::hash_pjw ((const char *) id.get_buffer (),
-                        id.length ());
+  if (TAO_Active_Object_Map::system_id_size_ == 0)
+    {
+      if (creation_parameters.allow_reactivation_of_system_ids_)
+        {
+          switch (creation_parameters.object_lookup_strategy_for_system_id_policy_)
+            {
+            case TAO_LINEAR:
+
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
+              break;
+
+            case TAO_DYNAMIC_HASH:
+            default:
+
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
+              break;
+            }
+
+          size_t hint_size;
+          if (creation_parameters.use_active_hint_in_ids_)
+            {
+              hint_size = ACE_Active_Map_Manager_Key::size ();
+            }
+          else
+            {
+              hint_size = 0;
+            }
+
+          TAO_Active_Object_Map::system_id_size_ += hint_size;
+        }
+      else
+        {
+          switch (creation_parameters.object_lookup_strategy_for_system_id_policy_)
+            {
+            case TAO_LINEAR:
+
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
+              break;
+
+            case TAO_DYNAMIC_HASH:
+
+              TAO_Active_Object_Map::system_id_size_ = sizeof (CORBA::ULong);
+              break;
+
+            case TAO_ACTIVE_DEMUX:
+            default:
+
+              TAO_Active_Object_Map::system_id_size_ = ACE_Active_Map_Manager_Key::size ();
+              break;
+            }
+        }
+    }
 }
-
-////////////////////////////////////////////////////////////////////////////////
-
-int
-TAO_Ignore_Original_Key_Adapter::encode (const PortableServer::ObjectId &original_key,
-                                         const ACE_Active_Map_Manager_Key &active_key,
-                                         PortableServer::ObjectId &modified_key)
-{
-  // Size of active key.
-  size_t active_key_size = active_key.size ();
-
-  // Resize to accommodate both the original data and the new active key.
-  modified_key.length (active_key_size);
-
-  // Copy active key data into user key.
-  active_key.encode (modified_key.get_buffer ());
-
-  // Success.
-  return 0;
-}
-
-int
-TAO_Ignore_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
-                                         ACE_Active_Map_Manager_Key &active_key)
-{
-  // Read off value of index and generation.
-  active_key.decode (modified_key.get_buffer ());
-
-  // Success.
-  return 0;
-}
-
-int
-TAO_Ignore_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
-                                         PortableServer::ObjectId &original_key)
-{
-  // Smartly copy all the data; <original_key does not own the data>.
-  original_key.replace (modified_key.maximum (),
-                        modified_key.length (),
-                        ACE_const_cast (CORBA::Octet *,
-                                        modified_key.get_buffer ()),
-                        0);
-
-  // Success.
-  return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-int
-TAO_Preserve_Original_Key_Adapter::encode (const PortableServer::ObjectId &original_key,
-                                           const ACE_Active_Map_Manager_Key &active_key,
-                                           PortableServer::ObjectId &modified_key)
-{
-  // Size of active key.
-  size_t active_key_size = active_key.size ();
-
-  // Resize to accommodate both the original data and the new active key.
-  modified_key.length (active_key_size + original_key.length ());
-
-  // Copy active key data into user key.
-  active_key.encode (modified_key.get_buffer ());
-
-  // Copy the original key after the active key.
-  ACE_OS::memcpy (modified_key.get_buffer () + active_key_size,
-                  original_key.get_buffer (),
-                  original_key.length ());
-
-  // Success.
-  return 0;
-}
-
-int
-TAO_Preserve_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
-                                           ACE_Active_Map_Manager_Key &active_key)
-{
-  // Read off value of index and generation.
-  active_key.decode (modified_key.get_buffer ());
-
-  // Success.
-  return 0;
-}
-
-int
-TAO_Preserve_Original_Key_Adapter::decode (const PortableServer::ObjectId &modified_key,
-                                           PortableServer::ObjectId &original_key)
-{
-  // Size of active key.
-  size_t active_key_size = ACE_Active_Map_Manager_Key::size ();
-
-  // Smartly copy all the data; <original_key does not own the data>.
-  original_key.replace (modified_key.maximum () - active_key_size,
-                        modified_key.length () - active_key_size,
-                        ACE_const_cast (CORBA::Octet *,
-                                        modified_key.get_buffer ()) + active_key_size,
-                        0);
-
-  // Success.
-  return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 
 TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
                                               int unique_id_policy,
                                               int persistent_id_policy,
-                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
+                                              const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
+                                              CORBA_Environment &ACE_TRY_ENV)
   : user_id_map_ (0),
     servant_map_ (0),
     id_uniqueness_strategy_ (0),
     lifespan_strategy_ (0),
     id_assignment_strategy_ (0),
-    id_hint_strategy_ (0),
-    system_id_size_ (0)
+    id_hint_strategy_ (0)
 {
+  TAO_Active_Object_Map::set_system_id_size (creation_parameters);
+
+  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy = 0;
   if (unique_id_policy)
     {
-      ACE_NEW (this->id_uniqueness_strategy_,
-               TAO_Unique_Id_Strategy);
+      ACE_NEW_THROW_EX (id_uniqueness_strategy,
+                        TAO_Unique_Id_Strategy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
   else
     {
-      ACE_NEW (this->id_uniqueness_strategy_,
-               TAO_Multiple_Id_Strategy);
+      ACE_NEW_THROW_EX (id_uniqueness_strategy,
+                        TAO_Multiple_Id_Strategy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
+  // Give ownership to the auto pointer.
+  auto_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
 
+  TAO_Lifespan_Strategy *lifespan_strategy = 0;
   if (persistent_id_policy)
     {
-      ACE_NEW (this->lifespan_strategy_,
-               TAO_Persistent_Strategy);
+      ACE_NEW_THROW_EX (lifespan_strategy,
+                        TAO_Persistent_Strategy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
   else
     {
-      ACE_NEW (this->lifespan_strategy_,
-               TAO_Transient_Strategy);
+      ACE_NEW_THROW_EX (lifespan_strategy,
+                        TAO_Transient_Strategy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
+  // Give ownership to the auto pointer.
+  auto_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
 
+  TAO_Id_Assignment_Strategy *id_assignment_strategy = 0;
   if (user_id_policy)
     {
-      ACE_NEW (this->id_assignment_strategy_,
-               TAO_User_Id_Strategy);
+      ACE_NEW_THROW_EX (id_assignment_strategy,
+                        TAO_User_Id_Strategy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
   else
     {
       if (unique_id_policy)
         {
-          ACE_NEW (this->id_assignment_strategy_,
-                   TAO_System_Id_With_Unique_Id_Strategy);
+          ACE_NEW_THROW_EX (id_assignment_strategy,
+                            TAO_System_Id_With_Unique_Id_Strategy,
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
         }
       else
         {
-          ACE_NEW (this->id_assignment_strategy_,
-                   TAO_System_Id_With_Multiple_Id_Strategy);
+          ACE_NEW_THROW_EX (id_assignment_strategy,
+                            TAO_System_Id_With_Multiple_Id_Strategy,
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
         }
     }
+  // Give ownership to the auto pointer.
+  auto_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
 
+  TAO_Id_Hint_Strategy *id_hint_strategy = 0;
   if ((user_id_policy ||
        creation_parameters.allow_reactivation_of_system_ids_) &&
       creation_parameters.use_active_hint_in_ids_)
     {
-      ACE_NEW (this->id_hint_strategy_,
-               TAO_Active_Hint_Strategy);
+      ACE_NEW_THROW_EX (id_hint_strategy,
+                        TAO_Active_Hint_Strategy (creation_parameters.active_object_map_size_),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
   else
     {
-      ACE_NEW (this->id_hint_strategy_,
-               TAO_No_Hint_Strategy);
+      ACE_NEW_THROW_EX (id_hint_strategy,
+                        TAO_No_Hint_Strategy,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK;
     }
+  // Give ownership to the auto pointer.
+  auto_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
 
+  servant_map *sm = 0;
   if (unique_id_policy)
     {
       switch (creation_parameters.reverse_object_lookup_strategy_for_unique_id_policy_)
         {
         case TAO_LINEAR:
-          ACE_NEW (this->servant_map_,
-                   servant_linear_map (creation_parameters.active_object_map_size_));
+          ACE_NEW_THROW_EX (sm,
+                            servant_linear_map (creation_parameters.active_object_map_size_),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
           break;
+
         case TAO_DYNAMIC_HASH:
         default:
-          ACE_NEW (this->servant_map_,
-                   servant_hash_map (creation_parameters.active_object_map_size_));
+          ACE_NEW_THROW_EX (sm,
+                            servant_hash_map (creation_parameters.active_object_map_size_),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
           break;
         }
     }
+  // Give ownership to the auto pointer.
+  auto_ptr<servant_map> new_servant_map (sm);
 
+  user_id_map *uim = 0;
   if (user_id_policy ||
       creation_parameters.allow_reactivation_of_system_ids_)
     {
@@ -229,21 +200,19 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         {
         case TAO_LINEAR:
 
-          ACE_NEW (this->user_id_map_,
-                   user_id_linear_map (creation_parameters.active_object_map_size_));
-
-          this->system_id_size_ = sizeof (CORBA::ULong);
-
+          ACE_NEW_THROW_EX (uim,
+                            user_id_linear_map (creation_parameters.active_object_map_size_),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
           break;
 
         case TAO_DYNAMIC_HASH:
         default:
 
-          ACE_NEW (this->user_id_map_,
-                   user_id_hash_map (creation_parameters.active_object_map_size_));
-
-          this->system_id_size_ = sizeof (CORBA::ULong);
-
+          ACE_NEW_THROW_EX (uim,
+                            user_id_hash_map (creation_parameters.active_object_map_size_),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
           break;
         }
     }
@@ -253,43 +222,59 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
         {
         case TAO_LINEAR:
 
-          ACE_NEW (this->user_id_map_,
-                   user_id_linear_map (creation_parameters.active_object_map_size_));
-
-          this->system_id_size_ = sizeof (CORBA::ULong);
-
+          ACE_NEW_THROW_EX (uim,
+                            user_id_linear_map (creation_parameters.active_object_map_size_),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
           break;
 
         case TAO_DYNAMIC_HASH:
 
-          ACE_NEW (this->user_id_map_,
-                   user_id_hash_map (creation_parameters.active_object_map_size_));
-
-          this->system_id_size_ = sizeof (CORBA::ULong);
-
+          ACE_NEW_THROW_EX (uim,
+                            user_id_hash_map (creation_parameters.active_object_map_size_),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
           break;
 
         case TAO_ACTIVE_DEMUX:
         default:
 
-          ACE_NEW (this->user_id_map_,
-                   user_id_active_map (creation_parameters.active_object_map_size_));
-
-          this->system_id_size_ = ACE_Active_Map_Manager_Key::size ();
-
+          ACE_NEW_THROW_EX (uim,
+                            user_id_active_map (creation_parameters.active_object_map_size_),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
           break;
         }
     }
+  // Give ownership to the auto pointer.
+  auto_ptr<user_id_map> new_user_id_map (uim);
 
-  this->id_uniqueness_strategy_->set_active_object_map (this);
-  this->lifespan_strategy_->set_active_object_map (this);
-  this->id_assignment_strategy_->set_active_object_map (this);
+  id_uniqueness_strategy->set_active_object_map (this);
+  lifespan_strategy->set_active_object_map (this);
+  id_assignment_strategy->set_active_object_map (this);
 
-  this->system_id_size_ += this->id_hint_strategy_->hint_size ();
+  // Finally everything is fine.  Make sure to take ownership away
+  // from the auto pointer.
+  this->id_uniqueness_strategy_ = new_id_uniqueness_strategy.release ();
+  this->lifespan_strategy_ = new_lifespan_strategy.release ();
+  this->id_assignment_strategy_ = new_id_assignment_strategy.release ();
+  this->id_hint_strategy_ = new_id_hint_strategy.release ();
+  this->servant_map_ = new_servant_map.release ();
+  this->user_id_map_ = new_user_id_map.release ();
 }
 
 TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
 {
+  user_id_map::iterator iterator = this->user_id_map_->begin ();
+  user_id_map::iterator end = this->user_id_map_->end ();
+  for (;
+       iterator != end;
+       ++iterator)
+    {
+      user_id_map::value_type map_entry = *iterator;
+      delete map_entry.second ();
+    }
+
   delete this->id_uniqueness_strategy_;
   delete this->lifespan_strategy_;
   delete this->id_assignment_strategy_;
@@ -502,10 +487,10 @@ TAO_Active_Object_Map::find_user_id_using_system_id (const PortableServer::Objec
   return 0;
 }
 
-size_t
+/* static */ size_t
 TAO_Active_Object_Map::system_id_size (void)
 {
-  return this->system_id_size_;
+  return TAO_Active_Object_Map::system_id_size_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -964,6 +949,11 @@ TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy (void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+TAO_Active_Hint_Strategy::TAO_Active_Hint_Strategy (CORBA::ULong map_size)
+  : system_id_map_ (map_size)
+{
+}
+
 TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy (void)
 {
 }
@@ -1074,10 +1064,24 @@ TAO_No_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class auto_ptr<TAO_Id_Uniqueness_Strategy>;
+template class auto_ptr<TAO_Lifespan_Strategy>;
+template class auto_ptr<TAO_Id_Assignment_Strategy>;
+template class auto_ptr<TAO_Id_Hint_Strategy>;
+template class auto_ptr<TAO_Active_Object_Map::servant_map>;
+template class auto_ptr<TAO_Active_Object_Map::user_id_map>;
+
+template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Strategy>;
+template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Strategy>;
+template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Strategy>;
+template class ACE_Auto_Basic_Ptr<TAO_Id_Hint_Strategy>;
+template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::servant_map>;
+template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>;
+
 // Common typedefs.
 typedef PortableServer::ObjectId id;
 typedef PortableServer::Servant servant;
-typedef TAO_Active_Object_Map::Map_Entry * value;
+typedef TAO_Active_Object_Map::Map_Entry *value;
 
 typedef ACE_Pair<id, value> id_expanded_value;
 typedef ACE_Reference_Pair<const id, value> id_value_type;
@@ -1086,7 +1090,7 @@ typedef ACE_Equal_To<id> id_compare_keys;
 typedef ACE_Equal_To<servant> servant_compare_keys;
 typedef TAO_ObjectId_Hash id_hash;
 typedef TAO_Servant_Hash servant_hash;
-typedef ACE_Noop_Key_Generator<PortableServer::Servant> noop_servant_key_generator;
+typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
 
 // Common
 template class ACE_Reference_Pair<const id, value>;
@@ -1159,6 +1163,20 @@ template class ACE_Map_Entry<servant, value>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate auto_ptr<TAO_Id_Uniqueness_Strategy>
+#pragma instantiate auto_ptr<TAO_Lifespan_Strategy>
+#pragma instantiate auto_ptr<TAO_Id_Assignment_Strategy>
+#pragma instantiate auto_ptr<TAO_Id_Hint_Strategy>
+#pragma instantiate auto_ptr<TAO_Active_Object_Map::servant_map>
+#pragma instantiate auto_ptr<TAO_Active_Object_Map::user_id_map>
+
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Strategy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Strategy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Strategy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Hint_Strategy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::servant_map>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map::user_id_map>
+
 // Common typedefs.
 typedef PortableServer::ObjectId id;
 typedef PortableServer::Servant servant;
@@ -1171,7 +1189,7 @@ typedef ACE_Equal_To<id> id_compare_keys;
 typedef ACE_Equal_To<servant> servant_compare_keys;
 typedef TAO_ObjectId_Hash id_hash;
 typedef TAO_Servant_Hash servant_hash;
-typedef ACE_Noop_Key_Generator<PortableServer::Servant> noop_servant_key_generator;
+typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
 
 // Common
 #pragma instantiate ACE_Reference_Pair<const id, value>

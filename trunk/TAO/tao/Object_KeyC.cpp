@@ -65,3 +65,10 @@ operator== (const TAO_ObjectKey &lhs,
 
   return 1;
 }
+
+int
+operator!= (const TAO_ObjectKey &lhs,
+            const TAO_ObjectKey &rhs)
+{
+  return !(lhs == rhs);
+}

@@ -1,3 +1,90 @@
+Tue Apr 06 05:04:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/POA.cpp: Phase two of the new POA design is complete.
+
+          - We now have support for active demuxing of POA. For transient
+	    POAs, we directly use an active demuxing key in the object key
+	    since transient POAs cannot be reactivated.  For persistent
+	    POAs, we have added a active demux hint field in the object
+	    key.  This hint is in addition to the persistent POA name.
+
+          - The use of the active demux hint for the POA name in the
+	    object key is optional.  If used, the lookups are faster
+	    (unless the hint is invalidated by a deactivation or by
+	    restarting a persistent POA).  However, using the hint results
+	    in a larger IOR, and more memory being used in the active
+	    object map.  This option can be controlled through the
+	    -ORBactivehintinpoanames runtime switch and is turned on by
+	    default.
+
+          - The POA related classes have been rewritten with respect to
+	    exceptions.  Memory management in case of exceptions from
+	    servants and in case of dynamic memory / constructor failures
+	    have been greatly improved through the use of auto pointer and
+	    the new ACE_NEW_THROW_EX macro.  One of the problems related
+	    to exceptions was that the POA Current was not reset properly.
+	    This has also been fixed.
+
+	  - New file Object_Adapter contains an abstraction for all the
+	    POAs in the ORB.  This class is used to hold the Object
+	    Adapter lock and the tables for the POAs in the ORB.  The
+	    point of contact for dispatching requests and finding servants
+	    has changed from the RootPOA to the Object Adapter.  The file
+	    also contains classes to iterate through a folded POA name.
+
+	  - New file Key_Adapters contains the common classes used by the
+	    Object_Adapter class and the Active_Object_Map class.  These
+	    common classes are usually used for similar maps such as the
+	    ACE_Active_Map_Manager_Adapter and
+	    ACE_Hash_Map_Manager_Ex_Adapter.
+
+	  - POA name separator was changed from '/' to '\0'.  Since POA
+	    names are strings, this makes a better choice since there is
+	    no chance of a conflict with the string specified by the
+	    user.
+
+	  - The POA name separator change also led to the removal of the
+	    TAO specific extension which allowed users to specify a nested
+	    POA name in find_POA() and create_POA().  The
+	    Explicit_Activation, FindPOA, and NewPOA examples were changed
+	    not to use the above TAO extention.
+
+	  - Fixed RootPOA example to remove extra exception code left
+	    there by Bala.
+
+	  - Collocation table now maps addresses to Object Adapters
+	    instead to the Root POAs.
+
+	  - POA objects and POA Manager objects now contain a reference to
+	    lock rather than a lock instance.  The locks coming from the
+	    Object Adapter.  This change was made to centralize the
+	    locking and reduce the number of locks grabbed during request
+	    dispatching.
+
+	* tao/Active_Object_Map.cpp:
+
+	  - Fixed the calculation of <system_id_size>.
+
+	  - Removed a memory leak by iterating over the entries left in
+	    the user id map and deleting the dynamically allocated
+	    <Map_Entry>s.
+
+	  - Made sure that the user can specify the map sizes if desired.
+
+	* tao/Connect.cpp (handle_message): Reduced the number of calls
+	  made to access the object_key and its buffer.
+
+	* tao/Object_KeyC.h: Added operator!= for Object Keys.
+
+	* tao/poa_macros.h (TAO_POA_GUARD_RETURN and TAO_POA_GUARD): Added
+	  new macros.
+
+	* examples/POA/Adapter_Activator/: Added new example to test the
+	  dynamic creation of POAs when dispatching requests.  The
+	  original POAs are deleted once the object references have been
+	  created. After this, an adapter activator is install in the
+	  RootPOA to reactivate the POAs on demand.
+
 Tue Apr  6 02:40:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Simple/Simple_util.cpp (init): We have to make sure we
