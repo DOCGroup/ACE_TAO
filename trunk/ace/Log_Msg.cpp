@@ -333,6 +333,12 @@ void
 ACE_Log_Msg::sync (const char *prog_name)
 {
   ACE_TRACE ("ACE_Log_Msg::sync");
+
+#if defined (VXWORKS)
+  // To avoid memory leak, don't copy the input string.  It had better
+  // be in the text segment!
+  ACE_Log_Msg::program_name_ = prog_name;
+#else
   if (prog_name)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
@@ -346,6 +352,8 @@ ACE_Log_Msg::sync (const char *prog_name)
 		  ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
 	  }	  
     }
+#endif /* VXWORKS */
+
   ACE_Log_Msg::pid_ = ACE_OS::getpid ();  
   ACE_Log_Msg::msg_off_ = 0;
 }
@@ -444,6 +452,10 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 
 ACE_Log_Msg::~ACE_Log_Msg()
 {
+  // On VxWorks, there is no static Log_Msg_Set.  And, the program_name_ and
+  // local_host_ strings weren't duplicated, in order to avoid memory leaks,
+  // because this destructor can't tell when the last thread in the program
+  // exits.
 #if ! defined (VXWORKS)
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock()));
   
@@ -475,6 +487,11 @@ ACE_Log_Msg::open (const char *prog_name,
   ACE_TRACE ("ACE_Log_Msg::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock(), -1));
 
+#if defined (VXWORKS)
+  // To avoid memory leak, don't copy the input string.  It had better
+  // be in the text segment!
+  ACE_Log_Msg::program_name_ = prog_name;
+#else
   if (prog_name)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
@@ -487,6 +504,7 @@ ACE_Log_Msg::open (const char *prog_name,
 		  ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
 	  }
   }
+#endif /* VXWORKS */
 
   int status = 0;
 
@@ -1159,6 +1177,11 @@ ACE_Log_Msg::msg_ostream (ostream *m)
 void
 ACE_Log_Msg::local_host (const char *s)
 {
+#if defined (VXWORKS)
+  // To avoid memory leak, don't copy the input string.  It had better
+  // be in the text segment!
+  ACE_Log_Msg::local_host_ = s;
+#else
   if (s)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::local_host_);
@@ -1168,6 +1191,7 @@ ACE_Log_Msg::local_host (const char *s)
 	      ACE_Log_Msg::local_host_ = ACE_OS::strdup (s);
 	  }
     }
+#endif /* VXWORKS */
 }
 
 const char *
