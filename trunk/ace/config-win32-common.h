@@ -252,11 +252,13 @@ typedef unsigned __int64 ACE_UINT64;
         #endif /* _MT */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0) && !defined (_UNDER_CE)
+#if !defined (ACE_HAS_WINCE)
+#if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0)
         #if !defined(_DLL)
                 #error You must link against (Debug) Multithreaded DLL run-time libraries.
         #endif /* !_DLL */
 #endif  /* ACE_HAS_DLL && ACE_HAS_DLL != 0 */
+#endif /* ACE_HAS_WINCE */
 
 // We are using STL's min and max (in algobase.h).  Therefore the
 // macros in window.h are extra
