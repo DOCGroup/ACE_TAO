@@ -194,7 +194,7 @@ Quoter_Factory_Finder_Server::parse_args (void)
 int
 main (int argc, char *argv [])
 {
-  Quoter_Factory_Finder_Server quoter_Factory_Finder_server;
+  Quoter_Factory_Finder_Server quoter_Factory_Finder_Server;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tIDL_Quoter:Quoter_Factory_Finder \n \n"));
