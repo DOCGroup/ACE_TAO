@@ -42,10 +42,10 @@ below.<p>
 
 <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
 There is a bug in <code>getsockname ()</code> on versions of Linux
-through 2.0.30, at least.  <code>getsockname ()</code> returns an
-Internet host address of 127.0.0.1 (localhost) instead of 0.0.0.0 for
-sockets that aren't connected.  This bug prevents TAO servers from
-working correctly.  To fix it, comment out these two lines in function
+through 2.0.34.  <code>getsockname ()</code> returns an Internet host
+address of 127.0.0.1 (localhost) instead of 0.0.0.0 for sockets that
+aren't connected.  This bug prevents TAO servers from working
+correctly.  To fix it, comment out these two lines in function
 <code>inet_getname ()</code> in
 <code>/usr/src/linux/net/ipv4/af_inet.c</code>:
 
