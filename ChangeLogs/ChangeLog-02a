@@ -1,3 +1,18 @@
+Mon Jun 19 17:33:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Removed the special case check for
+  
+          #     if defined (ACE_HAS_IRIX62_THREADS)
+	  #       define THR_SCOPE_SYSTEM        0x00100000
+	  #     else
+  
+          and just used this:
+	  
+	  #       define THR_SCOPE_SYSTEM        THR_BOUND
+  
+          Thanks to John Foresteire <John_J_Foresteire@res.raytheon.com>
+	  for this suggestion.
+
 Mon Jun 19 12:38:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/config-all.h:

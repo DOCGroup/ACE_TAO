@@ -1,15 +1,16 @@
 AIM:
 ---
+
 This is an extension of the Load_Balancing_Service example in
-$TAO_ROOT/examples/Load_Balancing. The aim of this example is to
-show a methodology to preserve the state of the service.  Here, the
-service stores the object reference of multiple copies of servers
-registered, so that load can be balanced among the registered
-servers. If the load balancing service fails, the references of the
-servers registered, is read from the persistent storage and can be used
-to satisfy the clients request. The core functionality is not much
-different from that of the normal Load_Balancing_Service in 
-$TAO_ROOT/examples/Load_Balancing.   
+$TAO_ROOT/examples/Load_Balancing. The aim of this example is to show
+a methodology to preserve the state of the service.  Here, the service
+stores the object reference of multiple copies of servers registered,
+so that load can be balanced among the registered servers. If the load
+balancing service fails, the references of the servers registered, is
+read from the persistent storage and can be used to satisfy the
+clients request. The core functionality is not much different from
+that of the normal Load_Balancing_Service in
+$TAO_ROOT/examples/Load_Balancing.
 
 Usage:
 -----

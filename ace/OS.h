@@ -2040,11 +2040,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #     define THR_SCHED_FIFO          0x00020000
 #     define THR_SCHED_RR            0x00040000
 #     define THR_SCHED_DEFAULT       0x00080000
-#     if defined (ACE_HAS_IRIX62_THREADS)
-#       define THR_SCOPE_SYSTEM        0x00100000
-#     else
-#       define THR_SCOPE_SYSTEM        THR_BOUND
-#     endif /* ACE_HAS_IRIX62_THREADS */
+#     define THR_SCOPE_SYSTEM        THR_BOUND
 #     define THR_SCOPE_PROCESS       0x00200000
 #     define THR_INHERIT_SCHED       0x00400000
 #     define THR_EXPLICIT_SCHED      0x00800000
