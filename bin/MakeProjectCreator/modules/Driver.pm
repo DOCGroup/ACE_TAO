@@ -122,7 +122,7 @@ sub optionError {
                "Usage: $base [-global <file>] [-include <directory>] [-recurse]]\n" .
                $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
-               $spaces . "[-noreldefs] [-notoplevel] [-static]\n" .
+               $spaces . "[-noreldefs] [-notoplevel] [-static] [-genins]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-feature_file <file name>] [-make_coexistence]\n" .
@@ -152,6 +152,7 @@ sub optionError {
 "       -feature_file   Specifies the feature file to read before processing.\n" .
 "                       The default feature file is default.features under the\n" .
 "                       config directory.\n" .
+"       -genins         Generate .ins files for use with prj_install.pl.\n" .
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
 "       -hierarchy      Generate a workspace in a hierarchical fashion.\n" .
@@ -356,24 +357,25 @@ sub run {
       }
       my($file) = $cfile;
       my($creator) = $name->new($options->{'global'},
-                                  $options->{'include'},
-                                  $options->{'template'},
-                                  $options->{'ti'},
-                                  $options->{'dynamic'},
-                                  $options->{'static'},
-                                  $options->{'relative'},
-                                  $options->{'addtemp'},
-                                  $options->{'addproj'},
-                                  (-t 1 ? \&progress : undef),
-                                  $options->{'toplevel'},
-                                  $options->{'baseprojs'},
-                                  $global_feature_file,
-                                  $options->{'feature_file'},
-                                  $options->{'hierarchy'},
-                                  $options->{'exclude'},
-                                  $options->{'coexistence'},
-                                  $options->{'name_modifier'},
-                                  $options->{'apply_project'});
+                                $options->{'include'},
+                                $options->{'template'},
+                                $options->{'ti'},
+                                $options->{'dynamic'},
+                                $options->{'static'},
+                                $options->{'relative'},
+                                $options->{'addtemp'},
+                                $options->{'addproj'},
+                                (-t 1 ? \&progress : undef),
+                                $options->{'toplevel'},
+                                $options->{'baseprojs'},
+                                $global_feature_file,
+                                $options->{'feature_file'},
+                                $options->{'hierarchy'},
+                                $options->{'exclude'},
+                                $options->{'coexistence'},
+                                $options->{'name_modifier'},
+                                $options->{'apply_project'},
+                                $options->{'genins'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$creator->cd($dir)) {

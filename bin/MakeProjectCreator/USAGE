@@ -12,7 +12,7 @@ projects for each one found.
 Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
-              [-noreldefs] [-notoplevel] [-static]
+              [-noreldefs] [-notoplevel] [-static] [-genins]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
@@ -30,6 +30,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
+       -genins         Generate .ins files for use with prj_install.pl.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -hierarchy      Generate a workspace in a hierarchical fashion.
@@ -90,6 +91,11 @@ a separate project file for dynamic libraries and static libraries.
 
 The -exclude option is used to exclude directories when searching for input
 files.  NOTE: This option has no effect when used with mpc.pl.
+
+The -genins option will cause MPC to generate an "install" file after
+processing each project that can be used in conjunction with the
+prj_install.pl script to install different parts of the project (such as
+header files) into an alternate location.
 
 The -hierarchy option is used to force the generation of a hierarchical
 workspace at each directory level in between the toplevel directory and the
@@ -172,7 +178,7 @@ project in the directory from which the script was started.
 Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
-              [-noreldefs] [-notoplevel] [-static]
+              [-noreldefs] [-notoplevel] [-static] [-genins]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
@@ -190,6 +196,7 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
+       -genins         Generate .ins files for use with prj_install.pl.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -hierarchy      Generate a workspace in a hierarchical fashion.

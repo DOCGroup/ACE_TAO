@@ -69,6 +69,7 @@ sub new {
   my($makeco)    = shift;
   my($nmod)      = shift;
   my($applypj)   = shift;
+  my($genins)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
@@ -92,6 +93,7 @@ sub new {
   $self->{'project_file_list'}   = {};
   $self->{'ordering_cache'}      = {};
   $self->{'handled_scopes'}      = {};
+  $self->{'generate_ins'}        = $genins;
 
   if (defined $$exclude[0]) {
     my($type) = $self->{'wctype'};
@@ -1388,6 +1390,9 @@ sub process_cmdline {
       if (defined $options->{'coexistence'}) {
         $self->optionError('-make_coexistence is ignored');
       }
+      if (defined $options->{'genins'}) {
+        $self->optionError('-genins is ignored');
+      }
       if (defined $options->{'input'}->[0]) {
         $self->optionError('Command line files ' .
                            'specified in a workspace are ignored');
@@ -1456,7 +1461,8 @@ sub project_creator {
                    $self->{'exclude'}->{$self->{'wctype'}},
                    $self->make_coexistence(),
                    $parameters{'name_modifier'},
-                   $parameters{'apply_project'});
+                   $parameters{'apply_project'},
+                   $self->{'generate_ins'});
 }
 
 
