@@ -1463,7 +1463,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
                     LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_OS_TRACE ("ACE_OS::mutex_init");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   pthread_mutexattr_t l_attributes;
   if (attributes == 0)
     attributes = &l_attributes;

@@ -1,3 +1,9 @@
+Thu Feb  1 18:01:26 2001  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ace/OS.i (mutex_init):
+
+	  Removed call into PACE.
+
 Thu Feb 01 18:21:15 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Thread_Mutex_Test.cpp: Only report "operation not supported"
