@@ -1,3 +1,16 @@
+Fri Oct 31 10:14:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+
+	  Added a comment for Dale
+	
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+	 
+	  Fix in the main trunk trunk never got moved to the branch. 
+
+	  These changes are in oci_haft_branch. They haven't been compiled
+	  yet. 
+
 Thu Oct 30 10:08:11 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs\tests\FaultTolerance\IOGRManipulation\FaultTolerance_IOGRManipulation.mpc:
@@ -7,14 +20,12 @@ Thu Oct 30 10:08:11 2003  Dale Wilson  <wilson_d@ociweb.com>
 
 Wed Oct 29 18:20:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-  * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
 
-    Made a simple mistake while trying to look at the number of
-    arguments.
+	  Made a simple mistake while trying to look at the number of
+	  arguments. 
 
-
-        These changes were made in the oci_haft branch.
-
+          These changes were made in the oci_haft branch.
 
 Wed Oct 29 13:52:36 2003  Dale Wilson  <wilson_d@ociweb.com>
 
