@@ -152,7 +152,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -415,7 +415,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -676,7 +676,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -918,7 +918,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_i.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
