@@ -1,7 +1,6 @@
-
 // $Id$
 
-//================================================================================
+// ============================================================================
 //
 // = LIBRARY
 //     TAO/tests/POA/On_Demand_Activation/Servant_Activator
@@ -16,7 +15,7 @@
 // = AUTHOR
 //     Irfan Pyarali
 //
-//==================================================================================
+// ============================================================================
 
 #include "Servant_Activator.h"
 #include "MyFooServant.h"
@@ -52,6 +51,11 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
                                     CORBA::Boolean remaining_activations,
                                     CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (oid);
+  ACE_UNUSED_ARG (poa);
+  ACE_UNUSED_ARG (cleanup_in_progress);
+  ACE_UNUSED_ARG (env);
+
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant delete it.
 
