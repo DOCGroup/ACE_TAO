@@ -15,6 +15,16 @@ autoconf or Larry Wall's metaconfig...
 Macro					Description
 -----					-----------
 
+ACE_HAS_RECV_TIMEDWAIT			Platform has the MIT pthreads APIs for
+ACE_HAS_RECVFROM_TIMEDWAIT		timed send/recv operations
+ACE_HAS_RECVMSG_TIMEDWAIT
+ACE_HAS_SEND_TIMEDWAIT
+ACE_HAS_SENDTO_TIMEDWAIT
+ACE_HAS_SENDMSG_TIMEDWAIT
+ACE_HAS_READ_TIMEDWAIT
+ACE_HAS_READV_TIMEDWAIT
+ACE_HAS_WRITE_TIMEDWAIT
+ACE_HAS_WRITEV_TIMEDWAIT
 ACE_HAS_4_4BSD_SENDMSG_RECVMSG		Platform has BSD 4.4 sendmsg()/recvmsg() APIs.
 ACE_HAS_P_READ_WRITE			Platform has pread() and pwrite() support
 ACE_HAS_64BIT_LONGS			Platform has 64bit longs and 32bit ints...
@@ -227,6 +237,7 @@ ACE_LACKS_SYSV_MSQ_PROTOS		Platform doesn't have prototypes for Sys V msg()* que
 ACE_LACKS_T_ERRNO			Header files lack t_errno for TLI
 ACE_LACKS_TCP_H				Platform doesn't have netinet/tcp.h
 ACE_LACKS_THREAD_STACK_SIZE		Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)
+ACE_LACKS_TIMEDWAIT_PROTOTYPES		MIT pthreads platform lacks the timedwait prototypes
 ACE_LACKS_UCONTEXT_H			Platform lacks the ucontext.h file
 ACE_LACKS_UNIX_DOMAIN_SOCKETS		ACE platform has no UNIX domain sockets
 ACE_LACKS_UNIX_SIGNALS			Platform lacks full signal support (e.g., Win32 and Chorus).

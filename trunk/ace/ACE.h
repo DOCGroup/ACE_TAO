@@ -47,7 +47,7 @@ class ACE_Export ACE
   //     methods are put here rather than in ACE_OS in order to
   //     separate concerns.
 public:
-  // = Network I/O functions that factor out differences between Win32 and UNIX.
+  // = Recv operations that factor out differences between Win32 and UNIX.
   static ssize_t recv (ACE_HANDLE handle, 
 		       void *buf, 
 		       size_t len, 
@@ -62,21 +62,7 @@ public:
   // <ACE_OS::read> system call on UNIX and the <ACE_OS::recv> call on
   // Win32).
 
-  static ssize_t recv (ACE_HANDLE handle, 
-		       void *buf, 
-		       size_t len, 
-		       int flags,
-		       const ACE_Time_Value *timeout);
-  // Wait up to <timeout> amount of time to receive up to <len> bytes
-  // into <buf> from <handle> (uses the <ACE_OS::recv> call).  The
-  // <ACE_Time_Value> indicates how long to blocking trying to
-  // receive.  If <timeout> == 0, the caller will block until action
-  // is possible, else will wait until the relative time specified in
-  // *<timeout> elapses).  If <recv> times out a -1 is returned with
-  // <errno == ETIME>.  If it succeeds the number of bytes received is
-  // returned.
-
-  // = Network I/O functions that recv and send exactly n bytes.
+  // = Recv operations that receive exactly n bytes.
   static ssize_t recv_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len, 
@@ -93,21 +79,76 @@ public:
   // Win32).  If <handle> is set to non-blocking mode this call will
   // poll until all <len> bytes are received.
 
+  // = Timed <recv> operations.
+  static ssize_t recv (ACE_HANDLE handle, 
+		       void *buf, 
+		       size_t len, 
+		       int flags,
+		       const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to receive up to <len> bytes
+  // into <buf> from <handle> (uses the <ACE_OS::recv> call).  The
+  // <timeout> indicates how long to blocking trying to receive.  If
+  // <timeout> == 0, the caller will block until action is possible,
+  // else will wait until the relative time specified in *<timeout>
+  // elapses).  If <recv> times out a -1 is returned with <errno ==
+  // ETIME>.  If it succeeds the number of bytes received is returned.
+
+  static ssize_t recv (ACE_HANDLE handle, 
+		       void *buf, 
+		       size_t len, 
+		       const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to receive up to <len> bytes
+  // into <buf> from <handle> (uses the <ACE_OS::read> call).  The
+  // <timeout> indicates how long to blocking trying to receive.  If
+  // <timeout> == 0, the caller will block until action is possible,
+  // else will wait until the relative time specified in *<timeout>
+  // elapses).  If <recv> times out a -1 is returned with <errno ==
+  // ETIME>.  If it succeeds the number of bytes received is returned.
+
+  static ssize_t recvmsg (ACE_HANDLE handle,
+			  struct msghdr *msg,
+			  int flags,
+			  const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to receive <msg> from
+  // <handle> (uses the <ACE_OS::recvmsg> call).  The <timeout>
+  // indicates how long to blocking trying to receive.  If <timeout>
+  // == 0, the caller will block until action is possible, else will
+  // wait until the relative time specified in *<timeout> elapses).
+  // If <recvmsg> times out a -1 is returned with <errno == ETIME>.
+  // If it succeeds the number of bytes received is returned.
+
+  static ssize_t recvfrom (ACE_HANDLE handle,
+			   char *buf,
+			   int len, 
+			   int flags,
+			   struct sockaddr *addr,
+			   int *addrlen,
+			   const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to recv up to <len> bytes
+  // into <buf> from <handle> (uses the <ACE_OS::recvfrom> call).  The
+  // <timeout> indicates how long to blocking trying to recv.  If
+  // <timeout> == 0, the caller will block until action is possible,
+  // else will wait until the relative time specified in *<timeout>
+  // elapses).  If <recvfrom> times out a -1 is returned with <errno
+  // == ETIME>.  If it succeeds the number of bytes received is
+  // returned.
+
   static ssize_t recv_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len, 
 			 int flags,
 			 const ACE_Time_Value *timeout);
   // Try to recv exactly <len> bytes into <buf> from <handle> (uses
-  // the <ACE_OS::recv> call).  The <ACE_Time_Value> indicates how
-  // long to blocking trying to receive.  If <timeout> == 0, the
-  // caller will block until action is possible, else will wait until
-  // the relative time specified in *<timeout> elapses).  If <recv>
-  // blocks for longer than <timeout> the number of bytes actually
-  // read is returned with <errno == ETIME>.  If a timeout does not
-  // occur, <recv_n> return <len> (i.e., the number of bytes requested
-  // to be read).
+  // the <ACE_OS::recv> call).  The <timeout> indicates how long to
+  // blocking trying to receive.  If <timeout> == 0, the caller will
+  // block until action is possible, else will wait until the relative
+  // time specified in *<timeout> elapses).  If <recv> blocks for
+  // longer than <timeout> the number of bytes actually read is
+  // returned with <errno == ETIME>.  If a timeout does not occur,
+  // <recv_n> return <len> (i.e., the number of bytes requested to be
+  // read).
 
+  // = Send operations that factor out differences between Win32 and UNIX.
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
 		       size_t len, 
@@ -122,6 +163,7 @@ public:
   // <ACE_OS::write> system call on UNIX and the <ACE_OS::send> call
   // on Win32).
 
+  // = Send operations that send exactly n bytes.
   static ssize_t send_n (ACE_HANDLE handle, 
 			 const void *buf, 
 			 size_t len, 
@@ -138,18 +180,19 @@ public:
   // <handle> is set to non-blocking mode this call will poll until
   // all <len> bytes are sent.
 
+  // = Timed <send> operations.
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
 		       size_t len, 
 		       const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to send up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::write> system call on
-  // UNIX and the <ACE_OS::send> call on Win32).  The <ACE_Time_Value>
-  // indicates how long to blocking trying to send.  If <timeout>
-  // == 0, the caller will block until action is possible, else will
-  // wait until the relative time specified in *<timeout> elapses).
-  // If <send> times out a -1 is returned with <errno == ETIME>.  If
-  // it succeeds the number of bytes sent is returned.
+  // UNIX and the <ACE_OS::send> call on Win32).  The <timeout>
+  // indicates how long to blocking trying to send.  If <timeout> ==
+  // 0, the caller will block until action is possible, else will wait
+  // until the relative time specified in *<timeout> elapses).  If
+  // <send> times out a -1 is returned with <errno == ETIME>.  If it
+  // succeeds the number of bytes sent is returned.
 
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
@@ -158,12 +201,38 @@ public:
 		       const ACE_Time_Value *timeout);
   // Wait up to <timeout> amount of time to send up to <len> bytes
   // into <buf> from <handle> (uses the <ACE_OS::send> call).  The
-  // <ACE_Time_Value> indicates how long to blocking trying to
-  // send.  If <timeout> == 0, the caller will block until action
-  // is possible, else will wait until the relative time specified in
-  // *<timeout> elapses).  If <send> times out a -1 is returned with
-  // <errno == ETIME>.  If it succeeds the number of bytes sent is
-  // returned.
+  // <timeout> indicates how long to blocking trying to send.  If
+  // <timeout> == 0, the caller will block until action is possible,
+  // else will wait until the relative time specified in *<timeout>
+  // elapses).  If <send> times out a -1 is returned with <errno ==
+  // ETIME>.  If it succeeds the number of bytes sent is returned.
+
+  static ssize_t sendmsg (ACE_HANDLE handle, 
+			  const struct msghdr *msg, 
+			  int flags,
+			  const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to send the <msg> to <handle>
+  // (uses the <ACE_OS::sendmsg> call).  The <timeout> indicates how
+  // long to blocking trying to send.  If <timeout> == 0, the caller
+  // will block until action is possible, else will wait until the
+  // relative time specified in *<timeout> elapses).  If <sendmsg>
+  // times out a -1 is returned with <errno == ETIME>.  If it succeeds
+  // the number of bytes sent is returned.
+
+  static ssize_t sendto (ACE_HANDLE handle,
+			 const char *buf,
+			 int len, 
+			 int flags,
+			 const struct sockaddr *addr,
+			 int addrlen,
+			 const ACE_Time_Value *timeout);
+  // Wait up to <timeout> amount of time to send up to <len> bytes
+  // into <buf> from <handle> (uses the <ACE_OS::sendto> call).  The
+  // <timeout> indicates how long to blocking trying to send.  If
+  // <timeout> == 0, the caller will block until action is possible,
+  // else will wait until the relative time specified in *<timeout>
+  // elapses).  If <sendto> times out a -1 is returned with <errno ==
+  // ETIME>.  If it succeeds the number of bytes sent is returned.
 
   static ssize_t send_n (ACE_HANDLE handle, 
 			 const void *buf, 
@@ -171,14 +240,38 @@ public:
 			 int flags,
 			 const ACE_Time_Value *timeout);
   // Try to send exactly <len> bytes into <buf> from <handle> (uses
-  // the <ACE_OS::send> call).  The <ACE_Time_Value> indicates how
-  // long to blocking trying to send.  If <timeout> == 0, the caller
-  // will block until action is possible, else will wait until the
-  // relative time specified in *<timeout> elapses).  If <send> blocks
-  // for longer than <timeout> the number of bytes actually sent is
+  // the <ACE_OS::send> call).  The <timeout> indicates how long to
+  // blocking trying to send.  If <timeout> == 0, the caller will
+  // block until action is possible, else will wait until the relative
+  // time specified in *<timeout> elapses).  If <send> blocks for
+  // longer than <timeout> the number of bytes actually sent is
   // returned with <errno == ETIME>.  If a timeout does not occur,
   // <send_n> return <len> (i.e., the number of bytes requested to be
   // sent).
+
+  // = Timed Scatter-read and gather-write functions.
+
+  static ssize_t writev (ACE_HANDLE handle, 
+			 const struct iovec* iov,
+			 int iovcnt,
+			 const ACE_Time_Value *timeout);
+  // Send <iovcnt> <iovec> structs to <handle> (uses the
+  // <ACE_OS::writev> call).  If <timeout> == 0, the caller will block
+  // until action is possible, else will wait until the relative time
+  // specified in *<timeout> elapses).  If <writev> times out a -1 is
+  // returned with <errno == ETIME>.  If it succeeds the number of
+  // bytes written is returned.
+
+  static ssize_t readv (ACE_HANDLE handle,
+			struct iovec *iov,
+			int iovcnt,
+			const ACE_Time_Value *timeout);
+  // Read <iovcnt> <iovec> structs from <handle> (uses the
+  // <ACE_OS::readv> call).  If <timeout> == 0, the caller will block
+  // until action is possible, else will wait until the relative time
+  // specified in *<timeout> elapses).  If <readv> times out a -1 is
+  // returned with <errno == ETIME>.  If it succeeds the number of
+  // bytes receieved is returned.
 
   // = File system I/O functions.
 
@@ -410,6 +503,30 @@ public:
 private:
   ACE (void);
   // Ensure we can't define an instance of this class...
+
+  static int enter_recv_timedwait (ACE_HANDLE handle,
+				   const ACE_Time_Value *timeout,
+				   int &val);
+  // Wait for <timeout> before proceeding to a <recv> operation.
+  // <val> keeps track of whether we're in non-blocking mode or not.
+
+  static void leave_recv_timedwait (ACE_HANDLE handle,
+				    const ACE_Time_Value *timeout,
+				    int val);
+  // Cleanup after a <recv> operation (e.g., restore the appropriate
+  // non-blocking status of <handle>).
+
+  static int enter_send_timedwait (ACE_HANDLE handle,
+				   const ACE_Time_Value* timeout,
+				   int &val);
+  // Wait for <timeout> before proceeding to a <send> operation.
+  // <val> keeps track of whether we're in non-blocking mode or not.
+
+  static void leave_send_timedwait (ACE_HANDLE handle,
+				    const ACE_Time_Value *timeout,
+				    int val);
+  // Cleanup after the <send> operation (e.g., restore the appropriate
+  // non-blocking status of <handle>).
 
   static size_t pagesize_;
   // Size of a VM page.
