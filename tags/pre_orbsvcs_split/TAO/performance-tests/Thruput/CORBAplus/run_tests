@@ -1,0 +1,41 @@
+#! /bin/csh
+#
+# Usage: run_tests <arguments>
+# <host> : remote hostname server
+# <port> : remote port to send requests.
+#
+
+rm -f results.CP
+touch results.CP
+
+echo "CORBAplus throughput test"
+echo "========================="
+echo "CORBAplus throughput test" >>& results.CP
+echo "=========================" >>& results.CP
+
+
+echo "Send Struct --------------------------------------------------------"  >>& results.CP
+   ./client -S 10485760 -f m -l 1024 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 2048 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP 
+   ./client -S 10485760 -f m -l 4096 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 8192 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 16384 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 32768 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 65536 -q S -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 131072 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 262144 -q S  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+
+echo "Send Short ---------------------------------------------------------"  >>& results.CP
+   ./client -S 10485760 -f m -l 1024 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 2048 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP 
+   ./client -S 10485760 -f m -l 4096 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 8192 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 16384 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 32768 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 65536 -q s -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 131072 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+   ./client -S 10485760 -f m -l 262144 -q s  -pbtrace -pbinit TTCP_IIOP_test iiop://$1:$2/TTCP_IIOP_test >>& results.CP
+ 
+
+grep "Mbit/sec\|Send" results.CP
+ 
