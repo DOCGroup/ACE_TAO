@@ -130,11 +130,11 @@ CORBA::TCKind
 TAO_DynUnion_i::discriminator_kind (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA_TypeCode_ptr tc = this->type_->discriminator_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAny_i::unalias (tc,
                                                 ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::tk_null);
 
   return retval;
 }
@@ -216,11 +216,11 @@ TAO_DynUnion_i::member_kind (CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA_TypeCode_ptr tc = this->type_->member_type (this->current_index_,
                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAny_i::unalias (tc,
                                                 ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::tk_null);
 
   return retval;
 }
