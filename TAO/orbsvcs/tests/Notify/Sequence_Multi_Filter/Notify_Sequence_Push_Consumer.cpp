@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Notify_Sequence_Push_Consumer.h"
+#include "orbsvcs/TimeBaseC.h"
 #include "common.h"
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
