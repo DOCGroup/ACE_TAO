@@ -1,7 +1,0 @@
-#
-# Makefile for building the OctetSeq test executables
-#
-
-MAKEFILES = client.bor server.bor OctetSeq.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

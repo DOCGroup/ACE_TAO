@@ -1,3 +1,0 @@
-project(POA Current): taoserver {
-  exename = Current
-}

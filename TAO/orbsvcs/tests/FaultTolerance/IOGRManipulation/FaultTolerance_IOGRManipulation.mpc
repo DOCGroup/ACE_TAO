@@ -1,3 +1,0 @@
-project(IOGRTest): taoserver, orbsvcsexe, iormanip, ftorb {
-  exename  = IOGRTest
-}

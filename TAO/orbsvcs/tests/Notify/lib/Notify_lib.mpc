@@ -1,4 +1,0 @@
-project(NotifyTests_Lib): orbsvcslib, notify {
-  sharedname = NotifyTests
-  dynamicflags = TAO_NOTIFY_TEST_BUILD_DLL
-}

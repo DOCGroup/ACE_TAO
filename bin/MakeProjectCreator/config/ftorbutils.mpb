@@ -1,6 +1,0 @@
-project : iormanip, portableserver {
-  after     += FTORB_Utils 
-  libs      += TAO_FTORB_Utils 
-  comps     += FTORB_Utils
-  tagchecks += FTORB_Utils
-}
