@@ -331,8 +331,8 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) UIOP_Profile::decode - \n")
-                      ASYS_TEXT ("TAO (%P|%t) ACE_UNIX_Addr::set () failed")));
+                      ASYS_TEXT ("TAO (%P|%t) UIOP_Profile::decode - ")
+                      ASYS_TEXT ("ACE_UNIX_Addr::set() failed\n")));
         }
       return -1;
     }
