@@ -247,6 +247,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Testing over.  Shut down server ORB.
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n     Testing over\n"));
       server2->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -266,6 +268,8 @@ main (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR_RETURN ((LM_ERROR,
                      "\nRTCORBA must be enabled to run this test!\n"),
                     1);
