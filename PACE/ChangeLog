@@ -1,3 +1,9 @@
+Mon Jul 17 13:31:50 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h:
+
+	  Added #define PACE_POSIX_ERROR_RETVAL -1
+
 Mon Jul 17 13:07:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/aio.h (pace_aio_cancel):
