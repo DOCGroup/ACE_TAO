@@ -313,21 +313,18 @@ run_event_loop (u_short port)
   // calls within the loop.
   ACE_SOCK_Stream new_stream;
 
-  fd_set handles;
-  
-  FD_ZERO (&handles);
-  FD_SET (twoway_acceptor.get_handle (), &handles);
-  FD_SET (oneway_acceptor.get_handle (), &handles);
+  ACE_Handle_Set handle_set;
+  handle_set.set_bit (twoway_acceptor.get_handle ());
+  handle_set.set_bit (oneway_acceptor.get_handle ());
 
   // Performs the iterative server activities.
 
   for (;;)
     {
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
-      fd_set temp = handles;
 
       int result = ACE_OS::select (int (oneway_acceptor.get_handle ()) + 1,
-                                   (fd_set *) &temp,
+                                   (fd_set *) handle_set,
                                    0,
                                    0,
                                    timeout);
@@ -340,8 +337,7 @@ run_event_loop (u_short port)
                     "(%P|%t) select timed out\n"));
       else
         {
-          if (FD_ISSET (twoway_acceptor.get_handle (),
-                        &temp))
+          if (handle_set.is_set (twoway_acceptor.get_handle ()))
             {
               if (twoway_acceptor.accept (new_stream) == -1)
                 {
@@ -358,7 +354,7 @@ run_event_loop (u_short port)
               run_server (twoway_server,
                           new_stream.get_handle ());
             }
-          if (FD_ISSET (oneway_acceptor.get_handle (), &temp))
+          if (handle_set.is_set (oneway_acceptor.get_handle ()))
             {
               if (oneway_acceptor.accept (new_stream) == -1)
                 {
