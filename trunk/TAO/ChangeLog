@@ -1,3 +1,66 @@
+Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableServer\POA.cpp (locate_servant_i): We no longer
+	  need to use the non-servant upcall idiom for calling
+	  ServantLocator::preinvoke() since we are now let of the lock
+	  altogether before calling the servant locator.
+	  ServantLocator::postinvoke() is also handled in a similar
+	  manner.
+
+          Note that it is possible for some other thread to reset the
+	  servant locator once the lock is released.  However, this
+	  possiblility also exists for postinvoke() which is also called
+	  outside the lock.
+
+	  Thanks to Ashok Sadasivan <ashok_sadasivan@hotmail.com> for
+	  pointing this out.
+
+	* tao\PortableServer\Object_Adapter.cpp (prepare_for_upcall):
+	  Check the state before releasing the lock since it may already
+	  have been released for Servant Locators.
+
+	* tao\PortableServer\Object_Adapter: Moved State enumeration from
+	  protected to public section.  Also added accessor and set method
+	  of the state.
+
+	* tests\POA\MT_Servant_Locator: Added new test to ensure that the
+	  POA allows multiple simultaneous calls to Servant Locators.
+
+	  The following files were added:
+        
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.dsp
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.dsw
+	  - tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc
+	  - tests/POA/MT_Servant_Locator/Makefile
+	  - tests/POA/MT_Servant_Locator/makefile.bor
+	  - tests/POA/MT_Servant_Locator/run_test.pl
+	  - tests/POA/MT_Servant_Locator/test.idl
+
+	  The following files were modified:
+	
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+	  - tests/TAO_Tests.dsw
+	  - tests/POA/Makefile
+	  - tests/POA/Makefile.bor
+	  - tests/POA/README
+	
+Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Following are fixes for bug 1317.  Thanks to Ossama for pointing
+	  this out.
+
+	* tao\TAO_Internal.cpp (open_services_i): If available, allow the
+	  Adapter Factory to setup by calling init().  This is similar to
+	  what we do for RT-CORBA.
+	
+	* tao\ORB_Core.cpp (poa_factory_name): Added accessor.
+
+	* tao\RTPortableServer\RT_Object_Adapter_Factory.h: Changed
+	  inheritance from TAO_Adapter_Factory to
+	  TAO_Object_Adapter_Factory to get the base class' init()
+	  functionality.
+
 Mon Oct 28 18:38:35 CET 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/tests/Makefile:
