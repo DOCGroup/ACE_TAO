@@ -20,7 +20,7 @@
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Connector.h"
 #include "DIOP_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

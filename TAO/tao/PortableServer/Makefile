@@ -1028,7 +1028,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Acceptor_Filter.i \
- $(TAO_ROOT)/tao/Pluggable.h \
+ $(TAO_ROOT)/tao/Transport_Acceptor.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(ACE_ROOT)/ace/SString.h \
@@ -1063,7 +1063,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Pluggable.i
+ $(TAO_ROOT)/tao/Transport_Acceptor.inl
 
 .obj/Object_Adapter.o .obj/Object_Adapter.so .shobj/Object_Adapter.o .shobj/Object_Adapter.so: Object_Adapter.cpp Object_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1295,8 +1295,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- POA.i Strategized_Object_Proxy_Broker.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp POA.i \
+ Strategized_Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/Object_Proxy_Broker.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
@@ -1972,8 +1972,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- POA.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp POA.i \
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2440,8 +2439,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- POA.i Operation_Table.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp POA.i \
+ Operation_Table.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
  $(TAO_ROOT)/tao/TAO_Singleton.inl \
  $(TAO_ROOT)/tao/TAO_Singleton.cpp \
@@ -2736,8 +2735,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- POA.i ThruPOA_Object_Proxy_Impl.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp POA.i \
+ ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -3827,8 +3826,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/ORB_Manager.o .obj/ORB_Manager.so .shobj/ORB_Manager.o .shobj/ORB_Manager.so: ORB_Manager.cpp ORB_Manager.h \
- $(ACE_ROOT)/ace/pre.h \
- PortableServer.h portableserver_export.h \
+ $(ACE_ROOT)/ace/pre.h PortableServer.h \
+ portableserver_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -4368,8 +4367,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- POA.i $(TAO_ROOT)/tao/ORB_Core.h \
+ $(ACE_ROOT)/ace/Containers_T.cpp POA.i \
+ $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
  $(TAO_ROOT)/tao/Services.i \
@@ -4883,8 +4882,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- POA.i
+ $(ACE_ROOT)/ace/Containers_T.cpp POA.i
 
 .obj/Servant_Dispatcher.o .obj/Servant_Dispatcher.so .shobj/Servant_Dispatcher.o .shobj/Servant_Dispatcher.so: Servant_Dispatcher.cpp Servant_Dispatcher.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -7051,6 +7049,10 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(ACE_ROOT)/ace/Recyclable.h \
+ $(ACE_ROOT)/ace/Recyclable.inl \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7081,12 +7083,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Cache_Entries.h \
- $(ACE_ROOT)/ace/Recyclable.h \
- $(ACE_ROOT)/ace/Recyclable.inl \
- $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
- $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
  $(ACE_ROOT)/ace/Refcountable.h \
@@ -7386,8 +7382,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- POA.i
+ $(ACE_ROOT)/ace/Containers_T.cpp POA.i
 
 .obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -7517,8 +7512,7 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Object.i \
  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
- ImplRepoC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ ImplRepoC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
