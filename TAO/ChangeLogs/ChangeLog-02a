@@ -1,3 +1,15 @@
+Wed Dec  6 17:06:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
+	* tao/corbafwd.h:
+
+	  Fixed code generation for CORBA::TCKind as an argument
+	  or a return type. We were adding '_ptr' to the scoped
+	  name. This fix also involved adding
+	  'typedef TCKind &TCKind_out' to corbafwd.h, the same
+	  as would be generated for an IDL enum.  
+
 Wed Dec  6 14:32:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Asynch_Invocation.cpp
