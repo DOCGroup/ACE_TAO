@@ -10,11 +10,10 @@
 @c %**end of header
 
 @ifinfo
-@format
-START-INFO-DIR-ENTRY
+@dircategory GNU programming tools
+@direntry
 * Gperf: (gperf).                Perfect Hash Function Generator.
-END-INFO-DIR-ENTRY
-@end format
+@end direntry
 @end ifinfo
 
 @ifinfo
