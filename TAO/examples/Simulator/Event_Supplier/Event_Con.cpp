@@ -49,7 +49,7 @@ static const char usage [] = "[-? |\n"
 "            [-t <timeout interval>, msec [250]]]";
 
 
-
+int received = 0;
 
 
 
@@ -145,6 +145,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events,
       return;
     }
  
+  cout << "Number of events: " << received++ << endl;
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
