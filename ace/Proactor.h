@@ -21,6 +21,8 @@
 #include "ace/Asynch_IO.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Timer_Queue.h"
+#include "ace/Timer_List.h"
+#include "ace/Timer_Heap.h"
 
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
