@@ -507,6 +507,11 @@ DRV_check_gperf (void)
   // Spawn a process for gperf.
   if (process_manager.spawn (process_options) == -1)
     return -1;
+
+#if defined (ACE_WIN32)
+  // No wait or anything in Win32.
+  return 0;
+#endif /* ACE_WIN32 */
   
   // Wait for gperf to complete.
   int wait_status = 0;
