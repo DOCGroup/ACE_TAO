@@ -299,7 +299,12 @@ ORB_CORE_FILES = \
   Request_Dispatcher \
   Valuetype_Adapter \
   ObjectKey_Table \
-  Refcounted_ObjectKey
+  Refcounted_ObjectKey \
+  Argument \
+  Basic_Arguments \
+  Special_Basic_Arguments \
+  UB_String_Arguments
+
 
 DYNAMIC_ANY_FILES =
 
@@ -322,6 +327,11 @@ TEMPLATE_FILES = \
   Seq_Var_T \
   Value_VarOut_T \
   VarOut_T \
+  Basic_Argument_T \
+  BD_String_Argument_T \
+  Object_Argument_T \
+  Special_Basic_Argument_T \
+  UB_String_Argument_T \
   TAO_Singleton
 
 ifndef TAO_ROOT
