@@ -1,3 +1,11 @@
+Thu Nov 18 22:32:55 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Direct_Priority_Mapping.cpp
+	* tao/Linear_Priority_Mapping.cpp:
+	  Priority conversion routines were not functioning correctly on
+	  NT due to native priorities being noncontiguous.  Fixed by
+	  adding conditionally compiled code to handle NT case.
+
 Thu Nov 18 20:51:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Interceptor.pidl:
