@@ -1,3 +1,8 @@
+Sat Jul 13 13:31:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the Stack_Recursion test to the
+	  daily  builds.
+
 Fri Jul 12 20:28:52 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/URL_Addr.cpp (string_to_addr):
