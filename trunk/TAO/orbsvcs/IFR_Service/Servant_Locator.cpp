@@ -5,6 +5,8 @@
 
 ACE_RCSID(IFR_Service, Servant_Locator, "$Id$")
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 IFR_ServantLocator::IFR_ServantLocator (TAO_Repository_i *repo)
   : repo_ (repo)
 {
@@ -63,3 +65,6 @@ IFR_ServantLocator::postinvoke (
 {
   delete servant;
 }
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
