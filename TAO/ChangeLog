@@ -324,7 +324,7 @@ Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 	* tao/PortableServer/POA:
 
  	  The following changes are primarily to fix the problems caused
-	  by:	
+	  by:
 
 	  Mon Jan 14 14:41:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
@@ -350,7 +350,7 @@ Thu Apr 24 19:39:36 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - invoke_key_to_object(): Super simplified this method.  All
 	  params required to call create_object_key() and key_to_object()
 	  are stored away in <key_to_object_params_>.
-	
+
 	* tao/PortableServer/ObjectReferenceTemplate.cpp:
 
 	  In make_object(), invoke_key_to_object() no longer requires any
@@ -643,7 +643,7 @@ Wed Apr 23 12:59:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           the above tests.
 
 Wed Apr 23 07:40:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>1
-	
+
         * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp: Use
           .out () instead of a .in (), which seems more meaningful.
 
@@ -2078,7 +2078,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
           ORB_init, Explicit_Binding, and Client_Protocol should work with
           the single threaded configuration.
 
-Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
+Wed Apr 16 13:44:47 2003  Irfan Pyarali  <irfan@oomworks.com>
 
         * tao/PortableServer/Object_Adapter (Non_Servant_Upcall):
 
@@ -2089,6 +2089,8 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
           Thanks to Weston Markham <wmarkham@tissueinformatics.com> for
           pointing this out.  This fixes bug #1432.
+
+Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
         * tests/POA/Nested_Non_Servant_Upcalls:
 
