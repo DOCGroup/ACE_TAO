@@ -126,14 +126,19 @@ JAWS_HTTP_10_Request::parse_header_line (char *header_line)
   while (isspace (*value))
     value++;
 
-  this->table_.insert (ACE_OS::strdup (header), ACE_OS::strdup (value));
+  char *key = ACE_OS::strdup (header);
+  char *item = ACE_OS::strdup (value);
 
-  ACE_DEBUG((LM_DEBUG,
-             " (%t) Headers::parse_header_line\n"
-             "      []%s\n"
-             "      <>%s\n",
-             header ? header : "<empty>",
-             value ? value : "<empty>"));
+  if (key == 0 || item == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "JAWS_HTTP_10_Request::parse_header_line"));
+      ACE_OS::free (key);
+      ACE_OS::free (item);
+    }
+  else
+    this->table_.insert (key, item);
 
   // Write back the unused portion of the input.
   ACE_OS::memmove (header_line, ptr, strlen(ptr) + 1);
