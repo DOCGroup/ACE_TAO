@@ -162,6 +162,15 @@ public:
   virtual void wakeup_all_threads (void);
   // Wake up all threads in waiting in the event loop
 
+  // = Any thread can perform a <handle_events>, override the owner()
+  //   methods to avoid the overhead of setting the owner thread.
+
+  virtual int owner (ACE_thread_t n_id, ACE_thread_t *o_id = 0);
+  // Set the new owner of the thread and return the old owner.
+
+  virtual int owner (ACE_thread_t *);
+  // Return the current owner of the thread.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
