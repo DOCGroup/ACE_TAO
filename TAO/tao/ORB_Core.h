@@ -928,11 +928,6 @@ protected:
                                        ACE_Allocator *buffer_allocator,
                                        ACE_Allocator *dblock_allocator,
                                        ACE_Lock *lock);
-  /// Obtain and cache the RT_ORB object reference
-  void resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV);
-
-  /// Obtain and cache the RT_Current flyweight reference
-  void resolve_rt_current_i (CORBA::Environment &ACE_TRY_ENV);
 
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV);
@@ -1013,10 +1008,10 @@ protected:
   CORBA::Object_ptr ior_table_;
 
   /// The cached object reference for the RTCORBA::RTORB.
-  CORBA::Object_ptr rt_orb_;
+  CORBA::Object_var rt_orb_;
 
   /// The cached object reference for the RTCORBA::RTCurrent interface.
-  CORBA::Object_ptr rt_current_;
+  CORBA::Object_var rt_current_;
 
   /**
    * @note

@@ -12,9 +12,14 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "Priority_Mapping_Manager.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORBInitInfo.h"
 #include "RT_ORB_Loader.h"
 #include "RT_Stub_Factory.h"
 #include "RT_Endpoint_Selector_Factory.h"
+#include "Linear_Priority_Mapping.h"
+#include "Direct_Priority_Mapping.h"
+#include "RT_ORB.h"
+#include "RT_Current.h"
 
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
@@ -22,8 +27,10 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 static const char *rt_poa_factory_name = "TAO_RT_POA";
 static const char *rt_poa_factory_directive = "dynamic TAO_RT_POA Service_Object * TAO_RTPortableServer:_make_TAO_RT_Object_Adapter_Factory()";
 
-TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (TAO_Priority_Mapping *priority_mapping)
-  : priority_mapping_ (priority_mapping)
+TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
+                                              int sched_policy)
+  : priority_mapping_type_ (priority_mapping_type),
+    sched_policy_ (sched_policy)
 {
 }
 
@@ -56,11 +63,35 @@ TAO_RT_ORBInitializer::pre_init (
   // Set the name of the stub factory to be the RT_Stub_Factory.
   TAO_ORB_Core::set_endpoint_selector_factory ("RT_Endpoint_Selector_Factory");
 
+  // Sets the client_protocol policy.
+  TAO_RT_Protocols_Hooks::set_client_protocols_hook
+    (TAO_ClientProtocolPolicy::hook);
+
+  // Sets the server_protocol policy.
+  TAO_RT_Protocols_Hooks::set_server_protocols_hook
+    (TAO_ServerProtocolPolicy::hook);
+
+
+  // Create the initial priority mapping instance.
+  TAO_Priority_Mapping *pm;
+  switch (this->priority_mapping_type_)
+    {
+    case TAO_PRIORITY_MAPPING_LINEAR:
+      ACE_NEW (pm,
+               TAO_Linear_Priority_Mapping (this->sched_policy_));
+      break;
+    default:
+    case TAO_PRIORITY_MAPPING_DIRECT:
+      ACE_NEW (pm,
+               TAO_Direct_Priority_Mapping (this->sched_policy_));
+      break;
+    }
+
   // Set the Priority_Mapping_Manager
   TAO_Priority_Mapping_Manager *manager = 0;
 
   ACE_NEW_THROW_EX (manager,
-                    TAO_Priority_Mapping_Manager (this->priority_mapping_),
+                    TAO_Priority_Mapping_Manager (pm),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -75,13 +106,59 @@ TAO_RT_ORBInitializer::pre_init (
                                     ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Sets the client_protocol policy.
-  TAO_RT_Protocols_Hooks::set_client_protocols_hook
-    (TAO_ClientProtocolPolicy::hook);
+  // @@ This is busted.  TAO_ORBInitInfo should do proper reference
+  //    counting.
+  // Narrow to a TAO_ORBInitInfo object to get access to the
+  // orb_core() TAO extension.
+  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info,
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
 
-  // Sets the server_protocol policy.
-  TAO_RT_Protocols_Hooks::set_server_protocols_hook
-    (TAO_ServerProtocolPolicy::hook);
+  if (CORBA::is_nil (tao_info.in ()))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) Security_ORBInitializer::pre_init:\n"
+                    "(%P|%t)    Unable to narrow "
+                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+  // Create the RT_ORB.
+  CORBA::Object_ptr rt_orb = CORBA::Object::_nil ();
+  ACE_NEW_THROW_EX (rt_orb,
+                    TAO_RT_ORB (tao_info->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+  CORBA::Object_var safe_rt_orb = rt_orb;
+  
+  info->register_initial_reference (TAO_OBJID_RTORB,
+                                    rt_orb,
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Create the RT_Current.
+  CORBA::Object_ptr current;
+  ACE_NEW_THROW_EX (current,
+                    TAO_RT_Current (tao_info->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+  CORBA::Object_var safe_rt_current = current;
+
+  info->register_initial_reference (TAO_OBJID_RTCURRENT,
+                                    current,
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -94,6 +171,7 @@ TAO_RT_ORBInitializer::post_init (
 
   this->register_policy_factories (info,
                                    ACE_TRY_ENV);
+
   ACE_CHECK;
 }
 

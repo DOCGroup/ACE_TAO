@@ -60,3 +60,8 @@ includes the following:
         . Thread_Pool
         
           Tests the creation and use of thread pools.
+
+        . ORB_init
+
+          Tests the creation and destruction of multiple RT enabled ORBs.
+

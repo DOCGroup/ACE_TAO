@@ -303,8 +303,8 @@ TAO_Thread_Pool::orb (void) const
         0), \
       CORBA::COMPLETED_NO));
 
-TAO_Thread_Pool_Manager::TAO_Thread_Pool_Manager (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+TAO_Thread_Pool_Manager::TAO_Thread_Pool_Manager (TAO_ORB_Core *orb_core)
+  : orb_core_ (orb_core),
     thread_pools_ (),
     thread_pool_id_counter_ (0),
     lock_ ()
@@ -401,7 +401,7 @@ TAO_Thread_Pool_Manager::create_threadpool_i (CORBA::ULong stacksize,
                                      allow_request_buffering,
                                      max_buffered_requests,
                                      max_request_buffer_size,
-                                     this->orb_.in ()),
+                                     this->orb_core_->orb ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -430,7 +430,7 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
                                      allow_request_buffering,
                                      max_buffered_requests,
                                      max_request_buffer_size,
-                                     this->orb_.in ()),
+                                     this->orb_core_->orb ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

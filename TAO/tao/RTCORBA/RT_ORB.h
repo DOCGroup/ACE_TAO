@@ -105,7 +105,7 @@ class TAO_RTCORBA_Export TAO_RT_ORB
 {
 public:
   /// Constructor.
-  TAO_RT_ORB (CORBA::ORB_ptr orb);
+  TAO_RT_ORB (TAO_ORB_Core *orb_core);
 
   /**
    * Create a new mutex.  Mutexes returned by this method
@@ -261,7 +261,7 @@ protected:
   virtual ~TAO_RT_ORB (void);
 
   /// Reference to our creating ORB.
-  CORBA::ORB_var orb_;
+  TAO_ORB_Core *orb_core_;
 
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;

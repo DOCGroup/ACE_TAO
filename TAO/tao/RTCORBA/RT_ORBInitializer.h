@@ -36,16 +36,21 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-// Forward references.
-class TAO_Priority_Mapping;
-
 /// RTCORBA ORB initializer.
 class TAO_RTCORBA_Export TAO_RT_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object
 {
 public:
-  TAO_RT_ORBInitializer (TAO_Priority_Mapping *priority_mapping);
+  // Priority mapping types
+  enum 
+  {
+    TAO_PRIORITY_MAPPING_LINEAR,
+    TAO_PRIORITY_MAPPING_DIRECT
+  };
+
+  TAO_RT_ORBInitializer (int priority_mapping_type,
+                         int sched_policy);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -69,8 +74,11 @@ private:
   /// a single instance between all ORBs.
   TAO_RT_PolicyFactory policy_factory_;
 
-  /// Initial priority mapping.
-  TAO_Priority_Mapping *priority_mapping_;
+  /// Initial priority mapping type.
+  int priority_mapping_type_;
+
+  /// Initial scheduling policy.
+  int sched_policy_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -1,11 +1,7 @@
 // $Id$
 
 #include "RT_ORB_Loader.h"
-#include "RT_ORB.h"
-#include "RT_Current.h"
 #include "RT_ORBInitializer.h"
-#include "Linear_Priority_Mapping.h"
-#include "Direct_Priority_Mapping.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -23,12 +19,21 @@ TAO_RT_ORB_Loader::Initializer (void)
 }
 
 TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
-  : initialized_ (0)
 {
 }
 
 TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader (void)
 {
+}
+
+CORBA::Object_ptr 
+TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr,
+                                  int,
+                                  char *[],
+                                  CORBA::Environment &)
+     ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return CORBA::Object::_nil ();
 }
 
 int
@@ -37,7 +42,16 @@ TAO_RT_ORB_Loader::init (int argc,
 {
   ACE_TRACE ("TAO_RT_ORB_Loader::init");
 
-  int priority_mapping_type = TAO_PRIORITY_MAPPING_DIRECT;
+  static int initialized = 0;
+
+  // Only allow initialization once.
+  if (initialized)
+    return 0;
+
+  initialized = 1;
+
+  // Set defaults.
+  int priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
   int sched_policy = ACE_SCHED_OTHER;
   int curarg = 0;
 
@@ -53,10 +67,10 @@ TAO_RT_ORB_Loader::init (int argc,
 
             if (ACE_OS::strcasecmp (name,
                                     "linear") == 0)
-              priority_mapping_type = TAO_PRIORITY_MAPPING_LINEAR;
+              priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_LINEAR;
             else if (ACE_OS::strcasecmp (name,
                                          "direct") == 0)
-              priority_mapping_type = TAO_PRIORITY_MAPPING_DIRECT;
+              priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_DIRECT;
             else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("RT_ORB_Loader - unknown argument")
@@ -97,24 +111,6 @@ TAO_RT_ORB_Loader::init (int argc,
           }
       }
 
-  // Create the initial priority mapping instance.
-  TAO_Priority_Mapping *pm;
-  switch (priority_mapping_type)
-    {
-    case TAO_PRIORITY_MAPPING_LINEAR:
-      ACE_NEW_RETURN (pm,
-                      TAO_Linear_Priority_Mapping (sched_policy),
-                      0);
-      break;
-    default:
-    case TAO_PRIORITY_MAPPING_DIRECT:
-      ACE_NEW_RETURN (pm,
-                      TAO_Direct_Priority_Mapping (sched_policy),
-                      0);
-      break;
-    }
-
-
   // Register the ORB initializer.
   ACE_TRY_NEW_ENV
     {
@@ -124,7 +120,8 @@ TAO_RT_ORB_Loader::init (int argc,
 
       /// Register the RTCORBA ORBInitializer.
       ACE_NEW_THROW_EX (temp_orb_initializer,
-                        TAO_RT_ORBInitializer (pm),
+                        TAO_RT_ORBInitializer (priority_mapping_type,
+                                               sched_policy),
                         CORBA::NO_MEMORY (
                           CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -145,66 +142,12 @@ TAO_RT_ORB_Loader::init (int argc,
     }
   ACE_ENDTRY;
 
-  // Allow someone to retrieve RTORB.
-  this->initialized_ = 1;
-
-  // Allow someone to retrieve RTCurrent now.
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_RT_Current_Loader);
-
   return 0;
 }
 
-CORBA::Object_ptr
-TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr orb,
-                                  int,
-                                  char *[],
-                                  CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Return RT_ORB
-  CORBA::Object_ptr rt_orb = CORBA::Object::_nil ();
-
-  // Check that all of the RTCORBA hooks have been initialized 
-  // successfully.
-  if (this->initialized_)
-    {
-      ACE_NEW_THROW_EX (rt_orb,
-                        TAO_RT_ORB (orb),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-
-  return rt_orb;
-}
 
 /////////////////////////////////////////////////////////////////////
 
-CORBA::Object_ptr
-TAO_RT_Current_Loader::create_object (CORBA::ORB_ptr orb,
-                                      int,
-                                      char *[],
-                                      CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  /// Return RT_Current
-  CORBA::Object_ptr current;
-
-  ACE_NEW_THROW_EX (current,
-                    TAO_RT_Current (orb->orb_core ()),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return current;
-}
 
 ACE_FACTORY_DEFINE (TAO, TAO_RT_ORB_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_RT_ORB_Loader,
@@ -215,11 +158,3 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_ORB_Loader,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-ACE_FACTORY_DEFINE (TAO, TAO_RT_Current_Loader)
-ACE_STATIC_SVC_DEFINE (TAO_RT_Current_Loader,
-                       ACE_TEXT ("RT_Current_Loader"),
-                       ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_RT_Current_Loader),
-                       ACE_Service_Type::DELETE_THIS
-                       | ACE_Service_Type::DELETE_OBJ,
-                       0)

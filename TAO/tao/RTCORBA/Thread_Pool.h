@@ -199,7 +199,7 @@ class TAO_RTCORBA_Export TAO_Thread_Pool_Manager
 public:
 
   /// Constructor.
-  TAO_Thread_Pool_Manager (CORBA::ORB_ptr orb);
+  TAO_Thread_Pool_Manager (TAO_ORB_Core *orb_core);
 
   /// Destructor.
   ~TAO_Thread_Pool_Manager (void);
@@ -282,7 +282,7 @@ private:
 
   // @}
 
-  CORBA::ORB_var orb_;
+  TAO_ORB_Core *orb_core_;
 
   THREAD_POOLS thread_pools_;
   RTCORBA::ThreadpoolId thread_pool_id_counter_;
