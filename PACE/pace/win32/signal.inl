@@ -13,14 +13,14 @@
  *
  * ============================================================================= */
 
-#include "pace/pthread.h"
-
 #if (PACE_HAS_POSIX_SIG_UOF)
 PACE_INLINE
 int
 pace_kill (pace_pid_t pid, int sig)
 {
-  return kill (pid, sig);
+  PACE_UNUSED_ARG (pid);
+  PACE_UNUSED_ARG (sig);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -29,18 +29,34 @@ PACE_INLINE
 int
 pace_raise (int sig)
 {
-  /* Implementation from POSIX std 8.1:54 */
-  return pthread_kill (pthread_self (), sig);
+  PACE_UNUSED_ARG (sig);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_SIG_UOF)
 PACE_INLINE
 int
-pace_sigaction (int sig, const pace_s_sigaction * act,
-                pace_s_sigaction * oact)
+pace_sigaction (int sig, const pace_sigaction_s * act,
+                pace_sigaction_s * oact)
 {
-  return sigaction (sig, act, oact);
+  pace_sigaction_s sa;
+
+  if (oact == 0)
+    {
+      oact = &sa;
+    }
+
+  if (act == 0)
+    {
+      oact->sa_handler = signal (sig, SIG_IGN);
+      signal (sig, oact->sa_handler);
+    }
+  else
+    {
+      oact->sa_handler = signal (sig, act->sa_handler);
+    }
+  return oact->sa_handler == SIG_ERR ? -1 : 0;
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -49,7 +65,9 @@ PACE_INLINE
 int
 pace_sigaddset (pace_sigset_t * set, int signo)
 {
-  return sigaddset (set, signo);
+  PACE_UNUSED_ARG (set);
+  PACE_UNUSED_ARG (signo);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -58,7 +76,8 @@ PACE_INLINE
 int
 pace_sigemptyset (pace_sigset_t * set)
 {
-  return sigemptyset (set);
+  PACE_UNUSED_ARG (set);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -67,7 +86,9 @@ PACE_INLINE
 int
 pace_sigdelset (pace_sigset_t * set, int signo)
 {
-  return sigdelset (set, signo);
+  PACE_UNUSED_ARG (set);
+  PACE_UNUSED_ARG (signo);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -76,7 +97,8 @@ PACE_INLINE
 int
 pace_sigfillset (pace_sigset_t * set)
 {
-  return sigfillset (set);
+  PACE_UNUSED_ARG (set);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -85,7 +107,9 @@ PACE_INLINE
 int
 pace_sigismember (const pace_sigset_t * set, int signo)
 {
-  return sigismember (set, signo);
+  PACE_UNUSED_ARG (set);
+  PACE_UNUSED_ARG (signo);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -103,7 +127,8 @@ PACE_INLINE
 int
 pace_sigpending (pace_sigset_t * set)
 {
-  return sigpending (set);
+  PACE_UNUSED_ARG (set);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -113,7 +138,10 @@ int
 pace_sigprocmask (int how, const pace_sigset_t * set,
                   pace_sigset_t * oset)
 {
-  return sigprocmask (how, set, oset);
+  PACE_UNUSED_ARG (how);
+  PACE_UNUSED_ARG (set);
+  PACE_UNUSED_ARG (oset);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -123,7 +151,9 @@ int
 pace_sigqueue (pace_pid_t pid, int signo,
                const pace_sigval value)
 {
-  return sigqueue (pid, signo, value);
+  PACE_UNUSED_ARG (pid);
+  PACE_UNUSED_ARG (signo);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -132,7 +162,8 @@ PACE_INLINE
 int
 pace_sigsuspend (const pace_sigset_t * sigmask)
 {
-  return sigsuspend (sigmask);
+  PACE_UNUSED_ARG (sigmask);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -142,7 +173,10 @@ int
 pace_sigtimedwait (const pace_sigset_t * set, pace_siginfo_t * info,
                    const pace_timespec * timeout)
 {
-  return sigtimedwait (set, info, timeout);
+  PACE_UNUSED_ARG (set);
+  PACE_UNUSED_ARG (info);
+  PACE_UNUSED_ARG (timeout);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -151,13 +185,9 @@ PACE_INLINE
 int
 pace_sigwait (const pace_sigset_t * set, int * sig)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return sigwait (set, sig);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
   PACE_UNUSED_ARG (set);
   PACE_UNUSED_ARG (sig);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -166,6 +196,8 @@ PACE_INLINE
 int
 pace_sigwaitinfo (const pace_sigset_t *set, pace_siginfo_t *info)
 {
-  return sigwaitinfo (set, info);
+  PACE_UNUSED_ARG (set);
+  PACE_UNUSED_ARG (info);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
