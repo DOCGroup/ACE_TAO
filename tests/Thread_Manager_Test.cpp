@@ -214,7 +214,7 @@ main (int, ASYS_TCHAR *[])
                   n_threads,
                   (ACE_THR_FUNC) worker,
                   (void *) n_iterations,
-                  THR_BOUND | THR_DETACHED
+                  THR_BOUND
 #if defined (VXWORKS)
                   , ACE_DEFAULT_THREAD_PRIORITY
                   , -1
@@ -235,7 +235,8 @@ main (int, ASYS_TCHAR *[])
       // so it's allowed to ENOTSUP; anything else is a hard fail.
       ACE_ASSERT (errno == ENOTSUP);
       ACE_DEBUG((LM_DEBUG,
-                 ASYS_TEXT (" OK: suspend_grp isn't supported with Pthreads\n")));
+                 ASYS_TEXT (" OK: suspend_grp isn't supported with "
+                            "Pthreads\n")));
     }
 
   // Wait for 1 more second and then resume every thread in the
@@ -249,7 +250,8 @@ main (int, ASYS_TCHAR *[])
     {
       ACE_ASSERT (errno == ENOTSUP);
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT (" OK: resume_grp isn't supported with Pthreads\n")));
+              ASYS_TEXT (" OK: resume_grp isn't supported with "
+                         "Pthreads\n")));
     }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
@@ -262,10 +264,6 @@ main (int, ASYS_TCHAR *[])
 #if defined (ACE_HAS_WTHREADS)
   thr_mgr->kill_grp (grp_id,
                      SIGINT);
-#elif defined (sun)
-  // thr_self () can't be used safely on Solaris within a signal
-  // handler.  It's not documented as being Async-Signal-Safe.
-  // So, don't signal them in this test on Solaris.
 #elif !defined (ACE_HAS_PTHREADS_DRAFT4)
   ACE_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGINT) != -1);
@@ -285,7 +283,7 @@ main (int, ASYS_TCHAR *[])
 
   // Perform a barrier wait until all the threads have shut down.
   // But, wait for a limited time, just in case.
-  const ACE_Time_Value max_wait (60);
+  const ACE_Time_Value max_wait (600);
   const ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
   if (thr_mgr->wait (&wait_time) == -1)
     {
