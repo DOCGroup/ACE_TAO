@@ -73,6 +73,7 @@ PUB_HDRS = \
   FILE_Parser \
   CORBALOC_Parser \
   CORBANAME_Parser \
+  BiDir_Adapter \
   CORBA_String
 
 PLUGGABLE_PROTOCOLS_FILES = \
@@ -85,6 +86,7 @@ PLUGGABLE_PROTOCOLS_FILES = \
   Acceptor_Registry \
   Protocol_Factory \
   Acceptor_Filter \
+  BiDir_Adapter \
   iiop_endpoints \
   IIOP_Factory \
   IIOP_Lite_Factory \
