@@ -308,9 +308,9 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
           // Create an array of sockaddr_in to hold the underlying
           // representations of the primary and secondary
           // addresses.
-          sockaddr*  local_inet_addrs = 0;
+          sockaddr_in*  local_inet_addrs = 0;
           ACE_NEW_NORETURN(local_inet_addrs,
-                           sockaddr[num_addresses]);
+                           sockaddr_in[num_addresses]);
 
           if (!local_inet_addrs)
             error = 1;
