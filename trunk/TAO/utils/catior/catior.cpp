@@ -118,7 +118,6 @@ catiiop (CORBA::String string,
   ACE_DEBUG ((LM_DEBUG,
               "\nThe Object Key as string:\n%s\n",
               string));
-
   return 1;
 }
 
@@ -173,8 +172,9 @@ catior (CORBA::String str,
   }
 
   mb.rd_ptr (1);
-  mb.wr_ptr (2*len-1);
-  TAO_InputCDR stream (&mb, byteOrder);
+  mb.wr_ptr (2 * len - 1);
+  TAO_InputCDR stream (&mb,
+                       byteOrder);
 
   if (byteOrder == 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -187,8 +187,11 @@ catior (CORBA::String str,
   // object reference.
   CORBA::String type_hint;
 
-  if ((continue_decoding = stream.decode (CORBA::_tc_string, &type_hint, 0, env))
-      == 0)
+  continue_decoding = stream.decode (CORBA::_tc_string, 
+                                     &type_hint,
+                                     0,
+                                     env);
+  if (continue_decoding == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read type id\n"));
@@ -199,7 +202,7 @@ catior (CORBA::String str,
               "The Type Id:\t\"%s\"\n",
               type_hint));
 
-  // Release any memory associated with the type_hint
+  // Release any memory associated with the type_hint.
   CORBA::string_free (type_hint);
 
   // Read the profiles, discarding all until an IIOP profile comes by.
@@ -212,7 +215,7 @@ catior (CORBA::String str,
   // we unmarshal objrefs.
 
   CORBA::ULong profiles = 0;
-  //  IIOP_Object *objdata = 0;
+  // IIOP_Object *objdata = 0;
 
   continue_decoding = stream.read_ulong (profiles);
 
@@ -353,6 +356,7 @@ catior (CORBA::String str,
         short counter = -1;
 
 	u_int i = 0;
+
         for (; i < objKeyLength; i++)
           {
             if (++counter == 8)
@@ -374,38 +378,35 @@ catior (CORBA::String str,
         ACE_DEBUG ((LM_DEBUG,
                     "\nThe Object Key as string:\n%s\n",
                     objKey));
+
         CORBA::string_free (objKey);
       }
   return 1;
 }
 
+// Parse the Orbix-style POOP object references, which have the form:
+//:\ntlj3corba:NS:NC_2::IR:CosNaming_NamingContext
+// :\ hostname
+// : server_name
+// : marker
+// : IR_host
+// : IR_server
+// : interface_marker
 
 static CORBA::Boolean
 catpoop (CORBA::String string,
         CORBA::Environment &env)
 {
-//:\ntlj3corba:NS:NC_2::IR:CosNaming_NamingContext
-
-	// :\ hostname
-	// : server_name
-	// : marker
-	// : IR_host
-	// : IR_server
-	// : interface_marker
-
-
   CORBA::Boolean  b = CORBA::B_FALSE;
   if (!string || !*string)
-	  return 0;
+    return 0;
 
   if (string [0] == ':'
       && string [1] == '\\')
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nPerhaps we've found some POOP\n"));
-  string+=2;
+    ACE_DEBUG ((LM_DEBUG,
+                "\nPerhaps we've found some POOP\n"));
+  string += 2;
 
-  //  read the hostname
-  CORBA::String  hostname;
   char *cp = ACE_OS::strchr (string, ':');
 
   if (cp == 0)
@@ -414,7 +415,8 @@ catpoop (CORBA::String string,
       return 0;
     }
   
-  hostname = CORBA::string_alloc (1 + cp - string);
+  // Read the hostname.
+  CORBA::String hostname = CORBA::string_alloc (1 + cp - string);
 
   for (cp = hostname;
        *string != ':';
@@ -427,14 +429,12 @@ catpoop (CORBA::String string,
   ACE_DEBUG ((LM_DEBUG,
               "Host Name:\t%s\n",
               hostname));
-  CORBA::string_free(hostname);
-
+  CORBA::string_free (hostname);
 
   //  read the server name
-  CORBA::String  server_name;
-  cp = ACE_OS::strchr(string, ':');
+  cp = ACE_OS::strchr (string, ':');
 
-  server_name = CORBA::string_alloc (1 + cp - string);
+  CORBA::String server_name = CORBA::string_alloc (1 + cp - string);
 
   for (cp = server_name;
        *string != ':';
@@ -447,12 +447,12 @@ catpoop (CORBA::String string,
   ACE_DEBUG ((LM_DEBUG,
               "Server Name:\t%s\n",
               server_name));
-  CORBA::string_free(server_name);
 
+  CORBA::string_free (server_name);
 
-  //  read the Orbix specific marker
-  CORBA::String  marker;
-  cp = ACE_OS::strchr(string, ':');
+  // Read the Orbix specific marker.
+  CORBA::String marker;
+  cp = ACE_OS::strchr (string, ':');
 
   marker = CORBA::string_alloc (1 + cp - string);
 
@@ -467,12 +467,11 @@ catpoop (CORBA::String string,
   ACE_DEBUG ((LM_DEBUG,
               "Marker:\t\t%s\n",
               marker));
-  CORBA::string_free(marker);
+  CORBA::string_free (marker);
 
-
-  // read the IR_host
+  // Read the IR_host.
   CORBA::String  IR_host;
-  cp = ACE_OS::strchr(string, ':');
+  cp = ACE_OS::strchr (string, ':');
 
   IR_host = CORBA::string_alloc (1 + cp - string);
 
@@ -487,14 +486,12 @@ catpoop (CORBA::String string,
   ACE_DEBUG ((LM_DEBUG,
               "IR Host:\t\t%s\n",
               IR_host));
-  CORBA::string_free(IR_host);
+  CORBA::string_free (IR_host);
 
+  // Read the IR_server
+  cp = ACE_OS::strchr (string, ':');
 
-  // read the IR_server
-  CORBA::String  IR_server;
-  cp = ACE_OS::strchr(string, ':');
-
-  IR_server = CORBA::string_alloc (1 + cp - string);
+  CORBA::String IR_server = CORBA::string_alloc (1 + cp - string);
 
   for (cp = IR_server;
        *string != ':';
@@ -507,18 +504,14 @@ catpoop (CORBA::String string,
   ACE_DEBUG ((LM_DEBUG,
               "IR Server:\t\t%s\n",
               IR_server));
-  CORBA::string_free(IR_server);
+  CORBA::string_free (IR_server);
 
-  // read the interface_marker
+  // Read the interface_marker
   ACE_DEBUG ((LM_DEBUG,
               "Interface Marker:\t%s\n",
               string));
-
-
-	return  1;
+  return 1;
 }
-
-
 
 int
 main (int argc, char *argv[])
@@ -527,23 +520,22 @@ main (int argc, char *argv[])
 
   CORBA::Environment env;
   CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO", env);
-
-  CORBA::Boolean  b;
-
+  CORBA::Boolean b;
   char opt;
+
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
         case 'n':
-            //  Read the CosName from the NamingService convert the
-            //  object_ptr to a CORBA::String_var via the call to
-            //  object_to_string.
-            ACE_DEBUG ((LM_DEBUG,
-                        "opening a connection to the NamingService\n"
-                        "resolving the CosName %s\n",
-                        get_opt.optarg));
-            break;
+          //  Read the CosName from the NamingService convert the
+          //  object_ptr to a CORBA::String_var via the call to
+          //  object_to_string.
+          ACE_DEBUG ((LM_DEBUG,
+                      "opening a connection to the NamingService\n"
+                      "resolving the CosName %s\n",
+                      get_opt.optarg));
+          break;
         case 'f':
           {
             //  Read the file into a CORBA::String_var.
@@ -572,7 +564,7 @@ main (int argc, char *argv[])
 
             ACE_DEBUG ((LM_DEBUG,
                         "\nhere is the IOR\n%s\n\n",
-                        aString.rep()));
+                        aString.rep ()));
 
             CORBA::String str;
             if (aString.find ("IOR:") == 0)
@@ -589,7 +581,7 @@ main (int argc, char *argv[])
                                      aString.length () - prefixLength);
                 subString[subString.length () - 1] = '\0';
                 str = subString.rep ();
-				b = catior(str, env);
+                b = catior (str, env);
               }
             else if (aString.find ("iiop:") == 0)
               {
@@ -604,22 +596,20 @@ main (int argc, char *argv[])
                                      aString.length () - prefixLength);
                 //subString[subString.length () - 1] = '\0';
                 str = subString.rep ();
-				b = catiiop(str, env);
+                b = catiiop (str, env);
               }
-			else if(aString.find(":IR:"))
-			{
-				ACE_DEBUG ((LM_DEBUG,
-					        "decoding an POOP IOR\n"));
+            else if (aString.find (":IR:"))
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "decoding an POOP IOR\n"));
 
-				str = aString.rep();
-				b = catpoop(str, env);
-			}
+                str = aString.rep ();
+                b = catpoop (str, env);
+              }
             else
               ACE_ERROR_RETURN ((LM_DEBUG,
                                  "Don't know how to decode this IOR\n"),
                                 -1);
-
-
             if (b == 1)
               ACE_DEBUG ((LM_DEBUG,
                           "catior returned true\n"));
@@ -640,7 +630,7 @@ main (int argc, char *argv[])
                              "and dumps the contents to stdout "
                              "\n",
                              argv[0]),
-                             1);
+                            1);
         }
     }
 
