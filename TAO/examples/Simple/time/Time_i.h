@@ -37,19 +37,19 @@ public:
   // Constructor
 
   Time_i (Time_i &);
-  // Copy Constructor added because g++ generates a 
+  // Copy Constructor added because g++ generates a
   // bad one if not defined
 
   ~Time_i (void);
   // Destructor
-  
+
   virtual CORBA::Long current_time (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the current time/date on the server
-  
+
   virtual void shutdown (CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);
@@ -58,8 +58,9 @@ public:
 private:
   CORBA::ORB_var orb_;
   // ORB pointer.
+
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Time_i &));
+  // Keeping g++2.7.2
 };
 
 #endif /* TIME_I_H */
-
-
