@@ -118,13 +118,14 @@ class ACE_Export ACE_Service_Object_Ptr
   // = TITLE 
   //     This is a smart pointer that holds onto the associated
   //     <ACE_Service_Object> * until the current scope is left, at
-  //     which point the object's <fini> hook is called.
+  //     which point the object's <fini> hook is called and the
+  //     service_object_ gets deleted.
   //
   // = DESCRIPTION
   //     This class is similar to the Standard C++ Library class
   //     <auto_ptr>.  It is used in conjunction with statically linked
   //     <ACE_Service_Objects>, as shown in the
-  //     ./netsvcs/server/main.cpp example.
+  //     ./netsvcs/server/main.cpp example.  
 public:
   // = Initialization and termination methods.
   ACE_Service_Object_Ptr (ACE_Service_Object *so);
