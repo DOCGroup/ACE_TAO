@@ -290,7 +290,8 @@ declare_entry (CORBA::Principal_ptr, tk_Principal);
 declare_entry (CORBA::Object_ptr, tk_objref);
 
 declare_entry (CORBA::String, tk_string);
-declare_entry (CORBA::OctetSeq, tk_sequence);
+//declare_entry (CORBA::OctetSeq, tk_sequence);
+declare_entry (TAO_opaque, tk_sequence);
 
 declare_entry (CORBA::LongLong, tk_longlong);
 declare_entry (CORBA::ULongLong, tk_ulonglong);
@@ -326,7 +327,8 @@ __TC_init_table (void)
   table [CORBA::tk_enum].alignment = sizeof (generic_enum);
 
   setup_entry (CORBA::String, tk_string);
-  setup_entry (CORBA::OctetSeq, tk_sequence);
+  //  setup_entry (CORBA::OctetSeq, tk_sequence);
+  setup_entry (TAO_opaque, tk_sequence);
 
   setup_entry (CORBA::LongLong, tk_longlong);
   setup_entry (CORBA::ULongLong, tk_ulonglong);

@@ -212,7 +212,15 @@ be_operation::gen_client_stubs (void)
       // Are we returning a pointer to value? i.e., is the type
       // variable? If it is, we must tell the stub what is the size of
       // the top level structure
-      if (bt->size_type () == be_decl::VARIABLE)
+      be_type *prim;
+      if (bt->node_type () == AST_Decl::NT_typedef)
+	{
+	  be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+	  prim = tdef->primitive_base_type ();
+	}
+      else
+	prim = bt;
+      if (prim->size_type () == be_decl::VARIABLE)
 	{
 	  switch (bt->node_type ())
 	    {

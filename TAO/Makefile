@@ -77,27 +77,9 @@ INSTALL:	TAO-INSTALL.html
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers/TAO)
   TIMESTAMP = (CHANGELOG='ChangeLog'; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
-              DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
               cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | egrep -v '/tests/log/' | perl -pi -e 's%/TAO%%g; s/$$/\\\n  /g'`; cd TAO; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
-              TAO_VERSION=`perl -pi -e \
-                'BEGIN { $$date=$$ENV{"DATE"} } \
-                 s/(TAO version \d+\.\d+\.)(\d+)/sprintf("$$1%d",$$2+1)/e; \
-                 if (s/(, released ).*/$$1$$date./) { \
-                   ($$version = $$_) =~ s/^This is //; } \
-                 END { print $$version  } ' VERSION;` export TAO_VERSION; \
-              perl -i -e \
-                'BEGIN {($$message = \
-                           $$ENV{"DATE"} . "  " . \
-                           $$ENV{"SIGNATURE"} . "  <" . \
-                           $$ENV{"LOGNAME"} . "\@cs.wustl.edu>\n\n\t* " . \
-                           $$ENV{"TAO_VERSION"} . "\n"); \
-                        $$message_printed = 0;} \
-                 while (<>) { \
-                   if ( ! $$message_printed++ ) { print "$$message\n"; } \
-                   print; } ' $$CHANGELOG; \
-              cvs commit -m"$$TAO_VERSION" VERSION $$CHANGELOG; \
-              chmod 644 VERSION $$CHANGELOG) &&
+	      perl release.pl) &&
 else
   TIMESTAMP =
 endif

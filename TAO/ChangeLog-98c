@@ -1,3 +1,8 @@
+Thu Jan 22 10:40:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged changes from main_to_poa_merge_10 up to
+	  main_to_poa_merge_11
+
 Wed Jan 21 00:31:40 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/servant_base.cpp (_default_POA): Changed to use

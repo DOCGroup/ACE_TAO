@@ -12,12 +12,12 @@
 LDLIBS = -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
-PROG_SRCS =	$(IDL_SRC) svr.cpp clnt.cpp
+PROG_SRCS =	$(IDL_SRC) svr.cpp clnt.cpp tmplinst.cpp
 
 LSRC = $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = cubitC.o cubitS.o svr.o cubit_i.o
-CUBIT_CLT_OBJS = cubitC.o clnt.o
+CUBIT_SVR_OBJS = cubitC.o cubitS.o svr.o cubit_i.o tmplinst.o
+CUBIT_CLT_OBJS = cubitC.o clnt.o tmplinst.o
 
 BIN = svr clnt
 BUILD = $(BIN)

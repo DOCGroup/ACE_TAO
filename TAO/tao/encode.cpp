@@ -318,6 +318,13 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 
   if (CORBA::is_nil (obj))
     {
+      // encode an empty type_id i.e., an empty string
+      stream->put_ulong (1);
+      stream->put_char (0);
+
+      // Number of profiles = 0
+      stream->put_ulong (0);
+
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   else
@@ -404,6 +411,8 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
   CORBA::TypeCode_ptr param;
   CORBA::Long size, alignment;
 
+  void *start_addr = (void *)data;
+
   if (env.exception () == 0)
     {
       int member_count = tc->member_count (env);
@@ -422,7 +431,10 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 		  alignment = param->alignment (env);
 		  if (env.exception () == 0)
 		    {
-		      data = ptr_align_binary (data, alignment);
+		      data = (const void *)
+                        ((ptr_arith_t) ptr_align_binary (data, alignment) +
+                        (ptr_arith_t) ptr_align_binary (start_addr, alignment) -
+                        (ptr_arith_t) start_addr);
 		      switch (param->kind_)
 			{
 			case CORBA::tk_null:

@@ -168,7 +168,7 @@ Cubit_Task::create_servants ()
       ACE_DEBUG ((LM_DEBUG,"Object Created at: '%ul'", obj));
       CORBA::string_free (obj_str);
     }
-
+  return 0;
 }
 
 // Global options used to configure various parameters.
@@ -269,7 +269,14 @@ start_servants ()
                     
   ACE_Sched_Priority priority;
 
+  // @@ The ifdef here is temporarily placed here until
+  // I figure out how to map NT's thread priorities
+  // into pthread's priorities.
+#if defined (ACE_THR_PRI_FIFO_DEF)
   priority = ACE_THR_PRI_FIFO_DEF;
+#else
+  priority = ACE_DEFAULT_THREAD_PRIORITY;
+#endif /* ACE_THR_PRI_FIFO_DEF */
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating servant with high priority\n"));
