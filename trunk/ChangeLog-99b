@@ -1,3 +1,10 @@
+Sun Apr 25 14:52:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* COPYING,
+	  TAO/COPYING: Updated the ACE+TAO COPYING information to
+ 	  emphasize the relationship to open source.  Thanks to Malcolm
+ 	  Spence <spence_m@ociweb.com> for suggesting the wording.
+	  
 Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ACE_wrappers/ace/POSIX_Asynch_IO.cpp
