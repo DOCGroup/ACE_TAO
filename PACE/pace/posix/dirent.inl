@@ -22,15 +22,15 @@ pace_opendir (const char * dirname)
 
 PACE_INLINE
 struct dirent *
-pace_readdir (DIR * dirp)
+pace_readdir (PACE_DIR * dirp)
 {
   return readdir (dirp);
 }
 
 PACE_INLINE
 int
-pace_readdir_r (DIR * dirp, struct dirent * entry,
-                struct dirent ** result)
+pace_readdir_r (PACE_DIR * dirp, pace_dirent * entry,
+                pace_dirent ** result)
 {
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return readdir_r (dirp, entry, result);
@@ -44,7 +44,7 @@ pace_readdir_r (DIR * dirp, struct dirent * entry,
 
 PACE_INLINE
 void
-pace_rewinddir (DIR * dirp)
+pace_rewinddir (PACE_DIR * dirp)
 {
   rewinddir (dirp);
   return;
@@ -52,7 +52,7 @@ pace_rewinddir (DIR * dirp)
 
 PACE_INLINE
 int
-pace_closedir (DIR * dirp)
+pace_closedir (PACE_DIR * dirp)
 {
   return closedir (dirp);
 }

@@ -60,6 +60,13 @@ pace_close (int fildes)
 }
 
 PACE_INLINE
+char *
+pace_ctermid (char * s)
+{
+  return ctermid (s);
+}
+
+PACE_INLINE
 int
 pace_dup (int fildes)
 {

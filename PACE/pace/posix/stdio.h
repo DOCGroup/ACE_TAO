@@ -23,138 +23,154 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-  #define pace_stderr stderr;
+#define PACE_BUFSIZ BUFSIZ
+#define PACE_EOF EOF
+#define PACE_FILENAME_MAX FILENAME_MAX
+#define PACE_L_ctermid L_ctermid
+#define PACE_L_cuserid L_cuserid
+#define PACE_NULL NULL
+#define PACE_SEEK_CUR SEEK_CUR
+#define PACE_SEEK_END SEEK_END
+#define PACE_SEEK_SET SEEK_SET
+#define PACE_TMP_MAX TMP_MAX
+#define pace_stderr stderr
+#define pace_stdout stdout
+#define pace_stdin stdin
 
-  #define pace_stdout stdout;
+typedef fpos_t pace_fpos_t;
 
-  #define pace_stdin stdin;
+#ifndef PACE_SIZE_T
+#define PACE_SIZE_T
+  typedef size_t pace_size_t;
+#endif /* PACE_SIZE_T */
 
-  /** 
+typedef FILE PACE_FILE;
+
+  /**
      PACE's implementation of the POSIX function clearerr.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE void pace_clearerr (FILE * stream);
+  PACE_INLINE void pace_clearerr (PACE_FILE * stream);
 
-  /** 
-     PACE's implementation of the POSIX function ctermid.
-     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
-     IEEE Std 1003.1, 1996 Edition), Section 4.7.1.
-   */
-  PACE_INLINE char * pace_ctermid (char * s);
-
-  /** 
+  /**
      PACE's implementation of the POSIX function fclose.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_fclose (FILE * stream);
+  PACE_INLINE int pace_fclose (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fdopen.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.2.
    */
-  PACE_INLINE FILE * pace_fdopen (int fildes, const char * type);
+  PACE_INLINE PACE_FILE * pace_fdopen (int fildes, const char * type);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function ferror.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_ferror (FILE * stream);
+  PACE_INLINE int pace_ferror (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function feof.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_feof (FILE * stream);
+  PACE_INLINE int pace_feof (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fflush.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_fflush (FILE * stream);
+  PACE_INLINE int pace_fflush (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fileno.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.1.
    */
-  PACE_INLINE int pace_fileno (FILE * stream);
+  PACE_INLINE int pace_fileno (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fgetc.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_fgetc (FILE * stream);
+  PACE_INLINE int pace_fgetc (PACE_FILE * stream);
 
-  /** 
+  /**
+    C std 7.19.9.1
+    */
+  PACE_INLINE int pace_fgetpos(PACE_FILE * stream,
+                               pace_fpos_t * pos);
+
+  /**
      PACE's implementation of the POSIX function fgets.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE char * pace_fgets (char * s, int n, FILE * stream);
+  PACE_INLINE char * pace_fgets (char * s, int n, PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function flockfile.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.6.
    */
-  PACE_INLINE void pace_flockfile (FILE * file);
+  PACE_INLINE void pace_flockfile (PACE_FILE * file);
   /* Requires PACE_HAS_REENTRANT. */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fopen.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE FILE * pace_fopen (const char * filename, const char * mode);
+  PACE_INLINE PACE_FILE * pace_fopen (const char * filename, const char * mode);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fprintf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  int pace_fprintf (FILE *stream, const char *format, ...);
+  int pace_fprintf (PACE_FILE *stream, const char *format, ...);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fputc.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_fputc (int c, FILE * stream);
+  PACE_INLINE int pace_fputc (int c, PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fputs.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_fputs (const char * s, FILE * stream);
+  PACE_INLINE int pace_fputs (const char * s, PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fread.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE size_t pace_fread (void * ptr,
-                                 size_t size,
-                                 size_t number_of_items,
-                                 FILE * stream);
+  PACE_INLINE pace_size_t pace_fread (void * ptr,
+                                      pace_size_t size,
+                                      pace_size_t number_of_items,
+                                      PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function freopen.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE FILE * pace_freopen (const char * filename,
                                    const char * mode,
-                                   FILE * stream);
+                                   PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fscanf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
@@ -167,59 +183,71 @@ extern "C" {
   * surrounding the arguments.
   */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function fseek.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_fseek (FILE * stream, long offset, int whence);
+  PACE_INLINE int pace_fseek (PACE_FILE * stream, long offset, int whence);
 
-  /** 
+  /**
+    C std 7.19.9.3
+    */
+  PACE_INLINE int pace_fsetpos(PACE_FILE *stream, const pace_fpos_t *pos);
+
+  /**
      PACE's implementation of the POSIX function ftell.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE long pace_ftell (FILE * stream);
+  PACE_INLINE long pace_ftell (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function ftrylockfile.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.6.
    */
-  PACE_INLINE int pace_ftrylockfile (FILE * file);
+  PACE_INLINE int pace_ftrylockfile (PACE_FILE * file);
   /* Requires PACE_HAS_REENTRANT. */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function funlockfile.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.6.
    */
-  PACE_INLINE void pace_funlockfile (FILE * file);
+  PACE_INLINE void pace_funlockfile (PACE_FILE * file);
   /* Requires PACE_HAS_REENTRANT. */
 
-  /** 
+  /**
+    C std 7.19.8.2
+  */
+  PACE_INLINE pace_size_t pace_fwrite(const void * ptr,
+                       pace_size_t size, pace_size_t nmemb,
+                       PACE_FILE * stream);
+
+  /**
      PACE's implementation of the POSIX function getc.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_getc (FILE * stream);
+  PACE_INLINE int pace_getc (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function getc_unlocked.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
    */
-  PACE_INLINE int pace_getc_unlocked (FILE * stream);
+  PACE_INLINE int pace_getc_unlocked (PACE_FILE * stream);
   /* Requires PACE_HAS_REENTRANT. */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function getchar.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE int pace_getchar ();
 
-  /** 
+  /**
      PACE's implementation of the POSIX function getchar_unlocked.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
@@ -227,50 +255,50 @@ extern "C" {
   PACE_INLINE int pace_getchar_unlocked ();
   /* Requires PACE_HAS_REENTRANT. */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function gets.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE char *pace_gets (char * s);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function perror.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE void pace_perror (const char * s);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function printf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   int pace_printf (const char* format, ...);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function putc.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE int pace_putc (int c, FILE * stream);
+  PACE_INLINE int pace_putc (int c, PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function putc_unlocked.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
    */
-  PACE_INLINE int pace_putc_unlocked (int c, FILE * stream);
+  PACE_INLINE int pace_putc_unlocked (int c, PACE_FILE * stream);
   /* Requires PACE_HAS_REENTRANT. */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function putchar.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE int pace_putchar (int c);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function putchar_unlocked.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.2.7.
@@ -278,21 +306,21 @@ extern "C" {
   PACE_INLINE int pace_putchar_unlocked (int c);
   /* Requires PACE_HAS_REENTRANT. */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function puts.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE int pace_puts (const char * s);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function remove.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE int pace_remove (const char * path);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function rename.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.5.3.
@@ -300,21 +328,21 @@ extern "C" {
   PACE_INLINE int pace_rename (const char * old_name,
                                const char * new_name);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function rewind.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE void pace_rewind (FILE * stream);
+  PACE_INLINE void pace_rewind (PACE_FILE * stream);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function sprintf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   int pace_sprintf (char* s, const char* format, ...);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function scanf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
@@ -327,14 +355,21 @@ extern "C" {
   * surrounding the arguments.
   */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function setbuf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE void pace_setbuf (FILE * stream, char * buf);
+  PACE_INLINE void pace_setbuf (PACE_FILE * stream, char * buf);
 
-  /** 
+
+  /**
+    C std 7.19.5.6
+    */
+  PACE_INLINE int pace_setvbuf(PACE_FILE * stream,
+                               char * buf,
+                               int mode, pace_size_t size);
+  /**
      PACE's implementation of the POSIX function sscanf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
@@ -347,26 +382,46 @@ extern "C" {
   * surrounding the arguments.
   */
 
-  /** 
+  /**
      PACE's implementation of the POSIX function sscanf.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE FILE * pace_tmpfile ();
 
-  /** 
+  /**
      PACE's implementation of the POSIX function tmpnam.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE char * pace_tmpnam (char * s);
 
-  /** 
+  /**
      PACE's implementation of the POSIX function ungetc.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE int pace_ungetc (int c, FILE * stream);
+
+  /**
+    C std 7.19.6.8
+    */
+  PACE_INLINE int pace_vfprintf (PACE_FILE * stream,
+                                 const char * format,
+                                 va_list arg);
+
+  /**
+    C std 7.19.6.10
+    */
+  PACE_INLINE int pace_vprintf (const char * format,
+                                va_list arg);
+
+  /**
+    C std 7.19.6.13
+    */
+  PACE_INLINE int pace_vsprintf (char * s,
+                                 const char * format,
+                                 va_list arg);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

@@ -15,14 +15,14 @@
 
 PACE_INLINE
 int
-pace_aio_cancel (int fildes, struct aiocb * aiocbp)
+pace_aio_cancel (int fildes, pace_aiocb * aiocbp)
 {
   return aio_cancel (fildes, aiocbp);
 }
 
 PACE_INLINE
 int
-pace_aio_error (const struct aiocb * aiocbp)
+pace_aio_error (const pace_aiocb * aiocbp)
 {
 #if PACE_HAS_POSIX == PACE_LYNXOS
   /* Cast away const since LynxOS' prototypes aren't const */
@@ -34,30 +34,30 @@ pace_aio_error (const struct aiocb * aiocbp)
 
 PACE_INLINE
 int
-pace_aio_fsync (int op, struct aiocb * aiocbp)
+pace_aio_fsync (int op, pace_aiocb * aiocbp)
 {
   return aio_fsync (op, aiocbp);
 }
 
 PACE_INLINE
 int
-pace_aio_read (struct aiocb * aiocbp)
+pace_aio_read (pace_aiocb * aiocbp)
 {
   return aio_read (aiocbp);
 }
 
 PACE_INLINE
 int
-pace_aio_return (struct aiocb * aiocbp)
+pace_aio_return (pace_aiocb * aiocbp)
 {
   return aio_return (aiocbp);
 }
 
 PACE_INLINE
 int
-pace_aio_suspend (const struct aiocb * const list[],
+pace_aio_suspend (const pace_aiocb * const list[],
                  int nent,
-                 const struct timespec * timeout)
+                 const pace_timespec * timeout)
 {
 #if PACE_HAS_POSIX == PACE_LYNXOS
   /* Cast away const since LynxOS' prototypes aren't const */
@@ -71,7 +71,7 @@ pace_aio_suspend (const struct aiocb * const list[],
 
 PACE_INLINE
 int
-pace_aio_write (struct aiocb * aiocbp)
+pace_aio_write (pace_aiocb * aiocbp)
 {
   return aio_write (aiocbp);
 }
@@ -79,9 +79,9 @@ pace_aio_write (struct aiocb * aiocbp)
 PACE_INLINE
 int
 pace_lio_listio (int mode,
-                 struct aiocb * const list[],
+                 pace_aiocb * const list[],
                  int nent,
-                 struct sigevent * sig)
+                 pace_sigevent * sig)
 {
 #if PACE_HAS_POSIX == PACE_LYNXOS
   /* Cast away const since LynxOS' prototypes aren't const */
