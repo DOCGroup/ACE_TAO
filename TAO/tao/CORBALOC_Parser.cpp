@@ -242,7 +242,7 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (
       ACE_CHECK;
 
       // Get the next token.
-      cloc_name_ptr = ACE_OS::strtok_r (NULL,
+      cloc_name_ptr = ACE_OS::strtok_r ((char*)NULL,
                                         ",",
                                         &last_addr);
     }

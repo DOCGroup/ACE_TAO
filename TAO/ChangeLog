@@ -1,3 +1,28 @@
+Wed Sep 24 09:02:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+	* tao/Buffering_Constraint_Policy.cpp:
+	* tao/BiDir_GIOP/BiDir_PolicyFactory.cpp:
+	* tao/RTCORBA/RT_Policy_i.cpp:
+	* tao/PortableServer/POA_Policies.cpp: Fix for [Bug 1587]. Please
+	  see  the documentation of the bug at 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1587
+
+	  for more details. Thanks to Carlos O'Ryan for the patches. 
+
+	* tao/MProfile.cpp: Fix for [BUG 1589]. Please see the
+	  documentation of the bug at 
+	  
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1589
+
+	  Thanks to Huang-Ming Huang for the patch
+	
+	* tao/CORBALOC_Parser.cpp: Added explicit (char*) cast to fix
+	  compile error.
+
+	  Thanks to Olli Savia <ops@iki.fi> for the patches.
+
 Mon Sep 22 23:39:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAOACE.dsw:
@@ -36,6 +61,7 @@ Mon Sep 22 11:57:42 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  as it was not used in the method. This should remove the warning
 	  on Redhat Explicit Template build.
 	
+>>>>>>> 1.2560
 Fri Sep 19 07:49:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/RTScheduling/Current/Makefile (SRC):
