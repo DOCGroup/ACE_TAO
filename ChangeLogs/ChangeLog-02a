@@ -1,3 +1,15 @@
+Wed May 31 14:49:36 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): Revert change from Thu May 25 17:39:22 2000.
+          Add #if !defined (ACE_LACKS_UNIX_SIGNALS) to ACE_Log_Msg_Sig_Guard
+          ctor which matches a similar check in the dtor. This makes it work
+          on pSOS same as on other platforms without UNIX-like signals.
+
+        * ace/Signal.i (ACE_Sig_Guard::ACE_Sig_Guard): Added compile-time
+          check for !defined (ACE_LACKS_UNIX_SIGNALS) to not try to manipulate
+          the signal mask for platforms that don't do it. Matches an existing
+          check in the dtor.
+
 Wed May 31 11:51:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/gperf/src/gperf.dsp:
