@@ -29,7 +29,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Unbounded_Set_Ex.h"
+#include "ace/Unbounded_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
