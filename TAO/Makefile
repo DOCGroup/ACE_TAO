@@ -60,7 +60,7 @@ clone:
 	done
 
 reverseclean:
-	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
+	@$(ACE_ROOT)/bin/reverse_clean $(MAKE) $(DIRS)
 
 CONTROLLED_FILES = TAO/COPYING* \
 	    	   TAO/ChangeLog* \
