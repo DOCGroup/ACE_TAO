@@ -241,6 +241,14 @@ SOURCE=.\Blocked_Connect_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BooleanSeqA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BooleanSeqC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsA.cpp
 # End Source File
 # Begin Source File
@@ -460,6 +468,14 @@ SOURCE=.\Fault_Tolerance_Service.cpp
 # Begin Source File
 
 SOURCE=.\FILE_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FloatSeqA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FloatSeqC.cpp
 # End Source File
 # Begin Source File
 
@@ -980,6 +996,14 @@ SOURCE=.\ServicesA.cpp
 
 SOURCE=.\ServicesC.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShortSeqA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShortSeqC.cpp
 # End Source File
 # Begin Source File
 

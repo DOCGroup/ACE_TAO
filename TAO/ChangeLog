@@ -1,3 +1,21 @@
+Fri Mar 26 18:41:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Makefile.tao:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+
+          Added new files from
+
+          Fri Mar 26 13:23:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+        
+          to projects makefiles.
+
+        * tao/BooleanSeqA.cpp:
+
+          Overlooked new file from
+
+          Fri Mar 26 13:23:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Mar 26 16:45:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp (redef_clash):
