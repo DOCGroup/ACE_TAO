@@ -95,8 +95,13 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_w
     return 0;
 
   if (this->is_empty ())
-    // Nothing on the Timer_Queue, so use whatever the caller gave us.
-    *the_timeout = *max_wait_time;
+    {
+      // Nothing on the Timer_Queue, so use whatever the caller gave us.
+      if (max_wait_time)
+        *the_timeout = *max_wait_time;
+      else
+        return 0;
+    }
   else
     {
       ACE_Time_Value cur_time = this->gettimeofday ();

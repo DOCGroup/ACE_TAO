@@ -1559,15 +1559,15 @@ ACE::count_interfaces (ACE_HANDLE handle,
 // so use guess and scan algorithm
 
   const int MAX_IF = 10; // probably hard to put this many ifs in a unix box..
-  ACE_HANDLE handle, num_ifs = MAX_IF; // HACK - set to an unreasonable number
+  int num_ifs = MAX_IF; // HACK - set to an unreasonable number
   struct ifconf ifcfg;
-  struct ifreq *p_ifs = NIL;
+  struct ifreq *p_ifs = 0;
   size_t ifreq_size = 0;
   ACE_UINT32 addr;
   struct in_addr if_addr, if_test; 
 
   ifreq_size = num_ifs * sizeof (struct ifreq);
-  p_ifs = (struct ifreq *) ACE_OS:malloc (ifreq_size);
+  p_ifs = (struct ifreq *) ACE_OS::malloc (ifreq_size);
 
   if (!p_ifs) 
     {
@@ -1583,7 +1583,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
   if (ACE_OS::ioctl (handle, SIOCGIFCONF, (caddr_t) &ifcfg) == -1) 
     {
       ACE_OS::free (ifcfg.ifc_req);
-      ACE_ERROR_RETURN (("count_interfaces:ioctl - SIOCGIFCONF failed"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "count_interfaces:ioctl - SIOCGIFCONF failed"), -1);
     } 
 
   ACE_OS::close (handle);
