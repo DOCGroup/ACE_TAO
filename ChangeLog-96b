@@ -1,3 +1,20 @@
+Mon Dec  2 00:08:51 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace/Log_Record.cpp (dump): There was an error on line 19 of
+	  Log_Record.cpp: 
+
+	  ACE_DEBUG ((LM_DEBUG, "\npid_ = %s\n", this->pid_));
+
+	  should be changed to:
+
+	  ACE_DEBUG ((LM_DEBUG, "\npid_ = %d\n", this->pid_));
+
+	  Thanks to Sandro Doro <alex@aureus.sublink.org> for reporting
+ 	  this.
+
+	* examples/Reactor/Misc/test_handle_set.cpp: Updated the test to
+ 	  remove a warning caused by sloppy nesting of loop counters.
+
 Mon Dec  2 00:23:23 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Strategies.{h,cpp}: Update the base-class and added
@@ -19,6 +36,15 @@ Mon Dec  2 00:23:23 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 Sun Dec  1 19:19:02 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
+	* ace/Service_Config: Moved the #inclusion of ace/Proactor.h and
+ 	  ace/ReactorEx.h from the *.h file to the *.cpp file to avoid
+ 	  problems with circular dependencies.
+
+	* ace/ReactorEx: Added a new parameter to the Reactor's
+ 	  initialization methods so that we can install a subclass of
+ 	  ACE_Timer_Queue.  This is in anticipation of Tim's new
+ 	  "real-time" implementation of a timer queue.
+
 	* ace/Reactor: Added a new parameter to the Reactor's
  	  initialization methods so that we can install a subclass of
  	  ACE_Timer_Queue.  This is in anticipation of Tim's new
@@ -35,9 +61,47 @@ Sun Dec  1 19:19:02 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 	* examples/Reactor/Misc: Changed the name of the signal_tester.cpp
  	  file to test_demuxing.cpp, which is really what this does.
 
-	* ace/Strategies: Created a suite of "Notification Strategies"
- 	  that are used with the new ACE_Message_Queue notification
- 	  scheme.
+	* ace/{Strategies,Message_Queue}: Created a suite of
+	  "Notification Strategies" that are used with the new
+	  ACE_Message_Queue notification scheme.  This works as
+	  follows:
+
+	  1. There's a new virtual hook method on ACE_Message_Queue
+	     called notify().  Whenever a new Message_Block is
+	     enqueued the notify() hook is called.  By default, this
+	     does nothing. 
+
+	  2. If you want to do something with the notify() hook, you
+	     have two choices:
+   
+   		a. You can subclass from ACE_Message_Queue and
+		   override this method.  This is an example of the
+		   "Template Method" pattern. 
+
+		b. You can configure an ACE_Notification_Strategy *
+		   into an ACE_Message_Queue.  An
+		   ACE_Notification_Strategy is the vehicle for
+		   extending the behavior of ACE_Message_Queue wrt
+		   notification *without subclassing*.  Thus, it's an
+		   example of the Bridge/Strategy patterns. 
+      
+	  3. ACE_Notification_Strategy is defined in
+	     ace/Strategies.{h,cpp}. There are two pre-defined
+	     subclasses: 
+  
+  		a. ACE_Reactor_Notification_Strategy -- integrates the
+		   ACE_Message_Queue notification into the
+		   ACE_Reactor::notify() method.
+
+		b. ACE_ReactorEx_Notification_Strategy -- integrates
+		   the ACE_Message_Queue notification into the
+		   ACE_ReactorEx::notify() method.
+
+	  Both of these can be used almost identically in order to 
+	  seamlessly integrate multiple threads of control, inserting 
+	  ACE_Message_Blocks in one or more ACE_Message_Queues, with
+	  the various ACE event demultiplexors (i.e., ACE_Reactor 
+	  and ACE_ReactorEx).
 
 	* ace: Created a new pair of files called Strategies_T.cpp and
  	  Strategies_T.h and move the template ACE_*Strategies classes

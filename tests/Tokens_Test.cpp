@@ -214,7 +214,9 @@ main (int, char* argv[])
   // Wait for the server to start.
   ACE_OS::sleep (3);
 
-  ACE_DEBUG ((LM_DEBUG, "Using Token Server on %s at port %d.\n", server_host, server_port));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "Using Token Server on %s at port %d.\n", 
+	      server_host, server_port));
   ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
 
   ACE_NEW_RETURN (A, ACE_Remote_Mutex ("R Mutex A", 0, 1), -1);
