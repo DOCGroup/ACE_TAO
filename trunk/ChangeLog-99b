@@ -1,4 +1,8 @@
-Sun Jun 27 20:39:33 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+Sun Jun 27 20:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests: Added the *.icc project files for the IBM C++ compiler.
+	  Thanks to Rene Matteau <matteau@ca.ibm.com> for contributing
+ 	  these.
 
 	* ace/WIN32_Proactor.cpp,
 	  ace/WIN32_Asynch_IO.cpp: Added back some initializers to keep EGCS happy. 
