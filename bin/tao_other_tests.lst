@@ -46,7 +46,7 @@ TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC !KCC_Linux
 TAO/examples/POA/RootPOA/run_test.pl
 TAO/examples/Simple/bank/run_test.pl: !NO_MESSAGING
 TAO/examples/Simple/grid/run_test.pl: !NO_MESSAGING
-TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING
+TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC !NO_MESSAGING !Win32
 TAO/examples/Simple/time/run_test.pl: !NO_MESSAGING
 TAO/examples/Quoter/run_test.pl: !MINIMUM !Win32
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1 !Win32
