@@ -17,16 +17,16 @@ Thu Jan 08 16:02:33 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 	* ace/Hash_Map_Manager.{h,cpp}: Added STL-styled iterator
  	  functions.
 
-	* tests/Map_Manager_Test.cpp: 
-	* tests/Hash_Map_Manager_Test.cpp: 
-	* tests/Conn_Test.cpp: 
-	* ace/Local_Name_Space.cpp: 
+	* tests/Map_Manager_Test.cpp:
+	* tests/Hash_Map_Manager_Test.cpp:
+	* tests/Conn_Test.cpp:
+	* ace/Local_Name_Space.cpp:
 	* ace/Filecache.cpp: Added missing template instantiation codes.
 
 Thu Jan 08 11:05:15 1998    <coryan@CHA-CHA>
 
-	* ace/ace_dll.dsp: 
-	* ace/ace_lib.dsp: 
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
 	  Added the new Shared_Memory.cpp file to the project.
 
 Wed Jan 07 20:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
@@ -47,6 +47,16 @@ Wed Jan 07 17:59:57 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 	* ace/Free_List.i (add): Only delete freeed item when we hit the
  	  high water mark, not the other way around.  Thanks to Stuart
  	  Myles <smyles@wsj.dowjones.com> for pointing this out.
+
+Wed Jan  7 17:46:09 1998  James C Hu  <jxh@cs.wustl.edu>
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.h:
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+	* examples/Timer_Queue/Driver.h:
+	* examples/Timer_Queue/Driver.cpp:
+	  Added virtual destructors to classes that needed them.
 
 Wed Jan  7 16:28:16 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -87,7 +97,7 @@ Tue Jan 06 17:19:13 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 Tue Jan  6 14:11:54 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* tests/Reader_Writer_Test.cpp: 
+	* tests/Reader_Writer_Test.cpp:
 	  Reverted to revision 4.21 since the latest one (4.23) fails;
 	  thanks to Irfan for this solution.
 
