@@ -26,27 +26,29 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:171
+// be\be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_DOMAINC_H_
 #define _TAO_IDL_ORIG_DOMAINC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
-
 #include "tao/PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -62,9 +64,7 @@
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -73,7 +73,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:63
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -90,7 +90,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_CORBA_DOMAINMANAGER__VAR_OUT_CH_)
 #define _CORBA_DOMAINMANAGER__VAR_OUT_CH_
@@ -150,7 +150,7 @@ namespace CORBA
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Policy_ptr get_domain_policy (
-        CORBA::PolicyType policy_type
+        ::CORBA::PolicyType policy_type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -214,7 +214,7 @@ namespace CORBA
   const CORBA::PolicyType SecConstruction = 11U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:611
+  // be\be_interface.cpp:598
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY__VAR_OUT_CH_)
 #define _CORBA_CONSTRUCTIONPOLICY__VAR_OUT_CH_
@@ -243,7 +243,7 @@ namespace CORBA
 #define _CORBA_CONSTRUCTIONPOLICY_CH_
   
   class TAO_Export ConstructionPolicy
-    : public virtual CORBA::Policy
+    : public virtual ::CORBA::Policy
   {
   public:
     friend class TAO::Narrow_Utils<ConstructionPolicy>;
@@ -274,8 +274,8 @@ namespace CORBA
     // be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void make_domain_manager (
-        CORBA::InterfaceDef_ptr object_type,
-        CORBA::Boolean constr_policy
+        ::CORBA::InterfaceDef_ptr object_type,
+        ::CORBA::Boolean constr_policy
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -426,17 +426,17 @@ namespace TAO
 #define _CORBA_DOMAINMANAGER__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<CORBA::DomainManager>
+  struct TAO_Export Objref_Traits< ::CORBA::DomainManager>
   {
-    static CORBA::DomainManager_ptr duplicate (
-        CORBA::DomainManager_ptr
+    static ::CORBA::DomainManager_ptr duplicate (
+        ::CORBA::DomainManager_ptr
       );
     static void release (
-        CORBA::DomainManager_ptr
+        ::CORBA::DomainManager_ptr
       );
-    static CORBA::DomainManager_ptr nil (void);
+    static ::CORBA::DomainManager_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::DomainManager_ptr p,
+        ::CORBA::DomainManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -447,17 +447,17 @@ namespace TAO
 #define _CORBA_CONSTRUCTIONPOLICY__TRAITS_CH_
   
   ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<CORBA::ConstructionPolicy>
+  struct TAO_Export Objref_Traits< ::CORBA::ConstructionPolicy>
   {
-    static CORBA::ConstructionPolicy_ptr duplicate (
-        CORBA::ConstructionPolicy_ptr
+    static ::CORBA::ConstructionPolicy_ptr duplicate (
+        ::CORBA::ConstructionPolicy_ptr
       );
     static void release (
-        CORBA::ConstructionPolicy_ptr
+        ::CORBA::ConstructionPolicy_ptr
       );
-    static CORBA::ConstructionPolicy_ptr nil (void);
+    static ::CORBA::ConstructionPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        CORBA::ConstructionPolicy_ptr p,
+        ::CORBA::ConstructionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -517,13 +517,13 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:978
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
-#include "DomainC.i"
+#include "DomainC.inl"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
@@ -534,4 +534,5 @@ TAO_Export CORBA::Boolean operator>> (
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
 

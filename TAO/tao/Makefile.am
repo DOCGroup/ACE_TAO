@@ -706,7 +706,7 @@ nobase_include_HEADERS += \
   Default_Collocation_Resolver.i \
   Default_Protocols_Hooks.i \
   Default_Thread_Lane_Resources_Manager.i \
-  DomainC.i \
+  DomainC.inl \
   DoubleSeqC.inl \
   DynamicC.inl \
   Dynamic_ParameterC.inl \
