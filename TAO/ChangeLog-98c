@@ -11,6 +11,9 @@ Tue Sep 08 07:30:33 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/IIOP_Interpreter.cpp (calc_union_attr_is_var_sized_member):
           wrapped a couple of break statements with ACE_NOTREACHED.
 
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (TAO_ECG_UDP_Sender::push):
+          commented out unused local "count".
+
 Mon Sep  7 21:10:06 1998  Balachandran Natarajan  <bala@cumbia.cs.wustl.edu>
 
         * tests/Simple/grid:  Made some changes to Constructors
