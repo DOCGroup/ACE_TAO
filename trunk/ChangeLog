@@ -1,3 +1,13 @@
+Fri Jun 29 10:14:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/config-macosx.h: Removed some macros that don't apply to
+	  MacOSX.  Thanks to John Zorko <j.zorko@att.net> for contributing
+ 	  this.
+
+	* include/makeinclude/platform_macosx.GNU (CC): Changed
+	  the -fimplict-templates to -fno-implicit-templates.  Thanks to
+ 	  John Zorko <j.zorko@att.net> for contributing this.
+
 Wed Jun 27 12:00:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/FIFO_Send_Msg.i (send): Make sure that when we use the
