@@ -1,6 +1,12 @@
+Fri Dec 22 12:56:06 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.cpp (process_active): Call CloseHandle before return to
+	  avoid handle leaks on Win32.  Thanks to Arnaud Compan
+	  <compan@ipanematech.com> for the fix.
+
 Fri Dec 22 13:04:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/run_all_list.pm: Added the bidirectional test to the list. 
+	* bin/run_all_list.pm: Added the bidirectional test to the list.
 
 Fri Dec 22 12:43:54 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
