@@ -31,12 +31,6 @@ OBJFILES = \
 	$(OBJDIR)\Filter_Command.obj \
 	$(OBJDIR)\LookupManager.obj \
 	$(OBJDIR)\Name.obj \
-	$(OBJDIR)\Notify_PushConsumer.obj \
-	$(OBJDIR)\Notify_PushSupplier.obj \
-	$(OBJDIR)\Notify_SequencePushConsumer.obj \
-	$(OBJDIR)\Notify_SequencePushSupplier.obj \
-	$(OBJDIR)\Notify_StructuredPushConsumer.obj \
-	$(OBJDIR)\Notify_StructuredPushSupplier.obj \
 	$(OBJDIR)\Notify_Test_Client.obj \
 	$(OBJDIR)\Options_Parser.obj \
 	$(OBJDIR)\Periodic_Consumer.obj \
