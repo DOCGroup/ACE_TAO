@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ComponentServer_Task.h"
-#include "Server_init.h"
+#include "ciao/Server_init.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
 /// The following check is taken from $(TAO_ROOT)/tests/RTCORBA/

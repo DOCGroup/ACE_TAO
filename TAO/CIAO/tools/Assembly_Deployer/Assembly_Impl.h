@@ -26,7 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Active_Map_Manager_T.h"
-#include "CCM_DeploymentS.h"
+#include "ciao/CCM_DeploymentS.h"
 #include "../XML_Helpers/Assembly_Spec.h"
 #include "Deployment_Configuration.h"
 #include "Assembly_Visitors.h"

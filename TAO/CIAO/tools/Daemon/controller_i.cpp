@@ -3,11 +3,11 @@
 #include "controller_i.h"
 #include "Daemon_Commands.h"
 #include "Softpkg_Commands.h"
-#include "Client_init.h"
+#include "ciao/Client_init.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
-#include "CCM_DeploymentC.h"
+#include "ciao/CCM_DeploymentC.h"
 
 #if !defined (__ACE_INLINE__)
 # include "controller_i.inl"

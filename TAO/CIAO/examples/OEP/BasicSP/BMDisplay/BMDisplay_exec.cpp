@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CIAO_common.h"
+#include "ciao/CIAO_common.h"
 #include "BMDisplay_exec.h"
 
 /// Default constructor.

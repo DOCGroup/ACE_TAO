@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CIAO_common.h"
+#include "ciao/CIAO_common.h"
 #include "NavDisplay_exec.h"
 
 /// Default constructor.
