@@ -16,6 +16,7 @@
 #include "ace/OS.h"
 #include "ace/Singleton.h"
 #include "tao/orbconf.h"
+#include "tao/debug.h"
 
 /**
  * @class Base_Time
