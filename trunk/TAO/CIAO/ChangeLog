@@ -1,3 +1,9 @@
+Thu Jan  1 19:32:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentServer_Impl.cpp:
+
+	  Fixed typo in the last checkin.
+
 Thu Jan  1 19:28:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* ciao/ComponentInstallation_Impl.cpp:
