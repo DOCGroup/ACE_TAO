@@ -29,7 +29,7 @@ CORBA::Boolean
 TAO_Linear_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                  RTCORBA::NativePriority &native_priority)
 {
-  if (corba_priority < 0)
+  if (corba_priority < 0 || corba_priority > RTCORBA::maxPriority)
     return 0;
 
   native_priority =
@@ -43,7 +43,7 @@ TAO_Linear_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
 
 CORBA::Boolean
 TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
-                                RTCORBA::Priority &corba_priority)
+                                       RTCORBA::Priority &corba_priority)
 {
   if ((this->min_ < this->max_
        && (native_priority < this->min_
@@ -66,11 +66,14 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
       corba_priority =
         RTCORBA::minPriority
         + ((RTCORBA::maxPriority - RTCORBA::minPriority)
-           * native_priority / delta);
+           * (native_priority - this->min_) / delta);
     }
   else
     {
-      corba_priority = this->min_;
+      // There is only one native priority.
+      if (native_priority != this->min_)
+        return 0;
+      corba_priority = RTCORBA::minPriority;
     }
 
   return 1;

@@ -91,9 +91,9 @@ Load_Balancing_Service::init (int argc,
 
       if (ior.in () == 0)
         return -1;
-      else if (TAO_debug_level > 0)
+      else if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG,
-                    "Object Group Factory ior: %s\n",
+                    "Load_Balancer: Object Group Factory ior is %s\n",
                     ior.in ()));
     }
   ACE_CATCHANY
@@ -119,6 +119,9 @@ Load_Balancing_Service::init (int argc,
 int
 Load_Balancing_Service::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Load_Balancer: Initialized \n"));
+
   int result;
 
   result = this->orb_manager_.run (ACE_TRY_ENV);

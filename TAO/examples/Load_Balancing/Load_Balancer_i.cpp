@@ -20,6 +20,17 @@ Object_Group_Factory_i::~Object_Group_Factory_i (void)
 {
 }
 
+void
+Object_Group_Factory_i::remove_group (const ACE_CString &id,
+                                      int random)
+{
+  // Remove the entry from the appropriate map of groups.
+  if (random)
+    random_groups_.unbind (id);
+  else
+    rr_groups_.unbind (id);
+}
+
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (const char * id,
                                           CORBA::Environment &ACE_TRY_ENV)
@@ -66,11 +77,11 @@ Object_Group_Factory_i::make_group (int random,
       Object_Group_i * group_servant;
       if (random)
         ACE_NEW_THROW_EX (group_servant,
-                          Random_Object_Group (id),
+                          Random_Object_Group (id, this),
                           CORBA::NO_MEMORY ());
       else
         ACE_NEW_THROW_EX (group_servant,
-                          RR_Object_Group (id),
+                          RR_Object_Group (id, this),
                           CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (group._retn ());
 
@@ -91,13 +102,21 @@ Object_Group_Factory_i::make_group (int random,
           if (random_groups_.bind (group_id, group) == -1)
             ACE_THROW_RETURN (CORBA::INTERNAL (),
                               Load_Balancer::Object_Group::_nil ());
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "Load_Balancer: Created new Random Group"
+                      " with id <%s>\n", id));
         }
       else
-        if (rr_groups_.bind (group_id, group) == -1)
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            Load_Balancer::Object_Group::_nil ());
+        {
+          if (rr_groups_.bind (group_id, group) == -1)
+            ACE_THROW_RETURN (CORBA::INTERNAL (),
+                              Load_Balancer::Object_Group::_nil ());
+          ACE_DEBUG ((LM_DEBUG,
+                      "Load_Balancer: Created new Round Robin Group"
+                      " with id <%s>\n", id));
+        }
       // Return.
-      ACE_DEBUG ((LM_DEBUG, "Successfully created new group: %s\n", id));
       return group._retn ();
     }
 }
@@ -175,8 +194,10 @@ Object_Group_Factory_i::random_groups (CORBA::Environment &ACE_TRY_ENV)
   return list_groups (1, ACE_TRY_ENV);
 }
 
-Object_Group_i::Object_Group_i (const char * id)
-  : id_ (id)
+Object_Group_i::Object_Group_i (const char * id,
+                                Object_Group_Factory_i *my_factory)
+  : id_ (id),
+    my_factory_ (my_factory)
 {
 }
 
@@ -228,6 +249,11 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
   // Theoretically, we should deal with memory failures more
   // thoroughly.  But, practically, the whole system is going to be
   // hosed anyways ...
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Load_Balancer: Added member <%s> to <%s> Group\n",
+              member_id.c_str (),
+              id_.c_str ()));
 }
 
 void
@@ -254,6 +280,10 @@ Object_Group_i::unbind (const char * id,
     iter.advance ();
   delete (iter.next ());
   iter.remove ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Load_Balancer: Removed member with id <%s>"
+              "from <%s> object group\n", id, id_.c_str ()));
 }
 
 CORBA::Object_ptr
@@ -318,13 +348,33 @@ Object_Group_i::destroy (CORBA::Environment &ACE_TRY_ENV)
   poa->deactivate_object (id.in (),
                           ACE_TRY_ENV);
   ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Load_Balancer: Destroyed object group"
+              "with id <%s>\n", id_.c_str ()));
 }
 
-Random_Object_Group::Random_Object_Group (const char *id)
-  : Object_Group_i (id)
+Random_Object_Group::Random_Object_Group (const char *id,
+                                          Object_Group_Factory_i *my_factory)
+  : Object_Group_i (id, my_factory)
 {
   // Seed the random number generator.
   ACE_OS::srand (ACE_OS::time ());
+}
+
+Random_Object_Group::~Random_Object_Group (void)
+{
+}
+
+void
+Random_Object_Group::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  //Deregisters this <Object_Group> with its
+  // <Object_Group_Factory>.
+  my_factory_->remove_group (id_, 1);
+
+  Object_Group_i::destroy (ACE_TRY_ENV);
 }
 
 CORBA::Object_ptr
@@ -345,7 +395,9 @@ Random_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
   // Get the id of the member to return to the client.
   ACE_CString *id;
   member_id_list_.get (id, member);
-  ACE_DEBUG ((LM_DEBUG, "In Random Group resolved to: %s\n",
+
+  ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%s> Group resolved to <%s>\n",
+              id_.c_str (),
               id->c_str()));
 
   // Return the object reference corresponding to the found id to the client.
@@ -353,10 +405,26 @@ Random_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
   return obj._retn ();
 }
 
-RR_Object_Group::RR_Object_Group (const char *id)
-  : Object_Group_i (id),
+RR_Object_Group::RR_Object_Group (const char *id,
+                                  Object_Group_Factory_i *my_factory)
+  : Object_Group_i (id, my_factory),
     next_ (0)
 {
+}
+
+RR_Object_Group::~RR_Object_Group (void)
+{
+}
+
+void
+RR_Object_Group::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  //Deregisters this <Object_Group> with its
+  // <Object_Group_Factory>.
+  my_factory_->remove_group (id_, 0);
+
+  Object_Group_i::destroy (ACE_TRY_ENV);
 }
 
 CORBA::Object_ptr
@@ -374,7 +442,10 @@ RR_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
   // Get the id of the member to return to the client.
   ACE_CString *id;
   member_id_list_.get (id, next_);
-  ACE_DEBUG ((LM_DEBUG, "In RR Group resolved to: %s\n", id->c_str ()));
+
+  ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%s> Group resolved to <%s>\n",
+              id_.c_str (),
+              id->c_str ()));
 
   // Adjust <next_> for the next invocation.
   next_ = (next_ + 1) % group_size;
@@ -420,6 +491,10 @@ RR_Object_Group::unbind (const char *id,
 
   else if (position == next_)
     next_ = next_ % (members_.current_size ());
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Load_Balancer: Removed member with id <%s>"
+              "from <%s> object group\n", id, id_.c_str ()));
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
