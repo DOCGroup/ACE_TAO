@@ -24,7 +24,7 @@ $ACE_ROOT/tests:
 3.  Add test to Makefile. *
 
 4.  Add a new MS project file, e.g., <test>.dsp, then add and entry for 
-    it to the tests.dsp file. *
+    it to the tests.dsw file. *
 
 5.  Add test to run_test.lst.
 
