@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="ServiceConfigurator" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Java Virtual Machine Java Project" 0x0809
