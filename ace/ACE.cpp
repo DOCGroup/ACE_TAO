@@ -99,6 +99,7 @@ ACE::process_active (pid_t pid)
 #endif /* ACE_WIN32 */
 }
 
+#if !defined (ACE_HAS_WINCE)
 int
 ACE::register_stdin_handler (ACE_Event_Handler *eh,
                              ACE_Reactor *reactor,
@@ -158,6 +159,7 @@ ACE::read_adapter (void *args)
 
   return 0;
 }
+#endif /* ACE_HAS_WINCE */
 
 // Split a string up into 'token'-delimited pieces, ala Perl's "split".
 
@@ -214,6 +216,79 @@ ACE::execname (const char *old_name)
 #endif /* ACE_HAS_WIN32 */
   return old_name;
 }
+
+#if defined (ACE_HAS_UNICODE)
+size_t
+ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
+{
+  ACE_TRACE ("ACE::strrepl");
+
+  size_t replaced = 0;
+
+  for (size_t i = 0; s[i] != '\0'; i++)
+    if (s[i] == search)
+      {
+        s[i] = replace;
+        replaced++;
+      }
+
+  return replaced;
+}
+
+wchar_t *
+ACE::strsplit_r (wchar_t *str,
+                 const wchar_t *token,
+                 wchar_t *&next_start)
+{
+  wchar_t *ret = 0;
+
+  if (str != 0)
+    next_start = str;
+
+  if (next_start != 0)
+    {
+      wchar_t *tok_loc = ACE_OS::strstr (next_start, token);
+
+      if (tok_loc != 0)
+        {
+          // Return the beginning of the string.
+          ret = next_start;
+
+          // Insure it's terminated.
+          *tok_loc = '\0';
+          next_start = tok_loc + ACE_OS::strlen (token);
+        }
+      else
+        {
+          ret = next_start;
+          next_start = (wchar_t *) 0;
+        }
+    }
+
+  return ret;
+}
+
+const wchar_t *
+ACE::execname (const wchar_t *old_name)
+{
+#if defined (ACE_HAS_WIN32)
+  if (ACE_OS::strstr (old_name, L".exe") == 0)
+    {
+      wchar_t *new_name;
+
+      ACE_NEW_RETURN (new_name, wchar_t[ACE_OS::strlen (old_name) +
+                                       ACE_OS::strlen (L".exe") +
+                                       1], -1);
+      wchar_t *end = new_name;
+      end = ACE::strecpy (new_name, old_name);
+      // Concatenate the .exe suffix onto the end of the executable.
+      ACE_OS::strcpy (end, L".exe");
+      return new_name;
+    }
+#endif /* ACE_HAS_WIN32 */
+  return old_name;
+}
+#endif /* ACE_HAS_UNICODE */
 
 u_long
 ACE::hash_pjw (const char *str)
@@ -397,6 +472,7 @@ ACE::strrepl (char *s, char search, char replace)
   return replaced;
 }
 
+#if !defined (ACE_HAS_WINCE)
 char *
 ACE::strenvdup (const char *str)
 {
@@ -410,6 +486,7 @@ ACE::strenvdup (const char *str)
   else
     return ACE_OS::strdup (str);
 }
+#endif /* ACE_HAS_WINCE */
 
 /*
 
@@ -428,6 +505,10 @@ netsvc.so            netsvc.so + warning      libnetsvc.so
 
 */
 
+#if !defined (ACE_HAS_WINCE)
+// @@ This is gradually getting out of hands.  Changing this part
+//    also requires changing Parse_Node.*.  I won't touch that for
+//    now.
 int
 ACE::ldfind (const char filename[],
              char pathname[],
@@ -625,12 +706,13 @@ ACE::ldopen (const char *filename, const char *type)
   else
     return ACE_OS::fopen (buf, type);
 }
+#endif /* ACE_HAS_WINCE */
 
 const char *
 ACE::basename (const char *pathname, char delim)
 {
   ACE_TRACE ("ACE::basename");
-  const char *temp = ::strrchr (pathname, delim);
+  const char *temp = ACE_OS::strrchr (pathname, delim);
 
   if (temp == 0)
     return pathname;
@@ -1137,6 +1219,7 @@ ACE::writev (ACE_HANDLE handle,
 // Portions taken from mdump by J.P. Knight (J.P.Knight@lut.ac.uk)
 // Modifications by Todd Montgomery.
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 int
 ACE::format_hexdump (const char *buffer, int size, char *obuf, int obuf_sz)
 {
@@ -1204,6 +1287,76 @@ ACE::format_hexdump (const char *buffer, int size, char *obuf, int obuf_sz)
     }
   return size;
 }
+#else /* ACE_HAS_UNICODE_ONLY */
+int
+ACE::format_hexdump (const wchar_t *buffer, int size,
+                     wchar_t *obuf, int obuf_sz)
+{
+  ACE_TRACE ("ACE::format_hexdump");
+
+  u_char c;
+  wchar_t textver[16 + 1];
+
+  int maxlen = (obuf_sz / 68) * 16;
+
+  if (size > maxlen)
+    size = maxlen;
+
+  int i;
+
+  for (i = 0; i < (size >> 4); i++)
+    {
+      int j;
+
+      for (j = 0 ; j < 16; j++)
+        {
+          c = buffer[(i << 4) + j];
+          ACE_OS::sprintf (obuf, L"%02x ", c);
+          obuf += 3;
+          if (j == 7)
+            {
+              ACE_OS::sprintf (obuf, L" ");
+              obuf++;
+            }
+          textver[j] = (c < 0x20 || c > 0x7e) ? '.' : c;
+        }
+
+      textver[j] = 0;
+
+      ACE_OS::sprintf (obuf, L"  %s\n", textver);
+
+      while (*obuf != '\0')
+        obuf++;
+    }
+
+  if (size % 16)
+    {
+      for (i = 0 ; i < size % 16; i++)
+        {
+          c = buffer[size - size % 16 + i];
+          ACE_OS::sprintf (obuf, L"%02x ",c);
+          obuf += 3;
+          if (i == 7)
+            {
+              ACE_OS::sprintf (obuf, L" ");
+              obuf++;
+            }
+          textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
+        }
+
+      for (i = size % 16; i < 16; i++)
+        {
+          ACE_OS::sprintf (obuf, L"   ");
+          obuf += 3;
+          textver[i] = ' ';
+        }
+
+      textver[i] = 0;
+      ACE_OS::sprintf (obuf, L"  %s\n", textver);
+    }
+  return size;
+}
+#endif /* ACE_HAS_UNICODE_ONLY */
 
 // Returns the current timestamp in the form
 // "hour:minute:second:microsecond."  The month, day, and year are
@@ -1211,6 +1364,7 @@ ACE::format_hexdump (const char *buffer, int size, char *obuf, int obuf_sz)
 // if unsuccessful, else returns pointer to beginning of the "time"
 // portion of <day_and_time>.
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
 char *
 ACE::timestamp (char date_and_time[], int date_and_timelen)
 {
@@ -1247,6 +1401,44 @@ ACE::timestamp (char date_and_time[], int date_and_timelen)
   date_and_time[26] = '\0';
   return &date_and_time[11];
 }
+#else /* ACE_HAS_UNICODE_ONLY */
+wchar_t *
+ACE::timestamp (wchar_t date_and_time[], int date_and_timelen)
+{
+  //ACE_TRACE ("ACE::timestamp");
+
+  if (date_and_timelen < 35)
+    {
+      errno = EINVAL;
+      return 0;
+    }
+
+#if defined (WIN32)
+  // @@ Jesper, I think Win32 supports all the UNIX versions below.
+  // Therefore, we can probably remove this WIN32 ifdef altogether.
+  SYSTEMTIME local;
+  ::GetLocalTime (&local);
+
+  ACE_OS::sprintf (date_and_time, "%02d/%02d/%04d %02d.%02d.%02d.%06d",
+                   (int) local.wMonth, // new, also the %02d in sprintf
+                   (int) local.wDay,   // new, also the %02d in sprintf
+                   (int) local.wYear,  // new, also the %02d in sprintf
+                   (int) local.wHour,
+                   (int) local.wMinute,
+                   (int) local.wSecond,
+                   (int) local.wMilliseconds * 1000);
+#else  /* UNIX */
+  wchar_t timebuf[26]; // This magic number is based on the ctime(3c) man page.
+  ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
+  time_t secs = cur_time.sec ();
+  ACE_OS::ctime_r (&secs, timebuf, sizeof timebuf);
+  ACE_OS::strncpy (date_and_time, timebuf, date_and_timelen);
+  ACE_OS::sprintf (&date_and_time[19], ".%06d", cur_time.usec ());
+#endif /* WIN32 */
+  date_and_time[26] = '\0';
+  return &date_and_time[11];
+}
+#endif /* ACE_HAS_UNICODE_ONLY */
 
 // This function rounds the request to a multiple of the page size.
 
