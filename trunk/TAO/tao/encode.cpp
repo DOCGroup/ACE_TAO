@@ -108,8 +108,6 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   // Value maintained by the Any.
   void *value;
 
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
-
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
   // Status of encode operation
@@ -122,64 +120,21 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   if (stream->encode (CORBA::_tc_TypeCode, &elem_tc, 0, env)
       == CORBA::TypeCode::TRAVERSE_CONTINUE) {
     value = (void *) any->value ();
-
-    // Switch on the data type and handle the cases for primitives
-    // here for efficiency rather than calling.
-    switch (elem_tc->kind_)
+    // if the any owns the data, then the value is a CDR stream and we simply
+    // append the CDR stream
+    if (any->any_owns_data_)
       {
-      case CORBA::tk_null:
-      case CORBA::tk_void:
-        break;
-      case CORBA::tk_short:
-      case CORBA::tk_ushort:
-        continue_encoding = stream->write_short (*(CORBA::Short *) value);
-        break;
-      case CORBA::tk_long:
-      case CORBA::tk_ulong:
-      case CORBA::tk_float:
-      case CORBA::tk_enum:
-        continue_encoding = stream->write_long (*(CORBA::Long *) value);
-        break;
-      case CORBA::tk_double:
-      case CORBA::tk_longlong:
-      case CORBA::tk_ulonglong:
-        continue_encoding = stream->write_longlong (*(CORBA::LongLong *) value);
-        break;
-      case CORBA::tk_boolean:
-        continue_encoding = stream->write_boolean (*(CORBA::Boolean *) value);
-        break;
-      case CORBA::tk_char:
-      case CORBA::tk_octet:
-        continue_encoding = stream->write_char (*(CORBA::Char *) value);
-        break;
-      case CORBA::tk_longdouble:
-        continue_encoding = stream->write_longdouble (*(CORBA::LongDouble *) value);
-        break;
-      case CORBA::tk_wchar:
-        continue_encoding = stream->write_wchar (*(CORBA::WChar *) value);
-        break;
-      case CORBA::tk_any:
-      case CORBA::tk_TypeCode:
-      case CORBA::tk_Principal:
-      case CORBA::tk_objref:
-      case CORBA::tk_struct:
-      case CORBA::tk_union:
-      case CORBA::tk_string:
-      case CORBA::tk_sequence:
-      case CORBA::tk_array:
-      case CORBA::tk_alias:
-      case CORBA::tk_except:
-      case CORBA::tk_wstring:
-        retval = stream->encode (elem_tc, value, 0, env);
-        break;
-      default:
-        // anything else is an error
-        retval = CORBA::TypeCode::TRAVERSE_STOP;
+        TAO_InputCDR in_strm ((ACE_Message_Block *) any->value_);
+        retval = stream->append (elem_tc, &in_strm, env);
+      }
+    else
+      {
+        // encode the value
+        retval = stream->encode (elem_tc, any->value_, 0, env);
       }
   }
 
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_encoding == CORBA::B_TRUE)
+  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -359,7 +314,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       u_int hostlen;
 
       hostlen = ACE_OS::strlen ((char *) profile->host);
-      CORBA::ULong encap_len = 
+      CORBA::ULong encap_len =
 	1                              // byte order
 	+ 1                            // version major
 	+ 1                            // version minor
@@ -1132,7 +1087,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
       CORBA::Long size, alignment;
 
       // first encode the RepositoryID which we can grab from the
-      // typecode pointer 
+      // typecode pointer
       continue_encoding = stream->write_string (tc->id (env));
 
       data = (char *) data + sizeof (CORBA::Exception);

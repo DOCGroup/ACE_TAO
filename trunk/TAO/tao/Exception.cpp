@@ -325,13 +325,14 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
-  int l = TAO_Exceptions::system_exceptions.length ();
-  TAO_Exceptions::system_exceptions.length (l + 1);
-  TAO_Exceptions::sys_exceptions [l] =
-    new (tcp) CORBA::TypeCode (CORBA::tk_except,
-                               stream.length (),
-                               stream.buffer (),
-                               CORBA::B_FALSE);
+  CORBA::ULong l = TAO_Exceptions::system_exceptions.count ();
+  TAO_Exceptions::system_exceptions.add (
+                                         new (tcp) CORBA::TypeCode
+                                         (CORBA::tk_except,
+                                          stream.length (),
+                                          stream.buffer (),
+                                          CORBA::B_FALSE)
+                                         );
 
   assert (tcp->length_ <= TAO_Exceptions::TC_BUFLEN);
   return;
@@ -388,11 +389,7 @@ TAO_Exceptions::init_standard_exceptions (CORBA::Environment &env)
 {
   // Initialize the list of system exceptions, used when
   // unmarshaling.
-  TAO_Exceptions::system_exceptions = 
-    CORBA::ExceptionList (TAO_Exceptions::NUM_SYS_EXCEPTIONS, 0,
-			  TAO_Exceptions::sys_exceptions);
 
-  // Initialize the typecodes.
 #define TAO_SYSTEM_EXCEPTION(name) \
   if (env.exception () == 0) \
     TAO_Exceptions::make_standard_typecode (&tc_std_ ## name, #name, \
@@ -545,4 +542,46 @@ CORBA::Environment::print_exception (const char *info,
     ACE_DEBUG ((LM_ERROR,
                 "(%P|%t) user exception, ID '%s'\n",
                 id));
+}
+
+CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
+                                          CORBA::TypeCode_ptr *tc_list)
+{
+  for (CORBA::ULong i=0; i < len; i++)
+    this->add (tc_list [i]);
+}
+
+void
+CORBA_ExceptionList::add (CORBA::TypeCode_ptr tc)
+{
+  this->tc_list_.enqueue_tail (CORBA::TypeCode::_duplicate (tc));
+}
+
+void
+CORBA_ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
+{
+  this->tc_list_.enqueue_tail (tc);
+}
+
+CORBA::TypeCode_ptr
+CORBA_ExceptionList::item (CORBA::ULong index,
+                           CORBA::Environment &env)
+{
+  CORBA::TypeCode_ptr *tc;
+  env.clear ();
+  if (this->tc_list_.get (tc, index) == -1)
+    {
+      env.exception (new CORBA::TypeCode::Bounds);
+      return 0;
+    }
+  else
+    {
+      return CORBA::TypeCode::_duplicate (*tc);
+    }
+}
+void
+CORBA_ExceptionList::remove (CORBA::ULong index, CORBA::Environment &env)
+{
+  // unimplemented
+  env.clear ();
 }

@@ -170,6 +170,18 @@ TAO_OutputCDR::TAO_OutputCDR (char *data, size_t size,
   CDR::mb_align (this->start_);
 }
 
+TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
+                              int byte_order,
+                              TAO_Marshal_Factory *factory)
+  :  factory_ (factory),
+     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
+     good_bit_ (1)
+{
+  this->start_ = ACE_Message_Block::duplicate (data);
+  // We cannot trust the buffer to be properly aligned
+  CDR::mb_align (this->start_);
+}
+
 TAO_OutputCDR::~TAO_OutputCDR (void)
 {
   ACE_Message_Block::release (this->start_);
@@ -466,6 +478,16 @@ TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
 {
   ACE_NEW (this->start_, ACE_Message_Block (buf, bufsiz));
   this->start_->wr_ptr (bufsiz);
+}
+
+TAO_InputCDR::TAO_InputCDR (ACE_Message_Block *data,
+                            int byte_order,
+                            TAO_Marshal_Factory *factory)
+  :  factory_ (factory),
+     do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
+     good_bit_ (1)
+{
+  this->start_ = ACE_Message_Block::duplicate (data);
 }
 
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,

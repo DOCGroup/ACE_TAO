@@ -37,6 +37,7 @@ ORBCORE_SRCS = \
 	CDR \
 	Client_Strategy_Factory \
 	Connect \
+	append \
 	debug \
 	decode \
 	deep_copy \

@@ -46,6 +46,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Containers.h"
 
 #if !defined (TAO_HAS_DLL)
 // On Windows NT, the default is to build TAO as a DLL library.
@@ -136,6 +137,8 @@ typedef class CORBA_ImplementationDef *CORBA_ImplementationDef_ptr;
 typedef class CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
 
 class CORBA_String_var;
+
+class CORBA_ExceptionList;
 
 // enum values defined in nvlist.hh, bitwise ORed.
 typedef u_int CORBA_Flags;

@@ -492,7 +492,6 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
 
       TAO_GIOP_ReplyStatusType status;
       CORBA::ExceptionList exceptions (info->except_count,
-				       info->except_count,
 				       info->excepts);
 
       status = call.invoke (exceptions, env);

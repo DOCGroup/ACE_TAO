@@ -33,12 +33,12 @@ CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
   return tc;
 }
 
-CORBA_Bounds::CORBA_Bounds (void)
+CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException (CORBA::_tc_Bounds)
 {
 }
 
-CORBA_BadKind::CORBA_BadKind (void)
+CORBA_TypeCode::BadKind::BadKind (void)
   : CORBA_UserException (CORBA::_tc_BadKind)
 {
 }

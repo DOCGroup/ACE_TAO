@@ -1023,11 +1023,11 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         // fail (next).
 
         for (CORBA::ULong i = 0;
-             i < xlist->length ();
+             i < xlist->count ();
              i++)
           {
-	    CORBA::TypeCode_ptr tcp = (*xlist) [i];
-	    
+	    CORBA::TypeCode_ptr tcp = xlist->item (i, env);
+
             const char *xid = tcp->id (env);
 
             if (env.exception () != 0)
@@ -1232,7 +1232,7 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
   msg.write_octet (type);
 
   // Write a dummy <size> later it is set to the right value...
-  // @@ TODO Maybe we should store the OutputCDR status in 
+  // @@ TODO Maybe we should store the OutputCDR status in
   CORBA::ULong size = 0;
   msg.write_ulong (size);
 
@@ -1242,11 +1242,9 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>;
 template class TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>;
-template class TAO_Unbounded_Sequence<CORBA::Octet>;
 template class TAO_Unbounded_Object_Sequence<CORBA::TypeCode>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
-#pragma instantiate TAO_Unbounded_Sequence<CORBA::Octet>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::TypeCode>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -117,6 +117,12 @@ public:
                                                  CORBA::Environment &env) = 0;
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env) = 0;
+  // append operation
+
   TAO_Marshal_Object (void);
   // constructor
 
@@ -158,6 +164,12 @@ public:
                                                  CORBA::Environment &env);
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
+
 };
 
 class TAO_Export TAO_Marshal_Any: public TAO_Marshal_Object
@@ -193,6 +205,12 @@ public:
                                                  void *context,
                                                  CORBA::Environment &env);
   // skip operation
+
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
 
 };
 
@@ -230,6 +248,12 @@ public:
                                                  CORBA::Environment &env);
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
+
 };
 
 class TAO_Export TAO_Marshal_Principal: public TAO_Marshal_Object
@@ -265,6 +289,12 @@ public:
                                                  void *context,
                                                  CORBA::Environment &env);
   // skip operation
+
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
 
 };
 
@@ -302,6 +332,12 @@ public:
                                                  CORBA::Environment &env);
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
+
 };
 
 class TAO_Export TAO_Marshal_Struct: public TAO_Marshal_Object
@@ -337,6 +373,12 @@ public:
                                                  void *context,
                                                  CORBA::Environment &env);
   // skip operation
+
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
 
 };
 
@@ -374,6 +416,12 @@ public:
                                                  CORBA::Environment &env);
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
+
 };
 
 class TAO_Export TAO_Marshal_String: public TAO_Marshal_Object
@@ -409,6 +457,12 @@ public:
                                                  void *context,
                                                  CORBA::Environment &env);
   // skip operation
+
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
 
 };
 
@@ -446,6 +500,12 @@ public:
                                                  CORBA::Environment &env);
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
+
 };
 
 class TAO_Export TAO_Marshal_Array: public TAO_Marshal_Object
@@ -481,6 +541,12 @@ public:
                                                  void *context,
                                                  CORBA::Environment &env);
   // skip operation
+
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
 
 };
 
@@ -518,6 +584,12 @@ public:
                                                  CORBA::Environment &env);
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
+
 };
 
 class TAO_Export TAO_Marshal_Except: public TAO_Marshal_Object
@@ -553,6 +625,12 @@ public:
                                                  CORBA::Environment &env);
   // skip operation
 
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
+
 };
 
 class TAO_Export TAO_Marshal_WString : public TAO_Marshal_Object
@@ -587,6 +665,12 @@ public:
                                                  void *context,
                                                  CORBA::Environment &env);
   // skip operation
+
+  virtual CORBA::TypeCode::traverse_status append (CORBA::TypeCode_ptr tc,
+                                                   TAO_InputCDR *src,
+                                                   TAO_OutputCDR *dest,
+                                                   CORBA::Environment &env);
+  // append operation
 
 };
 

@@ -196,6 +196,7 @@ CORBA_Any::~CORBA_Any (void)
     {
       // decrement the refcount on the Message_Block we hold
       ACE_Message_Block::release ((ACE_Message_Block *) this->value_);
+      this->value_ = 0;
     }
 
   if (this->type_)
