@@ -32,8 +32,8 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "Process - Win32 Debug"
-CPP=cl.exe
 RSC=rc.exe
+CPP=cl.exe
 
 !IF  "$(CFG)" == "Process - Win32 Release"
 
@@ -60,8 +60,8 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE"\
+# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Process.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\Release/
 CPP_SBRS=.\.
@@ -117,8 +117,8 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MLd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Process.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
@@ -132,9 +132,9 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ace.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib aced.lib /nologo /subsystem:console /debug /machine:I386
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib\
- advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib ace.lib /nologo\
+ advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib aced.lib /nologo\
  /subsystem:console /incremental:yes /pdb:"$(OUTDIR)/Process.pdb" /debug\
  /machine:I386 /out:"$(OUTDIR)/Process.exe" 
 LINK32_OBJS= \
@@ -185,18 +185,28 @@ SOURCE=.\process.cpp
 !IF  "$(CFG)" == "Process - Win32 Release"
 
 DEP_CPP_PROCE=\
+	"..\..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Process.h"\
 	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -208,8 +218,12 @@ DEP_CPP_PROCE=\
 !ELSEIF  "$(CFG)" == "Process - Win32 Debug"
 
 DEP_CPP_PROCE=\
+	"..\..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
@@ -218,6 +232,8 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Process.h"\

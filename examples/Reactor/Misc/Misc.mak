@@ -71,8 +71,8 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/timer_queue.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -83,8 +83,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/timer_queue.pdb" /debug /machine:I386\
@@ -130,8 +130,8 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/notification.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -142,8 +142,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/notification.pdb" /debug /machine:I386\
@@ -189,8 +189,8 @@ CLEAN :
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/reactors.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -201,8 +201,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/reactors.pdb" /debug /machine:I386\
@@ -217,8 +217,8 @@ LINK32_OBJS= \
 
 !ENDIF 
 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/timer_queue.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -249,6 +249,7 @@ SOURCE=.\test_timer_queue.cpp
 DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -267,8 +268,21 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
@@ -318,6 +332,7 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -366,6 +381,8 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -451,6 +468,7 @@ DEP_CPP_TEST_R=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -502,6 +520,8 @@ DEP_CPP_TEST_R=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\

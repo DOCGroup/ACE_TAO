@@ -66,6 +66,24 @@ CLEAN :
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
+"$(OUTDIR)" :
+
+"$(INTDIR)" :
+
+"$(OUTDIR)\client.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+
+.c{$(CPP_OBJS)}.obj:
+
+.c{$(CPP_SBRS)}.sbr:
+
+.cpp{$(CPP_OBJS)}.obj:
+
+.cpp{$(CPP_SBRS)}.sbr:
+
+.cxx{$(CPP_OBJS)}.obj:
+
+.cxx{$(CPP_SBRS)}.sbr:
+
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_OBJS=.\Debug/
@@ -80,8 +98,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/client.pdb" /debug /machine:I386 /out:"$(OUTDIR)/client.exe" 
@@ -126,6 +144,24 @@ CLEAN :
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
+"$(OUTDIR)" :
+
+"$(INTDIR)" :
+
+"$(OUTDIR)\server.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+
+.c{$(CPP_OBJS)}.obj:
+
+.cpp{$(CPP_OBJS)}.obj:
+
+.cxx{$(CPP_OBJS)}.obj:
+
+.c{$(CPP_SBRS)}.sbr:
+
+.cpp{$(CPP_SBRS)}.sbr:
+
+.cxx{$(CPP_SBRS)}.sbr:
+
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_OBJS=.\Debug/
@@ -140,8 +176,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/server.pdb" /debug /machine:I386 /out:"$(OUTDIR)/server.exe" 
@@ -186,6 +222,7 @@ CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
 
 SOURCE=.\test_sock_connector.cpp
 DEP_CPP_TEST_=\
+	"..\..\..\ace\config-win32.h"\
 	".\CPP-connector.cpp"\
 	".\CPP-connector.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -194,6 +231,10 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
@@ -206,10 +247,15 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -241,6 +287,8 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -329,6 +377,7 @@ DEP_CPP_TEST_=\
 
 SOURCE=".\CPP-connector.cpp"
 DEP_CPP_CPP_C=\
+	"..\..\..\ace\config-win32.h"\
 	".\CPP-connector.cpp"\
 	".\CPP-connector.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -337,6 +386,10 @@ DEP_CPP_CPP_C=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
@@ -349,10 +402,15 @@ DEP_CPP_CPP_C=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -384,6 +442,8 @@ DEP_CPP_CPP_C=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -475,6 +535,7 @@ DEP_CPP_CPP_C=\
 
 SOURCE=.\test_sock_acceptor.cpp
 DEP_CPP_TEST_S=\
+	"..\..\..\ace\config-win32.h"\
 	".\CPP-acceptor.cpp"\
 	".\CPP-acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -486,6 +547,10 @@ DEP_CPP_TEST_S=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -495,10 +560,15 @@ DEP_CPP_TEST_S=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -530,6 +600,8 @@ DEP_CPP_TEST_S=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -618,6 +690,7 @@ DEP_CPP_TEST_S=\
 
 SOURCE=".\CPP-acceptor.cpp"
 DEP_CPP_CPP_A=\
+	"..\..\..\ace\config-win32.h"\
 	".\CPP-acceptor.cpp"\
 	".\CPP-acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -629,6 +702,10 @@ DEP_CPP_CPP_A=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -638,10 +715,15 @@ DEP_CPP_CPP_A=\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
@@ -673,6 +755,8 @@ DEP_CPP_CPP_A=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\

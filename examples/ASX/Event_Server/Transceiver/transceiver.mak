@@ -13,7 +13,7 @@ CFG=Transceiver - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Transceiver.mak" CFG="Transceiver - Win32 Debug"
+!MESSAGE NMAKE /f "transceiver.mak" CFG="Transceiver - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -30,8 +30,9 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-CPP=cl.exe
+# PROP Target_Last_Scanned "Transceiver - Win32 Debug"
 RSC=rc.exe
+CPP=cl.exe
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "Debug"
@@ -45,15 +46,15 @@ RSC=rc.exe
 OUTDIR=.\.
 INTDIR=.\Debug
 
-ALL : "$(OUTDIR)\Transceiver.exe"
+ALL : "$(OUTDIR)\transceiver.exe"
 
 CLEAN : 
 	-@erase "$(INTDIR)\transceiver.obj"
 	-@erase "$(INTDIR)\vc40.idb"
 	-@erase "$(INTDIR)\vc40.pdb"
-	-@erase "$(OUTDIR)\Transceiver.exe"
-	-@erase "$(OUTDIR)\Transceiver.ilk"
-	-@erase "$(OUTDIR)\Transceiver.pdb"
+	-@erase "$(OUTDIR)\transceiver.exe"
+	-@erase "$(OUTDIR)\transceiver.ilk"
+	-@erase "$(OUTDIR)\transceiver.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
@@ -68,27 +69,27 @@ CLEAN :
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-BSC32_FLAGS=/nologo /o"$(OUTDIR)/Transceiver.bsc" 
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/transceiver.bsc" 
 BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
- /pdb:"$(OUTDIR)/Transceiver.pdb" /debug /machine:I386\
- /out:"$(OUTDIR)/Transceiver.exe" 
+ /pdb:"$(OUTDIR)/transceiver.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/transceiver.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\transceiver.obj"
 
-"$(OUTDIR)\Transceiver.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\transceiver.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Transceiver.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+ /Fp"$(INTDIR)/transceiver.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 
