@@ -127,7 +127,7 @@ ImR_Activator_i::activate_server_with_startup (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
-      ACE_THROW_RETURN(ImplementationRepository::NotFound (), "");
+      ACE_THROW_RETURN(ImplementationRepository::NotFound (), 0);
     }
 
   // Find out if it is already running
@@ -140,7 +140,7 @@ ImR_Activator_i::activate_server_with_startup (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find ServerObject IOR for server <%s>\n",
                   server));
-      ACE_THROW_RETURN (ImplementationRepository::NotFound (), "");
+      ACE_THROW_RETURN (ImplementationRepository::NotFound (), 0);
     }
 
   // Check to see if there is one running (if there is a server_object_ior)
@@ -164,7 +164,7 @@ ImR_Activator_i::activate_server_with_startup (const char *server,
               ACE_ERROR ((LM_ERROR,
                           "Error: Invalid ServerObject IOR: <%s>\n",
                           server_object_ior.c_str ()));
-              ACE_THROW_RETURN (ImplementationRepository::NotFound (), "");
+              ACE_THROW_RETURN (ImplementationRepository::NotFound (), 0);
             }
 
           // Check to see if we can ping it
@@ -191,11 +191,11 @@ ImR_Activator_i::activate_server_with_startup (const char *server,
             CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE,
                                                     0),
             CORBA::COMPLETED_NO),
-          "");
+          0);
 
       // Start the server.
       this->start_server_i (server);
-      ACE_CHECK_RETURN ("");
+      ACE_CHECK_RETURN (0);
     }
 
   // Get the latest information about where the server is running and
@@ -214,9 +214,9 @@ ImR_Activator_i::activate_server_with_startup (const char *server,
     if (this->repository_.update (server, "", "") != 0)
       {
         ACE_ERROR ((LM_ERROR,
-                   "Error: Could not update information for server <%s>\n",
+                    "Error: Could not update information for server <%s>\n",
                    server));
-        ACE_THROW_RETURN (ImplementationRepository::NotFound (), "");
+        ACE_THROW_RETURN (ImplementationRepository::NotFound (), 0);
       }
   }
 
@@ -941,18 +941,33 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
       // register this activator (with the name of the hostname where
       // this instance is being run) with the locator.
-      locator->register_activator (hostname,
-                                   imr_obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+      CORBA::ULong reg_act =
+        locator->register_activator (hostname,
+                                     imr_obj.in ()
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      if (reg_act == 1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Activator on %s didnt get registered\n"),
+                             -1);
+        }
 
       // Get reactor instance from TAO.
       ACE_Reactor *reactor = orb->orb_core ()->reactor ();
 
       // = Set up the process manager
-
-      // Init the Process Manager.
-      this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor);
+      if (reactor != 0)
+        {
+          // Init the Process Manager.
+          if (this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "The ACE_Process_Manager didnt get initialized\n"),
+                                 -1);
+            }
+        }
 
       // Initialize the persistent storage
       if (this->repository_.init ())

@@ -43,7 +43,7 @@ public:
   ~Options();
 
   /// Parse the command-line arguments and initialize the options.
-  int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, char *argv[]);
 
   /// Service Mode
   int service (void) const;
@@ -57,10 +57,10 @@ public:
   /// Returns the configuration  object.
   Repository_Configuration* config (void) const;
 
-  ACE_TCHAR *repository_mode (void);
+  char *repository_mode (void);
 
   /// Returns the file addr.
-  ACE_TCHAR *file_name (void) const;
+  char *file_name (void) const;
 
   /// Converts the activation mode to a const char *. Needed to put
   /// the activation mode into the XML file or print it out.
@@ -85,13 +85,13 @@ public:
 
 private:
   /// Parses and pulls out arguments for the ImR
-  int parse_args (int &argc, ACE_TCHAR *argv[]);
+  int parse_args (int &argc, char *argv[]);
 
   /// Print the usage information.
   void print_usage (void) const;
 
   /// Initialize file persistence.
-  int initialize_file_persistence (const ACE_TCHAR *filename);
+  int initialize_file_persistence (const char  *filename);
 
   /// Initialize Registry persistence.
   int initialize_registry_persistence (void);
@@ -100,10 +100,10 @@ private:
   int initialize_non_persistence (void);
 
   /// Initialize XML file persistence
-  int initialize_xml_persistence (const ACE_TCHAR *file_name);
+  int initialize_xml_persistence (const char *file_name);
 
   /// Run a service command.
-  int run_service_command (const ACE_TCHAR *command);
+  int run_service_command (const char *command);
 
   /// Loads ORB options from the registry
   int load_registry_options (ACE_ARGV &orb_options);
@@ -112,10 +112,10 @@ private:
   Repository_Configuration* repo_config_;
 
   /// Mode of the Server Repository: if XML (x) or non-XML (n)
-  ACE_TCHAR *repo_mode_;
+  char repo_mode_;
 
   /// The persistent file option.
-  ACE_TCHAR *file_name_;
+  char *file_name_;
 
   /// Debug level.
   unsigned int debug_;
