@@ -61,7 +61,6 @@ FILES= $(IDL_FILES) \
 	Event/ReactorTask \
 	Event/Task_Manager \
 	\
-	Sched/Scheduling_Service \
 	Sched/Config_Scheduler \
 	Sched/Scheduler \
 	Sched/Scheduler_Generic \
