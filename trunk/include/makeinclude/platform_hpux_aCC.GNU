@@ -30,9 +30,6 @@ endif
 ifeq (,$(optimize))
   optimize = 0
 endif
-ifeq (,$(stdcpplib))
-  stdcpplib = 1
-endif
 ifeq (,$(threads))
   threads = 1
 endif
@@ -44,43 +41,57 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 CC		= /bin/cc
 CXX		= aCC
 
-# Extract the compiler version number. If it's A.03.27 (on HP-UX 11) or
-# A.01.27 (on HP-UX 10.20) (or higher) then we can turn on the standard
-# C++ library usage, else we need to stick with the old one.
-CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
-CXXVERS := $(word 8, $(CXXVERS_WORDS))
-ifneq (27,$(CXXVERS))
-ifneq (30,$(CXXVERS))
-  stdcpplib = 0
-endif
+ifeq (,$(stdcpplib))
+# If the user didn't explicitly set stdcpplib, assume that the compiler
+# can do -AA, unless it's a .2x version (e.g., 03.24). 03.27 can do -AA,
+# so check for that one explicitly and enable it if so.
+  CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
+  CXXVERS := $(word 8, $(CXXVERS_WORDS))
+  ifeq (,$(filter 2%,$(CXXVERS)))
+    stdcpplib = 1
+  else
+    ifeq (27,$(CXXVERS))
+      stdcpplib = 1
+    else
+      stdcpplib = 0
+    endif
+  endif
 endif
 
 ifeq (1,$(stdcpplib))
-  CCFLAGS += -AA -DACE_HAS_STANDARD_CPP_LIBRARY=1
-ifeq (1, $(threads))
-  CCFLAGS += -D_RWSTD_MULTI_THREAD -D_REENTRANT
-endif
+  CCFLAGS += -AA
+  # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
+  # as support call 3201224717. (Steve Huston, 23-Nov-2002)
+  CCFLAGS += +W930
 # Compile errors using -AA and +noeh together - HP problem report
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
-  exceptions = 1
+# If you still have problems with this area, uncomment the following line:
+#  exceptions = 1
 endif
 
-# Set the appropriate preprocessor defs for threading based on OS version.
-# If the user has requested building without threads, then don't set any
-# for 10.20, but for 11.00, the default is to use threads, so explicitly
-# turn them off if the user requested build without threads.
-# On HP-UX 11, even without building for threads, the *_r reentrant
-# functions are available, and _REENTRANT enables them.
+# Set the appropriate preprocessor defs for threading based on OS version
+# and specified compiler options.
 ifeq ($(threads),1)
-ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-THR_DEFS	= -DACE_HAS_THREADS -D_POSIX_C_SOURCE=199506L
+  THR_DEFS = -DACE_HAS_THREADS -D_REENTRANT
+
+  # Different for v2 vs. v1 C++ library selection.
+  ifeq (1,$(stdcpplib))
+    THR_DEFS += -D_RWSTD_MULTI_THREAD
+  else
+    THR_DEFS += -DRWSTD_MULTI_THREAD -D_THREAD_SAFE
+  endif
+
+  # For HP-UX 11.x, choose kernel threads over CMA (user) threads.
+  ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+    THR_DEFS += -D_POSIX_C_SOURCE=199506L
+  endif
 else
-THR_DEFS	= -DACE_HAS_THREADS -D_REENTRANT
-endif
-else
-ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-THR_DEFS	= -DACE_HAS_THREADS=0 -D_REENTRANT
-endif
+  THR_DEFS = -DACE_HAS_THREADS=0
+  # On HP-UX 11, even without building for threads, the *_r reentrant
+  # functions are available, and _REENTRANT enables them.
+  ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+    THR_DEFS += -D_REENTRANT
+  endif
 endif
 
 # Suppress warning 302 ((...) parameter list is a non-portable feature)

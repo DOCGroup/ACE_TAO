@@ -1,3 +1,43 @@
+Sat Nov 23 17:54:18 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_CB_Proactor.{h cpp}: Changes to align with recent
+          ACE_POSIX_AIOCB_Proactor changes: changed handle_events (ulong) to
+          handle_events_i() and made nonvirtual. Removed get_result_status(),
+          cancel_aiocb(), and cancel_aio() since they simply forwarded to
+          ACE_POSIX_AIOCB_Proactor. Remove most of allocate_aio_slot(); call
+          up to ACE_POSIX_AIOCB_Proactor::allocate_aio_slot then tweak the
+          aiocb fields for the callback.
+
+        * ace/config-hpux-11.00.h: Control the ACE_HAS_STANDARD_CPP_LIBRARY
+          and ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB settings by compiler-
+          defined macro _HP_NAMESPACE_STD, not passing them through from
+          platform_hpux_aCC.GNU. Similarly with ACE_HAS_EXCEPTIONS (define
+          it unless __HPACC_NOEH is set). This breaks a coupling from the
+          platform_hpux_aCC.GNU file, and will make autoconf easier as well
+          as making it easier for users to write makefiles without following
+          the ties through and trying to duplicate them.
+          Also, include config-posix.h to let it pick up system-supplied
+          settings.
+
+        * ace/OS_Memory.h: In the HP aCC section, remove the checks for
+          aCC version > 32500 and _HP_NAMESPACE_STD... just use the
+          ACE_HAS_STANDARD_CPP_LIBRARY setting from config-hpux-11.00.h.
+
+        * ace/Proactor.cpp (ctor): When no implementation is supplied, be
+          sure to make one up, even w/o presence of realtime signals.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: If stdcpplib is not
+          specified by user, set it to 1 always, unless the compiler is
+          a .2x version and not .27 (03.27 (01.27 on 10.20) is the first
+          version that can do -AA); makes it unnecessary to update this every
+          time HP releases a new compiler version. Also rearranged the
+          thread-related compiler option settings to be simpler and easier
+          to match with what the documentation says to set. Removed the
+          ACE_HAS_STANDARD_CPP_LIBRARY settings; they're defined in
+          ace/config-hpux-11.00.h when proper (see above).
+          Also, added +W930 to CCLFAGS when -AA to stop a spurious warning
+          about placement operator delete on aC++ 03.37, 03.39.
+
 Sat Nov 23 17:43:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (send_n): Properly update byte count for each message
