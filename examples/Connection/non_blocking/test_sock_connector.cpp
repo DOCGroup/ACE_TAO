@@ -23,3 +23,7 @@ main (int argc, char *argv[])
   return peer_connector.svc ();
 }                                                       
 
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

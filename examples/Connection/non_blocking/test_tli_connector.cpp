@@ -24,6 +24,11 @@ main (int argc, char *argv[])
   
   return peer_connector.svc ();
 }                                                       
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class IPC_Client<PEER_HANDLER, ACE_TLI_CONNECTOR>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #else
 int
 main (void)

@@ -23,3 +23,7 @@ main (int argc, char *argv[])
   return peer_acceptor.svc ();
 }
 
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class IPC_Server<SVC_HANDLER, ACE_SOCK_ACCEPTOR>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
