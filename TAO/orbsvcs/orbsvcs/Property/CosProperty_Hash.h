@@ -8,8 +8,8 @@
 //     CosProperty_Hash.h
 //
 // = DESCRITION
-//     Defines CosProperty_Hash_Value and CosProperty_Hash_Key classes for the Hash_Map_Manager to
-//     be used in the CosPropertyService. 
+//     Defines CosProperty_Hash_Value and CosProperty_Hash_Key classes
+//     for the Hash_Map_Manager to be used in the CosPropertyService.
 //
 // = AUTHOR
 //     Alexander B. Arulanthu <alex@cs.wustl.edu>
