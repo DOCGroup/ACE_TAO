@@ -1,0 +1,22 @@
+project(*server): orbsvcsexe, rtcorbaevent, strategies {
+  after    += RTEC_Perf
+  libs     += TAO_RTEC_Perf
+  includes += ../lib $(TAO_ROOT)/orbsvcs
+
+  Source_Files {
+    server.cpp
+    Session.cpp
+    Session_Factory.cpp
+  }
+}
+
+project(*client): orbsvcsexe, rtcorbaevent, strategies {
+  after    += RTEC_Perf
+  libs     += TAO_RTEC_Perf
+  includes += ../lib $(TAO_ROOT)/orbsvcs
+
+  Source_Files {
+    client.cpp
+    Callback.cpp
+  }
+}

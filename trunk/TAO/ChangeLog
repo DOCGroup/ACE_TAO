@@ -1,15 +1,26 @@
+Tue Mar 23 13:53:59 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+
+          Added mpc files for these projects.
+
 Tue Mar 23 09:36:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/CORBA_String.cpp (string_alloc):
+        * tao/CORBA_String.cpp (string_alloc):
 
-	  Intialize the allocated string to null.
-	  
-	* tao/params.cpp (ctor):
+          Intialize the allocated string to null.
 
-	  Wrong usage of the array bounds.
+        * tao/params.cpp (ctor):
 
-	  Thanks to Andreas <andreas.koehler@sysde.eads.net> for spotting
-	  the problems and suggesting a patch.
+          Wrong usage of the array bounds.
+
+          Thanks to Andreas <andreas.koehler@sysde.eads.net> for spotting
+          the problems and suggesting a patch.
 
 Tue Mar 23 07:34:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
