@@ -10,10 +10,6 @@ ACE_RCSID (ORT,
 
 namespace TAO
 {
-  ORT_Adapter_Factory_Impl::~ORT_Adapter_Factory_Impl (void)
-  {
-  }
-
   ORT_Adapter *
   ORT_Adapter_Factory_Impl::create ()
   {
