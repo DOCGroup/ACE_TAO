@@ -112,15 +112,13 @@ TAO::ObjectKey_Table::destroy (void)
                         0);
 
       TABLE::ITERATOR end_iter = this->table_.end ();
+      TABLE::ITERATOR start;
 
-      for (TABLE::ITERATOR start = this->table_.begin ();
-           start != end_iter;
-           ++start)
+      while ((start = this->table_.begin ()) != end_iter)
         {
           TABLE::ENTRY &ent = (*start);
 
           (void) ent.item ()->decr_refcount ();
-
           this->table_.unbind (&ent);
         }
     }
