@@ -130,6 +130,10 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
   handler->message_block (ts_db);
   ts_db->io_handler (handler);
 
+  // Get the waiter index
+  JAWS_Waiter *waiter = JAWS_Waiter_Singleton::instance ();
+  int waiter_index = waiter->index ();
+
   do
     {
       JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, looping");
@@ -151,7 +155,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
           // need to wait for an asynchronous event
 
           JAWS_IO_Handler *h;
-          h = JAWS_Waiter_Singleton::instance ()->wait_for_completion ();
+          h = waiter->wait_for_completion (waiter_index);
           if (h == 0)
             result = -1;
           else

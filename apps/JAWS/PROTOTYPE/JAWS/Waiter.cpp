@@ -19,15 +19,9 @@ JAWS_Waiter::iter (void)
   return this->iter_;
 }
 
-JAWS_IO_Handler *
-JAWS_Waiter::wait_for_completion (void)
+int
+JAWS_Waiter::index (void)
 {
-  if (ACE_Proactor::instance ()->handle_events () == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
-      return 0;
-    }
-
 #if 0
   // A future version of ACE will support this.
   ACE_Thread_ID tid = ACE_OS::thr_self ();
@@ -42,15 +36,27 @@ JAWS_Waiter::wait_for_completion (void)
   ACE_Thread_ID tid (thr_handle, thr_name);
 #endif /* 0 */
 
-  return *(this->find (tid));
+  return JAWS_Waiter_Base::index (tid);
+}
+
+JAWS_IO_Handler *
+JAWS_Waiter::wait_for_completion (int i)
+{
+  if (ACE_Proactor::instance ()->handle_events () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
+      return 0;
+    }
+
+  return (i > 0) ? *(this->find (i)) : *(this->find (this->index ()));
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class JAWS_Assoc_Array<ACE_Thread_ID, JAWS_Data_Block *>;
-template class JAWS_Assoc_Array_Iterator<ACE_Thread_ID, JAWS_Data_Block *>;
+template class JAWS_Assoc_Array<ACE_Thread_ID, JAWS_IO_Handler *>;
+template class JAWS_Assoc_Array_Iterator<ACE_Thread_ID, JAWS_IO_Handler *>;
 template class ACE_Singleton<JAWS_Waiter, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate JAWS_Assoc_Array<ACE_Thread_ID, JAWS_Data_Block *>
-#pragma instantiate JAWS_Assoc_Array_Iterator<ACE_Thread_ID, JAWS_Data_Block *>
+#pragma instantiate JAWS_Assoc_Array<ACE_Thread_ID, JAWS_IO_Handler *>
+#pragma instantiate JAWS_Assoc_Array_Iterator<ACE_Thread_ID, JAWS_IO_Handler *>
 #pragme instantiate ACE_Singleton<JAWS_Waiter, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
