@@ -1,3 +1,9 @@
+Tue May  8 10:06:58 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/CORBALOC_Parser.cpp (parse_string): 
+	  Removed a debug statement that missed the final cleanup before
+	  the commit.
+
 Tue May  8 09:42:02 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/CORBALOC_Parser.cpp (check_prefix): 
