@@ -97,22 +97,22 @@ static ACE_TCHAR headers[] =
   ACE_TEXT ("Accept-Language: C++\r\n")
   ACE_TEXT ("Accept-Encoding: gzip, deflate\r\n")
   ACE_TEXT ("User-Agent: Proactor_Test/1.0 (non-compatible)\r\n")
-  ACE_TEXT ("Connection: Keep-Alive\r\n"); 
+  ACE_TEXT ("Connection: Keep-Alive\r\n");
 
 static ACE_TCHAR end_of_request_header[] =
   ACE_TEXT ("\r\n");
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
 static ACE_TCHAR complete_message[] =
-  "GET / HTTP/1.1\r\n"
-  "Accept: */*\r\n"
-  "Accept-Language: C++\r\n"
-  "Accept-Encoding: gzip, deflate\r\n"
-  "User-Agent: Proactor_Test/1.0 (non-compatible)\r\n"
-  "Connection: Keep-Alive\r\n"
-  "\r\n";
+  ACE_TEXT ("GET / HTTP/1.1\r\n")
+  ACE_TEXT ("Accept: */*\r\n")
+  ACE_TEXT ("Accept-Language: C++\r\n")
+  ACE_TEXT ("Accept-Encoding: gzip, deflate\r\n")
+  ACE_TEXT ("User-Agent: Proactor_Test/1.0 (non-compatible)\r\n")
+  ACE_TEXT ("Connection: Keep-Alive\r\n")
+  ACE_TEXT ("\r\n");
 
-class LogLocker 
+class LogLocker
 {
 public:
 
@@ -1103,18 +1103,18 @@ Sender::initiate_write_stream (void)
   static const size_t headers_length = ACE_OS::strlen (headers);
   static const size_t end_of_request_header_length = ACE_OS::strlen (end_of_request_header);
 
-  ACE_Message_Block *mb1 = 0, 
-                    *mb2 = 0, 
+  ACE_Message_Block *mb1 = 0,
+                    *mb2 = 0,
                     *mb3 = 0;
 
   // No need to allocate +1 for proper printing - the memory includes it already
-  ACE_NEW_RETURN (mb1, ACE_Message_Block (request_line,
+  ACE_NEW_RETURN (mb1, ACE_Message_Block ((char *) request_line,
                                           request_line_length), -1);
   mb1->wr_ptr (request_line_length);
-  ACE_NEW_RETURN (mb2, ACE_Message_Block (headers,
+  ACE_NEW_RETURN (mb2, ACE_Message_Block ((char *) headers,
                                           headers_length), -1);
   mb2->wr_ptr (headers_length);
-  ACE_NEW_RETURN (mb3, ACE_Message_Block (end_of_request_header,
+  ACE_NEW_RETURN (mb3, ACE_Message_Block ((char *) end_of_request_header,
                                           end_of_request_header_length), -1);
   mb3->wr_ptr (end_of_request_header_length);
 
@@ -1136,7 +1136,7 @@ Sender::initiate_write_stream (void)
   ACE_Message_Block *mb = 0;
 
   // No need to allocate +1 for proper printing - the memory includes it already
-  ACE_NEW_RETURN (mb, 
+  ACE_NEW_RETURN (mb,
                   ACE_Message_Block (complete_message, complete_message_length),
                   -1);
   mb->wr_ptr (complete_message_length);
@@ -1168,11 +1168,11 @@ Sender::initiate_read_stream (void)
   static const size_t headers_length = ACE_OS::strlen (headers);
   static const size_t end_of_request_header_length = ACE_OS::strlen (end_of_request_header);
 
-  ACE_Message_Block *mb1 = 0, 
-                    *mb2 = 0, 
+  ACE_Message_Block *mb1 = 0,
+                    *mb2 = 0,
                     *mb3 = 0;
 
-  // We allocate +1 only for proper printing - we can just set the last byte 
+  // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out
   ACE_NEW_RETURN (mb1, ACE_Message_Block (request_line_length + 1), -1);
   ACE_NEW_RETURN (mb2, ACE_Message_Block (headers_length + 1), -1);
@@ -1201,9 +1201,9 @@ Sender::initiate_read_stream (void)
 
   ACE_Message_Block *mb = 0;
 
-  // We allocate +1 only for proper printing - we can just set the last byte 
+  // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out
-  ACE_NEW_RETURN (mb, 
+  ACE_NEW_RETURN (mb,
                   ACE_Message_Block (complete_message_length + 1)
                   , -1);
 
@@ -1268,23 +1268,24 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       size_t bytes_transferred = result.bytes_transferred ();
       char index = 0;
-      for (ACE_Message_Block* mb_i = &mb; 
-           (mb_i != 0) && (bytes_transferred > 0); 
+      for (ACE_Message_Block* mb_i = &mb;
+           (mb_i != 0) && (bytes_transferred > 0);
            mb_i = mb_i->cont ())
       {
         // write 0 at string end for proper printout (if end of mb, it's 0 already)
-        mb_i->rd_ptr()[0]  = '\0'; 
+        mb_i->rd_ptr()[0]  = '\0';
+
+        size_t len = mb_i->rd_ptr () - mb_i->base ();
 
         // move rd_ptr backwards as required for printout
-        if (mb_i->rd_ptr () - mb_i->base () >= bytes_transferred)
+        if (len >= bytes_transferred)
         {
-          mb_i->rd_ptr (- bytes_transferred);
+          mb_i->rd_ptr (0 - bytes_transferred);
           bytes_transferred = 0;
         }
         else
         {
-          size_t len = mb_i->rd_ptr () - mb_i->base ();
-          mb_i->rd_ptr (- len);
+          mb_i->rd_ptr (0 - len);
           bytes_transferred -= len;
         }
 
@@ -1297,7 +1298,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       }
 #else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
       // write 0 at string end for proper printout (if end of mb, it's 0 already)
-      mb.rd_ptr()[0]  = '\0'; 
+      mb.rd_ptr()[0]  = '\0';
       // move rd_ptr backwards as required for printout
       mb.rd_ptr (- result.bytes_transferred ());
       ACE_DEBUG ((LM_DEBUG,
@@ -1373,8 +1374,8 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       char index = 0;
-      for (ACE_Message_Block* mb_i = &mb; 
-           mb_i != 0; 
+      for (ACE_Message_Block* mb_i = &mb;
+           mb_i != 0;
            mb_i = mb_i->cont ())
       {
         ++index;
@@ -1523,7 +1524,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           seconds = MIN_TIME;
         if (seconds > MAX_TIME)
           seconds = MAX_TIME;
-       	break;
+        break;
       case 'b':  // both client and server
         both = 1;
         break;
