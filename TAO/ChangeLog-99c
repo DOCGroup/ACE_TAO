@@ -1,3 +1,66 @@
+Fri Oct 01 07:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ch.h,
+	  TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ci.h,
+	  TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.h,
+	  TAO_IDL/be/be_visitor_interface/ami_handler_stub_cs.h,
+	  TAO_IDL/be/be_visitor_argument/ami_arglist.cpp,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp,
+	  TAO_IDL/be/be_visitor_argument/ami_arglist.h,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_arglist.h,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.h,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.h,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.h,
+	  TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.h,
+	  TAO_IDL/be/be_visitor_operation/ami_arglist.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_arglist.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ss.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_argument_marshal.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.h,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.h,
+	  TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.h,
+	  TAO_IDL/be/be_visitor_operation/ami_arglist.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_operation_ss.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_argument_marshal.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.cpp:
+	  Removed these files, because they are no longer needed.
+
+	* TAO_IDL/ast/ast_module.cpp:
+	  The method add_referenced was not properly called.	  
+
+	* TAO_IDL/be/be_visitor_argument.cpp,
+	  TAO_IDL/be/be_visitor_interface.cpp,
+	  TAO_IDL/be/be_visitor_operation.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ci.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
+	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Removed AMI dependencies.
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+	  Minor adjustments.
+
 Fri Oct 01 02:17:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/MessagingS.h: Fixed missing TAO_Export macros.
