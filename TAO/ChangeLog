@@ -1,3 +1,68 @@
+Sun Sep 12 17:08:17 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	* orbsvcs/examples/Log/Event/Log_Event.mpc:
+	* orbsvcs/examples/Log/Notify/Log_Notify.mpc:
+
+          Update *.mpc files to reflect new libraries.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogConsumer.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogNotification.h:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/Iterator_i.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/LogNotification.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogConsumer.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+	* orbsvcs/orbsvcs/Log/PersistStore.h:
+
+          Changed #include "*_export.h" to "*_serv_export.h"; Renamed
+          TAO_*_Export to TAO_*_Serv_Export.
+
+	* orbsvcs/orbsvcs/Log/eventlog_serv_export.h:
+	* orbsvcs/orbsvcs/Log/eventlog_skel_export.h:
+	* orbsvcs/orbsvcs/Log/log_serv_export.h:
+	* orbsvcs/orbsvcs/Log/log_skel_export.h:
+	* orbsvcs/orbsvcs/Log/notifylog_serv_export.h:
+	* orbsvcs/orbsvcs/Log/notifylog_skel_export.h:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.rc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.rc:
+
+	  New files.
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+
+          Split Event Logging Service into three libraries:
+	  DsEventLogAdmin, DsEventLogAdmin_Skel, and
+	  DsEventLogAdmin_Serv for client stubs, servant skeletons, and
+	  service implementation respectively.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+          Split Logging Service into three libraries:
+	  DsLogAdmin, DsLogAdmin_Skel, and DsLogAdmin_Serv for client
+	  stubs, servant skeletons, and service implementation
+	  respectively.
+
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+          Split Notify Logging Service into three libraries:
+	  DsNotifyLogAdmin, DsNotifyLogAdmin_Skel, and
+	  DsNotifyLogAdmin_Serv for client stubs, servant skeletons, and
+	  service implementation respectively.
+
 Sun Sep 12 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Leader_Followers/client.cpp:

@@ -30,6 +30,7 @@
 #include "orbsvcs/DsEventLogAdminS.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "orbsvcs/CosEventCommS.h"
+#include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -43,7 +44,7 @@
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_EventLog_Export TAO_EventLogNotification :
+class TAO_EventLog_Serv_Export TAO_EventLogNotification :
   public TAO_LogNotification,
   public POA_CosEventComm::PushSupplier
 {
