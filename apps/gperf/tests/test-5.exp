@@ -1,5 +1,5 @@
 /* C code produced by gperf version 2.6 (GNU C++ version) */
-/* Command-line: ../src/gperf -a -g -o -j1 -t -p -N is_reserved_word  */
+/* Command-line: ../src/gperf -g -o -j1 -t -p -N is_reserved_word  */
 /* ISO Pascal 7185 reserved words.
  *
  * For GNU Pascal compiler (GPC) by jtv@hut.fi

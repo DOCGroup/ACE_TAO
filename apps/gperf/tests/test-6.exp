@@ -12,8 +12,7 @@
 	running time at the cost of minimizing generated table-size.
 	The numeric argument represents the number of times to iterate when
 	resolving a collision.  `0' means ``iterate by the number of keywords.''
--g	Assume a GNU compiler, e.g., g++ or gcc.  This makes all generated
-	routines use the ``inline'' keyword to remove cost of function calls.
+-g	Make generated routines use ``inline'' to remove function overhead.
 -G	Generate the static table of keywords as a static global variable,
 	rather than hiding it inside of the lookup function (which is the
 	default behavior).
@@ -21,6 +20,8 @@
 -H	Allow user to specify name of generated hash function. Default
 	is `hash'.
 -i	Provide an initial value for the associate values array.  Default is 0.
+-I	Generate comparison code using case insensitive string comparison, e.g.,
+	strncasecmp or strcasecmp.
 	Setting this value larger helps inflate the size of the final table.
 -j	Affects the ``jump value,'' i.e., how far to advance the associated
 	character value upon collisions.  Must be an odd number, default is 5.
@@ -40,6 +41,8 @@
 	name is `in_word_set.'
 -o	Reorders input keys by frequency of occurrence of the key sets.
 	This should decrease the search time dramatically.
+-O	Optimize the generated lookup function by assuming that all input keywords 
+	are members of the keyset from the keyfile.
 -p	Changes the return value of the generated function ``in_word_set''
 	from its default boolean value (i.e., 0 or 1), to type ``pointer
 	to wordlist array''  This is most useful when the -t option, allowing
@@ -70,5 +73,5 @@
 -v	Prints out the current version number
 -Z	Allow user to specify name of generated C++ class.  Default
 	name is `Perfect_Hash.'
-Usage: ../src/gperf [-acCdDef[num]gGhH<hashname>i<init>jk<keys>K<keyname>lL<language>nN<function name>oprs<size>S<switches>tTvZ<class name>].
+Usage: ../src/gperf [-acCdDef[num]gGhH<hashname>i<init>Ijk<keys>K<keyname>lL<language>nN<function name>oOprs<size>S<switches>tTvZ<class name>].
 (type ../src/gperf -h for help)
