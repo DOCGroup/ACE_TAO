@@ -1,3 +1,37 @@
+Wed Sep 23 14:26:44 EDT 1998  James CE Johnson <jcej@lads.com>
+
+      * docs/tutorials/005/server.cpp
+        docs/tutorials/006/server.cpp
+        docs/tutorials/007/server.cpp
+        docs/tutorials/008/Makefile
+        docs/tutorials/009/Makefile
+        docs/tutorials/013/Makefile
+        docs/tutorials/013/block.cpp
+        docs/tutorials/013/block.h
+        docs/tutorials/013/data.h
+        docs/tutorials/013/message_queue.cpp
+        docs/tutorials/013/mld.cpp
+        docs/tutorials/013/mld.h
+        docs/tutorials/013/page01.html
+        docs/tutorials/013/page02.html
+        docs/tutorials/013/page03.html
+        docs/tutorials/013/page04.html
+        docs/tutorials/013/task.cpp
+        docs/tutorials/013/task.h
+        docs/tutorials/013/work.cpp
+        docs/tutorials/013/work.h
+
+        Fixed explicit template instantiaions in
+        tutorials 5, 6, 7.
+
+	Fixed a nasty bug in 9's Makefile (and removed
+	similar comment in 8's Makefile)
+
+	Preliminary version of 013 committed.  The code
+	worked before I began "optimizing" and should work
+	again in a couple of days.  The HTML is not yet
+	done but will be by the weekend (I hope).
+
 Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Stats.*: modified standard deviation calculation to

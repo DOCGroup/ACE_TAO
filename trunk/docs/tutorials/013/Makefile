@@ -1,16 +1,18 @@
-#----------------------------------------------------------------------------
-#	$Id$
-#----------------------------------------------------------------------------
+
+# $Id$
 
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN    = server directed_client broadcast_client
+BIN    = message_queue
 
-FILES  = 
+FILES  = task block work mld
 
-BUILD	= $(VBIN)
+BUILD  = $(VBIN)
+
+SRC  = $(addsuffix .cpp,$(BIN))
+SRC += $(addsuffix .cpp,$(FILES))
 
 HDR = *.h
 
@@ -32,7 +34,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 Indent : #
 	for i in $(SRC) $(HDR) ; do \
-		indent -npsl -l80 -fca -fc1 -cli0 -cdb < $$i | \
+		indent -npsl -l80 -fca -fc1 -cli0 -cdb -ts2 -bl -bli0 < $$i | \
 			sed -e 's/: :/::/g'  \
 			    -e 's/^.*\(public:\)/\1/' \
 			    -e 's/^.*\(protected:\)/\1/' \
@@ -40,12 +42,13 @@ Indent : #
 			    -e 's/:\(public\)/ : \1/' \
 			    -e 's/:\(protected\)/ : \1/' \
 			    -e 's/:\(private\)/ : \1/' \
+			    -e 's/	/  /g' \
 			> $$i~ ;\
 		mv $$i~ $$i ;\
 	done
 
 Depend : depend
-	perl ../fix.Makefile
+	perl ../007/fix.Makefile
 
 .depend : #
 	touch .depend
@@ -54,8 +57,4 @@ Depend : depend
 #	Dependencies
 #----------------------------------------------------------------------------
 
-	# Don't put anything below here.  Between the "depend" target and fix.Makefile
-	# it's guaranteed to be lost!
-
-	# This is inserted by the fix.Makefile script
 include .depend
