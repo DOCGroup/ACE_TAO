@@ -3,6 +3,12 @@ Wed Feb 03 10:12:14 1999  David L. Levine  <levine@cs.wustl.edu>
         * bin/make_release: fixed release_filter so that it doesn't put
           CVS files into the release.
 
+        * ace/Object_Manager.h: updated comments to reflect that
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER is now #defined in
+          several ace/config files, including that for Win32.
+          Thanks to Dave Meyer <dmeyer@std.saic.com> for pointing
+          that out.
+
 Wed Feb  3 09:30:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * websvcs/lib/URL_Addr.cpp:
