@@ -1,6 +1,13 @@
+Sat Oct 18 21:18:55 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/lib/Peer_T.cpp: Fixed unused arg warning.
+	* orbsvcs/orbsvcs/RTCosScheduling.dsp: Fixed path to idl compiler
+	  for MSVC release configuration.
+
 Sun Oct 19 02:02:27 UTC 2003 Kevin Bryan <bryank@cs.uri.edu>
-    * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
-    Cast what ACE_Thread::self() returns to int to satisfy FreeBSD.
+    
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+	  Cast what ACE_Thread::self() returns to int to satisfy FreeBSD.
     
 Sat Oct 18 17:02:49 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
