@@ -1,3 +1,8 @@
+Fri Mar  4 13:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Added new Operation_Table files
+
 Fri Mar  4 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1482_Regression/test.mpc:
