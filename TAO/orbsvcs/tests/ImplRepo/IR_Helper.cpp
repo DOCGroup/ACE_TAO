@@ -3,7 +3,7 @@
 #include "IR_Helper.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "../../ImplRepo_Service/PingS.h"
+#include "orbsvcs/PingS.h"
 
 class Ping_i: public POA_Ping_Object
   // = TITLE
