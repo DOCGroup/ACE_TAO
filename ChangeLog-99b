@@ -11,6 +11,9 @@ Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
           of the ACE tests pass with this configuration!  (Some of
           the usual suspects, such as Conn_Test, don't.)
 
+        * ace/config-qnx-neutrino.h: don't need ACE_HAS_PENTIUM here,
+          because it's in config-g++-common.h.
+
 Mon Jun 14 14:33:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Performance_Test.cpp (handle_input): removed
