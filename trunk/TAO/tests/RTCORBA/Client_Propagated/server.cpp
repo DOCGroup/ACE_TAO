@@ -1,5 +1,7 @@
 // $Id$
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 #include "testS.h"
 #include "ace/Get_Opt.h"
 
@@ -218,7 +220,7 @@ main (int argc, char *argv[])
         ACE_DEBUG ((LM_DEBUG,
                     "Final priority of the servant thread"
                     " = its initial priority\n"));
-      
+
     }
   ACE_CATCHANY
     {
@@ -230,3 +232,5 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */

@@ -1,5 +1,7 @@
 // $Id$
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
@@ -134,3 +136,5 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
