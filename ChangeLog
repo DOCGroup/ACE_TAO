@@ -1,3 +1,22 @@
+Wed Aug 25 07:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_loadavg.h:
+        * ace/os_include/sys/os_pstat.h:
+          New files to include sys/loadavg.h and sys/pstat.h when
+          ACE_HAS_SYS_LOADAVG_H and ACE_HAS_SYS_PSTAT_H is set
+
+        * ace/config-hpux-11.00.h:
+          HPUX has sys/pstat.h, so added define ACE_HAS_SYS_PSTAT_H
+
+        * ace/README:
+          Documented ACE_HAS_SYS_LOADAVG_H and ACE_HAS_SYS_PSTAT_H
+
+        * ace/OS.h:
+          Removed including of sys/pstat.h, it is really not needed here
+
+        * ace/OS_NS_unistd.cpp:
+          Instead of including sys/pstat.h include os_include/sys/os_pstat.h
+
 Wed Aug 25 07:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
