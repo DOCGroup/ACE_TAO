@@ -1,3 +1,8 @@
+Sun Nov 28 09:45:36 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * netsvcs/lib/Logging_Strategy.cpp: ACE_Logging_Strategy::fini () 
+          now returns a value.
+
 Sun Nov 28 02:41:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Reactor_Notify_Test.cpp (run_test): Only print out the
@@ -58,101 +63,106 @@ Sat Nov 27 14:59:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* bin/make_release:
 	  There was a non-scoped variable.
 
+Thu Nov 25 13:24:37 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tests/Capabilities_Test.cpp:  Changed a variable from
+          int to ACE_HANDLE.
+
 Thu Nov 25 02:17:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h: Added back some apparent bug fixes during the
-	  alignment change.
+        * ace/Malloc.h: Added back some apparent bug fixes during the
+          alignment change.
 
 Thu Nov 25 01:41:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h: Removed the alignment change for now.
+        * ace/Malloc.h: Removed the alignment change for now.
 
 Wed Nov 24 14:41:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.i (wait): Changed to use the process handle to wait
-	  for process termination.
+        * ace/Process.i (wait): Changed to use the process handle to wait
+          for process termination.
 
-	* ace/OS.h:
-	* ace/OS.i (wait,waitpid): Added an extra argument that takes the
-	  process handle of the waited process.  On Win32, <pid> is
-	  ignored if the <handle> is not equal to 0.  Passing the process
-	  <handle> is prefer on Win32 because using <pid> to wait on the
-	  project doesn't always work correctly if the waited process has
-	  already terminated.
+        * ace/OS.h:
+        * ace/OS.i (wait,waitpid): Added an extra argument that takes the
+          process handle of the waited process.  On Win32, <pid> is
+          ignored if the <handle> is not equal to 0.  Passing the process
+          <handle> is prefer on Win32 because using <pid> to wait on the
+          project doesn't always work correctly if the waited process has
+          already terminated.
 
 Wed Nov 24 08:30:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_malloc.cpp (malloc_recurse): Fixed
-	  the AMS macro to be ACE_MALLOC_STATS.  Thanks to David Levine
- 	  for reporting this.
+        * examples/Shared_Malloc/test_malloc.cpp (malloc_recurse): Fixed
+          the AMS macro to be ACE_MALLOC_STATS.  Thanks to David Levine
+          for reporting this.
 
 Tue Nov 23 12:47:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc.h: Modified the definition and use of
-	  ACE_MALLOC_PADDING_SIZE so that it works correctly and the code
- 	  that uses it compiles...  Thanks to Alexander Belopolsky
- 	  <belopolsky@my-deja.com> for reporting this.
+        * ace/Malloc.h: Modified the definition and use of
+          ACE_MALLOC_PADDING_SIZE so that it works correctly and the code
+          that uses it compiles...  Thanks to Alexander Belopolsky
+          <belopolsky@my-deja.com> for reporting this.
 
-	* ace/Malloc: Replaced the AMS macro, which polluted the global
- 	  namespace, with ACE_MALLOC_STATS, which doesn't...  Thanks to
- 	  Alexander Belopolsky <belopolsky@my-deja.com> for reporting
- 	  this.
+        * ace/Malloc: Replaced the AMS macro, which polluted the global
+          namespace, with ACE_MALLOC_STATS, which doesn't...  Thanks to
+          Alexander Belopolsky <belopolsky@my-deja.com> for reporting
+          this.
 
-	* ace/OS.h: Modified ACE_MIN macro so that it uses the > operator to
-	  be consistent with the ACE_MAX macro.  Thanks to Derek Dominish
- 	  <Derek.Dominish@Australia.Boeing.com> for reporting this.
+        * ace/OS.h: Modified ACE_MIN macro so that it uses the > operator to
+          be consistent with the ACE_MAX macro.  Thanks to Derek Dominish
+          <Derek.Dominish@Australia.Boeing.com> for reporting this.
 
-	* tests/Malloc_Test: Updated the Malloc_Test so that it'll
-	  allocate and test doubles to make sure they work correctly.
+        * tests/Malloc_Test: Updated the Malloc_Test so that it'll
+          allocate and test doubles to make sure they work correctly.
 
-	* ace/Malloc.h: Modified the alignment logic to make things
-	  work properly for datatypes like doubles.  Thanks to Alexander
- 	  Belopolsky <belopolsky@my-deja.com> for working this out.
+        * ace/Malloc.h: Modified the alignment logic to make things
+          work properly for datatypes like doubles.  Thanks to Alexander
+          Belopolsky <belopolsky@my-deja.com> for working this out.
 
 Tue Nov 23 12:02:53 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.i: Moved the inline methods for sec()/usec()/msec() so
-	  that are defined *before* they are used...
+        * ace/OS.i: Moved the inline methods for sec()/usec()/msec() so
+          that are defined *before* they are used...
 
 Tue Nov 23 11:34:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Malloc_Test.cpp (myallocator): Applied ACE_TEXT to several
-	  malloc argument.  Thanks to Ivan Murphy for reporting this.
+        * tests/Malloc_Test.cpp (myallocator): Applied ACE_TEXT to several
+          malloc argument.  Thanks to Ivan Murphy for reporting this.
 
 Tue Nov 23 11:06:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/CDR_File_Test.cpp (run_test): Changed <filename> to
-	  LPCTSTR so the test compile with UNICODE.  Thanks to Ivan Murphy
-	  for reporting this.
+        * tests/CDR_File_Test.cpp (run_test): Changed <filename> to
+          LPCTSTR so the test compile with UNICODE.  Thanks to Ivan Murphy
+          for reporting this.
 
 Mon Nov 22 18:02:19 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T.cpp:
-	* ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Strategies_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
 
-	  There was a strange interaction in
-	  find_or_create_svc_handler_i() because of these two changes:
+          There was a strange interaction in
+          find_or_create_svc_handler_i() because of these two changes:
 
-	  Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+          Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	  and
+          and
 
-	  Mon Jul 19 22:46:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+          Mon Jul 19 22:46:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	  Basically, <sh> was assigned to the newly created svc_handler.
-	  It had, however, not been added to the connection map nor had it
-	  been assigned a hint or recycler, i.e., it was partially
-	  initialized.
+          Basically, <sh> was assigned to the newly created svc_handler.
+          It had, however, not been added to the connection map nor had it
+          been assigned a hint or recycler, i.e., it was partially
+          initialized.
 
-	  However, we let go of the connector lock during the OS level
-	  connect call, hence exposing the partially initialized
-	  svc_handler to other threads.
+          However, we let go of the connector lock during the OS level
+          connect call, hence exposing the partially initialized
+          svc_handler to other threads.
 
-	  The solution is to use a temporary variable until the
-	  svc_handler is completely initialized.  After this we can assign
-	  <sh> to <potential_handler>. Note that making a new svc_handler,
-	  connecting remotely, binding to the map, and assigning of the
-	  hint and recycler should be atomic to the outside world.
+          The solution is to use a temporary variable until the
+          svc_handler is completely initialized.  After this we can assign
+          <sh> to <potential_handler>. Note that making a new svc_handler,
+          connecting remotely, binding to the map, and assigning of the
+          hint and recycler should be atomic to the outside world.
 
 Mon Nov 22 17:06:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -162,67 +172,67 @@ Mon Nov 22 17:06:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* examples/Configuration/config_test.cpp: ACE-ified this example.
+        * examples/Configuration/config_test.cpp: ACE-ified this example.
 
-	* ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
-	  within the overloaded global relational operator to use inline
- 	  methods.  This change should work around bugs with MSVC++.
-  	  Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
- 	  this.
+        * ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
+          within the overloaded global relational operator to use inline
+          methods.  This change should work around bugs with MSVC++.
+          Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
+          this.
 
-	* ace/Service_Config.cpp (parse_args): Reverted the behavior
-	  of parse_args() so that it doesn't return an error when it runs
- 	  across an option that it doesn't recognize.  This is necessary
- 	  to support certain use-cases where the Service Configurator is
- 	  part of an application-specific configuration process.  We do,
- 	  however, print a warning message if ACE::debug() > 0.  Thanks to
- 	  Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
- 	  suggesting a fix.
+        * ace/Service_Config.cpp (parse_args): Reverted the behavior
+          of parse_args() so that it doesn't return an error when it runs
+          across an option that it doesn't recognize.  This is necessary
+          to support certain use-cases where the Service Configurator is
+          part of an application-specific configuration process.  We do,
+          however, print a warning message if ACE::debug() > 0.  Thanks to
+          Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
+          suggesting a fix.
 
 Sat Nov 20 10:16:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Configuration.cpp: Moved DEFBUFSIZE into the Win32-specific
-	  part of the code and changed the name to ACE_DEFAULT_BUFSIZE so
- 	  that it won't conflict with any global names.  Thanks to David
- 	  Levine for reporting this.
+        * ace/Configuration.cpp: Moved DEFBUFSIZE into the Win32-specific
+          part of the code and changed the name to ACE_DEFAULT_BUFSIZE so
+          that it won't conflict with any global names.  Thanks to David
+          Levine for reporting this.
 
 Fri Nov 19 17:25:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace: Double checked that ACE builds correctly when threads are
-	  disabled.
+        * ace: Double checked that ACE builds correctly when threads are
+          disabled.
 
-	* ace/Local_Tokens.cpp (client_id): Had to futz with the code
-	  a bit to get it to work for both the threaded and non-threaded
- 	  case.
+        * ace/Local_Tokens.cpp (client_id): Had to futz with the code
+          a bit to get it to work for both the threaded and non-threaded
+          case.
 
-	* ace/Activation_Queue.h: Added a #define of ACE_Activation_List
-	  to ACE_Activation_Queue to be compatible with the terminology
- 	  used in the POSA2 book!
+        * ace/Activation_Queue.h: Added a #define of ACE_Activation_List
+          to ACE_Activation_Queue to be compatible with the terminology
+          used in the POSA2 book!
 
-	* ace/Message_Queue_T: Moved message_bytes(size_t) and
- 	  message_length(size_t) from the *.i file to the *.cpp file to
- 	  workaround bugs with SunC++ 5.0.  Thanks to Rick Weisner
- 	  <Rick.Weisner@East.Sun.COM> and John Tucker
- 	  <jtucker@infoglide.com> for reporting this problem and providing
- 	  the fix.
+        * ace/Message_Queue_T: Moved message_bytes(size_t) and
+          message_length(size_t) from the *.i file to the *.cpp file to
+          workaround bugs with SunC++ 5.0.  Thanks to Rick Weisner
+          <Rick.Weisner@East.Sun.COM> and John Tucker
+          <jtucker@infoglide.com> for reporting this problem and providing
+          the fix.
 
-	* ace/Configuration.cpp: There were inconsistencies in the explicit
-	  template instantiations where ACE_Thread_Mutex should have been
- 	  ACE_SYNCH_MUTEX so that the code will work when threading is
- 	  disabled.  In addition, we must be careful to conditionally
- 	  compile certain ACE_Allocator<> and ACE_Malloc<> template
- 	  instantiations since they are only valid when ACE_HAS_THREADS is
- 	  defined.
+        * ace/Configuration.cpp: There were inconsistencies in the explicit
+          template instantiations where ACE_Thread_Mutex should have been
+          ACE_SYNCH_MUTEX so that the code will work when threading is
+          disabled.  In addition, we must be careful to conditionally
+          compile certain ACE_Allocator<> and ACE_Malloc<> template
+          instantiations since they are only valid when ACE_HAS_THREADS is
+          defined.
 
-	* include/makeinclude/platform_irix6.x_sgic++.GNU,
-	* ace/Local_Tokens,
-	* ace/Synch_T.i:
-	  Made a number of minor changes so that ACE will compile/work
- 	  when threading is not enabled.  Thanks to Extern Chatterji
- 	  <Extern.Chatterji@kmweg.de> for reporting this.
+        * include/makeinclude/platform_irix6.x_sgic++.GNU,
+        * ace/Local_Tokens,
+        * ace/Synch_T.i:
+          Made a number of minor changes so that ACE will compile/work
+          when threading is not enabled.  Thanks to Extern Chatterji
+          <Extern.Chatterji@kmweg.de> for reporting this.
 
-	* ace/Message_Block.h: Clarified the comment for space().
-	  Thanks to Eric Newton for reporting this.
+        * ace/Message_Block.h: Clarified the comment for space().
+          Thanks to Eric Newton for reporting this.
 
 Fri Nov 19 02:21:11 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
