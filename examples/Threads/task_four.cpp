@@ -145,7 +145,9 @@ Invoker_Task::svc (void)
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
   Worker_Task **pTask = new Worker_Task* [n_tasks_];
    
-  for (int task = 0; 
+  int task;
+
+  for (task = 0; 
        task < this->n_tasks_;
        task++)
     {
