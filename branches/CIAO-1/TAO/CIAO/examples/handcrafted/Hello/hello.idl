@@ -2,6 +2,8 @@
 
 // A plain vanilla component definition.
 
+#include "ciao/CIAO_Component.pidl"
+
 interface Hello
 {
   // Return the greating string as:
