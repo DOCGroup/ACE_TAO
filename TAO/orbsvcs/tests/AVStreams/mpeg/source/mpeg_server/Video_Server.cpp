@@ -291,8 +291,16 @@ Video_Server::initialize_orb (int argc,
                         VIDEO_CONTROL_I::instance ()->_this (env),
                         env);
 
-  TAO_CHECK_ENV_RETURN (env, 
-                        -1);
+  if (env.exception () != 0)
+    {
+      env.clear ();
+      naming_context->rebind (video_control_name,
+                              VIDEO_CONTROL_I::instance ()->_this (env),
+                              env);
+      TAO_CHECK_ENV_RETURN (env,
+                            -1);
+    }
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   VIDEO_CONTROL_I::instance ()->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
