@@ -1,3 +1,15 @@
+Mon Jul 26 15:15:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/Makefile:
+	  Corrected some mistakes in the code to get
+	  generated files from reopened_modules.idl to
+	  be included in the build or not depending on
+	  whether the platform supports namespaces.
+
+	* TAO/tests/Makefile:
+	  Added IDL_Test directory to the list. It now builds
+	  cleanly on NT, SunOS/egcs and SunOS/g++.
+
 Mon Jul 26 15:00:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
