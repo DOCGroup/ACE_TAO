@@ -2521,7 +2521,7 @@ be_interface::gen_throw_spec (UTL_ExceptList *list,
        ei.next ())
     {
       *os << "," << be_nl
-          << ei.item ()->name ();
+          << "::" << ei.item ()->name ();
     }
 
   *os << be_uidt_nl
