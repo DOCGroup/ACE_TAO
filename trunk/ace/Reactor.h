@@ -18,7 +18,7 @@
 #define ACE_REACTOR_H
 
 #include "ace/Handle_Set.h"
-#include "ace/Timers.h"
+#include "ace/Timer_Queue.h"
 #include "ace/Signal.h"
 #include "ace/Thread.h"
 #include "ace/Token.h"

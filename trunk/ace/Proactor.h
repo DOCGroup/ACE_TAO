@@ -20,11 +20,12 @@
 
 #include "ace/Asynch_IO.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Timers.h"
+#include "ace/Timer_Queue.h"
 
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
 
+// Forward declarations.
 class ACE_Asynch_Result;
 class ACE_Proactor_Timer_Handler;
 class ACE_Proactor;

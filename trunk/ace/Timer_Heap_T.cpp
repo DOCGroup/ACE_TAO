@@ -1,11 +1,11 @@
 // $Id$
 
-#if !defined (ACE_TIMER_HEAP_C)
-#define ACE_TIMER_HEAP_C
+#if !defined (ACE_TIMER_HEAP_T_C)
+#define ACE_TIMER_HEAP_T_C
 
 #define ACE_BUILD_DLL
 
-#include "ace/Timer_Heap.h"
+#include "ace/Timer_Heap_T.h"
 
 // Define some simple macros to clarify the code.
 #define ACE_HEAP_PARENT(X) (X == 0 ? 0 : (((X) - 1) / 2))
@@ -543,4 +543,4 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
   return number_of_cancellations;
 }
 
-#endif /* ACE_TIMER_HEAP_C */
+#endif /* ACE_TIMER_HEAP_T_C */

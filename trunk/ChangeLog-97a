@@ -1,3 +1,10 @@
+Sat Apr 26 13:41:15 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Came up with a scheme that allowed us to remove the
+ 	  ace/Timers.{h,i,cpp} files by adding
+ 	  ACE_Timer_{Queue,Heap,List}_T.{h,i,cpp} files instead.  Thus, no
+ 	  existing code should break.
+
 Fri Apr 25 17:17:06 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): Fixed the fix from Thilo so that it

@@ -19,7 +19,6 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
-#include "ace/Timers.h"
 #include "ace/Map_Manager.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies.h"

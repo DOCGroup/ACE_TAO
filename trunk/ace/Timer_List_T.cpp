@@ -1,11 +1,11 @@
 // $Id$
 
-#if !defined (ACE_TIMER_LIST_C)
-#define ACE_TIMER_LIST_C
+#if !defined (ACE_TIMER_LIST_T_C)
+#define ACE_TIMER_LIST_T_C
 
 #define ACE_BUILD_DLL
 
-#include "ace/Timer_List.h"
+#include "ace/Timer_List_T.h"
 
 template <class TYPE, class FUNCTOR>
 ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>::ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR> &list)
@@ -307,5 +307,5 @@ ACE_Timer_List_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
   return number_of_cancellations;
 }
 
-#endif /* ACE_TIMER_LIST_C */
+#endif /* ACE_TIMER_LIST_T_C */
 
