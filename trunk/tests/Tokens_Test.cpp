@@ -230,7 +230,7 @@ main (int, char *[])
   ACE_OS::sleep (3);
 
   // Kill the token server.
-  if (new_process.kill () == -1)
+  if (new_process.terminate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Kill failed.\n"), -1);
 
   delete A;
