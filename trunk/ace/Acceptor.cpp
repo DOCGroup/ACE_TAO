@@ -193,6 +193,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
 
       this->reactor_->remove_handler
         (handle,
+         // We must pass the DONT_CALL flag here to avoid infinite
+         // recursion.
          ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
       // Shut down the listen socket to recycle the handles.
