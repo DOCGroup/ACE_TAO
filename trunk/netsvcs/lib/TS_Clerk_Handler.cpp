@@ -512,12 +512,11 @@ ACE_TS_Clerk_Processor::alloc (void)
   ACE_TRACE ("ACE_TS_Clerk_Processor::alloc");
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
 
-  void *temp = 0;
   // Only create the state if it doesn't already exist.
-  if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
+  if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR) ==  -1)
     {
       // Allocate the space out of shared memory for the system time entry
-      temp = this->shmem_->malloc (sizeof (this->system_time_));
+      void *temp = this->shmem_->malloc (sizeof (this->system_time_));
       
       // Give it a name binding
       this->shmem_->bind (ACE_DEFAULT_TIME_SERVER_STR, temp);
@@ -776,7 +775,7 @@ ACE_TS_Clerk_Processor::parse_args (int argc, char *argv[])
 	  break;
 	default:
 	  ACE_ERROR_RETURN ((LM_ERROR, 
-			     "%n:\n[-p hostname:port] [-t timeout] [-p poolname]\n%a", 1),
+			     "%n:\n[-h hostname:port] [-t timeout] [-p poolname]\n%a", 1),
 			    -1);
 	  break;
 	}
