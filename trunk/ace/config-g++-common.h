@@ -5,8 +5,6 @@
 // specific configuration file.  It provides config information common
 // to all g++ platforms, including egcs.
 
-// It is under construction, so it doesn't have much for non-egcs, yet.
-
 #if !defined (ACE_GNUG_COMMON_H)
 #define ACE_GNUG_COMMON_H
 
