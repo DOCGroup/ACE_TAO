@@ -45,7 +45,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO_IIOP_Transport(this, orb_core, 0));
+          TAO_IIOP_Transport (this, orb_core, 0));
 
   // store this pointer (indirectly increment ref count)
   this->transport(specific_transport);
@@ -313,6 +313,10 @@ int
 TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 
 {
+
+  // Increase the reference count on the upcall that have passed us.
+  this->pending_upcalls_++;
+
   return this->handle_input_i (h);
 }
 
@@ -321,7 +325,10 @@ int
 TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
                                              ACE_Time_Value *max_wait_time)
 {
-  this->pending_upcalls_++;
+  // The buffer on the stack which will be used to hold the input
+  // messages
+  char buf[TAO_CONNECTION_HANDLER_BUF_SIZE];
+
 
   // Call the transport read the message
   int result = this->transport ()->read_process_message (max_wait_time);
