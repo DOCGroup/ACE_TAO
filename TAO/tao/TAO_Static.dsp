@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="TAO Static" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="TAO LIB" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=TAO Static - Win32 Debug
+CFG=TAO LIB - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=TAO Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "TAO_Static.mak" CFG="TAO Static - Win32 Debug"
+!MESSAGE NMAKE /f "TAO_Static.mak" CFG="TAO LIB - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO Static - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "TAO Static - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "TAO LIB - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "TAO LIB - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=TAO Static - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "TAO Static - Win32 Release"
+!IF  "$(CFG)" == "TAO LIB - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -52,7 +52,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAOs.lib"
 
-!ELSEIF  "$(CFG)" == "TAO Static - Win32 Debug"
+!ELSEIF  "$(CFG)" == "TAO LIB - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -65,7 +65,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\\" /I "..\\" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -79,8 +79,8 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "TAO Static - Win32 Release"
-# Name "TAO Static - Win32 Debug"
+# Name "TAO LIB - Win32 Release"
+# Name "TAO LIB - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -330,6 +330,10 @@ SOURCE=.\Object_KeyC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectIDList.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Operation_Table.cpp
 # End Source File
 # Begin Source File
@@ -494,10 +498,6 @@ SOURCE=.\Active_Object_Map.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\align.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\any.h
 # End Source File
 # Begin Source File
@@ -522,6 +522,10 @@ SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Context.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CONV_FRAMEC.h
 # End Source File
 # Begin Source File
@@ -535,6 +539,10 @@ SOURCE=.\corba.h
 # Begin Source File
 
 SOURCE=.\corbafwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CurrentC.h
 # End Source File
 # Begin Source File
 
@@ -555,6 +563,10 @@ SOURCE=.\default_server.h
 # Begin Source File
 
 SOURCE=.\DomainC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DomainS.h
 # End Source File
 # Begin Source File
 
@@ -646,6 +658,10 @@ SOURCE=.\IOPS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_LookupTable.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IORC.h
 # End Source File
 # Begin Source File
@@ -698,7 +714,7 @@ SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Table.h
+SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
 
@@ -731,6 +747,10 @@ SOURCE=.\Pluggable.h
 # Begin Source File
 
 SOURCE=.\poa.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\POA_CORBA.h
 # End Source File
 # Begin Source File
 
@@ -882,6 +902,10 @@ SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Context.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\CONV_FRAMEC.i
 # End Source File
 # Begin Source File
@@ -891,10 +915,6 @@ SOURCE=.\CONV_FRAMES.i
 # Begin Source File
 
 SOURCE=.\corbafwd.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\CurrentC.i
 # End Source File
 # Begin Source File
 
@@ -946,10 +966,6 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Invocation.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\IOPC.i
 # End Source File
 # Begin Source File
@@ -990,6 +1006,10 @@ SOURCE=.\Object_KeyC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\ObjectIDList.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORB.i
 # End Source File
 # Begin Source File
@@ -1003,10 +1023,6 @@ SOURCE=.\ORB_Strategies_T.i
 # Begin Source File
 
 SOURCE=.\params.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\POA.i
 # End Source File
 # Begin Source File
 
@@ -1030,14 +1046,6 @@ SOURCE=.\PolicyC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PolicyS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Principal.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Request.i
 # End Source File
 # Begin Source File
@@ -1047,10 +1055,6 @@ SOURCE=.\sequence.i
 # Begin Source File
 
 SOURCE=.\Sequence_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Servant_Base.i
 # End Source File
 # Begin Source File
 
@@ -1092,14 +1096,6 @@ SOURCE=.\ValueFactory.i
 
 SOURCE=.\ValueFactory_Map.i
 # End Source File
-# Begin Source File
-
-SOURCE=.\varout.i
-# End Source File
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # End Group
 # End Target
 # End Project
