@@ -451,7 +451,8 @@ be_visitor_operation::gen_stub_operation_body (
 
   *os << "TAO::Arg_Traits<";
 
-  this->gen_arg_template_param_name (return_type, os);
+  this->gen_arg_template_param_name (return_type, 
+                                     os);
 
   *os << ">::stub_ret_val _tao_retval;";
 
@@ -468,7 +469,8 @@ be_visitor_operation::gen_stub_operation_body (
       *os << be_nl
           << "TAO::Arg_Traits<";
 
-      this->gen_arg_template_param_name (arg->field_type (), os);
+      this->gen_arg_template_param_name (arg->field_type (), 
+                                         os);
 
       *os << ">::";
 

@@ -37,8 +37,9 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "class " << be_global->skel_export_macro () << " "
-      << node->strategized_proxy_broker_name () << " : public virtual "
-      << "::" << node->full_base_proxy_broker_name () << be_nl <<  "{" 
+      << node->strategized_proxy_broker_name () << be_idt_nl
+      << ": public virtual "
+      << "TAO::Collocation_Proxy_Broker" << be_uidt_nl <<  "{" 
       << be_nl
       << "public: " << be_idt;
 
@@ -66,7 +67,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << "TAO::Argument ** args," << be_nl
       << "int num_args," << be_nl
       << "const char * op," << be_nl
-      << "int op_len," << be_nl
+      << "size_t op_len," << be_nl
       << "TAO::Collocation_Strategy strategy" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl

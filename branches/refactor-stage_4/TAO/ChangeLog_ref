@@ -1,3 +1,23 @@
+Tue Jul 22 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation.h:
+
+          Modified skeleton-side generated source files to match
+          Bala's latest hand-crafted changes to support collocation.
+
+        * tao/Collocation_Proxy_Broker.h (dispatch):
+
+          Changed the type of the 'op_len' parameter (which holds the
+          length of the operation string name) from int to size_t, since
+          the latter type is returned from strlen(). Also changed
+          instances of Object * to Object_ptr.
+
 Mon Jul 21 21:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
