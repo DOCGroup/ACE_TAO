@@ -82,11 +82,17 @@ be_visitor_interface::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_IS);
       break;
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SH);
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH);
       break;
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SS);
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH);
@@ -161,8 +167,10 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
     case TAO_CodeGen::TAO_INTERFACE_SH:
     case TAO_CodeGen::TAO_INTERFACE_IH:
@@ -247,8 +255,10 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
@@ -329,8 +339,10 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
@@ -404,17 +416,23 @@ be_visitor_interface::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_IS);
       break;
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SS);
-      break;
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
@@ -456,17 +474,17 @@ be_visitor_interface::visit_operation (be_operation *node)
     }
   delete visitor;
 
-  // 
+  //
   // AMI Call back code generation.
   //
-  
+
   // Return if AMI call back is not enabled.
   if (idl_global->ami_call_back () != I_TRUE)
-    {  
+    {
       return 0;
     }
-  
-  // Generate AMI stub for this operation, if you are doing client 
+
+  // Generate AMI stub for this operation, if you are doing client
   // side header.
 
   switch (this->ctx_->state ())
@@ -483,7 +501,7 @@ be_visitor_interface::visit_operation (be_operation *node)
       // We dont have to do anything for the other cases.
       return 0;
     }
-      
+
   // Grab the appropriate visitor.
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
@@ -494,7 +512,7 @@ be_visitor_interface::visit_operation (be_operation *node)
                          "NUL visitor\n"),
                         -1);
     }
-          
+
   // Visit the node using this visitor
   if (node->accept (visitor) == -1)
     {
@@ -505,7 +523,7 @@ be_visitor_interface::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
-  
+
   return 0;
 }
 
@@ -553,8 +571,10 @@ be_visitor_interface::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
@@ -635,8 +655,10 @@ be_visitor_interface::visit_union (be_union *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
@@ -717,8 +739,10 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done

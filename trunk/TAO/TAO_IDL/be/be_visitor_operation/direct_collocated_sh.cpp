@@ -8,10 +8,10 @@
 //    TAO IDL
 //
 // = FILENAME
-//    collocated_sh.cpp
+//    direct_collocated_sh.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for collocated operation in the server header
+//    Visitor generating code for direct_collocated operation in the server header
 //
 // = AUTHOR
 //    Aniruddha Gokhale
@@ -24,26 +24,26 @@
 
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, collocated_sh, "$Id$")
+ACE_RCSID(be_visitor_operation, direct_collocated_sh, "$Id$")
 
 
 // *************************************************************************
-//  be_visitor_operation_collocated_sh --
-//  This visitor generates code for the collocated operation signature in a
+//  be_visitor_operation_direct_collocated_sh --
+//  This visitor generates code for the direct_collocated operation signature in a
 //  server header file
 // *************************************************************************
 
-be_visitor_operation_collocated_sh::be_visitor_operation_collocated_sh
+be_visitor_operation_direct_collocated_sh::be_visitor_operation_direct_collocated_sh
 (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_collocated_sh::~be_visitor_operation_collocated_sh (void)
+be_visitor_operation_direct_collocated_sh::~be_visitor_operation_direct_collocated_sh (void)
 {
 }
 
-int be_visitor_operation_collocated_sh::visit_operation (be_operation *node)
+int be_visitor_operation_direct_collocated_sh::visit_operation (be_operation *node)
 {
   TAO_OutStream *os; // output stream
   be_type *bt;       // type node representing the return type

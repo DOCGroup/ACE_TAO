@@ -209,75 +209,75 @@ public:
   virtual UTL_ScopeStack   *scopes();              // Scopes stack
   virtual void             set_scopes(UTL_ScopeStack *);
                                                    // Set it
-                           
+
   virtual AST_Root         *root();                // Root of AST
   virtual void             set_root(AST_Root *);   // Set it
-                           
+
   virtual AST_Generator    *gen();                 // Generator
   virtual void             set_gen(AST_Generator *);// Set it
-                           
+
   virtual UTL_Error        *err();                 // Error reporter
   virtual void             set_err(UTL_Error *);   // Set it
-                           
+
   virtual long             err_count();            // How many errors?
   virtual void             set_err_count(long);    // Set it
-                           
+
   virtual long             lineno();               // Where in file?
   virtual void             set_lineno(long);       // Set it
-                           
+
   virtual UTL_String       *filename();            // What file?
   virtual void             set_filename(UTL_String *); // Set it
-                           
+
   virtual UTL_String       *main_filename();       // What's the main
                                                    // file name?
   virtual void             set_main_filename(UTL_String *);
                                                    // Set it
-                           
+
   virtual UTL_String       *real_filename();       // What's the real
                                                    // file name?
   virtual void             set_real_filename(UTL_String *);
                                                    // Set it
-                           
+
   virtual UTL_String       *stripped_filename();   // Stripped filename
   virtual void             set_stripped_filename(UTL_String *);  // Set it
-                           
+
   virtual idl_bool         imported();             // Are we imported?
   virtual idl_bool         import();               // Is import on?
   virtual void             set_import(idl_bool);   // Set it
-                           
+
   virtual idl_bool         in_main_file();         // Are we?
   virtual void             set_in_main_file(idl_bool);     // Set it
-                           
+
   virtual const char       *prog_name(void);           // Invoked as..
   virtual void             set_prog_name(const char *);  // Set it
-                           
+
   virtual const char       *cpp_location(void);     // Where's CPP?
   virtual void             set_cpp_location(const char *);// Set it
-                           
+
   virtual long             compile_flags(void);   // What flags are on?
   virtual void             set_compile_flags(long);// Turn some on or off
-                           
+
   virtual const char       *be(void);                  // Get BE to use
   virtual void             set_be(const char *);         // Set it
-                           
+
   virtual char             *local_escapes(void);       // Get local escapes
   virtual void             set_local_escapes(const char *);// Set it
-                           
+
   virtual UTL_Indenter     *indent();              // Get indenter
   virtual void             set_indent(UTL_Indenter *);
                                                    // Set it
-                           
+
   virtual UTL_StrList      *pragmas();             // Get pragmas
   virtual void             set_pragmas(UTL_StrList *);// Set it
-                           
+
   virtual idl_bool         read_from_stdin();      // Reading from stdin?
   virtual void             set_read_from_stdin(idl_bool); // Set it
-                           
+
   virtual void             store_include_file_name(UTL_String *);
-                           
+
   virtual UTL_String       **include_file_names();   // Array of file names
   virtual void             set_include_file_names(UTL_String **); // Set it
-                           
+
   virtual unsigned long    n_include_file_names(); // How many
   virtual void             set_n_include_file_names(unsigned long n);
 
@@ -524,26 +524,38 @@ public:
   virtual void compiled_marshaling (idl_bool);
   // enable compiled marshaling support
 
-  virtual void gen_impl_files (idl_bool);
-  //enable generation of implementation files
-
-  virtual void gen_copy_ctor (idl_bool);
-  //enable generation of copy constructor
-
-  virtual void gen_assign_op (idl_bool);
-  //enable the generation of the assignment operator
-
   virtual idl_bool compiled_marshaling (void);
   // check if we use compiled marshaling
+
+  virtual void gen_impl_files (idl_bool);
+  //enable generation of implementation files
 
   virtual idl_bool gen_impl_files (void);
   // check if we want to generate implementation files
 
+  virtual void gen_copy_ctor (idl_bool);
+  //enable generation of copy constructor
+
   virtual idl_bool gen_copy_ctor (void);
   //check if we want to generate the copy constructor
 
+  virtual void gen_assign_op (idl_bool);
+  //enable the generation of the assignment operator
+
   virtual idl_bool gen_assign_op (void);
   //check if we want to generate the assignment operator
+
+  virtual void gen_thru_poa_collocation (idl_bool);
+  // set whether we want to generate Thru_POA collocation stubs.
+
+  virtual idl_bool gen_thru_poa_collocation (void);
+  // check if we want to generate Thru_POA collocation stubs.
+
+  virtual void gen_direct_collocation (idl_bool);
+  // set whether we want to generate Direct collocation stubs.
+
+  virtual idl_bool gen_direct_collocation (void);
+  // check if we want to generate Direct collocation stubs.
 
   virtual void exception_support (idl_bool);
   // enable real C++ exceptions
@@ -608,12 +620,12 @@ private:
   // For char*'s have been allocated for this.
 
   ParseState                pd_parse_state;         // Parse state we're in.
-                  
-  // Operations   
+
+  // Operations
   long                      seen_include_file_before(UTL_String *);
                                                     // Seen this include
                                                     // before?
-                  
+
   UTL_String                *pd_idl_src_file;       // IDL source file.
 
   size_t  changing_standard_include_files_;
@@ -692,19 +704,25 @@ private:
   // do we optimize valuetype accessors?
 
   idl_bool compiled_marshaling_;
-  // do we support compiled marshaling
+  // do we support compiled marshaling?
 
   idl_bool gen_impl_files_;
-  //are we generating implementation files
+  // are we generating implementation files?
 
   idl_bool gen_copy_ctor_;
-  //are we generating the copy constructor
+  // are we generating the copy constructor?
 
   idl_bool gen_assign_op_;
-  //are we generating the assignment operator
+  // are we generating the assignment operator?
+
+  idl_bool gen_thru_poa_collocation_;
+  // are we generating Thru_POA collocated stubs?
+
+  idl_bool gen_direct_collocation_;
+  // are we generating Direct collocated stubs?
 
   idl_bool exception_support_;
-  // do we support real C++ exceptions (strict mapping) for stubs/skeletons
+  // do we support real C++ exceptions (strict mapping) for stubs/skeletons?
 
   idl_bool opt_tc_;
   // do we generate optimized typecodes?
