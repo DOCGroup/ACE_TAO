@@ -4841,7 +4841,15 @@ public:
   static int fgetc (FILE* fp);
 
 #if !defined (ACE_LACKS_CLEARERR)
+#if defined (clearerr)
+#define __ace_clearerr clearerr
+#undef clearerr
+#endif /* defined (clearerr) */
   static void clearerr (FILE* fp);
+#if defined (clearerr)
+#define clearerr __ace_clearerr
+#undef __ace_clearerr
+#endif /* defined (clearerr) */
 #endif /* !ACE_LACKS_CLEARERR */
 
 #if defined (ACE_HAS_WCHAR)

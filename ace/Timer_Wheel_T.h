@@ -182,6 +182,8 @@ private:
   void recalc_earliest(const ACE_Time_Value& last);
 
 private:
+  int power2bits (int n, int min_bits, int max_bits);
+
   /// Timing Wheel.
   ACE_Timer_Node_T<TYPE>** spokes_;
   /// Size of the timing wheel.
