@@ -423,7 +423,7 @@ sub check_for_pre_and_post ()
 # "#pragma warning(pop)" pragmas are used in a given header.
 sub check_for_push_and_pop ()
 {
-    print "Running #pragma warning(push)/(pop) test\n";
+    print "Running #pragma (push)/(pop) test\n";
     foreach $file (@files_h) {
         my $push_count = 0;
         my $pop_count = 0;
