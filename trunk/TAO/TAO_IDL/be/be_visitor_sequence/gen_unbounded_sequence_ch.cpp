@@ -34,6 +34,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -58,23 +59,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
         }
     }
 
-// May not need variable 'pt at all
-#if 0
-  // generate the class name
-  be_type  *pt; // base types
-
-  if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
-  else
-    pt = bt;
-#endif /* 0 */
-
   const char * class_name = node->instance_name ();
-
 
   // get the visitor for the type of the sequence
   be_visitor_context ctx (*this->ctx_);
@@ -83,69 +68,86 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 
   // !! branching in either compile time template instantiation
   // or manual template instatiation
-  os->gen_ifdef_AHETI();
+  os->gen_ifdef_AHETI ();
 
   os->gen_ifdef_macro (class_name);
 
-  os->indent ();
-
   *os << "class TAO_EXPORT_NESTED_MACRO "
-      << class_name << " : public TAO_Unbounded_Base_Sequence" << be_nl
+      << class_name << be_idt_nl
+      << ": public TAO_Unbounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "// = Initialization and termination methods." << be_nl
-      << be_nl;
+      << "// = Initialization and termination methods." << be_nl;
   // constructor
-  *os << class_name << " (void); // Default constructor." << be_nl;
+  *os << class_name << " (void);" << be_nl;
 
   // constructor
   *os << class_name << " (CORBA::ULong maximum); " << be_nl;
 
   // constructor
-  *os << class_name << " (CORBA::ULong maximum," << be_idt_nl
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "CORBA::ULong maximum," << be_nl
       << "CORBA::ULong length," << be_nl;
-  // the accept is here the first time used and if an
+
+  // The accept is used here the first time and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
   if (bt->accept (visitor) == -1)
-  {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_visitor_sequence_ch::"
-                        "visit_sequence - "
-                        "base type visit failed\n"),
-                        -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_ch::"
+                         "visit_sequence - "
+                         "base type visit failed\n"),
+                         -1);
+    }
+
   *os << " *data," << be_nl
-      << "CORBA::Boolean release = 0);" << be_uidt_nl;
+      << "CORBA::Boolean release = 0" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // constructor
-  *os << class_name << " (const " << class_name << " &rhs);" << be_nl;
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // operator =
-  *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl;
+  *os << class_name << " &operator= (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // destructor
-  *os << "virtual ~" << class_name << " (void); // Dtor." << be_nl;
+  *os << "virtual ~" << class_name << " (void);" << be_nl << be_nl;
 
   // Accessors
   *os << "// = Accessors." << be_nl;
+
   bt->accept (visitor);
+
   *os <<" &operator[] (CORBA::ULong i);" << be_nl;
 
   // operator[]
   *os << "const ";
+
   bt->accept (visitor);
-  *os << " &operator[] (CORBA::ULong i) const;" << be_nl;
+
+  *os << " &operator[] (CORBA::ULong i) const;" << be_nl << be_nl;
 
   // Static operations
   *os << "// = Static operations." << be_nl
       << "static ";
+
   bt->accept (visitor);
+
   *os << " *allocbuf (CORBA::ULong size);" << be_nl;
 
   *os << "static void freebuf (";
+
   bt->accept (visitor);
-  *os << " *buffer);" << be_nl;
+
+  *os << " *buffer);" << be_nl << be_nl;
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl;
 
   // allocate_buffer
   *os << "virtual void _allocate_buffer (CORBA::ULong length);" << be_nl;
@@ -153,9 +155,6 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // deallocate_buffer
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl
-      << be_nl;
   bt->accept(visitor);
   *os << " *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
@@ -165,13 +164,17 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   *os << " *get_buffer (void) const;" << be_nl;
 
   // replace
-  *os << "void replace (CORBA::ULong max," << be_idt_nl
+  *os << "void replace (" << be_idt << be_idt_nl
+      << "CORBA::ULong max," << be_nl
       << "CORBA::ULong length," << be_nl;
-  bt->accept(visitor);
-  *os <<" *data," << be_nl
-      << "CORBA::Boolean release);" << be_uidt << be_uidt_nl;
 
-  *os << "};\n";
+  bt->accept(visitor);
+
+  *os <<" *data," << be_nl
+      << "CORBA::Boolean release" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
+
+  *os << "};" << be_nl;
 
   os->gen_endif (); // endif macro
 

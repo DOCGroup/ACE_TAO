@@ -88,55 +88,68 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
 
   os->gen_ifdef_macro (class_name);
 
-  os->indent ();
-
-  *os << "class " << class_name << " : public TAO_Bounded_Base_Sequence" << be_nl
+  *os << "class " << class_name << be_idt_nl
+      << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "// = Initialization and termination methods." << be_nl
-      << be_nl;
+      << "// = Initialization and termination methods." << be_nl;
 
   // default Constructor
   *os << class_name << " (void);" << be_nl;
 
   // constructor
-  *os << class_name << " (CORBA::ULong length," << be_idt_nl;
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "CORBA::ULong length," << be_nl;
+
   bt->accept (visitor);
+
   *os <<" *data," << be_nl
-      << "CORBA::Boolean release = 0);" << be_uidt_nl;
+      << "CORBA::Boolean release = 0" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // constructor
-  *os << class_name << " (const " << class_name << " &rhs);" << be_nl
-      << "// Copy constructor." << be_nl;
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // operator=
-  *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl
-      << "// Assignment operator.  " << be_nl;
+  *os << class_name << " &operator= (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // destructor
-  *os << "virtual ~" << class_name << " (void); // Dtor." << be_nl;
+  *os << "virtual ~" << class_name << " (void);" << be_nl << be_nl;
 
   // Accessors
   // operator[]
   *os << "// = Accessors." << be_nl;
+
   bt->accept(visitor);
-  *os <<" &operator[] (CORBA::ULong i);// operator []" << be_nl;
+
+  *os <<" &operator[] (CORBA::ULong i);" << be_nl;
 
   // operator[]
   *os << "const ";
   bt->accept (visitor);
-  *os << " &operator[] (CORBA::ULong i) const;" << be_nl;
+  *os << " &operator[] (CORBA::ULong i) const;" << be_nl << be_nl;
 
   // Static Operations
   *os << "// = Static operations." << be_nl
       << "static ";
+
   bt->accept (visitor);
-  *os << " *allocbuf (CORBA::ULong); // Allocate storage for the sequence." << be_nl;
+
+  *os << " *allocbuf (CORBA::ULong);" << be_nl;
 
   // free_buf
   *os << "static void freebuf (";
+
   bt->accept (visitor);
-  *os << " *buffer); // Free the sequence." << be_nl;
+
+  *os << " *buffer);" << be_nl << be_nl;
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl;
 
   // allocate_buffer
   *os << "virtual void _allocate_buffer (CORBA::ULong length);" << be_nl;
@@ -145,22 +158,28 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
   // get_buffer
-  bt->accept(visitor);
+  bt->accept (visitor);
   *os << " *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
   *os << "const ";
+
   bt->accept (visitor);
+
   *os << " *get_buffer (void) const;" << be_nl;
 
   // replace
-  *os << "void replace (CORBA::ULong max," << be_idt_nl
+  *os << "void replace (" << be_idt << be_idt_nl 
+      << "CORBA::ULong max," << be_nl
       << "CORBA::ULong length," << be_nl;
-  bt->accept(visitor);
-  *os <<" *data," << be_nl
-      << "CORBA::Boolean release = 0);" << be_uidt << be_uidt_nl;
 
-  *os << "};\n";
+  bt->accept (visitor);
+
+  *os <<" *data," << be_nl
+      << "CORBA::Boolean release = 0" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
+
+  *os << "};" << be_nl;
 
   os->gen_endif (); // endif macro
 

@@ -29,9 +29,10 @@ be_visitor_sequence_ch::gen_bounded_wstr_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
 
-  // retrieve the base type since we may need to do some code
+  // Retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,18 +41,19 @@ be_visitor_sequence_ch::gen_bounded_wstr_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // generate the class name
-  be_type  *pt; // base types
+  // Generate the class name.
+  be_type *pt;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
+    {
+      // Get the primitive base type of this typedef node.
+      be_typedef *t = be_typedef::narrow_from_decl (bt);
+      pt = t->primitive_base_type ();
+    }
   else
-    pt = bt;
-
+    {
+      pt = bt;
+    }
 
   const char * class_name = node->instance_name ();
 
@@ -72,45 +74,61 @@ be_visitor_sequence_ch::gen_bounded_wstr_sequence (be_sequence *node)
   // error occurs, it will occur here. Later no check
   // for errors will be done.
   if (pt->accept (visitor) == -1)
-  {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_visitor_sequence_ch::"
-                        "visit_sequence - "
-                        "base type visit failed\n"),
-                        -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_ch::"
+                         "visit_sequence - "
+                         "base type visit failed\n"),
+                         -1);
+    }
 
-
-  *os << "class " << class_name << " : public TAO_Bounded_Base_Sequence" << be_nl
+  *os << "class " << class_name << be_idt_nl
+      << ": public TAO_Bounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl;
+      << "public:" << be_idt_nl
+      << "// = Initialization and termination methods." << be_nl;
 
   // constructor
   *os << class_name << " (void);" << be_nl;
 
   // constructor
-  *os << class_name << " (CORBA::ULong length," << be_idt_nl
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "CORBA::ULong length," << be_nl
       << "CORBA::WChar* *value," << be_nl
-      << "CORBA::Boolean release = 0);" << be_uidt_nl;
+      << "CORBA::Boolean release = 0" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // constructor
-  *os << class_name << " (const " << class_name << " &rhs);" << be_nl;
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // operator=
-  *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl;
+  *os << class_name << " &operator= (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // destructor
-  *os << "virtual ~" << class_name << " (void);" << be_nl;
+  *os << "virtual ~" << class_name << " (void);" << be_nl << be_nl;
+
+  // Accessors
+  *os << "// = Accessors." << be_nl;
 
   // operator[]
-  *os << "TAO_SeqElem_WString_Manager operator[] (CORBA::ULong index) const;" << be_nl
-      << "// read-write accessor" << be_nl;
+  *os << "TAO_SeqElem_WString_Manager operator[] (CORBA::ULong index) const;" 
+      << be_nl << be_nl;
+
+  // Static operations
+  *os << "// = Static operations." << be_nl;
 
   // allocbuf
   *os << "static CORBA::WChar **allocbuf (CORBA::ULong length);" << be_nl;
 
   // freebuf
-  *os << "static void freebuf (CORBA::WChar **buffer);" << be_nl;
+  *os << "static void freebuf (CORBA::WChar **buffer);" << be_nl << be_nl;
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl;
 
   // allocate_buffer
   *os << "virtual void _allocate_buffer (CORBA::ULong length);" << be_nl;
@@ -125,10 +143,12 @@ be_visitor_sequence_ch::gen_bounded_wstr_sequence (be_sequence *node)
   *os << "const CORBA::WChar* *get_buffer (void) const;" << be_nl;
 
   // shrink_buffer
-  *os << "virtual void _shrink_buffer (CORBA::ULong nl,CORBA::ULong ol);"
-      << be_uidt_nl;
+  *os << "virtual void _shrink_buffer (" << be_idt << be_idt_nl
+      << "CORBA::ULong nl," << be_nl
+      << "CORBA::ULong ol" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
 
-  *os << "};\n";
+  *os << "};" << be_nl;
 
   os->gen_endif (); // endif macro
 

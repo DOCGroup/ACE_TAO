@@ -29,16 +29,18 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//                    Base  Impl. Declaration" << be_nl
+      << "//                    Base Proxy Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
 
   // Generate Class Declaration.
   *os << "class " << be_global->stub_export_macro ()
-      << " " << node->base_proxy_impl_name ();
+      << " " << node->base_proxy_impl_name () << be_idt_nl
+      << ": ";
 
   if (node->n_inherits () > 0)
     {
-      *os << " : " << be_idt_nl; // idt = 1
+      *os << be_idt;
+
       for (int i = 0; i < node->n_inherits (); i++)
         {
           be_interface *inherited =
@@ -46,29 +48,28 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 
           *os << "public virtual ";
           *os << inherited->full_base_proxy_impl_name ();
-          if (i < node->n_inherits () - 1) // node is the case of multiple
-            // inheritance, so put a comma
+
+          if (i < node->n_inherits () - 1)
             {
+               // Node is the case of multiple
+               // inheritance, so put a comma.
               *os << ", " << be_nl;
             }
-        }  // end of for loop
-      *os << be_uidt_nl; // idt = 0
+        }
+
+      *os << be_uidt << be_uidt_nl; // idt = 0
     }
   else
     {
-      *os << " : public virtual TAO_Object_Proxy_Impl" << be_nl;
+      *os << "public virtual TAO_Object_Proxy_Impl" << be_uidt_nl;
     }
+
   *os << "{" << be_nl << "public:"
       << be_idt_nl; // idt = 1
 
-
-
   // Destructor Declaration.
   *os << "virtual ~" << node->base_proxy_impl_name () << " (void) { }"
-      << be_nl  << be_nl;
-
-
-
+      << be_nl;
 
   if (this->visit_scope (node) == -1)
     {
@@ -78,17 +79,16 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  *os << be_uidt; // idt = 0
+  *os << be_uidt_nl;
 
   // Constructor Declaration.
   *os << "protected:" << be_idt_nl // idt = 1
       << node->base_proxy_impl_name () << " (void);"
-      << be_uidt_nl  // idt = 0
-      << be_nl;
+      << be_uidt_nl;
 
-  *os  << "};" << be_nl
+  *os << "};" << be_nl << be_nl
       << "//" << be_nl
-      << "//                Base  Proxy Impl. Declaration" << be_nl
+      << "//               End Base Proxy Impl. Declaration" << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
   return 0;

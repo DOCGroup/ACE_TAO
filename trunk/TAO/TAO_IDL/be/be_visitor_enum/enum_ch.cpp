@@ -52,27 +52,25 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
 
   if (!node->cli_hdr_gen () && !node->imported ())
     {
-      // Start from whatever indentation level we were at.
-      os->indent (); 
       *os << "enum " << node->local_name () << be_nl;
       *os << "{" << be_idt_nl;
 
        if (this->visit_scope (node) == 1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_enum_ch::"
-                             "visit_enum - "
-                             "scope generation failed\n"
-                             ), -1);
-        }
+         {
+           ACE_ERROR_RETURN ((LM_ERROR,
+                              "(%N:%l) be_visitor_enum_ch::"
+                              "visit_enum - "
+                              "scope generation failed\n"
+                              ), 
+                             -1);
+         }
 
-      os->indent ();
       *os << be_uidt_nl;
-      *os << "};" << be_nl;
+      *os << "};" << be_nl << be_nl;
 
       // As per the ORBOS spec, we need the following typedef
       *os << "typedef " << node->local_name () << " &" << node->local_name ()
-          << "_out;\n";
+          << "_out;" << be_nl;
 
       if (!node->is_local ())
         {
@@ -119,7 +117,6 @@ be_visitor_enum_ch::visit_enum_val (be_enum_val *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent ();
   *os << node->local_name ();
 
   return 0;

@@ -32,52 +32,44 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (be_interface *node
       << "//" << be_nl << be_nl;
 
   *os << "class " << be_global->stub_export_macro () << " "
-      << node->remote_proxy_broker_name () << " : public virtual "
-      << node->base_proxy_broker_name () << be_nl <<  "{" << be_nl
+      << node->remote_proxy_broker_name () << be_idt_nl
+      << ": public virtual "
+      << node->base_proxy_broker_name () << be_uidt_nl 
+      <<  "{" << be_nl
       << "public: " << be_idt_nl;
 
   // Constructor
   *os << node->remote_proxy_broker_name () << " (void);" << be_nl << be_nl;
 
   // Destructor
-  *os << "virtual ~" << node->remote_proxy_broker_name () << " (void);" << be_nl << be_nl;
+  *os << "virtual ~" << node->remote_proxy_broker_name () << " (void);" 
+      << be_nl << be_nl;
 
   // Accessor Method
-  *os << "virtual " << node->base_proxy_impl_name () << " &" << "select_proxy (" << be_idt_nl;
+  *os << "virtual " << node->base_proxy_impl_name () << " &" << "select_proxy (" 
+      << be_idt << be_idt_nl;
 
   *os << node->local_name () << " *object," << be_nl
       << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "private:" << be_idt_nl
       << node->remote_proxy_impl_name () << " remote_proxy_impl_;"
-      << be_uidt_nl;
+      << be_uidt_nl << be_nl;
+
+  *os << "public:" << be_idt_nl;  
 
   // Factory Member Function declaration.
   *os << "// This member function is used to get an handle to the unique instance" << be_nl
       << "// of the Remote Proxy Broker that is available for a given" << be_nl
-      << "// interface."
-      << be_nl << be_nl;
-  *os << "public:" << be_idt_nl
+      << "// interface." << be_nl
       << "static " << node->remote_proxy_broker_name ()
       << " *the" << node->remote_proxy_broker_name ()
       << " (void);" << be_uidt_nl;
 
   *os << "};" << be_nl << be_nl;
 
-
-  /*
-  if (node->is_nested ())
-    *os << "TAO_NAMESPACE_STORAGE_CLASS ";
-  else
-    *os << "static ";
-
-  *os << node->remote_proxy_broker_name () << " *the"
-      << node->remote_proxy_broker_name ()
-      << " (void);" << be_nl;
-  */
-  *os << be_nl
-      << "//" << be_nl
+  *os << "//" << be_nl
       << "//              End Remote Proxy Broker Declaration " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;

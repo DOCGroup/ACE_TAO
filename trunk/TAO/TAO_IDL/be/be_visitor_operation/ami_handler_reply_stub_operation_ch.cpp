@@ -56,21 +56,21 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
   if (!node->has_native ())
     {
 
-      // Indent.
-      os->indent ();
-
       // Next line.
-      *os << be_nl
-          << "static void ";
+      *os << "static void ";
 
       // Check if we are an attribute node in disguise
       if (this->ctx_->attribute ())
         {
-          // now check if we are a "get" or "set" operation
-          if (node->nmembers () == 1) // set
-            *os << "_set_";
+          // Now check if we are a "get" or "set" operation.
+          if (node->nmembers () == 1)
+            {
+              *os << "_set_";
+            }
           else
-            *os << "_get_";
+            {
+              *os << "_get_";
+            }
         }
       *os << node->local_name ()
           << "_reply_stub (" << be_idt << be_idt_nl;
@@ -81,11 +81,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
 
       *os << "," << be_nl
           << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-          << "TAO_default_environment ()" << be_uidt;
-
-      *os << ");"
-          << be_uidt << be_nl
-          << be_uidt << "\n\n";
+          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
     }
   return 0;
 }

@@ -27,7 +27,6 @@ ACE_RCSID(be, be_type, "$Id$")
 
 be_type::be_type (void)
   : tc_name_ (0),
-    type_name_ (0),
     nested_type_name_ (0)
 {
 }
@@ -39,7 +38,6 @@ be_type::be_type (AST_Decl::NodeType nt,
               n, 
               p),
     tc_name_ (0),
-    type_name_ (0),
     nested_type_name_ (0)
 {
 }
@@ -607,12 +605,6 @@ be_type::destroy (void)
       this->tc_name_->destroy ();
       delete this->tc_name_;
       this->tc_name_ = 0;
-    }
-    
-  if (this->type_name_ != 0)
-    {
-      ACE_OS::free (this->type_name_);
-      this->type_name_ = 0;
     }
 
   if (this->nested_type_name_ != 0)

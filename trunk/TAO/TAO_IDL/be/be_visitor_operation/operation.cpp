@@ -124,16 +124,20 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
           *os << excp->name ();
           ei->next ();
         } // end of while loop
+
       delete ei;
     } // end of if
 
   if (be_global->use_raw_throw ())
-    *os << be_uidt_nl << ")"<< be_uidt;
+    {
+      *os << be_uidt_nl << ")" << be_uidt;
+    }
   else
-    *os << be_uidt_nl << "))"<< be_uidt;
+    {
+      *os << be_uidt_nl << "))" << be_uidt;
+    }
 
-   return 0;
-
+  return 0;
 }
 
 //Method that returns the appropriate CORBA::Environment variable

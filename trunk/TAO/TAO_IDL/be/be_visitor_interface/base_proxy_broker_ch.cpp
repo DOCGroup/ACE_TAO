@@ -45,7 +45,7 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (be_interface *node)
   // Accessor Method
   *os << "virtual " << node->base_proxy_impl_name () << " &"
       << "select_proxy ("
-      << be_idt_nl; // idt = 2
+      << be_idt << be_idt_nl;
 
   *os << node->local_name () << " *object," << be_nl
       << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl

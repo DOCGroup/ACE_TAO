@@ -33,9 +33,10 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
 
-  // retrieve the base type since we may need to do some code
+  // Retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -44,18 +45,19 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // generate the class name
-  be_type  *pt; // base types
+  // Generate the class name.
+  be_type  *pt;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
+    {
+      // Get the primitive base type of this typedef node.
+      be_typedef *t = be_typedef::narrow_from_decl (bt);
+      pt = t->primitive_base_type ();
+    }
   else
-    pt = bt;
-
+    {
+      pt = bt;
+    }
 
   const char * class_name = node->instance_name ();
 
@@ -63,13 +65,11 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-  // !! branching in either compile time template instantiation
-  // or manual template instantiation
+  // !! Branching in either compile time template instantiation
+  // or manual template instantiation.
   os->gen_ifdef_AHETI();
 
   os->gen_ifdef_macro (class_name);
-
-  os->indent ();
 
   *os << "class " << class_name
       << " : public TAO_Bounded_Base_Sequence" << be_nl
@@ -82,32 +82,30 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   *os << class_name << " (void);" << be_nl;
 
   // constructor
-  *os << class_name << " (CORBA::ULong length," << be_idt_nl;
-  // the accept is here the first time used and if an
-  // error occurs, it will occur here. Later no check
-  // for errors will be done.
-  if (bt->accept (visitor) == -1)
-  {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_visitor_sequence_ch::"
-                        "visit_sequence - "
-                        "base type visit failed\n"),
-                        -1);
-  }
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "CORBA::ULong length," << be_nl;
+
+  bt->accept (visitor);
+
   *os <<"* *value," << be_nl
-      << "CORBA::Boolean release = 0);" << be_uidt_nl;
+      << "CORBA::Boolean release = 0" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // constructor
-  *os << class_name << " (const " << class_name << " &rhs);" << be_nl
-      << "// Copy constructor." << be_nl;
-
-  // destructor
-  *os << "virtual ~" << class_name << " (void);" << be_nl
-      << "// destructor" << be_nl;
+  *os << class_name << " (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   // operator=
-  *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl
-      << "// Assignment from another Bounded sequence." << be_nl;
+  *os << class_name << " &operator= (" << be_idt << be_idt_nl
+      << "const " << class_name << " &rhs" << be_uidt_nl
+      << ");" << be_uidt_nl;
+
+  // destructor
+  *os << "virtual ~" << class_name << " (void);" << be_nl << be_nl;
+
+  // Accessors
+  *os << "// = Accessors." << be_nl;
 
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
   int is_pseudo_object =
@@ -128,23 +126,30 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 
   *os << bt->name () << ","
       << bt->name () << "_var>"
-      << " operator[] (CORBA::ULong index) const;"
-      << "// Read-write accessor." << be_nl;
+      << " operator[] (CORBA::ULong index) const;" << be_nl << be_nl;
+
+  // Static operations
+  *os << "// = Static operations." << be_nl;
 
   // allocbuf
   *os << "static ";
+
   bt->accept (visitor);
-  *os << " **allocbuf (CORBA::ULong length); "
-      << "// Allocate storage for a sequence.." << be_nl;
+
+  *os << " **allocbuf (CORBA::ULong length);" << be_nl;
 
   // freebuf
   *os << "static void freebuf (";
+
   bt->accept (visitor);
-  *os << " **buffer);" << be_nl;
+
+  *os << " **buffer);" << be_nl << be_nl;
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  *os << "// Implement the TAO_Base_Sequence methods (see Sequence.h)" << be_nl;
 
   // allocate_buffer
-  *os << "// The Base_Sequence functions, please see tao/sequence.h" << be_nl
-      << "virtual void _allocate_buffer (CORBA::ULong length);" << be_nl;
+  *os << "virtual void _allocate_buffer (CORBA::ULong length);" << be_nl;
 
   // deallocate_buffer
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
@@ -155,26 +160,31 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 
   // get_buffer
   *os << "const ";
+
   bt->accept (visitor);
+
   *os << "* *get_buffer (void) const;" << be_nl;
 
-  // _shrink_buffer
-  *os << "virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);" << be_nl;
+  // shrink_buffer
+  *os << "virtual void _shrink_buffer (" << be_idt << be_idt_nl
+      << "CORBA::ULong nl," << be_nl
+      << "CORBA::ULong ol" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
   if (!is_pseudo_object)
     {
-      // Pseudo objects do not require this methods.
+      // Pseudo objects do not require these methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
-	  << "void* target," << be_nl
-	  << "CORBA_Object *src," << be_nl
-	  << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
-	  << "TAO_default_environment ()"
-	  << be_uidt << be_uidt_nl
-	  << ");" << be_uidt_nl;
+	        << "void* target," << be_nl
+	        << "CORBA_Object *src," << be_nl
+	        << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
+	        << "TAO_default_environment ()"
+	        << be_uidt << be_uidt_nl
+	        << ");" << be_uidt_nl;
 
-      *os << "virtual CORBA_Object* _upcast (void *src) const;" <<  be_nl;
+      *os << "virtual CORBA_Object* _upcast (void *src) const;";
     }
-  *os << be_uidt_nl << "};\n";
+  *os << be_uidt_nl << "};" << be_nl;
 
   os->gen_endif ();
 

@@ -148,7 +148,7 @@ int
 be_valuetype::gen_var_defn (char *)
 {
   TAO_OutStream *ch = 0;
-  TAO_NL nl;
+  TAO_NL be_nl;
   char namebuf [NAMEBUFSIZE];
 
   ACE_OS::memset (namebuf,
@@ -166,67 +166,62 @@ be_valuetype::gen_var_defn (char *)
   // for over here.
 
   // Start with whatever was our current indent level.
-  ch->indent ();
   *ch << "class " << be_global->stub_export_macro ()
-      << " " << namebuf << nl;
-  *ch << "{" << nl;
-  *ch << "public:\n";
-  ch->incr_indent ();
+      << " " << namebuf << be_nl;
+  *ch << "{" << be_nl;
+  *ch << "public:" << be_idt_nl;
 
   // Default constructor.
-  *ch << namebuf << " (void); // default constructor" << nl;
-  *ch << namebuf << " (" << this->local_name () << "*);" << nl;
+  *ch << namebuf << " (void); // default constructor" << be_nl;
+  *ch << namebuf << " (" << this->local_name () << "*);" << be_nl;
   *ch << namebuf << " (const " << this->local_name ()
-      << "*); // (TAO extension)" << nl;
+      << "*); // (TAO extension)" << be_nl;
 
   // Copy constructor.
   *ch << namebuf << " (const " << namebuf <<
-    " &); // copy constructor" << nl;
+    " &); // copy constructor" << be_nl;
 
   // Destructor.
-  *ch << "~" << namebuf << " (void); // destructor" << nl;
-  *ch << nl;
+  *ch << "~" << namebuf << " (void); // destructor" << be_nl;
+  *ch << be_nl;
 
   // Assignment operator from a pointer.
   *ch << namebuf << " &operator= (" << this->local_name ()
-      << "*);" << nl;
+      << "*);" << be_nl;
 
   // Assignment from _var.
   *ch << namebuf << " &operator= (const " << namebuf <<
-    " &);" << nl;
+    " &);" << be_nl;
 
   // Arrow operator.
-  *ch << local_name () << "* operator-> (void) const;" << nl;
+  *ch << local_name () << "* operator-> (void) const;" << be_nl;
 
-  *ch << nl;
+  *ch << be_nl;
 
   // Other extra types (cast operators, [] operator, and others).
   *ch << "operator const " << this->local_name ()
-      << "* () const;" << nl;
-  *ch << "operator " << this->local_name () << "* ();" << nl;
+      << "* () const;" << be_nl;
+  *ch << "operator " << this->local_name () << "* ();" << be_nl;
 
-  *ch << "// in, inout, out, _retn " << nl;
+  *ch << "// in, inout, out, _retn " << be_nl;
   // The return types of in, out, inout, and _retn are based on the parameter
   // passing rules and the base type.
-  *ch << this->local_name () << "* in (void) const;" << nl;
-  *ch << this->local_name () << "* &inout (void);" << nl;
-  *ch << this->local_name () << "* &out (void);" << nl;
-  *ch << this->local_name () << "* _retn (void);" << nl;
+  *ch << this->local_name () << "* in (void) const;" << be_nl;
+  *ch << this->local_name () << "* &inout (void);" << be_nl;
+  *ch << this->local_name () << "* &out (void);" << be_nl;
+  *ch << this->local_name () << "* _retn (void);" << be_nl;
 
   // Generate an additional member function that returns 
   // the underlying pointer.
-  *ch << this->local_name () << "* ptr (void) const;\n";
+  *ch << this->local_name () << "* ptr (void) const;";
 
-  *ch << "\n";
-  ch->decr_indent ();
+  *ch << be_uidt_nl << be_nl;
 
   // Private.
-  *ch << "private:\n";
-  ch->incr_indent ();
-  *ch << this->local_name () << "* ptr_;\n";
+  *ch << "private:" << be_idt_nl;
+  *ch << this->local_name () << "* ptr_;" << be_uidt_nl;
 
-  ch->decr_indent ();
-  *ch << "};\n\n";
+  *ch << "};" << be_nl << be_nl;
 
   return 0;
 }
@@ -238,7 +233,7 @@ be_valuetype::gen_var_impl (char *,
                             char *)
 {
   TAO_OutStream *ci = 0;
-  TAO_NL nl;
+  TAO_NL be_nl;
 
   // To hold the full and local _var names.
   char fname [NAMEBUFSIZE];
@@ -269,34 +264,34 @@ be_valuetype::gen_var_impl (char *,
   ci->indent (); // start with whatever was our current indent level
 
   *ci << "// *************************************************************"
-      << nl;
-  *ci << "// Inline operations for class " << fname << nl;
+      << be_nl;
+  *ci << "// Inline operations for class " << fname << be_nl;
   *ci << "// *************************************************************\n\n";
 
   // Default constructor.
-  *ci << "ACE_INLINE" << nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname <<
-    " (void) // default constructor" << nl;
-  *ci << "  " << ": ptr_ (0)" << nl;
+    " (void) // default constructor" << be_nl;
+  *ci << "  " << ": ptr_ (0)" << be_nl;
   *ci << "{}\n\n";
 
   // Constructor from a pointer.
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (" 
-      << this->local_name () << "* p)" << nl;
-  *ci << "  : ptr_ (p)" << nl;
+      << this->local_name () << "* p)" << be_nl;
+  *ci << "  : ptr_ (p)" << be_nl;
   *ci << "{}\n\n";
 
   // Constructor from a const pointer.
   // TAO extension - it appears that there are problems with at least g++
   // which reclaims amguity between T(T*) and T(const T_var &)
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const "
-      << this->local_name () << "* p)" << nl;
+      << this->local_name () << "* p)" << be_nl;
   *ci << "  : ptr_ (ACE_const_cast(" 
-      << this->local_name () << "*, p))" << nl;
+      << this->local_name () << "*, p))" << be_nl;
   *ci << "{}\n\n";
 
   // The additional ptr () member function. This member function must be
@@ -304,8 +299,8 @@ be_valuetype::gen_var_impl (char *,
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << nl;
-  *ci << fname << "::ptr (void) const" << nl;
+  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
+  *ci << fname << "::ptr (void) const" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -314,9 +309,9 @@ be_valuetype::gen_var_impl (char *,
 
   // Copy constructor.
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const " << lname <<
-    " &p) // copy constructor" << nl;
+    " &p) // copy constructor" << be_nl;
   *ci << "{" << be_idt_nl
       <<    "CORBA::add_ref (p.ptr ());" << be_nl
       <<    "this->ptr_ = p.ptr ();" << be_uidt_nl
@@ -324,8 +319,8 @@ be_valuetype::gen_var_impl (char *,
 
   // Destructor.
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::~" << lname << " (void) // destructor" << nl;
+  *ci << "ACE_INLINE" << be_nl;
+  *ci << fname << "::~" << lname << " (void) // destructor" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::remove_ref (this->ptr_);\n";
@@ -334,42 +329,42 @@ be_valuetype::gen_var_impl (char *,
 
   // Assignment operator.
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << "ACE_INLINE " << fname << " &" << be_nl;
   *ci << fname << "::operator= (" << this->local_name () 
-      << "* p)" << nl;
+      << "* p)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << nl;
-  *ci << "this->ptr_ = p;" << nl;
+  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl;
+  *ci << "this->ptr_ = p;" << be_nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   // Assignment operator from _var.
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << "ACE_INLINE " << fname << " &" << be_nl;
   *ci << fname << "::operator= (const " << lname 
-      << " &p)" << nl;
+      << " &p)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "if (this != &p)" << nl;
+  *ci << "if (this != &p)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << nl
+  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl
       << this->local_name() << "* tmp = p.ptr ();" << be_nl
       << "CORBA::add_ref (tmp);" << be_nl
       << "this->ptr_ = tmp;\n";
   ci->decr_indent ();
-  *ci << "}" << nl;
+  *ci << "}" << be_nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   // Other extra methods - cast operator ().
   ci->indent ();
-  *ci << "ACE_INLINE " << nl;
+  *ci << "ACE_INLINE " << be_nl;
   *ci << fname << "::operator const " << this->name ()
-      << "* () const // cast" << nl;
+      << "* () const // cast" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -377,9 +372,9 @@ be_valuetype::gen_var_impl (char *,
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << nl;
+  *ci << "ACE_INLINE " << be_nl;
   *ci << fname << "::operator " << this->name ()
-      << "* () // cast " << nl;
+      << "* () // cast " << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -388,8 +383,8 @@ be_valuetype::gen_var_impl (char *,
 
   // operator->
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << nl;
-  *ci << fname << "::operator-> (void) const" << nl;
+  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
+  *ci << fname << "::operator-> (void) const" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -398,8 +393,8 @@ be_valuetype::gen_var_impl (char *,
 
   // in, inout, out, and _retn.
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "*" << nl;
-  *ci << fname << "::in (void) const" << nl;
+  *ci << "ACE_INLINE " << this->name () << "*" << be_nl;
+  *ci << fname << "::in (void) const" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -407,8 +402,8 @@ be_valuetype::gen_var_impl (char *,
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* &" << nl;
-  *ci << fname << "::inout (void)" << nl;
+  *ci << "ACE_INLINE " << this->name () << "* &" << be_nl;
+  *ci << fname << "::inout (void)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -416,24 +411,24 @@ be_valuetype::gen_var_impl (char *,
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* &" << nl;
-  *ci << fname << "::out (void)" << nl;
+  *ci << "ACE_INLINE " << this->name () << "* &" << be_nl;
+  *ci << fname << "::out (void)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << nl;
-  *ci << "this->ptr_ = 0;" << nl;
+  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl;
+  *ci << "this->ptr_ = 0;" << be_nl;
   *ci << "return this->ptr_;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << nl;
-  *ci << fname << "::_retn (void)" << nl;
+  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
+  *ci << fname << "::_retn (void)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "// yield ownership of managed obj reference" << nl;
-  *ci << this->local_name () << "* tmp = this->ptr_;" << nl;
-  *ci << "this->ptr_ = 0;" << nl;
+  *ci << "// yield ownership of managed obj reference" << be_nl;
+  *ci << this->local_name () << "* tmp = this->ptr_;" << be_nl;
+  *ci << "this->ptr_ = 0;" << be_nl;
   *ci << "return tmp;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -446,7 +441,7 @@ int
 be_valuetype::gen_out_defn (char *)
 {
   TAO_OutStream *ch = 0;
-  TAO_NL nl;
+  TAO_NL be_nl;
   char namebuf [NAMEBUFSIZE];
 
   ACE_OS::memset (namebuf,
@@ -461,54 +456,47 @@ be_valuetype::gen_out_defn (char *)
 
   // Generate the out definition (always in the client header).
 
-  // Start with whatever was our current indent level.
-  ch->indent ();
-
   *ch << "class " << be_global->stub_export_macro ()
-      << " " << namebuf << nl;
-  *ch << "{" << nl;
-  *ch << "public:\n";
-  ch->incr_indent ();
+      << " " << namebuf << be_nl;
+  *ch << "{" << be_nl;
+  *ch << "public:" << be_idt_nl;
 
   // No default constructor.
 
   // Constructor from a pointer.
-  *ch << namebuf << " (" << this->local_name () << "* &);" << nl;
+  *ch << namebuf << " (" << this->local_name () << "* &);" << be_nl;
 
   // Constructor from a _var &.
-  *ch << namebuf << " (" << this->local_name () << "_var &);" << nl;
+  *ch << namebuf << " (" << this->local_name () << "_var &);" << be_nl;
 
   // Constructor from a _out &.
-  *ch << namebuf << " (const " << namebuf << " &);" << nl;
+  *ch << namebuf << " (const " << namebuf << " &);" << be_nl;
 
   // Assignment operator from a _out &.
-  *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
+  *ch << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
 
   // Assignment operator from a pointer &, cast operator, ptr fn, operator
   // -> and any other extra operators.
   // Only interface allows assignment from var &.
   *ch << namebuf << " &operator= (const " << this->local_name ()
-      << "_var &);" << nl;
+      << "_var &);" << be_nl;
   *ch << namebuf << " &operator= (" << this->local_name ()
-      << "*);" << nl;
+      << "*);" << be_nl;
 
   // Cast.
-  *ch << "operator " << this->local_name () << "* &();" << nl;
+  *ch << "operator " << this->local_name () << "* &();" << be_nl;
 
   // ptr function.
-  *ch << this->local_name () << "* &ptr (void);" << nl;
+  *ch << this->local_name () << "* &ptr (void);" << be_nl;
 
   // operator ->
-  *ch << this->local_name () << "* operator-> (void);" << nl;
+  *ch << this->local_name () << "* operator-> (void);" << be_nl;
 
-  *ch << "\n";
-  ch->decr_indent ();
-  *ch << "private:\n";
-  ch->incr_indent ();
-  *ch << this->local_name () << "* &ptr_;\n";
+  *ch << be_uidt_nl;
+  *ch << "private:" << be_idt_nl;
+  *ch << this->local_name () << "* &ptr_;" << be_uidt_nl;
+  *ch << "};" << be_nl << be_nl;
 
-  ch->decr_indent ();
-  *ch << "};\n\n";
   return 0;
 }
 
@@ -517,7 +505,7 @@ be_valuetype::gen_out_impl (char *,
                             char *)
 {
   TAO_OutStream *ci = 0;
-  TAO_NL nl;
+  TAO_NL be_nl;
 
   // To hold the full and local _out names.
   char fname [NAMEBUFSIZE];
@@ -549,16 +537,16 @@ be_valuetype::gen_out_impl (char *,
   ci->indent ();
 
   *ci << "// *************************************************************"
-      << nl;
-  *ci << "// Inline operations for class " << fname << nl;
+      << be_nl;
+  *ci << "// Inline operations for class " << fname << be_nl;
   *ci << "// *************************************************************\n\n";
 
   // Constructor from a pointer.
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
-      << "* &p)" << nl;
-  *ci << "  : ptr_ (p)" << nl;
+      << "* &p)" << be_nl;
+  *ci << "  : ptr_ (p)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = 0;\n";
@@ -567,42 +555,42 @@ be_valuetype::gen_out_impl (char *,
 
   // Constructor from _var &.
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (" << this->local_name () 
-      << "_var &p) // constructor from _var" << nl;
-  *ci << "  : ptr_ (p.out ())" << nl;
+      << "_var &p) // constructor from _var" << be_nl;
+  *ci << "  : ptr_ (p.out ())" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "CORBA::remove_ref (this->ptr_);" << nl;
+  *ci << "CORBA::remove_ref (this->ptr_);" << be_nl;
   *ci << "this->ptr_ = 0;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   // Copy constructor.
   ci->indent ();
-  *ci << "ACE_INLINE" << nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const " << lname 
-      << " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << lname << "&,p).ptr_)" << nl;
+      << " &p) // copy constructor" << be_nl;
+  *ci << "  : ptr_ (ACE_const_cast (" << lname << "&,p).ptr_)" << be_nl;
   *ci << "{}\n\n";
 
   // Assignment operator from _out &.
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << "ACE_INLINE " << fname << " &" << be_nl;
   *ci << fname << "::operator= (const " << lname <<
-    " &p)" << nl;
+    " &p)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (" << lname << "&,p).ptr_;" << nl;
+  *ci << "this->ptr_ = ACE_const_cast (" << lname << "&,p).ptr_;" << be_nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   // Assignment operator from _var.
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << "ACE_INLINE " << fname << " &" << be_nl;
   *ci << fname << "::operator= (const " << this->local_name () 
-      << "_var &p)" << nl;
+      << "_var &p)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << this->local_name () << "* tmp = p.ptr ();" << be_nl
@@ -614,21 +602,21 @@ be_valuetype::gen_out_impl (char *,
 
   // Assignment operator from *.
   ci->indent ();
-  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << "ACE_INLINE " << fname << " &" << be_nl;
   *ci << fname << "::operator= (" << this->local_name () 
-      << "* p)" << nl;
+      << "* p)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = p;" << nl;
+  *ci << "this->ptr_ = p;" << be_nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   // Other extra methods - cast operator ().
   ci->indent ();
-  *ci << "ACE_INLINE " << nl;
+  *ci << "ACE_INLINE " << be_nl;
   *ci << fname << "::operator " << this->name () 
-      << "* &() // cast" << nl;
+      << "* &() // cast" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -637,8 +625,8 @@ be_valuetype::gen_out_impl (char *,
 
   // ptr function.
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* &" << nl;
-  *ci << fname << "::ptr (void) // ptr" << nl;
+  *ci << "ACE_INLINE " << this->name () << "* &" << be_nl;
+  *ci << fname << "::ptr (void) // ptr" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -647,8 +635,8 @@ be_valuetype::gen_out_impl (char *,
 
   // operator->
   ci->indent ();
-  *ci << "ACE_INLINE " << this->name () << "* " << nl;
-  *ci << fname << "::operator-> (void)" << nl;
+  *ci << "ACE_INLINE " << this->name () << "* " << be_nl;
+  *ci << fname << "::operator-> (void)" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
