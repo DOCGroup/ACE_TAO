@@ -31,7 +31,7 @@
 #include "ace/SOCK_Connector.h"
 #include "tao/Pluggable.h"
 #include "tao/Connector_Impl.h"
-#include "tao/IIOP_Connection_handler.h"
+#include "tao/IIOP_Connection_Handler.h"
 
 // ****************************************************************
 
