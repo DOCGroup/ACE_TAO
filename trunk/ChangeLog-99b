@@ -1,8 +1,14 @@
 Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/config-aix-4.2.x.h: added ACE_LACKS_PRAGMA once
+        * ace/config-aix-4.2.x.h: added ACE_LACKS_PRAGMA_ONCE
           to xlC section.  Thanks to Rainer Blome <rainer_blome@de.ibm.com>
           for reporting this.
+
+        * ace/config-osf1-4.0.h: added ACE_LACKS_PRAGMA_ONCE to
+          cxx section, with __DECCXX_VER < 60090010.  This should
+          help avoid compilation warnings from cxx 5.x.  Thanks
+          to Oliver M. Kellogg <Oliver.Kellogg@vs.dasa.de> for
+          reporting this.
 
 Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>
 
