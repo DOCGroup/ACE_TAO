@@ -86,7 +86,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
     }
 
   // If condition variable is present, then we are doing leader
-  // follower model. Do all the nessary things.
+  // follower model. Do all the necessary things.
   if (this->leader_follower_condition_variable_ != 0)
     {
       TAO_Leader_Follower& leader_follower =
