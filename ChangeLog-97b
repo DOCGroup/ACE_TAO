@@ -1,3 +1,12 @@
+Wed Nov 19 15:55:52 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* config-netbsd.h: NetBSD 1.3alpha has a better MSYNC. Commented out
+	ACE_HAS_BROKEN_NETBSD_MSYNC
+
+Wed Nov 19 14:26:36 1997  Nanbor Wang  <nw1@lindy.cs.wustl.edu>
+
+	* stdcpp.h, OS.h: *** empty log message ***
+
 Wed Nov 19 15:55:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-sunos5.*.h: Replaced all uses of ACE_HAS_UNICODE with
