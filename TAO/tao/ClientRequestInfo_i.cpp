@@ -28,31 +28,7 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
     reply_status_ (-1),
     rs_pi_current_ ()
 {
-
-  // Retrieve the thread scope current (no TSS access incurred yet).
-  TAO_PICurrent *pi_current = inv->orb_core ()->pi_current ();
-
-  // If the slot count is zero, then there is nothing to copy.
-  // Prevent any copying (and hence TSS accesses) from occurring.
-  if (pi_current != 0 && pi_current->slot_count () != 0)
-    {
-      // Retrieve the thread scope current.
-      TAO_PICurrent_Impl *tsc = pi_current->tsc ();
-
-      // Copy the TSC to the RSC.
-      this->rs_pi_current_.copy (*tsc, 0);  // Shallow copy
-
-      // PICurrent will potentially have to call back on the request
-      // scope current so that it can deep copy the contents of the
-      // thread scope current if the contents of the thread scope
-      // current are about to be modified.  It is necessary to do this
-      // deep copy once in order to completely isolate the request
-      // scope current from the thread scope current.  This is only
-      // necessary, if the thread scope current is modified after its
-      // contents have been *logically* copied to the request scope
-      // current.
-      tsc->pi_peer (&this->rs_pi_current_);
-    }
+  this->setup_picurrent ();
 }
 
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
@@ -67,9 +43,19 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
     reply_status_ (-1),
     rs_pi_current_ ()
 {
+  this->setup_picurrent ();
+}
 
+TAO_ClientRequestInfo_i::~TAO_ClientRequestInfo_i (void)
+{
+}
+
+void
+TAO_ClientRequestInfo_i::setup_picurrent (void)
+{
   // Retrieve the thread scope current (no TSS access incurred yet).
-  TAO_PICurrent *pi_current = inv->orb_core ()->pi_current ();
+  TAO_PICurrent *pi_current =
+    this->invocation_->orb_core ()->pi_current ();
 
   // If the slot count is zero, then there is nothing to copy.
   // Prevent any copying (and hence TSS accesses) from occurring.
@@ -90,12 +76,12 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
       // necessary, if the thread scope current is modified after its
       // contents have been *logically* copied to the request scope
       // current.
-      tsc->pi_peer (&this->rs_pi_current_);
+      //
+      // Only perform set the TSC's peer if a copy was actually
+      // performed.
+//       if (this->rs_pi_current_.dirty ())
+        tsc->pi_peer (&this->rs_pi_current_);
     }
-}
-
-TAO_ClientRequestInfo_i::~TAO_ClientRequestInfo_i (void)
-{
 }
 
 CORBA::Object_ptr
@@ -178,7 +164,7 @@ TAO_ClientRequestInfo_i::received_exception (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (temp,
                     CORBA::Any,
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));

@@ -1,3 +1,23 @@
+Wed Nov 20 15:15:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ClientRequestInfo_i.h (setup_picurrent):
+
+	  New method that sets up the thread scope and request scope
+	  PICurrent objects on the client side.
+
+	* tao/ClientRequestInfo_i.cpp (TAO_ClientRequestInfo_i):
+	  (setup_current):
+
+	  Refactored duplicate code in both TAO_ClientRequestInfo_i
+	  constructors to the new setup_picurrent() method.
+
+	  Only set the TSC's peer if a copy was actually performed.  Fixes
+	  a seg fault after calling
+	  PortableInterceptor::Current::set_slot() after a client
+	  invocation was performed.  Thanks to Philipp Leibfried
+	  <pleibfried@speech-design.de> for providing a test case that
+	  reproduced this problem.
+
 Wed Nov 20 15:54:10 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
