@@ -11,7 +11,7 @@ Thu Dec  7 11:59:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tests/Strategies/advanced_svc.conf:
 	* tests/Strategies/README:
 
-	  Moved the test to shows the ways to load default and 
+	  Moved the test that shows the ways to load default and 
 	  advanced strategies to the correct place.
 		
 	* tao/Strategies/tests/simple_test.idl:
