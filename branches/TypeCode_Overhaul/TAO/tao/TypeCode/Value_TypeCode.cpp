@@ -132,12 +132,12 @@ TAO::TypeCode::Value<StringType,
 
       CORBA::Visibility const lhs_visibility = lhs_field.visibility;
       CORBA::Visibility const rhs_visibility =
-	tc->member_visibility_i (i
-				 ACE_ENV_ARG_PARAMETER);
+        tc->member_visibility_i (i
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (lhs_visibility != rhs_visibility)
-	return 0;
+        return 0;
     }
 
   return 1;
