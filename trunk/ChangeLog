@@ -1,3 +1,19 @@
+Sun Mar 28 12:14:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Functor_String.cpp:
+	* ace/Functor_String.h:
+	* ace/Functor_String.inl:
+
+	  Functors for ACE_CString and ACE_WString. They have been placed
+	  in seperate files to avoid coupling the rest of ACE (which uses
+	  Functor.h) with strings that could lead to increased
+	  footprints. 
+	
+	* ace/Makefile.ace:
+	* ace/ace.mpc:
+
+	  New files for building.
+
 Sun Mar 28 15:31:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:

@@ -87,6 +87,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Flag_Manip.cpp
       Framework_Component.cpp
       Functor.cpp
+      Functor_String.cpp
       Get_Opt.cpp
       Hash_Map_Manager.cpp
       Connection_Recycling_Strategy.cpp
