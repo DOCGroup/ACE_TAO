@@ -951,4 +951,8 @@ template class ACE_Array_Base <ACE_CString>;
 #pragma instantiate ACE_Array_Base <TAO_PSDL_Scope *>;
 #pragma instantiate ACE_Array_Base <ACE_CString>;
 
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+
+template TAO_Singleton<TAO_PSDL_Scope, ACE_Thread_Mutex> *TAO_Singleton<TAO_PSDL_Scope, ACE_Thread_Mutex>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
