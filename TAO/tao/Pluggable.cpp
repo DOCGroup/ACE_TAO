@@ -240,6 +240,7 @@ TAO_Transport::leader_follower_condition_variable (void)
   return this->wait_strategy ()->leader_follower_condition_variable ();
 }
 
+
 void
 TAO_Transport::start_request (TAO_ORB_Core *,
                               TAO_Target_Specification & /*spec */,

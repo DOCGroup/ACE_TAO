@@ -1335,6 +1335,25 @@ SOURCE=.\GIOP_Message_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Lite.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Locate_Header.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"

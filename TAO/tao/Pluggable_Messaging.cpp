@@ -15,3 +15,9 @@ TAO_Pluggable_Messaging::~TAO_Pluggable_Messaging (void)
 {
 
 }
+
+int
+TAO_Pluggable_Messaging::more_messages (void)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
