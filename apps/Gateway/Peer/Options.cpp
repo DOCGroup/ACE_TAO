@@ -1,3 +1,5 @@
+#define ACE_BUILD_DLL
+
 #include "ace/Get_Opt.h"
 #include "Options.h"
 
