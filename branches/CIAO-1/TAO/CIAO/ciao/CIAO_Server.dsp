@@ -112,6 +112,10 @@ SOURCE=.\CIAO_ServersS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ComponentInstallation_Impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ComponentServer_Impl.cpp
 # End Source File
 # Begin Source File
@@ -165,6 +169,10 @@ SOURCE=.\CIAO_ServersC.h
 # Begin Source File
 
 SOURCE=.\CIAO_ServersS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ComponentInstallation_Impl.h
 # End Source File
 # Begin Source File
 
@@ -424,6 +432,10 @@ SOURCE=.\CIAO_ServersC.i
 # Begin Source File
 
 SOURCE=.\CIAO_ServersS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ComponentInstallation_Impl.inl
 # End Source File
 # Begin Source File
 

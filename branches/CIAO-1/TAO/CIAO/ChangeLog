@@ -1,3 +1,20 @@
+Sat Feb 15 22:54:11 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CIAO_Server.dsp:
+	* ciao/ComponentInstallation_Impl.cpp:
+	* ciao/ComponentInstallation_Impl.h:
+	* ciao/ComponentInstallation_Impl.inl: Filled in the
+	  implementation for ComponentInstallation interface.  We
+	  currently only provide a naive implemntation for this
+	  interface.  It currently manages the pathnames to various
+	  component implementations so a Container can fetch a
+	  implementation from its UUID.
+
+	* examples/handcrafted/Hello/hello_servants.dsp: Added CIAO_server
+	  to the list of link libraries.   I need to move the base
+	  container implementation from the CIAO_Server library to
+	  CIAO_Container library.
+
 Fri Feb 14 23:15:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/todo.html:  Added info on why the Assembly tools should
