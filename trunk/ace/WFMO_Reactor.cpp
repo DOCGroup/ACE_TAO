@@ -1472,7 +1472,7 @@ ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
 	return number_of_handlers_dispatched;
       
       // Readjust nCount
-      nCount -= dispatch_index;
+      nCount = max_handlep1 - dispatch_index;
 
       // Check the remaining handles
       wait_status = this->poll_remaining_handles (dispatch_index);
