@@ -150,10 +150,10 @@ worker (void)
 
   for (;;)
     if (ACE_Reactor::instance ()->handle_events () == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) exception return\n")));
-      break;
-    }
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) exception return\n")));
+        break;
+      }
 
   return 0;
 }

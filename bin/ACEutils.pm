@@ -6,6 +6,22 @@ $TARGETHOSTNAME = "localhost";
 
 package ACE;
 
+sub CheckForExeDir
+{
+  for($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq '-ExeSubDir') {  
+      if (defined $ARGV[$i + 1]) {
+        $::EXEPREFIX = $ARGV[$i + 1].$::DIR_SEPARATOR;
+      }
+      else {
+        print STDERR "You must pass a directory with ExeSubDir\n";
+        exit(1);
+      }
+      splice(@ARGV, $i, 2);
+    }
+  }
+}
+
 sub checkForTarget
 {
   my($cwd) = shift;
@@ -77,5 +93,7 @@ sub waitforfile_timed
 }
 
 $sleeptime = 5;
+
+CheckForExeDir ();
 
 1;
