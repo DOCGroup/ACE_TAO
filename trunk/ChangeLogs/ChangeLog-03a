@@ -1,3 +1,15 @@
+Wed Feb  5 20:48:47 2003  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU: Added rules to generate
+          object files from C++ file extensions .cxx, .C and .cc, in
+          addition to .cpp.
+
+Wed Feb  5 20:15:18 2003  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU: Removed the conditional
+          setting of VSHOBJS and VSHOBJS1 based on PRELIB. There is too
+          much bogosity here. This should fix HP-UX and AIX breakage.
+
 Sat Feb  1 08:43:53 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Stream_Modules.cpp (put): Return 0 rather than -1 to be consistent
@@ -77,17 +89,17 @@ Sat Feb  1 07:50 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
   	* Our deepest sympathies to the families and friends of the crew of
 	  the US Space Shuttle Columbia, which was lost over Texas this
- 	  morning.  
-  
+ 	  morning.
+
           "We shall never forget them nor the last time we saw them, as
 	  they prepared for their mission and waved good-bye and slipped
 	  the surly bonds of Earth to touch the face of God."
-  
+
              - President Reagan (addressing NASA employees following the
-	       tragic loss of the Challenger 7 crew on STS-51L.) 
-  
+	       tragic loss of the Challenger 7 crew on STS-51L.)
+
           Ad astra per aspera.
-  
+
 Sat Feb  1 09:00:00 2003  Steve Huston  <shuston@riverace.com>
 
         * Space Shuttle Columbia breaks up at 200,000ft altitude at
