@@ -117,7 +117,9 @@ typedef class CORBA_Exception *CORBA_Exception_ptr;
   TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE); \
   TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED); \
   TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK); \
-  TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);
+  TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION); \
+  TAO_SYSTEM_EXCEPTION(CODESET_INCOMPATIBLE); \
+  TAO_SYSTEM_EXCEPTION(BAD_QOS);
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   class CORBA_ ## name
@@ -1107,12 +1109,6 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // This number is reserver by the OMG as a prefix to all the standard
 // minor codes.  Check the CORBA/IIOP spec for details
 #define TAO_OMG_VMCID 0x4f4d0000
-
-// The following macros are used as semi-symbolic names for the
-// standard minor codes. Check the CORBA/IIOP spec for details, and/or
-// read the code in Exception.cpp
-// @@ TODO: Add more of the minor codes.  Use them in the right spot.
-#define TAO_OMG_MINOR_BAD_PARAM_10 10
 
 // This number was assigned by the OMG.  Do *NOT* change at random.
 // The ASCII representation is TA0xxxx, close enough since they only

@@ -241,10 +241,17 @@ public:
   static CORBA::ULong _tao_errno (int errno_value);
 
 protected:
+
   /// Constructor using a repository id.
   CORBA_SystemException (const char *repository_id,
                          CORBA::ULong code,
                          CORBA::CompletionStatus completed);
+
+  /// Return the exception description associated with the given OMG
+  /// minor code.
+  static const char *_tao_get_omg_exception_description (
+    const CORBA::SystemException &exc,
+    CORBA::ULong minor_code);
 
 private:
   /// Minor code.
@@ -314,6 +321,8 @@ TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);        // invalid transaction mode
 TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);    // operation needs transaction
 TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK);  // operation was a no-op
 TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);     // invalid TP context passed
+TAO_SYSTEM_EXCEPTION(CODESET_INCOMPATIBLE);    // incompatible code set
+TAO_SYSTEM_EXCEPTION(BAD_QOS);          // bad quality of service
 
 #undef TAO_SYSTEM_EXCEPTION
 
