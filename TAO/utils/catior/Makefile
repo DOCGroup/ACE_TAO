@@ -45,8 +45,9 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .obj/catior.o .obj/catior.so .shobj/catior.o .shobj/catior.so: catior.cpp $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -70,8 +71,7 @@ include $(TAO_ROOT)/taoconfig.mk
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -83,8 +83,6 @@ include $(TAO_ROOT)/taoconfig.mk
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -197,6 +195,7 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
@@ -211,6 +210,8 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/tao/ValueBase.i \
  $(TAO_ROOT)/tao/ValueFactory.h \
  $(TAO_ROOT)/tao/ValueFactory.i \
+ $(TAO_ROOT)/tao/AbstractBase.h \
+ $(TAO_ROOT)/tao/AbstractBase.inl \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -227,9 +228,9 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+ $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
@@ -244,36 +245,24 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Endpoint.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.i \
  $(TAO_ROOT)/tao/Strategies/UIOP_Profile.h \
  $(TAO_ROOT)/tao/Strategies/strategies_export.h \
  $(TAO_ROOT)/tao/Strategies/UIOP_Connection_Handler.h \
- $(TAO_ROOT)/tao/Strategies/UIOP_Transport.h \
- $(TAO_ROOT)/tao/Transport.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
- $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
- $(TAO_ROOT)/tao/Cache_Entries.h \
- $(ACE_ROOT)/ace/Recyclable.h \
- $(ACE_ROOT)/ace/Recyclable.inl \
- $(TAO_ROOT)/tao/Cache_Entries.inl \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/XML_Svc_Conf.h \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -287,33 +276,6 @@ include $(TAO_ROOT)/taoconfig.mk
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
- $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
- $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
- $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
- $(TAO_ROOT)/tao/Transport.inl \
- $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/UNIX_Addr.h \
- $(ACE_ROOT)/ace/UNIX_Addr.i \
- $(ACE_ROOT)/ace/LSOCK_Stream.h \
- $(ACE_ROOT)/ace/LSOCK.h \
- $(ACE_ROOT)/ace/LSOCK.i \
- $(ACE_ROOT)/ace/LSOCK_Stream.i \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
@@ -327,6 +289,11 @@ include $(TAO_ROOT)/taoconfig.mk
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Framework_Component.h \
+ $(ACE_ROOT)/ace/Framework_Component.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.h \
+ $(ACE_ROOT)/ace/Framework_Component_T.inl \
+ $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -345,28 +312,72 @@ include $(TAO_ROOT)/taoconfig.mk
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ $(ACE_ROOT)/ace/Recyclable.h \
+ $(ACE_ROOT)/ace/Recyclable.inl \
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Connection_Recycling_Strategy.h \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(TAO_ROOT)/tao/Strategies/UIOP_Transport.i \
- $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
  $(ACE_ROOT)/ace/Hashable.h \
  $(ACE_ROOT)/ace/Hashable.inl \
  $(ACE_ROOT)/ace/Strategies_T.i \
  $(ACE_ROOT)/ace/Strategies_T.cpp \
  $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
  $(ACE_ROOT)/ace/Acceptor.cpp \
  $(TAO_ROOT)/tao/Connection_Handler.h \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
  $(TAO_ROOT)/tao/Connection_Handler.inl \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(TAO_ROOT)/tao/Wait_Strategy.inl \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Transport.h \
+ $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/UNIX_Addr.h \
+ $(ACE_ROOT)/ace/UNIX_Addr.i \
+ $(ACE_ROOT)/ace/LSOCK_Stream.h \
+ $(ACE_ROOT)/ace/LSOCK.h \
+ $(ACE_ROOT)/ace/LSOCK.i \
+ $(ACE_ROOT)/ace/LSOCK_Stream.i \
+ $(TAO_ROOT)/tao/Transport.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Cache_Entries.h \
+ $(TAO_ROOT)/tao/Cache_Entries.inl \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Transport_Timer.h \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+ $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+ $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
+ $(TAO_ROOT)/tao/Transport.inl \
+ $(TAO_ROOT)/tao/Strategies/UIOP_Transport.i \
  $(TAO_ROOT)/tao/Strategies/UIOP_Connection_Handler.inl \
  $(TAO_ROOT)/tao/Strategies/UIOP_Endpoint.h \
  $(TAO_ROOT)/tao/Strategies/UIOP_Endpoint.i \
