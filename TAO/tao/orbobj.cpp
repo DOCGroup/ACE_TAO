@@ -454,6 +454,13 @@ CORBA_ORB::resolve_initial_references (CORBA::String name)
     return CORBA_Object::_nil ();
 }
 
+int
+CORBA_ORB::preconnect (CORBA::String connections)
+{
+  return TAO_ORB_Core_instance ()->preconnect (connections);
+}
+
+
 // Create an objref
 
 CORBA::Object_ptr
