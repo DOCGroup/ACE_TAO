@@ -56,14 +56,14 @@ TAO_ServerRequestInfo::request_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   // 64-bit platforms.
 
   if (sizeof (this) == 4)       // 32 bit address
-    id = ACE_static_cast (CORBA::ULong,
-                          ACE_reinterpret_cast (ptrdiff_t,
-                                                &(this->server_request_)));
+    id = static_cast <CORBA::ULong> (
+                     reinterpret_cast <ptrdiff_t>
+                                      (&(this->server_request_)));
 
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
-    id = ACE_static_cast (CORBA::ULong,
-                          ACE_reinterpret_cast (ptrdiff_t,
-                               &(this->server_request_)) & 0xFFFFFFFFu);
+    id = static_cast <CORBA::ULong> (
+                     reinterpret_cast <ptrdiff_t>
+                               (&(this->server_request_)) & 0xFFFFFFFFu);
 
   else
     // @@ Rather than fallback on the GIOP request ID, we should use
