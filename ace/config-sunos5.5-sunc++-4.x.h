@@ -14,9 +14,13 @@
     // with Sun C++ 4.0.1 never completes.
 #    define ACE_NEEDS_DEV_IO_CONVERSION
 #  elif (__SUNPRO_CC >= 0x420)
+#if 0 /* Explicit instantiation isn't useful without -instances=global,
+         but that results in link collisions.  We need to figure out how
+         to disable CC's implicit template instantiation. */
     // Sun C++ 4.2 (and beyond) supports template specialization.
 #    define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
+#endif /* 0 */
 #  endif
 #endif /* __SUNPRO_CC */
 
@@ -48,12 +52,12 @@
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR 
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 #define ACE_HAS_UALARM
 #define ACE_LACKS_UALARM_PROTOTYPE
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -91,7 +95,7 @@
 #define ACE_HAS_IP_MULTICAST
 
 // Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA 
+#define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
