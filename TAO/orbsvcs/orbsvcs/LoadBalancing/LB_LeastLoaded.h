@@ -103,8 +103,7 @@ protected:
 
   /// Retrieve the least loaded location from the given list of
   /// locations.
-  CORBA::Boolean get_location (PortableGroup::ObjectGroup_ptr object_group,
-                               CosLoadBalancing::LoadManager_ptr load_manager,
+  CORBA::Boolean get_location (CosLoadBalancing::LoadManager_ptr load_manager,
                                const PortableGroup::Locations & locations,
                                PortableGroup::Location & location
                                ACE_ENV_ARG_DECL);
