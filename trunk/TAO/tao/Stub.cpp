@@ -73,8 +73,8 @@ STUB_Object::STUB_Object (char *repository_id,
     first_locate_request_ (0)
 {
 
-  this->profile_lock_ptr_ =  
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+  this->profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 
   set_base_profiles (&profiles);
 }
@@ -94,11 +94,11 @@ STUB_Object::STUB_Object (char *repository_id,
 {
   // @@ XXX need to verify type and deal with wrong types
 
-  this->profile_lock_ptr_ =  
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+  this->profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 
   base_profiles_.set (1);
-  
+
   base_profiles_.give_profile (profile);
 
   reset_base ();
@@ -121,8 +121,8 @@ STUB_Object::STUB_Object (char *repository_id,
   // @@ XXX need to verify type and deal with wrong types
 
   // @@ does this need to be freed?
-  this->profile_lock_ptr_ =  
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+  this->profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 
   set_base_profiles (profiles);
 
@@ -140,8 +140,8 @@ STUB_Object::STUB_Object (char *repository_id)
     use_locate_request_ (0),
     first_locate_request_ (0)
 {
-  this->profile_lock_ptr_ = 
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
+  this->profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
@@ -352,7 +352,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
       for (;;)
         {
           // Start the call by constructing the request message header.
-	  // and connecting to the server.
+          // and connecting to the server.
           TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX1)
             {
               call.start (TAO_IN_ENV);
@@ -366,24 +366,24 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                                 guard,
                                 *this->profile_lock_ptr_));
 
-	      // get the next profile and try again
-	      // If a forward profile once succeeded but now fails then
-	      // start all over again.  Otherwise get the next profile and 
-	      // try again.  If this was the last profile in the list then
-	      // stop.
-	      if (profile_success_ && forward_profiles_)
-		{
-		  // reset profiles list and start all over again
-		  reset_profiles ();
+              // get the next profile and try again
+              // If a forward profile once succeeded but now fails then
+              // start all over again.  Otherwise get the next profile and
+              // try again.  If this was the last profile in the list then
+              // stop.
+              if (profile_success_ && forward_profiles_)
+                {
+                  // reset profiles list and start all over again
+                  reset_profiles ();
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (roundtrip_continue_label);
                 }
               else if (next_profile () != 0)
-		{
+                {
                   TAO_IN_ENV.clear ();
-  		  TAO_GOTO (roundtrip_continue_label);
-		}
-	
+                  TAO_GOTO (roundtrip_continue_label);
+                }
+
               // @@ Should re reset the profile list here?
               reset_profiles ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
@@ -406,19 +406,19 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                                 guard,
                                 *this->profile_lock_ptr_));
 
-	      if (profile_success_ && forward_profiles_)
-		{
-		  // reset profiles list and start all over again
-		  reset_profiles ();
+              if (profile_success_ && forward_profiles_)
+                {
+                  // reset profiles list and start all over again
+                  reset_profiles ();
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (roundtrip_continue_label);
                 }
               else if (next_profile () != 0)
-		{
+                {
                   TAO_IN_ENV.clear ();
-  		  TAO_GOTO (roundtrip_continue_label);
-		}
-	
+                  TAO_GOTO (roundtrip_continue_label);
+                }
+
               // @@ Should re reset the profile list here?
               reset_profiles ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
@@ -429,7 +429,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
             return;
           else if (status == TAO_GIOP_NO_EXCEPTION)
             {
-	      profile_success_ = 1;
+              profile_success_ = 1;
 
               // Now, get all the "return", "out", and "inout"
               // parameters from the response message body.
@@ -498,9 +498,18 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                 }
               return;
             }
+
           // ... or maybe this request got forwarded to someplace
           // else; send the request there instead.
-          if (status != TAO_GIOP_LOCATION_FORWARD)
+          if (status == TAO_GIOP_LOCATION_FORWARD)
+            {
+              if (next_profile () == 0)
+                {
+                  TAO_IN_ENV.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_NO));
+                  return;
+                }
+            }
+          else
             {
               // @@ What is the right exception to throw in this case?
               // TRANSIENT - FRED
@@ -528,23 +537,23 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
             {
               ACE_MT (ACE_GUARD (ACE_Lock,
                                 guard,
-	                                *this->profile_lock_ptr_));
+                                        *this->profile_lock_ptr_));
 
               // If this is the forward_profile, then check to see if we
               // need to go back to the original profile and try that.
-	      if (profile_success_ && forward_profiles_)
-		{
-		  // reset profiles list and start all over again
-		  reset_profiles ();
+              if (profile_success_ && forward_profiles_)
+                {
+                  // reset profiles list and start all over again
+                  reset_profiles ();
                   TAO_IN_ENV.clear ();
                   TAO_GOTO (oneway_continue_label);
                 }
               else if (next_profile () != 0)
-		{
+                {
                   TAO_IN_ENV.clear ();
-  		  TAO_GOTO (oneway_continue_label);
-		}
-	
+                  TAO_GOTO (oneway_continue_label);
+                }
+
               // @@ Should re reset the profile list here?
               reset_profiles ();
               TAO_RETHROW_SAME_ENV_RETURN_VOID;
