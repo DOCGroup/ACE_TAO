@@ -15,14 +15,6 @@
 #include <math.h>
 
 
-#ifndef extern_c_symbols
-#define extern_c_symbols
-extern "C" {
-
-       int usleep(unsigned int useconds);
-}
-#endif
-
 
 
 
