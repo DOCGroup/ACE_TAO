@@ -19,20 +19,10 @@
 #include "ace/Timer_Queue.h"
 #include "TestS.h"
 
-// @@ Mayur, please do not program like a Java programmer.  Please
-//    move the class declaration to a separate header file, and keep
-//    the implementation code in this file.
-//
-// Mayur: Okie.  I thought it would be easier if everything was
-// present in a single file because this class is small.  Of course,
-// if this class grows big (which shouldn't happen), that might be a
-// problem.
-
 class Timer_Handler : public ACE_Event_Handler
 {
 public:
-
-  Timer_Handler (Test::AMH_RoundtripResponseHandler_ptr rh, 
+  Timer_Handler (Test::AMH_RoundtripResponseHandler_ptr rh,
                  Test::Timestamp send_time);
 
   virtual int handle_timeout (const ACE_Time_Value &,
