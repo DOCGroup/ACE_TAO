@@ -8,6 +8,9 @@ Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
           to Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for
           reporting this.
 
+        * bin/create_ace_build: made perl4-compatible.  Thanks to
+          Carlos for noticing this.
+
 Thu Mar 05 12:36:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_TRACE): Added a missing right paren.
