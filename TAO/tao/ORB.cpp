@@ -995,10 +995,6 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
 
 #if defined (TAO_HAS_INTERFACE_REPOSITORY)
 
-void string2long (const char *str,
-                  ACE_CDR::ULong *&arr,
-                  ACE_CDR::ULong &arrlen);
-
 CORBA_TypeCode_ptr 
 CORBA_ORB::create_interface_tc (const char * id,
                                 const char * name,
@@ -1009,28 +1005,12 @@ CORBA_ORB::create_interface_tc (const char * id,
   // The piece of code that follows has been based on the code in the
   // IDL compiler 
   cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
-
-  // generate the REPO id
-  ACE_CDR::ULong slen = ACE_OS::strlen (id) + 1; // 1 for NULL terminating
   
-  cdr << slen;
+  // Use the overloaded operator from the TAO_Output CDR class 
+  cdr << id;
 
-  ACE_CDR::ULong *larr, arrlen;
-
-  string2long (id,larr, arrlen); 
-
-  for (ACE_CDR::ULong i = 0; i < arrlen; i++)
-    cdr << larr [i];
-
-  // Name of the interface
-  slen = ACE_OS::strlen (name) + 1;
-  cdr << slen;
-
-  string2long (name, larr, arrlen);
-  
-  
-  for (ACE_CDR::ULong ind = 0; ind < arrlen; ind++)
-    cdr << larr [ind];
+  // Send the name
+  cdr << name;
 
   CORBA_TypeCode_ptr interface_typecode = 0;
   ACE_NEW_THROW_EX (interface_typecode,
@@ -1055,41 +1035,18 @@ CORBA_ORB::create_enum_tc (const char *id,
   // The piece of code that follows has been based on the code in the
   // IDL compiler 
   cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
+
+  cdr << id;
+
+  cdr << name;
   
-  // generate and massage in the REPO id
-  ACE_CDR::ULong slen = ACE_OS::strlen (id) + 1; // 1 for NULL terminating
-  cdr << slen;
-
-  ACE_CDR::ULong *larr, arrlen;
-
-  string2long (id, larr, arrlen);
-
-  for (ACE_CDR::ULong i = 0; i < arrlen; i++)
-    cdr << larr [i];
-
-  // Name of the enum
-  slen = ACE_OS::strlen (name) + 1;
-  cdr << slen;
-
-  // Massage the enums values..
-  string2long (name, larr, arrlen);
-
-  for (ACE_CDR::ULong ind = 0; ind < arrlen; ind++)
-    cdr << larr [ind];
-
   CORBA::ULong len = members.length ();
-  
+
+  cdr << len;
+
   for (CORBA::ULong index = 0; index < len; index++)
     {
-      // String length defined inside the enums
-      slen = ACE_OS::strlen (members[index].in ()) + 1;
-      cdr << slen;
-      
-      string2long (members[index].in (), larr, arrlen);
-      
-      // And finally the enums themselves
-      for (ACE_CDR::ULong len1 = 0; len1 < arrlen; len1++)
-        cdr << larr [len1];
+      cdr << members[index].in ();
     } 
 
   CORBA_TypeCode_ptr interface_typecode = 0;
@@ -1104,31 +1061,48 @@ CORBA_ORB::create_enum_tc (const char *id,
   return interface_typecode;
 }
 
-
-                                   
-static const CORBA::ULong NAMEBUFSIZE = 1024;
-    
-void
-string2long (const char *str,
-             ACE_CDR::ULong *&larr,
-             ACE_CDR::ULong &arrlen)
+CORBA_TypeCode_ptr 
+CORBA_ORB::create_exception_tc (const char *id,
+                                const char *name,
+                                CORBA_StructMemberSeq &members,
+                                CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_CDR::ULong slen = ACE_OS::strlen (str) + 1; 
+  TAO_OutputCDR cdr;
   
+  // The piece of code that follows has been based on the code in the
+  // IDL compiler 
+  cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
 
-  // compute the number of bytes necessary to hold the name rounded to
-  // the next multiple of 4 (i.e., size of long)
-  const int bytes_per_word = sizeof (ACE_CDR::ULong);
-  arrlen = slen / bytes_per_word + (slen % bytes_per_word ? 1 : 0);
-  
-  ACE_CDR::ULong buf [NAMEBUFSIZE];
-  
-  larr = buf;
+  cdr << id;
 
-  ACE_OS::memset (buf, 0, sizeof (buf));
-  larr = buf;
-  ACE_OS::memcpy (buf, str, slen);
+  cdr << name;
+  
+  // Number of members..
+  CORBA::ULong len = members.length ();
+  cdr << len;
+
+  for (CORBA::ULong index = 0; index < len; index++)
+    {
+      // Get the first member which is a string.. 
+      CORBA_StructMember struct_member = members[index];
+
+      cdr << struct_member.name.in ();
+
+      cdr << struct_member.type.in ();
+    }
+
+  CORBA_TypeCode_ptr interface_typecode = 0;
+  ACE_NEW_THROW_EX (interface_typecode,
+                    CORBA_TypeCode (CORBA::tk_except,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+
+  return interface_typecode;
 }
+                                   
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
