@@ -1,6 +1,6 @@
 Fri May 16 18:11:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl (BasicSP): 
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl (BasicSP):
 	* examples/handcrafted/BasicSP/BasicSP.mpc:
 	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
 	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
@@ -26,7 +26,7 @@ Fri May 16 18:11:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Wed May 14 17:02:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-        * examples/handcrafted/BasicSP/EC/EC.idl:
+	* examples/handcrafted/BasicSP/EC/EC.idl:
 	* examples/handcrafted/BasicSP/EC/EC.mpc:
 	* examples/handcrafted/BasicSP/EC/ECE.idl:
 	* examples/handcrafted/BasicSP/EC/ECEI.idl:
@@ -39,12 +39,11 @@ Wed May 14 17:02:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* examples/handcrafted/BasicSP/EC/EC_svnt_export.h:
 	* examples/handcrafted/BasicSP/EC/client.cpp:
 	* examples/handcrafted/BasicSP/EC/controller.cpp: Implementation
-	  for the EC component. 
+	  for the EC component.
 
 Wed May 14 15:50:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-
-        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl:
 	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
 	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
 	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDEI.idl:
@@ -83,12 +82,12 @@ Tue May 13 23:26:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt.h:
 	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
 	* examples/handcrafted/BasicSP/EC/EC.idl: Hand code the BMDevice
-	  and BMDisplay component in the Boeing OEP scenario. 
+	  and BMDisplay component in the Boeing OEP scenario.
 
 Mon May 12 16:53:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/handcrafted/BasicSP/BasicSP.idl: 
-	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl: 
+	* examples/handcrafted/BasicSP/BasicSP.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl:
 	* examples/handcrafted/BasicSP/BMDevice/BMDeviceE.idl:
 	* examples/handcrafted/BasicSP/BMDevice/BMDeviceEI.idl:
 	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc
