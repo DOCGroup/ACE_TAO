@@ -1,12 +1,44 @@
+Thu Apr 12 12:22:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/README:
+        * tests/Oneway_Buffering/README:
+        * tests/Oneway_Buffering/Makefile:
+        * tests/Oneway_Buffering/Makefile.bor:
+        * tests/Oneway_Buffering/admin.bor:
+        * tests/Oneway_Buffering/client.bor:
+        * tests/Oneway_Buffering/server.bor:
+        * tests/Oneway_Buffering/run_buffer_size.pl:
+        * tests/Oneway_Buffering/run_message_count.pl:
+        * tests/Oneway_Buffering/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout.pl:
+        * tests/Oneway_Buffering/Test.idl:
+        * tests/Oneway_Buffering/Oneway_Buffering.h:
+        * tests/Oneway_Buffering/Oneway_Buffering.cpp:
+        * tests/Oneway_Buffering/Oneway_Buffering_Admin.h:
+        * tests/Oneway_Buffering/Oneway_Buffering_Admin.cpp:
+        * tests/Oneway_Buffering/admin.cpp:
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Oneway_Buffering/server.cpp:
+          New test for oneway buffering.  Verify that buffers are not
+          flushed before the constraints are reached, and that they are
+          indeed flushed shortly after that.
+
+        * tests/Reliable_Oneways/client.cpp:
+          Use Messaging.h instead of MessagingC.h, a convention for
+          CORBA-related namespaces is starting to appear: for each
+          namespace an include file with the same name.
+
 Thu Apr 12 12:07:05 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ClientRequestInfo.cpp (request_id):
-	* tao/PortableServer/ServerRequestInfo.cpp (request_id):
+        * tao/ClientRequestInfo.cpp (request_id):
+        * tao/PortableServer/ServerRequestInfo.cpp (request_id):
 
-	  reinterpret_cast to an "unsigned long" instead of CORBA::ULong
-	  since we need to first cast to an integer large enough to hold
-	  an address to avoid compile-time warnings on some 64-bit
-	  platforms.
+          reinterpret_cast to an "unsigned long" instead of CORBA::ULong
+          since we need to first cast to an integer large enough to hold
+          an address to avoid compile-time warnings on some 64-bit
+          platforms.
 
 Thu Apr 12 09:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -14,7 +46,7 @@ Thu Apr 12 09:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
     * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
     * examples/PluggableUDP/tests/SimplePerformance/test_i.cpp:
 
-      Fixed some minor compiler warnings. 
+      Fixed some minor compiler warnings.
 
 Thu Apr 12 08:33:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -24,30 +56,30 @@ Thu Apr 12 08:33:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Thu Apr 12 06:50:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/SimplePerformance/server.cpp:
-	* examples/PluggableUDP/tests/SimplePerformance/test_i.cpp: Fixed
-	  warnings with g++ builds.
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/test_i.cpp: Fixed
+          warnings with g++ builds.
 
 Wed Apr 11 19:33:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/SimplePerformance/server.cpp:
-	* examples/PluggableUDP/tests/SimplePerformance/client.cpp: Fixed
-	  warnings  with g++ builds.
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp: Fixed
+          warnings  with g++ builds.
 
 Wed Apr 11 18:15:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/BiDir_Adapter.cpp: Fixed a typo. Thanks to Frank for
-	  pointing this out.  
+        * tao/BiDir_Adapter.cpp: Fixed a typo. Thanks to Frank for
+          pointing this out.
 
 Wed Apr 11 16:32:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/tests/SimplePerformance/Makefile: Added
-	  proper libs for linking.
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile: Added
+          proper libs for linking.
 
 Wed Apr 11 16:21:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed template
-	  instantiations. 
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed template
+          instantiations.
 
 Wed Apr 11 09:57:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
