@@ -54,7 +54,7 @@ main (int argc, char *argv[])
       // Sanity check.
       if (ptype != Test::POLICY_TYPE)
         ACE_TRY_THROW (CORBA::INTERNAL ());
-        
+
       Test::Policy_var policy (Test::Policy::_narrow (p.in ()
                                                       ACE_ENV_ARG_PARAMETER));
       ACE_TRY_CHECK;
