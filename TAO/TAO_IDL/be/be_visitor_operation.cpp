@@ -997,7 +997,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "_tao_environment";
   // end the upcall
   *os << be_uidt_nl;
-  *os << ");" << be_nl;
+  *os << ");\n";
 
   // STEP 3F: do any post processing for the arguments
   ctx = *this->ctx_;
@@ -1016,7 +1016,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // STEP 3G: check if we are oneway in which case, we are done
   if (node->flags () == AST_Operation::OP_oneway)
     {
-      // we are done. Nothing else to do, except closing the funciton body. 
+      // we are done. Nothing else to do, except closing the funciton body.
       os->decr_indent ();
       *os << "}\n\n";
       return 0;
@@ -1024,6 +1024,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // STEP 3H: setup parameters for marshaling and marshal them into the
   // outgoing stream
+  os->indent ();
   *os << "_tao_server_request.marshal (" << be_idt_nl
       << "_tao_environment, " << be_nl
       << "&";

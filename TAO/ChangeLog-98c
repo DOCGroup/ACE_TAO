@@ -1,3 +1,17 @@
+Tue Mar 24 19:13:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/Server_Request.cpp: There was a lot of messy code on the
+	outgoing path from skeleton to the wire. Specifically, we were
+	mixing system exceptions with user defined exceptions. This has
+	been fixed and is under testing.
+
+	* TAO_IDL/{be_visitor_exception, be_exception}.cpp: The generated
+	typecode for Exceptions erroneously had a "tk_struct" TypeCode
+	kind. This has been fixed to be "tk_except".
+
+	* TAO_IDL/be_visitor_operation.cpp: Handling of oneway operations
+	in the server skeletons was buggy. It is now fixed.
+
 Tue Mar 24 14:51:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp (gen_server_skeletons): Changed
@@ -8,7 +22,7 @@ Tue Mar 24 14:51:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IIOP_Object.cpp: Initialze
  	  TAO_Synchronous_Cancellation_Required::old_type_.
-	
+
 Tue Mar 24 14:07:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/Server_Request.{h, i, cpp}: Made the class compliant with

@@ -414,7 +414,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "};" << be_nl;
 
       *os << "static CORBA::TypeCode _tc__tc_" << node->flatname () <<
-        " (CORBA::tk_struct, sizeof (_oc_" <<  node->flatname () <<
+        " (CORBA::tk_except, sizeof (_oc_" <<  node->flatname () <<
         "), (char *) &_oc_" << node->flatname () <<
         ", CORBA::B_FALSE);" << be_nl;
       *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_" <<
