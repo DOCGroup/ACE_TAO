@@ -134,9 +134,22 @@ Video_Control_i::stop (CORBA::Long cmdsn,
 
 CORBA::Boolean
 Video_Control_i::set_peer (char * &peer,
-                           CORBA::Environment &_tao_environment)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
-   ACE_INET_Addr client_data_addr (peer);
+
+  
+  char* peer_addr_str = new char[BUFSIZ];
+  ACE_OS::strcpy (peer_addr_str,peer);
+  ACE_OS::strtok_r (peer_addr_str, "=", &peer_addr_str);
+  char peer_addr [BUFSIZ];     
+
+  ACE_OS::sprintf (peer_addr,
+                   "%s:%s",
+                   ACE_OS::strtok (peer_addr_str, ";"),
+                   ACE_OS::strtok (0, ";")
+                   );
+
+  ACE_INET_Addr client_data_addr (peer_addr);
   // Data (UDP) Address of the client.
 
    ACE_DEBUG ((LM_DEBUG,
@@ -252,6 +265,7 @@ Video_Control_i::register_handlers (void)
 void
 Video_Control_i::change_state (Video_Control_State *state)
 {
+  ACE_DEBUG ((LM_DEBUG, "Process ID for CHANGE STATE %d", getpid ()));
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Video_Control_i::Changing to state %d\n",
               state->get_state ()));
@@ -262,6 +276,7 @@ Video_Control_i::change_state (Video_Control_State *state)
 Video_Control_State *
 Video_Control_i::get_state (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "Process ID for GET STATE %d", getpid ()));
   return this->state_;
 }
 
