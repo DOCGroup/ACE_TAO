@@ -1,3 +1,22 @@
+Sun Aug 17 11:15:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Var_Array_Argument_T.h:
+	* tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+	* tao/Fixed_Array_Argument_T.cpp:
+	* tao/Fixed_Array_Argument_T.h:
+	* tao/Fixed_Array_Argument_T.inl: The Inout and Out stub argument
+	  classes will take a reference to the slice pointer. Without this
+	  the values copied were getting lost and for right reasons!
+
+	* tao/Sequence_T.cpp: Converted all usage of reinterpret cast
+	  T_slice ** to T *. Usage of T_slice ** is totally nutty since
+	  the compiler doesn't know what the other * is for. Usage of **
+	  lead to reinterpret cast returning null. This crashed all the
+	  sequence related tests in Param_Test.
+
+	* tao/Synch_Invocation.cpp: Cosmetic fix.
+
 Sun Aug 17 11:07:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation.cpp: For attribute

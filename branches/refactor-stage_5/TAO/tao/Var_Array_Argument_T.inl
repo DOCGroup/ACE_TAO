@@ -20,7 +20,7 @@ TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
 TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::
-Inout_Var_Array_Argument_T (S x)
+Inout_Var_Array_Argument_T (S_slice  *&x)
   : x_ (x)
 {}
 

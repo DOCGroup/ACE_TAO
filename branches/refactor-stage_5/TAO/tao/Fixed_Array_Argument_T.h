@@ -55,7 +55,7 @@ namespace TAO
   class Inout_Fixed_Array_Argument_T : public Argument
   {
   public:
-    Inout_Fixed_Array_Argument_T (S x);
+    Inout_Fixed_Array_Argument_T (S_slice *&x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -78,7 +78,7 @@ namespace TAO
   class Out_Fixed_Array_Argument_T : public Argument
   {
   public:
-    Out_Fixed_Array_Argument_T (S x);
+    Out_Fixed_Array_Argument_T (S_slice *& x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
@@ -97,8 +97,8 @@ namespace TAO
    *
    */
   template<typename S,
-           typename S_slice, 
-           typename S_var, 
+           typename S_slice,
+           typename S_var,
            typename S_forany>
   class Ret_Fixed_Array_Argument_T : public Argument
   {
@@ -221,9 +221,9 @@ namespace TAO
    * @brief Argument traits of fixed size element array.
    *
    */
-  template<typename T, 
-           typename T_slice, 
-           typename T_var, 
+  template<typename T,
+           typename T_slice,
+           typename T_var,
            typename T_forany>
   struct Fixed_Array_Arg_Traits_T
   {

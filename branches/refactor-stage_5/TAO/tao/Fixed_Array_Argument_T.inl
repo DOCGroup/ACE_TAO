@@ -20,7 +20,7 @@ TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
 TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::
-Inout_Fixed_Array_Argument_T (S x)
+Inout_Fixed_Array_Argument_T (S_slice *& x)
   : x_ (x)
 {}
 
@@ -36,8 +36,7 @@ TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
 
 template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::
-Out_Fixed_Array_Argument_T (S x)
+TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::Out_Fixed_Array_Argument_T (S_slice *&x)
   : x_ (x)
 {}
 
@@ -144,4 +143,3 @@ TAO::Ret_Fixed_Array_SArgument_T<S_slice,S_var,S_forany>::arg (void)
 {
   return this->x_.out ();
 }
-

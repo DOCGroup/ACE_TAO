@@ -54,7 +54,7 @@ namespace TAO
   class Inout_Var_Array_Argument_T : public Argument
   {
   public:
-    Inout_Var_Array_Argument_T (S x);
+    Inout_Var_Array_Argument_T (S_slice *&x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
