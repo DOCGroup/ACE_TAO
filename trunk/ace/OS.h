@@ -1619,9 +1619,12 @@ enum ACE_Thread_State
   // Thread has been cancelled (which is an indiction that it needs to
   // terminate...).
 
-  ACE_THR_TERMINATED
+  ACE_THR_TERMINATED,
   // Thread has shutdown, but the slot in the thread manager hasn't
   // been reclaimed yet.
+
+  ACE_THR_JOINING
+  // Join operation has been invoked on the thread by thread manager.
 };
 
 # if !defined (ACE_DEFAULT_THREAD_PRIORITY)
