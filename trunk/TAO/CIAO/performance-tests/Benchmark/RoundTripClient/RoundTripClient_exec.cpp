@@ -1,9 +1,11 @@
-p// $Id$
- 
-#include "RoundTripClient_exec.h"
+// $Id$
+
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
+
+#include "RoundTripClient_exec.h"
+
 
 const int niterations = 100000; //Default no of iterations
 //=================================================================
@@ -50,13 +52,13 @@ MyImpl::RoundTripClient_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-MyImpl::RoundTripClient_exec_i::start () 
+MyImpl::RoundTripClient_exec_i::start ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ///////////// Start test /////////////////////////////////////////
-  
+
   // Let's try to start tests from here...
-  Benchmark::LatencyTest_var lt = 
+  Benchmark::LatencyTest_var lt =
     context_->get_connection_latency(ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -82,7 +84,7 @@ MyImpl::RoundTripClient_exec_i::start ()
 
       (void) lt->makeCall (test ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       history.sample (now - start);
     }
@@ -98,11 +100,11 @@ MyImpl::RoundTripClient_exec_i::start ()
   ACE_Basic_Stats stats;
   history.collect_basic_stats (stats);
   stats.dump_results ("Total", gsf);
-  
+
   ACE_Throughput_Stats::dump_throughput ("Total", gsf,
 					 test_end - test_start,
 					 stats.samples_count ());
-  
+
 }
 
 ::Benchmark::CCM_Controller_ptr
