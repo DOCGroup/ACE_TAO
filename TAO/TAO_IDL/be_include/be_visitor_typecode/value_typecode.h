@@ -21,9 +21,9 @@ namespace TAO
 {
 
   /**
-   * @class be_visitor_struct_typecode
+   * @class be_visitor_value_typecode
    *
-   * @brief Structure TypeCode generation visitor.
+   * @brief valuetype TypeCode generation visitor.
    *
    * Structure TypeCode generation visitor.
    */
@@ -33,28 +33,22 @@ namespace TAO
   public:
 
     /// Constructor.
-    be_visitor_value_typecode (be_visitor_context * ctx,
-                               bool is_exception);
+    be_visitor_value_typecode (be_visitor_context * ctx);
 
     /// Visit a structure.
     /**
-     * @todo The legacy method name "@c visit_structure()" is
+     * @todo The legacy method name "@c visit_valuetype()" is
      *       redundant since it is obvious from the argument what kind
      *       of TypeCode is being visited.  It will be changed once
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_valuetype (AST_Structure * node);
+    virtual int visit_valuetype (be_valuetype * node);
 
   private:
 
     /// Generate structure field related TypeCode code.
-    int visit_members (AST_Structure * node);
-
-  private:
-
-    /// Does the TypeCode refer to a CORBA exception?
-    bool const is_exception_;
+    int visit_members (be_valuetype * node);
 
   };
 

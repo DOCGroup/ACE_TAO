@@ -25,7 +25,7 @@ TAO::be_visitor_value_typecode::be_visitor_value_typecode (
 }
 
 int
-TAO::be_visitor_value_typecode::visit_structure (AST_Structure * node)
+TAO::be_visitor_value_typecode::visit_structure (be_valuetype * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -33,64 +33,140 @@ TAO::be_visitor_value_typecode::visit_structure (AST_Structure * node)
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  size_t const count =
+    node->data_members_count ();
 
-  std::string const fields_name (std::string ("_tao_fields_")
-                                 + node->flat_name ());
+  if (count == 1 &&
+      count == node->nmembers ()  // Verify no operations.
+      && node->n_inherits () == 0)
+    {
+      // Generate a value box TypeCode.  It is more compact than a
+      // valuetype TypeCode.
 
-  // Generate array containing struct field characteristics.
-  os << "static TAO::TypeCode::Value_Field<char const *> const "
-     << fields_name.c_str ()
-     << "[] =" << be_idt_nl
-     << "{" << be_idt_nl;
+      UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
 
-  if (this->visit_members (node) != 0)
-    return -1;
+      AST_Decl * const d = si.item ();
 
-  os << be_uidt_nl
-     << "};" << be_uidt_nl << be_nl;
+      ACE_ASSERT (d);
 
-  // Generate the TypeCode instantiation.
-  os
-    << "static TAO::TypeCode::Value<char const *," << be_nl
-    << "                            TAO::TypeCode::Value_Field<char const *> const *," << be_nl
-    << "                            CORBA::tk_"
-    << (this->is_exception_ ? "except" : "struct") << "," << be_nl
-    << "                            TAO::Null_RefCount_Policy> const"
-    << be_idt_nl
-    << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-    << "\"" << node->repoID () << "\"," << be_nl
-    << "\"" << node->original_local_name () << "\"," << be_nl
-    << "_tao_fields_" << node->flat_name () << "," << be_nl
-    << node->nfields () << ");" << be_uidt_nl
-    << be_uidt_nl;
+      AST_Field * const field = AST_Field::narrow_from_decl (d);
+
+      ACE_ASSERT (field);
+
+      be_type * const member_type =
+        be_type::narrow_from_decl (field->field_type ());
+
+      // Generate the TypeCode instantiation.
+      os
+        << "static TAO::TypeCode::Value_Box<char const *," << be_nl
+        << "                                TAO::Null_RefCount_Policy> const"
+        << be_idt_nl
+        << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
+        << "\"" << node->repoID () << "\"," << be_nl
+        << "\"" << node->original_local_name () << "\"," << be_nl
+        << "&"  << member_type->tc_name () << ");" << be_uidt_nl
+        << be_uidt_nl;
+    }
+  else
+    {
+      std::string const fields_name (std::string ("_tao_fields_")
+                                     + node->flat_name ());
+
+      // Generate array containing struct field characteristics.
+      os << "static TAO::TypeCode::Value_Field<char const *> const "
+         << fields_name.c_str ()
+         << "[] =" << be_idt_nl
+         << "{" << be_idt_nl;
+
+      if (this->visit_members (node) != 0)
+        return -1;
+
+      os << be_uidt_nl
+         << "};" << be_uidt_nl << be_nl;
+
+      // Generate the TypeCode instantiation.
+      os
+        << "static TAO::TypeCode::Value<char const *," << be_nl
+        << "                            TAO::TypeCode::Value_Field<char const *> const *," << be_nl
+        << "                            CORBA::tk_"
+        << (dynamic_cast<be_eventtype *> (node) ? "event" : "value") << "," << be_nl
+        << "                            TAO::Null_RefCount_Policy> const"
+        << be_idt_nl
+        << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
+        << "\"" << node->repoID () << "\"," << be_nl
+        << "\"" << node->original_local_name () << "\"," << be_nl
+        << "_tao_fields_" << node->flat_name () << "," << be_nl
+        << count << ");" << be_uidt_nl
+        << be_uidt_nl;
+    }
 
   return
     this->gen_typecode_ptr (be_type::narrow_from_decl (node));
 }
 
 int
-TAO::be_visitor_value_typecode::visit_members (AST_Structure * node)
+TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
 {
-  AST_Field ** member_ptr = 0;
-
-  size_t const count = node->nfields ();
-
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  for (size_t i = 0; i < count; ++i)
+  size_t const count =
+    node->data_members_count ();
+
+  size_t i = 0;
+
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next(), ++i)
     {
-      node->field (member_ptr, i);
+      AST_Decl * const d = si.item ();
+
+      if (!d)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_value_typecode::visit_members - "
+                             "bad node in this scope\n"), 0);
+        }
+
+      AST_Field * const field = AST_Field::narrow_from_decl (d);
+
+      if (!field)
+        {
+          continue;
+        }
 
       be_decl * const member_decl =
-        be_decl::narrow_from_decl (*member_ptr);
+        be_decl::narrow_from_decl (field);
 
       be_type * const member_type =
-        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+        be_type::narrow_from_decl (field->field_type ());
 
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "
-         << "&"  << member_type->tc_name ()
+         << "&"  << member_type->tc_name () << ", ";
+
+      AST_Field::Visibility const vis = field->visibility ();
+
+      switch (vis)
+        {
+        case AST_Field::vis_PUBLIC:
+          os << "CORBA::PUBLIC_MEMBER";
+          break;
+
+        case AST_Field::vis_PRIVATE:
+          os << "CORBA::PRIVATE_MEMBER";
+          break;
+
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_value_typecode::visit_members - "
+                             "Unknown valuetype member visibility.\n"),
+                            -1);
+        };
+
+      os 
+         << 
          << " }";
+
 
       if (i < count - 1)
         os << ",";
