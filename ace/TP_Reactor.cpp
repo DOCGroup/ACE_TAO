@@ -32,39 +32,6 @@ ACE_TP_Reactor::ACE_TP_Reactor (size_t size,
   this->supress_notify_renew (1);
 }
 
-// Dispatches a single event handler
-int
-ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
-{
-  ACE_TRACE ("ACE_TP_Reactor::notify_handle");
-
-  ACE_HANDLE handle = dispatch_info.handle_;
-  ACE_Event_Handler *event_handler = dispatch_info.event_handler_;
-  ACE_Reactor_Mask mask = dispatch_info.mask_;
-  ACE_EH_PTMF callback = dispatch_info.callback_;
-
-  // Check for removed handlers.
-  if (event_handler == 0)
-    return -1;
-
-  // Upcall
-  int status = (event_handler->*callback) (handle);
-
-  // If negative, remove from Reactor
-  if (status < 0)
-    return this->remove_handler (handle, mask);
-
-  // If positive, reschedule in Reactor
-  else if (status > 0)
-    this->ready_ops (handle,
-                     mask,
-                     ACE_Reactor::SET_MASK);
-  // assert (status >= 0);
-  // resume in Reactor
-  return (event_handler != this->notify_handler_ ?
-          this->resume_handler (handle) : 0);
-}
-
 int
 ACE_TP_Reactor::owner (ACE_thread_t, ACE_thread_t *o_id)
 {
@@ -86,47 +53,6 @@ ACE_TP_Reactor::owner (ACE_thread_t *t_id)
   
 }
 
-// Overwrites ACE_Select_Reactor::dispatch_io_set() to *not* dispatch
-// any event handlers.  The information of one activated event handler
-// is stored away, so that the event handler can be dispatch later.
-int
-ACE_TP_Reactor::dispatch_io_set (int number_of_active_handles,
-                                 int& number_dispatched,
-                                 int mask,
-                                 ACE_Handle_Set& dispatch_mask,
-                                 ACE_Handle_Set& ready_mask,
-                                 ACE_EH_PTMF callback)
-{
-  ACE_UNUSED_ARG (ready_mask);
-
-  ACE_HANDLE handle;
-
-  ACE_Handle_Set_Iterator handle_iter (dispatch_mask);
-
-  while ((handle = handle_iter ()) != ACE_INVALID_HANDLE
-         && number_dispatched < number_of_active_handles
-         && this->state_changed_ == 0)
-    {
-      // ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TP_Reactor::dispatching\n")));
-      number_dispatched++;
-
-      // Remember this info
-      this->dispatch_info_.set (handle,
-                                this->handler_rep_.find (handle),
-                                mask,
-                                callback);
-
-      // One is enough
-      break;
-    }
-
-  if (number_dispatched > 0 && this->state_changed_)
-    {
-      return -1;
-    }
-
-  return 0;
-}
 
 int
 ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
@@ -180,9 +106,21 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     }
 
   // We got the lock, lets handle some events.  Note: this method will
-  // *not* dispatch any handlers.  It will dispatch timeouts and
-  // signals.
-  result = this->handle_events_i (max_wait_time);
+  // *not* dispatch any I/O handlers.  It will dispatch signals,
+  // timeouts, and notifications.
+  ACE_EH_Dispatch_Info dispatch_info;
+  ACE_SEH_TRY
+    {
+      result = this->dispatch_i (max_wait_time, dispatch_info);
+    }
+
+  ACE_SEH_EXCEPT (this->release_token ())
+    {
+      // As it stands now, we catch and then rethrow all Win32
+      // structured exceptions so that we can make sure to release the
+      // <token_> lock correctly.
+    }
+
   if (result == -1)
     {
       ACE_MT (this->token_.release ());
@@ -190,31 +128,17 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     }
 
   // If there is any event handler that is ready to be dispatched, the
-  // dispatch information is recorded in this->dispatch_info_.
-  ACE_EH_Dispatch_Info dispatch_info;
-  if (this->dispatch_info_.dispatch ())
+  // dispatch information is recorded in dispatch_info.
+  if (dispatch_info.dispatch ())
     {
-      // Copy dispatch_info_ to the stack, as other threads can change
-      // dispatch_info_ after we release the lock.
-      dispatch_info = this->dispatch_info_;
-
-      // Reset dispatch_info_ so that we don't trip over it again.
-      this->dispatch_info_.reset ();
-
-      if (dispatch_info.event_handler_ == this->notify_handler_)
-        {
-          // Make sure we never suspend the notify_handler_ without holding the
-          // lock.
-          // @@ Actually, we don't even need to suspend the notify_handler_
-          //    here.  But let me get it to work first.
-          int retv = this->notify_handle (dispatch_info);
-          ACE_MT (this->token_.release ());
-          return retv;
-        }
-      else
-        // Suspend the handler so that other thread don't start
-        // dispatching it.
-        result = this->suspend_i (dispatch_info.handle_);
+      // Suspend the handler so that other threads don't start
+      // dispatching it.
+      // Make sure we never suspend the notify_handler_ without holding
+      // the lock.
+      // @@ Actually, we don't even need to suspend the notify_handler_
+      //    here.  But let me get it to work first.
+      if (dispatch_info.event_handler_ != this->notify_handler_)
+        this->suspend_i (dispatch_info.handle_);
     }
 
   // Release the lock.  Others threads can start waiting.
@@ -222,9 +146,15 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 
   // If there was an event handler ready, dispatch it.
   if (dispatch_info.dispatch ())
-    return this->notify_handle (dispatch_info);
-  else
-    return result;
+    {
+      if (this->notify_handle (dispatch_info) == 0)
+        ++result;                // Dispatched one more event
+      if (dispatch_info.event_handler_ != this->notify_handler_)
+        this->resume_handler (dispatch_info.handle_);
+    }
+
+  return result;
+
 }
 
 int
@@ -232,7 +162,7 @@ ACE_TP_Reactor::mask_ops (ACE_HANDLE handle,
                           ACE_Reactor_Mask mask,
                           int ops)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::mask_ops");
+  ACE_TRACE ("ACE_TP_Reactor::mask_ops");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token,
           ace_mon, this->token_, -1));
 
@@ -260,6 +190,189 @@ ACE_TP_Reactor::mask_ops (ACE_HANDLE handle,
 void
 ACE_TP_Reactor::no_op_sleep_hook (void *)
 {
+}
+
+
+int
+ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
+                            ACE_EH_Dispatch_Info &event)
+{
+  int result = -1;
+
+  event.reset ();           // Nothing to dispatch yet
+
+  // If the reactor handler state has changed, clear any remembered
+  // ready bits and re-scan from the master wait_set.
+  if (this->state_changed_)
+    {
+      this->ready_set_.rd_mask_.reset ();
+      this->ready_set_.wr_mask_.reset ();
+      this->ready_set_.ex_mask_.reset ();
+      this->state_changed_ = 0;
+    }
+
+  int active_handle_count = this->wait_for_multiple_events (this->ready_set_,
+                                                            max_wait_time);
+
+  int handlers_dispatched = 0;
+  int signal_occurred = 0;
+
+  // Note that we keep track of changes to our state.  If any of
+  // the dispatching ends up with this->state_changed_ being set,
+  // <wait_set_> state has changed as the result of an
+  // <ACE_Event_Handler> being dispatched.  This means that we
+  // need to bail out and rerun the select() again since our
+  // existing notion of handles in <dispatch_set_> may no longer be
+  // correct.
+
+  // First check for interrupts.
+  if (active_handle_count == -1)
+    {
+      // Bail out -- we got here since <select> was interrupted.
+      if (ACE_Sig_Handler::sig_pending () != 0)
+        {
+          ACE_Sig_Handler::sig_pending (0);
+
+#if 0
+          // Not sure if this should be done in the TP_Reactor
+          // case... leave it out for now.   -Steve Huston 22-Aug-00
+
+          // If any HANDLES in the <ready_set_> are activated as a
+          // result of signals they should be dispatched since
+          // they may be time critical...
+          active_handle_count = this->any_ready (dispatch_set);
+#else
+          active_handle_count = 0;
+#endif
+
+          // Record the fact that the Reactor has dispatched a
+          // handle_signal() method.  We need this to return the
+          // appropriate count below.
+          signal_occurred = 1;
+        }
+      else
+        return -1;
+    }
+
+  // Handle timers early since they may have higher latency
+  // constraints than I/O handlers.  Ideally, the order of
+  // dispatching should be a strategy...
+  this->dispatch_timer_handlers (handlers_dispatched);
+
+  // If either the state has changed as a result of timer
+  // expiry, or there are no handles ready for dispatching,
+  // all done for now.
+  if (this->state_changed_ || active_handle_count == 0)
+    return signal_occurred + handlers_dispatched;
+
+  // Next dispatch the notification handlers (if there are any to
+  // dispatch).  These are required to handle multi-threads that
+  // are trying to update the <Reactor>.
+
+  this->dispatch_notification_handlers (this->ready_set_,
+                                        active_handle_count,
+                                        handlers_dispatched);
+
+  // If one of those changed the state, return.
+  if (this->state_changed_ || active_handle_count == 0)
+    return signal_occurred + handlers_dispatched;
+
+  // Check for dispatch in write, except, read. Only catch one.
+  int found_io = 0;
+  ACE_HANDLE handle;
+
+  {
+    ACE_Handle_Set_Iterator handle_iter (this->ready_set_.wr_mask_);
+
+    while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
+      {
+        if (this->is_suspended_i (handle))
+          continue;
+
+        // Remember this info
+        event.set (handle,
+                   this->handler_rep_.find (handle),
+                   ACE_Event_Handler::WRITE_MASK,
+                   &ACE_Event_Handler::handle_output);
+        this->ready_set_.wr_mask_.clr_bit (handle);
+        found_io = 1;
+      }
+  }
+
+  if (!found_io)
+    {
+      ACE_Handle_Set_Iterator handle_iter (this->ready_set_.ex_mask_);
+
+      while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
+        {
+          if (this->is_suspended_i (handle))
+            continue;
+
+          // Remember this info
+          event.set (handle,
+                     this->handler_rep_.find (handle),
+                     ACE_Event_Handler::EXCEPT_MASK,
+                     &ACE_Event_Handler::handle_exception);
+          this->ready_set_.ex_mask_.clr_bit (handle);
+          found_io = 1;
+        }
+    }
+
+  if (!found_io)
+    {
+      ACE_Handle_Set_Iterator handle_iter (this->ready_set_.rd_mask_);
+
+      while ((handle = handle_iter ()) != ACE_INVALID_HANDLE && !found_io)
+        {
+          if (this->is_suspended_i (handle))
+            continue;
+
+          // Remember this info
+          event.set (handle,
+                     this->handler_rep_.find (handle),
+                     ACE_Event_Handler::READ_MASK,
+                     &ACE_Event_Handler::handle_input);
+          this->ready_set_.rd_mask_.clr_bit (handle);
+          found_io = 1;
+        }
+    }
+
+  result = signal_occurred + handlers_dispatched;
+
+  return result;
+}
+
+
+// Dispatches a single event handler
+int
+ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
+{
+  ACE_TRACE ("ACE_TP_Reactor::notify_handle");
+
+  ACE_HANDLE handle = dispatch_info.handle_;
+  ACE_Event_Handler *event_handler = dispatch_info.event_handler_;
+  ACE_Reactor_Mask mask = dispatch_info.mask_;
+  ACE_EH_PTMF callback = dispatch_info.callback_;
+
+  // Check for removed handlers.
+  if (event_handler == 0)
+    return -1;
+
+  // Upcall. If the handler returns positive value (requesting a
+  // reactor callback) don't set the ready-bit because it will be
+  // ignored if the reactor state has changed. Just call back
+  // as many times as the handler requests it. Other threads are off
+  // handling other things.
+  int status = 1;
+  while (status > 0)
+    status = (event_handler->*callback) (handle);
+
+  // If negative, remove from Reactor
+  if (status < 0)
+    return this->remove_handler (handle, mask);
+
+  // assert (status >= 0);
+  return 0;
 }
 
 

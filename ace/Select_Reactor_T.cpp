@@ -57,7 +57,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
     + this->ready_set_.wr_mask_.num_set ()
     + this->ready_set_.ex_mask_.num_set ();
 
-  if (number_ready > 0)
+  if (number_ready > 0 && &wait_set != &(this->ready_set_))
     {
       wait_set.rd_mask_ = this->ready_set_.rd_mask_;
       wait_set.wr_mask_ = this->ready_set_.wr_mask_;
@@ -895,7 +895,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_i (ACE_HANDLE handle)
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::suspend");
+  ACE_TRACE ("ACE_Select_Reactor_T::suspend_i");
   if (this->handler_rep_.find (handle) == 0)
     return -1;
 
@@ -915,6 +915,21 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
       this->wait_set_.ex_mask_.clr_bit (handle);
     }
   return 0;
+}
+
+// Must be called with locks held
+
+template <class ACE_SELECT_REACTOR_TOKEN> int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_Select_Reactor_T::is_suspended_i");
+  if (this->handler_rep_.find (handle) == 0)
+    return 0;
+
+  return this->suspend_set_.rd_mask_.is_set (handle) ||
+         this->suspend_set_.wr_mask_.is_set (handle) ||
+         this->suspend_set_.ex_mask_.is_set (handle)    ;
+
 }
 
 // Must be called with locks held
@@ -992,7 +1007,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
           dispatch_set.rd_mask_ = this->wait_set_.rd_mask_;
           dispatch_set.wr_mask_ = this->wait_set_.wr_mask_;
           dispatch_set.ex_mask_ = this->wait_set_.ex_mask_;
-
           number_of_active_handles = ACE_OS::select (int (width),
                                                      dispatch_set.rd_mask_,
                                                      dispatch_set.wr_mask_,
