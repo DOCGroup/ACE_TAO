@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 // IOR manipulation.
 #include "tao/IORManipulation/IORManip_Loader.h"

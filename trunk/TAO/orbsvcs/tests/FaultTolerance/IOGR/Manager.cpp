@@ -9,6 +9,8 @@
 #include "orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 // Files which have the IOR
 const char *first_ior = 0;

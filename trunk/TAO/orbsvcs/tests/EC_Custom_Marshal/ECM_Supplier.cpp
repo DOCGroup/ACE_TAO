@@ -4,6 +4,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"

@@ -10,6 +10,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_unistd.h"
 
 // How many servers should we get at once?
 const size_t IR_LIST_CHUNK = 10;

@@ -12,9 +12,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Barrier.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline, 
-           client, 
+ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline,
+           client,
            "$Id$")
 
 char const * hi_endpoint = "localhost:12345";

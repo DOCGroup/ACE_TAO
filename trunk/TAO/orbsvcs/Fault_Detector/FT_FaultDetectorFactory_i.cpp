@@ -13,6 +13,7 @@
 #include "FT_FaultDetectorFactory_i.h"
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.h"
 
