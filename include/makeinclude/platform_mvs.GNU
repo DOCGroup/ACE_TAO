@@ -6,7 +6,8 @@ debug = 0
  
 CXX           = cxx
 DCFLAGS	      += -g
-CPPFLAGS      = -+
+DCCFLAGS      += -g
+CPPFLAGS      += -+
 DEFFLAGS      = -D_ALL_SOURCE -DNDEBUG
 CC            = $(CXX)
 LD            = $(CXX)
