@@ -1,3 +1,9 @@
+Fri Aug 28 23:29:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp: Enhanced
+ 	  the client and server test so that it'll be a good benchmark for
+ 	  the "best case" to compare TAO against.
+
 Fri Aug 28 21:53:13 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.h: Conditionalize setting of ACE_INFINITE on non-Win32
