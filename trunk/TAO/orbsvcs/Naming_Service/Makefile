@@ -44,7 +44,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/NS_CosNaming.o .shobj/NS_CosNaming.: NS_CosNaming.cpp NS_CosNaming.h \
+.obj/NS_CosNaming.o .obj/NS_CosNaming. .shobj/NS_CosNaming.o .shobj/NS_CosNaming.: NS_CosNaming.cpp NS_CosNaming.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -163,7 +163,8 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
  $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/sequence_T.h \
+ $(TAO_ROOT)/tao/sequence_T.i \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
@@ -194,6 +195,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -212,7 +214,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
-.obj/CosNaming_i.o .shobj/CosNaming_i.: CosNaming_i.cpp CosNaming_i.h \
+.obj/CosNaming_i.o .obj/CosNaming_i. .shobj/CosNaming_i.o .shobj/CosNaming_i.: CosNaming_i.cpp CosNaming_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -333,7 +335,8 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
  $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/sequence_T.h \
+ $(TAO_ROOT)/tao/sequence_T.i \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
@@ -364,6 +367,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
@@ -383,7 +387,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  NS_CosNaming.h
-.obj/Naming_Service.o .shobj/Naming_Service.: Naming_Service.cpp CosNaming_i.h \
+.obj/Naming_Service.o .obj/Naming_Service. .shobj/Naming_Service.o .shobj/Naming_Service.: Naming_Service.cpp CosNaming_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -504,7 +508,8 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
  $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/sequence_T.h \
+ $(TAO_ROOT)/tao/sequence_T.i \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
@@ -535,6 +540,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/corbacom.i \
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
+ $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \

@@ -7,6 +7,12 @@
 #if !defined (TAO_SEQUENCE_T_C)
 #define TAO_SEQUENCE_T_C
 
+#include "tao/sequence_T.h"
+
+#if !defined (__ACE_INLINE__)
+#include "tao/sequence_T.i"
+#endif /* __ACE_INLINE__ */
+
 template <class T>
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence
 (const TAO_Unbounded_Sequence<T> &rhs)

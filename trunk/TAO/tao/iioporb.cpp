@@ -103,17 +103,15 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
                        obj2->profile.host, obj2->profile.port);
 
       char *cp = ACE_OS::strchr (buf, 0);
-      u_int len;
-      u_char *byte;
 
-      for (len = (u_int) obj2->profile.object_key.length,
-             byte = obj2->profile.object_key.buffer;
-           cp < &buf [BUFSIZ] && len != 0;
-           len--, byte++)
+      for (u_int i = 0;
+	   cp < buf + BUFSIZ && i < obj2->profile.object_key.length ();
+	   i++)
         {
-          if (isascii (*byte) && isprint (*byte) && *byte != '\\')
+	  u_char byte = obj2->profile.object_key[i];
+          if (isascii (byte) && isprint (byte) && byte != '\\')
             {
-              *cp++ = (char) *byte;
+              *cp++ = (char) byte;
               continue;
 	    }
 
@@ -121,8 +119,8 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
           // which is why buf is exactly two characters bigger than
           // that ... saves coding a test here.
           *cp++ = '\\';
-          *cp++ = ACE::nibble2hex (*byte & 0x0f);
-          *cp++ = ACE::nibble2hex ((*byte >> 4) & 0x0f);
+          *cp++ = ACE::nibble2hex (byte & 0x0f);
+          *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
 	}
       if (cp >= &buf [BUFSIZ])
         {
@@ -276,29 +274,30 @@ iiop_string_to_object (CORBA::String string,
   // nonprintable.  This assumes that printable ASCII is the common
   // case ... but since stringification is uncommon, no big deal.
 
-  data->profile.object_key.buffer =
-    (u_char *) CORBA::string_copy (string);
+  // @@ We copy the string into a buffer converting non-printables
+  // in '\0', in the next pass we remove them. This was the original
+  // algorithm, though I don't understand the motivation for it;
+  // finally we put the result into the object_key; I had to add a
+  // temporary buffer to do this, since the one in object_key is no
+  // longer available.
+  // (coryan).
 
-  // Strip out whitespace and adjust length accordingly.
+  char* buffer = CORBA::string_copy (string);
 
-  for (cp = (char *) data->profile.object_key.buffer;
-       *cp;
-       cp++)
+  for (cp = buffer; *cp != 0; ++cp)
     {
       if (!isprint (*cp))
-        {
-          *cp = '\0';
-          break;
-        }
+	{
+	  *cp = 0;
+	}
     }
 
-  string = (char *) data->profile.object_key.buffer;
-  data->profile.object_key.length = ACE_OS::strlen (string);
-  data->profile.object_key.maximum = data->profile.object_key.length;
+  string = buffer;
+  int length = ACE_OS::strlen (string);
 
   // Strip out hex escapes and adjust the key's length appropriately.
 
-  while ((cp = ACE_OS::strchr ((char *) data->profile.object_key.buffer, '\\')) != 0)
+  while ((cp = ACE_OS::strchr ((char *) buffer, '\\')) != 0)
     {
       *cp = (CORBA::Char) (ACE::hex2byte ((char) cp [1]) << 4);
       *cp |= (CORBA::Char) ACE::hex2byte ((char) cp [2]);
@@ -307,7 +306,13 @@ iiop_string_to_object (CORBA::String string,
       size_t len = ACE_OS::strlen (cp);
 
       ACE_OS::memcpy (cp, cp+2, len - 2);
-      data->profile.object_key.length -= 2;
+      length -= 2;
+    }
+
+  data->profile.object_key.length (length);
+  for (int i = 0; i < length; ++i)
+    {
+      data->profile.object_key[i] = string[i];
     }
 
   // Return the objref.

@@ -62,7 +62,7 @@ $(LOBJS): $(LHDRS)
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/drv_init.o .shobj/drv_init.so: drv_init.cpp ../include/idl.h \
+.obj/drv_init.o .obj/drv_init.so .shobj/drv_init.o .shobj/drv_init.so: drv_init.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -106,7 +106,7 @@ $(LOBJS): $(LHDRS)
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/drv_private.h \
  ../include/drv_link.h
-.obj/drv_private.o .shobj/drv_private.so: drv_private.cpp ../include/idl.h \
+.obj/drv_private.o .obj/drv_private.so .shobj/drv_private.o .shobj/drv_private.so: drv_private.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -149,7 +149,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/drv_private.h
-.obj/drv_args.o .shobj/drv_args.so: drv_args.cpp ../include/idl.h \
+.obj/drv_args.o .obj/drv_args.so .shobj/drv_args.o .shobj/drv_args.so: drv_args.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -193,7 +193,7 @@ $(LOBJS): $(LHDRS)
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/drv_private.h \
  ../include/drv_link.h
-.obj/drv_fork.o .shobj/drv_fork.so: drv_fork.cpp ../include/idl.h \
+.obj/drv_fork.o .obj/drv_fork.so .shobj/drv_fork.o .shobj/drv_fork.so: drv_fork.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -253,7 +253,7 @@ $(LOBJS): $(LHDRS)
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
  $(ACE_ROOT)/ace/Process_Manager.i
-.obj/drv_link.o .shobj/drv_link.so: drv_link.cpp ../include/idl.h \
+.obj/drv_link.o .obj/drv_link.so .shobj/drv_link.o .shobj/drv_link.so: drv_link.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -297,7 +297,7 @@ $(LOBJS): $(LHDRS)
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h ../include/drv_private.h \
  ../include/drv_link.h
-.obj/drv_preproc.o .shobj/drv_preproc.so: drv_preproc.cpp ../include/idl.h \
+.obj/drv_preproc.o .obj/drv_preproc.so .shobj/drv_preproc.o .shobj/drv_preproc.so: drv_preproc.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \

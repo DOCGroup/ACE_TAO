@@ -111,3 +111,9 @@ CORBA::wstring_free (CORBA::WChar *const str)
 {
   delete [] str;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class TAO_Unbounded_Sequence<CORBA::Octet>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Octet>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

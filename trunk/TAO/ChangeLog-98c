@@ -1,3 +1,43 @@
+Thu Jan 15 17:15:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO/TAO_IDL/be/be_interface.cpp: 
+	* TAO/tao/connect.cpp: 
+	* TAO/tao/corba.h: 
+	* TAO/tao/corbacom.cpp: 
+	* TAO/tao/corbacom.h: 
+	* TAO/tao/decode.cpp: 
+	* TAO/tao/encode.cpp: 
+	* TAO/tao/iiopobj.cpp: 
+	* TAO/tao/iiopobj.i: 
+	* TAO/tao/iioporb.cpp: 
+	* TAO/tao/poa.cpp: 
+	  Now TAO_opaque is implemented using the new TAO_*_Sequence
+	  classes, this is needed because the demarshaller expects that
+	  class.   There are some other sequences in the ORB core that
+	  need the same change, but currently that is not so urgent.
+	  The object table expects a CORBA_SEQUENCE so some casting is
+	  still done among those classes and the new templates.  The POS
+	  branch already solved this, so I will wait until the merge to
+	  fix it.
+
+	* TAO/tao/sequence_T.h: 
+	* TAO/tao/sequence_T.i: 
+	* TAO/tao/sequence_T.cpp: 
+	  Now we include sequence_T.i in sequence_T.h, this is needed for
+	  template instantiation.
+	  The ACE_ASSERT for indices was comparing to the value of
+	  length_, it must compare with maximum_, it is possible that the
+	  user creates the sequence with enough space (thus maximum_ is
+	  properly set, but length_ is 0), then inserts some data and
+	  finally sets the length, with the previous asserts that would
+	  fail.
+
+	* TAO/tao/Makefile: 
+	* TAO/TAO_IDL/*/Makefile: 
+	* TAO/orbsvcs/*/Makefile: 
+	* TAO/tests/Cubit/TAO/*/Makefile: 
+	  Dependencies regenerated.
+
 Wed Jan 14 23:10:13 1998    <coryan@MILONGA>
 
 	* sequence.h: 

@@ -70,7 +70,7 @@ $(LOBJS): $(LHDRS)
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/utl_scope.o .shobj/utl_scope.so: utl_scope.cpp ../include/idl.h \
+.obj/utl_scope.o .obj/utl_scope.so .shobj/utl_scope.o .shobj/utl_scope.so: utl_scope.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -113,7 +113,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_stack.o .shobj/utl_stack.so: utl_stack.cpp ../include/idl.h \
+.obj/utl_stack.o .obj/utl_stack.so .shobj/utl_stack.o .shobj/utl_stack.so: utl_stack.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -156,7 +156,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_string.o .shobj/utl_string.so: utl_string.cpp ../include/idl.h \
+.obj/utl_string.o .obj/utl_string.so .shobj/utl_string.o .shobj/utl_string.so: utl_string.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -199,7 +199,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_decllist.o .shobj/utl_decllist.so: utl_decllist.cpp ../include/idl.h \
+.obj/utl_decllist.o .obj/utl_decllist.so .shobj/utl_decllist.o .shobj/utl_decllist.so: utl_decllist.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -242,7 +242,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_labellist.o .shobj/utl_labellist.so: utl_labellist.cpp ../include/idl.h \
+.obj/utl_labellist.o .obj/utl_labellist.so .shobj/utl_labellist.o .shobj/utl_labellist.so: utl_labellist.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -285,7 +285,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_namelist.o .shobj/utl_namelist.so: utl_namelist.cpp ../include/idl.h \
+.obj/utl_namelist.o .obj/utl_namelist.so .shobj/utl_namelist.o .shobj/utl_namelist.so: utl_namelist.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -328,7 +328,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_exceptlist.o .shobj/utl_exceptlist.so: utl_exceptlist.cpp ../include/idl.h \
+.obj/utl_exceptlist.o .obj/utl_exceptlist.so .shobj/utl_exceptlist.o .shobj/utl_exceptlist.so: utl_exceptlist.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -371,7 +371,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_strlist.o .shobj/utl_strlist.so: utl_strlist.cpp ../include/idl.h \
+.obj/utl_strlist.o .obj/utl_strlist.so .shobj/utl_strlist.o .shobj/utl_strlist.so: utl_strlist.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -414,7 +414,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_list.o .shobj/utl_list.so: utl_list.cpp ../include/idl.h \
+.obj/utl_list.o .obj/utl_list.so .shobj/utl_list.o .shobj/utl_list.so: utl_list.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -457,7 +457,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_exprlist.o .shobj/utl_exprlist.so: utl_exprlist.cpp ../include/idl.h \
+.obj/utl_exprlist.o .obj/utl_exprlist.so .shobj/utl_exprlist.o .shobj/utl_exprlist.so: utl_exprlist.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -500,7 +500,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_error.o .shobj/utl_error.so: utl_error.cpp ../include/idl.h \
+.obj/utl_error.o .obj/utl_error.so .shobj/utl_error.o .shobj/utl_error.so: utl_error.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -543,7 +543,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_indenter.o .shobj/utl_indenter.so: utl_indenter.cpp ../include/idl.h \
+.obj/utl_indenter.o .obj/utl_indenter.so .shobj/utl_indenter.o .shobj/utl_indenter.so: utl_indenter.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -586,7 +586,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_identifier.o .shobj/utl_identifier.so: utl_identifier.cpp ../include/idl.h \
+.obj/utl_identifier.o .obj/utl_identifier.so .shobj/utl_identifier.o .shobj/utl_identifier.so: utl_identifier.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -629,7 +629,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_idlist.o .shobj/utl_idlist.so: utl_idlist.cpp ../include/idl.h \
+.obj/utl_idlist.o .obj/utl_idlist.so .shobj/utl_idlist.o .shobj/utl_idlist.so: utl_idlist.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -672,7 +672,7 @@ $(LOBJS): $(LHDRS)
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/utl_global.o .shobj/utl_global.so: utl_global.cpp ../include/idl.h \
+.obj/utl_global.o .obj/utl_global.so .shobj/utl_global.o .shobj/utl_global.so: utl_global.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \

@@ -1019,15 +1019,18 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
               if (env.exception () == 0)
                 {
                   bounds = seq->length_;
-                  // allocate a buffer to hold the sequence
-                  //                  seq->buffer = new CORBA::Octet [size
-                  //                  *(size_t) seq->maximum];
 
-                  // This should invoke the _allocate_buffer method overridden
-                  // by the derived class
-                  seq->_allocate_buffer (size);
+                  // Allocate the buffer using the virtual
+		  // _allocate_buffer method, hence the right
+		  // constructors are invoked and size for the array
+		  // is OK.
                   // @@ Who will free this memory?
+		  // (coryan): the sequence will release it, since its
+		  // release_ field is 1.
+                  seq->_allocate_buffer (bounds);
+
                   value = (char *) seq->buffer_;
+
                   switch (tc2->kind_)
                     {
                     case CORBA::tk_null:

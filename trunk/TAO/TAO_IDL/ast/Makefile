@@ -82,7 +82,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/ast_array.o .shobj/ast_array.so: ast_array.cpp ../include/idl.h \
+.obj/ast_array.o .obj/ast_array.so .shobj/ast_array.o .shobj/ast_array.so: ast_array.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -125,7 +125,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_argument.o .shobj/ast_argument.so: ast_argument.cpp ../include/idl.h \
+.obj/ast_argument.o .obj/ast_argument.so .shobj/ast_argument.o .shobj/ast_argument.so: ast_argument.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -168,7 +168,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_attribute.o .shobj/ast_attribute.so: ast_attribute.cpp ../include/idl.h \
+.obj/ast_attribute.o .obj/ast_attribute.so .shobj/ast_attribute.o .shobj/ast_attribute.so: ast_attribute.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -211,7 +211,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_check.o .shobj/ast_check.so: ast_check.cpp ../include/idl.h \
+.obj/ast_check.o .obj/ast_check.so .shobj/ast_check.o .shobj/ast_check.so: ast_check.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -254,7 +254,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_concrete_type.o .shobj/ast_concrete_type.so: ast_concrete_type.cpp ../include/idl.h \
+.obj/ast_concrete_type.o .obj/ast_concrete_type.so .shobj/ast_concrete_type.o .shobj/ast_concrete_type.so: ast_concrete_type.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -297,7 +297,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_constant.o .shobj/ast_constant.so: ast_constant.cpp ../include/idl.h \
+.obj/ast_constant.o .obj/ast_constant.so .shobj/ast_constant.o .shobj/ast_constant.so: ast_constant.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -340,7 +340,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_decl.o .shobj/ast_decl.so: ast_decl.cpp ../include/idl.h \
+.obj/ast_decl.o .obj/ast_decl.so .shobj/ast_decl.o .shobj/ast_decl.so: ast_decl.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -383,7 +383,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_enum.o .shobj/ast_enum.so: ast_enum.cpp ../include/idl.h \
+.obj/ast_enum.o .obj/ast_enum.so .shobj/ast_enum.o .shobj/ast_enum.so: ast_enum.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -426,7 +426,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_enum_val.o .shobj/ast_enum_val.so: ast_enum_val.cpp ../include/idl.h \
+.obj/ast_enum_val.o .obj/ast_enum_val.so .shobj/ast_enum_val.o .shobj/ast_enum_val.so: ast_enum_val.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -469,7 +469,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_exception.o .shobj/ast_exception.so: ast_exception.cpp ../include/idl.h \
+.obj/ast_exception.o .obj/ast_exception.so .shobj/ast_exception.o .shobj/ast_exception.so: ast_exception.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -512,7 +512,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_expression.o .shobj/ast_expression.so: ast_expression.cpp ../include/idl.h \
+.obj/ast_expression.o .obj/ast_expression.so .shobj/ast_expression.o .shobj/ast_expression.so: ast_expression.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -555,7 +555,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_field.o .shobj/ast_field.so: ast_field.cpp ../include/idl.h \
+.obj/ast_field.o .obj/ast_field.so .shobj/ast_field.o .shobj/ast_field.so: ast_field.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -598,7 +598,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_interface.o .shobj/ast_interface.so: ast_interface.cpp ../include/idl.h \
+.obj/ast_interface.o .obj/ast_interface.so .shobj/ast_interface.o .shobj/ast_interface.so: ast_interface.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -641,7 +641,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_interface_fwd.o .shobj/ast_interface_fwd.so: ast_interface_fwd.cpp ../include/idl.h \
+.obj/ast_interface_fwd.o .obj/ast_interface_fwd.so .shobj/ast_interface_fwd.o .shobj/ast_interface_fwd.so: ast_interface_fwd.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -684,7 +684,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_module.o .shobj/ast_module.so: ast_module.cpp ../include/idl.h \
+.obj/ast_module.o .obj/ast_module.so .shobj/ast_module.o .shobj/ast_module.so: ast_module.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -727,7 +727,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_native.o .shobj/ast_native.so: ast_native.cpp ../include/idl.h \
+.obj/ast_native.o .obj/ast_native.so .shobj/ast_native.o .shobj/ast_native.so: ast_native.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -770,7 +770,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_operation.o .shobj/ast_operation.so: ast_operation.cpp ../include/idl.h \
+.obj/ast_operation.o .obj/ast_operation.so .shobj/ast_operation.o .shobj/ast_operation.so: ast_operation.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -813,7 +813,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_predefined_type.o .shobj/ast_predefined_type.so: ast_predefined_type.cpp ../include/idl.h \
+.obj/ast_predefined_type.o .obj/ast_predefined_type.so .shobj/ast_predefined_type.o .shobj/ast_predefined_type.so: ast_predefined_type.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -856,7 +856,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_root.o .shobj/ast_root.so: ast_root.cpp ../include/idl.h \
+.obj/ast_root.o .obj/ast_root.so .shobj/ast_root.o .shobj/ast_root.so: ast_root.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -899,7 +899,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_sequence.o .shobj/ast_sequence.so: ast_sequence.cpp ../include/idl.h \
+.obj/ast_sequence.o .obj/ast_sequence.so .shobj/ast_sequence.o .shobj/ast_sequence.so: ast_sequence.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -942,7 +942,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_string.o .shobj/ast_string.so: ast_string.cpp ../include/idl.h \
+.obj/ast_string.o .obj/ast_string.so .shobj/ast_string.o .shobj/ast_string.so: ast_string.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -985,7 +985,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_structure.o .shobj/ast_structure.so: ast_structure.cpp ../include/idl.h \
+.obj/ast_structure.o .obj/ast_structure.so .shobj/ast_structure.o .shobj/ast_structure.so: ast_structure.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1028,7 +1028,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_type.o .shobj/ast_type.so: ast_type.cpp ../include/idl.h \
+.obj/ast_type.o .obj/ast_type.so .shobj/ast_type.o .shobj/ast_type.so: ast_type.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1071,7 +1071,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_typedef.o .shobj/ast_typedef.so: ast_typedef.cpp ../include/idl.h \
+.obj/ast_typedef.o .obj/ast_typedef.so .shobj/ast_typedef.o .shobj/ast_typedef.so: ast_typedef.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1114,7 +1114,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_union.o .shobj/ast_union.so: ast_union.cpp ../include/idl.h \
+.obj/ast_union.o .obj/ast_union.so .shobj/ast_union.o .shobj/ast_union.so: ast_union.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1157,7 +1157,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_union_branch.o .shobj/ast_union_branch.so: ast_union_branch.cpp ../include/idl.h \
+.obj/ast_union_branch.o .obj/ast_union_branch.so .shobj/ast_union_branch.o .shobj/ast_union_branch.so: ast_union_branch.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1200,7 +1200,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_union_label.o .shobj/ast_union_label.so: ast_union_label.cpp ../include/idl.h \
+.obj/ast_union_label.o .obj/ast_union_label.so .shobj/ast_union_label.o .shobj/ast_union_label.so: ast_union_label.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1243,7 +1243,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_generator.o .shobj/ast_generator.so: ast_generator.cpp ../include/idl.h \
+.obj/ast_generator.o .obj/ast_generator.so .shobj/ast_generator.o .shobj/ast_generator.so: ast_generator.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1286,7 +1286,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_redef.o .shobj/ast_redef.so: ast_redef.cpp ../include/idl.h \
+.obj/ast_redef.o .obj/ast_redef.so .shobj/ast_redef.o .shobj/ast_redef.so: ast_redef.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -1329,7 +1329,7 @@ CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_C
  ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
  ../include/ast_extern.h ../include/nr_extern.h \
  ../include/global_extern.h
-.obj/ast_recursive.o .shobj/ast_recursive.so: ast_recursive.cpp ../include/idl.h \
+.obj/ast_recursive.o .obj/ast_recursive.so .shobj/ast_recursive.o .shobj/ast_recursive.so: ast_recursive.cpp ../include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \

@@ -58,14 +58,14 @@ IIOP::Profile::set (const char *h,
       key = buffer;
     }
 
-  this->object_key.length = ACE_OS::strlen (key);
-  this->object_key.maximum = this->object_key.length;
+  this->object_key.length (ACE_OS::strlen (key));
 
-  ACE_NEW_RETURN (this->object_key.buffer,
-                  CORBA::Octet[this->object_key.maximum + 1],
-                  -1);
-
-  (void) ACE_OS::strcpy ((char *) this->object_key.buffer, key);
+  for (CORBA::ULong i = 0;
+       i < this->object_key.length ();
+       ++i)
+    {
+      this->object_key[i] = key[i];
+    }
   return 0;
 }
 
@@ -78,18 +78,8 @@ IIOP::Profile::set (const char *h,
   if (this->set (h, p, addr) == -1)
     return -1;
 
-  this->object_key.length = key.length;
-  this->object_key.maximum = key.length;
+  this->object_key = key;
 
-  ACE_NEW_RETURN (this->object_key.buffer,
-                  CORBA::Octet[key.maximum + 1],
-                  -1);
-
-  (void) ACE_OS::memcpy ((char *) this->object_key.buffer,
-                         key.buffer,
-                         key.length);
-  // NUL-terminate this guy...
-  this->object_key.buffer[key.length] = '\0';
   return 0;
 }
 
@@ -212,16 +202,32 @@ IIOP_Object::hash (CORBA::ULong max,
   // more (hostname, full key, exponential hashing) but no real need
   // to do so except if performance requires a more costly hash.
 
-  hashval = profile.object_key.length * profile.port;
+  hashval = profile.object_key.length () * profile.port;
   hashval += profile.iiop_version.minor;
 
-  if (profile.object_key.length >= 4)
+  if (profile.object_key.length () >= 4)
     {
-      hashval += profile.object_key.buffer [1];
-      hashval += profile.object_key.buffer [3];
+      hashval += profile.object_key [1];
+      hashval += profile.object_key [3];
     }
 
   return hashval % max;
+}
+
+int operator==(const TAO_opaque& rhs,
+	       const TAO_opaque& lhs)
+{
+  if (rhs.length () != lhs.length ())
+    return 0;
+
+  for (CORBA::ULong i = 0;
+       i < rhs.length ();
+       ++i)
+    {
+      if (rhs[i] != lhs[i])
+	return 0;
+    }
+  return 1;
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -251,12 +257,9 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
   body = &profile;
   body2 = &other_iiop_obj->profile;
 
-  ACE_ASSERT (body->object_key.length < UINT_MAX);
+  ACE_ASSERT (body->object_key.length () < UINT_MAX);
 
-  return body->object_key.length == body2->object_key.length
-    && ACE_OS::memcmp (body->object_key.buffer,
-                       body2->object_key.buffer,
-                       (size_t) body->object_key.length) == 0
+  return body->object_key == body2->object_key
     && body->port == body2->port
     && ACE_OS::strcmp (body->host, body2->host) == 0
     && body->iiop_version.minor == body2->iiop_version.minor
@@ -327,7 +330,8 @@ IIOP_Object::QueryInterface (REFIID riid,
 const char *
 IIOP_Object::_get_name (CORBA::Environment &)
 {
-  return (const char *) this->profile.object_key.buffer;
+  // @@ We need access to the underlying buffer.
+  return (const char *) &(this->profile.object_key[0]);
 }
 
 // It will usually be used by the _bind call.
