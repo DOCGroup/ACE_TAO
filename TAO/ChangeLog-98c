@@ -1,62 +1,67 @@
+Thu Aug 20 11:41:03 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * /orbsvcs/tests/Simulator/Event_Supplier/Makefile:
+          define TAO_ROOT if not already defined.
+
 Thu Aug 20 08:29:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
-	* TAO_IDL/be/be_operation.cpp: 
-	  The _tie classes generated improper code when one of the base
-	  classes was imported from another file and the number of
-	  arguments was non-zero.  Thanks to Christa Schwanninger
-	  <christa.schwanninger@mchp.siemens.de>, for patiently convincing
-	  me that this was a problem.
+        * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+          The _tie classes generated improper code when one of the base
+          classes was imported from another file and the number of
+          arguments was non-zero.  Thanks to Christa Schwanninger
+          <christa.schwanninger@mchp.siemens.de>, for patiently convincing
+          me that this was a problem.
 
 Wed Aug 19 21:03:38 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} : 
-	  Fixed memory leaks. Added a destructor to
-	  Task_State.
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	  Added code to delete dynamically allocated 
-	  memory.
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	  Removed unnecessary argv code and fixed memory leaks.
-	
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp} :
+          Fixed memory leaks. Added a destructor to
+          Task_State.
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+          Added code to delete dynamically allocated
+          memory.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+          Removed unnecessary argv code and fixed memory leaks.
+
 Wed Aug 19 19:20:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp: 
-	  Fixed the declarations for <<= and >>= operators.
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+          Fixed the declarations for <<= and >>= operators.
 
 Wed Aug 19 19:18:11 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp]: Added Naming_Utils code 
-	  to simplify Naming Service operations. Also added variable
-	  definitions that was affecting compilation (around line 457).
+        * tests/Cubit/TAO/MT_Cubit/server.{h,cpp]: Added Naming_Utils code
+          to simplify Naming Service operations. Also added variable
+          definitions that was affecting compilation (around line 457).
 
 Wed Aug 19 17:54:13 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}
-	* orbsvcs/tests/AVStreams/benchmark/server.{h,cpp} 
-	  Added Naming_Utils code to simplify Naming Service
-	  operations. Note: Due to multicast weirdness yet to be resolved
-	  sometimes the Naming Service will not be properly detected. I
-	  found that running the Naming Service and the server in the same
-	  window helped. I added comments to that effect.
+        * orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}
+        * orbsvcs/tests/AVStreams/benchmark/server.{h,cpp}
+          Added Naming_Utils code to simplify Naming Service
+          operations. Note: Due to multicast weirdness yet to be resolved
+          sometimes the Naming Service will not be properly detected. I
+          found that running the Naming Service and the server in the same
+          window helped. I added comments to that effect.
 
 Wed Aug 19 17:37:51 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: Integrated the Audio/video streams
-	  stuff into the mainstream orbsvcs.
+        * orbsvcs/orbsvcs/Makefile: Integrated the Audio/video streams
+          stuff into the mainstream orbsvcs.
 
 Wed Aug 19 17:32:40 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: I decided not to
-	  add an init_old_naming () method to the Naming_Server since it
-	  seemed inappropriate. I added a get_context () method which is
-	  basically the same as "->" (they both return the
-	  Naming_Context_ptr) for stylistic reasons. 
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: I decided not to
+          add an init_old_naming () method to the Naming_Server since it
+          seemed inappropriate. I added a get_context () method which is
+          basically the same as "->" (they both return the
+          Naming_Context_ptr) for stylistic reasons.
 
 Wed Aug 19 16:49:21 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/client.cpp: Added Naming_Utils code to 
-	  simplify Naming Service operations.
+        * tests/Cubit/TAO/DII_Cubit/client.cpp: Added Naming_Utils code to
+          simplify Naming Service operations.
 
 Wed Aug 19 16:43:36 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -66,19 +71,19 @@ Wed Aug 19 16:43:36 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Wed Aug 19 16:38:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosPropertyService.idl: 
-		Changed <exception PropertyException> to <struct
-		PropertyException>.
+        * orbsvcs/orbsvcs/CosPropertyService.idl:
+                Changed <exception PropertyException> to <struct
+                PropertyException>.
 
 Wed Aug 19 15:25:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* $ACE_wrappers/TAO/orbsvcs/tests/CosPropertyService/client.cpp: 
-		Fixed the SunCC warnings.
+        * $ACE_wrappers/TAO/orbsvcs/tests/CosPropertyService/client.cpp:
+                Fixed the SunCC warnings.
 
 Wed Aug 19 11:48:57 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/README: Removed the note on
-	IDL_Cubit_Test. It is no more there. run_test.pl does all.
+        * tests/Cubit/TAO/IDL_Cubit/README: Removed the note on
+        IDL_Cubit_Test. It is no more there. run_test.pl does all.
 
 Wed Aug 19 15:58:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
