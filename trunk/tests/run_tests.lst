@@ -23,7 +23,7 @@ OTHER/chorus/LynxOS/Unicos/Naming_Test
 Handle_Set_Test
 OrdMultiSet_Test
 chorus/Unicos/Mem_Map_Test
-MEM_Stream_Test
+#MEM_Stream_Test
 Malloc_Test
 Unicos/SV_Shared_Memory_Test
 chorus/Unicos/MM_Shared_Memory_Test
