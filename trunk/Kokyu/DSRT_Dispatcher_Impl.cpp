@@ -30,7 +30,7 @@ DSRT_Dispatcher_Impl::init_i (const DSRT_ConfigInfo& config_info)
 
 int
 DSRT_Dispatcher_Impl::schedule_i (guid_t guid,
-                  const QoSDescriptor& qos_info)
+                  const DSRT_QoSDescriptor& qos_info)
 {
   ACE_UNUSED_ARG (guid);
 
@@ -42,7 +42,7 @@ DSRT_Dispatcher_Impl::schedule_i (guid_t guid,
 
 int
 DSRT_Dispatcher_Impl::update_schedule_i (guid_t guid,
-                  const QoSDescriptor& qos_info)
+                  const DSRT_QoSDescriptor& qos_info)
 {
   ACE_UNUSED_ARG (guid);
   ACE_UNUSED_ARG (qos_info);
@@ -51,7 +51,7 @@ DSRT_Dispatcher_Impl::update_schedule_i (guid_t guid,
 
 int
 DSRT_Dispatcher_Impl::cancel_schedule_i (guid_t guid,
-                  const QoSDescriptor& qos_info)
+                  const DSRT_QoSDescriptor& qos_info)
 {
   return schedule_i (guid, qos_info);
 }

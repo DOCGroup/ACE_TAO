@@ -27,16 +27,17 @@ namespace Kokyu
   {
   public:
     DSRT_Scheduler_Impl ();
-    int schedule (guid_t, const QoSDescriptor&);
+    int schedule (guid_t, const DSRT_QoSDescriptor&);
 
   private:
-    virtual Priority_t schedule_i (guid_t, const QoSDescriptor&) = 0;
+    virtual Priority_t schedule_i (guid_t, const DSRT_QoSDescriptor&) = 0;
 
   protected:
     ACE_Sched_Params::Policy sched_policy_;
     int sched_scope_;
     Priority_t min_prio_;
     Priority_t max_prio_;
+    Priority_t prio_range_;
   };
 
   class MIF_Scheduler_Impl : public DSRT_Scheduler_Impl
@@ -48,7 +49,12 @@ namespace Kokyu
     static void init_svcs (void);
 
   private:
-    virtual Priority_t schedule_i (guid_t, const QoSDescriptor&);
+    virtual Priority_t schedule_i (guid_t, const DSRT_QoSDescriptor&);
+
+  private:
+    short min_importance_;
+    short max_importance_;
+    short importance_range_;
   };
 }
 

@@ -12,7 +12,7 @@ public:
 
   MyTask (ACE_Barrier& barrier,
           Kokyu::DSRT_Dispatcher* dispatcher,
-          Kokyu::QoSDescriptor& qos)
+          Kokyu::DSRT_QoSDescriptor& qos)
     :barrier_ (barrier),
      dispatcher_ (dispatcher),
      qos_ (qos)
@@ -49,7 +49,8 @@ public:
 private:
   ACE_Barrier& barrier_;
   Kokyu::DSRT_Dispatcher* dispatcher_;
-  Kokyu::QoSDescriptor& qos_;
+  Kokyu::DSRT_QoSDescriptor& qos_;
+
 };
 
 int main (int,char**)
@@ -68,11 +69,11 @@ int main (int,char**)
 
   ACE_ASSERT (disp.get () != 0);
 
-  Kokyu::QoSDescriptor qos1, qos2, qos3;
+  Kokyu::DSRT_QoSDescriptor qos1, qos2, qos3;
 
-  qos1.importance_ = Kokyu::LOW_IMPORTANCE;
-  qos2.importance_ = Kokyu::HIGH_IMPORTANCE;
-  qos3.importance_ = Kokyu::VERY_HIGH_IMPORTANCE;
+  qos1.importance_ = 1;
+  qos2.importance_ = 2;
+  qos3.importance_ = 3;
 
   MyTask mytask1 (barrier, disp.get (), qos1);
   MyTask mytask2 (barrier, disp.get (), qos2);

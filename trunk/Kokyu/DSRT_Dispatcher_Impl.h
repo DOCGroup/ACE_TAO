@@ -37,26 +37,24 @@ namespace Kokyu
 
     int init (const DSRT_ConfigInfo&);
     int schedule (guid_t guid,
-                  const QoSDescriptor&);
+                  const DSRT_QoSDescriptor&);
     int update_schedule (guid_t guid,
-                         const QoSDescriptor&);
+                         const DSRT_QoSDescriptor&);
     int cancel_schedule (guid_t guid,
-                         const QoSDescriptor&);
+                         const DSRT_QoSDescriptor&);
 
   private:
-    DSRT_Scheduler_Impl* create_scheduler (DSRT_Sched_t sched_type);
 
     int init_i (const DSRT_ConfigInfo&);
     int schedule_i (guid_t guid,
-                    const QoSDescriptor&);
+                    const DSRT_QoSDescriptor&);
     int update_schedule_i (guid_t guid,
-                           const QoSDescriptor&);
+                           const DSRT_QoSDescriptor&);
     int cancel_schedule_i (guid_t guid,
-                           const QoSDescriptor&);
+                           const DSRT_QoSDescriptor&);
 
   private:
     DSRT_ConfigInfo curr_config_info_;
-    DSRT_Sched_t sched_type_;
     DSRT_Scheduler_Impl* scheduler_impl_;
   };
 
