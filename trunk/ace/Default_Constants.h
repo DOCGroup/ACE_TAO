@@ -332,7 +332,6 @@
 #   endif /* ACE_NON_BLOCKING_BUG_DELAY */
 # endif /*ACE_WIN32*/
 
-
 // Max size of an ACE Log Record data buffer.  This can be reset in
 // the config.h file if you'd like to increase or decrease the size.
 # if !defined (ACE_MAXLOGMSGLEN)
