@@ -1,3 +1,37 @@
+Tue Aug  5 17:25:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Dev_Poll_Reactor.{cpp,h}:
+          Added #includes of Reverse_Lock_T.h, Recursive_Thread_Mutex.h,
+          NUll_Mutex.h, and Lock_Adapter_T.h needed due to recent subsetting.
+
+        * ace/Dump_T.cpp:
+          Added #include of Global_Macros.h.
+
+        * ace/Global_Macros.h:
+          Added #include of the appropriate new header to get the
+          definition of placement new().  Thanks to Olli Savia
+          <ops@iki.fi> for this suggestion.
+
+        * ace/Log_Msg.cpp:
+          Removed the explicite template instantiation of ACE_Reverse_Lock
+          that wasn't used and appeared to be dead code.  Thanks to Olli
+          Savia <ops@iki.fi> for pointing out the problem.
+
+        * ace/Timer_Queue_Adapters.{h,cpp}:
+          Moved #include of Condition_Recursive_Thread_Mutex.h from the
+          cpp to the header since it's used as a member variable.
+
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+          Added #include of Auto_Event.h needed due to recent subsetting
+          changes.
+
+        * tests/Proactor_Test.cpp:
+          Added #include of Thread_Semaphore needed due to recent
+          subsetting changes.
+        
 Tue Aug  5 15:16:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/os_errno.h:

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Signal.h"
+#include "ace/Condition_Recursive_Thread_Mutex.h"
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter

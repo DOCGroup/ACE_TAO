@@ -39,6 +39,7 @@ ACE_RCSID (tests,
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Task.h"
+#include "ace/Thread_Semaphore.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
