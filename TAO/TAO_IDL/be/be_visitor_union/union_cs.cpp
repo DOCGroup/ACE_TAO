@@ -214,15 +214,19 @@ int be_visitor_union_cs::visit_union (be_union *node)
       *os << node->name () << " &" << be_nl; // return type
       *os << node->name () << "::operator= (const ::"
           << node->name () << " &u)" << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
-      // first reset and set the discriminant
+      *os << "{" << be_idt_nl;
+      // First check for self-assignment.
+      *os << "if (&u == this)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "return *this;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+      // Reset and set the discriminant.
       *os << "this->_reset (u.disc_, 0);" << be_nl;
-      *os << "this->disc_ = u.disc_;" << be_nl;
+      *os << "this->disc_ = u.disc_;" << be_nl << be_nl;
       // now switch based on the disc value
       *os << "switch (this->disc_)" << be_nl;
-      *os << "{\n";
-      os->incr_indent (0);
+      *os << "{" << be_idt_nl;
+
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -239,15 +243,16 @@ int be_visitor_union_cs::visit_union (be_union *node)
       // an enum, this does no harm.
       if (node->default_index () == -1)
         {
-          os->indent ();
           *os << "default:" << be_nl
               << "break;" << be_uidt_nl;
         }
+      else
+        {
+          *os << be_uidt_nl;
+        }
 
-      os->decr_indent ();
-      *os << "}" << be_nl;
-      *os << "return *this;\n";
-      os->decr_indent ();
+      *os << "}" << be_nl << be_nl;
+      *os << "return *this;" << be_uidt_nl;
       *os << "}\n\n";
 
       // the reset method
