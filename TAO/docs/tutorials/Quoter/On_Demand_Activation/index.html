@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>Servant Managers</title>
-    <!--$Id$-->
+    <!-- $Id$ -->
   </head>
 
   <body text = "#000000"
@@ -14,11 +14,11 @@
     <h1>Servant Managers</h1>
     <P>In our <a href=../AMI/index.html>previous example</a>, we
       extended our <a href=../Simple/Client/client.cpp>simple client</a>  
-      using synchronous method invokation to handle asynchronous 
-      requests: Asynchronous Method Invokation by using 
+      using synchronous method invocation to handle asynchronous 
+      requests: Asynchronous Method Invocation by using 
       the reply handlers.
     </P>
-    <P>In applications which have many number of objects, activating
+    <P>In applications which have many objects, activating
       all of them all the time would be unnecessary
       and also might require too much memory or too many database
       lookups. For such applications, the POA provides an option 
@@ -29,18 +29,18 @@
       registers with a POA. When the POA attempts to determine the
       servant associated with a particular request, it calls back the
       application's servant manager to obtain the servant. To be able
-      to register a servant manager with the application, the 
+      to register a servant manager with the POA, the 
       <CODE>RequestProcessingPolicyValue</CODE>, which controls the
-      matching of requests to servants, is to be to set to
+      matching of requests to servants, is to be set to
       <CODE>USE_SERVANT_MANAGER</CODE>.
     </P>
-    <P>There are two types of servant managers depending on if the POA
+    <P>There are two types of servant managers depending on whether the POA
       retains the associations of objects to servants in its Active
       Object Map or not. This is determined by the value of the 
-      <CODE>ServantRetentionPolicy</CODE> policy set when the
+      <CODE>ServantRetentionPolicy</CODE> set when the
       POA is created. If the value of this policy is set as RETAIN,
-      the POA retains the associations and if the policy value is set
-      to be NON_RETAIN, the POA doesnt retain any associations between
+      the POA retains the associations, and if the policy value is set
+      to be NON_RETAIN, the POA doesn't retain any associations between
       the object and the servant. 
     </P>
     <P>For a POA with the RETAIN value, the servant manager must
@@ -50,7 +50,7 @@
       our servant manager object should be able to locate the servant
       for the requested object and then invoke it. 
     </P>
-    <P>In this example, lets use a servant locator to locate the
+    <P>In this example, let's use a servant locator to locate the
       servant associated with our Stock_Factory object when a request
       is invoked on this object. 
     </P>
@@ -60,7 +60,7 @@
     </P>
     <P>A servant Locator interface provides two operations: preinvoke
       and postinvoke. The preinvoke operation is invoked to obtain the
-      a servant to dispatch the request to. The servant returned by
+      servant to dispatch the request to. The servant returned by
       the preinvoke is used only for a single request. The postinvoke 
       operation is later invoked to destroy the servant created by the
       preinvoke operation. 
@@ -94,7 +94,8 @@
     </PRE>
     <P>In the implementation of the <CODE>preinvoke</CODE> operation, we check if
       the object ID is valid and then check for the servant we want to
-      create and create adn return the requested servant.
+      create and create and return the requested servant.
+    <PRE>
     <PRE>
      PortableServer::Servant
      Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid, 
@@ -127,7 +128,7 @@
       simple. We just destroy the servant which we created by the
       <CODE>preinvoke</CODE> operation. The <CODE>Cookie IDL
       type</CODE> which is a parameter in both these operations
-      helps associate the invokation of <CODE>preinvoke</CODE> with
+      helps associate the invocation of <CODE>preinvoke</CODE> with
       its <CODE>postinvoke</CODE> operation. 
     </P>
     <PRE>
@@ -180,13 +181,13 @@
 
     </PRE>
     <P> The policy values are assigned, the <CODE>childPOA</CODE> is
-      created with these policies and later these policy objects can be
-      deleted as a copy of these obejcts is made by the
-      <CODE>create_POA</CODE> and we wouldnot need these objects anymore.
+      created with these policies, and later these policy objects can be
+      deleted, as a copy of these objects is made by the
+      <CODE>create_POA</CODE> and we would not need these objects any more.
     </P>
     <P> Now that we have the POA which can support servant managers,
       the next step would be to create a servant for the servant
-      locator object, activate it to obtain its reference and set it as
+      locator object, activate it to obtain its reference, and set it as
       the servant manager with the childPOA.
     </P>
     <PRE>
@@ -201,9 +202,9 @@
        child_poa->set_servant_manager (servant_locator.in ());
     </PRE>
     <P>Now that we have set the servant manager with the childPOA, the
-      next step would be to create a reference with the user created
-      ID in childPOA which uses the Quoter_Stock_Fcatory_Locator_i
-      <CODE>create_reference_with_id</CODE> operation lets us
+      next step would be to create a reference with the user-created
+      ID in the childPOA which uses the Quoter_Stock_Factory_Locator_i.
+      The <CODE>create_reference_with_id</CODE> operation lets us
       create the required object without actually creating its servant.
       The application supplies the ObjectId which signifies the 
       identity of the object in the application domain.
@@ -218,7 +219,7 @@
          child_poa->create_reference_with_id (child_oid.in (), 
                                               "IDL:Quoter/Stock_Factory:1.0");
     </PRE>
-    <P>After this, as before, lets put this object reference as an IOR
+    <P>After this, as before, let's put this object reference as an IOR
       string and print it out. 
     </P>
     <PRE>
@@ -253,6 +254,7 @@
       <a href="../AMI/Handler_i.cpp">Handler_i.cpp</a>.
     </P>
     <H3>More Reading</H3>
+    <P>The 
     <P>The <A HREF="http://www.triodia.com/staff/michi-henning.html">Henning</A> and
       <A HREF="http://www.iona.com/hyplan/vinoski/">Vinoski</A> 
       <A HREF="http://www.iona.com/hyplan/vinoski/#book">CORBA book</A> 
@@ -261,13 +263,13 @@
       in C++ Report also include several articles about the POA.  Finally,
       the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>
       distribution includes 
-      <A HREF="../../../../examples/POA">examples</A> that illustrate how to use the POA policies.
+      <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/examples/POA">examples</A> that illustrate how to use the POA policies.
     </P>
     <hr>
     <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
     <!-- Created: Mon May  1 11:08:56 PDT 2000 -->
     <!-- hhmts start -->
-Last modified: Thu May  4 17:42:15 PDT 2000
+Last modified: Sun Apr  1 14:13:23 PDT 2001
 <!-- hhmts end -->
   </body>
 </html>
