@@ -1,5 +1,7 @@
 Sun May 23 12:14:59 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* examples/Simple/time/Time.idl (Time): 
+
 	* examples/Simple/time/Time_Client_i.cpp (run): 
 	* examples/Simple/time/Time_i.cpp
 	* examples/Simple/time/Time_i.h
