@@ -557,8 +557,8 @@ Vault_Client_Request_Dynamic_Interceptor::send_request (
 
  if (ACE_OS::strcmp (op.in (), "update_records") == 0)
     {
-      Dynamic::ParameterList_var paramlist = 
-        ri->arguments (ACE_TRY_CHECK);
+      Dynamic::ParameterList_var paramlist =
+        ri->arguments (ACE_TRY_ENV);
       ACE_CHECK;
 
       Test_Interceptors::Secure_Vault::Record *record;
