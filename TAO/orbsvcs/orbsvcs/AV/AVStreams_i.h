@@ -22,7 +22,8 @@
 #include "orbsvcs/orbsvcs_export.h"
 #include "orbsvcs/AVStreamsS.h"
 
-class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl : public virtual POA_AVStreams::Basic_StreamCtrl
+class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
+  : public virtual POA_AVStreams::Basic_StreamCtrl
 // = DESCRIPTION
 //    Base class for StreamCtrl, implements basic stream start
 //    and stop functionality 
