@@ -136,7 +136,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       os->gen_ifdef_macro (node->flatname ());
 
       // now generate the class definition
-      os->indent ();
       *os << "class " << idl_global->export_macro ()
                 << " " << node->local_name ();
 

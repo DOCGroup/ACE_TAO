@@ -82,7 +82,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << node->name () << "_ptr " << node->name ()
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &" << be_uidt_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
@@ -90,30 +90,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
       << "stub->_incr_refcnt ();" << be_nl;
-  *os << "void* servant = 0;" << be_nl;
-  *os << "if (obj->_is_collocated () "
-      << "&& obj->_servant() != 0)" << be_idt_nl
-      << "servant = obj->_servant()->_downcast (\""
-      << "IDL:omg.org/CORBA/Object:1.0\");" << be_uidt_nl;
 
-  *os << "if (servant != 0)" << be_idt_nl << "{" << be_idt_nl
-    // The collocated object reference factory is not working right (yet)
-      << node->name () << "_ptr retv = ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << node->name () << "_ptr," << be_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "PortableServer::Servant," << be_nl
-      << "servant" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "->_create_collocated_objref (" << be_idt << be_idt_nl
-      << "\"" << node->repoID () << "\"," << be_nl
-      << "TAO_ORB_Core::ORB_CONTROL," << be_nl
-      << "stub" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl
+  *os << "if (obj->_is_collocated () && _TAO_collocation_" << node->flatname ()
+      << "_Stub_Factory_function_pointer != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << node->local_name () << "_ptr retv = _TAO_collocation_"
+      << node->flatname ()
+      << "_Stub_Factory_function_pointer (obj);" << be_nl
       << "if (retv != 0)" << be_idt_nl
-      << "return retv;" << be_uidt
-    // So we are still using the old way to create collocated objref.
-      << be_uidt_nl
+      << "return retv;" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl;
 
   *os << "return new " << node->name () << "(stub);" << be_uidt_nl
