@@ -10,6 +10,9 @@ Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
           to Oliver M. Kellogg <Oliver.Kellogg@vs.dasa.de> for
           reporting this.
 
+        * ACE-INSTALL.html: corrected name of ace/config-linux-lxpthreads.h.
+          Thanks to Barry Hoggard <hoggard@cfx.com> for reporting this.
+
 Wed Mar  3 22:30:02 1999  James CE Johnson  <jcej@lads.com>
 
         * ace/IOStream_T.{cpp|h|i}: Those last changes break (at least)
