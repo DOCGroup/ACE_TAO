@@ -255,7 +255,7 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
   ACE_OS::memset (&this->begin_time_, 0, sizeof this->begin_time_);
   ACE_OS::memset (&this->end_time_, 0, sizeof this->end_time_);
   ACE_OS::memset (&this->last_time_, 0, sizeof this->last_time_);
-#endif /* ACE_HAS_GETRUSAGE */
+#  endif /* ACE_HAS_GETRUSAGE */
 }
 
 int
