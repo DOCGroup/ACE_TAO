@@ -43,7 +43,8 @@ output_(0)
 
 //=====================[ constructor with vbs_ and count ]==============
 Pdu::Pdu( Vb* pvbs, const int pvb_count): vb_count_(0), error_index_(0), 
-validity_(FALSE), request_id_(0), pdu_type_(0), notify_timestamp_(0)
+validity_(FALSE), request_id_(0), pdu_type_(0), notify_timestamp_(0), 
+output_(0)
 {
    int z;  // looping variable
 
@@ -75,7 +76,7 @@ validity_(FALSE), request_id_(0), pdu_type_(0), notify_timestamp_(0)
 //=====================[ constructor with another Pdu instance ]========
 Pdu::Pdu( const Pdu &pdu): vb_count_(0), 
 error_index_(0), validity_(FALSE), request_id_(0), pdu_type_(0),
-notify_timestamp_(0)
+notify_timestamp_(0), output_(0)
 {
    *this = pdu;
    return;

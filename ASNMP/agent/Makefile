@@ -1,10 +1,15 @@
+# Sample SNMPv1 Agent 
+# Makefile for Solaris 2.x
+# $Id$
+
 OBJS = main.o snmp_agent.o agent_impl.o
-CC=g++
 INCL = -I$(ACE_ROOT) -I$(ACE_ROOT)/ASNMP
-DEBUG = -g
+CC=CC
+SOL_FLAGS=-mt -R $(ACE_ROOT)/ASNMP/asnmp:$(ACE_ROOT)/ace
+DEBUG = -g $(SOL_FLAGS) 
 CFLAGS =$(INCL) $(DEBUG)
 RUNPATH = 
-LIBS = -L $(ACE_ROOT)/ASNMP/asnmp -lasnmp -L $(ACE_ROOT)/ace -lACE -ldl  -lefence
+LIBS = -L $(ACE_ROOT)/ASNMP/asnmp -lasnmp -L $(ACE_ROOT)/ace -lACE -ldl  
 
 agent: $(OBJS)
 	$(CC) -o agent $(DEBUG) $(OBJS) $(LIBS) $(RUNPATH)

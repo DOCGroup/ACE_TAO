@@ -217,14 +217,19 @@ int Vb::get_value( SnmpInt32 &i)
 
 int Vb::get_value( SnmpUInt32 &u)
 {
-   if (iv_vb_value_ &&
-       iv_vb_value_->valid() &&
-       (iv_vb_value_->get_syntax() == sNMP_SYNTAX_UINT32 )) {
-     u = *((SnmpUInt32 *) iv_vb_value_);
-     return SNMP_CLASS_SUCCESS;
+   if (iv_vb_value_ && iv_vb_value_->valid())
+   {
+       SmiUINT32 syntax = iv_vb_value_->get_syntax();
+       if (syntax == sNMP_SYNTAX_GAUGE32 || 
+	   syntax == sNMP_SYNTAX_CNTR32 ||
+	   syntax == sNMP_SYNTAX_TIMETICKS || 
+	   syntax == sNMP_SYNTAX_UINT32) 
+       {
+	   u = *((SnmpUInt32 *) iv_vb_value_);
+	   return SNMP_CLASS_SUCCESS;
+       }
    }
-   else
-     return SNMP_CLASS_INVALID;
+   return SNMP_CLASS_INVALID;
 }
 
 int Vb::get_value( Gauge32 &g)
@@ -355,7 +360,7 @@ char  *Vb::to_string()
   char *ptr = "";
   if (iv_vb_value_)
       ptr = iv_vb_value_->to_string(); 
-  len += ACE_OS::strlen(ptr);
+  len += ACE_OS::strlen(ptr) + 3 + 1; // " / " + null
   ACE_NEW_RETURN(output_, char[len], ""); 
   ACE_OS::sprintf(output_, "%s / %s", iv_vb_oid_.to_string(), ptr); 
   return output_;
