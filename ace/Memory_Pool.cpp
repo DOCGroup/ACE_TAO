@@ -724,7 +724,7 @@ ACE_Shared_Memory_Pool::release (void)
   for (size_t counter = 0;
        counter < this->max_segments_ && st[counter].used_ == 1;
        counter++)
-    if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, NULL) == -1)
+    if (ACE_OS::shmctl (st[counter].shmid_, IPC_RMID, 0) == -1)
       result = -1;
 
   return result;

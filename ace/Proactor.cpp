@@ -665,13 +665,13 @@ ACE_Proactor *
 ACE_Proactor::instance (size_t threads)
 {
   ACE_UNUSED_ARG (threads);
-  return NULL;
+  return 0;
 }
 
 ACE_Proactor *
 ACE_Proactor::instance (ACE_Proactor *)
 {
-  return NULL;
+  return 0;
 }
 
 void

@@ -31,13 +31,11 @@ typedef Timer_Queue_Test_Driver <ACE_Timer_Heap,
 int
 main (int, char *[])
 {
+  REACTOR_TIMER_QUEUE_TEST_DRIVER *tqtd;
+  ACE_NEW_RETURN (tqtd, Reactor_Timer_Queue_Test_Driver, -1);
   // Auto ptr ensures that the driver memory is released
   // automatically.
-  auto_ptr <REACTOR_TIMER_QUEUE_TEST_DRIVER> driver;
-  REACTOR_TIMER_QUEUE_TEST_DRIVER *tqtd;
-  
-  ACE_NEW_RETURN (tqtd, Reactor_Timer_Queue_Test_Driver, -1);
-  driver = tqtd;
+  auto_ptr <REACTOR_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);
   
   return driver->run_test ();
 }

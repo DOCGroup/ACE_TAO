@@ -367,14 +367,14 @@ ACE_Name_Handler::resolve (void)
   if (this->naming_context_->resolve (a_name, avalue, atype) == 0)
     {
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
-			    NULL, 0,
+			    0, 0,
 			    avalue.rep (),
 			    avalue.length () * sizeof (ACE_USHORT16),
 			    atype, ACE_OS::strlen (atype));
       return this->send_request (nrq);
     }
 
-  ACE_Name_Request nrq (ACE_Name_Request::BIND, NULL, 0, NULL, 0, NULL, 0);
+  ACE_Name_Request nrq (ACE_Name_Request::BIND, 0, 0, 0, 0, 0, 0);
   this->send_request (nrq);
   return 0;
 }
@@ -398,8 +398,8 @@ ACE_Name_Handler::name_request (ACE_WString *one_name)
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
 			   one_name->rep (),
 			   one_name->length () * sizeof (ACE_USHORT16),
-			   NULL, 0,
-			   NULL, 0);
+			   0, 0,
+			   0, 0);
 }
 
 ACE_Name_Request
@@ -407,10 +407,10 @@ ACE_Name_Handler::value_request (ACE_WString *one_value)
 {
   ACE_TRACE ("ACE_Name_Handler::value_request");
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
-			   NULL, 0,
+			   0, 0,
 			   one_value->rep (),
 			   one_value->length () * sizeof (ACE_USHORT16),
-			   NULL, 0);
+			   0, 0);
 }
 
 ACE_Name_Request
@@ -418,8 +418,8 @@ ACE_Name_Handler::type_request (ACE_WString *one_type)
 {
   ACE_TRACE ("ACE_Name_Handler::type_request");
   return ACE_Name_Request (ACE_Name_Request::LIST_TYPES,
-			   NULL, 0,
-			   NULL, 0,
+			   0, 0,
+			   0, 0,
 			   one_type->char_rep (),
 			   one_type->length ());
 }
@@ -444,7 +444,7 @@ ACE_Name_Handler::lists (void)
   if ((this->naming_context_->*list_table_[index].operation_) (set, pattern) != 0)
     {
       // None found so send blank request back
-      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, NULL, 0, NULL, 0, NULL, 0);
+      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (end_rq) == -1)
 	return -1;
@@ -467,9 +467,9 @@ ACE_Name_Handler::lists (void)
 
       // Send last message indicator.
       ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM,
-			    NULL, 0,
-			    NULL, 0,
-			    NULL, 0);
+			    0, 0,
+			    0, 0,
+			    0, 0);
       return this->send_request (nrq);
     }
   return 0;
@@ -506,7 +506,7 @@ ACE_Name_Handler::lists_entries (void)
   if ((this->naming_context_->*ptmf) (set, pattern) != 0)
     {
       // None found so send blank request back.
-      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, NULL, 0, NULL, 0, NULL, 0);
+      ACE_Name_Request end_rq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (end_rq) == -1)
 	return -1;
@@ -532,7 +532,7 @@ ACE_Name_Handler::lists_entries (void)
 	}
 
       // send last message indicator
-      ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM, NULL, 0, NULL, 0, NULL, 0);
+      ACE_Name_Request nrq (ACE_Name_Request::MAX_ENUM, 0, 0, 0, 0, 0, 0);
 
       if (this->send_request (nrq) == -1)
         return -1;

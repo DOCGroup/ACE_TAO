@@ -31,13 +31,11 @@ typedef Timer_Queue_Test_Driver<Async_Timer_Queue *,
 int
 main (int, char *[])
 {
+  ASYNC_TIMER_QUEUE_TEST_DRIVER *tqtd;
+  ACE_NEW_RETURN (tqtd, Async_Timer_Queue_Test_Driver, -1);
   // Auto ptr ensures that the driver memory is released
   // automatically.
-  auto_ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER> driver;
-  ASYNC_TIMER_QUEUE_TEST_DRIVER *tqtd;
-  
-  ACE_NEW_RETURN (tqtd, Async_Timer_Queue_Test_Driver, -1);
-  driver = tqtd;
+  auto_ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);
   
   return driver->run_test ();
 }

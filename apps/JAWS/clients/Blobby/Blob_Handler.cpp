@@ -128,9 +128,9 @@ ACE_Blob_Reader::receive_reply (void)
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
-      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != NULL)
+      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != 0)
         buf_ptr += 4;
-      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != NULL)
+      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != 0)
         buf_ptr += 2;
       else
         buf_ptr = buf;
@@ -313,11 +313,11 @@ ACE_Blob_Writer::receive_reply (void)
   // First check if this was a valid header -- HTTP/1.0
   char *token = ACE_OS::strtok_r (buf, " \t", &lasts);
 
-  if ( (token == NULL) || (ACE_OS::strcasecmp (token, "HTTP/1.0") != 0))
+  if ( (token == 0) || (ACE_OS::strcasecmp (token, "HTTP/1.0") != 0))
     ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Did not receive a HTTP/1.0 response"), -1);
 
   // Get the return code.
-  int return_code = ACE_OS::atoi (ACE_OS::strtok_r (NULL, " \t", &lasts));
+  int return_code = ACE_OS::atoi (ACE_OS::strtok_r (0, " \t", &lasts));
 
   // Check if the transaction succeeded. The only success codes are in
   // the range of 200-299 (HTTP specification).
@@ -327,7 +327,7 @@ ACE_Blob_Writer::receive_reply (void)
     {
       // Something went wrong!
       // Get the description from the header message of what went wrong.
-      char *description = ACE_OS::strtok_r (NULL, "\n\r", &lasts);
+      char *description = ACE_OS::strtok_r (0, "\n\r", &lasts);
       ACE_ERROR_RETURN((LM_ERROR, "%p\n", description), -1);
     }
   ACE_NOTREACHED(return 0);
