@@ -37,8 +37,8 @@ TAO::TypeCode::Empty_Param::tao_release (void)
 }
 
 CORBA::Boolean
-TAO::TypeCode::Empty_Param::equal_i (CORBA::TypeCode_ptr tc
-                                     ACE_ENV_ARG_DECL) const
+TAO::TypeCode::Empty_Param::equal_i (CORBA::TypeCode_ptr
+                                     ACE_ENV_ARG_DECL_NOT_USED) const
 {
   // Equality has already been established in the
   // CORBA::TypeCode base class.

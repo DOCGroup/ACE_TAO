@@ -479,13 +479,13 @@ namespace CORBA
 }  // End namespace CORBA
 
 
+TAO_Export bool operator<< (TAO_OutputCDR & cdr,
+                                     CORBA::TypeCode_ptr tc);
+TAO_Export bool operator>> (TAO_InputCDR & cdr,
+                            CORBA::TypeCode_ptr & tc);
+
 namespace TAO
 {
-  extern TAO_Export bool operator<< (TAO_OutputCDR & cdr,
-                                     CORBA::TypeCode_ptr tc);
-  extern TAO_Export bool operator>> (TAO_InputCDR & cdr,
-                                     CORBA::TypeCode_ptr & tc);
-
   /// Return the unaliased content @c TypeCode of the given
   /// @c TypeCode.
   CORBA::TypeCode_ptr unaliased_typecode (CORBA::TypeCode_ptr tc
