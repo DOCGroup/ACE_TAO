@@ -8,8 +8,8 @@
 // Initialize the static variables.
 /* static */
 
-Benchmark_Base::Benchmark_Base (void)
-  : benchmark_type_ (Benchmark_Base::BENCHMARK_BASE)
+Benchmark_Base::Benchmark_Base (int type)
+  : benchmark_type_ (type)
 {
 }
 
@@ -28,6 +28,44 @@ Benchmark_Base::thr_id (void)
 #else
   return ACE_Thread::self ();
 #endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
+}
+
+Benchmark_Method_Base::Benchmark_Method_Base (void)
+  : Benchmark_Base (Benchmark_Base::METHOD)
+{
+}
+
+int
+Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
+{
+  sri->advance ();
+  for (const ACE_Service_Type *sr;
+       sri.next (sr) != 0;
+       sri.advance ())
+    {
+      // This would greatly benefit from RTTI typesafe downcasting...
+      const ACE_Service_Type_Impl *type = sr->type ();
+      const void *obj = type->object ();
+      ACE_Service_Object *so = (ACE_Service_Object *) obj;
+      Benchmark_Base *bp = (Benchmark_Base *) so;
+
+      if (this->valid_test_object (bp))
+        {
+
+          ACE_DEBUG ((LM_DEBUG, "\nstarting up %s\n", sr->name ()));
+
+          this->pre_run_test () == 0 && this->run_test () == 0 &&
+            this->post_run_test () == 0;
+        }
+      else
+        return 0;
+    }
+  return 0;
+}
+
+Benchmark_Performance_Test_Base::Benchmark_Performance_Test_Base (void)
+  : Benchmark_Base (Benchmark_Base::PERFORMANCE)
+{
 }
 
 #if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
