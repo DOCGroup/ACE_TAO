@@ -23,6 +23,23 @@ Wed Jun 16 13:15:22 1999  Steve Huston  <shuston@riverace.com>
         * ace/Containers_T.i: Fixed compile errors; ACE_Double_Linked_List_
           Iterator_Base::dllist is a pointer, not a reference/object.
 
+        * ace/Cache_Map_Manager_T.h:
+        * ace/Caching_Strategy_Utility_T.h:
+        * ace/Caching_Strategies_T.h:
+        * ace/Hash_Cache_Map_Manager_T.h:
+          Corrected syntax for #pragma implementation statements.
+
+        * ace/Cache_Map_Manager_T.h: Fully qualified return type on iterator
+          assignment operators.
+
+        * apps/Gateway/Gateway/Event.h: Added ctor initializer on Event to
+          invoke ctor initializer on Event_Header.  IBM C++ 3.6.4 requires it.
+
+        * examples/Connection/non_blocking/Makefile:
+          Added LIBS += $(ACELIB) to include libACE when linking the
+          shared libs.  Removed VLDLIBS lines because they're set in
+          wrapper_macros.GNU, and it knows to do it correctly for AIX.
+
 Wed Jun 16 12:00:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp:
