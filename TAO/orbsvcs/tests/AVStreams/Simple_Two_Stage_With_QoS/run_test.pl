@@ -70,13 +70,12 @@ $output_file = "TCP_output";
 
 for $protocol (@protocols)
 {
-    if ($protocol eq "RTP/UDP")
+
+    $output_file = $protocol."_output";
+
+    if ($protocol eq "RTP_UDP")
     {
-	$output_file = "RTP_output";
-    }
-    else 
-    { 
-	$output_file = $protocol."_output";
+	$protocol = "RTP/UDP";
     }
 
     $SV = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -ORBDebugLevel ".$debug." -f ".$output_file);
