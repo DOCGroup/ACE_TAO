@@ -2,6 +2,7 @@
 
 #if !defined (GLOBALS_H)
 #define GLOBALS_H
+
 // ============================================================================
 //
 // = LIBRARY
@@ -11,7 +12,7 @@
 //    Globals.h
 //
 // = AUTHOR
-//    Nagarajan Surendran
+//    Nagarajan Surendran <naga@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -31,8 +32,15 @@ public:
 
 class Globals
 {
+  // = TITLE
+  //   // @@ Naga, can you please fill in here?
+  // = DESCRIPTION
+  //   // @@ Naga, can you please fill in here?
 public:
   Globals (void);
+
+  // @@ Naga, can you please make sure these fields/methods are
+  // commented briefly?
   int parse_args (int argc,char **argv);
   char hostname[BUFSIZ];
   char *ior_file;
@@ -41,6 +49,7 @@ public:
   u_int use_name_service;
   u_int thread_per_rate;
   u_int use_multiple_priority;
+
   int ready_;
   // ready flag used by the high priority thread to wake up the low
   // priority threads after it's parsed the arguments.
