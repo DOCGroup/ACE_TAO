@@ -11,10 +11,21 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-FILES= com fileio filters routine sendpt
+FILES = $(IDL_FILES)
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
+
+
+#TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
+
+IDL_FILES = Video_ControlS Video_ControlC
+
+FILES += com fileio filters routine sendpt Video_Control_i
+
+LDFLAGS += -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
+
 
 ##LIBS 	+= -lTAO -lACE
 
@@ -38,6 +49,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 ##LDFLAGS += -L$(TAO_ROOT)/tao
 ##CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
 CPPFLAGS += -DSH_MEM -DNEBUG -DSunOS -DSTAT
+
+.PRECIOUS: Video_ControlS.cpp Video_ControlC.cpp
+
+idl_stubs: $(addsuffix .h, $(IDL_FILES))
 
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
@@ -63,8 +78,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i fileio.h \
- routine.h com.h
+ $(ACE_ROOT)/ace/Log_Record.i fileio.h routine.h \
+ com.h
 .obj/fileio.o .obj/fileio.so .shobj/fileio.o .shobj/fileio.so: fileio.cpp routine.h ../include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
