@@ -1,3 +1,11 @@
+Mon Jan 01 16:35:00 2000  Michael Kircher  <Micahel.Kircher@mchp.siemens.de>
+
+	* tests/Reader_Writer_Test.cpp: Added a #ifdef to check for native
+	  RW lock support. If the platform supports native RW locks we should
+	  not report a failure on upgrading, because native RW locks do not
+	  support upgrading, only our RW lock emulation does this.
+	  Thanks to Frank and Doug for pointing out this failure.
+
 Sun Dec 31 14:12:08 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
