@@ -248,7 +248,8 @@ main (int    argc, char   *argv[])
 
 	    us /= call_count;
 
-	    ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
+		if (us > 0)
+		ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
 			    "%ld calls/second\n",
 			    us / 1000, us % 1000,
 			    1000000L / us);

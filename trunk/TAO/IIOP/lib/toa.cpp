@@ -86,7 +86,8 @@ TOA::get_named_toa (
 	    // TCP_OA initialization with name specified; it'll
 	    // come from /etc/services if it's not a port number.
 	    //
-	    tcp_oa = TCP_OA::init (orb, name, env);
+	    ACE_INET_Addr toa_name(name, INADDR_ANY);
+	    tcp_oa = TCP_OA::init (orb, toa_name, env);
 	    if (env.exception () != 0)
 		return 0;
 	    else
