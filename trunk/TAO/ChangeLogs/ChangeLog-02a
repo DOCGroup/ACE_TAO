@@ -1,38 +1,44 @@
+Fri May 26 08:31:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/RT_Policy_i.cpp:
+          Fixed warnings under gcc-2.95.2  The copy constructor should
+          explicitly initialize virtual base classes.
+
 Thu May 25 22:00:04 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/SHMIOP_Connect.cpp (svc):
-	* tao/IIOP_Connect.cpp (svc):
-	* tao/UIOP_Connect.cpp (svc):
+        * tao/SHMIOP_Connect.cpp (svc):
+        * tao/IIOP_Connect.cpp (svc):
+        * tao/UIOP_Connect.cpp (svc):
 
-	  Reset errno to make sure we don't trip over an old value of
-	  errno in case it is not reset when the recv() call fails if the
-	  socket has been closed.  Thanks to Tommy Andreasen
-	  <tommy.andreasen@radiometer.dk> for reporting this bug and
-	  providing a solution.
+          Reset errno to make sure we don't trip over an old value of
+          errno in case it is not reset when the recv() call fails if the
+          socket has been closed.  Thanks to Tommy Andreasen
+          <tommy.andreasen@radiometer.dk> for reporting this bug and
+          providing a solution.
 
 Thu May 25 21:41:30 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
-	  Fixed "A new-line character appears inside a string literal" error.
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+          Fixed "A new-line character appears inside a string literal" error.
 
 Thu May 25 19:35:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
-	  Removed .in() from two things that weren't _vars in
-	  create_exception_tc - the same change that was made
-	  to create_struct_tc a few days ago.
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+          Removed .in() from two things that weren't _vars in
+          create_exception_tc - the same change that was made
+          to create_struct_tc a few days ago.
 
 Thu May 25 12:14:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
-	  Cosmetic changes.
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+          Cosmetic changes.
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
-	  Added create_union_tc() method. Every feature has not
-	  been tested with every discriminator type, but enum
-	  discriminators have been thoroughly tested, as well
-	  as default cases and multiple case labels. Recursive
-	  typecodes (structs and unions) are not yet supported.
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+          Added create_union_tc() method. Every feature has not
+          been tested with every discriminator type, but enum
+          discriminators have been thoroughly tested, as well
+          as default cases and multiple case labels. Recursive
+          typecodes (structs and unions) are not yet supported.
 
 Thu May 25 11:09:24 2000  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -71,119 +77,119 @@ Wed May 24 19:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed May 24 20:48:51 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp:
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp:
-	  Fixed minor compile errors
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp:
+          Fixed minor compile errors
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Fixed undefined sybol reference errors
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Fixed undefined sybol reference errors
 
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for pointing them
-	  out and help fix them.
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for pointing them
+          out and help fix them.
 
 
 
 Wed May 24 17:53:12 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_PushConsumer.h:
- 	* orbsvcs/orbsvcs/Notify/Notify_PushSupplier.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_PushSupplier.h:
- 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
- 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
- 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
- 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
-	  Removed these helper files.
-	  They have been moved to orbsvcs/tests/Notify/lib
-	* orbsvcs/orbsvcs/CosNotification.dsp:
-	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
-	  Removed the helper files from the projects file.
+        * orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Notify_PushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_PushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
+          Removed these helper files.
+          They have been moved to orbsvcs/tests/Notify/lib
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+          Removed the helper files from the projects file.
 
 Wed May 24 15:32:49 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/examples/Notify/Filter/Filter.h:
-	* orbsvcs/examples/Notify/Filter/Filter.cpp:
-	* orbsvcs/examples/Notify/Filter/Makefile:
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.h:
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
-	* orbsvcs/examples/Notify/Subscribe/Makefile:
-	  Modified examples to not use helper classes.
+        * orbsvcs/examples/Notify/Filter/Filter.h:
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+          Modified examples to not use helper classes.
 
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	* orbsvcs/orbsvcs/Notify/README:
-	  Removed the helper files from the Notify lib.
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Notify/README:
+          Removed the helper files from the Notify lib.
 
-	* orbsvcs/tests/Notify/lib/Makefile:
-	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.cpp:
-	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.h:
- 	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp:
-	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.h:
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
-	* orbsvcs/tests/Notify/lib/notify_test_export.h:
-	* orbsvcs/tests/Notify/lib/README:
-	  Moved the helper files to a lib: libNotifyTests.so
-	  The Notify tests will use this lib.
+        * orbsvcs/tests/Notify/lib/Makefile:
+        * orbsvcs/tests/Notify/lib/Notify_PushConsumer.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_PushConsumer.h:
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.h:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h:
+        * orbsvcs/tests/Notify/lib/notify_test_export.h:
+        * orbsvcs/tests/Notify/lib/README:
+          Moved the helper files to a lib: libNotifyTests.so
+          The Notify tests will use this lib.
 
 Wed May 24 11:45:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* examples/Simulator/DOVEBrowser/Makefile
-	  examples/Simulator/DOVEBrowser/MultiDoubleVisComp.java (new)
-	  examples/Simulator/DOVEBrowser/Properties.java
-	  examples/Simulator/DOVEBrowser/PushConsumer.java
-	  examples/Simulator/DOVEBrowser/PushConsumerFactory.java
-	  examples/Simulator/DOVEBrowser/VisCompFactory.java
-	  examples/Simulator/DOVEBrowser/ecdata_patch.pl (new)
-	  examples/Simulator/DOVEBrowser/make.bat: ported from BOA to POA,
-	  added a Perl patch to remove a typedef from RtecEventComm.idl
-	  that the vbj 4.0 idl2java compiler is not handling correctly.
-	  Work still needs to be done to integrate with the new EC.
+        * examples/Simulator/DOVEBrowser/Makefile
+          examples/Simulator/DOVEBrowser/MultiDoubleVisComp.java (new)
+          examples/Simulator/DOVEBrowser/Properties.java
+          examples/Simulator/DOVEBrowser/PushConsumer.java
+          examples/Simulator/DOVEBrowser/PushConsumerFactory.java
+          examples/Simulator/DOVEBrowser/VisCompFactory.java
+          examples/Simulator/DOVEBrowser/ecdata_patch.pl (new)
+          examples/Simulator/DOVEBrowser/make.bat: ported from BOA to POA,
+          added a Perl patch to remove a typedef from RtecEventComm.idl
+          that the vbj 4.0 idl2java compiler is not handling correctly.
+          Work still needs to be done to integrate with the new EC.
 
 Tue May 23 22:45:50 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/RT_Policy_i.cpp:
-	* tao/RT_Current.h:
-	* tao/Makefile
-	  Minor compiler warning fixes, dependencies.
+        * tao/RT_Policy_i.cpp:
+        * tao/RT_Current.h:
+        * tao/Makefile
+          Minor compiler warning fixes, dependencies.
 
 Tue May 23 19:19:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/append.cpp:
-	* tao/skip.cpp:
-	  Replaced some typecode_ptrs with typecode_vars, to plug some memory leaks
-	  in TAO_Marshal_Union. Thanks to Tom Ziomek <tomz@cc701.comm.mot.com>
-	  for reporting these leaks and sending in the example code that
-	  helped track them down.
+        * tao/append.cpp:
+        * tao/skip.cpp:
+          Replaced some typecode_ptrs with typecode_vars, to plug some memory leaks
+          in TAO_Marshal_Union. Thanks to Tom Ziomek <tomz@cc701.comm.mot.com>
+          for reporting these leaks and sending in the example code that
+          helped track them down.
 
 Tue May 23 19:01:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): There was a
-	  bunch of busted code that must have resulted when removing %a.
-  	  Thanks to Yiu L. Lee <yiulee@crosskeys.com> for reporting this.
+        * TAO_IDL/driver/drv_args.cpp (DRV_parse_args): There was a
+          bunch of busted code that must have resulted when removing %a.
+          Thanks to Yiu L. Lee <yiulee@crosskeys.com> for reporting this.
 
 Tue May 23 17:36:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp:
-	  Added a missing pair of braces that got lost in my last cut and
+        * TAO_IDL/driver/drv_args.cpp:
+          Added a missing pair of braces that got lost in my last cut and
           paste session in this file. Thanks to
-	  Yiu L. Lee <yiulee@crosskeys.com> for reporting it.
+          Yiu L. Lee <yiulee@crosskeys.com> for reporting it.
 
 Tue May 23 15:04:13 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/Endpoint_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
-	  Updated dependencies to reflect changes in:
-	  Mon May 22 22:12:22 2000  Marina Spivak  <marina@cs.wustl.edu>
+        * tests/Endpoint_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+          Updated dependencies to reflect changes in:
+          Mon May 22 22:12:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 Tue May 23 09:37:32 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -513,8 +519,8 @@ Mon May 15 20:03:11 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
 
 Mon May 15 18:19:53 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Leader_Followers/client.cpp (class Client_Task): Added a
-	  small pause to avoid overrunning the server.
+        * tests/Leader_Followers/client.cpp (class Client_Task): Added a
+          small pause to avoid overrunning the server.
 
 Mon May 15 15:40:46 2000  Ossama Othman  <ossama@uci.edu>
 
