@@ -38,7 +38,7 @@ Client_Acceptor::open (const ACE_INET_Addr &addr,
                        int pool_size)
 {
   if (this->concurrency() == thread_pool_ && thread_pool_is_private ())
-    thread_pool ()->open (pool_size);
+    thread_pool ()->start (pool_size);
 
   return inherited::open (addr, reactor);
 }
@@ -49,7 +49,7 @@ int
 Client_Acceptor::close (void)
 {
   if (this->concurrency() == thread_pool_ && thread_pool_is_private ())
-    thread_pool ()->close ();
+    thread_pool ()->stop ();
 
   return inherited::close ();
 }

@@ -12,12 +12,12 @@ Thread_Pool::Thread_Pool (void)
 {
 }
 
-/* Our open() method is a thin disguise around the ACE_Task<>
+/* Our start() method is a thin disguise around the ACE_Task<>
    activate() method.  By hiding activate() in this way, the users of
    Thread_Pool don't have to worry about the thread configuration
    flags.  */
 int
-Thread_Pool::open (int pool_size)
+Thread_Pool::start (int pool_size)
 {
   return this->activate (THR_NEW_LWP|THR_DETACHED, pool_size);
 }
@@ -26,7 +26,7 @@ Thread_Pool::open (int pool_size)
    take an easy approach and simply enqueue a secret message for each
    thread we have active.  */
 int
-Thread_Pool::close (u_long flags)
+Thread_Pool::stop (void)
 {
   ACE_UNUSED_ARG(flags);
 

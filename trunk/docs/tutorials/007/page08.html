@@ -38,12 +38,12 @@ Remember back in <A HREF="../006/page01.html">Tutorial 6</A> when I
 {
 }
 
-<font color=red>/* Our open() method is a thin disguise around the ACE_Task&lt;>
+<font color=red>/* Our start() method is a thin disguise around the ACE_Task&lt;>
    activate() method.  By hiding activate() in this way, the users of
    Thread_Pool don't have to worry about the thread configuration
    flags.  */</font>
 int
-<font color=#008888>Thread_Pool::open</font> (int pool_size)
+<font color=#008888>Thread_Pool::start</font> (int pool_size)
 {
   return this->activate (THR_NEW_LWP|THR_DETACHED, pool_size);
 }
@@ -52,7 +52,7 @@ int
    take an easy approach and simply enqueue a secret message for each
    thread we have active.  */</font>
 int
-<font color=#008888>Thread_Pool::close</font> (u_long flags)
+<font color=#008888>Thread_Pool::stop</font> (void)
 {
   ACE_UNUSED_ARG(flags);
 

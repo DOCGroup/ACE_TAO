@@ -37,24 +37,15 @@ public:
   // Basic constructor
   Thread_Pool (void);
 
-  /* Opening the thread pool causes one or more threads to be
+  /* Starting the thread pool causes one or more threads to be
     activated.  When activated, they all execute the svc() method
     declared below.  */
-  int open (int pool_size = default_pool_size_);
-
-  /* Some compilers will complain that our open() above attempts to
-    override a virtual function in the baseclass.  We have no
-    intention of overriding that method but in order to keep the
-    compiler quiet we have to add this method as a pass-thru to the
-    baseclass method.  */
-  virtual int open (void *void_data)
-  {
-    return inherited::open (void_data);
-  }
+  int start (int pool_size = default_pool_size_);
 
   /*
+    Shut down the thread pool.
    */
-  virtual int close (u_long flags = 0);
+  virtual int stop (void);
 
   /* To use the thread pool, you have to put some unit of work into
     it.  Since we're dealing with event handlers (or at least their
