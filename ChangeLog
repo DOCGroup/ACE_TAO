@@ -1,3 +1,13 @@
+Fri Mar 14 11:38:56 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Dirent_Test.cpp (TEST_ENTRY):
+
+	  Changed name of file from "Dirent_Test.cpp" to "Makefile".  The
+	  latter is the only one guaranteed to exist in autoconf based
+	  VPATH builds.  Dirent_Test was failing since "Dirent_Test.cpp"
+	  did not exist in the current working directory so pick one that
+	  will always exist.
+
 Fri Mar 14 10:49:48 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac (bsearch, mktemp, qsort, rand_r):
