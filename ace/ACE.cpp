@@ -1743,7 +1743,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   if (n <= 0)
     {
       if (n == 0 && timeout != 0)
-        errno = ETIME;
+        errno = ETIMEDOUT;
       return ACE_INVALID_HANDLE;
     }
 
