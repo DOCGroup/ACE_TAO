@@ -1,3 +1,11 @@
+Sat Aug 28 16:40:29 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h (TAO_Interpreter):
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp (TAO_Interpreter):
+	  Fix for Bug#:236 - Added a Guard in the <build_tree> method to
+	  protect it from reentrance.Thanks to <ujaehrig@desys.com> for
+	  reporting this bug and providing a fix.
+
 Sat Aug 28 16:26:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/AMI/ami_test.dsw:
@@ -151,7 +159,7 @@ Fri Aug 27 17:06:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.h:
 	* tao/ORB.cpp:
-	
+
 	  CORBA 2.3 updates:
 
 	  work_pending() and perform_work() now throw a
@@ -165,7 +173,7 @@ Fri Aug 27 17:06:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Fixed a segmentation fault that occurred when a bogus endpoint
 	  was specified on the command line in conjunction with the
 	  "-ORBObJRefStyle URL" option.
-	
+
 	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp (set):
 
 	  Removed a cast that I inadvertently added.
