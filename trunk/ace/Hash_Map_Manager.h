@@ -211,6 +211,13 @@ public:
   size_t total_size (void);
   // Return the total size of the map.
 
+  ACE_LOCK &mutex (void);
+  // Returns a reference to the underlying <ACE_LOCK>.  This makes it
+  // possible to acquire the lock explicitly, which can be useful in
+  // some cases if you instantiate the <ACE_Atomic_Op> with an
+  // <ACE_Recursive_Mutex> or <ACE_Process_Mutex>.  NOTE: the right
+  // name would be lock_, but HP/C++ will choke on that!
+
   void dump (void) const;
   // Dump the state of an object.
 

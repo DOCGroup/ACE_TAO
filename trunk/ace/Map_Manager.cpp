@@ -583,8 +583,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::total_size (void)
 {
   ACE_TRACE ("ACE_Map_Manager::total_size");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_,
-                          ACE_static_cast(size_t, -1));
+                          ACE_static_cast (size_t, -1));
   return this->total_size_;
+}
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_LOCK &
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::mutex (void)
+{
+  ACE_TRACE ("ACE_Map_Manager::mutex");
+  return this->lock_;
 }
 
 // @@ && @@

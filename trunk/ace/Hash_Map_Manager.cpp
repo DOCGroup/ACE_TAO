@@ -206,6 +206,13 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::total_size (void)
   return this->total_size_;
 }
 
+template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_LOCK &
+ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::mutex (void)
+{
+  ACE_TRACE ("ACE_Hash_Map_Manager::mutex");
+  return this->lock_;
+}
+
 template <class EXT_ID, class INT_ID, class ACE_LOCK> u_long
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::hash (const EXT_ID &ext_id)
 {
