@@ -22,7 +22,7 @@
  * The command used to generate code is:
  *
  *  tao_idl
- *     -o orig -Gp -Gd -Ge 1 -GT -GA
+ *     -o orig -Gp -Gd -Ge 1 -GT -GA -Sc
  *          -Wb,export_macro=TAO_Export
  *          -Wb,pre_include="ace/pre.h"
  *          -Wb,post_include="ace/post.h"
@@ -47,13 +47,13 @@ module PortableInterceptor {
 
   typeprefix PortableInterceptor "omg.org";
 
-  local interface Interceptor 
+  local interface Interceptor
   {
     readonly attribute string name;
     void destroy ();
   };
 
-  exception ForwardRequest 
+  exception ForwardRequest
   {
     Object forward;
     boolean permanent;
@@ -74,13 +74,13 @@ module PortableInterceptor {
 
   exception InvalidSlot {};
 
-  local interface Current : CORBA::Current 
+  local interface Current : CORBA::Current
   {
     any get_slot (in SlotId id) raises (InvalidSlot);
     void set_slot (in SlotId id, in any data) raises (InvalidSlot);
   };
 
-  local interface RequestInfo 
+  local interface RequestInfo
   {
     readonly attribute unsigned long request_id;
     readonly attribute string operation;
@@ -98,7 +98,7 @@ module PortableInterceptor {
     IOP::ServiceContext get_reply_service_context (in IOP::ServiceId id);
   };
 
-  local interface ClientRequestInfo : RequestInfo 
+  local interface ClientRequestInfo : RequestInfo
   {
     readonly attribute Object target;
     readonly attribute Object effective_target;
@@ -113,7 +113,7 @@ module PortableInterceptor {
       in boolean replace);
   };
 
-  local interface ServerRequestInfo : RequestInfo 
+  local interface ServerRequestInfo : RequestInfo
   {
     readonly attribute any sending_exception;
     readonly attribute ServerId server_id;
@@ -130,7 +130,7 @@ module PortableInterceptor {
       in boolean replace);
   };
 
-  local interface ClientRequestInterceptor : Interceptor 
+  local interface ClientRequestInterceptor : Interceptor
   {
     void send_request  (in ClientRequestInfo ri) raises (ForwardRequest);
     void send_poll (in ClientRequestInfo ri);
@@ -139,7 +139,7 @@ module PortableInterceptor {
     void receive_other (in ClientRequestInfo ri) raises (ForwardRequest);
   };
 
-  local interface ServerRequestInterceptor : Interceptor 
+  local interface ServerRequestInterceptor : Interceptor
   {
     /// Proprietary method in TAO for fault tolerance
     void tao_ft_interception_point (in ServerRequestInfo ri, out CORBA::OctetSeq os) raises (ForwardRequest);
@@ -158,11 +158,11 @@ module PortableInterceptor {
 
   local interface IORInterceptor;
 
-  local interface ORBInitInfo 
+  local interface ORBInitInfo
   {
     typedef string ObjectId;
 
-    exception DuplicateName 
+    exception DuplicateName
     {
       string name;
     };
@@ -175,7 +175,7 @@ module PortableInterceptor {
 
     void register_initial_reference (in ObjectId id, in Object obj)
       raises (InvalidName);
-    Object resolve_initial_references (in ObjectId id) 
+    Object resolve_initial_references (in ObjectId id)
       raises (InvalidName);
     void add_client_request_interceptor (
       in ClientRequestInterceptor interceptor)
@@ -191,7 +191,7 @@ module PortableInterceptor {
       in PolicyFactory policy_factory);
   };
 
-  local interface ORBInitializer 
+  local interface ORBInitializer
   {
     void pre_init (in ORBInitInfo info);
     void post_init (in ORBInitInfo info);
