@@ -15,17 +15,14 @@
 #define ECCONFIG_H
 
 #include "ace/Array.h"
-//#include "ace/Synch.h"
 #include "ace/RW_Mutex.h"
 #include "orbsvcs/RtecSchedulerS.h" //for POA_RtecScheduler
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/Event/ECG_UDP_Receiver.h"
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/EC_Gateway.h"
 
-#include "AddrServer.h"
+//#include "AddrServer.h"
 #include "TestConfig.h"
 #include "Consumer.h"
 #include "Supplier.h"
@@ -123,17 +120,20 @@ private:
   //a write lock, all TimeoutConsumers must've finished, so the test
   //is finished.
 
-  //These members are for multicast Federated EC support
-  AddrServer as_impl;
-  RtecUDPAdmin::AddrServer_var address_server;
-  TAO_ECG_UDP_Out_Endpoint endpoint;
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver;
-
-  const char *udp_mcast_address;
-
   //Flag indicates whether or not the back-end has been configured
   int configured; //boolean
+
+  //These members are for Federated EC support
+  int use_federated; //boolean
+
+  TAO_EC_Gateway *gateway_impl;
+
+  RtecEventChannelAdmin::Observer_var gateway_obs;
+
+  ///Blocks the application using ACE_SOCK_Connector or
+  ///ACE_SOCK_Acceptor.  Used for barrier synchronization between the
+  ///application and others in the system.
+  void barrier(bool is_supplier);
 };
 
 } /* namespace TestConfig */
