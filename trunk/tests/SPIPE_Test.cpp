@@ -29,10 +29,10 @@
 #include "ace/SPIPE_Connector.h"
 #include "ace/SPIPE_Acceptor.h"
 
+#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 // pipe name to use
 static const char *PIPE_NAME = "ace_pipe_name";
 
-#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 static void *
 client (void *)
 {
