@@ -89,7 +89,7 @@ TAO_FT_IOGR_Property::get_primary (
     this->get_primary_profile (ior);
 
   if (pfile == 0)
-    ACE_THROW_RETURN (TAO_IOP::NotFound,
+    ACE_THROW_RETURN (TAO_IOP::NotFound (),
                       CORBA::Object::_nil ());
 
   // Search for the IOP::TAG_FT_PRIMARY in the tagged component of
@@ -226,12 +226,12 @@ TAO_FT_IOGR_Property::set_primary (
   CORBA::Octet *buf =
     tagged_components.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *i = cdr.begin ();
-       i != 0;
-       i = i->cont ())
+  for (const ACE_Message_Block *mb = cdr.begin ();
+       mb != 0;
+       mb = mb->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
-      buf += i->length ();
+      ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
+      buf += mb->length ();
     }
 
   // Set the <tagged_component>
