@@ -30,8 +30,8 @@ Tue Nov  4 16:23:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  #included the files where the contents of this file have been
 	  moved. This is necessary for backward compatibility. Lots of
 	  application code might still be using this.
-	
-	* tao/corbafwd.cpp (ACE_RCSID): 
+
+	* tao/corbafwd.cpp (ACE_RCSID):
 
 	  Emptied the contents since they are no longer needed. They are
 	  just around for backward compatibility.
@@ -41,7 +41,7 @@ Tue Nov  4 16:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
 
-	  Added missing includes to get them compiling. 
+	  Added missing includes to get them compiling.
 
 Tue Nov  4 20:40:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -466,9 +466,9 @@ Mon Nov  3 21:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Mon Nov  3 21:33:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/BiDir_GIOP/diffs/BiDirPolicy.diff:
-	  
-	  Added a new diff file for BiDirPolicy generated code. 
-	
+
+	  Added a new diff file for BiDirPolicy generated code.
+
 	* tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
 	* tao/BiDir_GIOP/diffs/BiDirPolicyC.h.diff:
 	* tao/BiDir_GIOP/diffs/BiDirPolicyC.i.diff:
@@ -480,11 +480,11 @@ Mon Nov  3 21:28:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/CurrentC.cpp: Cosmetic fix.
 
-	* tao/Domain.pidl: Fixed the comments in the pidl file. 
+	* tao/Domain.pidl: Fixed the comments in the pidl file.
 
 	* tao/DomainC.cpp:
 	* tao/DomainC.h:
-	* tao/DomainC.i: 
+	* tao/DomainC.i:
 	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
 	* tao/BiDir_GIOP/BiDirPolicyC.h:
 	* tao/BiDir_GIOP/BiDirPolicyC.i:
@@ -504,7 +504,7 @@ Mon Nov  3 21:28:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Messaging/TAO_ExtC.h:
 	* tao/Messaging/TAO_ExtC.i: Regenerated code to get the new IDL
 	  compiler change.
-	
+
 	* tao/Messaging/diffs/Messaging_No_Impl.diff:
 	* tao/Messaging/diffs/Messaging_RT_Policy.diff:
 	* tao/Messaging/diffs/Messaging_SyncScope_Policy.diff:
@@ -529,17 +529,17 @@ Mon Nov  3 19:42:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/CurrentC.cpp:
 	* tao/CurrentC.h:
 	* tao/CurrentC.i:
-          
-	  Regenerated the code for a start with the above macro. 
 
-	* tao/Current.pidl: 
+	  Regenerated the code for a start with the above macro.
+
+	* tao/Current.pidl:
 
 	  Fixed commment about including corbafwd.h, since it is not
-	  required. 
+	  required.
 
 Mon Nov  3 19:20:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/be/be_codegen.cpp:
 
 	  Fixed a typo from the last checkin.
 
@@ -703,14 +703,14 @@ Sun Nov  2 23:28:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Sun Nov  2 16:33:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/orbconf.h:
-	  
+
 	  Removed a couple of macros for namespaces that are no longer
 	  used and absolete. We can now use the keyword namespace
-	  directly. 
-	 
+	  directly.
+
 	  There are few more macros that can go. But that is the next
-	  step. 
-	
+	  step.
+
 	* tao/CONV_FRAMES.h:
 	* tao/Exception.cpp:
 	* tao/IOPS.h:
@@ -719,7 +719,7 @@ Sun Nov  2 16:33:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Messaging/MessagingS_T.h:
 
 	  Removal of the macro forced us to fudge these files where it was
-	  used. 
+	  used.
 
 Sun Nov  2 16:23:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -730,7 +730,7 @@ Sun Nov  2 16:23:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
 	* orbsvcs/orbsvcs/Notify/Method_Request.h:
 
-	  Added missing includes. 
+	  Added missing includes.
 
 Sun Nov  2 15:45:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -762,7 +762,7 @@ Sat Nov  1 14:58:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
 	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	  
+
 	  #included a bunch of OS_NS_sys_* files to get the right methods
 	  that are used from the ACE_OS namespace.
 
@@ -784,8 +784,8 @@ Sat Nov  1 11:30:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/examples/ORT/Makefile:
 	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
 
-	  Do not compile if corba_messaging is turned off. 
-	
+	  Do not compile if corba_messaging is turned off.
+
 Sat Nov  1 09:56:10 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Kokyu/Service.cpp: Added fixes to get rid
@@ -988,7 +988,7 @@ Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           ace/OS_NS_stdio.h, ace/OS_NS_time.h, ace/OS_NS_sys_stat.h,
           ace/OS_NS_fcntl.h, ace/OS_main.h, ace/OS_NS_netdb.h,
           ace/os_include/netinet/os_tcp.h, ace/Guard_T.h,
-          ace/OS_NS_strings.h, ace/Synch_Traits.h, ace/Null_Mutex.h, 
+          ace/OS_NS_strings.h, ace/Synch_Traits.h, ace/Null_Mutex.h,
 
 Fri Oct 31 14:42:09 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
 
