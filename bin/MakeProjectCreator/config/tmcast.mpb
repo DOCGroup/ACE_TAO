@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: acelib {
-  after        += TMCast
-  libs         += TMCast
-  requires     += exceptions threads
-}

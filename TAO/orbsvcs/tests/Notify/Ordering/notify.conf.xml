@@ -1,6 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./orbsvcs/tests/Notify/Ordering/notify.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!-- # $Id$ -->
- <static id="Notify_Default_Event_Manager_Objects_Factory" params="-MTDispatching -DispatchingThreads 1"/>
-</ACE_Svc_Conf>
