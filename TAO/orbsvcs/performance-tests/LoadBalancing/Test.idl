@@ -7,6 +7,7 @@ module Test
 {
   /// Use a timestamp to measure the roundtrip delay
   typedef unsigned long long Timestamp;
+  typedef long number;
 
   /// Measure roundtrip delay
   interface Roundtrip
@@ -18,7 +19,9 @@ module Test
      * without the need for a different reply handler for each
      * request.
      */
-    Timestamp test_method (in Timestamp send_time);
+    Timestamp test_method (in Timestamp send_time,
+                           in number cl_number,
+                           in number it_number);
 
     /// Shutdown the ORB
     void shutdown ();

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "stdio.h"
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -18,10 +19,11 @@ int niterations = 100;
 int do_dump_history = 0;
 int do_shutdown = 1;
 float rate = 0;
+int number;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:i:r:");
+  ACE_Get_Opt get_opts (argc, argv, "hxk:i:n:r:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -45,6 +47,10 @@ parse_args (int argc, char *argv[])
 
       case 'r':
         rate = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
+      case 'n':
+        number = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -115,7 +121,7 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           ACE_hrtime_t start = 0;
-          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start, number, j ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -127,24 +133,21 @@ main (int argc, char *argv[])
 
       const timespec ts = tv;
 
-      int result;
-      ulong prime_number;
-
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
+	  /*
           if (rate)
           {
             //(void) ACE_OS::nanosleep (&ts, 0);
-	    prime_number = ACE::is_prime (UINT_MAX, 2, UINT_MAX/2);
-	    prime_number = ACE::is_prime (UINT_MAX, 2, UINT_MAX/2);
-	    prime_number = ACE::is_prime (UINT_MAX, 2, UINT_MAX/2);
-	    prime_number = ACE::is_prime (10000, 2, 5000);
+	    //prime_number = ACE::is_prime (699999, 2, 349999);
 	  }
+	  */
 
-          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start, number,
+					 i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();

@@ -25,7 +25,9 @@ public:
   Roundtrip (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual Test::Timestamp test_method (Test::Timestamp send_time
+  virtual Test::Timestamp test_method (Test::Timestamp send_time,
+		                       Test::number cl_number,
+		                       Test::number it_number
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -36,6 +38,8 @@ private:
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
+
+  int count_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
