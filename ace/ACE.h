@@ -36,6 +36,12 @@ class ACE_Export ACE
   //     separate concerns.
   ACE_CLASS_IS_NAMESPACE (ACE);
 public:
+  // Initialize ACE library services.
+  static int init (void);
+
+  // Shut down ACE library services.
+  static int fini (void);
+
   // = ACE version information.
   static u_int major_version (void);
   // E.g., the "4" in ACE 4.3.19.
