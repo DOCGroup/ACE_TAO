@@ -1,3 +1,8 @@
+Tue Jun 16 20:29:32 1998  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Added some comments concerning MSVC 5.0 and SP3.
+	  Thanks to Bill Fulton for the excellent detective work.
+
 Tue Jun 16 16:08:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Timeprobe_T.h (class ACE_Timeprobe): Fixed copy constructor
