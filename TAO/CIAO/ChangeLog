@@ -1,3 +1,11 @@
+Mon May 24 21:18:07 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* examples/Hello/descriptors/run_test_remote.pl:
+	* examples/Hello/descriptors/run_test_default.pl:
+
+	  Updated the test script since Assembly_Deployer takes
+	  two more command line options.
+
 Mon May 24 19:44:32 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/ADD_Handler.*:
