@@ -1,3 +1,41 @@
+Tue Nov  4 21:08:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_argument.cpp:
+	  
+	  Removed the check for !dcl->imported () in the constructor
+	  before setting the bits. This was required to get the right
+	  Valuetype includes within the generated code. The inclusion is
+	  necessary for eventtype {} declarations to work. 
+	  
+	* TAO_IDL/be/be_home.cpp:
+
+	  Within the constructor narrow the AST_Component to a
+	  be_component and call seen_in_operation (), and ACE_SET_BITS for
+	  further processing. This is required to generate the
+	  Object_Argument_T.h includes in the stub cpp file.
+
+	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+	* TAO_IDL/be_include/be_visitor_arg_traits.h:
+
+	  Added two new methods visit_component () and visit_component_fwd
+	  () that delegates to the visit_interface () and
+	  visit_interface_fwd () call. 
+	
+	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
+
+	  Bunch of changes to these files. The changes include
+
+	  - Generating and initializing the right collocated factory
+	    function pointer  
+	  - Generating the right implementation for the setup_collocation
+	    () call 
+	  - Generating the right implementation for the _narrow () call.
+	  - Removal of the old _unchecked_narrow () generation.
+	  - Removal of the tao_QueryInterface () call
+	
+	  With the above changes CIAO examples seem to compile fine. 
+
 Tue Nov 04 19:36:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* COPYING: Modified to include CIAO in the Copyright disclaimer.
