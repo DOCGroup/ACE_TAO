@@ -29,15 +29,14 @@ endif # ! COMPSPEC
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
   ifndef TAO_IDL_PREPROCESSOR
-    #### Assume we have Bourne shell and sed.  Otherwise, the user
+    #### Assume we have Bourne shell and sed. Otherwise, the user
     #### should find out here that the TAO_IDL_PREPROCESSOR environment
     #### variable must be set explicitly!
-    ifneq ($(mingw32),1)
-      TAO_IDL_PREPROCESSOR := $(shell type $(CXX) | sed 's/.* is //')
+    ifeq ($(cygwin32),1)
+      TAO_IDL_PREPROCESSOR := $(shell cygpath -w $(shell type $(CXX) | sed 's/.* is //'))
     else
-      TAO_IDL_PREPROCESSOR := \
-	$(shell cygpath -w $(shell type $(CXX) | sed 's/.* is //'))
-    endif # !mingw32
+      TAO_IDL_PREPROCESSOR := $(shell type $(CXX) | sed 's/.* is //')
+    endif # cygwin32
   endif # ! TAO_IDL_PREPROCESSOR
 endif # COMSPEC
 
