@@ -22,14 +22,14 @@ ACE_RCSID(tao, IORC, "$Id$")
 
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
     return TAO_IOP::TAO_IOR_Manipulation::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0", ACE_TRY_ENV))
     return TAO_IOP::TAO_IOR_Manipulation::_nil ();
-  return TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (obj, env);
+  return TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
@@ -788,14 +788,14 @@ CORBA::ULong TAO_IOP::TAO_IOR_Manipulation::get_profile_count (
   return _tao_retval;
 }
 
-CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env);
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
 const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
