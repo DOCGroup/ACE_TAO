@@ -1,3 +1,9 @@
+Wed Jan 30 13:38:03 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.h (RefCountServantBase): Fixed
+	  a cut&paste error.  Thanks to Gautam H Thaker
+ 	  <gthaker@atl.lmco.com> for reporting this.
+
 Wed Jan 30 12:49:43 2002  Rob Ruff  <rruff@scires.com>
                           Craig Rodrigues  <crodrigu@bbn.com>
 
