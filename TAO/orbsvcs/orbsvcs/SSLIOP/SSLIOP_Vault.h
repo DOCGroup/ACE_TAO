@@ -22,6 +22,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/SSLIOPC.h"
+
+#include <openssl/opensslconf.h>
+
+
+/// Forward declarations for OpenSSL data structures.
+extern "C"
+{
+  typedef struct x509_st X509;
+
+#ifndef NO_RSA
+  typedef struct rsa_st RSA;
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+//   typedef struct dsa_st DSA;
+// #endif  /* !NO_DSA */
+}
+
 
 /**
  * @class TAO_SSLIOP_Vault
@@ -122,6 +141,24 @@ public:
   virtual Security::MechandOptionsList * get_supported_mechs (
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+protected:
+
+  /// Create an OpenSSL X509 structure using the provided
+  /// authentication data.
+  X509 * make_X509 (const SSLIOP::File &certificate);
+
+#ifndef NO_RSA
+  /// Create an OpenSSL RSA structure using the provided
+  /// authentication data.
+  RSA * make_RSA (const SSLIOP::File &key);
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+//   /// Create an OpenSSL DSA structure using the provided
+//   /// authentication data.
+//   DSA * make_DSA (const SSLIOP::File &key);
+// #endif  /* !NO_DSA */
 
 };
 

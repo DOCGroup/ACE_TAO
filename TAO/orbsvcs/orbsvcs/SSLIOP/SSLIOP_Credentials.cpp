@@ -6,14 +6,11 @@ ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Credentials,
            "$Id$")
 
-#include <openssl/asn1.h>
-#include <openssl/x509.h>
-
-#include "SSLIOP_X509.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Credentials.inl"
 #endif /* __ACE_INLINE__ */
+
 
 // SSLIOP does not support delegation, nor does it support detection
 // of replayed or misordered GIOP messages.
@@ -38,6 +35,40 @@ TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert)
 {
 }
 
+#ifndef NO_RSA
+TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert, RSA *rsa)
+  : accepting_options_supported_ (Security::Integrity
+                                  | Security::Confidentiality
+                                  | Security::EstablishTrustInTarget
+                                  | Security::NoDelegation),
+    accepting_options_required_ (Security::Integrity
+                                 | Security::Confidentiality
+                                 | Security::NoDelegation),
+    invocation_options_supported_ (accepting_options_supported_),
+    invocation_options_required_ (Security::NoDelegation),
+    x509_ (TAO_SSLIOP_X509::_duplicate (cert)),
+    rsa_ (TAO_SSLIOP_RSA::_duplicate (rsa))
+{
+}
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+// TAO_SSLIOP_Credentials::TAO_SSLIOP_Credentials (X509 *cert, DSA *dsa)
+//   : accepting_options_supported_ (Security::Integrity
+//                                   | Security::Confidentiality
+//                                   | Security::EstablishTrustInTarget
+//                                   | Security::NoDelegation),
+//     accepting_options_required_ (Security::Integrity
+//                                  | Security::Confidentiality
+//                                  | Security::NoDelegation),
+//     invocation_options_supported_ (accepting_options_supported_),
+//     invocation_options_required_ (Security::NoDelegation),
+//     x509_ (TAO_SSLIOP_X509::_duplicate (cert)),
+//     dsa_ (TAO_SSLIOP_DSA::_duplicate (dsa))
+// {
+// }
+// #endif  /* !NO_DSA */
+
 TAO_SSLIOP_Credentials::~TAO_SSLIOP_Credentials (void)
 {
 }
@@ -47,6 +78,41 @@ TAO_SSLIOP_Credentials::copy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SSLIOP_Credentials *c = 0;
+
+#ifndef NO_RSA
+  if (this->rsa_.in () != 0)
+    {
+      ACE_NEW_THROW_EX (c,
+                        TAO_SSLIOP_Credentials (this->x509_.in (),
+                                                this->rsa_.in ()),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (SecurityLevel2::Credentials::_nil ());
+
+      return c;
+    }
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+//   if (this->dsa_.in () != 0)
+//     {
+//       ACE_NEW_THROW_EX (c,
+//                         TAO_SSLIOP_Credentials (this->x509_.in (),
+//                                                 this->dsa_.in ()),
+//                         CORBA::NO_MEMORY (
+//                           CORBA::SystemException::_tao_minor_code (
+//                             TAO_DEFAULT_MINOR_CODE,
+//                             ENOMEM),
+//                           CORBA::COMPLETED_NO));
+//       ACE_CHECK_RETURN (SecurityLevel2::Credentials::_nil ());
+
+//       return c;
+//     }
+// #endif  /* !NO_DSA */
+
   ACE_NEW_THROW_EX (c,
                     TAO_SSLIOP_Credentials (this->x509_.in ()),
                     CORBA::NO_MEMORY (
