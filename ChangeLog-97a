@@ -1,12 +1,3 @@
-Mon Jul 07 17:01:47 1997    <irfan@TWOSTEP>
-
-	* ace/High_Res_Timer.cpp (get_registry_scale_factor): Rewrote some
- 	  of the code to make things more stable. We may need to rewrite
- 	  some parts so that the static variable is not initialized if we
- 	  are not using Timers. Currently, everyone using ACE on Win32
- 	  pays the price for running this code, irrespective of whether
-	  they are using Timers or not. 
-
 Thu Jul  3 20:36:19 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* performance-tests/Misc/childbirth_time.cpp: Changed the
