@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"ImplRepo_Service.exe" /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao\DynamicInterface" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib user32.lib advapi32.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"ImplRepo_Service.exe" /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao\DynamicInterface" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
@@ -89,11 +89,31 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\Adapter_Activator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Forwarder.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImplRepo.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\ImplRepo_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Iterator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Locator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\NT_Service.cpp
 # End Source File
 # Begin Source File
 
@@ -109,7 +129,27 @@ SOURCE=.\Repository.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Adapter_Activator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Forwarder.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImplRepo_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Iterator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Locator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\NT_Service.h
 # End Source File
 # Begin Source File
 

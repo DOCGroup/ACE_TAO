@@ -5,16 +5,32 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib "../../../../bin";
-
-require ACEutils;
 use Cwd;
 use Sys::Hostname;
+use File::Copy;
 
-$cwd = getcwd();
-$airplane_ior = "$cwd$DIR_SEPARATOR" . "airplane.ior";
-$nestea_ior = "$cwd$DIR_SEPARATOR" . "nestea.ior";
-$implrepo_ior = "$cwd$DIR_SEPARATOR" . "implrepo.ior";
+BEGIN {
+    ### We need to BEGIN this block so we make sure ACE_ROOT is set before
+    ### we use it in the use lib line
+    $cwd = getcwd();
+
+    $ACE_ROOT = $ENV{ACE_ROOT};
+
+    if (!$ACE_ROOT) {
+        chdir ('../../../../');
+        $ACE_ROOT = getcwd ();
+        chdir ($cwd);
+        print "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT\n";
+    }
+}
+
+use lib "$ACE_ROOT/bin";
+
+require ACEutils;
+
+$airplane_ior = $cwd.$DIR_SEPARATOR."airplane.ior";
+$nestea_ior = $cwd.$DIR_SEPARATOR."nestea.ior";
+$implrepo_ior = $cwd."/implrepo.ior";
 
 $refstyle = " -ORBobjrefstyle URL";
 
@@ -27,20 +43,14 @@ $endpoint = "-ORBEndpoint" . "$protocol" . "://" . "$host" . ":" . $port;
 
 ACE::checkForTarget($cwd);
 
-$implrepo_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
-                   $DIR_SEPARATOR."ImplRepo_Service".$EXE_EXT;
+$implrepo_server = "../../ImplRepo_Service/ImplRepo_Service".$EXE_EXT;
 
-$nt_implrepo_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".
-                      $DIR_SEPARATOR."NT_ImplRepo_Service".$EXE_EXT;
-
-if ($^O eq "MSWin32")
-{
-  $tao_imr = "tao_imr".$EXE_EXT;
+if ($^O eq "MSWin32") {
+    ### It is in the path
+    $tao_imr = "tao_imr".$EXE_EXT;
 }
-else
-{
-  $tao_imr = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
-             "ImplRepo_Service".$DIR_SEPARATOR."tao_imr".$EXE_EXT;
+else {
+    $tao_imr = "$ACE_ROOT/TAO/orbsvcs/ImplRepo_Service/tao_imr".$EXE_EXT;
 }
 
 $airplane_server = $EXEPREFIX."airplane_server".$EXE_EXT." ";
@@ -48,55 +58,74 @@ $airplane_client = $EXEPREFIX."airplane_client".$EXE_EXT." ";
 $nestea_server = $EXEPREFIX."nestea_server".$EXE_EXT." ";
 $nestea_client = $EXEPREFIX."nestea_client".$EXE_EXT." ";
 
-$airplane_path = $ENV{"ACE_ROOT"}.$DIR_SEPARATOR."TAO".$DIR_SEPARATOR.
-                 "orbsvcs".$DIR_SEPARATOR."tests".$DIR_SEPARATOR."ImplRepo".
-		 $DIR_SEPARATOR."airplane_server";
-$working_directory = $ENV{"ACE_ROOT"}.$DIR_SEPARATOR."TAO".$DIR_SEPARATOR.
-                     "orbsvcs".$DIR_SEPARATOR."tests".$DIR_SEPARATOR."ImplRepo";
+
+$airplane_path = "$ACE_ROOT/TAO/orbsvcs/tests/ImplRepo/"
+                 ."airplane_server".$EXE_EXT;
 
 # Make sure the files are gone, so we can wait on them.
 unlink $airplane_ior;
 unlink $nestea_ior;
 unlink $implrepo_ior;
 
+sub convert_slash($)
+{
+    $cmd = shift;
+
+    $cmd =~ s/\//\\/g;
+
+    return $cmd;
+}
+
 # The Tests
 
 sub airplane_test
 {
-  $SV = Process::Create ($airplane_server,
-                         "-o $airplane_ior $refstyle");
+    $SV = Process::Create ($airplane_server,
+                           "-o $airplane_ior $refstyle");
 
-  ACE::waitforfile ($airplane_ior);
+    ACE::waitforfile ($airplane_ior);
 
-  $status = system ($airplane_client." -k file://$airplane_ior");
+    $status = system ($airplane_client." -k file://$airplane_ior");
 
-  $SV->Kill (); $SV->Wait ();
+    $SV->Kill (); $SV->Wait ();
 }
 
-sub nt_service_ir_test
+sub nt_service_test
 {
-  system ($nt_implrepo_server." -i");
+    my $bin_implrepo_server = "$ACE_ROOT/bin/ImplRepo_Service.exe";
+    print "Copying ImplRepo_Service to bin\n";
+    copy ($implrepo_server, $bin_implrepo_server);
 
-  system ($nt_implrepo_server." -s");
+    print "Installing TAO Implementation Repository Service\n";
+    system (convert_slash ($bin_implrepo_server)." -c install");
 
-  system ($tao_imr." add airplane_server -c \"$airplane_path -ORBUseIMR 1\" -w $working_directory");
+    print "Starting TAO Implementation Repository Service\n";
+    system ("net start \"TAO Implementation Repository\"");
 
-  $SV = Process::Create ($airplane_server,
-                        "-o $airplane_ior -ORBUseIMR 1");
+    system ($tao_imr." add airplane_server -c \"$airplane_path -ORBUseIMR 1\" "
+            ."-w \"$ACE_ROOT/bin\"");
 
-  ACE::waitforfile ($airplane_ior);
+    $SV = Process::Create ($airplane_server,
+                           "-o $airplane_ior -ORBUseIMR 1");
 
-  system($airplane_client." -k file://$airplane_ior");
+    ACE::waitforfile ($airplane_ior);
 
-  system($tao_imr." shutdown airplane_server");
+    system ($airplane_client." -k file://$airplane_ior");
 
-  system($airplane_client." -k file://$airplane_ior");
+    system ($tao_imr." shutdown airplane_server");
 
-  system($tao_imr." shutdown airplane_server");
+    system ($airplane_client." -k file://$airplane_ior");
 
-  system ($nt_implrepo_server." -k");
+    system ($tao_imr." shutdown airplane_server");
 
-  system ($nt_implrepo_server." -r");
+    print "Stopping TAO Implementation Repository Service\n";
+    system ("net stop \"TAO Implementation Repository\"");
+
+    print "Removing TAO Implementation Repository Service\n";
+    system (convert_slash ($bin_implrepo_server)." -c remove");
+
+    print "Removing ImplRepo_Service from bin\n";
+    unlink ($bin_implrepo_server);
 }
 
 sub airplane_ir_test
@@ -137,7 +166,7 @@ sub nestea_test
 
 sub nestea_ir_test
 {
-  $IR = Process::Create ($implrepo_server," -o $implrepo_ior -d 0 $refstyle");
+  $IR = Process::Create ($implrepo_server, "-o $implrepo_ior -d 0 $refstyle");
 
   ACE::waitforfile ($implrepo_ior);
 
@@ -160,7 +189,7 @@ sub persistent_ir_test
 {
   unlink $backing_store;
  
-  $IR = Process::Create ($implrepo_server," $endpoint -o $implrepo_ior -p $backing_store -d 0");
+  $IR = Process::Create ($implrepo_server, "$endpoint -o $implrepo_ior -p $backing_store -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
@@ -253,8 +282,9 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "\n";
       print "-chorus <target>   -- Runs the test on Chorus target\n";
       print "test               -- Runs a specific test:\n";
-      print "                         airplane, airplane_ir, nt_service_ir, nestea,\n";
-      print "                         nestea_ir, both_ir, persistent_ir\n";
+      print "                         airplane, airplane_ir, nt_service, ",
+                                      "nestea, nestea_ir,\n";
+      print "                         both_ir, persistent_ir\n";
       exit;
     }
     if ($ARGV[$i] eq "airplane")
@@ -267,9 +297,9 @@ for ($i = 0; $i <= $#ARGV; $i++)
       airplane_ir_test ();
       exit;
     }
-    if ($ARGV[$i] eq "nt_service_ir")
+    if ($ARGV[$i] eq "nt_service")
     {
-      nt_service_ir_test ();
+      nt_service_test ();
       exit;
     }
     if ($ARGV[$i] eq "nestea")
@@ -296,4 +326,4 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-print "Specify airplane, airplane_ir, nestea, nestea_ir, or both_ir\n"
+both_ir ();

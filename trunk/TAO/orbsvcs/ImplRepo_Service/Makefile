@@ -15,20 +15,28 @@ endif
 LDLIBS = -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 PROG_SRCS = \
+        Adapter_Activator.cpp \
+        Forwarder.cpp \
         ImplRepo.cpp \
         ImplRepo_i.cpp \
-        Repository.cpp \
+        Iterator.cpp \
+        Locator.cpp \
         Options.cpp \
+        Repository.cpp \
 	tao_imr.cpp \
 	tao_imr_i.cpp
 
 SRC = $(PROG_SRCS)
 
 IMPLREPO_SVR_OBJS = \
+        Adapter_Activator.o \
+        Forwarder.o \
 	ImplRepo.o \
 	ImplRepo_i.o \
-	Repository.o \
-	Options.o
+        Iterator.o \
+        Locator.o \
+        Options.o \
+	Repository.o
 
 tao_imr_OBJS = \
 	tao_imr.o \
