@@ -116,8 +116,7 @@ test_functionality (ACE_Timer_Queue *tq)
   // timer that is cancelled).  
   ACE_ASSERT (tq->expire () == 1);
   ACE_ASSERT (tq->is_empty () != 0);
-
-
+  
   ACE_ASSERT (tq->schedule (&eh, (const void *) 4, 
 			    tq->gettimeofday ()) != -1);
   ACE_ASSERT (tq->schedule (&eh, (const void *) 5, 
@@ -127,6 +126,9 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (tq->cancel (&eh, 0) == 2);
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (tq->expire () == 0);
+
+  // This tests to make sure that <handle_close> is called when there
+  // is only one timer of the type in the queue
   ACE_ASSERT (tq->schedule (&eh, (const void *) 007, 
 			    tq->gettimeofday ()) != -1);
   ACE_ASSERT (tq->expire () == 1);
@@ -141,7 +143,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (tq->cancel (timer_id) == 1);
   ACE_ASSERT (tq->cancel (&eh) == 1);
   ACE_ASSERT (tq->expire () == 0);
-  ACE_ASSERT (eh.close_count_ == 3);
+  ACE_ASSERT (eh.close_count_ == 4);
 }
 
 static void
