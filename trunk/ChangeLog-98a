@@ -1,6 +1,15 @@
+Sat Nov 29 21:31:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Proactor.cpp (~ACE_Proactor_Timer_Handler): Removed explicit
+	  call to thr_mgr_.close().
+
+	* ace/Thread_Manager.cpp (close_singleton):  Only reset
+	  exit_on_wait status if we are responsible for deleting the
+	  global thread manager.
+
 Sat Nov 29 15:15:04 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* ace/IPC_SAP.cpp: 
+	* ace/IPC_SAP.cpp:
 	  Removed warning for functions not returning a value on SGI, it
 	  seems that the flow changed and the last return was reached
 	  sometimes, hence the ACE_NOTREACHED macro is no longer needed.
