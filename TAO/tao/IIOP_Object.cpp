@@ -12,6 +12,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/IIOP_Object.i"
+#endif /* ! __ACE_INLINE__ */
+
 int
 IIOP::Profile::set (const char *h,
                     const CORBA::UShort p,
@@ -207,7 +211,7 @@ IIOP_Object::hash (CORBA::ULong max,
 }
 
 int operator==(const TAO_opaque& rhs,
-	       const TAO_opaque& lhs)
+               const TAO_opaque& lhs)
 {
   if (rhs.length () != lhs.length ())
     return 0;
