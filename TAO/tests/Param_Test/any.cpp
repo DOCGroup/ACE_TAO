@@ -41,6 +41,7 @@ Test_Any::opname (void) const
   return this->opname_;
 }
 
+#if 0 /* any_table isn't currently used */
 static const CORBA::TypeCode_ptr any_table [] =
 {
   // primitive parameterless typecodes
@@ -53,6 +54,7 @@ static const CORBA::TypeCode_ptr any_table [] =
   Param_Test::_tc_StructSeq,
   Param_Test::_tc_Nested_Struct
 };
+#endif /* any_table isn't currently used */
 
 int
 Test_Any::init_parameters (Param_Test_ptr objref,
