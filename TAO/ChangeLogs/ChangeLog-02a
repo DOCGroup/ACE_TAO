@@ -1,3 +1,19 @@
+Wed May 24 17:53:12 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_PushConsumer.h:
+ 	* orbsvcs/orbsvcs/Notify/Notify_PushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_PushSupplier.h:
+ 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
+ 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
+ 	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
+	  Removed these helper files.
+	  They have been moved to orbsvcs/tests/Notify/lib
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+	  Removed the helper files from the projects file.
+
 Wed May 24 15:32:49 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/Notify/Filter/Filter.h:
