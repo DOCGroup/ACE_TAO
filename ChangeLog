@@ -1,3 +1,15 @@
+Mon Jan 19 18:49:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/msvc_mpc_auto_compile.pl: 
+
+	  This is a new auto_compile script for MSVC with MPC. This just
+	  build DLL's for both debug and release versions. The old file
+	  msvc_auto_compile.pl is age old and suffers from severe brain
+	  hemorrage which is hard to rectify with simple band aids and
+	  stuff. The old file simply needs to go. This new script will be
+	  used completely for DLL builds after testing in our daily
+	  builds. 
+
 Tue Jan 20 14:11:48 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/em3vcp.mpd:
