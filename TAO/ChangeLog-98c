@@ -1,3 +1,16 @@
+Sat Mar 14 00:36:30 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_property): 
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h (PropertyNamesIterator): 
+
+	* orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp (CosProperty_Hash_Value): 
+
+	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h: 
+	The tao_idl compiler has been made to generate Any at some places
+	where it was generating Any_var. The implementaion has been
+	changed according to this.
+
 Fri Mar 13 10:34:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation.cpp: For return types that are
