@@ -3400,8 +3400,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
-  int continue_op = 1;
-
 #     if defined (ACE_WIN32)
   if (result != WAIT_OBJECT_0)
     {
@@ -3412,7 +3410,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
           break;
         default:
           error = ::GetLastError ();
-          continue_op = 0;
           break;
         }
       result = -1;
@@ -3427,7 +3424,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
           break;
         default:
           error = errno;
-          continue_op = 0;
           break;
         }
       result = -1;
@@ -3442,16 +3438,15 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
           break;
         default:
           error = errno;
-          continue_op = 0;
           break;
         }
       result = -1;
     }
 #     endif /* ACE_WIN32 || VXWORKS */
 #     if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
-  else if (external_mutex->type_ == USYNC_PROCESS)
+  if (external_mutex->type_ == USYNC_PROCESS)
     {
-      if (last_waiter && continue_op)
+      if (last_waiter)
         // This call atomically signals the <waiters_done_> event and
         // waits until it can acquire the mutex.  This is important to
         // prevent unfairness.
@@ -3470,7 +3465,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       /* NOTREACHED */
     }
 #     endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
-  else if (last_waiter && continue_op)
+  else if (last_waiter)
     // Release the signaler/broadcaster if we're the last waiter.
 #     if defined (ACE_WIN32)
     ACE_OS::event_signal (&cv->waiters_done_);
@@ -3556,22 +3551,23 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   ACE_OS::thread_mutex_unlock (&cv->waiters_lock_);
 
-  switch (result)
+  if (result != WAIT_OBJECT_0)
     {
-    case WAIT_TIMEOUT:
-      error = ETIME;
+      switch (result)
+        {
+        case WAIT_TIMEOUT:
+          error = ETIME;
+          break;
+        default:
+          error = ::GetLastError ();
+          break;
+        }
       result = -1;
-      // Fall thru purposely
-    case WAIT_OBJECT_0:
-      if (last_waiter)
-        // Release the signaler/broadcaster if we're the last waiter.
-        ACE_OS::event_signal (&cv->waiters_done_);
-      break;
-    default:
-      error = ::GetLastError ();
-      result = -1;
-      break;
     }
+
+  if (last_waiter)
+    // Release the signaler/broadcaster if we're the last waiter.
+    ACE_OS::event_signal (&cv->waiters_done_);
 
   // We must always regain the <external_mutex>, even when errors
   // occur because that's the guarantee that we give to our callers.
