@@ -482,8 +482,8 @@ ACE_Connector<SVH, PR_CO_2>::connect_i (SVH *&sh,
         {
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
-          // Make sure to close down the Channel to avoid descriptor
-          // leaks.
+          // Make sure to close down the service handler to avoid
+          // handle leaks.
           if (sh_copy == 0)
             {
               if (sh)
