@@ -119,7 +119,7 @@ TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property & /*
 // @@ Need to throw not-supported exception here
 void
 TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &/* the_spec */,
-                                    const char  */* fp_name */,
+                                    const char  * /* fp_name */,
                                     const CORBA::Any &/* fp_settings */,
                                     CORBA::Environment &/* ACE_TRY_ENV */)
 {
@@ -2334,11 +2334,11 @@ int
 TAO_FlowSpec_Entry::set_direction (char *direction)
 {
   if (ACE_OS::strcasecmp (direction,"in") == 0)
-    this->direction_ = IN;
+    this->direction_ = DIR_IN;
   else if (ACE_OS::strcasecmp (direction,"out") == 0)
-    this->direction_ = OUT;
+    this->direction_ = DIR_OUT;
   else if (ACE_OS::strcasecmp (direction,"inout") == 0)
-    this->direction_ = INOUT;
+    this->direction_ = DIR_INOUT;
   return 0;
 }
 
@@ -2361,15 +2361,17 @@ TAO_FlowSpec_Entry::parse_address (char *address)
   char addr[BUFSIZ];
   ACE_OS::sprintf (addr,"%s:%s",address_tokenizer[0],address_tokenizer[1]);
   if (ACE_OS::strncasecmp (this->protocol_,"AAL",3) == 0)
-    ACE_NEW_RETURN (this->address_,
-                    ACE_ATM_Addr (addr),
-                    -1);
+    ACE_DEBUG ((LM_DEBUG,"ATM support not added yet\n"));
+//      ACE_NEW_RETURN (this->address_,
+//                      ACE_ATM_Addr (addr),
+//                      -1);
   else // we assume everything else is INET addr.
     {
       ACE_NEW_RETURN (this->address_,
                       ACE_INET_Addr (addr),
                       -1);
     }
+  return 0;
 }
 
 int
