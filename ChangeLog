@@ -1,11 +1,11 @@
 Wed Aug 11 08:32:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-     * ace/Process.cpp:
-       Added OpenVMS version of ACE_Process::spawn().
-       
-     * include/makeinclude/platform-openvms.GNU
-       Removed mathlibrary from required libs.
-       Added dummy code to circumvent 'touch' problem with OpenVMS make port.
+        * ace/Process.cpp:
+          Added OpenVMS version of ACE_Process::spawn().
+
+        * include/makeinclude/platform-openvms.GNU:
+          Removed mathlibrary from required libs.
+          Added dummy code to circumvent 'touch' problem with OpenVMS make port.
 
 Wed Aug 11 08:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
