@@ -1,8 +1,13 @@
+Fri Sep  3 19:30:18 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/Global_Macros.h:
+          LynxOS no longer needs special macro handling.
+        
 Fri Sep  3 19:13:24 2004  Olli Savia  <ops@iki.fi>
 
         * apps/drwho/File_Manager.cpp:
           LynxOS 3.x needs explicit template instantiation.
-        
+
 Fri Sep  3 10:44:27 2004  Steve Huston  <shuston@riverace.com>
 
         * ace/Process_Manager.cpp (append_proc): If the process_table_ needs
