@@ -1,4 +1,6 @@
-Tue Feb 24 14:58:45 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Tue Feb 24 17:45:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/orbobj.h: Removed the unnecessary = 0 on the new run method.
 
 	* tao/orbobj.cpp (run): Added a new run() method that takes an
  	ACE_Time_Value & rather than an ACE_Time_Value * so that we don't
