@@ -6,7 +6,7 @@
 #include "IR_Handler.h"
 #include "RUK_Handler.h"
 #include "Utils.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 #include "Property_Handler.h"
 
@@ -27,16 +27,20 @@ void IR_Handler::process_ImplementationRequirement
         {
         }
       else if
-        (process_string (this->iter_, node_name, "resourcePort", 
-                         ir.resourcePort));
+        (CIAO::Config_Handler::Utils::process_string 
+             (this->iter_, node_name, "resourcePort", 
+              ir.resourcePort));
       else if
-        (process_string (this->iter_, node_name, "componentPort", 
-                         ir.componentPort));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "componentPort", 
+               ir.componentPort));
       else if
-        (process_string (this->iter_, node_name, "resourceType", 
-                         ir.resourceType));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "resourceType", 
+               ir.resourceType));
       else if
-        (process_string (this->iter_, node_name, "name", ir.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "name", ir.name));
       else if
         (process_sequence_common<Deployment::Property>
            (this->doc_, this->iter_, node,

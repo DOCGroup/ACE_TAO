@@ -10,7 +10,7 @@
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "CompPkgDesc_Handler.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 #include <iostream>
 
@@ -130,7 +130,8 @@ void CAD_Handler::process_instance (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", sid.name));
+        (CIAO::Config_Handler::Utils::process_string 
+                 (iter, node_name, "name", sid.name));
       else if
         (process_sequence_remote<Deployment::ComponentPackageDescription, 
                                  CompPkgDesc_Handler>
@@ -179,7 +180,8 @@ void CAD_Handler::process_connection (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string(iter, node_name, "name", acd.name));
+        (CIAO::Config_Handler::Utils::process_string
+               (iter, node_name, "name", acd.name));
       else if
         (process_sequence_common<Deployment::Requirement>
            (node->getOwnerDocument(), iter, node,
@@ -225,7 +227,8 @@ void CAD_Handler::process_spe (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "portName", spe.portName));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "portName", spe.portName));
       else if
         (process_reference(node, node_name, "instance",
                            spe.instanceRef,
@@ -255,7 +258,8 @@ void CAD_Handler::process_spr (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "propertyName", spr.propertyName));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "propertyName", spr.propertyName));
       else if
         (process_reference(node, node_name, "instance",
                            spr.instanceRef,
@@ -285,9 +289,11 @@ void CAD_Handler::process_property(DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", apm.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "name", apm.name));
       else if
-        (process_string (iter, node_name, "externalName", apm.externalName));
+        (CIAO::Config_Handler::Utils::process_string 
+            (iter, node_name, "externalName", apm.externalName));
       else if
         (process_sequence_local<Deployment::SubcomponentPropertyReference>
            (node->getOwnerDocument(), iter, node,

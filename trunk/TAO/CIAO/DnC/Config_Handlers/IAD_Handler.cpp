@@ -7,7 +7,7 @@
 #include "Requirement_Handler.h"
 #include "NIA_Handler.h"
 #include "IAD_Handler.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 #include <iostream>
 
@@ -28,12 +28,15 @@ void IAD_Handler::process_ImplementationArtifactDescription
         {
         }
       else if
-        (process_string (this->iter_, node_name, "label", iad.label));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "label", iad.label));
       else if
-        (process_string (this->iter_, node_name, "UUID", iad.UUID));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "UUID", iad.UUID));
       else if
-        (process_string_seq (this->iter_, node_name, "location", 
-                             iad.location));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+              (this->iter_, node_name, "location", 
+               iad.location));
       else if
         (process_sequence_common<Deployment::Property>
            (this->doc_, this->iter_, node,

@@ -5,7 +5,7 @@
 #include "ace/Log_Msg.h"
 #include "IAD_Handler.h"
 #include "NIA_Handler.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 
 BEGIN_DEPLOYMENT_NAMESPACE
@@ -24,7 +24,8 @@ void NIA_Handler::process_NamedImplementationArtifact
         {
         }
       else if
-        (process_string (this->iter_, node_name, "name", nia.name));
+        (CIAO::Config_Handler::Utils::process_string 
+               (this->iter_, node_name, "name", nia.name));
       else if
         (process_element_remote<Deployment::ImplementationArtifactDescription,
                                 IAD_Handler>

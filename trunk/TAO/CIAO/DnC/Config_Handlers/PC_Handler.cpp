@@ -9,7 +9,7 @@
 #include "CompPkgDesc_Handler.h"
 #include "PC_Handler.h"
 #include "Process_Element.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
@@ -26,10 +26,12 @@ void PC_Handler::process_PackageConfiguration
                     (ACE_TEXT ("Deployment:PackageConfiguration")))
         {
         }
-      else if (process_string (this->iter_, node_name, "label", pc.label))
+      else if (CIAO::Config_Handler::Utils::process_string 
+                  (this->iter_, node_name, "label", pc.label))
         {
         }
-      else if (process_string (this->iter_, node_name, "UUID", pc.UUID))
+      else if (CIAO::Config_Handler::Utils::process_string 
+                  (this->iter_, node_name, "UUID", pc.UUID))
         {
         }
       else if (process_sequence_remote
