@@ -76,7 +76,7 @@ List_Node::List_Node (char *k, int len)
     index (0)
 {
   char *ptr = new char[(option[ALLCHARS] ? len : option.get_max_keysig_size ()) + 1];
-  char_set  = ptr;
+  keysig  = ptr;
   k[len] = '\0';             // Null terminate KEY to separate it from REST.
 
   // Lower case if STRCASECMP option is enabled.
@@ -93,7 +93,7 @@ List_Node::List_Node (char *k, int len)
       int i;
 
       // Iterate thru the list of key_positions, initializing
-      // occurrences table and char_set (via char * pointer ptr).
+      // occurrences table and keysig (via char * pointer ptr).
 
       for (option.reset (); (i = option.get ()) != EOS; )
         {
@@ -108,7 +108,7 @@ List_Node::List_Node (char *k, int len)
 
       // Didn't get any hits and user doesn't want to consider the
       // keylength, so there are essentially no usable hash positions!
-      if (ptr == char_set && option[NOLENGTH])
+      if (ptr == keysig && option[NOLENGTH])
         ACE_ERROR ((LM_ERROR,
                     "Can't hash keyword %s with chosen key positions.\n%a",
                     key,
@@ -116,7 +116,7 @@ List_Node::List_Node (char *k, int len)
     }
   *ptr = '\0';                  // Terminate this bastard....
   // Sort the KEY_SET items alphabetically.
-  set_sort (char_set, ptr - char_set);
+  set_sort (keysig, ptr - keysig);
 }
 
 #endif /* ACE_HAS_GPERF */

@@ -229,55 +229,61 @@ Key_List::read_keys (void)
       // Hash table this number of times larger than keyword number.
       int table_size = (list_len = total_keys) * TABLE_MULTIPLE;
 
-      // Note: we don't use new, because that invokes a custom operator new.
-      int malloc_size = ACE_POW (table_size) * sizeof(List_Node*);
-      if (malloc_size == 0) malloc_size = 1;
-      List_Node **table = (List_Node**)malloc(malloc_size);
-      if (table == NULL)
-	abort ();
+      int new_size = ACE_POW (table_size) * sizeof (List_Node *);
+      if (new_size == 0) 
+        new_size = 1;
+      List_Node **table = (List_Node **) new char[new_size];
+      ACE_ASSERT (table != 0);
 
-      // Make large hash table for efficiency.
-      Hash_Table found_link (table, table_size);
+      // We need to use a block here because otherwise the
+      // Hash_Table's destructor was being called AFTER the memory is
+      // deleted...
+      {
+        // Make large hash table for efficiency.
+        Hash_Table ht (table, table_size);
 
-      // Test whether there are any links and also set the maximum length
-      //  an identifier in the keyword list.
+        // Test whether there are any links and also set the maximum length
+        //  an identifier in the keyword list.
 
-      for (temp = head; temp; temp = temp->next)
-        {
-          List_Node *ptr = found_link (temp, option[NOLENGTH]);
+        for (temp = head; temp; temp = temp->next)
+          {
+            List_Node *ptr = ht.find (temp, option[NOLENGTH]);
 
-          // Check for links.  We deal with these by building an
-          // equivalence class of all duplicate values (i.e., links)
-          // so that only 1 keyword is representative of the entire
-          // collection.  This *greatly* simplifies processing during
-          // later stages of the program.
+            // Check for links.  We deal with these by building an
+            // equivalence class of all duplicate values (i.e., links)
+            // so that only 1 keyword is representative of the entire
+            // collection.  This *greatly* simplifies processing
+            // during later stages of the program.
 
-          if (ptr)
-            {
-              total_duplicates++;
-              list_len--;
-              trail->next = temp->next;
-              temp->link  = ptr->link;
-              ptr->link   = temp;
+            if (ptr == 0)
+              trail = temp;
+            else
+              {
+                total_duplicates++;
+                list_len--;
+                trail->next = temp->next;
+                temp->link = ptr->link;
+                ptr->link = temp;
 
-              // Complain if user hasn't enabled the duplicate option.
-              if (!option[DUP] || option[DEBUG])
-                ACE_ERROR ((LM_ERROR, "Key link: \"%s\" = \"%s\", with key set \"%s\".\n",
-                              temp->key, ptr->key, temp->char_set));
-            }
-          else
-            trail = temp;
+                // Complain if user hasn't enabled the duplicate
+                // option.
+                if (!option[DUP] || option[DEBUG])
+                  ACE_ERROR ((LM_ERROR,
+                              "Key link: \"%s\" = \"%s\", with key set \"%s\".\n",
+                              temp->key,
+                              ptr->key,
+                              temp->keysig));
+              }
 
-          // Update minimum and maximum keyword length, if needed.
-	  if (max_key_len < temp->length)
-	    max_key_len = temp->length;
-	  if (min_key_len > temp->length)
-	    min_key_len = temp->length;
-        }
+            // Update minimum and maximum keyword length, if needed.
+            if (max_key_len < temp->length)
+              max_key_len = temp->length;
+            if (min_key_len > temp->length)
+              min_key_len = temp->length;
+          }
+      }
 
-#if !defined (LARGE_STACK_ARRAYS)
-      free (table);
-#endif /* LARGE_STACK_ARRAYS */
+      delete [] table;
 
       // Exit program if links exists and option[DUP] not set, since
       // we can't continue.
@@ -287,13 +293,13 @@ Key_List::read_keys (void)
             {
               if (!option[MUTE])
                 ACE_ERROR ((LM_ERROR,
-                            "%d input keys have identical hash values, examine output carefully...\n",
+                            "%d input keysigs have identical hash values, examine output carefully...\n",
                             total_duplicates,
                             1));
             }
           else
             ACE_ERROR ((LM_ERROR,
-                        "%d input keys have identical hash values,\ntry different key positions or use option -D.\n%a",
+                        "%d input keysigs have identical hash values,\ntry different key positions or use option -D.\n%a",
                         total_duplicates,
                         1));
         }
@@ -362,7 +368,7 @@ Key_List::get_occurrence (List_Node *ptr)
 {
   int value = 0;
 
-  for (char *temp = ptr->char_set; *temp; temp++)
+  for (char *temp = ptr->keysig; *temp; temp++)
     value += Vectors::occurrences[*temp];
 
   return value;
@@ -374,7 +380,7 @@ Key_List::get_occurrence (List_Node *ptr)
 inline void
 Key_List::set_determined (List_Node *ptr)
 {
-  for (char *temp = ptr->char_set; *temp; temp++)
+  for (char *temp = ptr->keysig; *temp; temp++)
     determined[*temp] = 1;
 }
 
@@ -385,7 +391,7 @@ Key_List::already_determined (List_Node *ptr)
 {
   int is_determined = 1;
 
-  for (char *temp = ptr->char_set; is_determined && *temp; temp++)
+  for (char *temp = ptr->keysig; is_determined && *temp; temp++)
     is_determined = determined[*temp];
 
   return is_determined;
@@ -497,13 +503,8 @@ Key_List::output_switch (void)
     {
       // Keep track of the longest string we'll need!
       const char *s = "charmap[*str] == *resword->%s && !strncasecmp (str + 1, resword->%s + 1, len - 1)";
-#if defined (__GNUG__)
-      comp_buffer =
-        (char *) alloca (strlen (s) + 2 * strlen (option.get_key_name ()) + 1);
-#else
       comp_buffer =
         new char [strlen (s) + 2 * strlen (option.get_key_name ()) + 1];
-#endif /* __GNUG__ */
       if (option[COMP])
         sprintf (comp_buffer, "%s == *resword->%s && !%s (str + 1, resword->%s + 1, len - 1)",
                  option[STRCASECMP] ? "charmap[*str]" : "*str", option.get_key_name (),
@@ -575,10 +576,9 @@ Key_List::output_switch (void)
             {
               printf ("                case %*d:", field_width, temp->hash_value - lowest_case_value);
               if (option[DEBUG])
-                ACE_DEBUG ((LM_DEBUG,
-                            " /* hash value = %4d, keyword = \"%s\" */",
-                            temp->hash_value,
-                            temp->key));
+                printf (" /* hash value = %4d, keyword = \"%s\" */",
+                        temp->hash_value,
+                        temp->key);
               putchar ('\n');
 
               // Handle `natural links,' i.e., those that occur statically.
@@ -762,10 +762,9 @@ Key_List::output_keyword_table (void)
             {
               printf ("%s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
               if (option[DEBUG])
-                ACE_DEBUG ((LM_DEBUG,
-                            " /* hash value = %d, index = %d */",
-                            temp->hash_value,
-                            temp->index));
+                printf (" /* hash value = %d, index = %d */",
+                        temp->hash_value,
+                        temp->index);
               putchar ('\n');
               continue;
             }
@@ -773,10 +772,9 @@ Key_List::output_keyword_table (void)
 
       printf ("      %s\"%s\", %s%s", l_brace, temp->key, temp->rest, r_brace);
       if (option[DEBUG])
-        ACE_DEBUG ((LM_DEBUG,
-                    " /* hash value = %d, index = %d */",
-                    temp->hash_value,
-                    temp->index));
+        printf (" /* hash value = %d, index = %d */",
+                temp->hash_value,
+                temp->index);
       putchar ('\n');
 
       // Deal with links specially.
@@ -786,10 +784,9 @@ Key_List::output_keyword_table (void)
             links->index = ++index;
             printf ("      %s\"%s\", %s%s", l_brace, links->key, links->rest, r_brace);
             if (option[DEBUG])
-              ACE_DEBUG ((LM_DEBUG,
-                          " /* hash value = %d, index = %d */",
-                          links->hash_value,
-                          links->index));
+              printf (" /* hash value = %d, index = %d */",
+                      links->hash_value,
+                      links->index);
             putchar ('\n');
           }
     }
@@ -933,25 +930,19 @@ Key_List::output_lookup_array (void)
     {
       const int DEFAULT_VALUE = -1;
 
-      struct duplicate_entry
+      struct Duplicate_Entry
         {
           int hash_value;       // Hash value for this particular duplicate set.
           int index;            // Index into the main keyword storage array.
           int count;            // Number of consecutive duplicates at this index.
         };
 
-#if defined (LARGE_STACK_ARRAYS)
-      duplicate_entry duplicates[total_duplicates];
-      int lookup_array[max_hash_value + 1];
-#else
-      duplicate_entry *duplicates = (duplicate_entry *)
-	malloc (total_duplicates * sizeof (duplicate_entry));
-      int *lookup_array = (int *) malloc (sizeof (int) * (max_hash_value + 1));
-      if (duplicates == NULL || lookup_array == NULL)
+      Duplicate_Entry *duplicates = new Duplicate_Entry[total_duplicates];
+      int *lookup_array = new int[max_hash_value + 1];
+      if (duplicates == 0 || lookup_array == 0)
 	abort();
-#endif /* LARGE_STACK_ARRAYS */
 
-      duplicate_entry *dup_ptr = duplicates;
+      Duplicate_Entry *dup_ptr = duplicates;
       int *lookup_ptr = lookup_array + max_hash_value + 1;
 
       while (lookup_ptr > lookup_array)
@@ -963,31 +954,30 @@ Key_List::output_lookup_array (void)
           lookup_array[hash_value] = temp->index;
           if (option[DEBUG])
             ACE_DEBUG ((LM_DEBUG,
-                        "keyword = %s, index = %d\n",
+                        "keyword = %s, index = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
                         temp->key,
-                        temp->index));
+                        temp->index,
+                        temp->hash_value,
+                        lookup_array[hash_value]));
           if (!temp->link &&
               (!temp->next || hash_value != temp->next->hash_value))
             continue;
 
-#if defined (LARGE_STACK_ARRAYS)
-          *dup_ptr = (duplicate_entry) { hash_value, temp->index, 1 };
-#else
-	  duplicate_entry _dups;
-	  _dups.hash_value = hash_value;
-	  _dups.index = temp->index;
-	  _dups.count = 1;
-	  *dup_ptr = _dups;
-#endif /* LARGE_STACK_ARRAYS */
+	  Duplicate_Entry dups;
+	  dups.hash_value = hash_value;
+	  dups.index = temp->index;
+	  dups.count = 1;
+	  *dup_ptr = dups;
 
           for (List_Node *ptr = temp->link; ptr; ptr = ptr->link)
             {
               dup_ptr->count++;
               if (option[DEBUG])
                 ACE_DEBUG ((LM_DEBUG,
-                            "static linked keyword = %s, index = %d\n",
+                            "static linked keyword = %s, index = %d, hash_value = %d\n",
                             ptr->key,
-                            ptr->index));
+                            ptr->index,
+                            ptr->hash_value));
             }
 
           while (temp->next && hash_value == temp->next->hash_value)
@@ -996,18 +986,20 @@ Key_List::output_lookup_array (void)
               dup_ptr->count++;
               if (option[DEBUG])
                 ACE_DEBUG ((LM_DEBUG,
-                            "dynamic linked keyword = %s, index = %d\n",
+                            "static linked keyword = %s, index = %d, hash_value = %d\n",
                             temp->key,
-                            temp->index));
+                            temp->index,
+                            temp->hash_value));
 
               for (List_Node *ptr = temp->link; ptr; ptr = ptr->link)
                 {
                   dup_ptr->count++;
                   if (option[DEBUG])
                     ACE_DEBUG ((LM_DEBUG,
-                                "static linked keyword = %s, index = %d\n",
+                                "static linked keyword = %s, index = %d, hash_value = %d\n",
                                 ptr->key,
-                                ptr->index));
+                                ptr->index,
+                                ptr->hash_value));
                 }
             }
           dup_ptr++;
@@ -1049,7 +1041,7 @@ Key_List::output_lookup_array (void)
                   }
 
               // We are in *big* trouble if this happens!
-              assert (i >= 0);
+              assert (i != 0);
             }
         }
 
@@ -1089,10 +1081,9 @@ Key_List::output_lookup_array (void)
                 ++column % (max_column - 1) ? "" : "\n      ");
 
       printf ("\n%s%s};\n\n", indent, indent);
-#if !defined (LARGE_STACK_ARRAYS)
+
       free (duplicates);
       free (lookup_array);
-#endif /* LARGE_STACK_ARRAYS */
     }
 }
 
@@ -1377,27 +1368,50 @@ Key_List::dump ()
 {
   int field_width = option.get_max_keysig_size ();
 
-  fprintf (stderr, "\nList contents are:\n(hash value, key length, index, %*s, keyword):\n",
-           field_width, "char_set");
+  fprintf (stderr,
+           "\nList contents are:\n(hash value, key length, index, %*s, keyword, duplicates):\n",
+           field_width,
+           "keysig");
 
   for (List_Node *ptr = head; ptr; ptr = ptr->next)
-    fprintf (stderr, "%11d,%11d,%6d, %*s, %s\n",
-             ptr->hash_value, ptr->length, ptr->index,
-             field_width, ptr->char_set, ptr->key);
+    {
+      fprintf (stderr,
+               "%11d,%11d,%6d, %*s, %s",
+               ptr->hash_value,
+               ptr->length,
+               ptr->index,
+               field_width,
+               ptr->keysig,
+               ptr->key);
+
+      List_Node *dup = ptr->link;
+      if (dup)
+        {
+          for (;
+               dup != 0;
+               dup = dup->link)
+            fprintf (stderr,
+                     " %s",
+                     dup->key);
+        }
+      fprintf (stderr,
+               "\n");
+    }
 }
 
 // Simple-minded constructor action here...
 
 Key_List::Key_List (void)
+  : total_keys (1),
+    max_key_len (INT_MIN),
+    min_key_len (INT_MAX),
+    return_type (default_return_type),
+    array_type (default_array_type),
+    struct_tag (default_array_type),
+    head (0),
+    total_duplicates (0),
+    additional_code (0)
 {
-  total_keys       = 1;
-  max_key_len      = INT_MIN;
-  min_key_len      = INT_MAX;
-  return_type      = default_return_type;
-  array_type       = struct_tag  = default_array_type;
-  head             = 0;
-  total_duplicates = 0;
-  additional_code  = 0;
 }
 
 // Returns the length of entire key list.

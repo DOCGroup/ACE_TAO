@@ -45,7 +45,7 @@ public:
 
   ~Hash_Table (void);
 
-  List_Node *operator () (List_Node *item, int ignore_length);
+  List_Node *find (List_Node *item, int ignore_length);
 
 private:
   List_Node **table;

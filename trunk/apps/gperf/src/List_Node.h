@@ -49,7 +49,7 @@ public:
   char *rest;              
   // Additional information for building hash function. 
 
-  char *char_set;          
+  char *keysig;          
   // Set of characters to hash, specified by user. 
 
   int length;            

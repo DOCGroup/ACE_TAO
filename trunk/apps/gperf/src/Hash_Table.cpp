@@ -54,15 +54,26 @@ Hash_Table::~Hash_Table (void)
     {
       int field_width = option.get_max_keysig_size ();
 
-      fprintf (stderr, "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
-               "location, %*s, keyword\n", size, size * (int) sizeof *table, collisions, field_width, "keysig");
+      fprintf (stderr,
+               "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
+               "location, %*s, keyword\n",
+               size,
+               size * (int) sizeof *table,
+               collisions,
+               field_width,
+               "keysig");
 
       for (int i = size - 1; i >= 0; i--)
         if (table[i])
-          fprintf (stderr, "%8d, %*s, %s\n",
-                   i, field_width, table[i]->char_set, table[i]->key);
+          fprintf (stderr,
+                   "%8d, %*s, %s\n",
+                   i,
+                   field_width,
+                   table[i]->keysig,
+                   table[i]->key);
 
-      fprintf (stderr, "\nend dumping hash table\n\n");
+      fprintf (stderr,
+               "\nend dumping hash table\n\n");
     }
 }
 
@@ -71,21 +82,27 @@ Hash_Table::~Hash_Table (void)
 // double hashing.
 
 List_Node *
-Hash_Table::operator() (List_Node *item, int ignore_length)
+Hash_Table::find (List_Node *item, int ignore_length)
 {
-  unsigned hash_val  = ACE::hash_pjw (item->char_set);
-  int      probe     = hash_val & size - 1;
-  int      increment = (hash_val ^ item->length | 1) & size - 1;
+  u_int hash_val = ACE::hash_pjw (item->keysig);
+  int probe = hash_val & size - 1;
+  int increment = (hash_val ^ item->length | 1) & size - 1;
 
   while (table[probe]
-         && (strcmp (table[probe]->char_set, item->char_set)
+         && (strcmp (table[probe]->keysig, item->keysig) != 0
              || (!ignore_length && table[probe]->length != item->length)))
     {
       collisions++;
       probe = probe + increment & size - 1;
     }
 
-  return table[probe] ? table[probe] : (table[probe] = item, NIL (List_Node));
+  if (table[probe])
+    return table[probe];
+  else
+    {
+      table[probe] = item;
+      return NIL (List_Node);
+    }
 }
 
 #endif /* ACE_HAS_GPERF */

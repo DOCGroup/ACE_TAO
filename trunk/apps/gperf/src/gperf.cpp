@@ -39,18 +39,6 @@ main (int argc, char *argv[])
   struct tm *tm;
   time_t clock;
 
-#if defined (RLIMIT_STACK) && defined (LARGE_STACK_ARRAYS)
-  // Get rid of any avoidable limit on stack size.
-  {
-    struct rlimit rlim;
-
-    // Set the stack limit huge so that alloca does not fail.
-    ACE_OS::getrlimit (RLIMIT_STACK, &rlim);
-    rlim.rlim_cur = rlim.rlim_max;
-    ACE_OS::setrlimit (RLIMIT_STACK, &rlim);
-  }
-#endif /* RLIMIT_STACK && LARGE_STACK_ARRAYS */
-
   // Sets the Options.
   option (argc, argv);
 

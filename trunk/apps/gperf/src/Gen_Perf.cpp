@@ -165,7 +165,7 @@ Gen_Perf::hash (List_Node *key_node)
 {                             
   int sum = option[NOLENGTH] ? 0 : key_node->length;
 
-  for (char *ptr = key_node->char_set; *ptr; ptr++)
+  for (char *ptr = key_node->keysig; *ptr; ptr++)
       sum += Vectors::asso_values[*ptr];
   
   return key_node->hash_value = sum;
@@ -247,8 +247,8 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
                 curr->key,
                 curr->hash_value));
   sort_set (union_set,
-            compute_disjoint_union (prior->char_set,
-                                    curr->char_set,
+            compute_disjoint_union (prior->keysig,
+                                    curr->keysig,
                                     union_set));
 
   // Try changing some values, if change doesn't alter other values
@@ -292,15 +292,9 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
 int
 Gen_Perf::generate (void)
 {
-#if defined (LARGE_STACK_ARRAYS)
-  STORAGE_TYPE buffer[max_hash_value + 1];
-#else
-  // Note: we don't use new, because that invokes a custom operator new.
-  STORAGE_TYPE *buffer
-    = (STORAGE_TYPE*) malloc (sizeof(STORAGE_TYPE) * (max_hash_value + 1));
+  STORAGE_TYPE *buffer = new STORAGE_TYPE[max_hash_value + 1];
   if (buffer == NULL)
     abort ();
-#endif /* LARGE_STACK_ARRAYS */
 
   this->char_search.init (buffer, max_hash_value + 1);
   
@@ -338,9 +332,7 @@ Gen_Perf::generate (void)
         { 
           ACE_ERROR ((LM_ERROR, "\nInternal error, duplicate value %d:\n"
                         "try options -D or -r, or use new key positions.\n\n", hash (curr)));
-#if !defined (LARGE_STACK_ARRAYS)
 	  free (buffer);
-#endif /* LARGE_STACK_ARRAYS */
           return 1;
         }
 
@@ -350,9 +342,7 @@ Gen_Perf::generate (void)
 
   this->key_list.sort ();
   this->key_list.output ();
-#if !defined (LARGE_STACK_ARRAYS)
   free (buffer);
-#endif /* LARGE_STACK_ARRAYS */
   return 0;
 }
 

@@ -171,12 +171,5 @@ private:
 // Global option coordinator for the entire program.
 extern Options option;
 
-// If we're using GCC then we'll stack-allocate some large arrays.  If
-// this causes problems simple disable this #define.
-#if defined (__GNUC__)
-#define LARGE_STACK_ARRAYS
-#endif /* LARGE_STACK_ARRAYS */
-
 #endif /* ACE_HAS_GPERF */
-
 #endif /* OPTIONS_H */
