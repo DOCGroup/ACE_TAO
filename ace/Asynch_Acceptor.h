@@ -150,6 +150,8 @@ protected:
 
   /// Return the listen handle.
   ACE_HANDLE handle (void) const;
+  /// Set the listen handle.
+  void handle (ACE_HANDLE h);
 
   /// This parses the address from read buffer.
   void parse_address (const ACE_Asynch_Accept::Result &result,
