@@ -1788,6 +1788,7 @@ ACE::set_handle_limit (int new_limit)
 
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
   struct rlimit rl;
+
   ACE_OS::memset ((void *) &rl, 0, sizeof rl);
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   max_limit = rl.rlim_max;
@@ -1801,13 +1802,13 @@ ACE::set_handle_limit (int new_limit)
       errno = EINVAL;
       return -1;
     }
-  if (new_limit > cur_limit)
+  else if (new_limit > cur_limit)
     {
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
       rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
 #else
-      // Must be return EINVAL errno.
+      // Must return EINVAL errno.
       ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_LACKS_RLIMIT */
     }
@@ -1817,7 +1818,7 @@ ACE::set_handle_limit (int new_limit)
       rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
 #else
-      // We give a chance to platforms with not RLIMIT to work.
+      // We give a chance to platforms without RLIMIT to work.
       ACE_NOTSUP_RETURN (0);
 #endif /* ACE_LACKS_RLIMIT */
     }
