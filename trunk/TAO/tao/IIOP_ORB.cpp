@@ -40,7 +40,9 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
 
       // @@ Is BUFSIZ the right size here?
       char buf [BUFSIZ];
-      TAO_OutputCDR cdr (buf, sizeof buf, TAO_ENCAP_BYTE_ORDER);
+      TAO_OutputCDR cdr (buf,
+                         sizeof buf,
+                         TAO_ENCAP_BYTE_ORDER);
 
       // support limited oref ACE_OS::strcmp.
       (void) ACE_OS::memset (buf, 0, BUFSIZ);
@@ -58,11 +60,15 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       CORBA::String cp;
       size_t len = cdr.length ();
 
-      CORBA::String string = CORBA::string_alloc (sizeof ior_prefix + 2 * len);
+      CORBA::String string;
+      ACE_ALLOCATOR_RETURN (string,
+                            CORBA::string_alloc (sizeof ior_prefix + 2 * len),
+                            0);
 
-      ACE_OS::strcpy ((char *) string, ior_prefix);
+      ACE_OS::strcpy ((char *) string,
+                      ior_prefix);
 
-      const char* bytes = cdr.buffer ();
+      const char *bytes = cdr.buffer ();
 
       for (cp = (CORBA::String) ACE_OS::strchr ((char *) string, ':') + 1;
            len--;
@@ -82,15 +88,15 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       //
       // This only works for IIOP objrefs.  If we're handed an objref
       // that's not an IIOP objref, fail -- application must use an
-      // ORB that's configured differently.
-      // @@ Is this true??!! FRED
+      // ORB that's configured differently.  @@ Is this true? FRED
 
       if (obj->_stubobj () == 0)
         return CORBA::string_copy ((CORBA::String) TAO_IIOP_Profile::prefix ());
-        // @@ This should be some sort of default prefix, not hardcoded to IIOP!! FRED
+        // @@ This should be some sort of default prefix, not
+        // hardcoded to IIOP!! FRED
 
       CORBA::String buf = 
-                obj->_stubobj ()->profile_in_use ()->to_string (env);
+        obj->_stubobj ()->profile_in_use ()->to_string (env);
       return buf;
     }
 }
@@ -106,7 +112,6 @@ ior_string_to_object (const char *str,
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
-
   ACE_Message_Block mb (ACE_OS::strlen ((char *) str) / 2
                         + 1 + CDR::MAX_ALIGNMENT);
 
@@ -155,6 +160,9 @@ ior_string_to_object (const char *str,
 }
 
 // Destringify URL style IIOP objref.
+
+// @@ Fred, can you please put this into a class as a static method
+// rather than having it floating around as a stand-alone function?
 static CORBA::Object_ptr
 iiop_string_to_object (const char *string,
                        CORBA::Environment &env)
@@ -170,14 +178,20 @@ iiop_string_to_object (const char *string,
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
 
-  TAO_IIOP_Profile *pfile = new TAO_IIOP_Profile (string, env);
+  TAO_IIOP_Profile *pfile;
+
+  ACE_NEW_RETURN (pfile,
+                  TAO_IIOP_Profile (string,
+                                    env),
+                  CORBA::Object::_nil ());
   // pfile refcount == 1
 
   // Now make the STUB_Object ...
   STUB_Object *data;
-    ACE_NEW_RETURN (data, 
-                    STUB_Object ((char *) 0, pfile), 
-                    CORBA::Object::_nil ());
+  ACE_NEW_RETURN (data, 
+                  STUB_Object ((char *) 0,
+                               pfile), 
+                  CORBA::Object::_nil ());
   // pfile refcount == 2
 
   pfile->_decr_refcnt ();
@@ -188,7 +202,12 @@ iiop_string_to_object (const char *string,
     TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (data);
 
   // This will increase the ref_count on data by one
-  CORBA_Object *obj = new CORBA_Object (data, servant, servant != 0);
+  CORBA_Object *obj;
+  ACE_NEW_RETURN (obj,
+                  CORBA_Object (data,
+                                servant,
+                                servant != 0),
+                  CORBA::Object::_nil ());
 
   // Set the ref_count on data to 1, which is correct, because only
   // obj has now a reference to it.
@@ -197,9 +216,8 @@ iiop_string_to_object (const char *string,
   return obj;
 }
 
-// Destringify arbitrary objrefs.
-// called from resolve_name_service () with an IOR
-//             multicast_to_service () with and
+// Destringify arbitrary objrefs.  called from resolve_name_service ()
+// with an IOR multicast_to_service ().
 CORBA::Object_ptr
 IIOP_ORB::string_to_object (const char *str,
                             CORBA::Environment &env)
@@ -221,7 +239,7 @@ IIOP_ORB::string_to_object (const char *str,
                             sizeof ior_prefix - 1) == 0)
     obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
 
-  // Return the object
+  // Return the object.
   return obj;
 }
 
@@ -235,10 +253,13 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 
       TAO_Profile *pfile = sobj->profile_in_use ();
 
-      // Make sure users passed in a valid STUB_Object otherwise, 
-      // we don't know what to do next.
+      // Make sure users passed in a valid STUB_Object otherwise, we
+      // don't know what to do next.
       if (pfile == 0)
         {
+          // @@ Fred, can you please either keep these debugging
+          // statements in or remove them, but please don't leave the
+          // #if 0's around!
 #if 0
           ACE_ERROR ((LM_ERROR,
 		      "%p: Passing IIOP ORB and non-IIOP object\n",
@@ -266,23 +287,21 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
           return 0;
         }
 
-      // Check if the object requested is a collocated object.
+      // Check if the object requested is a collocated object. 
       // @@ FRED - can we make this more generic!!
       TAO_POA *poa = 0;
       if (pfile->tag () == TAO_IOP_TAG_INTERNET_IOP)
         {
           ACE_INET_Addr &addr =
-                 ACE_dynamic_cast (ACE_INET_Addr &,
-                                   pfile->object_addr());
+            ACE_dynamic_cast (ACE_INET_Addr &,
+                              pfile->object_addr());
     
           TAO_POA *poa = TAO_ORB_Core_instance ()->
             get_collocated_poa (addr);
         }
       else
-        {
-          ACE_ERROR ((LM_ERROR,
-		        "get_collocated_poa NOT Supported for NON-IIOP profile!\n"));
-        }
+        ACE_ERROR ((LM_ERROR,
+                    "get_collocated_poa NOT Supported for NON-IIOP profile!\n"));
 
       if (poa != 0)
         {
