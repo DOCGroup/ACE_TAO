@@ -1,19 +1,15 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     FaultTolerance
-//
-// = FILENAME
-//     FT_ORBInitializer.h
-//
-// = AUTHOR
-//     Bala Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     FT_ORBInitializer.h
+ *
+ *  $Id$
+ *
+ *  @author  Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_FT_ORB_INITIALIZER_H
 #define TAO_FT_ORB_INITIALIZER_H
@@ -56,10 +52,10 @@ public:
 
 private:
 
+  /// Register FTCORBA policy factories.
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info
          ACE_ENV_ARG_DECL);
-  ///< Register FTCORBA policy factories.
 
 };
 
