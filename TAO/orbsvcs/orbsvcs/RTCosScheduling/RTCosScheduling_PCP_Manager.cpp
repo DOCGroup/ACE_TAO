@@ -283,7 +283,7 @@ PCP_Manager::PCP_Manager(CosSchedulingLockList *locks,
   current_(current)
 {
   /// Get the thread ID
-  this->threadID_ = (ACE_OS::getpid() << 16) + ACE_Thread::self();
+  this->threadID_ = (ACE_OS::getpid() << 16) + int(ACE_Thread::self());
 }
 
 void
