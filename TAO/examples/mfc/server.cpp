@@ -13,6 +13,8 @@
 #include "serverDoc.h"
 #include "serverView.h"
 
+#include "ace/ACE.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
