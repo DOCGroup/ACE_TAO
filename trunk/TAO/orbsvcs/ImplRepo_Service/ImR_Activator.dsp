@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_Svc_Utils.lib TAO_IORTable.lib TAO_PortableServer.lib TAO_Strategies.lib TAO.lib ACEXML_Parser.lib ACEXML.lib ace.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ACEXML\parser\parser" /libpath:"..\..\..\ACEXML\common" /libpath:"..\..\..\ace" /libpath:"..\..\..\TAO\Strategies"
+# ADD LINK32 TAO_Svc_Utils.lib TAO_IORTable.lib TAO_PortableServer.lib TAO_Strategies.lib TAO.lib ACEXML_Parser.lib ACEXML.lib ace.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ACEXML\parser\parser" /libpath:"..\..\..\ACEXML\common" /libpath:"..\..\..\ace" /libpath:"..\..\TAO\Strategies"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ImR_Activator - Win32 Debug"

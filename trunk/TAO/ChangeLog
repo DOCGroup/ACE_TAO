@@ -1,3 +1,10 @@
+Wed Jun 25 16:05:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp: Changed incorrect
+	  path to TAO Strategies library in the release build.  Thanks to
+	  Bruce MacDonald <brucemac@netcomuk.co.uk> for submitting the bug
+	  report and the fix.
+
 Wed Jun 25 16:00:02 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
@@ -52,6 +59,7 @@ Wed Jun 25 12:38:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
           Updated the file list for this project.
 
+>>>>>>> 1.2011
 Wed Jun 25 12:14:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
@@ -408,10 +416,10 @@ Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jun 25 09:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-        * tao/TAO_Static.dsp:
-        * tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
-          files into the project. Thanks to Tommy Andreasen
-          <Tommy.Andreasen@Radiometer.dk> for providing the patches.
+	* tao/TAO_Static.dsp:
+	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
+	  files into the project. Thanks to Tommy Andreasen
+	  <Tommy.Andreasen@Radiometer.dk> for providing the patches. 
 
 Tue Jun 25 11:26:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -431,27 +439,27 @@ Tue Jun 24 18:40:08 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/Basic/run_test.pl:
           Added build option for RT Notification.
 
-        * orbsvcs/tests/Notify/Basic/notify.rt.conf:
-          Conf file for RT Notification.
+	* orbsvcs/tests/Notify/Basic/notify.rt.conf:
+	  Configuration file for RT Notification.
 
 Tue June 24 16:26:06 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-        * orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
-          set for B endpoint when initializing forward flows. If set use
-          that address to create acceptors. This case happens when no
-          address is specified for the A endpoint.
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: Check if the peer address is
+	  set for B endpoint when initializing forward flows. If set use
+	  that address to create acceptors. This case happens when no
+	  address is specified for the A endpoint.
 
-        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
-        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
-          "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
-          "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
-          The additonal Receiver_Address field allows the user to specify
-          the receiver address that will be used to receive the
-          data. This addition helps to solve the problem arising on a
-          multihomed host where the acceptor was by default accepting on
-          all interfaces. This was not acceptable in some cases. Hence,
-          by specifying the sender and receiver addresses explicitly only
-          the required interfaces on a multihomed host are used.
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: Changed the flow spec entry from
+	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address" to
+	  "Flowname\Direction\Format\Flow_Prtocol\Sender_Address\Receiver_Address".
+	  The additional Receiver_Address field allows the user to specify
+	  the receiver address that will be used to receive the
+	  data. This addition helps to solve the problem arising on a
+	  multi-homed host where the acceptor was by default accepting on
+	  all interfaces. This was not acceptable in some cases. Hence,
+	  by specifying the sender and receiver addresses explicitly only
+	  the required interfaces on a multi-homed host are used.
 
         * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
         * orbsvcs/orbsvcs/AV/UDP.cpp:Made changes to create sockets on the
@@ -515,7 +523,7 @@ Tue Jun 24 11:34:53 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/examples/Notify/Lanes/Lanes.mpc:
         * orbsvcs/examples/Notify/Lanes/Makefile:
 
-          Conf files, run script and project files.
+	  Configuration files, run script and project files.
 
         * orbsvcs/examples/Notify/Lanes/README:
 
@@ -609,12 +617,12 @@ Mon Jun 23 12:37:48 2003  Chad Elliott  <elliott_c@ociweb.com>
           Avoid an infinite loop during 'autostart'.  Once a server list
           is found to be of zero length, then we leave the while loop.  This
           would also happen if a 'list' command was issued and there were
-          more than 10 servers registerd with the ImR.
+          more than 10 servers registered with the ImR.
 
 Mon Jun 23 12:38:54 2003  Rich Seibel <seibel_r@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
-          Buzilla bug #1499 fix applied.
+          Bugzilla bug #1499 fix applied.
 
         * orbsvcs/orbsvcs/Makefile.CosNaming:
         * orbsvcs/orbsvcs/CosNaming.mpc:
@@ -652,7 +660,7 @@ Mon Jun 23 12:38:54 2003  Rich Seibel <seibel_r@ociweb.com>
 
         * orbsvcs/tests/Simple_Naming/run_test.pl:
         * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
-          Moved the flat file persistance test to a separate run test
+          Moved the flat file persistence test to a separate run test
           so that it could be disabled on MIN CORBA.  The Redundant
           Naming Service is build on the same code base as Flat File
           and uses a Servant Activator which is not available in
@@ -691,9 +699,9 @@ Sat Jun 21 19:54:47 2003  Don Hinton  <dhinton@dresystems.com>
         * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
         * tao/RTPortableServer/RT_POA.cpp:
         * tao/RTPortableServer/RT_POA.h:
-          Adjusted location of ifdef so that it's after orbconf.h
+          Adjusted location of #ifdef so that it's after orbconf.h
           which is where ACE_HAS_CORBA_MESSAGING gets set if you user
-          doesn't specify it explicitely.
+          doesn't specify it explicitly.
 
 Sat Jun 21 09:34:14 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
@@ -779,7 +787,7 @@ Fri Jun 20 14:50:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tao/RTCORBA/RT_ORB_Loader.h:
           Adjusted location of ifdef so that it's after orbconf.h
           which is where ACE_HAS_CORBA_MESSAGING gets set if you user
-          doesn't specify it explicitely.
+          doesn't specify it explicitly.
 
 Fri Jun 20 11:26:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -879,7 +887,7 @@ Fri Jun 20 04:22:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * tao/RTPortableServer/RT_Policy_Validator.h:
         * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
         * tao/RTPortableServer/RT_Servant_Dispatcher.h:
-          Ifdef'd out all the code if TAO_HAS_CORBA_MESSAGING = 0, since
+          #Ifdef'd out all the code if TAO_HAS_CORBA_MESSAGING = 0, since
           RTCORBA depends on messaging.
 
 Thu Jun 19 20:45:06 2003  Pradeep Gore  <pradeep@oomworks.com>
@@ -1147,7 +1155,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
         * orbsvcs/orbsvcs/Notify/Method_Request_Event.inl:
 
-          Moved the <Method_Request_Event> to its own seperate file.
+          Moved the <Method_Request_Event> to its own separate file.
 
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h:
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.cpp:
@@ -1164,13 +1172,13 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
           There are 3 different approaches to memory management during
           event dispatching:
           <TAO_NS_Method_Request_Dispatch> - This class increments the
-          reference count on the event copy and on the proxysupplier.
+          reference count on the event copy and on the ProxySupplier.
 
           <TAO_NS_Method_Request_Dispatch_No_Copy> - The event is not
-          copied and the refcount on the proxysupplier is not incremented.
+          copied and the refcount on the ProxySupplier is not incremented.
 
          <TAO_NS_Method_Request_Dispatch_T> - The refcount on the event is
-          incremented but not for the proxysupplier.
+          incremented but not for the ProxySupplier.
 
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.*:
           Removed this file. The Method_request_Dispatch accepts a flag
@@ -1236,7 +1244,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.inl:
 
-          Modifed <push> method to include ACE_ENV parameter.
+          Modified <push> method to include ACE_ENV parameter.
           Defined the TAO_NS_ProxySupplier_Guard class.
 
         * orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
@@ -1250,7 +1258,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
         * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
 
-          Modifed the <execute> method to include ACE_ENV parameter.
+          Modified the <execute> method to include ACE_ENV parameter.
 
         * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
         * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.cpp:
@@ -1261,16 +1269,16 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/orbsvcs/Notify/Worker_Task.h:
 
-          Modifed the <execute> method to include ACE_ENV parameter.
+          Modified the <execute> method to include ACE_ENV parameter.
 
         * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
         * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
 
-          Modifed the <push> methods to include ACE_ENV parameter.
+          Modified the <push> methods to include ACE_ENV parameter.
 
         * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
 
-          Modifed the <push> methods to include ACE_ENV parameter.
+          Modified the <push> methods to include ACE_ENV parameter.
 
         * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
@@ -1437,7 +1445,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp:
         * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp:
 
-          Removed as they are obsoleted by the new implementaion.
+          Removed as they are obsoleted by the new implementation.
 
         * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
 
@@ -1446,7 +1454,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
         * orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
 
-          - Changes to accomodate base class modifications.
+          - Changes to accommodate base class modifications.
 
           - Note that the periodic consumer receives "warmup events" from
           the periodic supplier . This helps us avoid huge spikes in
@@ -1465,9 +1473,9 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
         * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
 
-          - Changes to accomodate base class modifications.
+          - Changes to accommodate base class modifications.
 
-          - The supplier can be asked to run for a fixed ammount of time
+          - The supplier can be asked to run for a fixed amount of time
           regardless of if it could send the number of events that we
           asked it to send.
 
@@ -1486,7 +1494,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
 
-          By default, always run ORB.run() in a seperate thread that has the ORB sched
+          By default, always run ORB.run() in a separate thread that has the ORB SCHED
           policies set on it.
 
         * orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp:
@@ -1586,7 +1594,7 @@ Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated/run_test.pl:
 
           Tests the throughput obtained when the supplier, CosNotification
-          and consumer are colocated in the same process space.
+          and consumer are collocated in the same process space.
 
         * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/colocated.conf:
         * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl:
