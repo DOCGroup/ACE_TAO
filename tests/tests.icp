@@ -242,6 +242,10 @@ subproject Object_Manager_Test icc "Object_Manager_Test.icc", ics "Object_Manage
 {
 }
 
+subproject Obstack_Test icc "Obstack_Test.icc", ics "Obstack_Test.ics"
+{
+}
+
 subproject OrdMultiSet_Test icc "OrdMultiSet_Test.icc", ics "OrdMultiSet_Test.ics"
 {
 }
