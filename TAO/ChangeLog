@@ -1,3 +1,10 @@
+Wed Jan  7 12:16:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/tao.mpc:
+
+          Added taodefaults to the inheritance list to get the default
+          values that used to be coming from the tao_output base project.
+
 Wed Jan  7 11:43:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/tao.mpc:
@@ -52,75 +59,75 @@ Tue Jan  6 20:43:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jan  6 16:36:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Two_Objects/run_test.pl:
+        * tests/Two_Objects/run_test.pl:
 
-	  Reduced the timeout and the number of iterations.
+          Reduced the timeout and the number of iterations.
 
 Tue Jan  6 15:03:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* tao/CONV_FRAME.pidl:
-	* tao/Policy.pidl:
-	* tao/UShortSeq.pidl:
-	* tao/orb.idl:
-	* tao/Messaging/Messaging_No_Impl.pidl:
-	* tao/RTPortableServer/RTPortableServer.pidl:
+        * tao/CONV_FRAME.pidl:
+        * tao/Policy.pidl:
+        * tao/UShortSeq.pidl:
+        * tao/orb.idl:
+        * tao/Messaging/Messaging_No_Impl.pidl:
+        * tao/RTPortableServer/RTPortableServer.pidl:
 
-	  Fixed name redefinition bugs and recoded usage of deprecated
-	  anonymous sequences.
+          Fixed name redefinition bugs and recoded usage of deprecated
+          anonymous sequences.
 
 Tue Jan  6 12:04:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Strategies/SCIOP_Factory.cpp:
+        * tao/Strategies/SCIOP_Factory.cpp:
 
-	  SCIOP requires explicit endpoint specification. It shouldn't get
-	  loaded automatically as it is getting done now.
+          SCIOP requires explicit endpoint specification. It shouldn't get
+          loaded automatically as it is getting done now.
 
-	* tao/Object.pidl:
+        * tao/Object.pidl:
 
-	  Another legacy file that is getting removed.
+          Another legacy file that is getting removed.
 
 Tue Jan  6 11:14:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IFR_Client/Interface.pidl:
+        * tao/IFR_Client/Interface.pidl:
 
-	  Removed this file form the repo since it is not used and
-	  woefully out of date.
+          Removed this file form the repo since it is not used and
+          woefully out of date.
 
 Tue Jan  6 11:13:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Messaging.pidl:
+        * tao/Messaging/Messaging.pidl:
 
-	  Removed the #ifdef of NO_VALUE, since that condition is totally
-	  unnecessary now.
+          Removed the #ifdef of NO_VALUE, since that condition is totally
+          unnecessary now.
 
 Mon Jan  5 19:09:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/default_resource.cpp:
+        * tao/default_resource.cpp:
 
-	  Used a different constructor which has an option for restarting
-	  the reactor event loop when EINTR occurs. In TAO, we pass a
-	  non-0 value to restart the reactor event loop if EINTR
-	  occurs. Thanks to Markus Stenberg
-	  <markus.stenberg@conformiq.com> for motivating this. This fixes
-	  [BUGID 1649].
+          Used a different constructor which has an option for restarting
+          the reactor event loop when EINTR occurs. In TAO, we pass a
+          non-0 value to restart the reactor event loop if EINTR
+          occurs. Thanks to Markus Stenberg
+          <markus.stenberg@conformiq.com> for motivating this. This fixes
+          [BUGID 1649].
 
 Mon Jan  5 18:37:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
 
-	  Cosmetic fix.
+          Cosmetic fix.
 
 Mon Jan  5 15:33:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Policy/Makefile:
+        * tests/Smart_Proxies/Policy/Makefile:
 
-	  Added another library for linking.
+          Added another library for linking.
 
 Mon Jan  5 14:14:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
 
-	  Applied patches from Dale Wilson for warnings in  g++ builds.
+          Applied patches from Dale Wilson for warnings in  g++ builds.
 
 Mon Jan  5 13:54:09 2004  Chad Elliott  <elliott_c@ociweb.com>
 
