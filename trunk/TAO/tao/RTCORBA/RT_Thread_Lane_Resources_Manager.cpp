@@ -15,10 +15,6 @@ ACE_RCSID (RTCORBA,
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.i"
-#endif /* ! __ACE_INLINE__ */
-
 TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
     default_lane_resources_ (0),

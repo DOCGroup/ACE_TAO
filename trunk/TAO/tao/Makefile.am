@@ -1711,26 +1711,11 @@ nobase_include_HEADERS += \
   RTCORBA/Thread_Pool.h \
   RTCORBA/rtcorba_export.h \
   RTCORBA/rtcorba_typedefs.h \
-  RTCORBA/Continuous_Priority_Mapping.i \
-  RTCORBA/Direct_Priority_Mapping.i \
-  RTCORBA/Linear_Network_Priority_Mapping.i \
-  RTCORBA/Linear_Priority_Mapping.i \
-  RTCORBA/Multi_Priority_Mapping.i \
-  RTCORBA/Network_Priority_Mapping.i \
   RTCORBA/Network_Priority_Mapping_Manager.i \
-  RTCORBA/Priority_Mapping.i \
   RTCORBA/Priority_Mapping_Manager.i \
   RTCORBA/RTCORBAC.inl \
-  RTCORBA/RT_Current.i \
-  RTCORBA/RT_Invocation_Endpoint_Selectors.i \
-  RTCORBA/RT_Mutex.i \
-  RTCORBA/RT_ORB.i \
-  RTCORBA/RT_Policy_i.i \
-  RTCORBA/RT_Protocols_Hooks.i \
-  RTCORBA/RT_Thread_Lane_Resources_Manager.i \
   RTCORBA/RT_Transport_Descriptor.inl \
   RTCORBA/RT_Transport_Descriptor_Property.inl \
-  RTCORBA/Thread_Pool.i \
   RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBA_include.pidl
 

@@ -69,10 +69,6 @@ private:
   int max_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "Continuous_Priority_Mapping.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"

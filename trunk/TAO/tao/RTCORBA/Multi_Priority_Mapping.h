@@ -87,10 +87,6 @@ private:
   // The range
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/RTCORBA/Multi_Priority_Mapping.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #endif /* TAO_MULTI_PRIORITY_MAPPING_H */
