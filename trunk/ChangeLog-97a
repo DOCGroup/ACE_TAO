@@ -1,3 +1,11 @@
+Tue Jun 17 04:58:38 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
+
+	* ace/Timer_Queue_T.h: Added include file "ace/Synch_T.h" to avoid
+ 	  compilation errors in SC 4.1.  We didn't notice this because
+ 	  most of us have moved to SC 4.2.  Don't know why this didn't
+ 	  cause any problem in SC 4.2.  Thanks to Jack Erickson
+ 	  <jack@cibc.com> for reporting this bug.
+
 Mon Jun 16 22:25:18 1997  Steve Huston <shuston@riverace.com>
 
 	* ace/ACE.cpp: Fixed conditional compiles to compile the 
