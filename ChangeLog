@@ -1,3 +1,34 @@
+Fri Aug 27 08:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Integrated ORTrefactor_2 branch into main. Previously the PortableServer
+        library was dependent on IORInterceptor, ObjRefTemplate and Valuetype,
+        this dependency has been removed. PortableServer doesn't use these libs
+        anymore, but IORInterceptor, ObjRefTemplate and Valuetype are now
+        dependent on PortableServer. This will reduce the size of corba servers
+        which don't use IORInterceptor, ObjRefTemplate and Valuetype.
+
+        This are the needed MPC changes. Without MPC this would have been a
+        hard job to change all makefiles by hand.
+
+        Fri Aug 20 13:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * bin/MakeProjectCreator/config/portableserver.mpb:
+                * tao/PortableServer.mpc:
+                  PortableServer is not dependent on ValueType anymore, so removed it
+                  as base project
+
+        Fri Aug 20 11:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * bin/MakeProjectCreator/config/iorinterceptor.mpb:
+                  When using iorinterceptor use portableserver and objreftemplate
+
+                * bin/MakeProjectCreator/config/objreftemplate.mpb:
+                  When using objreftemplate, you must use portableserver
+
+                * bin/MakeProjectCreator/config/portableserver.mpb:
+                  When using portableserver there is no need to use objreftemplate and
+                  iorinterceptor
+
 Fri Aug 27 07:40:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * ace/ace_wchar.h:
