@@ -39,7 +39,7 @@ cause_error (void)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   // Note that the default behavior is to log to STDERR...
 
@@ -166,7 +166,7 @@ main (int argc, char *argv[])
       ACE_CLR_BITS (priority_mask, LM_INFO);
       ACE_LOG_MSG->priority_mask (priority_mask,
                                   ACE_Log_Msg::PROCESS);
-      
+
       ACE_DEBUG ((LM_INFO,
                   "This LM_INFO message should not print!\n"));
       ACE_DEBUG ((LM_DEBUG,
