@@ -91,13 +91,11 @@ namespace Kokyu
      * one inserted. A deletion and insertion has to happen instead of
      * update since the rebalancing of the RB_Tree should take place.
      *
-     * @param guid Guid of item.
-     *
-     * @param qos QoS associated with item.
+     * @param item <code> DSRT_Dispatch_Item </code> object containing guid and qos.
      *
      * @return -1 if insertion failed and 0 otherwise.
      */
-    int insert(Guid_t guid, const DSRT_QoSDescriptor_t& qos);
+    int insert(DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item);
 
     /**
      * Remove an item from the priority queue.

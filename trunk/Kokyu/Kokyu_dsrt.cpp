@@ -4,6 +4,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "DSRT_Direct_Dispatcher_Impl_T.h"
+#include "DSRT_CV_Dispatcher_Impl_T.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Kokyu_dsrt.i"
@@ -74,7 +75,26 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   //tmp =
   //  ACE_Dynamic_Service<DSRT_Dispatcher_Impl>::instance ("DSRT_Dispatcher_Impl");
 
-  ACE_NEW_RETURN (tmp, DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>, nil_ptr);
+  switch (config_info.impl_type_)
+    {
+    case DSRT_OS_BASED:
+      ACE_NEW_RETURN (tmp, 
+                      DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits> (
+                      config_info.sched_policy_, 
+                      config_info.sched_scope_), 
+                      nil_ptr);
+      break;
+
+    case DSRT_CV_BASED:
+    default:
+      ACE_NEW_RETURN (tmp, 
+                      DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>(
+                      config_info.sched_policy_, 
+                      config_info.sched_scope_), 
+                      nil_ptr);
+      break;
+    }
+    
   ACE_ASSERT (tmp != 0);
   ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, nil_ptr);
   DSRT_Dispatcher_Auto_Ptr disp_auto_ptr(disp);
@@ -83,17 +103,21 @@ create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
   return disp_auto_ptr;
 }
 
-template <class QoSDescriptor>
-int MUF_Comparator<QoSDescriptor>::
-operator ()(const QoSDescriptor& qos1,
-            const QoSDescriptor& qos2)
+template <class QoSDescriptor_t>
+int MUF_Comparator<QoSDescriptor_t>::
+operator ()(const QoSDescriptor_t& qos1,
+            const QoSDescriptor_t& qos2)
 {
   if (qos1.criticality_ > qos2.criticality_)
     {
       return 1;
     }
+  else if (qos2.criticality_ > qos1.criticality_)
+    {
+      return -1;
+    }
 
-  typename QoSDescriptor::Now now_functor;
+  typename QoSDescriptor_t::Now now_functor;
   Time_t now = now_functor ();
 
   Time_t exec_time1 = qos1.exec_time_;
@@ -122,6 +146,12 @@ int MIF_Comparator<QoSDescriptor>::
 operator ()(const QoSDescriptor& qos1,
             const QoSDescriptor& qos2)
 {
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t|%T):qos1.importance = %d, qos2.importance = %d\n",
+              qos1.importance_, qos2.importance_));
+#endif  
+
   if (qos1.importance_ > qos2.importance_)
     {
       return 1;

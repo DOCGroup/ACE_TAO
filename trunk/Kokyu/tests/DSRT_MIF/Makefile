@@ -28,7 +28,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
-CPPFLAGS += -I$(ACE_ROOT)/Kokyu
+CPPFLAGS += -I$(ACE_ROOT)/Kokyu -DKOKYU_DSRT_LOGGING
 LDFLAGS += -lKokyu
 
 #----------------------------------------------------------------------------
