@@ -347,8 +347,10 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
   /* Initialize with VS */
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
-    Video_Control::INITvideoPara_var  para (new Video_Control::INITvideoPara);
-    Video_Control::INITvideoReply_var reply (new Video_Control::INITvideoReply);
+    Video_Control::INITvideoPara_var  para (new
+                                            Video_Control::INITvideoPara);
+    Video_Control::INITvideoReply *reply_ptr = 0;
+    Video_Control::INITvideoReply_out reply (reply_ptr);
 
     para->sn = shared->cmdsn;
     para->version = VERSION;
@@ -363,7 +365,7 @@ Command_Handler::init_video_channel (char *phostname, char *videofile)
       {
         CORBA::Boolean result;
         result = this->video_control_->init_video (para.in (),
-                                                   reply.out (),
+                                                   reply,
                                                    TAO_TRY_ENV);
         TAO_CHECK_ENV;
         if (result == (CORBA::B_FALSE))
@@ -1491,13 +1493,16 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       pid = ACE_OS::wait (&status);
       if (pid == UIpid)
         {
-          cerr << "ui exited, im ending the event loop!" << endl;
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) UI process died, removing signal handlers from the reactor\n", signum));
+          this->command_handler_->close ();
+          ACE_Reactor::instance ()->remove_handler (this->sig_set);
           ACE_Reactor::instance ()->end_event_loop ();
         }
       return 0;
     case SIGINT:
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S, removing signal handlers from the reactor\n", signum));
       this->command_handler_->close ();
+      ACE_Reactor::instance ()->remove_handler (this->sig_set);
       ACE_Reactor::instance ()->end_event_loop ();
       return 0;
     default: 

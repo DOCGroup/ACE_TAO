@@ -788,7 +788,7 @@ Video_Global::SendReferences (int group, int frame)
   this->cmd = orgcmd;
 }
 
-void
+int
 Video_Global::GetFeedBack ()
 {
   VideoFeedBackPara para;
@@ -800,7 +800,7 @@ Video_Global::GetFeedBack ()
     /*
       SFprintf (stderr, "VS warning: a FB this->packet discarded.\n");
       */
-    return;
+    return -1;
   }
 #ifdef NeedByteOrderConversion
   para.this->needHeader = ntohl (para.this->needHeader);
@@ -812,7 +812,7 @@ Video_Global::GetFeedBack ()
   this->frameRateLimit = para.frameRateLimit1000 / 1000.0;
   this->sendPatternGops = para.sendPatternGops;
  
-  if (!Video_Timer_Global::timerOn) return;
+  if (!Video_Timer_Global::timerOn) return 0;
 
   this->needHeader = para.needHeader;
   memcpy (this->sendPattern, para.sendPattern, PATTERN_SIZE);
@@ -831,6 +831,8 @@ Video_Global::GetFeedBack ()
     SFprintf (stderr, "VS fb: addf %d, addupf %d\n",
     para.addFrames, para.addUsecPerFrame);
     */
+
+  return 0;
 }
 
 int
