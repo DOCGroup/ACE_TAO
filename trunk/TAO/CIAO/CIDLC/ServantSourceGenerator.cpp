@@ -826,9 +826,10 @@ namespace
            << "ACE_CHECK_RETURN (0);" << endl;
 
         os << "ACE_NEW_RETURN (" << endl
-           << "retv[i++].ck," << endl
+           << "retv[i].ck," << endl
            << "CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
            << "0);" << endl
+           << "++i;" << endl
            << "}";
 
         os << "return retv._retn ();" << endl
