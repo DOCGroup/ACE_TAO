@@ -10,16 +10,18 @@
 //
 // = DESCRIPTION
 //      This test illustrates the use of <ACE_Hash_Map_Manager> to
-//      maintain a hash table using strings. No command line arguments
-//      are needed to run this program.
+//      maintain a hash table using strings.  In addition, it also
+//      illustrates how the <ACE_Static_Allocator> works in
+//      conjunction with the <ACE_Hash_Map_Manager>.
 //
 // = AUTHOR
-//    James Hu
+//    James Hu and Douglas C. Schmidt
 //
 // ============================================================================
 
 #include "test_config.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Malloc_T.h"
 #include "ace/SString.h"
 #include "ace/Synch.h"
 
@@ -95,7 +97,7 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
         ACE_Hash_Map_Reverse_Iterator<Dumb_String, Dumb_String, ACE_Null_Mutex>
 
 #define MAP_STRING Dumb_String
-#define ENTRY ((char *)entry)
+#define ENTRY ((char *) entry)
 
 Dumb_String::Dumb_String (char *s)
   : s_ (s ? ACE_OS::strdup (s) : s),
@@ -158,67 +160,121 @@ Dumb_String::operator char * (void) const
 
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
+struct String_Table
+{
+  char *key_;
+  char *value_;
+};
+
+static String_Table string_table[] =
+{
+  { "hello", 
+    "guten Tag" 
+  },
+  { "goodbye",
+    "auf wiedersehen" 
+  },
+  { "funny",
+    "lustig" 
+  },
+  { 0, 0 }
+};
+
 static const int MAX_HASH = 256;
+
+// @@ The following requires too much internal implementation
+// information about the <ACE_Hash_Map_Manager>.  We need to figure
+// out how to simplify this.
+static const POOL_SIZE = 
+  sizeof (HASH_STRING_ENTRY) * 3 // Number of items in <string_table>.
+  + sizeof (HASH_STRING_ENTRY) * MAX_HASH; // Size of the Hash_Map_Manager table
+
+static ACE_Static_Allocator<POOL_SIZE> allocator;
+
+static int
+run_test (void)
+{
+  allocator.dump ();
+
+  HASH_STRING_MAP hash (MAX_HASH, &allocator);
+
+  size_t i;
+
+  for (i = 0; string_table[i].key_ != 0; i++)
+    if (hash.bind (string_table[i].key_,
+                   string_table[i].value_) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p failed for %s \n",
+                         "bind",
+                         string_table[i].key_), -1);
+
+  MAP_STRING entry;
+
+  for (i = 0; string_table[i].key_ != 0; i++)
+    if (hash.find (string_table[i].key_,
+                   entry) == 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  "`%s' found `%s'\n", 
+                  string_table[i].key_,
+                  ENTRY));
+    else
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "`%s' not found\n", 
+                         string_table[i].key_), 
+                        -1);
+      
+  // Let's test the iterator while we are at it.
+  {
+    HASH_STRING_ENTRY *entry;
+    size_t i = 0;
+
+    for (HASH_STRING_ITER hash_iter (hash);
+         hash_iter.next (entry) != 0;
+         hash_iter.advance (), i++)
+      ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
+                  i,
+                  (char *) entry->ext_id_,
+                  (char *) entry->int_id_));
+  }
+
+  hash.unbind (string_table[2].key_, entry);
+
+  for (i = 0; string_table[i].key_ != 0; i++)
+    if (hash.find (string_table[i].key_,
+                   entry) == 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  "`%s' found `%s'\n", 
+                  string_table[i].key_,
+                  ENTRY));
+    else if (i != 2)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "`%s' not found\n", 
+                         string_table[i].key_), 
+                        -1);
+
+  // Let's test the iterator backwards.
+  {
+    HASH_STRING_ENTRY *entry;
+    size_t i = 0;
+
+    for (HASH_STRING_REVERSE_ITER hash_iter (hash);
+         hash_iter.next (entry) != 0;
+         hash_iter.advance (), i++)
+      ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
+                  i,
+                  (char *) entry->ext_id_,
+                  (char *) entry->int_id_));
+  }
+
+  allocator.dump ();
+}
 
 int
 main (int, char *[])
 {
   ACE_START_TEST ("Hash_Map_Manager_Test");
 
-  // Scoping below so that result of destruction can be seen in the log.
-  {
-    HASH_STRING_MAP hash (MAX_HASH);
-
-    hash.bind ("hello", "guten Tag");
-    hash.bind ("goodbye", "auf wiedersehen");
-    hash.bind ("funny", "lustig");
-
-    MAP_STRING entry;
-
-    if (hash.find ("hello", entry) == 0)
-      ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "hello", ENTRY));
-    if (hash.find ("goodbye", entry) == 0)
-      ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "goodbye", ENTRY));
-    if (hash.find ("funny", entry) == 0)
-      ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "funny", ENTRY));
-
-    // Let's test the iterator while we are at it.
-    {
-      HASH_STRING_ENTRY *entry;
-      size_t i = 0;
-
-      for (HASH_STRING_ITER hash_iter (hash);
-           hash_iter.next (entry) != 0;
-           hash_iter.advance (), i++)
-        ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
-                    i,
-                    (char *) entry->ext_id_,
-                    (char *) entry->int_id_));
-    }
-
-    hash.unbind ("goodbye", entry);
-
-    if (hash.find ("hello", entry) == 0)
-      ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "hello", ENTRY));
-    if (hash.find ("goodbye", entry) == 0)
-      ACE_DEBUG ((LM_DEBUG, "OOPS!  `%s' found `%s'\n", "goodbye", ENTRY));
-    if (hash.find ("funny", entry) == 0)
-      ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "funny", ENTRY));
-
-    // Let's test the iterator backwards.
-    {
-      HASH_STRING_ENTRY *entry;
-      size_t i = 0;
-
-      for (HASH_STRING_REVERSE_ITER hash_iter (hash);
-           hash_iter.next (entry) != 0;
-           hash_iter.advance (), i++)
-        ACE_DEBUG ((LM_DEBUG, "iterating (%d): [%s, %s]\n",
-                    i,
-                    (char *) entry->ext_id_,
-                    (char *) entry->int_id_));
-    }
-  }
+  run_test ();
 
   ACE_END_TEST;
 

@@ -14,14 +14,14 @@
 // 
 // ============================================================================
 
-#ifndef HASH_MAP_MANAGER_TEST_H
+#if !defined (HASH_MAP_MANAGER_TEST_H)
 #define HASH_MAP_MANAGER_TEST_H
 
 class Dumb_String
+{
   // = DESCRIPTION
   //     Desperate times call for desperate measures.  Bug your compiler
   //     vendor to support template specialization.
-{
 public:
   Dumb_String (char *s = 0);
   // Default constructor
@@ -38,7 +38,7 @@ public:
   int operator== (const Dumb_String &ds) const;
   // To satisfy Hash_Map_Manager
 
-  char * operator= (const Dumb_String &ds);
+  char *operator= (const Dumb_String &ds);
   // To satisfy Hash_Map_Manager
 
   int operator== (char const * s) const;
@@ -46,14 +46,14 @@ public:
   // These make life a little easier
 
 private:
-  char * s_;
-  // the string
+  char *s_;
+  // The string.
 
   int &copy_;
-  // reference counter
+  // Reference counter.
 
   int junk_;
-  // default reference counter initializer
+  // default reference counter initializer.
 };
 
 #endif /* HASH_MAP_MANAGER_TEST_H */
