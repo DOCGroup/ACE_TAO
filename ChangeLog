@@ -1,3 +1,10 @@
+Sat Feb 12 09:00:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+          Rename ACE_WITH_{GL,FL,QT,TK} autoconf macros to ACE_PATH_{GL,
+	  FL,QT,TK} to be consistant with standard naming conventions.
+
 Sat Feb 12 01:00:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/RMCast/Protocol.h (Header):
