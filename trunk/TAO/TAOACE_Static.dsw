@@ -317,9 +317,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ObjRefTemplate_Static
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -462,9 +459,6 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name Valuetype_Static
     End Project Dependency
 }}}
@@ -495,16 +489,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name IORInterceptor_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ObjRefTemplate_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Valuetype_Static
     End Project Dependency
 }}}
 
