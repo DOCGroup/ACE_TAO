@@ -14,8 +14,8 @@ static int
 gen_size (void)
 {
 #if defined (ACE_HAS_THREADS)
-  ACE_RANDR_TYPE seed = ACE_RANDR_TYPE (&seed);
-  return (ACE_OS::rand_r (ACE_RANDR_TYPE (seed)) % Options::instance ()->max_msg_size ()) + 1;
+  ACE_RANDR_TYPE seed = ACE_reinterpret_cast (ACE_RANDR_TYPE, &seed);
+  return (ACE_OS::rand_r (seed) % Options::instance ()->max_msg_size ()) + 1;
 #else
   return (ACE_OS::rand () % Options::instance ()->max_msg_size ()) + 1;
 #endif /* ACE_HAS_THREADS */
