@@ -23,6 +23,13 @@
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/PortableServer/PortableServer.h"
 
+class Endpoint_Addresses
+{
+ public:
+  ACE_CString sender_addr;
+  ACE_CString receiver_addr;
+};
+
 class Connection_Manager
 {
   // = TITLE
@@ -49,7 +56,8 @@ public:
   // Method that binds the sender to the Naming Service and retreives
   // the references of any registered receivers.
 
-  void connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void connect_to_receivers (AVStreams::MMDevice_ptr sender
+			     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Connect to the receivers that we found.
 
   void bind_to_sender (const ACE_CString &sender_name,
@@ -75,9 +83,9 @@ public:
 
   // Map of receivers.
   typedef ACE_Hash_Map_Manager<ACE_CString,
-                               AVStreams::MMDevice_var,
-                               ACE_Null_Mutex>
-          Receivers;
+    AVStreams::MMDevice_var,
+    ACE_Null_Mutex>
+    Receivers;
 
   // Map of protocol objects.
   typedef ACE_Hash_Map_Manager<ACE_CString,
@@ -85,18 +93,30 @@ public:
                                ACE_Null_Mutex>
           Protocol_Objects;
 
+  
+
   // Map of streamctrl.
   typedef ACE_Hash_Map_Manager<ACE_CString,
                                AVStreams::StreamCtrl_var,
                                ACE_Null_Mutex>
           StreamCtrls;
 
+  // Map of flownames and corresponding endpoint addresses
+  typedef ACE_Hash_Map_Manager<ACE_CString,
+                               Endpoint_Addresses*,
+                               ACE_Null_Mutex>
+          EP_Addr;
+
   // Map accessors.
   Receivers &receivers (void);
   Protocol_Objects &protocol_objects (void);
   StreamCtrls &streamctrls (void);
 
+  void load_ep_addr (const char* file_name);
+  
 protected:
+
+
 
   void find_receivers (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -110,6 +130,7 @@ protected:
   Receivers receivers_;
   Protocol_Objects protocol_objects_;
   StreamCtrls streamctrls_;
+  EP_Addr ep_addr_;
 
   // Sender name.
   ACE_CString sender_name_;
