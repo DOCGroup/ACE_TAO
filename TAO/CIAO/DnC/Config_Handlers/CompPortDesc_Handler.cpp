@@ -63,7 +63,7 @@ namespace CIAO
           XStr node_name (node->getNodeName());
           if (node_name == XStr (ACE_TEXT ("name")))
             {
-              // Fetch the text node which contains the "label"
+              // Fetch the text node which contains the "name"
 	            node = this->iter_->nextNode();
 	            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_name (text->getNodeValue(), compportdesc);
@@ -155,37 +155,53 @@ namespace CIAO
     /// handle provider attribute
     void process_provider (const XMLCh* provider, ::Deployment::ComponentPortDescription &compportdesc)
     {
-      if (provider)
-	      {
-	        compportdesc.provider = XMLString::transcode (provider);
-	      }
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (provider);
+
+      if (value == true_val || value == true_cap_val)
+        compportdesc.provider = 1;
+      else
+        compportdesc.provider = 0;
     }
 
     /// handle exclusiveProvider attribute
     void process_exclusiveProvider (const XMLCh* exclusiveProvider, ::Deployment::ComponentPortDescription &compportdesc)
     {
-      if (exclusiveProvider)
-	      {
-	        compportdesc.exclusiveProvider = XMLString::transcode (exclusiveProvider);
-	      }
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (exclusiveProvider);
+
+      if (value == true_val || value == true_cap_val)
+        compportdesc.exclusiveProvider = 1;
+      else
+        compportdesc.exclusiveProvider = 0;
     }
 
     /// handle exclusiveUser attribute
     void process_exclusiveUser (const XMLCh* exclusiveUser, ::Deployment::ComponentPortDescription &compportdesc)
     {
-      if (exclusiveUser)
-	      {
-	        compportdesc.exclusiveUser = XMLString::transcode (exclusiveUser);
-	      }
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (exclusiveUser);
+
+      if (value == true_val || value == true_cap_val)
+        compportdesc.exclusiveUser = 1;
+      else
+        compportdesc.exclusiveUser = 0;
     }
 
     /// handle optional attribute
     void process_optional (const XMLCh* optional, ::Deployment::ComponentPortDescription &compportdesc)
     {
-      if (optional)
-	      {
-	        compportdesc.optional = XMLString::transcode (optional);
-	      }
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (optional);
+
+      if (value == true_val || value == true_cap_val)
+        compportdesc.optional = 1;
+      else
+        compportdesc.optional = 0;
     }
 
   }
