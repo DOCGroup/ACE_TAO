@@ -2353,10 +2353,17 @@ TAO_Container_i::update_refs (const char *path,
                               const char *name)
 {
   ACE_Configuration_Section_Key refs_key;
-  this->repo_->config ()->open_section (this->section_key_,
-                                        "refs",
-                                        1,
-                                        refs_key);
+  int status =
+    this->repo_->config ()->open_section (this->section_key_,
+                                          "refs",
+                                          0,
+                                          refs_key);
+     
+  // If this container has no "refs" section, there is nothing to do.                                        
+  if (status != 0)
+    {
+      return;
+    }
 
   u_int count = 0;
   this->repo_->config ()->get_integer_value (refs_key,
@@ -2380,13 +2387,26 @@ TAO_Container_i::update_refs (const char *path,
       this->repo_->config ()->get_string_value (ref_key,
                                                 "name",
                                                 ref_name);
+                                                
+      int pos = ref_name.find (this->repo_->extension ());
 
       // If one of the names has been mangled by move(), fix it.
-      if (ref_name.find (this->repo_->extension ()) != ACE_TString::npos)
+      if (pos != ACE_TString::npos)
         {
-          this->repo_->config ()->set_string_value (ref_key,
-                                                    "name",
-                                                    name);
+          // If we're just changing the path after doing a 'move',
+          // we don't want to change the name, so we've passed in 0.
+          if (name != 0)
+            {
+              this->repo_->config ()->set_string_value (ref_key,
+                                                        "name",
+                                                        name);
+            }
+          else
+            {
+              this->repo_->config ()->set_string_value (ref_key,
+                                                        "name",
+                                                        ref_name.substr (0, pos));
+            }
 
           this->repo_->config ()->set_string_value (ref_key,
                                                     "path",
@@ -2394,6 +2414,12 @@ TAO_Container_i::update_refs (const char *path,
 
           return;
         }
+    }
+    
+  // If we're just changing the path after doing a 'move', we're done.  
+  if (name == 0)
+    {
+      return;
     }
 
   // Add a new reference.

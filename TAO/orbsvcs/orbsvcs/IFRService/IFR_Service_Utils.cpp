@@ -116,9 +116,11 @@ TAO_IFR_Server::init_with_orb (int argc,
           return retval;
         }
 
-      if (use_multicast_server || OPTIONS::instance()->support_multicast_discovery ())
+      if (use_multicast_server
+          || OPTIONS::instance()->support_multicast_discovery ())
         {
-          retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
+          retval =
+            this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (retval != 0)
@@ -126,9 +128,6 @@ TAO_IFR_Server::init_with_orb (int argc,
               return retval;
             }
         }
-      ACE_DEBUG ((LM_DEBUG,
-                  "The IFR IOR is: <%s>\n",
-                  this->ifr_ior_.in ()));
     }
   ACE_CATCHANY
     {

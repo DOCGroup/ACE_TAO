@@ -13,7 +13,7 @@
 //      Implement wrappers useful to IFR Service clients and servers.
 //
 // = AUTHORS
-//    Jeff Parsons <parsons@isis.vanderbilt.edu>
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
 //    Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 //    Priyanka Gontla <pgontla@doc.ece.uci.edu>
 //
@@ -247,4 +247,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_IFR_SERVICE_UTILS_H */
