@@ -291,7 +291,6 @@ Dave Moore <dave dot moore at gecm dot com>
 Joseph Cross <joseph dot k dot cross at lmco dot com>
 Cherif Sleiman <sleiman at research dot moore dot com>
 Stefan Ericsson <Stefan dot Ericsson at osd dot uab dot ericsson dot se>
-Wei Chiang <wei dot chiang at horizon dot ntc dot nokia dot com>
 Thanh Ma <tma at encore dot com>
 Oleg Krivosheev <kriol at fnal dot gov>
 Stephen Coy <stevec at wsa dot com dot au>
@@ -320,7 +319,6 @@ Mike Kamrad <J dot M dot KAMRAD dot II at cdev dot com>
 Marios Zikos <zikos at csi dot forth dot gr>
 Mark L Boriack <mboriack at dctc dot saic dot com>
 Mark Hyett <mhyett at dctd dot saic dot com>
-Caleb Epstein <epstein_caleb_unix at jpmorgan dot com>
 Valik Solrzano Barboza <valik at xs4all dot nl>
 John Connett <jrc at skylon dot demon dot co dot uk>
 Tom Arbuckle <arbuckle at uran dot informatik dot uni-bonn dot de>
@@ -366,7 +364,6 @@ Paul von Behren <Paul_von_Behren at stortek dot com>
 Sudish Joseph <sj at eng dot mindspring dot net>
 Loren Rittle <rittle at comm dot mot dot com>
 Alexander Ovsiankin <sasha at technologist dot com>
-Fred Kuhns <fredk at arl dot wustl dot edu>
 Ravi Nagabhyru <ravi at future-minds dot com>
 Tom Brusehaver <tgb at cozy dot netco dot com>
 Dave Tallman <tallman at acsys dot com>
@@ -414,7 +411,6 @@ Jeff Franks <Jeffrey_Franks at i-o dot com>
 John Mulhern <9107 at mn3 dot lawson dot lawson dot com>
 Johan Lundin <johan at lundin dot com>
 Eric Powers <powerg at deltanet dot com>
-Zheng Han <zhan at glenvan dot glenayre dot com>
 Gabriel Lima <gali at enea dot se>
 Doug Anderson <dla at home dot com>
 Hongyin Quan <hq1 at arl dot wustl dot edu>
@@ -443,7 +439,6 @@ Dongwook Kim <baksoo at dbserver dot kaist dot ac dot kr>
 Don Davis <ded at heart dot jhuapl dot edu>
 Alberto Villarica <Alberto dot Villarica dot rav at nt dot com>
 XuYifeng <xuyf at pop dot zg169 dot net>
-Ossama Othman <othman at astrosun dot tn dot cornell dot edu>
 Tom Shields <Shields at MarsHotel dot CMPU dot NET>
 Krishna Padmasola <pkrishna at cybercash dot co dot in>
 Andre Folkers <folkers at informatik dot mu-luebeck dot de>
@@ -597,7 +592,6 @@ Jaepil Kim <jpkim at lgsoft dot com>
 Dmitry Goldshtain <goldstein at arcormail dot de>
 Carl Grinstead <grinstea at tsunami dot com>
 Henric Jungheim <junghelh at pe-nelson dot com>
-Konstantinos Margaritis <kmargar at cc dot uoa dot gr>
 Michael Preobrazhensky <mikep at xpedite dot com>
 Gregory D dot  Fee <gdf2 at cec dot wustl dot edu>
 Roland Gigler <roland at mch dot pn dot siemens dot de>
@@ -765,7 +759,6 @@ Yosi Sarusi <yosi at appstream dot com>
 Robert Shewan <rshew at peri dot com>
 Skye Sweeney <ssweeney at sanders dot com>
 Lars Immisch <lars at ibp dot de>
-Adrian Mercieca <adrian at anvil dot co dot uk>
 Stefan Wendt <wendts at stud dot fh-luebeck dot de>
 Herbert <herbert at shym dot com>
 Clarence Bishop <clarence dot bishop at na dot marconicomms dot com>
@@ -828,7 +821,6 @@ Bruce Alderson <balderso at triant dot com>
 Christoph Poggemann <Christoph dot Poggemann at ptv dot de>
 Travis Shirk <travis at pobox dot com>
 Alain Sauron <sauron at syseca dot thomson-csf dot com>
-Yury Kuznesov <yury at websci dot ru>
 David Delano <delanod at agcs dot com>
 Boris Sukholitko <boriss at richfx dot com>
 Brian Mason <bmason at oresis dot com>
@@ -955,7 +947,6 @@ Ralph Loader <suckfish at ihug dot co dot nz>
 Ji Wuliu <jiwuliu0952_cn at sina dot com>
 Wada Hiroshi <syu- at yhb dot att dot ne dot jp>
 Sal Amander <virgis at megagis dot lt>
-Bill Tonseth <tonseth at shamra dot mv dot com>
 Torsten Pfuetzenreuter <torsten_pf at geocities dot com>
 John M dot  Mills <jmills at tga dot com>
 David McWeeny <davemcw at tr dot comm dot mot dot com>
@@ -987,7 +978,6 @@ Michael Laing <mpl at flni dot com>
 Benoit Viaud <benoit dot viaud at artal dot fr>
 Ken Weinert <kenw at ihs dot com>
 Ferran Boladeres Salvad <salvadof at iis dot fhg dot de>
-Bill Tonseth <tonseth at shamra dot mv dot com>
 Steve Vranyes <steve dot vranyes at veritas dot com>
 Jim Melton <Jim dot Melton at lmco dot com>
 Ron Klein <rklein at west dot raytheon dot com>
@@ -1105,7 +1095,6 @@ Joachim Tremouroux <joachim dot tremouroux at microresearch dot be>
 Momchil Velikov <velco at fadata dot bg>
 Munagala Ramanath <amberarrow at yahoo dot com>
 Kevin Marshall <KCMarshall at att dot net>
-Adrian Mercieca <adrian at anvil dot co dot uk>
 David Channon <djc at uq dot net dot au>
 Andy Guy <andy at emory dot demon dot co dot uk>
 Oscar Rodriquez <Oscar dot Rodriquez at eln dot ericsson dot se>
@@ -1115,7 +1104,6 @@ Paul Rubel <prubel at bbn dot com>
 Jon Loeliger <jloeliger at chiaro dot com>
 Ricardo Chan <ricchan at nortelnetworks dot com>
 Sarabjeet Duhra <sarabjeet_duhra at hp dot com>
-Sathish Tiptur <Sathish dot Tiptur at geind dot ge dot com>
 Michael Rushton <miker at mbmnz dot co dot nz>
 Arno Pernozzoli <a dot bernicchia at tiscalinet dot it>
 Calum Mitchell <calum dot mitchell at cp dot net>
@@ -1202,7 +1190,6 @@ Carsten Madsen <com at navicon dot dk>
 David Sperry <sperryd at res dot raytheon dot com>
 Ted Horst <Ted dot Horst at ubsw dot com>
 Diana Arroyo <darroyo at infoglide dot com>
-Peter Phillips <pphillip at home dot com>
 Benny Prijono <bennylp at switchlab dot net>
 Roland Ziegler <zi at ave-web dot de>
 Stelios Sfakianakis <ssfak at ics dot forth dot gr>
@@ -1292,7 +1279,6 @@ Jenny Kowald <jkowald at oz dot agile dot tv>
 Oren Zeev-Ben-Mordehai <oren at phonedo dot com>
 Holger P dot  Krekel <krekel at merlinux dot de>
 Glenn Popelka <gpp at gpopelka dot com>
-Marco Kranawetter <Marco dot Kranawetter at icn dot siemens dot de>
 Tibor Kiss <tkiss at mindmaker dot hu>
 Robert Davidson <robert at rdavidson dot freeserve dot co dot uk>
 Peter Crowther <peter dot crowther at networkinference dot com>
@@ -1330,9 +1316,8 @@ Eamonn Saunders <Esaunders at softricity dot com>
 Yev Omenzel <omenzel at yahoo dot com>
 John E Hein <jhein at timing dot com>
 Tino Schwarze <tino dot schwarze at informatik dot tu-chemnitz dot de>
-Don Hinton <dhinton at ieee dot org>
 Gergely Timar <timarok at elender dot hu>
-Peter Phillips <pphillip at opentext dot com>
+Peter Phillips <pphillip at home dot com>
 Yury Kuznesov <yury at newst dot net>
 Daniel Manfis <dany_100 at yahoo dot com>
 Massimo Pichini <massimo at webbridges dot it>
@@ -1507,7 +1492,6 @@ Kevin Heifner <heifner_k at ociweb dot com>
 James Haiar <haiar at ll dot mit dot edu>
 Pavel Repin <pavel at repin dot com>
 Whitney Kew <Whitney dot Kew at Invensys dot com>
-Jaroslaw Nozderko <jarek at eko dot net dot pl>
 Tom Phan <tomp at telhub dot com>
 Andrew Guy <andrew dot guy at monis dot com>
 Bharathi Kangatharan <bharathi dot kangatharan at baesystems dot com>
@@ -1537,7 +1521,6 @@ Marek Maleta <marek_maleta at agilent dot com>
 David Smith <dts at prismtechnologies dot com>
 Dimitrije Jankovic <djankov99 at yahoo dot com>
 Frank O dot  Flemisch <f dot o dot flemisch at larc dot nasa dot gov>
-Ken Sedgwick <ken at bonsai dot com>
 Cary Steinmetz <cary dot s dot steinmetz at boeing dot com>
 Ty Tenait <tytenait at yahoo dot com>
 Nitin Mallya <Nitin dot Mallya at med dot ge dot com>
@@ -1707,7 +1690,6 @@ Nick Lewycky <nicholas at fresco dot org>
 Ira Burton <imburton at micron dot com>
 Thomas Wiegert <wiegert at schlund dot de>
 Craig Watcham <craigw at ananzi dot co dot za>
-Roland Meub <roland dot meub at gmx dot de>
 Pit Linnartz <Pit dot Linnartz at t-mobile dot de>
 Peder Norgaard <pcn at pogt dot dk>
 David Ohlemacher <ohlemacher at bbn dot com>
@@ -1736,7 +1718,6 @@ Danta Cannarozzi <djc2 at cse dot wustl dot edu>
 Valery Salamakha <ccapstan at bigpond dot net dot au>
 Karim Fodil-Lemelin <kfl at xiphos dot ca>
 Wenlong Tang <tang_long at hotmail dot com>
-Marek Brudka <M dot Brudka at elka dot pw dot edu dot pl>
 Manish Jain <majain at hss dot hns dot com>
 Robin Farine <robin dot farine at acn-group dot ch>
 Roland Schimmack <SC at ProCom dot de>
@@ -1790,7 +1771,6 @@ Gary Maxey <gary dot maxey at hp dot com>
 Yoav Borer <yoav dot borer at data-pod dot com>
 Andre Kleibeuker <kleibeuk at natlab dot research dot philips dot com>
 Andy Bellafaire <Andy_M_Bellafaire at raytheon dot com>
-Pierre Pacchioni <pierre dot pacchioni at avisto dot com>
 John Fletcher <john dot fletcher at rd dot bbc dot co dot uk>
 Terry Ware <terry dot ware at dc dot alphatech dot com>
 Pierre Pacchioni <pierre dot pacchioni at avisto dot com>
