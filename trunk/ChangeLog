@@ -9,7 +9,7 @@ Thu Mar 11 11:49:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  
 	* tests/SString_Test.cpp (run_main): 
 
-	  Added a test for this.
+	  Added a test for the above problem.
 
 Thu Mar 11 11:16:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
