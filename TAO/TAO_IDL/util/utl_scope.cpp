@@ -878,7 +878,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           continue;
         }
 
-      long equal;
+      long equal = 0;
 
       if (scope_offset == 0)
         {
@@ -886,7 +886,13 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
         }
       else
         {
-          equal = item_name->compare (e);
+          // If d is an argument in some other scope,
+          // whether or not it matches e is irrelevant,
+          // and can only cause problems if it does.
+          if (d->node_type () != AST_Decl::NT_argument)
+            {
+              equal = item_name->compare (e);
+            }
         }
 
       if (equal) 
@@ -992,16 +998,20 @@ UTL_Scope::lookup_by_name(UTL_ScopedName *e,
 
   while (1) 
     {
-      d = lookup_by_name_local(e->head(), treat_as_ref, index, scope_offset);
+      d = lookup_by_name_local (e->head (), 
+                                treat_as_ref, 
+                                index, scope_offset);
 
       // If we have popped up to a parent scope, we
       // must check the other children, if we haven't 
       // had any luck so far.
-      if (d == NULL && scope_offset > 0)
+      while (d == NULL && scope_offset > 1)
         {
           UTL_ScopeActiveIterator *iter = 
             new UTL_ScopeActiveIterator (this,
                                          UTL_Scope::IK_both);
+
+          scope_offset--;
 
           while (!iter->is_done ()) 
             {
@@ -1017,7 +1027,7 @@ UTL_Scope::lookup_by_name(UTL_ScopedName *e,
                                              treat_as_ref,
                                              0,
                                              0,
-                                             --scope_offset);
+                                             scope_offset);
                     }
                   else
                     {
