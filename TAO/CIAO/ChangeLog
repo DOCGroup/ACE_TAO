@@ -17,7 +17,10 @@ Tue Sep 21 13:04:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           factory. If either is found, code generation for registering
           the associated _init class with the container's ORB is skipped.
           Also added command line option to toggle off generation of
-          the factory registration in all cases.
+          the factory registration in all cases. Thanks to 
+          Vasili Goutas <vasili@goutas.de> for the posting to the ciao-users
+          mailing list that prompted us to make the CIDL compiler 
+          smarter and more friendly with regard to this feature.
 
 Tue Sep 21 13:00:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
