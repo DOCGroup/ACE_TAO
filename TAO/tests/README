@@ -145,7 +145,8 @@ how to run the following tests:
         . RTCORBA
 
           A collection of tests exercising features from RTCORBA 1.0
-          specification.
+          specification. Tests exercising TAO-specific RT features
+          can be found in $TAO_ROOT/performance-tests/RTCorba.
 
         . QtTests
 
