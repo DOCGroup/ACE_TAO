@@ -121,7 +121,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   this->interval_ = 0;
   this->max_size_ = ACE_DEFAULT_MAX_LOGFILE_SIZE;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("f:i:k:m:p:s:t:wn:o"), 0);
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("f:i:k:m:n:N:op:s:t:w"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -150,6 +150,10 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           this->max_size_ <<= 10;       // convert to KB
           break;
         case 'n':
+          delete [] this->program_name_;
+          this->program_name_ = ACE::strnew (get_opt.optarg);
+          break;
+        case 'N':
           // The max number for the log_file being created
           this->max_file_number_ = ACE_OS::atoi (get_opt.optarg) - 1;
           this->fixed_number_ = 1;
@@ -209,6 +213,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
                   ACE_LIB_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
   this->logger_key_ = ACE::strnew (ACE_DEFAULT_LOGGER_KEY);
+  this->program_name_ = 0;
 }
 
 int
@@ -216,6 +221,7 @@ ACE_Logging_Strategy::fini (void)
 {
   delete [] this->filename_;
   delete [] this->logger_key_;
+  delete [] this->program_name_;
   return 0;
 }
 
@@ -299,7 +305,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
       ACE_Log_Msg::instance ()->set_flags (this->flags_);
     }
 
-  return ACE_LOG_MSG->open (ACE_LIB_TEXT ("Logging_Strategy"),
+  return ACE_LOG_MSG->open (this->program_name_,
                             ACE_LOG_MSG->flags (),
                             this->logger_key_);
 }
@@ -326,6 +332,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
       FILE *output_file = (FILE *) ACE_LOG_MSG->msg_ostream ();
       ACE_OS::fclose (output_file);
+      // We'll call msg_ostream() modifier later.
 #else
       ofstream *output_file = (ofstream *) ACE_LOG_MSG->msg_ostream ();
       output_file->close ();
@@ -342,6 +349,11 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
               // Open a new log file with the same name.
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
               output_file = ACE_OS::fopen (this->filename_, "wt");
+
+              if (output_file == 0)
+                return -1;
+
+              ACE_LOG_MSG->msg_ostream (output_file);
 #else
               output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
                                  ios::out);
@@ -429,6 +441,11 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
       // Open a new log file by the same name
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
       output_file = ACE_OS::fopen (this->filename_, "wt");
+
+      if (output_file == 0)
+        return -1;
+
+      ACE_LOG_MSG->msg_ostream (output_file);
 #else
       output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
                          ios::out);

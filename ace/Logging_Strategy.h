@@ -83,7 +83,8 @@ public:
         (default is 0, i.e., do not sample by default).
    '-k' Set the logging key.
    '-m' Maximum logfile size in Kbytes.
-   '-n' The maximum number of logfiles that we want created.
+   '-n' Set the program name for the %n format specifier.
+   '-N' The maximum number of logfiles that we want created.
    '-o' Specifies that we want the no standard logfiles ordering
         (fastest processing in <handle_timeout>).  Default is not to order
         logfiles.  
@@ -123,6 +124,8 @@ private:
 
   /// Logger key for distributed logging.
   ACE_TCHAR *logger_key_;
+  /// Program name to be used for %n format specifier.
+  ACE_TCHAR *program_name_;
 
   /// If non-0 then wipeout the logfile, otherwise append to it.
   /// Default value is 0.  

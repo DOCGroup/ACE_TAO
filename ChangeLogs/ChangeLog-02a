@@ -1,3 +1,15 @@
+Fri Jul 13 09:40:08 2001  Jerry D. De Master <jdemaster@rite-solutions.com>
+
+	* ace/Log_Msg.*,
+	  ace/Logging_Strategy.*,
+	  ace/Log_Msg_UNIX_Syslog.*:
+          Applied patches to ACE_Log_Msg, ACE_Logging_Strategy, and
+ 	  ACE_Log_Msg_UNIX_Syslog that are required to add the program
+ 	  name logging strategy option ('n') and to initialize the UNIX
+ 	  syslog facility with the program name.  Also included are Boris
+ 	  Kolpackov <bosk@ipmce.ru> patches for ACE_LACKS_IOSTREAM_TOTALLY
+ 	  to ACE_Logging_Strategy.
+
 Thu Jul 12 19:54:27 2001  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Registry/test_registry_update.cpp (main):
