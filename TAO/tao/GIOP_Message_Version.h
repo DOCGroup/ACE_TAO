@@ -62,8 +62,8 @@ public:
   TAO_GIOP_Message_Version &operator= (const TAO_GIOP_Message_Version &src);
 
   /// Equality operator
-  int operator== (const TAO_GIOP_Message_Version &src);
-  int operator!= (const TAO_GIOP_Message_Version &src);
+  bool operator== (const TAO_GIOP_Message_Version &src);
+  bool operator!= (const TAO_GIOP_Message_Version &src);
 };
 
 #if defined (__ACE_INLINE__)

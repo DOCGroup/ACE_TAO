@@ -577,8 +577,8 @@ public:
                        const CORBA::Octet *folded_buffer);
 
     /// Comparison operators.
-    int operator== (const poa_name_iterator &rhs) const;
-    int operator!= (const poa_name_iterator &rhs) const;
+    bool operator== (const poa_name_iterator &rhs) const;
+    bool operator!= (const poa_name_iterator &rhs) const;
 
     /// Dereference operator.
     ACE_CString operator* () const;

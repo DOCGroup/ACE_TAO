@@ -5,24 +5,24 @@ ACE_RCSID (PortableGroup,
            PG_Operators,
            "$Id$")
 
-int
+bool
 operator== (const CosNaming::Name & lhs, const CosNaming::Name & rhs)
 {
   const CORBA::ULong lhs_len = lhs.length ();
   const CORBA::ULong rhs_len = rhs.length ();
 
   if (lhs_len != rhs_len)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < lhs_len; ++i)
     if (ACE_OS::strcmp (lhs[i].id.in (), rhs[i].id.in ()) != 0
         || ACE_OS::strcmp (lhs[i].kind.in (), rhs[i].kind.in ()) != 0)
-      return 0;
+      return false;
 
-  return 1;
+  return true;
 }
 
-int
+bool
 operator!= (const CosNaming::Name & lhs, const CosNaming::Name & rhs)
 {
   return !(lhs == rhs);

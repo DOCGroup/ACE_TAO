@@ -52,12 +52,12 @@ TAO_Creation_Time::creation_time (void) const
   return &this->time_stamp_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
 #if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
-  return 1;
+  return true;
 #else
   return ACE_OS::memcmp (&this->time_stamp_,
                          &rhs.time_stamp_,
@@ -65,12 +65,12 @@ TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 #endif /* POA_NO_TIMESTAMP */
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
 #if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
-  return 0;
+  return false;
 #else
   return ACE_OS::memcmp (&this->time_stamp_,
                          &rhs.time_stamp_,
@@ -78,12 +78,12 @@ TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 #endif /* POA_NO_TIMESTAMP */
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
 #if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
-  return 1;
+  return true;
 #else
   return ACE_OS::memcmp (this->time_stamp_,
                          rhs.creation_time (),
@@ -91,12 +91,12 @@ TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 #endif /* POA_NO_TIMESTAMP */
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
 #if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
-  return 0;
+  return false;
 #else
   return ACE_OS::memcmp (this->time_stamp_,
                          rhs.creation_time (),
@@ -104,13 +104,13 @@ TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 #endif /* POA_NO_TIMESTAMP */
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Creation_Time::operator== (const TAO_Temporary_Creation_Time &rhs) const
 {
   return rhs == *this;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Creation_Time::operator!= (const TAO_Temporary_Creation_Time &rhs) const
 {
   return rhs != *this;

@@ -252,6 +252,8 @@ TAO_LB_LoadAverage::analyze_loads (
                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          // @@ Jai, please use the compound "+=" operator here.  It
+          //    is more efficient in this case.
           total_load.value = total_load.value + load.value;
 
           tmp[i] = load;
@@ -261,7 +263,6 @@ TAO_LB_LoadAverage::analyze_loads (
                        "TOTAL == %f\n",
                        total_load.value));
           */
-
         }
       ACE_CATCH (CosLoadBalancing::LocationNotFound, ex)
         {
@@ -304,13 +305,13 @@ TAO_LB_LoadAverage::analyze_loads (
           ACE_TRY_CHECK;
           */
 
-         /* 
+         /*
           ACE_DEBUG ((LM_DEBUG,
                        "EFFECTIVE_LOAD == %f\n"
                        "AVERAGE       == %f\n",
                        tmp[i].value,
                        avg_load.value));
-         */ 
+         */
 
           if (tmp[i].value <= avg_load.value)
             {
@@ -320,9 +321,8 @@ TAO_LB_LoadAverage::analyze_loads (
             }
           else
             {
-          
               CORBA::Float percent_diff =
-                  (tmp[i].value / avg_load.value) - 1;    
+                  (tmp[i].value / avg_load.value) - 1;
 
               if (tmp[i].value == avg_load.value)
               {
@@ -340,6 +340,9 @@ TAO_LB_LoadAverage::analyze_loads (
                           percent_diff));
 */
 
+              // @@ Jai, please correct the indentation on the below
+              // conditional blocks so that they conform to the ACE
+              // coding style.
               if (percent_diff <= TAO_LB::LA_DEFAULT_DIFF_AVERAGE_CUTOFF)
               {
                 load_manager->disable_alert (loc
@@ -349,12 +352,12 @@ TAO_LB_LoadAverage::analyze_loads (
               else if ((percent_diff > TAO_LB::LA_DEFAULT_DIFF_AVERAGE_CUTOFF)
                        && (percent_diff < 1))
               {
-/*                      
+/*
                 ACE_DEBUG ((LM_DEBUG,
                             "%P --- ALERTING LOCATION %u\n",
                             i));
-*/                            
-              
+*/
+
                 load_manager->enable_alert (loc
                                             ACE_ENV_ARG_PARAMETER);
 

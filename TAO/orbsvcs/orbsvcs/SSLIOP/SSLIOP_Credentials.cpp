@@ -390,7 +390,7 @@ TAO_SSLIOP_Credentials::refresh (const CORBA::Any & /* refresh_data */
 #endif  /* 0 */
 }
 
-CORBA::Boolean
+bool
 TAO_SSLIOP_Credentials::operator== (const TAO_SSLIOP_Credentials &rhs)
 {
   X509 *xa = this->x509_.in ();

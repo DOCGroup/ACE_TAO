@@ -649,11 +649,11 @@ private:
 // ****************************************************************
 
 // Comparison of octet sequence.
-TAO_Export int operator== (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
-                           const TAO_Unbounded_Sequence<CORBA::Octet> &r);
+TAO_Export bool operator== (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
+                            const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
-TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
-                           const TAO_Unbounded_Sequence<CORBA::Octet> &r);
+TAO_Export bool operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
+                            const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
 // ****************************************************************
 
