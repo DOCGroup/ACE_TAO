@@ -80,16 +80,13 @@ Options::read (char *buf, size_t len, size_t &iteration)
 {
   if (io_source_ == ACE_STDIN)
     return ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+  else if (iteration >= this->iterations_)
+    return 0;
   else
     {
-      if (iteration >= this->iterations_)
-        return 0;
-      else
-        {
-          ACE_OS::strncpy (buf, "TAO", len);
-          iteration++;
-          return ACE_OS::strlen ("TAO") + 1;
-        }
+      ACE_OS::strncpy (buf, "TAO", len);
+      iteration++;
+      return ACE_OS::strlen ("TAO") + 1;
     }
 }
 
@@ -192,12 +189,6 @@ client (void *)
                 "(%P|%t) connected to %s\n",
                 remote_addr.get_host_name ()));
 
-  if (cli_stream.disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) %p\n",
-                       "disable"),
-                      0);
-
   // This variable is allocated off the stack to obviate the need for
   // locking.
   size_t iteration = 0;
@@ -211,17 +202,11 @@ client (void *)
                          options->quit_string (),
                          ACE_OS::strlen (options->quit_string ())) == 0)
       break;
-    else if (cli_stream.send (buf, r_bytes, 0, options->timeout ()) == -1)
-      {
-        if (errno == ETIME)
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) %p\n", "send_n"));
-        else
-          // Breakout if we didn't fail due to a timeout.
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) %p\n",
-                             "send_n"),
-                            0);
-      }
+    else if (cli_stream.send (buf, r_bytes, 0) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "send_n"),
+                        0);
     else if (cli_stream.recv (buf, sizeof buf) <= 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) %p\n",
