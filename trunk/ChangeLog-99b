@@ -1,25 +1,37 @@
+Tue Feb 16 13:05:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	Thanks to Eric Covington <eric@nowsol.com> for figuring out the
+	following.
+
+	* ace/ace_ce_dll.dsp: Added Functor.cpp and Message_Queue.cpp.
+
+	* ace/High_Res_Timer.cpp (dump): Fixed Unicode problem.
+
+	* ace/OS.i (truncate): WinCE does not have char* version of
+	  truncate.
+
 Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-	* ace/ace_dll.dsp:	
-	* examples/Reactor/Proactor/test_proactor.dsp: 
-	* examples/Reactor/Proactor/test_proactor.cpp: 
+	* ace/ace_dll.dsp:
+	* examples/Reactor/Proactor/test_proactor.dsp:
+	* examples/Reactor/Proactor/test_proactor.cpp:
 	Updated the files.
-	* ace/WIN32_Asynch_IO.h: 
-	* ace/WIN32_Asynch_IO.h: 
+	* ace/WIN32_Asynch_IO.h:
+	* ace/WIN32_Asynch_IO.h:
 	* ace/WIN32_Asynch_IO.h:
 	Added the files
 	* ace/ace_dll.dsp:
 	* ace/ace_lib.dsp:
 	Updated these files
-	* examples/Reactor/Proactor/Makefile: 	
+	* examples/Reactor/Proactor/Makefile:
 	New make file which also compiles the test_aiosig_ace.cpp
-	program. 		
+	program.
 	* ace/POSIX_Asynch_IO.i:
 	Added the file.
- 	
-	
+
+
 	rTagged the ACE_wrappers repository with <before_proactor>
 	After the following changes rtagged the repository with
-	<after_proactor> 
+	<after_proactor>
 
 	* ace/
 		Proactor.h
@@ -28,19 +40,19 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
  		Makefile
  		Proactor.cpp
  		Proactor.h
-		config-lynxos.h 
-		config-sunos5.6.h 
-		config-sunos5.7.h	
+		config-lynxos.h
+		config-sunos5.6.h
+		config-sunos5.7.h
 		POSIX_Asynch_IO.{h,CPP}
 		POSIX_Proactor.{h,cpp}
 		WIN32_Asynch_IO.{h,cpp}
 		Asynch_IO_Impl.{h,cpp,i}
-		Proactor_Impl.h			
+		Proactor_Impl.h
 	Applied Bridge pattern to the POSIX implementation of the Proactor
 	code. ACE_POSIX_AIOCB_Proactor works fine on Solaris
 	2.6. ACE_POSIX_SIG_Proactor works on LynxOS. Take a look at the tests
 	at the $(ACE_ROOT)/examples/Reactor/Proactor/ and the README.
-	
+
 	* tests/
 		Aio_Platform_Test.cpp
 	*examples/Reactor/Proactor/:
@@ -49,7 +61,7 @@ Tue Feb 16 00:39:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 		test_aiosig.cpp
 		test_aiosig_ace.cpp
 		README
-	Test files for testing out the platforms. 
+	Test files for testing out the platforms.
 
 Mon Feb 15 13:17:15 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -101,30 +113,30 @@ Sun Feb 14 15:25:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Sun Feb 14 14:09:11 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/015/server.cpp (main): Force the singleton to use 
-	the Select Reactor instead of the OS-default.  This should fix the 
-	problem this tutorial has on Win32 due to blocking vs non-blocking 
+	* docs/tutorials/015/server.cpp (main): Force the singleton to use
+	the Select Reactor instead of the OS-default.  This should fix the
+	problem this tutorial has on Win32 due to blocking vs non-blocking
 	socket configuration.
 
 	* docs/tutorials/015/Protocol_Task.h : Removed the ability to
 	activate this task.  The code is now a little simpler and less
 	likely to behave in unpredicatable ways.
 
-	* docs/tutorials/015/* : A few typos fixed but mostly fallout from 
+	* docs/tutorials/015/* : A few typos fixed but mostly fallout from
 	removing the ability to activate the Protocol_Task.
 
 	* docs/tutorials/016/page01.html : Added Kirthika's abstract.
-	
+
 	* docs/tutorials/016/condition.cpp : Made max_threads_ a
 	non-static member variable that is set by open().
 
 	* docs/tutorials/017/page01.html : Added Kirthika's abstract.
-	
+
 Sun Feb 14 12:47:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR_Stream.h: 
-	* ace/CDR_Stream.i: 
-	* ace/CDR_Stream.cpp: 
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.i:
+	* ace/CDR_Stream.cpp:
 	  Minor cosmetic changes, mostly trailing spaces.
 
 Sat Feb 13 22:06:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
