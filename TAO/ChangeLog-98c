@@ -1,3 +1,10 @@
+Tue Jul 14 15:28:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp: 
+	  Added support for arrays inside structures. Anonymous arrays do
+	  *not* work. Thanks to Eric Powers <powerg@deltanet.com> for this
+	  patch.
+
 Tue Jul 14 14:40:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Event_Latency/Event_Latency.cpp (print_stats):

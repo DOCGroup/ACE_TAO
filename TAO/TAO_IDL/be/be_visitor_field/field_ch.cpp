@@ -79,7 +79,48 @@ be_visitor_field_ch::visit_field (be_field *node)
 int
 be_visitor_field_ch::visit_array (be_array *node)
 {
-  // TO-DO
+  // @@ TODO Anonymous arrays do *not* work. Further the spec does not
+  // clarify the names for those types (yikes!).
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  be_type *bt = node;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+
+  // if not a typedef and we are defined in the use scope, we must be defined
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()))
+    {
+      // instantiate a visitor context with a copy of our context. This info
+      // will be modified based on what type of node we are visiting
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node); // set the node to be the node being visited. The scope
+                       // is still the same
+
+      // first generate the array declaration
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CH);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_ch::"
+                             "visit_array - "
+                             "Bad visitor\n"
+                             ), -1);
+        }
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_ch::"
+                             "visit_array - "
+                             "codegen failed\n"
+                             ), -1);
+        }
+      delete visitor;
+    }
+
+  os->indent (); // start from current indentation level
+  *os << bt->nested_type_name (this->ctx_->scope ());
   return 0;
 }
 
