@@ -100,14 +100,23 @@ public:
   /// Release all resources from the message queue and mark it as deactivated.
   virtual ~ACE_Message_Queue (void);
 
-  /// Release all resources from the message queue but do not mark it as deactivated. 
-  /// This method holds the queue lock during this operation.  Returns the number of 
-  /// messages flushed.
+  /// Release all resources from the message queue but do not mark it
+  /// as deactivated.
+  /**
+   * This method holds the queue lock during this operation.
+   *
+   * @retval The number of messages flushed.
+   */
   virtual int flush (void);
 
-  /// Release all resources from the message queue but do not mark it as deactivated. 
-  /// This method does not hold the queue lock during this operation, i.e., it assume
-  /// the lock is held externally.    Returns the number of messages flushed.
+  /// Release all resources from the message queue but do not mark it
+  /// as deactivated.
+  /**
+   * The caller must be holding the queue lock before calling this
+   * method.
+   *
+   * @retval The number of messages flushed.
+   */
   virtual int flush_i (void);
 
   // = Enqueue and dequeue methods.
@@ -120,27 +129,41 @@ public:
   // elapses, (in which case errno = EWOULDBLOCK).
 
   /**
-   * Retrieve the first <ACE_Message_Block> without removing it.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.  If the <timeout> elapses without receiving a message -1 is
-   * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
-   * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
-   * Otherwise, returns -1 on failure, else the number of items still
-   * on the queue.
+   * Retrieve a poiner to the first ACE_Message_Block in the queue
+   * without removing it.
+   *
+   * @arg first_item  Reference to an ACE_Message_Block * that will
+   *               point to the first block on the queue.  The block
+   *               remains on the queue until this or another thread
+   *               dequeues it.
+   * @arg timeout  The absolute time the caller will wait until
+   *               for a block to be queued.
+   *
+   * @retval  The number of ACE_Message_Blocks on the queue.
+   * @return  -1 on failure.  errno holds the reason. If EWOULDBLOCK,
+   *             the timeout elapsed.  If ESHUTDOWN, the queue was
+   *             deactivated or pulsed.
    */
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
-   * accordance with its <msg_priority> (0 is lowest priority).  FIFO
+   * Enqueue an ACE_Message_Block into the queue in accordance with
+   * the ACE_Message_Block's priority (0 is lowest priority).  FIFO
    * order is maintained when messages of the same priority are
-   * inserted consecutively.  Note that <timeout> uses <{absolute}>
-   * time rather than <{relative}> time.  If the <timeout> elapses
-   * without receiving a message -1 is returned and <errno> is set to
-   * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
-   * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
-   * else the number of items still on the queue.
+   * inserted consecutively.
+   *
+   * @arg new_item Pointer to an ACE_Message_Block that will be
+   *               added to the queue.  The block's @c msg_priority()
+   *               method will be called to obtain the queueing priority.
+   * @arg timeout  The absolute time the caller will wait until
+   *               for the block to be queued.
+   *
+   * @retval  The number of ACE_Message_Blocks on the queue after adding
+   *          the specified block.
+   * @return  -1 on failure.  errno holds the reason. If EWOULDBLOCK,
+   *             the timeout elapsed.  If ESHUTDOWN, the queue was
+   *             deactivated or pulsed.
    */
   virtual int enqueue_prio (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
@@ -305,20 +328,33 @@ public:
   // = Activation control methods.
 
   /**
-   * Notify all waiting threads so they can wakeup and continue other
-   * processing.  If <pulse> is 0 the queue's state is changed to
-   * deactivated and other operations called until the queue is
-   * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
-   * non-0 then only the waiting threads are notified and the queue's state
-   * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns the state of the queue before the call.  */
-  virtual int deactivate (int pulse = 0);
+   * Deactivate the queue and wakeup all threads waiting on the queue
+   * so they can continue.  No messages are removed from the queue,
+   * however.  Any other operations called until the queue is
+   * activated again will immediately return -1 with <errno> ==
+   * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
+   * call and WAS_ACTIVE if queue was active before the call.
+   */
+  virtual int deactivate (void);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
    * messages again.  Returns the state of the queue before the call.
    */
   virtual int activate (void);
+
+  /**
+   * Pulse the queue to wake up any waiting threads.  Changes the
+   * queue state to PULSED; future enqueue/dequeue operations proceed
+   * as in ACTIVATED state.
+   *
+   * @retval  The queue's state before this call.
+   */
+  virtual int pulse (void);
+
+  /// Returns the current state of the queue, which can be one of
+  /// ACTIVATED, DEACTIVATED, or PULSED.
+  virtual int state (void);
 
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
@@ -405,13 +441,18 @@ protected:
 
   /**
    * Notifies all waiting threads that the queue has been deactivated
-   * so they can wakeup and continue other processing.  If <pulse> is
-   * 0 then the queue's state is changed to deactivated and any other
-   * operations called until the queue is activated again will
-   * immediately return -1 with <errno> == ESHUTDOWN.  If <pulse> is
-   * non-0 then only the waiting threads are notified and the queue's state
-   * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns the state of the queue before the call.  */
+   * so they can wakeup and continue other processing.
+   * No messages are removed from the queue.
+   *
+   * @arg pulse  If 0, the queue's state is changed to DEACTIVATED
+   *             and any other operations called until the queue is
+   *             reactivated will immediately return -1 with
+   *             errno == ESHUTDOWN.
+   *             If not zero, only the waiting threads are notified and
+   *             the queue's state changes to PULSED.
+   *
+   * @retval The state of the queue before the call.
+   */
   virtual int deactivate_i (int pulse = 0);
 
   /// Activate the queue.
@@ -461,25 +502,11 @@ protected:
   /// Protect queue from concurrent access.
   ACE_SYNCH_MUTEX_T lock_;
 
-#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-  /// Used to make threads sleep until the queue is no longer empty.
-  ACE_SYNCH_SEMAPHORE_T not_empty_cond_;
-
-  /// Used to make threads sleep until the queue is no longer full.
-  ACE_SYNCH_SEMAPHORE_T not_full_cond_;
-
-  /// Number of threads waiting to dequeue a <Message_Block>.
-  size_t dequeue_waiters_;
-
-  /// Number of threads waiting to enqueue a <Message_Block>.
-  size_t enqueue_waiters_;
-#else
   /// Used to make threads sleep until the queue is no longer empty.
   ACE_SYNCH_CONDITION_T not_empty_cond_;
 
   /// Used to make threads sleep until the queue is no longer full.
   ACE_SYNCH_CONDITION_T not_full_cond_;
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
 private:
 
@@ -1120,14 +1147,14 @@ public:
   // = Activation control methods.
 
   /**
-   * Notify all waiting threads so they can wakeup and continue other
-   * processing.  If <pulse> is 0 the queue's state is changed to
-   * deactivated and other operations called until the queue is
-   * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
-   * non-0 then only the waiting threads are notified and the queue's state
-   * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns the state of the queue before the call.  */
-  virtual int deactivate (int pulse = 0);
+   * Deactivate the queue and wakeup all threads waiting on the queue
+   * so they can continue.  No messages are removed from the queue,
+   * however.  Any other operations called until the queue is
+   * activated again will immediately return -1 with <errno> ==
+   * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
+   * call and WAS_ACTIVE if queue was active before the call.
+   */
+  virtual int deactivate (void);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
@@ -1135,12 +1162,21 @@ public:
    */
   virtual int activate (void);
 
-  /// Returns the current state of the queue, which can either
-  /// be <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
+  /**
+   * Pulse the queue to wake up any waiting threads.  Changes the
+   * queue state to PULSED; future enqueue/dequeue operations proceed
+   * as in ACTIVATED state.
+   *
+   * @retval  The queue's state before this call.
+   */
+  virtual int pulse (void);
+
+  /// Returns the current state of the queue, which can be one of
+  /// ACTIVATED, DEACTIVATED, or PULSED.
   virtual int state (void);
 
-  /// Returns true if the state of the queue is <DEACTIVATED>,
-  /// but false if the queue's is <ACTIVATED> or <PULSED>.
+  /// Returns true if the state of the queue is DEACTIVATED,
+  /// but false if the queue's state is ACTIVATED or PULSED.
   virtual int deactivated (void);
 
   // = Notification hook.

@@ -1704,6 +1704,14 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       ACE_Log_Msg_Sig_Guard sb;
 #endif /* !ACE_WIN32 && !ACE_PSOS */
 
+      // Do the callback, if needed, before acquiring the lock
+      // to avoid holding the lock during the callback so we don't
+      // have deadlock if the callback uses the logger.
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                           ACE_Log_Msg::MSG_CALLBACK)
+          && this->msg_callback () != 0)
+        this->msg_callback ()->log (log_record);
+
       // Make sure that the lock is held during all this.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Log_Msg_Manager::get_lock (),
@@ -1754,19 +1762,6 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
                           );
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
-                           ACE_Log_Msg::MSG_CALLBACK)
-          && this->msg_callback () != 0)
-        {
-          // Use a "reverse lock" to avoid holding the lock during the
-          // callback so we don't have deadlock if the callback uses
-          // the logger.
-          ACE_MT (ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> reverse_lock
-                  (*ACE_Log_Msg_Manager::get_lock ()));
-          ACE_MT (ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>,
-                                    ace_mon_1, reverse_lock, -1));
-          this->msg_callback ()->log (log_record);
-        }
       if (tracing)
         this->start_tracing ();
    }

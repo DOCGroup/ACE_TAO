@@ -1017,7 +1017,8 @@ ACE_WFMO_Reactor::work_pending (const ACE_Time_Value &)
 }
 
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
-                                    ACE_Timer_Queue *tq)
+                                    ACE_Timer_Queue *tq,
+                                    ACE_Reactor_Notify *notify)
   : signal_handler_ (0),
     delete_signal_handler_ (0),
     timer_queue_ (0),
@@ -1039,7 +1040,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     open_for_business_ (0),
     deactivated_ (0)
 {
-  if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
+  if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq, 0, notify) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("WFMO_Reactor")));
@@ -1048,7 +1049,8 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
                                     int unused,
                                     ACE_Sig_Handler *sh,
-                                    ACE_Timer_Queue *tq)
+                                    ACE_Timer_Queue *tq,
+                                    ACE_Reactor_Notify *notify)
   : signal_handler_ (0),
     delete_signal_handler_ (0),
     timer_queue_ (0),
@@ -1072,7 +1074,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
 {
   ACE_UNUSED_ARG (unused);
 
-  if (this->open (size, 0, sh, tq) == -1)
+  if (this->open (size, 0, sh, tq, 0, notify) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("WFMO_Reactor")));
@@ -2228,8 +2230,10 @@ ACE_WFMO_Reactor_Notify::close (void)
   return -1;
 }
 
-ACE_WFMO_Reactor_Notify::ACE_WFMO_Reactor_Notify (void)
+ACE_WFMO_Reactor_Notify::ACE_WFMO_Reactor_Notify (size_t max_notifies)
   : timer_queue_ (0),
+    message_queue_ (max_notifies * sizeof (ACE_Notification_Buffer),
+                    max_notifies * sizeof (ACE_Notification_Buffer)),
     max_notify_iterations_ (-1)
 {
 }

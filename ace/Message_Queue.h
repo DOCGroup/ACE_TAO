@@ -47,29 +47,33 @@ template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 class ACE_Export ACE_Message_Queue_Base
 {
 public:
-  // = Default high and low water marks.
   enum
   {
+    // Default high and low watermarks.
+
     /// Default high watermark (16 K).
     DEFAULT_HWM = 16 * 1024,
     /// Default low watermark (same as high water mark).
     DEFAULT_LWM = 16 * 1024,
 
-    /// Message queue was activated before <activate> or <deactivate>.
+    // Queue states.  Before PULSED state was added, the activate()
+    // and deactivate() methods returned WAS_INACTIVE or WAS_ACTIVE
+    // to indicate the previous condition.  Now those methods
+    // return the state the queue was previously in.  WAS_ACTIVE
+    // and WAS_INACTIVE are defined to match previous semantics for
+    // applications that don't use the PULSED state.
+
     WAS_ACTIVE = 1, /* DEPRECATED */
-    WAS_ACTIVATED = 1,
+    /// Message queue is active and processing normally
+    ACTIVATED = 1,
 
-    /// Message queue was deactivated before <activate> or <deactivate>.
     WAS_INACTIVE = 2, /* DEPRECATED */
-    WAS_DEACTIVATED = 2,
+    /// Queue is deactivated; no enqueue or dequeue operations allowed.
+    DEACTIVATED = 2,
 
-    /// Message queue was pulsed before <activate> or <deactivate>.
-    WAS_PULSED = 3,
+    /// Message queue was pulsed; enqueue and dequeue may proceed normally.
+    PULSED = 3
 
-    /// The following are the states that a queue can be in.
-    ACTIVATED = 0,
-    DEACTIVATED = 1,
-    PULSED = 2
   };
 
   ACE_Message_Queue_Base (void);
@@ -153,27 +157,38 @@ public:
   // = Activation control methods.
 
   /**
-   * Notify all waiting threads so they can wakeup and continue other
-   * processing.  If <pulse> is 0 the queue's state is changed to
-   * deactivated and other operations called until the queue is
-   * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
-   * non-0 then only the waiting threads are notified and the queue's state
-   * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Return the state of the queue before the call.  */
-  virtual int deactivate (int pulse = 0) = 0;
+   * Deactivate the queue and wake up all threads waiting on the queue
+   * so they can continue.  No messages are removed from the queue,
+   * however.  Any other operations called until the queue is
+   * activated again will immediately return -1 with @c errno
+   * ESHUTDOWN.
+   *
+   * @retval  The queue's state before this call.
+   */
+  virtual int deactivate (void) = 0;
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
-   * messages again.  Returns the state of the queue before the call.
+   * messages again.
+   *
+   * @retval  The queue's state before this call.
    */
   virtual int activate (void) = 0;
 
-  /// Returns the current state of the queue, which can either
-  /// be <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
+  /**
+   * Pulse the queue to wake up any waiting threads.  Changes the
+   * queue state to PULSED; future enqueue/dequeue operations proceed
+   * as in ACTIVATED state.
+   *
+   * @retval  The queue's state before this call.
+   */
+  virtual int pulse (void) = 0;
+
+  /// Returns the current state of the queue.
   virtual int state (void);
 
-  /// Returns true if the state of the queue is <DEACTIVATED>,
-  /// but false if the queue's is <ACTIVATED> or <PULSED>.
+  /// Returns 1 if the state of the queue is DEACTIVATED,
+  /// and 0 if the queue's state is ACTIVATED or PULSED.
   virtual int deactivated (void) = 0;
 
   /// Get the notification strategy for the <Message_Queue>

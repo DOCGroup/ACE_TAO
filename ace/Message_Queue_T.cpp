@@ -6,6 +6,7 @@
 // #include Message_Queue.h instead of Message_Queue_T.h to avoid
 // circular include problems.
 #include "ace/Message_Queue.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -428,18 +429,18 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  switch (this->state_) 
+  switch (this->state_)
     {
     case ACE_Message_Queue_Base::ACTIVATED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = ACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::DEACTIVATED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = DEACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::PULSED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = PULSED\n")));
       break;
     }
@@ -487,15 +488,8 @@ template <ACE_SYNCH_DECL>
 ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
                                                      size_t lwm,
                                                      ACE_Notification_Strategy *ns)
-#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-  : not_empty_cond_ (0),
-    not_full_cond_ (0),
-    enqueue_waiters_ (0),
-    dequeue_waiters_ (0)
-#else
   : not_empty_cond_ (this->lock_),
     not_full_cond_ (this->lock_)
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 
@@ -578,10 +572,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivate_i (int pulse)
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
     {
       // Wakeup all waiters.
-#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
       this->not_empty_cond_.broadcast ();
       this->not_full_cond_.broadcast ();
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
       if (pulse)
         this->state_ = ACE_Message_Queue_Base::PULSED;
@@ -629,33 +621,17 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::signal_enqueue_waiters (void)
 {
-#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->not_full_cond_.signal () != 0)
     return -1;
-#else
-  if (this->enqueue_waiters_ > 0)
-    {
-      --this->enqueue_waiters_;
-      return this->not_full_cond_.release ();
-    }
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return 0;
 }
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::signal_dequeue_waiters (void)
 {
-#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   // Tell any blocked threads that the queue has a new item!
   if (this->not_empty_cond_.signal () != 0)
     return -1;
-#else
-  if (this->dequeue_waiters_ > 0)
-    {
-      --this->dequeue_waiters_;
-      return this->not_empty_cond_.release ();
-    }
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return 0;
 }
 
@@ -1126,30 +1102,10 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-                                                      ACE_Time_Value *timeout)
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond
+    (ACE_Guard<ACE_SYNCH_MUTEX_T> &, ACE_Time_Value *timeout)
 {
   int result = 0;
-#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-  while (this->is_full_i () && result != -1)
-    {
-      ++this->enqueue_waiters_;
-      // @@ Need to add sanity checks for failure...
-      mon.release ();
-      result = this->not_full_cond_.acquire (timeout);
-
-      if (result == -1 && errno == ETIME)
-        {
-          --this->enqueue_waiters_;
-          errno = EWOULDBLOCK;
-        }
-
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-      mon.acquire ();
-    }
-#else
-  ACE_UNUSED_ARG (mon);
 
   // Wait while the queue is full.
 
@@ -1169,35 +1125,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
           break;
         }
     }
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return result;
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-                                                       ACE_Time_Value *timeout)
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond
+    (ACE_Guard<ACE_SYNCH_MUTEX_T> &, ACE_Time_Value *timeout)
 {
   int result = 0;
-#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
-  while (this->is_empty_i () && result != -1)
-    {
-      ++this->dequeue_waiters_;
-      // @@ Need to add sanity checks for failure...
-      mon.release ();
-      result = this->not_empty_cond_.acquire (timeout);
-
-      if (result == -1 && errno == ETIME)
-        {
-          --this->dequeue_waiters_;
-          errno = EWOULDBLOCK;
-        }
-
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-      mon.acquire ();
-    }
-#else
-  ACE_UNUSED_ARG (mon);
 
   // Wait while the queue is empty.
 
@@ -1217,7 +1152,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX
           break;
         }
     }
-#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return result;
 }
 

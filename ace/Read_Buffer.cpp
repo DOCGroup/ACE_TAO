@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/Read_Buffer.h"
+#include "ace/Log_Msg.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)

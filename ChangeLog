@@ -1,3 +1,50 @@
+Thu Jun  6 18:10:45  Steve Huston  <shuston@riverace.com>
+
+        * ace/README: Removed ACE_HAS_OPTIMIZED_MESSAGE_QUEUE. No configs
+          use it, and it's functionality doesn't really support the
+          message queue deactivation/pulse semantics.
+
+        * ace/Message_Queue.h:
+        * ace/Message_Queue_T.{h cpp i}: Removed the "int pulse" argument
+          from deactivate() and add a pulse() method.  States stay the
+          same.
+          Took out all the ACE_HAS_OPTIMIZED_MESSAGE_QUEUE stuff.  It's
+          not used any longer.
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Use the pulse()
+          method instead of deactivate (1).
+
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Removed answered
+          questions.  Removed reimplemented handle_connect() method
+          because the needed things are now available via the framework.
+
+        * ace/Asynch_Acceptor.{h cpp}:
+        * ace/Asynch_Connector.{h cpp}: Added new hook method,
+          int validate_connection (const ACE_Asynch_Accept::Result&result,
+            const ACE_INET_Addr& remote_addr, const ACE_INET_Addr& local_addr)
+          that allows access to success/fail, handle, and addresses.  The
+          validate_new_connection (const ACE_INET_Addr&) method is now
+          deprecated.
+
+        * ace/WFMO_Reactor.{h cpp} (ACE_WFMO_Reactor_Notify): Add an
+          optional argument to ACE_WFMO_Reactor_Notify constructor.
+          size_t max_notifies is used to specify a limit for how many
+          notifications can be queued. The value is used to calculate
+          new high and low watermarks to the message_queue_. Default 1024.
+
+        * ace/Activation_Queue.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Message_Queue_T.cpp: Added #include "ace/Log_Msg.h" to get
+          the ACE_DEBUG, etc. definitions.
+
+        * ace/Read_Buffer.cpp: Added #include for ace/Log_Msg.h and
+          ace/Malloc_Base.h (for ACE_Allocator).
+
+        * ace/Log_Msg.cpp (log (ACE_Log_Record&)): If there's a
+          ACE_Log_Msg_Callback, do it before sending the log record
+          to any other logging sinks. Allows the callback to munge
+          the data.
+
 Thu Jun 06 10:50:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Dev_Poll_Reactor.cpp (cancel_timer):
@@ -24,8 +71,8 @@ Thu Jun  6 07:11:15 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Malloc_T.cpp: Clarify that the memory backing store must
 	  reside in a directory with the appropriate visibility and
- 	  permissions.  Thanks to Frank O. Flemisch <f.o.flemisch@larc.nasa.gov> 
-	  for reporting this.
+ 	  permissions.  Thanks to Frank O. Flemisch
+          <f.o.flemisch@larc.nasa.gov> for reporting this.
 
 Wed Jun  5 23:06:11 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
