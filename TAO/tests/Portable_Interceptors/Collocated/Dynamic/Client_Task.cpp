@@ -63,9 +63,6 @@ void
 Client_Task::run_test (Test_Interceptors::Visual_ptr server
           ACE_ENV_ARG_DECL)
 {
-  CORBA::Long val =
-    Echo_Client_Request_Interceptor::client_interceptor_check_;
-
   server->normal (10 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -98,10 +95,4 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server
     }
   ACE_ENDTRY;
   ACE_CHECK;
-
-  if (Echo_Client_Request_Interceptor::client_interceptor_check_ -
-      val != 10)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) ERROR:Client Interceptors not called"
-                " properly\n"));
 }

@@ -177,7 +177,6 @@ Echo_Client_Request_Interceptor::receive_exception (
                      PortableInterceptor::ForwardRequest))
 {
   client_interceptor_check_++;
-  client_interceptor_check_++;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -186,7 +185,6 @@ Echo_Client_Request_Interceptor::receive_exception (
     ri->received_exception_id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "
               "from \"%s\"\n",
@@ -195,8 +193,6 @@ Echo_Client_Request_Interceptor::receive_exception (
   ACE_DEBUG ((LM_DEBUG,
               "Exception ID = %s\n",
               exception_id.in ()));
-
-#endif
 }
 
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
@@ -334,7 +330,6 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ++server_interceptor_check_;
   ++server_interceptor_check_;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -7,6 +7,7 @@
 #include "ace/Manual_Event.h"
 #include "Echo_Collocated_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "interceptors.h"
 
 const char *output = "test.ior";
 const char *input = "file://test.ior";
@@ -108,6 +109,23 @@ main (int argc, char *argv[])
         }
 
       ACE_Thread_Manager::instance ()->wait ();
+
+      CORBA::ULong number_called =
+        Echo_Server_Request_Interceptor::server_interceptor_check_;
+
+      if (number_called != 10)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR: Server Side Interceptors not"
+                      " called properly, called %d times, expected 10\n",
+                      number_called));
+        }
+
+      if (Echo_Client_Request_Interceptor::client_interceptor_check_ != 10)
+        ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR:Client Interceptors not called"
+                  " properly\n"));
+
     }
   ACE_CATCHANY
     {
