@@ -202,6 +202,10 @@ void TAO_ServantBase::synchronous_upcall_dispatch (
       ACE_THROW (CORBA_BAD_OPERATION());
     }
 
+  CORBA::Boolean send_reply = !req.sync_with_server ()
+                              && req.response_expected ()
+                              && !req.deferred_reply ();
+
   ACE_TRY
   {
     // Log the message state to FT_Service Logging facility
@@ -221,9 +225,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (
 
     // We send the reply only if it is NOT a SYNC_WITH_SERVER, a
     // response is expected and if the reply is not deferred.
-    if ((!req.sync_with_server () &&
-         req.response_expected () &&
-         !req.deferred_reply ()))
+    if (send_reply)
       {
         req.tao_send_reply ();
       }
@@ -233,7 +235,10 @@ void TAO_ServantBase::synchronous_upcall_dispatch (
   {
     // If an exception was raised we should marshal it and send
     // the appropriate reply to the client
-    req.tao_send_reply_exception(ex);
+    if (send_reply)
+      {
+        req.tao_send_reply_exception(ex);
+      }
   }
   ACE_ENDTRY;
   ACE_CHECK;
