@@ -1,4 +1,4 @@
-Mon Oct 07 16:49:28 2002  Ossama Othman  <ossama@uci.edu>
+Mon Oct  7 16:49:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.DsLogAdmin (ACE_SHLIBS):
 	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin (ACE_SHLIBS):
