@@ -29,17 +29,19 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  DOMBuilder* parser = 
+  DOMBuilder* tpd_parser = 
      CIAO::Config_Handler::Utils::create_parser ();
-  DOMDocument* top_pc_doc = parser->parseURI (location);
-  auto_ptr<DOMBuilder> cleanup_parser (parser);
+  DOMDocument* top_pc_doc = tpd_parser->parseURI (location);
+  auto_ptr<DOMBuilder> cleanup_parser (tpd_parser);
   CIAO::Config_Handler::TPD_Handler top_pc_handler (top_pc_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
-  ACE_TString package_location = top_pc_handler.process_TopLevelPackageDescription ();
- 
-  DOMDocument* pc_doc = 
-     CIAO::Config_Handler::Utils::create_document (package_location.c_str());
+  ACE_TString package_location = top_pc_handler.
+      process_TopLevelPackageDescription ();
+  DOMBuilder* pc_parser = 
+     CIAO::Config_Handler::Utils::create_parser ();
+  auto_ptr<DOMBuilder> cleanup_pc_parser (pc_parser);
+  DOMDocument* pc_doc = pc_parser->parseURI (package_location.c_str());
   CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
