@@ -1,3 +1,8 @@
+Mon Jan 27 14:28:16 2003  Heather Drury  <drury_h@ociweb.com>
+
+	* include/makeinclude/wrapper_macros.GNU: Remove unnecessary use
+	  of GNU make basename command.  Supplied by Ganesh Pai <gpai@sonusnet.com>.
+
 Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
@@ -13,14 +18,14 @@ Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jan 25 20:31:56 2003  Frank Hunleth  <frank@hunleth.com>
 
-	* ace/config-openbsd.h:
-	* ace/config-openbsd-pthread.h: Added ACE_HAS_SNPRINTF since
-	  OpenBSD has snprintf() and to fix buffer overflow tested for by
-	  tests/Log_Msg_Test.
+        * ace/config-openbsd.h:
+        * ace/config-openbsd-pthread.h: Added ACE_HAS_SNPRINTF since
+          OpenBSD has snprintf() and to fix buffer overflow tested for by
+          tests/Log_Msg_Test.
 
 Sat Jan 25 18:15:48 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added a new test to the daily builds.
+        * bin/auto_run_tests.lst: Added a new test to the daily builds.
 
 Sat Jan 25 13:39:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -45,8 +50,8 @@ Thu Jan 23 17:57:05 2003  Heather Drury  <drury_h@ociweb.com>
 
 Thu Jan 23 17:44:38 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_freebsd.GNU: Remove gratuitous link
-	  of -lstdc++.  g++ already does that for us.
+        * include/makeinclude/platform_freebsd.GNU: Remove gratuitous link
+          of -lstdc++.  g++ already does that for us.
 
 Wed Jan 22 21:08:48 2003  Steve Huston  <shuston@riverace.com>
 
@@ -63,20 +68,20 @@ Wed Jan 22 18:12:41 2003  Steve Huston  <shuston@riverace.com>
 
 Wed Jan 22 18:08:27 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/config-freebsd.h: Add ACE_HAS_SNPRINTF.  Fixes Log_Msg_Test.
+        * ace/config-freebsd.h: Add ACE_HAS_SNPRINTF.  Fixes Log_Msg_Test.
 
 Wed Jan 22 18:03:35 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_linux.GNU:
-	* include/makeinclude/platform_linux_icc.GNU:
-	* include/makeinclude/platform_linux_kcc.GNU:
-	  Remove defines of _POSIX_THREADS and _POSIX_THREAD_SAFE_FUNCTIONS.
-	  These POSIX constants are not meant to be defined by
-	  the user.  The user must include <unistd.h> and *check*
-	  the value of these constants.  On Linux glibc systems,
-	  after including <unistd.h>, the header <bits/posix_opt.h>
-	  will be eventually be included...these constants are
-	  defined by the glibc implementation in that header.
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_icc.GNU:
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Remove defines of _POSIX_THREADS and _POSIX_THREAD_SAFE_FUNCTIONS.
+          These POSIX constants are not meant to be defined by
+          the user.  The user must include <unistd.h> and *check*
+          the value of these constants.  On Linux glibc systems,
+          after including <unistd.h>, the header <bits/posix_opt.h>
+          will be eventually be included...these constants are
+          defined by the glibc implementation in that header.
 
 Wed Jan 22 10:55:39 2003  Steve Huston  <shuston@riverace.com>
 
@@ -85,26 +90,26 @@ Wed Jan 22 10:55:39 2003  Steve Huston  <shuston@riverace.com>
 
 Wed Jan 22 01:24:51 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Message_Queue_T.h: Corrected the documentation for
+        * ace/Message_Queue_T.h: Corrected the documentation for
           ACE_Message_Block_Ex so it says ACE_MESSAGE_TYPE rather than
           ACE_Message_Block.
 
 Tue Jan 21 21:44:04 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/examples/SAXPrint/broken.xml: Added a new broken XML file
-	  to make sure we handle this case properly.
+        * ACEXML/examples/SAXPrint/broken.xml: Added a new broken XML file
+          to make sure we handle this case properly.
 
-	* ACEXML/parser/parser/Parser.i (get): Added a check for
-	  successful <get> operation from the input CharStream to avoid
-	  out of the infinite loop when reading broken XML files.  Thanks
-	  to Volodymyr Orlenko <vorlenko@jaalam.com> for reporting this
-	  and submitting the patch.
+        * ACEXML/parser/parser/Parser.i (get): Added a check for
+          successful <get> operation from the input CharStream to avoid
+          out of the infinite loop when reading broken XML files.  Thanks
+          to Volodymyr Orlenko <vorlenko@jaalam.com> for reporting this
+          and submitting the patch.
 
 Mon Jan 20 20:32:55 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Log_Msg.cpp (log): Added a '}' at line 1531 to fix a
-	  nasty compiler bug on Digital UNIX.  Thanks to Igor Pisarenko
- 	  <Igor.Pisarenko@computershare.com.au> for reporting this.
+        * ace/Log_Msg.cpp (log): Added a '}' at line 1531 to fix a
+          nasty compiler bug on Digital UNIX.  Thanks to Igor Pisarenko
+          <Igor.Pisarenko@computershare.com.au> for reporting this.
 
 Tue Jan 21 19:29:04 2003  Heather Drury  <drury_h@ociweb.com>
 
