@@ -891,6 +891,21 @@ UTL_Error::supports_error (UTL_ScopedName *n,
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+// Report an attempt to have a derived component or home support something.
+void
+UTL_Error::derived_supports_error (UTL_ScopedName *n)
+{
+  idl_error_header (EIDL_CANT_SUPPORT,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              "derived component or home "));
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " may not directly support interfaces\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
 // Report illegal inheritance from non-abstract valuetype or interface.
 void
 UTL_Error::abstract_inheritance_error (UTL_ScopedName *v,
@@ -923,6 +938,44 @@ UTL_Error::abstract_support_error (UTL_ScopedName *v,
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " attempts to support more than one concrete type: "));
+  i->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report illegal component or home support of abstract interface.
+void
+UTL_Error::concrete_interface_expected (UTL_ScopedName *c,
+                                        UTL_ScopedName *i)
+{
+  idl_error_header (EIDL_CANT_SUPPORT,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              " component or home "));
+  c->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " attempts to support an abstract interface: "));
+  i->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report illegal component or home support of abstract interface.
+void
+UTL_Error::unconstrained_interface_expected (UTL_ScopedName *c,
+                                             UTL_ScopedName *i)
+{
+  idl_error_header (EIDL_CANT_SUPPORT,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              " component or home "));
+  c->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              " attempts to support a local interface: "));
   i->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));

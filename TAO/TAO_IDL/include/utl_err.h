@@ -215,9 +215,12 @@ public:
   void supports_fwd_error  (UTL_ScopedName *n,
                             AST_Interface *f);
 
-  // Report an attempt to inherit from something other than an interface
+  // Report an attempt to support something other than an interface
   void supports_error (UTL_ScopedName *n,
                        AST_Decl *d);
+
+  // Report an attempt to have a derived component or home support something.
+  void derived_supports_error (UTL_ScopedName *n);
 
   // Report an attempt to illegally inherit from an abstract type.
   void abstract_inheritance_error (UTL_ScopedName *v,
@@ -226,6 +229,18 @@ public:
   // Report an attempt to support more then one abstract type.
   void abstract_support_error (UTL_ScopedName *v,
                                UTL_ScopedName *i);
+
+  // Report a situation where a concrete interface was expected but we got
+  // something else instead. This most likely is a case in a supports
+  // or inheritance list.
+  void concrete_interface_expected (UTL_ScopedName *c,
+                                    UTL_ScopedName *i);
+
+  // Report a situation where a non-local interface was expected but we got
+  // something else instead. This most likely is a case in a supports
+  // or inheritance list.
+  void unconstrained_interface_expected (UTL_ScopedName *c,
+                                         UTL_ScopedName *i);
 
   // A concrete supported interface must inherit from all concrete
   // interfaces supported by the valuetype's ancestors, and all of
