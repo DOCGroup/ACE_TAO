@@ -32,20 +32,17 @@ class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
   //     on <ACE_ReactorEx->wakeup_all_threads_>  
 {
 public:
-
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when the <ACE_ReactorEx->wakeup_all_threads_>
-  
-private:
 };
 
 class ACE_Export ACE_ReactorEx_Handler_Repository
   // = TITLE
   //     Used to map <ACE_HANDLE>s onto the appropriate
   //     <ACE_Event_Handler> *. 
-  // 
 {
 public:
+  // = Initialization and termination methods.
   ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &reactorEx);
   // Constructor.
 
@@ -71,8 +68,8 @@ public:
 
   // = Sanity checking.
 
-  // Check the <handle> to make sure it's a valid ACE_HANDLE 
   int invalid_handle (ACE_HANDLE handle) const;
+  // Check the <handle> to make sure it's a valid ACE_HANDLE 
 
   // = Accessors.
   size_t max_handlep1 (void) const;
@@ -86,10 +83,10 @@ public:
   // Pointer to the beginning of the current array of
   // <ACE_Event_Handler> *'s.
 
-  virtual int changes_required ();
+  virtual int changes_required (void);
   // Check if changes to the handle set are required.
 
-  virtual int make_changes ();
+  virtual int make_changes (void);
   // Make changes to the handle set
 
   void dump (void) const;
@@ -99,10 +96,10 @@ private:
   ACE_ReactorEx &reactorEx_;
   // Reference to our <ReactorEx>.
   
-  int handle_deletions ();
+  int handle_deletions (void);
   // Add handles to the handle set
 
-  int handle_additions ();
+  int handle_additions (void);
   // Remove handles from the handle set
 
   int remove_handler_i (size_t index,
@@ -376,10 +373,10 @@ private:
   int calculate_timeout (ACE_Time_Value *time);
   // Used to caluculate the next timeout
 
-  int update_state ();
+  int update_state (void);
   // Update the state of the handler repository
 
-  void wakeup_all_threads ();
+  void wakeup_all_threads (void);
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
 

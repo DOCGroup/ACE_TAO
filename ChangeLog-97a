@@ -1,3 +1,10 @@
+Wed Feb 12 22:58:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ReactorEx: Made minor changes to the ReactorEx.
+
+	* examples/Reactor/ReactorEx/test_MT.cpp: Updated Irfan's new
+ 	  ReactorEx test to use ACE_Tasks.
+
 Wed Feb 12 00:08:42 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/ReactorEx: Finished a complete rewrite of
