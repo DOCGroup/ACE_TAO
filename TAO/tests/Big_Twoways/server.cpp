@@ -95,6 +95,7 @@ main (int argc, char *argv[])
 
       Test::Coordinator_var coordinator =
         coordinator_impl->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (coordinator.in (), ACE_TRY_ENV);
@@ -120,6 +121,7 @@ main (int argc, char *argv[])
         {
           ACE_Time_Value tv (1, 0);
           orb->run (tv, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
 
@@ -138,6 +140,7 @@ main (int argc, char *argv[])
 
       Test::Session_Control_var session_control =
         session_control_impl->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       Test::Session_List session_list;
       coordinator_impl->create_session_list (session_control.in (),

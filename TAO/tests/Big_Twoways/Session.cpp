@@ -196,6 +196,7 @@ Session::echo_payload (const Test::Payload &the_payload,
       return retval._retn ();
   }
   this->terminate (1, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   return retval._retn ();
 }
