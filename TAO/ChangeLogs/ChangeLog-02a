@@ -1,3 +1,18 @@
+Tue Jun 27 10:09:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+
+	  Recent addition of a cast operator for TAO_Object_Manager
+	  to _var has caused the inline definition of the _var
+	  constructor from pointer to come too late. Even if it
+	  is defined at the occurrence of a forward declaration
+	  of the interface, aggessively inlining compilers will
+	  complain. Therefore, the definition of this constructor
+	  has been moved to the header file. This problem was
+	  uncovered by g++ warnings when compiling generated
+	  code.
+
 Tue Jun 27 09:44:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
