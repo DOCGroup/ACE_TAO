@@ -1021,10 +1021,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<char *, char *, ACE_Hash<char *>
 template class ACE_Hash_Map_Reverse_Iterator_Ex<char *, CORBA_Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<char *, char *, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_var, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, CORBA_Object_var,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<char *, Load_Balancer::Object_Group_var>;
-template class ACE_Hash_Map_Entry<ACE_CString, CORBA_Object_var>;
 template class ACE_Hash_Map_Entry<char *, char *>;
 template class ACE_Hash_Map_Iterator_Base_Ex<char *, CORBA::Object_var, ACE_Hash<char *>, ACE_Equal_To<char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<char *, CORBA::Object_var, ACE_Null_Mutex>;
