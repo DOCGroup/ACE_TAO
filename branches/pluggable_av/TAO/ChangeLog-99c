@@ -1,3 +1,22 @@
+Wed Jul 14 00:27:00 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	  Added this directory and files for testing the multipoint
+	  binding in AVStreams in the full profile. This code is hardcoded
+	  with 2 servers and a single ftp program streaming a file. The
+	  servers store the streamed file received thru the multipoint
+	  binding as 2 different files. 
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	  Added code so that the multipoint binding work in the full
+	  profile. Now the users can use full profile object like FDevs
+	  inside MMDevice to create flow producers and flow
+	  consumers. Right now the case of one multipoint source and
+	  multiple multipoint sinks has been tested with the Full
+	  profile. 
+	
 Tue Jul 13 12:18:44 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast/Makefile: 
