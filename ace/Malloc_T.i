@@ -194,6 +194,12 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::mutex (void)
   return this->lock_;
 }
 
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE void *
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::base_addr (void)
+{
+  return this->cb_ptr_;
+}
+
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name)
   : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name)
