@@ -13,8 +13,6 @@ Wed Jun 21 15:51:10 2000  Ossama Othman  <ossama@uci.edu>
 	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
 	* examples/Content_Server/AMI_Iterator/client.cpp:
 	* examples/Content_Server/AMI_Iterator/server.cpp:
-	* examples/Content_Server/AMI_Observer/Callback.cpp:
-	* examples/Content_Server/AMI_Observer/Callback.h:
 	* examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
 	* examples/Content_Server/AMI_Observer/Callback_Handler.h:
 	* examples/Content_Server/AMI_Observer/Callback_i.cpp:
@@ -30,6 +28,12 @@ Wed Jun 21 15:51:10 2000  Ossama Othman  <ossama@uci.edu>
 	  Further changes to make the examples conform to the ACE/TAO
 	  style guidelines.  Thanks to Doug for providing lots of useful
 	  feedback!
+
+	* examples/Content_Server/AMI_Observer/Callback.cpp:
+	* examples/Content_Server/AMI_Observer/Callback.h:
+
+	  Renamed these files to "Callback_i.{cpp,h}" to match the name of
+	  the class inside these files.
 
 	* examples/Content_Server/AMI_Observer/README:
 
