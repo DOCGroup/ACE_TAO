@@ -1,33 +1,21 @@
 // $Id$
 
 #include "ace/Reactor.h"
+#include "ace/Reactor_Impl.h"
+#include "ace/Handle_Set.h"
 //#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
 #  endif /* !ACE_LACKS_ACE_SVCCONF */
-//#endif /* ! ACE_HAS_WINCE */
-
-// Only include the headers needed to compile.
-#if !defined (ACE_WIN32) \
-      || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) \
-      || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) \
-      || defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
-#  if defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
-#    include "ace/TP_Reactor.h"
-#  else
-#    include "ace/Select_Reactor.h"
-#  endif /* ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL */
-#else /* We are on Win32 and we have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
-#  if defined (ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL)
-#    include "ace/Msg_WFMO_Reactor.h"
-#  else
+#  if defined (ACE_WIN32)
 #    include "ace/WFMO_Reactor.h"
-#  endif /* ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL */
-#endif /* !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
-
-#include "ace/Static_Object_Lock.h"
+#    include "ace/Msg_WFMO_Reactor.h"
+#  endif /* ACE_WIN32 */
+//#endif /* ! ACE_HAS_WINCE */
+#include "ace/Select_Reactor.h"
+#include "ace/TP_Reactor.h"
+#include "ace/Object_Manager.h"
 #include "ace/Framework_Component.h"
-#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Reactor.i"

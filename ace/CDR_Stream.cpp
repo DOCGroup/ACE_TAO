@@ -763,7 +763,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
       && newpos + size <= this->start_.space ())
     {
       // Notice that ACE_Message_Block::duplicate may leave the
-      // wr_ptr() with a higher value than what we actually want.
+      // wr_ptr() with a higher value that what we actually want.
       this->start_.rd_ptr (newpos);
       this->start_.wr_ptr (newpos + size);
 
@@ -1493,6 +1493,16 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
 {
   this->do_byte_swap_ = cdr.do_byte_swap_;
 
+  // Replace our data block by using the incoming CDR stream.
+  ACE_Data_Block *db =
+    this->start_.replace_data_block (cdr.start_.data_block ()->clone_nocopy ());
+
+  // Align the start_ message block.
+  ACE_CDR::mb_align (&this->start_);
+
+  // Clear the DONT_DELETE flag if it has been set
+  this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
+
   // Get the read & write pointer positions in the incoming CDR
   // streams
   char *rd_ptr = cdr.start_.rd_ptr ();
@@ -1529,34 +1539,6 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
   // Actual bytes traversed
   size_t rd_bytes = rd_ptr - nrd_ptr;
   size_t wr_bytes = wr_ptr - nwr_ptr;
-
-  ACE_CDR::mb_align (&this->start_);
-
-  ACE_Data_Block *db =
-    this->start_.data_block ();
-
-  // If the size of the data that needs to be copied are higher than
-  // what is available, then do a reallocation.
-  if (wr_bytes > this->start_.size ())
-    {
-      // @@NOTE: We need to probably add another method to the message
-      // block interface to simplify this
-      db =
-        cdr.start_.data_block ()->clone_nocopy ();
-
-      if (db->size ((wr_bytes) +
-                    ACE_CDR::MAX_ALIGNMENT) == -1)
-        return 0;
-
-      // Replace our data block by using the incoming CDR stream.
-      db = this->start_.replace_data_block (db);
-
-      // Align the start_ message block.
-      ACE_CDR::mb_align (&this->start_);
-
-      // Clear the DONT_DELETE flag if it has been set
-      this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
-    }
 
   // Now do the copy
   (void) ACE_OS::memcpy (this->start_.wr_ptr (),

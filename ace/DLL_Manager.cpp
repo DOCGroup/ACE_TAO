@@ -13,7 +13,6 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_dlfcn.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace,
 	   DLL_Manager,

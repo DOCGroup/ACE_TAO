@@ -11,16 +11,14 @@
 
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_signal.h"
 
-#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
-# include "ace/Object_Manager_Base.h"
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+# include "ace/Object_Manager.h"
 #endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)

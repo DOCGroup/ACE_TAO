@@ -131,9 +131,6 @@ public:
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   virtual ACE_Event_Handler* event_handler (void){ return this; }
-  /// Change the QoS
-  virtual int change_qos (AVStreams::QoS);
-
 protected:
   TAO_AV_Core *av_core_;
 };

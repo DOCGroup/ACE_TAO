@@ -63,12 +63,7 @@ public:
 
   virtual int visit_typedef (be_typedef *node);
 
-  virtual int visit_component (be_component *node);
-
-  virtual int visit_component_fwd (be_component_fwd *node);
-
 private:
-
   idl_bool generated (be_decl *node) const;
   void generated (be_decl *node,
                   idl_bool val);

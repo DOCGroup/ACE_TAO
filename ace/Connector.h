@@ -23,7 +23,6 @@
 
 #include "ace/Strategies_T.h"
 #include "ace/Synch_Options.h"
-#include "ace/Handle_Set.h"
 
 /**
  * @class ACE_Connector_Base

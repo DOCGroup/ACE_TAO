@@ -16,6 +16,7 @@
 // for outputting a specialized makefile build the reduce footprint library.
 
 #include "Obj_Module.h"
+#include "ace/streams.h"
 
 // The Makefile generator class serves as the base class used to output the
 // custom makefiles (or in the future, project files) used to build the 

@@ -6,12 +6,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/os_include/net/os_if.h"
 
 # if defined (ACE_HAS_GETIFADDRS)
@@ -259,21 +255,11 @@ get_windows_version()
 
 int
 ACE_Sock_Connect::bind_port (ACE_HANDLE handle,
-                             ACE_UINT32 ip_addr, 
-                             int address_family)
+                             ACE_UINT32 ip_addr)
 {
   ACE_TRACE ("ACE_Sock_Connect::bind_port");
 
-  ACE_INET_Addr addr;
-
-#if defined (ACE_HAS_IPV6)
-  if (address_family != PF_INET6)
-    // What do we do if it is PF_"INET6?  Since it's 4 bytes, it must be an
-    // IPV4 address. Is there a difference?  Why is this test done? dhinton
-#else
-    ACE_UNUSED_ARG (address_family);
-#endif /* ACE_HAS_IPV6 */
-    addr = ACE_INET_Addr ((u_short)0, ip_addr);
+  ACE_INET_Addr addr ((u_short)0, ip_addr);
 
 #if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.

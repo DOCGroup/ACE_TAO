@@ -1,10 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-// OS_NS_wchar.h is only needed to get the emulation methods.
-// Perhaps they should be moved.  dhinton
+// don't like this... dhinton
 #include "ace/OS_NS_wchar.h"
-#include "ace/os_include/os_string.h"
 
 ACE_INLINE const void *
 ACE_OS::memchr (const void *s, int c, size_t len)

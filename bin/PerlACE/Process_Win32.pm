@@ -232,7 +232,13 @@ sub Spawn ()
         @tokens = splice(@tokens,1);
         $cmdline = join(' ', @tokens);
         print SCRIPT "copy $executable 1:\\Windows\n";
-        print SCRIPT "start /wait $testname $cmdline\n";
+        print SCRIPT "$testname $cmdline\n";
+        if ($testname eq 'Cached_Conn_Test' || $testname eq 'Cached_Accept_Conn_Test') {
+            print SCRIPT "sleep 400\n";
+        }
+        else {
+            print SCRIPT "sleep 70\n";
+        }
         print SCRIPT "copy 1:\\log\\$testname*.txt $here\\log\n";
         print SCRIPT "del 1:\\Windows\\$testname.exe\n";
         print SCRIPT "del 1:\\log\\$testname*.txt\n";

@@ -273,7 +273,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   struct tm *gmtime (const time_t *clock);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   struct tm *gmtime_r (const time_t *clock,
                        struct tm *res);
 

@@ -6,10 +6,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_stat.h"
 
-#if defined (ACE_USES_WCHAR)
-#  include "ace/OS_NS_wchar.h"
-#endif /* ACE_USES_WCHAR */
-
 ACEXML_FileCharStream::ACEXML_FileCharStream (void)
   : filename_ (0), encoding_ (0), size_ (0), infile_ (0), peek_ (0)
 {

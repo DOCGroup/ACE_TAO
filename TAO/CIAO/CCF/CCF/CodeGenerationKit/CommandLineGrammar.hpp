@@ -46,6 +46,8 @@ struct string_directive : public unary<S, parser<string_directive<S> > >
 
     Iterator save = scan.first;
 
+    int len = 0;
+
     if (!scan.at_end())
     {
       // Now go one level deeper
@@ -59,7 +61,7 @@ struct string_directive : public unary<S, parser<string_directive<S> > >
 
       match<nil_t> hit = this->subject ().parse(sl_scan);
 
-      if (static_cast<std::size_t> (hit.length()) == v.length ())
+      if (hit.length() == v.length ())
       {
         ++scan;
 

@@ -5,7 +5,6 @@
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Guard_T.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

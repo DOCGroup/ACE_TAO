@@ -27,7 +27,6 @@
 #endif /* ACE_DEFAULT_GROWSIZE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#include "ace/iosfwd.h"
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
@@ -38,12 +37,9 @@ template class ACE_Export ACE_String_Base<ACE_WSTRING_TYPE>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
- * @class ACE_NS_WString
- *
  * @brief This class retain the backward compatibility for
- *        ACE_Naming_Context and related classes.  The only addition to
- *        ACE_WString is a very naive "wchar" to "char" conversion
- *        function.
+ *  Naming_Conext and related classes.  The only addition to
+ *  ACE_WString is a very naive "wchar" to "char" conversion function.
  */
 class ACE_Export ACE_NS_WString : public ACE_WString
 {
@@ -95,9 +91,6 @@ public:
 ACE_INLINE ACE_Export
 ACE_NS_WString operator + (const ACE_NS_WString &,
                            const ACE_NS_WString &);
-
-// -----------------------------------------------------------------
-
 /**
  * @class ACE_SString
  *

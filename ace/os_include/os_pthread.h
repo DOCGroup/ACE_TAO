@@ -364,7 +364,7 @@ extern "C" pthread_t pthread_self (void);
 #    if !defined (ACE_HAS_POSIX_SEM)
 
 // This needs to be moved out of here.
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 /**
  * @class ACE_sema_t
  *
@@ -372,7 +372,7 @@ extern "C" pthread_t pthread_self (void);
  * POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
  * it's a different type than the POSIX <sem_t>.
  */
-class ACE_Export ACE_sema_t
+class ACE_OS_Export ACE_sema_t
 {
 public:
   /// Serialize access to internal state.

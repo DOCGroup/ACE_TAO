@@ -10,9 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE.h"
-#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Signal.h"
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
 #include "ace/OS_NS_sys_select.h"
@@ -28,11 +26,9 @@
 #include "ace/Select_Reactor_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Select_Reactor_T,
-           "$Id$")
+ACE_RCSID(ace, Select_Reactor_T, "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_T)
+  ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_T)
 
 #if defined (ACE_WIN32)
 #define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)

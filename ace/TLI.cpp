@@ -7,7 +7,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_socket.h"
 
 ACE_RCSID(ace, TLI, "$Id$")
 

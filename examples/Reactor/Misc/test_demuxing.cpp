@@ -12,7 +12,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/Reactor_Notification_Strategy.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(Misc, test_demuxing, "$Id$")
 

@@ -22,20 +22,6 @@ $LM = new PerlACE::Process ("../../../../LoadBalancer/LoadManager", "-o lm.ior")
 $SV = new PerlACE::Process ("server", $init_ref);
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
-print STDERR "\n\n======== Running Application Controlled Membership Test================\n";
-print STDERR "\n";
-
-print STDERR "This test uses the Random Load Balancing strategy in the Cygnus Load Balancer\n";
-
-print STDERR "6 servers are created and added into a Object Group\n";
-
-print STDERR "When the client makes an invocation, Random load balancing strategy\n";
-print STDERR "selects one of the servers and then the client makes 5 invocations on\n";
-print STDERR "the server. When done, the application has to delete the object from the\n";
-print STDERR "object group. This is called the application controlled membership of\n";
-print STDERR "object group.\n";
-print STDERR "\n";
-
 $LM->Spawn ();
 
 if (PerlACE::waitforfile_timed ("lm.ior", 5) == -1) {

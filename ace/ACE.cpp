@@ -14,7 +14,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_select.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
@@ -26,10 +25,6 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_TLI.h"
-
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-#  include "ace/OS_NS_poll.h"
-#endif /* ACE_HAS_POLL  && ACE_HAS_LIMITED_SELECT */
 
 ACE_RCSID(ace, ACE, "$Id$")
 

@@ -149,15 +149,13 @@ namespace TAO
       {
         if (errno == ETIME)
           {
-            // We sent a message already and we haven't gotten a
-            // reply.  Just throw YIMMEOUT with *COMPLETED_MAYBE*.
             ACE_THROW_RETURN (
                 CORBA::TIMEOUT (
                     CORBA::SystemException::_tao_minor_code (
                         TAO_TIMEOUT_SEND_MINOR_CODE,
                         errno
                       ),
-                    CORBA::COMPLETED_MAYBE
+                    CORBA::COMPLETED_NO
                     ),
                 TAO_INVOKE_FAILURE
                 );

@@ -17,7 +17,7 @@
 #define ACE_OS_STRING_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,6 +37,16 @@ using std::size_t;
 using std::wint_t;
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 #endif
+
+/**
+ *  @namespace ACE_OS_String
+ *
+ *  @brief This class includes functions available in string.h and ctype.h.
+ */
+#define ACE_OS_String ACE_OS
+namespace ACE_OS
+{
+}; /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

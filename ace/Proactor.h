@@ -638,9 +638,6 @@ private:
 
 #else /* NOT WIN32 or POSIX with AIO features. */
 
-#  include "ace/os_include/os_stddef.h"
-#  include "ace/os_include/os_signal.h"
-
 class ACE_Time_Value;
 
 class ACE_Export ACE_Proactor

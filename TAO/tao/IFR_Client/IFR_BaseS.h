@@ -28,11 +28,10 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:390
 
-#ifndef _TAO_IDL_ORIG_IFR_BASES_H_
-#define _TAO_IDL_ORIG_IFR_BASES_H_
+#ifndef _TAO_IDL_IFR_BASES_H_
+#define _TAO_IDL_IFR_BASES_H_
 
 #include /**/ "ace/pre.h"
-
 #include "IFR_BaseC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -42,6 +41,9 @@
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
+#include "tao/PortableServer/Collocated_Object.h"
+#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
+#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -62,7 +64,7 @@ namespace POA_CORBA
   
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:90
+  // be/be_visitor_interface/interface_sh.cpp:87
   
   class IRObject;
   typedef IRObject *IRObject_ptr;
@@ -174,7 +176,7 @@ namespace POA_CORBA
   //
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:37
   
   class TAO_IFR_Client_Export _TAO_IRObject_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
@@ -203,24 +205,26 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((CORBA::Exception));
-    
-    static _TAO_IRObject_Strategized_Proxy_Broker *
-    the_TAO_IRObject_Strategized_Proxy_Broker (void);
-  };
   
-  //
-  //            End Strategized Proxy Broker Declaration 
-  ///////////////////////////////////////////////////////////////////////
-  
-  
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class TAO_IFR_Client_Export _TAO_IRObject_ThruPOA_Proxy_Impl
+  static
+  _TAO_IRObject_Strategized_Proxy_Broker *
+  the_TAO_IRObject_Strategized_Proxy_Broker (void);
+};
+
+//
+//            End Strategized Proxy Broker Declaration 
+///////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////
+//                    ThruPOA Proxy Impl. Declaration
+//
+
+// TAO_IDL - Generated from
+// be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+class TAO_IFR_Client_Export _TAO_IRObject_ThruPOA_Proxy_Impl
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
 public:
   _TAO_IRObject_ThruPOA_Proxy_Impl (void);
@@ -232,7 +236,8 @@ public:
   
   static void
   _get_def_kind (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -246,7 +251,8 @@ public:
   
   static void
   destroy (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -261,7 +267,7 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_sh.cpp:90
+// be/be_visitor_interface/interface_sh.cpp:87
 
 class Contained;
 typedef Contained *Contained_ptr;
@@ -533,7 +539,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:1951
+  // be/be_interface.cpp:1899
   
   static void
   destroy_skel (
@@ -549,7 +555,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_Contained_Strategized_Proxy_Broker
   : public virtual TAO::Collocation_Proxy_Broker
@@ -578,9 +584,10 @@ public:
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::Exception));
-  
-  static _TAO_Contained_Strategized_Proxy_Broker *
-  the_TAO_Contained_Strategized_Proxy_Broker (void);
+
+static
+_TAO_Contained_Strategized_Proxy_Broker *
+the_TAO_Contained_Strategized_Proxy_Broker (void);
 };
 
 //
@@ -596,7 +603,8 @@ public:
 // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_Contained_ThruPOA_Proxy_Impl
-  : public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
 {
 public:
   _TAO_Contained_ThruPOA_Proxy_Impl (void);
@@ -608,7 +616,8 @@ public:
   
   static void
   _get_id (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -622,7 +631,8 @@ public:
   
   static void
   _set_id (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -636,7 +646,8 @@ public:
   
   static void
   _get_name (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -650,7 +661,8 @@ public:
   
   static void
   _set_name (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -664,7 +676,8 @@ public:
   
   static void
   _get_version (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -678,7 +691,8 @@ public:
   
   static void
   _set_version (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -692,7 +706,8 @@ public:
   
   static void
   _get_defined_in (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -706,7 +721,8 @@ public:
   
   static void
   _get_absolute_name (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -720,7 +736,8 @@ public:
   
   static void
   _get_containing_repository (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -734,7 +751,8 @@ public:
   
   static void
   describe (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -748,7 +766,8 @@ public:
   
   static void
   move (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -757,7 +776,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_def_kind (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -767,11 +787,12 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:2132
+  // be/be_interface.cpp:2080
   
   static void
   destroy (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -786,7 +807,7 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_sh.cpp:90
+// be/be_visitor_interface/interface_sh.cpp:87
 
 class Container;
 typedef Container *Container_ptr;
@@ -1249,7 +1270,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:1951
+  // be/be_interface.cpp:1899
   
   static void
   destroy_skel (
@@ -1265,7 +1286,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_Container_Strategized_Proxy_Broker
   : public virtual TAO::Collocation_Proxy_Broker
@@ -1294,9 +1315,10 @@ public:
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::Exception));
-  
-  static _TAO_Container_Strategized_Proxy_Broker *
-  the_TAO_Container_Strategized_Proxy_Broker (void);
+
+static
+_TAO_Container_Strategized_Proxy_Broker *
+the_TAO_Container_Strategized_Proxy_Broker (void);
 };
 
 //
@@ -1312,7 +1334,8 @@ public:
 // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_Container_ThruPOA_Proxy_Impl
-  : public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
 {
 public:
   _TAO_Container_ThruPOA_Proxy_Impl (void);
@@ -1324,7 +1347,8 @@ public:
   
   static void
   lookup (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1338,7 +1362,8 @@ public:
   
   static void
   contents (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1352,7 +1377,8 @@ public:
   
   static void
   lookup_name (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1366,7 +1392,8 @@ public:
   
   static void
   describe_contents (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1380,7 +1407,8 @@ public:
   
   static void
   create_module (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1394,7 +1422,8 @@ public:
   
   static void
   create_constant (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1408,7 +1437,8 @@ public:
   
   static void
   create_struct (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1422,7 +1452,8 @@ public:
   
   static void
   create_union (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1436,7 +1467,8 @@ public:
   
   static void
   create_enum (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1450,7 +1482,8 @@ public:
   
   static void
   create_alias (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1464,7 +1497,8 @@ public:
   
   static void
   create_interface (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1478,7 +1512,8 @@ public:
   
   static void
   create_value (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1492,7 +1527,8 @@ public:
   
   static void
   create_value_box (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1506,7 +1542,8 @@ public:
   
   static void
   create_exception (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1520,7 +1557,8 @@ public:
   
   static void
   create_native (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1534,7 +1572,8 @@ public:
   
   static void
   create_abstract_interface (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1548,7 +1587,8 @@ public:
   
   static void
   create_local_interface (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1562,7 +1602,8 @@ public:
   
   static void
   create_ext_value (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1571,7 +1612,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_def_kind (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1581,11 +1623,12 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:2132
+  // be/be_interface.cpp:2080
   
   static void
   destroy (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1600,7 +1643,7 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_sh.cpp:90
+// be/be_visitor_interface/interface_sh.cpp:87
 
 class IDLType;
 typedef IDLType *IDLType_ptr;
@@ -1696,7 +1739,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:1951
+  // be/be_interface.cpp:1899
   
   static void
   destroy_skel (
@@ -1712,7 +1755,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_IDLType_Strategized_Proxy_Broker
   : public virtual TAO::Collocation_Proxy_Broker
@@ -1741,9 +1784,10 @@ public:
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::Exception));
-  
-  static _TAO_IDLType_Strategized_Proxy_Broker *
-  the_TAO_IDLType_Strategized_Proxy_Broker (void);
+
+static
+_TAO_IDLType_Strategized_Proxy_Broker *
+the_TAO_IDLType_Strategized_Proxy_Broker (void);
 };
 
 //
@@ -1759,7 +1803,8 @@ public:
 // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_IDLType_ThruPOA_Proxy_Impl
-  : public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
 {
 public:
   _TAO_IDLType_ThruPOA_Proxy_Impl (void);
@@ -1771,7 +1816,8 @@ public:
   
   static void
   _get_type (
-      TAO_Abstract_ServantBase *servant,
+      CORBA::Object_ptr obj,
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL
@@ -1780,7 +1826,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_def_kind (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1790,11 +1837,12 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:2132
+  // be/be_interface.cpp:2080
   
   static void
   destroy (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1809,7 +1857,7 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_sh.cpp:90
+// be/be_visitor_interface/interface_sh.cpp:87
 
 class TypedefDef;
 typedef TypedefDef *TypedefDef_ptr;
@@ -1889,7 +1937,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:1951
+  // be/be_interface.cpp:1899
   
   static void
   destroy_skel (
@@ -1960,7 +2008,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:1951
+  // be/be_interface.cpp:1899
   
   static void
   describe_skel (
@@ -1971,7 +2019,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:1951
+  // be/be_interface.cpp:1899
   
   static void
   move_skel (
@@ -1993,7 +2041,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_TypedefDef_Strategized_Proxy_Broker
   : public virtual TAO::Collocation_Proxy_Broker
@@ -2022,9 +2070,10 @@ public:
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::Exception));
-  
-  static _TAO_TypedefDef_Strategized_Proxy_Broker *
-  the_TAO_TypedefDef_Strategized_Proxy_Broker (void);
+
+static
+_TAO_TypedefDef_Strategized_Proxy_Broker *
+the_TAO_TypedefDef_Strategized_Proxy_Broker (void);
 };
 
 //
@@ -2040,7 +2089,8 @@ public:
 // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_IFR_Client_Export _TAO_TypedefDef_ThruPOA_Proxy_Impl
-  : public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl,
+  : public virtual TAO_ThruPOA_Object_Proxy_Impl,
+    public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl,
     public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
 {
 public:
@@ -2048,7 +2098,8 @@ public:
   
   virtual ~_TAO_TypedefDef_ThruPOA_Proxy_Impl (void) {}static void
   _get_def_kind (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2058,11 +2109,12 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:2132
+  // be/be_interface.cpp:2080
   
   static void
   destroy (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2071,7 +2123,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_id (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2082,7 +2135,8 @@ public:
   
   static void
   _set_id (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2091,7 +2145,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_name (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2102,7 +2157,8 @@ public:
   
   static void
   _set_name (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2111,7 +2167,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_version (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2122,7 +2179,8 @@ public:
   
   static void
   _set_version (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2131,7 +2189,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_defined_in (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2140,7 +2199,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_absolute_name (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2149,7 +2209,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_containing_repository (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2159,11 +2220,12 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:2132
+  // be/be_interface.cpp:2080
   
   static void
   describe (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2173,11 +2235,12 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:2132
+  // be/be_interface.cpp:2080
   
   static void
   move (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2186,7 +2249,8 @@ public:
       CORBA::SystemException
     ));static void
   _get_type (
-      TAO_Abstract_ServantBase *servant, 
+      CORBA::Object_ptr obj, 
+      CORBA::Object_out obj_forward,
       TAO::Argument ** args,
       int num_args
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2206,7 +2270,13 @@ public:
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:946
+// be/be_codegen.cpp:1004
+
+#include "IFR_BaseS_T.h"
+
+#if defined (__ACE_INLINE__)
+#include "IFR_BaseS.i"
+#endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

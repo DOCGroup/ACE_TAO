@@ -9,8 +9,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Signal.h"
 #include "ace/Timer_Queue_T.h"
-#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor_Timer_Interface.h"
 #include "ace/Null_Mutex.h"
@@ -20,10 +20,7 @@
 #include "ace/Timer_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Timer_Queue_T,
-           "$Id$")
-
+ACE_RCSID(ace, Timer_Queue_T, "$Id$")
 
 // This fudge factor can be overriden for timers that need it, such as on
 // Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config

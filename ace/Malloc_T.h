@@ -23,7 +23,6 @@
 
 #include "ace/Malloc_Allocator.h"
 #include "ace/Free_List.h"
-#include "ace/Guard_T.h"
 
 /**
  * @class ACE_Cached_Mem_Pool_Node

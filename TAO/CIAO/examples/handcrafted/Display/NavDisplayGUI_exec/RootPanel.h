@@ -7,7 +7,7 @@
 #include "DetailView.h"
 #include <qmainwindow.h>
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Null_Mutex.h"
+
 
 class NodeItem;
 class QMouseEvent;

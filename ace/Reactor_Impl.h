@@ -17,7 +17,7 @@
 
 // Timer Queue is a complicated template class. A simple forward
 // declaration will not work
-#include "ace/Timer_Queuefwd.h"
+#include "ace/Timer_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,14 +25,15 @@
 
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
-#include "ace/Time_Value.h"
+
+// We are using 4 or 5 signal classes, we could forward declare
+// them.... But Timer_Queue_T.h includes Signal.h, so I don't think
+// forward declaration will be useful here
+#include "ace/Signal.h"
 
 // Forward decls
 class ACE_Handle_Set;
 class ACE_Reactor_Impl;
-class ACE_Sig_Action;
-class ACE_Sig_Handler;
-class ACE_Sig_Set;
 
 /**
  * @class ACE_Reactor_Notify

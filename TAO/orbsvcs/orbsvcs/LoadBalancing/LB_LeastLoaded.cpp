@@ -8,7 +8,6 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-#include "ace/Null_Mutex.h"
 
 ACE_RCSID (LoadBalancing,
            LB_LeastLoaded,

@@ -82,9 +82,5 @@
 # define ACE_PTRDIFF_T_TYPE std::ptrdiff_t
 #endif
 
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x600)
-#define ACE_USES_EXPLICIT_STD_NAMESPACE
-#endif
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */

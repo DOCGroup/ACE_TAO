@@ -485,7 +485,7 @@ ACE_OS::mktime (struct tm *t)
   ACE_OS_GUARD
 #     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::mktime (t), time_t, (time_t) -1);
+  ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
 #   endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
 }
 

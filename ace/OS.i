@@ -81,6 +81,27 @@ using std::strftime;
 # endif /* ACE_HAS_GETIFADDRS */
 
 
+# if defined (DIGITAL_UNIX)
+extern "C" {
+  extern char *_Pctime_r (const time_t *, char *);
+  extern struct tm *_Plocaltime_r (const time_t *, struct tm *);
+  extern struct tm *_Pgmtime_r (const time_t *, struct tm *);
+  extern char *_Pasctime_r (const struct tm *, char *);
+  extern int _Prand_r (unsigned int *seedptr);
+  extern int _Pgetpwnam_r (const char *, struct passwd *,
+                           char *, size_t, struct passwd **);
+}
+# endif /* DIGITAL_UNIX */
+
+// VAC++ doesn't correctly grok the ::getpwnam_r - the function is redefined
+// in pwd.h, and that redefinition is used here
+# if defined (_AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+extern "C" {
+  extern int _posix_getpwnam_r(const char *, struct passwd *, char *,
+                               int, struct passwd **);
+           }
+#endif /* AIX and VAC++ 4 */
+
 #endif /* WIN32 */
 
 #if defined (ACE_HAS_SHM_OPEN) && defined(INTEGRITY)

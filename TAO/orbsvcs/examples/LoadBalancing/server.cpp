@@ -2,7 +2,6 @@
 #include "StockFactory.h"
 #include "ORBInitializer.h"
 #include "RPS_Monitor.h"
-#include "ace/OS.h"
 
 #include "ace/Get_Opt.h"
 

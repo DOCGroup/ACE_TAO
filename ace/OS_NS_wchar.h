@@ -37,12 +37,11 @@
 
 namespace ACE_OS {
 
+//#if defined (ACE_HAS_WCHAR)
   typedef ACE_WCHAR_T WChar;
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wint_t fgetwc (FILE* fp);
-#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCAT)
   /// Emulated wcscat - Appends a string.
@@ -179,6 +178,8 @@ namespace ACE_OS {
 #endif /* ACE_HAS_WCHAR */
 
 } /* namespace ACE_OS */
+
+//#endif /* ACE_HAS_WCHAR */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

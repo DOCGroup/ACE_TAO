@@ -6,7 +6,6 @@
 #include "ace/Asynch_Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Proactor.h"
-#include "ace/Signal.h"
 
 #include "IO.h"
 #include "HTTP_Server.h"

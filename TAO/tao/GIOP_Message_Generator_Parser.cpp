@@ -2,14 +2,15 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
+
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           GIOP_Message_Gen_Parser,
+ACE_RCSID (tao, 
+           GIOP_Message_Gen_Parser, 
            "$Id$")
 
 int

@@ -351,17 +351,14 @@ TAO_IIOP_Transport::get_listen_point (
 {
   TAO_IIOP_Acceptor *iiop_acceptor =
     ACE_dynamic_cast (TAO_IIOP_Acceptor *,
-                      acceptor);
-
-  if (iiop_acceptor == 0)
-    return -1;
+                      acceptor );
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
   const ACE_INET_Addr *endpoint_addr =
     iiop_acceptor->endpoints ();
 
   // Get the endpoint count
-  const size_t count =
+  size_t count =
     iiop_acceptor->endpoint_count ();
 
   // Get the local address of the connection
@@ -398,17 +395,17 @@ TAO_IIOP_Transport::get_listen_point (
        index++)
     {
       if (local_addr.get_ip_address()
-          == endpoint_addr[index].get_ip_address ())
+          == endpoint_addr[index].get_ip_address())
         {
           // Get the count of the number of elements
-          const CORBA::ULong len = listen_point_list.length ();
+          CORBA::ULong len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);
 
           // We have the connection and the acceptor endpoint on the
           // same interface
-          IIOP::ListenPoint & point = listen_point_list[len];
+          IIOP::ListenPoint &point = listen_point_list[len];
           point.host = CORBA::string_dup (local_interface.in ());
           point.port = endpoint_addr[index].get_port_number ();
         }

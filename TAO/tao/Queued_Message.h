@@ -16,7 +16,6 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/LF_Invocation_Event.h"
-#include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -3,7 +3,6 @@
 #include "Softpkg_Handlers.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Softpkg_Handlers.inl"

@@ -20,7 +20,7 @@
 
 // Included just keep compilers that see #pragma dierctive first
 // happy.
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +45,7 @@
 #   if defined (_DEBUG) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
 # include /**/ <crtdbg.h>
 
-class ACE_Export ACE_No_Heap_Check
+class ACE_OS_Export ACE_No_Heap_Check
 {
 public:
   ACE_No_Heap_Check (void)
@@ -711,8 +711,6 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 // Some useful abstrations for expressions involving
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
 // with ACE_ALLOCATOR* is that they call constructors also.
-
-#include "ace/OS_Errno.h"    /* Need errno and ENOMEM */
 
 # define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
    do { POINTER = ALLOCATOR; \

@@ -12,15 +12,15 @@
 
 #ifndef ACE_SELECT_REACTOR_BASE_H
 #define ACE_SELECT_REACTOR_BASE_H
-
 #include /**/ "ace/pre.h"
 
-#include "ace/Timer_Queuefwd.h"
+#include "ace/Signal.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Timer_Queue.h"
 #include "ace/Event_Handler.h"
 #include "ace/Handle_Set.h"
 #include "ace/Token.h"
@@ -546,5 +546,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* ACE_SELECT_REACTOR_BASE_H */

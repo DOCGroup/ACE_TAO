@@ -10,7 +10,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "ace/Signal.h"
 
 #include "Thread_Task.h"
 #include "Job_i.h"

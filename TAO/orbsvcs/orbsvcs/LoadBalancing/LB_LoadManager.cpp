@@ -14,7 +14,6 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Reactor.h"
-#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (LoadBalancing,
            LB_LoadManager,

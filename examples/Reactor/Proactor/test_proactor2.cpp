@@ -36,7 +36,7 @@
 #include "ace/streams.h"
 
 #include "ace/Task.h"
-#include "ace/OS_main.h"
+
 
 ACE_RCSID(Proactor, test_proactor2, "test_proactor2.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 

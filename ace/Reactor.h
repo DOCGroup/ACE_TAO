@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -13,16 +13,21 @@
 
 #ifndef ACE_REACTOR_H
 #define ACE_REACTOR_H
-
 #include /**/ "ace/pre.h"
 
-// Timer Queue is a complicated template class. A simple forward
-// declaration will not work.
-#include "ace/Timer_Queuefwd.h"
+class ACE_Reactor_Impl;
+
+// Need the class def for ACE_Handle_Set to compile references to it in
+// programs.
+#include "ace/Handle_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// Timer Queue is a complicated template class. A simple forward
+// declaration will not work
+#include "ace/Timer_Queue.h"
 
 // Contains the timer related interface for the Reactor.
 #include "ace/Reactor_Timer_Interface.h"
@@ -30,11 +35,10 @@
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 
-class ACE_Reactor_Impl;
-class ACE_Handle_Set;
-class ACE_Sig_Action;
-class ACE_Sig_Handler;
-class ACE_Sig_Set;
+// We are using 4 or 5 signal classes, we could forward declare
+// them.... But Timer_Queue_T.h includes Signal.h, so I don't think
+// forward declaration will be useful here
+#include "ace/Signal.h"
 
 /**
  * @class ACE_Reactor
@@ -855,5 +859,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* ACE_REACTOR_H */

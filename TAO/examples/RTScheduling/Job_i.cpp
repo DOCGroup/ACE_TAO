@@ -6,7 +6,6 @@
 #include "DT_Creator.h"
 #include "Task_Stats.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_sys_time.h"
 
 Job_i::Job_i (DT_Creator* dt_creator)
   : dt_creator_ (dt_creator),

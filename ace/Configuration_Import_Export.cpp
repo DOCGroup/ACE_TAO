@@ -3,7 +3,7 @@
 #include "ace/Configuration_Import_Export.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_string.h"
+
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)

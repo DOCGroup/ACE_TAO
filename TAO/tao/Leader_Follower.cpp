@@ -6,7 +6,6 @@
 #include "tao/LF_Event_Binder.h"
 #include "tao/debug.h"
 #include "tao/Transport.h"
-#include "ace/OS_NS_sys_time.h"
 
 #include "ace/Reactor.h"
 

@@ -10,7 +10,6 @@
 #include "PSDL_Exception_Scope.h"
 #include "PSDL_Op_Dcl_Scope.h"
 #include "PSDL_Stream.h"
-#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (PSS, PSDL_Scope, "$Id$")
 

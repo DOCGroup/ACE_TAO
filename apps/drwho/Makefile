@@ -135,11 +135,9 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -152,6 +150,7 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
   Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   CM_Client.h Comm_Manager.h \
@@ -159,24 +158,46 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
   $(ACE_ROOT)/ace/Time_Value.h \
-  Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h \
-  SMR_Client.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
-  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/os_include/os_signal.h \
   $(ACE_ROOT)/ace/os_include/os_time.h \
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h \
+  SMR_Client.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
@@ -195,12 +216,12 @@ endif #VxWorks
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -217,30 +238,65 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h
+  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/OS_NS_time.inl
 
 .obj/Protocol_Manager.o .obj/Protocol_Manager.so .shobj/Protocol_Manager.o .shobj/Protocol_Manager.so: Protocol_Manager.cpp \
   $(ACE_ROOT)/ace/pre.h \
@@ -248,11 +304,9 @@ endif #VxWorks
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -265,7 +319,11 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
@@ -274,9 +332,23 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
   $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   Options.h global.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h
 
@@ -284,15 +356,13 @@ endif #VxWorks
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h
+  $(ACE_ROOT)/ace/ace_wchar.inl
 
 .obj/Rwho_DB_Manager.o .obj/Rwho_DB_Manager.so .shobj/Rwho_DB_Manager.o .shobj/Rwho_DB_Manager.so: Rwho_DB_Manager.cpp global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Options.h Rwho_DB_Manager.h \
   $(ACE_ROOT)/ace/Dirent.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -306,37 +376,59 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdint.h \
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
-  Protocol_Record.h Drwho_Node.h \
+  $(ACE_ROOT)/ace/OS_NS_dirent.inl \
+  $(ACE_ROOT)/ace/Dirent.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  Protocol_Record.h Drwho_Node.h \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/OS_NS_time.inl \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_stat.h
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl
 
 .obj/Multicast_Manager.o .obj/Multicast_Manager.so .shobj/Multicast_Manager.o .shobj/Multicast_Manager.so: Multicast_Manager.cpp Multicast_Manager.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
   $(ACE_ROOT)/ace/os_include/os_stdint.h \
@@ -352,45 +444,83 @@ endif #VxWorks
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_unistd.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
   $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
-  $(ACE_ROOT)/ace/OS_NS_netdb.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdio.h \
+  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
+  $(ACE_ROOT)/ace/OS_NS_netdb.h \
+  $(ACE_ROOT)/ace/OS_NS_netdb.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl
 
 .obj/Protocol_Record.o .obj/Protocol_Record.so .shobj/Protocol_Record.o .shobj/Protocol_Record.so: Protocol_Record.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Protocol_Record.h Drwho_Node.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -402,14 +532,14 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Multicast_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -434,50 +564,69 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
-  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
-  $(ACE_ROOT)/ace/Containers_T.i
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/File_Manager.o .obj/File_Manager.so .shobj/File_Manager.o .shobj/File_Manager.so: File_Manager.cpp File_Manager.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Lock.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
@@ -495,66 +644,129 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.h \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Guard_T.h \
-  $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/Cleanup.h \
-  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
+  $(ACE_ROOT)/ace/OS_NS_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/OS_NS_ctype.h \
-  $(ACE_ROOT)/ace/Static_Object_Lock.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Object_Manager.i \
   $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
   $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
   $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
-  $(ACE_ROOT)/ace/OS_NS_pwd.h \
-  $(ACE_ROOT)/ace/os_include/os_pwd.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h
+  $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl
 
 .obj/Hash_Table.o .obj/Hash_Table.so .shobj/Hash_Table.o .shobj/Hash_Table.so: Hash_Table.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -567,7 +779,11 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
@@ -576,22 +792,34 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
   $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/os_include/os_float.h
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl
 
 .obj/Binary_Search.o .obj/Binary_Search.so .shobj/Binary_Search.o .shobj/Binary_Search.so: Binary_Search.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Binary_Search.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -604,6 +832,7 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
@@ -613,20 +842,26 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_time.h \
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl
 
 .obj/Search_Struct.o .obj/Search_Struct.so .shobj/Search_Struct.o .shobj/Search_Struct.so: Search_Struct.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Search_Struct.h Protocol_Record.h Drwho_Node.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -638,27 +873,27 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/Single_Lookup.o .obj/Single_Lookup.so .shobj/Single_Lookup.o .shobj/Single_Lookup.so: Single_Lookup.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Single_Lookup.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -681,6 +916,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -689,22 +926,54 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h
 
@@ -714,7 +983,6 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Options.h global.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   CM_Server.h Comm_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
@@ -735,7 +1003,6 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   PMS_All.h PM_Server.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h PMS_Flo.h PMS_Usr.h PMS_Ruser.h \
   SM_Server.h CM_Server.h Comm_Manager.h \
@@ -754,13 +1021,16 @@ endif #VxWorks
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
@@ -768,28 +1038,44 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_time.h \
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl
 
 .obj/PMS_Usr.o .obj/PMS_Usr.so .shobj/PMS_Usr.o .shobj/PMS_Usr.so: PMS_Usr.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SL_Server.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h PMS_Usr.h PM_Server.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -812,6 +1098,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -820,32 +1108,62 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/SL_Server.o .obj/SL_Server.so .shobj/SL_Server.o .shobj/SL_Server.so: SL_Server.cpp global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SL_Server.h Single_Lookup.h Options.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h \
   $(ACE_ROOT)/ace/OS_NS_string.h \
@@ -866,28 +1184,35 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
-  $(ACE_ROOT)/ace/ACE_export.h
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl
 
 .obj/PMS_Flo.o .obj/PMS_Flo.so .shobj/PMS_Flo.o .shobj/PMS_Flo.so: PMS_Flo.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   BS_Server.h Binary_Search.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h PMS_Flo.h PM_Server.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -910,6 +1235,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -918,32 +1245,62 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/PM_Server.o .obj/PM_Server.so .shobj/PM_Server.o .shobj/PM_Server.so: PM_Server.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Rwho_DB_Manager.h \
   $(ACE_ROOT)/ace/Dirent.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -957,17 +1314,25 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdint.h \
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
+  $(ACE_ROOT)/ace/OS_NS_dirent.inl \
+  $(ACE_ROOT)/ace/Dirent.i \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   Protocol_Record.h Drwho_Node.h PM_Server.h Protocol_Manager.h \
   Search_Struct.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -984,31 +1349,60 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
-  $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl
 
 .obj/HT_Server.o .obj/HT_Server.so .shobj/HT_Server.o .shobj/HT_Server.so: HT_Server.cpp HT_Server.h Hash_Table.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h global.h \
@@ -1016,19 +1410,18 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1051,6 +1444,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1059,23 +1454,54 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl
 
 .obj/BS_Server.o .obj/BS_Server.so .shobj/BS_Server.o .shobj/BS_Server.so: BS_Server.cpp BS_Server.h Binary_Search.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h global.h \
@@ -1083,7 +1509,6 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -1102,11 +1527,28 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/os_include/os_netdb.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
@@ -1117,21 +1559,20 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   PMS_All.h PM_Server.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1154,6 +1595,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1162,48 +1605,79 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
-  $(ACE_ROOT)/ace/os_include/os_pwd.h
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl
 
 .obj/PMS_Ruser.o .obj/PMS_Ruser.so .shobj/PMS_Ruser.o .shobj/PMS_Ruser.so: PMS_Ruser.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   HT_Server.h Hash_Table.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   PMS_Ruser.h PM_Server.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1226,6 +1700,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1234,27 +1710,59 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/OS_NS_pwd.h \
   $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/os_include/os_netdb.h
 
 .obj/SMR_Server.o .obj/SMR_Server.so .shobj/SMR_Server.o .shobj/SMR_Server.so: SMR_Server.cpp Options.h global.h \
@@ -1262,7 +1770,6 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
@@ -1280,19 +1787,18 @@ endif #VxWorks
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/CM_Client.o .obj/CM_Client.so .shobj/CM_Client.o .shobj/CM_Client.so: CM_Client.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Multicast_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -1308,42 +1814,84 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_netdb.h \
   CM_Client.h Comm_Manager.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_float.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_unistd.h \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_select.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_select.inl \
   $(ACE_ROOT)/ace/OS_NS_netdb.h \
+  $(ACE_ROOT)/ace/OS_NS_netdb.inl \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
   $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
-  $(ACE_ROOT)/ace/os_include/os_string.h
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdio.h \
+  $(ACE_ROOT)/ace/os_include/os_fcntl.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
+  $(ACE_ROOT)/ace/OS_NS_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl
 
 .obj/SM_Client.o .obj/SM_Client.so .shobj/SM_Client.o .shobj/SM_Client.so: SM_Client.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
   SM_Client.h CM_Client.h Comm_Manager.h \
@@ -1359,32 +1907,54 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   Select_Manager.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   $(ACE_ROOT)/ace/os_include/os_stdlib.h \
   $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
-  $(ACE_ROOT)/ace/os_include/os_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_time.h \
-  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl
 
 .obj/SMR_Client.o .obj/SMR_Client.so .shobj/SMR_Client.o .shobj/SMR_Client.so: SMR_Client.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
   SMR_Client.h SM_Client.h CM_Client.h Comm_Manager.h \
@@ -1400,37 +1970,44 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   Select_Manager.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/PM_Client.o .obj/PM_Client.so .shobj/PM_Client.o .shobj/PM_Client.so: PM_Client.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   PM_Server.h Protocol_Manager.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h PM_Client.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1453,6 +2030,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1461,25 +2040,56 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/HT_Client.o .obj/HT_Client.so .shobj/HT_Client.o .shobj/HT_Client.so: HT_Client.cpp HT_Client.h Hash_Table.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h global.h \
@@ -1487,19 +2097,18 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1522,6 +2131,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1530,40 +2141,70 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl
 
 .obj/BS_Client.o .obj/BS_Client.so .shobj/BS_Client.o .shobj/BS_Client.so: BS_Client.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   File_Manager.h \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/TSS_T.h \
   $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Lock.inl \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
   $(ACE_ROOT)/ace/os_include/os_unistd.h \
@@ -1581,73 +2222,140 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/TSS_T.cpp \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.h \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/Thread_Mutex.inl \
   $(ACE_ROOT)/ace/TSS_T.inl \
+  $(ACE_ROOT)/ace/TSS_T.cpp \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Guard_T.h \
-  $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
+  $(ACE_ROOT)/ace/RW_Mutex.inl \
+  $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Guard_T.cpp \
   $(ACE_ROOT)/ace/OS_NS_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
-  $(ACE_ROOT)/ace/Cleanup.h \
-  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
+  $(ACE_ROOT)/ace/OS_NS_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl \
   $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager_Base.h \
   $(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
-  $(ACE_ROOT)/ace/OS_NS_ctype.h \
-  $(ACE_ROOT)/ace/Static_Object_Lock.h \
+  $(ACE_ROOT)/ace/Recursive_Thread_Mutex.inl \
+  $(ACE_ROOT)/ace/Object_Manager.i \
   $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
   $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
   $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.h \
+  $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Null_Mutex.h \
   $(ACE_ROOT)/ace/Mem_Map.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
+  $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_mman.inl \
   BS_Client.h Binary_Search.h Search_Struct.h Protocol_Record.h \
-  Drwho_Node.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  Drwho_Node.h
 
 .obj/PMC_All.o .obj/PMC_All.so .shobj/PMC_All.o .shobj/PMC_All.so: PMC_All.cpp global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h PMC_All.h PM_Client.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1670,6 +2378,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1678,46 +2388,76 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/PMC_Flo.o .obj/PMC_Flo.so .shobj/PMC_Flo.o .shobj/PMC_Flo.so: PMC_Flo.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   BS_Client.h Binary_Search.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h PMC_Flo.h PM_Client.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1740,6 +2480,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1748,46 +2490,76 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/PMC_Usr.o .obj/PMC_Usr.so .shobj/PMC_Usr.o .shobj/PMC_Usr.so: PMC_Usr.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SL_Client.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h PMC_Usr.h PM_Client.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1810,6 +2582,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1818,32 +2592,62 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h
+  $(ACE_ROOT)/ace/Log_Priority.h
 
 .obj/SL_Client.o .obj/SL_Client.so .shobj/SL_Client.o .shobj/SL_Client.so: SL_Client.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SL_Client.h Single_Lookup.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h
 
@@ -1852,21 +2656,20 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Options.h HT_Client.h Hash_Table.h Search_Struct.h Protocol_Record.h \
   Drwho_Node.h PMC_Ruser.h PM_Client.h Protocol_Manager.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
   $(ACE_ROOT)/ace/os_include/sys/os_types.h \
   $(ACE_ROOT)/ace/os_include/os_stddef.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -1889,6 +2692,8 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
@@ -1897,25 +2702,56 @@ endif #VxWorks
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/os_include/os_netdb.h
 
 .obj/SMR_Client.o .obj/SMR_Client.so .shobj/SMR_Client.o .shobj/SMR_Client.so: SMR_Client.cpp Options.h global.h \
@@ -1923,7 +2759,6 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   PMC_All.h PM_Client.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h PMC_Flo.h PMC_Usr.h PMC_Ruser.h \
   SMR_Client.h SM_Client.h CM_Client.h Comm_Manager.h \
@@ -1939,23 +2774,30 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   Select_Manager.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/iosfwd.h
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
 .obj/SML_Client.o .obj/SML_Client.so .shobj/SML_Client.o .shobj/SML_Client.so: SML_Client.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SML_Client.h SM_Client.h PM_Client.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h CM_Client.h Comm_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
@@ -1970,7 +2812,16 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdio.h \
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/os_include/os_signal.h \
+  $(ACE_ROOT)/ace/os_include/os_time.h \
+  $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h
 
 .obj/CM_Server.o .obj/CM_Server.so .shobj/CM_Server.o .shobj/CM_Server.so: CM_Server.cpp global.h \
@@ -1978,7 +2829,6 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   Options.h CM_Server.h Comm_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
   $(ACE_ROOT)/ace/os_include/os_inttypes.h \
@@ -1995,12 +2845,12 @@ endif #VxWorks
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -2017,32 +2867,71 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_string.h \
   $(ACE_ROOT)/ace/OS_NS_arpa_inet.h \
-  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h
+  $(ACE_ROOT)/ace/os_include/arpa/os_inet.h \
+  $(ACE_ROOT)/ace/OS_NS_arpa_inet.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdio.h \
+  $(ACE_ROOT)/ace/OS_NS_stdio.inl \
+  $(ACE_ROOT)/ace/OS_NS_pwd.h \
+  $(ACE_ROOT)/ace/os_include/os_pwd.h \
+  $(ACE_ROOT)/ace/OS_NS_pwd.inl
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
   $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2050,11 +2939,9 @@ endif #VxWorks
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/os_include/os_limits.h \
@@ -2067,6 +2954,7 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_stdarg.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   Options.h global.h SML_Client.h SM_Client.h PM_Client.h \
   Protocol_Manager.h Search_Struct.h Protocol_Record.h Drwho_Node.h \
   CM_Client.h Comm_Manager.h \
@@ -2074,24 +2962,46 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/sys/os_socket.h \
   $(ACE_ROOT)/ace/os_include/sys/os_uio.h \
   $(ACE_ROOT)/ace/Time_Value.h \
-  Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h \
-  SMR_Client.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
-  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
   $(ACE_ROOT)/ace/os_include/os_signal.h \
   $(ACE_ROOT)/ace/os_include/os_time.h \
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
+  Select_Manager.h SML_Server.h SM_Server.h PM_Server.h CM_Server.h \
+  SMR_Client.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/os_stdlib.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_wait.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
-  $(ACE_ROOT)/ace/os_include/sys/os_time.h
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/os_include/os_float.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Options.h global.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  $(ACE_ROOT)/ace/OS_main.h \
   SMR_Server.h SM_Server.h PM_Server.h Protocol_Manager.h Search_Struct.h \
   Protocol_Record.h Drwho_Node.h CM_Server.h Comm_Manager.h \
   $(ACE_ROOT)/ace/os_include/netinet/os_in.h \
@@ -2110,12 +3020,12 @@ endif #VxWorks
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/OS_NS_fcntl.h \
   $(ACE_ROOT)/ace/os_include/os_fcntl.h \
   $(ACE_ROOT)/ace/os_include/sys/os_stat.h \
+  $(ACE_ROOT)/ace/OS_NS_fcntl.inl \
   $(ACE_ROOT)/ace/Handle_Ops.h \
   $(ACE_ROOT)/ace/Handle_Ops.i \
   $(ACE_ROOT)/ace/Lib_Find.h \
@@ -2132,29 +3042,64 @@ endif #VxWorks
   $(ACE_ROOT)/ace/os_include/os_ucontext.h \
   $(ACE_ROOT)/ace/os_include/sys/os_resource.h \
   $(ACE_ROOT)/ace/os_include/sys/os_time.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_select.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/OS_NS_unistd.h \
   $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_time.inl \
+  $(ACE_ROOT)/ace/OS_NS_unistd.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.h \
+  $(ACE_ROOT)/ace/os_include/sys/os_utsname.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_utsname.inl \
+  $(ACE_ROOT)/ace/OS_NS_string.h \
+  $(ACE_ROOT)/ace/OS_NS_string.inl \
+  $(ACE_ROOT)/ace/OS_NS_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_wchar.h \
+  $(ACE_ROOT)/ace/os_include/os_string.h \
+  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_wchar.inl \
+  $(ACE_ROOT)/ace/OS_NS_errno.h \
+  $(ACE_ROOT)/ace/os_include/os_errno.h \
+  $(ACE_ROOT)/ace/OS_NS_errno.inl \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/iosfwd.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/os_include/sys/os_sem.h \
   $(ACE_ROOT)/ace/os_include/sys/os_ipc.h \
   $(ACE_ROOT)/ace/os_include/os_semaphore.h \
   $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
+  $(ACE_ROOT)/ace/OS_NS_stdlib.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.h \
+  $(ACE_ROOT)/ace/Cleanup.h \
+  $(ACE_ROOT)/ace/Cleanup.inl \
+  $(ACE_ROOT)/ace/Object_Manager_Base.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(ACE_ROOT)/ace/OS_NS_signal.h \
-  $(ACE_ROOT)/ace/os_include/os_ctype.h \
+  $(ACE_ROOT)/ace/OS_NS_signal.inl \
+  $(ACE_ROOT)/ace/OS_NS_macros.h \
+  $(ACE_ROOT)/ace/OS_NS_Thread.inl \
   $(ACE_ROOT)/ace/OS_NS_sys_socket.h \
-  $(ACE_ROOT)/ace/os_include/net/os_if.h \
   $(ACE_ROOT)/ace/OS_NS_stropts.h \
   $(ACE_ROOT)/ace/os_include/os_stropts.h \
+  $(ACE_ROOT)/ace/OS_NS_stropts.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_socket.inl \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.h \
+  $(ACE_ROOT)/ace/OS_NS_sys_uio.inl \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_NS_time.h
+  $(ACE_ROOT)/ace/OS_NS_time.h \
+  $(ACE_ROOT)/ace/OS_NS_time.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

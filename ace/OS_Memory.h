@@ -16,7 +16,7 @@
 #define ACE_OS_MEMORY_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -233,6 +233,17 @@ typedef void *ACE_MALLOC_T;
 //@}
 
 #include "ace/OS_NS_stdlib.h"
+
+/**
+ * @namespace ACE_OS_Memory
+ *
+ * @brief This class is a wrapper for dynamic memory operations.
+ *
+ */
+#define ACE_OS_Memory ACE_OS
+namespace ACE_OS
+{
+} /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

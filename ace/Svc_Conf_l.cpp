@@ -22,7 +22,6 @@
 
 #include "ace/OS.h"
 #include "ace/Object_Manager.h"
-#include "ace/Guard_T.h"
 
 /* Use prototypes in function declarations. */
 #define ACE_YY_USE_PROTOS

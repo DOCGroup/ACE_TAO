@@ -81,13 +81,13 @@ class ACE_QoS;
 
 namespace ACE_OS {
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export 
   int getmsg (ACE_HANDLE handle,
               struct strbuf *ctl,
               struct strbuf
               *data, int *flags);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export 
   int getpmsg (ACE_HANDLE handle,
                struct strbuf *ctl,
                struct strbuf
@@ -95,7 +95,7 @@ namespace ACE_OS {
                int *band,
                int *flags);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export 
   int fattach (int handle,
                const char *path);
 

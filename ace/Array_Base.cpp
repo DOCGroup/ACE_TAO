@@ -15,7 +15,7 @@
 
 #include "ace/Malloc_Base.h"
 
-#if defined (_MSC_VER) && _MSC_VER == 1200
+#if (_MSC_VER == 1200)
 #  include <new>  /* For placement new() operator. */
 #endif  /* _MSC_VER == 1200 */
 

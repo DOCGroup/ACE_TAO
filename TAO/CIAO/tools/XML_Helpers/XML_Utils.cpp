@@ -6,7 +6,6 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "Assembly_Handlers.h"
 #include "RTConfig_Handlers.h"
-#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 # include "XML_Utils.inl"

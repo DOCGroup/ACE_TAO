@@ -22,6 +22,7 @@
 
 #include "ACEXML/common/CharStream.h"
 #include "ACEXML/common/Encoding.h"
+#include "ace/streams.h"
 
 /**
  * @class ACEXML_FileCharStream FileCharStream.h "ACEXML/common/FileCharStream.h"

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -12,7 +12,6 @@
 
 #ifndef ACE_ASYNCH_PSEUDO_TASK_H
 #define ACE_ASYNCH_PSEUDO_TASK_H
-
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -66,7 +65,7 @@ protected:
 
   int flg_active_;
 
-  ACE_Select_Reactor select_reactor_;
+  ACE_Select_Reactor select_reactor_;  
   // should be initialized before reactor_
 
   ACE_Reactor reactor_;
@@ -78,5 +77,4 @@ protected:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* ACE_ASYNCH_PSEUDO_TASK_H */

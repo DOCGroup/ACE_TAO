@@ -259,7 +259,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                       0,
                       sizeof local_inet6_addr);
 
-      if (local_sap.ACE_Addr::operator== (ACE_Addr::sap_any))
+      if (local_sap == ACE_Addr::sap_any)
         {
           local_inet6_addr.sin6_family = AF_INET6;
           local_inet6_addr.sin6_port = 0;

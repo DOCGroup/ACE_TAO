@@ -6,7 +6,6 @@
 
 #include "tao/NVList.h"
 #include "tao/Typecode.h"
-#include "ace/Null_Mutex.h"
 
 ACE_RCSID (DSI, 
            Database_i, 

@@ -13,8 +13,6 @@
 #include "debug.h"
 #include "ORB_Constants.h"
 #include "Messaging_SyncScopeC.h"
-#include "ORB_Core.h"
-#include "Service_Context.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -280,13 +278,13 @@ namespace TAO
             // dispatching has started. This is fragile.
             if (bd.unbind_dispatcher () == 0)
               {
-                // Just a timeout with completed_maybe, don't close
-                // the connection or  anything
+                // Just a timeout, don't close the connection or
+                // anything...
                 ACE_THROW_RETURN (CORBA::TIMEOUT (
                     CORBA::SystemException::_tao_minor_code (
-                        TAO_TIMEOUT_RECV_MINOR_CODE,
+                        TAO_TIMEOUT_SEND_MINOR_CODE,
                         errno),
-                    CORBA::COMPLETED_MAYBE),
+                    CORBA::COMPLETED_NO),
                                   TAO_INVOKE_FAILURE);
               }
           }
@@ -296,11 +294,12 @@ namespace TAO
             this->resolver_.transport ()->close_connection ();
             this->resolver_.stub ()->reset_profiles ();
 
-            return this->orb_core ()->service_raise_comm_failure (
-                this->details_.request_service_context ().service_info (),
-                this->resolver_.profile ()
-                ACE_ENV_ARG_PARAMETER);
-
+            ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+              CORBA::SystemException::_tao_minor_code (
+                TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+                errno),
+              CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_FAILURE);
           }
       }
 

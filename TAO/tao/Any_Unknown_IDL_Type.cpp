@@ -20,43 +20,11 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     ACE_WChar_Codeset_Translator *wtrans
   )
   : TAO::Any_Impl (0, tc),
-    cdr_ (0),
+    cdr_ (ACE_Message_Block::duplicate (mb)),
     byte_order_ (byte_order),
     char_translator_ (ctrans),
     wchar_translator_ (wtrans)
 {
-  if (mb != 0)
-    {
-      ACE_NEW (this->cdr_,
-               ACE_Message_Block (*mb,
-                                  ACE_CDR::MAX_ALIGNMENT));
-
-      // Align the base pointer assuming that the incoming stream is also
-      // aligned the way we are aligned
-      char *start =
-        ACE_ptr_align_binary (mb->base (),
-                              ACE_CDR::MAX_ALIGNMENT);
-
-      size_t newrdpos =
-        mb->rd_ptr() - start;
-
-      size_t newwrpos =
-        mb->wr_ptr() - start;
-
-      if (newwrpos <= this->cdr_->space ())
-        {
-          // Notice that ACE_Message_Block::duplicate may leave the
-          // wr_ptr() with a higher value than what we actually want.
-          this->cdr_->rd_ptr (newrdpos);
-          this->cdr_->wr_ptr (newwrpos);
-        }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO(%P|%t) - Unknown_IDL_Type::Unknown_IDL_Type "
-                      "Couldn't align read and write pointers \n"));
-        }
-    }
 }
 
 TAO::Unknown_IDL_Type::~Unknown_IDL_Type (void)
@@ -344,3 +312,4 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
 
   return 0;
 }
+

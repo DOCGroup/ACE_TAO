@@ -5,7 +5,6 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Containers.h"
-#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Signal.i"

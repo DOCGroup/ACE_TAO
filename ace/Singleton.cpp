@@ -16,7 +16,6 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Framework_Component.h"
-#include "ace/Guard_T.h"
 
 ACE_RCSID (ace,
            Singleton,
@@ -508,7 +507,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dll_name (void)
 {
   return this->instance ()->dll_name ();
 }
-
+ 
 template <class TYPE, class ACE_LOCK> const ACE_TCHAR *
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name (void)
 {
@@ -519,7 +518,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name (void)
 /**********************************************************************/
 
 template <class TYPE> const ACE_TCHAR*
-ACE_DLL_Singleton_Adapter_T<TYPE>::dll_name (void)
+ACE_DLL_Singleton_Adapter_T<TYPE>::dll_name (void) 
 {
   // @todo make this a constant somewhere (or it there already is one
   // then use it.

@@ -18,15 +18,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
-#include "ace/OS_Log_Msg_Attributes.h"
+#include "ace/OS_Export.h"
 
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 #if defined (ACE_PSOS)
 extern "C" void ace_thread_adapter (unsigned long args);
 #else /* ! defined (ACE_PSOS) */
-extern "C" ACE_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
+extern "C" ACE_OS_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
 #endif /* ACE_PSOS */
 
 /**
@@ -37,7 +36,7 @@ extern "C" ACE_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
  * Container for ACE_Thread_Descriptor members that are
  * used in ACE_OS.
  */
-class ACE_Export ACE_OS_Thread_Descriptor
+class ACE_OS_Export ACE_OS_Thread_Descriptor
 {
 public:
   /// Get the thread creation flags.
@@ -72,7 +71,7 @@ protected:
  * the thread that calls @c invoke() on this object.  Therefore,
  * the @c invoke() method is responsible for deleting itself.
  */
-class ACE_Export ACE_Base_Thread_Adapter
+class ACE_OS_Export ACE_Base_Thread_Adapter
 {
 public:
   /// Constructor.

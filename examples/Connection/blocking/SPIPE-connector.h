@@ -13,7 +13,6 @@
 #include "ace/SPIPE_Stream.h"
 #include "ace/Connector.h"
 #include "ace/SPIPE_Connector.h"
-#include "ace/Signal.h"
 
 class Peer_Handler : public ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
 {

@@ -25,10 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tools/XML_Helpers/RTConfigurationC.h"
+#include "../XML_Helpers/RTConfigurationC.h"
 #include "ace/Null_Mutex.h"
-#include "ace/Functor.h"
-#include "ace/Hash_Map_Manager_T.h"
 
 namespace CIAO
 {

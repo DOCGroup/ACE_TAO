@@ -1018,7 +1018,7 @@ private:
 
 # if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
-extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
+extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
@@ -1026,7 +1026,7 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 // pthread_cleanup_push, it is undone by the Solaris header file
 // /usr/include/pthread.h. So this macro generates a warning under Solaris
 // with SunCC. This is a bug in the Solaris header file.
-extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
+extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # else
@@ -1038,8 +1038,6 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 // forward decl's
 class ACE_event_t;
 # endif
-
-class ACE_Base_Thread_Adapter;
 
 namespace ACE_OS {
 
@@ -1408,7 +1406,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int rwlock_destroy (ACE_rwlock_t *rw);
 
-  extern ACE_Export
+  ACE_NAMESPACE_INLINE_FUNCTION
   int rwlock_init (ACE_rwlock_t *rw,
                    int type = ACE_DEFAULT_SYNCH_TYPE,
                    const ACE_TCHAR *name = 0,

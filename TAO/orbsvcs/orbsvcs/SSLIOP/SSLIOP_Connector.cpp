@@ -161,7 +161,7 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   if (!CORBA::is_nil (trust_policy.in ()))
     {
       trust = trust_policy->trust (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (-1);
     }
 
   // Flag that states whether any form of establishment of trust
@@ -498,7 +498,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
         this->retrieve_credentials (resolver->stub (),
                                     svc_handler->peer ().ssl ()
                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (-1);
 
       svc_handler = safe_handler.release ();
 

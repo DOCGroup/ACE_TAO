@@ -35,12 +35,14 @@ public:
                               int clip_portnum)       // clip port# info?
     {
       if (ip_addr.addr_to_string (ret_string, len, 1) == -1)
-        ACE_OS::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
+        {
+          ACE_OS::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
+        }
       else
         {
           ACE_TCHAR *pc;
           if (clip_portnum
-              && (pc = ACE_OS::strrchr (ret_string, ACE_LIB_TEXT (':'))))
+              && (pc = ACE_OS::strchr (ret_string, ACE_LIB_TEXT (':'))))
             *pc = ACE_LIB_TEXT ('\0'); // clip port# info.
         }
     }
@@ -188,22 +190,9 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
   ACE_INET_Addr bind_addy (mcast_addr);
   if (ACE_BIT_DISABLED (this->opts_, OPT_BINDADDR_YES))
     {
-#if defined (ACE_HAS_IPV6)
-      if (mcast_addr.get_type () == PF_INET6)
-        {
-          if (bind_addy.set (mcast_addr.get_port_number (), "::", 
-                             1, AF_INET6) == -1)
-            return -1;
-        }
-      else
-        // Bind to "any" address and explicit port#.
-        if (bind_addy.set (mcast_addr.get_port_number ()) == -1)
-          return -1;
-#else
       // Bind to "any" address and explicit port#.
       if (bind_addy.set (mcast_addr.get_port_number ()) == -1)
         return -1;
-#endif /* ACE_HAS_IPV6 */
     }
 
   // Bind to the address (which may be INADDR_ANY) and port# (which may be 0)
@@ -228,34 +217,6 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
   if (net_if)
     {
 #if defined (IP_MULTICAST_IF) && (IP_MULTICAST_IF != 0)
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-      if (mcast_addr.get_type () == AF_INET6)
-        {
-          ipv6_mreq send_mreq;
-          if (this->make_multicast_ifaddr6 (&send_mreq,
-                                           mcast_addr,
-                                           net_if) == -1)
-            return -1;
-          if (this->ACE_SOCK::set_option 
-                              (IPPROTO_IPV6, IPV6_MULTICAST_IF,
-                               &(send_mreq.ipv6mr_interface),
-                               sizeof send_mreq.ipv6mr_interface) == -1)
-            return -1; 
-        }
-      else
-        {
-          ip_mreq  send_mreq;
-          if (this->make_multicast_ifaddr (&send_mreq,
-                                           mcast_addr,
-                                           net_if) == -1)
-            return -1;
-          if (this->ACE_SOCK::set_option (IPPROTO_IP,
-                                          IP_MULTICAST_IF,
-                                          &(send_mreq.imr_interface),
-                                          sizeof send_mreq.imr_interface) == -1)
-            return -1;
-        }
-#else
       ip_mreq  send_mreq;
       if (this->make_multicast_ifaddr (&send_mreq,
                                        mcast_addr,
@@ -266,7 +227,6 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
                                       &(send_mreq.imr_interface),
                                       sizeof send_mreq.imr_interface) == -1)
         return -1;
-#endif /* __linux__ && ACE_HAS_IPV6 */
       this->send_net_if_ = new ACE_TCHAR[ACE_OS::strlen (net_if) + 1];
       ACE_OS::strcpy (this->send_net_if_, net_if);
 #else
@@ -292,91 +252,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   if (ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL)
       && net_if == 0)
     {
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-      if (mcast_addr.get_type () == AF_INET6)
-        {
-          struct if_nameindex *intf;
-
-          intf = ACE_OS::if_nameindex ();
-
-          if (intf == 0)
-            return -1;
-
-          size_t nr_subscribed = 0;
-          int index = 0;
-
-          while (intf[index].if_index != 0 || intf[index].if_name != 0)
-            {
-              if (this->join (mcast_addr, reuse_addr, 
-                              intf[index].if_name) == 0)
-                ++nr_subscribed;
-
-              ++index;
-            }
-
-          ACE_OS::if_freenameindex (intf);
-
-          if (nr_subscribed == 0)
-            {
-              errno = ENODEV;
-              return -1;
-            }
-
-          return 1;
-        }
-        else
-          {
-            // Subscribe on all local multicast-capable network interfaces, by
-            // doing recursive calls with specific interfaces.
-
-            ACE_INET_Addr *if_addrs = 0;
-            size_t if_cnt;
-
-            if (ACE_Sock_Connect::get_ip_interfaces (if_cnt, if_addrs) != 0)
-              return -1;
-
-            size_t nr_subscribed = 0;
-
-            if (if_cnt < 2)
-              {
-                if (this->subscribe (mcast_addr,
-                                     reuse_addr,
-                                     ACE_LIB_TEXT ("0.0.0.0")) == 0)
-                  ++nr_subscribed;
-              }
-            else
-              {
-                // Iterate through all the interfaces, figure out which ones
-                // offer multicast service, and subscribe to them.
-                while (if_cnt > 0)
-                  {
-                    --if_cnt;
-
-                    // Convert to 0-based for indexing, next loop check.
-                    if (if_addrs[if_cnt].get_ip_address () == INADDR_LOOPBACK)
-                      continue;
-                    if (this->subscribe (mcast_addr,
-                                         reuse_addr,
-                                         ACE_TEXT_CHAR_TO_TCHAR
-                                     (if_addrs[if_cnt].get_host_addr ())) == 0)
-                      ++nr_subscribed;
-                  }
-              }
-
-            delete [] if_addrs;
-
-            if (nr_subscribed == 0)
-              {
-                errno = ENODEV;
-                return -1;
-              }
-
-            // 1 indicates a "short-circuit" return.  This handles the
-            // recursive behavior of checking all the interfaces.
-            return 1;
-
-          }
-#else
       // Subscribe on all local multicast-capable network interfaces, by
       // doing recursive calls with specific interfaces.
 
@@ -425,33 +300,15 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
       // 1 indicates a "short-circuit" return.  This handles the
       // recursive behavior of checking all the interfaces.
       return 1;
-#endif /* __linux__ && ACE_HAS_IPV6 */
     }
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-  if (mcast_addr.get_type () == AF_INET6)
-    {
-      if (this->make_multicast_ifaddr6 (0, mcast_addr, net_if) == -1)
-        return -1;
-    }
-  else
-    {
-      // Validate passed multicast addr and iface specifications.
-      if (this->make_multicast_ifaddr (0,
-                                       mcast_addr,
-                                       net_if) == -1)
-        return -1;
-    }
-#else
-    // Validate passed multicast addr and iface specifications.
-    if (this->make_multicast_ifaddr (0,
-                                     mcast_addr,
-                                     net_if) == -1)
-      return -1;
-#endif /* __linux__ && ACE_HAS_IPV6 */
+  // Validate passed multicast addr and iface specifications.
+  if (this->make_multicast_ifaddr (0,
+                                   mcast_addr,
+                                   net_if) == -1)
+    return -1;
 
   return 0;
-  
 }
 
 // Subscribe and add address/iface to subscription list if successful.
@@ -504,24 +361,9 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
 
   // If bind_addr_opt_ is enabled, check for address different than
   // bound address.
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-  if (ACE_BIT_ENABLED (this->opts_, OPT_BINDADDR_YES) 
-      && ((this->send_addr_.get_type () == AF_INET
-          && this->send_addr_.get_ip_address () != INADDR_ANY
-          && this->send_addr_.get_ip_address () != mcast_addr.get_ip_address ())
-      || (this->send_addr_.get_type () == AF_INET6 && 
-          ACE_OS::memcmp 
-          (&((sockaddr_in6 *) this->send_addr_.get_addr ())->sin6_addr,
-           &in6addr_any, sizeof (in6_addr)) != 0 && 
-          ACE_OS::memcmp 
-          (&((sockaddr_in6 *) this->send_addr_.get_addr ())->sin6_addr,
-           &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr,
-           sizeof (in6_addr)) != 0)))
-#else
   if (ACE_BIT_ENABLED (this->opts_, OPT_BINDADDR_YES)
       && this->send_addr_.get_ip_address () != INADDR_ANY
       && this->send_addr_.get_ip_address () != mcast_addr.get_ip_address ())
-#endif /* __linux__ && ACE_HAS_IPV6 */
     {
       ACE_TCHAR sub_addr_string[MAXNAMELEN + 1];
       ACE_TCHAR bound_addr_string[MAXNAMELEN + 1];
@@ -573,9 +415,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe_i");
   ip_mreq  mreq;
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-  ipv6_mreq mreq6;
-#endif /* __linux__ && ACE_HAS_IPV6 */
 
   // Open the socket IFF this is the first ::subscribe and ::open
   // was not explicitly invoked.
@@ -595,34 +434,10 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
         return result;
     }
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-  if (mcast_addr.get_type () == AF_INET6) 
-    {
-      if (this->make_multicast_ifaddr6 (&mreq6, mcast_addr, net_if) == -1)
-        return -1;
-      // Tell IP stack to pass messages sent to this group.
-      else if (this->ACE_SOCK::set_option (IPPROTO_IPV6,
-                                           IPV6_JOIN_GROUP,
-                                           &mreq6,
-                                           sizeof mreq6) == -1)
-        return -1;
-    }
-  else
-    {
-      // Create multicast addr/if struct.
-      if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
-        return -1;
-      // Tell IP stack to pass messages sent to this group.
-      else if (this->ACE_SOCK::set_option (IPPROTO_IP,
-                                           IP_ADD_MEMBERSHIP,
-                                           &mreq,
-                                           sizeof mreq) == -1)
-        return -1;
-
-    }
-#else
+  // Create multicast addr/if struct.
   if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
     return -1;
+
   // Tell IP stack to pass messages sent to this group.
   // Note, this is not IPv6 compliant.
   else if (this->ACE_SOCK::set_option (IPPROTO_IP,
@@ -630,8 +445,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
                                        &mreq,
                                        sizeof mreq) == -1)
     return -1;
-
-#endif /* __linux__ && ACE_HAS_IPV6 */
 
   return 0;
 }
@@ -646,90 +459,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
   if (ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL)
       && net_if == 0)
     {
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-      if (mcast_addr.get_type () == AF_INET6)
-        {
-          struct if_nameindex *intf;
-
-          intf = ACE_OS::if_nameindex ();
-
-          if (intf == 0)
-            return -1;
-
-          size_t nr_unsubscribed = 0;
-          int index = 0;
-
-          while (intf[index].if_index != 0 || intf[index].if_name != 0)
-            {
-              if (this->leave (mcast_addr, intf[index].if_name) == 0)
-                ++nr_unsubscribed;
-
-              ++index;
-            }
-
-          ACE_OS::if_freenameindex (intf);
-
-          if (nr_unsubscribed == 0)
-            {
-              errno = ENODEV;
-              return -1;
-            }
-
-          return 1;
-
-
-        }
-      else
-        {
-          // Unsubscribe on all local multicast-capable network interfaces, by
-          // doing recursive calls with specific interfaces.
-
-          ACE_INET_Addr *if_addrs = 0;
-          size_t if_cnt;
-
-          // NOTE - <get_ip_interfaces> doesn't always get all of the
-          // interfaces.  In particular, it may not get a PPP interface.  This
-          // is a limitation of the way <get_ip_interfaces> works with
-          // old versions of MSVC.  The reliable way of getting the interface 
-          // list is available only with MSVC 5 and newer.
-          if (ACE_Sock_Connect::get_ip_interfaces (if_cnt, if_addrs) != 0)
-            return -1;
-
-          size_t nr_unsubscribed = 0;
-    
-          if (if_cnt < 2)
-            {
-              if (this->leave (mcast_addr,
-                               ACE_LIB_TEXT ("0.0.0.0")) == 0)
-                ++nr_unsubscribed;
-            }
-          else
-            {
-              while (if_cnt > 0)
-                {
-                  --if_cnt;
-                  // Convert to 0-based for indexing, next loop check
-                  if (if_addrs[if_cnt].get_ip_address () == INADDR_LOOPBACK)
-                    continue;
-                  if (this->leave (mcast_addr,
-                                   ACE_TEXT_CHAR_TO_TCHAR
-                                   (if_addrs[if_cnt].get_host_addr ())) == 0)
-                    ++nr_unsubscribed;
-                }
-            }
-
-          delete [] if_addrs;
-    
-          if (nr_unsubscribed == 0)
-            {
-              errno = ENODEV;
-              return -1;
-            }
-
-          return 1;
-
-        }
-#else
       // Unsubscribe on all local multicast-capable network interfaces, by
       // doing recursive calls with specific interfaces.
 
@@ -776,7 +505,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
         }
 
       return 1;
-#endif /* __linux__ && ACE_HAS_IPV6 */
     }
 
   return 0;
@@ -851,46 +579,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
   if (result != 0)
     return result;
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-  if (mcast_addr.get_type () == AF_INET6)
-    {
-      // Validate addr/if specifications and create addr/if struct.
-      ipv6_mreq  mreq;
-      if (this->make_multicast_ifaddr6 (&mreq, mcast_addr, net_if) == -1)
-        {
-          return -1;
-        }
-      // Tell network device driver to stop reading datagrams with the
-      // <mcast_addr>.  
-      else if (ACE_SOCK::set_option (IPPROTO_IPV6,
-                                     IPV6_LEAVE_GROUP,
-                                     &mreq,
-                                     sizeof mreq) == -1)
-        {
-          return -1;
-        }
-
-    }
-  else  // IPv4
-    {
-      // Validate addr/if specifications and create addr/if struct.
-      ip_mreq  mreq;
-      if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
-        {
-          return -1;
-        }
-      // Tell network device driver to stop reading datagrams with the
-      // <mcast_addr>.  
-      else if (ACE_SOCK::set_option (IPPROTO_IP,
-                                     IP_DROP_MEMBERSHIP,
-                                     &mreq,
-                                 sizeof mreq) == -1)
-        {
-          return -1;
-        }
-
-    }
-#else
   // Validate addr/if specifications and create addr/if struct.
   ip_mreq  mreq;
   if (this->make_multicast_ifaddr (&mreq, mcast_addr, net_if) == -1)
@@ -907,7 +595,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
     {
       return -1;
     }
-#endif /* __linux__ && ACE_HAS_IPV6 */
 
   return 0;
 }
@@ -1001,32 +688,3 @@ ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr (ip_mreq *ret_mreq,
   return 0;
 }
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-// XXX: This will not work on any operating systems that do not support 
-//      if_nametoindex
-int
-ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
-                                              const ACE_INET_Addr &mcast_addr,
-                                              const ACE_TCHAR *net_if)
-{
-  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr6");
-  ipv6_mreq  lmreq;       // Scratch copy.
-  if (net_if != 0)
-    {
-      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (net_if); 
-    }
-  else
-    lmreq.ipv6mr_interface = 0;
-
-  // now set the multicast address
-  ACE_OS::memcpy (&lmreq.ipv6mr_multiaddr, 
-                  &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr, 
-                  sizeof (in6_addr));
-
-  // Set return info, if requested.
-  if (ret_mreq)
-    *ret_mreq = lmreq;
-
-  return 0;
-}
-#endif /* __linux__ && ACE_HAS_IPV6 */

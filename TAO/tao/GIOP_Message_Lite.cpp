@@ -2,17 +2,16 @@
 //
 //$Id$
 
-#include "GIOP_Message_Lite.h"
-#include "debug.h"
-#include "TAOC.h"
-#include "ORB_Core.h"
-#include "operation_details.h"
-#include "TAO_Server_Request.h"
-#include "GIOP_Message_Locate_Header.h"
-#include "LF_Strategy.h"
-#include "Transport.h"
-#include "Transport_Mux_Strategy.h"
-#include "Codeset_Manager.h"
+#include "tao/GIOP_Message_Lite.h"
+#include "tao/debug.h"
+#include "tao/TAOC.h"
+#include "tao/ORB_Core.h"
+#include "tao/operation_details.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/GIOP_Message_Locate_Header.h"
+#include "tao/LF_Strategy.h"
+#include "tao/Transport.h"
+#include "tao/Codeset_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
@@ -751,7 +750,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
       if (!CORBA::is_nil (forward_to.in ()))
         {
           // We should forward to another object...
-          TAO_Pluggable_Reply_Params reply_params (transport);
+          TAO_Pluggable_Reply_Params reply_params (this->orb_core_);
           reply_params.request_id_ = request_id;
           reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
           reply_params.svc_ctx_.length (0);
@@ -1131,20 +1130,9 @@ TAO_GIOP_Message_Lite::parse_reply (TAO_InputCDR &cdr,
         }
     }
 
-  params.input_cdr_= &cdr;
-
-  if ( params.transport_->tms ()->dispatch_reply (params) == -1)
-    {
-      // Something really critical happened, we will forget about
-      // every reply on this connection.
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - GIOP_Message_Lite[%d]::process_parsed_messages, "
-                    "dispatch reply failed\n",
-                    params.transport_->id ()));
-
-      return -1;
-    }
+  // Steal the contents in to the reply CDR and loose ownership of the
+  // data block.
+  params.input_cdr_.exchange_data_blocks (cdr);
 
   return 0;
 }
@@ -1432,7 +1420,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
   transport->assign_translators(0,&output);
 
   // Make the GIOP & reply header. They are version specific.
-  TAO_Pluggable_Reply_Params reply_params (transport);
+  TAO_Pluggable_Reply_Params reply_params (orb_core);
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
 

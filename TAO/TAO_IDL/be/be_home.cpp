@@ -18,12 +18,10 @@
 // ============================================================================
 
 #include "be_home.h"
-#include "be_component.h"
 #include "be_visitor.h"
-#include "global_extern.h"
 
-ACE_RCSID (be,
-           be_home,
+ACE_RCSID (be, 
+           be_home, 
            "$Id$")
 
 be_home::be_home (void)
@@ -82,14 +80,6 @@ be_home::be_home (UTL_ScopedName *n,
                   I_FALSE)
 {
   this->size_type (AST_Type::VARIABLE);
-
-  be_component *bt =
-     be_component::narrow_from_decl (managed_component);
-
-  bt->seen_in_operation ();
-
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.object_arg_seen_);
 }
 
 be_home::~be_home (void)
@@ -99,7 +89,7 @@ be_home::~be_home (void)
 void
 be_home::destroy (void)
 {
-  // Can't call be_interface->destroy() because all the
+  // Can't call be_interface->destroy() because all the 
   // home's decls are also added to the explicit interface.
   this->AST_Home::destroy ();
 }

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "RTConfig_Handlers.h"
-#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RTConfig_Handlers.inl"

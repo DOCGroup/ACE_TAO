@@ -12,7 +12,7 @@ ACE_OS::asctime (const struct tm *t)
 {
 #if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_OS_TRACE ("ACE_OS::asctime");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::asctime (t), char *, 0);
+  ACE_OSCALL_RETURN (::asctime (t), char *, 0);
 #else
   // @@ WinCE doesn't have gmtime also.
   ACE_UNUSED_ARG (t);
@@ -43,7 +43,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 # endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #elif ! defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   char *result;
-  ACE_OSCALL (ACE_STD_NAMESPACE::asctime (t), char *, 0, result);
+  ACE_OSCALL (::asctime (t), char *, 0, result);
   ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 #else
@@ -425,7 +425,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
                   const struct tm *timeptr)
 {
 #if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
-  return ACE_STD_NAMESPACE::strftime (s, maxsize, format, timeptr);
+  return ::strftime (s, maxsize, format, timeptr);
 #else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (maxsize);

@@ -39,9 +39,6 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params
   )
 {
-  if (params.input_cdr_ == 0)
-    return -1;
-
   // AMI Timeout Handling Begin
   timeout_handler_.cancel ();
 
@@ -51,17 +48,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (*params.input_cdr_);
-
-  if (db == 0)
-    {
-      if (TAO_debug_level > 2)
-        ACE_ERROR ((
-          LM_ERROR,
-          "TAO (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply ",
-          "clone_from failed \n"));
-      return -1;
-    }
+    this->reply_cdr_.clone_from (params.input_cdr_);
 
   // See whether we need to delete the data block by checking the
   // flags. We cannot be happy that we initally allocated the
@@ -192,10 +179,9 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
     {
       // Generate a fake exception....
       CORBA::TIMEOUT timeout_failure (
-        CORBA::SystemException::_tao_minor_code (
-            TAO_TIMEOUT_RECV_MINOR_CODE,
-            errno),
-         CORBA::COMPLETED_MAYBE);
+        CORBA::SystemException::_tao_minor_code (TAO_TIMEOUT_SEND_MINOR_CODE,
+                                                 errno),
+         CORBA::COMPLETED_NO);
 
       TAO_OutputCDR out_cdr;
 

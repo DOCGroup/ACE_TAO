@@ -80,8 +80,6 @@ extern "C"
 
 #   if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI) || defined (ACE_HAS_FORE_ATM_XTI)
 #     if defined (ACE_HAS_BROKEN_XTI_MACROS)
-        // Make sure tcp.h gets included before sys/xti.h.
-#       include "ace/os_include/netinet/os_tcp.h"
 #       undef TCP_NODELAY
 #       undef TCP_MAXSEG
 #     endif /* ACE_HAS_BROKEN_XTI_MACROS */
@@ -126,11 +124,12 @@ extern "C" int _xti_error(char *);
 # endif /* ACE_REDEFINES_XTI_FUNCTIONS */
 
 /**
- * @namespace ACE_OS
+ * @namespace ACE_OS_TLI
  *
  * @brief This class is a wrapper for the TLI operations
  *
  */
+#define ACE_OS_TLI ACE_OS
 namespace ACE_OS
 {
   // = A set of wrappers for TLI.

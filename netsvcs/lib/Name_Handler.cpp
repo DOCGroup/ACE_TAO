@@ -5,7 +5,6 @@
 #include "ace/Singleton.h"
 #include "ace/Auto_Ptr.h"
 #include "Name_Handler.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(lib,
           Name_Handler,

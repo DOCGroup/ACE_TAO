@@ -34,6 +34,7 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+class ACE_Time_Value;
 
 # if defined (ACE_LACKS_SYS_NERR)
 extern ACE_Export int sys_nerr;
@@ -60,7 +61,7 @@ namespace ACE_OS {
 
 #if !defined (ACE_HAS_MEMCHR)
   /// Emulated memchr - Finds a character in a buffer.
-  extern ACE_Export
+  extern ACE_Export 
   const void *memchr_emulation (const void *s, int c, size_t len);
 #endif /* ACE_HAS_MEMCHR */
 
@@ -115,12 +116,12 @@ namespace ACE_OS {
 #if defined (ACE_LACKS_STRCHR)
   /// Emulated strchr (char version) - Finds the first occurance of a
   /// character in a string.
-  extern ACE_Export
+  extern ACE_Export 
   char *strchr_emulation (char *s, int c);
 
   /// Emulated strchr (const char version) - Finds the first occurance of a
   /// character in a string.
-  extern ACE_Export
+  extern ACE_Export 
   const char *strchr_emulation (const char *s, int c);
 #endif /* ACE_LACKS_STRCHR */
 
@@ -156,29 +157,29 @@ namespace ACE_OS {
 
 #if defined (ACE_LACKS_STRCSPN)
   /// Emulated strcspn - Finds a substring in a string.
-  extern ACE_Export
+  extern ACE_Export 
   size_t strcspn_emulation (const char *s, const char *reject);
 #endif /* ACE_LACKS_STRCSPN */
 
   /// Returns a malloced duplicated string (char version).
-  extern ACE_Export
+  extern ACE_Export 
   char *strdup (const char *s);
 
 #if defined (ACE_HAS_WCHAR)
   /// Returns a malloced duplicated string (wchar_t version).
-  extern ACE_Export
+  extern ACE_Export 
   wchar_t *strdup (const wchar_t *s);
 #endif /* ACE_HAS_WCHAR */
 
   /// Copies a string, but returns a pointer to the end of the
   /// copied region (char version).
-  extern ACE_Export
+  extern ACE_Export 
   char *strecpy (char *des, const char *src);
 
 #if defined (ACE_HAS_WCHAR)
   /// Copies a string, but returns a pointer to the end of the
   /// copied region (wchar_t version).
-  extern ACE_Export
+  extern ACE_Export 
   wchar_t *strecpy (wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
@@ -188,7 +189,7 @@ namespace ACE_OS {
 
 #if defined (ACE_LACKS_STRERROR)
   /// Emulated strerror - Returns a system error message.
-  extern ACE_Export
+  extern ACE_Export 
   char *strerror_emulation (int errnum);
 #endif /* ACE_LACKS_STRERROR */
 
@@ -210,12 +211,12 @@ namespace ACE_OS {
 
   /// Finds the first occurance of a character in an array (const char
   /// version).
-  extern ACE_Export
+  extern ACE_Export 
   const char *strnchr (const char *s, int c, size_t len);
 
   /// Finds the first occurance of a character in an array (const ACE_WCHAR_T
   /// version).
-  extern ACE_Export
+  extern ACE_Export 
   const ACE_WCHAR_T *strnchr (const ACE_WCHAR_T *s, ACE_WINT_T c, size_t len);
 
   /// Finds the first occurance of a character in an array (char version).
@@ -268,12 +269,12 @@ namespace ACE_OS {
 
   /// Finds the first occurance of a substring in an array (const char
   /// version).
-  extern ACE_Export
+  extern ACE_Export 
   const char *strnstr (const char *s, const char *t, size_t len);
 
   /// Finds the first occurance of a substring in an array (const wchar_t
   /// version).
-  extern ACE_Export
+  extern ACE_Export 
   const ACE_WCHAR_T *strnstr (const ACE_WCHAR_T *s,
                               const ACE_WCHAR_T *t,
                               size_t len);
@@ -308,7 +309,7 @@ namespace ACE_OS {
 
 #if defined (ACE_LACKS_STRPBRK)
   /// Emulated strpbrk - Searches for characters in a string.
-  extern ACE_Export
+  extern ACE_Export 
   char *strpbrk_emulation (const char *string,
                            const char *charset);
 #endif /* ACE_LACKS_STRPBRK */
@@ -338,12 +339,12 @@ namespace ACE_OS {
 #if defined (ACE_LACKS_STRRCHR)
   /// Emulated strrchr (char version) - Finds the last occurance of a
   /// character in a string.
-  extern ACE_Export
+  extern ACE_Export 
   char *strrchr_emulation (char *s, int c);
 
   /// Emulated strrchr (const char version) - Finds the last occurance of a
   /// character in a string.
-  extern ACE_Export
+  extern ACE_Export 
   const char *strrchr_emulation (const char *s, int c);
 #endif /* ACE_LACKS_STRRCHR */
 
@@ -363,7 +364,7 @@ namespace ACE_OS {
    * Very seldom it's possible that the '\0' padding feature from
    * strncpy() is needed.
    */
-  extern ACE_Export
+  extern ACE_Export 
   char *strsncpy (char *dst,
                   const char *src,
                   size_t maxlen);
@@ -384,7 +385,7 @@ namespace ACE_OS {
    * Very seldom it's possible that the '\0' padding feature from
    * strncpy() is needed.
    */
-  extern ACE_Export
+  extern ACE_Export 
   ACE_WCHAR_T *strsncpy (ACE_WCHAR_T *dst,
                          const ACE_WCHAR_T *src,
                          size_t maxlen);
@@ -403,7 +404,7 @@ namespace ACE_OS {
 
 #if defined (ACE_LACKS_STRSPN)
   /// Emulated wcsspn.
-  extern ACE_Export
+  extern ACE_Export 
   size_t strspn_emulation (const char *string,
                            const char *charset);
 #endif /* ACE_LACKS_STRSPN */
@@ -454,12 +455,12 @@ namespace ACE_OS {
 
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   /// Emulated strtok_r.
-  extern ACE_Export
+  extern ACE_Export 
   char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
 
 # if defined (ACE_HAS_WCHAR)
   /// Emulated strtok_r (wchar_t version).
-  extern ACE_Export
+  extern ACE_Export 
   wchar_t *strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts);
 # endif  // ACE_HAS_WCHAR
 #endif /* !ACE_HAS_REENTRANT_FUNCTIONS */

@@ -737,33 +737,3 @@ ACE_OS::socketpair (int domain, int type,
 #endif /* ACE_WIN32 */
 }
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
-ACE_INLINE unsigned int
-ACE_OS::if_nametoindex (const char *ifname)
-{
-  ACE_OS_TRACE ("ACE_OS::if_nametoindex");
-  ACE_OSCALL_RETURN (::if_nametoindex (ifname), int, 0);
-}
-
-ACE_INLINE char *
-ACE_OS::if_indextoname (unsigned int ifindex, char *ifname)
-{
-  ACE_OS_TRACE ("ACE_OS::if_indextoname");
-  ACE_OSCALL_RETURN (::if_indextoname (ifindex, ifname), char *, 0);
-}
-
-ACE_INLINE struct if_nameindex *
-ACE_OS::if_nameindex (void)
-{
-  ACE_OS_TRACE ("ACE_OS::if_nameindex");
-  ACE_OSCALL_RETURN (::if_nameindex (), struct if_nameindex *, 0);
-}
-
-ACE_INLINE void
-ACE_OS::if_freenameindex (struct if_nameindex *ptr)
-{
-  ACE_OS_TRACE ("ACE_OS::if_freenameindex");
-  if (ptr != 0)
-    ::if_freenameindex (ptr);
-}
-#endif /* __linux__ && ACE_HAS_IPV6 */

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
 
 #include "PollableC.h"
@@ -41,19 +41,86 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
 
 // Arg traits specializations.
 namespace TAO
 {
+
+#if !defined (_CORBA_POLLABLESET__ARG_TRAITS_CS_)
+#define _CORBA_POLLABLESET__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_Export Arg_Traits<CORBA::PollableSet>
+    : public
+        Object_Arg_Traits_T<
+            CORBA::PollableSet_ptr,
+            CORBA::PollableSet_var,
+            CORBA::PollableSet_out,
+            TAO::Objref_Traits<CORBA::PollableSet>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_POLLABLE__ARG_TRAITS_CS_)
+#define _CORBA_POLLABLE__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_Export Arg_Traits<CORBA::Pollable>
+    : public
+        Object_Arg_Traits_T<
+            CORBA::Pollable_ptr,
+            CORBA::Pollable_var,
+            CORBA::Pollable_out,
+            TAO::Objref_Traits<CORBA::Pollable>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_DIIPOLLABLE__ARG_TRAITS_CS_)
+#define _CORBA_DIIPOLLABLE__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_Export Arg_Traits<CORBA::DIIPollable>
+    : public
+        Object_Arg_Traits_T<
+            CORBA::DIIPollable_ptr,
+            CORBA::DIIPollable_var,
+            CORBA::DIIPollable_out,
+            TAO::Objref_Traits<CORBA::DIIPollable>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_POLLABLESET__ARG_TRAITS_CS_)
+#define _CORBA_POLLABLESET__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_Export Arg_Traits<CORBA::PollableSet>
+    : public
+        Object_Arg_Traits_T<
+            CORBA::PollableSet_ptr,
+            CORBA::PollableSet_var,
+            CORBA::PollableSet_out,
+            TAO::Objref_Traits<CORBA::PollableSet>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
 };
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::Pollable.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Pollable_ptr
 TAO::Objref_Traits<CORBA::Pollable>::tao_duplicate (
     CORBA::Pollable_ptr p
@@ -62,7 +129,6 @@ TAO::Objref_Traits<CORBA::Pollable>::tao_duplicate (
   return CORBA::Pollable::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<CORBA::Pollable>::tao_release (
     CORBA::Pollable_ptr p
@@ -71,14 +137,12 @@ TAO::Objref_Traits<CORBA::Pollable>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Pollable_ptr
 TAO::Objref_Traits<CORBA::Pollable>::tao_nil (void)
 {
   return CORBA::Pollable::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Pollable>::tao_marshal (
     CORBA::Pollable_ptr p,
@@ -89,7 +153,7 @@ TAO::Objref_Traits<CORBA::Pollable>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_Pollable_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -110,10 +174,10 @@ CORBA::Pollable::_narrow (
     {
       return Pollable::_nil ();
     }
-  
+
   Pollable_ptr proxy =
     dynamic_cast<Pollable_ptr> (_tao_objref);
-  
+
   return Pollable::_duplicate (proxy);
 }
 
@@ -124,7 +188,7 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -169,11 +233,10 @@ CORBA::Pollable::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::DIIPollable.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::DIIPollable_ptr
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_duplicate (
     CORBA::DIIPollable_ptr p
@@ -182,7 +245,6 @@ TAO::Objref_Traits<CORBA::DIIPollable>::tao_duplicate (
   return CORBA::DIIPollable::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_release (
     CORBA::DIIPollable_ptr p
@@ -191,14 +253,12 @@ TAO::Objref_Traits<CORBA::DIIPollable>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::DIIPollable_ptr
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_nil (void)
 {
   return CORBA::DIIPollable::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DIIPollable>::tao_marshal (
     CORBA::DIIPollable_ptr p,
@@ -209,7 +269,7 @@ TAO::Objref_Traits<CORBA::DIIPollable>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_DIIPollable_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -230,10 +290,10 @@ CORBA::DIIPollable::_narrow (
     {
       return DIIPollable::_nil ();
     }
-  
+
   DIIPollable_ptr proxy =
     dynamic_cast<DIIPollable_ptr> (_tao_objref);
-  
+
   return DIIPollable::_duplicate (proxy);
 }
 
@@ -244,7 +304,7 @@ CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -293,11 +353,10 @@ CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::PollableSet.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::PollableSet_ptr
 TAO::Objref_Traits<CORBA::PollableSet>::tao_duplicate (
     CORBA::PollableSet_ptr p
@@ -306,7 +365,6 @@ TAO::Objref_Traits<CORBA::PollableSet>::tao_duplicate (
   return CORBA::PollableSet::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<CORBA::PollableSet>::tao_release (
     CORBA::PollableSet_ptr p
@@ -315,14 +373,12 @@ TAO::Objref_Traits<CORBA::PollableSet>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::PollableSet_ptr
 TAO::Objref_Traits<CORBA::PollableSet>::tao_nil (void)
 {
   return CORBA::PollableSet::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PollableSet>::tao_marshal (
     CORBA::PollableSet_ptr p,
@@ -333,13 +389,13 @@ TAO::Objref_Traits<CORBA::PollableSet>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_PollableSet_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
-// TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
   : CORBA::UserException (
@@ -423,8 +479,8 @@ void CORBA::PollableSet::NoPossiblePollable::_tao_decode (
 
 
 
-// TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
   : CORBA::UserException (
@@ -524,10 +580,10 @@ CORBA::PollableSet::_narrow (
     {
       return PollableSet::_nil ();
     }
-  
+
   PollableSet_ptr proxy =
     dynamic_cast<PollableSet_ptr> (_tao_objref);
-  
+
   return PollableSet::_duplicate (proxy);
 }
 
@@ -538,7 +594,7 @@ CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -583,50 +639,41 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class
-    TAO::Objref_Traits<
-        CORBA::PollableSet
-      >;
+  template class TAO::Objref_Traits<CORBA::PollableSet>;
 
   template class
     TAO_Objref_Var_T<
         CORBA::PollableSet
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::PollableSet
       >;
 
-  template class
-    TAO::Objref_Traits<
-        CORBA::Pollable
-      >;
+  template class TAO::Objref_Traits<CORBA::Pollable>;
 
   template class
     TAO_Objref_Var_T<
         CORBA::Pollable
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::Pollable
       >;
 
-  template class
-    TAO::Objref_Traits<
-        CORBA::DIIPollable
-      >;
+  template class TAO::Objref_Traits<CORBA::DIIPollable>;
 
   template class
     TAO_Objref_Var_T<
         CORBA::DIIPollable
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::DIIPollable
@@ -634,50 +681,45 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        CORBA::PollableSet \
-      >
+# pragma instantiate TAO::Objref_Traits<CORBA::PollableSet>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         CORBA::PollableSet
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::PollableSet
       >
 
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        CORBA::Pollable \
-      >
+# pragma instantiate TAO::Objref_Traits<CORBA::Pollable>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         CORBA::Pollable
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Pollable
       >
 
+# pragma instantiate TAO::Objref_Traits<CORBA::DIIPollable>
+
 # pragma instantiate \
-    TAO::Objref_Traits< \
+    TAO_Objref_Var_T< \
+        CORBA::DIIPollable
+      >
+
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        CORBA::DIIPollable
+      >
+
+# pragma instantiate \
+    TAO::Any_Impl_T< \
         CORBA::DIIPollable \
       >
 
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        CORBA::DIIPollable
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        CORBA::DIIPollable
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -87,7 +87,7 @@ namespace TAO
                      TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
-    ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - DII_Invocation::"
                   "handle_user_exception \n"));
 
@@ -99,8 +99,6 @@ namespace TAO
     TAO_InputCDR tmp_stream (cdr,
                              cdr.start ()->length (),
                              0);
-
-
 
     // Pull the exception ID out of the marshaling buffer.
     if (tmp_stream.read_string (buf.inout ()) == 0)
@@ -151,7 +149,6 @@ namespace TAO
     // But first, save the user exception in case we
     // are being used in a TAO gateway.
     this->host_->raw_user_exception (cdr);
-
 
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 

@@ -9,7 +9,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include "ace/Signal.h"
 
 #include "Logging_Acceptor.h"
 #include "Reactor_Singleton.h"

@@ -2,7 +2,6 @@
 
 #include "Collocated_ORBInitializer.h"
 #include "interceptors.h"
-#include "ace/OS_NS_string.h"
 
 Collocated_ORBInitializer::Collocated_ORBInitializer (void)
 {

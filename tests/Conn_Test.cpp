@@ -32,7 +32,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Process_Mutex.h"
-#include "ace/Signal.h"
 #include "Conn_Test.h"
 #include "ace/Barrier.h"
 #include "ace/OS_NS_signal.h"
