@@ -335,7 +335,7 @@ ACE_Unbounded_Stack<T>::remove (const T &item)
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator_Base)
 
 template <class T>
-ACE_Double_Linked_List_Iterator_Base<T>::ACE_Double_Linked_List_Iterator_Base (ACE_Double_Linked_List<T> &dll)
+ACE_Double_Linked_List_Iterator_Base<T>::ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &dll)
   : current_ (0), dllist_ (&dll)
 {
   // Do nothing
@@ -444,7 +444,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::dump_i (void) const
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator)
 
 template <class T>
-ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &dll)
+ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (const ACE_Double_Linked_List<T> &dll)
   : ACE_Double_Linked_List_Iterator_Base <T> (dll)
 {
   this->current_ = ACE_static_cast (T*, dll.head_->next_);
@@ -483,7 +483,9 @@ ACE_Double_Linked_List_Iterator<T>::advance_and_remove (int dont_remove)
     {
       item = this->next ();
       this->do_advance ();
-      this->dllist_->remove (item);
+      // It seems dangerous to remove nodes in an iterator, but so it goes...
+      ACE_Double_Linked_List<T> *dllist = ACE_const_cast (ACE_Double_Linked_List<T> *, this->dllist_);
+      dllist->remove (item);
     }
   return item;
 }
@@ -583,7 +585,9 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::advance_and_remove (int dont_remove)
     {
       item = this->next ();
       this->do_retreat ();
-      this->dllist_->remove (item);
+      // It seems dangerous to remove nodes in an iterator, but so it goes...
+      ACE_Double_Linked_List<T> *dllist = ACE_const_cast (ACE_Double_Linked_List<T> *, this->dllist_);
+      dllist->remove (item);
     }
   return item;
 }
@@ -656,7 +660,7 @@ ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
 }
 
 template <class T>
-ACE_Double_Linked_List<T>::ACE_Double_Linked_List (ACE_Double_Linked_List<T> &cx)
+ACE_Double_Linked_List<T>::ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &cx)
   : allocator_ (cx.allocator_)
 {
   if (this->allocator_ == 0)
@@ -670,7 +674,7 @@ ACE_Double_Linked_List<T>::ACE_Double_Linked_List (ACE_Double_Linked_List<T> &cx
 }
 
 template <class T> void
-ACE_Double_Linked_List<T>::operator= (ACE_Double_Linked_List<T> &cx)
+ACE_Double_Linked_List<T>::operator= (const ACE_Double_Linked_List<T> &cx)
 {
   if (this != &cx)
     {
@@ -827,7 +831,7 @@ ACE_Double_Linked_List<T>::delete_nodes (void)
 }
 
 template <class T> void
-ACE_Double_Linked_List<T>::copy_nodes (ACE_Double_Linked_List<T> &c)
+ACE_Double_Linked_List<T>::copy_nodes (const ACE_Double_Linked_List<T> &c)
 {
   for (ACE_Double_Linked_List_Iterator<T> iter (c);
        !iter.done ();

@@ -431,7 +431,7 @@ protected:
   // = Initialization methods.
 
   /// Constructor
-  ACE_Double_Linked_List_Iterator_Base (ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
 
   /// Copy constructor.
   ACE_Double_Linked_List_Iterator_Base (const
@@ -472,7 +472,7 @@ protected:
   /// Remember where we are.
   T *current_;
 
-  ACE_Double_Linked_List<T> *dllist_;
+  const ACE_Double_Linked_List<T> *dllist_;
 };
 
 /**
@@ -493,7 +493,7 @@ class ACE_Double_Linked_List_Iterator : public ACE_Double_Linked_List_Iterator_B
 {
 public:
   // = Initialization method.
-  ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List_Iterator (const ACE_Double_Linked_List<T> &);
 
   /**
    * Retasks the iterator to iterate over a new
@@ -650,10 +650,10 @@ public:
   ACE_Double_Linked_List (ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
-  ACE_Double_Linked_List (ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
 
   /// Assignment operator.
-  void operator= (ACE_Double_Linked_List<T> &);
+  void operator= (const ACE_Double_Linked_List<T> &);
 
   /// Destructor.
   ~ACE_Double_Linked_List (void);
@@ -719,8 +719,8 @@ protected:
   /// Delete all the nodes in the list.
   void delete_nodes (void);
 
-  /// Copy nodes into this list.
-  void copy_nodes (ACE_Double_Linked_List<T> &);
+  /// Copy nodes from <rhs> into this list.
+  void copy_nodes (const ACE_Double_Linked_List<T> &rhs);
 
   /// Setup header pointer.  Called after we create the head node in ctor.
   void init_head (void);
@@ -784,7 +784,6 @@ typedef ACE_Double_Linked_List<ACE_DLList_Node> ACE_DLList_Base;
 template <class T>
 class ACE_DLList : public ACE_DLList_Base
 {
-
   friend class ACE_DLList_Node;
   friend class ACE_Double_Linked_List_Iterator<T>;
   friend class ACE_DLList_Iterator<T>;
@@ -793,7 +792,7 @@ class ACE_DLList : public ACE_DLList_Base
 public:
 
   /// Delegates to ACE_Double_Linked_List.
-  void operator= (ACE_DLList<T> &l);
+  void operator= (const ACE_DLList<T> &l);
 
   // = Classic queue operations.
 
@@ -831,7 +830,7 @@ public:
   ACE_DLList (ACE_Allocator *alloc = 0);
 
   /// Delegates to ACE_Double_Linked_List.
-  ACE_DLList (ACE_DLList<T> &l);
+  ACE_DLList (const ACE_DLList<T> &l);
 
   /// Deletes the list starting from the head.
   ~ACE_DLList (void);
