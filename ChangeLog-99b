@@ -3,7 +3,7 @@ Sat Jul 31 20:29:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/OS.cpp: Moved the comment regarding *printf to where it
 	  belongs.
 
-	* ace/OS.h: Removed an extra trailing semicolumn following
+	* ace/OS.h: Removed an extra trailing semicolon following
 	  IPPROTO_TCP.
 
 Sat Jul 31 19:27:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
