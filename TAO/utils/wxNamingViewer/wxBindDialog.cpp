@@ -76,7 +76,7 @@ bool WxBindDialog::TransferDataFromWindow()
 
   } catch(CORBA::Exception& ex) {
 
-    wxMessageBox( ex._id(), "Invalid IOR");
+    wxMessageBox( ex._rep_id(), "Invalid IOR");
     object = CORBA::Object::_nil();
 
   }

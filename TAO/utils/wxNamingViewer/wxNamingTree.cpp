@@ -120,7 +120,7 @@ void WxNamingTree::copySelectedToClipboard()
 
   } catch( CORBA::Exception& ex) {
 
-    wxMessageBox( ex._id(), "CORBA::Exception");
+    wxMessageBox( ex._rep_id(), "CORBA::Exception");
 
   }
 }
@@ -188,7 +188,7 @@ void WxNamingTree::listBindingList(
 
   } catch( CORBA::Exception& ex) {
 
-    wxMessageBox( ex._id(), "CORBA::Exception");
+    wxMessageBox( ex._rep_id(), "CORBA::Exception");
 
   }
 }
@@ -238,7 +238,7 @@ void WxNamingTree::listContext( wxTreeItemId& item)
 
   } catch( CORBA::Exception& ex) {
 
-    wxMessageBox( ex._id(), "CORBA::Exception");
+    wxMessageBox( ex._rep_id(), "CORBA::Exception");
 
   }
 
@@ -285,7 +285,7 @@ void WxNamingTree::onContextPopupBindContext( wxCommandEvent& event)
   } catch( CORBA::Exception& ex) {
 
     wxMessageBox(
-        ex._id(),
+        ex._rep_id(),
         "CORBA::Exception");
 
   }
@@ -319,7 +319,7 @@ void WxNamingTree::onContextPopupBindObject( wxCommandEvent& event)
   } catch( CORBA::Exception& ex) {
 
     wxMessageBox(
-        ex._id(),
+        ex._rep_id(),
         "CORBA::Exception");
 
   }
@@ -351,7 +351,7 @@ void WxNamingTree::onContextPopupBindNewContext( wxCommandEvent& event)
   } catch( CORBA::Exception& ex) {
 
     wxMessageBox(
-        ex._id(),
+        ex._rep_id(),
         "CORBA::Exception");
 
   }
@@ -391,7 +391,7 @@ void WxNamingTree::onContextPopupDestroy( wxCommandEvent&)
 
   } catch( CORBA::Exception& ex) {
 
-    wxMessageBox( ex._id(), "CORBA::Exception");
+    wxMessageBox( ex._rep_id(), "CORBA::Exception");
 
   }
 }
@@ -433,7 +433,7 @@ void WxNamingTree::onContextPopupUnbind( wxCommandEvent&)
 
   } catch( CORBA::Exception& ex) {
 
-    wxMessageBox( ex._id(), "CORBA::Exception");
+    wxMessageBox( ex._rep_id(), "CORBA::Exception");
 
   }
 }
@@ -499,7 +499,7 @@ void WxNamingTree::onObjectPopupUnbind( wxCommandEvent& )
 
   } catch( CORBA::Exception& ex) {
 
-    wxMessageBox( ex._id(), "CORBA::Exception");
+    wxMessageBox( ex._rep_id(), "CORBA::Exception");
 
   }
 }
