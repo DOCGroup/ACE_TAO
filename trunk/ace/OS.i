@@ -2606,6 +2606,7 @@ ACE_OS::getprotobyname_r (const char *name,
     return 0;
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
   ACE_NETDBCALL_RETURN (::getprotobyname (name),
 			struct protoent *, 0,
 			buffer, sizeof (ACE_PROTOENT_DATA));
@@ -2652,6 +2653,7 @@ ACE_OS::getprotobynumber_r (int proto,
     return 0;
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
   ACE_NETDBCALL_RETURN (::getprotobynumber (proto),
 			struct protoent *, 0,
 			buffer, sizeof (ACE_PROTOENT_DATA));
@@ -2874,6 +2876,8 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
     }
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_NETDBCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type),
 			struct hostent *, 0,
 			buffer, sizeof (ACE_HOSTENT_DATA));
@@ -2921,6 +2925,8 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
     }
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
+  ACE_UNUSED_ARG (h_errnop);
   ACE_NETDBCALL_RETURN (::gethostbyname (name),
 			struct hostent *, 0,
 			buffer, sizeof (ACE_HOSTENT_DATA));
@@ -2965,6 +2971,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
     return (struct servent *) 0;
 #else
 #if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
+  ACE_UNUSED_ARG (result);
   ACE_NETDBCALL_RETURN (::getservbyname (svc, proto),
 			struct servent *, 0,
 			buf, sizeof (ACE_SERVENT_DATA));
@@ -3372,6 +3379,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_continue (target_thread), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
   return ::ResumeThread (target_thread) != ACE_SYSCALL_FAILED ? 0 : -1;
@@ -3507,6 +3515,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (waiter_id, thr_id, status), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (thr_id);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_join (waiter_id, status), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_WTHREADS)
@@ -3587,6 +3596,8 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
   // I didn't manage to find pthread_cancel anywhere in the MIT pthread
   // implementation. So I'll just leave this instead, and see what
   // breaks. -- jwr
+  ACE_UNUSED_ARG (old_state);
+  ACE_UNUSED_ARG (new_state);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -3622,6 +3633,8 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
   // I didn't manage to find pthread_cancel anywhere int the MIT pthread
   // implementation. So I'll just leave this instead, and see what
   // breaks. -- jwr
+  ACE_UNUSED_ARG (new_type);
+  ACE_UNUSED_ARG (old_type);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -3651,6 +3664,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
   // I didn't manage to find pthread_cancel anywhere int the MIT
   // pthread implementation. So I'll just leave this instead, and
   // see what breaks. -- jwr
+  ACE_UNUSED_ARG (t_id);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
   ACE_NOTSUP_RETURN (-1);
@@ -3914,9 +3928,10 @@ ACE_OS::thr_setconcurrency (int hint)
 				       ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG(hint);
+  ACE_UNUSED_ARG (hint);
 	
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
@@ -3972,6 +3987,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 #if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_suspend (target_thread), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
   if (::SuspendThread (target_thread) != ACE_SYSCALL_FAILED)

@@ -84,8 +84,8 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
 					 FILE_FLAG_OVERLAPPED,
 					 PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE,
 					 MAX_PIPE_INSTANCES,
-					 1024*10,
-					 1024*10,
+					 1024 * 10,
+					 1024 * 10,
 					 ACE_DEFAULT_TIMEOUT,
 					 NULL);
   if (handle == ACE_INVALID_HANDLE)
@@ -94,6 +94,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
     this->set_handle (handle);
   return 0;
 #else
+  ACE_UNUSED_ARG (perms);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
@@ -158,9 +159,9 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
 
   return 0;
 #elif defined (ACE_WIN32)
-	ACE_UNUSED_ARG(restart);
-	ACE_UNUSED_ARG(timeout);
-	ACE_UNUSED_ARG(remote_addr);
+  ACE_UNUSED_ARG (restart);
+  ACE_UNUSED_ARG (timeout);
+  ACE_UNUSED_ARG (remote_addr);
 
   // Check to see if we have a valid pipe
   if (this->get_handle () == ACE_INVALID_HANDLE)
@@ -210,6 +211,10 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   // Create a new instance of the pipe for the next connection.
   return this->create_new_instance ();
 #else
+  ACE_UNUSED_ARG (restart);
+  ACE_UNUSED_ARG (timeout);
+  ACE_UNUSED_ARG (remote_addr);
+  ACE_UNUSED_ARG (new_io);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }

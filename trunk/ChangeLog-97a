@@ -1,3 +1,31 @@
+Mon Feb 17 18:32:29 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Protected the #ifdef for CLOCK_REALTIME so that it
+ 	  won't conflict with an existing macro in AIX.  Thanks to Chris
+ 	  Lahey <CLahey@cccis.com> for this.
+
+	* ace/Local_Name_Space_T.h: Added Local_Name_Space.h to
+ 	  Local_Name_Space_T.h so that templates will work correctly on
+ 	  AIX.  Thanks to Chris Lahey <CLahey@cccis.com> for this.
+
+	* tests: Added a new test, Reactor_Notify_Test.cpp, which tests
+ 	  out the new max_notify_iterations() method on the Reactor.
+
+	* ace/Reactor: Finished rewriting and testing the new dispatching
+ 	  logic of the Reactor.  The new implementation guards against
+ 	  pathological cases where ACE_Event_Handler::handle_*() methods
+ 	  remove registered ACE_Event_Handler objects whose handles are
+ 	  pending in the dispatch_set.  Previously there was no good way
+ 	  to guard against this.  Now, it should be handled automatically.
+
+	* ace: Added many minor fixes to remove warnings with the SGI C++
+ 	  compiler.  Thanks to Gonzalo Diethelm <gonzo@ing.puc.cl> for
+ 	  suggesting this.
+
+	* include/makeinclude/platform_irix6.2_sgic++.GNU: Turned on all
+ 	  the warnings for the SGI C++ compiler.  Thanks to Gonzalo
+ 	  Diethelm <gonzo@ing.puc.cl> for suggesting this.
+
 Mon Feb 17 20:59:47 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/IOStream.h: added null ipfx (), etc., methods for ACE_WIN32
@@ -21,26 +49,6 @@ Mon Feb 17 20:59:47 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/Service_Configurator/IPC-tests/client/\
 	  remote_dgram_client_test.cpp (main): cast mmap.size () to
 	  ssize_t to avoid signed/unsigned comparison.
-
-Mon Feb 17 18:32:29 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/OS.h: Protected the #ifdef for CLOCK_REALTIME so that it
- 	  won't conflict with an existing macro in AIX.  Thanks to Chris
- 	  Lahey <CLahey@cccis.com> for this.
-
-	* ace/Local_Name_Space_T.h: Added Local_Name_Space.h to
- 	  Local_Name_Space_T.h so that templates will work correctly on
- 	  AIX.  Thanks to Chris Lahey <CLahey@cccis.com> for this.
-
-	* tests: Added a new test, Reactor_Notify_Test.cpp, which tests
- 	  out the new max_notify_iterations() method on the Reactor.
-
-	* ace/Reactor: Finished rewriting and testing the new dispatching
- 	  logic of the Reactor.  The new implementation guards against
- 	  pathological cases where ACE_Event_Handler::handle_*() methods
- 	  remove registered ACE_Event_Handler objects whose handles are
- 	  pending in the dispatch_set.  Previously there was no good way
- 	  to guard against this.  Now, it should be handled automatically.
 
 Mon Feb 17 09:25:08 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
