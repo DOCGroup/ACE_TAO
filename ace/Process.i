@@ -48,16 +48,16 @@ ACE_Process::kill (int signum)
 
 #if defined (ACE_WIN32)
 
-ACE_INLINE int
-ACE_Process_Options::new_console (void) const
+ACE_INLINE u_long
+ACE_Process_Options::creation_flags (void) const
 {
-  return new_console_;
+  return creation_flags_;
 }
 
 ACE_INLINE void
-ACE_Process_Options::new_console (int nc)
+ACE_Process_Options::creation_flags (u_long cf)
 {
-  new_console_ = nc;
+  creation_flags_ = cf;
 }
 
 ACE_INLINE STARTUPINFO *
