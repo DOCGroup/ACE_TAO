@@ -1,3 +1,10 @@
+Sat Mar 03 11:46:36 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/server.bor:
+
+	  Fixed typo in the rule that builds the ServerRequestInterceptor
+	  stub.  The test should once again build with Borland C++.
+
 Sat Mar 03 11:14:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corbafwd.h:
