@@ -63,10 +63,12 @@ ACE_HAS_CLOCK_GETTIME			Platform supports POSIX 1.b clock_gettime ()
 ACE_HAS_COMPLEX_LOCK			Platform supports non-standard readers/writer locks...
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES 	Prototypes for both signal() and struct sigaction are consistent.
 ACE_HAS_CPLUSPLUS_HEADERS		Compiler/platform has correctly prototyped header files
+ACE_HAS_DLFCN_H_BROKEN_EXTERN_C         For platforms, e.g., RedHat 4.2/Linux 2.0.30/Alpha, that don't declare dl* functions as extern "C" in dlfcn.h.
 ACE_HAS_DLL				Build ACE using the frigging PC DLL nonsense...
 ACE_HAS_EXCEPTIONS			Compiler supports C++ exception handling
 ACE_HAS_GETPAGESIZE			Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be defined, except on Win32)
 ACE_HAS_GETRUSAGE                       Platform supports the getrusage() system call.
+ACE_HAS_GETRUSAGE_PROTO                 Platform has a getrusage () prototype in sys/resource.h that differs from the one in ace/OS.i.
 ACE_HAS_GNU_CSTRING_H			Denotes that GNU has cstring.h as standard which redefines memchr()
 ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT Optimize ACE_Handle_Set::count_bits for select() operations (common case)
 ACE_HAS_HI_RES_TIMER			Compiler/platform supports SunOS high resolution timers
