@@ -75,16 +75,9 @@ if ($client == -1) {
   $CL->Kill (); $CL->TimedWait (1);
 }
 
-$server = $SV->TimedWait (10);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
-}
+$SV->Terminate ();
+$SV->TimedWait (10);
 
 unlink $iorfile;
 
-if ($server != 0 || $client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $client == 0  ?  0  :  1;
