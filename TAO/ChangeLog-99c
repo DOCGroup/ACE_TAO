@@ -1,3 +1,8 @@
+Mon Jun 21 11:32:12 1999  Steve Huston  <shuston@riverace.com>
+
+        * TAO_IDL/Makefile: The platform_macros.GNU file can now set a
+          CPP_LOCATION to override the default, $(CXX).
+
 Mon Jun 21 11:07:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/AST_Expression.cpp:
