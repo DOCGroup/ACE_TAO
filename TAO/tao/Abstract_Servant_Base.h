@@ -109,6 +109,20 @@ public:
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
+    /// Find an operation in the operation table and return a
+  /// TAO_Skeleton which can be used to make upcalls
+  virtual int _find (const char *opname,
+                     TAO_Skeleton &skelfunc,
+                     const unsigned int length = 0) = 0;
+
+  /// Find an operation in the operation table and return a
+  /// TAO_Collocated_Skeleton which can be used to make upcalls onto
+  /// collocated servants.
+  virtual int _find (const char *opname,
+                     TAO_Collocated_Skeleton &skelfunc,
+                     TAO::Collocation_Strategy s,
+                     const unsigned int length = 0) = 0;
+
 protected:
 
   /// Default constructor, only derived classes can be created.
@@ -136,15 +150,10 @@ protected:
                                             void *derived_this
                                             ACE_ENV_ARG_DECL) = 0;
 
-  /// Find an operation in the operation table.
-  virtual int _find (const char *opname,
-                     TAO_Skeleton &skelfunc,
-                     const unsigned int length = 0) = 0;
-
   /// Register a CORBA IDL operation name.
-  virtual int _bind (const char *opname,
+  /*virtual int _bind (const char *opname,
                      const TAO_Skeleton skel_ptr) = 0;
-
+  */
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 

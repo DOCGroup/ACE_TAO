@@ -1,3 +1,31 @@
+Thu Aug 28 16:50:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.h (_find): Added a new _find () method
+	  that returns the static function pointer of functions that does
+	  an upcall on a collocated object. Further, moved the _find ()
+	  methods to be public so that they can be used in the generated
+	  code. 
+
+	* tao/PortableServer/Operation_Details.h:
+	* tao/PortableServer/Operation_Details.cpp:
+          Made the following changes 
+
+	  (1) Added a new version of find () that is useful to get the
+	  function pointer for collocated calls. This has been
+	  implemented for all the lookup strategies in the POA. 
+
+	  (2) Added a struct that encapulates all the skeleton pointers,
+	  since they all the skeleton pointers are generated in the
+	  skeleton code. 
+
+	  (3) Changed the implementation of the dynamic hash and active
+	  demux. We now cache all the pointers that are provided by the
+	  generated code in the map instead of just one pointer. 
+	
+	* tao/PortableServer/Servant_Base.h:
+	* tao/PortableServer/Servant_Base.cpp: Provided an implementation
+	  of _find (). 
+
 Thu Aug 28 13:27:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:

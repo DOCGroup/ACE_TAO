@@ -45,9 +45,35 @@ public:
   TAO_Skeleton skel_ptr_;
 
   /// Collocated skeleton pointers.
-  TAO_Collocated_Skeleton thruPOA_skel_ptr;
-  TAO_Collocated_Skeleton direct_skel_ptr;
+  TAO_Collocated_Skeleton thruPOA_skel_ptr_;
+  TAO_Collocated_Skeleton direct_skel_ptr_;
 };
+
+
+namespace TAO
+{
+  /**
+   * @class Operation_Skeleton_Ptr
+   *
+   * @brief A logical aggregation of all the operation skeleton pointers
+   * in use.
+   *
+   * This is not used by the IDL compiler. This is used internally
+   * within different strategies.
+   */
+  struct Operation_Skeletons
+  {
+    Operation_Skeletons (void);
+
+    /// Remote skeleton pointer
+    TAO_Skeleton skel_ptr_;
+
+    /// Collocated skeleton pointers.
+    TAO_Collocated_Skeleton thruPOA_skel_ptr_;
+    TAO_Collocated_Skeleton direct_skel_ptr_;
+  };
+}
+
 
 /**
  * @class TAO_Operation_Table
@@ -67,10 +93,20 @@ public:
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0) = 0;
 
+  /**
+   * Uses <{opname}> to look up the collocated skeleton function and
+   * pass it back in <{cskelfunc}>.  Returns non-negative integer on
+   * success, or -1 on failure.
+   */
+  virtual int find (const char *opname,
+                    TAO_Collocated_Skeleton &skelfunc,
+                    TAO::Collocation_Strategy s,
+                    const unsigned int length = 0) = 0;
+
   /// Associate the skeleton <{skel_ptr}> with an operation named
   /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (const char *opname,
-                    const TAO_Skeleton skel_ptr) = 0;
+                    const TAO::Operation_Skeletons skel_ptr) = 0;
 
   virtual ~TAO_Operation_Table (void);
 };
@@ -166,23 +202,21 @@ public:
   /// Destructor
   ~TAO_Dynamic_Hash_OpTable (void);
 
-  /// Associate the skeleton <{skel_ptr}> with an operation named
-  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+  /// See the documentation in the base class for details.
   virtual int bind (const char *opname,
-                    const TAO_Skeleton skel_ptr);
+                    const TAO::Operation_Skeletons skel_ptr);
 
-  /**
-   * Uses <{opname}> to look up the skeleton function and pass it back
-   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
-   * on failure.
-   */
   virtual int find (const char *opname,
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0);
 
+  virtual int find (const char *opname,
+                    TAO_Collocated_Skeleton &skelfunc,
+                    TAO::Collocation_Strategy s,
+                    const unsigned int length = 0);
 private:
   typedef ACE_Hash_Map_Manager_Ex<const char *,
-                                  TAO_Skeleton,
+                                  TAO::Operation_Skeletons,
                                   ACE_Hash<const char *>,
                                   ACE_Equal_To<const char *>,
                                   ACE_Null_Mutex>
@@ -209,19 +243,18 @@ public:
   /// Destructor.
   ~TAO_Linear_Search_OpTable (void);
 
-  /**
-   * Uses <{opname}> to look up the skeleton function and pass it back
-   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
-   * on failure.
-   */
+  /// See the documentation in the base class for details.
   virtual int find (const char *opname,
                     TAO_Skeleton &skel_ptr,
                     const unsigned int length = 0);
 
-  /// Associate the skeleton <{skel_ptr}> with an operation named
-  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+  virtual int find (const char *opname,
+                    TAO_Collocated_Skeleton &skelfunc,
+                    TAO::Collocation_Strategy s,
+                    const unsigned int length = 0);
+
   virtual int bind (const char *opname,
-                    const TAO_Skeleton skelptr);
+                    const TAO::Operation_Skeletons skelptr);
 
 private:
   // = Method that should defined by the subclasses. GPERF program
@@ -245,7 +278,7 @@ public:
   ~TAO_Active_Demux_OpTable_Entry (void);
 
   /// Skeleton pointer corresponding to the index.
-  TAO_Skeleton skel_ptr_;
+  TAO::Operation_Skeletons op_skel_ptr_;
 };
 
 /**
@@ -266,19 +299,18 @@ public:
   /// Destructor.
   ~TAO_Active_Demux_OpTable (void);
 
-  /**
-   * Uses <{opname}> to look up the skeleton function and pass it back
-   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
-   * on failure.
-   */
+  /// See the documentation in the base class fopr details.
   virtual int find (const char *opname,
                     TAO_Skeleton &skel_ptr,
                     const unsigned int length = 0);
 
-  /// Associate the skeleton <{skel_ptr}> with an operation named
-  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+  virtual int find (const char *opname,
+                    TAO_Collocated_Skeleton &skelfunc,
+                    TAO::Collocation_Strategy s,
+                    const unsigned int length = 0);
+
   virtual int bind (const char *opname,
-                    const TAO_Skeleton skelptr);
+                    const TAO::Operation_Skeletons skelptr);
 
 private:
   /// The next available free slot
@@ -313,19 +345,18 @@ public:
   /// Do nothing destrctor.
   virtual ~TAO_Perfect_Hash_OpTable (void);
 
-  /**
-   * Uses <{opname}> to look up the skeleton function and pass it back
-   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
-   * on failure.
-   */
+  /// See the documentation in the base class for details.
   virtual int find (const char *opname,
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0);
 
-  /// Associate the skeleton <{skel_ptr}> with an operation named
-  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+  virtual int find (const char *opname,
+                    TAO_Collocated_Skeleton &skelfunc,
+                    TAO::Collocation_Strategy s,
+                    const unsigned int length = 0);
+
   virtual int bind (const char *opname,
-                    const TAO_Skeleton skel_ptr);
+                    const TAO::Operation_Skeletons skel_ptr);
 
 private:
   // = Methods that should defined by the subclasses. GPERF program
@@ -358,19 +389,18 @@ public:
   /// Do nothing destrctor.
   virtual ~TAO_Binary_Search_OpTable (void);
 
-  /**
-   * Uses <{opname}> to look up the skeleton function and pass it back
-   * in <{skelfunc}>.  Returns non-negative integer on success, or -1
-   * on failure.
-   */
+  /// See the documentation in the base class for details.
   virtual int find (const char *opname,
                     TAO_Skeleton &skelfunc,
                     const unsigned int length = 0);
 
-  /// Associate the skeleton <{skel_ptr}> with an operation named
-  /// <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+  virtual int find (const char *opname,
+                    TAO_Collocated_Skeleton &skelfunc,
+                    TAO::Collocation_Strategy s,
+                    const unsigned int length = 0);
+
   virtual int bind (const char *opname,
-                    const TAO_Skeleton skel_ptr);
+                    const TAO::Operation_Skeletons skel_ptr);
 
 private:
   // = Method that should defined by the subclasses. GPERF program
@@ -389,6 +419,7 @@ typedef TAO_Singleton<TAO_Operation_Table_Parameters,
 typedef TAO_Singleton<TAO_Operation_Table_Factory,
                       TAO_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_FACTORY;
+
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPTABLE_H */

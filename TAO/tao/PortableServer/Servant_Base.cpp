@@ -129,12 +129,22 @@ TAO_ServantBase::_find (const char *opname,
 }
 
 int
+TAO_ServantBase::_find (const char *opname,
+                        TAO_Collocated_Skeleton& skelfunc,
+                        TAO::Collocation_Strategy st,
+                        const unsigned int length)
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
+  return optable_->find (opname, skelfunc, st, length);
+}
+
+/*int
 TAO_ServantBase::_bind (const char *opname,
                         const TAO_Skeleton skel_ptr)
 {
   return optable_->bind (opname, skel_ptr);
 }
-
+*/
 TAO_Stub *
 TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 {
