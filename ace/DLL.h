@@ -95,9 +95,9 @@ private:
   // This flag keeps track of whether we should close the handle
   // automatically when the destructor runs.
 
-  // = Disable copying and assignment since we don't handle these.
-  ACE_DLL (const ACE_DLL &);
-  void operator= (const ACE_DLL &);
+  // = Disallow copying and assignment since we don't handle these.
+  ACE_UNIMPLEMENTED_FUNC (ACE_DLL (const ACE_DLL &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL &))
 };
 
 #endif /* ACE_DLL_H */

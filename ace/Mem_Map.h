@@ -196,8 +196,8 @@ private:
   // the file into memory.
 
   // = Disallow copying and assignment.
-  ACE_Mem_Map (const ACE_Mem_Map &);
-  void operator = (const ACE_Mem_Map &);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Mem_Map (const ACE_Mem_Map &))
+  ACE_UNIMPLEMENTED_FUNC (void operator = (const ACE_Mem_Map &))
 };
 
 #if defined (__ACE_INLINE__)
