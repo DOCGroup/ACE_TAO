@@ -45,6 +45,9 @@ class ACE_Allocator;
                               ATTRIBUTES>
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
 
+// For linkers that cant grok long names.
+#define ACE_Hash_Cache_Map_Manager AHCMM
+
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
 {

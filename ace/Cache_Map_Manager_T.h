@@ -30,6 +30,9 @@ class ACE_Allocator;
 
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 
+#define ACE_Cache_Map_Iterator ACMI
+#define ACE_Cache_Map_Reverse_Iterator ACMRI
+
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator;
 
@@ -45,6 +48,9 @@ class ACE_Cache_Map_Reverse_Iterator;
 #define ACE_T2 KEY, VALUE, MAP, CACHING_STRATEGY, ATTRIBUTES
 
 #endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+// For linkers that cant grok long names.
+#define ACE_Cache_Map_Manager ACMM
 
 template <ACE_T1>
 class ACE_Cache_Map_Manager

@@ -29,6 +29,9 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
+// For linkers that cant grok long names.
+#define ACE_Caching_Strategy ACS
+
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Caching_Strategy
 {
@@ -86,6 +89,8 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
+
+#define ACE_Caching_Strategy_Adapter ACSA
 
 template <class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION>
 class ACE_Caching_Strategy_Adapter : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
@@ -162,6 +167,7 @@ private:
 };
 
 //////////////////////////////////////////////////////////////////////////
+#define ACE_LRU_Caching_Strategy ALRU
 
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LRU_Caching_Strategy
@@ -258,6 +264,7 @@ private:
 };
 
 //////////////////////////////////////////////////////////////////////////
+#define ACE_LFU_Caching_Strategy ALFU
 
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LFU_Caching_Strategy
@@ -348,6 +355,7 @@ private:
 };
 
 /////////////////////////////////////////////////////////////
+#define ACE_FIFO_Caching_Strategy AFIFO
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_FIFO_Caching_Strategy
@@ -436,6 +444,9 @@ private:
   // This is the helper class which will decide and expunge entries
   // from the cache.
 };
+
+//////////////////////////////////////////////////////////////////////
+#define ACE_Null_Caching_Strategy ANULL
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Null_Caching_Strategy
