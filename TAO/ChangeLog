@@ -1,3 +1,27 @@
+Mon May 19 11:05:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Knut-Håvard Aksnes <knut@orion.no>
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (parse_options):
+
+	  Fixed support for "hostname_in_ior" endpoint option.  [Bug 1370]
+
+	From David Kinder <david.kinder@sophos.com>
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  The base_connector_.connect() call will increment the handler's
+	  reference count once more.  This is not needed as we already
+	  hold a reference to the handler.  Therefore we discard this
+	  second reference.  Fixes a memory leak.  [Bug 1506]
+	  
+	  (retrieve_credentials):
+
+	  For the default certificate and private key case, assign the
+	  return value of the TAO_SSLIOP_Credentials_var::out() call to a
+	  reference to a TAO_SSLIOP_Credentials_ptr.  Previously, the
+	  return value was assigned to a local TAO_SSLIOP_Credentials_ptr
+	  variable that was lost when leaving the scope of this method.
+	  Fixes a memory leak.  [Bug 1508]
+
 Mon May 19 15:51:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/tests/Notify/Basic/Makefile:

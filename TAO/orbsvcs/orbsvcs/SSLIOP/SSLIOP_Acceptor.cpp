@@ -622,6 +622,10 @@ TAO_SSLIOP_Acceptor::parse_options (const char *str)
                                    value.c_str ()),
                                   -1);
             }
+          else if (name == "hostname_in_ior")
+            {
+              this->hostname_in_ior_ = value.rep ();
+            }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid ")

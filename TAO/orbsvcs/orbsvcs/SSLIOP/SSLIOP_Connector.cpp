@@ -527,6 +527,12 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                                               remote_address,
                                               synch_options);
 
+      // base_connector_.connect () will increment the handler's
+      // reference count once more. This is not needed as we already
+      // hold a reference to the handler, therefore we discard this
+      // second reference.
+      svc_handler->decr_refcount ();
+
       // We dont have to wait since we only use a blocked connect
       // strategy.
       if (result == -1 && errno == EWOULDBLOCK)
@@ -557,7 +563,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       // Reduce the refcount to the svc_handler that we have. The
       // increment to the handler is done in make_svc_handler (). Now
       // that we dont need the reference to it anymore we can decrement
-      // the refcount whether the connection is successful ot not.
+      // the refcount whether the connection is successful or not.
       svc_handler->decr_refcount ();
 
       if (result == -1)
@@ -691,7 +697,7 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
       // Use the default certificate and private key, i.e. the one set
       // in the SSL_CTX that was used when creating the SSL data
       // structure.
-      TAO_SSLIOP_Credentials_ptr c = ssliop_credentials.out ();
+      TAO_SSLIOP_Credentials_ptr & c = ssliop_credentials.out ();
       ACE_NEW_THROW_EX (c,
                         TAO_SSLIOP_Credentials (::SSL_get_certificate (ssl),
                                                 ::SSL_get_privatekey (ssl)),
