@@ -144,7 +144,7 @@ TAO_AttributeDef_i::mode (CORBA::Environment &)
 
 void 
 TAO_AttributeDef_i::mode (IR::AttributeMode mode,
-                          CORBA::Environment &A)
+                          CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
