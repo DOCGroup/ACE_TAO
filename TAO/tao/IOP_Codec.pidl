@@ -18,12 +18,12 @@
  *        -Wb,post_include="ace/post.h"
  *        IOP_Codec.pidl
  *
- * and then:
+ * and then apply the patches in  diffs/IOP_Codec.diff. 
  *
- * cp orig/IOP_CodecC.{h,i,cpp} .
- * patch < diffs/IOP_Codec.diff
- *
- * The code left in IOP_CodecC.{h,i,cpp} is ready for use.
+ * The code left in IOP_CodecC.{h,i,cpp} and IOP_CodecA.{h,cpp} is
+ * ready for use. If you are hand applying the patch be careful. Leave
+ * the typecodes for the user exceptions in the *C.h file so that they
+ * can be used by _type () call that is generated. 
  *
  */
 
