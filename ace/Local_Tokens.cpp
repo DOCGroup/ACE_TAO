@@ -6,13 +6,16 @@
 
 #include "ace/Thread.h"
 #include "ace/Token_Manager.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID(ace, Local_Tokens, "$Id$")
+ACE_RCSID (ace,
+           Local_Tokens,
+           "$Id$")
 
 void
 ACE_Tokens::dump (void) const
