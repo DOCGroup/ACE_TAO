@@ -1,7 +1,7 @@
 Mon Oct 19 14:28:30 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* examples/POA/NewPOA/run_test.pl: Runs the test. Not exactly a
-	  difficult task, since there's one executable with no arguments.
+        * examples/POA/NewPOA/run_test.pl: Runs the test. Not exactly a
+          difficult task, since there's one executable with no arguments.
 
 Mon Oct 19 11:24:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -20,6 +20,15 @@ Mon Oct 19 11:24:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * test/Param_Test/driver.cpp: added
           Param_Test_Client<Test_Unbounded_Struct_Sequence> instantiation.
+
+        * TAO/rules.tao.GNU: added -Wno-uninitialized with egcs 2.91.x.
+          It seems to be overly aggressive:
+
+            DynAny_i.cpp:565: warning: `class TAO_DynAny_i * this' might be
+            used uninitialized in this function
+
+        * TAO_IDL/Makefile: added include of rules.tao.GNU, to pick up
+          -Wno-unused and -Wno-uninitialized with g++/egcs.
 
 Sun Oct 18 22:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
