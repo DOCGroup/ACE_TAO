@@ -63,6 +63,21 @@ be_visitor_valuetype_field_ch::visit_field (be_field *node)
                          "codegen failed\n"
                          ), -1);
     }
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Generate the anonymous sequence member typedef
+  // but we must protect against certain versions of g++.
+  // This provides a consistent name to use instead of the
+  // implementation-specific name.
+  be_decl *bs = this->ctx_->scope ();  // get the enclosing struct backend
+  os->decr_indent (0);
+  *os << "#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
+      << be_idt_nl
+      << "typedef " << bt->nested_type_name (bs) 
+      << " _" << this->ctx_->node ()->local_name () << "_seq;" << be_uidt_nl;
+  *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */\n" << be_nl;
+  os->incr_indent ();
+
   return 0;
 }
 
