@@ -76,6 +76,17 @@ ACE_INLINE int operator == (const RtecEventComm::Event &event1,
 
 // ************************************************************
 
+// = TITLE
+//   Compare two TAO_EC_Events.
+//
+// = DESCRIPTION
+//   This is only used in the instantiation of ACE_Array<TAO_EC_Event>
+//
+ACE_INLINE
+int operator != (const TAO_EC_Event &rhs, const TAO_EC_Event &lhs);
+
+// ************************************************************
+
 // = DESCRIPTION
 //   Utility for debugging events.
 void TAO_ORBSVCS_Export dump_event (const RtecEventComm::Event &event);

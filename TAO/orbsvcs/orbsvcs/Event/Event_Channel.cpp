@@ -2455,7 +2455,7 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
   ACE_ES_Subscription_Info::Subscriber_Map &supplier_map =
     source->subscription_info ().type_subscribers_;
 
-  Subscriber_Set disconnect_list;
+  ACE_ES_Subscription_Info::Subscriber_Set disconnect_list;
 
   ACE_ES_Subscription_Info::Subscriber_Set *set;
 
@@ -2532,7 +2532,8 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
                            "ACE_ES_Subscription_Module::"
                            "push_source.\n"), -1);
 
-      for (Subscriber_Set_Iterator iter = disconnect_list.begin (),
+      for (ACE_ES_Subscription_Info::Subscriber_Set_Iterator iter =
+	     disconnect_list.begin (),
              disconnect_list_end = disconnect_list.end ();
            iter != disconnect_list_end;
            iter++)
@@ -3316,18 +3317,6 @@ template class ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>;
 
-// For ACE_ES_Event_Container_Allocator.
-template class ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_MEMORY_POOL_MUTEX>;
-template class ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_SYNCH_MUTEX>;
-template class ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX>;
-template class ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>;
-template class ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Null_Mutex>;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Thread_Mutex>;
-template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>;
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >;
-template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >;
-
 template class ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>;
 template class ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>;
 template class auto_ptr<ACE_Push_Supplier_Proxy>;
@@ -3363,16 +3352,6 @@ template class ACE_Array_Iterator<TAO_EC_Event>;
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>
-#pragma instantiate ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_MEMORY_POOL_MUTEX>
-#pragma instantiate ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX>
-#pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>
-#pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Null_Mutex>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Thread_Mutex>
-#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >
-#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >
 
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Supplier_Proxy>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Push_Consumer_Proxy>
