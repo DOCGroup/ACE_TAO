@@ -1,3 +1,16 @@
+Tue Aug 10 23:47:32 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.h:
+	* ace/Caching_Utility_T.h:
+	* ace/Caching_Strategies_T.h:
+	* ace/Cleanup_Strategies_T.h:
+	* ace/Cache_Map_Manager_T.h:
+	* ace/Hash_Cache_Map_Manager_T.h:
+
+	  Defined macros to shorten lengthy class names for linkers which
+	  couldnt grok long names (example: Sun Linker). Thanks to
+	  Dr.Schmidt for this cool idea.
+	
 Tue Aug 10 19:07:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/run_tests.sh:
