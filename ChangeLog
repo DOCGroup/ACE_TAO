@@ -1,3 +1,8 @@
+Tue May 25 22:08:42 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Also turn off LIBCHECK when passing -k, keep-going.
+
 Tue May 25 21:32:17 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
