@@ -1,3 +1,25 @@
+Sat Nov 29 15:25:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-lite.h: (new file)
+        * ace/config-all.h:
+          Added new file, config-lite.h, and moved most of the code,
+          except for the includes, from config-all.h to the new file,
+          and included it in config-all.h.  Since some of the files
+          included by config-all.h in turn include config-all.h, we
+          ended up with a circular include problem on some platforms.  The
+          new file eliminates the problem by seperating the includes from
+          the definitions.
+
+        * qce/ACE_export.h:
+        * ace/os_include/os_stdarg.h:
+        * ace/os_include/os_stddef.h:
+        * ace/os_include/os_stdio.h:
+          Include config-lite.h instead of config-all.h to avoid
+          circular include problem.  Most, if not all, of the files in
+          ace/os_include need only config-lite.h, but these are the only
+          files that currently have the circular include problem.  Future
+          subsetting can address the rest after the release.
+
 Fri Nov 28 17:08:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/README: Added this file with some basic information on
