@@ -43,19 +43,6 @@ CORBA_Object::_duplicate (CORBA_Object_ptr obj)
   return obj;
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  if (obj == 0)
-    return 1;
-
-  // To accomodate new definitions
-  if (obj->_stubobj ())
-    return obj->_stubobj ()->orb_core ()->object_is_nil (obj);
-
-  return 0;
-}
-
 
 
 // Null pointers represent nil objects.
