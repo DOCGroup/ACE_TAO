@@ -1,3 +1,58 @@
+Fri May  8 16:32:55 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_exception.cpp: In the typecode generation, we were
+	incorrectly generating the byte order flag as 0 meaning big
+	endian. This is now changed to TAO_ENCAP_BYTE_ORDER.
+
+	* TAO_IDL/be/be_visitor_exception.cpp: A spurious "return 0;"
+	statement in the middle of the code led to generation of empty
+	code for exception constructors.
+
+	* TAO_IDL/be/be_visitor_interface.cpp: Added the "ACE_CORBA_1"
+	macro to the generated code so that MSVC++4.2 will be able to
+	parse the generated code.
+
+	* orbsvcs/orbsvcs/Naming_Service/Naming_Service.cpp: We were
+	passing a variable of type ORB_var to a method expecting an
+	ORB_ptr. g++ was not too happy with this. So now we use the in ()
+	method on the _var variable.
+
+	* tao/Connect.cpp: Removed a large segment of commented-out code
+	which I had kept to remind me to use it to handle the DSI
+	case. See the log entry for Server_Request.{h,cpp}.
+
+	* tao/{POAC, PolicyC}.h: Used the ACE_CORBA_1 macro when the
+	classes inherit from CORBA::Object. MSVC++4.2 was not too happy
+	with CORBA::Object. It needed CORBA_Object.
+
+	* tao/ServantBase.h: Removed the Environment parameter from the
+	invoke method of TAO_DynamicImplementation class. This was
+	suggested by Irfan.
+
+	* tao/Servant_Base.cpp: (invoke): Added code after the invoke to
+	the DSI implementation is made. This code creates a REPLY message
+	and then uses the dsi_marshal method (described below) to marshal
+	outgoing parameters. These methods are called only if the request
+	was 2 way.
+
+	* tao/Server_Request.{h, cpp}: Several changes made
+
+	Added a data member that indicates if the request was oneway or
+	twoway. This is used by the DSI when it has to decide if a reply
+	message must be constructed or not.
+
+	Changed the is_user_exception_ data member to
+	exception_type_. This now explicitly tells us if it was a
+	GIOP_USER_EXCEPTION or a GIOP_SYSTEM_EXCEPTION or
+	GIOP_NO_EXCEPTION. This change was required because we faced a
+	situation in which we not only needed to know if the exception was
+	a user or a system exception but we wnated to know if there was an
+	exception itself or not. So a boolean variable was not sufficient
+	for this.
+
+	Added a new method called "dsi_marshal". This is used by the DSI
+	to marshal the outgoing parameters.
+
 Thu May 07 19:14:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.19 released.
@@ -6,7 +61,7 @@ Thu May 07 17:55:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO/orbsvcs/orbsvcs/orbsvcs.dsp:
 	* TAO/orbsvcs/tests/Logger/server.dsp: Updated.  Thanks to Carlos'
-	  instruction on how to make the change. 
+	  instruction on how to make the change.
 
 Thu May 7  16:11:00 1998  Robert Eric Thornton <ret1@cec.wustl.edu>
 
