@@ -1,3 +1,10 @@
+Wed Jan  9 13:36:14 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+
+          Changed the order of member initialization to match the
+          order of declaration.
+
 Wed Jan  9 11:39:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
