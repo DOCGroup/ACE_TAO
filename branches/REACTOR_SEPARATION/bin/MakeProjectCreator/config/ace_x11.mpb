@@ -2,8 +2,10 @@
 // ace_x11.mpb,v
 
 project {
-  // this feature by default is set to 1 as projects dependent on X11 has their own features
-  requires += x11
+  specific(vc6,vc7,vc71,vc8) {
+  } else {
+    requires += x11
+  }
 
   // Depends on configration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {
