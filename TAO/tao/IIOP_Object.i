@@ -87,10 +87,10 @@ IIOP_Object::set_fwd_profile (IIOP::Profile *new_profile)
   if (new_profile != 0)
   {
     delete this->fwd_profile_;
-    ACE_NEW_RETURN (this->fwd_profile_, 
+    ACE_NEW_RETURN (this->fwd_profile_,
                     IIOP::Profile(),
                     0);
-    *this->fwd_profile_ = *new_profile;  
+    *this->fwd_profile_ = *new_profile;
   }
   return old;
 }

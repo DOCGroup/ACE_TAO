@@ -198,7 +198,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
                              "codegen for access failed\n"), -1);
         }
 
-      *os << be_uidt_nl << "}" << be_uidt_nl << "}\n\n";
+      *os << be_uidt_nl << "}" << be_uidt_nl;
+      *os << "return 0; // default" << be_uidt_nl
+          << "}\n\n";
 
 
       // by using a visitor to declare and define the TypeCode, we have the
