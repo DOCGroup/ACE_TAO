@@ -507,15 +507,15 @@ ACE_Token_Handler::abandon (int send_error)
 
 ACE_TS_Mutex::ACE_TS_Mutex (const char *name,
 			    ACE_Token_Handler *th)
-: th_ (th), 
-  ACE_Local_Mutex (name, 0, 1) // The 1 is debug.
+: ACE_Local_Mutex (name, 0, 1), // The 1 is debug.
+  th_ (th)
 {
   ACE_TRACE ("ACE_TS_Mutex::ACE_TS_Mutex");
 }
 
 ACE_TS_Mutex::ACE_TS_Mutex (const ACE_TS_Mutex &m)
-: th_ (m.th_), 
-  ACE_Local_Mutex (m)
+: ACE_Local_Mutex (m),
+  th_ (m.th_)
 {
   ACE_TRACE ("ACE_TS_Mutex::ACE_TS_Mutex");
   this->open (m.name (), m.ignore_deadlock_, m.debug_);
@@ -551,15 +551,15 @@ ACE_TS_Mutex::clone (void) const
 
 ACE_TS_RLock::ACE_TS_RLock (const char *name,
 			    ACE_Token_Handler *th)
-: th_ (th), 
-  ACE_Local_RLock (name, 0, 1) // The 1 is debug.
+: ACE_Local_RLock (name, 0, 1), // The 1 is debug.
+  th_ (th)
 {
   ACE_TRACE ("ACE_TS_RLock::ACE_TS_RLock");
 }
 
 ACE_TS_RLock::ACE_TS_RLock (const ACE_TS_RLock &r)
-: th_ (r.th_), 
-  ACE_Local_RLock (r)
+: ACE_Local_RLock (r),
+  th_ (r.th_)
 {
   ACE_TRACE ("ACE_TS_RLock::ACE_TS_RLock");
   this->open (r.name (), r.ignore_deadlock_, r.debug_);
@@ -596,15 +596,15 @@ ACE_TS_RLock::clone (void) const
 
 ACE_TS_WLock::ACE_TS_WLock (const char *name,
 			    ACE_Token_Handler *th)
-: th_ (th), 
-  ACE_Local_WLock (name, 0, 1) // The 1 is debug.
+: ACE_Local_WLock (name, 0, 1), // The 1 is debug.
+  th_ (th)
 {
   ACE_TRACE ("ACE_TS_WLock::ACE_TS_WLock");
 }
 
 ACE_TS_WLock::ACE_TS_WLock (const ACE_TS_WLock &w)
-: th_ (w.th_),
-  ACE_Local_WLock (w)
+: ACE_Local_WLock (w),
+  th_ (w.th_)
 {
   ACE_TRACE ("ACE_TS_WLock::ACE_TS_WLock");
   this->open (w.name (), w.ignore_deadlock_, w.debug_);
