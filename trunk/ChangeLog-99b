@@ -1,3 +1,13 @@
+Mon Feb 22 21:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Sched_Params.cpp: removed #include of ACE.h because it's
+          not necessary.
+
+        * ace/Makefile: added ACE_COMPONENTS default definition.
+          Moved Sched_Params from THREADS_FILES to OS_FILES because
+          OS.cpp needs it.  It only contributes 172 bytes to libACE
+          on VxWorks and 248 on LynxOS.
+
 Sun Feb 21 18:52:17 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.23 released.
