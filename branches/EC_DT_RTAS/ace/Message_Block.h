@@ -578,9 +578,9 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  void set_ID (const ACE_Object_Counter::object_id id);
+  void set_ID (const Object_ID id);
 
-  const ACE_Object_Counter::object_id& get_ID (void);
+  const Object_ID& get_ID (void);
 
 protected:
   // = Internal initialization methods.
@@ -656,7 +656,7 @@ protected:
   /// and create new message blocks on duplicate.
   ACE_Allocator *message_block_allocator_;
 
-  ACE_Object_Counter::object_id oid_;
+  Object_ID oid_;
 
 private:
   // = Disallow these operations for now (use <clone> instead).

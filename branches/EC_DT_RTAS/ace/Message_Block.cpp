@@ -289,12 +289,12 @@ ACE_Message_Block::total_capacity (void) const
 }
 
 void
-ACE_Message_Block::set_ID (ACE_Object_Counter::object_id id)
+ACE_Message_Block::set_ID (Object_ID id)
 {
   this->oid_ = id;
 }
 
-const ACE_Object_Counter::object_id&
+const Object_ID&
 ACE_Message_Block::get_ID (void)
 {
   return this->oid_;

@@ -1212,13 +1212,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
   int queue_count = 0;
   {
 #if defined (ACE_HAS_DSUI)
-    ACE_Object_Counter::object_id oid = new_item->get_ID();
+    Object_ID oid = new_item->get_ID();
     DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_PRIO_LOCK_ACQUIRE, 0,
-                    sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+                    sizeof(Object_ID), (char*)&oid);
 #endif // ACE_HAS_DSUI
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 #if defined (ACE_HAS_DSUI)
-    DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_PRIO_LOCK_ACQUIRE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+    DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_PRIO_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
 #endif // ACE_HAS_DSUI
 
     if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
@@ -1233,15 +1233,15 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 #if defined (ACE_HAS_DSUI)
     if (enabled_dsui_ == 1)
       {
-        DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_I_CALL, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+        DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_I_CALL, 0, sizeof(Object_ID), (char*)&oid);
       }
 #endif // ACE_HAS_DSUI
     queue_count = this->enqueue_i (new_item);
 #if defined (ACE_HAS_DSUI)
   if (enabled_dsui_ == 1)
     {
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_I_CALL, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL, queue_count, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_I_CALL, 0, sizeof(Object_ID), (char*)&oid);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL, queue_count, sizeof(Object_ID), (char*)&oid);
     }
 #endif // ACE_HAS_DSUI
 
@@ -1304,13 +1304,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
   int queue_count = 0;
   {
 #if defined (ACE_HAS_DSUI)
-    ACE_Object_Counter::object_id oid = new_item->get_ID();
+    Object_ID oid = new_item->get_ID();
     DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_TAIL_LOCK_ACQUIRE, 0,
-                    sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+                    sizeof(Object_ID), (char*)&oid);
 #endif // ACE_HAS_DSUI
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 #if defined (ACE_HAS_DSUI)
-    DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+    DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
 #endif // ACE_HAS_DSUI
     if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
       {
@@ -1324,7 +1324,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 #if defined (ACE_HAS_DSUI)
     if (enabled_dsui_ == 1)
       {
-        DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_TAIL, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+        DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_ENQUEUE_TAIL, 0, sizeof(Object_ID), (char*)&oid);
       }
 #endif // ACE_HAS_DSUI
 
@@ -1333,8 +1333,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 #if defined (ACE_HAS_DSUI)
   if (enabled_dsui_ == 1)
     {
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_TAIL, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL, queue_count, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_ENQUEUE_TAIL, 0, sizeof(Object_ID), (char*)&oid);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL, queue_count, sizeof(Object_ID), (char*)&oid);
     }
 #endif // ACE_HAS_DSUI
 
@@ -1356,14 +1356,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
 
-  ACE_Object_Counter::object_id oid;
-  oid.id = 0;
+  Object_ID oid;
   oid.tid = ACE_OS::thr_self();
   oid.queue_id = queue_id_;
 
-  DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
-  DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
 
   if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
@@ -1377,7 +1376,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
 #if defined (ACE_HAS_DSUI)
   if (enabled_dsui_ == 1)
     {
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD, 0, sizeof(Object_ID), (char*)&oid);
     }
 #endif // ACE_HAS_DSUI
 
@@ -1386,8 +1385,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
 #if defined (ACE_HAS_DSUI)
   if (enabled_dsui_ == 1)
     {
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD, 0, sizeof(ACE_Object_Counter::object_id), (char*)&first_item->get_ID());
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL,  queue_count, sizeof(ACE_Object_Counter::object_id), (char*)&first_item->get_ID());
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD, 0, sizeof(Object_ID), (char*)&first_item->get_ID());
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL,  queue_count, sizeof(Object_ID), (char*)&first_item->get_ID());
     }
 #endif // ACE_HAS_DSUI
 
@@ -1652,14 +1651,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
 
-  ACE_Object_Counter::object_id oid;
-  oid.id = 0;
+  Object_ID oid;
   oid.tid = ACE_OS::thr_self();
   oid.queue_id = queue_id_;
 
-  DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
-  DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
 
   if (this->state_ == ACE_Message_Queue_Base::DEACTIVATED)
     {
@@ -1685,7 +1683,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
 #if defined (ACE_HAS_DSUI)
   if (enabled_dsui_ == 1)
     {
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD, 0, sizeof(Object_ID), (char*)&oid);
     }
 #endif // ACE_HAS_DSUI
 
@@ -1696,8 +1694,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
 #if defined (ACE_HAS_DSUI)
   if (enabled_dsui_ == 1)
     {
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD, 0, sizeof(ACE_Object_Counter::object_id), (char*)&first_item->get_ID());
-      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL, result, sizeof(ACE_Object_Counter::object_id), (char*)&first_item->get_ID());
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD, 0, sizeof(Object_ID), (char*)&first_item->get_ID());
+      DSUI_EVENT_LOG (MSG_QUEUE_FAM, QUEUE_LEVEL, result, sizeof(Object_ID), (char*)&first_item->get_ID());
     }
 #endif // ACE_HAS_DSUI
 
