@@ -1,3 +1,9 @@
+Sun Nov  9 08:06:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+
+	  Updated dependencies.
+
 Sun Nov  9 08:03:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/MProfile/client.cpp:
