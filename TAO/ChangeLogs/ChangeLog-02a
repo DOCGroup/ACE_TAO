@@ -1,3 +1,8 @@
+Wed Apr  4 08:05:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.cpp: Added a missing
+	  #include to fix compile error on Linux. 
+
 Wed Apr  4 07:49:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/BiDir_GIOP/BiDirPolicyC.cpp: Fixed a compile error by adding

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Notify_Service.h"
+#include "tao/debug.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 #include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
