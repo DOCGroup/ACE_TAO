@@ -7,14 +7,14 @@
 
 template <class ACE_LOCK> ACE_INLINE
 ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l)
-  : lock_ (&l)
+  : lock_ (&l), owner_ (0)
 {
   this->acquire ();
 }
 
 template <class ACE_LOCK> ACE_INLINE
 ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
-  : lock_ (&l)
+  : lock_ (&l), owner_ (0)
 {
   if (block)
     this->acquire ();
