@@ -1,7 +1,7 @@
 Fri Nov 28 11:21:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following are fixes for problems exposed by running
-	"autoreconf" the "--warnings=all" command line option.
+	`autoreconf' with the "--warnings=all" command line option.
 
 	* configure.ac:
 
