@@ -14171,11 +14171,6 @@ endif # GHS
  Service_Types.i \
  DLL.h \
  Parse_Node.i \
- Object_Manager.h \
- Object_Manager.i \
- Managed_Object.h \
- Managed_Object.i \
- Managed_Object.cpp \
  Svc_Conf_Lexer_Guard.h
 
 .obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp \
