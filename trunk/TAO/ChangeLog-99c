@@ -17,7 +17,7 @@ Sun Jun 06 08:19:55 1999  David L. Levine  <levine@cs.wustl.edu>
 Sun Jun  6 02:14:25 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV/sfp.cpp: Fixed a few missing template
-        instantiations spotted by Sun CC 5.0. Thanks to carlos for
+        instantiations spotted by Sun CC 5.0. Thanks to Carlos for
         reporting them.
 
 Sat Jun  5 23:48:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
