@@ -1,3 +1,13 @@
+Fri Jul 09 16:12:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface):
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+	  (be_visitor_interface_any_op_cs): Added appropriate storage
+	  class specifiers to the collocation stub factory function
+	  pointer and the dummy pointer initializer integer.  Hopefully,
+	  this will eliminate the bazillion warnings from OSF1.
+
 Fri Jul  9 16:04:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Invocation.cpp (start):
