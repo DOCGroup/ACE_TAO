@@ -1,3 +1,19 @@
+Fri Oct 26 11:18:21 PDT 2004  Dave Craig <dwc@qualcomm.com>
+
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SOCK_SEQPACK_Association.cpp:
+        Add SOCK_SEQPACK_Association::abort() to ungracefully remove an
+        association.  See RFC 2960 for more details.
+
+        * tests/SOCK_SEQPACK_Test.cpp:
+        * tests/tests.mpc:
+        * tests/tests.lst:
+        Add simple test to exercise SOCK_SEQPACK_* functionality through
+        loopback and verify that abort() is doing what it is supposed to
+        be doing.  It took a while to exercise all of the different #define's,
+        but the results should come out fine w/+w/o ACE_HAS_IPV6, w/+w/o
+        ACE_HAS_SCTP, and w/+w/o ACE_LACKS_FORK.
+
 Tue Oct 26 13:05:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/HTBP/HTBP.mpc:
