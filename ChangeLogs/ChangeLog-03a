@@ -12,6 +12,8 @@ Thu Dec 14 10:36:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Changed to use PerlACE::ConfigList.
 
+	  [Bug 729]
+
         * bin/ACEutils.pm:
 
           Made sure it would eat the -Config option so it will not
