@@ -1,3 +1,15 @@
+Sat Aug 22 01:41:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/TAO.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	  Forgot to fix the output directories.
+
+	* TAO_IDL/tao_idl.dsp:
+	* tests/Simple/time/server.dsp:
+	* tests/Simple/time/client.dsp:
+	  More Alpha configurations added.
+
 Fri Aug 21 23:16:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/TAO.dsp:
