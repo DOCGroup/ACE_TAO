@@ -4,6 +4,9 @@
 // inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
+
 inline void
 ACE_Handle_Gobbler::close_remaining_handles (void)
 {
