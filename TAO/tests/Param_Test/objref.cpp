@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "objref.h"
 
 ACE_RCSID(Param_Test, objref, "$Id$")
