@@ -57,11 +57,18 @@
 // Object Adapter
 #include "tao/Object_Adapter.h"
 
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
 class TAO_POA;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
+class TAO_Export TAO_Thread_Policy : public virtual PortableServer::RefCountServantBase,
+                                     public virtual POA_PortableServer::ThreadPolicy
 {
 public:
   TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
@@ -87,7 +94,8 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-class TAO_Export TAO_Lifespan_Policy : public POA_PortableServer::LifespanPolicy
+class TAO_Export TAO_Lifespan_Policy : public virtual PortableServer::RefCountServantBase,
+                                       public virtual POA_PortableServer::LifespanPolicy
 {
 public:
   TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value,
@@ -111,7 +119,8 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Id_Uniqueness_Policy : public POA_PortableServer::IdUniquenessPolicy
+class TAO_Export TAO_Id_Uniqueness_Policy : public virtual PortableServer::RefCountServantBase,
+                                            public virtual POA_PortableServer::IdUniquenessPolicy
 {
 public:
   TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value,
@@ -135,7 +144,8 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Id_Assignment_Policy : public POA_PortableServer::IdAssignmentPolicy
+class TAO_Export TAO_Id_Assignment_Policy : public virtual PortableServer::RefCountServantBase,
+                                            public virtual POA_PortableServer::IdAssignmentPolicy
 {
 public:
   TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value,
@@ -161,7 +171,8 @@ protected:
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-class TAO_Export TAO_Implicit_Activation_Policy : public POA_PortableServer::ImplicitActivationPolicy
+class TAO_Export TAO_Implicit_Activation_Policy : public virtual PortableServer::RefCountServantBase,
+                                                  public virtual POA_PortableServer::ImplicitActivationPolicy
 {
 public:
   TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value,
@@ -185,7 +196,8 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Servant_Retention_Policy : public POA_PortableServer::ServantRetentionPolicy
+class TAO_Export TAO_Servant_Retention_Policy : public virtual PortableServer::RefCountServantBase,
+                                                public virtual POA_PortableServer::ServantRetentionPolicy
 {
 public:
   TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value,
@@ -209,7 +221,8 @@ protected:
   PortableServer::POA_var poa_;
 };
 
-class TAO_Export TAO_Request_Processing_Policy : public POA_PortableServer::RequestProcessingPolicy
+class TAO_Export TAO_Request_Processing_Policy : public virtual PortableServer::RefCountServantBase,
+                                                 public virtual POA_PortableServer::RequestProcessingPolicy
 {
 public:
   TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value,
