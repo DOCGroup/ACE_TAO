@@ -1,3 +1,14 @@
+Fri Jul  6 13:23:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.cpp: Removed the initialization of a
+	  buffer  from the constructor. Looks like I used to do it in some
+	  life of mine and I dont which one it was. :( SunCC 4.2 doesnt
+	  like that.
+
+	* tao/Resume_Handle.cpp: Added a #include of the reactor to fix
+	  compile errors in Sun CC4.2.
+
 Fri Jul  6 13:19:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:

@@ -18,8 +18,7 @@ ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core)
-  : buf_ (),
-    db_ (sizeof buf_,
+  : db_ (sizeof buf_,
          ACE_Message_Block::MB_DATA,
          this->buf_,
          orb_core->message_block_buffer_allocator (),
