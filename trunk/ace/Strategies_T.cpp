@@ -371,14 +371,27 @@ template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cached_Connect_Strategy
   (ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
-   ACE_Recycling_Strategy<SVC_HANDLER> *rec_s)
-    : creation_strategy_ (0),
+   ACE_Recycling_Strategy<SVC_HANDLER> *rec_s,
+   MUTEX *lock,
+   int delete_lock)
+    : lock_ (lock),
+      delete_lock_ (delete_lock),
+      creation_strategy_ (0),
       delete_creation_strategy_ (0),
       concurrency_strategy_ (0),
       delete_concurrency_strategy_ (0),
       recycling_strategy_ (0),
       delete_recycling_strategy_ (0)
 {
+  // Create a new lock if necessary.
+  if (this->lock_ == 0)
+    {
+      ACE_NEW (this->lock_,
+               MUTEX);
+
+      this->delete_lock_ = 1;
+    }
+
   if (this->open (cre_s, con_s, rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p\n"),
@@ -388,6 +401,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cached_Connect_Strategy (void)
 {
+  if (this->delete_lock_)
+    delete this->lock_;
+
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;
   this->delete_creation_strategy_ = 0;
@@ -650,7 +666,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
     // Synchronization is required here as the setting of the
     // recyclable state must be done atomically with the finding and
     // binding of the service handler in the cache.
-    ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+    ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
     int result = this->connect_svc_handler_i (sh,
                                               remote_addr,
@@ -701,7 +717,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
     // Synchronization is required here as the setting of the
     // recyclable state must be done atomically with the finding and
     // binding of the service handler in the cache.
-    ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+    ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
     int result = this->connect_svc_handler_i (sh,
                                               remote_addr,
@@ -782,7 +798,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   // For all successful cases: mark the <svc_handler> in the cache
   // as being <in_use>.  Therefore recyclable is BUSY.
   entry->ext_id_.state (ACE_Recyclable::BUSY);
-  
+
   // And increment the refcount
   entry->ext_id_.increment ();
 
@@ -795,7 +811,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cache (co
   // Synchronization is required here as the setting of the recyclable
   // state must be done atomically with respect to other threads that
   // are querying the cache.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
   return this->cache_i (recycling_act);
 }
@@ -818,7 +834,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::purge (co
 {
   // Excluded other threads from changing cache while we take this
   // entry out.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
   return this->purge_i (recycling_act);
 }
@@ -837,7 +853,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::mark_as_c
 {
   // Excluded other threads from changing cache while we take this
   // entry out.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
   return this->mark_as_closed_i (recycling_act);
 }
@@ -859,7 +875,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
 {
   // Excluded other threads from changing cache while we take this
   // entry out.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
   return this->cleanup_hint_i (recycling_act);
 }

@@ -1,11 +1,11 @@
 Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Cached_Connect_Strategy_T.h
-	* ace/Cached_Connect_Strategy_T.i	
+	* ace/Cached_Connect_Strategy_T.i
 	* ace/Cached_Connect_Strategy_T.cpp
-		
+
 	  Caching connection strategy used by the Strategy Connector.
-	
+
 	* ace/Cache_Map_Manager_T.h
 	* ace/Cache_Map_Manager_T.i
 	* ace/Cache_Map_Manager_T.cpp
@@ -22,27 +22,27 @@ Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* ace/Caching_Strategies_T.h
 	* ace/Caching_Strategies_T.i
 	* ace/Caching_Strategies_T.cpp
-		
+
 	  Strategies used for caching purposes, example: Least Recently
 	  Used.
 
 	* ace/Caching_Strategy_Utility_T.h
 	* ace/Caching_Strategy_Utility_T.i
 	* ace/Caching_Strategy_Utility_T.cpp
-		
+
 	  Helper class for the caching strategy classes which does the
 	  purging of entries.
 
 	* ace/Cleanup_Strategies_T.h
-	* ace/Cleanup_Strategies_T.i	
+	* ace/Cleanup_Strategies_T.i
 	* ace/Cleanup_Strategies_T.cpp
-		
+
 	  Strategy which deals with destruction and cleanup in general.
-	
+
 	* ace/Makefile
-	  
+
 	  Added the above under the TEMPLATE_FILES.
-	  
+
 	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.h
         * examples/Web_Crawler/Optimal_Cache_Map_Manager_T.i
 	* examples/Web_Crawler/Optimal_Cache_Map_Manager_T.cpp
@@ -52,9 +52,9 @@ Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* examples/Web_Crawler/Caching_Strategies_T.h
 	* examples/Web_Crawler/Caching_Strategies_T.i
 	* examples/Web_Crawler/Caching_Strategies_T.cpp
-		
+
           Removed these files and added them to the ace library itself.
-	       
+
         * examples/Web_Crawler/Command_Processor.cpp
         * examples/Web_Crawler/Command_Processor.h
         * examples/Web_Crawler/HTTP_URL.cpp
@@ -64,7 +64,7 @@ Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * examples/Web_Crawler/Mem_Map_Stream.cpp
         * examples/Web_Crawler/Mem_Map_Stream.h
         * examples/Web_Crawler/Options.h
-        * examples/Web_Crawler/URL.h	  
+        * examples/Web_Crawler/URL.h
         * examples/Web_Crawler/URL_Addr.h
         * examples/Web_Crawler/URL_Status.h
         * examples/Web_Crawler/URL_Visitor.cpp
@@ -74,9 +74,14 @@ Thu Jun  3 17:05:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * examples/Web_Crawler/main.cpp
 
 	  Changed to include files pertaining to Caching and Connection
-	  management from ace library.	
-	
-Thu Jun 03 12:32:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+	  management from ace library.
+
+Thu Jun 03 15:57:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T (ACE_Cached_Connect_Strategy): Allowed the user
+	  to pass in a mutex.  This allows the user to pass in a
+	  preconfigured mutex of his/her liking. Since the parameters
+	  default appropriately, no existing code should break.
 
 	* ace/Functor: Changed ACE_Hash<unsigned long long> specialization
 	  to ACE_Hash<ACE_UINT64>.
