@@ -215,21 +215,22 @@ Client::svc (void)
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
           // Invoke method.
-          server_->test_method (ACE_TRY_ENV);
-          
+          server_->test_method (latency_base,
+                                ACE_TRY_ENV);
+
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
-          
+
           // Record statistics.
           this->throughput_.sample (now - throughput_base,
                                     now - latency_base);
 
           ACE_TRY_CHECK;
-          
+
           // Sleep for 10 msecs.
           if (sleep_flag)
             ACE_OS::sleep (sleep_time);
-          
+
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));

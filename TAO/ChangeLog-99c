@@ -1,3 +1,24 @@
+Mon Jul 26 13:18:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Reply_Dispatcher.cpp:
+	  Optimized reply dispatching, there is no need to create a new
+	  CORBA_Environment (which is an expensive operation) when there
+	  is a TSS environment object available.
+
+	* performance-tests/Latency/Makefile:
+	* performance-tests/Latency/ami-latency-client.cpp:
+	* performance-tests/Latency/ami-throughput-client.cpp:
+	* performance-tests/Latency/client-st-muxed.conf:
+	* performance-tests/Latency/client.cpp:
+	* performance-tests/Latency/st-client.cpp:
+	* performance-tests/Latency/test.idl:
+	* performance-tests/Latency/test_i.cpp:
+	* performance-tests/Latency/test_i.h:
+	  To measure round-trip latencies in two-way asynchronous requests 
+	  we simply send the time-stamp as an argument for the request,
+	  which is returned and used in the ReplyHandler to measure the
+	  delay.
+
 Wed Jul 21 21:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Makefile:
