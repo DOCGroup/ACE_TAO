@@ -11,6 +11,7 @@ ACE_RCSID (ace,
 
 # include "ace/OS_NS_unistd.h"
 # include "ace/OS_NS_fcntl.h"
+# include "ace/OS_NS_stropts.h"
 
 # if defined (ACE_HAS_EVENT_POLL) && defined (linux)
 #  include /**/ <sys/epoll.h>
