@@ -1,3 +1,16 @@
+Thu Nov 11 20:53:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/orb.idl:
+	  Added missing typedefs.
+
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp:
+	  Move some fields from the private section to the protected
+	  section, to facilitate the implementation of specialized
+	  versions of the protocol.
+
 Thu Nov 11 20:32:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Faults/ping.idl:

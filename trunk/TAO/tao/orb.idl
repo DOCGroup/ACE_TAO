@@ -7,4 +7,10 @@
 
 #include <Policy.pidl>
 
+module CORBA
+{
+  typedef unsigned long ServiceOption;
+  typedef unsigned long ServiceDetailType;
+};
+
 #endif /* TAO_CORBA_IDL */
