@@ -1,3 +1,13 @@
+Sat May 08 03:10:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_lib.dsp:
+	* performance-tests/Misc/basic_perf.dsp:
+	* performance-tests/Misc/context_switch_time.dsp:
+	* tests/version_tests/*.dsp: We should have used ACE_NO_INLINE
+	  instead of defining __ACE_INLINE__=0 to supress the use of
+	  inlining.  Thanks to Nick Sawadsky
+	  <Nick_Sawadsky@BrooksSoftware.com> for reporting this.
+
 Fri May 07 23:05:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: added
