@@ -106,14 +106,14 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
 
 
 ACE_INLINE void
-TAO_ORB_Parameters::service_port (MCAST_SERVICEID service_id,
+TAO_ORB_Parameters::service_port (TAO_MCAST_SERVICEID service_id,
                                   CORBA::UShort port)
 {
   this->service_port_[service_id] = port;
 }
 
 ACE_INLINE CORBA::UShort
-TAO_ORB_Parameters::service_port (MCAST_SERVICEID service_id) const
+TAO_ORB_Parameters::service_port (TAO_MCAST_SERVICEID service_id) const
 {
   return this->service_port_[service_id];
 }

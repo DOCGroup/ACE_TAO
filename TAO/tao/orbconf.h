@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,9 +6,7 @@
  *
  *  $Id$
  *
- *   Build configuration file for the Inter-ORB Engine, and application
- *   level code using it via <corba.hh>
- *
+ *  Build configuration file.
  *
  *  @author  Copyright 1995 by Sun Microsystems, Inc.
  *  @author  TAO-specific changes by Chris Cleeland
@@ -16,11 +14,12 @@
  */
 //=============================================================================
 
-#ifndef TAO_ORB_CONFIG_H
-#define TAO_ORB_CONFIG_H
+#ifndef TAO_ORBCONF_H
+#define TAO_ORBCONF_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -58,12 +57,19 @@
 # define POA_NO_TIMESTAMP 0
 #endif /* POA_NO_TIMESTAMP */
 
-// If set the ORB will use dotted decimal addresses in the IORs it
-// exports, this is useful for platforms or environments that cannot
-// depend on a DNS beign available.
+// If set the ORB will use dotted decimal addresses in the IIOP IORs
+// it exports.  This is useful for platforms or environments that
+// cannot depend on a DNS being available.  This macro only affects
+// the server side of a TAO-based CORBA application.
 #if !defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
 # define TAO_USE_DOTTED_DECIMAL_ADDRESSES 0
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
+
+// The default size of TAO's ORB table, i.e. the one used as the
+// underlying implementation for the CORBA::ORB_init() function.
+#if !defined (TAO_DEFAULT_ORB_TABLE_SIZE)
+const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
+#endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's server active object map.
 #if !defined (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE)
@@ -452,6 +458,7 @@
 #define TAO_OBJID_RTCURRENT               "RTCurrent"
 #define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
 #define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
+#define TAO_OBJID_SECURITYMANAGER     "SecurityManager"
 #define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
 #define TAO_OBJID_NOTIFICATIONSERVICE "NotificationService"
 #define TAO_OBJID_TYPEDNOTIFICATIONSERVICE "TypedNotificationService"
@@ -485,7 +492,7 @@
 //    dynamically.
 
 // Service IDs for the services that are located through Multicast.
-enum MCAST_SERVICEID
+enum TAO_MCAST_SERVICEID
 {
   NAMESERVICE,
   TRADINGSERVICE,
@@ -494,7 +501,7 @@ enum MCAST_SERVICEID
 };
 
 // No. of services locatable through multicast.
-#define NO_OF_MCAST_SERVICES 4
+#define TAO_NO_OF_MCAST_SERVICES 4
 
 // TAO Naming Service.
 
@@ -1061,4 +1068,5 @@ enum TAO_Policy_Scope
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
 #include "ace/post.h"
-#endif  /* TAO_ORB_CONFIG_H */
+
+#endif  /* TAO_ORBCONF_H */

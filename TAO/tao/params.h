@@ -84,8 +84,8 @@ public:
   void add_endpoint (ACE_CString &endpoint);
 
   /// Set/Get the port of services locatable through multicast.
-  CORBA::UShort service_port (MCAST_SERVICEID service_id) const;
-  void service_port (MCAST_SERVICEID service_id, CORBA::UShort port);
+  CORBA::UShort service_port (TAO_MCAST_SERVICEID service_id) const;
+  void service_port (TAO_MCAST_SERVICEID service_id, CORBA::UShort port);
 
   /// Get/Set address:port for Multicast Discovery Protocol for
   /// the Naming Service.
@@ -170,7 +170,7 @@ private:
   TAO_EndpointSet endpoints_list_;
 
   /// Port numbers of the configured services.
-  CORBA::UShort service_port_[NO_OF_MCAST_SERVICES];
+  CORBA::UShort service_port_[TAO_NO_OF_MCAST_SERVICES];
 
   /// address:port for Multicast Discovery Protocol for the Naming
   /// Service.

@@ -9,12 +9,16 @@
 # include "ORB_Table.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, ORB_Table, "$Id$")
+
+ACE_RCSID (tao,
+           ORB_Table,
+           "$Id$")
+
 
 // ****************************************************************
 
 TAO_ORB_Table::TAO_ORB_Table (void)
-  : table_ (),
+  : table_ (TAO_DEFAULT_ORB_TABLE_SIZE),
     first_orb_ (0)
 {
 }

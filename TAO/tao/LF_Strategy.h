@@ -14,13 +14,13 @@
 #define TAO_LF_STRATEGY_H
 #include "ace/pre.h"
 
-#include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Time_Value;
 class TAO_Leader_Follower;
 
 /**
@@ -32,7 +32,6 @@ class TAO_Leader_Follower;
  * otherwise performance suffers.
  *
  * This class strategizes the ORB behavior in this respect.
- *
  */
 class TAO_Export TAO_LF_Strategy
 {
