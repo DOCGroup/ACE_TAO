@@ -2,7 +2,9 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
-
+#if (_MSC_VER >= 1200) && (_MSC_VER < 1300)
+#include <fstream>
+#endif
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   // Output to default destination (stderr)
@@ -11,7 +13,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   ACE_TRACE (ACE_TEXT ("main"));
 
   ACE_OSTREAM_TYPE *output =
-        new std::ofstream ("ostream.output.test");
+        (ACE_OSTREAM_TYPE *) new std::ofstream ("ostream.output.test");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IThis will go to STDERR\n")));
 
