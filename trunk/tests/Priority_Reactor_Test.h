@@ -24,33 +24,46 @@
 #include "ace/Service_Config.h"
 #include "ace/Svc_Handler.h"
 
-class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-  // = TITLE
-  //      This class is the product created by both <ACE_Connector>
-  //      and <ACE_Acceptor> objects.
-  // 
-  // = DESCRIPTION
-  //    This class gets its own header file to work around AIX C++
-  //    compiler "features" related to template instantiation...  It is
-  //    only used by Conn_Test.cpp.
-  //    Basically it will run as an active object on the clients,
-  //    sending an stream of data to the server, where they will be
-  //    demultiplexed using a reactive strategy.
+class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>
+// = TITLE
+//   A Svc_Handler with a priority twist.
+//
+// = DESCRIPTION
+//   This Svc_Handler receives the data sent by the childs or writer
+//   threads; each one sets it own priority to a new level, in a
+//   cyclic manner.
+//   The main point is test and exercise the priority dispatching
+//   features of ACE_Priority_Reactor.
 {
 public:
-  Svc_Handler (ACE_Thread_Manager * = 0);
-  // Do-nothing constructor.
+  static void set_countdown (int nchildren);
+  // Set the number of children or writer threads we will be running,
+  // when they are all gone we terminate the reactor loop.
 
   virtual int open (void *);
-  // Initialization hook.
-
-  void send_data (void);
-  // Send data to server.
-
-  virtual int handle_input(ACE_HANDLE handle);
-  // Recv data from client.
+  virtual int handle_input (ACE_HANDLE h);
+  // The Svc_Handler callbacks.
 
 private:
+  static int waiting_;
+  // How many writers are we waiting for.
+
+  static int started_;
+  // How many readers have started.
+};
+
+class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_INET_Addr, ACE_SYNCH>
+// = TITLE
+//   A simple writer.
+//
+// = DESCRIPTION
+//   This Svc_Handler simply connects to a server and sends some
+//   output to it.
+//   Its purpose is to feed the test.
+{
+public:
+  virtual int open (void *);
+  virtual int svc (void);
 };
 
 #endif /* ACE_TESTS_PRIORITY_REACTOR_TEST_H */

@@ -37,37 +37,18 @@
 #include "Priority_Reactor_Test.h"
 
 static int opt_nchildren = 20;
+// The number of children to run, it can be changed using the -c
+// option.
+
 static int opt_nloops = 200;
+// The number of loops per children, it can be changed using the -l
+// option.
+
 static int opt_priority_reactor = 1;
+// If not set use the normal reactor, it can be changed using the -d
+// option.
 
-class Read_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
-// = TITLE
-//   A Svc_Handler with a priority twist.
-//
-// = DESCRIPTION
-//   This Svc_Handler receives the data sent by the childs or writer
-//   threads; each one sets it own priority to a new level, in a
-//   cyclic manner.
-//   The main point is test and exercise the priority dispatching
-//   features of ACE_Priority_Reactor.
-{
-public:
-  static void set_countdown (int nchildren);
-  // Set the number of children or writer threads we will be running,
-  // when they are all gone we terminate the reactor loop.
-
-  virtual int open (void *);
-  virtual int handle_input (ACE_HANDLE h);
-  // The Svc_Handler callbacks.
-
-private:
-  static int waiting_;
-  // How many writers are we waiting for.
-
-  static int started_;
-  // How many readers have started.
-};
-
+typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 int Read_Handler::waiting_ = 0;
@@ -136,22 +117,6 @@ Read_Handler::handle_input (ACE_HANDLE h)
   // result, h, priority ()));
   return 0;
 }
-
-class Write_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
-// = TITLE
-//   A simple writer.
-//
-// = DESCRIPTION
-//   This Svc_Handler simply connects to a server and sends some
-//   output to it.
-//   Its purpose is to feed the test.
-{
-public:
-  virtual int open (void *);
-  virtual int svc (void);
-};
-
-typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 
 int 
 Write_Handler::open (void *)
