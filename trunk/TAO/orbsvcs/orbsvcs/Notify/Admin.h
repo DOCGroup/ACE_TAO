@@ -32,10 +32,12 @@ class TAO_NS_EventChannel;
  * @brief
  *
  */
+
 class TAO_Notify_Export TAO_NS_Admin : public virtual TAO_NS_Container_T <TAO_NS_Proxy, TAO_NS_Admin, TAO_NS_EventChannel>
 {
-  typedef ACE_Unbounded_Set <TAO_NS_Object_Id> TAO_NS_Object_Id_Seq;
 public:
+  typedef ACE_Unbounded_Set <TAO_NS_Object_Id> TAO_NS_Object_Id_Seq;
+
   enum ADMIN_TYPE
     {
       CONSUMER_ADMIN,

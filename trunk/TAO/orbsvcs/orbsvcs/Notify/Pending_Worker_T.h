@@ -57,6 +57,9 @@ public:
   /// Destructor
   ~TAO_NS_Pending_Worker_T ();
 
+  /// Call the base class init
+  int init (int argc, char **argv);
+
   /// Init
   void init (TAO_NS_Dispatch_Observer_T<PEER>* dispatch_observer, ACE_Time_Value& update_period ACE_ENV_ARG_DECL);
 
