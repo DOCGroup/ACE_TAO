@@ -2,11 +2,14 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#include <ace/Synch.h>
-#include <ace/Refcounted_Auto_Ptr.h>
+#include "ace/OS_NS_string.h"
+#include "ace/Synch.h"
+#include "ace/Refcounted_Auto_Ptr.h"
 
 #include "Protocol.hpp"
 #include "Messaging.hpp"
+
+#include <typeinfo>
 
 namespace TMCast
 {
