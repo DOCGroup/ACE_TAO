@@ -1,3 +1,13 @@
+Tue Nov 12 11:15:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Added an assert
+	  statement after decrementing the reference count. Point taken
+	  from "Pragmatic Programmer". 
+
 Tue Nov 12 11:08:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.h: Commented out the following calls 
