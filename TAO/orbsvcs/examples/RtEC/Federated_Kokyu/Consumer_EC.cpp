@@ -11,12 +11,14 @@
 
 #include "Kokyu_EC.h"
 #include "Consumer.h"
-#include "orbsvcs/Event/EC_Event_Counter.h"
+#include <Kokyu/Counter.h>
 #include "orbsvcs/Event/EC_Event_Limit.h"
 
+#if ! defined (ACE_WIN32) & defined (ACE_HAS_DSUI)
 #include <dsui.h>
 #include "federated_config.h"
 #include "federated_dsui_families.h"
+#endif /* ! ACE_WIN32 & ACE_HAS_DSUI */
 
 namespace
 {

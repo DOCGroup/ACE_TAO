@@ -11,7 +11,7 @@
 #if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
 #include "ec_dsui_config.h"
 #include "ec_dsui_families.h"
-#include "EC_Event_Counter.h"
+#include <Kokyu/Counter.h>
 #include <dsui.h>
 #endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
 
@@ -44,10 +44,10 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       evnt.header.type = filter->type ();
       evnt.header.source = 0;
 
-      EC_Event_Counter::event_id eid = EC_EVENT_COUNTER->increment();
-      evnt.header.eid.id = eid.id;
-      evnt.header.eid.tid = eid.tid;
-      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_TIMEOUT_GENERATOR, 0, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+      kokyu::Object_Counter::object_id oid = kokyu::OBJECT_COUNTER->increment();
+      evnt.header.eid.id = oid.id;
+      evnt.header.eid.tid = oid.tid;
+      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_TIMEOUT_GENERATOR, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
 
       RtecEventComm::EventSet single_event (1, 1, &evnt, 0);
 
