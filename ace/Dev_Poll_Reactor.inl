@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "ace/Log_Msg.h"
+
 ACE_INLINE
 ACE_Dev_Poll_Event_Tuple::ACE_Dev_Poll_Event_Tuple (void)
   : event_handler (0),
