@@ -113,5 +113,6 @@ Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
 Tokens_Test: ALL MSVC !DISABLED TOKEN !chorus !Unicos
 TSS_Test
+Vector_Test
 UPIPE_SAP_Test: !VxWorks
 Upgradable_RW_Test: !chorus

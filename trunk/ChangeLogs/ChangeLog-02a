@@ -1,5 +1,14 @@
 Sat Jan 19 10:23:39 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Makefile (TEMPLATE_FILES): 
+	* tests/Makefile.bor:
+  	* tests/Makefile:
+    	* tests/run_test.lst:
+	* ace/Vector_T.{h,i,cpp}:
+	* tests/Vector_Test.cpp: Added support for the new ACE_Vector to
+	  the appropriate places.  This vector behaves like the STL
+ 	  vector.  Thanks to Gonzo and Craig Ching for contributing this.
+
 	* ace/Future_Set.h: Updated the documentation to explain how
 	  various features work better.  Thanks to Johnny Tucker for
  	  contributing this.

@@ -102,6 +102,7 @@ BIN =   Aio_Platform_Test \
         Time_Value_Test \
         Timer_Queue_Test \
         TSS_Test \
+	Vector_Test \
         UPIPE_SAP_Test \
         Upgradable_RW_Test
 
