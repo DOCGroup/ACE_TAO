@@ -3,7 +3,7 @@
 #
 # Arguments:
 #   $1  <Test_Name> 
-#   $2  <obj_reference_From_Server> 
+#   $2  <ior_file> 
 
 # if ($#argv < 2) then
 # 	echo "Usage: run_client <Test_Name> <obj_reference_From_Server>"

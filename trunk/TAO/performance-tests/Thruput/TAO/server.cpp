@@ -3,7 +3,8 @@
 // ============================================================================
 //
 // = TAO tests
-//    Throughput measurement using the TTCP benchmark adapted to work using TAO
+//    Throughput measurement using the TTCP benchmark adapted to work
+//    using TAO 
 //
 // = FILENAME
 //   server.cpp
@@ -197,24 +198,25 @@ main (int argc, char **argv)
       return 1;
     }
 
+  // get a stringified representation of the object reference created above
+  str = orb_var->object_to_string (obj_var.in (),
+                                   env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("object_to_string");
+      return 1;
+    }
+
   if (TAO_debug_level > 0)
     {
-      // get a stringified representation of the object reference created above
-      str = orb_var->object_to_string (obj_var.in (),
-                                       env);
-      if (env.exception () != 0)
-        {
-          env.print_exception ("object_to_string");
-          return 1;
-        }
-
       ACE_DEBUG ((LM_DEBUG, "stringified obj reference = %s\n", str));
-      if (ior_file != 0)
-        {
-          // write ior to a file
-          ACE_OS::fprintf (ior_file,"%s",str);
-          ACE_OS::fclose (ior_file);
-        }
+    }
+
+  if (ior_file != 0)
+    {
+      // write ior to a file
+      ACE_OS::fprintf (ior_file,"%s",str);
+      ACE_OS::fclose (ior_file);
     }
 
 #if defined (ACE_HAS_QUANTIFY)

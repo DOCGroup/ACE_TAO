@@ -210,9 +210,9 @@ void PrintStats (void)
         break;
       }
       outFile = fopen (filename, "a+");
-      ACE_OS::fprintf (outFile, "\n%ldk \t", buflen / 1024);
+      ACE_OS::fprintf (outFile, "%ldk \t", buflen / 1024);
       tmp = ((double) nbytes) / realt;
-      ACE_OS::fprintf (outFile, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
+      ACE_OS::fprintf (outFile, "%.2f\n", tmp * 8.0 / 1024.0 / 1024.0);
       fclose (outFile);
     }
 
