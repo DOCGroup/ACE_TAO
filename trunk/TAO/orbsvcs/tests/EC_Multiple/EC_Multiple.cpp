@@ -1,13 +1,5 @@
 // $Id$
 
-#if defined (sun) || defined (__osf__)
-// @@ TODO This should be encapsulated in ACE...
-#include <sys/types.h>
-#include <sys/priocntl.h>
-#include <sys/rtpriocntl.h>
-#include <sys/tspriocntl.h>
-#endif /* sun || __osf__ */
-
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
@@ -25,6 +17,10 @@
 
 #include "Scheduler_Runtime1.h"
 #include "Scheduler_Runtime2.h"
+
+#if defined (sun)
+# include <sys/lwp.h> /* for _lwp_self */
+#endif /* sun */
 
 Test_ECG::Test_ECG (void)
   : lcl_name_ ("Test_ECG"),
@@ -62,10 +58,6 @@ void
 print_priority_info (const char *const name)
 {
 #if defined (sun) || defined (__osf__)
-  pcinfo_t pcinfo;
-  id_t ts_id, rt_id;
-  pcparms_t pcparms;
-  rtparms_t rtparms;
   struct sched_param param;
   int policy, status;
 
@@ -73,7 +65,7 @@ print_priority_info (const char *const name)
                                        &param)) == 0) {
 #   ifdef sun
     ACE_DEBUG ((LM_DEBUG,
-                "%s (%lu|%u|%u); policy is %d, priority is %d\n",
+                "%s (%lu|%u); policy is %d, priority is %d\n",
                 name,
                 getpid (),
                 _lwp_self (),
@@ -92,53 +84,29 @@ print_priority_info (const char *const name)
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
 
-  // Get the class TS and RT class IDs.
-
-  memset (&pcinfo, 0, sizeof pcinfo);
-  strcpy (pcinfo.pc_clname, "TS");
-  if (priocntl (P_ALL /* ignored */,
-                P_MYID /* ignored */,
-                PC_GETCID,
-                (char *) &pcinfo) == -1)
-    return;
-  ts_id = pcinfo.pc_cid;
-
-  memset (&pcinfo, 0, sizeof pcinfo);
-  strcpy (pcinfo.pc_clname, "RT");
-  if (priocntl (P_ALL /* ignored */,
-                P_MYID /* ignored */,
-                PC_GETCID,
-                (char *) &pcinfo) == -1)
-    return;
-  rt_id = pcinfo.pc_cid;
-
-  /* The following is just to avoid Purify warnings about unitialized
-     memory reads. */
-  memset (&pcparms, 0, sizeof pcparms);
-  pcparms.pc_cid = PC_CLNULL;
-
 #ifdef sun
-  if (priocntl (P_LWPID,
-                P_MYID,
-                PC_GETPARMS,
-                (char *) &pcparms) == -1) {
-    perror ("priocntl: PCGETPARMS");
-  } else {
-    ACE_DEBUG ((LM_DEBUG,
-                "%s class: %s", name,
-                pcparms.pc_cid == rt_id ? "RT" :
-                (pcparms.pc_cid == ts_id ? "TS" : "UNKNOWN")));
-    if (pcparms.pc_cid == rt_id) {
-      /* RT class */
-      memcpy (&rtparms, pcparms.pc_clparms, sizeof rtparms);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "; priority: %d, quantum: %lu sec, %ld nsec\n",
-                  rtparms.rt_pri, rtparms.rt_tqsecs, rtparms.rt_tqnsecs));
-    } else {
-      ACE_DEBUG ((LM_DEBUG, "\n"));
+  // Find what scheduling class the thread's LWP is in.
+  ACE_Sched_Params sched_params (ACE_SCHED_OTHER, 0);
+  if (ACE_OS::lwp_getparams (sched_params) == -1)
+    {
+      ACE_OS::perror ("ACE_OS::lwp_getparams");
+      return;
     }
-  }
+  else if (sched_params.policy () == ACE_SCHED_FIFO  ||
+           sched_params.policy () == ACE_SCHED_RR)
+    {
+      // This thread's LWP is in the RT class.
+      ACE_DEBUG ((LM_DEBUG,
+                  "RT class; priority: %d, quantum: %u msec\n",
+                  sched_params.priority (),
+                  sched_params.quantum ().msec ()));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TS class; priority: %d\n",
+                  sched_params.priority ()));
+    }
 #endif /* sun */
 #endif /* sun || Digital Unix 4.0 */
 }
@@ -572,7 +540,7 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
     return RtecEventChannelAdmin::EventChannel::_nil ();
 
   return RtecEventChannelAdmin::EventChannel::_narrow (ec_ptr.in (),
-						       _env);
+                                                       _env);
 }
 
 void
