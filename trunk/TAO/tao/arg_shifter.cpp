@@ -4,8 +4,8 @@
 
 Arg_Shifter::Arg_Shifter(int& argc, char** argv, char** temp)
   : argc_ (argc),
-    temp_ (temp),
     total_size_ (argc),
+    temp_ (temp),
     argv_ (argv),
     current_index_ (0),
     back_ (argc - 1),
