@@ -71,13 +71,6 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_Addr &mcast_addr,
       // Create an address to bind the socket to.
       ACE_INET_Addr local;
 
-#if defined (linux)
-      local = this->mcast_addr_;
-#else /* linux */
-      if (local.set (this->mcast_addr_.get_port_number ()) == -1)
-        return -1;
-#endif /* linux */
-
       if (ACE_SOCK_Dgram::shared_open (local,
                                        protocol_family) == -1)
         return -1;
@@ -146,7 +139,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               continue;
             if (this->subscribe (mcast_addr,
                                  reuse_addr,
-                                 ACE_TEXT_CHAR_TO_TCHAR 
+                                 ACE_TEXT_CHAR_TO_TCHAR
                                    (if_addrs[if_cnt].get_host_addr()),
                                  protocol_family,
                                  protocol) == 0)
@@ -164,7 +157,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
         // 1 indicates a "short-circuit" return.  This handles the
         // rather bizarre semantics of checking all the interfaces on
         // NT.
-        return 1; 
+        return 1;
     }
 #else
   ACE_UNUSED_ARG (mcast_addr);
@@ -278,7 +271,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
               continue;
             if (this->unsubscribe (mcast_addr,
-                                   ACE_TEXT_CHAR_TO_TCHAR 
+                                   ACE_TEXT_CHAR_TO_TCHAR
                                      (if_addrs[if_cnt].get_host_addr()),
                                    protocol_family,
                                    protocol) == 0)
@@ -402,5 +395,3 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
                                          this->mcast_request_if_,
                                          net_if );
 }
-
-

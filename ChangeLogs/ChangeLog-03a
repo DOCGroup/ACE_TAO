@@ -1,3 +1,17 @@
+Fri Oct  5 14:40:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp (open): Removed the #if defined (linux)
+	  from the code. Looks like this had to be removed to get it
+	  working for RTI under Linux. The other ChangeLog entries that
+	  this change is concerned with are "Sat Feb 17 17:23:46 2001
+	  Darrell Brunsch <brunsch@uci.edu>" and "Fri Jan 26 11:18:15 2001
+	  Douglas C. Schmidt". Looks like the patch provided by Keith
+	  Nicewarner <knicewar@erg.sri.com> is being reverted. I remember
+	  a communication from Keith which seemed to hint that this may
+	  not be required. 
+
+	  Thanks to Russ Noseworthy for suggesting this.
+
 Fri Oct  5 14:04:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Hagen Ulrich to the Hall of Fame.
