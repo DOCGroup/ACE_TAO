@@ -1,3 +1,9 @@
+Thu Jan  1 00:35:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+
+	  Fixed a warning in Solaris 8 builds.
+
 Wed Dec 31 21:57:08 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
 	* ace/Base_Thread_Adapter.h:
