@@ -1,3 +1,10 @@
+Wed Jun 04 14:11:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_Dirent.cpp:
+          Changes definitions of INVALID_FILE_ATTRIBUTES and
+          INVALID_SET_FILE_POINTER from (-1) to ((DWORD)(-1)) to fix BCB5
+          warnings.
+
 Wed Jun 04 07:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.cpp:
