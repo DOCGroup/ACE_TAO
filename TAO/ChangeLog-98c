@@ -1,3 +1,7 @@
+Wed Jul 15 19:28:51 1998  Seth Widoff  <sbw1@cs.wuslt.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Added trader files.
+
 Wed Jul 15 18:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tao/Invocation.cpp: Made sure, that all control paths
