@@ -8,6 +8,12 @@ Tue Jan 13 13:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Basic_Types.{h,i} (ACE_U_LongLong): added
           operator/ (const double).
 
+        * ace/OS.h: moved definition of AF_FILE, etc., to _after_ the
+          #include of sys/socket.h.  That way, the #ifndef AF_FILE
+          protection will work properly on Linux/glib2.  Thanks to
+          Amos Shapira <amos@gezernet.co.il> for breaking silence and
+          reporting this.
+
 Mon Jan 12 20:19:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/SString.i: Replaced all uses of NULL with 0 since NULL
