@@ -102,7 +102,7 @@ class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
   //    to the run time and delegates all locking operations to the actual
   //    lock.  Users must overwrite the constructor to initialize <lock_>.
 public:
-  virtual ~ACE_Adaptive_Lock (void) = 0;
+  virtual ~ACE_Adaptive_Lock ();
   // You must also overwrite the destructor function to match with
   // how you construct the underneath <lock_>.
 
