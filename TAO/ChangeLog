@@ -1,3 +1,17 @@
+Thu Apr 24 13:01:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_type.cpp:
+
+          Substituted full name for local name in generation of
+          parameters for explicit template instantiation.
+
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+          Removed generation of explicit template instantiation for
+          TAO_Object_Manager and TAO_Valuetype_Manager. It is now
+          handled elsewhere.
+
 Thu Apr 24 11:48:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/Request.cpp:
