@@ -166,9 +166,4 @@ private:
 // Global option coordinator for the entire program.
 extern Options option;       
 
-// Set to 1 if your want to stack-allocate some large arrays.
-#if !defined (LARGE_STACK_ARRAYS)
-#define LARGE_STACK_ARRAYS 0
-#endif /* LARGE_STACK_ARRAYS */
-
 #endif /* OPTIONS_H */
