@@ -1,3 +1,10 @@
+Thu Dec 21 16:45:28 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/Capabilities_Test.cpp: Added missing \n to a ACE_ERROR
+          statement, and added ACE_DEFAULT_FILE_PERMS to the ACE_OS::open
+          call to create the test file. It used to be 0600, but that was
+          removed to satisfy Win32 which now pays attention to that arg.
+
 Thu Dec 21 05:50:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.cpp (expire): Fixed a mistake where
