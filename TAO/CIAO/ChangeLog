@@ -1,7 +1,17 @@
+Thu May 27 16:42:26 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Added a check to make sure that duplicate NodeManager names are
+          not added to the internal hashmap maintained in this
+          entity. This ensures that the length always corresponds to the
+          unique set of node names. Thanks to Gan Deng for pointing this
+          out.
+
 Thu May 27 16:38:19 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* DnC/Deployment.xsd: Added UUID element to deploymentPlan.
-	
+
 
 Thu May 27 13:03:02 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 

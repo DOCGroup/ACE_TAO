@@ -1,6 +1,8 @@
 // $Id$
 
 #include "DomainApplicationManager_Impl.h"
+#include "ace/Null_Mutex.h"
+#include "ace/OS_NS_string.h"
 
 CIAO::DomainApplicationManager_Impl::
 DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
@@ -36,7 +38,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     {
       // Call get_plan_info() method to get the total number
       // of child plans and list of NodeManager names.
-      if ( this->get_plan_info () == false)
+      if ( ! this->get_plan_info ())
         ACE_THROW (Deployment::PlanError ());
 
       // Check the validity of the global deployment plan.
@@ -112,13 +114,34 @@ get_plan_info (void)
     return 0;
 
   // Copy the name of the node in the plan on to the node manager
-  // array
+  // array, Making sure that duplicates are not added twice
+  int num_plans = 0;
   for (CORBA::ULong index = 0; index < length; index ++)
-    this->node_manager_names_.
-      push_back (CORBA::string_dup ((this->plan_.instance [index]).node));
+    {
+      bool matched = 0;
+      for (size_t i = 0; i < this->node_manager_names_.size (); i++)
+        // If a match is found do not add it to the list of unique
+        // node names
+        if (ACE_OS::strcmp (this->plan_.instance [index].node,
+                            (this->node_manager_names_ [i]).c_str ()) == 0)
+          {
+            // Break out -- Duplicates found
+            matched = 1;
+            break;
+          }
+
+      if (! matched)
+        {
+          // Add this unique node_name to the list of NodeManager names
+          this->node_manager_names_.push_back
+            (CORBA::string_dup
+             (this->plan_.instance [index].node));
+          ++ num_plans;
+        }
+    }
 
   // Set the length of the Node Managers
-  this->num_child_plans_ = length;
+  this->num_child_plans_ = num_plans;
 
   // Indicate success
   return 1;
