@@ -371,6 +371,9 @@ private:
   static int msg_off_;
   // Offset of msg_[].
 
+  static int instance_count_;
+  // Number of existing Log_Msg instances; when 0, delete program/host names
+
   static void close (void);
   // For cleanup, at program termination, by ACE_Object_Manager;
 
