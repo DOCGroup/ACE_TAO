@@ -505,12 +505,12 @@ ACE::crc32 (const char *string)
 }
 
 ACE_UINT32
-ACE::crc32 (const char *buffer, ACE_UINT32 len)
+ACE::crc32 (const void *buffer, size_t len)
 {
   register ACE_UINT32 crc = 0;
 
-  for (const char *p = buffer,
-                  *e = buffer + len;
+  for (const char *p = (char *) buffer,
+                  *e = (char *) buffer + len;
        p != e;
        ++p)
     {

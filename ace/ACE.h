@@ -536,13 +536,11 @@ namespace ACE
   extern ACE_Export u_long hash_pjw (const wchar_t *str, size_t len);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Computes the ISO 8802-3 standard 32 bits CRC for the string
-  /// (not for a file).
+  /// Computes the ISO 8802-3 standard 32 bits CRC for the string.
   extern ACE_Export ACE_UINT32 crc32 (const char *str);
 
-  /// Computes the ISO 8802-3 standard 32 bits CRC for the given
-  /// buffer (the length is included in the CRC).
-  extern ACE_Export ACE_UINT32 crc32 (const char *buf, ACE_UINT32 len);
+  /// Computes the ISO 8802-3 standard 32 bits CRC for the buffer.
+  extern ACE_Export ACE_UINT32 crc32 (const void *buf, size_t len);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the
   /// @ len iovec buffers.
