@@ -28,7 +28,6 @@
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE     // jcej 12/22/96         #2
 
 #define ACE_LACKS_THREAD_STACK_ADDR             // JCEJ 12/17/96
-#define ACE_LACKS_THREAD_STACK_SIZE             // JCEJ 12/17/96
 
 #define ACE_LACKS_RWLOCK_T                      // JCEJ 12/23/96        #1
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    // JCEJ 1/7-8/96
@@ -37,8 +36,15 @@
 // Platform supports reentrant functions (i.e., all the POSIX *_r
 // functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
-// getprotobyname_r have a different signature!
-#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+
+#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC__ < 1)
+   // Older versions of glibc lacked reentrant netdb functions
+#  define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+
+   // glibc < 2.1 lacks pthread_attr_setstacksize()
+#  define ACE_LACKS_THREAD_STACK_SIZE
+#endif /*  (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC__ < 1) */
+
 // uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif

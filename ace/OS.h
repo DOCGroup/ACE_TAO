@@ -1516,7 +1516,7 @@ typedef void (*ACE_Service_Object_Exterminator)(void *);
  * The intent of this pattern is to allow developers to dynamically
  * load and configure services into a system.  With a little help from
  * this macros statically linked services can also be dynamically
- * configured. 
+ * configured.
  *
  * More details about this component are available in the documentation
  * of the ACE_Service_Configurator class and also
@@ -1552,7 +1552,7 @@ extern ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS ;
  * macro, the full name is formed by appending _Export.
  * ACE provides tools to generate header files that define the macro
  * correctly on all platforms, please see
- * $ACE_ROOT/bin/generate_export_file.pl 
+ * $ACE_ROOT/bin/generate_export_file.pl
  *
  * @param EXPORT_NAME The export macro name prefix.
  * @param SERVICE_CLASS The name of the class implementing the service.
@@ -1661,7 +1661,7 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
 /**
  * Use with arguments matching ACE_FACTORY_DECLARE.
  * Normally used in the .cpp file that defines the service
- * implementation. 
+ * implementation.
  *
  * This macro defines both the factory method and the function used to
  * cleanup the service object.
@@ -1684,7 +1684,7 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #define ACE_SVC_NAME(SERVICE_CLASS) _make_##SERVICE_CLASS
 
 /// The canonical way to invoke (i.e. construct) a service factory
-/// method. 
+/// method.
 #define ACE_SVC_INVOKE(SERVICE_CLASS) _make_##SERVICE_CLASS (0)
 
 //@}
