@@ -1,3 +1,13 @@
+Thu Feb 11 02:51:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (ORB_init): Only initialize the ORB global variables
+	  _after_ the ORB has been initialized.  Otherwise, the
+	  init_orb_globals() will create a server_strategy_factory (as TAO
+	  is now) before we have a chance to initialize it.
+
+	  This bug was causing grief in POA registration test. Thanks to
+	  David A. Janello <argno@mcs.net> for reporting the bug.
+
 Wed Feb 10 23:50:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Connect.cpp (handle_input): It is unfotunate that an
