@@ -28,7 +28,7 @@ endif
 ifeq ($(static_libs_only),0)
 
 tao_idl: libTAO_IDL_FE_DLL.$(SOEXT) libTAO_IDL_BE_DLL.$(SOEXT)
-	touch tao_idl;
+	touch tao_idl$(EXEEXT);
 
 libTAO_IDL_FE_DLL.$(SOEXT):
 
@@ -37,7 +37,7 @@ libTAO_IDL_BE_DLL.$(SOEXT):
 else # static_libs_only == 1
 
 tao_idl: libTAO_IDL_FE_DLL.a libTAO_IDL_BE_DLL.a
-	touch tao_idl;
+	touch tao_idl$(EXEEXT);
 
 libTAO_IDL_FE_DLL.a:
 

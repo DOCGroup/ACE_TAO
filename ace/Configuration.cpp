@@ -451,6 +451,20 @@ ACE_Section_Key_Win32::~ACE_Section_Key_Win32 (void)
 
 //////////////////////////////////////////////////////////////////////////////
 
+int 
+ACE_Configuration_Win32Registry::operator== (const ACE_Configuration_Win32Registry &rhs) const
+{
+  ACE_UNUSED_ARG (rhs);
+  return 1; 
+}
+
+int 
+ACE_Configuration_Win32Registry::operator!=(const ACE_Configuration_Win32Registry &rhs) const
+{ 
+  ACE_UNUSED_ARG (rhs);
+  return 1;
+}
+
 ACE_Configuration_Win32Registry::ACE_Configuration_Win32Registry (HKEY hKey)
 {
   ACE_Section_Key_Win32 *temp;
@@ -773,10 +787,10 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
 }
 
 int
-ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Section_Key& key,
-                                                   const ACE_TCHAR* name,
-                                                   void*& data,
-                                                   u_int& length)
+ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Section_Key &key,
+                                                   const ACE_TCHAR *name,
+                                                   void *&data,
+                                                   u_int &length)
 {
   if (validate_name (name))
     return -1;
@@ -801,7 +815,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
   length = buffer_length;
 
-  ACE_NEW_RETURN (data, unsigned char[length], -4);
+  ACE_NEW_RETURN (data, BYTE[length], -4);
 
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
@@ -810,7 +824,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 (BYTE *) data,
                                 &buffer_length) != ERROR_SUCCESS)
     {
-      delete[] data;
+      delete [] (BYTE *) data;
       data = 0;
       return -5;
     }

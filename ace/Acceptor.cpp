@@ -89,9 +89,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   // the <accept> call can hang!
   this->peer_acceptor_.enable (ACE_NONBLOCK);
 
-  int result = reactor->register_handler
-    (this,
-     ACE_Event_Handler::ACCEPT_MASK);
+  int result = reactor->register_handler (this,
+                                          ACE_Event_Handler::ACCEPT_MASK);
   if (result != -1)
     this->reactor (reactor);
 
@@ -276,21 +275,17 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
   // associations.
   int reset_new_handle = this->reactor ()->uses_event_associations ();
 
-  // Note that it's not really an error if <accept> returns -1 and
-  // <errno> == EWOULDBLOCK because we have set the peer acceptor's
-  // handle into non-blocking mode to prevent the <accept> call from
-  // "hanging" if the connection has been shutdown.
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0, // remote address
                                    0, // timeout
                                    1, // restart
                                    reset_new_handle  // reset new handler
-                                   ) == -1 && errno != EWOULDBLOCK)
+                                   ) == -1)
     {
       // Close down handler to avoid memory leaks.
       svc_handler->close (0);
 
-      // If <reuse_addr> is true then we will close the socket and
+      // If <reuse_addr_> is true then we will close the socket and
       // open it again...
       if (this->reuse_addr_)
         {

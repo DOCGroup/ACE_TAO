@@ -1,13 +1,10 @@
 # $Id$
 
-#
 # This file should allow to build ACE for mingw32 with mingw tools.
 # Edit to change TCPU and M32_BASE below.
 #
 # Don't forget to define the ACE_ROOT environment variable!
-#
 
-#
 # mingw32 packages as distributed from sourceforge:
 # http://sourceforge.net/project/showfiles.php?group_id=2435&release_id=15084
 # See also http://www.mingw.org.
@@ -36,23 +33,19 @@
 #    with
 #    ... %{!shared:%{!mdll:c:/mingw32/lib/gcc-lib/mingw32/2.95.2/crt2%O%s}} ...
 #    or something similar depending on the location of your instalation).
-#
 
-#
 # Chose your target CPU (uncomment ONE of these).
-#
 TCPU = pentiumpro
 #TCPU = pentium
 #TCPU = i486
 #TCPU = i386
 
-#
 # Define here mingw32 instalation location.
 # These asumes no fancy hierachy, just all packages above unpacked on
 # the same base directory.
 # Optionally, you can define it as an environment variable, or set it
 # on your platform_macros.GNU before including this file.
-#
+
 ifndef MINGW_BASE
   MINGW_BASE = c:/live/local/mingw32
 endif

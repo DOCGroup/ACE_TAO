@@ -1,3 +1,46 @@
+Sat Jun  2 13:41:50 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/IDL_Test/generic_object.idl: Changed "THIS" and "THAT" to
+	  "OT_THIS" and "OT_THAT" to avoid problems with mingw.  Thanks to
+ 	  Cristian Ferretti <cristian_ferretti@yahoo.com> for pointing
+ 	  this out.
+
+	* TAO_IDL/Makefile.FE: Added ACE_SHLIBS = -lACE.  Thanks to
+	  Cristian Ferretti <cristian_ferretti@yahoo.com> for pointing
+ 	  this out.
+
+	* TAO_IDL/Makefile.EXE: Changed the definition of
+	  TAO_IDL_PREPROCESSOR so that it'll work on mingw.  Thanks to
+ 	  Cristian Ferretti <cristian_ferretti@yahoo.com> for pointing
+ 	  this out.
+
+	* TAO_IDL/Makefile.dependencies (tao_idl): Added support for the
+	  new EXEEXT macro.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* TAO_IDL/include/idl.h: #undef "interface" so that mingw will
+	  work correctly.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* TAO_IDL/be_include/be_extern.h: Added a forward decl of the
+	  function set_be_global().  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* tao/tao/IIOP_Connector.cpp,
+	* tao/Strategies/SHMIOP_Connector.cpp: Replaced template instantiation
+	  of "int" with "ACE_HANDLE" to work around problems with mingw.
+  	  Thanks to Cristian Ferretti <cristian_ferretti@yahoo.com> for
+ 	  pointing this out.
+
+	* tao/orbconf.h: Changed a check for _WIN32 to be a check for
+	  _MSC_VER so that mingw will work properly.  Thanks to Cristian
+ 	  Ferretti <cristian_ferretti@yahoo.com> for pointing this out.
+
+	* tao/DynamicInterface/Dynamic_Implementation.cpp (_create_stub): 
+	  Changed "interface" to "pinterface" to work around problems with
+ 	  mingw.  Thanks to Cristian Ferretti
+ 	  <cristian_ferretti@yahoo.com> for pointing this out.
+
 Sat Jun  2 09:23:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp: Fixed a Fuzz error.   
