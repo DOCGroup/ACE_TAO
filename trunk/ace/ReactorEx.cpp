@@ -760,7 +760,7 @@ ACE_ReactorEx::open (size_t size,
 
   if (tq == 0)
     {
-      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_List, -1);
+      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Heap, -1);
       this->delete_timer_queue_ = 1;
     }
   else 

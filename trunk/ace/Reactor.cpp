@@ -1056,7 +1056,7 @@ ACE_Reactor::open (size_t size,
 
   if (result != -1 && this->timer_queue_ == 0)
     {
-      this->timer_queue_ = new ACE_Timer_List;
+      this->timer_queue_ = new ACE_Timer_Heap;
 
       if (this->timer_queue_ == 0)
 	result = -1;
