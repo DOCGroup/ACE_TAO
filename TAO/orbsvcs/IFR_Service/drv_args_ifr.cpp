@@ -22,9 +22,9 @@ void
 DRV_usage (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (idl_global->prog_name ()),
+              idl_global->prog_name (),
               ACE_TEXT (": usage: "),
-              ACE_TEXT (idl_global->prog_name ()),
+              idl_global->prog_name (),
               ACE_TEXT (" [flag | file]*\n")));
 
   ACE_DEBUG ((LM_DEBUG,
