@@ -220,6 +220,16 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_File_Lock::ACE_File_Lock"));
 }
 
+int
+ACE_File_Lock::open (LPCTSTR name, 
+		     int flags, 
+		     mode_t perms)
+{
+// ACE_TRACE ("ACE_File_Lock::open");
+
+  return ACE_OS::flock_init (&this->lock_, flags, name, perms);
+}
+
 ACE_File_Lock::~ACE_File_Lock (void)
 {
 // ACE_TRACE ("ACE_File_Lock::~ACE_File_Lock");

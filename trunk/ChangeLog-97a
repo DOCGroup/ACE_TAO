@@ -1,4 +1,16 @@
+Wed Apr 23 00:02:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Process_Strategy_Test.cpp: Finished updating this program
+	  so that it is an automated test.
+
+	* ace/Acceptor.h: Moved get_handle() into the public portion of
+ 	  the Acceptor.
+
 Tue Apr 22 20:17:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Synch.cpp: Added a new method called open() to ACE_File_Lock
+ 	  so that we don't have to initialize it solely in the
+ 	  constructor.
 
 	* tests/Process_Strategy_Test.cpp: Added new test code that
  	  exercises the ACE_Process_Strategy, ACE_Thread_Strategy, and

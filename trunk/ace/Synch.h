@@ -96,6 +96,10 @@ public:
   ACE_File_Lock (LPCTSTR filename, int flags, mode_t mode = 0);
   // Open the <filename> with <flags> and <mode> and set the result to
   // <handle_>.
+
+  int open (LPCTSTR filename, int flags, mode_t mode = 0);
+  // Open the <filename> with <flags> and <mode> and set the result to
+  // <handle_>.
   
   ~ACE_File_Lock (void);
   // Remove a File lock by releasing it and closing down the <handle_>.
