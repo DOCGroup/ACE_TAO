@@ -1,3 +1,11 @@
+Mon Oct  4 11:59:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+
+	  Replicated the changes mentioned below to the above wait
+	  strategy. 
+
 Sun Oct  3 20:24:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Wait_On_Leader_Follower.cpp:
