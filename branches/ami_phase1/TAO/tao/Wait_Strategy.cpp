@@ -72,7 +72,7 @@ TAO_Wait_On_Reactor::handle_input (void)
                        "resume_handler failed"),
                       -1);
 
-  return result;
+  return 0;
 }  
 
 // Register the handler with the Reactor.
