@@ -502,9 +502,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
           ns_map = this->allocator_->malloc (map_size);
 
           // Initialize the map into its memory location (e.g., shared memory).
-          ACE_NEW_RETURN (this->name_space_map_,
-                          (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_),
-                          -1);
+          this->name_space_map_ =
+            new (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_);
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,

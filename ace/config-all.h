@@ -346,46 +346,68 @@
 // ============================================================================
 
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
-# if (__SUNPRO_CC)
-#   if (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && __SUNPRO_CC_COMPAT == 4))
+#  if defined (__HP_aCC)
+      // I know this works for HP aC++... if <stdexcept> is used, it
+      // introduces other stuff that breaks things, like <memory>, which
+      // screws up auto_ptr.
+#    include /**/ <new>
+#    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new(nothrow) CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+#    define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { POINTER = new(nothrow) CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
+
+    // _HP_aCC was first defined at aC++ 03.13 on HP-UX 11. Prior to that
+    // (03.10 and before) a failed new threw bad_alloc. After that (03.13
+    // and above) the exception thrown is dependent on the below settings.
+#    if (HPUX_VERS >= 1100)
+#      if (((__HP_aCC <  32500 && !defined (RWSTD_NO_NAMESPACE)) || \
+            (__HP_aCC >= 32500 && defined (_HP_NAMESPACE_STD))) \
+           || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB))
+#        define ACE_bad_alloc std::bad_alloc
+#      else
+#        define ACE_bad_alloc bad_alloc
+#      endif /* __HP_aCC */
+#    elif ((__HP_aCC <  12500 && !defined (RWSTD_NO_NAMESPACE)) || \
+           (__HP_aCC >= 12500 && defined (_NAMESPACE_STD)))
+#      define ACE_bad_alloc std::bad_alloc
+#    else
+#      define ACE_bad_alloc bad_alloc
+#    endif /* HPUX_VERS < 1100 */
+#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+
+#  else
+#    if (__SUNPRO_CC)
+#      if (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && __SUNPRO_CC_COMPAT == 4))
 #        include /**/ <exception.h>
          // Note: we catch ::xalloc rather than just xalloc because of
          // a name clash with unsafe_ios::xalloc()
 #        define ACE_bad_alloc ::xalloc
 #        define ACE_throw_bad_alloc throw ACE_bad_alloc ("no more memory")
-#   else
+#      else
 #        include /**/ <new>
 #        define ACE_bad_alloc std::bad_alloc
 #        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#   endif /* __SUNPRO_CC < 0x500 */
-# else
-    // I know this works for HP aC++... if <stdexcept> is used, it
-    // introduces other stuff that breaks things, like <memory>, which
-    // screws up auto_ptr.
-#   include /**/ <new>
-    // _HP_aCC was first defined at aC++ 03.13 on HP-UX 11. Prior to that
-    // (03.10 and before) a failed new threw bad_alloc. After that (03.13
-    // and above) the exception thrown is dependent on the below settings.
-#   if (defined (__HP_aCC) && \
-        (__HP_aCC < 32500 && !defined (RWSTD_NO_NAMESPACE)) || (__HP_aCC >= 32500 && defined (_NAMESPACE_STD))) \
-       || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#     define ACE_bad_alloc std::bad_alloc
-#   else
-#     define ACE_bad_alloc bad_alloc
-#   endif /* __HP_aCC */
-#   define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-# endif /* __SUNPRO_CC */
+#      endif /* __SUNPRO_CC < 0x500 */
+#    else
+#      define ACE_bad_alloc bad_alloc
+#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#    endif /* __SUNPRO_CC */
 
-# define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+#    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { try { POINTER = new CONSTRUCTOR; } \
         catch (ACE_bad_alloc) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 
-# define ACE_NEW(POINTER,CONSTRUCTOR) \
+#    define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { try { POINTER = new CONSTRUCTOR; } \
         catch (ACE_bad_alloc) { errno = ENOMEM; return; } \
    } while (0)
 
+#  endif /* __HP_aCC */
 #else /* ACE_NEW_THROWS_EXCEPTIONS */
 
 # define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \

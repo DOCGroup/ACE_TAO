@@ -380,6 +380,7 @@ ACE_HAS_MUTABLE_KEYWORD                 Compiler supports mutable.
 ACE_HAS_MUTEX_TIMEOUTS			Compiler supports timed mutex
                                         acquisitions
                                         (e.g. pthread_mutex_timedlock()).
+ACE_HAS_NEW_NOTHROW			Compiler offers new (nothrow).
 ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
                                         in calls to gethostbyaddr,
                                         gethostbyname, getservbyname

@@ -1288,9 +1288,7 @@ int
 ACE_Configuration_Heap::create_index_helper (void *buffer)
 {
   ACE_ASSERT (this->allocator_);
-  ACE_NEW_RETURN (this->index_,
-                  (buffer) SECTION_MAP (this->allocator_),
-                  -1);
+  this->index_ = new (buffer) SECTION_MAP (this->allocator_);
   return 0;
 }
 
@@ -1444,9 +1442,7 @@ ACE_Configuration_Heap::value_open_helper (size_t hash_table_size,
                                           void *buffer)
 {
   ACE_ASSERT (this->allocator_);
-  ACE_NEW_RETURN (buffer,
-                  (buffer) VALUE_MAP (hash_table_size, this->allocator_),
-                  -1);
+  new (buffer) VALUE_MAP (hash_table_size, this->allocator_);
   return 0;
 }
 
@@ -1455,9 +1451,7 @@ ACE_Configuration_Heap::section_open_helper (size_t hash_table_size,
                                              void *buffer)
 {
   ACE_ASSERT (this->allocator_);
-  ACE_NEW_RETURN (buffer,
-                  (buffer) SUBSECTION_MAP (hash_table_size, this->allocator_),
-                  -1);
+  new (buffer) SUBSECTION_MAP (hash_table_size, this->allocator_);
   return 0;
 }
 
