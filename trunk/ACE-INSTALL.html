@@ -123,12 +123,19 @@ using the GNU G++
 	  In the meantime, you might try using GNU GCC or SunC++
 	  on HP/UX. <P>
 
-<DT> <B> OSF/1 3.2 </B> <P>
+<DT> <B> OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0a) </B> <P>
 
-<DD> The current OSF/1 C++ 5.1 compiler is also rather poor and there
-	  seems to be no way to build shared libraries with templates
-	  on OSF/1.  I've also heard that the new version of this
-	  compiler (5.3) is better.  Again, you might try GNU GCC. <P>
+<DD> The current OSF/1 C++ 5.4 compiler still seems to have problems
+with ACE's templates. It compiles the lib and test programs, although
+giving warnings about template usage.  Most tests run, some dump core.
+Hopefully newer compiler releases will alleviate these problems.  <P>
+ 
+GNU gcc 2.7.2.1 compiles without problems. All tests run (besides
+minor problems).  Thanks to Thilo Kielmann &lt<A
+HREF="mailto:kielmann@informatik.uni-siegen.de">
+kielmann@informatik.uni-siegen.de</A>&gt and David Trumble &lt<A
+HREF="mailto:trumble@cvg.enet.dec.com">trumble@cvg.enet.dec.com</A>&gt
+for help with this port. <P>
 
 <DT><B> UnixWare 2.01 </B> <P>
 <DD>
@@ -162,6 +169,10 @@ If you use the GNU GCC C++ compiler please note the following: <P>
 		  this specifies whether your gcc install uses, for
 		  example, Solaris's "/usr/ccs/bin" binary utils or
 		  GNU binary utils. <P>
+
+	     <LI> Make sure that the linker invoked by GCC produces code 
+	  that initializes static objects.  Please see GCC's 
+	  documentation for using <CODE>collect2</CODE>.<P>
 </UL>
 
 <P><HR><P>

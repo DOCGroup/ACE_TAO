@@ -309,31 +309,22 @@ ACE_TSS<TYPE>::ts_get (void) const
   // Create and initialize thread-specific ts_obj.
   if (this->once_ == 0)
     {
-      // We need the lock for ACE_TSS_Cleanup as well since the
-      // ACE_Thread::keycreate() method requires access to internal
-      // tables.  This is to avoid deadlocks when using ACE_TSS from
-      // the close() hook of an ACE_Task.
-      ACE_OS::thr_win32_tls_table_lock ();		
-
       // Insure that we are serialized!
       ACE_GUARD_RETURN (ACE_Mutex, ace_mon_2, (ACE_Mutex &) this->keylock_, 0);
-
-      int result;
 
       // Use the Double-Check pattern to make sure we only create the
       // key once!
       if (this->once_ == 0)
-	result = ACE_Thread::keycreate ((ACE_thread_key_t *) &this->key_,
+	{
+	  if (ACE_Thread::keycreate ((ACE_thread_key_t *) &this->key_,
 					&ACE_TSS<TYPE>::cleanup,
-					(void *) this);
-      ACE_OS::thr_win32_tls_table_release ();
-
-      if (result != 0)
-	return 0; // Major problems, this should *never* happen!
-      else
-	// This *must* come last to avoid race conditions!  Note
-	// that we need to "cast away const..."
-	*(int *) &this->once_ = 1;
+					(void *) this) != 0)
+	    return 0; // Major problems, this should *never* happen!
+	  else
+	    // This *must* come last to avoid race conditions!  Note
+	    // that we need to "cast away const..."
+	    *(int *) &this->once_ = 1;
+	}
     }
 
   TYPE *ts_obj = 0;

@@ -1,8 +1,48 @@
+<<<<<<< ChangeLog-96b
+Thu Nov 21 00:05:11 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Backed out all of Detlef's changes to ACE_OS and
+ 	  ACE_TSS::ts_get().  It turns out that this is unnecessary since
+ 	  he reimplemented ACE_TSS_Cleanup so that it no longer needs to
+ 	  hold the lock when callbacks are made.  Once again, Detlef
+ 	  proves that he's a man, not a boy ;-)
+
+=======
 Wed Nov 20 21:35:28 1996  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Svc_Conf_l.cpp:  added #include of ace/config.h so that
  	  conditions for include of ace/OS.h can be checked
 
+>>>>>>> 4.32
 Wed Nov 20 02:38:40 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp: Moved the definition of logger_key_ to
+ 	  OS.h and changed it to a macro (ACE_LOGGER_KEY) so that it will
+ 	  be portable to Win32 and UNIX.  Thanks to Tilo for reporting
+ 	  this.
+
+	* ace/OS: Changed the return value of ACE_OS::getgid() from uid_t
+ 	  to gid_t to be POSIX compliant.
+
+	* ace/OS.cpp (thr_create): Fixed a typo where we were assigning
+ 	  stacksize rather than size.  Thanks Thilo.
+
+	* ace/OS.cpp (thr_create): Added a new piece of code for
+ 	  ACE_NEEDS_HUGE_THREAD_STACKSIZE, which is necessary to create a
+ 	  larger per-thread stack size in order to run ACE_Log_Msg::log.
+  	  Thanks to Thilo for this.
+
+	* tests/TSS_Test.cpp: Changed the name of the static variable
+ 	  "lock" to "cout_lock" to avoid a potential namespace clash on
+ 	  Digital UNIX.  Thanks to Thilo Kielmann for reporting this.
+
+	* ace/SOCK_Dgram.cpp (recv): Added a cast (char *)
+ 	  io_vec->iov_base so that this would work correctly on platforms
+ 	  where iov_base is a void * (e.g., AIX and HP/UX).  Thanks to
+ 	  Alan Stewart for the change.
+
+	* ace/OS.h: Added a few new changes for Digital UNIX 4.0a.  These
+ 	  should fix problems with ctime_r() and asctime_r().  Thanks to
+	  Dave Trumble for the fixes.
 
 	* tests/UPIPE_SAP_Test.cpp: Disabled this test if we don't have
  	  threads and (STREAM Pipes or Win32).  Thanks to Thilo Kielmann's
@@ -374,6 +414,23 @@ Sat Nov  9 11:23:13 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  Thanks to Alexander Smundak <sasha@migration.com> for reporting
  	  this.
 
+Sat Nov  9 01:44:15 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Message_Queue: Added forward and reverse iterators to
+ 	  Message_Queue. Also, added typedefs to Message_Queue for
+ 	  ITERATOR, and REVERSE_ITERATOR. This makes the Queue like an STL
+ 	  collection and also makes it easier to use since you don't have
+ 	  to define types for the iterators. Please see
+ 	  test/Message_Queue_Test.cpp for an example.
+
+	* ace/Map_Manager: Added reverse iterator to Map_Manager. Also,
+ 	  added typedefs to Map_Manager for ENTRY, ITERATOR, and
+ 	  REVERSE_ITERATOR. This makes the Map more like an STL collection
+ 	  and also makes it easier to use since you don't have to define
+ 	  types for the iterators and the entry. Please see
+ 	  test/Map_Manager_Test.cpp for an example. Note that the new
+ 	  typedefs does not break existing code.
+
 Fri Nov  8 20:04:26 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc.h: Fixed a typo on line 176 that reads:
@@ -420,23 +477,6 @@ Tue Nov  5 03:09:44 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  ::CloseHandle (thr_handle) (where thr_handle is a HANDLE *) when
  	  I should have been doing a ::CloseHandle (handle) instead.
   	  Thanks to Luca for finding this!
-
-Sat Nov  9 01:44:15 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
-
-	* ace/Message_Queue: Added forward and reverse iterators to
- 	  Message_Queue. Also, added typedefs to Message_Queue for
- 	  ITERATOR, and REVERSE_ITERATOR. This makes the Queue like an STL
- 	  collection and also makes it easier to use since you don't have
- 	  to define types for the iterators. Please see
- 	  test/Message_Queue_Test.cpp for an example.
-
-	* ace/Map_Manager: Added reverse iterator to Map_Manager. Also,
- 	  added typedefs to Map_Manager for ENTRY, ITERATOR, and
- 	  REVERSE_ITERATOR. This makes the Map more like an STL collection
- 	  and also makes it easier to use since you don't have to define
- 	  types for the iterators and the entry. Please see
- 	  test/Map_Manager_Test.cpp for an example. Note that the new
- 	  typedefs does not break existing code.
 
 Tue Nov  5 14:26:32 1996  David Levine  <levine@cs.wustl.edu>
 
