@@ -20,7 +20,43 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ");
+print STDOUT "\nFlushing based on implicit message counts\n\n";
+
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+                       "-c 5 -b -1 -f -1 -t -1");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+print STDOUT "\nFlushing based on implicit message bytes\n\n";
+
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+                       "-b 250 -c -1 -f -1 -t -1");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+print STDOUT "\nFlushing based on implicit timeout\n\n";
+
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+                       "-t 5000 -b -1 -c -1 -f -1");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+print STDOUT "\nExplicit queue flushing (and server shutdown)\n\n";
+
+$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+                       "-f 5 -b -1 -c -1 -t -1 -x");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

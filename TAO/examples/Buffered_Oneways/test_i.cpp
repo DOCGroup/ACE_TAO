@@ -15,7 +15,7 @@ test_i::method (CORBA::ULong request_number,
   ACE_THROW_SPEC (())
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Iteration %d @ %T\n",
+              "server: Iteration %d @ %T\n",
               request_number));
 }
 

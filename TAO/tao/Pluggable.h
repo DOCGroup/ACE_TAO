@@ -75,8 +75,12 @@ public:
   // Idles the corresponding connection handler.
 
   virtual ACE_HANDLE handle (void) = 0;
-  // This method provides a way to gain access to the underlying
-  // file handle used by the reactor.
+  // This method provides a way to gain access to the underlying file
+  // handle used by the reactor.
+
+  virtual ACE_Event_Handler *event_handler (void) = 0;
+  // This method provides a way to gain access to the underlying event
+  // handler used by the reactor.
 
   virtual ssize_t send (TAO_Stub *stub,
                         const ACE_Message_Block *mblk,
@@ -166,6 +170,14 @@ public:
   virtual TAO_Transport_Buffering_Queue &buffering_queue (void);
   // Queue for buffering transport messages.
 
+  long buffering_timer_id (void) const;
+  void buffering_timer_id (long);
+  // Timer id associated with buffering.
+
+  const ACE_Time_Value &buffering_timeout_value (void) const;
+  void buffering_timeout_value (const ACE_Time_Value &time);
+  // Timeout value associated with buffering.
+
   void flush_buffered_messages (void);
   // Flush any messages that have been buffered.
 
@@ -185,6 +197,12 @@ protected:
 
   TAO_Transport_Buffering_Queue *buffering_queue_;
   // Queue for buffering transport messages.
+
+  long buffering_timer_id_;
+  // Buffering timer id.
+
+  ACE_Time_Value buffering_timeout_value_;
+  // Buffering timeout value.
 };
 
 // ****************************************************************

@@ -27,6 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Pluggable.h"
+#include "tao/TAOC.h"
 
 class TAO_Export TAO_Sync_Strategy
 {
@@ -58,8 +59,14 @@ public:
                 const ACE_Message_Block *message_block,
                 ACE_Time_Value *max_wait_time);
 
-  virtual int buffering_constraints_reached (TAO_Stub &stub,
+  virtual int buffering_constraints_reached (TAO_Transport &transport,
+                                             TAO_Stub &stub,
                                              TAO_Transport_Buffering_Queue &buffering_queue);
+
+  void timer_check (TAO_Transport &transport,
+                    const TAO::BufferingConstraint &buffering_constraint);
+
+  ACE_Time_Value time_conversion (const TimeBase::TimeT &time);
 
   void dequeue_head (TAO_Transport_Buffering_Queue &buffering_queue);
 

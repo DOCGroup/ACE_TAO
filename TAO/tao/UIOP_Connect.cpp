@@ -394,6 +394,16 @@ TAO_UIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
+TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &tv,
+                                                    const void *arg)
+{
+  // Called when buffering timer expires.
+  this->transport ()->flush_buffered_messages ();
+
+  return 0;
+}
+
+int
 TAO_UIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                                                   ACE_Reactor_Mask rm)
 {

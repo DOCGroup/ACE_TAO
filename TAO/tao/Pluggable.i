@@ -28,6 +28,30 @@ TAO_Transport::tag (void) const
   return this->tag_;
 }
 
+ACE_INLINE long
+TAO_Transport::buffering_timer_id (void) const
+{
+  return this->buffering_timer_id_;
+}
+
+ACE_INLINE void
+TAO_Transport::buffering_timer_id (long new_value)
+{
+  this->buffering_timer_id_ = new_value;
+}
+
+ACE_INLINE const ACE_Time_Value &
+TAO_Transport::buffering_timeout_value (void) const
+{
+  return this->buffering_timeout_value_;
+}
+
+ACE_INLINE void
+TAO_Transport::buffering_timeout_value (const ACE_Time_Value &new_value)
+{
+  this->buffering_timeout_value_ = new_value;
+}
+
 // ****************************************************************
 
 ACE_INLINE CORBA::ULong
