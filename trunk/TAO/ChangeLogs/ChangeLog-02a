@@ -1,3 +1,32 @@
+Sun Mar 26 14:57:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+	  Support added for escaped identifiers, as specified in
+	  CORBA 2.3.1. If an identifier appears in an IDL file
+	  with a leading underscore, it will now appear in
+	  generated code without the underscore (such identifiers
+	  were not accepted by the lexer previously). Now
+	  generated code can contain identifiers identical to
+	  IDL keywords. Note that if the stripped identifier
+	  matches a C++ keyword "_cxx_" will be prepended in
+	  generated code as before. Thanks to Alex Bangs 
+	  <bangs@entelos.com> for uncovering this problem by
+	  reporting that the IDL compiler would not accept
+	  CosLifeCycle.idl with valuetype support enabled
+	  (CosLifeCycle.idl contains an identifier "suppports",
+	  a valuetype keyword).
+
+	* orbsvcs/orbsvcs/CosLifeCycle.idl:
+	  Changed "supports" identifier to "_supports". Generated
+	  code is unchanged, and the file can now be compiled
+	  with the -Gv option.
+
+	* docs/releasenotes/index.html:
+	  Added item about escaped identifier support in the IDL
+	  compiler.
+
 Sun Mar 26 13:32:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_stack.cpp:
