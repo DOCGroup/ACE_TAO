@@ -187,17 +187,8 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
       os << be_uidt;
     }
 
-  os << be_nl
-     << "ACE_CHECK;" << be_uidt_nl
+  os << be_uidt_nl
      << "}" << be_uidt_nl << be_nl;
-
-  // Prevent copying/assignment and generation of default copy
-  // constructor and assignment operator.
-  os << "private:" << be_idt_nl << be_nl
-     << "Upcall_Command ("
-     << "Upcall_Command const &);" << be_nl
-     << "void operator= (Upcall_Command const &);"
-     << be_uidt_nl << be_nl;
 
   // Generate class attributes.
   os << "private:" << be_idt_nl << be_nl
@@ -211,7 +202,6 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
 
       if (be_global->gen_thru_poa_collocation ())
         os << "TAO_Operation_Details const * const operation_details_;" << be_nl;
-
 
       os << "TAO::Argument * const * const args_;";
     }

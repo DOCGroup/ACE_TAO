@@ -73,7 +73,7 @@ namespace TAO
                        TAO::Argument * const * args,
                        size_t nargs,
                        void * servant_upcall,
-                       CORBA::TypeCode_ptr const exceptions[],
+                       CORBA::TypeCode_ptr const * exceptions,
                        size_t nexceptions);
 
     /// Return an ID unique to the current request.  This request ID may

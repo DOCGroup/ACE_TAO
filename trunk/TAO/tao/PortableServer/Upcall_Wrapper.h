@@ -90,7 +90,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
                  , void * servant_upcall
-                 , CORBA::TypeCode_ptr const exceptions[]
+                 , CORBA::TypeCode_ptr const * exceptions
                  , size_t nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
