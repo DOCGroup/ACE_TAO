@@ -140,7 +140,6 @@ TAO_String_Hash_Key::~TAO_String_Hash_Key (void)
 {
 }
 
-
 int
 operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 	   const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
@@ -152,7 +151,6 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
   else
     return 0;
 }
-
 
 int
 operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
