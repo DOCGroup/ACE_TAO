@@ -5,6 +5,8 @@
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Service.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (Notify_Logging_Service,
            Notify_Logging_Service,
