@@ -5868,7 +5868,7 @@ ACE_OS::last_error (void)
 #if defined (ACE_WIN32)
   int lerror = ::GetLastError ();
   int lerrno = errno;
-  return lerrno == 0 ? last_error : lerrno;
+  return lerrno == 0 ? lerror : lerrno;
 #else
   return errno;
 #endif /* ACE_HAS_WIN32 */
