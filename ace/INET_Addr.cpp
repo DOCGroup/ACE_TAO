@@ -285,7 +285,7 @@ ACE_INET_Addr::set (u_short port_number,
 
       if (hp == 0)
         {
-          errno = EINVAL;
+          errno = error;
           return -1;
         }
       else
