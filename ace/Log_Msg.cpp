@@ -56,7 +56,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 ACE_thread_key_t *log_msg_tss_key (void)
 {
-  static ACE_thread_key_t key;
+  static ACE_thread_key_t key = 0;
 
   return &key;
 }
