@@ -29,7 +29,7 @@
 
 // Global Methods
 
- PLAYpara Video_Server::para;
+PLAYpara Video_Server::para;
 
 // %% maybe put this in some class?
 // this sends one frame
@@ -146,6 +146,11 @@ fast_play_send (void)
 // the remaining  handlers.
 Video_Sig_Handler::Video_Sig_Handler (void)
 {
+}
+
+int
+Video_Sig_Handler::register_handler (void)
+{
   // Assign the Sig_Handler a dummy I/O descriptor.  Note that even
   // though we open this file "Write Only" we still need to use the
   // ACE_Event_Handler::NULL_MASK when registering this with the
@@ -158,7 +163,10 @@ Video_Sig_Handler::Video_Sig_Handler (void)
   // descriptor.
   if (ACE_Reactor::instance ()->register_handler 
       (this, ACE_Event_Handler::NULL_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n", 
+                       "register_handler"),
+                      -1);
 
   // Create a sigset_t corresponding to the signals we want to catch.
   ACE_Sig_Set sig_set;
@@ -168,8 +176,14 @@ Video_Sig_Handler::Video_Sig_Handler (void)
   sig_set.sig_add (SIGALRM);  
 
   // Register the signal handler object to catch the signals.
-  if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
+  if (ACE_Reactor::instance ()->register_handler (sig_set, 
+                                                  this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n", 
+                       "register_handler"),
+                      -1);
+
+  return 0;
 }
 // Called by the ACE_Reactor to extract the fd.
 
@@ -422,11 +436,12 @@ Video_Server::init (int ctr_fd,
                     int rttag,
                     int max_pkt_size)
 {
-  reactor_ = ACE_Reactor::instance ();
+  this->reactor_ = ACE_Reactor::instance ();
 
   // %% new the sig handler also here
-  data_handler_ = new Video_Data_Handler (data_fd);
-  control_handler_ = new Video_Control_Handler (ctr_fd);
+  this->data_handler_ = new Video_Data_Handler (data_fd);
+  this->control_handler_ = new Video_Control_Handler (ctr_fd);
+  this->sig_handler_ = new Video_Sig_Handler ();
 
   int result;
 
@@ -469,6 +484,8 @@ Video_Server::run (void)
 
   // Register the event handlers with the default ACE_REACTOR.
 
+
+  // first the data handler, i.e. UDP
   result = this->reactor_->register_handler (this->data_handler_, 
                                              ACE_Event_Handler::READ_MASK);
   if (result < 0)
@@ -479,9 +496,12 @@ Video_Server::run (void)
               "(%P|%t) registered fd for data handler = (%d)\n",
               this->data_handler_->get_handle ()));
 
+
+  // next, the control handler, i.e. TCP
   result = this->reactor_->register_handler (this->control_handler_,
                                              ACE_Event_Handler::READ_MASK);
 
+  
   if (result < 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) register_handler for data_handler failed\n"),
@@ -489,11 +509,22 @@ Video_Server::run (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) registered fd for control handler = (%d)\n",
               this->control_handler_->get_handle ()));
+
+  // finally, the signal handler, for periodic transmission
+  // of packets
+  result = this->sig_handler_->register_handler ();
+
+  
+  if (result < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) register_handler for sig_handler"
+                       "failed!\n"),
+                      -1);
+
   // Read the first command and do the init for that command
   // typicallly play...
   // %% this shouldnt be handling any commands eventually..
-  this->read_cmd ();
-  return 0;
+  return this->read_cmd ();
 }
 
 // this is currently called by several people

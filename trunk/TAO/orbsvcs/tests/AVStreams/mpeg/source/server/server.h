@@ -124,7 +124,7 @@ private:
   // if you are newing the other handlers, you should new 
   // this one also, and destroy them in the destructor
   // for video_server
-  Video_Sig_Handler vh_;
+  //  Video_Sig_Handler vh_;
   // signal handler for SIGALRM to periodically send the video frames
   // to the client
 
