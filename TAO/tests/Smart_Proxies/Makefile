@@ -23,8 +23,8 @@ FILES = Smart_Proxy_Impl
 
 SRC = $(addsuffix .cpp, $(BIN) $(FILES)) $(IDL_SRC)
 
-CLIENT_OBJS = client.o Smart_Proxy_Impl.o testC.o
-SERVER_OBJS = server.o $(IDL_SRC:.cpp=.o)
+CLIENT_OBJS = testC.o client.o Smart_Proxy_Impl.o
+SERVER_OBJS = $(IDL_SRC:.cpp=.o) server.o
 
 TAO_IDLFLAGS += -Ge 1 -Gsp
 
