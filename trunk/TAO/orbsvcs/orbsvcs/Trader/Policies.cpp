@@ -23,7 +23,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
   TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
 		  CosTrading::DuplicatePolicyName))
   : trader_ (trader),
-    policies_ (USE_PROXY_OFFERS + 1)
+    policies_ (REQUEST_ID + 1)
 {
   for (int i = 0; i <= REQUEST_ID; i++)
     this->policies_[i] = 0;
@@ -84,6 +84,10 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
 	    this->policies_[index] = (CosTrading::Policy *) &(policies[j]);
 	}
     }
+}
+
+TAO_Policies::~TAO_Policies (void)
+{
 }
 
 CORBA::ULong

@@ -117,13 +117,13 @@ public:
   // = Initialization and termination methods. 
   TAO_String_Hash_Key (void);  
   // Default constructor. 
-
+  
   TAO_String_Hash_Key (char * name); 
   // Constructor from a const string. 
-
+  
   TAO_String_Hash_Key (const char * name); 
   // Constructor from a const string. 
-
+  
   TAO_String_Hash_Key (const CORBA::String_var &hash_key); 
   // Copy constructor. 
 

@@ -82,6 +82,8 @@ public:
   // is included two or more times in this parameter, then the
   // DuplicatePolicyName exception is raised. 
   // END SPEC
+
+  ~TAO_Policies (void);
   
   CORBA::ULong search_card (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));

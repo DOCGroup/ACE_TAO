@@ -200,10 +200,11 @@ dump_typestruct (const char* typename,
 
   for (length = type_struct.props.length (), i = 0; i < length; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "Property: %-30s Mode: %-24s\n",
+      //      ACE_DEBUG ((LM_DEBUG, "Property: %-20s Type: %-20s Mode: %-24s\n",
+      ACE_DEBUG ((LM_DEBUG, "Property: %-20s  Mode: %-24s\n",
 		  type_struct.props[i].name.in (),
-		  mode_str[type_struct.props[i].mode]));
-      //		  type_struct.props[i].value_type->name (env)));
+		  mode_str[type_struct.props[i].mode])); //,
+		  //		  type_struct.props[i].value_type->name (env)));
     }
 }
 
@@ -215,64 +216,65 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::REMOTE_IO].props[0].name       =
     TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
   this->type_structs_[TT_Info::REMOTE_IO].props[0].value_type =
-    TT_Info::REMOTE_IO_PROPERTY_TYPES[TT_Info::NAME];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[0].mode       =
-    TT_Info::REMOTE_IO_PROPERTY_MODES[TT_Info::NAME];
+    CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY;
   this->type_structs_[TT_Info::REMOTE_IO].props[1].name       =
     TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION];
   this->type_structs_[TT_Info::REMOTE_IO].props[1].value_type =
-    TT_Info::REMOTE_IO_PROPERTY_TYPES[TT_Info::LOCATION];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[1].mode       =
-    TT_Info::REMOTE_IO_PROPERTY_MODES[TT_Info::LOCATION];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::REMOTE_IO].props[2].name       =
     TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
   this->type_structs_[TT_Info::REMOTE_IO].props[2].value_type =
-    TT_Info::REMOTE_IO_PROPERTY_TYPES[TT_Info::DESCRIPTION];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[2].mode       =
-    TT_Info::REMOTE_IO_PROPERTY_MODES[TT_Info::DESCRIPTION];
+    CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY;
   this->type_structs_[TT_Info::REMOTE_IO].if_name =
     ro._interface_repository_id ();
 
   Plotter pl;
   this->type_structs_[TT_Info::PLOTTER].props.length (6);
   this->type_structs_[TT_Info::PLOTTER].super_types.length (1);
-  this->type_structs_[TT_Info::PLOTTER].super_types[0] = TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO];
+  this->type_structs_[TT_Info::PLOTTER].super_types[0] =
+    TT_Info::INTERFACE_NAMES[TT_Info::REMOTE_IO]; 
   this->type_structs_[TT_Info::PLOTTER].props[0].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS];
   this->type_structs_[TT_Info::PLOTTER].props[0].value_type =
-    TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_NUM_COLORS];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_long);
   this->type_structs_[TT_Info::PLOTTER].props[0].mode       =
-    TT_Info::PLOTTER_PROPERTY_MODES[TT_Info::PLOTTER_NUM_COLORS];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PLOTTER].props[1].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING];
   this->type_structs_[TT_Info::PLOTTER].props[1].value_type =
-    TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_AUTO_LOADING];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
   this->type_structs_[TT_Info::PLOTTER].props[1].mode       =
-    TT_Info::PLOTTER_PROPERTY_MODES[TT_Info::PLOTTER_AUTO_LOADING];
+    CosTradingRepos::ServiceTypeRepository::PROP_READONLY;
   this->type_structs_[TT_Info::PLOTTER].props[2].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_COST_PER_PAGE];
   this->type_structs_[TT_Info::PLOTTER].props[2].value_type =
-    TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_COST_PER_PAGE];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_float);
   this->type_structs_[TT_Info::PLOTTER].props[2].mode       =
-    TT_Info::PLOTTER_PROPERTY_MODES[TT_Info::PLOTTER_COST_PER_PAGE];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PLOTTER].props[3].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER];
   this->type_structs_[TT_Info::PLOTTER].props[3].value_type =
-    TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_MODEL_NUMBER];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::PLOTTER].props[3].mode       =
-    TT_Info::PLOTTER_PROPERTY_MODES[TT_Info::PLOTTER_MODEL_NUMBER];
+    CosTradingRepos::ServiceTypeRepository::PROP_READONLY;
   this->type_structs_[TT_Info::PLOTTER].props[4].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
   this->type_structs_[TT_Info::PLOTTER].props[4].value_type =
-    TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_USER_QUEUE];
+    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_StringSeq);
   this->type_structs_[TT_Info::PLOTTER].props[4].mode       =
-    TT_Info::PLOTTER_PROPERTY_MODES[TT_Info::PLOTTER_USER_QUEUE];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PLOTTER].props[5].name       =
     TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
   this->type_structs_[TT_Info::PLOTTER].props[5].value_type =
-    TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
+    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_ULongSeq);
   this->type_structs_[TT_Info::PLOTTER].props[5].mode       =
-    TT_Info::PLOTTER_PROPERTY_MODES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PLOTTER].if_name =
     pl._interface_repository_id ();
 
@@ -283,45 +285,45 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::PRINTER].props[0].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COLOR];
   this->type_structs_[TT_Info::PRINTER].props[0].value_type =
-    TT_Info::PRINTER_PROPERTY_TYPES[TT_Info::PRINTER_COLOR];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
   this->type_structs_[TT_Info::PRINTER].props[0].mode       =
-    TT_Info::PRINTER_PROPERTY_MODES[TT_Info::PRINTER_COLOR];
+    CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY;
   this->type_structs_[TT_Info::PRINTER].props[1].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_DOUBLE_SIDED];
   this->type_structs_[TT_Info::PRINTER].props[1].value_type =
-    TT_Info::PRINTER_PROPERTY_TYPES[TT_Info::PRINTER_DOUBLE_SIDED];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
   this->type_structs_[TT_Info::PRINTER].props[1].mode       =
-    TT_Info::PRINTER_PROPERTY_MODES[TT_Info::PRINTER_DOUBLE_SIDED];
+    CosTradingRepos::ServiceTypeRepository::PROP_READONLY;
   this->type_structs_[TT_Info::PRINTER].props[2].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_COST_PER_PAGE];
   this->type_structs_[TT_Info::PRINTER].props[2].value_type =
-    TT_Info::PRINTER_PROPERTY_TYPES[TT_Info::PRINTER_COST_PER_PAGE];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_float);
   this->type_structs_[TT_Info::PRINTER].props[2].mode       =
-    TT_Info::PRINTER_PROPERTY_MODES[TT_Info::PRINTER_COST_PER_PAGE];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PRINTER].props[3].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_MODEL_NUMBER];
   this->type_structs_[TT_Info::PRINTER].props[3].value_type =
-    TT_Info::PRINTER_PROPERTY_TYPES[TT_Info::PRINTER_MODEL_NUMBER];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::PRINTER].props[3].mode       =
-    TT_Info::PRINTER_PROPERTY_MODES[TT_Info::PRINTER_MODEL_NUMBER];
+    CosTradingRepos::ServiceTypeRepository::PROP_READONLY;
   this->type_structs_[TT_Info::PRINTER].props[4].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_PAGES_PER_SEC];
   this->type_structs_[TT_Info::PRINTER].props[4].value_type =
-    TT_Info::PRINTER_PROPERTY_TYPES[TT_Info::PRINTER_PAGES_PER_SEC];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
   this->type_structs_[TT_Info::PRINTER].props[4].mode       =
-    TT_Info::PRINTER_PROPERTY_MODES[TT_Info::PRINTER_PAGES_PER_SEC];
+    CosTradingRepos::ServiceTypeRepository::PROP_READONLY;
   this->type_structs_[TT_Info::PRINTER].props[5].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE];
   this->type_structs_[TT_Info::PRINTER].props[5].value_type =
-    TT_Info::PRINTER_PROPERTY_TYPES[TT_Info::PRINTER_USER_QUEUE];
+    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_StringSeq);
   this->type_structs_[TT_Info::PRINTER].props[5].mode       =
-    TT_Info::PRINTER_PROPERTY_MODES[TT_Info::PRINTER_USER_QUEUE];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PRINTER].props[6].name       =
     TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING];
   this->type_structs_[TT_Info::PRINTER].props[6].value_type =
-    TT_Info::PRINTER_PROPERTY_TYPES[TT_Info::PRINTER_FILE_SIZES_PENDING];
+    CORBA::TypeCode::_duplicate (TAO_Sequences::_tc_ULongSeq);
   this->type_structs_[TT_Info::PRINTER].props[6].mode       =
-    TT_Info::PRINTER_PROPERTY_MODES[TT_Info::PRINTER_FILE_SIZES_PENDING];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::PRINTER].if_name =
     pr._interface_repository_id ();
 
@@ -332,21 +334,21 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::FILESYSTEM].props[0].name       =
     TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::DISK_SIZE];
   this->type_structs_[TT_Info::FILESYSTEM].props[0].value_type =
-    TT_Info::FILESYSTEM_PROPERTY_TYPES[TT_Info::DISK_SIZE];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
   this->type_structs_[TT_Info::FILESYSTEM].props[0].mode       =
-    TT_Info::FILESYSTEM_PROPERTY_MODES[TT_Info::DISK_SIZE];
+    CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY;
   this->type_structs_[TT_Info::FILESYSTEM].props[1].name       =
     TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING];
   this->type_structs_[TT_Info::FILESYSTEM].props[1].value_type =
-    TT_Info::FILESYSTEM_PROPERTY_TYPES[TT_Info::SPACE_REMAINING];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
   this->type_structs_[TT_Info::FILESYSTEM].props[1].mode       =
-    TT_Info::FILESYSTEM_PROPERTY_MODES[TT_Info::SPACE_REMAINING];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::FILESYSTEM].props[2].name       =
     TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::PERMISSION_LEVEL];
   this->type_structs_[TT_Info::FILESYSTEM].props[2].value_type =
-    TT_Info::FILESYSTEM_PROPERTY_TYPES[TT_Info::PERMISSION_LEVEL];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
   this->type_structs_[TT_Info::FILESYSTEM].props[2].mode       =
-    TT_Info::FILESYSTEM_PROPERTY_MODES[TT_Info::PERMISSION_LEVEL];
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::FILESYSTEM].if_name =
     fs._interface_repository_id ();  
 
@@ -358,9 +360,9 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::PS_PRINTER].props[0].name       =
     TT_Info::PS_PRINTER_PROPERTY_NAMES[TT_Info::VERSION];
   this->type_structs_[TT_Info::PS_PRINTER].props[0].value_type =
-    TT_Info::PS_PRINTER_PROPERTY_TYPES[TT_Info::VERSION];
+    CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
   this->type_structs_[TT_Info::PS_PRINTER].props[0].mode       =
-    TT_Info::PS_PRINTER_PROPERTY_MODES[TT_Info::VERSION];
+    CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY;
   this->type_structs_[TT_Info::PS_PRINTER].if_name =
     ps._interface_repository_id ();  
 }
