@@ -35,6 +35,8 @@ ACE_RCSID(tests, Reactor_Performance_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 // Number of client (user) threads
 static int opt_nconnections = 5;
 

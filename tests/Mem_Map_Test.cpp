@@ -24,6 +24,7 @@
 
 ACE_RCSID(tests, Mem_Map_Test, "$Id$")
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 static const int LINE_LENGTH = 10;
 static const int NUM_LINES = 15;
 
@@ -61,8 +62,8 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
   char *mybuf = 0;
 
   ACE_NEW_RETURN (mybuf, char[line_length + 1], -1);
-  char *c = ACE_ALPHABET;
-  char *d = c;
+  const char *c = ACE_ALPHABET;
+  const char *d = c;
 
   ACE_HANDLE file_handle = ACE_OS::open (filename,
                                          O_RDWR | O_CREAT | O_TRUNC,

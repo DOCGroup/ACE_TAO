@@ -32,6 +32,9 @@
 ACE_RCSID(tests, SPIPE_Test, "$Id$")
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
+
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 // pipe name to use
 static const ACE_TCHAR *PIPE_NAME = ACE_TEXT ("ace_pipe_name");
 
@@ -47,7 +50,7 @@ client (void *)
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), rendezvous));
 
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send (c, 1) == -1)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
 
@@ -66,7 +69,7 @@ server (void *)
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  char *t = ACE_ALPHABET;
+  const char *t = ACE_ALPHABET;
 
   const ACE_TCHAR *rendezvous = PIPE_NAME;
 

@@ -37,6 +37,8 @@
 
 ACE_RCSID(tests, Conn_Test, "$Id$")
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
 // listen-mode port/socket.  Also, note that since timed accept is
@@ -247,7 +249,7 @@ Svc_Handler::send_data (void)
 {
   // Send data to server.
 
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (this->peer ().send_n (c, 1) == -1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
@@ -262,7 +264,7 @@ Svc_Handler::recv_data (void)
   ACE_Handle_Set handle_set;
   handle_set.set_bit (new_stream.get_handle ());
 
-  char *t = ACE_ALPHABET;
+  const char *t = ACE_ALPHABET;
 
   // Read data from client (terminate on error).
 

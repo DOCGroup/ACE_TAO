@@ -30,6 +30,8 @@
 
 ACE_RCSID(tests, SOCK_Test, "$Id$")
 
+static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 static void *
 client (void *arg)
 {
@@ -66,7 +68,7 @@ client (void *arg)
 
   // Send data to server (correctly handles "incomplete writes").
 
-  for (char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send_n (c, 1) == -1)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
 
@@ -104,7 +106,7 @@ server (void *arg)
   ACE_Time_Value tv (def_timeout);
 
   char buf[BUFSIZ];
-  char *t = ACE_ALPHABET;
+  const char *t = ACE_ALPHABET;
 
   handle_set.reset ();
   handle_set.set_bit (peer_acceptor->get_handle ());
