@@ -248,6 +248,16 @@ CORBA_SystemException::errno_tao_ (int errno_value)
       return TAO_EPIPE_MINOR_CODE;
     case ECONNREFUSED:
       return TAO_ECONNREFUSED_MINOR_CODE;
+    case ENOENT:
+      return TAO_ENOENT_MINOR_CODE;
+    case EBADF:
+      return TAO_EBADF_MINOR_CODE;
+    case ENOSYS:
+      return TAO_ENOSYS_MINOR_CODE;
+    case EPERM:
+      return TAO_EPERM_MINOR_CODE;
+    case EAFNOSUPPORT:
+      return TAO_EAFNOSUPPORT_MINOR_CODE;
     default:
       return TAO_UNKNOWN_MINOR_CODE;
     }
@@ -284,53 +294,68 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
       const char *location;
       switch (this->minor () & 0x00000FF0u)
         {
-        case TAO_INVOCATION_CONNECT_MINOR_CODE :
+        case TAO_INVOCATION_CONNECT_MINOR_CODE:
           location = "invocation connect failed";
           break;
-        case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE :
+        case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
           location = "location forward failed";
           break;
-        case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE :
+        case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
           location = "send request failed";
           break;
-        case TAO_POA_DISCARDING :
+        case TAO_POA_DISCARDING:
           location = "poa in discarding state";
           break;
-        case TAO_POA_HOLDING :
+        case TAO_POA_HOLDING:
           location = "poa in holding state";
           break;
-        case TAO_UNHANDLED_SERVER_CXX_EXCEPTION :
+        case TAO_UNHANDLED_SERVER_CXX_EXCEPTION:
           location = "unhandled c++ exception in server side";
           break;
-        case TAO_INVOCATION_RECV_REQUEST_MINOR_CODE :
+        case TAO_INVOCATION_RECV_REQUEST_MINOR_CODE:
           location = "failed to recv request response";
           break;
-        default :
+        default:
           location = "unknown location";
         }
 
       const char *errno_indication;
       switch (this->minor () & 0x0000000Fu)
         {
-        case TAO_UNSPECIFIED_MINOR_CODE :
+        case TAO_UNSPECIFIED_MINOR_CODE:
           errno_indication = "unspecified errno";
           break;
-        case TAO_ETIMEDOUT_MINOR_CODE :
+        case TAO_ETIMEDOUT_MINOR_CODE:
           errno_indication = "ETIMEOUT";
           break;
-        case TAO_ENFILE_MINOR_CODE :
+        case TAO_ENFILE_MINOR_CODE:
           errno_indication = "ENFILE";
           break;
-        case TAO_EMFILE_MINOR_CODE :
+        case TAO_EMFILE_MINOR_CODE:
           errno_indication = "EMFILE";
           break;
-        case TAO_EPIPE_MINOR_CODE :
+        case TAO_EPIPE_MINOR_CODE:
           errno_indication = "EPIPE";
           break;
-        case TAO_ECONNREFUSED_MINOR_CODE :
+        case TAO_ECONNREFUSED_MINOR_CODE:
           errno_indication = "ECONNREFUSED";
           break;
-        default :
+        case TAO_ENOENT_MINOR_CODE:
+          errno_indication = "ENOENT";
+          break;
+        case TAO_EBADF_MINOR_CODE:
+          errno_indication = "EBADF";
+          break;
+        case TAO_ENOSYS_MINOR_CODE:
+          errno_indication = "ENOSYS";
+          break;
+        case TAO_EPERM_MINOR_CODE:
+          errno_indication = "EPERM";
+          break;
+        case TAO_EAFNOSUPPORT_MINOR_CODE:
+          errno_indication = "EAFNOSUPPORT";
+          break;
+        default:
           errno_indication = "unknown errno";
         }
 
