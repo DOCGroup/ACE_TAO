@@ -157,7 +157,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::open_i
   for (u_int i = 0; i < this->spoke_count_; ++i)
   {
     ACE_Timer_Node_T<TYPE>* root = this->alloc_node ();
-    root->set (0, 0, ACE_Time_Value::zero, ACE_Time_Value::zero, root, root, 0);
+    root->set (0, 0, ACE_Time_Value::zero_time_value(), ACE_Time_Value::zero_time_value(), root, root, 0);
     this->spokes_[i] = root;
   }
 
@@ -263,7 +263,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::earliest_time (void) const
   ACE_Timer_Node_T<TYPE>* n = this->get_first_i ();
   if (n != 0)
     return n->get_timer_value ();
-  return ACE_Time_Value::zero;
+  return ACE_Time_Value::zero_time_value();
 }
 
 /// Uses a simple hash to find which spoke to use based on when the
@@ -652,7 +652,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::recalc_earliest
   if (this->is_empty ())
     return;
 
-  ACE_Time_Value et = ACE_Time_Value::zero;
+  ACE_Time_Value et = ACE_Time_Value::zero_time_value();
 
   u_int spoke = this->earliest_spoke_;
 
@@ -669,7 +669,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::recalc_earliest
               this->earliest_spoke_ = spoke;
               return;
             }
-          else if (et == ACE_Time_Value::zero || t < et)
+          else if (et == ACE_Time_Value::zero_time_value() || t < et)
             {
               et = t;
             }
@@ -724,7 +724,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::remove_first (void)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::remove_first");
-  return remove_first_expired (ACE_Time_Value::max_time);
+  return remove_first_expired (ACE_Time_Value::max_time_value());
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
@@ -833,7 +833,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_ti
 
       this->postinvoke (info, cur_time, upcall_act);
 
-      if (n->get_interval () > ACE_Time_Value::zero)
+      if (n->get_interval () > ACE_Time_Value::zero_time_value())
         {
           // Make sure that we skip past values that have already
           // "expired".
