@@ -45,7 +45,9 @@ $(TEMPINCDIR):
 
 endif
 
+ifeq ($(minimum_corba),0)
 BIN    = $(BIN_UNCHECKED)
+endif #minimum_corba
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
