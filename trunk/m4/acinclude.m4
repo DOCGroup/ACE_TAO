@@ -50,8 +50,10 @@ AC_DEFUN(ACE_CHECK_FOR_CVS_DIR,
           mkdir objdir
           cd objdir
           ../configure
+          make
 
-      This will create a build space in the directory \`objdir'.
+      This will create a build space in the directory \`objdir' and
+      start a build in that directory.
      ])
  fi
 ])
