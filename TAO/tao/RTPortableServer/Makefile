@@ -226,7 +226,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -412,7 +411,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -573,7 +571,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -1113,7 +1110,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
@@ -1416,7 +1412,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
@@ -1728,7 +1723,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
@@ -1961,7 +1955,6 @@ endif # corba_messaging
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorbafwd.h \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping.i \
  $(TAO_ROOT)/tao/RTCORBA/Priority_Mapping_Manager.i \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \

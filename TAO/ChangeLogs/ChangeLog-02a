@@ -1,3 +1,45 @@
+Fri Jun 15 11:20:22 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTCORBA/Priority_Mapping.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBAC.i:
+        * tao/RTCORBA/diffs/RTCORBAC.cpp.diff:
+        * tao/RTCORBA/diffs/RTCORBAC.h.diff:
+        * tao/RTCORBA/diffs/RTCORBAC.i.diff:
+
+          Removed need for forward references into the RTCORBA 
+          namespace by Priority_Mapping.h.  This was causing 
+          problems on SunCC42 and VxWorks since neither one 
+          allows namespaces to be reopened.  Also cleaned up
+          diff files since there were lots of unnecessary differences.
+
+        * tao/RTCORBA/rtcorbafwd.h:
+
+          No longer needed.
+
+        * examples/Buffered_Oneways/Makefile:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+        * tao/Makefile.am:
+        * tao/RTCORBA/Makefile:
+        * tao/RTCORBA/TAO_RTCORBA.dsp:
+        * tao/RTCORBA/TAO_RTCORBA_Static.dsp:
+        * tao/RTPortableServer/Makefile:
+        * tests/Exposed_Policies/Makefile:
+        * tests/RTCORBA/Banded_Connections/Makefile:
+        * tests/RTCORBA/Client_Propagated/Makefile:
+        * tests/RTCORBA/Client_Protocol/Makefile:
+        * tests/RTCORBA/Explicit_Binding/Makefile:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/Makefile:
+        * tests/RTCORBA/Private_Connection/Makefile:
+        * tests/RTCORBA/RTMutex/Makefile:
+        * tests/RTCORBA/Server_Declared/Makefile:
+        * tests/RTCORBA/Server_Protocol/Makefile:
+        * tests/RTCORBA/Thread_Pool/Makefile:
+          
+          Updated makefiles and project files since rtcorbafwd.h
+          was removed.  
+
 Fri Jun 15 11:19:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:
