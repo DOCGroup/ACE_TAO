@@ -1,3 +1,15 @@
+Tue Apr 29 14:10:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+
+          Added guard for explicit template instantiation of anonymous
+          sequences, extending the fix in
+
+          Tue Apr 29 10:58:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          to work even if an anonymous nested sequences is declared more
+          than once, possibly in different scopes.
+
 Tue Apr 29 12:56:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PredefinedType_Seq_Tmplinst.cpp:

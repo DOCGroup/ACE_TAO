@@ -818,13 +818,14 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
 int
 be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
-                                                 be_type * /*elem */)
+                                                 be_type *elem)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  os->gen_ifdef_macro (elem->local_name ()->get_string ());
   os->gen_ifdef_AHETI ();
 
-  *os << be_nl
+  *os << be_nl << be_nl
       <<"template class ";
 
   // Pass it to the base constructor.
@@ -837,8 +838,7 @@ be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
                         -1);
     }
 
-  *os << ";"
-      << be_uidt_nl;
+  *os << ";" << be_uidt;
 
   os->gen_elif_AHETI ();
 
@@ -855,9 +855,10 @@ be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
                         -1);
     }
 
-  *os << be_uidt_nl;
+  *os << be_uidt;
 
   os->gen_endif_AHETI ();
+  os->gen_endif ();
 
   return 0;
 }
