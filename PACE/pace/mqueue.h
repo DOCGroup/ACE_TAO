@@ -17,6 +17,7 @@
 #define PACE_MQUEUE_H
 
 #include "pace/config/defines.h"
+#include "pace/signal.h"
 
 #if (PACE_HAS_POSIX)
 # include "pace/posix/mqueue.h"
