@@ -1,3 +1,16 @@
+Thu Sep 17 09:23:01 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* ace/FIFO_Send_Msg.cpp: 
+	  Fixed variable declaration, "struct ACE_IO_Vector_Base" is not
+	  the same as "ACE_IO_Vector_Base".
+
+	* ace/OS.i: 
+	  Fixed the ACE_OS::rand_r() signature for Win32.
+
+	* ace/SOCK_Dgram_Mcast.cpp: 
+	  Fixed some problems with the Win32 implementation of
+	  unsubscribe().
+
 Thu Sep 17 08:41:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Shared_Malloc/test_malloc.cpp: 

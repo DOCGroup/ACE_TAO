@@ -186,21 +186,20 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
   if (net_if == 0)
     {
       ACE_INET_Addr *if_addrs = 0;
-      size_t         if_cnt, nr_subscribed;
+      size_t         if_cnt;
 
       if (ACE::get_ip_interfaces(if_cnt, if_addrs) != 0)
 	return -1;
 
-      nr_subscribed = 0;
+      size_t nr_unsubscribed = 0;
 
       if (if_cnt < 2)
 	{
 	  if (this->unsubscribe (mcast_addr,
-				 reuse_addr,
 				 ASYS_WIDE_STRING ("0.0.0.0"),
 				 protocol_family,
 				 protocol) == 0)
-	    ++nr_subscribed;
+	    ++nr_unsubscribed;
 	}
       else
 	while (if_cnt > 0)
@@ -209,16 +208,15 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
 	    if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
 	      continue;
 	    if (this->unsubscribe (mcast_addr,
-				   reuse_addr,
 				   ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
 				   protocol_family,
 				   protocol) == 0)
-	      ++nr_subscribed;
+	      ++nr_unsubscribed;
 	  }
 
       delete [] if_addrs;
 
-      if (nr_subscribed == 0)
+      if (nr_unsubscribed == 0)
 	{
 	  errno = ENODEV;
 	  return -1;
@@ -228,16 +226,17 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
   // else do it like everyone else...
 #endif /* ACE_WIN32 */
 
+  ip_mreq multicast_address;
   // Create multicast request.
-  if (this->make_multicast_address (mcast_addr, net_if) == -1)
+  if (this->make_multicast_address_i (mcast_addr, multicast_address, net_if) == -1)
     return -1;
 
   // Tell network device driver to read datagrams with a
   // multicast_address address.
   else if (this->ACE_SOCK::set_option (IPPROTO_IP, 
                                        IP_DROP_MEMBERSHIP,
-                                       &multicast_address_, 
-                                       sizeof multicast_address_) == -1)
+                                       &multicast_address,
+                                       sizeof multicast_address) == -1)
     return -1;
   return 0;
 }
