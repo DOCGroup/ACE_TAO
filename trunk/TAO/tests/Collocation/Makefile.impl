@@ -57,6 +57,18 @@ include $(TAO_ROOT)/taoconfig.mk
 realclean: clean
 	-$(RM) DiamondC.* DiamondS.* DiamondS_T.*
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DDIAMOND_BUILD_DLL
+endif
+endif
+
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DACE_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS
+endif
+endif
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
