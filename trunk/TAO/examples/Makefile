@@ -39,7 +39,8 @@ endif # minimum_corba
 ifeq ($(corba_messaging),1)
 
 # No Buffered Oneways without CORBA Messaging
-  DIRS += Buffered_Oneways
+  DIRS += Buffered_Oneways \
+          Buffered_AMI
 
 endif # corba_messaging
 

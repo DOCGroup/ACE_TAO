@@ -219,6 +219,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Buffered_AMI Client"=.\examples\Buffered_AMI\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Buffered_AMI Server"=.\examples\Buffered_AMI\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Buffered_Oneways Client"=.\examples\Buffered_Oneways\client.dsp - Package Owner=<4>
 
 Package=<5>
