@@ -1,0 +1,32 @@
+DSTRM_FAMILY EDF_SCHED  13      "Events associated with the EDF Scheduler"
+
+
+DSTRM_EVENT  EDF_SCHED  13      CONSTRUCTOR                 0   "Inside constructor"    print_string
+DSTRM_EVENT  EDF_SCHED  13      DISPATCHER_SHUTDOWN         1   "Kokyu DSRT dispatcher shutdown"    print_string
+DSTRM_EVENT  EDF_SCHED  13      CREATE_SCHED_PARAM_START    2   "Start creating scheduling parameter"    print_string
+DSTRM_EVENT  EDF_SCHED  13      CREATE_SCHED_PARAM_END      3   "End creating scheduling paramter"    print_string
+DSTRM_EVENT  EDF_SCHED  13      START_NEW_SCHED_SEGMENT   4    "Starting scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      END_NEW_SCHED_SEGMENT   5    "End scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      START_NESTED_SCHED_SEGMENT   6    "Starting nested scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      END_NESTED_SCHED_SEGMENT   7    "End nested scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      START_UPDATE_SCHED_SEGMENT   8    "Starting update scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      END_UPDATE_SCHED_SEGMENT   9    "End scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      START_END_SCHED_SEGMENT   10    "Starting end scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      FINISH_END_SCHED_SEGMENT   11    "Finish end scheduling segment"    print_string
+DSTRM_EVENT  EDF_SCHED  13      START_CLIENT_SCHED_TIME   12    "Starting client scheduling time"    print_string
+DSTRM_EVENT  EDF_SCHED  13      START_KOKYU_DISPATCH_UPDATE_SCHEDULE   13    "Enter Kokyu dispatcher update schedule"    print_string
+DSTRM_EVENT  EDF_SCHED  13      END_KOKYU_DISPATCH_UPDATE_SCHEDULE   14    "End Kokyu dispatcher update schedule"    print_string
+DSTRM_EVENT  EDF_SCHED  13      END_CLIENT_SCHED_TIME   15    "End client scheduling time"    print_string
+DSTRM_EVENT  EDF_SCHED  13      ENTER_SERVER_SCHED_TIME   16    "Enter server scheduling time"    print_string
+DSTRM_EVENT  EDF_SCHED  13      LEAVE_SERVER_SCHED_TIME   17    "Leave server scheduling time"    print_string
+DSTRM_EVENT  EDF_SCHED  13      ENTER_SERVER_DISPATCH_SCHED   18    "Enter server dispatch schedule"    print_string
+DSTRM_EVENT  EDF_SCHED  13      LEAVE_SERVER_DISPATCH_SCHED   19    "Leave server dispatch schedule"    print_string
+DSTRM_EVENT  EDF_SCHED  13      INSIDE_SEND_POLL   20    "Inside send_poll"    print_string
+DSTRM_EVENT  EDF_SCHED  13      ENTER_SEND_REPLY   21    "Enter send_reply"    print_string
+DSTRM_EVENT  EDF_SCHED  13      EXIT_SEND_REPLY   22    "Exit send_reply"    print_string
+DSTRM_EVENT  EDF_SCHED  13      SEND_EXCEPTION   23    "Send exception"    print_string
+DSTRM_EVENT  EDF_SCHED  13      SEND_OTHER   24    "Send other"    print_string
+DSTRM_EVENT  EDF_SCHED  13      ENTER_RECEIVE_REPLY   25    "Enter receive_reply"    print_string
+DSTRM_EVENT  EDF_SCHED  13      EXIT_RECEIVE_REPLY   26    "Exit receive_reply"    print_string
+DSTRM_EVENT  EDF_SCHED  13      RECEIVE_EXCEPTION   27    "Receive exception"    print_string
+DSTRM_EVENT  EDF_SCHED  13      RECEIVE_OTHER   28    "Enter receive_other"    print_string

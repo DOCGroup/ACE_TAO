@@ -2,7 +2,7 @@
 <!DOCTYPE NAMESPACE SYSTEM
 "file:///usr/local/share/doc/kurt_filters/namespace.dtd">
 <NAMESPACE>
-  <FAMILY name="EDF_SCHED" id="11">
+  <FAMILY name="EDF_SCHED" id="13">
     <EVENT name="CONSTRUCTOR" id="0"/>
     <EVENT name="DISPATCHER_SHUTDOWN" id="1"/>
     <EVENT name="CREATE_SCHED_PARAM_START" id="2"/>
