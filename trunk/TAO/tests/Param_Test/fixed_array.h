@@ -62,6 +62,11 @@ public:
   // print all the values
 
 private:
+  // engine function called by the 2 versions of check_validity above
+  CORBA::Boolean check_validity_engine (const Param_Test::Fixed_Array the_in,
+                                        const Param_Test::Fixed_Array the_inout,
+                                        const Param_Test::Fixed_Array the_out,
+                                        const Param_Test::Fixed_Array the_ret);
 
   CORBA::Boolean compare (const Param_Test::Fixed_Array_slice *a1,
                           const Param_Test::Fixed_Array_slice *a2);
@@ -84,6 +89,9 @@ private:
 
   Param_Test::Fixed_Array_var ret_;
   // return value
+
+  Param_Test::Fixed_Array dii_ret_;
+  // DII return value
 };
 
 #endif /* PARAM_TEST_FIXED_ARRAY_H */

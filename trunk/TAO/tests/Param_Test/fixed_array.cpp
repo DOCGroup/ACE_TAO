@@ -92,45 +92,61 @@ Test_Fixed_Array::add_args (CORBA::NVList_ptr param_list,
 {
   // We provide the top level memory
   // the Any does not own any of these
-  CORBA::Any in_arg (Param_Test::_tc_Fixed_Array, this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Fixed_Array, this->inout_, 0);
-  CORBA::Any out_arg (Param_Test::_tc_Fixed_Array, this->out_, 0);
+  CORBA::Any in_arg (Param_Test::_tc_Fixed_Array,
+                     this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_Fixed_Array,
+                        this->inout_,
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_Fixed_Array,
+                      this->out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("l1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("l2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("l3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("l1", in_arg, CORBA::ARG_IN, env);
+  param_list->add_value ("l2", inout_arg, CORBA::ARG_INOUT, env);
+  param_list->add_value ("l3", out_arg, CORBA::ARG_OUT, env);
 
   // add return value type
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Array,
-                                                  0, // let the ORB allocate
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Array,
+                                            this->dii_ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
-}
-
-CORBA::Boolean
-Test_Fixed_Array::check_validity (void)
-{
-  if (this->compare (this->in_, this->inout_) &&
-      this->compare (this->in_, this->out_) &&
-      this->compare (this->in_, this->ret_.in ()))
-    return 1;
-  else
-    return 0;
 }
 
 CORBA::Boolean
 Test_Fixed_Array::check_validity (CORBA::Request_ptr req)
 {
-  CORBA::Environment env;
+  return this->check_validity_engine (this->in_,
+                                      this->inout_,
+                                      this->out_,
+                                      this->dii_ret_);
+}
 
-  // we have forced the ORB to allocate memory for the return value so that we
-  // can test the >>= operator
-  // Param_Test::Fixed_Array *ret;
-  Param_Test::Fixed_Array_forany forany (this->ret_.out ());
-  *req->result ()->value () >>= forany;
-  return this->check_validity ();
+CORBA::Boolean
+Test_Fixed_Array::check_validity (void)
+{
+  return check_validity_engine (this->in_,
+                                this->inout_,
+                                this->out_,
+                                this->ret_.in ());
+}
+
+CORBA::Boolean
+Test_Fixed_Array::check_validity_engine (const Param_Test::Fixed_Array the_in,
+                                         const Param_Test::Fixed_Array the_inout,
+                                         const Param_Test::Fixed_Array the_out,
+                                         const Param_Test::Fixed_Array the_ret)
+{
+  if (this->compare (the_in, the_inout) &&
+      this->compare (the_in, the_out) &&
+      this->compare (the_in, the_ret))
+    return 1;
+  else
+    return 0;
 }
 
 CORBA::Boolean
