@@ -172,6 +172,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -360,6 +361,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -514,6 +516,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -687,6 +690,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -841,6 +845,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -1014,6 +1019,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -1168,6 +1174,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -1342,6 +1349,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -1496,6 +1504,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -1669,6 +1678,7 @@ LIB32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -1823,6 +1833,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -2012,6 +2023,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -2166,6 +2178,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -2350,6 +2363,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -2504,6 +2518,7 @@ CLEAN :
 	-@erase "$(INTDIR)\SPIPE_Connector.obj"
 	-@erase "$(INTDIR)\SPIPE_Stream.obj"
 	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Stats.obj"
 	-@erase "$(INTDIR)\Strategies.obj"
 	-@erase "$(INTDIR)\SV_Message.obj"
 	-@erase "$(INTDIR)\SV_Message_Queue.obj"
@@ -2688,6 +2703,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\SPIPE_Connector.obj" \
 	"$(INTDIR)\SPIPE_Stream.obj" \
 	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Stats.obj" \
 	"$(INTDIR)\Strategies.obj" \
 	"$(INTDIR)\SV_Message.obj" \
 	"$(INTDIR)\SV_Message_Queue.obj" \
@@ -3115,6 +3131,7 @@ NODEP_CPP_TOKEN_C=\
 
 SOURCE=.\Token.cpp
 NODEP_CPP_TOKEN_CP=\
+	".\ace\streams.h"\
 	".\ace\Synch_T.h"\
 	".\ace\Thread.h"\
 	".\ace\Token.h"\
@@ -3517,6 +3534,7 @@ NODEP_CPP_SYSTE=\
 SOURCE=.\Synch_Options.cpp
 NODEP_CPP_SYNCH=\
 	".\ace\Synch_Options.h"\
+	".\ace\Synch_Options.i"\
 	
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -3847,6 +3865,7 @@ SOURCE=.\Strategies.cpp
 NODEP_CPP_STRAT=\
 	".\ace\Reactor.h"\
 	".\ace\Strategies.h"\
+	".\ace\Strategies.i"\
 	
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -5271,6 +5290,7 @@ NODEP_CPP_OS_CP=\
 SOURCE=.\Obstack.cpp
 NODEP_CPP_OBSTA=\
 	".\ace\Obstack.h"\
+	".\ace\Obstack.i"\
 	
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -6262,6 +6282,9 @@ SOURCE=.\High_Res_Timer.cpp
 NODEP_CPP_HIGH_=\
 	".\ace\High_Res_Timer.h"\
 	".\ace\High_Res_Timer.i"\
+	".\ace\Object_Manager.h"\
+	".\ace\Stats.h"\
+	".\ace\Synch.h"\
 	
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -7169,6 +7192,7 @@ NODEP_CPP_ADDR_=\
 SOURCE=.\Activation_Queue.cpp
 NODEP_CPP_ACTIV=\
 	".\ace\Activation_Queue.h"\
+	".\ace\Activation_Queue.i"\
 	
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -7537,6 +7561,42 @@ DEP_CPP_ARG_S=\
 
 
 "$(INTDIR)\Arg_Shifter.obj" : $(SOURCE) $(DEP_CPP_ARG_S) "$(INTDIR)"
+
+
+!ENDIF 
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\Stats.cpp
+NODEP_CPP_STATS=\
+	".\ace\Stats.h"\
+	".\ace\Stats.i"\
+	
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ENDIF 
@@ -7744,9 +7804,6 @@ NODEP_CPP_TTY_I=\
 # Begin Source File
 
 SOURCE=.\Trace.cpp
-
-!IF  "$(CFG)" == "ACE static library - Win32 Release"
-
 NODEP_CPP_TRACE=\
 	".\ace\ACE.h"\
 	".\ace\inc_user_config.h"\
@@ -7754,45 +7811,27 @@ NODEP_CPP_TRACE=\
 	".\ace\Trace.h"\
 	".\ace\Trace.i"\
 	
+
+!IF  "$(CFG)" == "ACE static library - Win32 Release"
+
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
 
-NODEP_CPP_TRACE=\
-	".\ace\ACE.h"\
-	".\ace\inc_user_config.h"\
-	".\ace\Log_Msg.h"\
-	".\ace\Trace.h"\
-	".\ace\Trace.i"\
-	
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
-NODEP_CPP_TRACE=\
-	".\ace\ACE.h"\
-	".\ace\inc_user_config.h"\
-	".\ace\Log_Msg.h"\
-	".\ace\Trace.h"\
-	".\ace\Trace.i"\
-	
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
 
-NODEP_CPP_TRACE=\
-	".\ace\ACE.h"\
-	".\ace\inc_user_config.h"\
-	".\ace\Log_Msg.h"\
-	".\ace\Trace.h"\
-	".\ace\Trace.i"\
-	
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
@@ -7951,6 +7990,7 @@ NODEP_CPP_TOKEN_C=\
 
 SOURCE=.\Token.cpp
 NODEP_CPP_TOKEN_CP=\
+	".\ace\streams.h"\
 	".\ace\Synch_T.h"\
 	".\ace\Thread.h"\
 	".\ace\Token.h"\
@@ -8353,6 +8393,7 @@ NODEP_CPP_SYSTE=\
 SOURCE=.\Synch_Options.cpp
 NODEP_CPP_SYNCH=\
 	".\ace\Synch_Options.h"\
+	".\ace\Synch_Options.i"\
 	
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
@@ -8683,6 +8724,7 @@ SOURCE=.\Strategies.cpp
 NODEP_CPP_STRAT=\
 	".\ace\Reactor.h"\
 	".\ace\Strategies.h"\
+	".\ace\Strategies.i"\
 	
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
@@ -10107,6 +10149,7 @@ NODEP_CPP_OS_CP=\
 SOURCE=.\Obstack.cpp
 NODEP_CPP_OBSTA=\
 	".\ace\Obstack.h"\
+	".\ace\Obstack.i"\
 	
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
@@ -11098,6 +11141,9 @@ SOURCE=.\High_Res_Timer.cpp
 NODEP_CPP_HIGH_=\
 	".\ace\High_Res_Timer.h"\
 	".\ace\High_Res_Timer.i"\
+	".\ace\Object_Manager.h"\
+	".\ace\Stats.h"\
+	".\ace\Synch.h"\
 	
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
@@ -12005,6 +12051,7 @@ NODEP_CPP_ADDR_=\
 SOURCE=.\Activation_Queue.cpp
 NODEP_CPP_ACTIV=\
 	".\ace\Activation_Queue.h"\
+	".\ace\Activation_Queue.i"\
 	
 
 !IF  "$(CFG)" == "ACE static library - Win32 Release"
@@ -12373,6 +12420,42 @@ DEP_CPP_ARG_S=\
 
 
 "$(INTDIR)\Arg_Shifter.obj" : $(SOURCE) $(DEP_CPP_ARG_S) "$(INTDIR)"
+
+
+!ENDIF 
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\Stats.cpp
+NODEP_CPP_STATS=\
+	".\ace\Stats.h"\
+	".\ace\Stats.i"\
+	
+
+!IF  "$(CFG)" == "ACE static library - Win32 Release"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Stats.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ENDIF 
