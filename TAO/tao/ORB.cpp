@@ -601,9 +601,9 @@ CORBA::wstring_free (CORBA::WChar *const str)
 }
 
 void
-CORBA_ORB::init_orb_globals (void)
+CORBA_ORB::init_orb_globals (CORBA::Environment &env)
 {
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ());
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, tao_mon, *ACE_Static_Object_Lock::instance ()));
 
   // Put these initializations here so that exceptions are enabled
   // immediately.
