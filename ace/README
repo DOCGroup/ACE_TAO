@@ -709,6 +709,12 @@ ACE_LACKS_BSEARCH                       Compiler/platform lacks the
                                         function
 ACE_LACKS_CLEARERR                      Platform lacks the clearerr system
                                         call.
+ACE_LACKS_CLOSEDIR                      Platform lacks closedir and the closedir
+                                        emulation must be used
+ACE_LACKS_OPENDIR                       Platform lacks opendir and the opendir
+                                        emulation must be used
+ACE_LACKS_READDIR                       Platform lacks readdir and the readdir
+                                        emulation must be used
 ACE_LACKS_CMSG_DATA_MACRO               Platform has
                                         ACE_HAS_4_4BSD_SENDMSG_RECVMSG but does
                                         not define CMSG_DATA (cmsg) macro.
@@ -1618,7 +1624,7 @@ ACE_USES_GPROF:
     ace/Base_Thread_Adapter.cpp
 
   Notes:
-    When using gprof mainly on Linux, #define ACE_USES_GPROF 
+    When using gprof mainly on Linux, #define ACE_USES_GPROF
     will add calls to getitimer/setitimer in order to initialize profile
     timer and overcome the problem of gprof with multithreaded applications.
 

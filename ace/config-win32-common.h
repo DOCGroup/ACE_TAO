@@ -516,11 +516,6 @@ typedef unsigned long long ACE_UINT64;
 # define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
 
-// mingw32 doesn't define this (yet...)
-#if defined(__MINGW32__) && !defined(MWMO_ALERTABLE)
-# define MWMO_ALERTABLE 0x0002
-#endif
-
 // Platform supports IP multicast on Winsock 2
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 # define ACE_HAS_IP_MULTICAST
@@ -556,6 +551,9 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_SIZEOF_WCHAR 2
 #define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_LACKS_STRUCT_DIR
+#define ACE_LACKS_OPENDIR
+#define ACE_LACKS_CLOSEDIR
+#define ACE_LACKS_READDIR
 #define ACE_LACKS_MKSTEMP
 
 // If we are using winsock2 then the SO_REUSEADDR feature is broken
