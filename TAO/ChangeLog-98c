@@ -1,3 +1,27 @@
+Thu May 28 11:37:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/orbconf.h: Removed the TAO_NAMESPACE_STORAGE_CLASS macro.
+
+	* tao/CurrentS.cpp: In the initialization of the constructor, we
+	were calling the default ctor of the base class. However, we now
+	call the other ctor that takes the stub object and servant as
+	arguments.
+
+	* tao/{encode, decode}.cpp: In Struct::{encode, decode}, I had
+	made an erroneous change a few days back where I was passing the
+	address of a pointer. This was for the Objref and Typecode
+	cases. Carlos pointed this out. Seth was getting lots of errors
+	due to this. This has been fixed.
+
+	* TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+	be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+	be_visitor_typedef, be_visitor_union}.cpp:
+
+	Reverted my previous change where I generated the
+	TAO_NAMSPACE_STORAGE_CLASS macro if the data type was nested. We
+	no more generate this macro and this macro has been removed from
+	orbconf.h as explained above.
+
 Thu May 28 00:08:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h (TAO_NAMESPACE_STORAGE_CLASS): Changed it from
@@ -21,7 +45,7 @@ Wed May 27 17:56:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POAS.cpp (_tao_collocated_Current): Changed
 	  "POA_CORBA::_tao_collocated_Current" to ACE_NESTED_CLASS
-	  (POA_CORBA,_tao_collocated_Current).  
+	  (POA_CORBA,_tao_collocated_Current).
 
 	* tao/POA_CORBA.h (_tao_collocated_Current): Changed its base
 	  class to CORBA_Current.
