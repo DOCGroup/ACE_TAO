@@ -10,7 +10,7 @@ ACE_CString::ACE_CString (ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
-    rep_ (0),
+    rep_ (&ACE_CString::NULL_CString_),
     release_ (0)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
