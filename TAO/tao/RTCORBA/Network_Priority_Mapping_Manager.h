@@ -63,10 +63,8 @@ public:
   RTCORBA::NetworkPriorityMapping *mapping (void);
 
 public:
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_Network_Priority_Mapping_Manager_ptr _ptr_type;
   typedef TAO_Network_Priority_Mapping_Manager_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   // the static operations
   static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (
