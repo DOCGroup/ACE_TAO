@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./orbsvcs/tests/Event/Basic/sched.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <dynamic id="EC_Factory" type="Service_Object">
-   <initializer path="TAO_RTSchedEvent" init="_make_TAO_EC_Sched_Factory" params="-ECDispatching priority -ECScheduling priority -ECFiltering priority -ECProxyPushConsumerCollection mt:copy_on_write:list -ECProxyPushSupplierCollection mt:copy_on_write:list  -ECProxyConsumerLock thread -ECProxySupplierLock thread -ECSupplierFiltering per-supplier"/>
- </dynamic>
-</ACE_Svc_Conf>

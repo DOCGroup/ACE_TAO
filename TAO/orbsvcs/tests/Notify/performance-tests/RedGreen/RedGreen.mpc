@@ -1,3 +1,0 @@
-project(*notify perf RedGreen): notifytest, naming {
-  exename = RedGreen_Test
-}
