@@ -28,6 +28,8 @@
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 
+#include "Deployment_Configuration.h"
+
 namespace CIAO
 {
   /**
@@ -74,7 +76,7 @@ namespace CIAO
      *
      * @@ What else do we need to initialize here?
      */
-    void init ()
+    void init (void)
       ACE_THROW_SPEC ((Deployment::ResourceNotAvailable,
                        Deployment::StartError,
                        Deployment::PlanError));
@@ -141,14 +143,14 @@ namespace CIAO
      * Check whether all the NodeManager names are present in the
      * deployment information data file.
      */
-    bool check_validity ();
+    bool check_validity (void);
 
     /**
      * Split the global (domain-level) deployment plan to a set of 
      * local (node-level) deployment plans. The set of local plans
      * are cached in the ACE hash map member variable.
      */
-    int split_plan ();
+    int split_plan (void);
 
   protected:
     /// location of the Domainapplication
@@ -196,7 +198,7 @@ namespace CIAO
     const char * deployment_file_;
 
     /// Deployment Configuration info, which contains the deployment topology.
-    Deployment_Configuration &deployment_config_;
+    Deployment_Configuration deployment_config_;
   };
 }
 
