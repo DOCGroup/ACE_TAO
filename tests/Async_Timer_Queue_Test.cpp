@@ -158,7 +158,7 @@ signal_handler (int signum)
     /* NOTREACHED */
     case SIGINT:
       {
-        Async_Timer_Queue:;instance ()->dump ();
+        Async_Timer_Queue::instance ()->dump ();
 	break;
 	/* NOTREACHED */
       }
