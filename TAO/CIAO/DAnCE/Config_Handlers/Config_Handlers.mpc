@@ -5,6 +5,7 @@ project (Config_Handlers) : ciao_deployment_stub {
   sharedname = Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
+  requires += exceptions
   includes += /usr/include $(XERCESCROOT)/include 
   libpaths += /usr/lib $(XERCESCROOT)/lib
   libs     += xerces-c CIAO_DnC_Server TAO_IFR_Client
