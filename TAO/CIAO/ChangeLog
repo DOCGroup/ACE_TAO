@@ -1,3 +1,9 @@
+Wed Jun 23 13:44:37 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/ExecutionManager/ExecutionManager_Impl.cpp:
+
+          Fixed a compilation error.
+
 Wed Jun 23 13:24:23 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Process_Element.cpp:
@@ -35,7 +41,7 @@ Wed Jun 23 11:48:10 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	The functions and classes are placed in the deployment namespace.
 
-4Wed Jun 23 03:14:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Wed Jun 23 03:14:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
