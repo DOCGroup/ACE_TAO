@@ -1,3 +1,44 @@
+Mon Jun 26 23:56:26 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/SMI_Iterator/Makefile:
+	* examples/Content_Server/AMI_Iterator/Makefile:
+
+	  Updated client and server file lists.  Some object files were
+	  unnecessarily linked into the client and/or the server.
+
+	* examples/Content_Server/SMI_Iterator/SMI_Iterator.dsw:
+	* examples/Content_Server/AMI_Iterator/AMI_Iterator.dsw:
+	* examples/Content_Server/AMI_Observer/AMI_Observer.dsw:
+
+	  Added new MSVC++ workspace files.
+
+	* examples/Content_Server/SMI_Iterator/server.dsp:
+	* examples/Content_Server/SMI_Iterator/client.dsp:
+
+	  Corrected include/library paths, and source file lists.
+
+	* examples/Content_Server/AMI_Iterator/server.dsp:
+	* examples/Content_Server/AMI_Iterator/client.dsp:
+	* examples/Content_Server/AMI_Observer/server.dsp:
+	* examples/Content_Server/AMI_Observer/client.dsp:
+
+	  New MSVC++ project files.
+
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+	* examples/Content_Server/AMI_Observer/Callback_Handler.h:
+	* examples/Content_Server/AMI_Observer/Callback_i.h:
+	* examples/Content_Server/AMI_Iterator/Push_Iterator_Handler.h:
+
+	  Added preprocessor pragma to surpress "dominance" warnings from
+	  MSVC++.  It is being a bit too paranoid.
+
+	* examples/Content_Server/SMI_Iterator/Web_Server.dsw:
+
+	  Removed this file.  It has been superseded by
+	  "SMI_Iterator.dsw."
+
 Mon Jun 26 16:50:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DomainC.h:
