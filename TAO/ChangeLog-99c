@@ -1,3 +1,11 @@
+Fri Apr  9 00:49:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Activation/server.cpp (main): 
+	* examples/POA/On_Demand_Activation/Servant_Activator.cpp:
+	* examples/POA/On_Demand_Activation/Servant_Locator.cpp
+	Made some cosmetic changes. Basically changed some ACE_TRY 
+	macros
+
 Fri Apr  9 00:04:45 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
