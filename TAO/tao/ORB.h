@@ -863,9 +863,11 @@ public:
   // Returns an indication of whether the ORB needs the <{main thread}> to
   // perform some work.
 
-  int perform_work (ACE_Time_Value * = 0);
+  int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero);
   // If called by the <{main thread}>, this operation performs an
   // implementation-defined unit of work. Otherwise, it does nothing.
+  // Note that the default behavior is not to block; this behavior can
+  // be modified by passing an appropriate <ACE_Time_Value>.
   //
   // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
