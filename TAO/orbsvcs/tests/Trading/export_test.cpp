@@ -39,7 +39,7 @@ main (int argc, char** argv)
       
       if (CORBA::is_nil (trading_obj.in ()))
       	ACE_ERROR_RETURN ((LM_ERROR,
-      			   " (%P|%t) Unable to initialize the POA.\n"),
+      			   " (%P|%t) Unable to bootstrap to the Trading Service.\n"),
 			   -1);
 
       

@@ -1,6 +1,6 @@
 // $Id$
 #include "TT_Info.h"
-#include "orbsvcs/Trader/Property_Evaluator.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 
 const char* TT_Info::INTERFACE_NAMES[] = 
 {
@@ -119,12 +119,16 @@ const char* TT_Info::MODEL_NUMBERS[] =
   "9q834jidlj234ujof"
 };
 
-const int TT_Info::NUM_QUERIES = 3;
+const int TT_Info::NUM_QUERIES = 7;
 const char* TT_Info::QUERIES[][3] =
 {
   {INTERFACE_NAMES[REMOTE_IO], "", ""},
   {INTERFACE_NAMES[REMOTE_IO], "Location ~ 'Cupples'", ""},
-  {INTERFACE_NAMES[PLOTTER], "'sbw1' in User_Queue", "min Cost_Per_Page"}
+  {INTERFACE_NAMES[PLOTTER], "'sbw1' in User_Queue", "min Cost_Per_Page"},
+  {INTERFACE_NAMES[PLOTTER], "Num_Colors > 1 and Location ~ 'Cupples'", "min Cost_Per_Page"},
+  {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > 3 and Color == TRUE", "with 'sbw1' in User_Queue"},
+  {INTERFACE_NAMES[PRINTER], "Color == TRUE and Double_Sided == TRUE", "random"},
+  {INTERFACE_NAMES[PRINTER], "Color and Double_Sided and 'sbw1' in User_Queue", "with Location ~ 'Cupples'"}
 };
 
 void

@@ -1,6 +1,6 @@
 // $Id$
 #include "Offer_Importer.h"
-#include "orbsvcs/Trader/Policy_Manager.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 
 TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if)
   : lookup_ (lookup_if)
