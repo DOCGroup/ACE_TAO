@@ -1,3 +1,9 @@
+Wed Oct  1 10:44:55 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/varout.h: Fixed some template errors in class
+	TAO_Object_out. This was pointed to me by Carlos as he was
+	compiling TAO in SGI. 
+
 Wed Oct  1 09:10:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* docs/releasenotes.html: 
