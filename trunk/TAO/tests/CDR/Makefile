@@ -362,8 +362,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i
 
-.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp \
- $(TAO_ROOT)/tao/corba.h \
+.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
@@ -677,8 +676,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i
 
-.obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp \
- $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \

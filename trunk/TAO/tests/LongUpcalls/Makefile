@@ -101,8 +101,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Controller.h \
- TestS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i Controller.h TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -332,8 +331,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -390,8 +389,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i
 
 .obj/blocking_server.o .obj/blocking_server.so .shobj/blocking_server.o .shobj/blocking_server.so: blocking_server.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
@@ -424,8 +423,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Manager.h \
- TestS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i Manager.h TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -655,8 +653,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -713,8 +711,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -757,8 +755,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Controller.h \
- TestS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i Controller.h TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -988,8 +985,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1046,8 +1043,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i Manager_Handler.h \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i Manager_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -1090,8 +1087,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i \
- AMI_Manager.h TestS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i AMI_Manager.h TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1321,8 +1317,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1379,8 +1375,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -1423,8 +1419,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Controller.h \
- TestS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i Controller.h TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1654,8 +1649,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1712,8 +1707,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i Manager_Handler.h \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i Manager_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -1756,8 +1751,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i \
- AMI_Manager.h TestS.h \
+ $(ACE_ROOT)/ace/Get_Opt.i AMI_Manager.h TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -1987,8 +1981,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2045,8 +2039,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -2317,8 +2311,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2375,8 +2369,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i
 
 .obj/Manager.o .obj/Manager.so .shobj/Manager.o .shobj/Manager.so: Manager.cpp Manager.h TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -2637,8 +2631,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2695,8 +2689,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -2967,8 +2961,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3025,8 +3019,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -3297,8 +3291,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3355,8 +3349,8 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -3685,8 +3679,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.i
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.i
 
 .obj/TestS.o .obj/TestS.so .shobj/TestS.o .shobj/TestS.so: TestS.cpp TestS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -3947,8 +3940,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Asynch_Reply_Dispatcher.i \
- $(TAO_ROOT)/tao/Asynch_Invocation.i \
- TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/Asynch_Invocation.i TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -4005,7 +3998,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i
+ $(TAO_ROOT)/tao/BoundsC.i TestC.i TestS_T.h \
+ TestS_T.i TestS_T.cpp TestS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
