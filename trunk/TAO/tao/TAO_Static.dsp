@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="TAO Static" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
@@ -129,6 +129,10 @@ SOURCE=.\default_server.cpp
 # Begin Source File
 
 SOURCE=.\encode.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Environment.cpp
 # End Source File
 # Begin Source File
 
@@ -312,6 +316,10 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Environment.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Exception.h
 # End Source File
 # Begin Source File
@@ -485,6 +493,10 @@ SOURCE=.\default_client.i
 # Begin Source File
 
 SOURCE=.\default_server.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Environment.i
 # End Source File
 # Begin Source File
 
