@@ -831,7 +831,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
   // Prepare the request header
   os->indent ();
-  *os << "CORBA::Long flag = ";
+  *os << "CORBA::Short flag = ";
 
   switch (node->flags ())
     {
