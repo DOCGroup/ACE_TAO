@@ -36,7 +36,7 @@ class TAO_Pluggable_Messaging;
 
 // ****************************************************************
 
-class TAO_IIOP_Properties
+class TAO_Export TAO_IIOP_Properties
 {
   // = TITLE
   //   TCP protocol properties specification for a set of

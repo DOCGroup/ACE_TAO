@@ -1,3 +1,14 @@
+Mon Nov  6 16:55:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connect.h:
+	* tao/UIOP_Connect.h: Added the TAO_Export for the TAO_*_Property
+	  class.  
+
+	* tao/IIOP_Connector.cpp:
+	* tao/UIOP_Connector.cpp:
+	* tao/SHMIOP_Connector.cpp: Added a ACE_TEXT macro for a ACE_DEBUG
+	  statement 
+
 Mon Nov  6 16:16:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/*/Makefile: Updated dependencies.

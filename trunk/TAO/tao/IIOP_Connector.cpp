@@ -194,7 +194,7 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                           __LINE__,
                           iiop_endpoint->host (),
                           iiop_endpoint->port (),
-                          "errno"));
+                          ACE_TEXT ("errno")));
             }
           return -1;
         }
