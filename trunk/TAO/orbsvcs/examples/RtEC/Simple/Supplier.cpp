@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Supplier.h"
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
 ACE_RCSID(EC_Examples, Supplier, "$Id$")

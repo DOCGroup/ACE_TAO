@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Consumer.h"
-#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
@@ -33,7 +33,7 @@ Consumer::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       // Do *NOT* make a copy because we don't want the ORB to outlive 
-      // the 
+      // the run() method.
       this->orb_ = orb.in ();
 
       if (argc <= 1)
