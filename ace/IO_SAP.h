@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -23,8 +22,8 @@
 class ACE_Export ACE_IO_SAP
 {
   // = TITLE
-  //     Defines the member functions for the base class of the ACE_IO_SAP
-  //     abstraction.  
+  //     Defines the methods for the base class of the <ACE_IO_SAP>
+  //     abstraction, which includes <ACE_FILE> and <ACE_DEV>.
 public:
   enum
   {
@@ -37,18 +36,23 @@ public:
   int control (int cmd, void *) const;
   // Interface for ioctl. 
 
-  // = Methods for manipulating common I/O descriptor options related to
-  //   files. 
-  int enable (int signum) const;
-  // Enable signal <signum>.
-  int disable (int signum) const;
-  // Disable signal <signum>.
+  // = Common I/O handle options related to files. 
+
+  int enable (int value) const;
+  // Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
+  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
+  // which is passed as the <value>.
+
+  int disable (int value) const;
+  // Disable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
+  // non-blocking I/O (ACE_NONBLOCK), or close-on-exec (ACE_CLOEXEC),
+  // which is passed as the <value>.
 
   ACE_HANDLE get_handle (void) const;
-  // Get the underlying descriptor. 
+  // Get the underlying handle. 
 
   void set_handle (ACE_HANDLE handle);
-  // Set the underlying descriptor. 
+  // Set the underlying handle. 
 
   void dump (void) const;
   // Dump the state of an object.
@@ -62,7 +66,7 @@ protected:
 
 private:
   ACE_HANDLE handle_;
-  // Underlying I/O descriptor. 
+  // Underlying I/O handle. 
 
   static pid_t pid_;
   // Cache the process ID. 
@@ -70,6 +74,6 @@ private:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/IO_SAP.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_IO_SAP_H */

@@ -6,7 +6,7 @@
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/IO_SAP.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, IO_SAP, "$Id$")
 
@@ -35,11 +35,8 @@ ACE_IO_SAP::dump (void) const
 // Cache for the process ID. 
 pid_t ACE_IO_SAP::pid_ = 0;
 
-// Make the HANDLE_ available for asynchronous I/O (SIGIO), urgent
-// data (SIGURG), or non-blocking I/O (ACE_NONBLOCK).
-
 int
-ACE_IO_SAP::enable (int signum) const
+ACE_IO_SAP::enable (int value) const
 {
   ACE_TRACE ("ACE_IO_SAP::enable");
   /* First-time in initialization. */
@@ -48,95 +45,99 @@ ACE_IO_SAP::enable (int signum) const
 
 #if !defined(ACE_WIN32) && !defined (VXWORKS)
 
-  switch (signum)
+  switch (value)
     {
 #if defined (SIGURG)
     case SIGURG:
+    case ACE_SIGURG:
 #if defined (F_SETOWN)
-      if (ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IO_SAP::pid_) < 0)
-	return ACE_IO_SAP::INVALID_HANDLE;
-      break;
+      return ACE_OS::fcntl (this->handle_,
+                            F_SETOWN,
+                            ACE_IO_SAP::pid_);
 #else
-      return ACE_IO_SAP::INVALID_HANDLE;
+      ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN */
 #endif /* SIGURG */
-#if defined (SIGIO)		// <==
+#if defined (SIGIO)
     case SIGIO:
+    case ACE_SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
-      if (ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IO_SAP::pid_) == ACE_IO_SAP::INVALID_HANDLE)
-	return ACE_IO_SAP::INVALID_HANDLE;
-      if (ACE::set_flags (this->handle_, FASYNC) == ACE_IO_SAP::INVALID_HANDLE)
-	return ACE_IO_SAP::INVALID_HANDLE;
+      if (ACE_OS::fcntl (this->handle_,
+                         F_SETOWN,
+                         ACE_IO_SAP::pid_) == -1
+          || ACE::set_flags (this->handle_,
+                             FASYNC) == -1)
+        return -1;
+      break;
 #else
-      return ACE_IO_SAP::INVALID_HANDLE;
+      ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN && FASYNC */
 #else  // <==
-      return ACE_IO_SAP::INVALID_HANDLE; // <==
+      ACE_NOTSUP_RETURN (-1);
 #endif /* SIGIO <== */
       break;
-
     case ACE_NONBLOCK:
-      if (ACE::set_flags (this->handle_, ACE_NONBLOCK) == ACE_IO_SAP::INVALID_HANDLE)
-	return ACE_IO_SAP::INVALID_HANDLE;
+      if (ACE::set_flags (this->handle_,
+                          ACE_NONBLOCK) == -1)
+        return -1;
       break;
     default:
-      return ACE_IO_SAP::INVALID_HANDLE;
+      return -1;
     }
-
 #else
-	ACE_UNUSED_ARG(signum);
+  ACE_UNUSED_ARG (value);
 #endif /* !ACE_WIN32 */
 
   return 0;
 }
 
-// Restore the IO_SAP by turning off synchronous I/O or urgent delivery. 
-
 int
-ACE_IO_SAP::disable (int signum) const
+ACE_IO_SAP::disable (int value) const
 {
   ACE_TRACE ("ACE_IO_SAP::disable");
 
 #if !defined(ACE_WIN32) && !defined (VXWORKS)
-
-  switch (signum)
+  switch (value)
     {
 #if defined (SIGURG)
     case SIGURG:
+    case ACE_SIGURG:
 #if defined (F_SETOWN)
-      if (ACE_OS::fcntl (this->handle_, F_SETOWN, 0) == ACE_IO_SAP::INVALID_HANDLE)
-	return ACE_IO_SAP::INVALID_HANDLE;
-#else
-      return ACE_IO_SAP::INVALID_HANDLE;
-#endif /* F_SETOWN */
+      if (ACE_OS::fcntl (this->handle_,
+                         F_SETOWN, 0) == -1)
+	return -1;
       break;
-#endif /* SIGURG */
-#if defined (SIGIO)		// <==
-    case SIGIO:
-#if defined (F_SETOWN) && defined (FASYNC)
-      if (ACE_OS::fcntl (this->handle_, F_SETOWN, 0) == ACE_IO_SAP::INVALID_HANDLE)
-	return ACE_IO_SAP::INVALID_HANDLE;
-      if (ACE::clr_flags (this->handle_, FASYNC) == ACE_IO_SAP::INVALID_HANDLE)
-	return ACE_IO_SAP::INVALID_HANDLE;
 #else
-      return ACE_IO_SAP::INVALID_HANDLE;
+      ACE_NOTSUP_RETURN (-1);
+#endif /* F_SETOWN */
+#endif /* SIGURG */
+#if defined (SIGIO)
+    case SIGIO:
+    case ACE_SIGIO:
+#if defined (F_SETOWN) && defined (FASYNC)
+      if (ACE_OS::fcntl (this->handle_,
+                         F_SETOWN,
+                         0) == -1
+          || ACE::clr_flags (this->handle_, FASYNC) == -1)
+	return -1;
+      break;
+#else
+      ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN && FASYNC */
 #else  // <==
-      return ACE_IO_SAP::INVALID_HANDLE; // <==
+      ACE_NOTSUP_RETURN (-1);
 #endif /* SIGIO <== */
-      break;
     case ACE_NONBLOCK:
-      if (ACE::clr_flags (this->handle_, ACE_NONBLOCK) == ACE_IO_SAP::INVALID_HANDLE)
-	return ACE_IO_SAP::INVALID_HANDLE;
+      if (ACE::clr_flags (this->handle_,
+                          ACE_NONBLOCK) == -1)
+	return -1;
       break;
     default:
-      return ACE_IO_SAP::INVALID_HANDLE;
+      return -;1
     }
-
-#else
-	ACE_UNUSED_ARG(signum);
-#endif /* !ACE_WIN32 */
-
   return 0;
+#else
+  ACE_UNUSED_ARG (value);
+#endif /* !ACE_WIN32 */
 }
 
