@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/QoS_Manager.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, QoS_Manager, "$Id $")
 

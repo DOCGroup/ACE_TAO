@@ -3,6 +3,7 @@
 
 #include "ace/QoS_Session_Factory.h"
 #include "ace/QoS_Session_Impl.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, QoS_Session_Factory, "$Id$")
   

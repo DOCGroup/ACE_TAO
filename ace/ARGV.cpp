@@ -4,6 +4,7 @@
 // Transforms a string BUF into an ARGV-style vector of strings. 
 
 #include "ace/ARGV.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ARGV.i"

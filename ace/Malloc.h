@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Malloc_Base.h"
+#include "ace/Log_Msg.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
@@ -38,8 +39,6 @@
 #include "ace/SV_Semaphore_Simple.h"
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
-
-#include "ace/Log_Msg.h"
 
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 

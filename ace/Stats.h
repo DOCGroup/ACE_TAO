@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Containers.h"
+#include "ace/Log_Msg.h"
 
 class ACE_Export ACE_Stats_Value
 {

@@ -4,6 +4,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/Handle_Set.h"
 #include "ace/Synch.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram.i"
