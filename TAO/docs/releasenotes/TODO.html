@@ -48,51 +48,6 @@
 	</P>
       </LI>
 
-      <LI><P><B>EC:</B>If a Supplier disconnects while it has
-	  consumers registered for it's Supplier_ID,
-	  the consumers are not connected again even if the supplier
-	  reconnects.
-	  <BR>[STATUS] Carlos in working on this.
-	</P>
-      </LI>
-
-      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> class
-	  receives events from a "remote" EC and pushes them on the
-	  local EC.
-	  The subscription and publication list for the Gateway are
-	  the disjunction of the local EC consumer subscriptions.
-	  Unfortunately this can result in multiple supplier_IDs for
-	  the Gateway, the current implementation is not prepared to
-	  handle this.
-	  The Gateway must keep a list of suppliers, each one with a
-	  different supplier id,
-	  when it receives a remote event it should push the event
-	  only to the right supplier.
-	  It must also keep another supplier used for the events that
-	  are of interest by their event type, regardless of their
-	  supplier ID.
-	</P>
-      </LI>
-
-      <LI><P><B>EC:</B>The Event Channel must be able to accept more
-	  than one supplier with a given supplier ID, or at least we
-	  should be able to configure the EC to work in such a mode.
-	  This is required for some applications that treat the
-	  supplier ID as a "supplier type".
-	</P>
-      </LI>
-
-      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> can be
-	  required to subscribe for events by source, but the source
-	  can be local instead of remote.
-	  This is not a problem if the Event Channel supports multiple
-	  supplier IDs,
-	  but if it that's not the case,
-	  we must check the local publications and remove those events
-	  from the Gateway publication and subscription list.
-	</P>
-      </LI>
-
     </OL>
 
     <HR>
@@ -204,7 +159,7 @@
       <LI>
     </OL>
 
-    <H4>New features</H4>
+    <H4>New features and Bug fixes</H4>
     <OL>
       <LI><B>EC:</B> Improve configuration support in the EC, give an
 	example of a single threaded EC, support different dispatching
@@ -322,7 +277,7 @@ class Foo {
 	  the event type into the mcast address was implemented.
 	  <BR>[STATUS] An advanced example that uses multiple mcast
 	  groups per process was developed; this example would be used
-	  to test the required features for general mcast support.
+	  To test the required features for general mcast support.
 	  <BR>[STATUS] The example is able to automatically join and
 	  leave multicast groups, as the consumer set on a local EC
 	  changes.
@@ -336,6 +291,15 @@ class Foo {
 	</P>
       </LI>
 
+      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> can be
+	  required to subscribe for events by source, but the source
+	  can be local instead of remote.
+	  This is not a problem since the Event Channel supports
+	  multiple supplier IDs,
+	  but we could check the local publications and remove those
+	  events from the Gateway publication and subscription list.
+	</P>
+      </LI>
 
       <LI>Add support for multiple Profiles in the ORB (completing the
 	IIOP 1.0 support)
@@ -810,6 +774,42 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> class
+	  receives events from a "remote" EC and pushes them on the
+	  local EC.
+	  The subscription and publication list for the Gateway are
+	  the disjunction of the local EC consumer subscriptions.
+	  Unfortunately this can result in multiple supplier_IDs for
+	  the Gateway, the current implementation is not prepared to
+	  handle this.
+	  The Gateway must keep a list of suppliers, each one with a
+	  different supplier id,
+	  when it receives a remote event it should push the event
+	  only to the right supplier.
+	  It must also keep another supplier used for the events that
+	  are of interest by their event type, regardless of their
+	  supplier ID.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B>The Event Channel must be able to accept more
+	  than one supplier with a given supplier ID, or at least we
+	  should be able to configure the EC to work in such a mode.
+	  This is required for some applications that treat the
+	  supplier ID as a "supplier type".
+	  <BR>[DONE]
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B>If a Supplier disconnects while it has
+	  consumers registered for it's Supplier_ID,
+	  the consumers are not connected again even if the supplier
+	  reconnects.
+	  <BR>[DONE]
+	</P>
+      </LI>
+
       <LI><P>Further optimize memory allocation by using a memory pool
 	  for the incoming CDR stream.
 	  <BR>[DONE] The pool is configurable for the users that may

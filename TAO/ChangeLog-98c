@@ -1,3 +1,28 @@
+Mon Oct  5 20:35:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
+	  The IIOP Gateways were not preserving the remote supplier IDs
+	  properly. The current implementation uses a map of
+	  ProxyPushConsumer on the "local" EC, using a different entry for
+	  each supplier ID the local consumers show interest in.
+	  At run-time the events are dispatched to the corresponding entry
+	  in the map.
+	  A special consumer is used for all the other events.
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Fixed a dead-lock during shutdown.
+	  Also fixed some problems while updating the Observers; we held
+	  the EC lock during the complete process, but it is fairly common
+	  to make changes to the EC while the observers are beign updated.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  Some improvements on shutdown.
+
+	* docs/releasenotes/TODO.html: 
+	  Updated the tasks corresponding to the changes in this ChangeLog
+	  entry.
+
 Mon Oct 05 18:54:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i: Fixed the POA id generation
