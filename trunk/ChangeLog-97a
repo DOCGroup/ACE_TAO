@@ -1,3 +1,9 @@
+Thu May  8 18:04:14 1997  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Containers: Made the return values of Container methods
+	  more consistant with other components of ACE (i.e., 0 for
+	  success, -1 for failure).
+
 Thu May  8 18:04:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.2_sgic++.GNU:  Moved SGI C++

@@ -24,10 +24,10 @@ ACE_Bounded_Stack<T>::push (const T &new_item)
   if (this->is_full () == 0)
     {
       this->stack_[this->top_++] = new_item;
-      return 1;
+      return 0;
     }
   else
-    return 0;
+    return -1;
 }
 
 template <class T> ACE_INLINE int
@@ -37,10 +37,10 @@ ACE_Bounded_Stack<T>::pop (T &item)
   if (this->is_empty () == 0)
     {
       item = this->stack_[--this->top_];
-      return 1;
+      return 0;
     }
   else
-    return 0;
+    return -1;
 }
 
 template <class T> ACE_INLINE int
@@ -50,10 +50,10 @@ ACE_Bounded_Stack<T>::top (T &item) const
   if (this->is_empty () == 0)
     {
       item = this->stack_[this->top_ - 1];
-      return 1;
+      return 0;
     }
   else
-    return 0;
+    return -1;
 }
 
 template <class T> ACE_INLINE size_t
@@ -85,10 +85,10 @@ ACE_Fixed_Stack<T, SIZE>::push (const T &new_item)
   if (this->is_full () == 0)
     {
       this->stack_[this->top_++] = new_item;
-      return 1;
+      return 0;
     }
   else
-    return 0;
+    return -1;
 }
 
 template <class T, size_t SIZE> ACE_INLINE int
@@ -98,10 +98,10 @@ ACE_Fixed_Stack<T, SIZE>::pop (T &item)
   if (this->is_empty () == 0)
     {
       item = this->stack_[--this->top_];
-      return 1;
+      return 0;
     }
   else
-    return 0;
+    return -1;
 }
 
 template <class T, size_t SIZE> ACE_INLINE int
@@ -111,10 +111,10 @@ ACE_Fixed_Stack<T, SIZE>::top (T &item) const
   if (this->is_empty () == 0)
     {
       item = this->stack_[this->top_ - 1];
-      return 1;
+      return 0;
     }
   else
-    return 0;
+    return -1;
 }
 
 template <class T, size_t SIZE> ACE_INLINE size_t
@@ -139,10 +139,10 @@ ACE_Unbounded_Stack<T>::top (T &item) const
   if (this->is_empty () == 0)
     {
       item = this->head_->next_->item_;
-      return 1;
+      return 0;
     }
   else
-    return 0;
+    return -1;
 }
 
 template <class T> ACE_INLINE int 
