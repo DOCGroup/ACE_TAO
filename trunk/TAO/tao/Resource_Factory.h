@@ -93,6 +93,22 @@ class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
   //   resources.
   //
 public:
+
+  enum Caching_Strategy
+  {
+    // Least Recently Used
+    LRU,
+
+    // Least Frequently Used
+    LFU,
+
+    // First In First Out
+    FIFO,
+
+    // Dont use any strategy.
+    NOOP
+  };
+
   // = Initialization and termination methods.
   TAO_Resource_Factory (void);
   virtual ~TAO_Resource_Factory (void);
@@ -137,6 +153,14 @@ public:
   // from the service configurator.  It is assumed
   // that only one thread will call this method at ORB initialization.
   // NON-THREAD-SAFE
+
+  virtual Caching_Strategy connection_caching_strategy_type (void) const;
+  // This accesses the connection caching strategy we use for managing
+  // purging of unused entries from the connection cache on demnad.
+
+  virtual double purge_percentage (void) const;
+  // This denotes the amount of entries to remove from the connection
+  // cache.
 };
 
 #endif /* TAO_RESOURCE_FACTORY_H */

@@ -179,6 +179,45 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
           }
       }
 
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBConnectionCachingStrategy") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    "lru") == 0)
+              this->connection_caching_type_ = TAO_Resource_Factory::LRU;
+            else if (ACE_OS::strcasecmp (name,
+                                         "lfu") == 0)
+              this->connection_caching_type_ = TAO_Resource_Factory::LFU;
+            else if (ACE_OS::strcasecmp (name,
+                                         "fifo") == 0)
+              this->connection_caching_type_ = TAO_Resource_Factory::FIFO;
+            else if (ACE_OS::strcasecmp (name,
+                                         "null") == 0)
+              this->connection_caching_type_ = TAO_Resource_Factory::NOOP;
+            else
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO_Default_Factory - unknown argument"
+                          " <%s> for -ORBConnectionCachingStrategy\n", name));
+          }
+      }
+
+   else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBPurgePercentage") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+            this->purge_percentage_ = ACE_OS::atoi (argv[curarg]);
+        else
+           ACE_DEBUG ((LM_DEBUG,
+                       "TAO_Default_Factory - unknown argument"
+                       "for -ORBPurgePercentage\n"));
+      }
+
   return 0;
 }
 
@@ -452,6 +491,18 @@ TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
   ACE_Allocator *allocator = 0;
   ACE_NEW_RETURN (allocator, NULL_LOCK_ALLOCATOR, 0);
   return allocator;
+}
+
+TAO_Resource_Factory::Caching_Strategy
+TAO_Default_Resource_Factory::connection_caching_strategy_type (void) const
+{
+  return this->connection_caching_type_;
+}
+
+double
+TAO_Default_Resource_Factory::purge_percentage (void) const
+{
+  return this->purge_percentage_;
 }
 
 // ****************************************************************
