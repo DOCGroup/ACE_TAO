@@ -37,10 +37,10 @@ CFG=ACE dynamic library - Win32 Alpha Unicode Debug
  "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE "ACE dynamic library - Win32 Alpha Unicode Release" (based on\
  "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug" (based on\
- "Win32 (WCE SH) Dynamic-Link Library")
 !MESSAGE "ACE dynamic library - Win32 (WCE x86em) CE emul Debug" (based on\
  "Win32 (WCE x86em) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 (WCE SH) Debug" (based on\
+ "Win32 (WCE SH) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -303,24 +303,61 @@ LINK32=link.exe
 # ADD LINK32 advapi32.lib /nologo /subsystem:windows /dll /pdb:".\aceu-r.pdb" /machine:ALPHA /out:".\aceu.dll"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_dyn0"
-# PROP BASE Intermediate_Dir "ACE_dyn0"
+# PROP BASE Output_Dir "ACE_dyna"
+# PROP BASE Intermediate_Dir "ACE_dyna"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Sh3CE/Debug"
-# PROP Intermediate_Dir "Sh3CE/Debug"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "EmuCE"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /FD /c
+# SUBTRACT BASE CPP /YX /Yc /Yu
+# ADD CPP /nologo /W3 /Gm /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /D ACE_HAS_WINCE=1 /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
+# ADD RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+LINK32=link.exe
+# ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:IX86 /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
+# SUBTRACT BASE LINK32 /pdb:none /incremental:no
+# ADD LINK32 commctrl.lib coredll.lib advapi32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:IX86 /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
+# SUBTRACT LINK32 /pdb:none /incremental:no
+EMPFILE=empfile.exe
+# ADD BASE EMPFILE -COPY
+# ADD EMPFILE -COPY
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ACE_dyna"
+# PROP BASE Intermediate_Dir "ACE_dyna"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "SHCE"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=shcl.exe
-# ADD BASE CPP /nologo /MLd /W3 /Zi /Od /Gy /I "..\STL" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /FD /I "..\\ /D " DEBUG" /c
+# ADD BASE CPP /nologo /MLd /W3 /GX- /Zi /Od /Gy /I "..\STL" /I "..\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /FD /c
 # SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /MLd /W3 /Zi /Od /Gy /I "..\STL" /I ".." /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /FD /I "..\\ /D " DEBUG" /c
+# ADD CPP /nologo /MTd /W3 /GX- /Zi /Od /Gy /I "..\STL" /I "..\\" /D "DEBUG" /D "SHx" /D "SH3" /D "_SH3_" /D "UNDER_CE" /D "UNICODE" /D ACE_HAS_DLL=1 /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /r /d "SHx" /d "SH3" /d "_SH3_" /d "UNDER_CE" /d "UNICODE" /d "DEBUG" /d _WIN32_WCE=200
@@ -340,43 +377,6 @@ PFILE=pfile.exe
 # ADD BASE PFILE COPY
 # ADD PFILE COPY
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_dyna"
-# PROP BASE Intermediate_Dir "ACE_dyna"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "EmuCE"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /W3 /Gm /GX- /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /FD /c
-# SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /W3 /Gm /GX- /Zi /Od /Gy /I "..\STL" /I "..\\" /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D ACE_HAS_DLL=1 /D ACE_HAS_WINCE=1 /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
-# ADD RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
-LINK32=link.exe
-# ADD BASE LINK32 commctrl.lib coredll.lib winmm.lib ole32m.lib oleautm.lib msvcrt.lib uuid.lib asfcguid.lib asfc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
-# SUBTRACT BASE LINK32 /pdb:none /incremental:no
-# ADD LINK32 commctrl.lib coredll.lib advapi32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /debug /nodefaultlib:"msvcrtd.lib" /out:".\aced.dll" /pdbtype:sept
-# SUBTRACT LINK32 /pdb:none /incremental:no
-EMPFILE=empfile.exe
-# ADD BASE EMPFILE -COPY
-# ADD EMPFILE -COPY
-
 !ENDIF 
 
 # Begin Target
@@ -389,8 +389,8 @@ EMPFILE=empfile.exe
 # Name "ACE dynamic library - Win32 Alpha Release"
 # Name "ACE dynamic library - Win32 Alpha Unicode Debug"
 # Name "ACE dynamic library - Win32 Alpha Unicode Release"
-# Name "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
 # Name "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+# Name "ACE dynamic library - Win32 (WCE SH) Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""
@@ -494,9 +494,9 @@ NODEP_CPP_ACE_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -618,9 +618,9 @@ NODEP_CPP_ACTIV=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -677,9 +677,9 @@ NODEP_CPP_ADDR_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -767,9 +767,9 @@ NODEP_CPP_ARGV_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -826,9 +826,9 @@ NODEP_CPP_ARRAY=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -924,9 +924,9 @@ NODEP_CPP_ASYNC=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1051,9 +1051,9 @@ NODEP_CPP_ASYNCH=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1078,9 +1078,9 @@ SOURCE=.\Basic_Types.cpp
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1221,9 +1221,9 @@ NODEP_CPP_CONNE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1331,9 +1331,9 @@ NODEP_CPP_CORBA=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1390,9 +1390,9 @@ NODEP_CPP_CORBA_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1449,9 +1449,9 @@ NODEP_CPP_DATE_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1514,9 +1514,9 @@ NODEP_CPP_DEV_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1575,9 +1575,9 @@ NODEP_CPP_DEV_A=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1644,9 +1644,9 @@ NODEP_CPP_DEV_CO=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1711,9 +1711,9 @@ NODEP_CPP_DEV_I=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1785,9 +1785,9 @@ NODEP_CPP_DUMP_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1844,9 +1844,9 @@ NODEP_CPP_DYNAM=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -1953,9 +1953,9 @@ NODEP_CPP_DYNAMI=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2043,9 +2043,9 @@ NODEP_CPP_EVENT=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2104,9 +2104,9 @@ NODEP_CPP_EVENT_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2165,9 +2165,9 @@ NODEP_CPP_FIFO_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2228,9 +2228,9 @@ NODEP_CPP_FIFO_R=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2293,9 +2293,9 @@ NODEP_CPP_FIFO_RE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2356,9 +2356,9 @@ NODEP_CPP_FIFO_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2421,9 +2421,9 @@ NODEP_CPP_FIFO_SE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2486,9 +2486,9 @@ NODEP_CPP_FILE_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2547,9 +2547,9 @@ NODEP_CPP_FILE_A=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2616,9 +2616,9 @@ NODEP_CPP_FILE_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2683,9 +2683,9 @@ NODEP_CPP_FILE_I=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2790,9 +2790,9 @@ NODEP_CPP_FILEC=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2862,9 +2862,9 @@ NODEP_CPP_FUTUR=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2921,9 +2921,9 @@ NODEP_CPP_GET_O=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -2980,9 +2980,9 @@ NODEP_CPP_HANDL=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3039,9 +3039,9 @@ NODEP_CPP_HIGH_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3100,9 +3100,9 @@ NODEP_CPP_INET_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3127,9 +3127,9 @@ SOURCE=.\IO_Cntl_Msg.cpp
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3186,9 +3186,9 @@ NODEP_CPP_IO_SA=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3253,9 +3253,9 @@ NODEP_CPP_IOSTR=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3312,9 +3312,9 @@ NODEP_CPP_IPC_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3444,9 +3444,9 @@ NODEP_CPP_LOCAL=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3556,9 +3556,9 @@ NODEP_CPP_LOCAL_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3669,9 +3669,9 @@ NODEP_CPP_LOG_M=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3726,9 +3726,9 @@ NODEP_CPP_LOG_R=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3791,9 +3791,9 @@ NODEP_CPP_LSOCK=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3871,9 +3871,9 @@ NODEP_CPP_LSOCK_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -3942,9 +3942,9 @@ NODEP_CPP_LSOCK_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4022,9 +4022,9 @@ NODEP_CPP_LSOCK_CO=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4091,9 +4091,9 @@ NODEP_CPP_LSOCK_D=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4166,9 +4166,9 @@ NODEP_CPP_LSOCK_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4254,9 +4254,9 @@ NODEP_CPP_MALLO=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4313,9 +4313,9 @@ NODEP_CPP_MEM_M=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4401,9 +4401,9 @@ NODEP_CPP_MEMOR=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4491,9 +4491,9 @@ NODEP_CPP_MESSA=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4549,9 +4549,9 @@ NODEP_CPP_METHO=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4687,9 +4687,9 @@ NODEP_CPP_MULTI=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4809,9 +4809,9 @@ NODEP_CPP_NAME_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4868,9 +4868,9 @@ NODEP_CPP_NAME_R=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -4991,9 +4991,9 @@ NODEP_CPP_NAME_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5137,9 +5137,9 @@ NODEP_CPP_NAMIN=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5252,9 +5252,9 @@ NODEP_CPP_OBJEC=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5310,9 +5310,9 @@ NODEP_CPP_OBSTA=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5405,23 +5405,126 @@ NODEP_CPP_OS_CP=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
-NODEP_CPP_OS_CP=\
-	".\ace\ARGV.h"\
-	".\ace\Array.h"\
-	".\ace\Containers.h"\
-	".\ace\Object_Manager.h"\
-	".\ace\OS.h"\
-	".\ace\OS.i"\
-	".\ace\Sched_Params.h"\
-	".\ace\SString.h"\
-	".\ace\streams.h"\
-	".\ace\Synch_T.h"\
-	".\ace\Task.h"\
-	
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
+
+DEP_CPP_OS_CP=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\ARGV.h"\
+	".\ARGV.i"\
+	".\Array.cpp"\
+	".\Array.h"\
+	".\Array.i"\
+	".\Atomic_Op.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Containers.cpp"\
+	".\Containers.h"\
+	".\Containers.i"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Hash_Map_Manager.cpp"\
+	".\Hash_Map_Manager.h"\
+	".\inc_user_config.h"\
+	".\IO_Cntl_Msg.h"\
+	".\iosfwd.h"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Message_Block.h"\
+	".\Message_Block.i"\
+	".\Message_Queue.cpp"\
+	".\Message_Queue.h"\
+	".\Message_Queue.i"\
+	".\Module.cpp"\
+	".\Module.h"\
+	".\Module.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\Sched_Params.h"\
+	".\Sched_Params.i"\
+	".\Service_Config.h"\
+	".\Service_Config.i"\
+	".\Service_Object.h"\
+	".\Service_Object.i"\
+	".\Service_Types.h"\
+	".\Service_Types.i"\
+	".\Shared_Object.h"\
+	".\Shared_Object.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\Strategies.h"\
+	".\Strategies_T.cpp"\
+	".\Strategies_T.h"\
+	".\Stream_Modules.cpp"\
+	".\Stream_Modules.h"\
+	".\Stream_Modules.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\Svc_Conf_Tokens.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_Options.h"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\sys_conf.h"\
+	".\Task.h"\
+	".\Task.i"\
+	".\Task_T.cpp"\
+	".\Task_T.h"\
+	".\Task_T.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Manager.h"\
+	".\Thread_Manager.i"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Trace.h"\
+	".\Version.h"\
+	".\WFMO_Reactor.h"\
+	".\WFMO_Reactor.i"\
+	".\ws2tcpip.h"\
+	
 
 !ENDIF 
 
@@ -5556,9 +5659,9 @@ NODEP_CPP_PARSE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5632,9 +5735,9 @@ NODEP_CPP_PIPE_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5750,9 +5853,9 @@ NODEP_CPP_PRIOR=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5898,9 +6001,9 @@ NODEP_CPP_PROAC=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -5990,9 +6093,9 @@ NODEP_CPP_PROCE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6065,9 +6168,9 @@ NODEP_CPP_PROCES=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6127,9 +6230,9 @@ NODEP_CPP_PROFI=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6260,9 +6363,9 @@ NODEP_CPP_REACT=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6366,9 +6469,9 @@ NODEP_CPP_READ_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6433,9 +6536,9 @@ NODEP_CPP_REGIS=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6568,9 +6671,9 @@ NODEP_CPP_REGIST=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6692,9 +6795,9 @@ NODEP_CPP_REMOT=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6824,9 +6927,9 @@ NODEP_CPP_REMOTE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -6883,9 +6986,9 @@ NODEP_CPP_SCHED=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7019,9 +7122,9 @@ NODEP_CPP_SELEC=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7169,9 +7272,9 @@ NODEP_CPP_SERVI=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7273,9 +7376,9 @@ NODEP_CPP_SERVIC=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7416,9 +7519,9 @@ NODEP_CPP_SERVICE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7493,9 +7596,9 @@ NODEP_CPP_SERVICE_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7572,9 +7675,9 @@ NODEP_CPP_SERVICE_R=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7709,9 +7812,9 @@ NODEP_CPP_SERVICE_T=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7736,9 +7839,9 @@ SOURCE=.\Shared_Memory.cpp
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7798,9 +7901,9 @@ NODEP_CPP_SHARE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7860,9 +7963,9 @@ NODEP_CPP_SHARED=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -7919,9 +8022,9 @@ NODEP_CPP_SHARED_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8007,9 +8110,9 @@ NODEP_CPP_SIGNA=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8070,9 +8173,9 @@ NODEP_CPP_SOCK_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8156,9 +8259,9 @@ NODEP_CPP_SOCK_A=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8223,9 +8326,9 @@ NODEP_CPP_SOCK_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8297,9 +8400,9 @@ NODEP_CPP_SOCK_CO=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8378,9 +8481,9 @@ NODEP_CPP_SOCK_D=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8447,9 +8550,9 @@ NODEP_CPP_SOCK_DG=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8516,9 +8619,9 @@ NODEP_CPP_SOCK_DGR=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8581,9 +8684,9 @@ NODEP_CPP_SOCK_I=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8650,9 +8753,9 @@ NODEP_CPP_SOCK_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8715,9 +8818,9 @@ NODEP_CPP_SPIPE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8783,9 +8886,9 @@ NODEP_CPP_SPIPE_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8844,9 +8947,9 @@ NODEP_CPP_SPIPE_A=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8913,9 +9016,9 @@ NODEP_CPP_SPIPE_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -8980,9 +9083,9 @@ NODEP_CPP_SPIPE_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9084,9 +9187,9 @@ NODEP_CPP_SSTRI=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9206,9 +9309,9 @@ NODEP_CPP_STRAT=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9265,9 +9368,9 @@ NODEP_CPP_SV_ME=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9326,9 +9429,9 @@ NODEP_CPP_SV_MES=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9387,9 +9490,9 @@ NODEP_CPP_SV_SE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9446,9 +9549,9 @@ NODEP_CPP_SV_SEM=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9505,9 +9608,9 @@ NODEP_CPP_SV_SH=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9615,9 +9718,9 @@ NODEP_CPP_SVC_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9758,9 +9861,9 @@ NODEP_CPP_SVC_CO=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9895,9 +9998,9 @@ NODEP_CPP_SVC_H=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -9966,9 +10069,9 @@ NODEP_CPP_SYNCH=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10024,9 +10127,9 @@ NODEP_CPP_SYNCH_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10113,9 +10216,9 @@ NODEP_CPP_SYSTE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10246,9 +10349,9 @@ NODEP_CPP_TASK_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10305,9 +10408,9 @@ NODEP_CPP_THREA=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10397,9 +10500,9 @@ NODEP_CPP_THREAD=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10456,9 +10559,9 @@ NODEP_CPP_TIME_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10556,9 +10659,9 @@ NODEP_CPP_TIMER=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10650,9 +10753,9 @@ NODEP_CPP_TIMER_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10744,9 +10847,9 @@ NODEP_CPP_TIMER_L=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10836,9 +10939,9 @@ NODEP_CPP_TIMER_Q=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -10971,9 +11074,9 @@ NODEP_CPP_TIMER_QU=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11067,9 +11170,9 @@ NODEP_CPP_TIMER_W=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11130,9 +11233,9 @@ NODEP_CPP_TLI_C=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11200,9 +11303,9 @@ NODEP_CPP_TLI_A=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11271,9 +11374,9 @@ NODEP_CPP_TLI_CO=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11338,9 +11441,9 @@ NODEP_CPP_TLI_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11411,9 +11514,9 @@ NODEP_CPP_TOKEN=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11523,9 +11626,9 @@ NODEP_CPP_TOKEN_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11635,9 +11738,9 @@ NODEP_CPP_TOKEN_I=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11747,9 +11850,9 @@ NODEP_CPP_TOKEN_M=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11860,9 +11963,9 @@ NODEP_CPP_TOKEN_R=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11918,9 +12021,9 @@ NODEP_CPP_TRACE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -11988,9 +12091,9 @@ NODEP_CPP_TTY_I=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12047,9 +12150,9 @@ NODEP_CPP_TYPED=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12113,9 +12216,9 @@ NODEP_CPP_TYPED_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12174,9 +12277,9 @@ NODEP_CPP_UNIX_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12327,9 +12430,9 @@ NODEP_CPP_UPIPE=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12479,9 +12582,9 @@ NODEP_CPP_UPIPE_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12627,9 +12730,9 @@ NODEP_CPP_UPIPE_S=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12752,9 +12855,9 @@ NODEP_CPP_WFMO_=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -12886,9 +12989,9 @@ NODEP_CPP_XTREA=\
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -14113,12 +14216,12 @@ SOURCE=.\Acceptor.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14170,12 +14273,12 @@ SOURCE=.\Auto_Ptr.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14227,12 +14330,12 @@ SOURCE=.\Containers.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14284,12 +14387,12 @@ SOURCE=.\Dump_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14341,12 +14444,12 @@ SOURCE=.\Free_List.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14398,12 +14501,12 @@ SOURCE=.\Hash_Map_Manager.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14455,12 +14558,12 @@ SOURCE=.\IOStream_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14512,12 +14615,12 @@ SOURCE=.\Local_Name_Space_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14569,12 +14672,12 @@ SOURCE=.\Malloc_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14626,12 +14729,12 @@ SOURCE=.\Map_Manager.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14683,12 +14786,12 @@ SOURCE=.\Message_Queue.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14740,12 +14843,12 @@ SOURCE=.\Module.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14797,12 +14900,12 @@ SOURCE=.\Singleton.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14854,12 +14957,12 @@ SOURCE=.\Strategies_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14911,12 +15014,12 @@ SOURCE=.\Stream.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -14968,12 +15071,12 @@ SOURCE=.\Stream_Modules.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -15025,12 +15128,12 @@ SOURCE=.\Synch_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -15082,12 +15185,12 @@ SOURCE=.\Task_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -15139,12 +15242,12 @@ SOURCE=.\Timer_Hash_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -15196,12 +15299,12 @@ SOURCE=.\Timer_Heap_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -15253,12 +15356,12 @@ SOURCE=.\Timer_List_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -15310,12 +15413,12 @@ SOURCE=.\Timer_Queue_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
@@ -15367,12 +15470,12 @@ SOURCE=.\Timer_Wheel_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) CE SH3 Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE x86em) CE emul Debug"
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 (WCE SH) Debug"
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
