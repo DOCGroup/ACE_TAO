@@ -1,4 +1,11 @@
-Test for Update
+Basic Tests:
 
+Updates:
+-------
 This test will check if the subscription and publication update messages
 from the event channel are properly received from the Notify Service.
+
+ConnectDisconnect:
+-----------------
+Connects/Disconnects consumers and suppliers in a loop to test connect
+and disconnect to admin objects.
