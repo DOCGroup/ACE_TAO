@@ -73,7 +73,7 @@ fe/lex.yy.cpp:	fe/idl.ll
 YACC = /home/cs/faculty/schmidt/bin/SunOS5/yacc
 
 lex.yy.cpp.target:
-		$(LEX) -L -t fe/idl.ll | \
+		/pkg/gnu2k1/bin/flex -L -t fe/idl.ll | \
 		sed -e "s/yy/tao_yy/g" \
 		    -e "s/YY/TAO_YY/g" \
 		    -e "s@#include <unistd\.h>@#include \"ace/OS.h\"@" \
