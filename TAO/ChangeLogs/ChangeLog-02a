@@ -1,3 +1,14 @@
+Tue Aug  7 23:29:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Thread_Per_Connection_Latency/svc.conf:  Did
+	  the same change as the last checkin, ie. removed the RW
+	  connection handler. But beware, we *could* have a performance
+	  drop in our stats page. If wehave performance drop, then we
+	  change the Transport_Mux_Strategy for the following test. Even
+	  if we do change the Mux_Strategy and the connection handler to
+	  RW, it seems that this would be in odd with what we preached a
+	  few days back at the TAO workshop.
+
 Tue Aug  7 23:02:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Thread_Pool_Latency/svc.conf: Looks like our
