@@ -135,7 +135,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
       be_visitor_typecode_decl visitor (&ctx);
 
       if (node->accept (&visitor) == -1)

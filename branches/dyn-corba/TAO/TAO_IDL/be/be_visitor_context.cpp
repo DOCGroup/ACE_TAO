@@ -48,7 +48,7 @@ ACE_RCSID (be,
 
 // constructor
 be_visitor_context::be_visitor_context (void)
-  : state_ (TAO_CodeGen::TAO_UNKNOWN),
+  : state_ (TAO_CodeGen::TAO_INITIAL),
     sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
     os_ (0),
     scope_ (0),

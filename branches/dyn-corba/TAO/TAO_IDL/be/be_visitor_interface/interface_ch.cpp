@@ -413,7 +413,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // Proxy Implementation Declaration.
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH);
       be_visitor_interface_proxy_impls_ch spi_visitor (&ctx);
 
       if (node->accept (&spi_visitor) == -1)
@@ -427,7 +426,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       // Proxy Broker Declaration.
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_PROXY_BROKERS_CH);
       be_visitor_interface_proxy_brokers_ch pb_visitor (&ctx);
 
       if (node->accept (&pb_visitor) == -1)
@@ -444,7 +442,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
       be_visitor_typecode_decl td_visitor (&ctx);
 
       if (node->accept (&td_visitor) == -1)

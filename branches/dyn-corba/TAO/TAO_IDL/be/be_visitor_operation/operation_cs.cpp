@@ -93,7 +93,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
   be_visitor_operation_rettype rt_visitor = (&ctx);
 
   if (bt->accept (&rt_visitor) == -1)
@@ -111,7 +110,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
   be_visitor_operation_arglist al_visitor (&ctx);
 
   if (node->accept (&al_visitor) == -1)

@@ -162,7 +162,6 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
   // STEP 3: Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH);
   be_visitor_valuetype_init_arglist_ch visitor (&ctx);
 
   if (node->accept (&visitor) == -1)

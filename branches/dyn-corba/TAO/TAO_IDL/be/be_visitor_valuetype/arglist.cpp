@@ -269,7 +269,6 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
         be_visitor_args_arglist visitor (&ctx);
         status = bt->accept (&visitor);
         break;
@@ -279,7 +278,6 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS);
         be_visitor_args_arglist visitor (&ctx);
         status = bt->accept (&visitor);
         break;

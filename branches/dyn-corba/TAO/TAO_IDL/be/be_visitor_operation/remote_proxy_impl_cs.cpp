@@ -64,7 +64,6 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
 
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
   be_visitor_operation_rettype ort_visitor (&ctx);
 
   if (bt->accept (&ort_visitor) == -1)

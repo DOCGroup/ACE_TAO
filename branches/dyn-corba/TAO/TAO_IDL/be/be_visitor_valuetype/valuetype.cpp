@@ -416,31 +416,8 @@ be_visitor_valuetype::visit_exception (be_exception *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_SH:
-    case TAO_CodeGen::TAO_ROOT_IH:
-    case TAO_CodeGen::TAO_ROOT_SI:
-    case TAO_CodeGen::TAO_ROOT_SS:
-    case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
-    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
-    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CH:
-    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CS:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
-      return 0; // Nothing to be done.
     default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_interface::"
-                           "visit_exception - "
-                           "Bad context state\n"), 
-                          -1);
-      }
+      return 0; // Nothing to be done.
     }
 
   if (status == -1)
@@ -666,38 +643,8 @@ be_visitor_valuetype::visit_union_fwd (be_union_fwd *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CI:
-    case TAO_CodeGen::TAO_ROOT_CS:
-    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
-    case TAO_CodeGen::TAO_ROOT_SH:
-    case TAO_CodeGen::TAO_ROOT_IH:
-    case TAO_CodeGen::TAO_ROOT_SI:
-    case TAO_CodeGen::TAO_ROOT_SS:
-    case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
-    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
-    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CH:
-    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CS:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
-    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
-      return 0; // nothing to be done
     default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_valuetype::"
-                           "visit_union_fwd - "
-                           "Bad context state\n"), 
-                          -1);
-      }
+      return 0; // nothing to be done
     }
 
   if (status == -1)

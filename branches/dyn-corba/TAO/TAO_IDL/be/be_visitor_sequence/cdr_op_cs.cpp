@@ -573,7 +573,6 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
     }
 
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor_sequence_base visitor (&ctx);
 
   // Initialize a boolean variable.

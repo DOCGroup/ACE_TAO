@@ -62,7 +62,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
 
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
   be_visitor_operation_rettype or_visitor (&ctx);
 
   if (bt->accept (&or_visitor) == -1)

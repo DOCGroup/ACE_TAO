@@ -106,7 +106,6 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   // Generate the _init-related code.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_VALUETYPE_INIT_CI);
   be_visitor_valuetype_init_ci visitor (&ctx);
 
   if (visitor.visit_valuetype (node) == -1)

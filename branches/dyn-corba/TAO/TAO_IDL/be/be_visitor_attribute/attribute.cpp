@@ -116,37 +116,34 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
         be_visitor_operation_base_proxy_impl_ch visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_PROXY_IMPL_XH);
         be_visitor_operation_proxy_impl_xh visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
         be_visitor_operation_remote_proxy_impl_cs visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_PROXY_IMPL_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS);
         be_visitor_operation_thru_poa_proxy_impl_ss visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_PROXY_IMPL_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_PROXY_IMPL_SS);
         be_visitor_operation_direct_proxy_impl_ss visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
@@ -157,30 +154,26 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
         be_visitor_operation_smart_proxy_cs visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
         be_visitor_operation_interceptors_cs visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SH);
         be_visitor_operation_interceptors_sh visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SS);
         be_visitor_operation_interceptors_ss visitor (&ctx);
         status = get_op.accept (&visitor);
         break;
@@ -198,12 +191,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         break;
       }
     default:
-      // Error.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_attribute::"
-                         "visit_attribute - "
-                         "bad codegen state\n"),
-                        -1);
+      return 0;
     }
 
   if (status == -1)
@@ -328,37 +316,34 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_BASE_PROXY_IMPL_CH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
         be_visitor_operation_base_proxy_impl_ch visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_PROXY_IMPL_XH:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CH:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_PROXY_IMPL_XH);
         be_visitor_operation_proxy_impl_xh visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS:
+    case TAO_CodeGen::TAO_INTERFACE_REMOTE_PROXY_IMPL_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
         be_visitor_operation_remote_proxy_impl_cs visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_PROXY_IMPL_SS:
+    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_PROXY_IMPL_SS);
         be_visitor_operation_thru_poa_proxy_impl_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_PROXY_IMPL_SS:
+    case TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_PROXY_IMPL_SS);
         be_visitor_operation_direct_proxy_impl_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
@@ -369,30 +354,26 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
+    case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
         be_visitor_operation_smart_proxy_cs visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
         be_visitor_operation_interceptors_cs visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SH:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SH);
         be_visitor_operation_interceptors_sh visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_SS:
+    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
       {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_SS);
         be_visitor_operation_interceptors_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;

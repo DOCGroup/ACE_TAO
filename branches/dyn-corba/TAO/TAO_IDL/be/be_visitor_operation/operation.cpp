@@ -235,13 +235,6 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
       // Last argument is always CORBA::Environment.
       *os << env_decl << "_WITH_DEFAULTS";
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
-      // Last argument is always CORBA::Environment.
-      *os << env_decl;
-      break;
     default:
       *os << env_decl;
       break;
@@ -308,8 +301,6 @@ be_visitor_operation::gen_raise_exception (be_type *return_type,
 
   // Non-void return type.
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-
   be_visitor_operation_rettype_return_cs visitor (&ctx);
 
   if (return_type->accept (&visitor) == -1)
@@ -340,8 +331,6 @@ be_visitor_operation::gen_check_exception (be_type *return_type)
   // Non-void return type....
   *os << "ACE_CHECK_RETURN (";
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-
   be_visitor_operation_rettype_return_cs visitor (&ctx);
 
   if (return_type->accept (&visitor) == -1)
@@ -371,8 +360,6 @@ be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
   // Non-void return type.
   *os << "TAO_INTERCEPTOR_CHECK_RETURN (";
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-
   be_visitor_operation_rettype_return_cs visitor (&ctx);
 
   if (return_type->accept (&visitor) == -1)
@@ -437,7 +424,6 @@ be_visitor_operation::gen_stub_operation_body (
 
   // Declare return type.
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS);
   be_visitor_operation_rettype_vardecl_cs rd_visitor (&ctx);
 
   if (return_type->accept (&rd_visitor) == -1)
@@ -497,7 +483,6 @@ be_visitor_operation::gen_stub_operation_body (
       // Do any pre marshal and invoke processing with return type. This
       // includes allocating memory, initialization.
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_PRE_INVOKE_CS);
       be_visitor_operation_rettype_pre_invoke_cs rpi_visitor (&ctx);
 
       if (return_type->accept (&rpi_visitor) == -1)
@@ -581,7 +566,6 @@ be_visitor_operation::gen_pre_stub_info (
   )
 {
   be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_EXCEPTLIST_CS);
   be_visitor_operation_exceptlist_cs visitor (&ctx);
 
   if (node->accept (&visitor) == -1)
@@ -999,7 +983,6 @@ be_visitor_operation::gen_marshal_and_invoke (
         {
           // Demarshal the return value.
           ctx = *this->ctx_;
-          ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
           ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
           be_visitor_operation_rettype_marshal_ss ori_visitor (&ctx);
 
@@ -1079,7 +1062,6 @@ be_visitor_operation::gen_marshal_and_invoke (
 
       // Generate the return type mapping (same as in the header file)
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
       be_visitor_operation_rettype oro_visitor (&ctx);
 
       if (bt->accept (&oro_visitor) == -1)
