@@ -2,7 +2,6 @@
 // $Id$
 
 project(NodeApplication): ciao_server_dnc, ciao_deployment_stub {
-  requires += dnc
   exename   = NodeApplication
 
     IDL_Files {

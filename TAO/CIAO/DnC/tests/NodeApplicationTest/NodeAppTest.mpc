@@ -2,10 +2,10 @@
 
 project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
   sharedname = NodeAppTest_RoundTrip_stub
-  requires += dnc
+
   idlflags += -Wb,stub_export_macro=NODEAPPTEST_ROUNDTRIP_STUB_Export -Wb,stub_export_include=RoundTrip_stub_export.h -Wb,skel_export_macro=NODEAPPTEST_ROUNDTRIP_SVNT_Export -Wb,skel_export_include=RoundTrip_svnt_export.h
   dynamicflags   = NODEAPPTEST_ROUNDTRIP_STUB_BUILD_DLL
-  after += CIAO_Container
+  after += CIAO_DnC_Container
 
   IDL_Files {
     NodeAppTest_RoundTrip.idl
@@ -19,7 +19,7 @@ project(NodeAppTest_RoundTrip_stub): ciao_client_dnc {
 project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
   after += NodeAppTest_RoundTrip_stub
   sharedname  = NodeAppTest_RoundTrip_svnt
-  requires += dnc
+
   libs    += NodeAppTest_RoundTrip_stub
   idlflags  +=  -Wb,export_macro=NODEAPPTEST_ROUNDTRIP_SVNT_Export -Wb,export_include=RoundTrip_svnt_export.h
   dynamicflags = NODEAPPTEST_ROUNDTRIP_SVNT_BUILD_DLL
@@ -41,7 +41,7 @@ project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
 
 project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
   after += NodeAppTest_RoundTrip_svnt
-  requires += dnc
+
   sharedname = NodeAppTest_RoundTrip_exec
   libs      += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
   idlflags  +=  -Wb,export_macro=NODEAPPTEST_ROUNDTRIP_EXEC_Export -Wb,export_include=RoundTrip_exec_export.h
@@ -57,7 +57,7 @@ project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
 
 project (NodeAppTest_client_simple) : ciao_server_dnc {
  after += NodeAppTest_RoundTrip_exec
-  requires += dnc
+
  libs += NodeAppTest_RoundTrip_stub
  exename += client_simple
 
@@ -73,7 +73,7 @@ project (NodeAppTest_client) : ciao_server_dnc {
  after += NodeAppTest_RoundTrip_exec
  libs += NodeAppTest_RoundTrip_stub
  exename += client
- requires += dnc
+
 
  IDL_Files {
  }
@@ -85,8 +85,9 @@ project (NodeAppTest_client) : ciao_server_dnc {
 
 project (NodeAppTest_client_ex) : ciao_server_dnc {
  after += NodeAppTest_RoundTrip_exec
-  requires += dnc
+
  libs += NodeAppTest_RoundTrip_stub
+
  exename += client_ex
 
  IDL_Files {
