@@ -1033,6 +1033,8 @@ protected:
 /**
  * @class ACE_POSIX_Asynch_Accept
  *
+ * @brief For the POSIX implementation this class is common for all Proactors
+ * (AIOCB/SIG/SUN)
  */
 class ACE_Export ACE_POSIX_Asynch_Accept :
   public virtual ACE_Asynch_Accept_Impl,
@@ -1040,12 +1042,6 @@ class ACE_Export ACE_POSIX_Asynch_Accept :
   public ACE_Event_Handler
 {
 public:
-  // = TITLE
-  //     For the POSIX implementation this class is common
-  //     for all Proactors (AIOCB/SIG/SUN)
-  //
-  // = DESCRIPTION
-
 
   /// Constructor.
   ACE_POSIX_Asynch_Accept (ACE_POSIX_AIOCB_Proactor * posix_aiocb_proactor);
@@ -1113,20 +1109,20 @@ public:
   ACE_Proactor* proactor (void) const;
 
 private:
+  /// flg_notify points whether or not we should send notification about
+  /// canceled accepts
+  ///  Parameter flg_notify can be
+  ///    0  - don't send notifications about canceled accepts
+  ///    1  - notify user about canceled accepts
+  ///         according POSIX standards we should receive notifications
+  ///         on canceled AIO requests
   int cancel_uncompleted (int flg_notify);
-  // flg_notify points whether or not we should send notification about
-  // canceled accepts
-  //  Parameter flg_notify can be
-  //    0  - don't send notifications about canceled accepts
-  //    1  - notify user about canceled accepts
-  //         according POSIX standards we should receive notifications
-  //         on canceled AIO requests
 
-  int flg_open_ ;
   /// 1 - Accept is registered in ACE_Asynch_Pseudo_Task
   /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
+  int flg_open_ ;
 
-  /// to prevent ACE_Asynch_Pseudo_Task from deletion
+  /// To prevent ACE_Asynch_Pseudo_Task from deletion
   /// while we make a call to the ACE_Asynch_Pseudo_Task
   /// This is extra cost !!!
   /// we could avoid them if all applications will follow the rule:
@@ -1291,7 +1287,7 @@ public:
    *  Behavior as usual AIO request
    */
   int cancel (void);
-  
+
   /**
    *  Close performs cancellation of all pending requests.
    */
@@ -1337,30 +1333,30 @@ private:
    *                   AIO requests.
    */
   int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
- 
+
   int flg_open_ ;
   /// 1 - Connect is registered in ACE_Asynch_Pseudo_Task
   /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
 
 
   /// to prevent ACE_Asynch_Pseudo_Task from deletion
-  /// while we make a call to the ACE_Asynch_Pseudo_Task 
+  /// while we make a call to the ACE_Asynch_Pseudo_Task
   /// This is extra cost !!!
   /// we could avoid them if all applications will follow the rule:
   /// Proactor should be deleted only after deletion all
-  ///  AsynchOperation objects connected with it 
+  ///  AsynchOperation objects connected with it
   int  task_lock_count_;
 
-  typedef ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+  typedef ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_MANAGER;
-  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_ITERATOR;
   typedef ACE_Map_Entry<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *>
           MAP_ENTRY;
 
+  /// Map of Result pointers that correspond to all the <accept>'s
+  /// pending.
   MAP_MANAGER result_map_;
-  // Map of Result pointers that correspond to all the <accept>'s
-  // pending.
 
   /// The lock to protect the result queue which is shared. The queue
   /// is updated by main thread in the register function call and
@@ -1388,7 +1384,7 @@ class ACE_Export ACE_POSIX_Asynch_Transmit_File_Result : public virtual ACE_Asyn
 
   /// Handlers do all the job.
   friend class ACE_POSIX_Asynch_Transmit_Handler;
- 
+
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
 

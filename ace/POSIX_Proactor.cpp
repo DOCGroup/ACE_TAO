@@ -18,29 +18,32 @@
 # endif /* ACE_HAS_SYS_INFO */
 
 // *********************************************************************
+/**
+ * @class ACE_POSIX_Wakeup_Completion
+ *
+ * This is result object is used by the <end_event_loop> of the
+ * ACE_Proactor interface to wake up all the threads blocking
+ * for completions.
+ */
 class ACE_Export ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
-  // = TITLE
-  //     This is result object is used by the <end_event_loop> of the
-  //     ACE_Proactor interface to wake up all the threads blocking
-  //     for completions.
 public:
+  /// Constructor.
   ACE_POSIX_Wakeup_Completion (ACE_Handler &handler,
                                const void *act = 0,
                                ACE_HANDLE event = ACE_INVALID_HANDLE,
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
-  // Constructor.
 
+  /// Destructor.
   virtual ~ACE_POSIX_Wakeup_Completion (void);
-  // Destructor.
 
 
+  /// This method calls the <handler>'s <handle_wakeup> method.
   virtual void complete (u_long bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
                          u_long error = 0);
-  // This method calls the <handler>'s <handle_wakeup> method.
 };
 
 // *********************************************************************
@@ -463,64 +466,66 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
   return 0;
 }
 
+/**
+ * @class ACE_AIOCB_Notify_Pipe_Manager
+ *
+ * @brief This class manages the notify pipe of the AIOCB Proactor.
+ *
+ * This class acts as the Handler for the
+ * <Asynch_Read> operations issued on the notify pipe. This
+ * class is very useful in implementing <Asynch_Accept> operation
+ * class for the <AIOCB_Proactor>. This is also useful for
+ * implementing <post_completion> for <AIOCB_Proactor>.
+
+ * <AIOCB_Proactor> class issues a <Asynch_Read> on
+ * the pipe, using this class as the
+ * Handler. <POSIX_Asynch_Result *>'s are sent through the
+ * notify pipe. When <POSIX_Asynch_Result *>'s show up on the
+ * notify pipe, the <POSIX_AIOCB_Proactor> dispatches the
+ * completion of the <Asynch_Read_Stream> and calls the
+ * <handle_read_stream> of this class. This class calls
+ * <complete> on the <POSIX_Asynch_Result *> and thus calls the
+ * application handler.
+ * Handling the MessageBlock:
+ * We give this message block to read the result pointer through
+ * the notify pipe. We expect that to read 4 bytes from the
+ * notify pipe, for each <accept> call. Before giving this
+ * message block to another <accept>, we update <wr_ptr> and put
+ * it in its initial position.
+ */
 class ACE_Export ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
 {
-  // = TITLE
-  //     This class manages the notify pipe of the AIOCB
-  //     Proactor. This class acts as the Handler for the
-  //     <Asynch_Read> operations issued on the notify pipe. This
-  //     class is very useful in implementing <Asynch_Accept> operation
-  //     class for the <AIOCB_Proactor>. This is also useful for
-  //     implementing <post_completion> for <AIOCB_Proactor>.
-  //
-  // = DESCRIPTION
-  //     <AIOCB_Proactor> class issues a <Asynch_Read> on
-  //     the pipe, using this class as the
-  //     Handler. <POSIX_Asynch_Result *>'s are sent through the
-  //     notify pipe. When <POSIX_Asynch_Result *>'s show up on the
-  //     notify pipe, the <POSIX_AIOCB_Proactor> dispatches the
-  //     completion of the <Asynch_Read_Stream> and calls the
-  //     <handle_read_stream> of this class. This class calls
-  //     <complete> on the <POSIX_Asynch_Result *> and thus calls the
-  //     application handler.
-  //     Handling the MessageBlock:
-  //     We give this message block to read the result pointer through
-  //     the notify pipe. We expect that to read 4 bytes from the
-  //     notify pipe, for each <accept> call. Before giving this
-  //     message block to another <accept>, we update <wr_ptr> and put
-  //     it in its initial position.
 public:
+  /// Constructor. You need the posix proactor because you need to call
+  /// <application_specific_code>
   ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  // Constructor. You need the posix proactor because you need to call
-  // <application_specific_code>
 
+  /// Destructor.
   virtual ~ACE_AIOCB_Notify_Pipe_Manager (void);
-  // Destructor.
 
+  /// Send the result pointer through the notification pipe.
   int notify ();
-  // Send the result pointer through the notification pipe.
 
+  /// This is the call back method when <Asynch_Read> from the pipe is
+  /// complete.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is the call back method when <Asynch_Read> from the pipe is
-  // complete.
 
 private:
+  /// The implementation proactor class.
   ACE_POSIX_AIOCB_Proactor  *posix_aiocb_proactor_;
-  // The implementation proactor class.
 
+  /// Message block to get ACE_POSIX_Asynch_Result pointer from the pipe.
   ACE_Message_Block message_block_;
-  // Message block to get ACE_POSIX_Asynch_Result pointer from the
-  // pipe.
 
+  /// Pipe for the communication between Proactor and the
+  /// Asynch_Accept/Asynch_Connect and other post_completions
   ACE_Pipe pipe_;
-  // Pipe for the communication between Proactor and the
-  // Asynch_Accept/Asynch_Connect and other post_completions
 
+  /// To do asynch_read on the pipe.
   ACE_POSIX_Asynch_Read_Stream read_stream_;
-  // To do asynch_read on the pipe.
 
+  /// Default constructor. Shouldnt be called.
   ACE_AIOCB_Notify_Pipe_Manager (void);
-  // Default constructor. Shouldnt be called.
 };
 
 ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
@@ -565,14 +570,14 @@ ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager (void)
   // 1. try to cancel pending aio
   this->read_stream_.cancel ();
 
-  // 2. close both handles 
+  // 2. close both handles
   // Destuctor of ACE_Pipe does not close handles.
   // We can not use ACE_Pipe::close() as it
   // closes  read_handle and than write_handle.
-  // In some systems close() may wait for 
+  // In some systems close() may wait for
   // completion for all asynch. pending requests.
   // So we should close write_handle firstly
-  // to force read completion ( if 1. does not help ) 
+  // to force read completion ( if 1. does not help )
   // and then read_handle and not vice versa
 
   ACE_HANDLE h = this->pipe_.write_handle ();
@@ -768,7 +773,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
           char * op = (aiocb_list_[ai]->aio_lio_opcode == LIO_WRITE )?
             "WRITE":"READ" ;
 
-        
+
           ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT("slot=%d op=%s status=%d return=%d %s\n"),
                   ai,
@@ -870,7 +875,7 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
 //    int aio_usedba;	/* Try to use DBA for raw I/O in lio_listio (0) */
 //    int aio_debug;	/* turn on debugging (0) */
 //    int aio_numusers;	/* max number of user sprocs making aio_* calls (5) */
-//    int aio_reserved[3];		
+//    int aio_reserved[3];
 //} aioinit_t;
 
     aioinit_t  aioinit;
@@ -963,7 +968,7 @@ ACE_POSIX_AIOCB_Proactor::putq_result (ACE_POSIX_Asynch_Result *result)
                        "%N:%l:ACE_POSIX_AIOCB_Proactor::putq_result failed\n"),
                       -1);
 
-  // let try not to overflow signal queue or notification pipe 
+  // let try not to overflow signal queue or notification pipe
 
   if (this->result_queue_.size () == 1)
     this->notify_completion (sig_num);
@@ -1211,7 +1216,7 @@ ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_res
      }
 
    return_status = aio_return (asynch_result);
-    
+
    if (return_status < 0)
      {
        return_status = 0; // zero bytes transferred
@@ -1255,7 +1260,7 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
       if (aiocb_list_[index] == 0) // Dont process null blocks.
         continue;
 
-      if (0 != this->get_result_status (result_list_[index], 
+      if (0 != this->get_result_status (result_list_[index],
                                         error_status,
                                         return_status))  // completed
         break;
@@ -1896,7 +1901,7 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 }
 
 int
-ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
+ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
 {
   int result_sigwait = 0;
   siginfo_t sig_info;

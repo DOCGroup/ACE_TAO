@@ -32,8 +32,10 @@
 class ACE_Export ACE_SV_Message
 {
 public:
-  // = Initialization and termination methods.
+  /// Constructor
   ACE_SV_Message (long type = 0);
+
+  /// Destructor
   ~ACE_SV_Message (void);
 
   /// Get the message type.

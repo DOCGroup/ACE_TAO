@@ -55,11 +55,20 @@ class ACE_Export ACE_POSIX_Proactor : public ACE_Proactor_Impl
 public:
   enum Proactor_Type
   {
-    PROACTOR_POSIX  = 0,  // base class type
-    PROACTOR_AIOCB  = 1,  // aio_suspend() based
-    PROACTOR_SIG    = 2,  // signals notifications
-    PROACTOR_SUN    = 3,  // SUN specific aiowait()
-    PROACTOR_CB     = 4   // callback notifications
+    /// Base class type
+    PROACTOR_POSIX  = 0,
+
+    /// Aio_suspend() based
+    PROACTOR_AIOCB  = 1,
+
+    /// Signals notifications
+    PROACTOR_SIG    = 2,
+
+    /// SUN specific aiowait()
+    PROACTOR_SUN    = 3,
+
+    /// Callback notifications
+    PROACTOR_CB     = 4
   };
 
 
@@ -127,7 +136,7 @@ public:
                                                                                 ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                                 int priority = 0,
                                                                                 int signal_number = ACE_SIGRTMIN);
-  
+
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
                                                                                   ACE_HANDLE handle,
                                                                                   ACE_Message_Block &message_block,
@@ -168,8 +177,8 @@ public:
                                                                               const void* act,
                                                                               ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                               int priority = 0,
-                                                                              int signal_number = ACE_SIGRTMIN); 
-	 
+                                                                              int signal_number = ACE_SIGRTMIN);
+
   virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result (ACE_Handler &handler,
                                                                                 ACE_HANDLE handle,
                                                                                 ACE_Message_Block *message_block,
@@ -179,7 +188,7 @@ public:
                                                                                 ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                                 int priority = 0,
                                                                                 int signal_number = ACE_SIGRTMIN);
-											 
+
   virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler &handler,
                                                                       ACE_HANDLE listen_handle,
                                                                       ACE_HANDLE accept_handle,
@@ -189,7 +198,7 @@ public:
                                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                       int priority = 0,
                                                                       int signal_number = ACE_SIGRTMIN);
-  
+
   virtual ACE_Asynch_Connect_Result_Impl *create_asynch_connect_result (ACE_Handler & handler,
                                                                         ACE_HANDLE connect_handle,
                                                                         const void *act,
@@ -272,7 +281,7 @@ class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
   friend class ACE_POSIX_Asynch_Accept;
   friend class ACE_POSIX_Asynch_Connect;
 
-  
+
 public:
   /// Constructor defines max number asynchronous operations
   /// which can be started at the same time
@@ -328,7 +337,7 @@ public:
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
   /**
-  * This method should be called from  
+  * This method should be called from
   * ACE_POSIX_Asynch_Operation::cancel()
   * instead of usual ::aio_cancel.
   * For all deferred AIO requests with handle "h"
@@ -342,9 +351,9 @@ public:
 
 protected:
 
-  /// Special constructor for ACE_SUN_Proactor 
+  /// Special constructor for ACE_SUN_Proactor
   /// and ACE_POSIX_SIG_Proactor
-  ACE_POSIX_AIOCB_Proactor (size_t nmaxop, 
+  ACE_POSIX_AIOCB_Proactor (size_t nmaxop,
                             ACE_POSIX_Proactor::Proactor_Type ptype);
 
   /// Check AIO for completion, error and result status
@@ -372,7 +381,7 @@ protected:
   /// Define the maximum number of asynchronous I/O requests
   /// for the current OS
   void check_max_aio_num (void) ;
- 
+
   /// To identify requests from Notify_Pipe_Manager
   void set_notify_handle (ACE_HANDLE h);
 
@@ -450,10 +459,10 @@ protected:
 
   /// The purpose of this member is only to identify asynchronous request
   /// from NotifyManager. We will reserve for it always slot 0
-  /// in the list of aiocb's to be sure that don't lose notifications. 
+  /// in the list of aiocb's to be sure that don't lose notifications.
  ACE_HANDLE notify_pipe_read_handle_ ;
- 
-  /// number of ACE_POSIX_Asynch_Result's waiting for start
+
+  /// Number of ACE_POSIX_Asynch_Result's waiting for start
   /// i.e. deferred AIOs
   size_t num_deferred_aiocb_ ;
 
@@ -532,7 +541,7 @@ public:
 
   /**
    * If <signal_number> is -1, check with the Proactor and use one of
-   * the signals that is present in the mask set (i.e. the signals for
+   * the signals that is present in the mask set (i.e., the signals for
    * which the Proactor will be waiting) of the Proactor. If there are
    * more than one signal, the higher numbered signal will be chosen.
    */

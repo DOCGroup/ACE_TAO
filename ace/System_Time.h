@@ -37,7 +37,7 @@ class ACE_Export ACE_System_Time
 {
 public:
   /**
-   * enumeration types to specify mode of synchronization with master
+   * Enumeration types to specify mode of synchronization with master
    * clock.  Jump will set local system time directly (thus possibly
    * producing time gaps or ambiguous local system times.  Adjust will
    * smoothly slow down or speed up the local system clock to reach
@@ -65,7 +65,7 @@ public:
   /// Get the system time of the central time server.
   int get_master_system_time (ACE_Time_Value &time_out);
 
-  /// synchronize local system time with the central time server using
+  /// Synchronize local system time with the central time server using
   /// specified mode.
   int sync_local_system_time (ACE_System_Time::Sync_Mode mode);
 

@@ -51,8 +51,10 @@ public:
   ACE_Token_Manager (void);
   virtual ~ACE_Token_Manager (void);
 
-  // Set/get a pointer to token manager singleton.
+  /// Get the pointer to token manager singleton.
   static ACE_Token_Manager *instance (void);
+
+  /// Set the pointer to token manager singleton.
   void instance (ACE_Token_Manager *);
 
   /**
@@ -65,16 +67,17 @@ public:
   void get_token (ACE_Token_Proxy *, const ACE_TCHAR *token_name);
 
   /**
+   * Check whether acquire will cause deadlock or not.
    * returns 1 if the acquire will _not_ cause deadlock.
    * returns 0 if the acquire _will_ cause deadlock.
-   * this method ignores recursive acquisition.  That is, it will not
+   * This method ignores recursive acquisition.  That is, it will not
    * report deadlock if the client holding the token requests the
    * token again.  Thus, it assumes recursive mutexes.
    */
   int check_deadlock (ACE_Token_Proxy *proxy);
   int check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy);
 
-  /// notify the token manager that a token has been released.  If as a
+  /// Notify the token manager that a token has been released.  If as a
   /// result, there is no owner of the token, the token is deleted.
   void release_token (ACE_Tokens *&token);
 
@@ -100,7 +103,7 @@ private:
   /// pointer to singleton token manager.
   static ACE_Token_Manager *token_manager_;
 
-  /// return the token that the given client_id is waiting for, if any
+  /// Return the token that the given client_id is waiting for, if any
   ACE_Tokens *token_waiting_for (const ACE_TCHAR *client_id);
 
   /// ACE_Mutex_Token used to lock internal data structures.
