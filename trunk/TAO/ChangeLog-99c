@@ -1,22 +1,21 @@
 Mon Apr 12 14:24:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * tao/ORB.cpp:
-          The resolve_policy_manager() and resolve_policy_current() only
-          worked if TAO_HAS_CORBA_MESSAGING was defined.
+        * tao/ORB.cpp: The resolve_policy_manager() and
+ 	  resolve_policy_current() only worked if TAO_HAS_CORBA_MESSAGING
+ 	  was defined.
 
 	* tao/ORB_Core.cpp:
-	* tao/Stub.cpp:
-	  More problems if TAO_HAS_CORBA_MESSAGING is not defined.
+	* tao/Stub.cpp: More problems if TAO_HAS_CORBA_MESSAGING is not
+ 	  defined.
 
 Mon Apr 12 14:19:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * LifeCycle_Service/Makefile,tests/Property/Makefile,
-          Trading_Service/Makefile,tests/Trading/Makefile:
-          only build if the orbsvcs library was built with the
-          necessary component.
+          Trading_Service/Makefile,tests/Trading/Makefile: only build if
+ 	  the orbsvcs library was built with the necessary component.
 
-        * Time_Service/Makefile,tests/Time/Makefile: added BIN2
-          support, for make realclean.
+        * Time_Service/Makefile,tests/Time/Makefile: added BIN2 support,
+ 	  for make realclean.
 
 Mon Apr 12 14:09:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
