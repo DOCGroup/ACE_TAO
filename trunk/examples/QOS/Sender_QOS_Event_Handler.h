@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    ACE_wrappers/examples/
+//    ACE_wrappers/examples/QOS
 //
 // = FILENAME
 //    QOS_Event_Handler.h
@@ -21,6 +21,9 @@
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+
+#define MY_DEFPORT (5001)
+#define DEFAULT_MULTICASTGROUP "234.5.6.7"
 
 ACE_RCSID(QOS_Event_Handler, QOS_Event_Handler, "$Id$")
 
@@ -48,7 +51,7 @@ public:
 private:
 
   ACE_SOCK_Dgram_Mcast dgram_mcast_;
-  ACE_INET_Addr remote_addr_;
+ 
 };
 
 #endif  /* SENDER_QOS_EVENT_HANDLER_H */
