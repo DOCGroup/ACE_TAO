@@ -19,6 +19,9 @@ public:
   virtual int open (void *);
   // Initialization hook.
 
+  virtual int recycle (void * = 0);
+  // Prepare for recycling.
+
   void send_data (void);
   // Send data to server.
 

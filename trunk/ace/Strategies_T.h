@@ -23,6 +23,30 @@
 #include "ace/Synch_Options.h"
 #include "ace/Hash_Map_Manager.h"
 
+template<class SVC_HANDLER> 
+class ACE_Recycling_Strategy
+  // = TITLE
+  //     Defines the interface (and default implementation) for
+  //     specifying a recycling strategy for a SVC_HANDLER.
+  //
+  // = DESCRIPTION
+  //      Acts as a consular to the Svc_Handler, preparing it for the
+  //      tough times ahead when the Svc_Handler will be recycled.
+{
+public:
+  virtual ~ACE_Recycling_Strategy (void);
+  // Virtual Destructor
+  
+  virtual int assign_recycler (SVC_HANDLER *svc_handler, 
+                               ACE_Connection_Recycling_Strategy *recycler,
+                               const void *recycling_act);
+  // Tell the Svc_Handler something about the recycler, so that it can
+  // reach the recycler when necessary.
+
+  virtual int prepare_for_recycling (SVC_HANDLER *svc_handler);
+  // This allows us to prepare the svc_handler for recycling.
+};
+
 template <class SVC_HANDLER>
 class ACE_Creation_Strategy
   // = TITLE
@@ -510,6 +534,27 @@ public:
   // This is a no-op.
 };
 
+template <class SVC_HANDLER>
+class ACE_NOOP_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+  // = TITLE
+  //
+  //     Implements a no-op activation strategy in order to avoid
+  //     calling open on a svc_handler multiple times.
+  //
+  // = DESCRIPTION
+  //
+  //     An example of the use of this is in the
+  //     <ACE_Cached_Connect_Strategy>, which reuses svc_handlers.
+  //     Therefore we don't want to call open on the recycled
+  //     svc_handler more than once.
+{
+public:
+  // = Factory method.
+  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
+				    void *arg = 0);
+  // This is a no-op.
+};
+
 template <class ADDR_T>
 class ACE_Hash_Addr
   // = TITLE
@@ -595,8 +640,34 @@ class ACE_Cached_Connect_Strategy
 {
 public:
 
+  ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
+                               ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
+                               ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0);
+  // Constructor
+
   virtual ~ACE_Cached_Connect_Strategy (void);
   // Destructor
+
+  virtual int open (ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
+                    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
+                    ACE_Recycling_Strategy<SVC_HANDLER> *rec_s);
+  // This methods allow you to change the strategies used by the
+  // cached connector.
+
+  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  // Template method for making a new <svc_handler>
+
+  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  // Template method for activating a new <svc_handler>
+
+  virtual int assign_recycler (SVC_HANDLER *svc_handler, 
+                               ACE_Connection_Recycling_Strategy *recycler,
+                               const void *recycling_act);
+  // Template method for setting the recycler information of the
+  // svc_handler.
+
+  virtual int prepare_for_recycling (SVC_HANDLER *svc_handler);
+  // Template method for preparing the svc_handler for recycling.
 
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
 				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
@@ -626,6 +697,11 @@ public:
 
 private:
 
+  // = Define some useful typedefs.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
+  typedef ACE_Recycling_Strategy<SVC_HANDLER> RECYCLING_STRATEGY;
+
   // = Super class
   typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> CONNECT_STRATEGY;
 
@@ -640,6 +716,29 @@ private:
 
   MUTEX lock_;
   // Mutual exclusion for this object.
+
+  // = Strategy objects.
+
+  CREATION_STRATEGY *creation_strategy_;
+  // Creation strategy for an <Connector>.
+
+  int delete_creation_strategy_;
+  // 1 if <Connector> created the creation strategy and thus should
+  // delete it, else 0.
+
+  CONCURRENCY_STRATEGY *concurrency_strategy_;
+  // Concurrency strategy for an <Connector>.
+
+  int delete_concurrency_strategy_;
+  // 1 if <Connector> created the concurrency strategy and thus should
+  // delete it, else 0.
+
+  RECYCLING_STRATEGY *recycling_strategy_;
+  // Recycling strategy for an <Connector>.
+
+  int delete_recycling_strategy_;
+  // 1 if <Connector> created the recycling strategy and thus should
+  // delete it, else 0.
 };
 
 template <class SVC_HANDLER>
