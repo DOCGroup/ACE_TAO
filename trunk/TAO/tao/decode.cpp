@@ -850,7 +850,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
       // have we reached the default label?, if so,
       // save a handle to the typecode for the default
       if (default_index >= 0 && default_index-- == 0)
-        default_tc = member_tc;
+        default_tc = member_tc.in ();
       if (discrim_matched)
         {
           member_val = base_union->_access (1);
