@@ -46,8 +46,10 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
   *os << "public:\n";
   os->incr_indent ();
 
-  *os << node->local_coll_name () << " (";
+  *os << node->local_coll_name () << " (\n";
 
+  os->incr_indent (0);
+  os->incr_indent ();
   AST_Decl *d = ScopeAsDecl (node->defined_in ());
   if (d->node_type () == AST_Decl::NT_root)
     {
@@ -57,7 +59,12 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
     }
 
   *os << node->local_name () << "_ptr "
-      << " servant);\n";
+      << " servant," << nl;
+
+  *os << "STUB_Object *stub\n";
+  os->decr_indent ();
+  *os << ");\n";
+  os->decr_indent (0);
 
   os->indent ();
   if (d->node_type () == AST_Decl::NT_root)
@@ -98,7 +105,7 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
 
   os->decr_indent ();
 
-  *os << "\nprivate:\n";
+  *os << nl << "private:\n";
   os->incr_indent ();
   if (d->node_type () == AST_Decl::NT_root)
     {
@@ -170,11 +177,20 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   this->current_interface_ = node;
 
   *ss << this->current_interface_->full_coll_name () << "::"
-      << this->current_interface_->local_coll_name () << " ("
-      << node->full_skel_name () << "_ptr "
-      << " servant)\n";
+      << this->current_interface_->local_coll_name () << " (\n";
+
+  ss->incr_indent (0);
   ss->incr_indent ();
-  *ss << ": ";
+  *ss << node->full_skel_name () << "_ptr "
+      << " servant," << nl;
+
+  *ss << "STUB_Object *stub\n";
+  ss->decr_indent ();
+  *ss << ")\n";
+  ss->decr_indent (0);
+
+  ss->incr_indent ();
+  *ss << ": " << node->name () << " (stub)," << nl;
   if (this->current_interface_->n_inherits () > 0)
     {
       for (int i = 0; i < node->n_inherits (); ++i)
@@ -203,9 +219,6 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   *ss << "\n";
   ss->decr_indent ();
   *ss << "{\n";
-  ss->incr_indent ();
-  *ss << "this->set_parent (servant->get_parent ());\n";
-  ss->decr_indent ();
   *ss << "}\n\n";
 
   ss->indent ();

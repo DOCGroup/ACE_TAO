@@ -706,7 +706,7 @@ int be_interface::gen_server_header (void)
   *sh << "{" << nl;
   *sh << "protected:\n";
   sh->incr_indent ();
-  *sh << namebuf << " (const char *obj_name = 0);" << nl;
+  *sh << namebuf << " (void);" << nl;
   sh->decr_indent ();
   *sh << "public:\n";
   sh->incr_indent ();
@@ -791,38 +791,16 @@ int be_interface::gen_server_skeletons (void)
     {
       // we are outermost. So the POA_ prefix is prepended to our name
       *ss << this->full_skel_name () << "::POA_" << this->local_name () <<
-        " (const char *obj_name)" << nl;
+        " (void)" << nl;
     }
   else
     {
       // the POA_ prefix is prepended to our outermost module name
       *ss << this->full_skel_name () << "::" << this->local_name () <<
-        " (const char *obj_name)" << nl;
+        " (void)" << nl;
     }
 
   *ss << "{\n";
-  ss->incr_indent ();
-  // code for the skeleton constructor
-  *ss << "const CORBA::String repoID = \"" << this->repoID () << "\"; // repository ID" << nl;
-  *ss << "IIOP_Object *data; // Actual object reference" << nl;
-  *ss << "TAO_ORB_Core *ocp = TAO_ORB_Core_instance (); " <<
-    "// underlying ORB core instance" << nl;
-  *ss << "CORBA::POA_ptr oa = TAO_ORB_Core_instance ()->root_poa (); " <<
-    "// underlying OA" << nl;
-  *ss << "const ACE_INET_Addr &addr = ocp->orb_params ()->addr ();" << nl;
-  *ss << "this->optable_ = &tao_" << this->flatname () << "_optable;" << nl <<
-    nl;
-  *ss << "// set up an IIOP object" << nl;
-  *ss << "data = new IIOP_Object (CORBA::string_dup (repoID), addr, obj_name);"
-      << nl;
-  *ss << "this->set_parent (data); // store the IIOP obj ref with us" <<
-    nl;
-  //  *ss << "this->sub_ = this; // set the most derived type to be
-  //  us" << nl;
-  *ss << "if (oa) oa->bind (data->profile.object_key, this);"
-      << " // register ourselves\n";
-
-  ss->decr_indent ();
   *ss << "}\n\n";
 
   // generate code for elements in the scope (e.g., operations)
@@ -909,6 +887,50 @@ int be_interface::gen_server_skeletons (void)
   this->accept (&visitor);
   *ss << "\n";
 
+  *ss << this->name () << "*" << be_nl
+      << this->full_skel_name ()
+      << "::_this (CORBA_Environment &_env)" << be_nl
+      << "{" << be_idt_nl
+      << "STUB_Object *stub = this->_create_stub (_env);" << be_nl
+      << "if (_env.exception () != 0)" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+
+#if 0
+      << "TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();" << be_nl
+      << "if (orb_core->get_current ()->in_servant_upcall ())" << be_nl
+      << "{" << be_idt << be_nl
+      << "stub = new IIOP_Object (" << be_idt << be_idt << be_nl
+      << "CORBA::string_copy (this->_interface_repository_id ())," << be_nl
+      << "IIOP::Profile (" << be_idt << be_idt << be_nl
+      << "TAO_ORB_Core_instance ()->orb_params ()->addr ()," << be_nl
+      << "orb_core->get_current ()->object_key ()" << be_uidt << be_nl
+      << ")" << be_uidt << be_uidt << be_nl
+      << ");" << be_uidt << be_uidt << be_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "POA* poa = this->default_poa (_env);" << be_nl
+      << "if (_env.exception () != 0)" << be_idt << be_nl
+      << "return 0;" << be_uidt << be_nl
+      << "const TAO::ObjectKey& object_key = " << be_idt << be_nl
+      << "poa->servant_to_id (this, _env);" << be_uidt << be_nl
+      << "if (_env.exception () != 0)" << be_idt << be_nl
+      << "return 0;" << be_uidt << be_nl
+      << "stub = new IIOP_Object (" << be_idt << be_idt << be_nl
+      << "CORBA::string_copy (this->_interface_repository_id ())," << be_nl
+      << "IIOP::Profile (" << be_idt << be_idt << be_nl
+      << "TAO_ORB_Core_instance ()->orb_params ()->addr ()," << be_nl
+      << "object_key" << be_uidt << be_nl
+      << ")" << be_uidt << be_uidt << be_nl
+      << ");" << be_uidt << be_uidt << be_nl
+      << "}\n" << be_nl
+#endif /* 0 */
+
+      << "return new " << this->full_coll_name ()
+      << " (this, stub);" << be_uidt << be_nl;
+
+  *ss << "}\n\n";
+
    return 0;
 }
 
@@ -952,14 +974,6 @@ be_interface::gen_server_inline (void)
   *si << "{\n";
   *si << "}\n";
 
-
-  *si << "ACE_INLINE " << this->name () << "*\n"
-      << this->full_skel_name () << "::_this (CORBA_Environment&)\n"
-      << "{\n";
-  si->incr_indent ();
-  *si << "return new " << this->full_coll_name () << " (this);\n";
-  si->decr_indent ();
-  *si << "}\n\n";
 
   // generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the call

@@ -384,3 +384,38 @@ TAO_ServantBase::dispatch (CORBA::ServerRequest &req,
               opname));
 }
 
+STUB_Object*
+TAO_ServantBase::_create_stub (CORBA_Environment &_env)
+{
+  STUB_Object *stub;
+
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+  if (orb_core->get_current ()->in_servant_upcall ())
+    {
+      stub = new IIOP_Object (
+          CORBA::string_copy (this->_interface_repository_id ()),
+          IIOP::Profile (
+	      TAO_ORB_Core_instance ()->orb_params ()->addr (),
+              orb_core->get_current ()->object_key ()
+            )
+        );
+    }
+  else
+    {
+      POA* poa = this->_default_poa (_env);
+      if (_env.exception () != 0)
+	return 0;
+      const TAO::ObjectKey& object_key = 
+	poa->servant_to_id (this, _env);
+      if (_env.exception () != 0)
+	return 0;
+      stub = new IIOP_Object (
+          CORBA::string_copy (this->_interface_repository_id ()),
+          IIOP::Profile (
+              TAO_ORB_Core_instance ()->orb_params ()->addr (),
+              object_key
+            )
+        );
+    }
+  return stub;
+}

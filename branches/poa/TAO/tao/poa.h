@@ -23,6 +23,7 @@
 #include "tao/objtable.h"
 
 class TAO_GIOP_RequestHeader;
+class STUB_Object;
 
 // @@ Why does this inherit from IUnknown?  This inherits from
 // IUnknown because it's foolish.  There's no good reason to get rid
@@ -61,8 +62,7 @@ public:
   // interface definition to identify specific interfaces and their
   // relationships to other OMG-IDL interfaces.  It's OK to provide a
   // null type ID.
-  //
-  // Clients which invoke operations using one of these references
+  //  // Clients which invoke operations using one of these references
   // when the server is not active (or after the last reference to the
   // POA is released) will normally see an OBJECT_NOT_EXIST exception
   // reported by the ORB.  If the POA is a "Named POA" the client's
@@ -308,6 +308,10 @@ protected:
   // Set the "parent" in the QueryInterface hierarchy.
   // @@ TODO use a conformant name; since it is an
   // internal (implementation) method its name should start with '_'
+
+protected:
+  STUB_Object *_create_stub (CORBA_Environment &_env);
+  // This is an auxiliar method for _this().
 
 protected:
   TAO_Operation_Table *optable_;
