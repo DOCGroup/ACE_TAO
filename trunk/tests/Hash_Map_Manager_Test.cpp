@@ -22,7 +22,6 @@
 #include "test_config.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
-#include "ace/SString.h"
 #include "ace/Synch.h"
 
 ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
@@ -32,147 +31,26 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+typedef ACE_Hash_Map_Entry<ASYS_TCHAR *, 
+                           ASYS_TCHAR *> HASH_STRING_ENTRY;
 
-#define HASH_STRING_ENTRY ACE_Hash_Map_Entry<ASYS_TCHAR *, ASYS_TCHAR *>
-#define HASH_STRING_MAP ACE_Hash_Map_Manager<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Null_Mutex>
-#define HASH_STRING_ITER ACE_Hash_Map_Iterator<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Null_Mutex>
-#define HASH_STRING_REVERSE_ITER ACE_Hash_Map_Reverse_Iterator<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Manager_Ex<ASYS_TCHAR *, 
+                                ASYS_TCHAR *, 
+                                ACE_Hash<ASYS_TCHAR *>, 
+                                ACE_Equal_To<ASYS_TCHAR *>, 
+                                ACE_Null_Mutex> HASH_STRING_MAP;
 
-#define MAP_STRING ASYS_TCHAR *
-#define ENTRY entry
+typedef ACE_Hash_Map_Iterator_Ex<ASYS_TCHAR *, 
+                                 ASYS_TCHAR *, 
+                                 ACE_Hash<ASYS_TCHAR *>, 
+                                 ACE_Equal_To<ASYS_TCHAR *>, 
+                                 ACE_Null_Mutex> HASH_STRING_ITER;
 
-HASH_STRING_ENTRY::ACE_Hash_Map_Entry (ASYS_TCHAR *const &ext_id,
-                                       ASYS_TCHAR *const &int_id,
-                                       HASH_STRING_ENTRY *next,
-                                       HASH_STRING_ENTRY *prev)
-  : ext_id_ (ACE_OS::strdup (ext_id)),
-    int_id_ (ACE_OS::strdup (int_id)),
-    next_ (next),
-    prev_ (prev)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Creating `%s' and `%s'\n"),
-              ext_id_,
-              int_id_));
-}
-
-HASH_STRING_ENTRY::ACE_Hash_Map_Entry (HASH_STRING_ENTRY *next,
-                                       HASH_STRING_ENTRY *prev)
-  : ext_id_ (0),
-    int_id_ (0),
-    next_ (next),
-    prev_ (prev)
-{
-}
-
-HASH_STRING_ENTRY::~ACE_Hash_Map_Entry (void)
-{
-  ASYS_TCHAR *key = ext_id_;
-  ASYS_TCHAR *value = int_id_;
-
-  if (key != 0 && value != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("Freeing `%s' and `%s'\n"),
-                key,
-                value));
-  ACE_OS::free (key);
-  ACE_OS::free (value);
-}
-
-// We need this template specialization since KEY is defined as a
-// ASYS_TCHAR*, which doesn't have a hash() method defined on it.
-
-long unsigned int
-HASH_STRING_MAP::hash (ASYS_TCHAR *const &ext_id)
-{
-  return ACE::hash_pjw (ext_id);
-}
-
-int
-HASH_STRING_MAP::equal (ASYS_TCHAR *const &id1,
-                        ASYS_TCHAR *const &id2)
-{
-  return ACE_OS::strcmp (id1, id2) == 0;
-}
-
-#else
-
-// Do this if we don't have template specialization.  It's not as efficient
-
-#include "Hash_Map_Manager_Test.h"      // Dumb_String is in here
-
-#define HASH_STRING_ENTRY ACE_Hash_Map_Entry<Dumb_String, Dumb_String>
-#define HASH_STRING_MAP \
-        ACE_Hash_Map_Manager<Dumb_String, Dumb_String, ACE_Null_Mutex>
-#define HASH_STRING_ITER \
-        ACE_Hash_Map_Iterator<Dumb_String, Dumb_String, ACE_Null_Mutex>
-#define HASH_STRING_REVERSE_ITER \
-        ACE_Hash_Map_Reverse_Iterator<Dumb_String, Dumb_String, ACE_Null_Mutex>
-
-#define MAP_STRING Dumb_String
-#define ENTRY ((ASYS_TCHAR *) entry)
-
-Dumb_String::Dumb_String (ASYS_TCHAR *s)
-  : s_ (s ? ACE_OS::strdup (s) : s),
-    copy_ (s ? *(new int (1)) : junk_),
-    junk_ (1)
-{
-}
-
-Dumb_String::Dumb_String (const Dumb_String &ds)
-  : s_ (ds.s_),
-    copy_ (ds.copy_),
-    junk_ (1)
-{
-  copy_++;
-}
-
-Dumb_String::~Dumb_String (void)
-{
-  if (--copy_ == 0)
-    {
-      ACE_OS::free (s_);
-      if (&copy_ != &junk_)
-        delete &copy_;
-    }
-}
-
-u_long
-Dumb_String::hash (void) const
-{
-  return ACE::hash_pjw (s_);
-}
-
-int
-Dumb_String::operator== (ASYS_TCHAR const * s) const
-{
-  return ACE_OS::strcmp (s_, s) == 0;
-}
-
-int
-Dumb_String::operator== (const Dumb_String &ds) const
-{
-  return ACE_OS::strcmp (s_, ds.s_) == 0;
-}
-
-ASYS_TCHAR *
-Dumb_String::operator= (const Dumb_String &ds)
-{
-  this->Dumb_String::~Dumb_String ();
-  new (this) Dumb_String (ds);
-  return s_;
-}
-
-Dumb_String::operator ASYS_TCHAR * (void) const
-{
-  return s_;
-}
-
-// Note that in this version, you will not get the Creating and
-// Freeing diagnostic messages.
-
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+typedef ACE_Hash_Map_Reverse_Iterator_Ex<ASYS_TCHAR *, 
+                                         ASYS_TCHAR *, 
+                                         ACE_Hash<ASYS_TCHAR *>, 
+                                         ACE_Equal_To<ASYS_TCHAR *>, 
+                                         ACE_Null_Mutex> HASH_STRING_REVERSE_ITER;
 
 struct String_Table
 {
@@ -227,7 +105,7 @@ run_test (void)
                          ASYS_TEXT ("bind"),
                          string_table[i].key_), -1);
 
-  MAP_STRING entry;
+  ASYS_TCHAR *entry;
 
   // Check the <find> operation.
   for (i = 0; string_table[i].key_ != 0; i++)
@@ -236,7 +114,7 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("`%s' found `%s'\n"),
                   string_table[i].key_,
-                  ENTRY));
+                  entry));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("`%s' not found\n"),
@@ -245,7 +123,7 @@ run_test (void)
 
   // Check the <trybind> operation.
   {
-    MAP_STRING pc = string_table[1].value_;
+    ASYS_TCHAR *pc = string_table[1].value_;
     if (hash.trybind (string_table[0].key_,
                       pc) != 1)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -284,7 +162,7 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("`%s' found `%s'\n"),
                   string_table[i].key_,
-                  ENTRY));
+                  entry));
     else if (i != 2)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ASYS_TEXT ("`%s' not found\n"),
@@ -326,17 +204,17 @@ main (int, ASYS_TCHAR *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>;
-template class ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ASYS_TCHAR *, ASYS_TCHAR *>;
+template class ACE_Hash_Map_Manager_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
 template class ACE_Static_Allocator<String_Table_size>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>
-#pragma instantiate ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ASYS_TCHAR *, ASYS_TCHAR *>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Static_Allocator<String_Table_size>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

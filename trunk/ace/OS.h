@@ -5226,7 +5226,17 @@ public:
   static size_t strlen (const wchar_t *s);
   static wchar_t *strcpy (wchar_t *s,
                           const wchar_t *t);
+  static int strcmp (const wchar_t *s,
+                     const wchar_t *t);
 # endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
+  static size_t strlen (const ACE_UINT16 *s);
+  static ACE_UINT16 *strcpy (ACE_UINT16 *s,
+                             const ACE_UINT16 *t);
+  static int strcmp (const ACE_USHORT16 *s,
+                     const ACE_USHORT16 *t);
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
   // The following WChar typedef and functions are used by TAO.  TAO
   // does not use wchar_t because the size of wchar_t is
@@ -5255,8 +5265,6 @@ public:
   static const wchar_t *strnchr (const wchar_t *s,
                                  wint_t c,
                                  size_t len);
-  static int strcmp (const wchar_t *s,
-                     const wchar_t *t);
   static int strncmp (const wchar_t *s,
                       const wchar_t *t,
                       size_t len);
@@ -5341,7 +5349,6 @@ public:
   static wchar_t *dlerror (void);
 #     endif /* !ACE_HAS_WINCE */
   static ACE_SHLIB_HANDLE dlopen (ACE_WIDE_DL_TYPE filename,
-
                                   int mode = ACE_DEFAULT_SHLIB_MODE);
   static void *dlsym (ACE_SHLIB_HANDLE handle, ACE_WIDE_DL_TYPE symbol);
   static wchar_t *mktemp (wchar_t *t);

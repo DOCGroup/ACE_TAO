@@ -9623,7 +9623,71 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 #   endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 # endif /* ACE_HAS_UNICODE */
 }
+
+ACE_INLINE int
+ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
+{
+  // ACE_TRACE ("ACE_OS::strcmp");
+# if defined (ACE_HAS_UNICODE)
+  return ::wcscmp (s, t);
+# else
+#   if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+  return wcscmp (s, t);
+#   else
+  while (*s != 0 && 
+         *t != 0 && 
+         *s == *t)
+    {
+      s++;
+      t++;
+    }
+
+  return *s - *t;
+#   endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
+# endif /* ACE_HAS_UNICODE */
+}
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
+ACE_INLINE size_t
+ACE_OS::strlen (const ACE_USHORT16 *s)
+{
+  // ACE_TRACE ("ACE_OS::strlen");
+  u_int len = 0;
+
+  while (*s++ != 0)
+    len++;
+
+  return len;
+}
+
+ACE_INLINE ACE_USHORT16 *
+ACE_OS::strcpy (ACE_USHORT16 *s, const ACE_USHORT16 *t)
+{
+  // ACE_TRACE ("ACE_OS::strcpy");
+  ACE_USHORT16 *result = s;
+
+  while ((*s++ = *t++) != 0)
+    continue;
+
+  return result;
+}
+
+ACE_INLINE int
+ACE_OS::strcmp (const ACE_USHORT16 *s, const ACE_USHORT16 *t)
+{
+  // ACE_TRACE ("ACE_OS::strcpy");
+  while (*s != 0 && 
+         *t != 0 && 
+         *s == *t)
+    {
+      s++;
+      t++;
+    }
+
+  return *s - *t;
+}
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
 ACE_INLINE u_int
 ACE_OS::wslen (const WChar *s)
@@ -9742,13 +9806,6 @@ ACE_OS::strrchr (wchar_t *s, wint_t c)
 
   return p;
 # endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE int
-ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
-{
-  // ACE_TRACE ("ACE_OS::strcmp");
-  return ::wcscmp (s, t);
 }
 
 ACE_INLINE wint_t

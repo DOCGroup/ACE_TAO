@@ -360,6 +360,37 @@ ACE::hash_pjw (const char *str)
   return ACE::hash_pjw (str, ACE_OS::strlen (str));
 }
 
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+u_long
+ACE::hash_pjw (const wchar_t *str, size_t len)
+{
+  u_long hash = 0;
+
+  for (size_t i = 0; i < len; i++)
+    {
+      const wchar_t temp = str[i];
+      hash = (hash << 4) + (temp * 13);
+
+      u_long g = hash & 0xf0000000;
+
+      if (g)
+        {
+          hash ^= (g >> 24);
+          hash ^= g;
+        }
+    }
+
+  return hash;
+}
+
+u_long
+ACE::hash_pjw (const wchar_t *str)
+{
+  return ACE::hash_pjw (str, ACE_OS::strlen (str));
+}
+#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
 u_long
 ACE::hash_pjw (const ACE_USHORT16 *str, size_t len)
 {
@@ -385,8 +416,9 @@ ACE::hash_pjw (const ACE_USHORT16 *str, size_t len)
 u_long
 ACE::hash_pjw (const ACE_USHORT16 *str)
 {
-  return ACE::hash_pjw (str, ACE_WString::strlen (str));
+  return ACE::hash_pjw (str, ACE_OS::strlen (str));
 }
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
 // The CRC routine was taken from the FreeBSD implementation of cksum,
 // that falls under the following license:

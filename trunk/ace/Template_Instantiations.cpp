@@ -205,8 +205,6 @@ template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> >;
 
-template class ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal>;
-template class ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal>;
 template class ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>;
 template class ACE_Map_Entry<ACE_Token_Name, ACE_Mutex_Invariants *>;
 template class ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>;
@@ -222,52 +220,61 @@ template class ACE_Singleton <ACE_TSS_Connection, ACE_Null_Mutex>;
 
 template class ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>;
 
-
+// from Local_Name_Space.cpp
+#if (1)
+template class ACE_Hash_Map_Entry<ACE_NS_String, ACE_NS_Internal>;
+template class ACE_Hash<ACE_NS_String>;
+template class ACE_Equal_To<ACE_NS_String>;
+template class ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-
-
-
-template class ACE_Hash_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-
+template class ACE_Hash_Map_Reverse_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
+#else
+template class ACE_Map_Entry<ACE_NS_String, ACE_NS_Internal>;
+template class ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+template class ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+template class ACE_Map_Reverse_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+#endif
 
 // from Filecache.cpp
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 template class ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>;
-template class ACE_Hash_Map_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 #else
 template class ACE_Hash_Map_Entry<ACE_CString, ACE_Filecache_Object *>;
-template class ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash<ACE_CString>;
+template class ACE_Equal_To<ACE_CString>;
 template class ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-#endif /* defined (ACE_HAS_TEMPLATE_SPECIALIZATION) */
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Filecache_Object *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
-template class ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-
-
-
-template class ACE_Hash_Map_Reverse_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-
-
-template class ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
 template class ACE_Map_Manager <ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
-template class ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Manager<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Manager<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Manager<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;

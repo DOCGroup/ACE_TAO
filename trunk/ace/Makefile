@@ -41,6 +41,7 @@ FILES    = Log_Msg \
            Functor \
            Get_Opt \
            Handle_Set \
+           Hash_Map_Manager \
            High_Res_Timer \
            INET_Addr \
            IOStream \
@@ -162,7 +163,7 @@ TEMPLATE_FILES = \
            Free_List \
            Functor_T \
            Future \
-           Hash_Map_Manager \
+           Hash_Map_Manager_T \
            IOStream_T \
            Local_Name_Space_T \
            Malloc_T \
