@@ -1324,7 +1324,7 @@ namespace CIAO
         DOMNodeIterator* iter,
         Deployment::ComponentInterfaceDescription& cid)
     {
-      CompIntrDesc_Handler handler (iter, false);
+      CCD_Handler handler (iter, false);
       handler.process_ComponentInterfaceDescription (cid);
     }
 
