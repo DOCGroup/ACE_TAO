@@ -1,3 +1,9 @@
+Wed Aug 27 15:13:45 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/ORB_init/Portspan/simpleI.cpp (test):
+
+	  Fixed unused argument warning.
+
 Wed Aug 27 15:10:28 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/IOR_MCast/server_i.cpp (enable_multicast):
