@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Any_SystemException.h"
-#include "Any.h"
+#include "Any_Unknown_IDL_Type.h"
 #include "CDR.h"
 #include "Exception.h"
 #include "Environment.h"
@@ -100,9 +100,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
-      ACE_Message_Block *mb = impl->_tao_get_cdr ();
-
-      if (mb == 0)
+      if (!impl->encoded ())
         {
           TAO::Any_SystemException *narrow_impl =
             dynamic_cast <TAO::Any_SystemException *> (impl);
@@ -127,22 +125,18 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 
       auto_ptr<TAO::Any_SystemException > replacement_safety (replacement);
 
-      TAO_InputCDR cdr (mb->data_block (),
-                        ACE_Message_Block::DONT_DELETE,
-                        mb->rd_ptr () - mb->base (),
-                        mb->wr_ptr () - mb->base (),
-                        impl->_tao_byte_order (),
-                        TAO_DEF_GIOP_MAJOR,
-                        TAO_DEF_GIOP_MINOR);
+      // We know this will work since the unencoded case is covered above.  
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
-      impl->assign_translator (any_tc,
-                               &cdr
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // We don't want the rd_ptr of unk to move, in case it is
+      // shared by another Any. This copies the state, not the buffer.
+      TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-      CORBA::Boolean result = replacement->demarshal_value (cdr);
+      CORBA::Boolean good_decode =
+        replacement->demarshal_value (for_reading);
 
-      if (result == 1)
+      if (good_decode)
         {
           _tao_elem = replacement->value_;
           const_cast<CORBA::Any &> (any).replace (replacement);

@@ -6,62 +6,37 @@
 #include "tao/SystemException.h"
 #include "tao/Marshal.h"
 #include "tao/Typecode.h"
-#include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_RCSID (tao,
            Any_Unknown_IDL_Type,
            "$Id$")
-
-
+           
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc,
-    const ACE_Message_Block *mb,
-    int byte_order,
-    ACE_Char_Codeset_Translator *ctrans,
-    ACE_WChar_Codeset_Translator *wtrans
+    TAO_InputCDR &cdr
   )
-  : TAO::Any_Impl (0, tc),
-    cdr_ (0),
-    byte_order_ (byte_order),
-    char_translator_ (ctrans),
-    wchar_translator_ (wtrans)
+  : TAO::Any_Impl (0, tc, true),
+    cdr_ (static_cast<ACE_Message_Block *> (0))
 {
-  if (mb != 0)
+  ACE_TRY_NEW_ENV
     {
-      ACE_NEW (this->cdr_,
-               ACE_Message_Block (*mb,
-                                  ACE_CDR::MAX_ALIGNMENT));
-
-      // Align the base pointer assuming that the incoming stream is also
-      // aligned the way we are aligned
-      char *start =
-        ACE_ptr_align_binary (mb->base (),
-                              ACE_CDR::MAX_ALIGNMENT);
-
-      size_t newrdpos =
-        mb->rd_ptr() - start;
-
-      size_t newwrpos =
-        mb->wr_ptr() - start;
-
-      if (newwrpos <= this->cdr_->space ())
-        {
-          // Notice that ACE_Message_Block::duplicate may leave the
-          // wr_ptr() with a higher value than what we actually want.
-          this->cdr_->rd_ptr (newrdpos);
-          this->cdr_->wr_ptr (newwrpos);
-        }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO(%P|%t) - Unknown_IDL_Type::Unknown_IDL_Type "
-                      "Couldn't align read and write pointers \n"));
-        }
+      this->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
     }
+  ACE_CATCH (CORBA::Exception, ex)
+    {
+    }
+  ACE_ENDTRY;
+}
+
+TAO::Unknown_IDL_Type::Unknown_IDL_Type (
+    CORBA::TypeCode_ptr tc
+  )
+  : TAO::Any_Impl (0, tc, true),
+    cdr_ (static_cast<ACE_Message_Block *> (0))
+{
 }
 
 TAO::Unknown_IDL_Type::~Unknown_IDL_Type (void)
@@ -73,12 +48,13 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 {
   ACE_TRY_NEW_ENV
     {
-      TAO_InputCDR input (this->cdr_,
-                          this->byte_order_);
-
+      // We don't want the rd_ptr to move, in case we are shared by
+      // another Any, so we use this to copy the state, not the buffer.
+      TAO_InputCDR for_reading (this->cdr_);
+    
       TAO::traverse_status status =
         TAO_Marshal_Object::perform_append (this->type_,
-                                            &input,
+                                            &for_reading,
                                             &cdr
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -100,18 +76,17 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 const void *
 TAO::Unknown_IDL_Type::value (void) const
 {
-  return this->cdr_;
+  return this->cdr_.start ();
 }
 
 void
 TAO::Unknown_IDL_Type::free_value (void)
 {
   CORBA::release (this->type_);
-  delete this->cdr_;
 }
 
-ACE_Message_Block *
-TAO::Unknown_IDL_Type::_tao_get_cdr (void) const
+TAO_InputCDR &
+TAO::Unknown_IDL_Type::_tao_get_cdr (void)
 {
   return this->cdr_;
 }
@@ -119,7 +94,7 @@ TAO::Unknown_IDL_Type::_tao_get_cdr (void) const
 int
 TAO::Unknown_IDL_Type::_tao_byte_order (void) const
 {
-  return this->byte_order_;
+  return this->cdr_.byte_order ();
 }
 void
 TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
@@ -155,51 +130,28 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
   // space in the message block.
   size_t size = end - begin;
 
-  ACE_Message_Block::release (this->cdr_);
-  ACE_NEW (this->cdr_,
+  ACE_Message_Block *new_mb = 0;
+  ACE_NEW (new_mb,
            ACE_Message_Block (size + 2 * ACE_CDR::MAX_ALIGNMENT));
 
-  ACE_CDR::mb_align (this->cdr_);
+  ACE_CDR::mb_align (new_mb);
   ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
 
   if (offset < 0)
-    offset += ACE_CDR::MAX_ALIGNMENT;
+    {
+      offset += ACE_CDR::MAX_ALIGNMENT;
+    }
 
-  this->cdr_->rd_ptr (offset);
-  this->cdr_->wr_ptr (offset + size);
+  new_mb->rd_ptr (offset);
+  new_mb->wr_ptr (offset + size);
 
-  ACE_OS::memcpy (this->cdr_->rd_ptr (),
+  ACE_OS::memcpy (new_mb->rd_ptr (),
                   begin,
                   size);
 
-  this->byte_order_ = cdr.byte_order ();
-
-  // Get character translators.
-  this->char_translator_ = cdr.char_translator();
-  this->wchar_translator_ = cdr.wchar_translator();
-}
-
-void
-TAO::Unknown_IDL_Type::assign_translator (CORBA::TypeCode_ptr tc,
-                                          TAO_InputCDR *cdr
-                                          ACE_ENV_ARG_DECL)
-{
-  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  switch (kind)
-    {
-      case CORBA::tk_string:
-      case CORBA::tk_char:
-        cdr->char_translator (this->char_translator_);
-        break;
-      case CORBA::tk_wstring:
-      case CORBA::tk_wchar:
-        cdr->wchar_translator(this->wchar_translator_);
-        break;
-      default:
-        break;
-    }
+  this->cdr_.reset (new_mb, cdr.byte_order ());
+  this->cdr_.char_translator (cdr.char_translator ());
+  this->cdr_.wchar_translator (cdr.wchar_translator ());
 }
 
 CORBA::Boolean
@@ -228,13 +180,7 @@ TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
           return 0;
         }
 
-      TAO_InputCDR stream (this->cdr_,
-                           this->byte_order_,
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           0);
-
-      return stream >> obj;
+      return this->cdr_ >> obj;
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
@@ -270,12 +216,6 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
           return 0;
         }
 
-      TAO_InputCDR stream (this->cdr_,
-                           this->byte_order_,
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           0);
-
       TAO_Valuetype_Adapter *adapter =
         ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
             TAO_ORB_Core::valuetype_adapter_name ()
@@ -287,8 +227,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
                             0);
         }
 
-      return adapter->stream_to_value (stream,
-                                       val);
+      return adapter->stream_to_value (this->cdr_, val);
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
@@ -324,12 +263,6 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
           return 0;
         }
 
-      TAO_InputCDR stream (this->cdr_,
-                           this->byte_order_,
-                           TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR,
-                           TAO_ORB_Core_instance ());
-
       TAO_Valuetype_Adapter *adapter =
         ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
             TAO_ORB_Core::valuetype_adapter_name ()
@@ -341,7 +274,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
                             0);
         }
 
-      return adapter->stream_to_abstract_base (stream,
+      return adapter->stream_to_abstract_base (this->cdr_,
                                                obj);
     }
   ACE_CATCH (CORBA::Exception, ex)

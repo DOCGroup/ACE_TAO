@@ -1,3 +1,53 @@
+Sun Feb  6 19:46:23 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl.cpp:
+        * tao/Any_Impl.h:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/Any_SystemException.cpp:
+        * tao/Any_Unknown_IDL_Type.cpp:
+        * tao/Any_Unknown_IDL_Type.h:
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/Typecode.cpp:
+        * tao/append.cpp:
+        * tao/skip.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tests/DynAny_Test/analyzer.cpp:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/small_union.cpp:
+
+          Changed implementation of class TAO::Any_Unknown_IDL_Type to
+          have a TAO_InputCDR member instead of ACE_Message_Block*.
+          This change not only makes usage of codeset translators
+          easier during Any extraction (which was the original
+          impetus for opening up this issue) but also cleans up
+          some of the alignment and memory management code formerly
+          needed when handling this subclass of TAO::Any_Impl.
+
 Sat Feb  5 21:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/diffs/Messaging_RT_Policy.diff:

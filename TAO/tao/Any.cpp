@@ -123,17 +123,6 @@ CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
     }
 }
 
-ACE_Message_Block *
-CORBA::Any::_tao_get_cdr (void) const
-{
-  if (this->impl_ != 0)
-    {
-      return this->impl_->_tao_get_cdr ();
-    }
-
-  return 0;
-}
-
 int
 CORBA::Any::_tao_byte_order (void) const
 {
@@ -307,9 +296,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
     {
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
-                      TAO::Unknown_IDL_Type (tc.in (),
-                                             0,
-                                             cdr.byte_order ()),
+                      TAO::Unknown_IDL_Type (tc.in ()),
                       0);
 
       any.replace (impl);

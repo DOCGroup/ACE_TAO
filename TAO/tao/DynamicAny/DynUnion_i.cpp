@@ -138,38 +138,36 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Get the CDR stream of the argument.
-  ACE_Message_Block* mb = any._tao_get_cdr ();
-  bool type_known = false;
-
-  if (mb == 0)
-    {
-      ACE_NEW (mb,
-               ACE_Message_Block);
-      TAO_OutputCDR out;
-      any.impl ()->marshal_value (out);
-      ACE_CDR::consolidate (mb, out.begin ());
-      type_known = true;
-    }
-
-  TAO_InputCDR cdr (mb,
-                    any._tao_byte_order ());
-
-  if (type_known)
-    {
-      mb->release ();
-    }
-
   CORBA::TypeCode_var disc_tc =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Any disc_any;
   TAO::Unknown_IDL_Type *unk = 0;
+
+  // Get a CDR stream - if the Any doesn't have one, make one.
+  TAO::Any_Impl *impl = any.impl ();
+  TAO_OutputCDR out;
+  TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *tmp =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+    
+      in = tmp->_tao_get_cdr ();
+    }
+  else
+    {
+      impl->marshal_value (out);
+      TAO_InputCDR tmp_in (out);
+      in = tmp_in;
+    }
+    
   ACE_NEW (unk,
-           TAO::Unknown_IDL_Type (disc_tc.in (),
-                                  cdr.start (),
-                                  cdr.byte_order ()));
+            TAO::Unknown_IDL_Type (disc_tc.in (),
+                                  TAO_InputCDR (in)));
+
   disc_any.replace (unk);
 
   // Need this here because we might have been called from init().
@@ -187,7 +185,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
 
   // Move to the next field in the CDR stream.
   (void) TAO_Marshal_Object::perform_skip (disc_tc.in (),
-                                           &cdr
+                                           &in
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -207,7 +205,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
   for (i = 0; i < count; ++i)
     {
       CORBA::Any_var label_any = tc->member_label (i
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       match = this->label_match (label_any.in (),
@@ -239,8 +237,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
       TAO::Unknown_IDL_Type *unk = 0;
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (member_tc.in (),
-                                      cdr.start (),
-                                      cdr.byte_order ()));
+                                      in));
       member_any.replace (unk);
 
       this->member_ =
@@ -283,8 +280,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (default_tc.in (),
-                                          cdr.start (),
-                                          cdr.byte_order ()));
+                                          in));
           default_any.replace (unk);
 
           this->member_ =
@@ -776,73 +772,65 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
     this->discriminator_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  ACE_Message_Block *disc_mb = disc_any->_tao_get_cdr ();
-  bool type_known = false;
+  TAO::Any_Impl *disc_any_impl = disc_any->impl ();
+  TAO_OutputCDR disc_out_cdr;
+  TAO_InputCDR disc_in_cdr (static_cast<ACE_Message_Block *> (0));
 
-  if (disc_mb == 0)
+  if (disc_any_impl->encoded ())
     {
-      ACE_NEW_RETURN (disc_mb,
-                      ACE_Message_Block,
-                      0);
-      TAO_OutputCDR out;
-      disc_any->impl ()->marshal_value (out);
-      ACE_CDR::consolidate (disc_mb, out.begin ());
-      type_known = true;
+      TAO::Unknown_IDL_Type *disc_unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (disc_any_impl);
+        
+      disc_in_cdr = disc_unk->_tao_get_cdr ();
     }
-
-  TAO_InputCDR disc_cdr (disc_mb,
-                         disc_any->_tao_byte_order ());
-
-  if (type_known)
+  else
     {
-      disc_mb->release ();
-      type_known = false;
+      disc_any_impl->marshal_value (disc_out_cdr);
+      TAO_InputCDR disc_tmp_in_cdr (disc_out_cdr);
+      disc_in_cdr = disc_tmp_in_cdr;
     }
 
   (void) TAO_Marshal_Object::perform_append (disc_tc.in (),
-                                             &disc_cdr,
+                                             &disc_in_cdr,
                                              &out_cdr
                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Add the member to the CDR stream unless it has no active member.
   if (this->has_no_active_member () == 0)
-  {
-    CORBA::TypeCode_var member_tc = 
-      this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-   
-    CORBA::Any_var member_any = 
-      this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-   
-    ACE_Message_Block *member_mb = member_any->_tao_get_cdr ();
+    {
+      CORBA::TypeCode_var member_tc = 
+        this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+     
+      CORBA::Any_var member_any = 
+        this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+     
+      TAO::Any_Impl *member_any_impl = member_any->impl ();
+      TAO_OutputCDR member_out_cdr;
+      TAO_InputCDR member_in_cdr (static_cast<ACE_Message_Block *> (0));
 
-    if (member_mb == 0)
-      {
-        ACE_NEW_RETURN (member_mb,
-                        ACE_Message_Block,
-                        0);
-        TAO_OutputCDR out;
-        member_any->impl ()->marshal_value (out);
-        ACE_CDR::consolidate (member_mb, out.begin ());
-        type_known = true;
-      }
-   
-    TAO_InputCDR member_cdr (member_mb,
-                             member_any->_tao_byte_order ());
-
-    if (type_known)
-      {
-        member_mb->release ();
-      }
-   
-    (void) TAO_Marshal_Object::perform_append (member_tc.in (),
-                                               &member_cdr,
-                                               &out_cdr
-                                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-  }
+      if (member_any_impl->encoded ())
+        {
+          TAO::Unknown_IDL_Type *member_unk =
+            dynamic_cast<TAO::Unknown_IDL_Type *> (member_any_impl);
+            
+          member_in_cdr = member_unk->_tao_get_cdr ();
+        }
+      else
+        {
+          member_any_impl->marshal_value (member_out_cdr);
+          TAO_InputCDR member_tmp_in_cdr (member_out_cdr);
+          member_in_cdr = member_tmp_in_cdr;
+        }
+     
+      (void) TAO_Marshal_Object::perform_append (member_tc.in (),
+                                                &member_in_cdr,
+                                                &out_cdr
+                                                ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
   
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
@@ -856,8 +844,7 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
-                                           in_cdr.start (),
-                                           in_cdr.byte_order ()),
+                                           in_cdr),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -1085,33 +1072,47 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
       {
         CORBA::ULong my_val;
         CORBA::ULong other_val;
-        ACE_Message_Block *mb = my_any._tao_get_cdr ();
-        bool type_known = false;
+        
+        TAO::Any_Impl *my_impl = my_any.impl ();
 
-        if (mb == 0)
+        if (my_impl->encoded ())
           {
-            ACE_NEW_RETURN (mb,
-                            ACE_Message_Block,
-                            0);
-            TAO_OutputCDR out;
-            my_any.impl ()->marshal_value (out);
-            ACE_CDR::consolidate (mb, out.begin ());
-            type_known = true;
+            TAO::Unknown_IDL_Type *my_unk =
+              dynamic_cast<TAO::Unknown_IDL_Type *> (my_impl);
+              
+            // We don't want unk's rd_ptr to move, in case we are shared by
+            // another Any, so we use this to copy the state, not the buffer.
+            TAO_InputCDR for_reading (my_unk->_tao_get_cdr ());
+            for_reading.read_ulong (my_val);
+          }
+        else
+          {
+            TAO_OutputCDR my_out;
+            my_impl->marshal_value (my_out);
+            TAO_InputCDR my_in (my_out);
+            my_in.read_ulong (my_val);
           }
 
-        TAO_InputCDR my_cdr (mb,
-                             my_any._tao_byte_order ());
-
-        if (type_known)
+        TAO::Any_Impl *other_impl = other_any.impl ();
+        
+        if (other_impl->encoded ())
           {
-            mb->release ();
+            TAO::Unknown_IDL_Type *other_unk =
+              dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
+              
+            // We don't want unk's rd_ptr to move, in case we are shared by
+            // another Any, so we use this to copy the state, not the buffer.
+            TAO_InputCDR for_reading (other_unk->_tao_get_cdr ());
+            for_reading.read_ulong (other_val);
           }
-
-        my_cdr.read_ulong (my_val);
-        mb = other_any._tao_get_cdr ();
-        TAO_InputCDR other_cdr (mb,
-                                other_any._tao_byte_order ());
-        other_cdr.read_ulong (other_val);
+        else
+          {
+            TAO_OutputCDR other_out;
+            other_impl->marshal_value (other_out);
+            TAO_InputCDR other_in (other_out);
+            other_in.read_ulong (other_val);
+          }
+          
         return my_val == other_val;
       }
     // Cannot happen - we've covered all the legal discriminator types.

@@ -166,12 +166,12 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                     {
                       TAO_OutputCDR cdr;
                       cdr.write_ulong (ev->u.ulval);
+                      TAO_InputCDR in_cdr (cdr);
                       TAO::Unknown_IDL_Type *unk = 0;
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (
                                           this->disc_tc_.in (),
-                                          cdr.begin (),
-                                          TAO_ENCAP_BYTE_ORDER
+                                          in_cdr
                                         ),
                                       -1);
                       this->members_[index].label.replace (unk);

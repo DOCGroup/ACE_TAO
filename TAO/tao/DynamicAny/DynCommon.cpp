@@ -513,11 +513,11 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
               value->marshal (cdr);
             }
 
+          TAO_InputCDR in (cdr);
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (this->type_.in (),
-                                          cdr.begin (),
-                                          TAO_ENCAP_BYTE_ORDER));
+                                          in));
           this->any_.replace (unk);
         }
       else

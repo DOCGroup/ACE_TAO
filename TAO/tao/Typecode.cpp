@@ -2813,10 +2813,10 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
         }
 
       TAO::Unknown_IDL_Type *impl = 0;
+      TAO_InputCDR in (out);
       ACE_NEW_THROW_EX (impl,
                         TAO::Unknown_IDL_Type (label_tc,
-                                               out.begin (),
-                                               ACE_CDR_BYTE_ORDER),
+                                               in),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 

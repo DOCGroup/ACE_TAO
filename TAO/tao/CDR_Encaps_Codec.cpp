@@ -169,43 +169,27 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
-      ACE_Message_Block * mb = data._tao_get_cdr ();
-
-      auto_ptr<ACE_Message_Block> safe_mb;
-
-      if (mb == 0)
+      TAO::Any_Impl *impl = data.impl ();
+      
+      if (impl->encoded ())
         {
-          ACE_Message_Block * tmp;
+          TAO::Unknown_IDL_Type *unk =
+            dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+            
+          // We don't want unk's rd_ptr to move, in case we are shared by
+          // another Any, so we use this to copy the state, not the buffer.
+          TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-          ACE_NEW_THROW_EX (tmp,
-                            ACE_Message_Block,
-                            CORBA::NO_MEMORY ());
+          TAO_Marshal_Object::perform_append (data._tao_get_typecode (),
+                                              &for_reading,
+                                              &cdr
+                                              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
-
-          ACE_AUTO_PTR_RESET (safe_mb,
-                              tmp,
-                              ACE_Message_Block);
-
-          mb = tmp;
-
-          TAO_OutputCDR out;
-          CORBA::Any any (data);
-          any.impl ()->marshal_value (out);
-
-          ACE_CDR::consolidate (mb, out.begin ());
         }
-
-      TAO_InputCDR input (mb,
-                          data._tao_byte_order (),
-                          this->major_,
-                          this->minor_,
-                          this->orb_core_);
-
-      TAO_Marshal_Object::perform_append (data._tao_get_typecode (),
-                                          &input,
-                                          &cdr
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      else
+        {
+          impl->marshal_value (cdr);
+        }
 
       // TAO extension: replace the contents of the octet sequence with
       // the CDR stream.
@@ -299,84 +283,27 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      // @@ (JP) The following code depends on the fact that
-      //         TAO_InputCDR does not contain chained message blocks,
-      //         otherwise <begin> and <end> could be part of
-      //         different buffers!
+      CORBA::Any * any = 0;
+      ACE_NEW_THROW_EX (any,
+                        CORBA::Any,
+                        CORBA::NO_MEMORY (
+                            CORBA::SystemException::_tao_minor_code (
+                                0,
+                                ENOMEM
+                              ),
+                            CORBA::COMPLETED_NO
+                          ));
+      ACE_CHECK_RETURN (0);
 
-      // This will be the start of a new message block.
-      char *begin = cdr.rd_ptr ();
+      CORBA::Any_var safe_any = any;
 
-      // Skip over the next argument.
-      TAO::traverse_status status =
-        TAO_Marshal_Object::perform_skip (tc,
-                                          &cdr
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);  // @@ Should we throw a
-                             //    IOP::Codec::TypeMismatch exception
-                             //    here if this fails?
-
-      if (status == TAO::TRAVERSE_CONTINUE)
-        {
-          // This will be the end of the new message block.
-          char *end = cdr.rd_ptr ();
-          size_t size = end - begin;
-
-          // @@ I added the following check, but I'm not sure if it is
-          //    a valid check.  Can someone verify this?
-          //          -Ossama
-
-          // If the unaligned buffer size is not equal to the octet
-          // sequence length (minus the "byte order byte") then the
-          // TypeCode does not correspond to the data in the CDR
-          // encapsulation.  However, even if they do match it is
-          // still uncertain if the TypeCode corresponds to the data
-          // in the octet sequence.  With this test, it is only
-          // possible to determine if the TypeCode does *not* match
-          // the data, not if it does match.
-          if (size != sequence_length - 1)
-            {
-              ACE_THROW_RETURN (IOP::Codec::TypeMismatch (),
-                                0);
-            }
-
-          ptrdiff_t offset =
-            ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
-          if (offset < 0)
-            offset += ACE_CDR::MAX_ALIGNMENT;
-
-          mb.rd_ptr (offset);
-          mb.wr_ptr (offset + size);
-
-          CORBA::Any * any = 0;
-          ACE_NEW_THROW_EX (any,
-                            CORBA::Any,
-                            CORBA::NO_MEMORY (
-                                CORBA::SystemException::_tao_minor_code (
-                                    0,
-                                    ENOMEM
-                                  ),
-                                CORBA::COMPLETED_NO
-                              ));
-          ACE_CHECK_RETURN (0);
-
-          CORBA::Any_var safe_any = any;
-
-          // Stick it into the Any.
-          TAO::Unknown_IDL_Type *unk = 0;
-          ACE_NEW_RETURN (unk,
-                          TAO::Unknown_IDL_Type (tc,
-                                                 &mb,
-                                                 cdr.byte_order ()),
-                          0);
-          any->replace (unk);
-          return safe_any._retn ();
-        }
-      else
-        {
-          ACE_THROW_RETURN (IOP::Codec::TypeMismatch (),
-                            0);
-        }
+      // Stick it into the Any.
+      TAO::Unknown_IDL_Type *unk = 0;
+      ACE_NEW_RETURN (unk,
+                      TAO::Unknown_IDL_Type (tc, cdr),
+                      0);
+      any->replace (unk);
+      return safe_any._retn ();
     }
 
   ACE_THROW_RETURN (IOP::Codec::FormatMismatch (),

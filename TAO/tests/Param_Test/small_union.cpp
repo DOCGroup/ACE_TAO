@@ -48,7 +48,7 @@ Test_Small_Union::opname (void) const
 
 void
 Test_Small_Union::dii_req_invoke (CORBA::Request *req
-                                ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
@@ -78,7 +78,7 @@ Test_Small_Union::dii_req_invoke (CORBA::Request *req
 
 int
 Test_Small_Union::init_parameters (Param_Test_ptr objref
-                                 ACE_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
