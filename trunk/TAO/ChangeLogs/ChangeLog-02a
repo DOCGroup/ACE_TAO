@@ -1,3 +1,8 @@
+Sun Mar  3 17:35:32 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
+	  Add -lTAO_Messaging.
+
 Sun Mar  3 16:09:14 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.cpp:
