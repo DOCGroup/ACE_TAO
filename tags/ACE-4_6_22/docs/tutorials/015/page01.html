@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+
+In a typical client/server system you will be sending and receiving
+      data.  That's the whole point after all.
+<P>
+In the client/server tutorials that we've done so far it was just a
+      matter of sending a buffer of data to the peer.  This was done
+      with the send*() and recv*() methods of the ACE_SOCK* objects.
+<P>
+In a more robust system, one might want to process the data before
+      sending it to a peer and "unprocess" it after reading from a
+      peer.  These processing steps might include encryption,
+      compression, applying checksums or any number of other actions.
+<P>
+In this tutorial a Protocol_Stream object is created to encrypt and
+      compress* data being sent between peers.  Both client and server 
+      applications are presented as well.  I present the application
+level code first and then go into the details of the protocol stream
+and it's helper objects.  If the stream stuff in the application logic 
+is confusing then just read on by and come back to it after the later
+discussions.
+<P>
+Disclaimer:
+<br>
+<ul>
+Several folks have reported problems with this tutorial on Win32.
+There are a couple of ways to solve this.  I've chosen to solve it by
+using the ACE_Select_Reactor on all platforms instead of taking the
+OS-default.
+</ul>
+<P>
+Kirthika's abstract:
+<UL>
+The Protocol Stream model consists of a stream layer which pushes the
+data towards the underlying SOCK_Stream thru the stages of encryption
+and compression. This data is received at the other end of the
+SOCK_Stream and sent up to its Protocol_Stream layer via the stages of
+decompression and decryption and an optional Reader task. This is very
+similar to the model of the TCP/IP stack (specifically the datalink to
+physical layer portion).
+<P>
+ACE_Message_Blocks are used to communicate between the client and the
+server across the Protocol Stream, which abstracts the protocol
+conformance details. The underlying SOCK_Stream is used to set up the
+connection using the ACE_SOCK_Connector class. Once the connector
+completes its job, the SOCK_Stream pointer is passed on to the
+Protocol Stream which now takes over. The Client has put() and get()
+methods to send and receive data from the server. 
+<P>
+The server is implemented using the ACE_Acceptor to listen at the port
+for connections and a reactor for delegating events to the appropriate
+event handler. The handle_input () method of the handler simply allows
+the stream to receive the data and hand it over to the Handler_Task (a
+derivative of the ACE_Task) which will then process it.
+<P>
+The implementation of this Protocol Stream model is done using the
+ACE_Module class. The module for Xmit/Recv is shoved in first
+into the stream, followed by the compression and encryption modules. The
+optional Reader if defined is bundled with a dummy task
+(ACE_Thru_Task class) into a module. The get() and put() methods do
+the job of reading and writing to the Stream. Each module is made up
+of a pair of Protocol Tasks. A Protocol Task is a derivative of the
+ACE_Task and whose recv() and send() methods need to be filled to
+perform the appropriate task.
+<P>
+The Xmit object derives from the Protocol task and has a send() method
+which does the task of transmitting data to the underlying
+SOCK_Stream. Keeping the fragmentation and reassembly issues in mind,
+block-size is also sent across with the block of data.
+The Recv object uses a dummy Message Block to provoke the Protocol
+Task object to call the recv() on it. This is done by being
+foresighted about the use of mutliple threads instead of a single
+thread.
+<P>
+The compression/decompression is bundled in a single Protocol Task
+object with the send () method doing the compression and the recv()
+doing the decompression. Similarly, the encrption/decryption is done
+using a single Protocol Task object.
+<P>
+This tutorial provides a glimpse on how to design and implement a
+protocol in layers and also revises a lot of what has been learnt until
+now from the previous tutorials.
+(for instance, Message_Block, Task, Acceptor, Connector, Event_Handler
+etc.)
+</UL>
+<P>
+<font size=-1>* Ok, I didn't really implement encryption and
+        compression objects.  I'll leave that as a thought
+        exercise!</font>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page02.html">Continue This Tutorial</A>]</CENTER>

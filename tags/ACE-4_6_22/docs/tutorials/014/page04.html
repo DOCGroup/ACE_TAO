@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Bob McWhirter">
+   <TITLE>ACE Tutorial 014</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 014</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>ACE_Stream Tutorial, Of Sorts</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+<P>
+As stated in the comments below, the default action of the task at the 
+	  stream tail is to treat any received data as an error.  In our
+	  implementation it will often happen that data gets through to
+	  the tail.  How, then, do we handle this without creating an
+	  error condition?  Simple:  Create a custom Task for use as the
+	  stream tail that doesn't consider it an error to receive data.
+<P>
+Read on...
+<P>
+<HR WIDTH="100%">
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=red>// EndTask.h</font>
+<font color=red>//</font>
+<font color=red>// Tutorial regarding a way to use ACE_Stream.</font>
+<font color=red>//</font>
+<font color=red>// written by bob mcwhirter (bob@netwrench.com)</font>
+<font color=red>//</font>
+<font color=red>//</font>
+
+<font color=blue>#ifndef</font> <font color=purple>ENDTASK_H</font>
+<font color=blue>#define</font> <font color=purple>ENDTASK_H</font>
+
+<font color=blue>#include</font> "<font color=green>Task.h</font>"
+
+<font color=red>// When you setup a Stream and push your modules on,</font>
+<font color=red>// there are two additional modules that go unseen</font>
+<font color=red>// by the user.</font>
+<font color=red>//</font>
+<font color=red>// The Stream pushes on a Stream_Head in front of</font>
+<font color=red>// your first module, and a Stream_Tail behind your</font>
+<font color=red>// last module.</font>
+<font color=red>//</font>
+<font color=red>// If your put() a message to the Stream Tail, it</font>
+<font color=red>// assumes you did so in error. This simple EndTask</font>
+<font color=red>// class allows you to push a message to it and just</font>
+<font color=red>// have it safely Go Away.</font>
+<font color=red>//</font>
+<font color=red>// All this Task does is release the Message_Block</font>
+<font color=red>// and return 0.  It's a suitable black-hole.</font>
+
+class EndTask : public Task
+{
+public:
+  typedef Task inherited;
+
+  EndTask (const char *nameOfTask): inherited (nameOfTask, 0) 
+  {
+    <font color=red>// when we get open()'d, it with 0 threads since there is actually</font>
+    <font color=red>// no processing to do.</font>
+
+    ACE_DEBUG ((LM_INFO,
+                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                __LINE__,
+                __FILE__));
+  }
+
+  virtual int open (void *)
+  {
+    ACE_DEBUG ((LM_INFO,
+                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                __LINE__,
+                __FILE__));
+    return 0;
+  }
+
+  virtual int open (void)
+  {
+    ACE_DEBUG ((LM_INFO,
+                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                __LINE__,
+                __FILE__));
+    return 0;
+  }
+
+  virtual ~EndTask(void) 
+  {
+  }
+
+  virtual int put (ACE_Message_Block *message,
+                   ACE_Time_Value *timeout) 
+  {
+    ACE_DEBUG ((LM_INFO,
+                "<font color=green>(%P|%t) Line: %d, File: %s\n</font>",
+                __LINE__,
+                __FILE__));
+    ACE_UNUSED_ARG (timeout);
+
+    <font color=red>// we don't have anything to do, so release() the message.</font>
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) %s <font color=#008888>EndTask::put</font>() -- releasing Message_Block\n</font>",
+                this->nameOfTask ()));
+    message->release ();
+    return 0;
+  }
+
+};
+
+<font color=blue>#endif</font> <font color=red>/* ENDTASK_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page05.html">Continue This Tutorial</A>]</CENTER>

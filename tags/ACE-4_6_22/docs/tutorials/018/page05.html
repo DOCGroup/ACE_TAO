@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 018</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 018</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>The FIFO Nature of ACE_Token</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+Here we create simple derivatives of our Test templated class.  Each
+is parameterized with our mutex of choice and "named".  Using the Test 
+template we're able to reuse all of the code with practially no
+retyping and certainly much less chance of error!
+<HR>
+<HR width=50%><P><center>Token_i.h</center><HR width=50%>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>TOKEN_I_H</font>
+<font color=blue>#define</font> <font color=purple>TOKEN_I_H</font>
+
+<font color=blue>#include</font> "<font color=green>Test_T.h</font>"
+
+<font color=red>// Go get ace/Token.h so that we know what an ACE_Token is.</font>
+<font color=blue>#include</font> "<font color=green>ace/Token.h</font>"
+
+<font color=red>/* Create a very simple derivative of our Test template.  All we have
+   to do is provide our mutex choice and a name.
+ */</font>
+class Token : public Test_T&lt;ACE_Token>
+{
+public:
+  Token (void): Test_T&lt;ACE_Token> ("<font color=green>Token</font>") {}
+};
+
+<font color=blue>#endif</font> <font color=red>/* TOKEN_I_H */</font>
+</PRE>
+<HR width=50%><P><center>Mutex_i.h</center><HR width=50%>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>MUTEX_I_H</font>
+<font color=blue>#define</font> <font color=purple>MUTEX_I_H</font>
+
+<font color=blue>#include</font> "<font color=green>Test_T.h</font>"
+
+<font color=red>/* Create a very simple derivative of our Test template.  All we have
+   to do is provide our mutex choice and a name.
+ */</font>
+class Mutex : public Test_T&lt;ACE_Mutex>
+{
+public:
+  Mutex (void) : Test_T&lt;ACE_Mutex> ("<font color=green>Mutex</font>") {}
+};
+
+<font color=blue>#endif</font> <font color=red>/* MUTEX_I_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page06.html">Continue This Tutorial</A>]</CENTER>
