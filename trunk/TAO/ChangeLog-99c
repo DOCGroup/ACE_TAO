@@ -1,3 +1,10 @@
+Tue Apr 27 15:04:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	  Removed an incorrect "var" string appended to the
+	  local member name in the case where a union contains
+	  another union. Was causing a compile error in fooC.i.
+
 Tue Apr 27 12:01:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.cpp (main): Changed to use
