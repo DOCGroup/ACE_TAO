@@ -1,3 +1,11 @@
+Wed Jun 11 07:28:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/config-lynxos.h: 
+	* examples/C++NPv1/Logging_Client.cpp:
+	* examples/C++NPv2/Select_Reactor_Logging_Server.cpp: Applied
+	  patches from Olli Savia <ops@iki.fi> to get the C++NPv examples
+	  compiling on pre-LynxOS 3.0.1 with gcc 2.7-97r1.
+
 Tue Jun 10 12:50:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:

@@ -40,6 +40,10 @@
 # endif /* __GNUC_MINOR__ == 7 */
 #endif /* __GNUG__ */
 
+#if defined ( __LYNXOS_SDK_VERSION ) &&  ( __LYNXOS_SDK_VERSION <= 199701L )
+# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
+#endif /* __LYNXOS_SDK_VERSION */
+
 #if defined (__x86__)
   // PowerPC libraries don't seem to have alloca (), so only use with x86.
 // Although ACE does have alloca() on this compiler/platform combination, it is
