@@ -280,6 +280,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   tmp = CORBA::string_alloc (length_host);
 
+  // Skip the trailing '/'
   ACE_OS::strncpy (tmp.inout (), start, length_host);
   tmp[length_host] = '\0';
 
