@@ -1,7 +1,13 @@
+Mon Jan 26 15:18:06 2004  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * bin/count_lines (initfiletypes):
+
+        Added .py for python and .php for php scripts.
+
 Mon Jan 26 15:47:55 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Timers/PCB.cpp: Don't put needed things inside
-	  ACE_ASSERT - they disappear when built with ACE_NDEBUG.
+        * examples/APG/Timers/PCB.cpp: Don't put needed things inside
+          ACE_ASSERT - they disappear when built with ACE_NDEBUG.
 
 Mon Jan 26 13:01:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
