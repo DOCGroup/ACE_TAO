@@ -14,8 +14,6 @@ project(RTSched) : orbsvcslib, core, naming, svc_utils, portableserver {
     Sched {
       RtecSchedulerC.cpp
       RtecSchedulerS.cpp
-      RtecBaseC.cpp
-      RtecBaseS.cpp
       Scheduler_Factory.cpp
       Runtime_Scheduler.cpp
       Scheduler_Utilities.cpp
