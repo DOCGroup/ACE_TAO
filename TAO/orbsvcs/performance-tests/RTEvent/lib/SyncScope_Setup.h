@@ -28,7 +28,7 @@ public:
   /// Constructor
   SyncScope_Setup (CORBA::ORB_ptr orb,
                    Messaging::SyncScope value = Messaging::SYNC_WITH_TARGET
-                   ACE_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Destructor
   /**
