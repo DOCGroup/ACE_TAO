@@ -82,7 +82,8 @@ Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   // initialize and register the corresponding valuefactory in the
   // component server.  Here, we are registering the valuefactory
   // explicitly to work around this problem.
-  char *argv[1] = { "Receiver_exec"};
+  char *argv[1];
+  argv[0] = "Receiver_exec";
   int argc = sizeof(argv)/sizeof(argv[0]);
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
