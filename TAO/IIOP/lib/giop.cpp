@@ -49,13 +49,12 @@
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Stream.h"
 
+#include "orb.h"
+
 #include "orbobj.h"
 #include "factories.h"
 
-#include <orb.h>
-
 #include "cdr.h"
-#include "debug.h"
 #include "giop.h"
 
 // defined by GIOP 1.0 protocol
@@ -159,8 +158,9 @@ GIOP::send_message (CDR &stream,
       writelen = peer.send ((char _FAR *) buf, buflen);
 
 #ifdef	DEBUG
-      dmsg_filter (6, "wrote %d bytes to connection %d",
-		   writelen, connection);
+      //      dmsg_filter (6, "wrote %d bytes to connection %d",
+      //	   writelen, connection);
+      dmsg_filter (6, "wrote %d bytes", writelen);
 #endif	// DEBUG
 
       assert ((writelen >= 0 
@@ -707,7 +707,7 @@ GIOP::Invocation::start (CORBA_Environment &env)
   static CORBA_Principal_ptr anybody = 0;
   static ServiceContextList svc_ctx;	// all zeroes
 
-  if (CDR::encoder (&TC_ServiceContextList, 0, &svc_ctx, &stream, env)
+  if (stream.encode (&TC_ServiceContextList, 0, &svc_ctx, env)
       != CORBA_TypeCode::TRAVERSE_CONTINUE)
     return;
 
@@ -718,15 +718,15 @@ GIOP::Invocation::start (CORBA_Environment &env)
       return;
     }
 
-  if (CDR::encoder (&TC_opaque,
+  if (stream.encode (&TC_opaque,
 		    key, 0, 
-		    &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || CDR::encoder (_tc_CORBA_String, 
+		    env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (_tc_CORBA_String, 
 		       &opname, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
-      || CDR::encoder (_tc_CORBA_Principal, 
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+      || stream.encode (_tc_CORBA_Principal, 
 		       &anybody, 0, 
-		       &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
+		       env) != CORBA_TypeCode::TRAVERSE_CONTINUE)
     return; // right after fault
   else
     return; // no fault reported
@@ -879,7 +879,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
   CORBA_ULong request_id;
   CORBA_ULong reply_status;		// GIOP::ReplyStatusType
 
-  if (CDR::decoder (&TC_ServiceContextList, &reply_ctx, 0, &stream, env)
+  if (stream.decode (&TC_ServiceContextList, &reply_ctx, 0, env)
       != CORBA_TypeCode::TRAVERSE_CONTINUE) 
     {
       send_error (handler_->peer());
@@ -993,7 +993,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 
 		exception = new (new char [size]) CORBA_Exception (*tcp);
 
-		if (CDR::decoder (*tcp, exception, 0, &stream, env)
+		if (stream.decode (*tcp, exception, 0, env)
 		    != CORBA_TypeCode::TRAVERSE_CONTINUE) 
 		  {
 		    delete exception;
@@ -1035,9 +1035,9 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 	// one of the facets of this object will be an IIOP invocation
 	// profile.
 
-	if (CDR::decoder (_tc_CORBA_Object, 
+	if (stream.decode (_tc_CORBA_Object, 
 			  &obj, 0, 
-			  &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+			  env) != CORBA_TypeCode::TRAVERSE_CONTINUE
 	    || obj->QueryInterface (IID_IIOP_Object, 
 				    (void **)&obj2) != NOERROR)
 	  {
@@ -1156,30 +1156,26 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	// security environment.  It may be required even when using
 	// IPSEC security infrastructure.
 
-	hdr_status = CDR::decoder (&TC_ServiceContextList,
+	hdr_status = msg.decode (&TC_ServiceContextList,
 				   &req.service_info,
 				   0, 
-				   &msg,
 				   env);
 
 	// Get the rest of the request header ...
 
 	hdr_status = hdr_status && msg.get_ulong (req.request_id);
 	hdr_status = hdr_status && msg.get_boolean (req.response_expected);
-	hdr_status = hdr_status && CDR::decoder (&TC_opaque, 
+	hdr_status = hdr_status && msg.decode (&TC_opaque, 
 						 &req.object_key,
 						 0, 
-						 &msg, 
 						 env);
-	hdr_status = hdr_status && CDR::decoder (_tc_CORBA_String,
+	hdr_status = hdr_status && msg.decode (_tc_CORBA_String,
 						 &req.operation,
 						 0,
-						 &msg,
 						 env);
-	hdr_status = hdr_status && CDR::decoder (_tc_CORBA_Principal,
+	hdr_status = hdr_status && msg.decode (_tc_CORBA_Principal,
 						 &req.requesting_principal,
 						 0,
-						 &msg,
 						 env);
 
 	// XXX check whether hdr_status identifies a header
@@ -1226,10 +1222,9 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
 		start_message (Reply, response);
 		resp_ctx.length = 0;
-		CDR::encoder (&TC_ServiceContextList,
+		response.encode (&TC_ServiceContextList,
 			      &resp_ctx,
 			      0,
-			      &response,
 			      env);
 		response.put_ulong (req.request_id);
 
@@ -1248,10 +1243,9 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 		  {
 		    ACE_DEBUG((LM_DEBUG, "(%P|%t) forwarding Request message\n"));
 		    response.put_ulong (LOCATION_FORWARD);
-		    CDR::encoder (_tc_CORBA_Object,
+		    response.encode (_tc_CORBA_Object,
 				  &fwd_ref,
 				  0, 
-				  &response, 
 				  env);
 		    CORBA_release (fwd_ref);
 		    (void) send_message (response, peer);
@@ -1264,10 +1258,9 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
 		    response.put_ulong (SYSTEM_EXCEPTION);
 
-		    (void) CDR::encoder (_tc_CORBA_OBJECT_NOT_EXIST,
+		    (void) response.encode (_tc_CORBA_OBJECT_NOT_EXIST,
 					 &exc,
 					 0,
-					 &response,
 					 env);
 
 		    (void) send_message (response, peer);
@@ -1290,10 +1283,9 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 
 	    start_message (Reply, response);
 	    resp_ctx.length = 0;
-	    CDR::encoder (&TC_ServiceContextList,
+	    response.encode (&TC_ServiceContextList,
 			  &resp_ctx,
 			  0,
-			  &response,
 			  env);
 	    response.put_ulong (req.request_id);
 
@@ -1320,7 +1312,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	opaque key;
 
 	msg.get_ulong (request_id);
-	CDR::decoder (&TC_opaque, &key, 0, &msg, env);
+	msg.decode (&TC_opaque, &key, 0, env);
 
 	// we've read the request header; send a LocateReply
 
@@ -1346,8 +1338,7 @@ GIOP::incoming_message (ACE_SOCK_Stream &peer,
 	    if (status == OBJECT_FORWARD) 
 	      {
 		ACE_DEBUG((LM_DEBUG, "LocateRequest response:  forward requests\n"));
-		CDR::encoder (_tc_CORBA_Object, &fwd_ref, 0,
-			      &response, env);
+		response.encode (_tc_CORBA_Object, &fwd_ref, 0, env);
 	      } 
 	    else if (status == OBJECT_HERE)
 	      ACE_DEBUG((LM_DEBUG, "LocateRequest response:  object is here!\n"));

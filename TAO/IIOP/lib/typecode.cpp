@@ -19,42 +19,48 @@
 #include <assert.h>
 #include <limits.h>
 #include <string.h>
-#include <orb.h>
-
-#include "debug.h"
-#include "cdr.h"
 
 #if !defined (VXWORKS)
 #include <memory.h>
 #endif
 #include <sys/types.h>
 
+#include "orb.h"
+#include "cdr.h"
 #include <initguid.h>
 
+size_t calc_key_union_attributes(CDR *stream,
+				     size_t &alignment,
+				     size_t &size_with_pad,
+				     CORBA_Environment	&env);
 
-void
-CORBA_release (CORBA_TypeCode_ptr tc)
-{
-  if (tc)
-    tc->Release ();
-}
 
-CORBA_Boolean
-CORBA_is_nil (CORBA_TypeCode_ptr tc)
-{
-  return (CORBA_Boolean) tc == 0;
-}
-
-// Constructor for CONSTANT typecodes with empty parameter lists.
-// These are only created once, and those constants are shared.
-
-CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind)
-  : _length (0),
-    _buffer (0),
-    _kind (kind),
-    _parent (0),
-    _refcount (1),
-    _orb_owns (CORBA_B_FALSE)
+// constructor for the private state
+TC_PRV_State::TC_PRV_State()
+  : tc_id_known_(CORBA_B_FALSE),
+    tc_name_known_(CORBA_B_FALSE),
+    tc_member_count_known_(CORBA_B_FALSE),
+    tc_member_type_list_known_(CORBA_B_FALSE),
+    tc_member_label_list_known_(CORBA_B_FALSE),
+    tc_discriminator_type_known_(CORBA_B_FALSE),
+    tc_default_index_used_known_(CORBA_B_FALSE),
+    tc_length_known_(CORBA_B_FALSE),
+    tc_content_type_known_(CORBA_B_FALSE),
+    tc_size_known_(CORBA_B_FALSE),
+    tc_alignment_known_(CORBA_B_FALSE),
+    tc_discrim_pad_size_known_(CORBA_B_FALSE),
+    tc_id_(0),
+    tc_name_(0),
+    tc_member_count_(0),
+    tc_member_type_list_(0),
+    tc_member_label_list_(0),
+    tc_discriminator_type_(0),
+    tc_default_index_used_ (0),
+    tc_length_(0),
+    tc_content_type_(0),
+    tc_size_(0),
+    tc_alignment_(0),
+    tc_discrim_pad_size_(0)
 {
 }
 
@@ -70,7 +76,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind,
     _kind (kind),
     _parent (0),
     _refcount (1),
-    _orb_owns (orb_owns_tc)
+    _orb_owns (orb_owns_tc),
+    _prv_state (new TC_PRV_State)
 {
   // The CDR code used to interpret TypeCodes requires in-memory
   // alignments to match the "on-the-wire" alignments, simplifying
@@ -95,21 +102,22 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind,
       temp &= ~0x03;
       _buffer = (CORBA_Octet *) temp;
 
- (void) ACE_OS::memcpy (_buffer, buffer, (size_t) length);
+      (void) ACE_OS::memcpy (_buffer, buffer, (size_t) length);
       _orb_owns = CORBA_B_FALSE;	// XXX may leak
     }
 }
 
-// Destructor.  For "indirected" typecodes, the typecode reuses the
-// buffer owned by its parent, and so rather than deleting the buffer
-// it just drops the parent's refcount.
-
-CORBA_TypeCode::~CORBA_TypeCode (void)
+// decreases the refcount and deletes when refcount reaches 0
+void CORBA_release (CORBA_TypeCode_ptr tc)
 {
-  if (_parent)
-    _parent->Release ();
-  else if (_orb_owns)
-    delete _buffer;
+  if (tc)
+    tc->Release ();
+}
+
+// returns true if the typecode is NULL
+CORBA_Boolean CORBA_is_nil (CORBA_TypeCode_ptr tc)
+{
+  return (CORBA_Boolean) tc == 0;
 }
 
 // COM's IUnknown support
@@ -118,6 +126,7 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 DEFINE_GUID (IID_CORBA_TypeCode,
 0xa201e4c1, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
+// COM stuff
 ULONG __stdcall
 CORBA_TypeCode::AddRef (void)
 {
@@ -126,6 +135,7 @@ CORBA_TypeCode::AddRef (void)
   return _refcount++;
 }
 
+// COM stuff
 ULONG __stdcall
 CORBA_TypeCode::Release (void)
 {
@@ -140,6 +150,7 @@ CORBA_TypeCode::Release (void)
   return 0;
 }
 
+// COM stuff
 HRESULT __stdcall
 CORBA_TypeCode::QueryInterface (REFIID riid,
 				void **ppv)
@@ -156,134 +167,640 @@ CORBA_TypeCode::QueryInterface (REFIID riid,
   return NOERROR;
 }
 
-// just fetch the 'kind' field out of the typecode
-
-CORBA_TCKind
-CORBA_TypeCode::kind (CORBA_Environment	&env) const
+CORBA_Boolean
+CORBA_TypeCode::prv_equal(CORBA_TypeCode_ptr tc, CORBA_Environment &env) const
 {
-  env.clear ();
-  return _kind;
+  // We come in here only if the typecode kinds of both are same
+  // Handle each complex typecode separately
+  switch (_kind)
+    {
+    case tk_null:
+    case tk_void:
+    case tk_short:
+    case tk_ushort:
+    case tk_long:
+    case tk_ulong:
+    case tk_float:
+    case tk_double:
+    case tk_longlong:
+    case tk_longdouble:
+    case tk_boolean:
+    case tk_octet:
+    case tk_char:
+    case tk_wchar:
+    case tk_TypeCode:
+    case tk_Principal:
+      // all these are simple typecodes and the comparison is based solely on
+      // the _kind field
+      return CORBA_B_TRUE;
+    case tk_objref:
+      //      return prv_equal_objref(tc, env);
+    case tk_struct:
+      //      return prv_equal_struct(tc, env);
+    case tk_union:
+      //      return prv_equal_union(tc, env);
+    case tk_enum:
+      //      return prv_equal_enum(tc, env);
+    case tk_string:
+      //      return prv_equal_string(tc, env);
+    case tk_wstring:
+      //      return prv_equal_string(tc, env);
+    case tk_sequence:
+      //      return prv_equal_sequence(tc, env);
+    case tk_array:
+      //      return prv_equal_array(tc, env);
+    case tk_alias:
+      //      return prv_equal_alias(tc, env);
+    case tk_except:
+      //      return prv_equal_except(tc, env);
+      // Not implemented yet
+      return CORBA_B_FALSE;
+    }
 }
 
-// skip a typecode encoding in a given CDR stream
-
-static CORBA_Boolean
-skip_typecode (CDR &stream)
+// Return the type ID (RepositoryId) for the TypeCode; it may be empty.
+//
+// NOTE the string returned here is owned by the typecode!!
+//
+// Valid only for objref, struct, union, enum, alias, and except. Raises
+// BadKind exception for the rest of the cases.
+const CORBA_String
+CORBA_TypeCode::prv_id (CORBA_Environment &env) const
 {
-  CORBA_ULong kind;
-  CORBA_ULong temp;
+  env.clear ();
 
-  if (!stream.get_ulong (kind) || kind >= TC_KIND_COUNT)
-    return CORBA_B_FALSE;
-
-  switch (kind) 
+  switch (_kind) 
     {
-      // Most TypeCodes have empty parameter lists, nothing to skip
-    default:
-      break;
+      // These are all complex typecodes, which have as their first
+      // parameter (number zero) a repository/type ID string encoded
+      // per CDR rules.  That means we can just return a pointer to
+      // that string directly!
 
-      // Some have single integer parameters, easy to skip.  Some have
-      // preallocated constants that could be used.
-    case tk_string:
-    case tk_wstring:
-    case ~0:
-      return stream.get_ulong (temp);
-
-      // The rest have "complex" parameter lists that are
-      // encoded as bulk octets ... just skip them.
     case tk_objref:
     case tk_struct:
     case tk_union:
     case tk_enum:
-    case tk_sequence:
-    case tk_array:
     case tk_alias:
     case tk_except:
-      return stream.get_ulong (temp) != CORBA_B_FALSE
-	&& stream.skip_bytes (temp) != CORBA_B_FALSE;
+      _prv_state->tc_id_known_ = CORBA_B_TRUE;
+      _prv_state->tc_id_ = (CORBA_String) (_buffer
+					   + 4		// skip byte order flag and padding
+					   + 4		// skip (strlen + 1)
+					   );
+      return _prv_state->tc_id_;
+      // No other typecodes ever have type IDs
+    default:
+      env.exception (new CORBA_BadKind ());
+      return 0;
     }
-
-  return CORBA_B_TRUE;
 }
 
+// return the name. The string is owned by the typecode
+const CORBA_String
+CORBA_TypeCode::prv_name (CORBA_Environment &env) const
+{
+  env.clear ();
+
+  switch (_kind) 
+    {
+      // These are all complex typecodes, which have as their second
+      // parameter (number one) a name string encoded
+      // per CDR rules.  That means we can just return a pointer to
+      // that string directly!
+
+    case tk_objref:
+    case tk_struct:
+    case tk_union:
+    case tk_enum:
+    case tk_alias:
+    case tk_except:
+      {
+	CORBA_ULong len;
+	CDR stream;
+
+	stream.setup_encapsulation (_buffer, (size_t)_length);
+
+	// skip the typecode ID
+	if (stream.skip_string ())  // ID
+	  {
+	    _prv_state->tc_name_known_ = CORBA_B_TRUE;
+	    _prv_state->tc_name_ = (CORBA_String)(stream.next
+						  +
+						  CDR::LONG_SIZE);  // skip past the length field
+	    return _prv_state->tc_name_;
+	  }
+	else
+	  {
+	    env.exception(new CORBA_INTERNAL(COMPLETED_NO));
+	    return (CORBA_String)0;
+	  }
+	// No other typecodes ever have type IDs
+      }
+    break;
+    default:
+      env.exception (new CORBA_BadKind ());
+      return 0;
+    }
+}
+
+// Return the number of members defined by this typecode
+//
+// Applicable to struct, union, enum, alias, and except
+// For the rest of the cases, raises the BadKind exception.
+
+CORBA_ULong
+CORBA_TypeCode::prv_member_count (CORBA_Environment &env) const
+{
+  env.clear ();
+
+  switch (_kind) 
+    {
+    case tk_alias:
+      //      tc_member_count_known_ = CORBA_B_TRUE;
+      //tc_member_count_ = 1;
+      return 1;
+
+    case tk_enum:
+    case tk_except:
+    case tk_struct:
+      {
+	CORBA_ULong members;
+	CDR stream;
+
+	stream.setup_encapsulation (_buffer, (size_t)_length);
+
+	// skip rest of header (type ID and name) and collect the
+	// number of struct members
+	if (!stream.skip_string ()	    	    // ID
+	    || !stream.skip_string ()  	    // struct name
+	    || !stream.get_ulong (members)) 
+	  {
+	    env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+	    return 0;
+	  }
+
+	_prv_state->tc_member_count_known_ = CORBA_B_TRUE;
+	_prv_state->tc_member_count_ = members;
+	return _prv_state->tc_member_count_;
+      }
+    case tk_union:
+      {
+	CORBA_ULong members;
+	CDR stream;
+
+	stream.setup_encapsulation (_buffer, (size_t) _length);
+
+	// skip rest of header (type ID, name, etc...) and collect the
+	// number of struct members
+	if (!stream.skip_string ()			// ID
+	    || !stream.skip_string ()		// struct name
+	    || !skip_typecode (stream)		// discriminant TC
+	    || !stream.get_ulong (members)	// default used
+	    || !stream.get_ulong (members))	// real member count
+	  {
+	    // this is a system exception indicating something is wrong with
+	    // the typecode itself.
+	    env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+	    return 0;
+	  }
+
+	_prv_state->tc_member_count_known_ = CORBA_B_TRUE;
+	_prv_state->tc_member_count_ = members;
+	return _prv_state->tc_member_count_;
+      }
+    default:
+      env.exception(new CORBA_BadKind());
+      return 0;
+    }
+}
+
+// Return the name for the nth member
+// Applicable only to tk_struct, tk_union, and tk_except
+const CORBA_String 
+CORBA_TypeCode::member_name(CORBA_ULong index, CORBA_Environment &env) const
+{
+  return 0;
+}
+
+// NOTE special calling convention for stream.decode () when we're
+// potentially deencapsulating an indirected typecode: the "data2"
+// value indicates that this typecode is the parent.  See comments at
+// stream.decode () for further details.
+//
+// Applicable only to struct, union, and except
+//
+
+CORBA_TypeCode_ptr
+CORBA_TypeCode::prv_member_type (CORBA_ULong index, CORBA_Environment &env) const
+{
+  CORBA_ULong temp, mcount;
+
+  // Build the de-encapsulating CDR stream, bypassing the stringent
+  // alignment tests (we're a bit looser in what we need here, and we
+  // _know_ we're OK).  Then skip the byte order code.
+  CDR stream;
+  CORBA_TypeCode_ptr tc = 0;
+
+  stream.setup_encapsulation (_buffer, (size_t)_length);
+
+  switch (_kind) 
+    {
+    case tk_except:
+    case tk_struct:		// index from 0
+      mcount = member_count (env);		// clears env
+      if (env.exception () == 0)
+	{
+	  // the first time in. Precompute and store types of all members
+	  _prv_state->tc_member_type_list_ = new CORBA_TypeCode_ptr [mcount];
+	  if (_prv_state->tc_member_type_list_)
+	    {
+	      // skip the id, name, and member_count part
+	      if (!stream.skip_string ()		// type ID, hidden
+		  || !stream.skip_string ()	// typedef name
+		  || !stream.get_ulong (temp)) 
+		{ 	// member count
+		  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+		  return (CORBA_TypeCode_ptr)0;
+		} 
+	      else 
+		{
+		  CORBA_ULong i;
+
+		  // compute the typecodes for all the members and return the
+		  // required one
+		  for (i = 0; i < mcount; i++) 
+		    {
+		      // the ith entry will have the typecode of the ith guy
+		      if (!stream.skip_string ()  // skip the name
+			  || stream.decode (_tc_CORBA_TypeCode,
+					    &_prv_state->tc_member_type_list_[i],
+					    this, env) !=
+			  CORBA_TypeCode::TRAVERSE_CONTINUE) 
+			{
+			  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+			  return 0;
+			}
+		    }
+		  _prv_state->tc_member_type_list_known_ = CORBA_B_TRUE;
+		  if (index >= 0 && index < mcount)
+		    {
+		      return CORBA_TypeCode::_duplicate(_prv_state->tc_member_type_list_[index]);
+		    }
+		  else
+		    {
+		      env.exception(new CORBA_Bounds());
+		      return (CORBA_TypeCode_ptr)0;
+		    }
+		}
+	    }
+	  else  // no memory for the member_list
+	    {
+	      env.exception(new CORBA_NO_MEMORY(COMPLETED_NO));
+	      return (CORBA_TypeCode_ptr)0;
+	    }
+	}
+      else // out of bounds
+	{
+	  env.exception (new CORBA_Bounds());
+	  return (CORBA_TypeCode_ptr)0;
+	}
+    case tk_union:            // index from 0
+      mcount = member_count (env);		// clears env
+      if (env.exception () == 0)
+	{
+	  // the first time in. Precompute and store types of all members
+	  _prv_state->tc_member_type_list_ = new CORBA_TypeCode_ptr [mcount];
+	  if (_prv_state->tc_member_type_list_)
+	    {
+	      // skip the id, name, and discrimant type part
+	      if (!stream.skip_string ()		// type ID, hidden
+		  || !stream.skip_string ()	// typedef name
+		  || stream.decode (_tc_CORBA_TypeCode,
+				    &tc, this,
+				    env) != CORBA_TypeCode::TRAVERSE_CONTINUE)  // TC
+		{ 	// member count
+		  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+		  return (CORBA_TypeCode_ptr)0;
+		} 
+	      else if (!stream.get_ulong (temp)	// default used
+		       || !stream.get_ulong (temp))	// member count
+		{
+		  tc->Release ();
+		  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+		  return 0;
+		}
+	      else  
+		{
+		  CORBA_ULong i;
+		  CORBA_Long scratch; // always big enough
+		  // compute the typecodes for all the members and return the
+		  // required one
+		  for (i = 0; i < temp; i++) 
+		    {
+		      // the ith entry will have the typecode of the ith guy
+		      if (stream.decode (tc, &scratch, this,  env) // member label
+			  != CORBA_TypeCode::TRAVERSE_CONTINUE
+			  || !stream.skip_string ()  // skip the name
+			  || stream.decode (_tc_CORBA_TypeCode,  // get the typecode
+					    &_prv_state->tc_member_type_list_[i],
+					    this, env) !=
+			  CORBA_TypeCode::TRAVERSE_CONTINUE)
+			{
+			  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+			  return 0;
+			}
+		    }
+		  _prv_state->tc_member_type_list_known_ = CORBA_B_TRUE;
+		  if (index >= 0 && index < mcount)
+		    {
+		      return CORBA_TypeCode::_duplicate(_prv_state->tc_member_type_list_[index]);
+		    }
+		  else
+		    {
+		      env.exception(new CORBA_Bounds());
+		      return (CORBA_TypeCode_ptr)0;
+		    }
+		}
+	    }
+	  else  // no memory for the member_list
+	    {
+	      env.exception(new CORBA_NO_MEMORY(COMPLETED_NO));
+	      return (CORBA_TypeCode_ptr)0;
+	    }
+	}
+      else // out of bounds
+	{
+	  env.exception (new CORBA_Bounds());
+	  return (CORBA_TypeCode_ptr)0;
+	}
+
+    default:
+      // bad kind
+      env.exception(new CORBA_BadKind());
+      return (CORBA_TypeCode_ptr)0;
+    }
+}
 
 // Return member labels for tk_union typecodes.
-
 CORBA_Any_ptr
-CORBA_TypeCode::member_label (CORBA_ULong n,
+CORBA_TypeCode::prv_member_label (CORBA_ULong n,
 			      CORBA_Environment &env) const
 {
   env.clear ();
 
+  // this function is only applicable to the tk_union TC
+  if (_kind == tk_union)
+    {
+      CDR stream;
+
+      stream.setup_encapsulation (_buffer, (size_t)_length);
+
+      // skip ID and name, and then get the discriminant TC
+      CORBA_TypeCode_ptr    tc = 0;
+
+      if (!stream.skip_string ()		// type ID, hidden
+	  || !stream.skip_string ()	// typedef name
+	  || stream.decode (_tc_CORBA_TypeCode, &tc, this,  env)
+	  != CORBA_TypeCode::TRAVERSE_CONTINUE) {
+	env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+	return 0;
+      }
+
+      // skip default used, and get member count
+      CORBA_ULong member_count;
+
+      if (!stream.get_ulong (member_count)	// default used
+	  || !stream.get_ulong (member_count)) 
+	{
+	  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+	  dmsg ("TypeCode::prv_member_label -- error reading from stream");
+	  return 0;
+	}
+
+      _prv_state->tc_member_label_list_ = new CORBA_Any_ptr [member_count];
+      if (_prv_state->tc_member_label_list_)
+	{
+	  for (CORBA_ULong i = 0; i < member_count; i++) 
+	    {
+	      // allocate buffer to hold the member label value
+	      void *buf = new CORBA_Octet [tc->size (env)];
+	      if (stream.decode (tc, buf, this,  env)
+		  != CORBA_TypeCode::TRAVERSE_CONTINUE
+		  || !stream.skip_string ()   	    // member name
+		  || !skip_typecode (stream)) // member type
+		{	    // member TC
+		  dmsg1("TypeCode::prv_member_label -- error getting typecode\
+for member %d",i);
+		  delete [] buf;
+		  // XXX-Andy: free this list on error
+		  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+		  return 0;
+		}
+	      else
+		{
+		  _prv_state->tc_member_label_list_[i] = new CORBA_Any (tc, buf, CORBA_B_TRUE);
+		}
+	    }
+	}
+      else
+	{
+	  env.exception(new CORBA_NO_MEMORY(COMPLETED_NO));
+	  return 0;
+	}
+
+      _prv_state->tc_member_label_list_known_ = CORBA_B_TRUE;
+      tc->Release ();
+
+      // If caller asked for the label for a nonexistent member, they get
+      // an error report!
+      if (n >= member_count)  
+	{
+	  env.exception (new CORBA_Bounds ());
+	  return 0;
+	}
+      else
+	{
+	  return _prv_state->tc_member_label_list_[n];
+	}
+    }
+  else // wrong typecode
+    {
+      env.exception(new CORBA_BadKind());
+      return 0;
+    }
+}
+
+CORBA_TypeCode_ptr 
+CORBA_TypeCode::prv_discriminator_type(CORBA_Environment &env) const
+{
   CDR stream;
+  
+  stream.setup_encapsulation (_buffer, (size_t)_length);
+
+  // skip ID and name, and then get the discriminant TC
+  
+  if (!stream.skip_string ()		// type ID, hidden
+      || !stream.skip_string ()	        // typedef name
+      || stream.decode (_tc_CORBA_TypeCode,
+			&_prv_state->tc_discriminator_type_, this,  env) !=
+      CORBA_TypeCode::TRAVERSE_CONTINUE) 
+    {
+      env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
+      return 0;
+    }
+  else
+    {
+      _prv_state->tc_discriminator_type_known_ = CORBA_B_TRUE;
+      return CORBA_TypeCode::_duplicate(_prv_state->tc_discriminator_type_);
+    }
+}
+
+CORBA_Long
+CORBA_TypeCode::prv_default_index (CORBA_Environment &env) const
+{
+  CDR stream;
+  CORBA_TypeCode_ptr tc = 0;
 
   stream.setup_encapsulation (_buffer, (size_t)_length);
 
-  // this function is only applicable to the tk_union TC
-  if (_kind != tk_union) 
-    {
-      env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
-      return 0;
-    }
-
   // skip ID and name, and then get the discriminant TC
-  CORBA_TypeCode_ptr    tc = 0;
-
+  
   if (!stream.skip_string ()		// type ID, hidden
-      || !stream.skip_string ()	// typedef name
-      || CDR::decoder (_tc_CORBA_TypeCode, &tc, this, &stream, env)
-      != CORBA_TypeCode::TRAVERSE_CONTINUE) {
-    env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
-    return 0;
-  }
-
-  // skip default used, and get member count
-  CORBA_ULong member_count;
-
-  if (!stream.get_ulong (member_count)	// default used
-      || !stream.get_ulong (member_count)) 
+      || !stream.skip_string ()	        // typedef name
+      || stream.decode (_tc_CORBA_TypeCode,
+			&tc, this,  env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+      || !stream.get_long(_prv_state->tc_default_index_used_))
+      
     {
       env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
       return 0;
     }
-
-  // If caller asked for the label for a nonexistent member, they get
-  // an error report!
-  if (n >= member_count) 
+  else
     {
-      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+      _prv_state->tc_default_index_used_known_ = CORBA_B_TRUE;
+      return _prv_state->tc_default_index_used_;
+    }
+}
+
+CORBA_Long
+CORBA_TypeCode::prv_length (CORBA_Environment &env) const
+{
+  CDR stream;
+  CORBA_TypeCode_ptr tc = 0;
+
+  stream.setup_encapsulation (_buffer, (size_t)_length);
+  switch (_kind)
+    {
+    case tk_sequence:
+    case tk_array:
+      {
+	// skip the typecode of the element and get the bounds
+	if (stream.decode (_tc_CORBA_TypeCode, &tc, this,  env) !=
+	    CORBA_TypeCode::TRAVERSE_CONTINUE // skip typecode
+	    || !stream.get_ulong(_prv_state->tc_length_))
+	  {
+	    env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+	    return 0;
+	  }
+	else
+	  {
+	    _prv_state->tc_length_known_ = CORBA_B_TRUE;
+	    return _prv_state->tc_length_;
+	  }
+	break;
+      case tk_string:
+      case tk_wstring:
+	{
+	  if (stream.get_ulong(_prv_state->tc_length_))
+	    {
+	      _prv_state->tc_length_known_ = CORBA_B_TRUE;
+	      return _prv_state->tc_length_;
+	    }
+	  else
+	    {
+	      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+	      return 0;
+	    }
+	}
+      default:
+	env.exception (new CORBA_BadKind);
+	return 0;
+      }
+    }
+}
+
+CORBA_TypeCode_ptr
+CORBA_TypeCode::prv_content_type (CORBA_Environment &env) const
+{
+  CDR stream;
+  CORBA_TypeCode_ptr tc = 0;
+
+  stream.setup_encapsulation (_buffer, (size_t)_length);
+  switch (_kind)
+    {
+    case tk_sequence:
+    case tk_array:
+      {
+	// skip the typecode of the element and get the bounds
+	if (stream.decode (_tc_CORBA_TypeCode, &_prv_state->tc_content_type_,
+			   this,  env) != 
+	    CORBA_TypeCode::TRAVERSE_CONTINUE) // element type
+	  {
+	    env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+	    return 0;
+	  }
+	else
+	  {
+	    _prv_state->tc_content_type_known_ = CORBA_B_TRUE;
+	    return CORBA_TypeCode::_duplicate(_prv_state->tc_content_type_);
+	  }
+	break;
+      case tk_alias:
+	{
+	  if (!stream.skip_string()  // typeID
+	      || !stream.skip_string() // name
+	      || stream.decode (_tc_CORBA_TypeCode,
+				&_prv_state->tc_content_type_, this,  env) != 
+	      CORBA_TypeCode::TRAVERSE_CONTINUE)
+	    {
+	      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+	      return 0;
+	    }
+	  else
+	    {
+	      _prv_state->tc_content_type_known_ = CORBA_B_TRUE;
+	      return CORBA_TypeCode::_duplicate(_prv_state->tc_content_type_);
+	    }
+	}
+      default:
+	env.exception (new CORBA_BadKind);
+	return 0;
+      }
+    }
+}
+
+CORBA_ULong
+CORBA_TypeCode::prv_discrim_pad_size (CORBA_Environment &env)
+{
+  CDR stream;
+  size_t discrim_size,
+    overall_align;
+
+  stream.setup_encapsulation (_buffer, (size_t)_length);
+
+  (void) calc_key_union_attributes (&stream, overall_align, discrim_size, env);
+  if (env. exception () == 0)
+    {
+      _prv_state->tc_discrim_pad_size_known_ = CORBA_B_TRUE;
+      _prv_state->tc_discrim_pad_size_ = discrim_size;
+      return discrim_size;
+    }
+  else
+    {
       return 0;
     }
-
-  // Get the n-th member label; they're all the same size and have no
-  // nested pointers, so we just overwrite each one with the enxt
-  // parameter.
-
-  void *buf = new CORBA_Octet [tc->size (env)];
-
-  if (env.exception () != 0)
-    return 0;
-
-  for (CORBA_ULong i = 0; i <= n; i++) 
-    {
-      if (CDR::decoder (tc, buf, this, &stream, env)
-	  != CORBA_TypeCode::TRAVERSE_CONTINUE
-	  || !stream.skip_string ()   	    // member name
-	  || !skip_typecode (stream)) 
-	{	    // member TC
-	  delete [] buf;
-	  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
-	  return 0;
-	}
-    }
-
-  // return the member label as an any
-  CORBA_Any *retval;
-
-  retval = new CORBA_Any (tc, buf, CORBA_B_TRUE);
-  tc->Release ();
-  return retval;
 }
+// ************ The following are deprecated ****************
 
 // say how many parameters this typecode has; normally a fixed number,
 // some are variable length.
@@ -445,10 +962,10 @@ CORBA_TypeCode::ulong_param (CORBA_ULong n,
 // Internal hack, used until member_type (), discriminator_type (),
 // and content_type () are implemented.
 //
-// NOTE special calling convention for CDR::decoder () when we're
+// NOTE special calling convention for stream.decode () when we're
 // potentially deencapsulating an indirected typecode: the "data2"
 // value indicates that this typecode is the parent.  See comments at
-// CDR::decoder () for further details.
+// stream.decode () for further details.
 
 CORBA_TypeCode_ptr
 CORBA_TypeCode::typecode_param (CORBA_ULong n,
@@ -484,9 +1001,9 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
     case tk_array:
       if (n != 0)
 	break;
-      if (CDR::decoder (_tc_CORBA_TypeCode,
+      if (stream.decode (_tc_CORBA_TypeCode,
 			&tc, this,
-			&stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE) 
+			 env) != CORBA_TypeCode::TRAVERSE_CONTINUE) 
 	{
 	  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
 	  return 0;
@@ -498,7 +1015,7 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 	break;
       if (!stream.skip_string ()		// type ID, hidden
 	  || !stream.skip_string ()	// typedef name
-	  || CDR::decoder (_tc_CORBA_TypeCode, &tc, this, &stream, env)
+	  || stream.decode (_tc_CORBA_TypeCode, &tc, this,  env)
 	  != CORBA_TypeCode::TRAVERSE_CONTINUE) 
 	{
 	  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
@@ -538,7 +1055,7 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 	    }
 
 	  if (!stream.skip_string ()
-	      || CDR::decoder (_tc_CORBA_TypeCode, &tc, this, &stream,
+	      || stream.decode (_tc_CORBA_TypeCode, &tc, this, 
 			       env)!= CORBA_TypeCode::TRAVERSE_CONTINUE) 
 	    {
 	      env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
@@ -556,9 +1073,9 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 
       if (!stream.skip_string ()		// type ID, hidden
 	  || !stream.skip_string ()	// typedef name
-	  || CDR::decoder (_tc_CORBA_TypeCode,
+	  || stream.decode (_tc_CORBA_TypeCode,
 			   &tc, this,
-			   &stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE)  // TC
+			    env) != CORBA_TypeCode::TRAVERSE_CONTINUE)  // TC
 	{
 	  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
 	  return 0;
@@ -583,7 +1100,7 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 
       for (i = 0; i < temp; i++) 
 	{
-	  if (CDR::decoder (tc, &scratch, this, &stream, env) // member label
+	  if (stream.decode (tc, &scratch, this,  env) // member label
 	      != CORBA_TypeCode::TRAVERSE_CONTINUE
 	      || !stream.skip_string ()		// member name
 	      || !skip_typecode (stream)) 
@@ -595,9 +1112,9 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 	}
 
       // member label
-      if (CDR::decoder (tc, 
+      if (stream.decode (tc, 
 			&scratch, this,
-			&stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE
+			 env) != CORBA_TypeCode::TRAVERSE_CONTINUE
 	  || !stream.skip_string ())		// member name
 	{
 	  tc->Release ();
@@ -606,9 +1123,9 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
 	}
       tc->Release ();
 
-      if (CDR::decoder (_tc_CORBA_TypeCode,
+      if (stream.decode (_tc_CORBA_TypeCode,
 			&tc, this,
-			&stream, env) != CORBA_TypeCode::TRAVERSE_CONTINUE) 
+			 env) != CORBA_TypeCode::TRAVERSE_CONTINUE) 
 	{
 	  env.exception (new CORBA_BAD_TYPECODE (COMPLETED_NO));
 	  return 0;
@@ -620,37 +1137,50 @@ CORBA_TypeCode::typecode_param (CORBA_ULong n,
   return 0;
 }
 
-// Return the type ID (RepositoryId) for the TypeCode; it may be empty.
-//
-// NOTE the string returned here is owned by the typecode!!
-
-CORBA_String
-CORBA_TypeCode::id (CORBA_Environment &env) const
+// skip a typecode encoding in a given CDR stream
+// This is just a helper function
+CORBA_Boolean 
+CORBA_TypeCode::skip_typecode (CDR &stream)
 {
-  env.clear ();
+  CORBA_ULong kind;
+  CORBA_ULong temp;
 
-  switch (_kind) 
+  if (stream.get_ulong (kind) && (kind < TC_KIND_COUNT || kind == ~0))
     {
-      // These are all complex typecodes, which have as their first
-      // parameter (number zero) a repository/type ID string encoded
-      // per CDR rules.  That means we can just return a pointer to
-      // that string directly!
 
-    case tk_objref:
-    case tk_struct:
-    case tk_union:
-    case tk_enum:
-    case tk_alias:
-    case tk_except:
-      return (CORBA_String) (_buffer
-			     + 4		// skip byte order flag and padding
-			     + 4		// skip (strlen + 1)
-			     );
+      switch (kind) 
+	{
+	  // Most TypeCodes have empty parameter lists, nothing to skip
+	default:
+	  break;
 
-      // No other typecodes ever have type IDs
-    default:
-      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
-      return 0;
+	  // Some have single integer parameters, easy to skip.  Some have
+	  // preallocated constants that could be used.
+	case tk_string:
+	case tk_wstring:
+	case ~0:
+	  return stream.get_ulong (temp);
+
+	  // The rest have "complex" parameter lists that are
+	  // encoded as bulk octets ... just skip them.
+	case tk_objref:
+	case tk_struct:
+	case tk_union:
+	case tk_enum:
+	case tk_sequence:
+	case tk_array:
+	case tk_alias:
+	case tk_except:
+	  return stream.get_ulong (temp) != CORBA_B_FALSE
+	    && stream.skip_bytes (temp) != CORBA_B_FALSE;
+	}
+
+      return CORBA_B_TRUE;
+    }
+  else
+    {
+      return CORBA_B_FALSE;
     }
 }
+
 

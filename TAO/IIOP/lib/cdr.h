@@ -48,13 +48,15 @@
 #include <assert.h>
 #include "ace/OS.h"
 
+#include	"align.h"
+
 #if defined(__IIOP_BUILD)
 #  include "orb.h"
+#  include "marshal.h"
 #else
 #  include <corba/orb.h>
+#  include <marshal.h>
 #endif
-
-#include	<align.h>
 
 // Identify byte order ... this is basically dependent on processor,
 // but some processors support different byte orders (e.g. MIPS,
@@ -148,7 +150,6 @@ struct ACE_Svc_Export CDR
     // frames as large as the system page size (often 4Kb) can easily
     // overrun the "redzone" at the bottom of most VM-based stacks.
   };
-
   // = ENCODING SUPPORT 
 
   // Adjust pointers as needed, then store in the native byte order.
@@ -158,26 +159,53 @@ struct ACE_Svc_Export CDR
   // plus the interpretive encoder.
 
   CORBA_Boolean put_byte (char c);
-  CORBA_Boolean put_short (CORBA_Short s);
-  CORBA_Boolean put_long (CORBA_Long l);
-  CORBA_Boolean put_longlong (const CORBA_LongLong &ll);
-  CORBA_Boolean put_char (CORBA_Char c);
-  CORBA_Boolean put_wchar (CORBA_WChar wc);
-  CORBA_Boolean put_boolean (CORBA_Boolean b);
-  CORBA_Boolean	put_octet (CORBA_Octet o);
-  CORBA_Boolean	put_ushort (CORBA_UShort s);
-  CORBA_Boolean	put_ulong (CORBA_ULong l);
-  CORBA_Boolean	put_ulonglong (const CORBA_ULongLong &ll);
-  CORBA_Boolean	put_float (float f);
-  CORBA_Boolean	put_double (const double &d);
-  CORBA_Boolean put_longdouble (CORBA_LongDouble &ld);
+  // encode a byte in the CDR stream
 
-  static CORBA_TypeCode::traverse_status encoder (CORBA_TypeCode_ptr tc,
+  CORBA_Boolean put_short (CORBA_Short s);
+  // encode a short in the CDR stream
+
+  CORBA_Boolean put_long (CORBA_Long l);
+  // encode a long into the CDR stream
+
+  CORBA_Boolean put_longlong (const CORBA_LongLong &ll);
+  // encode a longlong into the CDR stream
+
+  CORBA_Boolean put_char (CORBA_Char c);
+  // encode a char into the CDR stream
+
+  CORBA_Boolean put_wchar (CORBA_WChar wc);
+  // encode a wide char into the CDR stream
+
+  CORBA_Boolean put_boolean (CORBA_Boolean b);
+  // encode a boolean into the CDR stream
+
+  CORBA_Boolean	put_octet (CORBA_Octet o);
+  // encode a octet into the CDR stream
+
+  CORBA_Boolean	put_ushort (CORBA_UShort s);
+  // encode an unsigned short  into the CDR stream
+
+  CORBA_Boolean	put_ulong (CORBA_ULong l);
+  // encode an unsigned long into the CDR stream
+
+  CORBA_Boolean	put_ulonglong (const CORBA_ULongLong &ll);
+  // encode an unsigned longlong into the CDR stream
+
+  CORBA_Boolean	put_float (float f);
+  // encode a float into the CDR stream
+
+  CORBA_Boolean	put_double (const double &d);
+  // encode a double into the CDR stream
+
+  CORBA_Boolean put_longdouble (CORBA_LongDouble &ld);
+  // encode a longdouble into the CDR stream
+
+
+  CORBA_TypeCode::traverse_status encode (CORBA_TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  void *context,
                                                   CORBA_Environment &env);
-  // Marshaling interpreter ... <context> really points to a <CDR>.
+  // Marshaling. ... <context> really points to a <CDR>.
 
   // = DECODING SUPPORT 
 
@@ -186,34 +214,76 @@ struct ACE_Svc_Export CDR
   // do it that way than to use virtual functions.
 
   CORBA_Boolean get_byte (char &c);
-  CORBA_Boolean get_short (CORBA_Short &s);
-  CORBA_Boolean get_long (CORBA_Long &l);
-  CORBA_Boolean get_longlong (CORBA_LongLong &ll);
-  CORBA_Boolean get_char (CORBA_Char &o);
-  CORBA_Boolean get_wchar (CORBA_WChar &wc);
-  CORBA_Boolean get_boolean (CORBA_Boolean &b);
-  CORBA_Boolean	get_octet (CORBA_Octet &o);
-  CORBA_Boolean	get_ushort (CORBA_UShort &s);
-  CORBA_Boolean	get_ulong (CORBA_ULong &l);
-  CORBA_Boolean	get_ulonglong (const CORBA_ULongLong &ull);
-  CORBA_Boolean	get_float (float &f);
-  CORBA_Boolean	get_double (double &d);
-  CORBA_Boolean get_longdouble (CORBA_LongDouble &ld);
+  // decode a byte from the CDR stream
 
-  static CORBA_TypeCode::traverse_status decoder (CORBA_TypeCode_ptr tc,
+  CORBA_Boolean get_short (CORBA_Short &s);
+  // decode a short from the CDR stream
+
+  CORBA_Boolean get_long (CORBA_Long &l);
+  // decode a long from the CDR stream
+
+  CORBA_Boolean get_longlong (CORBA_LongLong &ll);
+  // decode a longlong from the CDR stream
+
+  CORBA_Boolean get_char (CORBA_Char &o);
+  // decode a char from the CDR stream
+
+  CORBA_Boolean get_wchar (CORBA_WChar &wc);
+  // decode a wide char from the CDR stream
+
+  CORBA_Boolean get_boolean (CORBA_Boolean &b);
+  // decode a boolean from the CDR stream
+
+  CORBA_Boolean	get_octet (CORBA_Octet &o);
+  // decode an octet from the CDR stream
+
+  CORBA_Boolean	get_ushort (CORBA_UShort &s);
+  // decode an unsigned short from the CDR stream
+
+  CORBA_Boolean	get_ulong (CORBA_ULong &l);
+  // decode an unsigned long from the CDR stream
+
+  CORBA_Boolean	get_ulonglong (const CORBA_ULongLong &ull);
+  // decode an unsigned longlong from the CDR stream
+
+  CORBA_Boolean	get_float (float &f);
+  // decode a float from the CDR stream
+
+  CORBA_Boolean	get_double (double &d);
+  // decode a double from the CDR stream
+
+  CORBA_Boolean get_longdouble (CORBA_LongDouble &ld);
+  // decode a longdouble from the CDR stream
+
+
+  CORBA_TypeCode::traverse_status decode (CORBA_TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *,
-                                                  void *context,
                                                   CORBA_Environment &env);
   // Unmarshaling interpreter ... <context> really points to a <CDR>.
+
+  CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
+                                                  const void *data,
+                                                  const void *data2,
+                                                  CORBA_Environment &env);
+  // Does a deep copy for hierarchical data types
+
+  CORBA_TypeCode::traverse_status deep_free (CORBA_TypeCode_ptr tc,
+                                                  const void *data,
+                                                  const void *data2,
+                                                  CORBA_Environment &env);
+  // Deallocates memory for hierarchical data structures
 
   CDR (u_char *buf = 0,
        u_int len = 0,
        int byte_order = MY_BYTE_SEX,
-       int consume_buf = 0);
+       int consume_buf = 0,
+       TAO_MarshalFactory *f = TAO_DEFAULT_MARSHAL_FACTORY);
+  // constructor
   
 
   ~CDR (void);
+  // destructor
 
   void *operator new (size_t, void *_FAR p);
   void *operator new (size_t s);
@@ -225,7 +295,10 @@ struct ACE_Svc_Export CDR
   // reported.
 
   CORBA_Boolean skip_string (void);
+  // skip a string field in a typecode
+
   CORBA_Boolean skip_bytes (u_int nbytes);
+  // skip given number of bytes in a typecode
     
   void setup_encapsulation (u_char *buf, u_int len);
   // Also used when interpreting typecodes, but more generally when
@@ -263,7 +336,24 @@ struct ACE_Svc_Export CDR
   // Length of the dynamically allocated memory.
 
   int do_byteswap;	
-  // Decode ONLY.
+  // for decoding only.
+
+private:
+  static void swap_long(unsigned char *orig, CORBA_Long &target);
+  // do byte swapping for longs
+
+  static void swap_longlong(unsigned char *orig, CORBA_LongLong &target);
+  // do byte swapping for longlongs
+
+  static void swap_longdouble(unsigned char *orig, CORBA_LongDouble &target);
+  // do byte swapping for longdoubles
+
+  TAO_MarshalFactory  *factory_;
+  // maintain a factory that can make specialized marshaling objects
+
+  TAO_MarshalObject   *mobj_;
+  // maintain an instance of a marshaling object. The CDR stream delegates the
+  // marshaling activity to mobj_;
 };
 
 // In this ONE case, we make a substantial exception to how inline
@@ -281,7 +371,6 @@ struct ACE_Svc_Export CDR
 #  endif
 
 #  include "cdr.i"
-
 #  if defined(do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
 #    undef ACE_INLINE

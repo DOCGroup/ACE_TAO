@@ -138,8 +138,24 @@ private:
 
 // XXX need CORBA_Object_var class typedef
 
-#if defined(__ACE_INLINE__)
+// In this case, we make a substantial exception to how inline
+// files are included.  Normally, we would conditionally include the
+// inline file iff __ACE_INLINE__ is defined.  But, in the original,
+// highly optimized Sun IIOP code, much of what is in the inline file
+// was here ready to be inlined at a moments notice and ALWAYS.  So,
+// in this ONE file, we defer to David Brownell's considerable prowess
+// at creating typecode interpreters as well as to the ACE convention
+// of placing inline functions into separate files.
+#  if !defined(__ACE_INLINE__)
+#    undef ACE_INLINE
+#    define ACE_INLINE inline
+#    define do_undef_on_ACE_INLINE
+#  endif
 #  include "object.i"
-#endif
+#  if defined(do_undef_on_ACE_INLINE)
+#    undef do_undef_on_ACE_INLINE
+#    undef ACE_INLINE
+#    define ACE_INLINE
+#  endif
 
 #endif /* CORBA_OBJECT_H */

@@ -69,9 +69,8 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.h>
 
-#include	"debug.h"
+#include	"orb.h"
 #include	"cdr.h"
 
 // Utility routines are used to manipulate CDR-encapsulated TypeCode
@@ -612,7 +611,7 @@ calc_exception_attributes (CDR *stream,
 // over the typecode: the inter-element padding changes depending on
 // the strictest alignment required by _any_ arm of the union.
 
-static size_t
+size_t
 calc_key_union_attributes (CDR *stream,
 			   size_t &overall_alignment,
 			   size_t &discrim_size_with_pad,
@@ -1382,7 +1381,7 @@ CORBA_TypeCode::traverse (const void *value1,
 // this typecode ... typically used to allocate memory.
 
 size_t
-CORBA_TypeCode::size (CORBA_Environment &env)
+CORBA_TypeCode::prv_size (CORBA_Environment &env)
 {
   if (_kind >= TC_KIND_COUNT) 
     {
@@ -1407,7 +1406,7 @@ CORBA_TypeCode::size (CORBA_Environment &env)
 // completeness.
 
 size_t
-CORBA_TypeCode::alignment (CORBA_Environment &env)
+CORBA_TypeCode::prv_alignment (CORBA_Environment &env)
 {
   if (_kind >= TC_KIND_COUNT) 
     {
