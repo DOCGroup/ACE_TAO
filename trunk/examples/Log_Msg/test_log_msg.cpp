@@ -177,12 +177,14 @@ main (int argc, char *argv[])
 
       if (ACE_OS::execv (badname,
                          l_argv) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%n: (%x), %p%r%a\n",
-                    10000,
-                    badname,
-                    cleanup,
-                    1));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%n: (%x), %p%r\n",
+                      10000,
+                      badname,
+                      cleanup));
+          ACE_OS::_exit ();
+        }
     }
   return 0;
 }
