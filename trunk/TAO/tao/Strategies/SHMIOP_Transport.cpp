@@ -105,40 +105,37 @@ TAO_SHMIOP_Transport::recv_i (char *buf,
                               size_t len,
                               const ACE_Time_Value *max_wait_time)
 {
-  ssize_t n = 0;
+  ssize_t n = this->connection_handler_->peer ().recv (buf,
+                                                       len,
+                                                       max_wait_time);
 
-  int read_break = 0;
-
-  while (!read_break)
+  // Most of the errors handling is common for
+  // Now the message has been read
+  if (n == -1 &&
+      TAO_debug_level > 4 &&
+      errno != ETIME)
     {
-      n = this->connection_handler_->peer ().recv (buf,
-                                                   len,
-                                                   max_wait_time);
-
-      // If we get a EWOULBLOCK we try to read again.
-      if (n == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
-        {
-          n = 0;
-          continue;
-        }
-
-      // If there is anything else we just drop out of the loop.
-      read_break = 1;
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO - read message failure ")
+                  ACE_TEXT ("recv_i () \n")));
     }
 
-  if (n == 0 || n == -1)
+  // Error handling
+  if (n == -1)
     {
-      if (TAO_debug_level > 3 && errno != ETIME)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - %p \n"),
-                      ACE_TEXT ("TAO - read message failure ")
-                      ACE_TEXT ("recv_i () \n")));
-        }
+      if (errno == EWOULDBLOCK)
+        return 0;
+
+      return -1;
+    }
+  // @@ What are the other error handling here??
+  else if (n == 0)
+    {
+      return -1;
     }
 
   return n;
-
 }
 
 
