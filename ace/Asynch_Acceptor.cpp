@@ -35,8 +35,10 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 				    size_t bytes_to_read,
 				    int pass_addresses,
 				    int backlog,
-				    int reuse_addr)
+				    int reuse_addr,
+				    ACE_Proactor *proactor)
 {
+  this->proactor (proactor);
   this->pass_addresses_ = pass_addresses;
   this->bytes_to_read_ = bytes_to_read;
 
@@ -46,7 +48,10 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::socket"), -1);
   
   // Initialize the ACE_Asynch_Accept
-  if (this->asynch_accept_.open (*this) == -1)
+  if (this->asynch_accept_.open (*this,
+				 this->listen_handle_,
+				 0,
+				 this->proactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Accept::open"), -1);
 
   if (reuse_addr)
