@@ -7,19 +7,19 @@
 CFG=RTEvent_Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "RTEvent_Static.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "RTEvent_Static.mak" CFG="RTEvent_Static - Win32 Static Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "RTEvent_Static - Win32 Static Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "RTEvent_Static - Win32 Static Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\RTEvent"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\RTEvent"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -80,7 +80,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAO_RTEventsd.lib"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -158,7 +158,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECD="..\..\..\bin\tao_idl_static.exe"
+USERDEP__RTECD="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecDefaultEventData.idl
 InputName=RtecDefaultEventData
@@ -194,7 +194,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -242,7 +242,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECE="..\..\..\bin\tao_idl_static.exe"
+USERDEP__RTECE="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecEventChannelAdmin.idl
 InputName=RtecEventChannelAdmin
@@ -278,7 +278,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -326,7 +326,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECEV="..\..\..\bin\tao_idl_static.exe"
+USERDEP__RTECEV="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecEventComm.idl
 InputName=RtecEventComm
@@ -362,7 +362,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -410,7 +410,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "RTEvent_Static - Win32 Static Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__RTECU="..\..\..\bin\tao_idl_static.exe"
+USERDEP__RTECU="..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL on $(InputPath)
 InputPath=.\RtecUDPAdmin.idl
 InputName=RtecUDPAdmin
@@ -446,7 +446,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
@@ -491,15 +491,19 @@ SOURCE=.\Event\EC_Default_Factory.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Default_ProxyConsumer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Disjunction_Filter.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Reactive_Dispatching.i
 # End Source File
 # Begin Source File
 
@@ -531,7 +535,7 @@ SOURCE=.\Event\EC_Gateway_UDP.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_UDP_Out_Endpoint.i
+SOURCE=.\Event\EC_Group_Scheduling.inl
 # End Source File
 # Begin Source File
 
@@ -575,19 +579,15 @@ SOURCE=.\Event\EC_ProxySupplier.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_ProxyConsumer.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Default_ProxySupplier.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_QOS_Info.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_ConsumerControl.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Reactive_Dispatching.i
 # End Source File
 # Begin Source File
 
@@ -635,7 +635,15 @@ SOURCE=.\Event\EC_Type_Filter.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_UDP_Out_Endpoint.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Sender.inl
 # End Source File
 # Begin Source File
 
@@ -715,6 +723,10 @@ SOURCE=.\Event\EC_Busy_Lock.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Channel_Destroyer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Conjunction_Filter.cpp
 # End Source File
 # Begin Source File
@@ -731,15 +743,19 @@ SOURCE=.\Event\EC_Default_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Default_ProxyConsumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Disjunction_Filter.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Reactive_Dispatching.cpp
 # End Source File
 # Begin Source File
 
@@ -771,15 +787,11 @@ SOURCE=.\Event\EC_Gateway.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_UDP_Out_Endpoint.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Gateway_UDP.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Group_Scheduling.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Lifetime_Utils.cpp
 # End Source File
 # Begin Source File
 
@@ -815,6 +827,10 @@ SOURCE=.\Event\EC_Prefix_Filter_Builder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Proxy_Disconnector.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_ProxyConsumer.cpp
 # End Source File
 # Begin Source File
@@ -823,19 +839,15 @@ SOURCE=.\Event\EC_ProxySupplier.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_ProxyConsumer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Default_ProxySupplier.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_QOS_Info.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_ConsumerControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Reactive_Dispatching.cpp
 # End Source File
 # Begin Source File
 
@@ -887,7 +899,51 @@ SOURCE=.\Event\EC_UDP_Admin.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_Adapters.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Address_Server_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Receiver.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_CDR_Message_Sender.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Complex_Address_Server.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Mcast_Gateway.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Address_Server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Simple_Mcast_EH.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_EH.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Out_Endpoint.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Receiver.cpp
 # End Source File
 # Begin Source File
 
@@ -975,6 +1031,14 @@ SOURCE=.\Event\EC_Default_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Default_ProxyConsumer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Default_ProxySupplier.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Defaults.h
 # End Source File
 # Begin Source File
@@ -984,10 +1048,6 @@ SOURCE=.\Event\EC_Disjunction_Filter.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Dispatching.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Reactive_Dispatching.h
 # End Source File
 # Begin Source File
 
@@ -1019,11 +1079,11 @@ SOURCE=.\Event\EC_Gateway.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_UDP_Out_Endpoint.h
+SOURCE=.\Event\EC_Gateway_UDP.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Gateway_UDP.h
+SOURCE=.\Event\EC_Group_Scheduling.h
 # End Source File
 # Begin Source File
 
@@ -1067,19 +1127,15 @@ SOURCE=.\Event\EC_ProxySupplier.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\EC_Default_ProxyConsumer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Default_ProxySupplier.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_QOS_Info.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Reactive_ConsumerControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Reactive_Dispatching.h
 # End Source File
 # Begin Source File
 
@@ -1128,6 +1184,22 @@ SOURCE=.\Event\EC_Type_Filter.h
 # Begin Source File
 
 SOURCE=.\Event\EC_UDP_Admin.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_UDP_Out_Endpoint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Mcast_EH.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Protocol.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_UDP_Sender.h
 # End Source File
 # Begin Source File
 
@@ -1186,29 +1258,5 @@ SOURCE=.\RtecUDPAdminS.h
 SOURCE=.\RtecUDPAdminS_T.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\Event\EC_Group_Scheduling.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Group_Scheduling.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_Mcast_EH.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_UDP_Protocol.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_UDP_Sender.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_UDP_Sender.inl
-# End Source File
 # End Target
 # End Project
