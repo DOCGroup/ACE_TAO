@@ -1222,7 +1222,6 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
 #if defined (ACE_HAS_THREADS)
   size_t threads_waited_on;
-
   {
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -1255,7 +1254,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
     ACE_Thread_Descriptor item;
 
-    while (! this->terminated_thr_queue_.dequeue_head (item))
+    while (!this->terminated_thr_queue_.dequeue_head (item))
 	ACE_Thread::join (item.thr_handle_);
   }
 #endif /* VXWORKS */
