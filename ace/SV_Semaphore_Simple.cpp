@@ -17,7 +17,7 @@ ACE_SV_Semaphore_Simple::dump (void) const
 int
 ACE_SV_Semaphore_Simple::control (int cmd, 
 				  int value, 
-				  int semnum) const
+				  u_short semnum) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::control");
   if (this->internal_id_ == -1)
