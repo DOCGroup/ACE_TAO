@@ -75,6 +75,12 @@ int main (int argc, char *argv[])
       doesn't send all of the data, it is up to you to program things such that it will
       keep trying until all of the data is sent or simply give up. The send_n() function
       already does the "keep tyring" option for us, so we use it. 
+
+			Like the send() method used in the servers we've seen, there are two additional
+			parameters you can use on the send() and send_n() method calls.  The timeout
+			parameter limits the amount of time the system will attempt to send the data
+			to the peer.  The flags parameter is passed directly to the OS send() system
+			call.  See send(2) for the valid flags values.
      */
     if (server.send_n ( buf, strlen(buf) ) == -1)
     {
