@@ -20,12 +20,12 @@
 #define _CORBA_ORB_OBJECTIDLIST_CS_
 
 // *************************************************************
-// CORBA::ORB::ObjectIdList
+// CORBA_ORB_ObjectIdList
 // *************************************************************
 
-CORBA::ORB::ObjectIdList::ObjectIdList (void)
+CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (void)
 {}
-CORBA::ORB::ObjectIdList::ObjectIdList (CORBA::ULong max) // uses max size
+CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (CORBA::ULong max) // uses max size
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -34,7 +34,7 @@ CORBA::ORB::ObjectIdList::ObjectIdList (CORBA::ULong max) // uses max size
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
-CORBA::ORB::ObjectIdList::ObjectIdList (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
+CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -43,7 +43,7 @@ CORBA::ORB::ObjectIdList::ObjectIdList (CORBA::ULong max, CORBA::ULong length, c
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
-CORBA::ORB::ObjectIdList::ObjectIdList (const ObjectIdList &seq) // copy ctor
+CORBA_ORB_ObjectIdList::CORBA_ORB_ObjectIdList (const CORBA_ORB_ObjectIdList &seq) // copy ctor
   : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -52,7 +52,7 @@ CORBA::ORB::ObjectIdList::ObjectIdList (const ObjectIdList &seq) // copy ctor
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
-CORBA::ORB::ObjectIdList::~ObjectIdList (void) // dtor
+CORBA_ORB_ObjectIdList::~CORBA_ORB_ObjectIdList (void) // dtor
 {}
 
 
@@ -75,7 +75,7 @@ static const CORBA::Long _oc_CORBA_ORB_ObjectIdList[] =
       0, // string length
   0,
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (CORBA::tk_alias, sizeof (_oc_CORBA_ORB_ObjectIdList), (char *) &_oc_CORBA_ORB_ObjectIdList, 0, sizeof (CORBA::ORB::ObjectIdList));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (CORBA::tk_alias, sizeof (_oc_CORBA_ORB_ObjectIdList), (char *) &_oc_CORBA_ORB_ObjectIdList, 0, sizeof (CORBA_ORB_ObjectIdList));
 CORBA::TypeCode_ptr CORBA::ORB::_tc_ObjectIdList = &_tc_TAO_tc_CORBA_ORB_ObjectIdList;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -86,11 +86,11 @@ CORBA::TypeCode_ptr CORBA::ORB::_tc_ObjectIdList = &_tc_TAO_tc_CORBA_ORB_ObjectI
 
 void operator<<= (
     CORBA::Any &_tao_any,
-    const CORBA::ORB::ObjectIdList &_tao_elem
+    const CORBA_ORB_ObjectIdList &_tao_elem
   ) // copying
 {
-  CORBA::ORB::ObjectIdList *_tao_any_val;
-  ACE_NEW (_tao_any_val, CORBA::ORB::ObjectIdList (_tao_elem));
+  CORBA_ORB_ObjectIdList *_tao_any_val;
+  ACE_NEW (_tao_any_val, CORBA_ORB_ObjectIdList (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
@@ -104,7 +104,7 @@ void operator<<= (
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ORB::ObjectIdList *_tao_elem) // non copying
+void operator<<= (CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
@@ -115,7 +115,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ORB::ObjectIdList *_tao_elem) // 
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ORB::ObjectIdList *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
@@ -124,12 +124,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ORB::ObjectIdList
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA::ORB::ObjectIdList *)_tao_any.value ();
+      _tao_elem = (CORBA_ORB_ObjectIdList *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA::ORB::ObjectIdList, 0);
+      ACE_NEW_RETURN (_tao_elem, CORBA_ORB_ObjectIdList, 0);
       TAO_InputCDR stream (_tao_any._tao_get_cdr ());
       if (stream.decode (CORBA::ORB::_tc_ObjectIdList, _tao_elem, 0, ACE_TRY_ENV)
         == CORBA::TypeCode::TRAVERSE_CONTINUE)

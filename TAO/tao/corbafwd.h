@@ -301,6 +301,11 @@ class TAO_OutputCDR;
 // @@ TODO This should be TAO_TAO_Stub
 class TAO_Stub;
 
+class CORBA_ORB_ObjectIdList;
+class CORBA_ORB_ObjectIdList_var;
+class CORBA_ORB_ObjectIdList_out;
+typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
+
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
