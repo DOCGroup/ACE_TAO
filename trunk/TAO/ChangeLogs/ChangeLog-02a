@@ -1,3 +1,17 @@
+Fri May 19 09:49:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/constants.idl:
+	  We got a bug report of an IDL compiler error when given a
+	  signed long constant with the minimum value. I'm curious 
+	  because a fix was checked in for this almost a year ago,
+	  but it's not included in IDL_Test (which was written later),
+	  and probably wasn't tested on every platform. I think it may be a 
+	  preprocessor problem. Anyway, I've added that constant to
+	  this file, to see what the various platforms/compilers
+	  have to say. If it is indeed a preprocessor problem, it
+	  may have to be removed later. Thanks to Sam Cooper
+	  <Sam.Cooper@scisys.co.uk> for reporting the bug.
+
 Thu May 18 21:05:46 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
