@@ -1,3 +1,8 @@
+Fri Dec 11 16:30:44 1998  Ossama Othman  <othman@tango.cs.wustl.edu>
+
+	* tests/Time_Value_Test.cpp: Removed the ACE_DISABLE_AUTOCONF_LONGLONG
+ 	  macro.  It broke ACE+autoconf on non-sun platforms.
+
 1998-12-11  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* test/DLL_Test.dsp: Fixed configuration settings.  Most of the
