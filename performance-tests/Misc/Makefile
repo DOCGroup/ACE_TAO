@@ -17,9 +17,12 @@ BIN     = basic_perf \
 # Only build static library for optimum run-time speed.
 LIB	= libPerf.a
 
-SRC   	= $(addsuffix .cpp,$(BIN))
-OBJ   	= $(SRC:%.cpp=$(VDIR)%.o)
-LSRC  	= basic_func.cpp
+FILES   = basic_func
+
+LSRC	= $(addsuffix .cpp,$(FILES)) 
+LOBJ	= $(addsuffix .o,$(FILES))
+SHOBJ	= $(addsuffix .so,$(FILES))
+
 LDLIBS 	= -lPerf
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
