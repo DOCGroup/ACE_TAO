@@ -216,7 +216,7 @@ ECT_Supplier_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr 
                                     this->event_b_,
                                     channel,
                                     _env);
-      if (_env.exception () != 0) return;
+      TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
 
@@ -235,7 +235,7 @@ ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &_env)
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       this->suppliers_[i]->disconnect (_env);
-      if (_env.exception () != 0) return;
+      TAO_CHECK_ENV_RETURN_VOID (_env);
     }
 }
 

@@ -1,3 +1,15 @@
+Wed Dec 23 15:16:00 CST 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * TAO/docs/events_tutorial.html: added tutorial on event channel.  
+          Thanks to Carlos O'Ryan for ongoing help maintaining this, and to
+          Tim Harrison for providing the original version.
+
+        * TAO/orbsvs/tests/EC_Throughput/ECT_Consumer.cpp
+          TAO/orbsvs/tests/EC_Throughput/ECT_Consumer_Driver.cpp
+          TAO/orbsvs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+          converted a number of places to use the TAO_CHECK_ENV_RETURN_VOID
+          macro consistently, added comments, etc.
+
 Wed Dec 23 14:44:04 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
