@@ -377,7 +377,7 @@ performance_test (int queue_type = 0)
   // large relative to the amount of stack space available.  Allocate
   // it here instead of in the sender, so that we can delete it after
   // the _receiver_ is done.
-  ACE_Message_Block **send_block;
+  ACE_Message_Block **send_block = 0;
   ACE_NEW_RETURN (send_block,
                   ACE_Message_Block *[messages],
                   -1);
