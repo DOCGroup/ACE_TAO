@@ -1,3 +1,10 @@
+Thu May  6 16:20:00 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/SP_Handler.cpp:
+
+          Added functionality to parse the schema definitions when the
+          individual elements appear in no specific order.
+
 Mon May  3 23:04:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* CIAO-INSTALL.html:
