@@ -1,3 +1,15 @@
+Thu Jul 29 23:03:32 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/client.{h,cpp}: 
+	  Fixed the direct usage of ACE_Condition to ACE_SYNCH_CONDITION.
+		
+	* orbsvcs/tests/AVStreams/mpeg/source:
+	  Fixed LIBS to LDLIBS in Makefile. Also removed a few warnings
+	  for egcs.
+
+	* orbsvcs/tests/AVStreams/mpeg/server_discovery:
+	  Fixed LIBS to LDLIBS in Makefile.
+	
 Thu Jul 29 22:11:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Faults/run_test.pl:
