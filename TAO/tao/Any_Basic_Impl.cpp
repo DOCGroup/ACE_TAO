@@ -134,12 +134,22 @@ namespace TAO
                           TAO_DEF_GIOP_MAJOR,
                           TAO_DEF_GIOP_MINOR);
 
-        CORBA::Boolean result = replacement->demarshal_value (cdr);
+        // Get the kind of the type where we are extracting in ie. the
+        // aliased  type if there are any. Passing the aliased kind
+        // will not help.
+        CORBA::TCKind tck =
+          tc->kind ();
+
+
+        CORBA::Boolean result =
+          replacement->demarshal_value (cdr,
+                                        (CORBA::Long) tck);
 
         if (result == 1)
           {
             Any_Basic_Impl::assign_value (_tao_elem,
-                                          replacement);
+                                          replacement,
+					  tck);
             ACE_const_cast (CORBA::Any &, any).replace (replacement);
             replacement_safety.release ();
             return 1;
@@ -198,9 +208,17 @@ namespace TAO
   CORBA::Boolean
   Any_Basic_Impl::demarshal_value (TAO_InputCDR &cdr)
   {
-    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind,
-                                            this->kind_);
+    return this->demarshal_value (cdr,
+                                  this->kind_);
+  }
 
+  CORBA::Boolean
+  Any_Basic_Impl::demarshal_value (TAO_InputCDR &cdr,
+                                   CORBA::Long tck)
+  {
+    CORBA::TCKind tckind =
+      ACE_static_cast (CORBA::TCKind,
+                       tck);
     switch (tckind)
     {
       case CORBA::tk_short:
@@ -288,10 +306,21 @@ namespace TAO
   void
   Any_Basic_Impl::assign_value (void *dest, Any_Basic_Impl *src)
   {
-    CORBA::TCKind kind = ACE_static_cast (CORBA::TCKind, src->kind_);
+    Any_Basic_Impl::assign_value (dest,
+                                  src,
+                                  src->kind_);
+  }
+
+  void
+  Any_Basic_Impl::assign_value (void *dest,
+                                Any_Basic_Impl *src,
+                                CORBA::Long tck)
+  {
+    CORBA::TCKind kind =
+      ACE_static_cast (CORBA::TCKind, tck);
 
     switch (kind)
-    {
+      {
       case CORBA::tk_short:
         *ACE_static_cast (CORBA::Short *, dest) = src->u_.s;
         break;
@@ -333,6 +362,6 @@ namespace TAO
         break;
       default:
         break;
-    }
+      }
   }
 }

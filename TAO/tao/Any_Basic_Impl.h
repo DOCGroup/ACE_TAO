@@ -49,7 +49,11 @@ namespace TAO
                                    void *);
 
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
+
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
+    CORBA::Boolean demarshal_value (TAO_InputCDR &,
+                                    CORBA::Long);
+
     virtual void _tao_decode (TAO_InputCDR &
                               ACE_ENV_ARG_DECL);
 
@@ -58,6 +62,9 @@ namespace TAO
   private:
     static void assign_value (void *, Any_Basic_Impl *);
 
+    static void assign_value (void *,
+                              Any_Basic_Impl *,
+                              CORBA::Long tck);
   private:
     CORBA::Long kind_;
     union
