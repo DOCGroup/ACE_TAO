@@ -42,7 +42,7 @@ public:
   // Constructor.
 
 # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
-  ~ACE_Hash_Map_Entry (void);
+  virtual ~ACE_Hash_Map_Entry (void);
   // Destructor.
 #endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
@@ -127,9 +127,9 @@ public:
   // Close down a <Hash_Map_Manager_Ex> and release dynamically allocated
   // resources.
 
-  ~ACE_Hash_Map_Manager_Ex (void);
+  virtual ~ACE_Hash_Map_Manager_Ex (void);
   // Initialize a <Hash_Map_Manager_Ex> with size <length>.
-
+  
   int bind (const EXT_ID &item,
             const INT_ID &int_id);
   // Associate <ext_id> with <int_id>.  If <ext_id> is already in the
@@ -235,8 +235,21 @@ public:
   // Return reverse iterator.
 
 protected:
-  // = The following methods do the actual work.
-
+  virtual ACE_Hash_Map_Entry<EXT_ID, INT_ID> *create_entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next = 0,
+                                                            ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = 0);
+  // Creates an entry.
+  
+  virtual ACE_Hash_Map_Entry<EXT_ID, INT_ID> *create_entry (const EXT_ID &ext_id,
+                                                            const INT_ID &int_id,
+                                                            ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next = 0,
+                                                            ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = 0);
+  // Creates an entry.
+  
+  virtual int shared_find (const EXT_ID &ext_id,
+                           ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+                           u_long &loc);
+  // Returns the <ACE_Hash_Map_Entry> that corresponds to <ext_id>.
+  
   int equal (const EXT_ID &id1, const EXT_ID &id2);
   // Returns 1 if <id1> == <id2>, else 0.  This is defined as a
   // separate method to facilitate template specialization.
@@ -324,11 +337,6 @@ protected:
   // Function object used for comparing keys.
 
 private:
-  int shared_find (const EXT_ID &ext_id,
-                   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
-                   u_long &loc);
-  // Returns the <ACE_Hash_Map_Entry> that corresponds to <ext_id>.
-
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_;
   // Array of <ACE_Hash_Map_Entry> *s, each of which points to an
   // <ACE_Hash_Map_Entry> that serves as the beginning of a linked
@@ -576,7 +584,7 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Hash_Map_Manager_T.cpp")
+#pragma implementation "ace/Hash_Map_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HASH_MAP_MANAGER_T_H */
