@@ -15,23 +15,18 @@
 #      define JAWS_Export ACE_Proper_Export_Flag
 #      define JAWS_SINGLETON_DECLARATION(T) \
               ACE_EXPORT_SINGLETON_DECLARATION (T)
-#      define JAWS_SINGLETON_INSTANTIATION(T) \
-              ACE_PROPER_SINGLETON_INSTANTIATION (T)
 #    else
 #      define JAWS_Export ACE_Proper_Import_Flag
 #      define JAWS_SINGLETON_DECLARATION(T) \
               ACE_IMPORT_SINGLETON_DECLARATION (T)
-#      define JAWS_SINGLETON_INSTANTIATION(T)
 #    endif /* JAWS_BUILD_DLL */
 #  else
 #    define JAWS_Export
 #    define JAWS_SINGLETON_DECLARATION(T)
-#    define JAWS_SINGLETON_INSTANTIATION(T)
 #  endif   /* ! JAWS_HAS_DLL == 1 */
 #else
 #  define JAWS_Export
 #  define JAWS_SINGLETON_DECLARATION(T)
-#  define JAWS_SINGLETON_INSTANTIATION(T)
 #endif     /* JAWS_HAS_DLL */
 
 #endif     /* JAWS_EXPORT_H */

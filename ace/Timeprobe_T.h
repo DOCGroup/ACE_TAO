@@ -74,6 +74,9 @@ public:
   void reset (void);
   // Reset the slots.  All old time probes will be lost.
 
+  ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
+  // Not implemented (stupid MSVC won't let it be protected).
+
 protected:
   typedef ACE_Timeprobe<ACE_LOCK> 
           SELF;
@@ -92,9 +95,6 @@ protected:
   u_int *current_slot_vme_address_;
   // Added sections below here to make compatible with the VMETRO
   // board test.
-
-  ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
-  // Not implemented.
 
   const char *find_description_i (u_long i);
   // Find description of event <i>
