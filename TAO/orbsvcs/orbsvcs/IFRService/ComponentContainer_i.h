@@ -45,7 +45,7 @@ class TAO_IFRService_Export TAO_ComponentContainer_i
   // = DESCRIPTION
   //    Base class used to form a containment hierarchy
   //    for component-related types in the Interface Repository.
-  //    Contains the relevant create_* methods.
+  //    Defines the relevant create_* methods.
   //
 public:
   TAO_ComponentContainer_i (TAO_Repository_i *repo);
@@ -127,6 +127,12 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+    
+  static int same_as_tmp_name (const char *name);
+  // Called from TAO_IFR_Service_Utils::name_exisits.
+    
+protected:
+  static const char *tmp_name_holder_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

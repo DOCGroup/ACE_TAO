@@ -3,6 +3,7 @@
 
 #include "EnumDef_i.h"
 #include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 
 ACE_RCSID (IFRService, 
            EnumDef_i, 
@@ -94,8 +95,9 @@ TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   for (u_int i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
-                                            this->int_to_string (i),
+                                            stringified,
                                             0,
                                             member_key);
 
@@ -141,8 +143,9 @@ TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
  for (CORBA::ULong i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
-                                            this->int_to_string (i),
+                                            stringified,
                                             1,
                                             member_key);
 

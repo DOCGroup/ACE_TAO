@@ -21,6 +21,25 @@ TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i (void)
 {
 }
 
+void
+TAO_InterfaceAttrExtension_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void
+TAO_InterfaceAttrExtension_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  /// TODO.
+}
+
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface (
     ACE_ENV_SINGLE_ARG_DECL

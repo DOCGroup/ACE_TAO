@@ -53,77 +53,77 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual void destroy (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual void destroy_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+  void destroy_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
   virtual CORBA::Contained::Description *describe (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+  CORBA::Contained::Description *describe_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA::TypeCode_ptr type_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+  CORBA::TypeCode_ptr type_i (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::InterfaceDefSeq *supported_interfaces (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::InterfaceDefSeq *supported_interfaces_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void supported_interfaces_i (
       const CORBA::InterfaceDefSeq &supported_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::ComponentDef_ptr base_component (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::ComponentDef_ptr base_component_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_component (
@@ -143,8 +143,8 @@ public:
       const char *name,
       const char *version,
       CORBA::InterfaceDef_ptr interface_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::ProvidesDef_ptr create_provides_i (
@@ -152,8 +152,8 @@ public:
       const char *name,
       const char *version,
       CORBA::InterfaceDef_ptr interface_type
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::UsesDef_ptr create_uses (
@@ -162,8 +162,8 @@ public:
       const char *version,
       CORBA::InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::UsesDef_ptr create_uses_i (
@@ -172,8 +172,8 @@ public:
       const char *version,
       CORBA::InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::EmitsDef_ptr create_emits (
@@ -181,8 +181,8 @@ public:
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::EmitsDef_ptr create_emits_i (
@@ -190,8 +190,8 @@ public:
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::PublishesDef_ptr create_publishes (
@@ -199,8 +199,8 @@ public:
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::PublishesDef_ptr create_publishes_i (
@@ -208,8 +208,8 @@ public:
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::ComponentIR::ConsumesDef_ptr create_consumes (
@@ -217,8 +217,8 @@ public:
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ComponentIR::ConsumesDef_ptr create_consumes_i (
@@ -226,9 +226,13 @@ public:
       const char *name,
       const char *version,
       CORBA::ValueDef_ptr value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
+    
+  static int name_clash (const char *name);
+  // Called from TAO_IFR_Service_Utils::name_exists() when we
+  // are a base component.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

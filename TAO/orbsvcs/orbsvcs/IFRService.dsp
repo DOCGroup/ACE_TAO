@@ -175,7 +175,15 @@ SOURCE=.\IFRService\AttributeDef_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFRService\ComponentContainer_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFRService\ComponentDef_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ComponentModuleDef_i.cpp
 # End Source File
 # Begin Source File
 
@@ -211,7 +219,31 @@ SOURCE=.\IFRService\EventDef_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFRService\EventPortDef_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFRService\ExceptionDef_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtAbstractInterfaceDef_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtAttributeDef_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtInterfaceDef_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtLocalInterfaceDef_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtValueDef_i.cpp
 # End Source File
 # Begin Source File
 
@@ -235,11 +267,31 @@ SOURCE=.\IFRService\IDLType_i.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFRService\IFR_BaseS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\IFR_BasicS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\IFR_ComponentsS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\IFR_ExtendedS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFRService\IFR_Service_Loader.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\IFRService\IFR_Service_Utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\InterfaceAttrExtension_i.cpp
 # End Source File
 # Begin Source File
 
@@ -268,10 +320,6 @@ SOURCE=.\IFRService\OperationDef_i.cpp
 # Begin Source File
 
 SOURCE=.\IFRService\Options.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IFRService\PrimaryKeyDef_i.cpp
 # End Source File
 # Begin Source File
 
@@ -355,7 +403,15 @@ SOURCE=.\IFRService\AttributeDef_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFRService\ComponentContainer_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFRService\ComponentDef_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ComponentModuleDef_i.h
 # End Source File
 # Begin Source File
 
@@ -395,7 +451,31 @@ SOURCE=.\IFRService\EventDef_i.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFRService\EventPortDef_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFRService\ExceptionDef_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtAbstractInterfaceDef_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtAttributeDef_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtInterfaceDef_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtLocalInterfaceDef_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\ExtValueDef_i.h
 # End Source File
 # Begin Source File
 
@@ -467,6 +547,14 @@ SOURCE=.\IFRService\IFR_Service_Utils.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFRService\IFR_Service_Utils_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\InterfaceAttrExtension_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFRService\InterfaceDef_i.h
 # End Source File
 # Begin Source File
@@ -492,10 +580,6 @@ SOURCE=.\IFRService\OperationDef_i.h
 # Begin Source File
 
 SOURCE=.\IFRService\Options.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IFRService\PrimaryKeyDef_i.h
 # End Source File
 # Begin Source File
 
@@ -599,40 +683,97 @@ SOURCE=.\IFRService\IFR_ExtendedS_T.i
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\IFRService\IFR_BaseS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IFRService\IFR_BaseS_T.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=.\IFRService\IFR_BasicS.cpp
+!IF  "$(CFG)" == "IFRService - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\IFRService\IFR_BasicS_T.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=.\IFRService\IFR_ComponentsS.cpp
+!IF  "$(CFG)" == "IFRService - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\IFRService\IFR_ComponentsS_T.cpp
-# End Source File
-# Begin Source File
 
-SOURCE=.\IFRService\IFR_ExtendedS.cpp
+!IF  "$(CFG)" == "IFRService - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\IFRService\IFR_ExtendedS_T.cpp
+
+!IF  "$(CFG)" == "IFRService - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFRService\IFR_Service_Utils_T.cpp
+
+!IF  "$(CFG)" == "IFRService - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "IFRService - Win32 mfc Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "rc"
 # End Group
+# Begin Source File
+
+SOURCE=.\IFRService\IFR_Service_Utils_T.asp
+# End Source File
 # End Target
 # End Project

@@ -5,6 +5,7 @@
 #include "Repository_i.h"
 #include "IDLType_i.h"
 #include "ExceptionDef_i.h"
+#include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -54,12 +55,18 @@ TAO_AttributeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Contained::Description_var retval = desc_ptr;
 
-  retval->kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  retval->kind = CORBA::dk_Attribute;
+
+  CORBA::AttributeDescription *ad = 0;
+  ACE_NEW_RETURN (ad,
+                  CORBA::AttributeDescription,
+                  0);
+
+  this->make_description (*ad
+                          ACE_ENV_ARG_PARAMETER)
   ACE_CHECK_RETURN (0);
 
-  retval->value <<= this->make_description (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
+  retval->value <<= ad;
   return retval._retn ();
 }
 
@@ -84,7 +91,9 @@ TAO_AttributeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  TAO_IDLType_i *impl = this->path_to_idltype (type_path);
+  TAO_IDLType_i *impl = 
+    TAO_IFR_Service_Utils::path_to_idltype (type_path,
+                                            this->repo_);
 
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -110,8 +119,10 @@ TAO_AttributeDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "type_path",
                                             type_path);
 
-  CORBA::Object_var obj = this->path_to_ir_object (type_path
-                                                   ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::path_to_ir_object (type_path,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   CORBA::IDLType_var retval = CORBA::IDLType::_narrow (obj.in ()
@@ -141,7 +152,7 @@ TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *type_path =
-    this->reference_to_path (type_def);
+    TAO_IFR_Service_Utils::reference_to_path (type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "type_path",
@@ -196,12 +207,13 @@ TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode
                                              mode);
 }
 
-CORBA::AttributeDescription
-TAO_AttributeDef_i::make_description (ACE_ENV_SINGLE_ARG_DECL)
+void
+TAO_AttributeDef_i::make_description (
+    CORBA::AttributeDescription &ad
+    ACE_ENV_SINGLE_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::AttributeDescription ad;
-
   ad.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ad);
 
@@ -209,7 +221,6 @@ TAO_AttributeDef_i::make_description (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (ad);
 
   ACE_TString container_id;
-
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
                                             container_id);
@@ -224,8 +235,6 @@ TAO_AttributeDef_i::make_description (ACE_ENV_SINGLE_ARG_DECL)
 
   ad.mode = this->mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ad);
-
-  return ad;
 }
 
 CORBA::ExceptionDefSeq *
@@ -291,9 +300,10 @@ TAO_AttributeDef_i::get_exceptions (ACE_ENV_SINGLE_ARG_DECL)
       path_queue.dequeue_head (path);
 
       CORBA::Object_var obj =
-        this->create_objref (CORBA::dk_Exception,
-                             path.c_str ()
-                             ACE_ENV_ARG_PARAMETER);
+        TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
+                                              path.c_str (),
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
@@ -367,9 +377,10 @@ TAO_AttributeDef_i::put_exceptions (ACE_ENV_SINGLE_ARG_DECL)
       path_queue.dequeue_head (path);
 
       CORBA::Object_var obj =
-        this->create_objref (CORBA::dk_Exception,
-                             path.c_str ()
-                             ACE_ENV_ARG_PARAMETER);
+        TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
+                                              path.c_str (),
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()

@@ -3,6 +3,7 @@
 
 #include "UnionDef_i.h"
 #include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -114,7 +115,9 @@ TAO_UnionDef_i::discriminator_type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "disc_path",
                                             disc_path);
 
-  TAO_IDLType_i *impl = this->path_to_idltype (disc_path);
+  TAO_IDLType_i *impl = 
+    TAO_IFR_Service_Utils::path_to_idltype (disc_path,
+                                            this->repo_);
 
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -140,8 +143,10 @@ TAO_UnionDef_i::discriminator_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "disc_path",
                                             disc_path);
 
-  CORBA::Object_var obj = path_to_ir_object (disc_path
-                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::path_to_ir_object (disc_path,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
@@ -172,7 +177,7 @@ TAO_UnionDef_i::discriminator_type_def_i (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *disc_path = 
-    this->reference_to_path (discriminator_type_def);
+    TAO_IFR_Service_Utils::reference_to_path (discriminator_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "disc_path",
@@ -211,8 +216,9 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   for (u_int i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       if (this->repo_->config ()->open_section (refs_key,
-                                                this->int_to_string (i),
+                                                stringified,
                                                 0,
                                                 member_key)
            == 0)
@@ -271,15 +277,17 @@ TAO_UnionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
                                                 "path",
                                                 path);
 
-      obj = this->path_to_ir_object (path
-                                     ACE_ENV_ARG_PARAMETER);
+      obj = TAO_IFR_Service_Utils::path_to_ir_object (path,
+                                                      this->repo_
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[k].type_def = CORBA::IDLType::_narrow (obj.in ()
                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      impl = this->path_to_idltype (path);
+      impl = TAO_IFR_Service_Utils::path_to_idltype (path,
+                                                     this->repo_);
 
       retval[k].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -331,8 +339,9 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members
   for (CORBA::ULong i = 0; i < count; i++)
     {
       ACE_Configuration_Section_Key member_key;
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            this->int_to_string (i),
+                                            stringified,
                                             1,
                                             member_key);
 
@@ -341,7 +350,7 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members
                                                 members[i].name.in ());
 
       member_path = 
-        this->reference_to_path (members[i].type_def.in ());
+        TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "path",

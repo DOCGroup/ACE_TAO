@@ -20,13 +20,25 @@
 #include "tao/debug.h"
 #include "tao/Stub.h"
 #include "ace/Get_Opt.h"
+#include "ace/High_Res_Timer.h"
+#include "ace/Stats.h"
+#include "ace/Sample_History.h"
+#include "ace/Sched_Params.h"
 
 ACE_RCSID(Param_Test, anyop, "$Id$")
 
 int
 main (int argc, char *argv[])
 {
-  int n = 1024;
+  int priority = 
+    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
+     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+
+  ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+			                  priority,
+					  ACE_SCOPE_PROCESS));
+
+  int n = 50000;
 
   ACE_TRY_NEW_ENV
     {
@@ -61,169 +73,772 @@ main (int argc, char *argv[])
             }
         }
 
-      for (int i = 0; i != n; ++i)
-        {
-          CORBA::Any any;
+      CORBA::Boolean result = 0;
+      int j;
 
-#if 0
-          // @@ TODO @@ This one crashes in deep_free!!!
+#undef INSERTION
+//#define INSERTION
+
+      {
+        CORBA::Object_var obj =
+          orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
+                                 ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        Param_Test_var param_test =
+          Param_Test::_unchecked_narrow (obj.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        TAO_Stub *stub = param_test->_stubobj ();
+        stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
+
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
           {
-            Param_Test::Var_Array var_array;
-            any <<= Param_Test::Var_Array_forany (var_array);
-
-            Param_Test::Var_Array_forany forany;
-            if (!(any >>= forany))
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for Param_Test::Var_Array\n"));
-              }
-            Param_Test::Var_Array_var var =
-              Param_Test::Var_Array_dup (forany.in ());
-            any <<= Param_Test::Var_Array_forany (var.inout ());
-            if (!(any >>= forany))
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for Param_Test::Var_Array[2]\n"));
-              }
-          }
-#endif /* 0 */
-
-          {
-            CORBA::Object_var obj =
-              orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar"
-                                     ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-
-            Param_Test_var param_test =
-              Param_Test::_unchecked_narrow (obj.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-            TAO_Stub *stub = param_test->_stubobj ();
-            stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
+            CORBA::Any any;
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
 
             any <<= param_test.in ();
 
-            Param_Test_ptr o;
-            if (!(any >>= o))
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Cannot extract Param_Test (oh the horror)\n"));
-              }
-            CORBA::Boolean equiv =
-              param_test->_is_equivalent (o ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-            if (!equiv)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Mismatched Param_Test extraction\n"));
-              }
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
 
-            CORBA::Object_var other;
-            if (!(any >>= CORBA::Any::to_object (other.inout ())))
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Cannot extract Param_Test as Object\n"));
-              }
+            Param_Test_ptr o;
+
+            result = any >>= o;
+#else
+            any <<= param_test.in ();
+
+            Param_Test_ptr o;
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
           }
 
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Objref insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Objref extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {   
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
           {
+            CORBA::Any any;
             CORBA::Short i = 123;
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            CORBA::Short o;
+
+            result = any >>= o;
+#else
             any <<= i;
 
             CORBA::Short o;
-            if (!(any >>= o)
-                || i != o)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::Short (%d,%d)\n",
-                            i, o));
-              }
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
           }
 
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Short insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Short extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
           {
+            CORBA::Any any;
             CORBA::Long i = 123;
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            CORBA::Long o;
+
+            result = any >>= o;
+#else
             any <<= i;
 
             CORBA::Long o;
-            if (!(any >>= o)
-                || i != o)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::Long (%d,%d)\n",
-                            i, o));
-              }
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
           }
 
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Long insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Long extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
           {
-            CORBA::ULongLong i = 123;
+            CORBA::Any any;
+            CORBA::Double i = 123;
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
             any <<= i;
 
-            CORBA::ULongLong o;
-            if (!(any >>= o)
-                || i != o)
-              {
-#if defined (ACE_LACKS_LONGLONG_T)
-                char bufferi[32];
-                char buffero[32];
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::ULongLong (%s,%s)\n",
-                            i.as_string (bufferi),
-                            o.as_string (buffero)));
-#else
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::ULongLong (%Q,%Q)\n",
-                            i, o));
-#endif
-              }
-          }
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
 
-          {
-            CORBA::Double i = 123;
+            CORBA::Double o;
+
+            result = any >>= o;
+#else
             any <<= i;
 
             CORBA::Double o;
-            if (!(any >>= o)
-                || i != o)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::Double (%f,%f)\n",
-                            i, o));
-              }
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
           }
 
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Double insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Double extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        Param_Test::Fixed_Struct i;
+        i.l = -7;
+        i.c = 'c';
+        i.s = 5;
+        i.o = 255;
+        i.f = 2.3f;
+        i.b = 0;
+        i.d = 3.1416;
+
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
           {
+            CORBA::Any any;
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            Param_Test::Fixed_Struct *o;
+
+            result = any >>= o;
+#else
+            any <<= i;
+
+            Param_Test::Fixed_Struct *o;
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
+          }
+
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Struct copying insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Struct extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        for (j = 0; j != n; ++j)
+          {
+            CORBA::Any any;
+            Param_Test::Fixed_Struct *i = 0;
+            ACE_NEW_RETURN (i,
+                            Param_Test::Fixed_Struct,
+                            -1);
+            i->l = -7;
+            i->c = 'c';
+            i->s = 5;
+            i->o = 255;
+            i->f = 2.3f;
+            i->b = 0;
+            i->d = 3.1416;
+
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            Param_Test::Fixed_Struct *o;
+
+            result = any >>= o;
+#else
+            any <<= i;
+
+            Param_Test::Fixed_Struct *o;
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
+          }
+
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Struct non-copying insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Struct extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        CORBA::ULong len = 1024;
+        Param_Test::Long_Seq i (len);
+        i.length (len);
+        
+        for (CORBA::ULong k = 0; k < len; ++k)
+          {
+            i[k] = 11;
+          }
+
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
+          {
+            CORBA::Any any;
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            Param_Test::Long_Seq *o;
+
+            result = any >>= o;
+#else
+            any <<= i;
+
+            Param_Test::Long_Seq *o;
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
+          }
+
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Sequence copying insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Sequence extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        CORBA::ULong len = 1024;
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+        for (j = 0; j != n; ++j)
+          {
+            CORBA::Any any;
+            Param_Test::Long_Seq *i = 0;
+            ACE_NEW_RETURN (i,
+                            Param_Test::Long_Seq (len),
+                            -1);
+            i->length (len);
+            
+            for (CORBA::ULong k = 0; k < len; ++k)
+              {
+                (*i)[k] = 11;
+              }
+
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            Param_Test::Long_Seq *o;
+
+            result = any >>= o;
+#else
+            any <<= i;
+
+            Param_Test::Long_Seq *o;
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
+          }
+
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Sequence non-copying insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Sequence extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
+          {
+            CORBA::Any any;
             CORBA::Any i;
             i <<= CORBA::Short (123);
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            const CORBA::Any *o;
+            CORBA::Short oo;
+
+            result = any >>= o;
+            result = *o >>= oo;
+#else
             any <<= i;
 
             const CORBA::Any *o;
             CORBA::Short oo;
 
-            if (!(any >>= o)
-                || !(*o >>= oo)
-                || 123 != oo)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for CORBA::Any (%d)\n",
-                            oo));
-              }
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            result = *o >>= oo;
+#endif
           }
 
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Any copying insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Any extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
           {
-            const char i[] = "123";
+            CORBA::Any any;
+            CORBA::Any *i = 0;
+            ACE_NEW_RETURN (i,
+                            CORBA::Any,
+                            -1);
+            *i <<= CORBA::Short (123);
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            const CORBA::Any *o;
+            CORBA::Short oo;
+
+            result = any >>= o;
+            result = *o >>= oo;
+#else
+            any <<= i;
+
+            const CORBA::Any *o;
+            CORBA::Short oo;
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            result = *o >>= oo;
+#endif
+          }
+
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Any non-copying insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Any extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
+          {
+            CORBA::Any any;
+            const char i[] = "1234567890";
+#if defined (INSERTION)
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            any <<= i;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+
+            const char *o;
+
+            result = any >>= o;
+#else
             any <<= i;
 
             const char *o;
-            if (!(any >>= o)
-                || ACE_OS::strcmp (i, o) != 0)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Failure for char* (%s,%s)\n",
-                            i, o));
-              }
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            result = any >>= o;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+#endif
           }
 
-        }
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+#if defined (INSERTION)
+        ACE_DEBUG ((LM_DEBUG, 
+                    "String insertion test finished\n"));
+#else
+        ACE_DEBUG ((LM_DEBUG, 
+                    "String extraction test finished\n"));
+#endif
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    
+      {
+        ACE_Sample_History history (n);
+        ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
+        for (j = 0; j != n; ++j)
+          {
+            CORBA::Any any;
+            const char i[] = "1234567890";
+            any <<= i;
+            CORBA::Any copy;
+
+            ACE_hrtime_t start = ACE_OS::gethrtime ();
+
+            copy = any;
+
+            ACE_hrtime_t now = ACE_OS::gethrtime ();
+            history.sample (now - start);
+          }
+
+        ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
+        ACE_DEBUG ((LM_DEBUG, 
+                    "Copy test finished\n"));
+        ACE_DEBUG ((LM_DEBUG, 
+                    "High resolution timer calibration...."));
+        ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    "done\n"));
+
+        ACE_Basic_Stats stats;
+        history.collect_basic_stats (stats);
+        stats.dump_results ("Total", gsf);
+
+        ACE_Throughput_Stats::dump_throughput ("Total", 
+											                         gsf,
+                                               test_end - test_start,
+                                               stats.samples_count ());
+      }
     }
   ACE_CATCHANY
     {

@@ -4,6 +4,7 @@
 #include "ExceptionDef_i.h"
 #include "Repository_i.h"
 #include "IDLType_i.h"
+#include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -181,8 +182,9 @@ TAO_ExceptionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
   for (u_int i = 0; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            this->int_to_string (i),
+                                            stringified,
                                             0,
                                             member_key);
 
@@ -250,9 +252,10 @@ TAO_ExceptionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
       path_queue.dequeue_head (path);
 
       obj =
-        this->create_objref (kind,
-                             path.c_str ()
-                             ACE_ENV_ARG_PARAMETER);
+        TAO_IFR_Service_Utils::create_objref (kind,
+                                              path.c_str (),
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[k].type_def = CORBA::IDLType::_narrow (obj.in ()
@@ -264,7 +267,8 @@ TAO_ExceptionDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
                                            member_key,
                                            0);
 
-      impl = this->path_to_idltype (path);
+      impl = TAO_IFR_Service_Utils::path_to_idltype (path,
+                                                     this->repo_);
 
       retval[k].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -315,8 +319,9 @@ TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members
       for (CORBA::ULong i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key member_key;
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (refs_key,
-                                                this->int_to_string (i),
+                                                stringified,
                                                 1,
                                                 member_key);
 
@@ -326,7 +331,9 @@ TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members
                                                     name);
 
           path = 
-            this->reference_to_path (members[i].type_def.in ());
+            TAO_IFR_Service_Utils::reference_to_path (
+                members[i].type_def.in ()
+              );
 
           this->repo_->config ()->set_string_value (member_key,
                                                     "path",

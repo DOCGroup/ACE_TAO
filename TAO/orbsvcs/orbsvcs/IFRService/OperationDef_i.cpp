@@ -5,6 +5,7 @@
 #include "Repository_i.h"
 #include "IDLType_i.h"
 #include "ExceptionDef_i.h"
+#include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -85,7 +86,9 @@ TAO_OperationDef_i::result_i (ACE_ENV_SINGLE_ARG_DECL)
                                             result_path);
 
 
-  TAO_IDLType_i *impl = this->path_to_idltype (result_path);
+  TAO_IDLType_i *impl = 
+    TAO_IFR_Service_Utils::path_to_idltype (result_path,
+                                            this->repo_);
 
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -111,8 +114,10 @@ TAO_OperationDef_i::result_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "result",
                                             result_path);
 
-  CORBA::Object_var obj = this->path_to_ir_object (result_path
-                                                   ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::path_to_ir_object (result_path,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
@@ -138,7 +143,8 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  char *result_path = this->reference_to_path (result_def);
+  char *result_path = 
+    TAO_IFR_Service_Utils::reference_to_path (result_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "result",
@@ -182,9 +188,10 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
       for (i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key param_key;
+          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           status =
             this->repo_->config ()->open_section (params_key,
-                                                  this->int_to_string (i),
+                                                  stringified,
                                                   0,
                                                   param_key);
 
@@ -236,13 +243,17 @@ TAO_OperationDef_i::params_i (ACE_ENV_SINGLE_ARG_DECL)
                                                 "type_path",
                                                 type_path);
 
-      TAO_IDLType_i *impl = path_to_idltype (type_path);
+      TAO_IDLType_i *impl = 
+        TAO_IFR_Service_Utils::path_to_idltype (type_path,
+                                                this->repo_);
 
       retval[i].type = impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Object_var obj = this->path_to_ir_object (type_path
-                                                       ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_var obj = 
+        TAO_IFR_Service_Utils::path_to_ir_object (type_path,
+                                                  this->repo_
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[i].type_def = CORBA::IDLType::_narrow (obj.in ()
@@ -297,8 +308,9 @@ TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       ACE_Configuration_Section_Key param_key;
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (params_key,
-                                            this->int_to_string (i),
+                                            stringified,
                                             1,
                                             param_key);
 
@@ -306,7 +318,7 @@ TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params
                                                 "name",
                                                 params[i].name.in ());
       type_path = 
-        this->reference_to_path (params[i].type_def.in ());
+        TAO_IFR_Service_Utils::reference_to_path (params[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (param_key,
                                                 "type_path",
@@ -401,8 +413,9 @@ TAO_OperationDef_i::contexts_i (ACE_ENV_SINGLE_ARG_DECL)
       // IR objects so they can't be destroyed one at a time. To
       // make a change one has to call the mutator version of this
       // function and make a completely new list.
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (index++);
       while (this->repo_->config ()->get_string_value (contexts_key,
-                                                       this->int_to_string (index++),
+                                                       stringified,
                                                        context)
               == 0)
         {
@@ -467,8 +480,9 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (contexts_key,
-                                                this->int_to_string (i),
+                                                stringified,
                                                 contexts[i].in ());
     }
 }
@@ -542,9 +556,10 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
       path_queue.dequeue_head (path);
 
       CORBA::Object_var obj =
-        this->create_objref (CORBA::dk_Exception,
-                             path.c_str ()
-                             ACE_ENV_ARG_PARAMETER);
+        TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
+                                              path.c_str (),
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ()
@@ -594,9 +609,10 @@ TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      type_path = this->reference_to_path (exceptions[i]);
+      type_path = TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (excepts_key,
-                                                this->int_to_string (i),
+                                                stringified,
                                                 type_path);
     }
 

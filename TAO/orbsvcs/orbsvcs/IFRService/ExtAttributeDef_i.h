@@ -103,6 +103,24 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  // Utility function that fills sequence elements for a
+  // ComponentDescription.
+  void fill_description (
+      CORBA::ExtAttributeDescription &desc
+      ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  /// Common code for the set and get varieties.
+
+  void fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
+                        const char *sub_section
+                        ACE_ENV_ARG_DECL);
+
+  void exceptions (const char *sub_section,
+                   const CORBA::ExcDescriptionSeq &exceptions);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

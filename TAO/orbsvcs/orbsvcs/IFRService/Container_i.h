@@ -47,6 +47,8 @@ class TAO_IFRService_Export TAO_Container_i : public virtual TAO_IRObject_i
   //    derived from the Contained interface.
   //
 public:
+  friend class TAO_Port_Utils;
+
   TAO_Container_i (TAO_Repository_i *repo);
   // Constructor.
 
@@ -399,13 +401,9 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Boolean name_exists (
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Checks for local existence of <name>.
+    
+  static int same_as_tmp_name (const char *name);
+  // Called from TAO_IFR_Service_Utils::name_exisits.
 
 protected:
    void store_label (
@@ -415,25 +413,6 @@ protected:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Store a union member's label value.
-
-  CORBA::Boolean pre_exist (
-      const char *id,
-      const char *name
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Bundles id_exists and name_exists together.
-
-  ACE_TString create_common (
-      ACE_Configuration_Section_Key sub_key,
-      ACE_Configuration_Section_Key &new_key,
-      const char *id,
-      const char *name,
-      const char *version,
-      const char *sub_section,
-      CORBA::DefinitionKind def_kind
-    );
-  // Code common to all the create_* methods.
 
   void lookup_attr (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
@@ -460,25 +439,14 @@ private:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
-  CORBA::Boolean id_exists (
-      const char *id
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Checks for global existence of the repo id.
-
-  CORBA::Boolean valid_container (
-      const CORBA::DefinitionKind op_kind
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // Is this operation valid for this container type?
-
   void update_refs (
       const char *path,
       const char *name
     );
   // Used with structs, unions and exceptions.
+  
+protected:
+  static const char *tmp_name_holder_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

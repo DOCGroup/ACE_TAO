@@ -3,6 +3,7 @@
 
 #include "ArrayDef_i.h"
 #include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -155,7 +156,8 @@ TAO_ArrayDef_i::element_type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "element_path",
                                             element_path);
   TAO_IDLType_i *impl =
-    this->path_to_idltype (element_path);
+    TAO_IFR_Service_Utils::path_to_idltype (element_path,
+                                            this->repo_);
 
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -181,8 +183,10 @@ TAO_ArrayDef_i::element_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "element_path",
                                             element_path);
 
-  CORBA::Object_var obj = this->path_to_ir_object (element_path
-                                                   ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::path_to_ir_object (element_path,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return CORBA::IDLType::_narrow (obj.in ()
@@ -212,7 +216,7 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
   ACE_CHECK;
 
   char *new_element_path =
-    this->reference_to_path (element_type_def);
+    TAO_IFR_Service_Utils::reference_to_path (element_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "element_path",
@@ -241,7 +245,9 @@ TAO_ArrayDef_i::destroy_element_type (
                                              "def_kind",
                                              kind);
 
-  CORBA::DefinitionKind def_kind = this->path_to_def_kind (element_path);
+  CORBA::DefinitionKind def_kind = 
+    TAO_IFR_Service_Utils::path_to_def_kind (element_path, 
+                                             this->repo_);
 
   switch (def_kind)
   {
