@@ -207,7 +207,9 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
         {
           CORBA::ULong l = b->length ();
 
-          iov[iovcnt].iov_base = b->rd_ptr ();
+          char* rd_ptr = b->rd_ptr ();
+
+          iov[iovcnt].iov_base = rd_ptr;
           iov[iovcnt].iov_len  = l;
           fragment_size += l;
           iovcnt++;
@@ -237,7 +239,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
               // Reset, but don't forget that the last Message_Block
               // may need to be sent in multiple fragments..
               l -= last_mb_length;
-              iov[1].iov_base = b->rd_ptr () + last_mb_length;
+              rd_ptr += last_mb_length;
+              iov[1].iov_base = rd_ptr;
               iov[1].iov_len = l;
               fragment_size = l;
               iovcnt = 2;
