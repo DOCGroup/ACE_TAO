@@ -1,3 +1,8 @@
+Fri Dec 10 11:43:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/run_tests.lst: Disabled the MT_Reactor_Timer_Test
+	  until Darrell can fix the timer queue.
+
 Fri Dec 10 07:24:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: on VxWorks, automatic
