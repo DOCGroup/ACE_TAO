@@ -1,3 +1,25 @@
+Wed May  3 17:21:50 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-win32-common.h:  
+          
+          After many reports of not having _MT defined (and then not 
+          quite knowing what to do about it), I felt we needed a bit 
+          more descriptive error and comment.  
+
+        * docs/ACE-FMM.html:
+        * docs/ACE-bug-process.html:
+        * docs/ACE-development-process.html:
+        * docs/ACE-guidelines.html:
+        * docs/ACE-lessons.html:
+        * docs/ACE-porting.html:
+        * docs/ACE-subsets.html:
+        * docs/exceptions.html:
+        * docs/index.html: (added)
+        * docs/usage-bugzilla.html:
+
+          Added an index for the files in this directory.  Added 
+          backlinks to the other files.
+
 Wed May  3 18:07:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Malloc_T (memory_pool): Found another bug with SunC++ 5.0...
