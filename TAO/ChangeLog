@@ -1,7 +1,14 @@
+Thu Oct 21 10:58:25 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+
+          Wait for the signal handler thread before exiting.
+
 Thu Oct 21 10:49:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
-        
+
           Modified generation of implied IDL for event consumer interfaces
           to always inherit from EventConsumerBase regardless of
           whether the associated eventtype is derived or not. This makes
