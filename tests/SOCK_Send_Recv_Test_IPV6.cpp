@@ -314,6 +314,7 @@ server (void *arg)
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
+#if defined (ACE_HAS_IPV6)
 static void
 spawn (void)
 {
@@ -384,6 +385,8 @@ spawn (void)
       peer_acceptor.close ();
     }
 }
+
+#endif /*ACE_HAS_IPV6*/
 
 int
 run_main (int, ACE_TCHAR *[])
