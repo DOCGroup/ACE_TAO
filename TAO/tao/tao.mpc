@@ -300,4 +300,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
     TAO_Singleton.cpp
     orb.idl
   }
+
+  Pkgconfig_Files {
+    TAO.pc.in
+  }
 }

@@ -26,4 +26,8 @@ project : taolib, rtcorba, portableserver, core, corba_messaging {
   PIDL_Files {
     RTScheduling
   }
+
+  Pkgconfig_Files {
+    RTScheduling/TAO_RTScheduler.pc.in
+  }
 }
