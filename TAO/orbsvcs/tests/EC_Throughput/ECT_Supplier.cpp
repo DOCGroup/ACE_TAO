@@ -7,7 +7,6 @@
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ECT_Supplier.h"
 
@@ -24,7 +23,8 @@ Test_Supplier::Test_Supplier (ECT_Driver *driver)
 }
 
 void
-Test_Supplier::connect (const char* name,
+Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
+                        const char* name,
                         int burst_count,
                         int burst_size,
                         int event_size,
@@ -41,11 +41,8 @@ Test_Supplier::connect (const char* name,
   this->event_a_ = event_a;
   this->event_b_ = event_b;
     
-  RtecScheduler::Scheduler_ptr server =
-    ACE_Scheduler_Factory::server ();
-
   RtecScheduler::handle_t rt_info =
-    server->create (name, TAO_IN_ENV);
+    scheduler->create (name, TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_Time_Value tv (0, burst_pause);
@@ -58,15 +55,15 @@ Test_Supplier::connect (const char* name,
   tv.set (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  server->set (rt_info,
-               RtecScheduler::VERY_HIGH_CRITICALITY,
-               time, time, time,
-               rate,
-               RtecScheduler::VERY_LOW_IMPORTANCE,
-               time,
-               1,
-               RtecScheduler::OPERATION,
-               TAO_IN_ENV);
+  scheduler->set (rt_info,
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  rate,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  1,
+                  RtecScheduler::OPERATION,
+                  TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   this->supplier_id_ = ACE::crc32 (name);

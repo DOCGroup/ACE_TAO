@@ -1,3 +1,42 @@
+Fri Feb  5 02:34:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
+	* orbsvcs/orbsvcs/Event/RT_Task.h: 
+	* orbsvcs/orbsvcs/Event/ReactorTask.cpp: 
+	* orbsvcs/orbsvcs/Event/ReactorTask.h: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
+	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
+	  The Event Channel can receive a reference to the scheduler in
+	  its constructor, this reference is propagated to all the modules 
+	  and used instead of the Scheduler_Factory singleton.
+	  This can be used to have more than one Event Channel for process 
+	  or to simplify the testing of multiple Scheduling services.
+	  If no scheduler is specified the Event Channel bootstraps from
+	  the Scheduler_Factory as usual.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h: 
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
+	  It doesn't use the Scheduler_Factory anymore, this illustrates
+	  how the EC can receive the scheduler as an argument.
+
+
 Fri Feb  5 02:33:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: 

@@ -88,7 +88,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description,
 // ************************************************************
 
 static RtecScheduler::Preemption_Priority_t
-Preemption_Priority (RtecScheduler::handle_t rtinfo,
+Preemption_Priority (RtecScheduler::Scheduler_ptr scheduler,
+                     RtecScheduler::handle_t rtinfo,
                      CORBA::Environment &TAO_IN_ENV)
 {
   RtecScheduler::OS_Priority thread_priority;
@@ -96,12 +97,22 @@ Preemption_Priority (RtecScheduler::handle_t rtinfo,
   RtecScheduler::Preemption_Priority_t preemption_priority;
 
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED);
+
+#if 1
+  scheduler->priority
+    (rtinfo,
+     thread_priority,
+     subpriority,
+     preemption_priority,
+     TAO_IN_ENV);
+#else
   ACE_Scheduler_Factory::server ()->priority
     (rtinfo,
      thread_priority,
      subpriority,
      preemption_priority,
      TAO_IN_ENV);
+#endif
   TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
   return preemption_priority;
 }
@@ -137,7 +148,8 @@ public:
   // When executed, tells <consumer_module> that <consumer> has shut
   // down.
   Shutdown_Consumer (ACE_ES_Consumer_Module *consumer_module,
-                     ACE_Push_Consumer_Proxy *consumer)
+                     ACE_Push_Consumer_Proxy *consumer,
+                     RtecScheduler::Scheduler_ptr scheduler)
     : consumer_module_ (consumer_module)
     {
       consumer_ = consumer;
@@ -159,7 +171,7 @@ public:
             {
               env.clear ();
               RtecScheduler::Preemption_Priority_t q =
-                ::Preemption_Priority ((*iter).rt_info, env);
+                ::Preemption_Priority (scheduler, (*iter).rt_info, env);
               if (env.exception () != 0)
                 continue;
               if (rt_info_ == 0 || q < p)
@@ -396,9 +408,7 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
   if (CORBA::is_nil (push_consumer_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "EC (%t) Push to disconnected consumer %s\n",
-                  ::ACE_ES_Consumer_Name (this->qos (),
-                                          TAO_IN_ENV)));
+                  "EC (%t) Push to disconnected consumer\n"));
       // ACE_ES_DEBUG_ST (::dump_sequence (events));
       return;
     }
@@ -470,7 +480,8 @@ ACE_Push_Consumer_Proxy::shutdown (void)
 
 ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
                                     u_long type,
-                                    TAO_Module_Factory* factory)
+                                    TAO_Module_Factory* factory,
+                                    RtecScheduler::Scheduler_ptr scheduler)
   : rtu_manager_ (0),
     type_ (type),
     state_ (INITIAL_STATE),
@@ -483,6 +494,16 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
     {
       this->own_factory_ = 1;
       ACE_NEW (this->module_factory_, TAO_Default_Module_Factory);
+    }
+  if (CORBA::is_nil (scheduler))
+    {
+      this->scheduler_ = 
+        RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
+    }
+  else
+    {
+      this->scheduler_ = 
+        RtecScheduler::Scheduler::_duplicate (scheduler);
     }
 
   consumer_module_ =
@@ -1231,7 +1252,10 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
 
   // Create a shutdown message.  When this is dispatched, it will
   // delete the proxy.
-  Shutdown_Consumer *sc = new Shutdown_Consumer (this, consumer);
+  RtecScheduler::Scheduler_var scheduler = 
+    this->channel_->scheduler ();
+  Shutdown_Consumer *sc =
+    new Shutdown_Consumer (this, consumer, scheduler.in ());
   if (sc == 0)
     TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
@@ -2151,6 +2175,7 @@ ACE_ES_Subscription_Module::ACE_ES_Subscription_Module (ACE_EventChannel *channe
     up_ (0),
     down_ (0)
 {
+  this->scheduler_ = this->channel_->scheduler ();
 }
 
 void
@@ -2245,15 +2270,22 @@ ACE_ES_Subscription_Module::connected (ACE_Push_Supplier_Proxy *supplier,
                 // new subscribers list.  Dependencies are updated.
 
                 // @@ TODO: Handle exceptions.
+#if 1
+                this->scheduler_->add_dependency
+                  ((*proxy)->dependency()->rt_info,
+                   new_subscribers->dependency_info_->rt_info,
+                   new_subscribers->dependency_info_->number_of_calls,
+                   RtecScheduler::ONE_WAY_CALL,
+                   TAO_IN_ENV);
+#else
                 ACE_Scheduler_Factory::server()->add_dependency
                   ((*proxy)->dependency()->rt_info,
                    new_subscribers->dependency_info_->rt_info,
                    new_subscribers->dependency_info_->number_of_calls,
                    RtecScheduler::ONE_WAY_CALL,
                    TAO_IN_ENV);
-                if (TAO_IN_ENV.exception () != 0)
-                  return;
-                // @@ TODO use the TAO_TRY macros.
+#endif
+                TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
                 if (new_subscribers->consumers_.insert (*proxy) == -1)
                   {
@@ -2617,12 +2649,21 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
               {
                 TAO_TRY
                   {
+#if 1
+                    this->scheduler_->add_dependency
+                      (consumer->dependency()->rt_info,
+                       temp->int_id_->dependency_info_->rt_info,
+                       temp->int_id_->dependency_info_->number_of_calls,
+                       RtecScheduler::ONE_WAY_CALL,
+                       TAO_TRY_ENV);
+#else
                     ACE_Scheduler_Factory::server()->add_dependency
                       (consumer->dependency()->rt_info,
                        temp->int_id_->dependency_info_->rt_info,
                        temp->int_id_->dependency_info_->number_of_calls,
                        RtecScheduler::ONE_WAY_CALL,
                        TAO_TRY_ENV);
+#endif
                     TAO_CHECK_ENV;
                   }
                 TAO_CATCHANY
@@ -2682,12 +2723,21 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
           // @@ TODO handle exceptions.
           TAO_TRY
             {
+#if 1
+              this->scheduler_->add_dependency
+                (consumer->dependency ()->rt_info,
+                 dependency_info->rt_info,
+                 dependency_info->number_of_calls,
+                 RtecScheduler::ONE_WAY_CALL,
+                 TAO_TRY_ENV);
+#else
               ACE_Scheduler_Factory::server()->add_dependency
                 (consumer->dependency ()->rt_info,
                  dependency_info->rt_info,
                  dependency_info->number_of_calls,
                  RtecScheduler::ONE_WAY_CALL,
                  TAO_TRY_ENV);
+#endif
               TAO_CHECK_ENV;
             }
           TAO_CATCHANY
@@ -2742,12 +2792,21 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
                 // @@ TODO handle exceptions.
                 TAO_TRY
                   {
+#if 1
+                    this->scheduler_->add_dependency
+                      (consumer->dependency ()->rt_info,
+                       dependency_info->rt_info,
+                       dependency_info->number_of_calls,
+                       RtecScheduler::ONE_WAY_CALL,
+                       TAO_TRY_ENV);
+#else
                     ACE_Scheduler_Factory::server()->add_dependency
                       (consumer->dependency ()->rt_info,
                        dependency_info->rt_info,
                        dependency_info->number_of_calls,
                        RtecScheduler::ONE_WAY_CALL,
                        TAO_TRY_ENV);
+#endif
                     TAO_CHECK_ENV;
                   }
                 TAO_CATCHANY
@@ -3240,28 +3299,6 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
         }
     }
   pub.length (sc);
-}
-
-// ************************************************************
-
-const char *
-ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos,
-                      CORBA::Environment &TAO_IN_ENV)
-{
-  // The first dependency should designate a correlation group.
-
-  ACE_FUNCTION_TIMEPROBE (TAO_EVENT_CHANNEL_CONSUMER_NAME_PRIORITY_REQUESTED);
-  if (qos.dependencies.length () <= 1)
-    return "no-name";
-
-  RtecScheduler::RT_Info* rt_info = ACE_Scheduler_Factory::server ()->get
-    (qos.dependencies[1].rt_info, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
-
-  if (rt_info == 0)
-    return "no-name";
-
-  return rt_info->entry_point;
 }
 
 // ************************************************************

@@ -50,12 +50,14 @@ private:
   int parse_args (int argc, char* argv[]);
   // parse the command line args
 
-  void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
+  void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec,
                           CORBA::Environment &_env);
   void disconnect_consumers (CORBA::Environment &_env);
   // Connect and disconnect the consumers.
 
-  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
+  void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
+                          RtecEventChannelAdmin::EventChannel_ptr local_ec,
                           CORBA::Environment &_env);
   void disconnect_suppliers (CORBA::Environment &_env);
   // Connect the suppliers.

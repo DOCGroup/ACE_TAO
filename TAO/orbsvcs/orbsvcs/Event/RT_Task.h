@@ -101,7 +101,8 @@ class TAO_ORBSVCS_Export ACE_RT_Task : public ACE_ES_TASK
   //    one thread should be calling any management methods.
   friend class ACE_RT_Thread_Manager;
 public:
-  ACE_RT_Task (void);
+  ACE_RT_Task (RtecScheduler::Scheduler_ptr scheduler = 
+                   RtecScheduler::Scheduler::_nil ());
   // Default construction.
 
   ~ACE_RT_Task (void);
@@ -155,13 +156,6 @@ public:
   // of command->execute ().
 
 protected:
-  RtecScheduler::handle_t rt_info_;
-  // Scheduling characteristics of this active object.
-
-  int closed_;
-  // Set to 1 when this->shutdown_threads or this->close_queue is
-  // called.  Keeps us from enqueuing more that one shutdown message.
-
   virtual int svc (void);
   // Run by each thread spawned.  Each thread dequeues
   // ACE_RT_Task_Commands and executes them.
@@ -171,6 +165,17 @@ protected:
 
   void close_all_threads (void);
   // Enqueues shutdown message for every thread in the task.
+
+protected:
+  RtecScheduler::handle_t rt_info_;
+  // Scheduling characteristics of this active object.
+
+  int closed_;
+  // Set to 1 when this->shutdown_threads or this->close_queue is
+  // called.  Keeps us from enqueuing more that one shutdown message.
+
+  RtecScheduler::Scheduler_var scheduler_;
+  // The scheduler.
 };
 
 #if defined (__ACE_INLINE__)

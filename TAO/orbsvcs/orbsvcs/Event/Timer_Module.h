@@ -149,7 +149,8 @@ class TAO_ORBSVCS_Export TAO_EC_RPT_Timer_Module : public TAO_EC_Timer_Module
   //   each Reactor runs at a different priority.
   //
 public:
-  TAO_EC_RPT_Timer_Module (void);
+  TAO_EC_RPT_Timer_Module (RtecScheduler::Scheduler_ptr scheduler = 
+                               RtecScheduler::Scheduler::_nil ());
   // Create the Timer Module
 
   virtual ~TAO_EC_RPT_Timer_Module (void);
@@ -193,6 +194,9 @@ private:
 
   TAO_EC_Timeout_Handler timeout_handler_;
   // To receive the timeouts.
+
+  RtecScheduler::Scheduler_var scheduler_;
+  // The scheduler.
 };
 
 #if defined (__ACE_INLINE__)

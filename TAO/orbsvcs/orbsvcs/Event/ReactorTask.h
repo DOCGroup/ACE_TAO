@@ -38,10 +38,11 @@ public:
   typedef ACE_Reactor Reactor;
 #endif /* ACE_OLD_STYLE_REACTOR */
 
-  ACE_ES_Reactor_Task();
+  ACE_ES_Reactor_Task (RtecScheduler::Scheduler_ptr scheduler = 
+                           RtecScheduler::Scheduler::_nil ());
   // Default construction.
 
-  ~ACE_ES_Reactor_Task();
+  ~ACE_ES_Reactor_Task (void);
   // Destruction.
 
   virtual int svc_hook(RtecScheduler::OS_Priority);

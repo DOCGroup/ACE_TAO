@@ -7,7 +7,6 @@
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ECT_Consumer.h"
 
@@ -25,16 +24,14 @@ Test_Consumer::Test_Consumer (ECT_Driver *driver,
 }
 
 void
-Test_Consumer::connect (const char* name,
+Test_Consumer::connect (RtecScheduler::Scheduler_ptr scheduler,
+                        const char* name,
                         int event_a, int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec,
                         CORBA::Environment& TAO_IN_ENV)
 {
-  RtecScheduler::Scheduler_ptr server =
-    ACE_Scheduler_Factory::server ();
-
   RtecScheduler::handle_t rt_info =
-    server->create (name, TAO_IN_ENV);
+    scheduler->create (name, TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // The worst case execution time is far less than 2
@@ -42,15 +39,15 @@ Test_Consumer::connect (const char* name,
   ACE_Time_Value tv (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  server->set (rt_info,
-               RtecScheduler::VERY_HIGH_CRITICALITY,
-               time, time, time,
-               0,
-               RtecScheduler::VERY_LOW_IMPORTANCE,
-               time,
-               0,
-               RtecScheduler::OPERATION,
-               TAO_IN_ENV);
+  scheduler->set (rt_info,
+                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                  time, time, time,
+                  0,
+                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                  time,
+                  0,
+                  RtecScheduler::OPERATION,
+                  TAO_IN_ENV);
   TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_ConsumerQOS_Factory qos;
