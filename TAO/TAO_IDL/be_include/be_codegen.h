@@ -310,7 +310,7 @@ private:
   // save current node in this
 };
 
-typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_MUTEX> TAO_CODEGEN;
+typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;
 // Singleton instance of the BE code generator
 
 

@@ -239,7 +239,7 @@ private:
   // the enumerated value indicating the lookup strategy
 };
 
-typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RW_MUTEX> TAO_OP_TABLE_PARAMETERS;
+typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX> TAO_OP_TABLE_PARAMETERS;
 // define a singleton instance of operation table parameters
 
 class ACE_Svc_Export TAO_Operation_Table_Factory
@@ -258,7 +258,7 @@ public:
   // destructor
 };
 
-typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_SYNCH_RW_MUTEX> TAO_OP_TABLE_FACTORY;
+typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_SYNCH_RECURSIVE_MUTEX> TAO_OP_TABLE_FACTORY;
 // define a singleton instance of the operation table factory
 
 #endif /* TAO_OPTABLE_H */

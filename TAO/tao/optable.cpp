@@ -257,10 +257,10 @@ TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 template class ACE_Hash_Map_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Manager<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Entry<const char*, TAO_Skeleton>;
-template class ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Manager<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<const char*, TAO_Skeleton>
-#pragma instantiate ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
