@@ -89,7 +89,7 @@ private:
   char *factory_key_;
   // Key of factory obj ref.
 
-  u_int loop_count_;
+  CORBA::ULong loop_count_;
   // Number of times to do the send operations.
 
   int shutdown_;
@@ -98,16 +98,13 @@ private:
   Pluggable_Test_Factory_var factory_;
   // factory pointer for cubit.
 
-  CORBA::Environment env_;
-  // Environment variable.
-
   Pluggable_Test_var objref_;
   // Pluggable_Test obj ref.
 
-  u_int call_count_;
+  CORBA::ULong call_count_;
   // # of calls made to functions.
 
-  u_int error_count_;
+  CORBA::ULong error_count_;
   // # of errors incurred in the lifetime of the application.
 
   FILE *factory_ior_file_;
