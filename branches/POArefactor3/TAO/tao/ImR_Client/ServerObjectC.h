@@ -68,13 +68,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
-// be\be_visitor_root/root_ch.cpp:63
+// TAO_IDL - Generated from 
+// be\be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -84,22 +84,22 @@ namespace TAO
 
 namespace ImplementationRepository
 {
-
+  
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:603
+  // be\be_interface.cpp:598
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_
-
+  
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServerObject
       >
     ServerObject_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServerObject
@@ -107,13 +107,13 @@ namespace ImplementationRepository
     ServerObject_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT_CH_
-
+  
   class TAO_IMR_Client_Export ServerObject
     : public virtual CORBA::Object
   {
@@ -121,74 +121,74 @@ namespace ImplementationRepository
     friend class TAO::Narrow_Utils<ServerObject>;
     typedef ServerObject_ptr _ptr_type;
     typedef ServerObject_var _var_type;
-
+    
     // The static operations.
     static ServerObject_ptr _duplicate (ServerObject_ptr obj);
-
+    
     static ServerObject_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerObject_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerObject_ptr _nil (void)
     {
-      return (ServerObject_ptr)0;
+      return static_cast<ServerObject_ptr> (0);
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void ping (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void shutdown (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:208
-
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   private:
     TAO::Collocation_Proxy_Broker *the_TAO_ServerObject_Proxy_Broker_;
-
+  
   protected:
     // Concrete interface only.
     ServerObject (void);
-
+    
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
     virtual void ImplementationRepository_ServerObject_setup_collocation (void);
-
+    
     // Concrete non-local interface only.
     ServerObject (
         IOP::IOR *ior,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     // Non-local interface only.
     ServerObject (
         TAO_Stub *objref,
@@ -196,21 +196,21 @@ namespace ImplementationRepository
         TAO_Abstract_ServantBase *servant = 0,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     virtual ~ServerObject (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ServerObject (const ServerObject &);
-
+    
     void operator= (const ServerObject &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerObject;
 
 // TAO_IDL - Generated from
@@ -238,7 +238,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_IMR_Client_Export Objref_Traits< ::ImplementationRepository::ServerObject>
   {
@@ -272,7 +272,7 @@ TAO_IMR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Implemen
 TAO_IMR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, ImplementationRepository::ServerObject_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "ServerObjectC.inl"

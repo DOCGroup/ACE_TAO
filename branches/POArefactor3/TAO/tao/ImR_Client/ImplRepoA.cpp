@@ -27,6 +27,8 @@
 
 #include "ImplRepoC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/Any_Basic_Impl_T.h"
@@ -959,9 +961,9 @@ TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>::demarshal_val
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -971,11 +973,11 @@ TAO::Any_Dual_Impl_T<ImplementationRepository::AlreadyRegistered>::demarshal_val
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -1044,9 +1046,9 @@ TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>::demarshal_value 
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -1056,11 +1058,11 @@ TAO::Any_Dual_Impl_T<ImplementationRepository::CannotActivate>::demarshal_value 
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.
@@ -1129,9 +1131,9 @@ TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>::demarshal_value (
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -1141,11 +1143,11 @@ TAO::Any_Dual_Impl_T<ImplementationRepository::NotFound>::demarshal_value (
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.

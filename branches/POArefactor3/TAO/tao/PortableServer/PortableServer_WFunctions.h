@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    PortableServer_Functions.h
+ *  @file    PortableServer_WFunctions.h
  *
  *  $Id$
  *
@@ -12,8 +12,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_PORTABLESERVER_FUNCTIONS_H
-#define TAO_PORTABLESERVER_FUNCTIONS_H
+#ifndef TAO_PORTABLESERVER_WFUNCTIONS_H
+#define TAO_PORTABLESERVER_WFUNCTIONS_H
 
 #include /**/ "ace/pre.h"
 
@@ -49,14 +49,13 @@
 
 namespace PortableServer
 {
-  /// Utility functions for the other
-  TAO_NAMESPACE_STORAGE_CLASS char* ObjectId_to_string (
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::WChar* ObjectId_to_wstring (
     const PortableServer::ObjectId &id);
 
-  TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *string_to_ObjectId (
-    const char *id);
+  TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *wstring_to_ObjectId (
+    const CORBA::WChar *id);
 }
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_PORTABLESERVER_FUNCTIONS_H */
+#endif /* TAO_PORTABLESERVER_WFUNCTIONS_H */

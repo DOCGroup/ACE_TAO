@@ -26,8 +26,8 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:605
+// TAO_IDL - Generated from 
+// be\be_codegen.cpp:609
 
 #ifndef _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
 #define _TAO_IDL_ORIG_SERVEROBJECTS_CPP_
@@ -57,7 +57,6 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc_Allocator.h"
-#include "ace/config-all.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
@@ -68,7 +67,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -77,7 +76,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1540
+// be\be_interface.cpp:1536
 
 class TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -90,7 +89,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POArefactor\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\POArefactor3\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0,0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -542,7 +541,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::dispat
   
   if (status == -1)
     {
-      ACE_THROW (CORBA::BAD_OPERATION ());
+      ACE_THROW (CORBA::BAD_OPERATION (TAO::VMCID | 2, CORBA::COMPLETED_NO));
     }
   
   ACE_TRY
@@ -576,7 +575,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::dispat
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:648
+// be\be_visitor_interface/interface_ss.cpp:640
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -992,7 +991,7 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   
   POA_ImplementationRepository::ServerObject *_tao_impl =
-    (POA_ImplementationRepository::ServerObject *) _tao_servant;
+    static_cast<POA_ImplementationRepository::ServerObject *> (_tao_servant);
   
   CORBA::Boolean _tao_retval = 0;
   CORBA::String_var value;
@@ -1022,7 +1021,7 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
   )
 {
   POA_ImplementationRepository::ServerObject *_tao_impl =
-    (POA_ImplementationRepository::ServerObject *) _tao_servant;
+    static_cast<POA_ImplementationRepository::ServerObject *> (_tao_servant);
   
   CORBA::Boolean _tao_retval =
     _tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1055,7 +1054,7 @@ void POA_ImplementationRepository::ServerObject::_interface_skel (
     }
   
   POA_ImplementationRepository::ServerObject *_tao_impl =
-    (POA_ImplementationRepository::ServerObject *) _tao_servant;
+    static_cast<POA_ImplementationRepository::ServerObject *> (_tao_servant);
   
   CORBA::InterfaceDef_ptr _tao_retval = 
     _tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1086,7 +1085,7 @@ void POA_ImplementationRepository::ServerObject::_component_skel (
   )
 {
   POA_ImplementationRepository::ServerObject *_tao_impl =
-    (POA_ImplementationRepository::ServerObject *) _tao_object_reference;
+    static_cast<POA_ImplementationRepository::ServerObject *> (_tao_object_reference);
   
   CORBA::Object_var _tao_retval =
     _tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1106,23 +1105,17 @@ CORBA::Boolean POA_ImplementationRepository::ServerObject::_is_a (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (
+  return
+    (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:ImplementationRepository/ServerObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Object:1.0"
         )
-     )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    );
 }
 
 void* POA_ImplementationRepository::ServerObject::_downcast (
@@ -1150,7 +1143,7 @@ const char* POA_ImplementationRepository::ServerObject::_interface_repository_id
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:584
+// be\be_visitor_interface/interface_ss.cpp:576
 
 void POA_ImplementationRepository::ServerObject::_dispatch (
     TAO_ServerRequest &req,
@@ -1165,7 +1158,7 @@ void POA_ImplementationRepository::ServerObject::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:526
+// be\be_visitor_interface/interface_ss.cpp:527
 
 ImplementationRepository::ServerObject *
 POA_ImplementationRepository::ServerObject::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -1176,22 +1169,14 @@ POA_ImplementationRepository::ServerObject::_this (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Stub_Auto_Ptr safe_stub (stub);
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
   
-  if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
-    {
-      ACE_NEW_RETURN (
-          tmp,
-          CORBA::Object (stub, 1, this),
-          0
-        );
-    }
-  else
-    {
-      ACE_NEW_RETURN (
-          tmp,
-          CORBA::Object (stub, 0, this),
-          0
-        );
-    }
+  CORBA::Boolean _tao_opt_colloc =
+    stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
+  
+  ACE_NEW_RETURN (
+      tmp,
+      CORBA::Object (stub, _tao_opt_colloc, this),
+      0
+    );
   
   CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
