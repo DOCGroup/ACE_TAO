@@ -284,7 +284,9 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   u_long scratch;
 
   do {
-    asm volatile ("mftbu %0; mftb %1; mftbu %2" 
+    asm volatile ("mftbu %0\n"
+		  "mftb  %1\n"
+		  "mftbu %2" 
 		  : "=r" (most), "=r" (least), "=r" (scratch));
   } while (most != scratch);
 #endif
