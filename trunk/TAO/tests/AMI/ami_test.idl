@@ -32,7 +32,7 @@ module A
                   in string in_str)
           raises (DidNotWork);
   
-        // attribute long yadda;
+        attribute long yadda;
         //  oneway void shutdown ();
       };
 

@@ -47,12 +47,19 @@ class be_visitor_ami_pre_proc : public be_visitor_scope
 private:
  typedef AST_Interface *AST_Interface_ptr; 
 
+ typedef enum {
+   NORMAL,
+   GET_OPERATION,
+   SET_OPERATION 
+ } Operation_Kind;
 
 public:
   be_visitor_ami_pre_proc (be_visitor_context *ctx);
 
-  // constructor is protected
   virtual ~be_visitor_ami_pre_proc (void);
+
+  virtual int visit_root (be_root *node);
+  // visit a root
 
   virtual int visit_module (be_module *node);
   // visit module
@@ -60,25 +67,20 @@ public:
   virtual int visit_interface (be_interface *node);
   // visit interface
 
-  virtual int visit_interface_fwd (be_interface_fwd *node);
-  // visit interface_fwd
-
   virtual int visit_operation (be_operation *node);
   // visit an operation
-
-  //virtual int visit_field (be_field *node);
-  // visit a field
-
-  virtual int visit_argument (be_argument *node);
-  // visit argument
 
   virtual int visit_attribute (be_attribute *node);
   // visit an attribute
 
-  virtual int visit_root (be_root *node);
-  // visit a root
-
 private:
+  int create_raise_operation (be_decl *node,
+                               be_valuetype *excep_holder,
+                               Operation_Kind operation_kind);
+  // Creates a raise operation from node and inserts it in
+  // excep_holder, while obeying if it is a normal operation
+  // or a set or get attribute.
+  
   be_interface *create_reply_handler (be_interface *node,
                                       be_valuetype *excep_holder);
   // create the reply handler interface
@@ -93,13 +95,13 @@ private:
   // object reference to the reply handler as the first argument,
   // but this should not be marhaled, therefor we need the switch
 
-  be_operation *create_excep_operation (be_operation *node,
-                                        be_interface *reply_handler,
-                                        be_valuetype *excep_holder);
+  int create_excep_operation (be_operation *node,
+                              be_interface *reply_handler,
+                              be_valuetype *excep_holder);
   // create a method with "_excep" appended
 
-  be_operation *create_reply_handler_operation (be_operation *node,
-                                                be_interface *reply_handler);
+  int create_reply_handler_operation (be_operation *node,
+                                      be_interface *reply_handler);
   // create an operation with only the OUT and INOUT arguments
 
   int visit_scope (be_scope *node);
@@ -111,6 +113,14 @@ private:
                      const char *suffix);
   // concatenate the prefix, middle_name and suffix
   // and store the result in desination.
+
+  be_operation *generate_get_operation (be_attribute *node);
+  // generate a get operation out of the attribute.
+
+  be_operation *generate_set_operation (be_attribute *node);
+  // generate a set operation out of the attribute.
+
 };
+
 
 #endif // TAO_BE_VISITOR_AMI_PRE_PROC_H

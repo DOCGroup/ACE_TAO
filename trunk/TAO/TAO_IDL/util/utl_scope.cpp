@@ -1244,15 +1244,16 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
     pd_referenced[pd_referenced_used++] = e;
   else if (referenced (ex))
     {
-      for (i = ++pd_referenced_used; i > 1; i--)
-      {
-        pd_referenced[i] = pd_referenced[i-1];
-        if (pd_referenced[i-1] == ex)
-          {
-            pd_referenced[i-1] = e;
-            break;
-          }
-      }
+      for (i = pd_referenced_used; i > 0; i--)
+        {
+          pd_referenced[i] = pd_referenced[i-1];
+          if (pd_referenced[i-1] == ex)
+            {
+              pd_referenced[i-1] = e;
+              break;
+            }
+        }
+      ++pd_referenced_used;
     }
 
   // Now, if recursive is specified and "this" is not a common ancestor
@@ -1294,6 +1295,36 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
       pd_name_referenced[pd_name_referenced_used++] = id;
     }
 }
+
+void 
+UTL_Scope::replace_referenced (AST_Decl *old_decl,
+                               AST_Decl *new_decl)
+{
+  int i;
+  for (i = 0; i < pd_referenced_used; i++)
+    if (pd_referenced[i] == old_decl)
+      {
+        pd_referenced[i] = new_decl;
+        break;
+      }
+  
+}
+
+
+void 
+UTL_Scope::replace_scope (AST_Decl *old_decl,
+                          AST_Decl *new_decl)
+{
+  int i;
+  for (i = 0; i < pd_decls_used; i++)
+    if (pd_decls[i] == old_decl)
+      {
+        pd_decls[i] = new_decl;
+        break;
+      }
+  
+}
+
 
 // Add a node to set of nodes declared in this scope
 void
@@ -1380,7 +1411,7 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
     pd_decls[pd_decls_used++] = e;
   else
     {
-      for (i = ++pd_decls_used; i > 1; i--)
+      for (i = pd_decls_used; i > 0; i--)
         {
           pd_decls[i] = pd_decls[i-1];
           if (pd_decls[i-1] == ex)
@@ -1389,6 +1420,7 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
               break;
             }
         }
+      ++pd_decls_used;
     }
 }
 

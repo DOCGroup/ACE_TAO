@@ -112,10 +112,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "CORBA::ULong reply_status";
 
-    *os << "," << be_nl
-        << "CORBA::Environment &ACE_TRY_ENV";
+  *os << "," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV";
         
-   *os << ")" << be_uidt << be_uidt_nl;
+  *os << ")" << be_uidt << be_uidt_nl;
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.

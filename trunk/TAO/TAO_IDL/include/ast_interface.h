@@ -109,6 +109,8 @@ public:
   long n_inherits();
   void set_n_inherits(long i);
   void be_add_operation (AST_Operation *);
+  void be_replace_operation (AST_Decl *old_op,
+                             AST_Decl *new_op);
 
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
