@@ -79,7 +79,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   
   char * name;
   ACE_NEW_RETURN (name, char [BUFSIZ], 0);
-
+  
   CORBA::String_var service_name (name);
   
   ACE_INET_Addr remote_addr;
@@ -94,7 +94,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                        "TAO_IOR_Multicast::handle_input - peek %d\n",
 		       n), 
 		      0);
-  else if (header <= 0)
+  else if (ACE_NTOHS (header) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Header value < 1\n"),
                       0);
@@ -108,7 +108,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   iov[1].iov_base = (char *) &remote_port;
   iov[1].iov_len  = sizeof (ACE_UINT16);
   iov[2].iov_base = (char *) service_name;
-  iov[2].iov_len  = header - sizeof (ACE_UINT16);
+  iov[2].iov_len  = ACE_NTOHS (header) - sizeof (ACE_UINT16);
   
   // Read the iovec.
   n = this->mcast_dgram_.recv (iov,
@@ -120,9 +120,9 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                        "TAO_IOR_Multicast::handle_input recv = %d\n",
 		       n), 
 		      0);
-
+  
   // Null terminate.
-  service_name [header - sizeof (ACE_UINT16)] = 0;
+  service_name [ACE_NTOHS (header) - sizeof (ACE_UINT16)] = 0;
   
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -149,7 +149,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 			   "IOR_Multicast::find failed.\n"),
 			  0);
     }
-
+  
   ACE_SOCK_Connector connector;
   ACE_INET_Addr peer_addr (ACE_NTOHS (remote_port),
 			   remote_addr.get_host_name ());
