@@ -1,7 +1,17 @@
+Tue Jun 29 20:57:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Simple/chat/Broadcaster_i.cpp:
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	* examples/Event_Comm/Notifier_Handler.cpp:
+	* examples/Event_Comm/Notifier_Server.cpp:
+	* examples/Event_Comm/notifier.cpp:
+	  Fixed exception handling macros
+
 Tue Jun 29 20:37:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/configurations.html: Updated documentation for thread-pool
-	  concurrency policy.  Thanks to Madhu Konety <madhu.konety@stdc.com> for motivating this.
+	  concurrency policy.  Thanks to Madhu Konety
+	  <madhu.konety@stdc.com> for motivating this.
 
 Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
