@@ -1,3 +1,37 @@
+Tue Dec 17 09:53:02 2002  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Transport_Cache_Manager.*: 
+
+	Fixed deadlock that can occur when trying to gain reactor token
+	and transport cache manager lock while purging cache entries.
+	Unfortunately , the classic solution to the classic
+	deadlock--which is typically caused by an ordering problem, and is
+	solved by re-ordering--doesn't apply.  We simply don't have
+	control of the order due to the fact that we have two frameworks
+	interacting, and the offending bodies of code don't have
+	visibility to both locks.
+
+	The key is not trying to remove the handler while the transport
+	cache lock is held.  So, we break this into two loops.  The first
+	loop does everything cache-releated with only the cache lock held,
+	then releases it.  The second loop then does only the
+	reactor-related things.
+
+	Key changes are:
+
+	- Move purge() from .inl to .cpp.
+	- Fold close_entries() into purge() (purge was the only thing that
+	called close_entries anyway).
+	- Use a stack to accumulate the transports that have been purged
+	in the first loop, then, in the second loop, pop the stack and
+	call the remove_handler on each transport.
+	- Note that the transports whose pointers are stuck in the stack
+	are properly reference counted using
+	TAO_Transport::_duplicate/release.
+
+	Thanks to Raytheon in San Diego for providing the environment to
+	find this!
+		
 Tue Dec 17 08:14:35 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * utils/nslist/nslist.mpc:
