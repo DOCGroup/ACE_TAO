@@ -1,3 +1,12 @@
+Sun Jul 16 16:21:16 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/grp.inl: 
+	* pace/win32/grp.h:
+
+	  No WIN32 support. ACE does not emulate this family.
+	  Build a group struct & return -1 and set ernno to
+	  NO SUPPORT!
+
 Sun Jul 16 16:17:25 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h (PACE_FAIL_RETURN):
