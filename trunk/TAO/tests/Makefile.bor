@@ -1,5 +1,5 @@
 #
-# Makefile for building the TAO tests
+# $Id$
 #
 
 DIRS = \
@@ -33,6 +33,7 @@ DIRS = \
         MProfile_Forwarding \
 	MT_Client \
 	MT_Server \
+	MT_Timeout \
         Multiple \
 	Multiple_Inheritance \
 	Muxing \
