@@ -2,6 +2,7 @@
 #
 # A perl script that filers length VC output into a concise html report.
 
+# Define html tags.
 $header = "<html><head>
 <title>Error/Warning Summary of Daily Build</title>
 </head>
@@ -19,8 +20,8 @@ $in_sin_e = "</FONT>";
 $new_build_b = "<P>";
 $new_build_e = "";
 
+# Get filename.
 $fname = $ARGV[0];
-
 open (fp, "$fname");
 
 print $header ;
