@@ -181,7 +181,7 @@ ACE_OS_TLI::t_open (char *path, int oflag, struct t_info *info)
   ACE_UNUSED_ARG (oflag);
   ACE_UNUSED_ARG (info);
 
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 #endif /* ACE_HAS_TLI */
 }
 

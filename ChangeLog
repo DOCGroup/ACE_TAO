@@ -1,3 +1,7 @@
+Wed Jun 27 07:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS_TLI.inl: Fixed a compile error in Win32 builds.
+
 Tue Jun 26 17:56:05 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/Message_Block_Test.cpp: Changed the test to use
