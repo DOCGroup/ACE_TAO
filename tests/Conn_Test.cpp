@@ -548,6 +548,7 @@ template class ACE_Creation_Strategy<Svc_Handler>;
 template class ACE_Hash_Map_Entry<Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *>;
 template class ACE_Hash_Map_Manager<Hash_Addr<ACE_INET_Addr,Svc_Handler>, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;

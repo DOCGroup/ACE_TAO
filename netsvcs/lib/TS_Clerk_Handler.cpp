@@ -600,6 +600,7 @@ template class ACE_Set_Node<ACE_TS_Clerk_Handler *>;
 template class ACE_Svc_Tuple<ACE_TS_Clerk_Handler>;
 template class ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>;
 template class ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_SYNCH_RW_MUTEX>;
 
