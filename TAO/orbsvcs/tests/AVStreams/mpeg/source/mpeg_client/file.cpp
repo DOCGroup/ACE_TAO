@@ -36,7 +36,7 @@
 #if defined(SunOS) || defined(FreeBSD)
 #include <stdlib.h>
 #endif
-#include "../include/common.h"
+#include "common.h"
 #include "newproto.h"
 #include "global.h"
 
