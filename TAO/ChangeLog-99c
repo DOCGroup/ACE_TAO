@@ -1,3 +1,48 @@
+Fri Jul 23 12:01:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/namespace_check.cpp:
+	   New file that includes files generated from reopened_modules.idl
+	   if ACE_HAS_USING_KEYWORD is defined. Reopened
+	   modules are mapped to reopened namespaces, and platforms
+	   without namespaces cannot handle this, even with the 
+	   TAO_NAMESPACE macro. If this is the case, the file
+	   namespace_check.cpp will be empty after preprocessing.
+
+	* TAO/tests/IDL_Test/Makefile:
+	* TAO/tests/IDL_Test/README:
+	   Changed to reflect the above addition.
+
+	* TAO/tests/IDL_Test/reopened_modules.idl:
+	* TAO/tests/IDL_Test/interface.idl:
+	* TAO/tests/IDL_Test/sequence.idl
+	   New examples added.
+
+	* TAO_IDL/util/utl_scope.cpp:
+	   Further tweaking of the lookup_by_name() method,
+	   in response to a bug report. Thanks to 
+	   Diterwich, Ruud <R.M.L.Diterwich@marin.nl>
+	   for sending in the example.
+
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	   Added code generation for an explicit temporary in
+	   CDR extraction operator of multi-dimensional array
+	   where base type is a typedef, rather than just 
+	   putting a constructor on the rhs of the >> operator
+	   in the FOR loop. SunOS/egcs complained about
+	   lvalue/rvalue stuff.
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	   Added #if !defined guards around CDR operator
+	   declarations and definitions if the sequence is
+	   anonymous. A struct or a union could contain an
+	   anonymous sequence of the same type more than once,
+	   and the body of the CDR operators would also appear
+	   more than once in generated code, leading to C++ 
+	   compile errors. Thanks to Roger Egbers <regbers@isrglobal.com
+	   for sending in the example.
+
 Fri Jul 23 11:37:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Use get_host_addr()
@@ -8,11 +53,11 @@ Fri Jul 23 11:37:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Fri Jul 23 08:53:52 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_type.cpp (nested_type_name):
-	  There was an error in the computation of the string length that
- 	  we use to do string comparison. This error resulted due to a
- 	  copy/paste which was causing errors in generated code. This bug
- 	  report was passed to me by Jeff Parsons. Thanks to ?? <??> for
- 	  submitting the bug report.
+	  There was an error in the computation of the string length that we
+	  use to do string comparison. This error resulted due to a copy/paste which
+	  was causing errors in generated code. This bug report was passed to me by 
+	  Jeff Parsons. Thanks to Alex Hornby <alex@anvil.co.uk>
+	  for submitting the bug report.
 
 Fri Jul 23 02:13:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
