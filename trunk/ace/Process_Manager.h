@@ -159,9 +159,9 @@ public:
   // Block until pid exits or <timeout> expires.
   // Returns 0 on success and -1 on failure.
 
-  int wait (pid_t pid = -(ACE_OS::getpid( )),
-            int *stat_loc = 0,
-            int options = WNOHANG );
+  int wait (pid_t pid,
+            int *stat_loc,
+            int options);
   // Reap the result of a single process by calling <ACE_OS::wait>.
   // If the child is successfully reaped, <remove> is called
   // automatically.  Note that this method can be portably called
