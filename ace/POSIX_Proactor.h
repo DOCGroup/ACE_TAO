@@ -359,7 +359,7 @@ public:
                                                        const ACE_Time_Value &tv,
                                                        ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                        int priority = 0,
-                                                       int signal_number = ACE_SIGRTMIN) ;
+                                                       int signal_number = ACE_SIGRTMIN);
   // If <signal_number> is -1, check with the Proactor and use one of
   // the signals that is present in the mask set (i.e. the signals for
   // which the Proactor will be waiting) of the Proactor. If there are

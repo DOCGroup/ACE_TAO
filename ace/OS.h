@@ -4166,6 +4166,13 @@ union semun
 # define ACE_MAXCLIENTIDLEN MAXHOSTNAMELEN + 20
 
 // Create some useful typedefs.
+
+// Typedef for the null handler func.
+extern "C"
+{
+typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo*,void*);
+}
+
 typedef const char **SYS_SIGLIST;
 typedef void *(*ACE_THR_FUNC)(void *);
 // This is for C++ static methods.
