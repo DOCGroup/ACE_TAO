@@ -24,7 +24,7 @@ my $long_usage="   -? option prints this message\n" .
   "   -v <version>, where <version> is major, minor, or beta (default)\n" .
   "   -ta <ACE tag>, to specify ACE tag to be use for checkout (export)\n" .
   "   -tt <TAO tag>, to specify TAO tag to be use for checkout (export)\n" .
-  "   -tc <CIAO tag>, to specify TAO tag to be use for checkout (export)\n" .
+  "   -tc <CIAO tag>, to specify CIAO tag to be use for checkout (export)\n" .
   "   -u to update versions\n";
 
 ########
@@ -180,6 +180,7 @@ my $find = 'find';
 my $gzip = 'gzip';
 my $bzip2 = 'bzip2';
 my $make = 'make -f Release -s';
+my $regmake = 'make -s';
 my $mv = 'mv -f';
 my $rm = 'rm -f';
 my $cp = 'cp -f';
@@ -685,17 +686,17 @@ sub update_changelog () {
   &ex ("cd ..; $cvs commit -m'$version' " .
       "TAO/VERSION TAO/PROBLEM-REPORT-FORM TAO/ChangeLog $version_h $version_mpb && " .
       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-      "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+      "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
   } elsif ($KIT eq 'CIAO') {
   &ex ("cd ../../; $cvs commit -m'$version' " .
        "TAO/CIAO/VERSION TAO/CIAO/PROBLEM-REPORT-FORM TAO/CIAO/ChangeLog $version_h $version_mpb && " .
        "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-       "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
   } else {
   &ex ("$cvs commit -m'$version' " .
        "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb &&" .
        "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb; " .
-       "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
+       "chgrp 1213 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h $version_mpb");
   }
 
   return 1 if $? >> 8;
@@ -872,12 +873,12 @@ sub create_kit () {
       # Create a list of files that needs to be packed with CIAO
       # including ACE+TAO.
       my $tmp_rel_file = '';
-      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUmakefile show_release_files`);
+      chomp ($tmp_rel_file = `$regmake -f ACE_wrappers/TAO/Release show_release_files`);
       $release_files .= ' ';
       $release_files .= $tmp_rel_file;
       $tmp_rel_file = '';
       $release_files .= ' ';
-      chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/CIAO/GNUmakefile show_release_files`);
+      chomp ($tmp_rel_file = `$regmake -f ACE_wrappers/TAO/CIAO/Release show_release_files`);
       $release_files .= $tmp_rel_file;
 
       print "RELEASE FILES from CIAO are $release_files \n";
@@ -893,7 +894,7 @@ sub create_kit () {
         "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$bzip2 > ACE+TAO+CIAO.tar.bz2 && " .
         "$chmod 664 ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
-        "$chgrp doc ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
+        "$chgrp 1213 ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 && " .
         "$dispose ACE+TAO+CIAO.tar.gz ACE+TAO+CIAO.zip ACE+TAO+CIAO.tar.bz2 $dest &&" .
         "$cp $dest/ACE+TAO+CIAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.zip &&".
         "$cp $dest/ACE+TAO+CIAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag+$local_ciao_tag.tar.gz &&".
@@ -915,7 +916,7 @@ sub create_kit () {
   if ($kit eq 'ace+tao' || $kit eq 'ace+tao+ciao') {
       # Set the relese files once again
     my $tmp_rel_file = '';
-    chomp ($tmp_rel_file = `$make -f ACE_wrappers/TAO/GNUmakefile show_release_files`);
+    chomp ($tmp_rel_file = `$regmake -f ACE_wrappers/TAO/Release show_release_files`);
     $release_files = $base_release_files;
     $release_files .= ' ';
     $release_files .= $tmp_rel_file;
@@ -933,7 +934,7 @@ sub create_kit () {
         "$find $release_files $release_filter | $cpio -o -H ustar | " .
           "$bzip2 > ACE+TAO.tar.bz2 && " .
         "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
-        "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
+        "$chgrp 1213 ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 && " .
         "$dispose ACE+TAO.tar.gz ACE+TAO.zip ACE+TAO.tar.bz2 $dest &&" .
         "$cp $dest/ACE+TAO.zip $old_versions_dir/$local_ace_tag+$local_tao_tag.zip &&".
         "$cp $dest/ACE+TAO.tar.gz $old_versions_dir/$local_ace_tag+$local_tao_tag.tar.gz &&".
@@ -966,7 +967,7 @@ sub create_kit () {
       }
 
       # Reset it again with autoconf files
-      chomp ($release_files = `$make -f ACE_wrappers/GNUmakefile show_autoconf_release_files`);
+      chomp ($release_files = `$regmake -f ACE_wrappers/Release show_autoconf_release_files`);
 
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .
@@ -988,7 +989,7 @@ sub create_kit () {
           "$bzip2 > ACE-lib.tar.bz2 && " .
         "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
 	  "ACE.zip ACE-lib.zip && " .
-        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
+        "$chgrp 1213 ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 ".
 	  "ACE.zip ACE-lib.zip && " .
         "$dispose ACE.zip ACE-lib.zip $dest && " .
         "$dispose ACE.tar.gz ACE-lib.tar.gz ACE.tar.bz2 ACE-lib.tar.bz2 $dest && " .
