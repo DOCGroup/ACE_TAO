@@ -11,10 +11,6 @@ Thu Nov 20 10:45:08 1997    <irfan@TWOSTEP>
 	* ace/Reactor.cpp (ACE_Reactor): Fixed error of not creating any
  	  Reactors on UNIX.
 
-Thu Nov 20 10:45:10 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.3.54, released Thu Nov 20 10:45:10 1997.
-
 Thu Nov 20 08:36:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,cpp}:  Added a dummy argument to internal
