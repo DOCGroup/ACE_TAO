@@ -188,10 +188,9 @@ static const int MAX_HASH = 6;
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
 // out how to simplify this.
-static const POOL_SIZE = sizeof (HASH_STRING_ENTRY) * STRING_TABLE_SIZE
-                         + sizeof (HASH_STRING_ENTRY) * MAX_HASH; 
-static char String_Table_pool[POOL_SIZE];
-static ACE_Static_Allocator_Base allocator (String_Table_pool, POOL_SIZE);
+static const String_Table_size = sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_SIZE + MAX_HASH);
+static char String_Table_pool[String_Table_size];
+static ACE_Static_Allocator_Base allocator (String_Table_pool, String_Table_size);
 
 static int
 run_test (void)
