@@ -4435,7 +4435,7 @@ public:
                         const void *base,
                         size_t nel,
                         size_t size,
-                        int (*compar)(const  void  *,  const  void *));
+                        int (*compar)(const void *, const void *));
   static void qsort (void *base,
                      size_t nel,
                      size_t width,
