@@ -2,6 +2,8 @@
 
 #include "ace/MEM_SAP.h"
 
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_SAP.i"
 #endif
@@ -77,3 +79,5 @@ template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control
 #pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

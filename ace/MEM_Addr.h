@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
 #include "ace/INET_Addr.h"
 
 /**
@@ -144,6 +146,8 @@ private:
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Addr.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #include "ace/post.h"
 #endif /* ACE_MEM_ADDR_H */
