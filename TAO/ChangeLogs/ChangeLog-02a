@@ -1,4 +1,9 @@
-Wed Nov 13 14:14:24 2001  Craig Rodrigues <crodrigu@bbn.com>
+Tue Nov 13 14:31:44 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV.dsp: (updated)
+	* orbsvcs/orbsvcs/AV_Static.dsp: (updated)
+
+Tue Nov 13 14:14:24 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 	Fixes provided by Rob Ruff <rruff@scires.com>:  
 
