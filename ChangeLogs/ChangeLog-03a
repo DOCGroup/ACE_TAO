@@ -1,3 +1,11 @@
+Thu Feb  7 08:16:24 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ACE-INSTALL.html: Document the include_env=1 make switch.
+
+	* docs/exceptions.html: Replaced the "Transition from TAO_TRY
+	  to ACE_TRY" section with "Transition from ACE_TRY_ENV usage
+	  to ACE_ENV_ARG".
+
 Wed Feb  6 06:57:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_test.lst: Disabled TP_Reactor_Test as the test is
