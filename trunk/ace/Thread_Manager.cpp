@@ -1205,17 +1205,11 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
         return -1;
   } // Let go of the guard, giving other threads a chance to run.
 
-  // @@ This should be removed now.  But let me make sure my changes
-  // work first.
-
-  // Yield (four times) for each thread that we had to wait on.  This
-  // should give each of those threads a chance to clean up.  The
-  // problem arises because the threads that signalled zero_cond_ may
-  // not have had a chance to run after that, and therefore may not
-  // have finished cleaning themselves up.  This isn't a guaranteed
-  // fix, of course, but that would be very complicated.
-  for (size_t i = 0; i < 4 * threads_waited_on; ++i)
-    ACE_OS::thr_yield ();
+  // @@ Hopefully, we can get rid of all this stuff if we keep a list
+  // of threads to join with...  In addition, we should be able to
+  // close down the HANDLE at this point, as well, on NT.  Note that
+  // we can also mark the thr_table_[entry] as ACE_THR_IDLE once we've
+  // joined with it.
 
 #if !defined (VXWORKS)
   {
