@@ -1,3 +1,9 @@
+Sat Feb 24 14:37:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * ace/config-g++-common.h
+          gcc 2.97 and higher require the use of the std namespace for
+          iostrams
+
 Sat Feb 24 10:27:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
