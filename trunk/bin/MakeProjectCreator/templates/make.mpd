@@ -20,18 +20,21 @@ SHLIB         = lib<%sharedname%>.$(SOEXT)
 SOEXT         = <%soext%>
 <%endfor%>
 <%foreach(configurations)%>
-<%if(cppflags)%>
-CPPFLAGS     += <%cppflags%>
-<%endif%>
-<%if(zzip)%>
-CPPFLAGS     += -I$(ZZIP_ROOT)/include
-CPPFLAGS     += <%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%>
-<%endif%>
-<%endfor%>
-<%foreach(configurations)%>
 CPPFLAGS     += <%pic%>
 SHFLAGS       = <%shflags%>
 <%endfor%>
+<%endif%>
+<%foreach(configurations)%>
+<%if(cppflags)%>
+CPPFLAGS     += <%cppflags%>
+<%endif%>
+<%endfor%>
+<%if(zzip)%>
+CPPFLAGS     += -I$(ZZIP_ROOT)/include
+CPPFLAGS     +=<%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%>
+<%endif%>
+<%if(pch_header)%>
+CPPFLAGS     +=<%foreach(pch_defines)%> -D<%pch_define%><%endfor%>
 <%endif%>
 <%if(idl_files)%>
 IDL_FILES     =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
@@ -169,7 +172,7 @@ $(DEPENDENCIES):
 	touch $(DEPENDENCIES)
 
 depend:
-	perl <%depgen("$(ACE_ROOT)/bin/depgen.pl")%> -t gnu<%foreach(includes)%> -I<%include%><%endfor%><%foreach(macros)%> -D<%macro%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%> -f $(DEPENDENCIES)<%foreach(source_files)%> <%source_file%><%endfor%>
+	perl <%depgen("$(ACE_ROOT)/bin/depgen.pl")%> -t gnu $(CFLAGS) $(CCFLAGS) $(CPPFLAGS) -f $(DEPENDENCIES)<%foreach(source_files)%> <%source_file%><%endfor%>
 
 include $(DEPENDENCIES)
 <%marker(bottom)%>
