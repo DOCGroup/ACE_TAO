@@ -1,3 +1,9 @@
+Mon Oct 08 11:43:05 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+	  Added another barrier to synchronize shutdown.  Thanks to Frank
+	  Wolf <fwolf@gum.de> for reporting the problem.
+
 Sun Oct 07 18:19:14 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/ServerRequestInfo.cpp
@@ -12,7 +18,7 @@ Sun Oct  7 04:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* tao/TypeCodeFactory/Makefile:
 
 	  Changed a wrong "-I" in the linker flags to "-L".
-    
+
 Sat Oct 06 23:41:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
@@ -28,7 +34,7 @@ Sat Oct  6 11:14:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/MessagingC.h: Moved the #if defines before #include
 	  "ace/post.h".  Thanks to Adrian Mercieca <adrian@anvilmalta.com>
 	  for reporting the problem and Chris Kohlhoff for verifying the
-	  fix. 
+	  fix.
 
 Fri Oct  5 18:56:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -131,12 +137,12 @@ Fri Oct  5 14:44:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Oct  5 14:31:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h: Added a forward
-	  declaration for  class ACE_Command_Base. 
+	  declaration for  class ACE_Command_Base.
 	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp: Included the header
 	  file ace/Functor.h. These were part of the patches that Russ
 	  Noseworthy <j.russell.noseworthy@objectsciences.com>
 	  provided. He had to to use this patch to get it compiling in his
-	  environment. 
+	  environment.
 
 Fri Oct 05 05:58:58 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -159,13 +165,13 @@ Thu Oct  4 10:11:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Oct  2 11:26:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/Security/Send_File/server_key.pem: 
-	* orbsvcs/examples/Security/Send_File/server_cert.pem: 
-	* orbsvcs/examples/Security/Send_File/client_key.pem: 
-	* orbsvcs/examples/Security/Send_File/client_cert.pem: 
+	* orbsvcs/examples/Security/Send_File/server_key.pem:
+	* orbsvcs/examples/Security/Send_File/server_cert.pem:
+	* orbsvcs/examples/Security/Send_File/client_key.pem:
+	* orbsvcs/examples/Security/Send_File/client_cert.pem:
 	* orbsvcs/examples/Security/Send_File/cacert.pem:
 	  Regenerated as the previous ones have expired.
-	
+
 Tue Oct  2 12:13:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp: If the read message is less than the
@@ -177,7 +183,7 @@ Tue Oct  2 12:13:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Oct  2 11:05:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp: Removed a debug statement that made no
-	  sense. 
+	  sense.
 
 Mon Oct  1 14:24:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -199,7 +205,7 @@ Mon Oct  1 07:10:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp: 
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
 	  One of the long standing race conditions that came to the fore
 	  recently. The problem was that we were returning a -1 to the
@@ -209,7 +215,7 @@ Mon Oct  1 07:10:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  thread being unblocked by notify () dispatching a
 	  request. During the process the thread could have resumed the
 	  handler. Another thread in the Reactor could come around and
-	  tried closing the connection. Before the thread from the Reactor 
+	  tried closing the connection. Before the thread from the Reactor
 	  finishes with the cleanup job, the thread that was dispatching
 	  because of notify () could return dropping the upcall count. It
 	  would also return with a -1 to the reactor. At this stage we
@@ -300,7 +306,7 @@ Fri Sep 28 13:52:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Sep 28 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.cpp (handle_close): 
+	* tao/IIOP_Connection_Handler.cpp (handle_close):
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Added some debug
@@ -309,7 +315,7 @@ Fri Sep 28 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Fri Sep 28 11:41:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/server.cpp (main): Made the program create a big
-	  file for use.  
+	  file for use.
 
 	* tests/File_IO/big.txt: Removed the file from the repo. Thanks to
 	  Ossama for driving some sense in me.
@@ -325,12 +331,12 @@ Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
 	  Thanks to Chris Kohloff for contributing this and to Jan Kalin
  	  <jan.kalin@zag.si> for motivating this.
-	
+
 Fri Sep 28 06:40:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Fixed a
 	  cut and paste error :(.  This should clear of many of the
-	  builds. 
+	  builds.
 
 Thu Sep 27 22:26:23 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -341,7 +347,7 @@ Thu Sep 27 22:26:23 2001  Ossama Othman  <ossama@uci.edu>
 
 Thu Sep 27 17:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp (handle_close): 
+	* tao/IIOP_Connection_Handler.cpp (handle_close):
 	* tao/IIOP_Connection_Handler.h: We always depended on the
 	  handle_close () to cleanup memory, the cache and the
 	  transport. The cleanup would not start if the number of upcalls
@@ -349,38 +355,38 @@ Thu Sep 27 17:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  cases like this one
 
 	  - One of the threads is woken up by the Reactor to handle
-            upcalls. 
+            upcalls.
 
 	  - After the upcall is dispatched another thread could be woken
 	    up to close the connection. The second thread would call
 	    handle_close () religiously, but cleanup wouldnt have
-	    occurred. 
-	  
+	    occurred.
+
 	  We need to start cleanup only after the upcall count reaches
 	  0. We now have a method handle_close_i () which does the cleanup
 	  activity. This method is called whenever there is a possibility
-	  of the upcall count reaching zero. 
+	  of the upcall count reaching zero.
 
 	* tao/Strategies/UIOP_Connection_Handler.h:
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
 	* tao/Strategies/DIOP_Connection_Handler.h:
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp: 
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
 	  Applied the same fix to the above protocols too.
-	
+
 Thu Sep 27 17:12:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/client.cpp: 
+	* tests/File_IO/client.cpp:
 	* tests/File_IO/server.cpp: scaled this program down as it was
 	  creating problems  with our daily builds on many
 	  platforms. Retained the essence of the prgoram though. We now run
 	  only 2 threads on the server end 4 threads on the client
 	  end. We now request only 128 K of data (ie. twice the normal
 	  socket buffer size). Hopefully this will go well on all
-	  platforms. 
+	  platforms.
 
 Thu Sep 27 16:23:34 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -411,7 +417,7 @@ Wed Sep 26 15:30:31 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Thread_Pool/client.cpp: 
+	* performance-tests/RTCorba/Thread_Pool/client.cpp:
 
 	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
 	    common file parsing code.  This way we can removed the
@@ -421,7 +427,7 @@ Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    calculated (as before) or can be explicitly specified
 	    through the <invocation_priorities_file> option.
 
-	* performance-tests/RTCorba/Thread_Pool/server.cpp: 
+	* performance-tests/RTCorba/Thread_Pool/server.cpp:
 
 	  - Include tests/RTCORBA/Linear_Priority/readers.cpp to reuse
 	    common file parsing code.  Auto lane priorities and bands
@@ -432,12 +438,12 @@ Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    through the <bands_file> and <lanes_file> options.
 
 	* performance-tests/RTCorba/Thread_Pool/empty_file
-	* performance-tests/RTCorba/Thread_Pool/invocation_priorities 
-	* performance-tests/RTCorba/Thread_Pool/lanes 
+	* performance-tests/RTCorba/Thread_Pool/invocation_priorities
+	* performance-tests/RTCorba/Thread_Pool/lanes
 	* performance-tests/RTCorba/Thread_Pool/bands
 
 	  New files.
-	
+
 	* tests/RTCORBA/Linear_Priority/client.cpp (main): Renamed
 	  Priorities to Short_Array.
 
@@ -446,23 +452,23 @@ Tue Sep 25 23:45:30 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Sep 25 17:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/AMI_Buffering/client.cpp (run_buffer_size): 
+	* tests/AMI_Buffering/client.cpp (run_buffer_size):
 	* tests/Oneway_Buffering/client.cpp: Changed all the ACE_ERROR
 	  statements to ACE_DEBUG statements. Changed the ERROR in the
 	  debug messages as DEBUG. We know that this test shows a problem
 	  with the ORB/Reactor. The error statements create too much of
 	  noise for the builds czars todo any good work. The bug #982 and
 	  #1031 that has been captured in the bugzilla talks about the
-	  problem.  
+	  problem.
 
 Tue Sep 25 11:32:39 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer): 
+	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer):
 
 	  Last night I removed:
 
 	  ACE_STATIC_SVC_REQUIRE(TAO_Advanced_Resource_Factory)
-	  
+
 	  but forgot to add the replacement:
 
 	  ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
@@ -484,26 +490,26 @@ Tue Sep 25 00:17:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp (open_services_i):
-	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp (Initializer): 
-	* tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp (Initializer): 
-	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer): 
-	* tao/RTPortableServer/RTPortableServer.cpp (TAO_RTPortableServer_Initializer): 
-	* tao/RTCORBA/RTCORBA.cpp (TAO_RTCORBA_Initializer): 
-	* tao/PortableServer/PortableServer.cpp (init): 
-	* tao/IORTable/IORTable.cpp (init): 
-	* tao/IORManipulation/IORManip_Loader.cpp (Initializer): 
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp (Initializer): 
-	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp (Initializer): 
-	* tao/DynamicAny/DynamicAny.cpp (Initializer): 
-	* tao/BiDir_GIOP/BiDirGIOP.cpp (Initializer): 
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp (Initializer):
+	* tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp (Initializer):
+	* tao/Strategies/advanced_resource.cpp (TAO_Resource_Factory_Changer):
+	* tao/RTPortableServer/RTPortableServer.cpp (TAO_RTPortableServer_Initializer):
+	* tao/RTCORBA/RTCORBA.cpp (TAO_RTCORBA_Initializer):
+	* tao/PortableServer/PortableServer.cpp (init):
+	* tao/IORTable/IORTable.cpp (init):
+	* tao/IORManipulation/IORManip_Loader.cpp (Initializer):
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp (Initializer):
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp (Initializer):
+	* tao/DynamicAny/DynamicAny.cpp (Initializer):
+	* tao/BiDir_GIOP/BiDirGIOP.cpp (Initializer):
 
-          - Changed 
+          - Changed
 
-            ACE_Service_Config::static_svcs ()->insert (&blah) 
+            ACE_Service_Config::static_svcs ()->insert (&blah)
 
             to
 
-            ACE_Service_Config::process_directive (blah) 
+            ACE_Service_Config::process_directive (blah)
 
             The reason for this change is that when the ORB is loaded
             into a program as a DLL through the Service Configurator,
@@ -514,15 +520,15 @@ Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             irrespective of whether Service_Config::open has already
             being run.
 
-	* tao/Strategies/TAO_Strategies_Internal.cpp: 
-	* tao/Strategies/TAO_Strategies_Internal.h: 
+	* tao/Strategies/TAO_Strategies_Internal.cpp:
+	* tao/Strategies/TAO_Strategies_Internal.h:
 
 	  Removed unused files.
-	
-	* tao/Strategies/Makefile.bor: 
-	* tao/Strategies/Makefile: 
-	* tao/Strategies/TAO_Strategies.dsp: 
-	* tao/Strategies/TAO_Strategies_Static.dsp: 
+
+	* tao/Strategies/Makefile.bor:
+	* tao/Strategies/Makefile:
+	* tao/Strategies/TAO_Strategies.dsp:
+	* tao/Strategies/TAO_Strategies_Static.dsp:
 
 	  Removed TAO_Strategies_Internal.
 
@@ -531,7 +537,7 @@ Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  as it was not needed.
 
 	* tao/default_resource.cpp (get_parser_names): Removed unnecessary
-	  lookup of parsers. 
+	  lookup of parsers.
 
 	* tao/orbconf.h: Removed default defines for
 	  TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
@@ -541,7 +547,7 @@ Mon Sep 24 19:23:29 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  horribly out of date and the defaults work fine.  User can still
 	  define them as needed.
 
-	* tao/TAO_Internal.cpp: 
+	* tao/TAO_Internal.cpp:
 
 	  - Since TAO_DEFAULT_RESOURCE_FACTORY_ARGS,
 	    TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS, and
