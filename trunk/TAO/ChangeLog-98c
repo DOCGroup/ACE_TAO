@@ -9,6 +9,10 @@ Mon Oct 19 11:24:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/EC_Basic/EC_Basic.cpp (run): added
           .in () reference of several args.
 
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp: added a bunch of
+          ACE_UNUSED_ARG's.  Thanks to JM Strauss <jms97@club-internet.fr>
+          for reporting these.
+
 Sun Oct 18 22:05:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
