@@ -3,8 +3,8 @@
 
 int main (int argc, char *argv[])
 {
-  u_short server_port = argc > 1 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
-  char *server_host = argc > 2 ? argv[3] : ACE_DEFAULT_SERVER_HOST;
+  char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  u_short server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_IOStream<ACE_SOCK_Stream> server;
   ACE_SOCK_Connector connector;
