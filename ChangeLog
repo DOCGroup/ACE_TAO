@@ -1,3 +1,12 @@
+Wed Feb 11 16:25:11 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/INET_Addr.cpp (get_host_addr): On Windows for IPv6, don't try
+	  to call ACE_OS::inet_ntop() - it's not supported. The rough
+	  equivalent is getnameinfo(). Rather than add this at the ACE_OS
+	  layer after BFO (getnameinfo() may have been replaced by newer
+	  APIs in other OSes) add the getnameinfo() call in here.
+	  This fixes the crash in INET_Addr_Test on Windows w/ IPv6.
+
 Wed Feb 11 13:14:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/INET_Addr_Test_IPV6.cpp: Cast INADDR_ANY to ACE_UINT32 to
