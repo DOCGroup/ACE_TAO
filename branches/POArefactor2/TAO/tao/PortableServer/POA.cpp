@@ -90,7 +90,7 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
 
 PortableServer::LifespanPolicy_ptr
 TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
-                                 ACE_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::Portable_Server::Policy_Creator<
@@ -104,7 +104,7 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
 
 PortableServer::IdUniquenessPolicy_ptr
 TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value
-                                      ACE_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::Portable_Server::Policy_Creator<
@@ -118,7 +118,7 @@ TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
 
 PortableServer::IdAssignmentPolicy_ptr
 TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value
-                                      ACE_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::Portable_Server::Policy_Creator<
@@ -134,7 +134,7 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
 
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value
-                                            ACE_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::Portable_Server::Policy_Creator<
@@ -148,7 +148,7 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
 
 PortableServer::ServantRetentionPolicy_ptr
 TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value
-                                          ACE_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::Portable_Server::Policy_Creator<
@@ -162,7 +162,7 @@ TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
 
 PortableServer::RequestProcessingPolicy_ptr
 TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value
-                                           ACE_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::Portable_Server::Policy_Creator<
