@@ -962,8 +962,9 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   Identifier *item_name = 0;
   AST_Decl *d = 0;
   UTL_ScopeActiveIterator *i = 0;
+  char *name_string = e->get_string ();
 
-  if (ACE_OS::strcmp (e->get_string (), "Object") == 0)
+  if (ACE_OS::strcmp (name_string, "Object") == 0)
     {
       // Iterate over the global scope.
       UTL_ScopeActiveIterator global_iter (idl_global->scopes ()->bottom (),
@@ -971,7 +972,8 @@ UTL_Scope::lookup_pseudo (Identifier *e)
 
       i = &global_iter;
     }
-  else if (ACE_OS::strcmp (e->get_string (), "TypeCode") == 0)
+  else if (ACE_OS::strcmp (name_string, "TypeCode") == 0
+           || ACE_OS::strcmp (name_string, "TCKind") == 0)
     {
       // Occurrences of "TypeCode" in IDL files must be scoped with
       // "CORBA" so we know we'll be in the CORBA module if we get
@@ -986,7 +988,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
       return 0;
     }
 
-  while (!i->is_done ())
+  for (;!i->is_done (); i->next ())
     {
       d = i->item ();
 
@@ -996,8 +998,6 @@ UTL_Scope::lookup_pseudo (Identifier *e)
         {
           return d;
         }
-
-      i->next ();
     }
 
   return 0;
@@ -1010,7 +1010,6 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
   AST_Decl *as_decl = 0;
   UTL_Scope *ancestor = 0;
   AST_PredefinedType *t = 0;
-  UTL_ScopeActiveIterator *i = 0;
   AST_PredefinedType::PredefinedType pdt;
 
   as_decl = ScopeAsDecl (this);
@@ -1080,14 +1079,11 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
       return 0;
     }
 
-  ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this,
-                                           UTL_Scope::IK_decls),
-                  0);
-
-  while (!i->is_done())
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
+       !i.is_done();
+       i.next ())
     {
-      as_decl = i->item ();
+      as_decl = i.item ();
 
       if (as_decl->node_type () == AST_Decl::NT_pre_defined)
         {
@@ -1095,20 +1091,16 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 
           if (t == NULL)
             {
-              i->next ();
               continue;
             }
 
           if (t->pt () == pdt)
             {
-              delete i;
               return t;
             }
         }
-
-      i->next ();
     }
-  delete i;
+
   return 0;
 }
 
@@ -1210,15 +1202,15 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       return 0;
     }
 
-  UTL_ScopeActiveIterator i (this,
-                             UTL_Scope::IK_both);
   Identifier *item_name = 0;
 
   idl_bool in_corba = 
     ACE_OS::strcmp (e->get_string (), "CORBA") == 0;
 
   // Iterate over this scope.
-  while (!i.is_done ())
+  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
+       !i.is_done ();
+       i.next ())
     {
       d = i.item ();
 
@@ -1226,7 +1218,6 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
       if (item_name == 0)
         {
-          i.next ();
           continue;
         }
 
@@ -1237,7 +1228,6 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
       if (!in_corba
           && ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA") == 0)
         {
-          i.next ();
           continue;
         }
 
@@ -1263,12 +1253,9 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           // the scoped name we're working with.
             {
               index--;
-              i.next ();
               continue;
             }
         }
-
-      i.next ();
     }
 
   // OK, not found, check if this scope is a module, and if so,
@@ -1664,7 +1651,6 @@ UTL_Scope::add_to_scope (AST_Decl *e,
     }
 
   AST_Decl **tmp = this->pd_referenced;
-  UTL_IdListActiveIterator *iter = 0;
   long i = this->pd_referenced_used;
 
   Identifier *decl_name = e->local_name ();
@@ -1691,10 +1677,9 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           // is used may clash with a local declaration.
           UTL_ScopedName *s = (*tmp)->name ();
 
-          ACE_NEW (iter,
-                   UTL_IdListActiveIterator (s));
+          UTL_IdListActiveIterator iter (s);
 
-          ref_name = iter->item ();
+          ref_name = iter.item ();
           ref_string = ref_name->get_string ();
 
           // Get the first non-null component of the scoped
@@ -1702,12 +1687,10 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           while (!ACE_OS::strcmp (ref_string, "")
                  || !ACE_OS::strcmp (ref_string, "::"))
             {
-              iter->next ();
-              ref_name = iter->item ();
+              iter.next ();
+              ref_name = iter.item ();
               ref_string = ref_name->get_string ();
             }
-
-          delete iter;
         }
 
       // If the names compare exactly, it's a redefinition
@@ -1968,7 +1951,6 @@ UTL_Scope::has_prefix (idl_bool val)
 void
 UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
 {
-  UTL_ScopeActiveIterator *i = 0;
   AST_Decl *d = 0;
 
   if (idl_global->indent () == 0)
@@ -1984,15 +1966,13 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
 
   if (pd_locals_used > 0)
     {
-      ACE_NEW (i,
-               UTL_ScopeActiveIterator (this,
-                                        UTL_Scope::IK_localtypes));
-
       o << ("\n/* Locally defined types: */\n");
 
-      while (!i->is_done ())
+      for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_localtypes);
+           !i.is_done ();
+           i.next ())
         {
-          d = i->item ();
+          d = i.item ();
 
           if (!d->imported ())
             {
@@ -2000,24 +1980,18 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
               d->dump (o);
               o << "\n";
             }
-
-          i->next ();
         }
-
-      delete i;
     }
 
   if (pd_decls_used > 0)
     {
-      ACE_NEW (i,
-               UTL_ScopeActiveIterator (this,
-                                        UTL_Scope::IK_decls));
-
       o << ACE_TEXT ("\n/* Declarations: */\n");
 
-      while (!i->is_done ())
+      for (UTL_ScopeActiveIterator j (this, UTL_Scope::IK_decls);
+           !j.is_done ();
+           j.next ())
         {
-          d = i->item ();
+          d = j.item ();
 
           if (!d->imported ())
             {
@@ -2025,11 +1999,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
               d->dump (o);
               o << ";\n";
             }
-
-          i->next ();
         }
-
-      delete i;
     }
 
   idl_global->indent ()->decrease ();

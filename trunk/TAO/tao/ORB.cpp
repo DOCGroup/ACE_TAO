@@ -1969,6 +1969,27 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, 
+                                      const CORBA::TCKind &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
+}
+
+CORBA::Boolean operator>> (TAO_InputCDR &strm, 
+                                      CORBA::TCKind &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (CORBA::TCKind, _tao_temp);
+    }
+  
+  return _tao_result;
+}
+
 ACE_Time_Value *
 CORBA_ORB::get_timeout (void)
 {
