@@ -88,7 +88,7 @@ public:  // For template instantiation, with some compilers that need the
 private:
 
   ACE_Unbounded_Queue<object_info_t> registered_objects_;
-  // Keeps track of all the register objects.
+  // Keeps track of all the registered objects.
 
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
   // Register an object or array for deletion at program termination.
