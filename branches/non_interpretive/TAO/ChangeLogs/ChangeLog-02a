@@ -1,3 +1,16 @@
+Fri Mar 10 14:54:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  In the definition of the static function
+	  _tao_any_destructor, prepending the global "::"
+	  to the scoped name of the class or struct keeps
+	  gcc happy. Thanks to Carlos for pointing this out.
+
 Fri Mar 10 12:24:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/POA/DSI/Database_i.cpp:
