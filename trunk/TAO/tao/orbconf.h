@@ -177,6 +177,10 @@
 // can also be set using the command line option -ORBCDRtradeoff
 #define TAO_DEFAULT_CDR_MEMCPY_TRADEOFF 256
 
+#if defined (ACE_HAS_EXCEPTIONS)
+// #define TAO_USE_EXCEPTIONS
+#endif /* TAO_USE_EXCEPTIONS */
+
 // The CDR growing strategy is control by several parameters:
 // + The default or initial CDR buffer size.
 // + From that value the CDR buffer is grown exponentially (size
@@ -224,13 +228,6 @@
 #if defined (major)
 #undef major
 #endif /* major*/
-
-// For Win16, near/far pointers reflect same/other segment addressing.
-// Of course, ACE doesn't support Win16, so why bother?
-
-// For now, we simply set the default to empty definition and let
-// places that it fails bubble up.
-#define _FAR
 
 // Assume DOS/Windows if "configure" didn't get run.
 

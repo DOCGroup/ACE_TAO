@@ -84,6 +84,11 @@ PortableServer::ForwardRequest::ForwardRequest(
   this->forward_reference = CORBA::Object::_duplicate (_tao_forward_reference);
 }
 
+void PortableServer::ForwardRequest::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::ForwardRequest_ptr
 PortableServer::ForwardRequest::_narrow (CORBA::Exception *exc)
@@ -94,7 +99,7 @@ PortableServer::ForwardRequest::_narrow (CORBA::Exception *exc)
     return 0;
 }
 
-// TAO extension - the _alloc method
+// = TAO extension
 CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
 {
   return new PortableServer::ForwardRequest;
@@ -929,6 +934,11 @@ PortableServer::POAManager::AdapterInactive::operator= (const PortableServer::PO
   return *this;
 }
 
+void PortableServer::POAManager::AdapterInactive::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POAManager::AdapterInactive_ptr
 PortableServer::POAManager::AdapterInactive::_narrow (CORBA::Exception *exc)
@@ -1285,6 +1295,11 @@ PortableServer::POA::AdapterAlreadyExists::operator= (const PortableServer::POA:
   return *this;
 }
 
+void PortableServer::POA::AdapterAlreadyExists::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POA::AdapterAlreadyExists_ptr
 PortableServer::POA::AdapterAlreadyExists::_narrow (CORBA::Exception *exc)
@@ -1373,6 +1388,11 @@ PortableServer::POA::AdapterInactive::operator= (const PortableServer::POA::Adap
   return *this;
 }
 
+void PortableServer::POA::AdapterInactive::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POA::AdapterInactive_ptr
 PortableServer::POA::AdapterInactive::_narrow (CORBA::Exception *exc)
@@ -1459,6 +1479,11 @@ PortableServer::POA::AdapterNonExistent::operator= (const PortableServer::POA::A
 {
   this->CORBA_SystemException::operator= (_tao_excp);
   return *this;
+}
+
+void PortableServer::POA::AdapterNonExistent::_raise (void)
+{
+  TAO_RAISE(*this);
 }
 
 // narrow
@@ -1559,6 +1584,11 @@ PortableServer::POA::InvalidPolicy::InvalidPolicy(
   this->index = _tao_index;
 }
 
+void PortableServer::POA::InvalidPolicy::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POA::InvalidPolicy_ptr
 PortableServer::POA::InvalidPolicy::_narrow (CORBA::Exception *exc)
@@ -1650,6 +1680,11 @@ PortableServer::POA::NoServant::operator= (const PortableServer::POA::NoServant 
   return *this;
 }
 
+void PortableServer::POA::NoServant::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POA::NoServant_ptr
 PortableServer::POA::NoServant::_narrow (CORBA::Exception *exc)
@@ -1737,6 +1772,11 @@ PortableServer::POA::ObjectAlreadyActive::operator= (const PortableServer::POA::
 {
   this->CORBA_SystemException::operator= (_tao_excp);
   return *this;
+}
+
+void PortableServer::POA::ObjectAlreadyActive::_raise (void)
+{
+  TAO_RAISE(*this);
 }
 
 // narrow
@@ -1828,6 +1868,11 @@ PortableServer::POA::ObjectNotActive::operator= (const PortableServer::POA::Obje
   return *this;
 }
 
+void PortableServer::POA::ObjectNotActive::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POA::ObjectNotActive_ptr
 PortableServer::POA::ObjectNotActive::_narrow (CORBA::Exception *exc)
@@ -1915,6 +1960,11 @@ PortableServer::POA::ServantAlreadyActive::operator= (const PortableServer::POA:
 {
   this->CORBA_SystemException::operator= (_tao_excp);
   return *this;
+}
+
+void PortableServer::POA::ServantAlreadyActive::_raise (void)
+{
+  TAO_RAISE(*this);
 }
 
 // narrow
@@ -2006,6 +2056,11 @@ PortableServer::POA::ServantNotActive::operator= (const PortableServer::POA::Ser
   return *this;
 }
 
+void PortableServer::POA::ServantNotActive::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POA::ServantNotActive_ptr
 PortableServer::POA::ServantNotActive::_narrow (CORBA::Exception *exc)
@@ -2095,6 +2150,11 @@ PortableServer::POA::WrongAdapter::operator= (const PortableServer::POA::WrongAd
   return *this;
 }
 
+void PortableServer::POA::WrongAdapter::_raise (void)
+{
+  TAO_RAISE(*this);
+}
+
 // narrow
 PortableServer::POA::WrongAdapter_ptr
 PortableServer::POA::WrongAdapter::_narrow (CORBA::Exception *exc)
@@ -2182,6 +2242,11 @@ PortableServer::POA::WrongPolicy::operator= (const PortableServer::POA::WrongPol
 {
   this->CORBA_SystemException::operator= (_tao_excp);
   return *this;
+}
+
+void PortableServer::POA::WrongPolicy::_raise (void)
+{
+  TAO_RAISE(*this);
 }
 
 // narrow
@@ -2325,6 +2390,11 @@ PortableServer::Current::NoContext::operator= (const PortableServer::Current::No
 {
   this->CORBA_SystemException::operator= (_tao_excp);
   return *this;
+}
+
+void PortableServer::Current::NoContext::_raise (void)
+{
+  TAO_RAISE(*this);
 }
 
 // narrow

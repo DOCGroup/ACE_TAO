@@ -585,6 +585,12 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
     case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
+	// @@ TODO This code is not exception safe. Notice how on
+	// every exit path we have to invoke TAO_GIOP::send_error,
+	// this should be handled by the destructor of some class;
+	// which is disabled on the normal exit paths.
+	// Plus <buf> should be stored in a CORBA::String_var
+
         char* buf;
 
         // Pull the exception ID out of the marshaling buffer.
@@ -597,10 +603,9 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
             }
         }
 
-	CORBA_Exception *exception = 0;
 	if (reply_status == TAO_GIOP_SYSTEM_EXCEPTION)
 	  {
-	    exception = 
+	    CORBA_Exception *exception =  
 	      TAO_Exceptions::create_system_exception (buf, env);
 	    if (env.exception () != 0)
 	      return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -608,6 +613,8 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	    this->inp_stream_.decode (exception->_type (),
 				      &exception, 0,
 				      env);
+	    env.exception (exception);
+	    return TAO_GIOP_SYSTEM_EXCEPTION;
 	  }
 	else
 	  {
@@ -637,15 +644,19 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 		if (ACE_OS::strcmp (buf, xid) != 0)
 		    continue;
 
-		// @@ Somehow store the CDR inside the Any, if
-		// necessary add an extension to the Any class.
+		// @@ TODO Somehow store the CDR inside the Any, we
+		// know what is the typecode (tcp), but there is no
+		// constructor for Any taking a TypeCode and a CDR
+		// stream, it may be that we need an extension to the
+		// CORBA_Any class
 		const ACE_Message_Block* cdr = 
 		  this->inp_stream_.start ();
 		CORBA_Any any;
-		exception = 
+		CORBA_Exception *exception = 
 		  new CORBA_UnknownUserException (any);
-		break;
+		env.exception (exception);
               }
+	    return TAO_GIOP_USER_EXCEPTION;
           }
 
         // If we couldn't find this exception's typecode, report it as
@@ -828,6 +839,12 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
     case TAO_GIOP_USER_EXCEPTION:
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
+	// @@ TODO This code is not exception safe. Notice how on
+	// every exit path we have to invoke TAO_GIOP::send_error,
+	// this should be handled by the destructor of some class;
+	// which is disabled on the normal exit paths.
+	// Plus <buf> should be stored in a CORBA::String_var
+
         char* buf;
 
         // Pull the exception ID out of the marshaling buffer.
@@ -905,7 +922,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
         // a CORBA::UNKNOWN, i.e. we got an exception that was not the
 	// right type...
 
-        if (!exception)
+        if (exception == 0)
           {
 	    env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_YES));
             return TAO_GIOP_SYSTEM_EXCEPTION;

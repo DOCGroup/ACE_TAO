@@ -143,7 +143,8 @@ protected:
   virtual void send_response (TAO_OutputCDR &response);
   // Send <response> to the client on the other end.
   
-  void send_error (CORBA::ULong request_id, CORBA::Environment &env);
+  void send_error (CORBA::ULong request_id,
+		   CORBA::Exception *ex);
   // Send <error> to the client on the other end, which
   // means basically sending the exception.
 

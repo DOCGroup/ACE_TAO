@@ -74,6 +74,16 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           << " &); // copy ctor" << be_nl;
       *os << "~" << node->local_name () << " (void); // dtor" << be_nl;
 
+      os->indent ();
+      // assignment operator
+      *os << node->local_name () << " &operator= (const "
+          << node->local_name () << " &);\n\n";
+
+      *os << be_nl
+	  << "virtual void _raise (void);\n" << be_nl
+	  << "static " << node->local_name ()
+          << " *_narrow (CORBA::Exception *);\n\n";
+
       // generate constructor that takes each member as a parameter. We need a
       // new state. Such a constructor exists if we have members
       if (node->member_count () > 0)
@@ -92,14 +102,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           delete visitor;
         }
 
-      os->indent ();
-      // assignment operator
-      *os << node->local_name () << " &operator= (const "
-          << node->local_name () << " &);" << be_nl;
-      // the static _narrow method
-      *os << "static " << node->local_name ()
-          << " *_narrow (CORBA::Exception *);\n";
-
       // generate code for field members
       if (this->visit_scope (node) == -1)
         {
@@ -109,12 +111,11 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
                              "codegen for scope failed\n"), -1);
         }
 
-      // generate the static *_alloc method
-      os->indent ();
-      // this is TAO extension
-      *os << "// the alloc method. This is TAO extension" << be_nl;
-      *os << "static CORBA::Exception *_alloc (void);" << be_uidt_nl;
-      *os << "}; // exception " << node->name () << be_nl;
+      *os << be_nl
+	  << "// = TAO extension" << be_nl
+	  << "static CORBA::Exception *_alloc (void);\n" << be_uidt_nl
+	  << "}; // exception " << node->name ()
+	  << "\n" << be_nl;
 
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be

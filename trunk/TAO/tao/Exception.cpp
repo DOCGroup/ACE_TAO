@@ -32,6 +32,9 @@ CORBA_Environment::exception (CORBA::Exception *ex)
       this->exception_ = ex;
       this->exception_->_incr_refcnt ();
     }
+#if defined (TAO_USE_EXCEPTIONS)
+  ex->_raise ();
+#endif /* TAO_USE_EXCEPTIONS */
 }
 
 CORBA_Environment::~CORBA_Environment (void)
@@ -84,7 +87,7 @@ CORBA_Exception::~CORBA_Exception (void)
 }
 
 CORBA_Exception &
-CORBA_Exception::operator = (const CORBA_Exception &src)
+CORBA_Exception::operator= (const CORBA_Exception &src)
 {
   if (this->type_)
     CORBA::release (this->type_);
@@ -115,12 +118,6 @@ int
 CORBA_Exception::_is_a (const char* repository_id) const
 {
   return (ACE_OS::strcmp (repository_id, "IDL:omg.org/CORBA/Exception:1.0")==0);
-}
-
-void
-CORBA_Exception::_raise (void)
-{
-  // @@ TODO this method should be defined on each Exception.
 }
 
 CORBA::ULong
@@ -162,13 +159,9 @@ CORBA_UserException::~CORBA_UserException (void)
 }
 
 CORBA_UserException &
-CORBA_UserException::operator = (const CORBA_UserException &src)
+CORBA_UserException::operator= (const CORBA_UserException &src)
 {
-  if (this->type_)
-    CORBA::release (this->type_);
-  this->type_ = CORBA::TypeCode::_duplicate (src.type_);
-  assert (this->type_ != 0);
-
+  this->CORBA_Exception::operator= (src);
   return *this;
 }
 
@@ -209,16 +202,12 @@ CORBA_SystemException::~CORBA_SystemException (void)
 }
 
 CORBA_SystemException &
-CORBA_SystemException::operator = (const CORBA_SystemException &src)
+CORBA_SystemException::operator= (const CORBA_SystemException &src)
 {
-  if (this->type_)
-    CORBA::release (this->type_);
-  this->type_ = CORBA::TypeCode::_duplicate (src.type_);
+  this->CORBA_Exception::operator= (src);
 
   this->minor_ = src.minor_;
   this->completed_ = src.completed_;
-
-  assert (this->type_ != 0);
 
   return *this;
 }
@@ -278,6 +267,12 @@ CORBA_UnknownUserException::_narrow (CORBA_Exception *ex)
   if (ex->_is_a ("IDL:omg.org/CORBA/UnknownUserException:1.0"))
     return ACE_dynamic_cast (CORBA_UnknownUserException*, ex);
   return 0;
+}
+
+void
+CORBA_UnknownUserException::_raise (void)
+{
+  TAO_RAISE(*this);
 }
 
 // Note that "buffer" holds the (unscoped) name originally, and is
@@ -549,6 +544,14 @@ CORBA_##name ::_is_a (const char* interface_id) const \
 { \
   return ((ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/" #name ":1.0")==0) \
           || CORBA_SystemException::_is_a (interface_id)); \
+}
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+void \
+CORBA_##name ::_raise (void) \
+{ \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION

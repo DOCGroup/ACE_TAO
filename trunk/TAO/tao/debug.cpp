@@ -115,8 +115,8 @@ setup (void)
 #endif /* OS-specific initialization */
 
 void TAO_Export
-dmsg_filter (const char *_FAR categories,
-             const char *_FAR fmt,
+dmsg_filter (const char *categories,
+             const char *fmt,
              ...)
 {
   const char *cp = 0;
@@ -162,7 +162,7 @@ dmsg_filter (const char *_FAR categories,
 
 void TAO_Export
 dmsg_filter (u_int level,
-             const char *_FAR fmt,
+             const char *fmt,
              ...)
 {
   if (level > TAO_debug_level)
@@ -186,7 +186,7 @@ dmsg_filter (u_int level,
 }
 
 void TAO_Export
-dmsg_v (const char *_FAR fmt,
+dmsg_v (const char *fmt,
         ...)
 {
   va_list ap;
@@ -207,8 +207,8 @@ dmsg_v (const char *_FAR fmt,
 }
 
 void TAO_Export
-_dmsg_x (CORBA::Environment _FAR &env,
-         const char *_FAR info)
+_dmsg_x (CORBA::Environment &env,
+         const char *info)
 {
   const CORBA::Exception *ex = env.exception ();
 
@@ -238,8 +238,8 @@ _dmsg_x (CORBA::Environment _FAR &env,
 }
 
 void TAO_Export
-dmsg_opaque (char *_FAR label,
-             u_char *_FAR buffer,
+dmsg_opaque (char *label,
+             u_char *buffer,
              u_long len)
 {
   setup ();
@@ -305,8 +305,8 @@ dmsg_opaque (char *_FAR label,
 }
 
 void TAO_Export
-dmsg_opaque_full (char *_FAR label,
-                  const u_char *_FAR buffer,
+dmsg_opaque_full (char *label,
+                  const u_char *buffer,
                   u_long len)
 {
   setup ();

@@ -87,28 +87,28 @@ extern TAO_Export char *TAO_debug_filter;
 // characters in that string are in the "TAO_debug_filter" string, the
 // message is then printed.  Assign thosee characters as needed.
 
-extern void TAO_Export dmsg_filter (const char *_FAR filter,
-                                    const char *_FAR fmt,
+extern void TAO_Export dmsg_filter (const char *filter,
+                                    const char *fmt,
                                     ...);
 
 // Filter according to TAO_debug_level instead of category.  (For
 // speed, test against TAO_debug_level directly.)
 
 extern void TAO_Export dmsg_filter (u_int level, 
-                                    const char *_FAR fmt,
+                                    const char *fmt,
                                     ...);
 
 // General varargs debug message printer, no filtering
 
-extern void TAO_Export dmsg_v (const char *_FAR fmt,
+extern void TAO_Export dmsg_v (const char *fmt,
                                ...);
-extern void TAO_Export _dmsg_x (CORBA_Environment _FAR &env,
-                                const char *_FAR info);
-extern void TAO_Export dmsg_opaque (char *_FAR label,
-                                    u_char *_FAR buffer,
+extern void TAO_Export _dmsg_x (CORBA_Environment &env,
+                                const char *info);
+extern void TAO_Export dmsg_opaque (char *label,
+                                    u_char *buffer,
                                     u_long len);
-extern void TAO_Export dmsg_opaque_full (char *_FAR label,
-                                         const u_char *_FAR buffer,
+extern void TAO_Export dmsg_opaque_full (char *label,
+                                         const u_char *buffer,
                                          u_long len);
 #endif /* DEBUG */
 
