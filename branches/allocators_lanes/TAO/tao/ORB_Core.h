@@ -126,29 +126,12 @@ private:
 
 public:
 
-  /*
-   * @@todo: All these allocators should be on a per-lane basis. Need
-   * to move it to the lanes. It makes no sense to leave it in the TSS
-   * resources class -- Bala
-   *
-   */
+
   /// The allocators for the output CDR streams.
   //@{
   ACE_Allocator *output_cdr_dblock_allocator_;
   ACE_Allocator *output_cdr_buffer_allocator_;
   ACE_Allocator *output_cdr_msgblock_allocator_;
-  //@}
-
-  /// The allocators for the input CDR streams.
-  //@{
-  ACE_Allocator *input_cdr_dblock_allocator_;
-  ACE_Allocator *input_cdr_buffer_allocator_;
-  ACE_Allocator *input_cdr_msgblock_allocator_;
-  //@}
-
-  /// The allocators for the buffering messages in the transport.
-  //@{
-  ACE_Allocator *transport_message_buffer_allocator_;
   //@}
 
   /**

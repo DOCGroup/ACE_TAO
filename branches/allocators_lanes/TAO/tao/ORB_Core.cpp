@@ -2146,49 +2146,22 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // ****************************************************************
-
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
-  if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
-        this->orb_resources_.input_cdr_dblock_allocator_ =
-          this->resource_factory ()->input_cdr_dblock_allocator ();
-    }
-  return this->orb_resources_.input_cdr_dblock_allocator_;
+  return this->lane_resources ().input_cdr_dblock_allocator ();
 }
-
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
-  if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
-        this->orb_resources_.input_cdr_buffer_allocator_ =
-          this->resource_factory ()->input_cdr_buffer_allocator ();
-    }
-  return this->orb_resources_.input_cdr_buffer_allocator_;
+  return this->lane_resources ().input_cdr_buffer_allocator ();
 }
-
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_msgblock_allocator (void)
 {
-  if (this->orb_resources_.input_cdr_msgblock_allocator_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->orb_resources_.input_cdr_msgblock_allocator_ == 0)
-        this->orb_resources_.input_cdr_msgblock_allocator_ =
-          this->resource_factory ()->input_cdr_msgblock_allocator ();
-    }
-  return this->orb_resources_.input_cdr_msgblock_allocator_;
+  return this->lane_resources ().input_cdr_msgblock_allocator ();
 }
 
 ACE_Allocator*
@@ -2250,18 +2223,10 @@ TAO_ORB_Core::output_cdr_msgblock_allocator (void)
 }
 
 
-ACE_Allocator*
+ACE_Allocator *
 TAO_ORB_Core::transport_message_buffer_allocator (void)
 {
-  if (this->orb_resources_.transport_message_buffer_allocator_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->orb_resources_.transport_message_buffer_allocator_ == 0)
-        this->orb_resources_.transport_message_buffer_allocator_ =
-          this->resource_factory ()->input_cdr_dblock_allocator ();
-    }
-  return this->orb_resources_.transport_message_buffer_allocator_;
+  return this->lane_resources ().transport_message_buffer_allocator ();
 }
 
 
@@ -2656,10 +2621,6 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   : output_cdr_dblock_allocator_ (0),
     output_cdr_buffer_allocator_ (0),
     output_cdr_msgblock_allocator_ (0),
-    input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0),
-    input_cdr_msgblock_allocator_ (0),
-    transport_message_buffer_allocator_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     lane_ (0),
@@ -2689,22 +2650,6 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
   if (this->output_cdr_msgblock_allocator_ != 0)
     this->output_cdr_msgblock_allocator_->remove ();
   delete this->output_cdr_msgblock_allocator_;
-
-  if (this->input_cdr_dblock_allocator_ != 0)
-    this->input_cdr_dblock_allocator_->remove ();
-  delete this->input_cdr_dblock_allocator_;
-
-  if (this->input_cdr_buffer_allocator_ != 0)
-    this->input_cdr_buffer_allocator_->remove ();
-  delete this->input_cdr_buffer_allocator_;
-
-    if (this->input_cdr_msgblock_allocator_ != 0)
-    this->input_cdr_msgblock_allocator_->remove ();
-  delete this->input_cdr_msgblock_allocator_;
-
-  if (this->transport_message_buffer_allocator_ != 0)
-    this->transport_message_buffer_allocator_->remove ();
-  delete this->transport_message_buffer_allocator_;
 
 #if TAO_HAS_INTERCEPTORS == 1
   CORBA::release (this->client_request_info_);
