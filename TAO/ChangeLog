@@ -1,3 +1,8 @@
+Mon Aug  2 08:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.h:
+          Doxygen fix
+
 Mon Aug  2 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Cache_Manager.cpp (is_entry_idle):
