@@ -89,12 +89,12 @@ public:
 
   // = Enqueue and dequeue methods.
 
-  // For all the following routines if <timeout> == 0, the caller will
-  // block until action is possible, else will wait until the absolute
-  // time specified in *<timeout> elapses).  These calls will return,
-  // however, when queue is closed, deactivated, when a signal occurs,
-  // or if the time specified in timeout elapses, (in which case errno
-  // = EWOULDBLOCK).
+  // For the following enqueue and dequeue methods if <timeout> == 0,
+  // the caller will block until action is possible, else will wait
+  // until the absolute time specified in *<timeout> elapses).  These
+  // calls will return, however, when queue is closed, deactivated,
+  // when a signal occurs, or if the time specified in timeout
+  // elapses, (in which case errno = EWOULDBLOCK).
 
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *timeout = 0);

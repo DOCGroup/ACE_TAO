@@ -1,3 +1,10 @@
+Fri Aug  7 12:46:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Activation_Queue.h: Updated the documentation to indicate
+ 	  the need for absolute rather than relative time values.  Thanks
+ 	  to Johannes Gutleber <Johannes.Gutleber@cern.ch> for reporting
+ 	  this.
+
 Fri Aug 07 02:06:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MsgQueue_Water_Mark_Test.{dsp,cpp}: Added a new test to
