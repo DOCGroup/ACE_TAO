@@ -34,7 +34,7 @@ TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
                   1);
 
   request->set_exception (any,
-                          env);
+                          ACE_TRY_ENV);
 }
 
 CORBA::RepositoryId
