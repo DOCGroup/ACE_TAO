@@ -1,3 +1,9 @@
+Mon Aug 20 15:48:30 2001  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * bin/msvc_auto_compile.pl:
+
+          Modify script to print config.h contents.
+
 Mon Aug 20 13:14:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:
