@@ -21,6 +21,7 @@ Performance_Test::Performance_Test (void)
 int
 Performance_Test::init (int argc, char **argv)
 {
+  ACE_DEBUG ((LM_DEBUG, "Performance_Test::init\n"));
   performance_test_options.parse_args (argc, argv);
   return 0;
 }
@@ -79,13 +80,12 @@ Performance_Test::post_run_test (void)
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "targ 0x%x (%s, %s, %s)\n"
-	     "n_lwps_orig = %d, n_lwps_set = %d, n_lwps_end = %d\n",
-	     performance_test_options.t_flags (),
-	     (performance_test_options.t_flags () & THR_DETACHED) ? "THR_DETACHED" : "Not Detached",
-	     (performance_test_options.t_flags () & THR_BOUND)	? "THR_BOUND"    : "Not Bound",
-	     (performance_test_options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
-	     this->orig_n_lwps_, this->n_lwps_, ACE_Thread::getconcurrency ()));
-
+              "n_lwps_orig = %d, n_lwps_set = %d, n_lwps_end = %d\n",
+              performance_test_options.t_flags (),
+              (performance_test_options.t_flags () & THR_DETACHED) ? "THR_DETACHED" : "Not Detached",
+              (performance_test_options.t_flags () & THR_BOUND) ? "THR_BOUND"    : "Not Bound",
+              (performance_test_options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
+              this->orig_n_lwps_, this->n_lwps_, ACE_Thread::getconcurrency ()));
   int count = performance_test_options.count ();
   float rate  = count / (float (performance_test_options.sleep_time ()));
 
