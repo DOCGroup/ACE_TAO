@@ -1,3 +1,14 @@
+Sat Nov  6 19:07:18 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao-config.1.in:
+
+	  Minor updates.
+
+	* tao-config.in:
+
+	  Minor updates.  Modified so that "tao" is the default library if
+	  one isn't specified.
+
 Sat Nov  6 15:02:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/orbconf.h:
