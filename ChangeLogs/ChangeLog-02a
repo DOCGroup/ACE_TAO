@@ -1,3 +1,9 @@
+Sun Jul  8 08:13:12 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Select_Reactor_Base.h: Added a comment explaining what
+	  the ACE_HAS_REACTOR_NOTIFICATION_QUEUE macro means.  Thanks to
+ 	  Kobi Cohen-Arazi <kobic@bvr.co.il> for motivating this.
+
 Sat Jul  7 18:53:49 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* include/makeinclude/platform_osf1_4.0.GNU:
