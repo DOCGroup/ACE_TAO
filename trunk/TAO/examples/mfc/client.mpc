@@ -3,7 +3,9 @@ project(MFC client): namingexe {
 
   verbatim(gnuace, top) {
     ifneq ($(MAKE),)
-    all:
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
     "	@echo This will only build on Windows"
     else
   }
