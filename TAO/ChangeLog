@@ -1,3 +1,8 @@
+Fri Aug 22 14:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Data.h:
+          Added #include Null_Mutex.h
+
 Fri Aug 22 13:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
