@@ -220,7 +220,7 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
   CORBA::TypeCode_ptr tc;
   const void *value;
 
-  if (!svr_req._params && env.exception () == 0) 
+  if (!svr_req.params_ && env.exception () == 0) 
     {
       dmsg ("DSI user error, didn't supply params");
       env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
@@ -228,7 +228,7 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
 
   if (env.exception () != 0) 
     {	// standard exceptions only
-      CORBA::Environment	env2;
+      CORBA::Environment env2;
       CORBA::Exception *x = env.exception ();
       CORBA::TypeCode_ptr except_tc = x->type ();
 
@@ -241,12 +241,12 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
       CORBA::TypeCode_ptr except_tc;
 
       x = (CORBA::Exception *) svr_req._exception->value ();
-      except_tc = svr_req._exception->type ();
+      except_tc = svr_req.exception_->type ();
 
       // Finish the GIOP Reply header, then marshal the exception.
       //
       // XXX x->type () someday ...
-      if (svr_req._ex_type == CORBA::SYSTEM_EXCEPTION)
+      if (svr_req.ex_type_ == CORBA::SYSTEM_EXCEPTION)
 	response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
       else
 	response.put_ulong (TAO_GIOP_USER_EXCEPTION);
@@ -259,17 +259,17 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
       response.put_ulong (TAO_GIOP_NO_EXCEPTION);
 
       // ... then send any return value ...
-      if (svr_req._retval)
+      if (svr_req.retval_)
 	{
-	  tc = svr_req._retval->type ();
-	  value = svr_req._retval->value ();
+	  tc = svr_req.retval_->type ();
+	  value = svr_req.retval_->value ();
 	  (void) response.encode (tc, value, 0, env);
 	}
 
       // ... followed by "inout" and "out" parameters, left to right
-      for (u_int i = 0; i < svr_req._params->count (); i++)
+      for (u_int i = 0; i < svr_req.params_->count (); i++)
 	{
-	  CORBA::NamedValue_ptr	nv = svr_req._params->item (i);
+	  CORBA::NamedValue_ptr	nv = svr_req.params_->item (i);
 	  CORBA::Any_ptr any;
 
 	  if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
