@@ -3737,6 +3737,7 @@ struct sigaction
 
 # if !defined (IP_ADD_MEMBERSHIP)
 #   define IP_ADD_MEMBERSHIP 0
+#   define ACE_LACKS_IP_ADD_MEMBERSHIP
 # endif /* IP_ADD_MEMBERSHIP */
 
 # if !defined (SIOCGIFBRDADDR)
@@ -4083,7 +4084,7 @@ struct flock
 #   endif /* ! VXWORKS */
 # endif /* ACE_LACKS_FILELOCKS */
 
-# if !defined (ACE_HAS_IP_MULTICAST)  &&  !defined (IP_ADD_MEMBERSHIP)
+# if !defined (ACE_HAS_IP_MULTICAST)  &&  defined (ACE_LACKS_IP_ADD_MEMBERSHIP)
   // Even if ACE_HAS_IP_MULTICAST is not defined, if IP_ADD_MEMBERSHIP
   // is defined, assume that the ip_mreq struct is also defined
   // (presumably in netinet/in.h).
@@ -4094,7 +4095,7 @@ struct flock
     struct in_addr imr_interface;
     // local IP address of interface
   };
-# endif /* ! ACE_HAS_IP_MULTICAST  &&  ! IP_ADD_MEMBERSHIP */
+# endif /* ! ACE_HAS_IP_MULTICAST  &&  ACE_LACKS_IP_ADD_MEMBERSHIP */
 
 # if !defined (ACE_HAS_STRBUF_T)
 struct strbuf
