@@ -1018,7 +1018,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 
-      TAO_TRY
+      ACE_TRY_NEW_ENV
         {
           if (this->cubit_factory_key_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1028,13 +1028,13 @@ Cubit_Client::shutdown_server (int do_shutdown)
 
           CORBA::Object_var factory_object =
             this->orb_->string_to_object (this->cubit_factory_key_,
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           this->factory_ =
             Cubit_Factory::_narrow (factory_object.in(),
-                                    TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1043,22 +1043,22 @@ Cubit_Client::shutdown_server (int do_shutdown)
                               -1);
 
           this->cubit_ =
-            this->factory_->make_cubit (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+            this->factory_->make_cubit (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-          this->cubit_->shutdown (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          this->cubit_->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "shutdown on shutdown object\n"));
 
           this->env_.print_exception ("server, please ACE_OS::exit");
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
-          TAO_TRY_ENV.print_exception ("Cubit::init");
+          ACE_TRY_ENV.print_exception ("Cubit::init");
           return -1;
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
 
     }
   else if (do_shutdown)
@@ -1149,14 +1149,14 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (this->testing_collocation_ == 0)
         // turn off collocation if directed to do so.
         TAO_ORB_Core_instance ()->using_collocation (0);
@@ -1176,13 +1176,13 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
 
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (this->cubit_factory_key_,
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->factory_ =
         Cubit_Factory::_narrow (factory_object.in(),
-                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1195,20 +1195,20 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
 
       // Now retrieve the Cubit obj ref corresponding to the key.
       this->cubit_ =
-        this->factory_->make_cubit (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->factory_->make_cubit (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->cubit_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null cubit objref returned by factory\n"),
                           -1);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Cubit::init");
+      ACE_TRY_ENV.print_exception ("Cubit::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

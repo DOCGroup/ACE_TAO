@@ -17,30 +17,30 @@ svr_worker (void *arg)
   ACE_Barrier *barrier = (ACE_Barrier *) arg;
   char *fake[] = {"server", "-o", THE_IOR_FILE };
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      if (cubit_server.init (3, fake, TAO_TRY_ENV) == -1)
+      if (cubit_server.init (3, fake, ACE_TRY_ENV) == -1)
         return (void *) 1;
       else
         {
           barrier->wait ();
-          cubit_server.run (TAO_TRY_ENV);
+          cubit_server.run (ACE_TRY_ENV);
         }
-        TAO_CHECK_ENV;
+        ACE_TRY_CHECK;
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_TRY_ENV.print_exception ("System Exception");
       return (void *) 1;
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_TRY_ENV.print_exception ("User Exception");
       return (void *) 1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 

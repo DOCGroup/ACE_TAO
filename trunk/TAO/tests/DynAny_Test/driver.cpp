@@ -13,7 +13,7 @@
 //    Implementation file for the driver program.
 //
 // = AUTHOR
-//    Jeff Parsons <jp4@cs.wustl.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -63,15 +63,15 @@ Driver::~Driver (void)
 int
 Driver::init (int argc, char* argv[])
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     "local",
-                                    TAO_TRY_ENV);
+                                    ACE_TRY_ENV);
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) == -1)
@@ -81,12 +81,12 @@ Driver::init (int argc, char* argv[])
                           -1);
 
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Driver::init");
+      ACE_TRY_ENV.print_exception ("Driver::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

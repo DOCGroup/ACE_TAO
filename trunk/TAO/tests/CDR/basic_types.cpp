@@ -212,75 +212,75 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
 int
 main (int argc, char *argv[])
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0,
-					    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+					    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_Get_Opt get_opt (argc, argv, "dn:l:");
       int opt;
       
       while ((opt = get_opt ()) != EOF)
-	{
-	  switch (opt)
-	    {
-	    case 'd':
-	      TAO_debug_level++;
-	      break;
-	    case 'n':
-	      n = ACE_OS::atoi (get_opt.optarg);
-	      break;
-	    case 'l':
-	      nloops = ACE_OS::atoi (get_opt.optarg);
-	      break;
-	    case '?':
-	    default:
-	      ACE_DEBUG ((LM_DEBUG,
-			  "Usage: %s "
-			  "-d debug"
-			  "-n <num> "
-			  "-l <loops> "
-			  "\n",
-			  argv[0]));
-	      return -1;
-	    }
-	}
+	      {
+	        switch (opt)
+	          {
+	            case 'd':
+	              TAO_debug_level++;
+	              break;
+	            case 'n':
+	              n = ACE_OS::atoi (get_opt.optarg);
+	              break;
+	            case 'l':
+	              nloops = ACE_OS::atoi (get_opt.optarg);
+	              break;
+	            case '?':
+	            default:
+	              ACE_DEBUG ((LM_DEBUG,
+			          "Usage: %s "
+			          "-d debug"
+			          "-n <num> "
+			          "-l <loops> "
+			          "\n",
+			          argv[0]));
+	              return -1;
+	            }
+	      }
   
       for (int i = 0; i < nloops; ++i)
-	{
-	  TAO_OutputCDR output;
-	  CDR_Test_Types test_types;
+	      {
+	        TAO_OutputCDR output;
+	        CDR_Test_Types test_types;
 	  
-	  if (test_put (output, test_types) != 0)
-	    {
-	      return 1;
-	    }
-	  TAO_InputCDR input (output);
-	  if (TAO_debug_level > 0)
-	    {
-	      ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
-	      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-	      ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
-	      ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-	    }
+	        if (test_put (output, test_types) != 0)
+	          {
+	            return 1;
+	          }
+	        TAO_InputCDR input (output);
+	        if (TAO_debug_level > 0)
+	          {
+	            ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
+	            ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+	            ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
+	            ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+	          }
 
-	  if (test_get (input, test_types) != 0)
-	    {
-	      return 1;
-	    }
-	}
+	        if (test_get (input, test_types) != 0)
+	          {
+	            return 1;
+	          }
+	      }
       
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TC");
+      ACE_TRY_ENV.print_exception ("TC");
       return 0;
 
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
