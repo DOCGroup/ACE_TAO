@@ -603,9 +603,10 @@ public:
   // resembles <suspend_thr>.
 
   // = Operations on ACE_Tasks.
+
   int wait_task (ACE_Task_Base *task);
   // Block until there are no more threads running in <task>.  Returns
-  // 0 on success and -1 on failure.  Notice that wait_task will not
+  // 0 on success and -1 on failure.  Note that <wait_task> will not
   // wait on detached threads.
   int suspend_task (ACE_Task_Base *task);
   // Suspend all threads in an ACE_Task.
