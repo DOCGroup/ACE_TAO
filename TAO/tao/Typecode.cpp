@@ -2130,6 +2130,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
                        this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
   CORBA::TypeCode::traverse_status status = CORBA::TypeCode::TRAVERSE_STOP;
+  CORBA::ULong i = 0;
 
   switch (this->kind_)
     {
@@ -2179,7 +2180,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       temp = (n - 3) / 2;
 
       // skip member pairs to the one we want
-      for (CORBA::ULong i = 0; i < temp; i++)
+      for (i = 0; i < temp; i++)
         // skip to the member being asked
         if (!stream.skip_string ()        // member name
             || !skip_typecode (stream))
@@ -2229,7 +2230,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
       CORBA::Long scratch;              // always big enough
 
-      for (CORBA::ULong i = 0; i < temp; i++)
+      for (i = 0; i < temp; i++)
         {
           status = stream.decode (tc, &scratch, this,  env); // member label
           TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO), env, 0);
