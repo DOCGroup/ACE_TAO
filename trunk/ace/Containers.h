@@ -210,6 +210,9 @@ class ACE_Unbounded_Stack
 public:
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
+  // Trait definition.
+  typedef ACE_Unbounded_Stack_Iterator<T> ITERATOR;
+
   // = Initialization, assignemnt, and termination methods.
   ACE_Unbounded_Stack (ACE_Allocator *alloc = 0);
   // Initialize a new stack so that it is empty.  Use user defined
@@ -376,7 +379,10 @@ class ACE_Unbounded_Queue
 public:
   friend class ACE_Unbounded_Queue_Iterator<T>;
 
-  // = Initialization and termination methods.
+  // Trait definition.
+  typedef ACE_Unbounded_Queue_Iterator<T> ITERATOR;
+
+ // = Initialization and termination methods.
   ACE_Unbounded_Queue (ACE_Allocator *alloc = 0);
   // construction.  Use user specified allocation strategy
   // if specified.
@@ -522,6 +528,9 @@ class ACE_Double_Linked_List
   //     of a specific element from a specific location.
 public:
   friend class ACE_Double_Linked_List_Iterator<T>;
+
+  // Trait definition.
+  typedef ACE_Double_Linked_List_Iterator<T> ITERATOR;
 
   // = Initialization and termination methods.
   ACE_Double_Linked_List (ACE_Allocator *alloc = 0);
@@ -671,6 +680,9 @@ class ACE_Unbounded_Set
 public:
   friend class ACE_Unbounded_Set_Iterator<T>;
 
+  // Trait definition.
+  typedef ACE_Unbounded_Set_Iterator<T> ITERATOR;
+
   // = Initialization and termination methods.
   ACE_Unbounded_Set (ACE_Allocator *alloc = 0);
   // Constructor.  Use user specified allocation strategy
@@ -798,6 +810,9 @@ class ACE_Fixed_Set
 public:
   friend class ACE_Fixed_Set_Iterator<T, SIZE>;
 
+  // Trait definition.
+  typedef ACE_Fixed_Set_Iterator<T, SIZE> ITERATOR;
+
   // = Initialization and termination methods.
   ACE_Fixed_Set (void);
   // Constructor.
@@ -917,6 +932,9 @@ class ACE_Bounded_Set
   //     This implementation does not allow duplicates...
 public:
   friend class ACE_Bounded_Set_Iterator<T>;
+
+  // Trait definition.
+  typedef ACE_Bounded_Set_Iterator<T> ITERATOR;
 
   enum
   {
