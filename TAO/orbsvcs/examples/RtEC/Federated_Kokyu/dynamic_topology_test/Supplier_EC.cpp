@@ -5,6 +5,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Thread.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_stdlib.h" //for rand()
 #include "ace/Select_Reactor_Base.h" //for ACE_Select_Reactor_Impl::DEFAULT_SIZE
 #include "ace/Map.h"
 #include "ace/Vector_T.h"
@@ -43,7 +44,8 @@ namespace
 class Mode_Handler: public Service_Handler
 {
 public:
-  ///Switches Supplier from NORMAL mode to FAULT_TOLERANT after switch_at_event handle_service_start()s
+  //Switches Supplier from NORMAL mode to FAULT_TOLERANT after
+  //switch_at_event handle_service_start()s. If switch_at_event = -1, then switching happens randomly.
   Mode_Handler(long switch_at_event)
     : switch_(switch_at_event)
   {
@@ -67,17 +69,33 @@ public:
                      , RtecScheduler::SYNCHRONIZATION_FAILURE
                      ))
   {
-    if (this->switch_ <= 0)
+    if (this->switch_ >= 0)
       {
-        ACE_DEBUG((LM_DEBUG,"Mode_Handler (%P|%t) handle_service_start() START\n"));
+        //switch to FAULT_TOLERANT after a certain number of Task servicings
+        if (this->switch_ == 0)
+          {
+            ACE_DEBUG((LM_DEBUG,"Mode_Handler (%P|%t) handle_service_start() START\n"));
 
-        this->supplier_->mode(Supplier::FAULT_TOLERANT);
+            this->supplier_->mode(Supplier::FAULT_TOLERANT);
 
-        ACE_DEBUG((LM_DEBUG,"Mode_Handler (%P|%t) handle_service_start() END\n"));
+            ACE_DEBUG((LM_DEBUG,"Mode_Handler (%P|%t) handle_service_start() END\n"));
+          }
+        else
+          {
+            this->switch_--;
+          }
       }
     else
       {
-        this->switch_--;
+        //randomly choose mode
+        if (rand() > RAND_MAX/2.0)
+          {
+            this->supplier_->mode(Supplier::FAULT_TOLERANT);
+          }
+        else
+          {
+            this->supplier_->mode(Supplier::NORMAL);
+          }
       }
   }
 
@@ -225,7 +243,7 @@ public:
 
     Mode_Handler *mode_handler;
     ACE_NEW(mode_handler,
-            Mode_Handler(1)); //mode switch after first event
+            Mode_Handler(0)); //mode switch immediately
     Supplier *supplier_impl1_1;
     Timeout_Consumer *timeout_consumer_impl1_1;
     ACE_NEW(supplier_impl1_1,
@@ -234,7 +252,7 @@ public:
     this->handler_ = mode_handler;
     ACE_NEW(timeout_consumer_impl1_1,
             Timeout_Consumer(supplier_impl1_1));
-    ACE_Time_Value tv(1,200000); //period DEBUG: set to much longer period
+    ACE_Time_Value tv(0,200000); //period
     add_supplier_with_timeout(supplier_impl1_1,
                               "supplier1_1",
                               supp1_1_types,
