@@ -1,5 +1,10 @@
 Wed Jan 21 16:27:58 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
+	* Makefile: Updated this to use the new release.pl file below.
+
+	* release.pl: Added new script to take over some of the release
+ 	work rather than having it all inline in the Makefile.
+
 	* tests/Cubit/TAO/MT_Cubit/README: Changed docs to reflect the new
  	names and command line requirements.
 
