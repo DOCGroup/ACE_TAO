@@ -12,6 +12,10 @@ Wed Oct  2 17:01:13 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed emulated exception support.
 
+	  Removed unnecessary static_cast hacks.  Use the ".in()"
+	  accessors in the "_var" variables introduced in the above memory
+	  leak fixes instead.  "Use the C++ mapping Luke."
+
 	  Updated to conform to ACE/TAO coding/style guidelines.
 
 	  Added missing ACE_RCSID macros.
