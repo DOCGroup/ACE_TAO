@@ -1,7 +1,13 @@
+Sun Dec 12 10:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.cpp:
+          Added include of PolicyC.h to fix compile problems in minimum
+          builds.
+
 Sat Dec 11 14:07:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
-        
+
           Fixed generation of typenames in the template parameter
           of the TAO::Arg_Traits<> instantiations for operation
           parameters and return types to consistently use the
