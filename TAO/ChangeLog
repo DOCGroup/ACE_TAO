@@ -1,3 +1,10 @@
+Sat Nov 22 07:42:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/On_Demand/Makefile:
+	  
+	  Fix the static build linking errors. Thanks to Don Hinton for
+	  the patches.
+
 Fri Nov 21 22:19:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1636_Regression/client.cpp:

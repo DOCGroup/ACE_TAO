@@ -26,12 +26,12 @@ SHLIB_SRC = $(IDL_SRC) Smart_Test_Factory.cpp Smart_Proxy_Impl.cpp
 CLIENT_FILES = client
 CLIENT_SRCS = $(addsuffix .cpp, $(CLIENT_FILES)) $(IDL_SRC) 
 #CLIENT_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(CLIENT_FILES)))
-CLIENT_OBJS = $(addsuffix .o,$(CLIENT_FILES))
+CLIENT_OBJS = $(addsuffix .o,$(CLIENT_FILES)) $(CLIENT_SRCS:.cpp=.o)
 
 SERVER_FILES = server
 SERVER_SRCS = $(addsuffix .cpp, $(SERVER_FILES)) $(IDL_SRC) 
 #SERVER_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(SERVER_FILES)))
-SERVER_OBJS = $(addsuffix .o,$(SERVER_FILES))
+SERVER_OBJS = $(addsuffix .o,$(SERVER_FILES)) $(SERVER_SRCS:.cpp=.o)
 
 BIN = client server
 LSRC = $(SHLIB_SRC)
