@@ -199,7 +199,6 @@ set_nil_servant_manager (PortableServer::POA_ptr poa)
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!succeed)
   {
