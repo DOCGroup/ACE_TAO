@@ -1,3 +1,30 @@
+Mon Apr 24 15:24:19 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/examples/RtEC/Makefile:
+	* orbsvcs/examples/RtEC/MCast/Makefile:
+	* orbsvcs/examples/RtEC/MCast/README:
+	* orbsvcs/examples/RtEC/MCast/svc.conf:
+	* orbsvcs/examples/RtEC/MCast/AddrServer.h:
+	* orbsvcs/examples/RtEC/MCast/AddrServer.cpp:
+	* orbsvcs/examples/RtEC/MCast/Consumer.h:
+	* orbsvcs/examples/RtEC/MCast/Consumer.cpp:
+	* orbsvcs/examples/RtEC/MCast/MCast.h:
+	* orbsvcs/examples/RtEC/MCast/MCast.cpp:
+	* orbsvcs/examples/RtEC/MCast/MCast.dsp:
+	* orbsvcs/examples/RtEC/MCast/Supplier.cpp:
+	* orbsvcs/examples/RtEC/MCast/Supplier.h:
+
+	* orbsvcs/examples/RtEC/Simple/Consumer.h:
+	* orbsvcs/examples/RtEC/Simple/Supplier.h:
+	  Fixed the comments.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+	  It was rejecting the ACE_ES_UNDEFINED_EVENT which is the first
+	  event available to the user.
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	  Use STL style iterators for the event header collection.
+
 Mon Apr 24 14:38:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs_static.dsw:

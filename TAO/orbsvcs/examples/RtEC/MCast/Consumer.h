@@ -18,6 +18,7 @@
 #define CONSUMER_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,14 +31,18 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //
   // = DESCRIPTION
   //   This class is a consumer of events.
-  //   It simply registers for one event type.
+  //   It simply subscribes to one event type.
   //
 public:
   Consumer (void);
   // Constructor
 
-  int run (int argc, char* argv[]);
-  // Run the test
+  void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
+                CORBA::Environment &ACE_TRY_ENV);
+  // Connect to the Event Channel
+
+  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  // Disconnect from the event channel
 
   // = The RtecEventComm::PushConsumer methods
 
@@ -52,9 +57,8 @@ private:
   CORBA::ULong event_count_;
   // Keep track of the number of events received.
 
-  CORBA::ORB_ptr orb_;
-  // The orb, just a pointer because the ORB does not outlive the
-  // run() method...
+  RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
+  // The proxy
 };
 
 #endif /* CONSUMER_H */
