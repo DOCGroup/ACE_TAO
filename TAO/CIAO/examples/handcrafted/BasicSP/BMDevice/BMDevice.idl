@@ -17,9 +17,9 @@ module BasicSP
 {
   component BMDevice
     {
-      provides ReadData data_out;
-      publishes DataAvailable out_data;
-      consumes TimeOut timeout20;
+      provides ReadData data_read;
+      publishes DataAvailable data_available;
+      consumes TimeOut timeout;
     };
 
   home BMDeviceHome manages BMDevice
