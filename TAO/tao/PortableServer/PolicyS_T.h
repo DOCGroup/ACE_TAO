@@ -35,7 +35,7 @@ TAO_NAMESPACE  POA_CORBA
 {
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_Export Policy_tie : public Policy
+  class Policy_tie : public Policy
   {
   public:
     Policy_tie (T &t);
@@ -48,7 +48,7 @@ TAO_NAMESPACE  POA_CORBA
     // ctor with T*, ownership flag and a POA
     ~Policy_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -60,40 +60,40 @@ TAO_NAMESPACE  POA_CORBA
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       );
     CORBA::PolicyType policy_type (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
         ::CORBA::Policy_ptr copy (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
         void destroy (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
       private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     Policy_tie (const Policy_tie &);
     void operator= (const Policy_tie &);

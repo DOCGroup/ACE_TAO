@@ -34,7 +34,7 @@ ACE_Proactor *ACE_Proactor::proactor_ = 0;
 // only delete it safely if we created it!)
 int ACE_Proactor::delete_proactor_ = 0;
 
-class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
+class ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
 {
   // = TITLE
   //     A Handler for timer. It helps in the management of timers

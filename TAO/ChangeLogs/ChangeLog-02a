@@ -1,3 +1,24 @@
+Mon Feb 18 19:38:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * tao/IIOP_Transport.h:
+        * tao/Domain/DomainS_T.h:
+        * tao/PortableServer/ImplRepoS_T.h:
+        * tao/PortableServer/MessagingS_T.h:
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * TAO-INSTALL.html:
+
+          Made TAO compiling with the Microsoft Visual C++ 7 compiler.
+          Template classes cannot be exported when doing a dynamic build, so
+          removed some export macro's from template definitions. When a class
+          is derived from a class template then the class template must be
+          explicit instantiated and be exported. To make sure that we only do
+          this when a compiler supports this we introduced the new define
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT.
+
 Mon Feb 18 11:27:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
@@ -8,7 +29,7 @@ Mon Feb 18 11:27:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
 	* orbsvcs/orbsvcs/AV/QoS_UDP.h:
 	  Check for ACE_HAS_WINSOCK2_GQOS in addition to ACE_HAS_RAPI
-	  for compiling QoS enabled code.  
+	  for compiling QoS enabled code.
 	  Add TAO_AV_UDP_QoS_Acceptor::qos_acceptor_addr_.  Populate
 	  this address with localhost in open_default(), instead of the
 	  any address (0.0.0.0).
@@ -20,7 +41,7 @@ Mon Feb 18 11:27:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* TAOACE.dsw:
 	  Add ACE_QoS.dsp to workspace.
-	
+
 Mon Feb 18 09:26:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/ETCL/ETCL.dsp:
@@ -144,8 +165,8 @@ Fri Feb 15 07:01:28 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Thu Feb 14 17:03:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp (shutdown): 
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp (shutdown): 
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp (shutdown):
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp (shutdown):
 	  Fixed event channel shutdown problems:  the event channel
 	  removes some Event_Handlers from the Reactor, but did not reset
 	  the reactor pointer in those Event_Handlers. If the ORB Reactor is
@@ -155,10 +176,10 @@ Thu Feb 14 17:03:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 Thu Feb 14 15:20:19 2002  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp (supplier_non_existent): 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp (consumer_non_existent): 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp (supplier_non_existent): 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp (consumer_non_existent): 
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp (supplier_non_existent):
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp (consumer_non_existent):
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp (supplier_non_existent):
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp (consumer_non_existent):
 	  Do not hold the mutex while checking if the peer stil exists.
 	  Doing so can result in dead-locks whenever there is a nested
 	  upcall as part of the request.

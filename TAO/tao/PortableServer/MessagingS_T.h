@@ -36,7 +36,7 @@ TAO_NAMESPACE  POA_Messaging
 {
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_PortableServer_Export ReplyHandler_tie : public ReplyHandler
+  class ReplyHandler_tie : public ReplyHandler
   {
   public:
     ReplyHandler_tie (T &t);

@@ -158,6 +158,11 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &))
 };
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class ACE_Export ACE_Task<ACE_MT_SYNCH>;
+template class ACE_Export ACE_Task<ACE_NULL_SYNCH>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 #if defined (__ACE_INLINE__)
 #include "ace/Task_T.i"
 #endif /* __ACE_INLINE__ */
