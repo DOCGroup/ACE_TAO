@@ -4,8 +4,6 @@ This directory contains a modified version of the TTCP benchmark that
 uses the TAO ORB. TAO_TTCP is used to measure the throughput of TAO
 for sending different data types. This code tests sequences of short,
 long, octet, char, double, and richly-typed data such as a struct.
-This benchmark uses an interpretive form of marshaling the data by
-using the dynamic invocation interfaces provided by the TAO ORB.
 
 Organization
 ------------
