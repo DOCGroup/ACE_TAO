@@ -390,7 +390,11 @@ public:
   //
   // NOTE:  those are IDL extensions, not yet standard.
 
+#if defined(VXWORKS) && defined(ghs)
+  typedef short WChar;
+#else
   typedef wchar_t WChar;
+#endif
   typedef WChar *WString;
   
   typedef WChar &WChar_out; // out type for WChar

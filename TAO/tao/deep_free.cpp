@@ -168,7 +168,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
-  CORBA::Long size, alignment;
+  CORBA::Long size;
   CDR stream;
 
   if (tc)
@@ -178,7 +178,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
       if (env.exception () == 0)
 	{
 	  for (int i = 0; i < member_count && retval ==
-		CORBA::TypeCode::TRAVERSE_CONTINUE; i++)
+                 CORBA::TypeCode::TRAVERSE_CONTINUE; i++)
 	    {
 	      // get the typecode for the ith field
 	      param = tc->member_type (i, env);
@@ -188,75 +188,65 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 		  size = param->size (env);
 		  if (env.exception () == 0)
 		    {
-		      // get the alignment of the field
-		      alignment = param->alignment (env);
-		      if (env.exception () == 0)
-			{
-			  switch (param->kind_)
-			    {
-			    case CORBA::tk_null:
-			    case CORBA::tk_void:
-			    case CORBA::tk_short:
-			    case CORBA::tk_ushort:
-			    case CORBA::tk_long:
-			    case CORBA::tk_ulong:
-			    case CORBA::tk_float:
-			    case CORBA::tk_enum:
-			    case CORBA::tk_double:
-			    case CORBA::tk_longlong:
-			    case CORBA::tk_ulonglong:
-			    case CORBA::tk_boolean:
-			    case CORBA::tk_char:
-			    case CORBA::tk_octet:
-			    case CORBA::tk_longdouble:
-			    case CORBA::tk_wchar:
-			      break;
-			    case CORBA::tk_any:
-			      retval = TAO_Marshal_Any::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_TypeCode:
-			      retval = TAO_Marshal_TypeCode::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_Principal:
-			      retval = TAO_Marshal_Principal::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_objref:
-			      retval = TAO_Marshal_ObjRef::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_struct:
-			      retval = TAO_Marshal_Struct::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_union:
-			      retval = TAO_Marshal_Union::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_string:
-			      retval = TAO_Marshal_String::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_sequence:
-			      retval = TAO_Marshal_Sequence::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_array:
-			      retval = TAO_Marshal_Array::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_alias:
-			      retval = TAO_Marshal_Alias::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_except:
-			      retval = TAO_Marshal_Except::deep_free (param, source, dest, env);
-			      break;
-			    case CORBA::tk_wstring:
-			      retval = TAO_Marshal_WString::deep_free (param, source, dest, env);
-			      break;
-			    default:
-			      retval = CORBA::TypeCode::TRAVERSE_STOP;
-			    } // end of switch
-			  source = (char *)source + size;
-			}  
-		      else  // exception computing alignment 
-			{
-			  dmsg ("TAO_Marshal_Struct::deep_free detected error");
-			  return CORBA::TypeCode::TRAVERSE_STOP;
-			}
+                      switch (param->kind_)
+                        {
+                        case CORBA::tk_null:
+                        case CORBA::tk_void:
+                        case CORBA::tk_short:
+                        case CORBA::tk_ushort:
+                        case CORBA::tk_long:
+                        case CORBA::tk_ulong:
+                        case CORBA::tk_float:
+                        case CORBA::tk_enum:
+                        case CORBA::tk_double:
+                        case CORBA::tk_longlong:
+                        case CORBA::tk_ulonglong:
+                        case CORBA::tk_boolean:
+                        case CORBA::tk_char:
+                        case CORBA::tk_octet:
+                        case CORBA::tk_longdouble:
+                        case CORBA::tk_wchar:
+                          break;
+                        case CORBA::tk_any:
+                          retval = TAO_Marshal_Any::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_TypeCode:
+                          retval = TAO_Marshal_TypeCode::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_Principal:
+                          retval = TAO_Marshal_Principal::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_objref:
+                          retval = TAO_Marshal_ObjRef::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_struct:
+                          retval = TAO_Marshal_Struct::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_union:
+                          retval = TAO_Marshal_Union::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_string:
+                          retval = TAO_Marshal_String::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_sequence:
+                          retval = TAO_Marshal_Sequence::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_array:
+                          retval = TAO_Marshal_Array::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_alias:
+                          retval = TAO_Marshal_Alias::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_except:
+                          retval = TAO_Marshal_Except::deep_free (param, source, dest, env);
+                          break;
+                        case CORBA::tk_wstring:
+                          retval = TAO_Marshal_WString::deep_free (param, source, dest, env);
+                          break;
+                        default:
+                          retval = CORBA::TypeCode::TRAVERSE_STOP;
+                        } // end of switch
+                      source = (char *)source + size;
 		    } 
 		  else  // exception computing size 
 		    {
