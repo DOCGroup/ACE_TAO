@@ -1,3 +1,14 @@
+Fri Nov 12 14:15:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        
+          In the generated _this() method for the AMH class, added
+          generation of auto pointer for the created stub class, to
+          make the code exception safe, similarly to what is done
+          in the corresponding skeleton class. Thanks again to 
+          Johnny Willemsen <jwillemsen@remedy.nl> for pointing
+          this out.
+
 Fri Nov 12 08:40:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
