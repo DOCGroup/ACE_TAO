@@ -5,6 +5,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
@@ -36,7 +37,7 @@ public:
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("errno for this signal is %d [%s]\n"),
                 siginfo->si_errno,
-                strerror (siginfo->si_errno)));
+                ACE_OS::strerror (siginfo->si_errno)));
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("signal was sent by process %d")
                 ACE_TEXT (" / user %d\n"),
