@@ -10,9 +10,9 @@ JAWS_Data_Block::task (void)
 }
 
 JAWS_IO_Handler *
-JAWS_Data_Block::handler (void)
+JAWS_Data_Block::io_handler (void)
 {
-  return this->handler_;
+  return this->io_handler_;
 }
 
 JAWS_Dispatch_Policy *
@@ -28,30 +28,15 @@ JAWS_Data_Block::task (JAWS_Pipeline_Handler *taskp)
 }
 
 void
-JAWS_Data_Block::handler (JAWS_IO_Handler *handlerp)
+JAWS_Data_Block::io_handler (JAWS_IO_Handler *handlerp)
 {
-  this->handler_ = handlerp;
+  this->io_handler_ = handlerp;
 }
 
 void
 JAWS_Data_Block::policy (JAWS_Dispatch_Policy *policyp)
 {
   this->policy_ = policyp;
-}
-
-int
-JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
-                                       ACE_Time_Value *)
-{
-  /* JAWS_Data_Block should contain an INET_Addr and an IO */
-  // JAWS_IO_Handler *handler = data->handler ();
-  JAWS_Dispatch_Policy *policy = data->policy ();
-
-  // data->policy ()->update (handler);
-
-  JAWS_IO *io = policy->io ();
-  // io->accept (data->addr ());
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

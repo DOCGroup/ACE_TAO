@@ -6,6 +6,8 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Handler.h"
+#include "JAWS/IO_Acceptor.h"
+#include "JAWS/Pipeline_Tasks.h"
 
 JAWS_Server::JAWS_Server (void)
   : port_ (5432),
@@ -57,6 +59,8 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
   JAWS_Data_Block *db;
 
   ACE_INET_Addr inet_addr (this->port_);
+  JAWS_IO_Synch_Acceptor_Singleton::instance ()->open (inet_addr);
+  JAWS_IO_Asynch_Acceptor_Singleton::instance ()->open (inet_addr);
 
   // initialize an IO_Handler
   factory = (this->dispatch_ == 0) ? &synch_factory : &asynch_factory;
@@ -78,8 +82,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
       return -1;
     }
 
-  // db->addr (&inet_addr);
-  db->handler (handler);
+  db->io_handler (handler);
   db->task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
 
   // The message block should contain an INET_Addr, and call the

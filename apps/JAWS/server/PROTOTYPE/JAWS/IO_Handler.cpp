@@ -9,7 +9,9 @@ JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory (void)
 }
 
 JAWS_Synch_IO_Handler::JAWS_Synch_IO_Handler (JAWS_IO_Handler_Factory *factory)
-  : mb_ (0),
+  : status_ (0),
+    mb_ (0),
+    handle_ (ACE_INVALID_HANDLE),
     task_ (0),
     factory_ (factory)
 {
@@ -24,9 +26,10 @@ JAWS_Synch_IO_Handler::~JAWS_Synch_IO_Handler (void)
 }
 
 void
-JAWS_Synch_IO_Handler::accept_complete (void)
+JAWS_Synch_IO_Handler::accept_complete (ACE_HANDLE handle)
 {
   // callback into pipeline task, notify that the accept has completed
+  this->handle_ = handle;
 }
 
 void
@@ -97,10 +100,22 @@ JAWS_Synch_IO_Handler::factory (void)
   return this->factory_;
 }
 
+ACE_HANDLE
+JAWS_Synch_IO_Handler::handle (void)
+{
+  return this->handle_;
+}
+
 void
 JAWS_Synch_IO_Handler::done (void)
 {
   this->factory ()->destroy_io_handler (this);
+}
+
+int
+JAWS_Synch_IO_Handler::status (void)
+{
+  return this->status_;
 }
 
 JAWS_IO_Handler *
@@ -123,3 +138,9 @@ JAWS_Synch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
 {
   delete handler;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate  ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

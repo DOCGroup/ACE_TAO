@@ -25,6 +25,7 @@ class JAWS_IO_Acceptor;
 #include "ace/ACE.h"
 #include "ace/Asynch_IO.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Singleton.h"
 
 class JAWS_IO
   // = TITLE
@@ -41,36 +42,45 @@ class JAWS_IO
 public:
   JAWS_IO (void);
   virtual ~JAWS_IO (void);
-  void handler (JAWS_IO_Handler *handler);
-  // void acceptor (JAWS_IO_Acceptor *acceptor);
-  void handle (ACE_HANDLE h);
-  ACE_HANDLE handle (void);
+
+  //  void acceptor (JAWS_IO_Acceptor *acceptor);
+  //  void handler (JAWS_IO_Handler *handler);
+  //  void handle (ACE_HANDLE h);
+  //  ACE_HANDLE handle (void);
 
   // James, please add documentation here.
 
-  virtual void accept (ACE_INET_Addr *addr) = 0;
+  virtual void accept (JAWS_IO_Handler *ioh) = 0;
   // accept a passive connection
 
-  virtual void read (ACE_Message_Block& mb, int size) = 0;
+  virtual void read (JAWS_IO_Handler *ioh,
+                     ACE_Message_Block& mb,
+                     int size) = 0;
   // read from the handle size bytes into the message block.
 
-  virtual void transmit_file (const char *filename,
+  virtual void transmit_file (JAWS_IO_Handler *ioh,
+                              const char *filename,
                               const char *header,
                               int header_size,
                               const char *trailer,
                               int trailer_size) = 0;
   // send header, filename, trailer to the handle.
 
-  virtual void receive_file (const char *filename,
+  virtual void receive_file (JAWS_IO_Handler *ioh,
+                             const char *filename,
                              void *initial_data,
                              int initial_data_length,
                              int entire_length) = 0;
   // read data from the handle and store in filename.
 
-  virtual void send_confirmation_message (const char *buffer, int length) = 0;
+  virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
+                                          const char *buffer,
+                                          int length) = 0;
   // send a confirmation message to the handle.
 
-  virtual void send_error_message (const char *buffer, int length) = 0;
+  virtual void send_error_message (JAWS_IO_Handler *ioh,
+                                   const char *buffer,
+                                   int length) = 0;
   // send an error message to the handle.
 
 protected:
@@ -92,32 +102,39 @@ public:
 
   ~JAWS_Synch_IO (void);
 
-  virtual void accept (ACE_INET_Addr *addr);
+  virtual void accept (JAWS_IO_Handler *ioh);
 
-  void read (ACE_Message_Block& mb, int size);
+  void read (JAWS_IO_Handler *ioh, ACE_Message_Block& mb, int size);
 
-  void transmit_file (const char *filename,
+  void transmit_file (JAWS_IO_Handler *ioh,
+                      const char *filename,
                       const char *header,
                       int header_size,
                       const char *trailer,
                       int trailer_size);
 
-  void receive_file (const char *filename,
+  void receive_file (JAWS_IO_Handler *ioh,
+                     const char *filename,
                      void *initial_data,
                      int initial_data_length,
                      int entire_length);
 
-  void send_confirmation_message (const char *buffer,
+  void send_confirmation_message (JAWS_IO_Handler *ioh,
+                                  const char *buffer,
                                   int length);
 
-  void send_error_message (const char *buffer,
+  void send_error_message (JAWS_IO_Handler *ioh,
+                           const char *buffer,
                            int length);
 
 protected:
-  virtual void send_message (const char *buffer,
+  virtual void send_message (JAWS_IO_Handler *ioh,
+                             const char *buffer,
                              int length);
 };
 
+typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
+        JAWS_Synch_IO_Singleton;
 
 // This only works on Win32
 #if defined (ACE_WIN32)
