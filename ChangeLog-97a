@@ -1,3 +1,9 @@
+Sat Apr 05 17:27:02 1997    <irfan@TWOSTEP>
+
+	* Registry.cpp (resolve): Type and size of the object is only set
+ 	  if RegQueryValueEx() returns success. Thanks to Alan
+	  (Alan_Cabrera@fp.cibc.com) for reporting this.
+
 Sat Apr  5 13:12:37 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/MM_Shared_Memory_Test.cpp: Removed the use of dynamic
