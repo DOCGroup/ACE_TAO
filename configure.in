@@ -3344,7 +3344,7 @@ dnl Check if platform has thread_self() rather than pthread_self()
 
 dnl Check if pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
 dnl PTHREAD_PROCESS_SHARED values
-  ACE_CACHE_CHECK(for PTHREAD_PROCESS_* values in <pthread.h>, dnl
+  ACE_CACHE_CHECK(for PTHREAD_PROCESS_* values in <pthread.h>,
                   ace_cv_lib_pthread_process_enum,
                   [
                    AC_TRY_COMPILE(
