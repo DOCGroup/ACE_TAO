@@ -1,3 +1,9 @@
+Tue Jul 16 11:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Some tests where based on aceexe, changes this to acetest. This
+          fixes problems with vc71.
+
 Tue Jul 15 06:22:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
