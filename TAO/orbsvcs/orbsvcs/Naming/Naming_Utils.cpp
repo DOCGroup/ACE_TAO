@@ -204,9 +204,9 @@ TAO_Naming_Server::parse_args (int argc,
           this->context_size_ = size;
         break;
       case 'b':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()),
+        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
 #if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-                           ACE_UINT64_FORMAT_SPECIFIER,
+                           ACE_INT64_FORMAT_SPECIFIER,
 #else
                            "%ld",
 #endif /* ACE_SIZEOF_VOID_P */
@@ -639,7 +639,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 
         // set a timeout on the orb
         //
-        CORBA::Object_var orbPolicyManagerObj = 
+        CORBA::Object_var orbPolicyManagerObj =
 	  orb->resolve_initial_references ("ORBPolicyManager"
 			                   ACE_ENV_ARG_PARAMETER);
 	ACE_TRY_CHECK;
