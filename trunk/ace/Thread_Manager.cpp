@@ -1262,8 +1262,6 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    size_t threads_waited_on = this->thr_list_.size ();
-
     while (this->thr_list_.size () > 0)
       if (this->zero_cond_.wait (timeout) == -1)
         return -1;
