@@ -20,6 +20,7 @@
 static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
 
 Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)
+: use_LifeCycle_Service_ (0)
 {
 }
 
@@ -154,33 +155,36 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       /* for now as long as the trading service is not ported to NT we skip this */
 
-      // get the Quoter_Life_Cycle_Service
-      CosNaming::Name life_Cycle_Service_Name (1);
-      life_Cycle_Service_Name.length (1);
-      life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
+      if (this->use_LifeCycle_Service_)
+      {
+        // get the Quoter_Life_Cycle_Service
+        CosNaming::Name life_Cycle_Service_Name (1);
+        life_Cycle_Service_Name.length (1);
+        life_Cycle_Service_Name[0].id = CORBA::string_dup ("Life_Cycle_Service");
 
-      CORBA::Object_var life_Cycle_Service_Obj_var =
-        namingContext_var->resolve (life_Cycle_Service_Name,
+        CORBA::Object_var life_Cycle_Service_Obj_var =
+          namingContext_var->resolve (life_Cycle_Service_Name,
                                            TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        TAO_CHECK_ENV;
 
-      LifeCycleService::Life_Cycle_Service_var  life_Cycle_Service_var =
-        LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        LifeCycleService::Life_Cycle_Service_var  life_Cycle_Service_var =
+          LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in (),
+                                                         TAO_TRY_ENV);
+        TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "Have a proper reference to Life Cycle Service.\n"));
+        ACE_DEBUG ((LM_DEBUG, "Have a proper reference to Life Cycle Service.\n"));
 
-      CORBA::Object_var object_var = this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV);
+        CORBA::Object_var object_var = this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV);
 
-      life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
-						"Bryan 503",               // location
-						"Generic Factory",         // description
-						object_var,
-						TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      ACE_DEBUG ((LM_DEBUG,
-                  "Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
+        life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
+				  		                                    "Bryan 503",               // location
+					  	                                    "Generic Factory",         // description
+						                                      object_var,
+						                                      TAO_TRY_ENV);
+        TAO_CHECK_ENV;
+        ACE_DEBUG ((LM_DEBUG,
+                    "Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
+      }
             
     }
   TAO_CATCHANY
@@ -223,6 +227,8 @@ Quoter_Generic_Factory_Server::parse_args (void)
                     this->argv_[0], usage));
         ACE_OS::exit (0);
         break;
+      case 'l':
+        this->use_LifeCycle_Service_ = 1;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: unknown arg, -%c\n"
