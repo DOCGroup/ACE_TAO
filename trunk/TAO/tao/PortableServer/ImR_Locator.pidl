@@ -6,14 +6,14 @@
  *
  * $Id$
  *
- * This file was used to generate the code in ImplRepo{C,S,S_T}.{h,i,cpp}
+ * This file was used to generate the code in ImplRepo{C,S}.{h,i,cpp}
  *
  * The command used to generate code from this file is:
  *
  * tao_idl.exe -Gp -Gd -Ge 1 -Sc -GT -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=portableserver_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImR_Locator.pidl
  *
  * After generation is complete you must remove unneeded explicit instantiations
- * from ImR_LocatorC.cpp to avoid duplicate symbols on some platforms. 
+ * from ImR_LocatorC.cpp to avoid duplicate symbols on some platforms.
  *
  */
 //=============================================================================
@@ -44,7 +44,7 @@ module ImplementationRepository
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
-    
+
     void shutdown_server_in_activator (in string server,
                                        in string activator)
       raises (NotFound);
@@ -52,7 +52,7 @@ module ImplementationRepository
     //
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
-    
+
     void server_is_shutting_down_in_activator (in string server,
                                                in string activator)
       raises (NotFound);
@@ -62,20 +62,20 @@ module ImplementationRepository
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
 
-    long register_activator (in string activator, 
+    long register_activator (in string activator,
                              in Administration admin,
                              in ServerNameList servers);
-    // returns a token that can be used (along with activator name) to unregister the activator. 
-    
+    // returns a token that can be used (along with activator name) to unregister the activator.
+
     void unregister_activator (in string activator, in long token);
-    // You must pass in the token returned from register_activator. 
-      
+    // You must pass in the token returned from register_activator.
+
     void server_is_running_in_activator (in string server,
                                             in string activator,
                                             in Address addr,
                                             in ServerObject server_object)
       raises (NotFound);
-    
+
     void find_in_activator (in string server,
                in string activator,
                out ServerInformation info)

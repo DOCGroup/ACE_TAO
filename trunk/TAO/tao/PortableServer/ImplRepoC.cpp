@@ -26,10 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "ImplRepoC.h"
+#include "tao/CDR.h"
 #include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
@@ -53,7 +54,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -61,7 +62,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerObject>
     : public
@@ -75,13 +76,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:474
+  // be\be_visitor_arg_traits.cpp:618
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::StartupOptions>
     : public
@@ -94,13 +95,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:474
+  // be\be_visitor_arg_traits.cpp:618
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformation>
     : public
@@ -113,13 +114,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // .\be\be_visitor_arg_traits.cpp:265
+  // be\be_visitor_arg_traits.cpp:379
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
@@ -135,7 +136,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_PortableServer_Export Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
@@ -151,8 +152,9 @@ namespace TAO
 #endif /* end #if !defined */
 }
 
+
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for ImplementationRepository::ServerObject.
 
@@ -192,13 +194,13 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::ServerObject::ping (
     ACE_ENV_SINGLE_ARG_DECL
@@ -221,14 +223,14 @@ void ImplementationRepository::ServerObject::ping (
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       1,
       "ping",
       4,
@@ -240,7 +242,7 @@ void ImplementationRepository::ServerObject::ping (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::ServerObject::shutdown (
     ACE_ENV_SINGLE_ARG_DECL
@@ -263,14 +265,14 @@ void ImplementationRepository::ServerObject::shutdown (
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       1,
       "shutdown",
       8,
@@ -316,6 +318,21 @@ ImplementationRepository::ServerObject::_narrow (
 {
   return
     TAO::Narrow_Utils<ServerObject>::narrow (
+        _tao_objref,
+        "IDL:ImplementationRepository/ServerObject:1.0",
+        ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer
+        ACE_ENV_ARG_PARAMETER
+      );
+}
+
+ImplementationRepository::ServerObject_ptr
+ImplementationRepository::ServerObject::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL
+  )
+{
+  return
+    TAO::Narrow_Utils<ServerObject>::unchecked_narrow (
         _tao_objref,
         "IDL:ImplementationRepository/ServerObject:1.0",
         ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer
@@ -374,7 +391,7 @@ ImplementationRepository::ServerObject::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
 {
@@ -414,7 +431,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::AlreadyRegistered::AlreadyRegistered (void)
   : CORBA::UserException (
@@ -516,11 +533,16 @@ void ImplementationRepository::AlreadyRegistered::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr ImplementationRepository::AlreadyRegistered::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::ImplementationRepository::_tc_AlreadyRegistered;
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_AlreadyRegistered[] =
 {
@@ -563,7 +585,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::CannotActivate::CannotActivate (void)
   : CORBA::UserException (
@@ -667,7 +689,7 @@ void ImplementationRepository::CannotActivate::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_exception/exception_ctor.cpp:66
+// be\be_visitor_exception/exception_ctor.cpp:66
 
 ImplementationRepository::CannotActivate::CannotActivate (
     const char * _tao_reason
@@ -683,11 +705,16 @@ ImplementationRepository::CannotActivate::CannotActivate (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr ImplementationRepository::CannotActivate::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::ImplementationRepository::_tc_CannotActivate;
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_CannotActivate[] =
 {
@@ -733,7 +760,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 ImplementationRepository::NotFound::NotFound (void)
   : CORBA::UserException (
@@ -835,11 +862,16 @@ void ImplementationRepository::NotFound::_tao_decode (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr ImplementationRepository::NotFound::_type (void) const
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("This TAO-specific method is now")
+              ACE_LIB_TEXT (" deprecated and will be removed")
+              ACE_LIB_TEXT (" in future versions.\n")));
+  
   return ::ImplementationRepository::_tc_NotFound;
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_NotFound[] =
 {
@@ -878,7 +910,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentVariable[] =
 {
@@ -932,7 +964,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 ImplementationRepository::EnvironmentVariable::_tao_any_destructor (
@@ -945,7 +977,7 @@ ImplementationRepository::EnvironmentVariable::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_Address[] =
 {
@@ -984,7 +1016,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_)
 #define _IMPLEMENTATIONREPOSITORY_ENVIRONMENTLIST_CS_
@@ -1037,7 +1069,7 @@ void ImplementationRepository::EnvironmentList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentList[] =
 {
@@ -1119,7 +1151,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ActivationMode[] =
 {
@@ -1174,7 +1206,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
 {
@@ -1345,7 +1377,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 ImplementationRepository::StartupOptions::_tao_any_destructor (
@@ -1358,7 +1390,7 @@ ImplementationRepository::StartupOptions::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
 {
@@ -1594,7 +1626,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 ImplementationRepository::ServerInformation::_tao_any_destructor (
@@ -1607,7 +1639,7 @@ ImplementationRepository::ServerInformation::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST_CS_
@@ -1660,7 +1692,7 @@ void ImplementationRepository::ServerInformationList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
 {
@@ -1927,11 +1959,11 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for ImplementationRepository::Administration.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Administration_ptr
 TAO::Objref_Traits<ImplementationRepository::Administration>::tao_duplicate (
     ImplementationRepository::Administration_ptr p
@@ -1940,7 +1972,7 @@ TAO::Objref_Traits<ImplementationRepository::Administration>::tao_duplicate (
   return ImplementationRepository::Administration::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<ImplementationRepository::Administration>::tao_release (
     ImplementationRepository::Administration_ptr p
@@ -1949,14 +1981,14 @@ TAO::Objref_Traits<ImplementationRepository::Administration>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::Administration_ptr
 TAO::Objref_Traits<ImplementationRepository::Administration>::tao_nil (void)
 {
   return ImplementationRepository::Administration::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<ImplementationRepository::Administration>::tao_marshal (
     ImplementationRepository::Administration_ptr p,
@@ -1973,7 +2005,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::activate_server (
     const char * server
@@ -2000,7 +2032,7 @@ void ImplementationRepository::Administration::activate_server (
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server
@@ -2024,7 +2056,7 @@ void ImplementationRepository::Administration::activate_server (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       2,
       "activate_server",
       15,
@@ -2040,7 +2072,7 @@ void ImplementationRepository::Administration::activate_server (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 char * ImplementationRepository::Administration::activate_server_with_startup (
     const char * server,
@@ -2069,7 +2101,7 @@ char * ImplementationRepository::Administration::activate_server_with_startup (
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<CORBA::Long>::in_arg_val _tao_check_startup (check_startup);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server,
@@ -2094,7 +2126,7 @@ char * ImplementationRepository::Administration::activate_server_with_startup (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       3,
       "activate_server_with_startup",
       28,
@@ -2112,7 +2144,7 @@ char * ImplementationRepository::Administration::activate_server_with_startup (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::register_server (
     const char * server,
@@ -2141,7 +2173,7 @@ void ImplementationRepository::Administration::register_server (
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<ImplementationRepository::StartupOptions>::in_arg_val _tao_options (options);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server,
@@ -2166,7 +2198,7 @@ void ImplementationRepository::Administration::register_server (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       3,
       "register_server",
       15,
@@ -2182,7 +2214,7 @@ void ImplementationRepository::Administration::register_server (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::reregister_server (
     const char * server,
@@ -2211,7 +2243,7 @@ void ImplementationRepository::Administration::reregister_server (
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<ImplementationRepository::StartupOptions>::in_arg_val _tao_options (options);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server,
@@ -2236,7 +2268,7 @@ void ImplementationRepository::Administration::reregister_server (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       3,
       "reregister_server",
       17,
@@ -2252,7 +2284,7 @@ void ImplementationRepository::Administration::reregister_server (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::remove_server (
     const char * server
@@ -2278,7 +2310,7 @@ void ImplementationRepository::Administration::remove_server (
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server
@@ -2296,7 +2328,7 @@ void ImplementationRepository::Administration::remove_server (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       2,
       "remove_server",
       13,
@@ -2312,7 +2344,7 @@ void ImplementationRepository::Administration::remove_server (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::shutdown_server (
     const char * server
@@ -2338,7 +2370,7 @@ void ImplementationRepository::Administration::shutdown_server (
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server
@@ -2356,7 +2388,7 @@ void ImplementationRepository::Administration::shutdown_server (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       2,
       "shutdown_server",
       15,
@@ -2372,7 +2404,7 @@ void ImplementationRepository::Administration::shutdown_server (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::server_is_running (
     const char * server,
@@ -2402,7 +2434,7 @@ void ImplementationRepository::Administration::server_is_running (
   TAO::Arg_Traits<ImplementationRepository::Address>::in_arg_val _tao_addr (addr);
   TAO::Arg_Traits<ImplementationRepository::ServerObject>::in_arg_val _tao_server_object (server_object);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server,
@@ -2422,7 +2454,7 @@ void ImplementationRepository::Administration::server_is_running (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       4,
       "server_is_running",
       17,
@@ -2438,7 +2470,7 @@ void ImplementationRepository::Administration::server_is_running (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::server_is_shutting_down (
     const char * server
@@ -2464,7 +2496,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server
@@ -2482,7 +2514,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       2,
       "server_is_shutting_down",
       23,
@@ -2498,7 +2530,7 @@ void ImplementationRepository::Administration::server_is_shutting_down (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::find (
     const char * server,
@@ -2526,7 +2558,7 @@ void ImplementationRepository::Administration::find (
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_server (server);
   TAO::Arg_Traits<ImplementationRepository::ServerInformation>::out_arg_val _tao_info (info);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_server,
@@ -2545,7 +2577,7 @@ void ImplementationRepository::Administration::find (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       3,
       "find",
       4,
@@ -2561,7 +2593,7 @@ void ImplementationRepository::Administration::find (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::Administration::list (
     CORBA::ULong how_many,
@@ -2590,7 +2622,7 @@ void ImplementationRepository::Administration::list (
   TAO::Arg_Traits<ImplementationRepository::ServerInformationList>::out_arg_val _tao_server_list (server_list);
   TAO::Arg_Traits<ImplementationRepository::ServerInformationIterator>::out_arg_val _tao_server_iterator (server_iterator);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_how_many,
@@ -2600,7 +2632,7 @@ void ImplementationRepository::Administration::list (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       4,
       "list",
       4,
@@ -2612,7 +2644,7 @@ void ImplementationRepository::Administration::list (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 char * ImplementationRepository::Administration::find_ior (
     const char * object_name
@@ -2638,7 +2670,7 @@ char * ImplementationRepository::Administration::find_ior (
   TAO::Arg_Traits<CORBA::Char *>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_object_name (object_name);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_object_name
@@ -2656,7 +2688,7 @@ char * ImplementationRepository::Administration::find_ior (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       2,
       "find_ior",
       8,
@@ -2716,6 +2748,21 @@ ImplementationRepository::Administration::_narrow (
 }
 
 ImplementationRepository::Administration_ptr
+ImplementationRepository::Administration::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL
+  )
+{
+  return
+    TAO::Narrow_Utils<Administration>::unchecked_narrow (
+        _tao_objref,
+        "IDL:ImplementationRepository/Administration:1.0",
+        ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function_pointer
+        ACE_ENV_ARG_PARAMETER
+      );
+}
+
+ImplementationRepository::Administration_ptr
 ImplementationRepository::Administration::_duplicate (Administration_ptr obj)
 {
   if (! CORBA::is_nil (obj))
@@ -2766,7 +2813,7 @@ ImplementationRepository::Administration::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_Administration[] =
 {
@@ -2806,11 +2853,11 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for ImplementationRepository::ServerInformationIterator.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::ServerInformationIterator_ptr
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_duplicate (
     ImplementationRepository::ServerInformationIterator_ptr p
@@ -2819,7 +2866,7 @@ TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_dup
   return ImplementationRepository::ServerInformationIterator::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_release (
     ImplementationRepository::ServerInformationIterator_ptr p
@@ -2828,14 +2875,14 @@ TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_rel
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 ImplementationRepository::ServerInformationIterator_ptr
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_nil (void)
 {
   return ImplementationRepository::ServerInformationIterator::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_marshal (
     ImplementationRepository::ServerInformationIterator_ptr p,
@@ -2852,7 +2899,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
     CORBA::ULong how_many,
@@ -2879,7 +2926,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
   TAO::Arg_Traits<CORBA::ULong>::in_arg_val _tao_how_many (how_many);
   TAO::Arg_Traits<ImplementationRepository::ServerInformationList>::out_arg_val _tao_server_list (server_list);
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_how_many,
@@ -2888,7 +2935,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       3,
       "next_n",
       6,
@@ -2902,7 +2949,7 @@ CORBA::Boolean ImplementationRepository::ServerInformationIterator::next_n (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_operation/operation_cs.cpp:78
+// be\be_visitor_operation/operation_cs.cpp:78
 
 void ImplementationRepository::ServerInformationIterator::destroy (
     ACE_ENV_SINGLE_ARG_DECL
@@ -2925,14 +2972,14 @@ void ImplementationRepository::ServerInformationIterator::destroy (
   
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   
-  TAO::Argument *_tao_signature [] =
+  TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
   
   TAO::Invocation_Adapter _tao_call (
       this,
-      _tao_signature,
+      _the_tao_operation_signature,
       1,
       "destroy",
       7,
@@ -2978,6 +3025,21 @@ ImplementationRepository::ServerInformationIterator::_narrow (
 {
   return
     TAO::Narrow_Utils<ServerInformationIterator>::narrow (
+        _tao_objref,
+        "IDL:ImplementationRepository/ServerInformationIterator:1.0",
+        ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function_pointer
+        ACE_ENV_ARG_PARAMETER
+      );
+}
+
+ImplementationRepository::ServerInformationIterator_ptr
+ImplementationRepository::ServerInformationIterator::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL
+  )
+{
+  return
+    TAO::Narrow_Utils<ServerInformationIterator>::unchecked_narrow (
         _tao_objref,
         "IDL:ImplementationRepository/ServerInformationIterator:1.0",
         ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function_pointer
@@ -3036,7 +3098,7 @@ ImplementationRepository::ServerInformationIterator::marshal (TAO_OutputCDR &cdr
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[] =
 {
@@ -3082,7 +3144,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3137,7 +3199,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3222,7 +3284,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3307,7 +3369,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_exception/any_op_cs.cpp:50
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3392,7 +3454,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -3450,7 +3512,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -3508,7 +3570,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_enum/any_op_cs.cpp:52
+// be\be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -3536,7 +3598,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -3594,7 +3656,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -3652,7 +3714,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -3710,7 +3772,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3765,7 +3827,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -3820,7 +3882,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/cdr_op_cs.cpp:63
+// be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -3856,7 +3918,131 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_exception/cdr_op_cs.cpp:60
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const ImplementationRepository::AlreadyRegistered &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    ImplementationRepository::AlreadyRegistered&
+  )
+{
+  return 1;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_exception/cdr_op_cs.cpp:60
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const ImplementationRepository::CannotActivate &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason.in ())
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    ImplementationRepository::CannotActivate &_tao_aggregate
+  )
+{
+  // Demarshal the members.
+  if (
+    (strm >> _tao_aggregate.reason.out ())
+  )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_exception/cdr_op_cs.cpp:60
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const ImplementationRepository::NotFound &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    ImplementationRepository::NotFound&
+  )
+{
+  return 1;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const ImplementationRepository::EnvironmentVariable &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.name.in ()) &&
+    (strm << _tao_aggregate.value.in ());
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    ImplementationRepository::EnvironmentVariable &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.name.out ()) &&
+    (strm >> _tao_aggregate.value.out ());
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_ImplementationRepository_EnvironmentList_CPP_
 #define _TAO_CDR_OP_ImplementationRepository_EnvironmentList_CPP_
@@ -3928,7 +4114,85 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_ImplementationRepository_EnvironmentList_CPP_ */
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_enum/cdr_op_cs.cpp:51
+
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, const ImplementationRepository::ActivationMode &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = _tao_enumval;
+  return strm << _tao_temp;
+}
+
+CORBA::Boolean operator>> (TAO_InputCDR &strm, ImplementationRepository::ActivationMode &_tao_enumval)
+{
+  CORBA::ULong _tao_temp = 0;
+  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  
+  if (_tao_result == 1)
+    {
+      _tao_enumval = ACE_static_cast (ImplementationRepository::ActivationMode, _tao_temp);
+    }
+  
+  return _tao_result;
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const ImplementationRepository::StartupOptions &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.command_line.in ()) &&
+    (strm << _tao_aggregate.environment) &&
+    (strm << _tao_aggregate.working_directory.in ()) &&
+    (strm << _tao_aggregate.activation) &&
+    (strm << _tao_aggregate.activator.in ());
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    ImplementationRepository::StartupOptions &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.command_line.out ()) &&
+    (strm >> _tao_aggregate.environment) &&
+    (strm >> _tao_aggregate.working_directory.out ()) &&
+    (strm >> _tao_aggregate.activation) &&
+    (strm >> _tao_aggregate.activator.out ());
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const ImplementationRepository::ServerInformation &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.logical_server.in ()) &&
+    (strm << _tao_aggregate.server.in ()) &&
+    (strm << _tao_aggregate.startup) &&
+    (strm << _tao_aggregate.location.in ());
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    ImplementationRepository::ServerInformation &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.logical_server.out ()) &&
+    (strm >> _tao_aggregate.server.out ()) &&
+    (strm >> _tao_aggregate.startup) &&
+    (strm >> _tao_aggregate.location.out ());
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_ImplementationRepository_ServerInformationList_CPP_
 #define _TAO_CDR_OP_ImplementationRepository_ServerInformationList_CPP_
@@ -4000,7 +4264,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_CPP_ */
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/cdr_op_cs.cpp:63
+// be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -4036,7 +4300,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_interface/cdr_op_cs.cpp:63
+// be\be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -4072,7 +4336,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\build\vc71\tao\tao_idl\be\be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

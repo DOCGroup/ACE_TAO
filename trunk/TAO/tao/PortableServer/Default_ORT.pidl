@@ -10,7 +10,7 @@
  * command:
  *
  *   tao_idl.exe
- *        -o orig -Ge 1 -GT
+ *        -o orig -Ge 1 -GT -Sc
  *        -I../..
  *        -Wb,export_macro=TAO_PortableServer_Export \
  *        -Wb,export_include="portableserver_export.h" \
@@ -43,7 +43,7 @@
 module TAO_Default_ORT
 {
   valuetype ObjectReferenceTemplate
-    : PortableInterceptor::ObjectReferenceTemplate 
+    : PortableInterceptor::ObjectReferenceTemplate
   {
   };
 };
