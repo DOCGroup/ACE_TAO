@@ -1,3 +1,15 @@
+Sat Mar 27 15:29:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tests/Multicast_Test_IPV6.cpp (leave): Replaced
+
+          size_t size = 0;
+
+          with
+
+          size_t size = this->address_vec_.size ();
+
+          Thanks to Johnny Willemsen for reporting this!
+
 Fri Mar 26 14:15:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/idl_compiler.mpt:
