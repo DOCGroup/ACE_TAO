@@ -1,3 +1,20 @@
+Wed Dec 08 19:53:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/MessagingS.h (SyncScopePolicy::synchronization):
+	* tao/TAOS.h (BufferingConstraintPolicy::buffering_constraint):
+
+	  Hacky TAO extension to bypass the call to
+	  CORBA::Environment::default_environment () since this method
+	  will never raise exceptions.
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+
+	  Fixed include and library paths.
+
+	* version_tests.dsw: Added new performance test
+	  RTCorba/Oneways/Reliable.
+
 Wed Dec  8 15:03:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Invocation.{h,i,cpp}:
