@@ -136,6 +136,7 @@ int
 Peer_Router_Context::make_svc_handler (Peer_Handler *&sh)
 { 
   ACE_NEW_RETURN (sh, Peer_Handler (this), -1);
+  return 0;
 }
 
 Peer_Handler::Peer_Handler (Peer_Router_Context *prc)
