@@ -27,6 +27,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_Endpoint;
+class TAO_DIOP_Endpoint;
+
 // ****************************************************************
 
 /**
@@ -82,6 +85,11 @@ protected:
 
   /// Do we need to use a GIOP_Lite for sending messages?
   CORBA::Boolean lite_flag_;
+
+private:
+
+  /// Return the remote endpoint, a helper function
+  TAO_DIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
   // @@ Michael: UDP Addition

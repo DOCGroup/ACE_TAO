@@ -34,6 +34,9 @@
 #include "tao/Connector_Impl.h"
 
 
+class TAO_UIOP_Endpoint;
+class TAO_Endpoint;
+
 /**
  * @class TAO_UIOP_Connector
  *
@@ -105,6 +108,11 @@ protected:
   /// initializes <uiop_properties_>.
   int init_uiop_properties (void);
   //@}
+
+private:
+
+  /// Return the remote endpoint, a helper function
+  TAO_UIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
 

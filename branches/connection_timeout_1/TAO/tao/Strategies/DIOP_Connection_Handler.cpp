@@ -51,7 +51,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
           TAO_DIOP_Transport(this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
-  this->transport(specific_transport);
+  this->transport (specific_transport);
   TAO_Transport::release (specific_transport);
 }
 
@@ -121,6 +121,8 @@ TAO_DIOP_Connection_Handler::open (void*)
 
   // Set the id in the transport now that we're active.
   this->transport ()->id ((int) this->get_handle ());
+
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
   return 0;
 }
@@ -236,7 +238,7 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
-    this->handle_close_i ();
+    this->decr_refcount ();
 
   return 0;
 }
@@ -374,16 +376,18 @@ TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE)
   // The upcall is done. Bump down the reference count
   long upcalls = this->decr_pending_upcalls ();
 
-  ACE_ASSERT (upcalls >= 0);
-
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
     {
-      this->handle_close_i ();
+      this->decr_refcount ();
 
       // As we have already performed the handle closing we dont want
       // to return a  -1. Doing so would make the reactor call
       // handle_close () which could be harmful.
+      retval = 0;
+    }
+  else if (upcalls < 0)
+    {
       retval = 0;
     }
 

@@ -47,8 +47,6 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   TAO_Transport::release (this->transport_);
 
   delete this->pending_upcall_lock_;
-
-  cout << " Amba I am going " << endl;
 }
 
 
