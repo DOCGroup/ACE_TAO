@@ -1,3 +1,20 @@
+Thu Mar 23 04:31:50 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Reactor.i (register_handler): There was a very subtle bug in
+	  all versions of <register_handler>.  The problem was that once
+	  the <event_handler> has been successfully registered with the
+	  Reactor, it is available for processing events.  In the problem
+	  case, input arrived from the client, the handler handled it, and
+	  eventually closed down.  All this happened in the other thread
+	  running the Reactor, and all before this line got executed:
+
+	      event_handler->reactor (this);
+
+	  By the time this thread came around to set the <reactor>, the
+	  <event_handler> had packed up and gone home. The fix is to set
+	  the <reactor> before registering the <event_handler> with the
+	  <reactor>.  Thanks to Steve Huston for report this bug.
+
 Wed Mar 22 12:01:22 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/NT_Service.{h i cpp}: Added support for operating on services
@@ -25,7 +42,7 @@ Wed Mar 22 09:24:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  instantiations from the end of the file to the top of the
 	  file. Thanks to Dr.Levine for helping me fix this and thanks to
 	  Manuel Benche <mbenche@jazz.cs.utsa.edu> for reporting this
-	  problem. 
+	  problem.
 
 Wed Mar 22 09:16:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
