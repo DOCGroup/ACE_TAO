@@ -4700,23 +4700,8 @@ public:
                        size_t nelems,
                        FILE *fp);
 
-#if defined (feof)
-#undef feof
-#endif /* feof */
-  static int feof (FILE *fp);
-
-#if defined (ferror)
-#undef ferror
-#endif /* ferror */
-  static int ferror (FILE *fp);
-
   static int fgetc (FILE* fp);
   static void clearerr (FILE* fp);
-
-#if defined (ungetc)
-#undef ungetc
-#endif /* ungetc */
-  static int ungetc (int c, FILE* fp);
 
 #if defined (ACE_HAS_WCHAR)
   static wint_t fgetwc (FILE* fp);

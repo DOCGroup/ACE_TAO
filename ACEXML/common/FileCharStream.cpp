@@ -59,7 +59,7 @@ int
 ACEXML_FileCharStream::get (ACEXML_Char& ch)
 {
   ch = (ACEXML_Char) ACE_OS::fgetc (this->infile_);
-  return (ACE_OS::feof(this->infile_) ? -1 : 0);
+  return (::feof(this->infile_) ? -1 : 0);
 }
 
 int
@@ -73,6 +73,6 @@ int
 ACEXML_FileCharStream::peek (void)
 {
   ACEXML_Char ch = ACE_OS::fgetc (this->infile_);
-  ACE_OS::ungetc (ch, this->infile_);
+  ::ungetc (ch, this->infile_);
   return ch;
 }
