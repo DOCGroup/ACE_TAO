@@ -625,7 +625,8 @@ class ACE_Export ACE_Event
   //
   // = DESCRIPTION
   //     Portable implementation of an Event mechanism, which is
-  //     native to Win32, but must be emulated on UNIX.
+  //     native to Win32, but must be emulated on UNIX.  Note that
+  //     this only provides <USYNC_PROCESS> support on Win32 machines.
 public:
   ACE_Event (int manual_reset = 0,
              int initial_state = 0,
@@ -715,7 +716,8 @@ class ACE_Export ACE_Manual_Event : public ACE_Event
   //
   // = DESCRIPTION
   //     Specialization of Event mechanism which wakes up all waiting
-  //     threads on signal()
+  //     threads on <signal>.  Note that this only provides
+  //     <USYNC_PROCESS> support on Win32 machines. 
 public:
   ACE_Manual_Event (int initial_state = 0,
                     int type = USYNC_THREAD,
@@ -740,7 +742,8 @@ class ACE_Export ACE_Auto_Event : public ACE_Event
   //
   // = DESCRIPTION
   //     Specialization of Event mechanism which wakes up one waiting
-  //     thread on signal()
+  //     thread on <signal>.  Note that this only provides
+  //     <USYNC_PROCESS> support on Win32 machines.
 public:
   ACE_Auto_Event (int initial_state = 0,
                   int type = USYNC_THREAD,
