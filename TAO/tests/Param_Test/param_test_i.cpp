@@ -659,7 +659,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   else if (a1 >>= fixed_structure)
     {
       if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG, "Received Fixed_Struct\n"));
+        ACE_DEBUG ((LM_DEBUG, "Received Fixed_Struct\n"));
     }
   else
     {
