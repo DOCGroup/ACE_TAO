@@ -133,10 +133,6 @@ protected:
   CORBA::ULong count_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "SCIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_SCIOP == 1 */
 
 #include /**/ "ace/post.h"

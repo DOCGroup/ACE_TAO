@@ -18,10 +18,6 @@ ACE_RCSID (Strategies,
            UIOP_Profile,
            "$Id$")
 
-#if !defined (__ACE_INLINE__)
-# include "UIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 static const char prefix_[] = "uiop";
 
 const char TAO_UIOP_Profile::object_key_delimiter_ = '|';

@@ -16,10 +16,6 @@ ACE_RCSID (Strategies,
            SHMIOP_Profile,
            "$Id$")
 
-#if !defined (__ACE_INLINE__)
-# include "SHMIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "shmiop";
@@ -513,7 +509,5 @@ TAO_SHMIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
-
-
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

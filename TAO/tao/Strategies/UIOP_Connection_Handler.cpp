@@ -19,11 +19,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
 
-#if !defined (__ACE_INLINE__)
-# include "UIOP_Connection_Handler.inl"
-#endif /* ! __ACE_INLINE__ */
-
-
 ACE_RCSID (Strategies,
            UIOP_Connection_Handler,
            "$Id$")

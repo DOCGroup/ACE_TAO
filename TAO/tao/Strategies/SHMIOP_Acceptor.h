@@ -148,10 +148,6 @@ private:
   CORBA::Boolean lite_flag_;
 };
 
-#if defined(__ACE_INLINE__)
-#include "SHMIOP_Acceptor.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #include /**/ "ace/post.h"

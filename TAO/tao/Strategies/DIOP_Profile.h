@@ -122,10 +122,6 @@ protected:
   CORBA::ULong count_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "DIOP_Profile.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include /**/ "ace/post.h"

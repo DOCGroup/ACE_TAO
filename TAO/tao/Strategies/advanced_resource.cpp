@@ -2,10 +2,6 @@
 
 #include "advanced_resource.h"
 
-#if !defined (__ACE_INLINE__)
-# include "advanced_resource.i"
-#endif /* ! __ACE_INLINE__ */
-
 #include "UIOP_Factory.h"
 #include "SHMIOP_Factory.h"
 #include "DIOP_Factory.h"

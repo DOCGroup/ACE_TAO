@@ -1995,26 +1995,11 @@ nobase_include_HEADERS += \
   Strategies/strategies_export.h \
   Strategies/uiop_endpoints.h \
   Strategies/DIOP_Acceptor.i \
-  Strategies/DIOP_Connection_Handler.i \
   Strategies/DIOP_Endpoint.i \
-  Strategies/DIOP_Profile.i \
-  Strategies/DIOP_Transport.i \
   Strategies/LF_Strategy_Null.inl \
   Strategies/SCIOP_Acceptor.i \
-  Strategies/SCIOP_Connection_Handler.i \
   Strategies/SCIOP_Endpoint.i \
-  Strategies/SCIOP_Profile.i \
-  Strategies/SCIOP_Transport.i \
-  Strategies/SHMIOP_Acceptor.i \
-  Strategies/SHMIOP_Connection_Handler.inl \
   Strategies/SHMIOP_Endpoint.i \
-  Strategies/SHMIOP_Profile.i \
-  Strategies/SHMIOP_Transport.i \
-  Strategies/UIOP_Connection_Handler.inl \
-  Strategies/UIOP_Endpoint.i \
-  Strategies/UIOP_Profile.i \
-  Strategies/UIOP_Transport.i \
-  Strategies/advanced_resource.i \
   Strategies/sciop_endpoints.i \
   Strategies/uiop_endpoints.i \
   Strategies/sciop_endpoints.pidl \
