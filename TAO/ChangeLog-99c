@@ -1,6 +1,18 @@
+Sat Oct 30 21:40:48 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Removed ACE_IOSTREAM_TYPE and replaced
+	  code with either FILE* or ofstream* until I find a macro
+	  that will properly represnt either an ofstream* or FILE*.
+	  When (ACE_LACKS_IOSTREAM_TOTALLY) is defined, it produces a FILE*
+	  that works well with open(FILE*...), but if it is not defined,
+	  it returns an iostream which does not work with
+	  ->open (filename,...,..) For now, depending on what is defined,
+	  we create an explicit FILE* or ofstream* to redirect ACE_DEBUG
+	  and ACE_ERROR to.
+
 Sat Oct 30 19:32:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Load_Balancing_persistent/README: 
+	* examples/Load_Balancing_persistent/README:
 	* examples/Load_Balancing_persistent/Identity_Client.cpp:
 	* examples/Load_Balancing_persistent/Identity_Client.h
 	* examples/Load_Balancing_persistent/Identity_Server.cpp:
@@ -17,7 +29,7 @@ Sat Oct 30 19:32:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  demonstrates how to make a service persistent. This is a simple
 	  extension of the Load_Balancing_Service in
 	  $TAO_ROOT/Load_Balancing. Please refer to the README for more
-	  details. 
+	  details.
 
 Sat Oct 30 12:16:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

@@ -834,42 +834,40 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBLogFile")))
         {
-
-          // USAGE: -ORBLogFile <filename> <a|w>
-          // I actually accept anything that starts with
-          // an 'a' ie: append
+          // redirect all ACE_DEUBG and ACE_ERROR output to a file
+          // USAGE: -ORBLogFile <filename>
+          // default: append
 
           ASYS_TCHAR* file_name = current_arg;
           arg_shifter.consume_arg ();
 
-          ACE_OSTREAM_TYPE* output_stream;
+          //
+          // would rather use ACE_OSTREAM_TYPE out here..
+          // but need ACE_FSTREAM_TYPE to call ->open(...)
+          // and haven't found such a macro to rep FILE* and/or fstream*
+          //
 
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-          output_stream = ACE_OS::fopen (file_name, "a");
+          FILE* output_stream = ACE_OS::fopen (file_name, "a");
 
           ACE_LOG_MSG->msg_ostream (output_stream);
 
 #else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-          //
-          // won't compile on linux ???
-          //
-          // output_stream->open (file_name, flags, 0660);
-          //
-          // forced to use constructor with file name
-          //
+          ofstream* output_stream;
 
           ACE_NEW_RETURN
             (output_stream,
-             ofstream(file_name, ios::out | ios::app, 0660),
+             ofstream (),
              1);
 
           //
-          // note: we are allocating dynamic memory here....
-          // but I assume it will stay persistent for the life
-          // of the program.
+          // note: we are allocating dynamic memory here....but
+          // I assume it will persist for the life of the program
           //
+
+          output_stream->open (file_name, ios::out | ios::app, 0660);
 
           if (!output_stream->bad ())
             {
