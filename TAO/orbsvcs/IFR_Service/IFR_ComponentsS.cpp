@@ -54,9 +54,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:50 */
+/* starting time is 23:08:23 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ComponentRepository_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ComponentRepository_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_ComponentRepository_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -199,7 +199,7 @@ TAO_IR_ComponentRepository_Perfect_Hash_OpTable::lookup (const char *str, unsign
     }
   return 0;
 }
-/* ending time is 20:42:50 */
+/* ending time is 23:08:24 */
 static TAO_IR_ComponentRepository_Perfect_Hash_OpTable tao_IR_ComponentRepository_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -777,9 +777,6 @@ void POA_IR::ComponentRepository::create_component_skel (
   POA_IR::ComponentRepository *_tao_impl =
     ACE_static_cast (POA_IR::ComponentRepository *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::ComponentDef_var _tao_retval;
   CORBA::String_var id;
   CORBA::String_var name;
@@ -797,6 +794,9 @@ void POA_IR::ComponentRepository::create_component_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -869,6 +869,9 @@ void POA_IR::ComponentRepository::create_component_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -883,9 +886,6 @@ void POA_IR::ComponentRepository::create_home_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::ComponentRepository *_tao_impl =
     ACE_static_cast (POA_IR::ComponentRepository *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::HomeDef_var _tao_retval;
   CORBA::String_var id;
@@ -906,6 +906,9 @@ void POA_IR::ComponentRepository::create_home_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -980,6 +983,9 @@ void POA_IR::ComponentRepository::create_home_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -1152,9 +1158,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:50 */
+/* starting time is 23:08:24 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ProvidesDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ProvidesDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_ProvidesDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -1280,7 +1286,7 @@ TAO_IR_ProvidesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
     }
   return 0;
 }
-/* ending time is 20:42:50 */
+/* ending time is 23:08:24 */
 static TAO_IR_ProvidesDef_Perfect_Hash_OpTable tao_IR_ProvidesDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -1589,12 +1595,12 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
   POA_IR::ProvidesDef *_tao_impl =
     ACE_static_cast (POA_IR::ProvidesDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA_InterfaceDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -1657,6 +1663,9 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -1826,9 +1835,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:50 */
+/* starting time is 23:08:25 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_UsesDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_UsesDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_UsesDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -1955,7 +1964,7 @@ TAO_IR_UsesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
     }
   return 0;
 }
-/* ending time is 20:42:50 */
+/* ending time is 23:08:25 */
 static TAO_IR_UsesDef_Perfect_Hash_OpTable tao_IR_UsesDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -2420,12 +2429,12 @@ void POA_IR::UsesDef::_get_interface_type_skel (
   POA_IR::UsesDef *_tao_impl =
     ACE_static_cast (POA_IR::UsesDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA_InterfaceDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -2488,6 +2497,9 @@ void POA_IR::UsesDef::_get_interface_type_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -2502,12 +2514,12 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
   POA_IR::UsesDef *_tao_impl =
     ACE_static_cast (POA_IR::UsesDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::Boolean _tao_retval = 0;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -2569,6 +2581,9 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -2738,9 +2753,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:50 */
+/* starting time is 23:08:25 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_EventDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_EventDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_EventDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -2867,7 +2882,7 @@ TAO_IR_EventDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
     }
   return 0;
 }
-/* ending time is 20:42:50 */
+/* ending time is 23:08:25 */
 static TAO_IR_EventDef_Perfect_Hash_OpTable tao_IR_EventDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -3348,9 +3363,6 @@ void POA_IR::EventDef::is_a_skel (
   POA_IR::EventDef *_tao_impl =
     ACE_static_cast (POA_IR::EventDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::Boolean _tao_retval = 0;
   CORBA::String_var event_id;
   if (!(
@@ -3360,6 +3372,9 @@ void POA_IR::EventDef::is_a_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3423,6 +3438,9 @@ void POA_IR::EventDef::is_a_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3437,12 +3455,12 @@ void POA_IR::EventDef::_get_event_skel (
   POA_IR::EventDef *_tao_impl =
     ACE_static_cast (POA_IR::EventDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA_ValueDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3505,6 +3523,9 @@ void POA_IR::EventDef::_get_event_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3674,9 +3695,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:50 */
+/* starting time is 23:08:26 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_EmitsDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_EmitsDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_EmitsDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -3803,7 +3824,7 @@ TAO_IR_EmitsDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
     }
   return 0;
 }
-/* ending time is 20:42:50 */
+/* ending time is 23:08:26 */
 static TAO_IR_EmitsDef_Perfect_Hash_OpTable tao_IR_EmitsDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -4115,9 +4136,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:50 */
+/* starting time is 23:08:26 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_PublishesDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_PublishesDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_PublishesDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -4244,7 +4265,7 @@ TAO_IR_PublishesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
     }
   return 0;
 }
-/* ending time is 20:42:50 */
+/* ending time is 23:08:26 */
 static TAO_IR_PublishesDef_Perfect_Hash_OpTable tao_IR_PublishesDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -4556,9 +4577,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:51 */
+/* starting time is 23:08:27 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ConsumesDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ConsumesDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_ConsumesDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -4685,7 +4706,7 @@ TAO_IR_ConsumesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
     }
   return 0;
 }
-/* ending time is 20:42:51 */
+/* ending time is 23:08:27 */
 static TAO_IR_ConsumesDef_Perfect_Hash_OpTable tao_IR_ConsumesDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -4997,9 +5018,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:51 */
+/* starting time is 23:08:27 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ComponentDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_ComponentDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_ComponentDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -5167,7 +5188,7 @@ TAO_IR_ComponentDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
     }
   return 0;
 }
-/* ending time is 20:42:51 */
+/* ending time is 23:08:28 */
 static TAO_IR_ComponentDef_Perfect_Hash_OpTable tao_IR_ComponentDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -7728,12 +7749,12 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA_InterfaceDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -7796,6 +7817,9 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -7811,9 +7835,6 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
     CORBA_InterfaceDefSeq supported_interfaces;
   if (!(
@@ -7823,6 +7844,9 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -7877,6 +7901,9 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -7891,12 +7918,12 @@ void POA_IR::ComponentDef::_get_base_component_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::ComponentDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -7959,6 +7986,9 @@ void POA_IR::ComponentDef::_get_base_component_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -7973,12 +8003,12 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::ProvidesDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8041,6 +8071,9 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8055,12 +8088,12 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::UsesDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8123,6 +8156,9 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8137,12 +8173,12 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::EmitsDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8205,6 +8241,9 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8219,12 +8258,12 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::PublishesDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8287,6 +8326,9 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8301,12 +8343,12 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::ConsumesDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8369,6 +8411,9 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8383,12 +8428,12 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::Boolean _tao_retval = 0;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8450,6 +8495,9 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8464,9 +8512,6 @@ void POA_IR::ComponentDef::create_provides_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::ProvidesDef_var _tao_retval;
   CORBA::String_var id;
@@ -8483,6 +8528,9 @@ void POA_IR::ComponentDef::create_provides_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8553,6 +8601,9 @@ void POA_IR::ComponentDef::create_provides_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8567,9 +8618,6 @@ void POA_IR::ComponentDef::create_uses_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::UsesDef_var _tao_retval;
   CORBA::String_var id;
@@ -8588,6 +8636,9 @@ void POA_IR::ComponentDef::create_uses_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8660,6 +8711,9 @@ void POA_IR::ComponentDef::create_uses_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8674,9 +8728,6 @@ void POA_IR::ComponentDef::create_emits_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::EmitsDef_var _tao_retval;
   CORBA::String_var id;
@@ -8693,6 +8744,9 @@ void POA_IR::ComponentDef::create_emits_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8763,6 +8817,9 @@ void POA_IR::ComponentDef::create_emits_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8777,9 +8834,6 @@ void POA_IR::ComponentDef::create_publishes_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::PublishesDef_var _tao_retval;
   CORBA::String_var id;
@@ -8796,6 +8850,9 @@ void POA_IR::ComponentDef::create_publishes_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8866,6 +8923,9 @@ void POA_IR::ComponentDef::create_publishes_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -8880,9 +8940,6 @@ void POA_IR::ComponentDef::create_consumes_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::ComponentDef *_tao_impl =
     ACE_static_cast (POA_IR::ComponentDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::ConsumesDef_var _tao_retval;
   CORBA::String_var id;
@@ -8899,6 +8956,9 @@ void POA_IR::ComponentDef::create_consumes_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -8969,6 +9029,9 @@ void POA_IR::ComponentDef::create_consumes_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -9147,9 +9210,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:51 */
+/* starting time is 23:08:30 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -9276,7 +9339,7 @@ TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
     }
   return 0;
 }
-/* ending time is 20:42:51 */
+/* ending time is 23:08:30 */
 static TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable tao_IR_PrimaryKeyDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -9757,9 +9820,6 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
   POA_IR::PrimaryKeyDef *_tao_impl =
     ACE_static_cast (POA_IR::PrimaryKeyDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::Boolean _tao_retval = 0;
   CORBA::String_var primary_key_id;
   if (!(
@@ -9769,6 +9829,9 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -9832,6 +9895,9 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -9846,12 +9912,12 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
   POA_IR::PrimaryKeyDef *_tao_impl =
     ACE_static_cast (POA_IR::PrimaryKeyDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA_ValueDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -9914,6 +9980,9 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -10083,9 +10152,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:51 */
+/* starting time is 23:08:30 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_FactoryDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_FactoryDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_FactoryDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -10272,7 +10341,7 @@ TAO_IR_FactoryDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
     }
   return 0;
 }
-/* ending time is 20:42:51 */
+/* ending time is 23:08:30 */
 static TAO_IR_FactoryDef_Perfect_Hash_OpTable tao_IR_FactoryDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -10584,9 +10653,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:51 */
+/* starting time is 23:08:31 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_FinderDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_FinderDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_FinderDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -10773,7 +10842,7 @@ TAO_IR_FinderDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
     }
   return 0;
 }
-/* ending time is 20:42:51 */
+/* ending time is 23:08:31 */
 static TAO_IR_FinderDef_Perfect_Hash_OpTable tao_IR_FinderDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -11085,9 +11154,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 20:42:51 */
+/* starting time is 23:08:31 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_HomeDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_IR_HomeDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_IR_HomeDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -11249,7 +11318,7 @@ TAO_IR_HomeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
     }
   return 0;
 }
-/* ending time is 20:42:51 */
+/* ending time is 23:08:31 */
 static TAO_IR_HomeDef_Perfect_Hash_OpTable tao_IR_HomeDef_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -12953,12 +13022,12 @@ void POA_IR::HomeDef::_get_base_home_skel (
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::HomeDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13021,6 +13090,9 @@ void POA_IR::HomeDef::_get_base_home_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13035,12 +13107,12 @@ void POA_IR::HomeDef::_get_managed_component_skel (
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::ComponentDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13103,6 +13175,9 @@ void POA_IR::HomeDef::_get_managed_component_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13117,12 +13192,12 @@ void POA_IR::HomeDef::_get_primary_key_skel (
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::PrimaryKeyDef_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13185,6 +13260,9 @@ void POA_IR::HomeDef::_get_primary_key_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13199,12 +13277,12 @@ void POA_IR::HomeDef::_get_factories_skel (
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::FactoryDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13267,6 +13345,9 @@ void POA_IR::HomeDef::_get_factories_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13281,12 +13362,12 @@ void POA_IR::HomeDef::_get_finders_skel (
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     IR::FinderDefSeq_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13349,6 +13430,9 @@ void POA_IR::HomeDef::_get_finders_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13363,12 +13447,12 @@ void POA_IR::HomeDef::_get_is_basic_skel (
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::Boolean _tao_retval = 0;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13430,6 +13514,9 @@ void POA_IR::HomeDef::_get_is_basic_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13444,9 +13531,6 @@ void POA_IR::HomeDef::create_primary_key_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::PrimaryKeyDef_var _tao_retval;
   CORBA::String_var id;
@@ -13463,6 +13547,9 @@ void POA_IR::HomeDef::create_primary_key_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13533,6 +13620,9 @@ void POA_IR::HomeDef::create_primary_key_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13547,9 +13637,6 @@ void POA_IR::HomeDef::create_factory_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::FactoryDef_var _tao_retval;
   CORBA::String_var id;
@@ -13568,6 +13655,9 @@ void POA_IR::HomeDef::create_factory_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13640,6 +13730,9 @@ void POA_IR::HomeDef::create_factory_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -13654,9 +13747,6 @@ void POA_IR::HomeDef::create_finder_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_IR::HomeDef *_tao_impl =
     ACE_static_cast (POA_IR::HomeDef *, _tao_object_reference);
-  
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
   
     IR::FinderDef_var _tao_retval;
   CORBA::String_var id;
@@ -13675,6 +13765,9 @@ void POA_IR::HomeDef::create_finder_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -13747,6 +13840,9 @@ void POA_IR::HomeDef::create_finder_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
