@@ -45,7 +45,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   ACE_INET_Addr addr;
   // do a getsockname () to get the address
-  if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
+  if (base_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return 0;
 
   // @@ we only make one for now
@@ -60,7 +60,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   ACE_NEW_RETURN (pfile,
                   TAO_IIOP_Profile (this->host_,
                                     this->port_,
-                                    key,
+                                    object_key,
                                     addr),
                   -1);
 
