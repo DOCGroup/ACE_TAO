@@ -306,7 +306,7 @@ Server_i::init (int argc,
       // Use the Naming Service Register the above implementation with the Naming Service.
       this->init_naming_service (command.get_argc(),
                                  command.get_ASCII_argv()
-                                 ACE_ENV_SINGLE_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
