@@ -279,13 +279,6 @@ public:
   // the CORBA semantics for memory managment, i.e. the user gains
   // ownership of the reference returned.
 
-private:
-  void init (int activate_threads);
-  // Factor out commonality in the constructor.
-
-  void cleanup_observers (void);
-  // Remove all the observers, this simplifies the shutdown process.
-
   struct Observer_Entry
   {
     // = TITLE
@@ -313,6 +306,12 @@ private:
   };
 
 private:
+  void init (int activate_threads);
+  // Factor out commonality in the constructor.
+
+  void cleanup_observers (void);
+  // Remove all the observers, this simplifies the shutdown process.
+
   ACE_RTU_Manager *rtu_manager_;
   // The RTU manager dude!
 

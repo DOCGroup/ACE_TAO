@@ -1,3 +1,10 @@
+Wed Feb 10 13:05:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h (pdf): Moved struct
+ 	  Observer_Entry into the public part of the class to avoid
+ 	  problems with the SGI compiler.  Thanks to Eric Mitchell
+ 	  <emitchell@altaira.com> for reporting this.
+
 Wed Feb 10 10:39:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Time_Service/IR_Helper.cpp: 
