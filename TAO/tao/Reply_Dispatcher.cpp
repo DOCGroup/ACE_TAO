@@ -2,9 +2,9 @@
 
 #include "tao/Reply_Dispatcher.h"
 
-#if defined(__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"
-#endif /* __ACE_INLINE__ */ 
+#endif /* __ACE_INLINE__ */
 
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
