@@ -1,3 +1,9 @@
+Fri Feb 20 16:40:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* apps/mkcsregdb/mkcsregdb.cpp:
+	  Fixed warning in BCB builds about comparing signed and unsigned
+	  values
+
 Fri Feb 20 07:51:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* etc/ace.doxygen:
@@ -34,7 +40,7 @@ Thu Feb 19 08:06:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	* ace/OS_NS_sys_stat.inl (lstat): Removed the ACE_WIN32
 	  branch since Windows doesn't support _lstat().  Thanks to
 	  Johnny Willemsen for this.
-  
+
 	* ace/config-win32-common.h: Added ACE_LACKS_LSTAT.  Thanks to
 	  Johnny Willemsen for this.
 
