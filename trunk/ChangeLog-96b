@@ -1,3 +1,20 @@
+Sat Nov  9 01:44:15 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Message_Queue: Added forward and reverse iterators to
+ 	  Message_Queue. Also, added typedefs to Message_Queue for
+ 	  ITERATOR, and REVERSE_ITERATOR. This makes the Queue like an STL
+ 	  collection and also makes it easier to use since you don't have
+ 	  to define types for the iterators. Please see
+ 	  test/Message_Queue_Test.cpp for an example.
+
+	* ace/Map_Manager: Added reverse iterator to Map_Manager. Also,
+ 	  added typedefs to Map_Manager for ENTRY, ITERATOR, and
+ 	  REVERSE_ITERATOR. This makes the Map more like an STL collection
+ 	  and also makes it easier to use since you don't have to define
+ 	  types for the iterators and the entry. Please see
+ 	  test/Map_Manager_Test.cpp for an example. Note that the new
+ 	  typedefs does not break existing code.
+
 Tue Nov  5 14:26:32 1996  David Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/wrapper_macros.GNU:  Changed LINK.{c,cc}
 	  commands to use LD instead of CXX.  Changed all platform
