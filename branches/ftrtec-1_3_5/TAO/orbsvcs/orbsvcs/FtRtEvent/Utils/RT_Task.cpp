@@ -5,7 +5,10 @@
 
 void RT_Task::set_current()
 {
-  if (ACE_OS::thr_setprio(ACE_SCHED_FIFO) == -1){
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+  long prio = ACE_Sched_Params::priority_max(ACE_SCHED_FIFO);
+  if (ACE_OS::thr_setprio(thr_handle, prio, ACE_SCHED_FIFO) == -1){
     ACE_DEBUG((LM_DEBUG, "Cannot set the thread to RT class\n"));
   }
 }
