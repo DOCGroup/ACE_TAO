@@ -95,40 +95,25 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       if (!obj2)			// null?
         return CORBA::string_copy ((CORBA::String) iiop_prefix);
 
-      char buf [BUFSIZ + 2];
+      CORBA::String_var key;
+      TAO_POA::encode_sequence_to_string (key.inout(),
+                                          obj2->profile.object_key);
 
-      ACE_OS::sprintf (buf, "%s%c.%c//%s:%d/", iiop_prefix,
+      u_int buflen = (ACE_OS::strlen (iiop_prefix) +
+                      1 /* major # */ + 1 /* minor # */ +
+                      ACE_OS::strlen (obj2->profile.host) +
+                      5 /* port number */ +
+                      ACE_OS::strlen (key) +
+                      1 /* zero terminator */);
+      CORBA::String buf = CORBA::string_alloc (buflen);
+
+      ACE_OS::sprintf (buf, "%s%c.%c//%s:%d/%s", iiop_prefix,
                        digits [obj2->profile.iiop_version.major],
                        digits [obj2->profile.iiop_version.minor],
-                       obj2->profile.host, obj2->profile.port);
+                       obj2->profile.host, obj2->profile.port,
+                       key.in ());
 
-      char *cp = ACE_OS::strchr (buf, 0);
-
-      for (u_int i = 0;
-	   cp < buf + BUFSIZ && i < obj2->profile.object_key.length ();
-	   i++)
-        {
-	  u_char byte = obj2->profile.object_key[i];
-          if (isascii (byte) && isprint (byte) && byte != '\\')
-            {
-              *cp++ = (char) byte;
-              continue;
-	    }
-
-          // NOTE: this could run two characters past &buf[BUFSIZ],
-          // which is why buf is exactly two characters bigger than
-          // that ... saves coding a test here.
-          *cp++ = '\\';
-          *cp++ = ACE::nibble2hex (byte & 0x0f);
-          *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
-	}
-      if (cp >= &buf [BUFSIZ])
-        {
-          env.exception (new CORBA_IMP_LIMIT (CORBA::COMPLETED_NO));
-          return 0;
-	}
-      *cp = 0;
-      return CORBA::string_copy ((CORBA::String) &buf[0]);
+      return buf;
     }
 }
 
@@ -270,51 +255,10 @@ iiop_string_to_object (CORBA::String string,
   data->profile.object_addr (0);
   string = ++cp;
 
-  // Parse the key ... it's ASCII plus hex escapes for everything
-  // nonprintable.  This assumes that printable ASCII is the common
-  // case ... but since stringification is uncommon, no big deal.
-
-  // @@ We copy the string into a buffer converting non-printables
-  // in '\0', in the next pass we remove them. This was the original
-  // algorithm, though I don't understand the motivation for it;
-  // finally we put the result into the object_key; I had to add a
-  // temporary buffer to do this, since the one in object_key is no
-  // longer available.
-  // (coryan).
-
-  char* buffer = CORBA::string_copy (string);
-
-  for (cp = buffer; *cp != 0; ++cp)
-    {
-      if (!isprint (*cp))
-	{
-	  *cp = 0;
-	}
-    }
-
-  string = buffer;
-  int length = ACE_OS::strlen (string);
-
-  // Strip out hex escapes and adjust the key's length appropriately.
-
-  while ((cp = ACE_OS::strchr ((char *) buffer, '\\')) != 0)
-    {
-      *cp = (CORBA::Char) (ACE::hex2byte ((char) cp [1]) << 4);
-      *cp |= (CORBA::Char) ACE::hex2byte ((char) cp [2]);
-      cp++;
-
-      size_t len = ACE_OS::strlen (cp);
-
-      ACE_OS::memcpy (cp, cp+2, len - 2);
-      length -= 2;
-    }
-
-  data->profile.object_key.length (length);
-  for (int i = 0; i < length; ++i)
-    {
-      data->profile.object_key[i] = string[i];
-    }
-
+  // Parse the object key
+  TAO_POA::decode_string_to_sequence (data->profile.object_key,
+                                      string);
+  
   // Return the objref.
   CORBA::Object_ptr obj;
 

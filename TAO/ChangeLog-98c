@@ -1,10 +1,32 @@
+Sun Feb 15 20:12:00 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.{h,cpp}: Heavily modified several routines to correct
+ 	problems with the notion of what, exactly, an object key really
+ 	is.  Some were treating it as simply an octet sequence, others as
+ 	a zero-terminated string (C-style), while others as a sequence of
+ 	octets which must be terminated by a zero.
+
+	Object keys and IDs are now stored canonically as opaque octet
+ 	sequences, and two new conversion routines
+ 	(encode_sequence_to_string and decode_string_to_sequence) have
+ 	been created to convert between these octet sequences and C-style
+ 	strings.
+
+	* tao/iioporb.cpp (object_to_string): Modified to utilize the new
+ 	encoding routines to convert from octet sequences to printable
+ 	strings.
+
+	* tao/{tao_internals,orbobj}.cpp: Added explicit inclusion of
+ 	Object_Manager.h.
+
 Sun Feb 15 16:15:49 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/Param_Test/options.cpp (parse_args): Changed the -f option to read
 	the servant-IOR from a file.
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the -f <cubit_factory_key> to -f <cubit_factory_ior_file>. Reads the ior from that file.
-	
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the -f
+ 	<cubit_factory_key> to -f <cubit_factory_ior_file>. Reads the ior
+ 	from that file.
 
 	* tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -o <ior_output_file> 
 	option to output the cubit factory ior to a file.
