@@ -5,6 +5,8 @@
 NAME = TAO_Strategies
 
 OBJFILES = \
+        $(OBJDIR)\GIOP_Message_NonReactive_Base.obj \
+        $(OBJDIR)\GIOP_Message_NonReactive_Handler.obj \
 	$(OBJDIR)\UIOP_Factory.obj \
 	$(OBJDIR)\UIOP_Lite_Factory.obj \
 	$(OBJDIR)\UIOP_Profile.obj \
