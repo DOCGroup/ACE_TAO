@@ -350,3 +350,15 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
   ACE_NOTREACHED (return 0);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Auto_Basic_Ptr<FactoryCosEventChannel_i>;
+template class auto_ptr<FactoryCosEventChannel_i>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Auto_Basic_Ptr<FactoryCosEventChannel_i>
+#pragma instantiate auto_ptr<FactoryCosEventChannel_i>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
