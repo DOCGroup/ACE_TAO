@@ -39,7 +39,7 @@ public:
   virtual int open (void);
   virtual int close (void);
 
-  operator ACE_SOCK_Stream &();
+  ACE_SOCK_Stream &peer (void);
   // Conversion operators.
 
 protected:

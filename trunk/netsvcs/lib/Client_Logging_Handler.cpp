@@ -20,7 +20,7 @@ class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<ACE_SOC
 public:
   // = Initialization and termination.
 
-  ACE_Client_Logging_Handler (const char rendezvous[]);
+  ACE_Client_Logging_Handler (const char rendezvous[] = 0);
   // Default constructor.
 
   virtual int open (void * = 0);
