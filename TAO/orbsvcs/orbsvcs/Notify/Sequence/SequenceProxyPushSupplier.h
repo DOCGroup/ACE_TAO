@@ -43,7 +43,7 @@ TAO_Notify_ProxySupplier_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
  *
  *
  */
-class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier 
+class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 {
   friend class TAO_Notify_Builder;
@@ -54,9 +54,6 @@ public:
 
   /// Destructor
   ~TAO_Notify_SequenceProxyPushSupplier ();
-
-  /// Destroy this object.
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
 
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
