@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project: taolib {
   sharedname = Alt_Resource_Factory
   dynamicflags = Alt_Resource_Factory_BUILD_DLL

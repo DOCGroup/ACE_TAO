@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(DsNotifyLogAdmin) : orbsvcslib, core, dseventlogadmin, notification, naming {
   sharedname   = TAO_DsNotifyLogAdmin
   idlflags    += -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log/notifylog_export.h

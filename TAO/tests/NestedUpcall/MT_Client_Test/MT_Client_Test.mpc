@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Nested Upcall Server): taoexe, portableserver {
   Source_Files {
     MT_Object_i.cpp

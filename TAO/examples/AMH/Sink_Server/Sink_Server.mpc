@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*st_server): taoexe, strategies, valuetype, amh, portableserver {
   Source_Files {
     st_server.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*security server): taoexe, portableserver, orbsvcsexe, security, ssl {
   Source_Files {
     Foo_i.cpp

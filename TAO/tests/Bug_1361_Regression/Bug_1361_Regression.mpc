@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoexe, messaging {
   Source_Files {
     Server_Thread_Pool.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*AMH server): taoexe, portableserver, strategies, valuetype, amh {
   Source_Files {
     Roundtrip.cpp

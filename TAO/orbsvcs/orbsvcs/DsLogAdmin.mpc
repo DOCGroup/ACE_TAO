@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(DsLogAdmin) : orbsvcslib, core, etcl, naming, svc_utils, dynamicany {
   sharedname   = TAO_DsLogAdmin
   idlflags    += -Wb,export_macro=TAO_Log_Export -Wb,export_include=Log/log_export.h

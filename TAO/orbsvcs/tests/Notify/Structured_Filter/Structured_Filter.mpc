@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Notify Structured Supplier): notifytest, naming {
   exename = Structured_Supplier
 

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*client) : taoexe, portableserver {
   requires += exceptions
   source_files {

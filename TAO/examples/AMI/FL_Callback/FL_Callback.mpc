@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*progress): taoexe, strategies, messaging, ami, portableserver {
   requires += fl_reactor
   Source_Files {

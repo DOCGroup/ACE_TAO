@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*server): orbsvcsexe, portablegroup, loadbalancing, naming, svc_utils {
   Source_Files {
 	server.cpp

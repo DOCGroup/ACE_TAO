@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Main): taoserver {
   exename = main
 

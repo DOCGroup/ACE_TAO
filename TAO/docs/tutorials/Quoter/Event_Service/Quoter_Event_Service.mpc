@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*client) : orbsvcsexe, portableserver, event, naming  {
   requires += exceptions
   source_files {

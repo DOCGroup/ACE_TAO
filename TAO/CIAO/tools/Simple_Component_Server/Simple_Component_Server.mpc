@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project (Simple_Server_Stub) : taolib_with_idl, ciao_client {
   sharedname  = CIAO_Simple_Server_Stub
   idlflags  += -Wb,stub_export_include=Simple_Server_Stub_Export.h -Wb,stub_export_macro=CIAO_SIMPLE_SERVER_STUB_Export

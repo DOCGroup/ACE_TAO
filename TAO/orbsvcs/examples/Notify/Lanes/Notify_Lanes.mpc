@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Supplier): notify, rtcorba, rtnotify, minimum_corba {
   exename = Supplier
   Source_Files {

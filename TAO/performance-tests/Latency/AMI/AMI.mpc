@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*latency server): messaging, taoexe, portableserver, strategies, ami {
   Source_Files {
     Roundtrip.cpp

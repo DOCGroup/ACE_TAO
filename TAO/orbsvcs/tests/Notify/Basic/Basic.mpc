@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Notify ConnectDisconnect): notifytest {
   Source_Files {
     ConnectDisconnect.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(IFR_Service) : orbsvcsexe, core, ifrservice, typecodefactory, svc_utils, ifr_client, iortable, portableserver, crosscompile {
   avoids   += minimum_corba
   exename  = IFR_Service

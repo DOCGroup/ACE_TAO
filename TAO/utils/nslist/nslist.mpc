@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(nsadd): namingexe {
   Source_Files {
     nsadd.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(PortableGroup) : orbsvcslib, core, naming, svc_utils, portableserver, messaging, iormanip {
   sharedname   = TAO_PortableGroup
   idlflags    += -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
   exename  = ECT_Supplier
   comps   += Naming RTOLDEvent

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming {
 
   Define_Custom(AMI_IDL) {

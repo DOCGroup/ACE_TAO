@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(CosLoadManager): namingexe, portableserver, core, iormanip, loadbalancing {
   requires += ami interceptors
   Source_Files {

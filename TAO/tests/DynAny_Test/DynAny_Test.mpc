@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Basic): taoexe, portableserver, dynamicany {
   exename  = basic_test
 

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*server): taoexe, portableserver {
   Source_Files {
     PP_Test_Server.cpp

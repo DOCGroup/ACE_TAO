@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*sequence server) : server, strategies {
   avoids += minimum_corba
 

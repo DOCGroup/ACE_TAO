@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoexe, portableserver {
   requires += interceptors
   Source_Files {
