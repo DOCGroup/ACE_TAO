@@ -4,6 +4,12 @@
 
 #include "Kokyu.h"
 #include "ace/Task.h"
+#include "ace/SString.h"
+#include "ace/Get_Opt.h"
+
+ACE_CString sched_policy_str = "fifo";
+
+int parse_args (int argc, char *argv[]);
 
 class MyCommand : public Kokyu::Dispatch_Command
 {
@@ -45,24 +51,52 @@ private:
 };
 
 
-int main (int,char**)
+int main (int argc, char** argv)
 {
   Kokyu::ConfigInfoSet config_info(3);
 
+  int  hi_prio, me_prio, lo_prio;
+  int sched_policy=ACE_SCHED_FIFO;
+
+  Kokyu::Dispatcher_Attributes attrs;
+
+  if (parse_args (argc, argv) == -1)
+    return 0;
+
+  if (ACE_OS::strcasecmp(sched_policy_str.c_str(), "fifo") == 0)
+    {
+      sched_policy = ACE_SCHED_FIFO;
+    }
+  else if (ACE_OS::strcasecmp(sched_policy_str.c_str(), "other") == 0)
+    {
+      sched_policy = ACE_SCHED_OTHER;
+    }
+  else if (ACE_OS::strcasecmp(sched_policy_str.c_str(), "rr") == 0)
+    {
+      sched_policy = ACE_SCHED_RR;
+    }
+
+  attrs.sched_policy (sched_policy);
+  hi_prio = ACE_Sched_Params::priority_max (sched_policy);
+  me_prio = ACE_Sched_Params::previous_priority (sched_policy, 
+                                                 hi_prio);
+  lo_prio = ACE_Sched_Params::previous_priority (sched_policy,
+                                                 me_prio);
+
   config_info[0].preemption_priority_ = 1;
-  config_info[0].thread_priority_ = 15;
+  config_info[0].thread_priority_ = hi_prio ;
   config_info[0].dispatching_type_ = Kokyu::FIFO_DISPATCHING;
 
   config_info[1].preemption_priority_ = 2;
-  config_info[1].thread_priority_ = 2;
+  config_info[1].thread_priority_ = me_prio;
   config_info[1].dispatching_type_ = Kokyu::FIFO_DISPATCHING;
 
   config_info[2].preemption_priority_ = 3;
-  config_info[2].thread_priority_ = 0;
+  config_info[2].thread_priority_ = lo_prio;
   config_info[2].dispatching_type_ = Kokyu::FIFO_DISPATCHING;
 
-  Kokyu::Dispatcher_Attributes attrs;
   attrs.config_info_set_ = config_info;
+
   ACE_DEBUG ((LM_DEBUG, "before create_dispatcher\n" ));
   auto_ptr<Kokyu::Dispatcher> 
     disp (Kokyu::Dispatcher_Factory::create_dispatcher (attrs));
@@ -86,5 +120,30 @@ int main (int,char**)
   disp->shutdown ();
 
   ACE_DEBUG ((LM_DEBUG, "after shutdown\n"));
+  return 0;
+}
+
+int parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "p:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'p':
+        sched_policy_str = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s %s"
+                           "\n",
+                           argv [0],
+                           "-p <fifo|rr|other>"),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
   return 0;
 }

@@ -49,14 +49,19 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
     {
       //ACE_DEBUG ((LM_DEBUG, "iter = %d\n", i));
       Dispatcher_Task* task=0;
-      ACE_NEW_RETURN (task, Dispatcher_Task (*config, ACE_Thread_Manager::instance ()), -1);
+      ACE_NEW_RETURN (task, 
+                      Dispatcher_Task (*config, 
+                                       ACE_Thread_Manager::instance()),
+                      -1);
       auto_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
       tasks_[i++] = tmp_task_auto_ptr;
-      //I couldn't use reset because MSVC++ auto_ptr does not have reset method.
+      //I couldn't use reset because MSVC6 auto_ptr does not have reset method.
       //So in configurations where the auto_ptr maps to the std::auto_ptr instead
       //of ACE auto_ptr, this would be a problem.
       //tasks_[i++].reset (task);
     }
+
+  thr_creation_flags_ = attrs.thread_creation_flags ();
 
   if (attrs.immediate_activation_ && !this->activated_)
     {
@@ -77,19 +82,16 @@ Default_Dispatcher_Impl::activate_i ()
 
   for(i=0; i<ntasks_; ++i)
     {
-      long flags = THR_NEW_LWP | THR_BOUND | THR_SCHED_FIFO | THR_JOINABLE;
-
       Priority_t priority =
         tasks_[i]->get_curr_config_info ().thread_priority_;
 
-      if (this->tasks_[i]->activate (flags, 1, 1, priority) == -1)
+      if (this->tasks_[i]->activate (this->thr_creation_flags_, 
+                                     1, 1, priority) == -1)
         {
-          flags = THR_BOUND | THR_JOINABLE;
-          priority = ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
-                                                     ACE_SCOPE_THREAD);
-          if (this->tasks_[i]->activate (flags, 1, 1, priority) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate queue %d", i));
+          ACE_ERROR_RETURN ((LM_ERROR,
+             ACE_TEXT ("EC (%P|%t) cannot activate queue.")
+             ACE_TEXT ("Need superuser privilege to run in RT class\n")),  
+             -1);
         }
     }
 
@@ -125,12 +127,10 @@ Default_Dispatcher_Impl::dispatch_i (const Dispatch_Command* cmd,
   Dispatcher_Task* task =
     find_task_with_preemption_prio (qos_info.preemption_priority_);
 
-  if (task != 0)
-    task->enqueue (cmd, qos_info);
-  else
-    tasks_[0]->enqueue (cmd, qos_info);
+  if (task == 0)
+    task = tasks_[0].get ();
 
-  return 0;
+  return task->enqueue (cmd, qos_info);
 }
 
 int

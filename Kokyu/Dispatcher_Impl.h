@@ -61,6 +61,8 @@ namespace Kokyu
     virtual int shutdown_i () =0;
     virtual int activate_i () =0;
 
+  protected:
+    int thr_creation_flags_;
   };
 } //end of namespace
 

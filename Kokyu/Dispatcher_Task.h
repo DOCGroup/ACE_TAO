@@ -66,6 +66,8 @@ public:
   Dispatcher_Task (const ConfigInfo& config_info,
                    ACE_Thread_Manager* thr_manager = 0);
 
+
+  ~Dispatcher_Task ();
   int initialize();
 
   int enqueue (const Dispatch_Command* cmd,
@@ -81,8 +83,11 @@ private:
   static int get_native_prio();
 
 private:
+  ConfigInfo curr_config_info_;
+
   /// An per-task allocator
   ACE_Allocator *allocator_;
+  int own_allocator_;
 
   /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
@@ -90,7 +95,6 @@ private:
   /// The queue
   ACE_Message_Queue<ACE_SYNCH>* the_queue_;
 
-  ConfigInfo curr_config_info_;
   ACE_Deadline_Message_Strategy deadline_msg_strategy_;
   ACE_Laxity_Message_Strategy laxity_msg_strategy_;
 };
