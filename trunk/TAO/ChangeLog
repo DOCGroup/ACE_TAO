@@ -1,3 +1,10 @@
+Tue Aug 31 14:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Updated some debug messages so that the formatting matches other
+          messages in TAO and when the log is read, it is clear where this
+          message is coming from.
+
 Tue Aug 31 09:06:40 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * interop-tests/wchar/interop_wchar_i.cpp:
