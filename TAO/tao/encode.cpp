@@ -707,11 +707,17 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
   // permissive as to send messages violating the interface spec
   // by having excessively long strings!
   CORBA::ULong bounds = tc->length (env);
-
-  if (env.exception () == 0)
+  if (str != 0)
     {
-      if (stream->write_string (str))
-        return CORBA::TypeCode::TRAVERSE_CONTINUE;
+      CORBA::ULong length = ACE_OS::strlen (str);
+      if (bounds == 0 || bounds >= length)
+	if (stream->write_string (length, str))
+	  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    }
+  else
+    {
+      if (stream->write_string (0, 0))
+	return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
@@ -1277,25 +1283,21 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
   // by having excessively long strings!
   CORBA::ULong bounds = tc->length (env);
 
-  if (env.exception () == 0)
+  if (str != 0)
     {
       // get the actual length of the string
       CORBA::ULong len = ACE_OS::wslen ((CORBA::WChar *) str);
 
       // if it is an unbounded string or if the length is less than the
       // bounds for an unbounded string
-      if ((bounds == 0) || (len <= bounds))
-        {
-          // Encode the string, followed by a NUL character.
-
-          for (continue_encoding = stream->write_ulong (len + 1);
-               continue_encoding != CORBA::B_FALSE && *str;
-               continue_encoding = stream->write_wchar (*str++))
-            continue;
-
-          stream->write_wchar (0);
-          return CORBA::TypeCode::TRAVERSE_CONTINUE;
-        }
+      if (bounds == 0 || len <= bounds)
+	if (stream->write_wstring (len, str))
+	  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    }
+  else
+    {
+      if (stream->write_wstring (0, 0))
+	return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   return CORBA::TypeCode::TRAVERSE_STOP;
 }

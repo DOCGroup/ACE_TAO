@@ -145,6 +145,19 @@ Driver::run (void)
         delete client;
       }
       break;
+    case Options::TEST_BOUNDED_STRING:
+      {
+        Param_Test_Client<Test_Bounded_String> *client = new
+          Param_Test_Client<Test_Bounded_String> (this->orb_.in (),
+						  this->objref_.in(),
+						  new Test_Bounded_String);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     case Options::TEST_FIXED_STRUCT:
       {
         Param_Test_Client<Test_Fixed_Struct> *client = new
@@ -404,6 +417,7 @@ Driver::run (void)
 template class ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class Param_Test_Client<Test_Short>;
 template class Param_Test_Client<Test_Unbounded_String>;
+template class Param_Test_Client<Test_Bounded_String>;
 template class Param_Test_Client<Test_Fixed_Struct>;
 template class Param_Test_Client<Test_String_Sequence>;
 template class Param_Test_Client<Test_Bounded_String_Sequence>;
@@ -426,6 +440,7 @@ template class Param_Test_Client<Test_Var_Array>;
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
+#pragma instantiate Param_Test_Client<Test_Bounded_String>
 #pragma instantiate Param_Test_Client<Test_Fixed_Struct>
 #pragma instantiate Param_Test_Client<Test_String_Sequence>
 #pragma instantiate Param_Test_Client<Test_Bounded_String_Sequence>

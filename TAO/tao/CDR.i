@@ -103,6 +103,22 @@ TAO_OutputCDR::write_longdouble (const CORBA::LongDouble &x)
 }
 
 ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_string (const CORBA::Char *x)
+{
+  if (x != 0)
+    return this->write_string (ACE_OS::strlen (x), x);
+  return this->write_string (0, 0);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_OutputCDR::write_wstring (const CORBA::WChar *x)
+{
+  if (x != 0)
+    return this->write_wstring (ACE_OS::wslen (x), x);
+  return this->write_wstring (0, 0);
+}
+
+ACE_INLINE CORBA_Boolean
 TAO_OutputCDR::write_char_array (const CORBA::Char* x,
 				 CORBA::ULong length)
 {

@@ -1,4 +1,4 @@
-// $Id
+// $Id$
 
 // ============================================================================
 //
@@ -42,6 +42,7 @@ public:
   CORBA::Double gen_double (void);
 #endif
   CORBA::String gen_string (void);
+  CORBA::String gen_string (int maxlength);
   const Param_Test::Fixed_Struct gen_fixed_struct (void);
 private:
   Param_Test::Fixed_Struct fixed_struct_;
