@@ -25,6 +25,8 @@ Mon Oct 13 15:41:32 1997  Steve Huston  <shuston@riverace.com>
 	  argument.  Timer_Queue_Adapters.h is the only user of the definition,
 	  and it was changed to not supply the template argument.
 
+	* tests/Conn_Test.h: Added #include "ace/SOCK_Stream.h"
+
 Mon Oct 13 14:10:30 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Priority_Reactor_Test.cpp: 
