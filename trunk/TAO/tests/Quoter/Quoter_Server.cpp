@@ -69,20 +69,28 @@ Quoter_Server::init (int argc,
                     char* argv[],
                     CORBA::Environment& env)
 {
-  //TAO_ORB_Manager::init();
+  if (this->orb_manager_.init (argc,
+                               argv,
+                               env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n", 
+                       "init"),
+                      -1);
 
-  // copy them, because parse_args expects them there
+  // Copy them, because parse_args expects them there.
   this->argc_ = argc;
   this->argv_ = argv;
 
   this->parse_args ();
 
-
-  // activate the object
+  // Activate the object.
   CORBA::String_var str  =
-    this->activate (&this->quoter_Factory_Impl_, env);
+    this->orb_manager_.activate (&this->quoter_Factory_Impl_,
+                                 env);
 
-  ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", str.in ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "The IOR is: <%s>\n",
+              str.in ()));
 
   if (this->ior_output_file_)
   {

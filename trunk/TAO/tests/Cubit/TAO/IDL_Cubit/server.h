@@ -73,7 +73,7 @@ private:
   // File to output the cubit factory IOR.
 
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager
+  // The ORB manager.
 
   TAO_Naming_Server my_name_server_;
   // An instance of the name server used for registering the factory

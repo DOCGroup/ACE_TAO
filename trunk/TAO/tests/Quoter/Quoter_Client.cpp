@@ -287,30 +287,30 @@ Quoter_Client::init (int argc, char **argv)
           if (naming_result == -1)
             return naming_result;
       }
-      else if (this->quoter_factory_key_ == 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                            "%s: no quoter factory key specified\n",
-                            this->argv_[0]),
-                           -1);
-      
-      
-        CORBA::Object_var factory_object = 
+      else
+        {
+          if (this->quoter_factory_key_ == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%s: no quoter factory key specified\n",
+                               this->argv_[0]),
+                              -1);
+
+          CORBA::Object_var factory_object = 
             this->orb_->string_to_object (this->quoter_factory_key_,
                                           TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+          TAO_CHECK_ENV;
       
-        this->factory_ = Stock::Quoter_Factory::_narrow (factory_object.in (), 
-                                                         TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+          this->factory_ = Stock::Quoter_Factory::_narrow (factory_object.in (), 
+                                                           TAO_TRY_ENV);
+          TAO_CHECK_ENV;
       
-        if (CORBA::is_nil (this->factory_.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,"invalid factory key <%s>\n",
-                                       this->quoter_factory_key_),
-                                       -1);
+          if (CORBA::is_nil (this->factory_.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,"invalid factory key <%s>\n",
+                                 this->quoter_factory_key_),
+                                -1);
+            }
         }
-      }
     
       ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
     

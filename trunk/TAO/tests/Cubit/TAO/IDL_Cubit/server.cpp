@@ -58,17 +58,21 @@ Cubit_Server::init (int argc,
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
-  this->orb_manager_.init_child_poa (argc,
-                                     argv,
-                                     "child_poa",
-                                     env);
+  if (this->orb_manager_.init_child_poa (argc,
+                                         argv,
+                                         "child_poa",
+                                         env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n", 
+                       "init_child_poa"),
+                      -1);
 
   TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
   this->parse_args ();
-  // ~~ check for the return value here
+  // @@ Check for the return value here.
 
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("factory",
@@ -80,9 +84,7 @@ Cubit_Server::init (int argc,
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
+      ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
 
