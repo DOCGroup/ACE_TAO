@@ -100,14 +100,13 @@ CFLAGS = $(WARNINGS_CFLAGS) -q -VP -Vx -a8 -b- -k $(DCFLAGS) \
 CPPFLAGS += #$(CFLAGS)
 CCFLAGS += $(CFLAGS)
 BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v
-BORINITOBJ = borinitso.o borinit.o crt1.o 
+BORINITOBJ = borinitso.o borinit.o crt1.o
 BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so libc.so libm.so libdl.so
 LIBS += $(BORINITOBJ) $(BORSHAREDOBJ)
- 
-PRELINK=
-SOFLAGS= -Tpd 
 
-SOLINK.cc = $(LD) -Tpd
+PRELINK=
+SOFLAGS= -Tpd $(BORLDFLAGS)
+
 LINK.cc = override
 LINK.cc.override = $(LD) $(LDFLAGS) $(BORINITOBJ) $(BORSHAREDOBJ) $(BORLDFLAGS) $(POSTLINK)
 
