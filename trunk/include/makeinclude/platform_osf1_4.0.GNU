@@ -40,7 +40,6 @@ endif # ! 6.0
 #### CXX_VER to CXX_5 either on the make command line, or by
 #### or by setting the CXX_VER environment variable to CXX_5.
 # WARNING_FLAGS +=
-#    9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
 #  174: expr_has_no_effect
 #  193: zero used for undefined preprocessing identifier
 #  236: controlling expression is constant
@@ -51,9 +50,15 @@ endif # ! 6.0
 # 1016: expected type is incompatible with declared type of int (in bzero ())
 # 1136: conversion to integral type of smaller size could lose data
 ifneq ($(CXX_VER),CXX_5)
-  WARNING_FLAGS += -w0 -msg_display_number
+  WARNING_FLAGS += -w0 -msg_display_number -msg_display_tag
   WARNING_FLAGS += \
-    -msg_disable 9,174,193,236,401,610,835,839$(CXX_1016)$(CXX_1136)
+    -msg_disable 174,193,236,401,610,835,839$(CXX_1016)$(CXX_1136)
+
+  ifndef ACE_DU_VERSION
+    # In case this file wasn't included by platform_osf1_cxx.GNU:
+    # 9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
+    WARNING_FLAGS += -msg_disable 9
+  endif # ACE_DU_VERSION
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
