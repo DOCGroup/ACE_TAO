@@ -23,11 +23,25 @@
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 #include "ace/ARGV.h"
+#include "ace/Sched_Params.h"
+#include "ace/Task.h"
+#include "ace/High_Res_Timer.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "cubitC.h"
 
+#if defined (CHORUS)
+#include "pccTimer.h"
+#endif /* CHORUS */
+
 #include <math.h>
+
+static unsigned int LOW_PRIORITY;
+static unsigned int HIGH_PRIORITY;
+
+// global test configuration parameters
+static unsigned long num_iterations = 1000;
+static unsigned int new_lwp = 0;
 
 // @@ Should we put this into a more general file, e.g., OS.h?
 //
@@ -160,9 +174,14 @@ public:
   char *ior_file_;
   // Name of the filename that the server used to store the iors.
 
-  u_int use_sysbench_;
-  // flag that  indicates that we are going to use the sysBench() call
-  // to time calls.  This only applies to the CHORUS ClassiX OS.
+  u_int grain_;
+  // this is the granularity of the timing of the CORBA requests. A
+  // value of 5 represents that we will take time every 5 requests,
+  // instead of the default of every request (1).
+  
+  u_int context_switch_;
+  // stores the total number of context switches incurred by the
+  // program while making CORBA requests
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
@@ -197,7 +216,8 @@ private:
 
   void put_latency (double *jitter,
                     double latency,
-                    u_int);
+                    u_int thread_id,
+		    u_int context_switch);
   // Records the latencies in the <Task_State>.
 
   int parse_args (int, char **);
@@ -212,5 +232,35 @@ private:
   CosNaming::NamingContext_var mt_cubit_context_;
   // Object reference to the cubit context "MT_Cubit".
 };
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// class Yield_Test
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+class Yield_Test : public ACE_Task<ACE_MT_SYNCH>
+{
+public:
+  Yield_Test (const unsigned long iterations);
+  virtual ~Yield_Test ();
+
+  virtual int svc ();
+
+  ACE_hrtime_t elapsed_time () const { return elapsed_time_; }
+private:
+  const unsigned long iterations_;
+  ACE_Barrier timer_barrier_;
+  ACE_High_Res_Timer timer_;
+  ACE_hrtime_t elapsed_time_;
+
+  // force proper construction of independent instances
+  Yield_Test ();
+  Yield_Test (const Yield_Test &);
+  Yield_Test &operator= (const Yield_Test &);
+};
+
+double 
+context_switch_time (void);
 
 #endif /* !defined (TASK_CLIENT_H) */

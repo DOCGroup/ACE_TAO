@@ -39,6 +39,8 @@ initialize (void)
 int
 do_priority_inversion_test (Task_State &ts)
 {
+  u_int i;
+
   // Create the clients.
   Client high_priority_client (&ts);
   Client low_priority_client (&ts);
@@ -72,8 +74,10 @@ do_priority_inversion_test (Task_State &ts)
                 "activate failed",
                 priority));
 
-  u_int i;
-
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating 1 client with high priority of %d\n",
+              priority));
+ 
   // Drop the priority, so that the priority of clients will increase
   // with increasing client number.
   for (i = 0; i < ts.thread_count_; i++)
@@ -82,9 +86,10 @@ do_priority_inversion_test (Task_State &ts)
                                                     ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d clients with low priority of %d\n",
+              "Creating %d clients with low priority ranging from %d to %d\n",
               ts.thread_count_ - 1,
-              priority));
+	      priority,
+	      priority + ts.thread_count_ - 2));
 
   for (i = 0; i < ts.thread_count_ - 1; i++)
     {
@@ -111,7 +116,8 @@ do_priority_inversion_test (Task_State &ts)
   ACE_OS::printf ("Test done.\n"
                   "High priority client latency : %d usec\n"
                   "Low priority client latency : %d usec\n",
-                  high_priority_client.get_high_priority_latency (),
+
+                 high_priority_client.get_high_priority_latency (),
                   low_priority_client.get_low_priority_latency ());
 #elif defined (CHORUS)
   ACE_OS::printf ("Test done.\n"
@@ -126,47 +132,49 @@ do_priority_inversion_test (Task_State &ts)
   FILE *latency_file_handle = 0;
   char latency_file[BUFSIZ];
   char buffer[BUFSIZ];
+  
+  ACE_OS::sprintf (latency_file, 
+		   "cb__%d.txt", 
+		   ts.thread_count_);
 
-  sprintf (latency_file,
-           "cb%d%s%d.txt",
-           ACE_OS::getpid (),
-           ts.use_sysbench_ == 1? "SB": "__",
-           ts.thread_count_);
-  ACE_DEBUG ((LM_DEBUG,
-              "--->Output file for latency data is \"%s\"\n",
-              latency_file));
-
+  ACE_OS::fprintf(stderr, 
+		  "--->Output file for latency data is \"%s\"\n",
+		  latency_file);
+  
   latency_file_handle = ACE_OS::fopen (latency_file, "w");
-
-  // @@ What does this loop do?
+  
+  // This loop visits each client.  start_count_ is the number of clients.
   for (u_int j = 0; j < ts.start_count_; j ++)
     {
-      sprintf (buffer,
-               "%s #%d",
-               j == 0 ? "High Priority": "Low Priority",
-               j);
-
-      for (u_int i = 0; i < ts.loop_count_; i ++)
-        {
-          sprintf (buffer + ACE_OS::strlen (buffer),
-                   "\t%u\n", ts.global_jitter_array_[j][i]);
-          ACE_OS::fputs (buffer,
-                         latency_file_handle);
-          buffer[0] = 0;
-        }
+      ACE_OS::sprintf(buffer, 
+		      "%s #%d", 
+		      j==0? "High Priority": "Low Priority", 
+		      j);
+      // this loop visits each request latency from a client
+      for (u_int i = 0; i < ts.loop_count_/ts.grain_; i ++)
+	{
+	  ACE_OS::sprintf(buffer+strlen(buffer), 
+			  "\t%u\n", 
+			  ts.global_jitter_array_[j][i]);
+	  fputs (buffer, latency_file_handle);
+	  buffer[0]=0;
+	}
     }
-
-  ACE_OS::fclose (latency_file_handle);
-
-#else /* !defined (CHORUS) */
+  
+  ACE_OS::fclose (latency_file_handle);  
+#else /* !CHORUS */
   ACE_DEBUG ((LM_DEBUG, "Test done.\n"
               "High priority client latency : %f msec, jitter: %f msec\n"
-              "Low priority client latency : %f msec, jitter: %f msec\n",
+              "Low priority client latency : %f msec, jitter: %f msec\n"
+	      "# of context switches: %d\n"
+	      "total context switch time: %f\n",
               high_priority_client.get_high_priority_latency (),
               high_priority_client.get_high_priority_jitter (),
               low_priority_client.get_low_priority_latency (),
-              low_priority_client.get_low_priority_jitter ()));
-#endif /* !defined (VXWORKS) && !defined (CHORUS) */
+              low_priority_client.get_low_priority_jitter (),
+	      ts.context_switch_,
+	      context_switch_time () * ts.context_switch_ ));
+#endif /* !VXWORKS && !CHORUS */
 
   // signal the utilization thread to finish with its work..
   util_thread.done_ = 1;
@@ -292,11 +300,33 @@ main (int argc, char *argv [])
   initialize ();
 
   Task_State ts (argc, argv);
+
+#if defined (CHORUS)
+  // start the pccTimer for chorus classix
+  int pTime;
+
+  // Initialize the PCC timer Chip
+  pccTimerInit();
+
+  if(pccTimer(PCC2_TIMER1_START,&pTime) !=K_OK) 
+    { 
+      printf("pccTimer has a pending benchmark\n"); 
+    } 
+#endif /* CHORUS */
+
   if (ts.thread_per_rate_ == 0)
     do_priority_inversion_test (ts);
   else
     do_thread_per_rate_test (ts);
-#else
+
+#if defined (CHORUS)
+  if(pccTimer(PCC2_TIMER1_STOP,&pTime) !=K_OK) 
+    { 
+      printf("pccTimer has a pending bench mark\n"); 
+    } 
+#endif /* CHORUS */
+
+#else /* !ACE_HAS_THREADS */
   ACE_DEBUG ((LM_DEBUG,
               "Test not run.  This platform doesn't seem to have threads.\n"));
 #endif /* ACE_HAS_THREADS */

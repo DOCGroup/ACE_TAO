@@ -6,7 +6,7 @@
 //    TAO/tests
 //
 // = FILENAME
-//    svr.cpp
+//    server.cpp
 //
 // = AUTHOR
 //    Andy Gokhale, Sumedh Mungee, and Sergio Flores-Gaitan
@@ -781,6 +781,7 @@ start_servants (void)
                                               priority,
                                               ACE_SCOPE_THREAD);
 
+#if 0
   //  Make the factory low priority task an active object.
   if (factory_task->activate (THR_BOUND | ACE_SCHED_FIFO,
                           1,
@@ -790,7 +791,7 @@ start_servants (void)
       ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
                   "factory_task->activate"));
     }
-
+#endif
   return 0;
 }
 

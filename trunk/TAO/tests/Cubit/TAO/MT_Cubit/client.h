@@ -23,6 +23,10 @@
 #include "Task_Client.h"
 #include "Util_Thread.h"
 
+#if defined (CHORUS)
+#include "pccTimer.h"
+#endif /* CHORUS */
+
 #if defined (VME_DRIVER)
 #include <hostLib.h>
 extern "C" STATUS vmeDrv (void);
