@@ -10,8 +10,7 @@
 
 INFO  = README
 
-DIRS  =	APG \
-	ASX \
+DIRS  =	ASX \
 	C++NPv1 \
 	C++NPv2 \
 	Connection \
