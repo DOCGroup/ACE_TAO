@@ -309,11 +309,9 @@ TAO_Naming_Context::to_name (const char *sn,
         {
           ncomp++;
         }
-
-      if (*j == '\\')
+      else if (*j == '\\')
         {
           ++j;
-          --len;
 
           if (*j == '\0')
             {
