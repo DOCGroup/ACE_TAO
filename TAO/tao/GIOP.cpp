@@ -1189,7 +1189,8 @@ TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
   // note: this has to be and is thread safe
 
   // The object is no longer needed, because we have now the IIOP_Object
-  CORBA::release (object_ptr);
+  CORBA::release (object_ptr); 
+  // We have a refcount of 2 because of the Query_Inteface method.
   CORBA::release (object_ptr);
 
   env.clear ();
