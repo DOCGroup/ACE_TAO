@@ -48,16 +48,6 @@ options (CL::Description& d)
                   "Use provided regular expression when constructing "
                   "name of servant file.",
                   true));
-  /*
-  d.add_option (CL::OptionDescription (
-                  "lem-force-all",
-                  "Force generation of local executor mapping for all IDL "
-                  "types including those not used (directly or inderectly) "
-                  "by compositions. This option is useful for generating a "
-                  "common portion of local executor mapping used by more "
-                  "than one component or composition.",
-                  true));
-  */
 }
 
 
