@@ -195,10 +195,10 @@ copied instead of appended to the CDR stream.</TD></TR>
 (<em>which</em> = <code>global</code>) or a thread-specific
 (<em>which</em> = <code>tss</code>) instance for the Root POA.</TD></TR>
 <TR>
-<TD><CODE>-ORBlockfreedreactor</CODE> <EM>which</EM></TD>
-<TD><a name="-ORBcoltable"></a>Specify whether the ORB reactor is thread-safe 
-(<em>which</em> = <code>no</code>) or not
-(<em>which</em> = <code>yes</code>).  Default is <code>yes</code></TD></TR>
+<TD><CODE>-ORBreactorlock</CODE> <EM>which</EM></TD>
+<TD><a name="-ORBcoltable"></a>Specify whether the ORB reactor is thread-safe
+(<em>which</em> = <code>token</code>) or not
+(<em>which</em> = <code>null</code>).  Default is <code>token</code></TD></TR>
 <TR>
 <TD><CODE>-ORBcoltable</CODE> <EM>which</EM></TD>
 <TD><a name="-ORBcoltable"></a>Specify whether each ORB uses a global
@@ -283,7 +283,7 @@ specifies that no locking be performed.  The default is
 Specify, whether to use a lock for accessing the IIOP Profile or not.
 Default is <code>thread</code>, which means that a lock is used. The
 second option is <code>null</code>, which means a null lock is used.
-This makes sense in case of optiziations and is allowed when 
+This makes sense in case of optiziations and is allowed when
 no forwarding is used or only a single threaded client.
 </TD></TR>
 </TABLE>
