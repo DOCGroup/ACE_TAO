@@ -127,7 +127,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "codegen for _var failed\n"), -1);
+                         "codegen for _var failed\n"), 
+                        -1);
     }
 
   // Generate the _out class.
@@ -136,7 +137,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "codegen for _out failed\n"), -1);
+                         "codegen for _out failed\n"), 
+                        -1);
     }
 
   be_visitor *visitor = 0;
@@ -203,9 +205,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
    // Generate the destructor and default constructor.
   *os << be_nl;
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
   *os << node->name () << "::" << node->local_name ();
+
   if (!node->is_local ())
     {
       *os << " (int collocated)" << be_nl
@@ -490,7 +493,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "_tao_QueryInterface method codegen failed\n"), -1);
+                         "_tao_QueryInterface method codegen failed\n"), 
+                        -1);
     }
 
   *os << "(type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))"
@@ -518,7 +522,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
 
