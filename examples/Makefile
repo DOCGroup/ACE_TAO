@@ -25,6 +25,7 @@ DIRS  =	ASX \
 	Shared_Malloc \
 	Shared_Memory \
 	System_V_IPC \
+	Synch \
 	Threads \
 	Timer_Queue
 

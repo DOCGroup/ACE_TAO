@@ -1,3 +1,13 @@
+Thu Apr 05 03:26:13 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/Makefile:
+        * examples/Synch/Makefile:
+        * examples/Synch/README:
+        * examples/Synch/Synch.dsw:
+        * examples/Synch/proc_sema.cpp:
+        * examples/Synch/proc_sema.dsp: Added a new explame to play with
+	  process semaphores.
+
 Thu Apr 05 02:48:51 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.cpp (write): My earlier change was causing the test
