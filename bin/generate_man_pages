@@ -22,7 +22,7 @@ fi
 #    to nroff man files.
 ACE_HEADERS=`find ../../ace -name CLASSIX -prune -o \
              -name '*.h' ! -name 'config*.h' ! -name 'ws2tcpip.h' \
-             ! -name 'RMCast_Export.h' -print`
+             ! -name 'RMCast_Export.h' ! -name 'RMCast_Reassembly.h' -print`
 ../../bin/class2man $ACE_HEADERS > /dev/null
 
 # 3. Then I run "man2html" on the *.3 files to produce the *.html files.
