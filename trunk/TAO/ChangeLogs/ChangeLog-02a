@@ -1,3 +1,68 @@
+Sat Mar  4 18:11:28 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* Modified the following files:
+ 	* orbscvs/Notify/Notify_Constraint_Interpreter.h:
+	* orbscvs/Notify/Notify_FilterAdmin_i.{h,cpp}:
+	* orbscvs/Notify/Notify_FilterFactory_i.h:
+ 	* orbscvs/Notify/Notify_Filter_i.{h,cpp}:
+	* orbscvs/Notify/Notify_QoSAdmin_i.h :
+	  minor changes to header file inclusions.
+	* orbscvs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
+	* orbscvs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+	* orbscvs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
+	* orbscvs/Notify/Notify_EventChannel_i.{h,cpp}:
+	  Changed the design for looking up children objects from being
+	  ACE_Hash_Map_Manager based to the POA.Each Object factory in Notify
+	  creates a child POA to activate created objects in.This cleanly
+	  decouples object lookup functionality from the working of the
+	  Event Channel.The unique ID's generated for each object created is
+	  converted to Object Id's for activation and reference lookup.
+ 	* orbscvs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
+ 	* orbscvs/Notify/Notify_ProxyPushSupplier_i.{h,cpp}:
+	* orbscvs/Notify/Notify_StructuredProxyPushConsumer_i.{h,cpp}:
+ 	* orbscvs/Notify/Notify_StructuredProxyPushSupplier_i.{h,cpp}:
+	  Added 'push' implementations.
+ 	* orbscvs/Notify/Notify_StructuredPushConsumer.{h,cpp}:
+ 	* orbscvs/Notify/Notify_StructuredPushSupplier.{h,cpp}:
+          Removed <open> and close methods from helper classes.
+        * orbsvcs/orbsvcs/Makefile:
+	  Added new files to Notify, updated dependencies.
+        * orbsvcs/Notify_Service/Notify_Service.{h,cpp}:
+	  Changed to use the TAO_Notify_EventChannelFactory::create method.
+	* orbsvcs/examples/Notify/Filter.cpp:
+	  Changed to use the new TAO_Notify_StructuredPushConsumer methods.
+
+	  New files:
+ 	* orbscvs/Notify/Notify_Event_Manager.{h,cpp}:
+	  The <TAO_Notify_Event_Manager> class controls all aspects of event
+	  propogation from suppliers to consumers, provides methods to handle
+	  subscription and publication lists logic.It also contains the
+	  <recipient_map_> which is the central storage for subscription
+	  lists and is accessed to decide where events should go.
+ 	* orbscvs/Notify/Notify_ID_Pool_T.{h,cpp,i}:
+	  The <TAO_Notify_ID_Pool> template class generates Ids for all object
+	  factories in Notify.Id's can be returned to the pool for recyling.
+ 	* orbscvs/Notify/Notify_Listeners.h:
+	  Defines the <TAO_Notify_Event_Listener> and
+	  <TAO_Notify_Update_Listener> internal interfaces for Notify.
+	* orbscvs/Notify/Notify_ProxyConsumer_T.{h,cpp}:
+	  Template Base classes for the Proxy Consumers.
+ 	* orbscvs/Notify/Notify_ProxySupplier_T.{h,cpp}:
+	  Template Base classes for the Proxy Suppliers.
+ 	* orbscvs/Notify/Notify_PushConsumer.{h,cpp}:
+	  Helper servant implementation for PushConsumers.
+ 	* orbscvs/Notify/Notify_PushSupplier.cpp.{h,cpp}:
+	  Helper servant implementation for PushSuppliers.
+ 	* orbscvs/Notify/Notify_Resource_Manager.{h,cpp}:
+	  All object creations are done here.
+ 	* orbscvs/Notify/Notify_Types.{h,cpp}:
+          Defines the <TAO_Notify_EventType> and Subscription and Publication
+	  list types.
+	* orbsvcs/examples/Notify/Subscribe/Subscribe{.h,.cpp}:
+	* orbsvcs/examples/Notify/Subscribe/main.cpp:
+	* orbsvcs/examples/Notify/Subscribe/Makefile:
+          New example to show how to use subscription (under construction).
+
 Sat Mar  4 16:09:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/MessagingC.h:
@@ -9,16 +74,16 @@ Sat Mar  4 16:09:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/PolicyC.h:
 	* tao/PolicyC.i:
 	* tao/PolicyC.cpp:
-	  Replaced all Any insertion/extraction operators with the new 
-	  versions that use compiled marshaling. Also added many missing 
-	  Any and CDR stream insertion/extraction operators. This 
+	  Replaced all Any insertion/extraction operators with the new
+	  versions that use compiled marshaling. Also added many missing
+	  Any and CDR stream insertion/extraction operators. This
 	  completes the job for all the generated files in TAO/tao.
 
 Fri Mar  3 14:41:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Sequence.cpp (allocbuf): 
+	* tao/Sequence.cpp (allocbuf):
 	* tao/Typecode.cpp: Removed the use of "naked new"
-	  operators. 
+	  operators.
 
 Fri Mar  3 13:41:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -27,7 +92,7 @@ Fri Mar  3 13:41:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/UIOP_Profile.cpp: Added error checking. The error checking
 	  was needed for the ACE_Inet_Addr::set () method that was getting
 	  called. This is for bug #474 reported by Chris Cleeland
-	  <cleeland_c@ociweb.com>. 
+	  <cleeland_c@ociweb.com>.
 
 Fri Mar  3 11:15:06 2000  Ossama Othman  <ossama@uci.edu>
 
