@@ -450,8 +450,14 @@ DRV_parse_args (long ac, char **av)
           switch (av[i][1])
             {
             case 0:
-              DRV_push_file ("standard input");
-              break;
+              // One or more letters expected after the dash.
+              ACE_ERROR ((
+                  LM_ERROR,
+                  ACE_TEXT ("IDL: Space between dash and option ")
+                  ACE_TEXT ("letters not allowed\n")
+                ));
+
+              ACE_OS::exit (99);
             case 'A':
               if (av[i][2] == '\0')
                 {
