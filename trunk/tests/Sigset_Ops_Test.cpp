@@ -57,6 +57,7 @@ main (int, char *[])
 
   sigset_t x ;			// examined sigset
   int sigset [NSIG] ;		// a comparison sigset
+  int i ;
 
   // Two test signal numbers.  I choose these low value signals to
   // avoid exceeding the NSIG range.
@@ -68,7 +69,7 @@ main (int, char *[])
   ACE_OS::sigfillset (&x) ;
 
   // fill the comparison set
-  for (int i = 0 ; i < NSIG ; i++) {
+  for (i = 0 ; i < NSIG ; i++) {
     sigset [i] = 1 ;
   }
   siglistset (x, sigset) ;
