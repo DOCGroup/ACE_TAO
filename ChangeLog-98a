@@ -11,10 +11,6 @@ Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES so that it isn't used
           with egcs.  Thanks to Gonzo for testing this.
 
-        * tests/MT_Sock_Test.cpp (spawn): changed type of local variable i
-          to int to avoid signed/unsigned comparison.  Thanks to Gonzo for
-          reporting this.
-
         * tests/Service_Config.test: changed type of VARIETIES to u_int to
           avoid signed/unsigned comparison in main.  Thanks to Gonzo for
           reporting this.
