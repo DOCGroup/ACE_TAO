@@ -472,7 +472,7 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,
               "current_buffer_size_ = %d\n",
               this->current_buffer_size_));
-  if (this->next_timeout_ != 0)
+  if (this->timeoutp_ != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "next_timeout_.sec = %d, next_timeout_.usec = %d\n",
                 this->next_timeout_.sec (),
