@@ -1,3 +1,13 @@
+Sat Jul 27 17:35:06 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_g++_common.GNU (SOFLAGS):
+
+          Allow building of shared libraries with gcc and Solaris ld.
+          There wasn't any reason that it wouldn't work.
+
+        * Changelog: Remove >>>>> out by merge conflicts. People should be
+          more careful about checking for conflicts.
+
 Sat Jul 27 16:20:19 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN): Changed
@@ -489,7 +499,6 @@ Sat Jul 13 17:29:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* bin/fuzz.pl: Removed the word "warning" from a print statement,
 	  since our scoreboard scripts seems to catch that as a warning.
 
->>>>>>> 4.3893
 Sat Jul 13 13:31:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the Stack_Recursion test to the
