@@ -1,3 +1,21 @@
+Fri Oct 23 18:45:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA: 
+	  
+	  ACE_wrappers/TAO/examples/POA/DSI/client.dsp
+	  ACE_wrappers/TAO/examples/POA/DSI/server.dsp
+	  ACE_wrappers/TAO/examples/POA/Default_Servant/client.dsp
+	  ACE_wrappers/TAO/examples/POA/Default_Servant/server.dsp:
+
+	  Updated project files with the new IDL compiler location and new
+ 	  bin/DLL directory location.
+
+	  ACE_wrappers/TAO/examples/POA/DSI/server.cpp:
+
+	  Fixed signed/unsigned problem.
+
+	  Thanks to John Morey<jmorey@tbi.com> for reporting them.
+
 Fri Oct 23 18:23:07 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/README (Options):
