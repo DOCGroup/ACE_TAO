@@ -179,6 +179,7 @@ SOURCE="<%idl_file%>"
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%platform%> <%configuration%>"
 
+USERDEP__<%basenoextension(idl_file)%>=<%idl_compiler%>.exe
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking IDL Compiler on $(InputPath)
 InputPath=<%idl_file%>
