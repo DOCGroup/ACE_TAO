@@ -74,23 +74,14 @@ PCCFLAGS	+= #### set in platform_macros.GNU file, e.g., -p
 RM		= /bin/rm
 VAR		=
 VDIR		= .obj/
+ifndef ACELIB
+ACELIB = -lACE
+endif
 ifndef  VSHDIR
 VSHDIR		= .shobj/
 endif # VSHDIR
 ifdef SHLIBA
 VLDLIBS :=$(VLDLIBS) -lACEshr $(LIBS)
-else
-ifdef MVSLIB
-  # Special for MVS in order to build .x files
-  VLDLIBS :=$(VLDLIBS:$(VSHDIR)%.so=$(VDIR)%.o)
-  ifeq ($(findstring .x,$(MVSLIB)),.x)
-    VLDLIBS :=$(VLDLIBS:-l%=$(ACE_ROOT)/ace/lib%.x) $(MVSLIB)
-  else
-    LDLIBS :=$(VLDLIBS) $(MVSLIB)
-  endif
-else
-VLDLIBS :=$(VLDLIBS) -lACE $(LIBS)
-endif
 endif
 YACC		= yacc
 
