@@ -540,7 +540,7 @@ DII_Cubit_Client::cube_short_dii (void)
   // Initialize the result variable.
   req->result ()->value ()->replace (CORBA::_tc_short, 
                                      &ret_short, 
-                                     CORBA::B_TRUE, 
+                                     CORBA::B_FALSE, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -595,7 +595,7 @@ DII_Cubit_Client::cube_long_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (CORBA::_tc_long, 
                                      &ret_long, 
-                                     CORBA::B_TRUE, 
+                                     CORBA::B_FALSE, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -650,7 +650,7 @@ DII_Cubit_Client::cube_octet_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (CORBA::_tc_octet, 
                                      &ret_octet, 
-                                     CORBA::B_TRUE, 
+                                     CORBA::B_FALSE, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -712,7 +712,7 @@ DII_Cubit_Client::cube_union_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_oneof, 
                                      &ret_union, 
-                                     CORBA::B_TRUE, 
+                                     CORBA::B_FALSE, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -775,7 +775,7 @@ DII_Cubit_Client::cube_struct_dii (void)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_Many, 
                                      &ret_struct, 
-                                     CORBA::B_TRUE, 
+                                     CORBA::B_FALSE, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -835,7 +835,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_octet_seq, 
                                      &ret_octet_seq, 
-                                     CORBA::B_TRUE, 
+                                     CORBA::B_FALSE, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
@@ -906,7 +906,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   // Insert the result variable.
   req->result ()->value ()->replace (Cubit::_tc_long_seq, 
                                      &ret_long_seq, 
-                                     CORBA::B_TRUE, 
+                                     CORBA::B_FALSE, 
                                      this->env_);
 
   CUBIT_CHECK_ENV_RELEASE_RETURN_VOID (req,
