@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    RT_Task
 //
@@ -26,7 +26,7 @@
 
 class TAO_ORBSVCS_Export ACE_RT_Thread_Manager : public ACE_Thread_Manager
   // = TITLE
-  //   
+  //
   // = DESCRIPTION
 {
 public:
@@ -41,16 +41,16 @@ public:
   // Resumes all threads.
 
 protected:
-  virtual int spawn_i (ACE_THR_FUNC func, 
-		       void *args, 
-		       long flags, 
-		       ACE_thread_t * = 0, 
-		       ACE_hthread_t *t_handle = 0,
-		       long priority = 0,
-		       int grp_id = -1,
-		       void *stack = 0, 
-		       size_t stack_size = 0,
-		       ACE_Task_Base *task = 0);
+  virtual int spawn_i (ACE_THR_FUNC func,
+                       void *args,
+                       long flags,
+                       ACE_thread_t * = 0,
+                       ACE_hthread_t *t_handle = 0,
+                       long priority = 0,
+                       int grp_id = -1,
+                       void *stack = 0,
+                       size_t stack_size = 0,
+                       ACE_Task_Base *task = 0);
 
   int flags_;
 };
@@ -59,7 +59,7 @@ protected:
 
 class TAO_ORBSVCS_Export ACE_RT_Task_Command : public ACE_Message_Block
 // = TITLE
-//   
+//
 // = DESCRIPTION
 {
 public:
@@ -88,7 +88,7 @@ class TAO_ORBSVCS_Export ACE_RT_Task : public ACE_ES_TASK
 {
   // = TITLE
   //   ACE Real-Time Task
-  //   
+  //
   // = DESCRIPTION
   //    Real-Time Active Object that integrates with a global
   //    scheduler and Event Service.  For now, none of the management
@@ -97,7 +97,7 @@ class TAO_ORBSVCS_Export ACE_RT_Task : public ACE_ES_TASK
   //    add synchronization.  For the most part, RT_Task threads
   //    should be dequeueing commands from the message queue.  Only
   //    one thread should be calling any management methods.
-  friend ACE_RT_Thread_Manager;
+  friend class ACE_RT_Thread_Manager;
 public:
   ACE_RT_Task (void);
   // Default construction.
