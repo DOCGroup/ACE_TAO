@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #
 # $Id$
@@ -27,13 +29,8 @@ SHLIB = libCollocation_Test_Stub.$(SOEXT)
 LIB = libCollocation_Test_Stub.a
 
 IDL_FILES = Diamond
-IDL_SRC = DiamondC
 
-SHLIB_SRC = $(IDL_SRC)
-
-LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
-LOBJ = $(addsuffix .o,$(SHLIB_SRC))
-PSRC = $(addsuffix .cpp,$(BIN))
+LSRC = $(IDL_SRC)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -45,15 +42,8 @@ include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
-
-
-.PRECIOUS: DiamondC.h DiamondC.i DiamondC.cpp DiamondS.h DiamondS.i DiamondS.cpp
-
-realclean: clean
-	-$(RM) DiamondC.* DiamondS.* DiamondS_T.*
 
 ifeq ($(shared_libs),1)
 ifneq ($(SHLIB),)

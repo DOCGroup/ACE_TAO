@@ -170,6 +170,12 @@ CPPFLAGS += \
 	$(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
 	$(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
 
+# MPC currently defines IDL_SRC in each generated Makefile, so don't redefine it in that case.
+ifndef IDL_SRC
+  IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
+endif
+IDL_OBJS = $(IDL_SRC:%.cpp=%.$(OBJEXT))
+
 ####
 #### Build rules.
 ####

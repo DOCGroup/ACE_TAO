@@ -11,10 +11,9 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = test
-IDL_SRC = testC testS
 BIN_UNCHECKED = client server
 
-SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Client_ORBInitializer Server_ORBInitializer interceptors $(IDL_SRC))
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Client_ORBInitializer Server_ORBInitializer interceptors) $(IDL_SRC)
 
 CLIENT_OBJS = \
   testC.o \
@@ -52,16 +51,11 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
-
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
-
-realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

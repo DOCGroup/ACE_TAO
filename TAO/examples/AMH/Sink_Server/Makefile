@@ -13,7 +13,6 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = Test
-IDL_SRC = TestC TestS
 BIN_UNCHECKED = st_server mt_server client
 
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) \
@@ -21,8 +20,8 @@ SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) \
       Base_Server \
       AMH_Servant \
       Timer_Handler \
-      Client_Task \
-      $(IDL_SRC))
+      Client_Task) \
+      $(IDL_SRC)
 
 ST_SERVER_OBJS = st_server.o Base_Server.o AMH_Servant.o Timer_Handler.o TestC.o TestS.o
 MT_SERVER_OBJS = mt_server.o MT_AMH_Server.o Base_Server.o AMH_Servant.o Timer_Handler.o TestC.o TestS.o

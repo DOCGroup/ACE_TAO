@@ -13,17 +13,16 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = corbaloc
-IDL_SRC = corbalocC corbalocS
 
 LDLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO 
 #CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 BIN = server client corbaname_client
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC) status_i ior_corbaloc_client_i)
+SRC = $(addsuffix .cpp, $(BIN) status_i ior_corbaloc_client_i) $(IDL_SRC)
 
-CLIENT_OBJS = $(addsuffix .o, $(IDL_SRC) client ior_corbaloc_client_i)
-SERVER_OBJS = $(addsuffix .o, $(IDL_SRC) server status_i)
-CORBANAME_CLIENT_OBJS = $(addsuffix .o, $(IDL_SRC) corbaname_client status_i)
+CLIENT_OBJS = $(addsuffix .o, client ior_corbaloc_client_i) $(IDL_SRC:.cpp=.o)
+SERVER_OBJS = $(addsuffix .o, server status_i) $(IDL_SRC:.cpp=.o)
+CORBANAME_CLIENT_OBJS = $(addsuffix .o, corbaname_client status_i) $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -42,8 +41,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), corbaloc$(ext))
-
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
@@ -52,9 +49,6 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 
 corbaname_client: $(addprefix $(VDIR),$(CORBANAME_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), corbaloc$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

@@ -13,12 +13,11 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES=test
-IDL_SRC = testC testS
 BIN_UNCHECKED = server Manager
 
-SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) $(IDL_SRC) test_i)
+SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) test_i) $(IDL_SRC)
 
-SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDL_SRC))
+SERVER_OBJS = server.o test_i.o $(IDL_SRC:%.cpp=%.o) 
 MANAGER_OBJS = Manager.o testC.o
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs

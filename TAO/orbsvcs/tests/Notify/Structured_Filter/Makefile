@@ -15,9 +15,8 @@ endif # ! TAO_ROOT
 BIN =  Structured_Supplier Structured_Consumer
 
 IDL_FILES = control
-IDL_SRCS = controlC controlS
 
-SRC = $(addsuffix .cpp, $(IDL_SRCS)) \
+SRC = $(IDL_SRCS) \
 	Structured_Supplier.cpp Structured_Consumer.cpp Notify_Push_Consumer.cpp
 
 SUPPLIER_OBJS = Structured_Supplier.o controlS.o controlC.o

@@ -10,14 +10,11 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
 
 IDL_FILES = data
-IDL_SRC = dataC dataS
-IDL_HDR = dataC dataS
 
-ECM_Supplier_OBJS=$(addsuffix .o,$(IDL_SRC) ECM_Supplier ECM_Data)
-ECM_Consumer_OBJS=$(addsuffix .o,$(IDL_SRC) ECM_Consumer ECM_Data)
+ECM_Supplier_OBJS=$(addsuffix .o, ECM_Supplier ECM_Data) $(IDL_SRC:%.cpp=%.o)
+ECM_Consumer_OBJS=$(addsuffix .o, ECM_Consumer ECM_Data) $(IDL_SRC:%.cpp=%.o)
 
 SRC =  $(addsuffix .cpp, $(BIN2)) \
-        $(addsuffix .cpp, $(IDL_SRC)) \
         ECM_Data.cpp
 
 BIN2 = ECM_Supplier ECM_Consumer
@@ -43,16 +40,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #### Local rules and variables...
 
-.PRECIOUS: $(addsuffix .h, $(IDL_SRC)) $(addsuffix .i, $(IDL_SRC)) $(addsuffix .cpp, $(IDL_SRC))
-
 ECM_Supplier: $(addprefix $(VDIR),$(ECM_Supplier_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ECM_Consumer: $(addprefix $(VDIR),$(ECM_Consumer_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-realclean:
-	$(RM) dataC.* dataS.* dataS_T.*
 
 #----------------------------------------------------------------------------
 #       Dependencies

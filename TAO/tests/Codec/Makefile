@@ -11,10 +11,10 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = test
-IDL_SRC = testC
+IDL_SRC = testC.cpp
 BIN = client
 
-SRC = $(addsuffix .cpp, $(IDL_SRC) $(BIN))
+SRC = $(IDL_SRC) $(addsuffix .cpp, $(BIN))
 
 CLIENT_OBJS = \
   testC.o \

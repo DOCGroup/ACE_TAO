@@ -13,15 +13,14 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = Quoter
-IDL_SRC = QuoterC QuoterS
 BIN = client server
 
 LDLIBS = -lTAO_Messaging -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO 
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC) Handler_i Stock_i Stock_Factory_i)
+SRC = $(addsuffix .cpp, $(BIN) Handler_i Stock_i Stock_Factory_i) $(IDL_SRC)
 
-CLIENT_OBJS = $(addsuffix .o, client Handler_i $(IDL_SRC))
-SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i $(IDL_SRC))
+CLIENT_OBJS = $(addsuffix .o, client Handler_i) $(IDL_OBJS)
+SERVER_OBJS = $(addsuffix .o, server Stock_i Stock_Factory_i) $(IDL_OBJS)
 
 TAO_IDLFLAGS=-GC -in
 
@@ -41,16 +40,11 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS: $(foreach ext, $(IDL_EXT), Quoter$(ext))
-
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-realclean: clean
-	-$(RM) $(foreach ext, $(IDL_EXT), Quoter$(ext))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

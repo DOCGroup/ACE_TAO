@@ -6,6 +6,11 @@
 # debug = 1
 # optimize = 1
 
+# We always include config-linux.h on Linux platforms.
+ifndef ACE_PLATFORM_CONFIG
+  ACE_PLATFORM_CONFIG = config-linux.h
+endif
+
 ifndef exceptions
   exceptions = 1
 endif

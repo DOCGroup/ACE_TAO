@@ -26,6 +26,29 @@ endif
 # are required, REQUIRED_COMPONENTS need not be set.
 include $(ACE_ROOT)/include/makeinclude/component_check.GNU
 
+# If no required components are missing, set the real targets
+ifeq ($(MISSING_COMPONENTS),)
+  ifneq ($(CLEANUP_BIN),)
+    ifeq ($(BIN),)
+      BIN = $(CLEANUP_BIN)
+    endif # !BIN
+  endif # !CLEANUP_BIN
+  ifdef static_libs
+    ifneq ($(CLEANUP_LIB),)
+      ifeq ($(LIB),)
+        LIB = $(CLEANUP_LIB)
+      endif # !LIB
+    endif # !CLEANUP_LIB
+  endif # static_libs
+  ifdef shared_libs
+    ifneq ($(CLEANUP_SHLIB),)
+      ifeq ($(SHLIB),)
+        SHLIB = $(CLEANUP_SHLIB)
+      endif # !SHLIB
+    endif # !CLEANUP_SHLIB
+  endif # !shared_libs
+endif # COMPILE_COMPONENT
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
@@ -43,33 +66,24 @@ endif # LIB
 
 ifneq ($(CLEANUP_SHLIB),)
   include_lib = 1
-  # If the Makefile has both BIN and SHLIB targets, add .shobj to OBJDIRS
-  # so that it will get cleanup too.
-  ifneq ($(findstring $(VSHDIR),$(OBJDIRS)),$(VSHDIR))
-    OBJDIRS += $(VSHDIR)
-  endif
 endif # SHLIB
 
 ifeq ($(include_lib),1)
   include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 endif
 
-# Always add VBIN, it could be undefined, but that's not problem.
-BUILD := $(VBIN)
+# Always build the V* targets in this order.  We control assignment to them
+# elsewhere.
+BUILD = $(IDL_SRC) $(VLIBS) $(VBIN)
 
 # Add VSHLIB if we're building shared_libs, could be undefined.
 ifdef shared_libs
-  BUILD := $(VSHLIB) $(SHLIBA) $(BUILD)
+  VLIBS = $(VSHLIB) $(SHLIBA)
 endif
 
 # Finally, add VLIB if building static_libs, which could also be undefined.
 ifdef static_libs 
-  BUILD := $(VLIB) $(BUILD)
-endif
-
-# And if IDL_FILES have been defined, prepend idl_stubs.
-ifneq ($(IDL_SRC),)
-   BUILD := idl_stubs $(BUILD)
+  VLIBS += $(VLIB)
 endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

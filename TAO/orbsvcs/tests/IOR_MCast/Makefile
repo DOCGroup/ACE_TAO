@@ -13,17 +13,16 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = MCast
-IDL_SRC = MCastC MCastS
 
 LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 BIN = server client
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC) server_i ior_mcast_client_i MCast_Server_i)
+SRC = $(addsuffix .cpp, $(BIN) server_i ior_mcast_client_i MCast_Server_i) $(IDL_SRC)
 
-SERVER_OBJS = $(addsuffix .o, server server_i MCast_Server_i $(IDL_SRC))
-CLIENT_OBJS = $(addsuffix .o, client ior_mcast_client_i server_i MCast_Server_i $(IDL_SRC))
+SERVER_OBJS = $(addsuffix .o, server server_i MCast_Server_i) $(IDL_SRC:.cpp=.o)
+CLIENT_OBJS = $(addsuffix .o, client ior_mcast_client_i server_i MCast_Server_i) $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
