@@ -34,7 +34,7 @@ CIAO::Container_Impl::init (const ::Deployment::Properties &properties
   // more kinds of container implementations.
 
   ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Swapping_Container (this->orb_.in (), this),
+                    CIAO::Session_Container (this->orb_.in (), this),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (-1);
 
