@@ -1,3 +1,9 @@
+Mon Aug  4 03:25:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Added new changes from Mike MacFaden, which add new html
+ 	  documentation, a new "one-button test" script, and updates so
+ 	  that the programming style is like ACE.  Thanks Mike!
+ 
 Sat Aug  2 12:07:43 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* Started to integrate the code into a more ACE-like style, e.g.,
