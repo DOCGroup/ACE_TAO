@@ -1,3 +1,10 @@
+Wed Sep  5 18:58:00 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* ace/OS.h: 
+	* ace/OS.i:
+
+	  Changed the sending_flowspec_ and receiving_flowspec_ members of the ACE_QoS class to pointers so they can be initialized to null flow specs.
+
 Wed Sep  5 16:50:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Peter Phillips <pphillip@opentext.com> to the hall
