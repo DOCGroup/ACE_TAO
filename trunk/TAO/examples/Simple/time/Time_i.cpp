@@ -10,6 +10,12 @@ Time_i::Time_i (void)
   // no-op
 }
 
+// Copy  Constructor
+Time_i::Time_i (Time_i &tim)
+{
+  // no-op
+}
+
 // Destructor
 
 Time_i::~Time_i (void)
