@@ -1,3 +1,8 @@
+Thu Mar 24 13:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+          Updated because timer_id is a long
+
 Thu Mar 24 12:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Sequence.h:
