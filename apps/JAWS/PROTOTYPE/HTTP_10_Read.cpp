@@ -32,9 +32,14 @@ JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
   if (data->length () > 0)
     {
-      JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put, have data");
-      return 0;
+      if (data->rd_ptr ()[0] != '\0')
+        {
+          JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put, have data");
+          return 0;
+        }
     }
+  data->rd_ptr (data->wr_ptr ());
+  data->crunch ();
 
   io->read (handler, data, data->size ());
   switch (handler->status ())
