@@ -696,6 +696,9 @@ public:
 
   void *arg_;
   // Argument to thread startup function.
+
+  ACE_Log_Msg *inherit_log_;
+  // TSS log data of creating thread.
 };
 
 // Run the thread exit point.  This must be an extern "C" to make
@@ -708,7 +711,17 @@ ace_thread_adapter (void *args)
   ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
 
   ACE_THR_FUNC func = thread_args->func_;
+
+  // Inherit the logging feature if necessary.
+  ACE_Log_Msg *inherit_log = thread_args->inherit_log_;
+  ACE_Log_Msg *new_log = ACE_LOG_MSG;
+  new_log->msg_ostream (inherit_log->msg_ostream ());
+  new_log->priority_mask (inherit_log->priority_mask ());
+  if (inherit_log->tracing_enabled ())
+    new_log->start_tracing ();
+
   void *arg = thread_args->arg_;
+
   delete thread_args;
 
 #if defined (ACE_WIN32)
@@ -737,7 +750,8 @@ ace_thread_adapter (void *args)
 
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
   : func_(f), 
-    arg_(a) 
+    arg_(a),
+    inherit_log_ (ACE_LOG_MSG)
 {
 // ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
 }

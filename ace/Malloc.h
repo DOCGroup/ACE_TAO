@@ -102,7 +102,11 @@ public:
   // Dump the state of the object.
 };
 
-typedef long ACE_Malloc_Align; 
+// Allow the user to override this in the config.h file.
+#if !defined (ACE_MALLOC_ALIGN)
+#define ACE_MALLOC_ALIGN long
+#endif /* ACE_MALLOC_ALIGN */
+
 // For alignment to long boundary 
 
 union ACE_Export ACE_Malloc_Header
@@ -117,7 +121,7 @@ union ACE_Export ACE_Malloc_Header
     // Size of this block.
   } s_;
 
-  ACE_Malloc_Align x_;
+  ACE_MALLOC_ALIGN x_;
   // Force alignment.
 };
 
