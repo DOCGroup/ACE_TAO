@@ -22,14 +22,14 @@ TAO_Wait_Strategy::send_request (TAO_ORB_Core *orb_core,
                                  TAO_OutputCDR &stream,
                                  int /* two_way */)
 {
-  int success = success = (int) TAO_GIOP::send_request (this->transport_,
-                                                        stream,
-                                                        this->transport_->orb_core ());
-  
+  int success = (int) TAO_GIOP::send_request (this->transport_,
+                                              stream,
+                                              this->transport_->orb_core ());
+
   if (!success)
     return -1;
   else
-    return 0;  
+    return 0;
 }
 
 // *********************************************************************
@@ -56,11 +56,12 @@ TAO_Wait_On_Reactor::wait (void)
     this->transport_->orb_core ()->reactor ();
 
   // @@ Carlos: Can we rely on <reply_received> flag in the AMI case?
-  //    It depends on whether we are expecting replies or not, right? 
+  //    It depends on whether we are expecting replies or not, right?
   //    So, I think we can simply return from this loop, when some
   //    event occurs, and the invocation guy can call us again, if it
   //    wants to. (AMI will call, if it is expecting replies, SMI will
   //    call if the reply is not arrived) (Alex).
+  // @@ Alex: I think you are right, let's fix it later....
 
   // Do the event loop, till there are no events and no errors.
 
@@ -124,7 +125,7 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 }
 
 
-// @@ Why do we need <orb_core> and the <two_way> flag? <orb_core> is 
+// @@ Why do we need <orb_core> and the <two_way> flag? <orb_core> is
 //    with the <Transport> object and <two_way> flag wont make sense
 //    at this level since this is common for AMI also. (Alex).
 int
@@ -141,25 +142,25 @@ TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core *orb_core,
   else
     {
       // = Two way call.
-      
+
       // @@ Should we do here that checking for the difference in the
       //    Reactor used??? (Alex).
 
       // Register the handler.
       this->transport_->register_handler ();
       // @@ Carlos: We do this only if the reactor is different right?
-      //    (Alex) 
-      
+      //    (Alex)
+
       // Obtain the lock.
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
                         orb_core->leader_follower_lock (), -1);
-      
+
       // Set the state so that we know we're looking for a response.
       this->expecting_response_ = 1;
-      
+
       // remember in which thread the client connection handler was running
       this->calling_thread_ = ACE_Thread::self ();
-      
+
       // Send the request
       return TAO_Wait_Strategy::send_request (orb_core,
                                               stream,
@@ -171,17 +172,17 @@ int
 TAO_Wait_On_Leader_Follower::wait (void)
 {
   // @@ Do we need this code (checking for the difference in the
-  //    Reactor)? (Alex). 
+  //    Reactor)? (Alex).
   // @@ Alex: yes, the same connection may be used in multiple
   //    threads, each with its own reactor.
   // @@ Carlos: But, where is that code now? I  cant see it here now?
-  //    (Alex). 
+  //    (Alex).
 
   // Cache the ORB core, it won't change and is used multiple times
   // below:
-  TAO_ORB_Core* orb_core = 
+  TAO_ORB_Core* orb_core =
     this->transport_->orb_core ();
-  
+
   // Set the state so that we know we're looking for a response.
 
   // @@ Alex: maybe this should be managed by the Demux strategy?
@@ -197,11 +198,11 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
   // @@ Carlos: I have done this: There is a <send_request> method for
   //    this class now. (Alex).
-  
+
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
                     orb_core->leader_follower_lock (), -1);
-  
+
   // Check if there is a leader, but the leader is not us
   if (orb_core->leader_available () && !orb_core->I_am_the_leader_thread ())
     {
@@ -270,7 +271,7 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
   int result = 0;
 
-  while (result == 0 && !this->reply_received_)
+  while (result >= 0 && this->reply_received_ == 0)
     result = orb_core->reactor ()->handle_events ();
 
   // Wake up the next leader, we cannot do that in handle_input,
@@ -291,12 +292,17 @@ TAO_Wait_On_Leader_Follower::wait (void)
                        "handle_events failed.\n"),
                       -1);
 
+  // Return an error if there was a problem receiving the reply...
+  result = 0;
+  if (this->reply_received_ == -1)
+    result = -1;
+
   // Make us reusable
   this->reply_received_ = 0;
   this->expecting_response_ = 0;
   this->calling_thread_ = ACE_OS::NULL_thread;
 
-  return 0;
+  return result;
 }
 
 // Handle the input. Return -1 on error, 0 on success.
@@ -322,9 +328,13 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Severe error, abort....
   if (result == -1)
-    return -1;
+    {
+      this->reply_received_ = -1;
+      return -1;
+    }
+     
 
-  // Bata was read, but there the reply has not been completely
+  // Data was read, but there the reply has not been completely
   // received...
   if (result == 0)
     return 0;
@@ -336,7 +346,7 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
     {
       // We are the leader thread, simply return 1 to terminate the
       // event loop....
-      return 1;
+      return 0;
     }
 
   // We are not the leader thread, but we have our data, wake up
@@ -365,7 +375,7 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 int
 TAO_Wait_On_Leader_Follower::register_handler (void)
 {
-  return 0;
+  return this->transport_->register_handler ();
 }
 
 // Resume the connection handler.

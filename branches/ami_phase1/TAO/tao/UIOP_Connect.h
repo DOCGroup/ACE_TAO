@@ -39,6 +39,7 @@ class TAO_ORB_Core;
 class TAO_UIOP_Transport;
 class TAO_UIOP_Client_Transport;
 class TAO_UIOP_Server_Transport;
+class TAO_ORB_Core;
 
 typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH> TAO_UIOP_SVC_HANDLER;
 
@@ -53,6 +54,8 @@ public:
   virtual int resume_handler (ACE_Reactor *reactor);
   // Resume the handler.
 };
+
+// ****************************************************************
 
 class TAO_Export TAO_UIOP_Client_Connection_Handler : public TAO_UIOP_Handler_Base
 {
@@ -133,77 +136,7 @@ protected:
 
 };
 
-class TAO_Export TAO_ST_UIOP_Client_Connection_Handler : public TAO_UIOP_Client_Connection_Handler
-{
-public:
-  TAO_ST_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
-
-  virtual ~TAO_ST_UIOP_Client_Connection_Handler (void);
-
-  virtual int open (void *);
-  // Initialize the handler.
-
-  virtual int send_request (TAO_ORB_Core* orb_core,
-                            TAO_OutputCDR &stream,
-                            int is_twoway);
-  // Send the request in <stream>.  If it is a twoway invocation, then
-  // this re-enters the reactor event loop so that incoming requests
-  // can continue to be serviced.  This insures that a nested upcall,
-  // i.e., an invocation coming back from the remote during this
-  // invocation, will still be handled and deadlock averted.
-
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Called when a a response from a twoway invocation is available.
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
-
-protected:
-
-};
-
-class TAO_Export TAO_MT_UIOP_Client_Connection_Handler : public TAO_UIOP_Client_Connection_Handler
-{
-public:
-  TAO_MT_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
-
-  virtual ~TAO_MT_UIOP_Client_Connection_Handler (void);
-
-  virtual int open (void *);
-  // Initialize the handler.
-
-  virtual int send_request (TAO_ORB_Core* orb_core,
-                            TAO_OutputCDR &stream,
-                            int is_twoway);
-  // Send the request in <stream>.  If it is a twoway invocation, then
-  // this re-enters the reactor event loop so that incoming requests
-  // can continue to be serviced.  This insures that a nested upcall,
-  // i.e., an invocation coming back from the remote during this
-  // invocation, will still be handled and deadlock averted.
-
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Called when a a response from a twoway invocation is available.
-
-  virtual int resume_handler (ACE_Reactor *reactor);
-  // Resume the handler.
-
-protected:
-  ACE_SYNCH_CONDITION* cond_response_available (TAO_ORB_Core* orb_core);
-  // Return the cond_response_available, initializing it if necessary.
-
-  ACE_thread_t calling_thread_;
-  // the thread ID of the thread we were running in.
-
-  ACE_SYNCH_CONDITION* cond_response_available_;
-  // wait on reponse if the leader-follower model is active
-
-  TAO_ORB_Core* orb_core_;
-  // The ORB core where we are executing a request.
-};
-
 // ****************************************************************
-
-class TAO_ORB_Core;
 
 class TAO_Export TAO_UIOP_Server_Connection_Handler : public TAO_UIOP_Handler_Base
 {

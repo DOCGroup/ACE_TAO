@@ -80,7 +80,8 @@ TAO_Muxed_RMS::destroy_cdr_stream (void)
 // *********************************************************************
 
 TAO_Exclusive_RMS::TAO_Exclusive_RMS (void)
-  : request_id_ (931232), // @@ Hardcoding.
+  : request_id_generator_ (0),
+    request_id_ (0),
     rd_ (0)
 {
 }
@@ -95,7 +96,7 @@ TAO_Exclusive_RMS::~TAO_Exclusive_RMS (void)
 CORBA::ULong
 TAO_Exclusive_RMS::request_id (void)
 {
-  return this->request_id_;
+  return this->request_id_generator_++;
 }
 
 // Bind the handler with the request id.

@@ -1,3 +1,46 @@
+Sat May 29 16:56:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.h:
+	* tao/Connect.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connect.cpp:
+	  Removed unused classes, the RW, ST and MT variants for the
+	  client connection handlers.
+	  Also removed unused methods in the client connection handler.
+
+	* tao/GIOP.cpp:
+	  The GIOP::dump_msg() helper function prints out request id of
+	  the message, this is useful when debugging complex interaction
+	  between clients and servers.
+
+	* tao/GIOP_Server_Request.cpp:
+	  Minor cosmetic changes
+
+	* tao/IIOP_Transport.cpp:
+	  Return -1 in case of error from handle_client_input()
+
+	* tao/Request_Mux_Strategy.h:
+	* tao/Request_Mux_Strategy.cpp:
+	  Keep a separate variable to generate the request id numbers, and 
+	  actually generate a different request id for each request
+
+	* tao/Wait_Strategy.cpp:
+	  Track down if there was an error while receiving the reply, if
+	  so then exit the event loop and return the error to the upper
+	  layer.
+	  Don't forget to register the handler for the
+	  Wait_On_Leader_Follower strategy.
+
+	* tests/MT_Client/Makefile:
+	* tests/MT_Client/client.cpp:
+	* tests/MT_Client/server.conf:
+	* tests/MT_Client/simple-client.cpp:
+	  Added simple-client to the Makefile.
+	  The server.conf file didn't have to use dynamic loading, the
+	  service is statically configured.
+	  Commented out debugging messages in client.cpp
+	  Cleanup dead-code in simple-client.cpp
+
 Sat May 29 14:02:41 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Wait_Strategy.cpp: 

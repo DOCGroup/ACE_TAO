@@ -126,7 +126,7 @@ TAO_GIOP::dump_msg (const char *label,
   if (TAO_debug_level >= 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
+                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s",
                   label,
                   digits[ptr[4]],
                   digits[ptr[5]],
@@ -135,11 +135,29 @@ TAO_GIOP::dump_msg (const char *label,
                   (ptr[7] <= TAO_GIOP::Fragment) ? names [ptr[7] +
                                                          TAO_GIOP::tao_specific_message_types] : "UNKNOWN TYPE"));
 
+      if (ptr[7] == TAO_GIOP::Request)
+        {
+          // @@ Only works if ServiceContextList is empty....
+          const CORBA::ULong *request_id =
+            ACE_reinterpret_cast(const CORBA::ULong*,
+                                 ptr + TAO_GIOP_HEADER_LEN + 4);
+          ACE_DEBUG ((LM_DEBUG, " = %d\n", *request_id));
+        }
+      else if (ptr[7] == TAO_GIOP::Reply)
+        {
+          const CORBA::ULong *request_id =
+            ACE_reinterpret_cast(const CORBA::ULong*,
+                                 ptr + TAO_GIOP_HEADER_LEN + 4);
+          ACE_DEBUG ((LM_DEBUG, " = %d\n", *request_id));
+        }
+      else
+        ACE_DEBUG ((LM_DEBUG, "\n"));
+
       if (TAO_debug_level >= 4)
         ACE_HEX_DUMP ((LM_DEBUG,
                        (const char*)ptr,
                        len,
-                       "\n"));
+                       "GIOP message"));
     }
 }
 
@@ -469,7 +487,9 @@ TAO_GIOP::recv_message (TAO_Transport *transport,
   // Default header length.
   ssize_t header_len = TAO_GIOP_HEADER_LEN;
 
-  TAO_GIOP::Message_Type retval;
+  // @@ Alex&Carlos: we need to figure out what is the right value to
+  //    initialize this thing...
+  TAO_GIOP::Message_Type retval = TAO_GIOP::ShortRead;
   CORBA::ULong message_size;
   ssize_t len;
   char *header = 0;
@@ -629,11 +649,11 @@ TAO_GIOP::recv_message (TAO_Transport *transport,
     {
       // Reset.
       transport->message_size (0);
-  
+
       // Current message is received fully.
       transport->message_received (1);
     }
-  
+
   return retval;
 }
 

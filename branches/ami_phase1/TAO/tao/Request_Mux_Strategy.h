@@ -163,6 +163,10 @@ public:
   // NO-OP function.
 
 protected:
+  CORBA::ULong request_id_generator_;
+  // Used to generate a different request_id on each call to
+  // request_id()
+
   CORBA::ULong request_id_;
   // Request id for the current request.
 

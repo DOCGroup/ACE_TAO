@@ -128,7 +128,6 @@ void
 TAO_IIOP_Transport::resume_connection (ACE_Reactor *reactor)
 {
   this->ws_->resume_handler (reactor);
-  // this->handler_->resume_handler (reactor);
 }
 
 void
@@ -150,7 +149,7 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
 
-  return this->ws_->send_request (orb_core, 
+  return this->ws_->send_request (orb_core,
                                   stream,
                                   two_way);
 }
@@ -166,7 +165,7 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 int
 TAO_IIOP_Client_Transport::handle_client_input (int block)
 {
-  // @@ Alex: it should be possible to make this code generic and move 
+  // @@ Alex: it should be possible to make this code generic and move
   //    it to the GIOP class or something similar....
 
   // When we multiplex several invocations over a connection we need
@@ -182,7 +181,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   // factory returns a pointer to the pre-allocated CDR.
   //
   // @@ Alex: I thought some more about this, and here is how i would
-  //    like to do it: this class keeps a CDR stream for the "current" 
+  //    like to do it: this class keeps a CDR stream for the "current"
   //    message beign received. Initially the CDR is 0, when the
   //    handle_client_input() is called the first time then we go to
   //    the muxer to obtain the CDR stream.
@@ -246,11 +245,11 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
     case TAO_GIOP::MessageError:
       // Handle errors like these.
       // @@ this->reply_handler_->error ();
-      return 1;
+      return -1;
 
     case TAO_GIOP::Fragment:
       // Handle this.
-      return 1;
+      return -1;
 
     case TAO_GIOP::Request:
       // In GIOP 1.0 and GIOP 1.1 this is an error, but it is
@@ -258,14 +257,14 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
       // on the firt iteration, leave it for the nearby future...
       // ERROR too.
       // @@ this->reply_handler_->error ();
-      return 1;
+      return -1;
 
     case TAO_GIOP::CancelRequest:
     case TAO_GIOP::LocateRequest:
     case TAO_GIOP::CloseConnection:
       // @@ Errors for the time being.
       // @@ this->reply_handler_->error ();
-      return 1;
+      return -1;
 
     case TAO_GIOP::LocateReply:
     case TAO_GIOP::Reply:
@@ -363,6 +362,14 @@ TAO_IIOP_Client_Transport::resume_handler (void)
 int
 TAO_IIOP_Client_Transport::check_unexpected_data (void)
 {
+  // @@ Alex: This should *not* be part of the client connection
+  //    handler, we should treat any incoming data as a GIOP message.
+  //    The server can always send the "CloseConnection" message and
+  //    we should act accordingly.
+  //    Finally: in the future the server may send requests though
+  //    GIOP 1.2 connections, we shouldn't hard-code the current GIOP
+  //    state machine at this level...
+
   // We're a client, so we're not expecting to see input.  Still we
   // better check what it is!
   char ignored;
