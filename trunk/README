@@ -133,11 +133,10 @@ OBTAINING ACE
 The current ACE release is provided as a tar file that is around 1.8
 Meg compressed using GNU gzip.  ACE may be obtained electronically
 from http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
-contains contains the source code, test drivers, and example
-applications for C++ wrapper libraries and the higher-level ACE
-network programming framework developed as part of the ADAPTIVE
-project at the University of California, Irvine and at Washington
-University.
+contains the source code, test drivers, and example applications for
+C++ wrapper libraries and the higher-level ACE network programming
+framework developed as part of the ADAPTIVE project at the University
+of California, Irvine and at Washington University.
 
 ACE DIRECTORY STRUCTURE
 

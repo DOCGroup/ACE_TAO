@@ -1,3 +1,21 @@
+Thu May  1 10:16:34 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-osf1-4.0.h: Added 
+	
+	  #define ACE_LACKS_IOSTREAM_FX
+	  #define ACE_LACKS_LINEBUFFERED_STREAMBUF
+	  #define ACE_LACKS_SIGNED_CHAR
+
+	  Thanks to James CE Johnson <jjohnson@lads.com> for reporting
+ 	  this.
+
+	* ace/Timer_{Wheel,Heap,List}_T.h: Fixed a typo in all these
+	  classes that was failing to put the keyword "class" after
+	  "friend."  Also, replaced the use of the typedef with the
+	  expanded name of the class to work around problems with DEC
+	  C++.  Thanks to James CE Johnson <jjohnson@lads.com> for
+	  reporting this. 
+
 Thu May 01 00:05:59 1997    <irfan@TWOSTEP>
 
 	* tests/Time_Service_Test.cpp (main): Made sure that the backing

@@ -72,7 +72,7 @@ public:
   typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR> LIST_ITERATOR;
   // Type of iterator
 
-  friend LIST_ITERATOR;
+  friend class ACE_Timer_List_Iterator_T<TYPE, FUNCTOR>;
   // Iterator is a friend
 
   typedef ACE_Timer_Queue_T<TYPE, FUNCTOR> INHERITED;
