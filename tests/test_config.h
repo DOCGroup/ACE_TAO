@@ -337,7 +337,7 @@ ACE_Test_Output::close (void)
 
 #define ACE_START_TEST(NAME) \
   const ASYS_TCHAR *program = NAME; \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting %s test at %D\n"), program))
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
 
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
