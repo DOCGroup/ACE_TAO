@@ -86,13 +86,27 @@ TAO_ServerRequest::object_key (void)
 ACE_INLINE TAO_Service_Context &
 TAO_ServerRequest::request_service_context (void)
 {
-  return this->request_service_context_;
+  if (!operation_details_)
+  {
+    return this->request_service_context_;
+  }
+  else
+  {
+    return const_cast <TAO_Operation_Details*> (this->operation_details_)->request_service_context ();
+  }
 }
 
 ACE_INLINE TAO_Service_Context &
 TAO_ServerRequest::reply_service_context (void)
 {
-  return this->reply_service_context_;
+  if (!operation_details_)
+  {
+    return this->reply_service_context_;
+  }
+  else
+  {
+    return const_cast <TAO_Operation_Details*> (this->operation_details_)->reply_service_context ();
+  }
 }
 
 ACE_INLINE IOP::ServiceContextList &

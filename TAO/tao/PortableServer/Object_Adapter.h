@@ -163,9 +163,8 @@ public:
   virtual int priority (void) const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out foward_to
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                        CORBA::Object_out forward_to
+                        ACE_ENV_ARG_DECL);
   virtual const char *name (void) const;
   virtual CORBA::Object_ptr root (void);
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,

@@ -49,8 +49,6 @@
  * fast access to the info that we need from the Service Context
  * List.
  */
-
-
 class TAO_Export TAO_Service_Context
 {
 public:
@@ -129,6 +127,10 @@ private:
 
   /// Helper methods to implement get_context()
   int get_context_i (IOP::ServiceContext &context) const;
+
+  // Prevent copying
+  TAO_Service_Context (const TAO_Service_Context &);
+  TAO_Service_Context &operator= (const TAO_Service_Context &);
 
 private:
   /// The ServiceContextList info.

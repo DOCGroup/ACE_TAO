@@ -723,7 +723,6 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                               TAO_ServerRequest &request,
                               CORBA::Object_out forward_to
                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (ACE_OS::memcmp (key.get_buffer (),
                       &TAO_Root_POA::objectkey_prefix[0],
@@ -815,7 +814,9 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
       // LOCATION_FORWARD).
       if (status == PortableInterceptor::SYSTEM_EXCEPTION
           || status == PortableInterceptor::USER_EXCEPTION)
-        ACE_RE_THROW;
+        {
+          ACE_RE_THROW;
+        }
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (result);
