@@ -19,6 +19,7 @@
 
 #include "clnt.h"
 #include "CosNaming_i.h"
+#include "../../Logger/loggerC.h"
 
 // constructor
 
@@ -78,7 +79,18 @@ CosNaming_Client::parse_args (void)
 int
 CosNaming_Client::run (void)
 {
+  //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  // Time to bind to logger server
+  CosNaming::Name n;
+  CORBA::Object_ptr l_obj;
+  Logger_var logger;
 
+  n.length (1);
+  n[0].id = CORBA::string_dup ("logger");
+
+  l_obj = this->CosNaming_->resolve (n, this->env_);
+  logger = Logger::_narrow (l_obj);
+  logger->log ("I am logging using a reference obtained from the Naming Service!!!", this->env_);
 
   if (this->exit_later_)
     {
@@ -98,16 +110,19 @@ CosNaming_Client::~CosNaming_Client (void)
 int
 CosNaming_Client::init (int argc, char **argv)
 {
+  //  Logger_ptr logger_1_;
+  // Logger obj ref
+  //Logger_Factory_ptr factory_;
+  // factory pointer for logger.
+
   this->argc_ = argc;
   this->argv_ = argv;
 
-  //  CosNaming::NamingContext_ptr cos_naming_i = new CosNaming::NamingContext;
-
   // retrieve the ORB
-  CORBA::ORB_init (this->argc_,
-                   this->argv_,
-                   "nameserver",
-                   this->env_);
+  CORBA::ORB_ptr orb = CORBA::ORB_init (this->argc_,
+					this->argv_,
+					"internet",
+					this->env_);
 
   if (this->env_.exception () != 0)
     {
@@ -133,7 +148,8 @@ CosNaming_Client::init (int argc, char **argv)
 
   if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       " _bind returned null object for host (%s), port (%d)\n",
+                       " _bind returned null object for key(%s), host (%s), port (%d)\n",
+		       this->cosnaming_factory_key_,
                        this->hostname_,
                        this->portnum_),
                       1);
