@@ -1,3 +1,9 @@
+Mon Mar  7 14:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added ACE_USE_RCSID defined as 0, don't expand the ACE_RCSID
+          macro when generating the documentation
+
 Mon Mar  7 06:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process_Manager.cpp:
