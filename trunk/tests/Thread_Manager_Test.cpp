@@ -32,6 +32,11 @@
 // dynamically.
 static ACE_TSS<Signal_Catcher> *signal_catcher = 0;
 
+// Synchronize starts of threads, so that they all start before the
+// main thread cancels them.  To avoid creating a static object, it
+// is dynamically allocated, before spawning any threads.
+static ACE_Barrier *thread_start;
+
 extern "C" void
 handler (int signum)
 {
@@ -72,6 +77,9 @@ worker (int iterations)
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
 
+  // After setting up the signal catcher, block on the start barrier.
+  thread_start->wait ();
+
   ACE_DEBUG ((LM_DEBUG,
               "(%t) worker starting loop\n"));
 
@@ -100,7 +108,7 @@ worker (int iterations)
 }
 
 static const int DEFAULT_THREADS = ACE_MAX_THREADS;
-static const int DEFAULT_ITERATIONS = 100000;
+static const int DEFAULT_ITERATIONS = 10000;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS<Signal_Catcher>;
@@ -116,17 +124,20 @@ main (int, char *[])
   ACE_START_TEST ("Thread_Manager_Test");
 
 #if defined (ACE_HAS_THREADS)
+  int n_threads = DEFAULT_THREADS;
+  int n_iterations = DEFAULT_ITERATIONS;
+
   // Dynamically allocate signal_catcher so that we can control when
   // it gets deleted.  Specifically, we need to delete it before the
   // main thread's TSS is cleaned up.
   ACE_NEW_RETURN (signal_catcher, ACE_TSS<Signal_Catcher>, 1);
 
+  // And similarly, dynamically allocate the thread_start barrier.
+  ACE_NEW_RETURN (thread_start, ACE_Barrier (n_threads + 1), -1);
+
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
-
-  int n_threads = DEFAULT_THREADS;
-  int n_iterations = DEFAULT_ITERATIONS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
@@ -136,9 +147,10 @@ main (int, char *[])
                                  THR_BOUND | THR_DETACHED);
 
   ACE_ASSERT (grp_id != -1);
+  thread_start->wait ();
 
-  // Pthreads doesn't do suspend/resume
-#if !defined (ACE_HAS_PTHREADS)
+  // Pthreads doesn't do suspend/resume.  Neither do DCEThreads.
+#if !defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_DCETHREADS)
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "(%t) suspending group\n"));
@@ -152,7 +164,7 @@ main (int, char *[])
   ACE_DEBUG ((LM_DEBUG, "(%t) resuming group\n"));
 
   ACE_ASSERT (thr_mgr->resume_grp (grp_id) != -1);
-#endif /* ACE_HAS_PTHREADS */
+#endif /* ! ACE_HAS_PTHREADS && ! ACE_HAS_DCETHREADS */
 
   // Wait for 1 more second and then send a SIGINT to every thread in
   // the group.
@@ -160,10 +172,10 @@ main (int, char *[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) signaling group\n"));
 
-#if !defined (ACE_HAS_WTHREADS)
-  ACE_ASSERT (thr_mgr->kill_grp (grp_id, SIGINT) != -1);
-#else
+#if defined (ACE_HAS_WTHREADS)
   thr_mgr->kill_grp (grp_id, SIGINT);
+#else
+  ACE_ASSERT (thr_mgr->kill_grp (grp_id, SIGINT) != -1);
 #endif /* ACE_HAS_WTHREADS */
 
   // Wait for 1 more second and then cancel all the threads.
@@ -178,6 +190,8 @@ main (int, char *[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread finished\n"));
 
+  delete thread_start;
+  thread_start = 0;
   delete signal_catcher;
   signal_catcher = 0;
 
