@@ -65,7 +65,15 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &_env)
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &env)
 {
-  env.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
+  TAO_TRY
+    {
+      TAO_TRY_ENV.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception:");
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -129,7 +137,7 @@ TAO_Time_Service_Clerk::get_time (void)
   // Globally sync. time is the latest global time plus the time
   // elapsed since last updation was done.
 
-  return ACE_OS::gettimeofday ().sec () 
+  return ACE_OS::gettimeofday ().sec ()
     - this->update_timestamp_ + this->time_;
 
 }
