@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /I ".." /I "..\.." /I "..\..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D TAO_ORBSVCS_HAS_DLL=1 /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I ".." /I "..\.." /I "..\..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D TAO_ORBSVCS_HAS_DLL=0 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /D TAO_RTSCHED_HAS_DLL=0 /D TAO_RTSCHEDEVENT_HAS_DLL=0 /D TAO_EVENT_HAS_DLL=0 /D TAO_RTEVENT_HAS_DLL=0 /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I ".." /I "..\.." /I "..\..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOs.lib aces.lib TAO_CosNamings.lib TAO_RTEvents.lib TAO_RTOLDEvents.lib TAO_RTScheds.lib /nologo /subsystem:console /machine:I386 /out:"..\orbsvcs,..\..\tao,..\..\..\ace"
-# ADD LINK32 TAOs.lib aces.lib TAO_CosNamings.lib TAO_RTEvents.lib TAO_RTOLDEvents.lib TAO_RTScheds.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOs.lib aces.lib TAO_PortableServers.lib TAO_Svc_Utilss.lib TAO_CosNamings.lib TAO_RTEvents.lib TAO_RTOLDEvents.lib TAO_RTScheds.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\TAO\PORTABLESERVER"
 
 !ELSEIF  "$(CFG)" == "Event_Service_static - Win32 Static Debug"
 
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I ".." /I "..\.." /I "..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D TAO_ORBSVCS_HAS_DLL=1 /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /I "..\.." /I "..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D TAO_ORBSVCS_HAS_DLL=1 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /D TAO_RTSCHED_HAS_DLL=0 /D TAO_RTSCHEDEVENT_HAS_DLL=0 /D TAO_EVENT_HAS_DLL=0 /D TAO_RTEVENT_HAS_DLL=0 /YX /FD  /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /I "..\.." /I "..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /YX /FD  /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 TAOsd.lib acesd.lib TAO_CosNamingsd.lib TAO_RTEventsd.lib TAO_RTOLDEventsd.lib TAO_RTSchedsd.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\orbsvcs,..\..\tao,..\..\..\ace" /pdbtype:sept
-# ADD LINK32 TAOsd.lib acesd.lib TAO_CosNamingsd.lib TAO_RTEventsd.lib TAO_RTOLDEventsd.lib TAO_RTSchedsd.lib user32.lib advapi32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOsd.lib acesd.lib TAO_PortableServersd.lib TAO_Svc_Utilssd.lib TAO_CosNamingsd.lib TAO_RTEventsd.lib TAO_RTOLDEventsd.lib TAO_RTSchedsd.lib user32.lib advapi32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\orbsvcs" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\TAO\PORTABLESERVER"
 
 !ENDIF 
 
