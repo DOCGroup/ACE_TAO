@@ -21,6 +21,10 @@
 #ifndef TAO_IDL_MESSAGINGC_H
 #define TAO_IDL_MESSAGINGC_H
 
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -1901,5 +1905,7 @@ operator>> (TAO_InputCDR &, Messaging::Poller_ptr &);
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #endif /* TAO_IDL_MESSAGINGC_H */

@@ -11,10 +11,13 @@
 #ifndef TAO_IDL_MESSAGINGS_H
 #define TAO_IDL_MESSAGINGS_H
 
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 #include "TimeBaseS.h"
 #include "POA_CORBA.h"
 #include "MessagingC.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -2644,5 +2647,7 @@ private:
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #endif /* TAO_IDL_MESSAGINGS_H */
