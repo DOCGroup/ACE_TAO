@@ -134,8 +134,7 @@ public:
    * Resets the <ACE_Reactor::end_event_loop_> static so that the
    * <run_event_loop> method can be restarted.  Note that this method
    * can only be used by the singleton <ACE_Reactor::instance>.  Thus,
-   * to reset another reactor use
-   * <ACE_Reactor::reset_reactor_event_loop>.
+   * to reset another reactor use <ACE_Reactor::reset_reactor_event_loop>.
    */
   static void reset_event_loop (void);
 

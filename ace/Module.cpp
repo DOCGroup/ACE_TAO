@@ -160,7 +160,7 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (void)
   : flags_ (0)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::ACE_Module");
-  this->name ("<unknown>");
+  this->name (ACE_TEXT ("<unknown>"));
   // Do nothing...
   this->q_pair_[0] = 0;
   this->q_pair_[1] = 0;

@@ -1,3 +1,16 @@
+Thu Sep 27 06:12:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Module.cpp (ACE_Module): The line 
+	
+	  this->name ("<unknown>");
+  
+	  was  be replaced with
+  
+          this->name (ACE_TEXT("<unknown>"));  
+	  
+	  Thanks to Airat A. Sadreev <sadreevaa@hq.tatenergo.ru> for
+ 	  reporting this.  This fixes bug id 1041.
+
 Thu Sep 27 13:09:19 2001  Bala  <bala@cs.wustl.edu>
 
         * ACE version 5.1.21 released.
@@ -47,7 +60,7 @@ Sun Sep 23 19:28:06 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/Reactor.h (ACE_Reactor): Fixed comments for
 	  <end_reactor_event_loop> and <reactor_event_loop_done>.  Both
 	  methods work on an instance of reactor, not the global singleton
-	  reacotr.  Thanks to Doug for noticing this.
+	  reactor.  Thanks to Doug for noticing this.
 
 Sun Sep 23 10:02:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 

@@ -10,13 +10,11 @@
  */
 //=============================================================================
 
-
 #ifndef CACHING_STRATEGIES_H
 #define CACHING_STRATEGIES_H
 #include "ace/pre.h"
 
 #include "ace/OS.h"
-
 #include "ace/Caching_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -41,9 +39,7 @@
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Caching_Strategy
 {
-
 public:
-
   /// Destructor.
   virtual ~ACE_Caching_Strategy (void);
 
