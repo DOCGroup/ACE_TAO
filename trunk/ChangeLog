@@ -1,9 +1,10 @@
 Thu Apr 22 22:22:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/clone.cpp:
+	* tests/Dirent_Test.cpp:
 
 	  Replaced "ace/OS.h" include with lighterweight "ace/OS_NS_*.h"
-	  includes.  Fixes a "fuzz" error.
+	  includes.  Fixes "fuzz" errors.
 
 Thu Apr 22 20:54:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
