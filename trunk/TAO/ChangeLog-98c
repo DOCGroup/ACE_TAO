@@ -18,6 +18,13 @@ Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
           system headers, and use ACE_OS::gethrtime () instead of
           gethrtime ().
 
+        * orbsvcs/orbsvcs/Event/Reactor_Task.cpp (ACE_ES_Reactor_Task): always
+          use ACE_OS::gettimeofday ().  ACE_High_Res_Timer::gettimeofday ()
+          now takes an argument, so it's not compatible with what
+          ACE_Timer_Queue needs.  And it didn't seem necessary to have
+          separate code for VxWorks.  And the hrtimer on WIN32 is flakely
+          on multiple-CPU machines.
+
 Fri Mar 27 09:50:52 1998  Steve Huston  <shuston@riverace.com>
 
 	* TAO/TAO_IDL/driver/drv_preproc.cpp: Use explicit char * operator on
