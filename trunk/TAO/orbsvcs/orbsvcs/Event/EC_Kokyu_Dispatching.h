@@ -55,7 +55,9 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Dispatching : public TAO_EC_Dispatchi
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base* ec);
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base* ec,
+                            int sched_policy,
+                            int sched_scope);
 
   // = The EC_Dispatching methods.
   virtual void activate (void);
@@ -83,6 +85,8 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 
   int lanes_setup_;
+  int disp_sched_policy_;
+  int disp_sched_scope_;
 };
 
 // ****************************************************************
