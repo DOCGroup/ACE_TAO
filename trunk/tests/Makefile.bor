@@ -6,7 +6,7 @@
 
 TESTS = \
 	Aio_Platform_Test \
-        ARGV_Test \
+	ARGV_Test \
 	Atomic_Op_Test \
 	Auto_IncDec_Test \
 	Barrier_Test \
@@ -26,7 +26,7 @@ TESTS = \
 	Dynamic_Priority_Test \
 	Enum_Interfaces_Test \
 	Env_Value_Test \
-        FlReactor_Test \
+	FlReactor_Test \
 	Future_Set_Test \
 	Future_Test \
 	Handle_Set_Test \
@@ -35,7 +35,7 @@ TESTS = \
 	High_Res_Timer_Test \
 	IOStream_Test \
 	Lazy_Map_Manager_Test \
-        Log_Msg_Test \
+	Log_Msg_Test \
 	Malloc_Test \
 	Map_Manager_Test \
 	Map_Test \
@@ -51,7 +51,7 @@ TESTS = \
 	Notify_Performance_Test \
 	Object_Manager_Test \
 	OrdMultiSet_Test \
-        OS_Test \
+	OS_Test \
 	Pipe_Test \
 	Priority_Buffer_Test \
 	Priority_Reactor_Test \
@@ -70,7 +70,7 @@ TESTS = \
 	Reverse_Lock_Test \
 	Semaphore_Test \
 	Service_Config_Test \
-        Signal_Test \
+	Signal_Test \
 	Sigset_Ops_Test \
 	Simple_Message_Block_Test \
 	SOCK_Connector_Test \
@@ -89,17 +89,24 @@ TESTS = \
 	Time_Value_Test \
 	Timeprobe_Test \
 	Timer_Queue_Test \
-        TkReactor_Test \
+	TkReactor_Test \
 	Tokens_Test \
 	TSS_Test \
 	Upgradable_RW_Test \
 	UPIPE_SAP_Test \
 	XtReactor_Test
 
-all_tests: $(TESTS)
+!ifndef NAME
+all: $(TESTS)
 
 $(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS) $(BINDIR)\$@.exe
+	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS)
+
+clean: $(TESTS:_Test=_Test.Clean)
+
+$(TESTS:_Test=_Test.Clean):
+	$(MAKE) -fMakefile.bor -DNAME=$(@:.Clean=) $(MAKE_FLAGS) clean
+!endif
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 
@@ -110,5 +117,4 @@ CPPDIR = .
 LIBFILES = $(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
-
 
