@@ -180,7 +180,7 @@
 #ifndef ACE_HAS_AIO_CALLS
 #define ACE_HAS_AIO_CALLS
 #endif /* ACE_HAS_AIO_CALLS */
-#endif 
+#endif
 
 #if __GLIBC__ >= 2
 // glibc 2 and higher has wchar support
