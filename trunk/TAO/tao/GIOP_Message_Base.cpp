@@ -237,7 +237,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
       this->dump_msg ("send",
                       ACE_reinterpret_cast (u_char *,
                                             buf),
-                      bodylen + TAO_GIOP_MESSAGE_HEADER_LEN);
+                      total_len);
     }
 
   return 0;
