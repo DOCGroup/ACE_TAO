@@ -1,23 +1,31 @@
+Wed Dec 10 07:08:30 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+          This project should inherit from dseventlogadmin instead of
+          inheriting from dslogadmin and directly referencing the
+          DsEventLogAdmin library and project.
+
 Wed Dec 10 06:31:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Bug_1630_Regression/Makefile.Bug_1630_testclient:
+        * orbsvcs/tests/Bug_1630_Regression/Makefile.Bug_1630_testclient:
 
           Do not compile if minimum_corba is enabled.
 
           BTW, this test and the Makefiles needs cleaning up. Will get to
-	  that soon.
+          that soon.
 
 Wed Dec 10 06:12:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Client:
-	* orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Server:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Client:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Server:
 
-	  Fixed the link lines in the Makefiles.
+          Fixed the link lines in the Makefiles.
 
 Wed Dec 10 11:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Bug_1330_Regression/Bug_1330_Client.dsp:
-          Fixed release configuration, this should be the last for the 
+        * tests/Bug_1330_Regression/Bug_1330_Client.dsp:
+          Fixed release configuration, this should be the last for the
           1.3.6 release
 
 Wed Dec 10 10:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -51,13 +59,13 @@ Wed Dec 10 09:26:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 10 09:13:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/OBV/TC_Alignment/client.dsp:
-	* tests/OBV/TC_Alignment/server.dsp:
-	* tests/Bug_1330_Regression/Bug_1330_Client.dsp:
-	* tests/Bug_1330_Regression/Bug_1330_Server.dsp:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.dsp:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+        * tests/OBV/TC_Alignment/client.dsp:
+        * tests/OBV/TC_Alignment/server.dsp:
+        * tests/Bug_1330_Regression/Bug_1330_Client.dsp:
+        * tests/Bug_1330_Regression/Bug_1330_Server.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
           Fixed release configuration
 
 Tue Dec  9 22:15:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -68,19 +76,19 @@ Tue Dec  9 22:15:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Dec  9 18:25:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
 
-	  Added a dependency on CosNaming.
+          Added a dependency on CosNaming.
 
 Tue Dec  9 18:22:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Makefile:
+        * orbsvcs/tests/Makefile:
 
-	  Added a bunch of new tests into the Makefiles for compilation.
+          Added a bunch of new tests into the Makefiles for compilation.
 
-	* orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
 
-	  Fixed a compilation error.
+          Fixed a compilation error.
 
 Tue Dec  9 15:17:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -123,97 +131,97 @@ Tue Dec  9 18:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Dec  9 11:37:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/extra_core.mpb:
+        * tao/extra_core.mpb:
 
-	  For some reason there are so many places where we have hardcoded
-	  that  minimum_corba means no messaging. This is atrocious :-).
+          For some reason there are so many places where we have hardcoded
+          that  minimum_corba means no messaging. This is atrocious :-).
 
-	* tests/Bug_1639_Regression/test.mpc:
+        * tests/Bug_1639_Regression/test.mpc:
 
-	  Cleaned the MPC file.
+          Cleaned the MPC file.
 
 Tue Dec  9 17:24:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.dsp:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.dsp:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.dsp:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.dsp:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
-	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
-	* orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
-	* orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
-	* orbsvcs/examples/RtEC/MCast/MCast.dsp:
-	* orbsvcs/examples/Notify/Filter/Filter.dsp:
-	* orbsvcs/examples/Notify/Lanes/Consumer.dsp:
-	* orbsvcs/examples/Notify/Lanes/Supplier.dsp:
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
-	* orbsvcs/examples/Notify/ThreadPool/Consumer.dsp:
-	* orbsvcs/examples/Notify/ThreadPool/Supplier.dsp:
-	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
-	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
-	* examples/Simple/bank/client.dsp:
-	* examples/Logging/Logging_Service.dsp:
-	* examples/Logging/Logging_Test.dsp:
-	* docs/tutorials/Quoter/AMI/client.dsp:
-	* orbsvcs/tests/Concurrency/CC_client.dsp:
-	  Fixed release configurations
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.dsp:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.dsp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.dsp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.dsp:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
+        * orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
+        * orbsvcs/examples/Security/Send_File/Send_File_Server.dsp:
+        * orbsvcs/examples/RtEC/MCast/MCast.dsp:
+        * orbsvcs/examples/Notify/Filter/Filter.dsp:
+        * orbsvcs/examples/Notify/Lanes/Consumer.dsp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.dsp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.dsp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.dsp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+        * examples/Simple/bank/client.dsp:
+        * examples/Logging/Logging_Service.dsp:
+        * examples/Logging/Logging_Test.dsp:
+        * docs/tutorials/Quoter/AMI/client.dsp:
+        * orbsvcs/tests/Concurrency/CC_client.dsp:
+          Fixed release configurations
 
 Tue Dec  9 16:26:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/Redundant_Naming/client.dsp:
-	* orbsvcs/tests/Miop/McastHello/client.dsp:
-	* orbsvcs/tests/Miop/McastHello/server.dsp:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
-	* orbsvcs/tests/Interoperable_Naming/client.dsp:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_client.dsp:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
-	* orbsvcs/tests/InterfaceRepo/IDL3_Test/IDL3_Test.dsp:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
-	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.dsp:
-	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Persistence_Test.dsp:
-	* orbsvcs/tests/ImplRepo/airplane_client.dsp:
-	* orbsvcs/tests/ImplRepo/airplane_server.dsp:
-	* orbsvcs/tests/ImplRepo/nestea_client.dsp:
-	* orbsvcs/tests/ImplRepo/nestea_server.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
-	* orbsvcs/tests/Event/*.dsp:
-	* orbsvcs/tests/EC_MT_Mcast/MCast.dsp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
-	  Fixed release configurations, more follow later.
+        * orbsvcs/tests/Redundant_Naming/client.dsp:
+        * orbsvcs/tests/Miop/McastHello/client.dsp:
+        * orbsvcs/tests/Miop/McastHello/server.dsp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
+        * orbsvcs/tests/Interoperable_Naming/client.dsp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_client.dsp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/IDL3_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Persistence_Test.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_client.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGR/server.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+        * orbsvcs/tests/Event/*.dsp:
+        * orbsvcs/tests/EC_MT_Mcast/MCast.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+          Fixed release configurations, more follow later.
 
 Tue Dec  9 09:41:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
 
-	  Fixed a debug statement.
+          Fixed a debug statement.
 
 Tue Dec  9 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Synch_Invocation.cpp (TAO):
+        * tao/Synch_Invocation.cpp (TAO):
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 Tue Dec  9 07:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Bug_1482_Regression/test.mpc:
+        * tests/Bug_1482_Regression/test.mpc:
         * tests/Bug_1551_Regression/test.mpc:
           Fixed errors in these mpc files
 
 Mon Dec  8 21:13:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/LoadBalancing/Roundtrip.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/Roundtrip.cpp:
 
-	  Include "ace/ACE.h" to pull in ACE::is_prime() prototype.
+          Include "ace/ACE.h" to pull in ACE::is_prime() prototype.
 
-	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/server.cpp:
 
-	  Include "ace/OS_NS_strings.h" to pull in ACE_OS::strcasecmp()
-	  prototype.
+          Include "ace/OS_NS_strings.h" to pull in ACE_OS::strcasecmp()
+          prototype.
 
 Mon Dec  8 19:44:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -224,16 +232,16 @@ Mon Dec  8 19:44:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Dec  8 19:33:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
 
-	  Fixed a minor problem with reinvocation. We were not handling
-	  errors properly, more precisely the retsrat errors if they show
-	  up during wait_for_reply (). Thanks to Milan Cvetkovic for
-	  motivating this change.
+          Fixed a minor problem with reinvocation. We were not handling
+          errors properly, more precisely the retsrat errors if they show
+          up during wait_for_reply (). Thanks to Milan Cvetkovic for
+          motivating this change.
 
-	* tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
 
-	  Cosmetic change.
+          Cosmetic change.
 
 Mon Dec  8 18:50:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -256,62 +264,62 @@ Mon Dec  8 18:50:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Dec  8 12:49:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/PSS/PSS.mpc:
+        * orbsvcs/examples/PSS/PSS.mpc:
 
-	  Removed from the repository so that our daily builds will not
-	  run this to get a Makefile. We will not be supporting PSDL for
-	  TAO 1.4.
+          Removed from the repository so that our daily builds will not
+          run this to get a Makefile. We will not be supporting PSDL for
+          TAO 1.4.
 
 Mon Dec  8 18:30:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/POA/Implicit_Activation/client.dsp:
-	* performance-tests/POA/Implicit_Activation/collocated.dsp:
-	* performance-tests/POA/Implicit_Activation/server.dsp:
-	* performance-tests/POA/Object_Creation_And_Registration/registration.dsp:
-	* performance-tests/Pluggable/client.dsp:
-	* performance-tests/Pluggable/server.dsp:
-	* performance-tests/Latency/Thread_Pool/client.dsp:
-	* performance-tests/Latency/Thread_Pool/server.dsp:
-	* performance-tests/Latency/Thread_Per_Connection/client.dsp:
-	* performance-tests/Latency/Thread_Per_Connection/server.dsp:
-	* performance-tests/Latency/Single_Threaded/server.dsp:
-	* performance-tests/Latency/Single_Threaded/client.dsp:
-	* performance-tests/Latency/DSI/client.dsp:
-	* performance-tests/Latency/DSI/server.dsp:
-	* performance-tests/Latency/AMH/Single_Threaded/client.dsp:
-	* performance-tests/Latency/AMH/Single_Threaded/server.dsp:
-	* performance-tests/Callback/client.dsp:
-	* performance-tests/Callback/server.dsp:
-	* orbsvcs/tests/Simple_Naming/client.dsp:
-	* orbsvcs/tests/Security/SecurityLevel1/client.dsp:
-	* orbsvcs/tests/Security/SecurityLevel1/server.dsp:
-	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
-	* orbsvcs/tests/Security/Secure_Invocation/server.dsp:
-	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
-	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp:
-	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
-	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
-	* orbsvcs/tests/Security/Callback/client.dsp:
-	* orbsvcs/tests/Security/Callback/server.dsp:
-	* orbsvcs/tests/Security/Big_Request/client.dsp:
-	* orbsvcs/tests/Security/Big_Request/server.dsp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
-	* orbsvcs/tests/Redundant_Naming/client.dsp:
-	* orbsvcs/tests/Notify/*.dsp:
-	  Enabled RTTI in all configurations.
+        * performance-tests/POA/Implicit_Activation/client.dsp:
+        * performance-tests/POA/Implicit_Activation/collocated.dsp:
+        * performance-tests/POA/Implicit_Activation/server.dsp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.dsp:
+        * performance-tests/Pluggable/client.dsp:
+        * performance-tests/Pluggable/server.dsp:
+        * performance-tests/Latency/Thread_Pool/client.dsp:
+        * performance-tests/Latency/Thread_Pool/server.dsp:
+        * performance-tests/Latency/Thread_Per_Connection/client.dsp:
+        * performance-tests/Latency/Thread_Per_Connection/server.dsp:
+        * performance-tests/Latency/Single_Threaded/server.dsp:
+        * performance-tests/Latency/Single_Threaded/client.dsp:
+        * performance-tests/Latency/DSI/client.dsp:
+        * performance-tests/Latency/DSI/server.dsp:
+        * performance-tests/Latency/AMH/Single_Threaded/client.dsp:
+        * performance-tests/Latency/AMH/Single_Threaded/server.dsp:
+        * performance-tests/Callback/client.dsp:
+        * performance-tests/Callback/server.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * orbsvcs/tests/Security/SecurityLevel1/client.dsp:
+        * orbsvcs/tests/Security/SecurityLevel1/server.dsp:
+        * orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+        * orbsvcs/tests/Security/Secure_Invocation/server.dsp:
+        * orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/client.dsp:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.dsp:
+        * orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
+        * orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
+        * orbsvcs/tests/Security/Callback/client.dsp:
+        * orbsvcs/tests/Security/Callback/server.dsp:
+        * orbsvcs/tests/Security/Big_Request/client.dsp:
+        * orbsvcs/tests/Security/Big_Request/server.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
+        * orbsvcs/tests/Redundant_Naming/client.dsp:
+        * orbsvcs/tests/Notify/*.dsp:
+          Enabled RTTI in all configurations.
 
 Mon Dec  8 17:00:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
-	  Fixed release configuration
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+          Fixed release configuration
 
 Mon Dec  8 16:31:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Bug_1636_Regression/bug_1636_testclient.dsp:
-	  Fixed wrong path to TAO_IDL compiler, stupid mistake from me
+        * tests/Bug_1636_Regression/bug_1636_testclient.dsp:
+          Fixed wrong path to TAO_IDL compiler, stupid mistake from me
 
 Mon Dec  8 16:00:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -324,117 +332,117 @@ Mon Dec  8 16:00:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec  8 10:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/Time/Time.mpc:
-	  Changed name of project to fix msvc6 duplicate project error. Set
-	  exename to client to match the perl script.
+        * orbsvcs/tests/Time/Time.mpc:
+          Changed name of project to fix msvc6 duplicate project error. Set
+          exename to client to match the perl script.
 
 Mon Dec  8 09:10:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
           Fixed incorrect exception macro
 
 Sun Dec  7 22:34:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 
-	  Fix for a race condition that I dreamt up, but could
-	  happen. This is just a continuation to "Sat Dec  6 23:42:13 2003
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
+          Fix for a race condition that I dreamt up, but could
+          happen. This is just a continuation to "Sat Dec  6 23:42:13 2003
+          Balachandran Natarajan  <bala@dre.vanderbilt.edu>".
 
 Sun Dec  7 20:36:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.h:
-	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.h:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 Sun Dec  7 18:44:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
 
-	  Add needed #includes due to the split up in IOP_IOR.pidl
+          Add needed #includes due to the split up in IOP_IOR.pidl
 
 Sun Dec  7 18:32:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
-	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
-	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
 
-	  Fixed a compile error due to the changes in IOP_IOR.pidl.
+          Fixed a compile error due to the changes in IOP_IOR.pidl.
 
 Sun Dec  7 12:26:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
 
-	  Fixed a compile error due to the changes in IOP_IOR.pidl.
+          Fixed a compile error due to the changes in IOP_IOR.pidl.
 
 Sun Dec  7 17:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/AMH/Sink_Server/mt_server.dsp:
-	* examples/Buffered_AMI/client.dsp:
-	* examples/Buffered_AMI/server.dsp:
-	* examples/Buffered_Oneways/client.dsp:
-	* examples/Buffered_Oneways/server.dsp:
-	* examples/Callback_Quoter/Consumer.dsp:
-	* examples/Callback_Quoter/Notifier.dsp:
-	* examples/Callback_Quoter/Supplier.dsp:
-	* examples/Content_Server/AMI_Iterator/client.dsp:
-	* examples/Content_Server/AMI_Iterator/server.dsp:
-	* examples/Content_Server/AMI_Observer/client.dsp:
-	* examples/Content_Server/AMI_Observer/server.dsp:
-	* examples/Content_Server/SMI_Iterator/client.dsp:
-	* examples/Content_Server/SMI_Iterator/server.dsp:
-	* examples/Event_Comm/Consumer.dsp:
-	* examples/Event_Comm/Notifier.dsp:
-	* examples/Event_Comm/Supplier.dsp:
-	* examples/Load_Balancing/client.dsp:
-	* examples/Load_Balancing/server.dsp:
-	* examples/Load_Balancing/service.dsp:
-	* examples/Load_Balancing_persistent/client.dsp:
-	* examples/Load_Balancing_persistent/server.dsp:
-	* examples/Load_Balancing_persistent/service.dsp:
-	* examples/OBV/Typed_Events/client.dsp:
-	* examples/OBV/Typed_Events/server.dsp:
-	* examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
-	* examples/Persistent_Grid/Persistent_Grid_Second_Client_Files.dsp:
-	* examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
-	* examples/PluggableUDP/tests/Basic/client.dsp:
-	* examples/PluggableUDP/tests/Basic/server.dsp:
-	* examples/PluggableUDP/tests/Performance/client.dsp:
-	* examples/PluggableUDP/tests/Performance/server.dsp:
-	* examples/PluggableUDP/tests/SimplePerformance/client.dsp:
-	* examples/PluggableUDP/tests/SimplePerformance/server.dsp:
-	* examples/POA/Default_Servant/client.dsp:
-	* examples/POA/Default_Servant/server.dsp:
-	* examples/POA/DSI/client.dsp:
-	* examples/POA/DSI/server.dsp:
-	* examples/POA/FindPOA/FindPOA.dsp:
-	* examples/POA/Forwarding/client.dsp:
-	* examples/POA/Forwarding/server.dsp:
-	* examples/POA/On_Demand_Loading/server.dsp:
-	* examples/POA/TIE/client.dsp:
-	* examples/POA/TIE/server.dsp:
-	* examples/Quoter/client.dsp:
-	* examples/Quoter/Factory_Finder.dsp:
-	* examples/Quoter/Generic_Factory.dsp:
-	* examples/Quoter/server.dsp:
-	* examples/RTCORBA/Activity/activity.dsp:
-	* examples/Simple/bank/client.dsp:
-	* examples/Simple/bank/server.dsp:
-	* examples/Simple/chat/client.dsp:
-	* examples/Simple/chat/server.dsp:
-	* examples/Simple/echo/client.dsp:
-	* examples/Simple/echo/server.dsp:
-	* examples/Simple/grid/client.dsp:
-	* examples/Simple/grid/server.dsp:
-	* examples/Simple/time/client.dsp:
-	* examples/Simple/time/server.dsp:
-	* examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
-	* examples/Simulator/Event_Supplier/Event_Sup.dsp:
-	* examples/Simulator/Event_Supplier/Logging_Sup.dsp:
-	  Enabled RTTI in all configurations
+        * examples/AMH/Sink_Server/mt_server.dsp:
+        * examples/Buffered_AMI/client.dsp:
+        * examples/Buffered_AMI/server.dsp:
+        * examples/Buffered_Oneways/client.dsp:
+        * examples/Buffered_Oneways/server.dsp:
+        * examples/Callback_Quoter/Consumer.dsp:
+        * examples/Callback_Quoter/Notifier.dsp:
+        * examples/Callback_Quoter/Supplier.dsp:
+        * examples/Content_Server/AMI_Iterator/client.dsp:
+        * examples/Content_Server/AMI_Iterator/server.dsp:
+        * examples/Content_Server/AMI_Observer/client.dsp:
+        * examples/Content_Server/AMI_Observer/server.dsp:
+        * examples/Content_Server/SMI_Iterator/client.dsp:
+        * examples/Content_Server/SMI_Iterator/server.dsp:
+        * examples/Event_Comm/Consumer.dsp:
+        * examples/Event_Comm/Notifier.dsp:
+        * examples/Event_Comm/Supplier.dsp:
+        * examples/Load_Balancing/client.dsp:
+        * examples/Load_Balancing/server.dsp:
+        * examples/Load_Balancing/service.dsp:
+        * examples/Load_Balancing_persistent/client.dsp:
+        * examples/Load_Balancing_persistent/server.dsp:
+        * examples/Load_Balancing_persistent/service.dsp:
+        * examples/OBV/Typed_Events/client.dsp:
+        * examples/OBV/Typed_Events/server.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Second_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Performance/client.dsp:
+        * examples/PluggableUDP/tests/Performance/server.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+        * examples/POA/Default_Servant/client.dsp:
+        * examples/POA/Default_Servant/server.dsp:
+        * examples/POA/DSI/client.dsp:
+        * examples/POA/DSI/server.dsp:
+        * examples/POA/FindPOA/FindPOA.dsp:
+        * examples/POA/Forwarding/client.dsp:
+        * examples/POA/Forwarding/server.dsp:
+        * examples/POA/On_Demand_Loading/server.dsp:
+        * examples/POA/TIE/client.dsp:
+        * examples/POA/TIE/server.dsp:
+        * examples/Quoter/client.dsp:
+        * examples/Quoter/Factory_Finder.dsp:
+        * examples/Quoter/Generic_Factory.dsp:
+        * examples/Quoter/server.dsp:
+        * examples/RTCORBA/Activity/activity.dsp:
+        * examples/Simple/bank/client.dsp:
+        * examples/Simple/bank/server.dsp:
+        * examples/Simple/chat/client.dsp:
+        * examples/Simple/chat/server.dsp:
+        * examples/Simple/echo/client.dsp:
+        * examples/Simple/echo/server.dsp:
+        * examples/Simple/grid/client.dsp:
+        * examples/Simple/grid/server.dsp:
+        * examples/Simple/time/client.dsp:
+        * examples/Simple/time/server.dsp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Event_Sup.dsp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.dsp:
+          Enabled RTTI in all configurations
 
 Sun Dec  7 10:50:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -451,86 +459,86 @@ Sun Dec  7 10:50:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Dec  7 10:24:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_IORA.cpp:
-	* tao/IOP_IORA.h:
+        * tao/IOP_IORA.cpp:
+        * tao/IOP_IORA.h:
 
-	  Regenerated code.
+          Regenerated code.
 
 Sun Dec  7 16:02:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Sequence_Latency/DII/client.dsp:
-	* performance-tests/Sequence_Latency/DII/server.dsp:
-	* performance-tests/Sequence_Latency/Deferred/client.dsp:
-	* performance-tests/Sequence_Latency/Deferred/client.dsp:
-	* performance-tests/Sequence_Latency/AMH/Single_Threaded/client.dsp:
-	* performance-tests/Sequence_Latency/AMH/Single_Threaded/server.dsp:
-	* performance-tests/Sequence_Latency/AMI/client.dsp:
-	* performance-tests/Sequence_Latency/AMI/server.dsp:
-	* performance-tests/RTCorba/Thread_Pool/client.dsp:
-	* performance-tests/RTCorba/Thread_Pool/server.dsp:
-	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
-	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
-	  Fixed release configuration
+        * performance-tests/Sequence_Latency/DII/client.dsp:
+        * performance-tests/Sequence_Latency/DII/server.dsp:
+        * performance-tests/Sequence_Latency/Deferred/client.dsp:
+        * performance-tests/Sequence_Latency/Deferred/client.dsp:
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/client.dsp:
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded/server.dsp:
+        * performance-tests/Sequence_Latency/AMI/client.dsp:
+        * performance-tests/Sequence_Latency/AMI/server.dsp:
+        * performance-tests/RTCorba/Thread_Pool/client.dsp:
+        * performance-tests/RTCorba/Thread_Pool/server.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+          Fixed release configuration
 
 Sun Dec  7 09:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_IOR.pidl:
+        * tao/IOP_IOR.pidl:
 
-	  Do not use sequence<octet>, use CORBA::OctetSeq instead.
+          Do not use sequence<octet>, use CORBA::OctetSeq instead.
 
-	* tao/IOP_IORC.cpp:
-	* tao/IOP_IORC.h:
-	* tao/IOP_IORC.i:
+        * tao/IOP_IORC.cpp:
+        * tao/IOP_IORC.h:
+        * tao/IOP_IORC.i:
 
-	  Regenerated the code, since we had all the sequence<octet> code
-	  with has other implications in terms of footprint and
-	  compilation times.
+          Regenerated the code, since we had all the sequence<octet> code
+          with has other implications in terms of footprint and
+          compilation times.
 
-	* tao/diffs/OctetSeq.diff:
+        * tao/diffs/OctetSeq.diff:
 
-	  Religious update of the diff file, which is very minimal.
+          Religious update of the diff file, which is very minimal.
 
 Sun Dec  7 08:49:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h.diff:
-	* examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h.diff:
-	* examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h.diff:
-	* examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h.diff:
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h.diff:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h.diff:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h.diff:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h.diff:
 
-	  These diff files are not required anymore.
+          These diff files are not required anymore.
 
 Sun Dec  7 14:29:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Sequence_Latency/Single_Threaded/client.dsp:
-	* performance-tests/Sequence_Latency/Single_Threaded/server.dsp:
-	* performance-tests/Sequence_Latency/DSI/client.dsp:
-	* performance-tests/Sequence_Latency/DSI/server.dsp:
-	  Fixed release configuration
+        * performance-tests/Sequence_Latency/Single_Threaded/client.dsp:
+        * performance-tests/Sequence_Latency/Single_Threaded/server.dsp:
+        * performance-tests/Sequence_Latency/DSI/client.dsp:
+        * performance-tests/Sequence_Latency/DSI/server.dsp:
+          Fixed release configuration
 
-	* performance-tests/Sequence_Latency/DSI/DSI_Latency.ncb:
-	* performance-tests/Sequence_Latency/DSI/DSI_Latency.opt:
-	  Removed these files from the repo, they are MSVC6 generated and
-	  don't need to be in the repo
+        * performance-tests/Sequence_Latency/DSI/DSI_Latency.ncb:
+        * performance-tests/Sequence_Latency/DSI/DSI_Latency.opt:
+          Removed these files from the repo, they are MSVC6 generated and
+          don't need to be in the repo
 
 Sun Dec  7 14:24:06 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/AMH_Exceptions/server.dsp:
-	* performance-tests/Throughput/client.dsp:
-	* performance-tests/Throughput/server.dsp:
-	* performance-tests/Sequence_Latency/Thread_Pool/client.dsp:
-	* performance-tests/Sequence_Latency/Thread_Pool/server.dsp:
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/client.dsp:
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/server.dsp:
-	  Fixed release configuration
+        * tests/AMH_Exceptions/server.dsp:
+        * performance-tests/Throughput/client.dsp:
+        * performance-tests/Throughput/server.dsp:
+        * performance-tests/Sequence_Latency/Thread_Pool/client.dsp:
+        * performance-tests/Sequence_Latency/Thread_Pool/server.dsp:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/client.dsp:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/server.dsp:
+          Fixed release configuration
 
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection_Latency.ncb:
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection_Latency.opt:
-	  Removed these files from the repo, they are MSVC6 generated and
-	  don't need to be in the repo
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection_Latency.ncb:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Connection_Latency.opt:
+          Removed these files from the repo, they are MSVC6 generated and
+          don't need to be in the repo
 
 Sun Dec  7 10:03:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -547,11 +555,11 @@ Sun Dec  7 09:49:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec  7 00:53:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	* orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
-	* orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
 
-	  Effects of Auto_Functor directory change.
+          Effects of Auto_Functor directory change.
 
 Sun Dec  7 000:46:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -568,81 +576,81 @@ Sun Dec  7 000:46:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Dec  7 00:41:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Asynch_Reply_Dispatcher_Base.cpp:
-	* tao/Asynch_Reply_Dispatcher_Base.h:
-	* tao/Asynch_Reply_Dispatcher_Base.i:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
-	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
-	* tao/Messaging/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/Asynch_Reply_Dispatcher_Base.i:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.h:
 
-	  Fixed a bunch of compile errors when compiled with exceptions=0.
+          Fixed a bunch of compile errors when compiled with exceptions=0.
 
 Sat Dec  6 23:42:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	This checkin is a fix for the various race conditions in Asynch
+        This checkin is a fix for the various race conditions in Asynch
         Invocation reported by Cyrille Chepelov. The various race
         conditions were
 
-	  - Race between threads trying to dispatch replies and timeouts
-	  - Race between threads propogating timeouts and propogating
-	    replies.
+          - Race between threads trying to dispatch replies and timeouts
+          - Race between threads propogating timeouts and propogating
+            replies.
 
-	The crux of the changes involved adding refcounts to the
+        The crux of the changes involved adding refcounts to the
         Asynch_Reply_Dispatcher and Asynch_Timeout_Handler. To handle
         these cleanly I have made some supplementary change like moving
         Auto_Functor to the TAO library from Utils library, since it is
         more useful for a bunch of things.
 
-	* tao/Asynch_Reply_Dispatcher_Base.cpp
-	* tao/Asynch_Reply_Dispatcher_Base.h:
-	* tao/Asynch_Reply_Dispatcher_Base.i:
+        * tao/Asynch_Reply_Dispatcher_Base.cpp
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/Asynch_Reply_Dispatcher_Base.i:
 
-	  Added refcounting to this class. Further added a Functor which
-	  can be used by Auto_Functor.
+          Added refcounting to this class. Further added a Functor which
+          can be used by Auto_Functor.
 
-	* tao/Muxed_TMS.cpp:
+        * tao/Muxed_TMS.cpp:
 
-	  Fixed a duplicate debug statement in dispatch_reply ().
+          Fixed a duplicate debug statement in dispatch_reply ().
 
-	* tao/Messaging/Asynch_Invocation.cpp:
-	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
 
-	  Use Auto_Functor instead of auto_ptr <> since the reply
-	  dispatcher cannot be deleted, but can only be refcounted.
+          Use Auto_Functor instead of auto_ptr <> since the reply
+          dispatcher cannot be deleted, but can only be refcounted.
 
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp::
-	* tao/Messaging/Asynch_Reply_Dispatcher.h:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp::
+        * tao/Messaging/Asynch_Reply_Dispatcher.h:
 
-	  The reply dispatcher creates a timeout handler when
-	  schedule_timer is called and holds a refcount of the timeout
-	  handler. The calls close_connection (), dispatch_reply () and
-	  reply_timed_out () doesn't call delete this, but decrements the
-	  refcount.
+          The reply dispatcher creates a timeout handler when
+          schedule_timer is called and holds a refcount of the timeout
+          handler. The calls close_connection (), dispatch_reply () and
+          reply_timed_out () doesn't call delete this, but decrements the
+          refcount.
 
         * tao/Messaging/Asynch_Timeout_Handler.cpp:
 
-	  Enable refcounting of the timeout handler. This object holds a
-	  refcounted reply dispatcher object. Will decrement the refcount
-	  of the reply dispatcher when the object is destroyed.
+          Enable refcounting of the timeout handler. This object holds a
+          refcounted reply dispatcher object. Will decrement the refcount
+          of the reply dispatcher when the object is destroyed.
 
-	* tao/Makefile.tao:
-	* tao/Auto_Functor.{h,cpp,inl}:
-	  Moved the autofunctor class form the Utils library to the TAO
-	  library.
+        * tao/Makefile.tao:
+        * tao/Auto_Functor.{h,cpp,inl}:
+          Moved the autofunctor class form the Utils library to the TAO
+          library.
 
-	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
 
-	  Replicated the changes made in the Asynch classes to DII
-	  classes.
+          Replicated the changes made in the Asynch classes to DII
+          classes.
 
-	* tao/Utils/Implicit_Deactivator.h:
-	* tao/Utils/ORB_Destroyer.h:
+        * tao/Utils/Implicit_Deactivator.h:
+        * tao/Utils/ORB_Destroyer.h:
 
-	  Changed the include path for Auto_Functor.h
+          Changed the include path for Auto_Functor.h
 
 Sat Dec  6 20:35:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -654,57 +662,57 @@ Sat Dec  6 20:35:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sat Dec  6 13:26:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Advanced/README_DOCGROUP:
+        * examples/Advanced/README_DOCGROUP:
 
-	  A README file that explains why we cannot support the following
-	  examples anymore.
+          A README file that explains why we cannot support the following
+          examples anymore.
 
-	* examples/Advanced/ch_12/Advanced_ch_12.mpc:
-	* examples/Advanced/ch_18/Advanced_ch_18.mpc:
-	* examples/Advanced/ch_21/Advanced_ch_21.mpc:
+        * examples/Advanced/ch_12/Advanced_ch_12.mpc:
+        * examples/Advanced/ch_18/Advanced_ch_18.mpc:
+        * examples/Advanced/ch_21/Advanced_ch_21.mpc:
 
-	  Removed all these MPC files. These directories will not be
-	  henceforth compiled  in the daily builds. The reason is
-	  explained in the file above. The crux of the problem is the
-	  dependancy between the examples and old iostream
-	  library. Graduating them to the new iostream library introduces
-	  lots of changes and does break code with old iostream library. I
-	  don't think the doc_group will have any time in the near future
-	  to get these examples compiling reliably with older and new
-	  generation of compilers. If someone can give patches we will, as
-	  usual, integrate them.
+          Removed all these MPC files. These directories will not be
+          henceforth compiled  in the daily builds. The reason is
+          explained in the file above. The crux of the problem is the
+          dependancy between the examples and old iostream
+          library. Graduating them to the new iostream library introduces
+          lots of changes and does break code with old iostream library. I
+          don't think the doc_group will have any time in the near future
+          to get these examples compiling reliably with older and new
+          generation of compilers. If someone can give patches we will, as
+          usual, integrate them.
 
 Sat Dec  6 12:37:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
 
-	  Changed the names of enum declarations "NONE" in these
-	  files. This was causing a clash with VxWORKS systems
-	  headers. Thanks to Thomas Lockhart for providing the patches.
+          Changed the names of enum declarations "NONE" in these
+          files. This was causing a clash with VxWORKS systems
+          headers. Thanks to Thomas Lockhart for providing the patches.
 
 Sat Dec  6 18:25:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Latency/DII/client.dsp:
-	* performance-tests/Latency/DII/server.dsp:
-	* performance-tests/Latency/Deferred/client.dsp:
-	* performance-tests/Latency/Deferred/server.dsp:
-	* performance-tests/Latency/AMI/client.dsp:
-	* performance-tests/Latency/AMI/server.dsp:
-	* performance-tests/Latency/AMH/Single_Threaded/client.dsp:
-	* performance-tests/Latency/AMH/Single_Threaded/server.dsp:
-	* performance-tests/Latency/DSI/client.dsp:
-	* performance-tests/Latency/DSI/server.dsp:
-	* performance-tests/Latency/Single_Threaded/client.dsp:
-	* performance-tests/Latency/Single_Threaded/server.dsp:
-	* performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
-	* performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	  Another set of fixes in the release configuration.
+        * performance-tests/Latency/DII/client.dsp:
+        * performance-tests/Latency/DII/server.dsp:
+        * performance-tests/Latency/Deferred/client.dsp:
+        * performance-tests/Latency/Deferred/server.dsp:
+        * performance-tests/Latency/AMI/client.dsp:
+        * performance-tests/Latency/AMI/server.dsp:
+        * performance-tests/Latency/AMH/Single_Threaded/client.dsp:
+        * performance-tests/Latency/AMH/Single_Threaded/server.dsp:
+        * performance-tests/Latency/DSI/client.dsp:
+        * performance-tests/Latency/DSI/server.dsp:
+        * performance-tests/Latency/Single_Threaded/client.dsp:
+        * performance-tests/Latency/Single_Threaded/server.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+          Another set of fixes in the release configuration.
 
 Sat Dec  6 18:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -713,74 +721,74 @@ Sat Dec  6 18:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Dec  6 10:41:50 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/PortableServer/Object_Adapter.cpp: Replaced the use of
-	  operator== to compare to thread ids with ACE_OS::thr_equal().
-  	  Thanks to Gary Maxey <gary.maxey@hp.com> for reporting this.
-	  This fixes bugid 1663.
+        * tao/PortableServer/Object_Adapter.cpp: Replaced the use of
+          operator== to compare to thread ids with ACE_OS::thr_equal().
+          Thanks to Gary Maxey <gary.maxey@hp.com> for reporting this.
+          This fixes bugid 1663.
 
 Sat Dec  6 09:19:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/CodeSets/UCS4_UTF16/WUCS4_UTF16.cpp:
+        * tests/CodeSets/UCS4_UTF16/WUCS4_UTF16.cpp:
 
-	  #included OS_Memory.h to get the declaration of ACE_NEW_RETURN.
+          #included OS_Memory.h to get the declaration of ACE_NEW_RETURN.
 
 Sat Dec  6 13:52:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/RTEvent.dsp:
-	* docs/tutorials/Quoter/RT_Event_Service/server.dsp:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
-	* docs/tutorials/Quoter/Simple/Server/server.dsp:
-	* docs/tutorials/Quoter/AMI/server.dsp:
-	* examples/AMH/Sink_Server/client.dsp:
-	* examples/AMH/Sink_Server/server.dsp:
-	  Another set of project setting fixes
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.dsp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
+        * docs/tutorials/Quoter/Simple/Server/server.dsp:
+        * docs/tutorials/Quoter/AMI/server.dsp:
+        * examples/AMH/Sink_Server/client.dsp:
+        * examples/AMH/Sink_Server/server.dsp:
+          Another set of project setting fixes
 
 Sat Dec  6 13:27:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAOACE.dsw:
-	  SvcUtils is dependent on PortableServer.
+        * TAOACE.dsw:
+          SvcUtils is dependent on PortableServer.
 
 Sat Dec  6 12:43:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Bug_1639_Regression/struct_client.cpp:
-	  Fixed warning
+        * tests/Bug_1639_Regression/struct_client.cpp:
+          Fixed warning
 
 Fri Dec  5 14:10:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
-	* orbsvcs/orbsvcs/RTSched.dsp:
-	* orbsvcs/orbsvcs/RTEvent.dsp:
-	* orbsvcs/orbsvcs/RTOLDEvent.dsp:
-	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
-	* orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
-	* orbsvcs/ImplRepo_Service/implrepo.dsp:
-	* orbsvcs/LoadBalancer/LoadManager.dsp:
-	* orbsvcs/LoadBalancer/LoadMonitor.dsp:
-	* orbsvcs/orbsvcs/Metrics.dsp:
-	* orbsvcs/Naming_Service/NT_Naming_Service.dsp:
-	* orbsvcs/Notify_Service/Notify_Service.dsp:
-	* orbsvcs/orbsvcs/RTCORBAEvent.dsp:
-	* orbsvcs/orbsvcs/RTEventLog.dsp:
-	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp:
-	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
-	* examples/Simple/time-date/Time_Date.dsp:
-	* examples/POA/Generic_Servant/server.dsp:
-	* tests/UNKNOWN_Exception/server.dsp:
-	* tests/Stack_Recursion/server.dsp:
-	* tests/RTCORBA/Client_Propagated/client.dsp:
-	* tests/RTCORBA/Client_Propagated/server.dsp:
-	* tests/Oneways_Invoking_Twoways/client.dsp:
-	* tests/Nested_Upcall_Crash/client.dsp:
-	* tests/Nested_Upcall_Crash/scavenger.dsp:
-	* tests/Nested_Upcall_Crash/server.dsp:
-	* tests/Muxing/server.dsp:
-	* tests/Crashed_Callback/client.dsp:
-	* tests/Bug_1627_Regression/Bug_1627_Client.dsp:
-	* tests/Bug_1627_Regression/Bug_1627_Server.dsp:
-	* tests/Bug_1330_Regression/Bug_1330_Client.dsp:
-	* tests/Bug_1330_Regression/Bug_1330_Server.dsp:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+        * orbsvcs/orbsvcs/RTSched.dsp:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent.dsp:
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/LoadBalancer/LoadManager.dsp:
+        * orbsvcs/LoadBalancer/LoadMonitor.dsp:
+        * orbsvcs/orbsvcs/Metrics.dsp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/orbsvcs/RTCORBAEvent.dsp:
+        * orbsvcs/orbsvcs/RTEventLog.dsp:
+        * orbsvcs/ImplRepo_Service/tao_imr.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp:
+        * orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+        * examples/Simple/time-date/Time_Date.dsp:
+        * examples/POA/Generic_Servant/server.dsp:
+        * tests/UNKNOWN_Exception/server.dsp:
+        * tests/Stack_Recursion/server.dsp:
+        * tests/RTCORBA/Client_Propagated/client.dsp:
+        * tests/RTCORBA/Client_Propagated/server.dsp:
+        * tests/Oneways_Invoking_Twoways/client.dsp:
+        * tests/Nested_Upcall_Crash/client.dsp:
+        * tests/Nested_Upcall_Crash/scavenger.dsp:
+        * tests/Nested_Upcall_Crash/server.dsp:
+        * tests/Muxing/server.dsp:
+        * tests/Crashed_Callback/client.dsp:
+        * tests/Bug_1627_Regression/Bug_1627_Client.dsp:
+        * tests/Bug_1627_Regression/Bug_1627_Server.dsp:
+        * tests/Bug_1330_Regression/Bug_1330_Client.dsp:
+        * tests/Bug_1330_Regression/Bug_1330_Server.dsp:
           Fixed release configuration of these project files. Not
           completely finished yet, but this is a step in the right
           direction. When somebody resets also these I will help
@@ -788,12 +796,12 @@ Fri Dec  5 14:10:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec  5 13:09:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/CosConcurrency.dsp:
-	* orbsvcs/orbsvcs/CosLifeCycle.dsp:
-	* orbsvcs/orbsvcs/PortableGroup.dsp:
-	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
-	* orbsvcs/orbsvcs/CosTime.dsp:
-	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle.dsp:
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+        * orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+        * orbsvcs/orbsvcs/CosTime.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
 
 Fri Dec  5 10:30:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -815,20 +823,20 @@ Thu Dec  4 14:15:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Dec  4 18:37:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
-	  Fixed incorrect method name in ACE_PRINT_EXCEPTION
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+          Fixed incorrect method name in ACE_PRINT_EXCEPTION
 
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.{h,cpp}:
-	  Fixed emulated exception build
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.{h,cpp}:
+          Fixed emulated exception build
 
 Thu Dec  4 16:45:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
-	  Fixed compile problem with emulated exceptions
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+          Fixed compile problem with emulated exceptions
 
 Thu Dec  4 09:09:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/RTCORBA/RT_Mutex.h:
+        * tao/RTCORBA/RT_Mutex.h:
           In case TAO_HAS_NAMED_RT_MUTEXES is set to 1, include
           ace/SString.h to get ACE_CString.
 
@@ -852,11 +860,11 @@ Wed Dec  3 10:12:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Wed Dec  3 16:05:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/UNKNOWN_Exception/UNKNOWN_Exception_Client.bor:
-	* tests/UNKNOWN_Exception/UNKNOWN_Exception_Server.bor:
-	* tests/Timeout/client.bor:
-	* tests/Timeout/server.bor:
-	  Added missing Id tag
+        * tests/UNKNOWN_Exception/UNKNOWN_Exception_Client.bor:
+        * tests/UNKNOWN_Exception/UNKNOWN_Exception_Server.bor:
+        * tests/Timeout/client.bor:
+        * tests/Timeout/server.bor:
+          Added missing Id tag
 
 Wed Dec  3 09:41:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -976,7 +984,7 @@ Tue Dec  2 16:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec  2 14:42:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* utils/NamingView/NamingViewer.cpp:
+        * utils/NamingView/NamingViewer.cpp:
           Added include of ace/ACE.h to fix compile errors. Thanks to
           UV Wildner <djuv@gmx.net> for reporting this.
 
@@ -988,20 +996,20 @@ Tue Dec  2 13:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec  2 07:18:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Object_KeyC.cpp (encode_string_to_sequence):
+        * tao/Object_KeyC.cpp (encode_string_to_sequence):
 
-	  Thanks to Cyrille Chepelov <cyrille@softek.fr> for catching a
-	  buffer overrun in the  for loop.
+          Thanks to Cyrille Chepelov <cyrille@softek.fr> for catching a
+          buffer overrun in the  for loop.
 
 Tue Dec  2 08:17:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.h:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.h:
           Fixed incorrect exception macro usage to fix emulated exception
           build.
 
 Tue Dec  2 07:56:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Worker.h:
           Added include ace/os_include/os_stddef.h to get size_t.
 
 Mon Dec  1 12:20:11 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
@@ -1009,8 +1017,8 @@ Mon Dec  1 12:20:11 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
           Use ACE_AUTOP_PTR_RESET instead of auto_ptr.reset() to fix the
- 	  problem in MSVC 6. Thanks to Alan l Batongbacal <alanlb@vt.edu>
- 	  for reporting the problem.
+          problem in MSVC 6. Thanks to Alan l Batongbacal <alanlb@vt.edu>
+          for reporting the problem.
 
         * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
           Fixed warnings in SunForte8 build.
@@ -1049,7 +1057,7 @@ Mon Dec 01 03:05:44 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 Mon Dec 01 07:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/RtEC/Simple/RtEC_Simple.mpc:
+        * orbsvcs/examples/RtEC/Simple/RtEC_Simple.mpc:
           This examples is using the Naming Service, so added this to the
           MPC file.
 
@@ -1094,7 +1102,7 @@ Sat Nov 29 20:27:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:
 
-	  Since the local variable that was supposed to be removed in
+          Since the local variable that was supposed to be removed in
 
           Sat Nov 29 11:13:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1107,9 +1115,9 @@ Sat Nov 29 20:27:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sat Nov 29 19:40:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
 
-	  Fixed an unused variable warning.
+          Fixed an unused variable warning.
 
 Sat Nov 29 12:45:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1163,11 +1171,11 @@ Sat Nov 29 09:43:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 28 22:46:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
 
-	  When sending a AMI call, pass a oneway identifier so that the
-	  required infrastructure within the ORB for request buffering,
-	  non-blocking semantics with LF flushing strategy etc. fires.
+          When sending a AMI call, pass a oneway identifier so that the
+          required infrastructure within the ORB for request buffering,
+          non-blocking semantics with LF flushing strategy etc. fires.
 
 Fri Nov 28 21:39:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1183,9 +1191,9 @@ Fri Nov 28 21:39:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 28 17:21:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Cosmetic fix.
+          Cosmetic fix.
 
 Fri Nov 28 12:53:48 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
@@ -1284,186 +1292,186 @@ Fri Nov 28 09:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 27 20:51:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Fixed a problem with this checkin "Thu Nov 27 18:07:15 2003
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". The above
-	  checkin was deadlocking the ORB.
+          Fixed a problem with this checkin "Thu Nov 27 18:07:15 2003
+          Balachandran Natarajan  <bala@dre.vanderbilt.edu>". The above
+          checkin was deadlocking the ORB.
 
 Thu Nov 27 18:33:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Container_T.cpp:
 
-	  Re-ordered includes to prevent compile errors. This shoudl
-	  prevent compilel errors in static_core build.
+          Re-ordered includes to prevent compile errors. This shoudl
+          prevent compilel errors in static_core build.
 
 Thu Nov 27 18:07:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (root_poa):
+        * tao/ORB_Core.cpp (root_poa):
 
-	  Added a double-checked-locking in the implementation of
-	  root_poa. Thanks to Sebastien Lalonde for pointing this
-	  out. Looks like the intial authors thought that users wouldn't
-	  call resolve_initial_references () from multiple threads.
+          Added a double-checked-locking in the implementation of
+          root_poa. Thanks to Sebastien Lalonde for pointing this
+          out. Looks like the intial authors thought that users wouldn't
+          call resolve_initial_references () from multiple threads.
 
 Thu Nov 27 17:41:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/implrepo.dsp:
-	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
-	* orbsvcs/tests/Notify/Basic/AdminProperties.dsp:
-	* orbsvcs/tests/Notify/Basic/Filter.dsp:
-	* orbsvcs/tests/Notify/Basic/MultiTypes.dsp:
-	* orbsvcs/tests/Notify/Basic/Updates.dsp:
-	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
-	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
-	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
-	* orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp:
-	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp:
-	* orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp:
-	* orbsvcs/tests/Notify/Driver/Driver.dsp:
-	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp:
-	* orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp:
-	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp:
-	* orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp:
-	* orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp:
-	* orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp:
-	* orbsvcs/tests/Notify/RT_lib/TAO_RT_NotifyTests.dsp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp:
-	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
-	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp:
-	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
-	* orbsvcs/tests/Security/Big_Request/client.cpp
-	* orbsvcs/tests/Security/Big_Request/server.cpp
-	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
-	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
-	* orbsvcs/tests/Security/Crash_Test/client.cpp
-	* orbsvcs/tests/Security/Crash_Test/server.cpp
-	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
-	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/tao_imr.dsp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties.dsp:
+        * orbsvcs/tests/Notify/Basic/Filter.dsp:
+        * orbsvcs/tests/Notify/Basic/MultiTypes.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Driver/Driver.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/RT_lib/TAO_RT_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
+        * orbsvcs/tests/Security/Big_Request/client.cpp
+        * orbsvcs/tests/Security/Big_Request/server.cpp
+        * orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
+        * orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
+        * orbsvcs/tests/Security/Crash_Test/client.cpp
+        * orbsvcs/tests/Security/Crash_Test/server.cpp
+        * orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
 
-	  Another set of fixes for the dsp files.
+          Another set of fixes for the dsp files.
 
-	* orbsvcs/tests/Security/MT_SSLIOP/test_i.cpp:
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp:
-	* orbsvcs/tests/Security/SecurityLevel1/server.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/test_i.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/server.cpp:
 
-	  Additional includes needed to get it compiling on Win32.
+          Additional includes needed to get it compiling on Win32.
 
 Thu Nov 27 16:12:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/implrepo.dsp:
-	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
-	* orbsvcs/tests/Notify/Basic/AdminProperties.dsp:
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
-	* orbsvcs/tests/Notify/Basic/Events.dsp:
-	* orbsvcs/tests/Notify/Basic/Filter.dsp:
-	* orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
-	* orbsvcs/tests/Notify/Basic/LifeCycle.dsp:
-	* orbsvcs/tests/Notify/Basic/MultiTypes.dsp:
-	* orbsvcs/tests/Notify/Basic/Sequence.dsp:
-	* orbsvcs/tests/Notify/Basic/Simple.dsp:
-	* orbsvcs/tests/Notify/Basic/Updates.dsp:
-	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
-	* orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
-	* orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
-	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/tao_imr.dsp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/Notify/Basic/Events.dsp:
+        * orbsvcs/tests/Notify/Basic/Filter.dsp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycle.dsp:
+        * orbsvcs/tests/Notify/Basic/MultiTypes.dsp:
+        * orbsvcs/tests/Notify/Basic/Sequence.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.dsp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.dsp:
+        * orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.dsp:
 
-	  Some more fixes.
+          Some more fixes.
 
 Thu Nov 27 13:10:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/ImplRepo_Service/implrepo.dsp:
-	* orbsvcs/ImplRepo_Service/tao_imr.dsp:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
-	* orbsvcs/tests/ImplRepo/airplane_client.dsp:
-	* orbsvcs/tests/ImplRepo/airplane_server.dsp:
-	* orbsvcs/tests/ImplRepo/nestea_client.dsp:
-	* orbsvcs/tests/ImplRepo/nestea_server.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/tao_imr.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGR/server.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_client.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
 
-	  Another set of dsp fixes. If these get reset again by someone,
-	  I may have to use the lead pipe that I have stacked in the
-	  corner of my room and pay a visit to those friends :-)!
+          Another set of dsp fixes. If these get reset again by someone,
+          I may have to use the lead pipe that I have stacked in the
+          corner of my room and pay a visit to those friends :-)!
 
-	  BTW, there are a lot more remaining.
+          BTW, there are a lot more remaining.
 
 Thu Nov 27 12:35:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Concurrency/CC_client.dsp:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
-	* orbsvcs/tests/Event/Performance/Connect.dsp:
-	* orbsvcs/tests/Event/Performance/Latency.dsp:
-	* orbsvcs/tests/Event/Performance/Latency_Server.dsp:
+        * orbsvcs/tests/Concurrency/CC_client.dsp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+        * orbsvcs/tests/Event/Performance/Connect.dsp:
+        * orbsvcs/tests/Event/Performance/Latency.dsp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.dsp:
 
-	  Not sure how the list of libraries and paths got whacked
-	  out. Reset all of them. Let us see how the builds go.
+          Not sure how the list of libraries and paths got whacked
+          out. Reset all of them. Let us see how the builds go.
 
 Thu Nov 27 17:52:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
-	  Added FT_ORBUtils
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
+          Added FT_ORBUtils
 
-	* orbsvcs/tests/IOR_MCast/server.bor:
-	* orbsvcs/tests/Property/client.bor:
-	* orbsvcs/tests/Property/server.bor:
-	* orbsvcs/tests/Time/client.bor:
-	* orbsvcs/tests/Redundant_Naming/makefile.bor:
-	* orbsvcs/tests/Simple_Naming/makefile.bor:
-	* orbsvcs/tests/Concurrency/CC_client.bor:
-	  Added Messaging library
+        * orbsvcs/tests/IOR_MCast/server.bor:
+        * orbsvcs/tests/Property/client.bor:
+        * orbsvcs/tests/Property/server.bor:
+        * orbsvcs/tests/Time/client.bor:
+        * orbsvcs/tests/Redundant_Naming/makefile.bor:
+        * orbsvcs/tests/Simple_Naming/makefile.bor:
+        * orbsvcs/tests/Concurrency/CC_client.bor:
+          Added Messaging library
 
 Thu Nov 27 10:55:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsp:
-	* orbsvcs/examples/Security/Send_File/server.cpp
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.dsp:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.dsp:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
-	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
-	* orbsvcs/tests/Bug_1334_Regression/Bug_1334_client.dsp:
-	* orbsvcs/tests/Bug_1334_Regression/client.cpp:
-	* tests/ICMG_Any_Bug/client.dsp:
-	* tests/ICMG_Any_Bug/server.dsp:
-	* tests/Nested_Upcall_Crash/client.dsp:
-	* tests/Nested_Upcall_Crash/scavenger.dsp:
-	* tests/Nested_Upcall_Crash/server.dsp:
-	* tests/Portable_Interceptors/IORInterceptor/server.dsp:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsp:
+        * orbsvcs/examples/Security/Send_File/server.cpp
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.dsp:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.dsp:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
+        * orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+        * orbsvcs/tests/Bug_1334_Regression/Bug_1334_client.dsp:
+        * orbsvcs/tests/Bug_1334_Regression/client.cpp:
+        * tests/ICMG_Any_Bug/client.dsp:
+        * tests/ICMG_Any_Bug/server.dsp:
+        * tests/Nested_Upcall_Crash/client.dsp:
+        * tests/Nested_Upcall_Crash/scavenger.dsp:
+        * tests/Nested_Upcall_Crash/server.dsp:
+        * tests/Portable_Interceptors/IORInterceptor/server.dsp:
 
-	  Fixed linking errors in Win32 builds.
+          Fixed linking errors in Win32 builds.
 
 Thu Nov 27 16:22:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Starter.bor:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Test.bor:
-	  Added Messaging library
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Starter.bor:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Test.bor:
+          Added Messaging library
 
-	* performance-tests/Latency/DII/client.bor:
-	  Added ValueType lib
+        * performance-tests/Latency/DII/client.bor:
+          Added ValueType lib
 
-	* performance-tests/Latency/Deferred/client.bor:
-	  Added Messaging and PortableServer library
+        * performance-tests/Latency/Deferred/client.bor:
+          Added Messaging and PortableServer library
 
 Thu Nov 27 16:03:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1479,10 +1487,10 @@ Thu Nov 27 15:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 27 08:55:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/AMI/client.cpp:
-	* tests/AMI/simple_client.cpp:
+        * tests/AMI/client.cpp:
+        * tests/AMI/simple_client.cpp:
 
-	  Fixed compile errors with g++.
+          Fixed compile errors with g++.
 
 Thu Nov 27 10:51:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1500,9 +1508,9 @@ Wed Nov 26 21:54:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov 26 19:15:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.dsp:
 
-	  Added missing libraries for linking.
+          Added missing libraries for linking.
 
 Wed Nov 26 17:26:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1546,114 +1554,114 @@ Wed Nov 26 14:15:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov 26 18:09:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
-	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
-	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
-	  It should be libs instead of lib, stupid typo made which I now correct
+        * docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+        * docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+          It should be libs instead of lib, stupid typo made which I now correct
 
 Wed Nov 26 12:04:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Content_Server/SMI_Iterator/Makefile:
-	* examples/Logging/Makefile:
-	* examples/ior_corbaloc/Makefile:
+        * examples/Content_Server/SMI_Iterator/Makefile:
+        * examples/Logging/Makefile:
+        * examples/ior_corbaloc/Makefile:
 
-	  Do not build them if CosNaming is not built.
+          Do not build them if CosNaming is not built.
 
 Wed Nov 26 11:48:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Scheduling_Service/Makefile:
-	* orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
 
-	  Check for RTSched instead of Sched before going ahead to build.
+          Check for RTSched instead of Sched before going ahead to build.
 
-	* orbsvcs/tests/ImplRepo/NameService/Makefile:
-	* orbsvcs/tests/Notify/Blocking/Makefile:
-	* orbsvcs/tests/Notify/Discarding/Makefile:
-	* orbsvcs/tests/Notify/MT_Dispatching/Makefile
-	* orbsvcs/tests/Notify/Ordering/Makefile:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
-	* orbsvcs/tests/Notify/Structured_Filter/Makefile:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
-	* orbsvcs/tests/Sched/Makefile:
-	* orbsvcs/tests/ior_corbaname/Makefile:
+        * orbsvcs/tests/ImplRepo/NameService/Makefile:
+        * orbsvcs/tests/Notify/Blocking/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
 
-	  Do not build any of them if their service level libraries are
-	  not buit For example, if Notify is not built do not build any of
-	  the executables in the above tests.
+          Do not build any of them if their service level libraries are
+          not buit For example, if Notify is not built do not build any of
+          the executables in the above tests.
 
 Wed Nov 26 17:46:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FT_ORB.bor:
-	  Removed this file from the archive, it has been replaced by the three
-	  new BCB makefiles below.
+        * orbsvcs/orbsvcs/FT_ORB.bor:
+          Removed this file from the archive, it has been replaced by the three
+          new BCB makefiles below.
 
-	* orbsvcs/orbsvcs/FT_ClientORB.bor:
-	* orbsvcs/orbsvcs/FT_ServerORB.bor:
-	* orbsvcs/orbsvcs/FTORB_Utils.bor:
-	  Added new BCB makefiles for FT
+        * orbsvcs/orbsvcs/FT_ClientORB.bor:
+        * orbsvcs/orbsvcs/FT_ServerORB.bor:
+        * orbsvcs/orbsvcs/FTORB_Utils.bor:
+          Added new BCB makefiles for FT
 
-	* orbsvcs/orbsvcs/Makefile.bor:
-	  Updated this makefile with the changes above
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Updated this makefile with the changes above
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.bor:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.bor:
-	  Updated these makefiles because of the changes above
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.bor:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.bor:
+          Updated these makefiles because of the changes above
 
 Wed Nov 26 11:00:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/RtCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
-	  Reordered the libraries to get it linking. Static linking needs
-	  proper ordering of libraries.
+        * performance-tests/RtCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+          Reordered the libraries to get it linking. Static linking needs
+          proper ordering of libraries.
 
 Wed Nov 26 10:20:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Servant_To_Reference_Test/server.cpp:
+        * tests/Servant_To_Reference_Test/server.cpp:
 
-	  Fixed a warning in g++ builds.
+          Fixed a warning in g++ builds.
 
 Wed Nov 26 15:20:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAOACE.dsw:
-	  Messaging needs PortableServer so added dependency
+        * TAOACE.dsw:
+          Messaging needs PortableServer so added dependency
 
 Wed Nov 26 14:32:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
-	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
-	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
-	  Add missing lib to fix link errors in our SunForte 8 build.
+        * docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+        * docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+          Add missing lib to fix link errors in our SunForte 8 build.
 
 Wed Nov 26 14:21:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Event_Comm/Event_Comm_i.cpp:
-	  If ACE_HAS_REGEX is defined include ace/OS_NS_regex.h to fix compile
-	  errors in Solaris Forte8 build.
+        * examples/Event_Comm/Event_Comm_i.cpp:
+          If ACE_HAS_REGEX is defined include ace/OS_NS_regex.h to fix compile
+          errors in Solaris Forte8 build.
 
 Wed Nov 26 14:13:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
-	  Added missing const qualifier
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
+          Added missing const qualifier
 
 Wed Nov 26 14:05:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/Naming_Service/Naming_Service.bor:
-	* orbsvcs/Naming_Service/NT_Naming_Service.bor:
-	* orbsvcs/Time_Service/Time_Service_Clerk.bor:
-	* orbsvcs/Time_Service/Time_Service_Server.bor:
-	* include/makeinclude/build_example.bor:
-	* examples/Quoter/Factory_finder.bor:
-	* examples/Quoter/Generic_factory.bor:
-	* examples/Quoter/Server.bor:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Starter.bor:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Test.bor:
-	* tests/InterOp-Naming/server.bor:
-	  Add Messaging library to fix link errors in BCB6 Static Build.
+        * orbsvcs/Naming_Service/Naming_Service.bor:
+        * orbsvcs/Naming_Service/NT_Naming_Service.bor:
+        * orbsvcs/Time_Service/Time_Service_Clerk.bor:
+        * orbsvcs/Time_Service/Time_Service_Server.bor:
+        * include/makeinclude/build_example.bor:
+        * examples/Quoter/Factory_finder.bor:
+        * examples/Quoter/Generic_factory.bor:
+        * examples/Quoter/Server.bor:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Starter.bor:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Test.bor:
+        * tests/InterOp-Naming/server.bor:
+          Add Messaging library to fix link errors in BCB6 Static Build.
 
 Wed Nov 26 10:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1664,82 +1672,82 @@ Tue Nov 25 21:17:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sunsoft.cpp:
 
-	  Changed code generation for the literal on the rhs of an
-	  unsigned long long constant to be more portable, using
-	  ACE_UINT64_LITERAL instead of a letter suffix. Thanks to
-	  Malcolm McRoberts <mmcroberts@ideorlando.org> for the
-	  suggestion.
+          Changed code generation for the literal on the rhs of an
+          unsigned long long constant to be more portable, using
+          ACE_UINT64_LITERAL instead of a letter suffix. Thanks to
+          Malcolm McRoberts <mmcroberts@ideorlando.org> for the
+          suggestion.
 
 Tue Nov 25 20:11:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosEvent:
-	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	* orbsvcs/orbsvcs/Makefile.RT_Notification:
-	* orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* orbsvcs/orbsvcs/Makefile.Security:
-	* orbsvcs/orbsvcs/Makefile.av:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.RT_Notification:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/Makefile.av:
 
-	  Updated dependencies just for the above files.
+          Updated dependencies just for the above files.
 
 Tue Nov 25 20:01:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
 
-	  Lots of libraries depend on CosNaming. CosNaming depends on
-	  corba_messaging. This means that most of the orbsvcs cannot be
-	  built without corba_messaging.
+          Lots of libraries depend on CosNaming. CosNaming depends on
+          corba_messaging. This means that most of the orbsvcs cannot be
+          built without corba_messaging.
 
 Tue Nov 25 18:17:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Simulator/Event_Supplier/Makefile:
+        * examples/Simulator/Event_Supplier/Makefile:
 
-	  Do not build this in parallel This seems to create lots of
-	  problems.
+          Do not build this in parallel This seems to create lots of
+          problems.
 
 2003-11-25  Douglas C. Schmidt  <schmidt@deuce.doc.wustl.edu>
 
-	* utils/wxNamingViewer/wxBindNewContext.cpp: Updated this file to
-	  fix the following problems:
+        * utils/wxNamingViewer/wxBindNewContext.cpp: Updated this file to
+          fix the following problems:
 
-	  - wxBindNewContext.cpp:110, add a # in front of endif
+          - wxBindNewContext.cpp:110, add a # in front of endif
 
-	  - wxBindNewContext.cpp: 113 - 119, remove duplicate definition of
-	    WxBindNewContext constructor.
+          - wxBindNewContext.cpp: 113 - 119, remove duplicate definition of
+            WxBindNewContext constructor.
 
           Thanks to Charles Frasch for reporting this!
 
 Tue Nov 25 16:21:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Servant_To_Reference_Test/server.cpp (svc):
+        * tests/Servant_To_Reference_Test/server.cpp (svc):
 
-	  Reduced the number of iterations so that they have any chance of
-	  completing on slower machines.
+          Reduced the number of iterations so that they have any chance of
+          completing on slower machines.
 
-	* tests/Servant_To_Reference_Test/run_test.pl:
+        * tests/Servant_To_Reference_Test/run_test.pl:
 
-	  Scripts for daily builds
+          Scripts for daily builds
 
 Tue Nov 25 15:52:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/POA.cpp:
-	* tao/PortableServer/POA.h:
-	* tao/PortableServer/POA.i:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POA.i:
 
-	  Calling servant_to_reference () from multiple threads from an
-	  application could lead to race conditions. This checkin prevents
-	  this race condition by adding a lock. We have also added a
-	  method servant_to_reference_i () which does the bulk of the
-	  work. Thanks to Milan Cvetkovic <mcvetkovic@mpathix.com> for
-	  proposing this fix.
+          Calling servant_to_reference () from multiple threads from an
+          application could lead to race conditions. This checkin prevents
+          this race condition by adding a lock. We have also added a
+          method servant_to_reference_i () which does the bulk of the
+          work. Thanks to Milan Cvetkovic <mcvetkovic@mpathix.com> for
+          proposing this fix.
 
-	* tests/Servant_To_Reference_Test:
+        * tests/Servant_To_Reference_Test:
 
-	  A new test to check for race conditions.
+          A new test to check for race conditions.
 
-	* tests/Makefile:
+        * tests/Makefile:
 
-	  Added Servant_To_Reference_Test into the daily builds.
+          Added Servant_To_Reference_Test into the daily builds.
 
 Tue Nov 25 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1761,22 +1769,22 @@ Tue Nov 25 13:51:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Nov 25 09:56:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/DLL_ORB/Makefile.Test_Client_Module:
+        * tests/DLL_ORB/Makefile.Test_Client_Module:
 
-	  No need to compile and link in the skeleton files into the
-	  library. This is counter productive since the skeleton files
-	  bring in some symbols that are not completly resolved during
-	  loading time.
+          No need to compile and link in the skeleton files into the
+          library. This is counter productive since the skeleton files
+          bring in some symbols that are not completly resolved during
+          loading time.
 
-	  This is just part of the problem that prevents the test from
-	  running in the daily builds.
+          This is just part of the problem that prevents the test from
+          running in the daily builds.
 
 Tue Nov 25 09:15:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Xt_Stopwatch/Makefile:
-	* tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+        * tests/Xt_Stopwatch/Makefile:
+        * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
 
-	  Do not build if xt_reactor is set to zero.
+          Do not build if xt_reactor is set to zero.
 
 Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1796,11 +1804,11 @@ Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 25 07:16:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
 
-	  Fixed a small typo that caused the Makefile not to build any of
-	  the executables. This should fix the strange errors that were
-	  caused when Naming_Service wasn't built.
+          Fixed a small typo that caused the Makefile not to build any of
+          the executables. This should fix the strange errors that were
+          caused when Naming_Service wasn't built.
 
 Tue Nov 25 10:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1843,31 +1851,31 @@ Mon Nov 24 20:05:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
 
-	  Provided the path to the included header files.
+          Provided the path to the included header files.
 
 Mon Nov 24 19:57:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
 
-	  The last fix was bogus. Added a new target 'all'. Thanks to Don
-	  for pointing it out.
+          The last fix was bogus. Added a new target 'all'. Thanks to Don
+          for pointing it out.
 
 Mon Nov 24 17:57:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/Notify/Lanes/Makefile:
-	* orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
-	* orbsvcs/examples/Notify/ThreadPool/Makefile:
-	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
-	* orbsvcs/tests/Notify/RT_lib/Makefile:
+        * orbsvcs/examples/Notify/Lanes/Makefile:
+        * orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
+        * orbsvcs/examples/Notify/ThreadPool/Makefile:
+        * orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
+        * orbsvcs/tests/Notify/RT_lib/Makefile:
 
-	  These tests don't build in a minimum_corba build.
+          These tests don't build in a minimum_corba build.
 
 Mon Nov 24 15:24:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/IFR_Service/IFR_Service.dsp:
-	* orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/orbsvcs/Security.dsp:
 
-	  Set the RTTI options on for these project files.
+          Set the RTTI options on for these project files.
 
 Mon Nov 24 14:31:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1879,16 +1887,16 @@ Mon Nov 24 14:31:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Nov 24 14:27:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Secure_invocation/Makefile:
+        * orbsvcs/tests/Security/Secure_invocation/Makefile:
 
-	  Added the required libraries for linking withou any problems.
+          Added the required libraries for linking withou any problems.
 
 Mon Nov 24 12:33:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Makefile:
 
-	  Add ORBSVCS_COMPONENTS to he standard_targets. This will force
-	  the make to spit the file with the components that were built.
+          Add ORBSVCS_COMPONENTS to he standard_targets. This will force
+          the make to spit the file with the components that were built.
 
 Mon Nov 24 17:29:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1916,24 +1924,24 @@ Mon Nov 24 11:31:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Nov 23 23:22:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
 
-	  Modified the test to use the CRC check.
+          Modified the test to use the CRC check.
 
 Sun Nov 23 23:16:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
 
-	  In  TAO_ECG_CDR_Message_Receiver::handle_input (), use the
-	  modified iov.iov_len before calculating the CRC. Thanks to
-	  Keith Nicewarner for providing this patch.
+          In  TAO_ECG_CDR_Message_Receiver::handle_input (), use the
+          modified iov.iov_len before calculating the CRC. Thanks to
+          Keith Nicewarner for providing this patch.
 
 Sun Nov 23 22:53:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RTCORBA_includeC.h:
+        * tao/RTCORBA/RTCORBA_includeC.h:
 
-	  Removed the inclusion of the inlined files since they are are
-	  not required. Thanks to Don for catching the problem.
+          Removed the inclusion of the inlined files since they are are
+          not required. Thanks to Don for catching the problem.
 
 Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -2023,31 +2031,31 @@ Sun Nov 23 21:28:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Nov 23 20:43:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
-	  #included "ace/os_include/os_netdb.h" to pacify Win32 VC6
-	  builds.
+          #included "ace/os_include/os_netdb.h" to pacify Win32 VC6
+          builds.
 
 Sun Nov 23 20:09:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTCORBA/RTCORBA_include.pidl:
-	* tao/RTCORBA/RTCORBA_includeC.h:
+        * tao/RTCORBA/RTCORBA_includeC.h:
 
-	  New files, a .pidl which only includes RTCORBA.pidl, and the
-	  stub header file generated from it, hand-crafted to include
-	  RTCORBA.h instead of RTCORBAC.h. This pair of files allows
-	  applications to include RTCORBA.pidl in their IDL files by
-	  including RTCORBA_include.pidl instead and let the IDL compiler
-	  automatically include  RTCORBA_includeC.h in the associated
-	  generated file, thus avoiding the error of including RTCORBAC.h
-	  directly.
+          New files, a .pidl which only includes RTCORBA.pidl, and the
+          stub header file generated from it, hand-crafted to include
+          RTCORBA.h instead of RTCORBAC.h. This pair of files allows
+          applications to include RTCORBA.pidl in their IDL files by
+          including RTCORBA_include.pidl instead and let the IDL compiler
+          automatically include  RTCORBA_includeC.h in the associated
+          generated file, thus avoiding the error of including RTCORBAC.h
+          directly.
 
-	* tao/RTCORBA/RTCORBA.mpc:
+        * tao/RTCORBA/RTCORBA.mpc:
 
-	  Added RTCORBA_includeC.h to the header file list.
+          Added RTCORBA_includeC.h to the header file list.
 
-	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
         * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
         * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
         * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
@@ -2076,46 +2084,46 @@ Sun Nov 23 17:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Nov 23 14:31:46 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
-	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
-	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
-	* docs/tutorials/Quoter/idl/Quoter_idl.mpc:
-	* docs/tutorials/Quoter/AMI/Quoter_AMI.mpc:
-	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
-	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
-	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
-	  Updated these MPC files, exceptions are needed for all at this moment and
-	  the Quoter_idl file must be build before the Simple ones.
+        * docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+        * docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+        * docs/tutorials/Quoter/idl/Quoter_idl.mpc:
+        * docs/tutorials/Quoter/AMI/Quoter_AMI.mpc:
+        * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+        * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+        * docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+          Updated these MPC files, exceptions are needed for all at this moment and
+          the Quoter_idl file must be build before the Simple ones.
 
 Sun Nov 23 08:20:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/OctetSeq.pidl:
-	* tao/OctetSeqC.h:
-	* tao/OctetSeqC.i:
+        * tao/OctetSeq.pidl:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
 
-	  Thanks to Johnny for reporting a small problem with generated
-	  code that caused the Borland builds to freak out.
+          Thanks to Johnny for reporting a small problem with generated
+          code that caused the Borland builds to freak out.
 
 Sat Nov 22 20:44:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Simple/grid/Makefile:
+        * examples/Simple/grid/Makefile:
 
-	  Added TAO_Messaging to the link line.
+          Added TAO_Messaging to the link line.
 
 Sat Nov 22 20:39:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/ORT/ORT.mpc:
+        * tests/ORT/ORT.mpc:
 
-	  Changed teh project name in the above file so that they don't
-	  clash with projects in orbsvcs/examples.
+          Changed teh project name in the above file so that they don't
+          clash with projects in orbsvcs/examples.
 
 Sat Nov 22 20:35:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
 
-	  Fixed a typo in the mpc file.
+          Fixed a typo in the mpc file.
 
 Sat Nov 22 17:20:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2167,9 +2175,9 @@ Sat Nov 22 17:20:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           New files renamed from the ones below.
 
         * examples/Kokyu_dsrt_schedulers/FP_Scheduling.pidl:
-	* examples/Kokyu_dsrt_schedulers/Kokyu_qos.pidl:
-	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.pidl:
-	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.pidl:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qos.pidl:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.pidl:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.pidl:
 
           Removed files, renamed to the ones above.
 
@@ -2202,77 +2210,77 @@ Sat Nov 22 11:32:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sat Nov 22 10:12:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* rules.tao.GNU:
+        * rules.tao.GNU:
 
-	  If messaging is set to zero, set RTCORBA to zero.
+          If messaging is set to zero, set RTCORBA to zero.
 
-	* tests/RTCORBA/Linear_Priority/Makefile:
-	* tests/RTCORBA/Persistent_IOR/Makefile:
-	* tests/RTCORBA/Policy_Combinations/Makefile:
-	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile:
-	* tests/RTCORBA/Thread_Pool/Makefile:
+        * tests/RTCORBA/Linear_Priority/Makefile:
+        * tests/RTCORBA/Persistent_IOR/Makefile:
+        * tests/RTCORBA/Policy_Combinations/Makefile:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Makefile:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile:
+        * tests/RTCORBA/Thread_Pool/Makefile:
 
-	  Fixed what I broke before. The makefiles also need to ensure
-	  that RTCORBA is available in addition to minimum_corba being set
-	  to zero.
+          Fixed what I broke before. The makefiles also need to ensure
+          that RTCORBA is available in addition to minimum_corba being set
+          to zero.
 
 Sat Nov 22 08:34:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
-	* orbsvcs/examples/Notify/Lanes/Makefile:
-	* orbsvcs/examples/Notify/ThreadPool/Makefile:
-	* examples/Callback_Quoter/Makefile:
-	* examples/Event_Comm/Makefile:
-	* examples/Logging/Makefile:
-	* examples/Simple/bank/Makefile:
-	* examples/Simple/echo/Makefile:
-	* examples/Simple/time/Makefile:
-	* examples/Simple/time-date/Makefile:
-	* performance-tests/POA/Demux/Makefile:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+        * orbsvcs/examples/Notify/Lanes/Makefile:
+        * orbsvcs/examples/Notify/ThreadPool/Makefile:
+        * examples/Callback_Quoter/Makefile:
+        * examples/Event_Comm/Makefile:
+        * examples/Logging/Makefile:
+        * examples/Simple/bank/Makefile:
+        * examples/Simple/echo/Makefile:
+        * examples/Simple/time/Makefile:
+        * examples/Simple/time-date/Makefile:
+        * performance-tests/POA/Demux/Makefile:
 
-	  Fixed the above Makefiles to link in the messaging
-	  library. Fallout due to the change from Simon.
+          Fixed the above Makefiles to link in the messaging
+          library. Fallout due to the change from Simon.
 
-	* orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
+        * orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
 
-	  Do not build if minimum_corba is enabled.
+          Do not build if minimum_corba is enabled.
 
 Sat Nov 22 07:42:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/On_Demand/Makefile:
+        * tests/Smart_Proxies/On_Demand/Makefile:
 
-	  Fix the static build linking errors. Thanks to Don Hinton for
-	  the patches.
+          Fix the static build linking errors. Thanks to Don Hinton for
+          the patches.
 
 Fri Nov 21 22:19:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1636_Regression/client.cpp:
+        * tests/Bug_1636_Regression/client.cpp:
 
-	  Fixed compilation errors in builds where exceptions are turned
-	  off.
+          Fixed compilation errors in builds where exceptions are turned
+          off.
 
-	* tests/Bug_1639_Regression/Makefile:
-	* tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
-	* tests/Bug_1639_Regression/test.mpc:
+        * tests/Bug_1639_Regression/Makefile:
+        * tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
+        * tests/Bug_1639_Regression/test.mpc:
 
-	  Made this test compilable only when exceptions are turned
-	  on. The right way would be to use ACE_EXCEPTION macros. But
-	  Simon has to be doing that. Till then, let me  get the builds
-	  clean.
+          Made this test compilable only when exceptions are turned
+          on. The right way would be to use ACE_EXCEPTION macros. But
+          Simon has to be doing that. Till then, let me  get the builds
+          clean.
 
 Fri Nov 21 21:48:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/AV.mpc:
 
-	  Added SCT_SEQ.cpp coditionally in makefiles only when sctp is
-	  enabled.
+          Added SCT_SEQ.cpp coditionally in makefiles only when sctp is
+          enabled.
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp:
 
-	  Fixed compile error that showed up in MPC builds. They needed a
-	  couple of inclusions.
+          Fixed compile error that showed up in MPC builds. They needed a
+          couple of inclusions.
 
 Fri Nov 21 21:05:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2305,9 +2313,9 @@ Fri Nov 21 21:05:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 21 20:48:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
 
-	  Fixed a warning in the daily builds.
+          Fixed a warning in the daily builds.
 
 Fri Nov 21 14:57:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2351,23 +2359,23 @@ Fri Nov 21 10:31:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 21 08:55:16 2003 Charlie Frasch  <cfrasch@atdesk.com>
 
-	* utils/wxNamingViewer/Makefile:
-	* utils/wxNamingViewer/README:
-	* utils/wxNamingViewer/mondrian.xpm:
-	* utils/wxNamingViewer/wxAddNameServerDlg.cpp:
-	* utils/wxNamingViewer/wxBindDialog.cpp:
-	* utils/wxNamingViewer/wxBindDialog.h:
-	* utils/wxNamingViewer/wxBindNewContext.cpp:
-	* utils/wxNamingViewer/wxNamingObject.cpp:
-	* utils/wxNamingViewer/wxNamingTree.cpp:
-	* utils/wxNamingViewer/wxNamingViewer.cpp:
-	* utils/wxNamingViewer/wxNamingViewerFrame.cpp:
-	* utils/wxNamingViewer/wxSelectNSDialog.cpp:
-	* utils/wxNamingViewer/wxViewIORDialog.cpp:
-	  Updated for linux, gcc, latest ACE/TAO and wxWindows 2.4.2. For
-	  linux, the wxNamingViewer.wxr file is no longer used, and the
-	  dialog components are created  inline. A future change should
-	  incorporate wxWindow's new XML-based resource system.
+        * utils/wxNamingViewer/Makefile:
+        * utils/wxNamingViewer/README:
+        * utils/wxNamingViewer/mondrian.xpm:
+        * utils/wxNamingViewer/wxAddNameServerDlg.cpp:
+        * utils/wxNamingViewer/wxBindDialog.cpp:
+        * utils/wxNamingViewer/wxBindDialog.h:
+        * utils/wxNamingViewer/wxBindNewContext.cpp:
+        * utils/wxNamingViewer/wxNamingObject.cpp:
+        * utils/wxNamingViewer/wxNamingTree.cpp:
+        * utils/wxNamingViewer/wxNamingViewer.cpp:
+        * utils/wxNamingViewer/wxNamingViewerFrame.cpp:
+        * utils/wxNamingViewer/wxSelectNSDialog.cpp:
+        * utils/wxNamingViewer/wxViewIORDialog.cpp:
+          Updated for linux, gcc, latest ACE/TAO and wxWindows 2.4.2. For
+          linux, the wxNamingViewer.wxr file is no longer used, and the
+          dialog components are created  inline. A future change should
+          incorporate wxWindow's new XML-based resource system.
 
 Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -2457,13 +2465,13 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Nov 20 21:02:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
 
-	  Added missing includes to get them compiling on VC7.1
+          Added missing includes to get them compiling on VC7.1
 
 Thu Nov 20 20:25:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2473,10 +2481,10 @@ Thu Nov 20 20:25:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 20 20:24:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/VarOut_T.h:
+        * tao/VarOut_T.h:
 
-	  Moved a header file inclusion from below the pragma directive to
-	  the top of the file.
+          Moved a header file inclusion from below the pragma directive to
+          the top of the file.
 
 Thu Nov 20 20:12:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2501,58 +2509,58 @@ Thu Nov 20 20:12:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 20 19:16:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainC.i:
-	* tao/ServicesC.cpp:
-	* tao/ServicesC.h:
-	* tao/ServicesC.i:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.h:
+        * tao/ServicesC.i:
 
-	  Regenerated the code and removed the duplicate explicit template
-	  instantations.
+          Regenerated the code and removed the duplicate explicit template
+          instantations.
 
         * tao/Tagged_Components.cpp:
-	* tao/Typecode.cpp:
+        * tao/Typecode.cpp:
 
-	  Removed duplicate explicit template instantiations.
+          Removed duplicate explicit template instantiations.
 
-	* tao/diffs/Domain.diff
+        * tao/diffs/Domain.diff
 
-	  Updated the diff files.
+          Updated the diff files.
 
 Thu Nov 20 18:28:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IFR_Client_Adapter.h:
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client_Adapter.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
 
-	  Added TAO_HAS_MINIMUM_CORBA around create_operation_list.
+          Added TAO_HAS_MINIMUM_CORBA around create_operation_list.
 
-	* tao/orbconf.h:
-	* rules.tao.GNU:
+        * tao/orbconf.h:
+        * rules.tao.GNU:
 
-	  Nowhere in the CORBA spec does it say that messaging and
-	  RTCORBA needs to disabled when minimum corba is enabled. It has
-	  been a TAO artifact from legacy code. This prevented users from
-	  using RTCORBA in minimum_corba mode, which IMHO is insane to say
-	  the least. I am sure Bill Beckwith would support my argument:-)
+          Nowhere in the CORBA spec does it say that messaging and
+          RTCORBA needs to disabled when minimum corba is enabled. It has
+          been a TAO artifact from legacy code. This prevented users from
+          using RTCORBA in minimum_corba mode, which IMHO is insane to say
+          the least. I am sure Bill Beckwith would support my argument:-)
 
-	  Just enabled RTCORBA and messaging in minimum_corba builds.
+          Just enabled RTCORBA and messaging in minimum_corba builds.
 
-	* tao/RTCORBA/RTCORBA.cpp:
-	* tao/RTCORBA/RTCORBA.h:
+        * tao/RTCORBA/RTCORBA.cpp:
+        * tao/RTCORBA/RTCORBA.h:
 
-	  Set the #defined  properly.
+          Set the #defined  properly.
 
-	* tests/RTCORBA/Linear_Priority/Makefile:
-	* tests/RTCORBA/Persistent_IOR/Makefile:
-	* tests/RTCORBA/Policy_Combinations/Makefile:
-	* tests/RTCORBA/Priority_Inversion_With_Bands/Makefile:
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile:
-	* tests/RTCORBA/Thread_Pool/Makefile:
+        * tests/RTCORBA/Linear_Priority/Makefile:
+        * tests/RTCORBA/Persistent_IOR/Makefile:
+        * tests/RTCORBA/Policy_Combinations/Makefile:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Makefile:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/Makefile:
+        * tests/RTCORBA/Thread_Pool/Makefile:
 
-	  These tests specifically use the minimum_poa features. So
-	  prevented these tests from compiling in minimum_corba builds.
+          These tests specifically use the minimum_poa features. So
+          prevented these tests from compiling in minimum_corba builds.
 
 Thu Nov 20 18:05:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2605,12 +2613,12 @@ Thu Nov 20 18:05:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 20 13:05:00 2003  Justin mIchel <michel_j@ociweb.com>
 
-	* tao/PortableServer/ImR_LocatorC.cpp:
-	* tao/PortableServer/ImR_Locator.pidl:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_Locator.pidl:
 
-	  Removed redundant explicit template instantiations. This should
-	  be a temporary workaround. Eventually, the generated file will
-	  work as is.
+          Removed redundant explicit template instantiations. This should
+          be a temporary workaround. Eventually, the generated file will
+          work as is.
 
 Thu Nov 20 11:04:09 2003  Dale Wilson  <wilson_d@>
 
