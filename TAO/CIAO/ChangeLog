@@ -1,3 +1,22 @@
+Fri May 30 17:41:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_svnt.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
+        * examples/OEP/Display/RateGen/RateGen_svnt.dsp:
+
+          Changed the location of the CIDL compiler executable to
+          CIAO_ROOT/bin.
+
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.h:
+
+          Removed these file from the repository - they are generated
+          and shouldn't have been checked in.
+
 Fri May 30 15:25:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/Display/Configuration-0.png:
