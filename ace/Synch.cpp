@@ -264,7 +264,6 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
                               int flags,
                               mode_t perms)
-  : removed_ (0)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
@@ -281,7 +280,7 @@ ACE_File_Lock::open (LPCTSTR name,
                      mode_t perms)
 {
 // ACE_TRACE ("ACE_File_Lock::open");
-
+  this->removed_ = 0;
   return ACE_OS::flock_init (&this->lock_, flags, name, perms);
 }
 
