@@ -1,5 +1,14 @@
 Tue Jul 21 17:41:26 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	  Since according to Carlos' last ChangeLog entry the call to
+	  CORBA::Any::type () returns a duplicated typecode, I've ensured
+	  calls to type () are matched with CORBA::TypeCode::release ()s. 
+
 	* tao/Any.cpp (type): needed return statement.
 
 Tue Jul 21 17:29:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
