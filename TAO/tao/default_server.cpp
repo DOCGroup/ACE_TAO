@@ -149,7 +149,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
         {
           curarg++;
           if (curarg < argc)
-            this->object_table_size_ = ACE_OS::strtoul (argv[curarg], NULL, 10);
+            this->object_table_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
         }
       else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
         {

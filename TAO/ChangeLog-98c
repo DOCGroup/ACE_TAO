@@ -1,5 +1,7 @@
 Tue Nov 11 20:45:26 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tao/default_server.cpp (parse_args): Replaced NULL with 0.
+
 	* tao/corbacom.h: Fixed the macro for TAO_SYSTEM_EXCEPTION so
  	  compilers don't whine about extra semi-colons.
 
