@@ -1,3 +1,18 @@
+Thu Jul  3 13:15:17 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Added 'libpath' to the custom define keywords to allow a user to
+          specify an additional library search path for the custom command.
+
 Thu Jul  3 11:49:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
