@@ -1,3 +1,8 @@
+Wed Jan 03 05:49:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+          The ace_cuserid() helper cannot be defined in Win32
+
 Wed Jan 03 05:42:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:
