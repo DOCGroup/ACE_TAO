@@ -3,11 +3,10 @@
 // ============================================================================
 //
 // = FILENAME
-//    FactoryFinder.cpp
+//    Generic_Factory.cpp
 //
 // = DESCRIPTION
-//    A Factory Finder for the Quoter example. This example conforms
-//    to the CosLifeCycle Factory Finder notion.
+//    The server for the GenericFactory for the quoter example.
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
@@ -15,26 +14,26 @@
 // ============================================================================
 
 #include "tao/corba.h"
-#include "Factory_Finder.h"
+#include "Generic_Factory.h"
 
 
 static const char usage [] = 
 "[-? |\n[-O[RBport] ORB port number]]";
 
-Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server () 
+Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server () 
 {
 }
 
-Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server () 
+Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server () 
 {
   TAO_TRY
     {
       // Unbind the Quoter Factory Finder.
-      CosNaming::Name factory_Finder_Name (2);
-      factory_Finder_Name.length (2);
-      factory_Finder_Name[0].id = CORBA::string_dup ("IDL_Quoter");
-      factory_Finder_Name[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
-      this->quoterNamingContext_var_->unbind (factory_Finder_Name,TAO_TRY_ENV);
+      CosNaming::Name generic_Factory_Name (2);
+      generic_Factory_Name.length (2);
+      generic_Factory_Name[0].id = CORBA::string_dup ("IDL_Quoter");
+      generic_Factory_Name[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
+      this->quoterNamingContext_var_->unbind (generic_Factory_Name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)
@@ -50,7 +49,7 @@ Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server ()
   TAO_ENDTRY;
 }
 
-Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& env)
+Quoter_Generic_Factory_Server::init (int argc, char *argv[], CORBA::Environment& env)
 {
   if (this->orb_manager_.init (argc,
                                argv,
@@ -67,20 +66,20 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
   this->parse_args ();
 
 
-  ACE_NEW_RETURN (this->quoter_Factory_Finder_Impl_ptr_,
-                  Quoter_Factory_Finder_Impl(),
+  ACE_NEW_RETURN (this->quoter_Generic_Factory_Impl_ptr_,
+                  Quoter_Generic_Factory_Impl(),
                   -1);
 
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (this->quoter_Factory_Finder_Impl_ptr_,
+    this->orb_manager_.activate (this->quoter_Generic_Factory_Impl_ptr_,
                                  env);
 
   // Failure while activating the Quoter Factory Finder object
   if (str == 0)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "%p\n", 
-                       "init: Failure while activating the Quoter Factory Finder Impl.\n"),
+                       "init: Failure while activating the Quoter Generic Factory Impl.\n"),
                       -1);
 
 
@@ -88,7 +87,7 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
               "The IOR is: <%s>\n",
               str.in ()));
 
-  // Register the Quoter Factory Finder with the Naming Service
+  // Register the Quoter GenericFactory with the Naming Service
   TAO_TRY 
     {
       ACE_DEBUG ((LM_DEBUG,"Trying to get a reference to the Naming Service.\n"));
@@ -106,6 +105,12 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       CosNaming::NamingContext_var namingContext_var =
         CosNaming::NamingContext::_narrow (namingObj_var.in (),
                                            TAO_TRY_ENV);
+
+      if (CORBA::is_nil (namingContext_var.ptr ())) 
+        ACE_ERROR ((LM_ERROR,
+                   " (%P|%t) Unable get the Naming Service.\n"));
+
+      
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,"Have a proper reference to the Naming Service.\n"));
 
@@ -124,17 +129,17 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
        
       ACE_DEBUG ((LM_DEBUG,"Have a proper reference to the Quoter Naming Context.\n"));
 
-      // Bind the QuoterFactory Finder to the IDL_Quoter naming
+      // Bind the Quoter GenericFactory to the IDL_Quoter naming
       // context.
-      CosNaming::Name quoter_Factory_Finder_Name_ (1);
-      quoter_Factory_Finder_Name_.length (1);
-      quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
+      CosNaming::Name quoter_Generic_Factory_Name_ (1);
+      quoter_Generic_Factory_Name_.length (1);
+      quoter_Generic_Factory_Name_[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
-      quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
-                                            this->quoter_Factory_Finder_Impl_ptr_->_this(TAO_TRY_ENV),
+      quoterNamingContext_var_->bind (quoter_Generic_Factory_Name_,
+                                            this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV),
                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ACE_DEBUG ((LM_DEBUG,"Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
+      ACE_DEBUG ((LM_DEBUG,"Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
     }
   TAO_CATCHANY
     {
@@ -147,7 +152,7 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
 }
 
 int
-Quoter_Factory_Finder_Server::run (CORBA::Environment& env)
+Quoter_Generic_Factory_Server::run (CORBA::Environment& env)
 {
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -161,7 +166,7 @@ Quoter_Factory_Finder_Server::run (CORBA::Environment& env)
 // Function get_options.
 
 unsigned int
-Quoter_Factory_Finder_Server::parse_args ()
+Quoter_Generic_Factory_Server::parse_args ()
 {
   // We need the 'O' in get_opt () because we also want to have ORB
   // parameters, they all start with 'O'.
@@ -194,17 +199,17 @@ Quoter_Factory_Finder_Server::parse_args ()
 int
 main (int argc, char *argv [])
 {
-  Quoter_Factory_Finder_Server quoter_Factory_Finder_server;
+  Quoter_Generic_Factory_Server quoter_Generic_Factory_Server;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\tIDL_Quoter:Quoter_Factory_Finder \n \n"));
+              "\n\tIDL_Quoter: Quoter_Generic_Factory_Server \n \n"));
   TAO_TRY
     {
-      if (quoter_Factory_Finder_Server.init (argc,argv,TAO_TRY_ENV) == -1)
+      if (quoter_Generic_Factory_Server.init (argc,argv,TAO_TRY_ENV) == -1)
         return 1;
       else
         {
-          quoter_Factory_Finder_Server.run (TAO_TRY_ENV);
+          quoter_Generic_Factory_Server.run (TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
     }
