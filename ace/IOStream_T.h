@@ -167,10 +167,10 @@ private:
   // streambuf_ will be buffering IO on the STREAM object.  If these
   // functions were used in your program, there is a danger of getting
   // the datastream out of sync.
-  ssize_t send (...);
-  ssize_t recv (...);
-  ssize_t send_n (...);
-  ssize_t recv_n (...);
+  ACE_UNIMPLEMENTED_FUNC (ssize_t send (...));
+  ACE_UNIMPLEMENTED_FUNC (ssize_t recv (...));
+  ACE_UNIMPLEMENTED_FUNC (ssize_t send_n (...));
+  ACE_UNIMPLEMENTED_FUNC (ssize_t recv_n (...));
 };
 
 template <class STREAM>
