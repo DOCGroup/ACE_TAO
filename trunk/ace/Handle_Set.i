@@ -136,10 +136,6 @@ ACE_Handle_Set_Iterator::operator () (void)
 	       this->word_num_++)
 	    this->handle_index_ += ACE_Handle_Set::WORDSIZE;
 	  
-          ACE_DEBUG ((LM_DEBUG,
-		      "handle_index_: %d, maxhandlep1: %d, word_num_: %d\n",
-		      handle_index_, maxhandlep1, word_num_));
-
 	  // If the bit index becomes >= the maxhandlep1 that means
 	  // there weren't any more bits set that we want to consider.
 	  // Therefore, we'll just store the maxhandlep1, which will
