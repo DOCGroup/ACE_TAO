@@ -26,8 +26,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"
-#include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event_Service_Constants.h"
 #include "SchedEntry.h"
 
 class ACE_Scheduler
@@ -74,7 +72,7 @@ public:
     , ST_UNKNOWN_TASK
     , ST_TASK_ALREADY_REGISTERED
     , ST_BAD_DEPENDENCIES_ON_TASK
-    , ST_NULL_DEPENDENCY_POINTER
+    , ST_BAD_INTERNAL_POINTER
     , ST_VIRTUAL_MEMORY_EXHAUSTED
 
     // The following are only used by the runtime Scheduler.
@@ -103,9 +101,9 @@ public:
   virtual ~ACE_Scheduler ();
     // public dtor
 
-  // = Utility function for outputting the textual representation of a
-  //   status_t value to a FILE.
-  static void output (FILE *, const status_t);
+  // = Utility function for outputting the textual
+  //   representation of a status_t value.
+  static const char * status_message (status_t status);
 
   // = Initialize the scheduler.
   void init (const OS_Priority minimum_priority,
@@ -257,15 +255,18 @@ protected:
   // protected pure virtual member functions //
   /////////////////////////////////////////////
 
-  virtual status_t sort_dispatches (Dispatch_Entry *, u_int) = 0;
+  virtual Preemption_Priority minimum_critical_priority () = 0;
+  // = determine the minimum critical priority number
+
+  virtual status_t sort_dispatches (Dispatch_Entry **, u_int) = 0;
   // internal sorting method: this orders the dispatches by
   // static priority and dynamic and static subpriority.
 
-  virtual status_t assign_priorities (Dispatch_Entry_Link *dispatches,
+  virtual status_t assign_priorities (Dispatch_Entry **dispatches,
                                       u_int count) = 0;
     // = assign priorities to the sorted dispatches
 
-  virtual status_t assign_subpriorities (Dispatch_Entry_Link *dispatches, 
+  virtual status_t assign_subpriorities (Dispatch_Entry **dispatches, 
                                          u_int count) = 0;
     // = assign dynamic and static sub-priorities to the sorted dispatches
 
@@ -385,12 +386,6 @@ private:
   status_t calculate_utilization_params (void);
   // calculate utilization, frame size, etc.
 
-  status_t store_schedule (const char *filename);
-  // Export all dispatch entries to the named file.
-
-  status_t store_rt_infos (const char *filename);
-  // Export all RT_Infos to the named file.
-
   // the following functions are not implememented
   ACE_UNIMPLEMENTED_FUNC(ACE_Scheduler (const ACE_Scheduler &))
   ACE_UNIMPLEMENTED_FUNC(ACE_Scheduler &operator= (const ACE_Scheduler &))
@@ -427,10 +422,10 @@ private:
 
   u_int output_level_;
 
-  u_long frame_size_; /* 100 microsec */
+  u_long frame_size_; /* 100 nanosec */
     // minimum frame size for all tasks
 
-  u_long critical_set_frame_size_; /* 100 microsec */
+  u_long critical_set_frame_size_; /* 100 nanosec */
     // minimum frame size for guaranteed schedulable tasks
 
   double utilization_;
@@ -450,13 +445,12 @@ private:
     // the maximum priority dispatch queue is always 0, -1 indicates none can
     // be guaranteed.
 
-  ACE_Unbounded_Queue <TimeLine_Entry_Link> *timeline_;
-    // Queue of timeline entries.
+  ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_;
+    // Ordered MultiSet of timeline entries.
 
   u_int up_to_date_;
     // indicates whether the a valid schedule has been generated since the last
     // relevant change (addition, alteration or removal of an RT_Info, etc.)
-
 };
 
 #if defined (__ACE_INLINE__)

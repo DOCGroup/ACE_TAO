@@ -18,6 +18,63 @@
 //
 // ============================================================================
 
+#include "SchedEntry.h"
+
+#if ! defined (__ACE_INLINE__)
+#include "SchedEntry.i"
+#endif /* __ACE_INLINE__ */
+
+//////////////////////
+// Helper Functions //
+//////////////////////
+
+// TBD - move this to the ACE class
+// Euclid's greatest common divisor algorithm
+u_long gcd (u_long x, u_long y)
+{
+  if (y = 0)
+  {
+    return x;
+  }
+  else
+  {
+    return gcd (y, x % y);
+  }
+}
+
+
+// TBD - move this to the ACE class
+// calculate the minimum frame size that 
+u_long minimum_frame_size (u_long period1, u_long period2)
+{
+  // first, find the greatest common divisor of the two periods
+  u_long greatest_common_divisor = gcd (period1, period2);
+
+  // explicitly consider cases to reduce risk of possible overflow errors
+  if (greatest_common_divisor == 1)
+  {
+    // periods are relative primes: just multiply them together
+    return period1 * period2;
+  }
+  else if (greatest_common_divisor == period1)
+  {
+    // the first period divides the second: return the second
+    return period2;
+  }
+  else if (greatest_common_divisor == period2)
+  {
+    // the second period divides the first: return the first
+    return period1;
+  }
+  else
+  {
+    // the current frame size and the entry's effective period
+    // have a non-trivial greatest common divisor: return the
+    // product of factors divided by those in their gcd.
+    return (period1 * period2) / greatest_common_divisor;
+  }
+}
+
 
 //////////////////////
 // Class Task_Entry //
@@ -25,7 +82,6 @@
 
 Task_Entry::Task_Entry ()
   : rt_info_ (0)
-  , effective_execution_time_(0)
   , effective_period_(0)
   , dfs_status_ (NOT_VISITED)
   , discovered_ (-1)
@@ -43,15 +99,15 @@ Task_Entry::~Task_Entry ()
 
   // iterate through the "calls" set of Task Entry Links and free each one
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter(calls_);
-  Task_Entry_Link *link = 0;
+  Task_Entry_Link **link = 0;
   for (iter.first (); ! iter.done (); iter.advance (), link = 0)
   {
-    if ((iter.next (link) != 0) && (link))
+    if ((iter.next (link) != 0) && (link) && (*link))
     {
       // remove the link object pointer from the calling
       // entry's "callers" set and destroy the link object
-      link->called ().callers_.remove (link);
-      delete link;
+      (*link)->called ().callers_.remove (*link);
+      delete (*link);
     }
   }
 }
@@ -62,40 +118,40 @@ int
 Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
 {
   int result = 0;
-  switch (dependency_type ())
+  switch (info_type ())
   {
-    case DISJUNCTION:
+    case RtecScheduler::DISJUNCTION:
 
       // prohibit two-way dispatches of a disjunction group,
       // and disjunctively merge its one-way dispatches.
-      result = prohibit_dispatches (TWO_WAY_CALL);
+      result = prohibit_dispatches (RtecScheduler::TWO_WAY_CALL);
       if (result == 0)
       {
-        result = disjunctive_merge (ONE_WAY_CALL, dispatch_entries);
+        result = disjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries);
       }
 
       break;
 
-    case CONJUNCTION:
+    case RtecScheduler::CONJUNCTION:
 
       // prohibit two-way dispatches of a conjunction group,
       // and conjunctively merge its one-way dispatches.
-      result = prohibit_dispatches (TWO_WAY_CALL);
+      result = prohibit_dispatches (RtecScheduler::TWO_WAY_CALL);
       if (result == 0)
       {
-        result = conjunctive_merge (ONE_WAY_CALL, dispatch_entries);
+        result = conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries);
       }
 
       break;
 
-    case OPERATION:
+    case RtecScheduler::OPERATION:
 
       // disjunctively merge the operation's two-way dispatches,
       // and conjunctively merge its one-way dispatches.
-      result = disjunctive_merge (TWO_WAY_CALL, dispatch_entries);
+      result = disjunctive_merge (RtecScheduler::TWO_WAY_CALL, dispatch_entries);
       if (result == 0)
       {
-        result = conjunctive_merge (ONE_WAY_CALL, dispatch_entries);
+        result = conjunctive_merge (RtecScheduler::ONE_WAY_CALL, dispatch_entries);
       }
 
       break;
@@ -127,9 +183,9 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
   while (! iter.done ())
   {
-    Task_Entry_Link *link;
-    if ((iter.next (link) == 0) || (link == 0) || 
-        (link->dependency_type () == dt))
+    Task_Entry_Link **link;
+    if ((iter.next (link) == 0) || (! link) || (! (*link)) ||
+        ((*link)->dependency_type () == dt))
     {
       return -1;
     }
@@ -144,7 +200,7 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
 // perform disjunctive merge of arrival times of oneway calls:
 // all arrival times of all dependencies are duplicated by the
 // multiplier and repetition over the new frame size and merged
-void 
+int
 Task_Entry::disjunctive_merge (
   Dependency_Type dt, 
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
@@ -154,20 +210,20 @@ Task_Entry::disjunctive_merge (
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
   while (! iter.done ())
   {
-    Task_Entry_Link *link;
-    if ((iter.next (link) == 0) || (link == 0))
+    Task_Entry_Link **link;
+    if ((iter.next (link) == 0) || (! link) || (! (*link)))
     {
       return -1;
     }
 
     // the link matches the dependency type given
-    if (link->dependency_type () == dt)
+    if ((*link)->dependency_type () == dt)
     {
       // merge the caller's dispatches into the current set
-      if (merge_dispatches (dispatches_, link->caller ().dispatches_,
-                            effective_period_, 
-                            link->caller ().effective_period_, 
-                            link->number_of_calls ()) < 0)
+      if (merge_frames (dispatch_entries, *this, dispatches_,
+                       (*link)->caller ().dispatches_, effective_period_,
+                       (*link)->caller ().effective_period_, 
+                       (*link)->number_of_calls ()) < 0)
       {
         return -1;
       }
@@ -185,7 +241,7 @@ Task_Entry::disjunctive_merge (
 // iteratively merged by choosing the maximal arrival time at
 // the current position in each queue (iteration is in lockstep
 // over all queues, and ends when any queue ends).
-void 
+int 
 Task_Entry::conjunctive_merge (
   Dependency_Type dt, 
   ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries)
@@ -194,25 +250,26 @@ Task_Entry::conjunctive_merge (
 
   // iterate over the dependencies, and determine the total frame size 
   u_long frame_size = 1;
-  for (ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
-       dep_iter.done () == 0; dep_iter.advance ())
+  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
+  for (dep_iter.first (); dep_iter.done () == 0; dep_iter.advance ())
   {
-    Task_Entry_Link *link;
-    if ((dep_iter.next (link) == 0) || (link == 0))
+    Task_Entry_Link **link;
+    if ((dep_iter.next (link) == 0) || (! link) || (! (*link)))
     {
       return -1;
     }
 
     // the link matches the dependency type given
-    if (link->dependency_type () == dt)
+    if ((*link)->dependency_type () == dt)
     {
-      frame_size = minimum_frame_size (frame_size, link->caller ().effective_period_);
+      frame_size = minimum_frame_size (frame_size, (*link)->caller ().effective_period_);
     }
   }
 
   // reframe dispatches in the set to the new frame size
   // (expands the set's effective period to be the new enclosing frame)
-  if (reframe (dispatches_, effective_period_, frame_size) < 0)
+  if (reframe (dispatch_entries, *this, dispatches_, 
+               effective_period_, frame_size) < 0)
   {
     return -1;
   }
@@ -228,21 +285,21 @@ Task_Entry::conjunctive_merge (
   // if any of the sets is empty, just return 0;
   for (dep_iter.first (); dep_iter.done () == 0; dep_iter.advance ())
   {
-    Task_Entry_Link *link;
-    if ((iter.next (link) == 0) || (link == 0))
+    Task_Entry_Link **link;
+    if ((dep_iter.next (link) == 0) || (! link) || (! (*link)))
     {
       return -1;
     }
 
     // the link matches the dependency type given
-    if (link->dependency_type () == dt)
+    if ((*link)->dependency_type () == dt)
     {
       Dispatch_Proxy_Iterator *proxy_ptr;
       ACE_NEW_RETURN (proxy_ptr, 
-                      Dispatch_Proxy_Iterator src_iter (
-                        link->caller ().dispatches_, 
-                        link->caller ().effective_period_, 
-                        frame_size, link->number_of_calls ())
+                      Dispatch_Proxy_Iterator (
+                        (*link)->caller ().dispatches_, 
+                        (*link)->caller ().effective_period_, 
+                        frame_size, (*link)->number_of_calls ()),
                       -1);
 
       // if there are no entries in the virtual set, we're done
@@ -263,14 +320,18 @@ Task_Entry::conjunctive_merge (
   int more_dispatches = (conj_set_iter.done ()) ? 0 : 1;
   while (more_dispatches)
   {
+    u_long arrival = 0;
+    u_long deadline = 0;
+    long priority = 0;
+
     for (conj_set_iter.first ();
          conj_set_iter.done () == 0; 
          conj_set_iter.advance ())
 	 {
       // initialize to earliest arrival and deadline, and highest priority
-      u_long arrival = 0;
-      u_long deadline = 0;
-      u_long priority = 0;
+      arrival = 0;
+      deadline = 0;
+      priority = 0;
 
       // Policy: conjunctively dispatched operations get the latest deadline of any
       //         of the dispatches in the conjunction at the time they were dispatched
@@ -285,29 +346,26 @@ Task_Entry::conjunctive_merge (
       //         strategy class.
 
       // obtain a pointer to the current dispatch proxy iterator
-      Dispatch_Proxy_Iterator *proxy_iter;
-      if ((conj_set_iter.next (proxy_iter) == 0) || (! proxy_iter)
+      Dispatch_Proxy_Iterator **proxy_iter;
+      if ((conj_set_iter.next (proxy_iter) == 0) || (! proxy_iter) || (! (*proxy_iter)))
       {
         return -1;
       }
 
       // use latest arrival, latest deadline, lowest priority (0 is highest)
-      arrival = (arrival < proxy_iter->arrival ()) 
-        ? arrival : proxy_iter->arrival ();
-      deadline = (deadline < proxy_iter->deadline ()) 
-        ? deadline : proxy_iter->deadline ();
-      priority = (priority < proxy_iter->priority ()) 
-        ? priority : proxy_iter->priority ();
+      arrival = (arrival < (*proxy_iter)->arrival ()) 
+        ? arrival : (*proxy_iter)->arrival ();
+      deadline = (deadline < (*proxy_iter)->deadline ()) 
+        ? deadline : (*proxy_iter)->deadline ();
+      priority = (priority < (*proxy_iter)->priority ()) 
+        ? priority : (*proxy_iter)->priority ();
 
-      proxy_iter->advance ();         
-      if (proxy_iter->done ())
+      (*proxy_iter)->advance ();         
+      if ((*proxy_iter)->done ())
       {
         more_dispatches = 0;
       }
     }
-
-    // use iterator for efficient insertion into the dispatch set
-    ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> insert_iter (dispatches_);
 
     Dispatch_Entry *entry_ptr;
     ACE_NEW_RETURN (entry_ptr, 
@@ -319,10 +377,13 @@ Task_Entry::conjunctive_merge (
 
     // add the new dispatch entry to the set of all dispatches, and
     //  a link to it to the dispatch links for this task entry
-    if (dispatch_entries_.insert (entry_ptr) < 0)
+    if (dispatch_entries.insert (entry_ptr) < 0)
     {
       return -1;
     }            
+
+    // use iterator for efficient insertion into the dispatch set
+    ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> insert_iter (dispatches_);
     if (dispatches_.insert (Dispatch_Entry_Link (*entry_ptr), insert_iter) < 0)
     {
       return -1;
@@ -344,6 +405,8 @@ Task_Entry::conjunctive_merge (
 // was not a multiple of the old one), or -1 if an error occurred.
 int 
 Task_Entry::reframe (
+  ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+  Task_Entry &owner,
   ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
   u_long &set_period, u_long new_period)
 {
@@ -370,7 +433,8 @@ Task_Entry::reframe (
   // in the new set, and leaves all dispatches in the 0th sub-frame of
   // the new period in the old set.
   u_long temp_period = new_period;
-  int result = merge_frames (new_set, set, temp_period, set_period, 1, 1);
+  int result = merge_frames (dispatch_entries, owner, new_set, set,
+                             temp_period, set_period, 1, 1);
 
   // if the period changed during the merge, or an error was returned, bail out
   if ((temp_period != new_period) || result == -1)
@@ -381,7 +445,8 @@ Task_Entry::reframe (
   // now, update the period for the set, and merge the 
   // new set into the old set, over the same period
   set_period = new_period;
-  int result = merge_frames (set, new_set, set_period, set_period);
+  result = merge_frames (dispatch_entries, owner, set, 
+                         new_set, set_period, set_period);
 
   // if the period changed during the merge, return an error
   if (set_period != new_period)
@@ -399,6 +464,8 @@ Task_Entry::reframe (
 // given "into" set, without affecting the "from set".
 int 
 Task_Entry::merge_frames (
+  ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+  Task_Entry &owner,
   ACE_Ordered_MultiSet <Dispatch_Entry_Link> &dest,
   ACE_Ordered_MultiSet <Dispatch_Entry_Link> &src,
   u_long &dest_period,
@@ -410,7 +477,7 @@ Task_Entry::merge_frames (
 
   // reframe dispatches in the destination set to the new frame size
   // (expands the destination set's period to be the new enclosing frame)
-  if (reframe (dest, dest_period, 
+  if (reframe (dispatch_entries, owner, dest, dest_period, 
                minimum_frame_size (dest_period, src_period)) < 0)
   {
     return -1;
@@ -438,7 +505,7 @@ Task_Entry::merge_frames (
     ACE_NEW_RETURN (entry_ptr, 
                     Dispatch_Entry (src_iter.arrival (), 
                                     src_iter.deadline (),
-                                    src_iter.priority (), *this),
+                                    src_iter.priority (), owner),
                     -1);
 
     // if even one new dispatch was inserted, status is "something happened".
@@ -446,10 +513,11 @@ Task_Entry::merge_frames (
 
     // add the new dispatch entry to the set of all dispatches, and
     //  a link to it to the dispatch links for this task entry
-    if (dispatch_entries_.insert (entry_ptr) < 0)
+    if (dispatch_entries.insert (entry_ptr) < 0)
     {
       return -1;
     }            
+    
     if (dest.insert (Dispatch_Entry_Link (*entry_ptr), dest_iter) < 0)
     {
       return -1;
@@ -486,7 +554,7 @@ Task_Entry_Link::Task_Entry_Link (
 // Class Dispatch_Entry //
 //////////////////////////
 
-Dispatch_Entry::next_id = 0;
+Dispatch_Entry::Dispatch_Id Dispatch_Entry::next_id_ = 0;
 
 Dispatch_Entry::Dispatch_Entry (
       Preemption_Priority priority,
@@ -507,13 +575,13 @@ Dispatch_Entry::Dispatch_Entry (
 }
 
 Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
-  : priority_ (d.priority)
+  : priority_ (d.priority_)
   , OS_priority_ (d.OS_priority_)
   , dynamic_subpriority_ (d.dynamic_subpriority_)
   , static_subpriority_ (d.static_subpriority_)
-  , arrival_ (d.arrival)
-  , deadline_ (d.deadline)
-  , task_entry_ (d.task_entry)
+  , arrival_ (d.arrival_)
+  , deadline_ (d.deadline_)
+  , task_entry_ (d.task_entry_)
 {
   // obtain, increment the next id
   dispatch_id_ = next_id_++;
@@ -583,7 +651,7 @@ Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
    u_long number_of_calls,
    u_long starting_sub_frame)
   : number_of_calls_ (number_of_calls)
-  , current_call_ (current_call)
+  , current_call_ (0)
   , actual_frame_size_ (actual_frame_size)
   , virtual_frame_size_ (virtual_frame_size)
   , current_frame_offset_ (actual_frame_size * starting_sub_frame)
@@ -594,7 +662,7 @@ Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
       // ctor
 
 int 
-Dispatch_Proxy_Iterator::first (u_int sub_frame = 0)
+Dispatch_Proxy_Iterator::first (u_int sub_frame)
 {
   if (actual_frame_size_ * (sub_frame + 1) >= virtual_frame_size_)
   {
@@ -721,7 +789,7 @@ Dispatch_Proxy_Iterator::retreat ()
   // correctly, 0 if not, and -1 if an error occurred.
 
 u_long 
-Dispatch_Proxy_Iterator::arrival ()
+Dispatch_Proxy_Iterator::arrival () const
 {
   Dispatch_Entry_Link *link;
   if ((iter_.done ()) || (iter_.next(link) == 0) || (! link))
@@ -734,7 +802,7 @@ Dispatch_Proxy_Iterator::arrival ()
   // returns the adjusted arrival time of the virtual entry
 
 u_long 
-Dispatch_Proxy_Iterator::deadline ()
+Dispatch_Proxy_Iterator::deadline () const
 {
   Dispatch_Entry_Link *link;
   if ((iter_.done ()) || (iter_.next(link) == 0) || (! link))
@@ -746,8 +814,8 @@ Dispatch_Proxy_Iterator::deadline ()
 }
   // returns the adjusted deadline time of the virtual entry
 
-Preemption_Priority 
-Dispatch_Proxy_Iterator::priority ()
+Dispatch_Proxy_Iterator::Preemption_Priority 
+Dispatch_Proxy_Iterator::priority () const
 {
   Dispatch_Entry_Link *link;
   if ((iter_.done ()) || (iter_.next(link) == 0) || (! link))
@@ -767,7 +835,7 @@ Dispatch_Proxy_Iterator::priority ()
 
 
     // time slice constructor 
-TimeLine_Entry::Timeline_Entry (Dispatch_Entry &dispatch_entry,
+TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
                                 u_long start, u_long stop,
                                 TimeLine_Entry *next,
                                 TimeLine_Entry *prev)
