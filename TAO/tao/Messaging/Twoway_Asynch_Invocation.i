@@ -3,7 +3,7 @@
 // $Id$
 //
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 ACE_INLINE
 TAO_GIOP_Twoway_Asynch_Invocation::TAO_GIOP_Twoway_Asynch_Invocation (
@@ -40,4 +40,4 @@ TAO_GIOP_Twoway_Asynch_Invocation::TAO_GIOP_Twoway_Asynch_Invocation (
     }
 }
 
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+#endif /* TAO_HAS_AMI_CALLBACK == 1*/

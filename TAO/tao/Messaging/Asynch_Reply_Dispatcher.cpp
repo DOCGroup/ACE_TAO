@@ -14,7 +14,7 @@
 
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
@@ -229,4 +229,4 @@ TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
 
 // AMI Timeout Handling End
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK == 1 */

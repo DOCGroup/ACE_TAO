@@ -1,3 +1,25 @@
+Sat Mar 29 21:59:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/orbconf.h: Commented out portions that were connected to
+	  TAO_HAS_AMI_POLLER == 1. The reason for this are multi-fold. For
+	  one, we dont support the polling model and this #define only
+	  helped to confuse things. Secondly, no one knows how to use it
+	  properly and if not used the right way created
+	  problems. Finally, we want to be moving away from guarding code
+	  using #define stuff. 
+	
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.h:
+	* tao/Messaging/Asynch_Timeout_Handler.cpp:
+	* tao/Messaging/Asynch_Timeout_Handler.h:
+	* tao/Messaging/Twoway_Asynch_Invocation.cpp:
+	* tao/Messaging/Twoway_Asynch_Invocation.h:
+	* tao/Messaging/Twoway_Asynch_Invocation.i: Removed the usage of
+	  TAO_HAS_AMI_POLLER == 1 from all these files. I dont think we
+	  understand well how the poller model works and whether it is
+	  possible to reuse these classes or not. Time for these to go
+	  away. 
+
 Sat Mar 29 20:04:20 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:

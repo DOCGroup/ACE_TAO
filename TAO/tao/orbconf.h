@@ -645,29 +645,25 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
             TAO_HAS_CORBA_MESSAGING == 0 */
 #endif  /* !TAO_HAS_AMI */
 
-// AMI_POLLER support is disabled by default if TAO is not configured
-// for AMI.  If TAO is configured for AMI, then AMI_POLLER will be
-// enabled by default.  If enabled, it requires CORBA_MESSAGING
-// support.
-// To explicitly enable AMI_POLLER support uncomment the following
-// #define TAO_HAS_AMI_POLLER 1
-// To explicitly disable AMI_POLLER support uncomment the following
-// #define TAO_HAS_AMI_POLLER 0
+// We dont have AMI_POLLER support in TAO. Just prevent anyone from
+// using it.
 
-// Default AMI_POLLER settings
-#if !defined (TAO_HAS_AMI_POLLER)
-#  if (TAO_HAS_AMI == 1)
-#    define TAO_HAS_AMI_POLLER 1
-#  else
-#    define TAO_HAS_AMI_POLLER 0
-#  endif  /* TAO_HAS_AMI == 1 */
-#else
-#  if (TAO_HAS_AMI_POLLER == 1) && \
-      (TAO_HAS_CORBA_MESSAGING == 0)
-#  error "tao/orbconf.h: You need CORBA_MESSAGING for AMI support"
-#  endif /* TAO_HAS_AMI_POLLER == 1 &&
-            TAO_HAS_CORBA_MESSAGING == 0 */
-#endif  /* !TAO_HAS_AMI_POLLER */
+/***********************************************************/
+// All these are for future use. Commenting it..
+
+// #if !defined (TAO_HAS_AMI_POLLER)
+// #  if (TAO_HAS_AMI == 1)
+// #    define TAO_HAS_AMI_POLLER 1
+// #  else
+// #    define TAO_HAS_AMI_POLLER 0
+// #  endif  /* TAO_HAS_AMI == 1 */
+// #else
+// #  if (TAO_HAS_AMI_POLLER == 1) && (TAO_HAS_CORBA_MESSAGING == 0)
+// #  error "tao/orbconf.h: You need CORBA_MESSAGING for AMI support"
+// #  endif /* TAO_HAS_AMI_POLLER == 1 &&
+//             TAO_HAS_CORBA_MESSAGING == 0 */
+// #endif  /* !TAO_HAS_AMI_POLLER */
+/***********************************************************/
 
 // AMI_CALLBACK support is disabled by default if TAO is not
 // configured for AMI.  If TAO is configured for AMI, then

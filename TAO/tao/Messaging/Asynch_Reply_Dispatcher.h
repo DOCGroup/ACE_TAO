@@ -26,7 +26,7 @@
 #include "Asynch_Timeout_Handler.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 /// Reply dispatcher for Asynchoronous Method Invocation (AMI)s.
 class TAO_Messaging_Export TAO_Asynch_Reply_Dispatcher
@@ -66,7 +66,7 @@ private:
   TAO_Asynch_Timeout_Handler timeout_handler_;
 };
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_CALLBACK == */
 
 #if defined (__ACE_INLINE__)
 #include "Asynch_Reply_Dispatcher.i"
