@@ -105,11 +105,13 @@ ACE_Hash<unsigned long>::operator () (unsigned long t) const
   return t;
 }
 
+#if ACE_SIZEOF_LONG != 8
 ACE_INLINE u_long
 ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 {
   return ACE_U64_TO_U32 (t);
 }
+#endif /* ACE_SIZEOF_LONG != 8 */
 
 ACE_INLINE u_long
 ACE_Hash<const char *>::operator () (const char *t) const
