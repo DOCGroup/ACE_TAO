@@ -1,3 +1,15 @@
+Mon Sep  6 00:54:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/LoadBalancer/LoadBalancer.mpc:
+
+	  For some reason this MPC file was configured to generate
+	  "CosLoadManager" and "CosLoadMonitor" libraries rather
+	  "LoadManager" and "LoadMonitor" executables, respectively; a
+	  complete departure from the pre-MPC "hand-written" Makefiles and
+	  project files.  Fixed this problem.  This should also fix the
+	  Load Balancer test failures in our daily automated regression
+	  tests.
+
 Mon Sep  6 00:42:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Utils/Server_Main.cpp:
