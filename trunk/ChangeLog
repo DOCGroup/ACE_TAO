@@ -1,3 +1,10 @@
+Wed Dec 20 15:57:32 2000  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/RMCast/RMCast_IO_UDP.cpp
+        * ace/RMCast?RMCast_IO_UDP.h
+        * ace/RMCast/RMCast_IO_UDP.i : cleaned up tabs and trailing ws from
+	  last submission...
+
 Wed Dec 20 16:18:49 2000  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/Proactor/simple_test_proactor.cpp: Removed unused
@@ -11,14 +18,14 @@ Wed Dec 20 16:18:49 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Dec 20 15:42:36 2000  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ace/RMCast/RMCast_IO_UDP.cpp 
-	* ace/RMCast?RMCast_IO_UDP.h
-	* ace/RMCast/RMCast_IO_UDP.i : The g++ cross compiler 2.9-gnupro-98r2 
-	  for target Lynx 3.0.1 host Solaris 2.6 was breaking with an internal
-	  error at the end of handle_input().  Replacing a couple of lines of
-	  code with the private, inline method allocate_and_bind_proxy() gets
-	  around the problem. 
-
+        * ace/RMCast/RMCast_IO_UDP.cpp 
+        * ace/RMCast?RMCast_IO_UDP.h
+        * ace/RMCast/RMCast_IO_UDP.i : The g++ cross compiler 2.9-gnupro-98r2
+          for target Lynx 3.0.1 host Solaris 2.6 was breaking with an internal
+          error at the end of handle_input().  Replacing a couple of lines of
+          code with the private, inline method allocate_and_bind_proxy() gets
+          around the problem.
+  
 Wed Dec 20 15:32:44 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/Threads/wfmo.cpp: Move the function calls etc. out of
