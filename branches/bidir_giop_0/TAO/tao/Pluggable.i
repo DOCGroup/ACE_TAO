@@ -4,8 +4,16 @@
 
 // ****************************************************************
 
+// @@ One of the orb_core () methods should be done away. Will visit
+// @@ this later -- Bala
 ACE_INLINE TAO_ORB_Core *
 TAO_Transport::orb_core (void) const
+{
+  return this->orb_core_;
+}
+
+ACE_INLINE TAO_ORB_Core *
+TAO_Transport::orb_core (void)
 {
   return this->orb_core_;
 }

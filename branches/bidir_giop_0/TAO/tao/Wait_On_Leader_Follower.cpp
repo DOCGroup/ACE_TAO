@@ -20,7 +20,7 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 int
 TAO_Wait_On_Leader_Follower::register_handler (void)
 {
-  return this->transport_->register_handler ();
+  this->transport_->register_handler ();
 }
 
 int

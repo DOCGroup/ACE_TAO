@@ -632,6 +632,25 @@ SOURCE=.\Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connector_Impl.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1278,7 +1297,7 @@ SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.cpp
+SOURCE=.\IIOP_Connection_Handler.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3403,6 +3422,10 @@ SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connector_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
@@ -3559,7 +3582,7 @@ SOURCE=.\IIOP_Acceptor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.h
+SOURCE=.\IIOP_Connection_Handler.h
 # End Source File
 # Begin Source File
 
@@ -4108,6 +4131,10 @@ SOURCE=.\Connection_Descriptor_Interface.inl
 # Begin Source File
 
 SOURCE=.\Connection_Handler.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Impl.inl
 # End Source File
 # Begin Source File
 
