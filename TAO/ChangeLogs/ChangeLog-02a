@@ -1,3 +1,13 @@
+Fri May 25 06:02:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service: Added some fixes to 
+	  ensure that we don't delete the tie member too quickly.  Thanks
+ 	  to Dayisi <dayisi@163.com> for reporting this.
+
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp (close): 
+	  Fixed a bug where we don't wait for our own thread to quit.
+  	  Thanks to Dayisi <dayisi@163.com> for reporting this.
+
 Thu May 24 23:34:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.pidl:
