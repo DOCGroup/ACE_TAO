@@ -48,6 +48,8 @@ IDL_FILES += \
 	Event_Forwarder
 
 CPP_SRCS += \
+        Notify/Method_Request_Dispatch \
+        Notify/Any/PushSupplier \
         Notify/Notify_Extensions \
         Notify/Event_Manager \
         Notify/Admin \
@@ -58,7 +60,6 @@ CPP_SRCS += \
         Notify/Any/ProxyPushConsumer \
         Notify/Any/ProxyPushSupplier \
         Notify/Any/PushConsumer \
-        Notify/Any/PushSupplier \
         Notify/Buffering_Strategy \
         Notify/Builder \
         Notify/Consumer \
@@ -72,8 +73,6 @@ CPP_SRCS += \
         Notify/FilterAdmin \
         Notify/ID_Factory \
         Notify/Method_Request \
-        Notify/Method_Request_Dispatch \
-        Notify/Method_Request_Dispatch_No_Filtering \
         Notify/Object \
         Notify/Method_Request_Lookup \
         Notify/Method_Request_Shutdown \
@@ -112,7 +111,8 @@ CPP_SRCS += \
 	Notify/Timer_Reactor \
 	Notify/Timer_Queue \
 	Notify/Sequence/Batch_Buffering_Strategy \
-	Notify/CosNotify_Initializer
+	Notify/CosNotify_Initializer \
+	Notify/Method_Request_Event
 
 CPP_SRCS += \
         Notify/ETCL_Filter \
@@ -664,12 +664,20 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   ESF/ESF_Worker.i \
   ESF/ESF_Worker.cpp \
-  Notify/Event_Manager.inl Notify/ProxyConsumer.h Notify/Event.h \
+  Notify/Event_Manager.inl Notify/ProxyConsumer.h \
+  CosEventChannelAdminC.h \
+  Notify/notify_export.h \
+  CosEventCommC.h \
+  CosEventCommC.i \
+  CosEventChannelAdminC.i \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
-  Notify/notify_export.h \
   CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -695,9 +703,6 @@ realclean: clean
   CosNotifyFilterS.h \
   CosNotifyCommS.h \
   CosEventCommS.h \
-  CosEventCommC.h \
-  CosEvent/event_export.h \
-  CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
   CosEventCommS_T.cpp \
@@ -715,8 +720,6 @@ realclean: clean
   CosNotifyFilterS_T.cpp \
   CosNotifyFilterS.i \
   CosEventChannelAdminS.h \
-  CosEventChannelAdminC.h \
-  CosEventChannelAdminC.i \
   CosEventChannelAdminS_T.h \
   CosEventChannelAdminS_T.i \
   CosEventChannelAdminS_T.cpp \
@@ -744,14 +747,11 @@ realclean: clean
   Notify/PropertySeq.inl Notify/Event.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
   Notify/Property_Boolean.inl Notify/QoSProperties.inl \
-  Notify/AdminProperties.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
-  Notify/AdminProperties.inl Notify/Refcountable.h \
-  Notify/Refcountable.inl Notify/Object.inl Notify/EventTypeSeq.h \
-  Notify/EventType.h Notify/EventType.inl Notify/EventTypeSeq.inl \
-  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
-  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
+  Notify/AdminProperties.h Notify/AdminProperties.inl \
+  Notify/Refcountable.h Notify/Refcountable.inl Notify/Object.inl \
+  Notify/EventTypeSeq.h Notify/EventType.h Notify/EventType.inl \
+  Notify/EventTypeSeq.inl Notify/FilterAdmin.h Notify/ID_Factory.h \
+  Notify/ID_Factory.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/ProxyConsumer.inl Notify/ProxySupplier.h \
   Notify/ProxySupplier.inl Notify/Event_Map_T.h \
   Notify/Event_Map_Entry_T.h Notify/Event_Map_Entry_T.inl \
@@ -1054,7 +1054,6 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -1409,7 +1408,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -1429,42 +1427,62 @@ realclean: clean
   Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -1480,22 +1498,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1535,9 +1538,6 @@ realclean: clean
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -1698,7 +1698,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -1749,13 +1748,13 @@ realclean: clean
   Notify/Peer.inl Notify/Proxy.h Notify/Object.h Notify/QoSProperties.h \
   Notify/Property_Boolean.h Notify/Property_Boolean.inl \
   Notify/QoSProperties.inl Notify/AdminProperties.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
   Notify/AdminProperties.inl Notify/Refcountable.h \
   Notify/Refcountable.inl Notify/Object.inl Notify/FilterAdmin.h \
   Notify/ID_Factory.h Notify/ID_Factory.inl Notify/Admin.h \
   Notify/Admin.inl Notify/Proxy.inl Notify/Consumer.inl \
-  Notify/ProxySupplier.h Notify/ProxySupplier.inl
+  Notify/ProxySupplier.h Notify/Refcountable_Guard_T.h \
+  Notify/Refcountable_Guard_T.inl Notify/Refcountable_Guard_T.cpp \
+  Notify/ProxySupplier.inl
 
 .obj/CosEC_ProxyPushConsumer.o .obj/CosEC_ProxyPushConsumer.so .shobj/CosEC_ProxyPushConsumer.o .shobj/CosEC_ProxyPushConsumer.so: Notify/Any/CosEC_ProxyPushConsumer.cpp \
   Notify/Any/CosEC_ProxyPushConsumer.h \
@@ -2007,7 +2006,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  CosEvent/event_export.h \
+  Notify/notify_export.h \
   CosEventCommC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -2038,7 +2037,6 @@ realclean: clean
   Notify/ProxyConsumer_T.h Notify/Proxy_T.h Notify/Proxy.h \
   Notify/Object.h \
   NotifyExtC.h \
-  Notify/notify_export.h \
   CosNotifyChannelAdminC.h \
   CosNotificationC.h \
   CosNotificationC.i \
@@ -2093,8 +2091,10 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxyConsumer.h \
-  Notify/ProxyConsumer.inl Notify/ProxyConsumer_T.inl \
-  Notify/ProxyConsumer_T.cpp Notify/SupplierAdmin.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxyConsumer.inl \
+  Notify/ProxyConsumer_T.inl Notify/ProxyConsumer_T.cpp \
+  Notify/SupplierAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -2129,7 +2129,11 @@ realclean: clean
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   Notify/Event_Map_T.inl Notify/Event_Map_T.cpp \
-  Notify/Any/CosEC_ProxyPushConsumer.inl Notify/Any/AnyEvent.h \
+  Notify/Any/CosEC_ProxyPushConsumer.inl Notify/Method_Request_Lookup.h \
+  Notify/Method_Request.h Notify/Method_Request.inl Notify/Consumer_Map.h \
+  Notify/Method_Request_Lookup_T.h Notify/Method_Request_Lookup_T.inl \
+  Notify/Method_Request_Lookup_T.cpp Notify/Method_Request_Lookup.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Any/AnyEvent.h \
   Notify/Any/AnyEvent.inl Notify/Any/PushSupplier.h Notify/Supplier.h \
   Notify/Peer.h Notify/Peer.inl Notify/Supplier.inl \
   Notify/Any/PushSupplier.inl
@@ -2384,7 +2388,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  CosEvent/event_export.h \
+  Notify/notify_export.h \
   CosEventCommC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -2415,7 +2419,6 @@ realclean: clean
   Notify/ProxySupplier_T.h Notify/Proxy_T.h Notify/Proxy.h \
   Notify/Object.h \
   NotifyExtC.h \
-  Notify/notify_export.h \
   CosNotifyChannelAdminC.h \
   CosNotificationC.h \
   CosNotificationC.i \
@@ -2470,16 +2473,17 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxySupplier.h \
-  Notify/ProxySupplier.inl Notify/ProxySupplier_T.inl \
-  Notify/ProxySupplier_T.cpp Notify/Consumer.h Notify/Peer.h \
-  Notify/Peer.inl Notify/Consumer.inl Notify/Structured/StructuredEvent.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
+  Notify/ProxySupplier_T.inl Notify/ProxySupplier_T.cpp Notify/Consumer.h \
+  Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl \
+  Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl Notify/Any/AnyEvent.h \
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
-  Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Dispatch_No_Filtering.h \
-  Notify/Method_Request_Dispatch_No_Filtering.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl Notify/Event_Manager.h \
+  Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
   ESF/ESF_Worker.i \
   ESF/ESF_Worker.cpp \
@@ -2792,7 +2796,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -2852,8 +2855,10 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxyConsumer.h \
-  Notify/ProxyConsumer.inl Notify/ProxyConsumer_T.inl \
-  Notify/ProxyConsumer_T.cpp Notify/SupplierAdmin.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxyConsumer.inl \
+  Notify/ProxyConsumer_T.inl Notify/ProxyConsumer_T.cpp \
+  Notify/SupplierAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -2888,7 +2893,11 @@ realclean: clean
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   Notify/Event_Map_T.inl Notify/Event_Map_T.cpp \
-  Notify/Any/ProxyPushConsumer.inl Notify/Any/AnyEvent.h \
+  Notify/Any/ProxyPushConsumer.inl Notify/Method_Request_Lookup.h \
+  Notify/Method_Request.h Notify/Method_Request.inl Notify/Consumer_Map.h \
+  Notify/Method_Request_Lookup_T.h Notify/Method_Request_Lookup_T.inl \
+  Notify/Method_Request_Lookup_T.cpp Notify/Method_Request_Lookup.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Any/AnyEvent.h \
   Notify/Any/AnyEvent.inl Notify/Any/PushSupplier.h Notify/Supplier.h \
   Notify/Peer.h Notify/Peer.inl Notify/Supplier.inl \
   Notify/Any/PushSupplier.inl
@@ -3169,7 +3178,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -3229,16 +3237,17 @@ realclean: clean
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxySupplier.h \
-  Notify/ProxySupplier.inl Notify/ProxySupplier_T.inl \
-  Notify/ProxySupplier_T.cpp Notify/Consumer.h Notify/Peer.h \
-  Notify/Peer.inl Notify/Consumer.inl Notify/Structured/StructuredEvent.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
+  Notify/ProxySupplier_T.inl Notify/ProxySupplier_T.cpp Notify/Consumer.h \
+  Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl \
+  Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl Notify/Any/AnyEvent.h \
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
-  Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Dispatch_No_Filtering.h \
-  Notify/Method_Request_Dispatch_No_Filtering.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl Notify/Event_Manager.h \
+  Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
   ESF/ESF_Worker.i \
   ESF/ESF_Worker.cpp \
@@ -3526,7 +3535,6 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Consumer.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -3608,7 +3616,9 @@ realclean: clean
   Event_ForwarderS_T.cpp \
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/Consumer.inl Notify/ProxySupplier.h Notify/ProxySupplier.inl \
+  Notify/Consumer.inl Notify/ProxySupplier.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
   Notify/Any/PushConsumer.inl
 
 .obj/PushSupplier.o .obj/PushSupplier.so .shobj/PushSupplier.o .shobj/PushSupplier.so: Notify/Any/PushSupplier.cpp Notify/Any/PushSupplier.h \
@@ -3862,7 +3872,6 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Supplier.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -4215,7 +4224,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -4546,7 +4554,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -4656,8 +4663,10 @@ realclean: clean
   ESF/ESF_Worker.h \
   ESF/ESF_Worker.i \
   ESF/ESF_Worker.cpp \
-  Notify/Event_Manager.inl Notify/ProxyConsumer.h Notify/Proxy.h \
-  Notify/Proxy.inl Notify/ProxyConsumer.inl Notify/ProxySupplier.h \
+  Notify/Event_Manager.inl Notify/ProxyConsumer.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/Proxy.h Notify/Proxy.inl \
+  Notify/ProxyConsumer.inl Notify/ProxySupplier.h \
   Notify/ProxySupplier.inl Notify/Event_Map_T.h \
   Notify/Event_Map_Entry_T.h Notify/Event_Map_Entry_T.inl \
   Notify/Event_Map_Entry_T.cpp \
@@ -4721,9 +4730,8 @@ realclean: clean
   Notify/ProxySupplier_T.cpp Notify/Consumer.h Notify/Peer.h \
   Notify/Peer.inl Notify/Consumer.inl Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl Notify/Method_Request_Dispatch.h \
-  Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Dispatch_No_Filtering.h \
-  Notify/Method_Request_Dispatch_No_Filtering.inl \
+  Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Any/ProxyPushSupplier.inl Notify/Any/CosEC_ProxyPushConsumer.h \
   Notify/Any/CosEC_ProxyPushConsumer.inl \
   Notify/Any/CosEC_ProxyPushSupplier.h \
@@ -4993,7 +5001,6 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Peer.h Notify/EventTypeSeq.h Notify/EventType.h \
@@ -5075,7 +5082,9 @@ realclean: clean
   Event_ForwarderS_T.cpp \
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/Consumer.inl Notify/ProxySupplier.h Notify/ProxySupplier.inl
+  Notify/Consumer.inl Notify/ProxySupplier.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl
 
 .obj/ConsumerAdmin.o .obj/ConsumerAdmin.so .shobj/ConsumerAdmin.o .shobj/ConsumerAdmin.so: Notify/ConsumerAdmin.cpp Notify/ConsumerAdmin.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -5353,7 +5362,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -5457,42 +5465,62 @@ realclean: clean
   $(ACE_ROOT)/ace/ace_wchar.inl \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -5508,22 +5536,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -5563,9 +5576,6 @@ realclean: clean
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -5726,7 +5736,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -6048,7 +6057,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -6144,8 +6152,10 @@ realclean: clean
   Notify/EventType.inl Notify/EventTypeSeq.inl Notify/Admin.inl \
   Notify/ConsumerAdmin.inl Notify/SupplierAdmin.h \
   Notify/SupplierAdmin.inl Notify/Event_Manager.h \
-  Notify/Event_Manager.inl Notify/ProxyConsumer.h Notify/Proxy.h \
-  Notify/Proxy.inl Notify/ProxyConsumer.inl Notify/ProxySupplier.h \
+  Notify/Event_Manager.inl Notify/ProxyConsumer.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/Proxy.h Notify/Proxy.inl \
+  Notify/ProxyConsumer.inl Notify/ProxySupplier.h \
   Notify/ProxySupplier.inl Notify/Event_Map_T.h \
   Notify/Event_Map_Entry_T.h Notify/Event_Map_Entry_T.inl \
   Notify/Event_Map_Entry_T.cpp Notify/Event_Map_T.inl \
@@ -6430,7 +6440,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -7330,7 +7339,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -7398,9 +7406,11 @@ realclean: clean
   Notify/ConsumerAdmin.inl \
   Notify/Structured/StructuredProxyPushConsumer.h \
   Notify/ProxyConsumer_T.h Notify/Proxy_T.h Notify/Proxy_T.inl \
-  Notify/Proxy_T.cpp Notify/ProxyConsumer.h Notify/ProxyConsumer.inl \
-  Notify/ProxyConsumer_T.inl Notify/ProxyConsumer_T.cpp \
-  Notify/Event_Manager.h Notify/Event_Manager.inl Notify/ProxySupplier.h \
+  Notify/Proxy_T.cpp Notify/ProxyConsumer.h Notify/Refcountable_Guard_T.h \
+  Notify/Refcountable_Guard_T.inl Notify/Refcountable_Guard_T.cpp \
+  Notify/ProxyConsumer.inl Notify/ProxyConsumer_T.inl \
+  Notify/ProxyConsumer_T.cpp Notify/Event_Manager.h \
+  Notify/Event_Manager.inl Notify/ProxySupplier.h \
   Notify/ProxySupplier.inl Notify/Event_Map_T.h \
   Notify/Event_Map_Entry_T.h Notify/Event_Map_Entry_T.inl \
   Notify/Event_Map_Entry_T.cpp Notify/Properties.h \
@@ -7423,10 +7433,9 @@ realclean: clean
   Notify/Structured/StructuredEvent.inl Notify/Any/AnyEvent.h \
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
-  Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Dispatch_No_Filtering.h \
-  Notify/Method_Request_Dispatch_No_Filtering.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl \
+  Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl \
   Notify/Structured/StructuredProxyPushSupplier.inl \
   Notify/Any/ProxyPushConsumer.h Notify/Any/ProxyPushConsumer.inl \
   Notify/Any/ProxyPushSupplier.h Notify/Any/ProxyPushSupplier.inl \
@@ -7713,7 +7722,6 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -8036,7 +8044,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -8337,7 +8344,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -8666,7 +8672,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -8713,16 +8718,19 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Refcountable.h Notify/Refcountable.inl \
-  Notify/Method_Request_Dispatch.inl Notify/ProxySupplier.h \
-  Notify/Proxy.h Notify/Object.h Notify/QoSProperties.h \
-  Notify/Property_Boolean.h Notify/Property_Boolean.inl \
-  Notify/QoSProperties.inl Notify/AdminProperties.h \
-  Notify/AdminProperties.inl Notify/Object.inl Notify/EventTypeSeq.h \
-  Notify/EventType.h Notify/EventType.inl Notify/EventTypeSeq.inl \
-  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
-  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/ProxySupplier.inl Notify/Consumer.h Notify/Peer.h \
-  Notify/Peer.inl Notify/Consumer.inl Notify/ConsumerAdmin.h \
+  Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  Notify/Admin.h Notify/FilterAdmin.h Notify/ID_Factory.h Notify/Object.h \
+  Notify/QoSProperties.h Notify/Property_Boolean.h \
+  Notify/Property_Boolean.inl Notify/QoSProperties.inl \
+  Notify/AdminProperties.h Notify/AdminProperties.inl Notify/Object.inl \
+  Notify/ID_Factory.inl Notify/EventTypeSeq.h Notify/EventType.h \
+  Notify/EventType.inl Notify/EventTypeSeq.inl Notify/Admin.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/ProxySupplier.h \
+  Notify/Proxy.h Notify/Proxy.inl Notify/Refcountable_Guard_T.h \
+  Notify/Refcountable_Guard_T.inl Notify/Refcountable_Guard_T.cpp \
+  Notify/ProxySupplier.inl Notify/Method_Request_Dispatch.inl \
+  Notify/Consumer.h Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl \
+  Notify/ConsumerAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -9013,7 +9021,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -9068,8 +9075,9 @@ realclean: clean
   Notify/EventType.h Notify/EventType.inl Notify/EventTypeSeq.inl \
   Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
   Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/ProxySupplier.inl Notify/Consumer.h Notify/Peer.h \
-  Notify/Peer.inl Notify/Consumer.inl
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
+  Notify/Consumer.h Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl
 
 .obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Notify/Object.cpp Notify/Object.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -9336,7 +9344,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -9751,7 +9758,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -9797,15 +9803,17 @@ realclean: clean
   Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
-  Notify/ProxySupplier.h Notify/Proxy.h Notify/Object.h \
-  Notify/QoSProperties.h Notify/Property_Boolean.h \
-  Notify/Property_Boolean.inl Notify/QoSProperties.inl \
-  Notify/AdminProperties.h Notify/AdminProperties.inl \
-  Notify/Refcountable.h Notify/Refcountable.inl Notify/Object.inl \
-  Notify/EventTypeSeq.h Notify/EventType.h Notify/EventType.inl \
-  Notify/EventTypeSeq.inl Notify/FilterAdmin.h Notify/ID_Factory.h \
-  Notify/ID_Factory.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/ProxySupplier.inl Notify/Consumer_Map.h Notify/Event_Map_T.h \
+  Notify/ProxyConsumer.h Notify/Refcountable_Guard_T.h \
+  Notify/Refcountable_Guard_T.inl Notify/Refcountable_Guard_T.cpp \
+  Notify/Proxy.h Notify/Object.h Notify/QoSProperties.h \
+  Notify/Property_Boolean.h Notify/Property_Boolean.inl \
+  Notify/QoSProperties.inl Notify/AdminProperties.h \
+  Notify/AdminProperties.inl Notify/Refcountable.h \
+  Notify/Refcountable.inl Notify/Object.inl Notify/EventTypeSeq.h \
+  Notify/EventType.h Notify/EventType.inl Notify/EventTypeSeq.inl \
+  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
+  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
+  Notify/ProxyConsumer.inl Notify/Consumer_Map.h Notify/Event_Map_T.h \
   Notify/Event_Map_Entry_T.h Notify/Event_Map_Entry_T.inl \
   Notify/Event_Map_Entry_T.cpp \
   ESF/ESF_Proxy_Collection.h \
@@ -9828,9 +9836,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
-  Notify/Event_Map_T.inl Notify/Event_Map_T.cpp \
-  Notify/Method_Request_Lookup.inl Notify/ProxyConsumer.h \
-  Notify/ProxyConsumer.inl Notify/SupplierAdmin.h \
+  Notify/Event_Map_T.inl Notify/Event_Map_T.cpp Notify/ProxySupplier.h \
+  Notify/ProxySupplier.inl Notify/Method_Request_Lookup_T.h \
+  Notify/Method_Request_Lookup_T.inl Notify/Event_Manager.h \
+  Notify/Event_Manager.inl Notify/Method_Request_Lookup_T.cpp \
+  Notify/Method_Request_Lookup.inl Notify/SupplierAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -10120,7 +10130,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -10508,7 +10517,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -10600,6 +10608,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -10891,7 +10903,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -11226,7 +11237,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -11517,7 +11527,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -12297,7 +12306,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -12365,9 +12373,10 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Peer.h Notify/Peer.inl Notify/Method_Request_Updates.h \
-  Notify/Method_Request.h Notify/Method_Request.inl \
-  Notify/Method_Request_Updates.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl Notify/Properties.h \
+  Notify/Method_Request_Updates_T.h Notify/Method_Request_Updates_T.inl \
+  Notify/Method_Request_Updates_T.cpp Notify/Method_Request.h \
+  Notify/Method_Request.inl Notify/Method_Request_Updates.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Properties.h \
   $(TAO_ROOT)/tao/TAO_Singleton.h \
   $(TAO_ROOT)/tao/TAO_Singleton.inl \
   $(TAO_ROOT)/tao/TAO_Singleton.cpp \
@@ -12393,11 +12402,7 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  Notify/Event.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
-  Event_ForwarderS.h \
-  CosNotificationS.h \
-  CosNotificationC.h \
+  CosEventChannelAdminC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -12632,6 +12637,17 @@ realclean: clean
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h \
+  CosEventCommC.h \
+  CosEventCommC.i \
+  CosEventChannelAdminC.i \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/Event.h \
+  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  Event_ForwarderS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -12657,9 +12673,6 @@ realclean: clean
   CosNotifyFilterS.h \
   CosNotifyCommS.h \
   CosEventCommS.h \
-  CosEventCommC.h \
-  CosEvent/event_export.h \
-  CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
   CosEventCommS_T.cpp \
@@ -12677,8 +12690,6 @@ realclean: clean
   CosNotifyFilterS_T.cpp \
   CosNotifyFilterS.i \
   CosEventChannelAdminS.h \
-  CosEventChannelAdminC.h \
-  CosEventChannelAdminC.i \
   CosEventChannelAdminS_T.h \
   CosEventChannelAdminS_T.i \
   CosEventChannelAdminS_T.cpp \
@@ -12706,14 +12717,11 @@ realclean: clean
   Notify/PropertySeq.inl Notify/Event.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
   Notify/Property_Boolean.inl Notify/QoSProperties.inl \
-  Notify/AdminProperties.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
-  Notify/AdminProperties.inl Notify/Refcountable.h \
-  Notify/Refcountable.inl Notify/Object.inl Notify/EventTypeSeq.h \
-  Notify/EventType.h Notify/EventType.inl Notify/EventTypeSeq.inl \
-  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
-  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
+  Notify/AdminProperties.h Notify/AdminProperties.inl \
+  Notify/Refcountable.h Notify/Refcountable.inl Notify/Object.inl \
+  Notify/EventTypeSeq.h Notify/EventType.h Notify/EventType.inl \
+  Notify/EventTypeSeq.inl Notify/FilterAdmin.h Notify/ID_Factory.h \
+  Notify/ID_Factory.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/ProxyConsumer.inl Notify/Supplier.h Notify/Peer.h \
   Notify/Peer.inl Notify/Supplier.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
@@ -12746,8 +12754,9 @@ realclean: clean
   Notify/Event_Map_T.inl Notify/Event_Map_T.cpp \
   Notify/Method_Request_Lookup.h Notify/Method_Request.h \
   Notify/Method_Request.inl Notify/Consumer_Map.h \
-  Notify/Method_Request_Lookup.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl Notify/SupplierAdmin.h \
+  Notify/Method_Request_Lookup_T.h Notify/Method_Request_Lookup_T.inl \
+  Notify/Method_Request_Lookup_T.cpp Notify/Method_Request_Lookup.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/SupplierAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -12764,42 +12773,62 @@ realclean: clean
   Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -12815,22 +12844,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -12870,9 +12884,6 @@ realclean: clean
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -13033,7 +13044,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -13081,17 +13091,14 @@ realclean: clean
   Notify/PropertySeq.inl Notify/Event.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
   Notify/Property_Boolean.inl Notify/QoSProperties.inl \
-  Notify/AdminProperties.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
-  Notify/AdminProperties.inl Notify/Refcountable.h \
-  Notify/Refcountable.inl Notify/Object.inl Notify/EventTypeSeq.h \
-  Notify/EventType.h Notify/EventType.inl Notify/EventTypeSeq.inl \
-  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
-  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/ProxySupplier.inl Notify/Method_Request_Dispatch_No_Filtering.h \
-  Notify/Method_Request.h Notify/Method_Request.inl \
-  Notify/Method_Request_Dispatch_No_Filtering.inl Notify/Event_Manager.h \
+  Notify/AdminProperties.h Notify/AdminProperties.inl \
+  Notify/Refcountable.h Notify/Refcountable.inl Notify/Object.inl \
+  Notify/EventTypeSeq.h Notify/EventType.h Notify/EventType.inl \
+  Notify/EventTypeSeq.inl Notify/FilterAdmin.h Notify/ID_Factory.h \
+  Notify/ID_Factory.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
+  Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
   ESF/ESF_Worker.i \
   ESF/ESF_Worker.cpp \
@@ -13121,7 +13128,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Service_Object.i \
   Notify/Event_Map_T.inl Notify/Event_Map_T.cpp Notify/Consumer.h \
   Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl \
-  Notify/Method_Request_Dispatch.h Notify/Method_Request_Dispatch.inl \
+  Notify/Method_Request_Dispatch.h Notify/Method_Request.h \
+  Notify/Method_Request.inl Notify/Method_Request_Dispatch_T.h \
+  Notify/Method_Request_Dispatch_T.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Buffering_Strategy.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -13403,7 +13413,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -13694,7 +13703,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -14076,7 +14084,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -14136,8 +14143,10 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxyConsumer.h \
-  Notify/ProxyConsumer.inl Notify/ProxyConsumer_T.inl \
-  Notify/ProxyConsumer_T.cpp Notify/SupplierAdmin.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxyConsumer.inl \
+  Notify/ProxyConsumer_T.inl Notify/ProxyConsumer_T.cpp \
+  Notify/SupplierAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -14175,7 +14184,11 @@ realclean: clean
   Notify/Sequence/SequenceProxyPushConsumer.inl \
   Notify/Sequence/SequencePushSupplier.h Notify/Supplier.h Notify/Peer.h \
   Notify/Peer.inl Notify/Supplier.inl \
-  Notify/Sequence/SequencePushSupplier.inl \
+  Notify/Sequence/SequencePushSupplier.inl Notify/Method_Request_Lookup.h \
+  Notify/Method_Request.h Notify/Method_Request.inl Notify/Consumer_Map.h \
+  Notify/Method_Request_Lookup_T.h Notify/Method_Request_Lookup_T.inl \
+  Notify/Method_Request_Lookup_T.cpp Notify/Method_Request_Lookup.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl \
   Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl
 
@@ -14456,7 +14469,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -14516,16 +14528,17 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxySupplier.h \
-  Notify/ProxySupplier.inl Notify/ProxySupplier_T.inl \
-  Notify/ProxySupplier_T.cpp Notify/Consumer.h Notify/Peer.h \
-  Notify/Peer.inl Notify/Consumer.inl Notify/Structured/StructuredEvent.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
+  Notify/ProxySupplier_T.inl Notify/ProxySupplier_T.cpp Notify/Consumer.h \
+  Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl \
+  Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl Notify/Any/AnyEvent.h \
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
-  Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Dispatch_No_Filtering.h \
-  Notify/Method_Request_Dispatch_No_Filtering.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl Notify/Event_Manager.h \
+  Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
   ESF/ESF_Worker.i \
   ESF/ESF_Worker.cpp \
@@ -14611,6 +14624,26 @@ realclean: clean
   $(ACE_ROOT)/ace/Event_Handler.i \
   Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
@@ -14640,22 +14673,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -14693,9 +14711,6 @@ realclean: clean
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -14856,7 +14871,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -14906,16 +14920,15 @@ realclean: clean
   Notify/EventTypeSeq.inl Notify/Peer.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
   Notify/Property_Boolean.inl Notify/QoSProperties.inl \
-  Notify/AdminProperties.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
-  Notify/AdminProperties.inl Notify/Refcountable.h \
-  Notify/Refcountable.inl Notify/Object.inl Notify/FilterAdmin.h \
-  Notify/ID_Factory.h Notify/ID_Factory.inl Notify/Admin.h \
-  Notify/Admin.inl Notify/Proxy.inl Notify/Consumer.inl \
-  Notify/ProxySupplier.h Notify/ProxySupplier.inl \
-  Notify/Sequence/Batch_Buffering_Strategy.h Notify/Method_Request.h \
-  Notify/Method_Request.inl Notify/Buffering_Strategy.h \
+  Notify/AdminProperties.h Notify/AdminProperties.inl \
+  Notify/Refcountable.h Notify/Refcountable.inl Notify/Object.inl \
+  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
+  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl Notify/Consumer.inl \
+  Notify/ProxySupplier.h Notify/Refcountable_Guard_T.h \
+  Notify/Refcountable_Guard_T.inl Notify/Refcountable_Guard_T.cpp \
+  Notify/ProxySupplier.inl Notify/Sequence/Batch_Buffering_Strategy.h \
+  Notify/Method_Request.h Notify/Method_Request.inl \
+  Notify/Buffering_Strategy.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
   $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -14930,7 +14943,8 @@ realclean: clean
   Notify/Buffering_Strategy.inl \
   Notify/Sequence/Batch_Buffering_Strategy.inl \
   Notify/Sequence/SequencePushConsumer.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl Notify/Timer.h
+  Notify/Worker_Task.inl Notify/Method_Request_Event.h \
+  Notify/Method_Request_Event.inl Notify/Timer.h
 
 .obj/SequencePushSupplier.o .obj/SequencePushSupplier.so .shobj/SequencePushSupplier.o .shobj/SequencePushSupplier.so: Notify/Sequence/SequencePushSupplier.cpp \
   Notify/Sequence/SequencePushSupplier.h \
@@ -15184,7 +15198,6 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Supplier.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -15278,42 +15291,62 @@ realclean: clean
   Notify/Event.h \
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -15329,22 +15362,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -15384,9 +15402,6 @@ realclean: clean
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -15547,7 +15562,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -15598,14 +15612,13 @@ realclean: clean
   Notify/EventTypeSeq.inl Notify/Peer.inl Notify/Proxy.h Notify/Object.h \
   Notify/QoSProperties.h Notify/Property_Boolean.h \
   Notify/Property_Boolean.inl Notify/QoSProperties.inl \
-  Notify/AdminProperties.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
-  Notify/AdminProperties.inl Notify/Refcountable.h \
-  Notify/Refcountable.inl Notify/Object.inl Notify/FilterAdmin.h \
-  Notify/ID_Factory.h Notify/ID_Factory.inl Notify/Admin.h \
-  Notify/Admin.inl Notify/Proxy.inl Notify/Consumer.inl \
-  Notify/ProxySupplier.h Notify/ProxySupplier.inl
+  Notify/AdminProperties.h Notify/AdminProperties.inl \
+  Notify/Refcountable.h Notify/Refcountable.inl Notify/Object.inl \
+  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
+  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl Notify/Consumer.inl \
+  Notify/ProxySupplier.h Notify/Refcountable_Guard_T.h \
+  Notify/Refcountable_Guard_T.inl Notify/Refcountable_Guard_T.cpp \
+  Notify/ProxySupplier.inl
 
 .obj/StructuredProxyPushConsumer.o .obj/StructuredProxyPushConsumer.so .shobj/StructuredProxyPushConsumer.o .shobj/StructuredProxyPushConsumer.so:  \
  Notify/Structured/StructuredProxyPushConsumer.cpp \
@@ -15884,7 +15897,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -15944,8 +15956,10 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxyConsumer.h \
-  Notify/ProxyConsumer.inl Notify/ProxyConsumer_T.inl \
-  Notify/ProxyConsumer_T.cpp Notify/SupplierAdmin.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxyConsumer.inl \
+  Notify/ProxyConsumer_T.inl Notify/ProxyConsumer_T.cpp \
+  Notify/SupplierAdmin.h \
   NotifyExtS.h \
   NotifyExtS_T.h \
   NotifyExtS_T.i \
@@ -15985,7 +15999,11 @@ realclean: clean
   Notify/Peer.h Notify/Peer.inl Notify/Supplier.inl \
   Notify/Structured/StructuredPushSupplier.inl \
   Notify/Structured/StructuredEvent.h \
-  Notify/Structured/StructuredEvent.inl
+  Notify/Structured/StructuredEvent.inl Notify/Method_Request_Lookup.h \
+  Notify/Method_Request.h Notify/Method_Request.inl Notify/Consumer_Map.h \
+  Notify/Method_Request_Lookup_T.h Notify/Method_Request_Lookup_T.inl \
+  Notify/Method_Request_Lookup_T.cpp Notify/Method_Request_Lookup.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl
 
 .obj/StructuredProxyPushSupplier.o .obj/StructuredProxyPushSupplier.so .shobj/StructuredProxyPushSupplier.o .shobj/StructuredProxyPushSupplier.so:  \
  Notify/Structured/StructuredProxyPushSupplier.cpp \
@@ -16264,7 +16282,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -16324,16 +16341,17 @@ realclean: clean
   $(ACE_ROOT)/ace/Copy_Disabled.h \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
   Notify/Proxy_T.inl Notify/Proxy_T.cpp Notify/ProxySupplier.h \
-  Notify/ProxySupplier.inl Notify/ProxySupplier_T.inl \
-  Notify/ProxySupplier_T.cpp Notify/Consumer.h Notify/Peer.h \
-  Notify/Peer.inl Notify/Consumer.inl Notify/Structured/StructuredEvent.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
+  Notify/ProxySupplier_T.inl Notify/ProxySupplier_T.cpp Notify/Consumer.h \
+  Notify/Peer.h Notify/Peer.inl Notify/Consumer.inl \
+  Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl Notify/Any/AnyEvent.h \
   Notify/Any/AnyEvent.inl Notify/Method_Request_Dispatch.h \
   Notify/Method_Request.h Notify/Method_Request.inl \
-  Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Dispatch_No_Filtering.h \
-  Notify/Method_Request_Dispatch_No_Filtering.inl Notify/Worker_Task.h \
-  Notify/Worker_Task.inl Notify/Event_Manager.h \
+  Notify/Method_Request_Dispatch_T.h Notify/Method_Request_Dispatch_T.inl \
+  Notify/Method_Request_Dispatch_T.cpp Notify/Method_Request_Dispatch.inl \
+  Notify/Worker_Task.h Notify/Worker_Task.inl Notify/Event_Manager.h \
   ESF/ESF_Worker.h \
   ESF/ESF_Worker.i \
   ESF/ESF_Worker.cpp \
@@ -16624,7 +16642,6 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Consumer.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -16706,7 +16723,9 @@ realclean: clean
   Event_ForwarderS_T.cpp \
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/Consumer.inl Notify/ProxySupplier.h Notify/ProxySupplier.inl \
+  Notify/Consumer.inl Notify/ProxySupplier.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxySupplier.inl \
   Notify/Structured/StructuredPushConsumer.inl
 
 .obj/StructuredPushSupplier.o .obj/StructuredPushSupplier.so .shobj/StructuredPushSupplier.o .shobj/StructuredPushSupplier.so: Notify/Structured/StructuredPushSupplier.cpp \
@@ -16961,7 +16980,6 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Supplier.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -17313,7 +17331,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -17378,7 +17395,9 @@ realclean: clean
   Event_ForwarderS_T.cpp \
   Event_ForwarderS.i \
   Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
-  Notify/Supplier.inl Notify/ProxyConsumer.h Notify/ProxyConsumer.inl
+  Notify/Supplier.inl Notify/ProxyConsumer.h \
+  Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
+  Notify/Refcountable_Guard_T.cpp Notify/ProxyConsumer.inl
 
 .obj/Subscription_Change_Worker.o .obj/Subscription_Change_Worker.so .shobj/Subscription_Change_Worker.o .shobj/Subscription_Change_Worker.so: Notify/Subscription_Change_Worker.cpp \
   Notify/Subscription_Change_Worker.h \
@@ -17650,7 +17669,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -17994,7 +18012,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -18408,7 +18425,6 @@ realclean: clean
   CosNotifyFilterC.h \
   CosNotifyCommC.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -18505,6 +18521,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -18798,7 +18818,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -19154,7 +19173,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -19278,6 +19296,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -19309,72 +19331,41 @@ realclean: clean
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
-  Notify/Method_Request.h \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/ACE_export.h \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Errno.h \
-  $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/Basic_Types.h \
-  $(ACE_ROOT)/ace/Basic_Types.i \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_Memory.h \
-  $(ACE_ROOT)/ace/OS_Memory.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.h \
-  $(ACE_ROOT)/ace/Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
-  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch.h \
-  $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  Notify/Event.h \
-  $(ACE_ROOT)/ace/Copy_Disabled.h \
-  Event_ForwarderS.h \
-  CosNotificationS.h \
-  CosNotificationC.h \
+  Notify/Method_Request_Updates_T.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(TAO_ROOT)/tao/orbconf.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
   $(TAO_ROOT)/tao/corbafwd.i \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -19390,7 +19381,22 @@ realclean: clean
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -19398,6 +19404,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
@@ -19429,6 +19436,9 @@ realclean: clean
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Memory_Pool.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   $(ACE_ROOT)/ace/XML_Svc_Conf.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -19457,6 +19467,11 @@ realclean: clean
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -19557,13 +19572,16 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  Notify/Method_Request_Updates_T.inl Notify/Peer.h \
+  CosNotificationC.h \
   Notify/notify_export.h \
   CosNotificationC.i \
-  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
-  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
-  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  Notify/EventTypeSeq.h Notify/EventType.h Notify/EventType.inl \
+  Notify/EventTypeSeq.inl Notify/Peer.inl Notify/Proxy.h Notify/Object.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op_T.h \
@@ -19571,6 +19589,34 @@ realclean: clean
   $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  NotifyExtC.h \
+  CosNotifyChannelAdminC.h \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosNotifyChannelAdminC.i \
+  NotifyExtC.i \
+  Notify/QoSProperties.h Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  Notify/PropertySeq.inl Notify/Property_T.h Notify/Property_T.inl \
+  Notify/Property_T.cpp Notify/Property_Boolean.h \
+  Notify/Property_Boolean.inl Notify/Property.h \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  Notify/QoSProperties.inl Notify/AdminProperties.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  Notify/AdminProperties.inl Notify/Refcountable.h \
+  Notify/Refcountable.inl Notify/Object.inl Notify/FilterAdmin.h \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosNotificationS.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
@@ -19579,38 +19625,28 @@ realclean: clean
   CosNotificationS_T.i \
   CosNotificationS_T.cpp \
   CosNotificationS.i \
-  CosNotifyChannelAdminS.h \
-  CosNotifyFilterS.h \
-  CosNotifyCommS.h \
   CosEventCommS.h \
-  CosEventCommC.h \
-  CosEvent/event_export.h \
-  CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
   CosEventCommS_T.cpp \
   CosEventCommS.i \
-  CosNotifyCommC.h \
-  CosNotifyCommC.i \
   CosNotifyCommS_T.h \
   CosNotifyCommS_T.i \
   CosNotifyCommS_T.cpp \
   CosNotifyCommS.i \
-  CosNotifyFilterC.h \
-  CosNotifyFilterC.i \
   CosNotifyFilterS_T.h \
   CosNotifyFilterS_T.i \
   CosNotifyFilterS_T.cpp \
   CosNotifyFilterS.i \
+  Notify/ID_Factory.h Notify/ID_Factory.inl Notify/Event.h \
+  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  Event_ForwarderS.h \
+  CosNotifyChannelAdminS.h \
   CosEventChannelAdminS.h \
-  CosEventChannelAdminC.h \
-  CosEventChannelAdminC.i \
   CosEventChannelAdminS_T.h \
   CosEventChannelAdminS_T.i \
   CosEventChannelAdminS_T.cpp \
   CosEventChannelAdminS.i \
-  CosNotifyChannelAdminC.h \
-  CosNotifyChannelAdminC.i \
   CosNotifyChannelAdminS_T.h \
   CosNotifyChannelAdminS_T.i \
   CosNotifyChannelAdminS_T.cpp \
@@ -19621,24 +19657,9 @@ realclean: clean
   Event_ForwarderS_T.i \
   Event_ForwarderS_T.cpp \
   Event_ForwarderS.i \
-  Notify/Property.h \
-  $(TAO_ROOT)/tao/TimeBaseC.h \
-  $(TAO_ROOT)/tao/TimeBaseC.i \
-  NotifyExtC.h \
-  NotifyExtC.i \
-  Notify/Property_T.h Notify/Property_T.inl Notify/Property_T.cpp \
-  Notify/PropertySeq.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
-  Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
-  Notify/EventTypeSeq.h Notify/EventType.h Notify/EventType.inl \
-  Notify/EventTypeSeq.inl Notify/Refcountable.h Notify/Refcountable.inl \
-  Notify/Method_Request_Updates.inl Notify/Proxy.h Notify/Object.h \
-  Notify/QoSProperties.h Notify/Property_Boolean.h \
-  Notify/Property_Boolean.inl Notify/QoSProperties.inl \
-  Notify/AdminProperties.h Notify/AdminProperties.inl Notify/Object.inl \
-  Notify/FilterAdmin.h Notify/ID_Factory.h Notify/ID_Factory.inl \
-  Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl Notify/Peer.h \
-  Notify/Peer.inl
+  Notify/Event.inl Notify/Admin.h Notify/Admin.inl Notify/Proxy.inl \
+  Notify/Method_Request_Updates_T.cpp Notify/Method_Request.h \
+  Notify/Method_Request.inl Notify/Method_Request_Updates.inl
 
 .obj/Timer_Reactor.o .obj/Timer_Reactor.so .shobj/Timer_Reactor.o .shobj/Timer_Reactor.so: Notify/Timer_Reactor.cpp Notify/Timer_Reactor.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -19906,6 +19927,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -20325,7 +20350,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -20386,7 +20410,8 @@ realclean: clean
   Notify/AdminProperties.h Notify/Property_Boolean.h \
   Notify/Property_Boolean.inl Notify/AdminProperties.inl \
   Notify/Buffering_Strategy.inl \
-  Notify/Sequence/Batch_Buffering_Strategy.inl
+  Notify/Sequence/Batch_Buffering_Strategy.inl \
+  Notify/Method_Request_Event.h Notify/Method_Request_Event.inl
 
 .obj/CosNotify_Initializer.o .obj/CosNotify_Initializer.so .shobj/CosNotify_Initializer.o .shobj/CosNotify_Initializer.so: Notify/CosNotify_Initializer.cpp \
   Notify/CosNotify_Initializer.h \
@@ -20670,7 +20695,6 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -20702,6 +20726,335 @@ realclean: clean
   CosNotifyChannelAdminS_T.cpp \
   CosNotifyChannelAdminS.i \
   Notify/CosNotify_Service.inl
+
+.obj/Method_Request_Event.o .obj/Method_Request_Event.so .shobj/Method_Request_Event.o .shobj/Method_Request_Event.so: Notify/Method_Request_Event.cpp \
+  Notify/Method_Request_Event.h \
+  $(ACE_ROOT)/ace/pre.h \
+  Notify/notify_export.h \
+  $(ACE_ROOT)/ace/post.h \
+  $(ACE_ROOT)/ace/ace_wchar.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl \
+  Notify/Method_Request.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/ACE_export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Errno.h \
+  $(ACE_ROOT)/ace/OS_Errno.inl \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/Basic_Types.h \
+  $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_Memory.h \
+  $(ACE_ROOT)/ace/OS_Memory.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.h \
+  $(ACE_ROOT)/ace/Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+  $(ACE_ROOT)/ace/Refcounted_Auto_Ptr.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
+  Notify/Event.h \
+  $(ACE_ROOT)/ace/Copy_Disabled.h \
+  Event_ForwarderS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
+  $(TAO_ROOT)/tao/corba.h \
+  $(TAO_ROOT)/tao/corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
+  $(ACE_ROOT)/ace/CDR_Base.inl \
+  $(TAO_ROOT)/tao/orbconf.h \
+  $(TAO_ROOT)/tao/TAO_Export.h \
+  $(TAO_ROOT)/tao/corbafwd.i \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/String_Base.h \
+  $(ACE_ROOT)/ace/String_Base_Const.h \
+  $(ACE_ROOT)/ace/String_Base.i \
+  $(ACE_ROOT)/ace/String_Base.cpp \
+  $(ACE_ROOT)/ace/Malloc.h \
+  $(ACE_ROOT)/ace/Malloc.i \
+  $(ACE_ROOT)/ace/Malloc_T.h \
+  $(ACE_ROOT)/ace/Malloc_Allocator.h \
+  $(ACE_ROOT)/ace/Malloc_Allocator.i \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.i \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Malloc_T.i \
+  $(ACE_ROOT)/ace/Malloc_T.cpp \
+  $(ACE_ROOT)/ace/Memory_Pool.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/Signal.h \
+  $(ACE_ROOT)/ace/Signal.i \
+  $(ACE_ROOT)/ace/Mem_Map.h \
+  $(ACE_ROOT)/ace/Mem_Map.i \
+  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+  $(ACE_ROOT)/ace/Memory_Pool.i \
+  $(ACE_ROOT)/ace/SString.i \
+  $(ACE_ROOT)/ace/XML_Svc_Conf.h \
+  $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  $(ACE_ROOT)/ace/iosfwd.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
+  $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
+  $(TAO_ROOT)/tao/Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  $(TAO_ROOT)/tao/Object.h \
+  $(TAO_ROOT)/tao/Policy_ForwardC.h \
+  $(TAO_ROOT)/tao/Sequence.h \
+  $(TAO_ROOT)/tao/Managed_Types.h \
+  $(TAO_ROOT)/tao/Managed_Types.i \
+  $(TAO_ROOT)/tao/Sequence.i \
+  $(TAO_ROOT)/tao/Sequence_T.h \
+  $(TAO_ROOT)/tao/Sequence_T.i \
+  $(TAO_ROOT)/tao/Sequence_T.cpp \
+  $(TAO_ROOT)/tao/Environment.h \
+  $(TAO_ROOT)/tao/Environment.i \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.h \
+  $(TAO_ROOT)/tao/varbase.h \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Objref_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Var_T.h \
+  $(TAO_ROOT)/tao/Seq_Var_T.inl \
+  $(TAO_ROOT)/tao/Seq_Var_T.cpp \
+  $(TAO_ROOT)/tao/Seq_Out_T.h \
+  $(TAO_ROOT)/tao/Seq_Out_T.inl \
+  $(TAO_ROOT)/tao/Seq_Out_T.cpp \
+  $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
+  $(TAO_ROOT)/tao/IOP_IORC.h \
+  $(TAO_ROOT)/tao/OctetSeqC.h \
+  $(TAO_ROOT)/tao/OctetSeqC.i \
+  $(TAO_ROOT)/tao/VarOut_T.h \
+  $(TAO_ROOT)/tao/VarOut_T.inl \
+  $(TAO_ROOT)/tao/VarOut_T.cpp \
+  $(TAO_ROOT)/tao/IOP_IORC.i \
+  $(TAO_ROOT)/tao/Object.i \
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  $(TAO_ROOT)/tao/NVList.h \
+  $(TAO_ROOT)/tao/NVList.i \
+  $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  $(TAO_ROOT)/tao/Principal.h \
+  $(TAO_ROOT)/tao/Principal.i \
+  $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
+  $(TAO_ROOT)/tao/CORBA_String.h \
+  $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
+  $(TAO_ROOT)/tao/objectid.h \
+  $(TAO_ROOT)/tao/PolicyC.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/CurrentC.i \
+  $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/ORB.i \
+  $(TAO_ROOT)/tao/BoundsC.h \
+  $(TAO_ROOT)/tao/BoundsC.i \
+  $(TAO_ROOT)/tao/DomainC.h \
+  $(TAO_ROOT)/tao/DomainC.i \
+  $(TAO_ROOT)/tao/WrongTransactionC.h \
+  $(TAO_ROOT)/tao/WrongTransactionC.i \
+  $(TAO_ROOT)/tao/Array_VarOut_T.h \
+  $(TAO_ROOT)/tao/Array_VarOut_T.inl \
+  $(TAO_ROOT)/tao/Array_VarOut_T.cpp \
+  $(TAO_ROOT)/tao/StringSeqC.h \
+  $(TAO_ROOT)/tao/StringSeqC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.h \
+  $(TAO_ROOT)/tao/PI_ForwardC.i \
+  $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/DynamicC.i \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
+  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
+  $(TAO_ROOT)/tao/IOPC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/IOP_CodecC.i \
+  $(TAO_ROOT)/tao/IOPC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
+  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
+  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
+  $(ACE_ROOT)/ace/Atomic_Op.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.h \
+  $(ACE_ROOT)/ace/Atomic_Op_T.i \
+  $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+  $(ACE_ROOT)/ace/Atomic_Op.i \
+  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
+  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
+  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
+  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
+  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyChannelAdminS.h \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
+  Event_ForwarderC.h \
+  Event_ForwarderC.i \
+  Event_ForwarderS_T.h \
+  Event_ForwarderS_T.i \
+  Event_ForwarderS_T.cpp \
+  Event_ForwarderS.i \
+  Notify/Property.h \
+  $(TAO_ROOT)/tao/TimeBaseC.h \
+  $(TAO_ROOT)/tao/TimeBaseC.i \
+  NotifyExtC.h \
+  NotifyExtC.i \
+  Notify/Property_T.h Notify/Property_T.inl Notify/Property_T.cpp \
+  Notify/PropertySeq.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+  Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
+  Notify/Method_Request_Event.inl
 
 .obj/ETCL_Filter.o .obj/ETCL_Filter.so .shobj/ETCL_Filter.o .shobj/ETCL_Filter.so: Notify/ETCL_Filter.cpp Notify/ETCL_Filter.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -20986,7 +21339,6 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -21287,7 +21639,6 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -21585,7 +21936,6 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
-  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -22221,6 +22571,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -22247,6 +22601,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -22532,18 +22888,18 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
   CosNotificationS.i CosNotifyFilterS.h CosNotifyCommS.h CosEventCommS.h \
-  CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
-  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
-  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
-  CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
-  CosNotifyFilterC.i CosNotifyFilterS_T.h CosNotifyFilterS_T.i \
-  CosNotifyFilterS_T.cpp CosNotifyFilterS.i CosEventChannelAdminS.h \
-  CosEventChannelAdminC.h CosEventChannelAdminC.i \
-  CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
-  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i \
-  CosNotifyChannelAdminC.h CosNotifyChannelAdminC.i \
-  CosNotifyChannelAdminS_T.h CosNotifyChannelAdminS_T.i \
-  CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminS.i \
+  CosEventCommC.h CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
+  CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
+  CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i CosNotifyFilterC.h CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i CosEventChannelAdminS.h CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(ACE_ROOT)/ace/Map_T.h \
@@ -22624,6 +22980,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -22650,6 +23010,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -22933,10 +23295,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
-  CosNotificationS.i CosEventCommS.h CosEventCommC.h \
-  CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
-  CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h \
-  CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotificationS.i CosEventCommS.h CosEventCommC.h CosEventCommC.i \
+  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
   CosNotifyCommS_T.cpp CosNotifyCommS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
@@ -23018,6 +23379,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -23044,6 +23409,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -23327,10 +23694,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
-  CosNotificationS.i CosEventCommS.h CosEventCommC.h \
-  CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
-  CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h \
-  CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotificationS.i CosEventCommS.h CosEventCommC.h CosEventCommC.i \
+  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
   CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
   CosNotifyFilterC.i CosNotifyFilterS_T.h CosNotifyFilterS_T.i \
   CosNotifyFilterS_T.cpp CosNotifyFilterS.i \
@@ -23414,6 +23780,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -23440,6 +23810,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -23705,7 +24077,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  CosEvent/event_export.h CosEventCommC.i \
+  Notify/notify_export.h CosEventCommC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -23803,6 +24175,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -23829,6 +24205,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -24095,7 +24473,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  CosEvent/event_export.h CosEventCommC.i \
+  Notify/notify_export.h CosEventCommC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -24196,6 +24574,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -24222,6 +24604,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -24506,20 +24890,19 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
   CosNotificationS.i CosNotifyFilterS.h CosNotifyCommS.h CosEventCommS.h \
-  CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
-  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
-  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
-  CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
-  CosNotifyFilterC.i CosNotifyFilterS_T.h CosNotifyFilterS_T.i \
-  CosNotifyFilterS_T.cpp CosNotifyFilterS.i CosEventChannelAdminS.h \
-  CosEventChannelAdminC.h CosEventChannelAdminC.i \
-  CosEventChannelAdminS_T.h CosEventChannelAdminS_T.i \
-  CosEventChannelAdminS_T.cpp CosEventChannelAdminS.i \
-  CosNotifyChannelAdminC.h CosNotifyChannelAdminC.i \
-  CosNotifyChannelAdminS_T.h CosNotifyChannelAdminS_T.i \
-  CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminS.i NotifyExtC.h \
-  NotifyExtC.i NotifyExtS_T.h NotifyExtS_T.i NotifyExtS_T.cpp \
-  NotifyExtS.i \
+  CosEventCommC.h CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
+  CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
+  CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i CosNotifyFilterC.h CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h CosNotifyFilterS_T.i CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i CosEventChannelAdminS.h CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i NotifyExtC.h NotifyExtC.i NotifyExtS_T.h \
+  NotifyExtS_T.i NotifyExtS_T.cpp NotifyExtS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(ACE_ROOT)/ace/Map_T.h \
@@ -24600,6 +24983,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -24626,6 +25013,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -24910,10 +25299,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
   CosNotificationS.i CosNotifyChannelAdminS.h CosNotifyFilterS.h \
-  CosNotifyCommS.h CosEventCommS.h CosEventCommC.h \
-  CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
-  CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h \
-  CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotifyCommS.h CosEventCommS.h CosEventCommC.h CosEventCommC.i \
+  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
   CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
   CosNotifyFilterC.i CosNotifyFilterS_T.h CosNotifyFilterS_T.i \
   CosNotifyFilterS_T.cpp CosNotifyFilterS.i CosEventChannelAdminS.h \
@@ -25005,6 +25393,10 @@ realclean: clean
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -25031,6 +25423,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Tagged_Components.i \
   $(TAO_ROOT)/tao/GIOP_Message_Version.h \
   $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.h \
+  $(TAO_ROOT)/tao/Refcounted_ObjectKey.inl \
   $(TAO_ROOT)/tao/Profile.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -25342,6 +25736,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -25658,10 +26056,9 @@ realclean: clean
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
-  CosNotifyFilterC.h CosNotifyCommC.h CosEventCommC.h \
-  CosEvent/event_export.h CosEventCommC.i CosNotifyCommC.i \
-  CosNotifyFilterC.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
-  CosNotifyChannelAdminC.i \
+  CosNotifyFilterC.h CosNotifyCommC.h CosEventCommC.h CosEventCommC.i \
+  CosNotifyCommC.i CosNotifyFilterC.i CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i CosNotifyChannelAdminC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
@@ -25708,6 +26105,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -26023,8 +26424,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
-  CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
-  CosNotifyCommC.i \
+  CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
@@ -26071,6 +26471,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -26386,8 +26790,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h CosNotifyCommC.h CosNotificationC.h \
-  CosNotificationC.i CosEventCommC.h CosEvent/event_export.h \
-  CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
+  CosNotificationC.i CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
@@ -26434,6 +26838,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -26748,7 +27156,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  CosEvent/event_export.h CosEventCommC.i \
+  Notify/notify_export.h CosEventCommC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
@@ -26795,6 +27203,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -27110,7 +27522,7 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  CosEvent/event_export.h CosEventCommC.h CosEventCommC.i \
+  Notify/notify_export.h CosEventCommC.h CosEventCommC.i \
   CosEventChannelAdminC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -27158,6 +27570,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -27474,8 +27890,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h CosNotifyChannelAdminC.h CosNotificationC.h \
   CosNotificationC.i CosNotifyFilterC.h CosNotifyCommC.h CosEventCommC.h \
-  CosEvent/event_export.h CosEventCommC.i CosNotifyCommC.i \
-  CosNotifyFilterC.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
+  CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
+  CosEventChannelAdminC.h CosEventChannelAdminC.i \
   CosNotifyChannelAdminC.i NotifyExtC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -27523,6 +27939,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -27839,9 +28259,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
   CosNotifyChannelAdminC.h CosNotifyFilterC.h CosNotifyCommC.h \
-  CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
-  CosNotifyCommC.i CosNotifyFilterC.i CosEventChannelAdminC.h \
-  CosEventChannelAdminC.i CosNotifyChannelAdminC.i Event_ForwarderC.i \
+  CosEventCommC.h CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
+  CosEventChannelAdminC.h CosEventChannelAdminC.i \
+  CosNotifyChannelAdminC.i Event_ForwarderC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/MProfile.i \
@@ -27888,6 +28308,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
+  $(TAO_ROOT)/tao/ObjectKey_Table.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
