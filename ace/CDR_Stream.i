@@ -893,6 +893,13 @@ ACE_InputCDR::good_bit (void) const
 // ****************************************************************
 
 ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_CDR::Char x)
+{
+  os.write_char (x);
+  return os.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_CDR::Short x)
 {
   os.write_short (x);
@@ -1020,6 +1027,13 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
 }
 
 // ****************************************************************
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_CDR::Char &x)
+{
+  is.read_char (x);
+  return is.good_bit ();
+}
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::Short &x)
