@@ -42,6 +42,54 @@ MIF_Task::post_activate (void)
 }
 
 int
+MIF_Task::activate_task (RTScheduling::Current_ptr current,
+			 CORBA::Policy_ptr sched_param,
+			 long flags,
+			 ACE_Time_Value* base_time
+			 ACE_ENV_ARG_DECL)
+{
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Thread_Task::activate %d\n",
+		importance_));
+  
+  char msg [BUFSIZ];
+  ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
+  dt_creator_->log_msg (msg);
+   
+  base_time_ = base_time;
+
+  current_ = RTScheduling::Current::_narrow (current
+					     ACE_ENV_ARG_PARAMETER);	
+  ACE_CHECK;
+
+  sched_param_ = CORBA::Policy::_duplicate (sched_param);
+
+  //  this->count_ = ++thread_count.value_i ();
+  
+  //    ACE_DEBUG ((LM_DEBUG,
+  //  	      "thr_id = %d \n importance = %d\n",
+  //  	      count_,
+  //  	      importance_));
+  
+  
+  pre_activate ();
+
+  if (this->activate (flags,
+		      1) == -1)
+    {
+      if (ACE_OS::last_error () == EPERM)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
+			  -1);
+    }
+  
+  post_activate ();
+  return 0;
+}
+
+int
 MIF_Task::perform_task (void)
 {
   char msg [BUFSIZ];
