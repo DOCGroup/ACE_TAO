@@ -1,3 +1,118 @@
+Mon Oct 15 23:16:55 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.h (process_directives_i):
+
+	  Updated the signature of this method to accept a parameter that
+	  will eventually passed to the parser and the scanner.
+
+	* ace/Service_Config.cpp:
+
+	  No need to include "ace/Svc_Conf_Lexer_Guard.h" and
+	  "ace/Object_Manager.h".
+
+	  (process_directives_i):
+
+	  Updated the signature of this method to accept a parameter that
+	  will eventually passed to the parser and the scanner.
+
+	  Pass the "ACE_Svc_Conf_Param" parameter to the yyparse() call.
+	  This is reentrant/thread-safe.
+
+	  Check the error count found in the "ACE_Svc_Conf_Param" object.
+	  It's count is incremented in a thread-safe/reentrant manner.
+
+	  (process_directive, process_directives):
+
+	  The ACE_Svc_Conf_Lexer_Guard and its accompanying
+	  synchronization has been moved to the generated scanner code.
+	  This makes locking finer grained.  Specifically, instead of
+	  holding a lock for the duration of the scope within which
+	  service configurator directive parsing and scanning is
+	  performed (e.g. for the duration of the yyparse() call), the
+	  lock is only held for the duration of the scope where service
+	  configurator directive scanning occurs (i.e. the entire yylex()
+	  call is synchronized).  This is part of the core fix that
+	  corrects a deadlock that occurred when activating an ACE_Task,
+	  in conjunction with the singleton instance of the
+	  ACE_Thread_Manager, during Service Object initialization.
+	  
+	* ace/Service_Config.i:
+
+	  Cosmetic update.
+
+	* ace/Svc_Conf.h:
+
+	  Added declaration and method definitions for the
+	  ACE_Svc_Conf_Param class.  Instances of this class contain the
+	  state used when parsing/scanning a given service configurator
+	  file or service configurator directive.
+
+	  (ACE_SERVICE_DIRECTIVE_STACK_DEPTH):
+
+	  There is no longer any hard-coded limit on the maximum depth
+	  nested service configurator directives may be processed.  Only
+	  process resource limits limit the maximum nesting depth.
+
+	  (ace_yyparse, ace_yylex):
+
+	  Updated the parser and lexer entry points to accept an
+	  additional parameter, i.e. a pointer to an ACE_Svc_Conf_Param
+	  object.
+
+	  (ace_yy_push_buffer, ace_yy_pop_buffer):
+
+	  Pass a pointer to the buffer that will be "switched" in our out
+	  when processing nested service configurator directives those
+	  that are processed in parallel.
+
+	* ace/Svc_Conf.l:
+
+	  Removed array that implemented the service configurator
+	  directive stack.  The "stack" is now implemented using the
+	  function call stack itself.  Hence there is no hard-coded limit
+	  to the stack size.
+
+	  Removed all references to ACE_{LPAREN, RPAREN, LBRACE, RBRACE,
+	  COLON, STAR}.  Just return their corresponding symbolic integer
+	  constants (e.g. ACE_COLON --> ':').
+
+	  Increment error and line count in the ACE_Svc_Conf_Param object
+	  passed to the yylex() function from yyparse().  This improves
+	  reentrance/thread-safety when tracking error counts.
+
+	  (yy_push_buffer, yy_pop_buffer):
+	
+	  Pass a pointer to the buffer that will be "switched" in our out
+	  when processing nested service configurator directives those
+	  that are processed in parallel.
+
+	* ace/Svc_Conf.y:
+
+	  Removed all references to ACE_{LPAREN, RPAREN, LBRACE, RBRACE,
+	  COLON, STAR}.  Just use their corresponding symbolic integer
+	  constants (e.g. ACE_COLON --> ':').
+
+	  Increment error and line count in the ACE_Svc_Conf_Param object
+	  passed to the yylex() function from yyparse().  This improves
+	  reentrance/thread-safety when tracking error counts.
+
+	* ace/Svc_Conf_Lexer_Guard.h:
+
+	  Store a pointer the lexer buffer currently being scanned.
+
+	* ace/Svc_Conf_Lexer_Guard.cpp:
+
+	  Updated constructor to accept a pointer to an ACE_Svc_Conf_Param
+	  object.  If the buffer in that object is zero, it will be
+	  initialized.
+
+	* ace/Svc_Conf_l.cpp:
+	* ace/Svc_Conf_y.cpp:
+	* ace/Svc_Conf_Tokens.h:
+
+	  Regenerated these files in order to pull in the updates made to
+	  their corresponding source files (i.e. Svc_Conf.{l,y}).
+
 Mon Oct 15 11:26:39 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2: New directory for examples in "C++ Network

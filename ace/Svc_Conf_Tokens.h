@@ -13,10 +13,3 @@
 #define	ACE_PATHNAME	268
 #define	ACE_IDENT	269
 #define	ACE_STRING	270
-#define	ACE_LPAREN	271
-#define	ACE_RPAREN	272
-#define	ACE_LBRACE	273
-#define	ACE_RBRACE	274
-#define	ACE_STAR	275
-#define	ACE_COLON	276
-

@@ -9,8 +9,6 @@
 #define ACE_YY_FLEX_MAJOR_VERSION 2
 #define ACE_YY_FLEX_MINOR_VERSION 5
 
-#include "ace/OS.h"
-
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus
@@ -24,6 +22,7 @@
 
 #include /**/ <stdlib.h>
 #include "ace/OS.h"
+#include "ace/Object_Manager.h"
 
 /* Use prototypes in function declarations. */
 #define ACE_YY_USE_PROTOS
@@ -513,6 +512,7 @@ ACE_TCHAR *ace_yytext;
 // Lexical tokens values defined by YACC.
 #include "ace/Svc_Conf.h"
 #include "ace/Svc_Conf_Tokens.h"
+#include "ace/Svc_Conf_Lexer_Guard.h"
 
 ACE_RCSID (ace,
 	   Svc_Conf_l,
@@ -520,12 +520,6 @@ ACE_RCSID (ace,
 
 // Keeps track of the current line for debugging output.
 int ace_yylineno = 1;
-
-// Array that implements the underlying lexer buffer stack.
-ACE_YY_BUFFER_STATE ace_yybuffer_stack[ACE_SERVICE_DIRECTIVE_STACK_DEPTH];
-
-// Array index of the buffer currently in use.
-int ace_yy_stack_index = 0;
 
 #define token(x)  x
 #define PARAMETERS 1
@@ -681,6 +675,14 @@ ACE_YY_MALLOC_DECL
 
 ACE_YY_DECL
 	{
+
+          ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                                    ace_mon,
+                                    *ACE_Static_Object_Lock::instance (),
+                                    -1));
+
+          ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (ACE_SVC_CONF_PARAM);
+
 	register ace_yy_state_type ace_yy_current_state;
 	register ACE_TCHAR *ace_yy_cp = 0, *ace_yy_bp = 0;
 	register int ace_yy_act;
@@ -837,32 +839,32 @@ ACE_YY_RULE_SETUP
 case 13:
 ACE_YY_RULE_SETUP
 #line 54 "Svc_Conf.l"
-{ return token (ACE_COLON); }
+{ return token (':'); }
 //	ACE_YY_BREAK
 case 14:
 ACE_YY_RULE_SETUP
 #line 55 "Svc_Conf.l"
-{ return token (ACE_STAR); }
+{ return token ('*'); }
 //	ACE_YY_BREAK
 case 15:
 ACE_YY_RULE_SETUP
 #line 56 "Svc_Conf.l"
-{ return token (ACE_LPAREN); }
+{ return token ('('); }
 //	ACE_YY_BREAK
 case 16:
 ACE_YY_RULE_SETUP
 #line 57 "Svc_Conf.l"
-{ return token (ACE_RPAREN); }
+{ return token (')'); }
 //	ACE_YY_BREAK
 case 17:
 ACE_YY_RULE_SETUP
 #line 58 "Svc_Conf.l"
-{ return token (ACE_LBRACE); }
+{ return token ('{'); }
 //	ACE_YY_BREAK
 case 18:
 ACE_YY_RULE_SETUP
 #line 59 "Svc_Conf.l"
-{ return token (ACE_RBRACE); }
+{ return token ('}'); }
 //	ACE_YY_BREAK
 case 19:
 ACE_YY_RULE_SETUP
@@ -1830,62 +1832,43 @@ ace_yywrap (void)
 }
 
 void
-ace_yy_push_buffer (FILE *file)
+ace_yy_push_buffer (FILE *file, ace_yy_buffer_state *&buffer)
 {
   // External synchronization is required.
 
-  if (ace_yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
-                  ACE_LIB_TEXT ("nesting is too deep.\n")
-                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
-                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
+  if (buffer == 0)
+    buffer = ace_yy_create_buffer (file, ACE_YY_BUF_SIZE);
 
-      // Not much we can do, so resort to flushing the current buffer
-      // and switch to the supplied stream.
-      ace_yyrestart (file);
-    }
-  else
-    {
-      ace_yybuffer_stack[ace_yy_stack_index++] = ACE_YY_CURRENT_BUFFER;
-      ace_yy_switch_to_buffer (ace_yy_create_buffer (file, ACE_YY_BUF_SIZE));
-    }
+  ace_yy_switch_to_buffer (buffer);
 }
 
 void
-ace_yy_push_buffer (const ACE_TCHAR *directive)
+ace_yy_push_buffer (const ACE_TCHAR *directive, ace_yy_buffer_state *&buffer)
 {
   // External synchronization is required.
 
-  if (ace_yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) Service Configurator directive ")
-                  ACE_LIB_TEXT ("nesting is too deep.\n")
-                  ACE_LIB_TEXT ("(%P|%t) Consider increasing value of ")
-                  ACE_LIB_TEXT ("ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n")));
+  // ace_yyparse() may invoke ace_yylex() multiple times when parsing
+  // a single directive.  Prevent a new buffer from created during
+  // each call to ace_yylex().
+  if (ACE_YY_CURRENT_BUFFER != 0
+      && directive == ACE_YY_CURRENT_BUFFER->ace_yy_ch_buf)
+    return;
 
-      // Not much we can do.
+  if (buffer == 0)
+    {
+      // ace_yy_scan_string() already switches the buffer so there is
+      // no need to explicitly make the switch.
+      buffer = ace_yy_scan_string (directive);
     }
   else
-    {
-      ace_yybuffer_stack[ace_yy_stack_index++] = ACE_YY_CURRENT_BUFFER;
-
-      // ace_yy_scan_string() already switches the buffer so setting
-      // ACE_YY_CURRENT_BUFFER here is a bit redundant.  No biggy.
-      ACE_YY_CURRENT_BUFFER = ace_yy_scan_string (directive);
-    }
+    ace_yy_switch_to_buffer (buffer);
 }
 
 void
-ace_yy_pop_buffer (void)
+ace_yy_pop_buffer (ace_yy_buffer_state *buffer)
 {
+
   // External synchronization is required.
 
-  if (--ace_yy_stack_index >= 0)
-    {
-      ace_yy_delete_buffer (ACE_YY_CURRENT_BUFFER);
-      ace_yy_switch_to_buffer (ace_yybuffer_stack[ace_yy_stack_index]);
-    }
+  ace_yy_switch_to_buffer (buffer);
 }

@@ -7,12 +7,10 @@
 #include "ace/Service_Manager.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
-#include "ace/Svc_Conf_Lexer_Guard.h"
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Object_Manager.h"
 
 #include "ace/Service_Config.h"
 
@@ -361,18 +359,15 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
 }
 
 int
-ACE_Service_Config::process_directives_i (void)
+ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 {
   // AC 970827 Skip the heap check because yacc allocates a buffer
   // here which will be reported as a memory leak for some reason.
   ACE_NO_HEAP_CHECK
 
-  // The fact that these are all global variables means that we really
-  // can't be doing this processing in multiple threads
-  // simultaneously...
-  // @@ It is actually now possible to do processing in multiple
-  //    threads since the lock acquired prior to entering this method
-  //    prevents more than thread from invoking this method.
+  // The fact that these are global variables means that we really
+  // can't track the number of errors in multiple threads
+  // simultaneously.
   ace_yyerrno = 0;
   ace_yylineno = 1;
 
@@ -382,16 +377,16 @@ ACE_Service_Config::process_directives_i (void)
                   ACE_Obstack_T<ACE_TCHAR>,
                   -1);
 
-  ace_yyparse ();
+  ace_yyparse (param);
 
   delete ace_obstack;
   ace_obstack = oldstack;
 
-  if (ace_yyerrno > 0)
+  if (param->yyerrno > 0)
     {
       // This is a hack, better errors should be provided...
       errno = EINVAL;
-      return ace_yyerrno;
+      return param->yyerrno;
     }
   else
     return 0;
@@ -408,14 +403,9 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 
   ACE_UNUSED_ARG (directive);
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                            ace_mon,
-                            *ACE_Static_Object_Lock::instance (),
-                            -1));
+  ACE_Svc_Conf_Param d (directive);
 
-  ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (directive);
-
-  int result = ACE_Service_Config::process_directives_i ();
+  int result = ACE_Service_Config::process_directives_i (&d);
 
   return result;
 }
@@ -456,15 +446,10 @@ ACE_Service_Config::process_directives (void)
             }
           else
             {
-              ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                                        ace_mon,
-                                        *ACE_Static_Object_Lock::instance (),
-                                        -1));
-
-              ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (fp);
+              ACE_Svc_Conf_Param f (fp);
 
               // Keep track of the number of errors.
-              result += ACE_Service_Config::process_directives_i ();
+              result += ACE_Service_Config::process_directives_i (&f);
             }
           ACE_OS::fclose (fp);
         }
