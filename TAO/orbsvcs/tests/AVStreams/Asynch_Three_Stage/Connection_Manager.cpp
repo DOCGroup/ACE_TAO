@@ -30,9 +30,11 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
   this->sender_name_ =
     sender_name;
 
+  /* 
   this->sender_ =
     AVStreams::MMDevice::_duplicate (sender);
-
+  */
+ 
   CosNaming::Name name (1);
   name.length (1);
 
@@ -184,7 +186,8 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list
 }
 
 void
-Connection_Manager::connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL)
+Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
+					  ACE_ENV_ARG_DECL)
 {
   // Connect to all receivers that we know about.
   for (Receivers::iterator iterator = this->receivers_.begin ();
@@ -232,7 +235,7 @@ Connection_Manager::connect_to_receivers (ACE_ENV_SINGLE_ARG_DECL)
                                streamctrl_object);
 
       // Bind the sender and receiver MMDevices.
-      (void) streamctrl->bind_devs (this->sender_.in (),
+      (void) streamctrl->bind_devs (sender,
                                     (*iterator).int_id_.in (),
                                     the_qos.inout (),
                                     flow_spec

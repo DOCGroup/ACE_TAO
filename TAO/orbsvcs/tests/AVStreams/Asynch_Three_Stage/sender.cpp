@@ -139,7 +139,8 @@ Sender::init (int argc,
   ACE_CHECK_RETURN (-1);
 
   // Connect to the receivers
-  this->connection_manager_.connect_to_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->connection_manager_.connect_to_receivers (mmdevice.in ()
+								ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;

@@ -196,7 +196,8 @@ Distributer::init (int argc,
   ACE_CHECK_RETURN (-1);
 
   // Connect to receivers
-  this->connection_manager_.connect_to_receivers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ()
+												ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Bind to sender.
