@@ -8,13 +8,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (void)
     condition_ (lock_)
 {
   // Assume that we start in active mode.
-  active_ = 1;
+  this->active_ = 1;
 }
 
 template<class TQ> ACE_INLINE ACE_SYNCH_MUTEX &
 ACE_Thread_Timer_Queue_Adapter<TQ>::lock (void)
 {
-  return lock_;
+  return this->lock_;
 }
 
 template<class TQ> ACE_INLINE TQ &

@@ -336,6 +336,9 @@ class category.
 		Handle_Set.cpp
 		Handle_Set.h
 		Handle_Set.i
+		Priority_Reactor.cpp
+		Priority_Reactor.i
+		Priority_Reactor.h
 		Proactor.h
 		Proactor.i
 		Proactor.cpp
@@ -368,13 +371,16 @@ class category.
 		Service_Repository.cpp
 		Service_Repository.h
 		Service_Repository.i
+		Service_Types.cpp
+		Service_Types.i
+		Service_Types.h
 		Shared_Object.cpp
 		Shared_Object.h
 		Shared_Object.i
 		Svc_Conf.h
 		Svc_Conf_l.cpp
 		Svc_Conf_y.cpp
-		sc_tokens.h
+		Svc_Conf_Tokens.h
 	[System_V_IPC]
 		[System_V_Message_Queues]
 			SV_Message.cpp

@@ -6,6 +6,10 @@ Tue Oct 14 17:48:28 1997  Steve Huston  <shuston@riverace.com>
 
 Tue Oct 14 03:26:17 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/OS.h: Moved <sys/types.h> to earlier in the file so that
+ 	  u_int will be defined.  Thanks to Neil B. Cohen <nbc@metsci.com>
+ 	  for reporting this.
+
 	* ace/OS.cpp (uname): Added a workaround for the fact that
 	  Chorus doesn't support uname().  Thanks to Wei Chiang for
 	  this fix.
