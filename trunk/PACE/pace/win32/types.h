@@ -15,8 +15,8 @@
 
 #include <sys/types.h>
 
-#ifndef PACE_SYS_TYPES_H
-#define PACE_SYS_TYPES_H
+#ifndef PACE_SYS_TYPES_H_WIN32
+#define PACE_SYS_TYPES_H_WIN32
 
 #include <wtypes.h>
 
@@ -136,8 +136,4 @@ extern "C" {
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_SYS_TYPES_H */
-
-
-
-
+#endif /* PACE_SYS_TYPES_H_WIN32 */
