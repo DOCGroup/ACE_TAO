@@ -1,3 +1,14 @@
+Fri Mar 27 13:38:04 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/IOR_Multicast.{h,cpp}:
+	* orbsvcs/Makefile:
+	* orbsvcs/Naming/Naming_Utils.{h,cpp}:
+	I moved the Ior_Multicast.{h,cpp} files up a directory and changed
+	the class name to TAO_IOR_Multicast. It didn't logically belong
+	in the Naming directory, since other bootstrappable services
+	require it. 
+
+
 Fri Mar 27 11:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/IIOP_ORB.*,IIOP_Object.{h,cpp,corba.h: #include the .i file
