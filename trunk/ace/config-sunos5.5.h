@@ -364,6 +364,12 @@
 #define ACE_LACKS_SETREUID_PROTOTYPE
 #define ACE_LACKS_SETREGID_PROTOTYPE
 
+// Solaris does indeed implement the inet_aton() function, but it is
+// found in `libresolv.*'.  It doesn't seem worth it to link another
+// library just for that function.  Just use the emulation in ACE that
+// has been used for years.
+#define ACE_LACKS_INET_ATON
+
 #if defined (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64)
 #undef ACE_HAS_PROC_FS
 #undef ACE_HAS_PRUSAGE_T
