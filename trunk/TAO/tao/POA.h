@@ -354,6 +354,7 @@ public:
 
   friend class TAO_Object_Adapter;
   friend class TAO_Object_Adapter::Outstanding_Requests;
+  friend class TAO_Object_Adapter::Single_Threaded_POA_Lock;
   friend class TAO_POA_Current;
   friend class TAO_POA_Manager;
 
@@ -673,6 +674,10 @@ protected:
   CORBA::ULong increment_outstanding_requests (void);
 
   CORBA::ULong decrement_outstanding_requests (void);
+
+  void establish_servant_lock (PortableServer::Servant servant);
+
+  void teardown_servant_lock (PortableServer::Servant servant);
 
   String name_;
 

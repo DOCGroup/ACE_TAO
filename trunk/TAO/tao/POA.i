@@ -621,6 +621,24 @@ TAO_POA::decrement_outstanding_requests (void)
 }
 
 ACE_INLINE void
+TAO_POA::establish_servant_lock (PortableServer::Servant servant)
+{
+  if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      servant->_increment_single_threaded_poa_lock_count ();
+    }
+}
+
+ACE_INLINE void
+TAO_POA::teardown_servant_lock (PortableServer::Servant servant)
+{
+  if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      servant->_decrement_single_threaded_poa_lock_count ();
+    }
+}
+
+ACE_INLINE void
 TAO_POA_Current::clear (void)
 {
   this->poa_impl_ = 0;

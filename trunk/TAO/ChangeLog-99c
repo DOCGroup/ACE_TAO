@@ -1,3 +1,29 @@
+Wed Apr 28 18:52:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tao/Object_Adapter:
+
+          - Single_Threaded_POA_Lock: This class helps us by locking
+	    servants in a single threaded POA for the duration of the
+	    upcall.  Single_Threaded_POA_Lock has a magic constructor and
+	    destructor.  We acquire the servant lock in the constructor.
+	    We release the servant lock in the destructor.
+
+        * tao/POA:
+
+	  - Added appropriate code for establishing and tearing down locks
+	    for servants in POAs with the SINGLE_THREAD_MODEL policy.
+
+	* tao/Servant_Base:
+
+	  - Added a lock pointer to the servant base class.  This lock
+	    will be created when the servant is registered with a single
+	    threaded poa and removed/deleted when the servant is
+	    deactivated from the POA.
+
+	    Note that because a servant maybe registered with multiple
+	    single threaded POAs simultaneously, we do reference counting
+	    on this lock.
+
 Wed Apr 28 18:05:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs[_static].dsp: Fixed dependencies of some
