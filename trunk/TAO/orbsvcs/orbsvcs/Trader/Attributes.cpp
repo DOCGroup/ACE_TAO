@@ -267,7 +267,7 @@ TAO_Import_Attributes_Impl::def_follow_policy (void) const
 }
 
 void
-TAO_Import_Attributes_Impl::def_follow_policy (FollowOption new_value)
+TAO_Import_Attributes_Impl::def_follow_policy (CosTrading::FollowOption new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());
 
@@ -277,7 +277,7 @@ TAO_Import_Attributes_Impl::def_follow_policy (FollowOption new_value)
     this->def_follow_policy_ = new_value;  
 }
 
-FollowOption
+CosTrading::FollowOption
 TAO_Import_Attributes_Impl::max_follow_policy (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->trader_.lock (), CosTrading::local_only); 
@@ -285,7 +285,7 @@ TAO_Import_Attributes_Impl::max_follow_policy (void) const
 }
 
 void
-TAO_Import_Attributes_Impl::max_follow_policy (FollowOption new_value)
+TAO_Import_Attributes_Impl::max_follow_policy (CosTrading::FollowOption new_value)
 {
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->trader_.lock ());  
   this->max_follow_policy_ = new_value;
