@@ -1,16 +1,27 @@
+Mon Aug  2 09:58:20 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* netsvcs/lib/Name_Handler.cpp (init):
+	* netsvcs/lib/Server_Logging_Handler_T.cpp (init):
+	* netsvcs/lib/TS_Clerk_Handler.cpp (init):
+
+	  Changed cast to ACE_SignalHandler to allow it to compile under
+	  gcc 2.95.
+
+
 Sun Aug  1 15:58:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/colorize:  Added <PRE></PRE> wrapper around generated
-    output.
+	* docs/tutorials/colorize:
+	Added <PRE></PRE> wrapper around generated output.
 
-  * docs/tutorials/Chap_03/Makefile:
-  * docs/tutorials/Chap_03/README:
-  * docs/tutorials/Chap_03/mm.cpp:
-  * docs/tutorials/Chap_03/ex03.html:
-    mm.cpp (and ex03.html) are a slightly modified version of ex02.html
-    that uses a memory mapped file instead of SYSV SHMEM.  To work around
-    the lack of fork() in Win32, the app must be executed once in server
-    mode (argv[1] == 's') and again in client mode.
+	* docs/tutorials/Chap_03/Makefile:
+	* docs/tutorials/Chap_03/README:
+	* docs/tutorials/Chap_03/mm.cpp:
+	* docs/tutorials/Chap_03/ex03.html:
+	mm.cpp (and ex03.html) are a slightly modified version of
+ 	ex02.html that uses a memory mapped file instead of SYSV SHMEM.
+  	To work around the lack of fork() in Win32, the app must be
+ 	executed once in server mode (argv[1] == 's') and again in client
+ 	mode.
 
 Sun Aug  1 15:58:39 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
