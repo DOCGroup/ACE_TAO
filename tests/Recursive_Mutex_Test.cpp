@@ -26,7 +26,7 @@
 #if defined (ACE_HAS_THREADS)
 
 // Total number of iterations.
-#if defined (CHORUS) || defined (ACE_HAS_WINCE)
+#if defined (CHORUS)
   // Chorus can't handle 100 iterations:
   //   [amThrd.C:154]: Failed to allocate an AmActor
   static size_t n_iterations = 50;
