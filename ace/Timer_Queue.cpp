@@ -107,6 +107,10 @@ ACE_Timer_Queue::ACE_Timer_Queue (void)
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
 }
 
+ACE_Timer_Queue::~ACE_Timer_Queue (void)
+{
+  ACE_TRACE ("ACE_Timer_Queue::~ACE_Timer_Queue");
+}
 
 // Run the <handle_timeout> method for all Timers whose values are <=
 // <cur_time>.
@@ -119,7 +123,7 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 
   int number_of_timers_expired = 0;
 
-  ACE_Timer_Queue_Iterator &iter = this->iter ();
+  ACE_Timer_Queue_Iterator &iter (this->iter ());
 
   // Keep looping while there are timers remaining and the earliest
   // timer is <= the <cur_time> passed in to the method.

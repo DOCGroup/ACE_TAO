@@ -18,6 +18,7 @@
 #define ACE_TIMER_HEAP_H
 
 #include "ace/Timer_Queue.h"
+#include "ace/Set.h"
 
 // Forward declaration
 class ACE_Timer_Heap;
@@ -47,7 +48,7 @@ protected:
 };
 
 class ACE_Export ACE_Timer_Heap : public ACE_Timer_Queue
-  // = TITLE
+  // = TITLE 
   //      Provides a very fast and predictable timer implementation.
   //
   // = DESCRIPTION
@@ -138,6 +139,11 @@ private:
   void insert (ACE_Timer_Node *new_node);
   // Insert <new_node> into the heap and restore the heap property.
 
+  void grow_heap (void);
+  // Doubles the size of the heap and the corresponding timer_ids array.
+  // If preallocation is used, will also double the size of the 
+  // preallocated array of ACE_Timer_Nodes.
+
   void reheap_up (ACE_Timer_Node *new_node);
   // Restore the heap property.
 
@@ -188,11 +194,16 @@ private:
   ACE_Timer_Node *preallocated_nodes_;
   // If this is non-0, then we preallocate <max_size_> number of
   // <ACE_Timer_Node> objects in order to reduce dynamic allocation
-  // costs.
+  // costs.  In auto-growing implementation, this points to the 
+  // last array of nodes allocated.
 
   ACE_Timer_Node *preallocated_nodes_freelist_;
   // This points to the head of the <preallocated_nodes_> freelist,
   // which is organized as a stack.
+
+  ACE_Unbounded_Set<ACE_Timer_Node *> preallocated_node_set_;
+  // Set of pointers to the arrays of preallocated timer nodes.
+  // Used to delete the allocated memory when required.
 };
 
 #endif /* ACE_TIMER_HEAP_H */
