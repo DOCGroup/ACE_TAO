@@ -504,6 +504,19 @@ public:
                                           CORBA_StructMemberSeq &members,
                                           CORBA::Environment &ACE_TRY_ENV =
                                           TAO_default_environment ());
+
+  CORBA_TypeCode_ptr create_alias_tc (const char *id,
+                                      const char *name,
+                                      const CORBA::TypeCode_ptr original_type,
+                                      CORBA::Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ());
+
+  CORBA_TypeCode_ptr create_struct_tc (const char *id,
+                                       const char *name,
+                                       CORBA_StructMemberSeq &members,
+                                       CORBA::Environment &ACE_TRY_ENV =
+                                       TAO_default_environment ());
+                                      
   
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
