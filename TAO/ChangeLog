@@ -1,3 +1,13 @@
+Tue Aug 27 16:22:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Yet another pass at fixing conditional #included IDL files.
+          This time code has been added to make sure, when stripping
+          -I prefixes off of preprocessor #include strings, that we
+          strip off the longest match, in case some -I options are
+          substrings of others.
+
 Tue Aug 27 15:41:57 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tests/ORB_shutdown/server.bor:
