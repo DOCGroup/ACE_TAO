@@ -256,7 +256,7 @@ endif # ACE_COMPONENTS
 
 ifeq (FOR_TAO,$(ACE_COMPONENTS))
   #### These ACE components are necessary to support TAO.
-  ACE_COMPONENTS = \
+  override ACE_COMPONENTS = \
     OS \
     Utils \
     Logging \
