@@ -1031,7 +1031,7 @@ ACE_OS::_exit (int status)
   ::_exit (status);
 #else
   ACE_UNUSED_ARG (status);
-  ACE_ERROR ((LM_ERROR, "Don't know how to implement _exit yet!\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Don't know how to implement _exit yet!\n")));
 #endif /* VXWORKS */
 }
 

@@ -145,7 +145,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm,
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue");
 
   if (this->open (hwm, lwm, ns) == -1)
-    ACE_ERROR ((LM_ERROR, "open"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("open")));
 }
 
 template <ACE_SYNCH_DECL>
@@ -153,7 +153,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue");
   if (this->head_ != 0 && this->close () == -1)
-    ACE_ERROR ((LM_ERROR, "close"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("close")));
 }
 
 // Don't bother locking since if someone calls this function more than

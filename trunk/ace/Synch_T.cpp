@@ -92,8 +92,8 @@ ACE_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "mutex_ = %x\n", this->lock_));
-  ACE_DEBUG ((LM_DEBUG, "owner_ = %d\n", this->owner_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("mutex_ = %x\n"), this->lock_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("owner_ = %d\n"), this->owner_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -129,7 +129,7 @@ ACE_Condition<MUTEX>::dump (void) const
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -159,7 +159,7 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::ACE_Condition");
   if (ACE_OS::cond_init (&this->cond_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Condition::ACE_Condition"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_Condition::ACE_Condition")));
 }
 
 template <class MUTEX>
@@ -167,7 +167,7 @@ ACE_Condition<MUTEX>::~ACE_Condition (void)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::~ACE_Condition");
   if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Condition::~ACE_Condition"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_Condition::~ACE_Condition")));
 }
 
 template <class MUTEX> int
@@ -238,9 +238,9 @@ ACE_TSS<TYPE>::dump (void) const
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->keylock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "key_ = %d\n", this->key_));
-  ACE_DEBUG ((LM_DEBUG, "\nonce_ = %d", this->once_));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %d\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nonce_ = %d"), this->once_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 }
@@ -304,11 +304,11 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
       if (ACE_Thread::setspecific (this->key_, (void *) tss_adapter) != 0)
 	{
 	  delete tss_adapter;						
-	  ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread::setspecific() failed!"));
+	  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_Thread::setspecific() failed!")));
 	}
 #else
       if (ACE_Thread::setspecific (this->key_, (void *) ts_obj) != 0)
-      	ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread::setspecific() failed!"));
+      	ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_Thread::setspecific() failed!")));
 #endif /* ACE_HAS_THR_C_DEST */
     }
 }
@@ -484,8 +484,8 @@ ACE_TSS_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "key_ = %d", this->key_));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %d"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
