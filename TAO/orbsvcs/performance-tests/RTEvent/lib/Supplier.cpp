@@ -89,6 +89,8 @@ Supplier::push (const RtecEventComm::EventSet &events
                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // ACE_DEBUG ((LM_DEBUG, "Supplier pushing (%d,%d)\n",
+  // events[0].header.type, events[0].header.source));
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);

@@ -14,7 +14,8 @@ DIRS  = \
   RTCORBA_Callback \
   Roundtrip \
   Federated_Roundtrip \
-  Colocated_Roundtrip
+  Colocated_Roundtrip \
+  TCP_Baseline
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

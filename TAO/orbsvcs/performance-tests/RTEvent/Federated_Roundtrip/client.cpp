@@ -12,6 +12,7 @@
 #include "Client_Pair.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/Strategies/advanced_resource.h"
@@ -128,6 +129,7 @@ parse_args (int argc, char *argv[])
 
 int main (int argc, char *argv[])
 {
+  TAO_EC_Default_Factory::init_svcs();
   RT_Class rt_class;
 
   ACE_TRY_NEW_ENV
@@ -261,7 +263,7 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
                            high_priority_period,
                            0,
                            ACE_ES_EVENT_UNDEFINED,
-                           1,
+                           experiment_id,
                            high_priority_group.supplier (),
                            &barrier);
   {
