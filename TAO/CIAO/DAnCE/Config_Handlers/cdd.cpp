@@ -1,4 +1,5 @@
 // $Id$
+#include "Config_Handlers_Export.h"
 #include "cdd.hpp"
 
 namespace CIAO
@@ -294,7 +295,7 @@ namespace CIAO
   }
 }
 
-#include <XSCRT/ExtendedTypeInfo.hpp>
+#include <XMLSchema/TypeInfo.hpp>
 
 namespace CIAO
 {

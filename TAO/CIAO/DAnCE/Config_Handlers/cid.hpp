@@ -1,4 +1,5 @@
 // $Id$
+#include "Config_Handlers_Export.h"
 #ifndef CID_HPP
 #define CID_HPP
 
@@ -19,8 +20,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include <XMLSchema/Types.hpp>
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -32,7 +32,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class SubcomponentInstantiationDescription : public ::XSCRT::Type
+    class Config_Handlers_Export SubcomponentInstantiationDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -115,7 +115,7 @@ namespace CIAO
       char regulator__;
     };
 
-    class SubcomponentPropertyReference : public ::XSCRT::Type
+    class Config_Handlers_Export SubcomponentPropertyReference : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -154,7 +154,7 @@ namespace CIAO
       char regulator__;
     };
 
-    class AssemblyPropertyMapping : public ::XSCRT::Type
+    class Config_Handlers_Export AssemblyPropertyMapping : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -204,7 +204,7 @@ namespace CIAO
       char regulator__;
     };
 
-    class ComponentAssemblyDescription : public ::XSCRT::Type
+    class Config_Handlers_Export ComponentAssemblyDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -261,7 +261,7 @@ namespace CIAO
       char regulator__;
     };
 
-    class MonolithicImplementationDescription : public ::XSCRT::Type
+    class Config_Handlers_Export MonolithicImplementationDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -315,7 +315,7 @@ namespace CIAO
       char regulator__;
     };
 
-    class ComponentImplementationDescription : public ::XSCRT::Type
+    class Config_Handlers_Export ComponentImplementationDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -452,7 +452,7 @@ namespace CIAO
   }
 }
 
-#include <XSCRT/Traversal.hpp>
+#include <XMLSchema/Traversal.hpp>
 
 namespace CIAO
 {
@@ -460,7 +460,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct SubcomponentInstantiationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >
+      struct Config_Handlers_Export SubcomponentInstantiationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >
       {
         virtual void
         traverse (Type&);
@@ -541,7 +541,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct SubcomponentPropertyReference : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentPropertyReference >
+      struct Config_Handlers_Export SubcomponentPropertyReference : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SubcomponentPropertyReference >
       {
         virtual void
         traverse (Type&);
@@ -574,7 +574,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct AssemblyPropertyMapping : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::AssemblyPropertyMapping >
+      struct Config_Handlers_Export AssemblyPropertyMapping : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::AssemblyPropertyMapping >
       {
         virtual void
         traverse (Type&);
@@ -613,7 +613,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct ComponentAssemblyDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentAssemblyDescription >
+      struct Config_Handlers_Export ComponentAssemblyDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentAssemblyDescription >
       {
         virtual void
         traverse (Type&);
@@ -694,7 +694,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct MonolithicImplementationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::MonolithicImplementationDescription >
+      struct Config_Handlers_Export MonolithicImplementationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::MonolithicImplementationDescription >
       {
         virtual void
         traverse (Type&);
@@ -763,7 +763,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct ComponentImplementationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentImplementationDescription >
+      struct Config_Handlers_Export ComponentImplementationDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentImplementationDescription >
       {
         virtual void
         traverse (Type&);
@@ -907,7 +907,7 @@ namespace CIAO
   }
 }
 
-#include <XSCRT/Writer.hpp>
+#include <XMLSchema/Writer.hpp>
 
 namespace CIAO
 {
@@ -915,7 +915,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct SubcomponentInstantiationDescription : Traversal::SubcomponentInstantiationDescription, 
+      struct Config_Handlers_Export SubcomponentInstantiationDescription : Traversal::SubcomponentInstantiationDescription, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::SubcomponentInstantiationDescription Type;
@@ -946,7 +946,7 @@ namespace CIAO
         SubcomponentInstantiationDescription ();
       };
 
-      struct SubcomponentPropertyReference : Traversal::SubcomponentPropertyReference, 
+      struct Config_Handlers_Export SubcomponentPropertyReference : Traversal::SubcomponentPropertyReference, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::SubcomponentPropertyReference Type;
@@ -965,7 +965,7 @@ namespace CIAO
         SubcomponentPropertyReference ();
       };
 
-      struct AssemblyPropertyMapping : Traversal::AssemblyPropertyMapping, 
+      struct Config_Handlers_Export AssemblyPropertyMapping : Traversal::AssemblyPropertyMapping, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::AssemblyPropertyMapping Type;
@@ -987,7 +987,7 @@ namespace CIAO
         AssemblyPropertyMapping ();
       };
 
-      struct ComponentAssemblyDescription : Traversal::ComponentAssemblyDescription, 
+      struct Config_Handlers_Export ComponentAssemblyDescription : Traversal::ComponentAssemblyDescription, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::ComponentAssemblyDescription Type;
@@ -1021,7 +1021,7 @@ namespace CIAO
         ComponentAssemblyDescription ();
       };
 
-      struct MonolithicImplementationDescription : Traversal::MonolithicImplementationDescription, 
+      struct Config_Handlers_Export MonolithicImplementationDescription : Traversal::MonolithicImplementationDescription, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::MonolithicImplementationDescription Type;
@@ -1049,7 +1049,7 @@ namespace CIAO
         MonolithicImplementationDescription ();
       };
 
-      struct ComponentImplementationDescription : Traversal::ComponentImplementationDescription, 
+      struct Config_Handlers_Export ComponentImplementationDescription : Traversal::ComponentImplementationDescription, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::ComponentImplementationDescription Type;

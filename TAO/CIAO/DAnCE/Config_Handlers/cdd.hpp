@@ -1,4 +1,5 @@
 // $Id$
+#include "Config_Handlers_Export.h"
 #ifndef CDD_HPP
 #define CDD_HPP
 
@@ -14,8 +15,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include <XMLSchema/Types.hpp>
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -23,7 +23,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Domain : public ::XSCRT::Type
+    class Config_Handlers_Export Domain : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -107,7 +107,7 @@ namespace CIAO
   }
 }
 
-#include <XSCRT/Traversal.hpp>
+#include <XMLSchema/Traversal.hpp>
 
 namespace CIAO
 {
@@ -115,7 +115,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct Domain : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Domain >
+      struct Config_Handlers_Export Domain : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Domain >
       {
         virtual void
         traverse (Type&);
@@ -199,7 +199,7 @@ namespace CIAO
   }
 }
 
-#include <XSCRT/Writer.hpp>
+#include <XMLSchema/Writer.hpp>
 
 namespace CIAO
 {
@@ -207,7 +207,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct Domain : Traversal::Domain, 
+      struct Config_Handlers_Export Domain : Traversal::Domain, 
       virtual ::XSCRT::Writer< char >
       {
         typedef ::CIAO::Config_Handlers::Domain Type;
