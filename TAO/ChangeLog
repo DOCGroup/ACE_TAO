@@ -1,3 +1,10 @@
+Thu Mar 13 000:14:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp (retrieve):
+
+	  Changed creation of Any to be compatible with the new
+	  implementation.
+
 Wed Mar 12 22:25:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
