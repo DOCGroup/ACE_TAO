@@ -29,6 +29,14 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.4
 ============================================
 
+. Reimplemented the way that TAO_Transport deals with GIOP headers.  In
+  some cases partial GIOP message headers were read and used as if a full
+  GIOP header were received. [Bug 1681]
+
+. GIOP fragment handling has changed where a single large allocation and
+  copy occurs at the end of a fragment chain instead of an allocation and
+  copy for every fragment received.
+
 . The tao-config script has been replaced by pkg-config metadata files
   which are installed in ${prefix}/lib/pkgconfig by the automake build.
 
@@ -88,7 +96,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.2 and TAO-1.4.3
 
 . Split ORB Services into stub, skeleton, and implementation libraries.
   Changes to the Naming, Trading, Event, Notification, and Logging
-  Services have been commited.
+  Services have been committed.
 
 . Common utilities (tao_imr, tao_ifr, nslist, nsadd, nsdel,
   NamingViewer) now installed in $ACE_ROOT/bin.
@@ -179,7 +187,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
     ".i".  The latter is generally used as the extension for
     pre-processed C sources.
   - Process multiple IDL files in a single execution by iteration
-    in a single process, rather than spawing a process for each
+    in a single process, rather than spawning a process for each
     file as before.
   - Added the remaining spec-defined sequences of predefined types
     to the CORBA namespace in TAO.
@@ -259,7 +267,7 @@ IDL COMPILER
 . Changed the names of some local variables in generated
   operation code, to reduce that chance of a name clash.
 
-. Fixed bug where a #pragam version directive is sometimes
+. Fixed bug where a #pragma version directive is sometimes
   not reflected in the generated repository id.
 
 . Disambiguated generated template instantiations for array
@@ -282,7 +290,7 @@ IDL COMPILER
 . Added -GId command line option to generate line and
   file debug info in *I.* files, similar to what is
   already generated in *C.* and *S.* files. This debug
-  info generation is now off by defaul in *I.* files.
+  info generation is now off by default in *I.* files.
 
 . Fixed the handling of included orb.idl file to generate
   corresponding C++ includes for the files orb.idl
@@ -339,12 +347,12 @@ IDL COMPILER
 . Fixed bug in code generation for an array of typedef of
   string and wstring.
 
-. Fixed a bug in the generation of respository ids for
+. Fixed a bug in the generation of repository ids for
   explicit, implicit and equivalent interfaces for component
   homes.
 
 . Fixed bugs in the generation of marshaling and demarshaling
-  code for aggragate types with component or eventtype members.
+  code for aggregate types with component or eventtype members.
 
 ORB SERVICES:
 -------------
@@ -409,13 +417,13 @@ CORE ORB
   specification of -ORBEndpoint sciop:// at startup.
 
 . Fixed a bug that caused the ORB to dump a core when server side
-  interceptors returns an exception and if the operartion parameters
+  interceptors returns an exception and if the operation parameters
   contains a sequence an out parameter.
 
 . Fixed a bug that caused extraction of basic data types that are
   aliased from an Any.
 
-. Added a couple of regerssions tests for some of AMH features.
+. Added a couple of regressions tests for some of AMH features.
 
 . Lots of other bug fixes (see the bottom of this message for a
   complete list of bugzilla bugids fixed in this beta).
@@ -425,7 +433,7 @@ CORE ORB
   where dynamic loading/unloading of the ORB failed.
 
 . Added an option, -ORBDisableRTCollocation which allows users to
-  disable the RT collocation technique used by TAO and fallback on the
+  disable the RT collocation technique used by TAO and fall back on the
   default collocation technique used for the vanilla ORB.
 
 . Prevent the TP_Reactor used within TAO from exiting when it receives
@@ -438,7 +446,7 @@ ORB SERVICES
   independently of libTAO_SSLIOP, and set the default to true.
 
 . An initial implementation of the FTCORBA spec has been added to
-  TAO. This release features an intial cut of ReplicationManager,
+  TAO. This release features an initial cut of ReplicationManager,
   FaultNotifier, and a FaultDetector. Please see
 
   $TAO_ROOT/orbsvcs/tests/FT_App/README

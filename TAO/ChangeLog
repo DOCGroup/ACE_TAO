@@ -1,3 +1,9 @@
+Wed Feb  2 06:45:59 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Updated with information about PMB and GIOP fragments.
+
 Wed Feb  2 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
@@ -136,8 +142,8 @@ Tue Feb  1 10:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan 31 20:42:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
 
           Added missing header include directives that are necessary due
           to inter-header dependency reductions in ACE.
@@ -232,45 +238,45 @@ Mon Jan 31 07:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan 30 20:47:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Simple/time-date/server.cpp:
+        * examples/Simple/time-date/server.cpp:
 
-	  Fixed syntax error in ACE_RCSID macro argument.
+          Fixed syntax error in ACE_RCSID macro argument.
 
 Sun Jan 30 19:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
-	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
-	* examples/Content_Server/AMI_Observer/Callback_i.cpp:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
-	* examples/Content_Server/SMI_Iterator/client.cpp:
-	* examples/Simple/time-date/Time_Date.cpp:
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
-	* orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/RecursDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/RecursDef_i.h:
-	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
-	* orbsvcs/tests/FT_App/FT_TestReplica_i.h:
-	* orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h:
-	* orbsvcs/tests/FT_App/StubBatchConsumer.h:
-	* orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
-	* orbsvcs/tests/FT_App/StubFaultConsumer.h:
-	* orbsvcs/tests/FT_App/StubFaultNotifier.h:
-	* orbsvcs/tests/FtRtEvent/consumer.cpp:
-	* orbsvcs/tests/FtRtEvent/supplier.cpp:
-	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* performance-tests/Sequence_Latency/AMI/client.cpp:
-	* tests/Abstract_Interface/test_i.cpp:
-	* tests/Bug_1482_Regression/Hello.cpp:
-	* tests/DynAny_Test/test_dynenum.cpp:
-	* tests/DynAny_Test/test_dynsequence.cpp:
-	* tests/DynAny_Test/test_dynstruct.cpp:
-	* tests/DynAny_Test/test_dynunion.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
+        * examples/Content_Server/AMI_Observer/Callback_i.cpp:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+        * examples/Content_Server/SMI_Iterator/client.cpp:
+        * examples/Simple/time-date/Time_Date.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/RecursDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/RecursDef_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.h:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+        * orbsvcs/tests/FtRtEvent/consumer.cpp:
+        * orbsvcs/tests/FtRtEvent/supplier.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * performance-tests/Sequence_Latency/AMI/client.cpp:
+        * tests/Abstract_Interface/test_i.cpp:
+        * tests/Bug_1482_Regression/Hello.cpp:
+        * tests/DynAny_Test/test_dynenum.cpp:
+        * tests/DynAny_Test/test_dynsequence.cpp:
+        * tests/DynAny_Test/test_dynstruct.cpp:
+        * tests/DynAny_Test/test_dynunion.cpp:
 
-	  Added missing header include directives that are necessary due
-	  to inter-header dependency reductions in ACE.
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
 
 Sun Jan 30 12:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -279,79 +285,79 @@ Sun Jan 30 12:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jan 29 23:58:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/AMH/Sink_Server/AMH_Servant.cpp:
-	* examples/Event_Comm/Consumer_Input_Handler.h:
-	* examples/POA/POA_BiDir/POA_BiDir.cpp:
-	* examples/RTCORBA/Activity/Activity.cpp:
-	* examples/Simple/time-date/server.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
-	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
-	* orbsvcs/Fault_Notifier/FT_Notifier_i.h:
-	* orbsvcs/ImplRepo_Service/Activator_Info.h:
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
-	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
-	* orbsvcs/TAO_Service/TAO_Service.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
-	* orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Container_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
-	* orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/NativeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/RecursDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/StringDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/TypedefDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/WstringDef_i.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.h:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
-	* orbsvcs/tests/Notify/lib/Driver.h:
-	* tao/CORBALOC_Parser.h:
-	* tao/default_server.h:
-	* tao/Messaging/Messaging.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tests/MProfile_Forwarding/Manager.cpp:
+        * examples/AMH/Sink_Server/AMH_Servant.cpp:
+        * examples/Event_Comm/Consumer_Input_Handler.h:
+        * examples/POA/POA_BiDir/POA_BiDir.cpp:
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * examples/Simple/time-date/server.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/ImplRepo_Service/Activator_Info.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h:
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EnumDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/NativeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/RecursDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StringDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
+        * orbsvcs/tests/Notify/lib/Driver.h:
+        * tao/CORBALOC_Parser.h:
+        * tao/default_server.h:
+        * tao/Messaging/Messaging.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tests/MProfile_Forwarding/Manager.cpp:
 
-	  Added missing header include directives that are necessary due
-	  to inter-header dependency reductions in ACE.
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
 
 Sat Jan 29 00:43:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Change --with-{acexml,qos,rmcast,ssl} to --enable-{acexml,qos,
-	  rmcast,ssl} to be consistant with standard autoconf conventions.
+          Change --with-{acexml,qos,rmcast,ssl} to --enable-{acexml,qos,
+          rmcast,ssl} to be consistant with standard autoconf conventions.
 
 Sat Jan 29 02:31:21 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -369,246 +375,246 @@ Sat Jan 29 02:31:21 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jan 28 21:48:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
 
-	  Include "ace/Auto_Ptr.h" to pull in auto_ptr<> class template
-	  declaration.
+          Include "ace/Auto_Ptr.h" to pull in auto_ptr<> class template
+          declaration.
 
 Fri Jan 28 21:39:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/AV/RTP.h:
-	* orbsvcs/orbsvcs/AV/TCP.h:
-	* orbsvcs/orbsvcs/AV/UDP.h:
+        * orbsvcs/orbsvcs/AV/RTP.h:
+        * orbsvcs/orbsvcs/AV/TCP.h:
+        * orbsvcs/orbsvcs/AV/UDP.h:
 
-	  Include "ace/Service_Config.h" to pull in
-	  complete ACE_Static_Svc_Descriptor class declaration.
-	  Necessitated by interheader dependency reductions in ACE.
+          Include "ace/Service_Config.h" to pull in
+          complete ACE_Static_Svc_Descriptor class declaration.
+          Necessitated by interheader dependency reductions in ACE.
 
 Fri Jan 28 21:07:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CORBANAME_Parser.cpp:
-	* tao/DynamicInterface/Request.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/DynamicInterface/Request.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
 
-	  Include "ace/SString.h" since to pull in complete ACE string
-	  class declarations.  Necessitated by include directive
-	  reductions in ACE.
+          Include "ace/SString.h" since to pull in complete ACE string
+          class declarations.  Necessitated by include directive
+          reductions in ACE.
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Include "ace/Reactor.h" to pull in complete ACE_Reactor class
-	  declaration.  Necessitated by include directive reductions in
-	  ACE.
+          Include "ace/Reactor.h" to pull in complete ACE_Reactor class
+          declaration.  Necessitated by include directive reductions in
+          ACE.
 
-	* tao/default_resource.h:
+        * tao/default_resource.h:
 
-	  Forward declare ACE_Reactor_Impl class.  Necessitated by include
-	  directive reductions in ACE.
+          Forward declare ACE_Reactor_Impl class.  Necessitated by include
+          directive reductions in ACE.
 
 Fri Jan 28 13:32:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tests/OctetSeq/client.cpp:
-	* tests/OctetSeq/test_i.cpp:
+        * tests/OctetSeq/client.cpp:
+        * tests/OctetSeq/test_i.cpp:
 
-	  Removed reinterpret_cast<const char*> for ACE_crc32's buffer
-	  parameter, as it was changed to take a const void* some time
-	  back.
+          Removed reinterpret_cast<const char*> for ACE_crc32's buffer
+          parameter, as it was changed to take a const void* some time
+          back.
 
 Fri Jan 28 07:53:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
-	* orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
-	* orbsvcs/LoadBalancer/LoadManager.cpp:
-	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
-	* orbsvcs/Naming_Service/NT_Naming_Service.cpp:
-	* orbsvcs/Notify_Service/NT_Notify_Service.cpp:
-	* orbsvcs/PSS/PSDL_Datastore.cpp:
-	* orbsvcs/PSS/PSDL_OctetSeq.cpp:
-	* orbsvcs/examples/LoadBalancing/server.cpp:
-	* orbsvcs/examples/ORT/Object_Factory_i.cpp:
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
-	* orbsvcs/orbsvcs/Time_Utilities.i:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
-	* orbsvcs/orbsvcs/Event/Timer_Module.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.i:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
-	* orbsvcs/orbsvcs/Notify/AllocTracker.h:
-	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Notify/PropertySeq.cpp:
-	* orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.i:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
-	* orbsvcs/tests/Concurrency/CC_test_utils.cpp:
-	* orbsvcs/tests/Concurrency/CC_tests.cpp:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.i:
-	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
-	* orbsvcs/tests/Notify/Blocking/common.cpp:
-	* orbsvcs/tests/Notify/Discarding/common.cpp:
-	* orbsvcs/tests/Notify/Ordering/common.cpp:
-	* orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
-	* orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
-	* orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.h:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
-	* orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+        * orbsvcs/PSS/PSDL_Datastore.cpp:
+        * orbsvcs/PSS/PSDL_OctetSeq.cpp:
+        * orbsvcs/examples/LoadBalancing/server.cpp:
+        * orbsvcs/examples/ORT/Object_Factory_i.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.i:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+        * orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.i:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Notify/AllocTracker.h:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.i:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp:
+        * orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.i:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/Notify/Blocking/common.cpp:
+        * orbsvcs/tests/Notify/Discarding/common.cpp:
+        * orbsvcs/tests/Notify/Ordering/common.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/lib/Task_Stats.inl:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.h:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
 
           Converted ACE_{static,dynamic,reinterpret,const}_cast macros
           calls to their standard C++ counterparts.
 
 Fri Jan 28 07:18:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/AMH/Sink_Server/AMH_Servant.cpp:
-	* examples/AMI/FL_Callback/Progress_i.cpp:
-	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
-	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
-	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
-	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
-	* examples/Event_Comm/Event_Comm_i.cpp:
-	* examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
-	* examples/Kokyu_dsrt_schedulers/EDF_SchedulingC.cpp:
-	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
-	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
-	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
-	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
-	* examples/Logging/Logger_i.cpp:
-	* examples/Logging/Logging_Service_i.cpp:
-	* examples/Logging/Logging_Test_i.cpp:
-	* examples/OBV/Typed_Events/Client_i.cpp:
-	* examples/OBV/Typed_Events/Event_Types_impl.cpp:
-	* examples/OBV/Typed_Events/Server_i.cpp:
-	* examples/POA/DSI/Database_i.cpp:
-	* examples/POA/DSI/server.cpp:
-	* examples/POA/Generic_Servant/client.cpp:
-	* examples/POA/Loader/Servant_Activator.cpp:
-	* examples/POA/Loader/Servant_Locator.cpp:
-	* examples/POA/Loader/Server_Manager.cpp:
-	* examples/POA/On_Demand_Activation/server.cpp:
-	* examples/POA/On_Demand_Loading/Servant_Locator.cpp:
-	* examples/POA/On_Demand_Loading/Servant_Manager.cpp:
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp:
-	* examples/Persistent_Grid/Grid_i.cpp:
-	* examples/PluggableUDP/tests/Basic/UDP_Client_i.cpp:
-	* examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
-	* examples/RTCORBA/Activity/Task_Stats.cpp:
-	* examples/RTScheduling/FP_SchedulingC.cpp:
-	* examples/RTScheduling/MIF_SchedulingC.cpp:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
-	* examples/Simple/Simple_util.cpp:
-	* examples/Simple/time/Time_Client_i.cpp:
-	* examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
-	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
-	* performance-tests/RTCorba/Thread_Pool/client.cpp:
-	* tests/AMH_Exceptions/server.cpp:
-	* tests/AMH_Oneway/server.cpp:
-	* tests/CDR/allocator.cpp:
-	* tests/CDR/growth.cpp:
-	* tests/CDR/octet_sequence.cpp:
-	* tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
-	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
-	* tests/CodeSets/simple/client.cpp:
-	* tests/Codec/client.cpp:
-	* tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
-	* tests/FL_Cube/client.cpp:
-	* tests/NestedUpcall/MT_Client_Test/client.cpp:
-	* tests/NestedUpcall/Simple/server.cpp:
-	* tests/OctetSeq/OctetSeq.cpp:
-	* tests/OctetSeq/client.cpp:
-	* tests/OctetSeq/test_i.cpp:
-	* tests/Policies/Manipulation.cpp:
-	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
-	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
-	* tests/RTCORBA/RTMutex/server.cpp:
-	* tests/RTScheduling/DT_Spawn/test.cpp:
-	* tests/Xt_Stopwatch/client.cpp:
-	* tests/Xt_Stopwatch/timer.cpp:
-	* utils/catior/catior.cpp:
+        * examples/AMH/Sink_Server/AMH_Servant.cpp:
+        * examples/AMI/FL_Callback/Progress_i.cpp:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Event_Comm/Event_Comm_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/EDF_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * examples/Logging/Logger_i.cpp:
+        * examples/Logging/Logging_Service_i.cpp:
+        * examples/Logging/Logging_Test_i.cpp:
+        * examples/OBV/Typed_Events/Client_i.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+        * examples/OBV/Typed_Events/Server_i.cpp:
+        * examples/POA/DSI/Database_i.cpp:
+        * examples/POA/DSI/server.cpp:
+        * examples/POA/Generic_Servant/client.cpp:
+        * examples/POA/Loader/Servant_Activator.cpp:
+        * examples/POA/Loader/Servant_Locator.cpp:
+        * examples/POA/Loader/Server_Manager.cpp:
+        * examples/POA/On_Demand_Activation/server.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Locator.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp:
+        * examples/Persistent_Grid/Grid_i.cpp:
+        * examples/PluggableUDP/tests/Basic/UDP_Client_i.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+        * examples/RTCORBA/Activity/Task_Stats.cpp:
+        * examples/RTScheduling/FP_SchedulingC.cpp:
+        * examples/RTScheduling/MIF_SchedulingC.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * examples/Simple/time/Time_Client_i.cpp:
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * performance-tests/RTCorba/Thread_Pool/client.cpp:
+        * tests/AMH_Exceptions/server.cpp:
+        * tests/AMH_Oneway/server.cpp:
+        * tests/CDR/allocator.cpp:
+        * tests/CDR/growth.cpp:
+        * tests/CDR/octet_sequence.cpp:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+        * tests/CodeSets/simple/client.cpp:
+        * tests/Codec/client.cpp:
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+        * tests/FL_Cube/client.cpp:
+        * tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * tests/NestedUpcall/Simple/server.cpp:
+        * tests/OctetSeq/OctetSeq.cpp:
+        * tests/OctetSeq/client.cpp:
+        * tests/OctetSeq/test_i.cpp:
+        * tests/Policies/Manipulation.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+        * tests/RTScheduling/DT_Spawn/test.cpp:
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/timer.cpp:
+        * utils/catior/catior.cpp:
 
           Converted ACE_{static,dynamic,reinterpret,const}_cast macros
           calls to their standard C++ counterparts.
 
 Thu Jan 27 20:01:21 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 
-	  Fix for [BUGID 2038]. Please see
+          Fix for [BUGID 2038]. Please see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2038
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2038
 
-	  for details and thanks to Torsten Kuepper
-	  <torsten.kuepper@nokia.com> for reporting the problem.
+          for details and thanks to Torsten Kuepper
+          <torsten.kuepper@nokia.com> for reporting the problem.
 
 Thu Jan 27 11:39:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/.../*.{cpp,h,i,inl}:
+        * orbsvcs/.../*.{cpp,h,i,inl}:
 
-	  Ossama let me know that my ACE-style to C++ cast conversion
-	  script didn't add a space between the ">" and the "(", which
-	  violates the ACE/TAO conventions.  I wrote another script to
-	  fix the damage, which fixed up a lot of other cases as well.
+          Ossama let me know that my ACE-style to C++ cast conversion
+          script didn't add a space between the ">" and the "(", which
+          violates the ACE/TAO conventions.  I wrote another script to
+          fix the damage, which fixed up a lot of other cases as well.
 
 Thu Jan 27 10:37:19 2005  Chad Elliott  <elliott_c@ociweb.com>
 
