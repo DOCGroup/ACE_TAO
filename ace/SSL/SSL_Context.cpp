@@ -87,7 +87,7 @@ ACE_SSL_Context::ssl_library_init (void)
       const char *egd_socket_file =
         ACE_OS::getenv (ACE_SSL_EGD_FILE_ENV);
 
-      if (egd_file != 0)
+      if (egd_socket_file != 0)
         (void) this->egd_file (egd_socket_file);
 #endif  /* OPENSSL_VERSION_NUMBER */
 
