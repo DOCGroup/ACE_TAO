@@ -1,3 +1,8 @@
+Sat Jan 19 23:30:42 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp: 
+          Fixed some bugs in generated any extraction operator.  
+	
 Sat Jan 19 14:15:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: Not sure why this
