@@ -31,13 +31,11 @@ Peer_Handler<PR_ST_2>::open (void *)
 #if defined (ACE_WIN32)
     // On Win32, the std handle must be registered directly (and not
     // as a socket)
-    this->reactor ()->register_handler 
-      (this, ACE_STDIN);
+    this->reactor ()->register_handler (this, ACE_STDIN);
 #else
     // On non-Win32, the std handle must be registered as a normal
     // handle with the READ mask
-    this->reactor ()->register_handler 
-      (ACE_STDIN, this, ACE_Event_Handler::READ_MASK);
+    this->reactor ()->register_handler (ACE_STDIN, this, ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
   else
     {
@@ -48,19 +46,6 @@ Peer_Handler<PR_ST_2>::open (void *)
 			  ACE_Event_Handler::READ_MASK);
     }
   return 0;
-}
-
-template <PR_ST_1> int
-Peer_Handler<PR_ST_2>::disconnecting (void)
-{
-  char buf[BUFSIZ];
-  ssize_t n = this->peer ().recv (buf, sizeof buf);
-
-  if (n > 0)
-    ACE_OS::write (ACE_STDOUT, buf, n);
-
-  this->action_ = &Peer_Handler<PR_ST_2>::idle;
-  return -1;
 }
 
 template <PR_ST_1> int
@@ -84,7 +69,6 @@ Peer_Handler<PR_ST_2>::connected (void)
       if (this->peer ().close () == -1) 
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
 
-      this->action_ = &Peer_Handler<PR_ST_2>::disconnecting;
       return -1;
     }
   else
@@ -142,24 +126,23 @@ Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE,
 {
   ACE_DEBUG ((LM_DEBUG, "closing down (%d)\n", mask));
 
-  // When the socket closes down, then we'll switch over to reading
-  // from stdin and writing to stdout.
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    {
-      this->action_ = &Peer_Handler<PR_ST_2>::stdio;
-      this->peer ().close ();
-      ACE_OS::rewind (stdin);
-
-      if (this->reactor ())
-	return ACE::register_stdin_handler 
-	(this, this->reactor (), ACE_Thread_Manager::instance ());
-      else
-	return 0;
-    }
-  else if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
+  this->action_ = &Peer_Handler<PR_ST_2>::stdio;
+  this->peer ().close ();
+  ACE_OS::rewind (stdin);
+  
+  if (this->reactor ())
+#if defined (ACE_WIN32)
+    // On Win32, the std handle must be registered directly (and not
+    // as a socket)
+    return this->reactor ()->register_handler (this, ACE_STDIN);
+#else
+  // On non-Win32, the std handle must be registered as a normal
+  // handle with the READ mask
+  return this->reactor ()->register_handler (ACE_STDIN, this, ACE_Event_Handler::READ_MASK);
+#endif /* ACE_WIN32 */
+  else
     delete this;
   return 0;
-
 }
 
 template <class SH, PR_CO_1> int
