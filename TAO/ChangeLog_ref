@@ -1,3 +1,10 @@
+Mon Sep  1 13:41:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+
+          Added generation of forward declaration for the TAO::Narrow_Utils
+          template class.
+
 Mon Sep  1 13:26:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Sync_Strategies.h: Removed Transport.h inclusion
