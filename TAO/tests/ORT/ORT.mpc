@@ -1,9 +1,15 @@
 project(ORT Server): server {
   requires += interceptors
+  idlflags += -I$(TAO_ROOT) -Gv
 
   Source_Files {
+    ORT_testC.cpp
+    ORT_testS.cpp
+    ObjectReferenceFactoryC.cpp
+    ObjectReferenceFactory.cpp
     ORT_test_i.cpp
-    ORT_test_IORInterceptor_ORBInitializer.cpp
+    ServerORBInitializer.cpp
+    ServerRequestInterceptor.cpp
     ORT_test_IORInterceptor.cpp
     server.cpp
   }
@@ -11,6 +17,7 @@ project(ORT Server): server {
 
 project(ORT Client): client {
   requires += interceptors
+  idlflags += -I$(TAO_ROOT) -Gv
 
   Source_Files {
     ORT_testC.cpp
