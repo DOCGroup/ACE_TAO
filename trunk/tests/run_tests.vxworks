@@ -63,6 +63,10 @@ ld < Time_Value_Test
 write 2, "Time_Value_Test ", 16
 ace_main; unld "Time_Value_Test"
 
+ld < High_Res_Timer_Test
+write 2, "High_Res_Timer_Test ", 20
+ace_main; unld "High_Res_Timer_Test"
+
 ld < SString_Test
 write 2, "SString_Test ", 13
 ace_main; unld "SString_Test"

@@ -83,6 +83,7 @@ run Semaphore_Test                      # uses ACE_Thread_Semaphore
 run TSS_Test                            # uses Task, Mutex, Guard
 run Timeprobe_Test
 run Time_Value_Test
+run High_Res_Timer_Test
 run SString_Test
 test $chorus || test $LynxOS || run Naming_Test # uses Naming_Context, WString
 

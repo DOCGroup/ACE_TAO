@@ -1,3 +1,5 @@
+rem $Id$
+
 @echo off
 rem    To use this either give it no arguments to run all the tests or
 rem    pass it the test name (without the extention) to run only one
@@ -30,6 +32,7 @@ call %0 %dopure% Env_Value_Test
 call %0 %dopure% Future_Test
 call %0 %dopure% Handle_Set_Test
 call %0 %dopure% Hash_Map_Manager_Test
+call %0 %dopure% High_Res_Timer_Test
 call %0 %dopure% IOStream_Test
 call %0 %dopure% Map_Manager_Test
 call %0 %dopure% Mem_Map_Test
