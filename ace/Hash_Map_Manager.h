@@ -47,6 +47,7 @@ public:
   INT_ID int_id_;
   // The contents of the entry itself.
 
+  // = <prev_>/<next_> pointers allow iteration in both directions.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next_;
   // Pointer to the next item in the bucket of overflow nodes.
 
@@ -57,15 +58,13 @@ public:
   // Dump the state of an object.
 };
 
-// Forward decl.
+// Forward decls.
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator_Base;
 
-// Forward decl.
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator;
 
-// Forward decl.
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Reverse_Iterator;
 
@@ -91,14 +90,20 @@ public:
 
   typedef EXT_ID KEY;
   typedef INT_ID VALUE;
-  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> ENTRY;
-  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> ITERATOR;
-  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> REVERSE_ITERATOR;
-  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> iterator;
-  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
+  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> 
+          ENTRY;
+  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          ITERATOR;
+  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          REVERSE_ITERATOR;
+
+  // = Achieve STL-like name conformance.
+  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          iterator;
+  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          reverse_iterator;
 
   // = Initialization and termination methods.
-
   ACE_Hash_Map_Manager (size_t size, 
 			ACE_Allocator *alloc = 0);
   // Initialize a <Hash_Map_Manager> with size <length>.
@@ -302,9 +307,10 @@ private:
                    u_long &loc);
   // Returns the <ACE_Hash_Map_Entry> that corresponds to <ext_id>.
 
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_;
-  // Array of <ACE_Hash_Map_Entry> *s, each of which points to the
-  // beginning of a linked list of <EXT_ID>s that hash to that bucket.
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> **table_;
+  // Array of pointers to <ACE_Hash_Map_Entry> *s, every one of which
+  // points to the beginning of a linked list of <EXT_ID>s that hash
+  // to each bucket.
 
   size_t total_size_;
   // Total size of the hash table.
@@ -317,13 +323,13 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator_Base
 {
   // = TITLE
-  //     Iterator for the ACE_Hash_Map_Manager.
+  //     Iterator base class for the <ACE_Hash_Map_Manager>.
 public:
   // = Initialization method.
   ACE_Hash_Map_Iterator_Base (ACE_Hash_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
 			      int head);
   // Contructor.  If head != 0, the iterator constructed is positioned
-  // at the head of the map, it is positioned at the end otherwise.
+  // at the head of the map, otherwise it is positioned at the end.
 
   // = ITERATION methods.
 
@@ -344,7 +350,7 @@ public:
 
   int operator== (const ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   int operator!= (const ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
-  // Check if two iterators point to the same position
+  // Check if two iterators point to the same position.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -373,13 +379,10 @@ protected:
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Hash_Map_Iterator
-  : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
+class ACE_Hash_Map_Iterator : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
   // = TITLE
-  //     Iterator for the ACE_Hash_Map_Manager.
-  //
-  // = DESCRIPTION
+  //     Iterator for the <ACE_Hash_Map_Manager>.
 public:
   // = Initialization method.
   ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
@@ -388,8 +391,8 @@ public:
   // = Iteration methods.
 
   int advance (void);
-  // Move forward by one element in the set.  Returns 0 when all the
-  // items in the set have been seen, else 1.
+  // Move forward by one element.  Returns 0 when all the items in the
+  // set have been seen, else 1.
   
   void dump (void) const;
   // Dump the state of an object.
@@ -413,13 +416,10 @@ public:
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Hash_Map_Reverse_Iterator
-  : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
+class ACE_Hash_Map_Reverse_Iterator : public ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
   // = TITLE
-  //     Iterator for the ACE_Hash_Map_Manager.
-  //
-  // = DESCRIPTION
+  //     Reverse iterator for the <ACE_Hash_Map_Manager>.
 public:
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
@@ -428,8 +428,8 @@ public:
   // = Iteration methods.
 
   int advance (void);
-  // Move forward by one element in the set.  Returns 0 when all the
-  // items in the set have been seen, else 1.
+  // Move forward by one element.  Returns 0 when all the items in the
+  // set have been seen, else 1.
   
   void dump (void) const;
   // Dump the state of an object.
