@@ -1,3 +1,11 @@
+Thu Apr 22 12:13:52 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/common/codecs.mpb:
+        * ACEXML/common/common.mpc:
+
+          Support disabling the ace_codecs feature.  This project takes
+          advantage of the ! (not) feature of MPC.
+
 Thu Apr 22 14:00:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ace_tests.lst:
