@@ -67,8 +67,14 @@ be_visitor_interface::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_CH);
       break;
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_H);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_CS);
+      break;
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_S);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SH);

@@ -1810,7 +1810,7 @@ be_interface::queryinterface_helper (be_interface *derived,
         << ancestor->full_name () << "_ptr," << be_nl
         << "this" << be_uidt_nl
         << ")" << be_uidt << be_uidt_nl
-        << ")" << be_uidt << be_uidt_nl;
+        << ");" << be_uidt << be_uidt_nl;
 
   *os << "else if ";
 

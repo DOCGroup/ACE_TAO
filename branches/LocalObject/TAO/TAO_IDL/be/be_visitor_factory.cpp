@@ -411,7 +411,9 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
         return new be_visitor_decl (new_ctx);
 
     case TAO_CodeGen::TAO_ATTRIBUTE_CH:
+    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_H:
     case TAO_CodeGen::TAO_ATTRIBUTE_CS:
+    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_S:
     case TAO_CodeGen::TAO_ATTRIBUTE_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_IH:
     case TAO_CodeGen::TAO_ATTRIBUTE_SS:

@@ -94,6 +94,9 @@ public:
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
 
+    TAO_LOCAL_ATTRIBUTE_H,
+    TAO_LOCAL_ATTRIBUTE_S,
+
     // emitting code for array defn
     TAO_ARRAY_CH,
     TAO_ARRAY_CI,
