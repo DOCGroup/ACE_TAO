@@ -1,3 +1,15 @@
+Mon Mar 21 06:56:10 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
+
+          Added a new ORB option, -ORBLingerTimeout, that allows the user to
+          set the linger timeout on a TCP socket before closing.  The
+          default is to not modify the linger timeout.
+
 Mon Mar 21 12:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connection_Handler.cpp:
@@ -22,9 +34,9 @@ Mon Mar 21 09:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar 20 08:53:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RT_Stub.cpp:
+        * tao/RTCORBA/RT_Stub.cpp:
 
-	  Fixed compilation warnings by adding .in() to the _var type.
+          Fixed compilation warnings by adding .in() to the _var type.
 
 Sat Mar 19 13:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -59,47 +71,47 @@ Fri Mar 18 20:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Mar 18 11:48:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RT_Stub.h:
+        * tao/RTCORBA/RT_Stub.h:
 
-	  Changed the member variables defined in the RT_Stub class
-	  from pointer type to "_var" type to avoid memory leak.
-	  Thanks Roland Schmimmack <Roland.Schmimmack@gmx.de> for
-	  reporting the memory leak problem.
+          Changed the member variables defined in the RT_Stub class
+          from pointer type to "_var" type to avoid memory leak.
+          Thanks Roland Schmimmack <Roland.Schmimmack@gmx.de> for
+          reporting the memory leak problem.
 
 Fri Mar 18 10:58:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/Options.html (below):
+        * docs/Options.html (below):
 
-	  Added documentation for -ORBDropRepliesonShutdown.
+          Added documentation for -ORBDropRepliesonShutdown.
 
 Fri Mar 18 10:36:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/svc.conf:
-	* orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/tests/EC_Custom_Marshal/svc.conf:
+        * orbsvcs/tests/EC_Throughput/ec.conf:
 
-	  These two tests require that the ORB not drop replies during
-	  shutdown.  Therefore added that strategy. If this strategy is
-	  not used EC would exit with a COMM_FAILURE exception.
+          These two tests require that the ORB not drop replies during
+          shutdown.  Therefore added that strategy. If this strategy is
+          not used EC would exit with a COMM_FAILURE exception.
 
 Fri Mar 18 10:34:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Transport.cpp:
-	* tao/Transport.h (provide_blockable_handler):
+        * tao/Transport.cpp:
+        * tao/Transport.h (provide_blockable_handler):
 
-	  Return a bool instead of void.
+          Return a bool instead of void.
 
-	* tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Cache_Manager.cpp:
 
-	  Check for the return value from provide_blockable_handler before
-	  marking the entry as closed.
+          Check for the return value from provide_blockable_handler before
+          marking the entry as closed.
 
 Fri Mar 18 09:26:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Faults/client.cpp:
+        * tests/Faults/client.cpp:
 
-	  Added an additional check to omit COMM_FAILURE exceptions when
+          Added an additional check to omit COMM_FAILURE exceptions when
           doing a self shutdown test. This shoudl address test failures in
-	  our daily builds.
+          our daily builds.
 
 Fri Mar 18 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -121,10 +133,10 @@ Fri Mar 18 09:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Mar 17 11:00:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add no-define to AC_INIT_AUTOMAKE so that PLATFORM and VERSION
-	  are not defined in config.h.
+          Add no-define to AC_INIT_AUTOMAKE so that PLATFORM and VERSION
+          are not defined in config.h.
 
 Thu Mar 17 09:02:28 2005  Ciju John  <john_c@ociweb.com>
 
