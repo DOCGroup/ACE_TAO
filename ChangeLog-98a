@@ -1,13 +1,18 @@
+Sat Feb 14 21:12:52 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Synch_T.h (class ACE_Guard): this->acquire() already sets
+ 	  the owner, so we don't need to do it in the constructor.
+
 Sat Feb 14 20:57:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/lib/Log_Message_Receiver.{h,cpp} (log_output): Added this to
 	  all receiver classes.  It allows writing messages to a user
 	  specified ostream.
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
-	* netsvcs/lib/Client_Logging_Handler.cpp (send): Use the above
-	  change to avoid missing data on NT.  Thanks to Greg White
-	  <gwhite@northlink.com> for providing the fix.
+	* netsvcs/lib/Server_Logging_Handler_T.cpp
+  	  (handle_logging_record): * netsvcs/lib/Client_Logging_Handler.cpp
+	  (send): Use the above change to avoid missing data on NT.  Thanks
+	  to Greg White <gwhite@northlink.com> for providing the fix.
 
 Sat Feb 14 18:34:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
