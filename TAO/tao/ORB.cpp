@@ -35,6 +35,7 @@
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/Request.h"
+#include "tao/MProfile.h"
 #ifdef TAO_HAS_VALUETYPE
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
@@ -49,7 +50,6 @@
 ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
-static const char iioploc_prefix [] = "iioploc:";
 static const char file_prefix[] = "file://";
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -940,16 +940,13 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   TAO_Stub *stub = 0;
 
-  TAO_ORB_Parameters *orb_params =
-    this->orb_core_->orb_params ();
-
   size_t pfile_count =
          this->orb_core_->acceptor_registry ()->endpoint_count ();
 
   // First we create a profile list, well actually the empty container
   TAO_MProfile mp (pfile_count);
 
-  this->orb_core_->acceptor_registry ()->make_mprofilekey, mp);
+  this->orb_core_->acceptor_registry ()->make_mprofile (key, mp);
 
   ACE_CHECK_RETURN (stub);
 

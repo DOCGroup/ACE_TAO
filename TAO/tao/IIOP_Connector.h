@@ -46,7 +46,7 @@ public:
   int close (void);
   // Shutdown Connector bridge and concreate Connector.
 
-  int preconnect (char *preconnections);
+  int preconnect (const char *preconnections);
   // Initial set of connections to be established.
 
   int connect (TAO_Profile *profile,

@@ -287,7 +287,7 @@ public:
   TAO_Acceptor (CORBA::ULong tag);
 
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile  *&mprofile) = 0;
+                               TAO_MProfile &mprofile) = 0;
   // Create the corresponding profile for this endpoint.
 
   virtual int open (TAO_ORB_Core *orb_core, ACE_CString &address) = 0;
@@ -302,7 +302,7 @@ public:
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
 
-  CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count (void) = 0;
   // returns the number of endpoints this acceptor is listening on.  This
   // is used for determining how many profiles will be generated
   // for this acceptor.
@@ -327,7 +327,7 @@ public:
   TAO_Connector (CORBA::ULong tag);
   // default constructor.
 
-  virtual int preconnect (char *preconnections) = 0;
+  virtual int preconnect (const char *preconnections) = 0;
   // Initial set of connections to be established.
 
   virtual int open (TAO_Resource_Factory *trf,

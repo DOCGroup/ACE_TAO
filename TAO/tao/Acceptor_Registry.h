@@ -95,7 +95,7 @@ public:
   // that will be created.
 
   int make_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile  *&mprofile)
+                     TAO_MProfile &mprofile);
   // add profiles to the mprofile object for all open endpoints.
 
   int is_collocated (const TAO_MProfile& mprofile);

@@ -64,7 +64,7 @@ public:
   // initialize acceptor for this address.
 
   int create_mprofile (const TAO_ObjectKey &object_key,
-                      TAO_MProfile  *&mprofile);
+                       TAO_MProfile &mprofile);
   // create profile objects for this Acceptor using the SAP
   // (service access point) and object_key.
 
@@ -74,6 +74,8 @@ public:
   virtual ACE_Event_Handler *acceptor (void);
   // Return the underlying acceptor object, ACE_Acceptor
 
+  CORBA::ULong endpoint_count (void);
+  // return the number of profiles this will generate
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.

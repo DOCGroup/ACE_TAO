@@ -9,6 +9,7 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/params.h"
+#include "tao/MProfile.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -23,7 +24,7 @@ TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
 size_t
 TAO_Acceptor_Registry::endpoint_count (void)
 {
-  int count;
+  int count = 0;
   TAO_AcceptorSetItor end =
                 this->acceptors_.end ();
   TAO_AcceptorSetItor acceptor =
@@ -37,16 +38,16 @@ TAO_Acceptor_Registry::endpoint_count (void)
   return count;
 }
 
-TAO_Mprofile *
+int
 TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile  *&mprofile)
+                                      TAO_MProfile &mprofile)
 {
   TAO_AcceptorSetItor end =
                 this->acceptors_.end ();
   TAO_AcceptorSetItor acceptor =
                 this->acceptors_.begin ();
 
-  for (; acceptor != end; acceptor++)
+  for (; acceptor != end; ++acceptor)
     {
       if ((*acceptor)->create_mprofile (object_key, mprofile) == -1)
         return -1;
@@ -67,7 +68,7 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
   TAO_AcceptorSetItor acceptor =
                 this->acceptors_.begin ();
 
-  for (; acceptor != end; acceptor++)
+  for (; acceptor != end; ++acceptor)
     {
       if ((*acceptor)->tag () == tag)
         return (*acceptor);
@@ -114,6 +115,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
   TAO_EndpointSetIterator last_endpoint =
     orb_core->orb_params ()->endpoints ().end ();
 
+  ACE_Auto_Basic_Array_Ptr <char> addr_str;
+
   for (TAO_EndpointSetIterator endpoint = first_endpoint;
        endpoint != last_endpoint;
        ++endpoint)
@@ -149,10 +152,9 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
           TAO_ProtocolFactorySetItor factory =
                         orb_core->protocol_factories ()->begin ();
 
-          TAO_Acceptor *acceptor;
-          for (acceptor = 0 ;
-               factory != end ;
-               factory++)
+          for (TAO_Acceptor *acceptor = 0;
+               factory != end;
+               ++factory)
             {
               if ((*factory)->factory ()->match_prefix (prefix))
                 {
@@ -169,7 +171,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                   else
                     {
                       ACE_ERROR_RETURN ((LM_ERROR,
-                                         "(%P|%t) Unable to create an acceptor for %s\n",
+                                         "(%P|%t) Unable to create an "
+                                         "acceptor for %s\n",
                                          iop.c_str ()),
                                         -1);
                     }

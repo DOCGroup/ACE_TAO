@@ -23,6 +23,8 @@
 #include "tao/Pluggable.h"
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
+#include "tao/params.h"
+
 #include "ace/Containers_T.h"
 
 // Forward declarations.
@@ -67,7 +69,7 @@ public:
   int close_all (void);
   // Close all open connectors.
 
-  int preconnect (const char *the_preconnections);
+  int preconnect (TAO_EndpointSet &preconnections);
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
