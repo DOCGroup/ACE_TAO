@@ -2100,13 +2100,13 @@ TAO_POA::valid_priority (RTCORBA::Priority priority)
   // specified <priority>.
   TAO_Acceptor_Registry *ar =
     this->orb_core_.acceptor_registry ();
-  
+
   for (TAO_Acceptor **a = ar->begin (); a != ar->end (); ++a)
     {
       if ((*a)->priority () == priority)
         return 1;
     }
-  
+
   return 0;
 }
 
@@ -3551,13 +3551,14 @@ TAO_POA_Policies::validity_check (CORBA::Environment &ACE_TRY_ENV)
         this->id_assignment_ != PortableServer::SYSTEM_ID)
       ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
+#if (TAO_HAS_RT_CORBA == 1)
   // Perform checks for RTCORBA policies.
   // @@ What are the appropriate exceptions to throw?
 
   // @@ We have to force ORB_Core open, in order for
   // Acceptor_Registry/acceptors get created, so that we can do
   // validation.  Once threadpools are in place, this may not be
-  // necessary. 
+  // necessary.
   this->orb_core_.open (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -3569,7 +3570,11 @@ TAO_POA_Policies::validity_check (CORBA::Environment &ACE_TRY_ENV)
 
   if (this->validate_priority_bands () == -1)
     ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 }
+
+#if (TAO_HAS_RT_CORBA == 1)
 
 int
 TAO_POA_Policies::validate_priority_model (void)
@@ -3579,13 +3584,13 @@ TAO_POA_Policies::validate_priority_model (void)
       // Make sure we have at least one endpoint that can provide
       // service for the specified SERVER_DECLARED priority.
       TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
-  
+
       for (TAO_AcceptorSetIterator a = ar->begin (); a != ar->end (); ++a)
         {
           if ((*a)->priority () == this->server_priority_)
             return 0;
         }
-      
+
       return -1;
     }
 
@@ -3603,7 +3608,7 @@ TAO_POA_Policies::validate_server_protocol (void)
     this->server_protocol_->protocols_rep ();
 
   TAO_Acceptor_Registry *ar = this->orb_core_.acceptor_registry ();
-  
+
   for (CORBA::ULong j = 0; j < protocols.length (); ++j)
     {
       CORBA::ULong protocol_type = protocols[j].protocol_type;
@@ -3615,8 +3620,6 @@ TAO_POA_Policies::validate_server_protocol (void)
     }
   return -1;
 }
-
-#if (TAO_HAS_RT_CORBA == 1)
 
 int
 TAO_POA_Policies::validate_priority_bands ()
