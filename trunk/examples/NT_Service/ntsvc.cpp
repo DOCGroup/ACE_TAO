@@ -25,10 +25,6 @@ Service::Service (void)
 {
   // Remember the Reactor instance.
   reactor (ACE_Reactor::instance ());
-
-  // Schedule a timer every two seconds.
-  ACE_Time_Value tv (2, 0);
-  ACE_Reactor::instance ()->schedule_timer (this, 0, tv, tv);
 }
 
 // This method is called when the service gets a control request.  It
@@ -44,7 +40,7 @@ Service::handle_control (DWORD control_code)
       report_status (SERVICE_STOP_PENDING);
 
       ACE_DEBUG ((LM_INFO,
-                  "Service control stop requested\n"));
+                  ACE_TEXT ("Service control stop requested\n")));
       stop_ = 1;
       reactor ()->notify (this,
                           ACE_Event_Handler::EXCEPT_MASK);
@@ -83,7 +79,7 @@ int
 Service::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Service::svc\n"));
+              ACE_TEXT ("Service::svc\n")));
 
   // As an NT service, we come in here in a different thread than the
   // one which created the reactor.  So in order to do anything, we
@@ -92,14 +88,19 @@ Service::svc (void)
   if (report_status (SERVICE_RUNNING) == 0)
     reactor ()->owner (ACE_Thread::self ());
 
-  stop_ = 0;
+  this->stop_ = 0;
 
-  while (!stop_)
+  // Schedule a timer every two seconds.
+  ACE_Time_Value tv (2, 0);
+  ACE_Reactor::instance ()->schedule_timer (this, 0, tv, tv);
+
+  while (!this->stop_)
     reactor ()->handle_events ();
 
   // Cleanly terminate connections, terminate threads.
   ACE_DEBUG ((LM_DEBUG,
-              "Shutting down\n"));
+              ACE_TEXT ("Shutting down\n")));
+  reactor ()->cancel_timer (this);
   return 0;
 }
 
