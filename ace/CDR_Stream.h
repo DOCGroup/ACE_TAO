@@ -926,6 +926,7 @@ class ACE_Export ACE_Char_Codeset_Translator
 public:
   ACE_Char_Codeset_Translator ();
 
+  virtual ~ACE_Char_Codeset_Translator () {};
   /// Increment the reference count. 
   void add_ref ();
   void remove_ref ();
@@ -1015,7 +1016,6 @@ protected:
   ACE_CDR::Octet minor_version (ACE_OutputCDR& output);
 
 protected:
-  virtual ~ACE_Char_Codeset_Translator () {};
 
 private:
   short refcount_;
