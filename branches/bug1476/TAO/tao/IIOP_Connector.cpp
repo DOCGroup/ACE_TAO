@@ -214,14 +214,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                           "non blocking wait done for handle[%d], result = %d\n",
                           svc_handler->get_handle (), result));
             }
-
-          // When the wait returns -1, the transport is not connected, else it is
-// is this right??
-		  if (result == 0)
-            {
-              svc_handler->transport ()->is_connected(true);
-            }
-//		  svc_handler->transport ()->is_connected(false);
         }
       else
         {
@@ -246,8 +238,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                           "wait done for handle[%d], result = %d\n",
                           svc_handler->get_handle (), result));
             }
-
-          svc_handler->transport ()->is_connected(true);
         }
 
       // There are three possibilities when wait() returns: (a)
@@ -360,6 +350,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // then we do so. If registeration is required and it succeeds,
   // #REFCOUNT# becomes two.
 // this also gives problems when we do it on a not connected trasnport
+// maybe move this to the connection_handler::open()??? the assumption that we
+// are always connected here is not correct.
   if (transport->is_connected())
     retval = transport->wait_strategy ()->register_handler ();
 

@@ -141,6 +141,9 @@ TAO_IIOP_Connection_Handler::open (void*)
                   client, this->peer ().get_handle ()));
     }
 
+  // Set that this transport is now connected
+  this->transport ()->is_connected (true);
+
   // Set the id in the transport now that we're active.
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
   this->transport ()->id ((size_t) this->get_handle ());

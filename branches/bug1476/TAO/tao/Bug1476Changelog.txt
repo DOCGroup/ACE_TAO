@@ -1,3 +1,20 @@
+Thu Jul  8 14:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connection_Handler.cpp (open):
+          Set the transport to connected here. We should refactor the last
+          lines of this method, these lines are copied in each different type
+          of connection_handler
+
+        * tao/IIOP_Connector.cpp:
+          Removed not needed code, just us is_connected() on the transport.
+          Made a remark with the registration of the wait_strategy, do we need
+          to do this here?
+
+        * tao/Transport_Connector.cpp:
+          Use the transport->is_connected() instead of the wait of the result.
+
+          Thanks to Bala for getting me on the right track.
+
 Thu Jul  8 13:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp:

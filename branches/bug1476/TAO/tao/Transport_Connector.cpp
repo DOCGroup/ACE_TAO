@@ -262,7 +262,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                                             &zero);
 
 // this is not correct
-          if (result == 0)
+          if (base_transport->is_connected())
             {
 			  // We now have a connection
 
@@ -289,12 +289,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                   "could not register the connected connection in the reactor, get a new one\n"));
                     }
                 }
-			  else
-			  {
-                base_transport->is_connected(true);
-				return base_transport;
-			  }
-
             }
           else
           {
