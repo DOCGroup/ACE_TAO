@@ -110,6 +110,9 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
   TAO_Client_Priority_Policy *policy =
     this->stub_->client_priority ();
 
+  // Automatically release the policy
+  CORBA::Object_var auto_release = policy;
+
   if (policy == 0)
     // Policy is not set.
     {
@@ -245,6 +248,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
     this->stub_->relative_roundtrip_timeout ();
+
+  // Automatically release the policy
+  CORBA::Object_var auto_release = timeout_policy;
 
   // If max_wait_time is not zero then this is not the first attempt
   // to send the request, the timeout value includes *all* those
@@ -1001,6 +1007,9 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
   TAO_Sync_Scope_Policy *ssp = stub->sync_scope ();
+
+  // Automatically release the policy
+  CORBA::Object_var auto_release = ssp;
 
   if (ssp)
     {

@@ -1,67 +1,102 @@
+Fri May 12 14:36:21 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.i:
+        * tao/Policy_Manager.cpp:
+          The Policy_Manager object is accessed from multiple threads, it
+          requires a lock.
+          The Policy_Manager_Impl object increases the reference count of
+          the special policies before returning them (just like normal
+          policies).
+          These two changes fix the last portion of [BUGID:322], the code
+          is safe because the policy cannot be by a separate thread.
+
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+        * tao/Invocation.cpp:
+        * tao/Sync_Strategies.cpp:
+        * tao/SHMIOP_Connect.cpp:
+        * tao/UIOP_Connect.cpp:
+        * tao/IIOP_Connect.cpp:
+          Now we must release the Policy objects after they are used.
+
+        * tests/Makefile:
+        * tests/Policies/Makefile:
+        * tests/Policies/Manipulation.cpp:
+        * tests/Policies/Manipulation.dsp:
+        * tests/Policies/Policies.dsw:
+        * tests/Policies/README:
+        * tests/Policies/run_test.pl:
+        * tests/Policies/test.idl:
+          New stress test for the policy manipulation code.
+
+        * tests/MT_Client/client.cpp:
+          Fix a misspelled comment.
+
 Fri May 12 16:32:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface_cpp:
-	* TAO_IDL/be/be_interface_fwd.cpp:
-	  The addition to the _var copy constructor in the entry below
-	  must have perturbed the delicate balance of compiler 
-	  happiness. Now it seems g++ wants a local name instead of
-	  a scoped name for the next line.
+        * TAO_IDL/be/be_interface_cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+          The addition to the _var copy constructor in the entry below
+          must have perturbed the delicate balance of compiler
+          happiness. Now it seems g++ wants a local name instead of
+          a scoped name for the next line.
 
 Fri May 12 12:13:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/varbase.h:
-	  Added new file varbase.h and included it in corbafwd.h. This
-	  new file contains a base class declaration for the object _var
-	  classes called TAO_Base_var. Declaring (but not implementing)
-	  a private copy constructor and assignment operator that takes
-	  a reference to this base class as the rhs will cause a compile-
-	  time error if a "widening assignment" happens - when a var of
-	  a derived interface is assigned to a var of its ancestor. This is
-	  what we want, the CORBA spec forbids it.
+        * tao/corbafwd.h:
+        * tao/varbase.h:
+          Added new file varbase.h and included it in corbafwd.h. This
+          new file contains a base class declaration for the object _var
+          classes called TAO_Base_var. Declaring (but not implementing)
+          a private copy constructor and assignment operator that takes
+          a reference to this base class as the rhs will cause a compile-
+          time error if a "widening assignment" happens - when a var of
+          a derived interface is assigned to a var of its ancestor. This is
+          what we want, the CORBA spec forbids it.
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_interface_fwd.cpp:
-	  Changes to generate the declarations mentioned above in the
-	  *C.h files, as well as a call to the var base class default
-	  constructor in the initialization of the var copy constructor
-	  (as demanded by Sun egcs) in the *C.i files.
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+          Changes to generate the declarations mentioned above in the
+          *C.h files, as well as a call to the var base class default
+          constructor in the initialization of the var copy constructor
+          (as demanded by Sun egcs) in the *C.i files.
 
-	* tao/CurrentC.h:
-	* tao/DomainC.h:
-	* tao/DynAnyC.h:
-	* tao/IORC.h:
-	* tao/ImplRepoC.h:
-	* tao/InterceptorC.h:
-	* tao/InterfaceC.h:
-	* tao/MessagingC.h:
-	* tao/POAC.h:
-	* tao/PolicyC.h:
-	* tao/PollableC.h:
-	* tao/TAOC.h:
-	* tao/CurrentC.i:
-	* tao/DomainC.i:
-	* tao/DynAnyC.i:
-	* tao/IORC.i:
-	* tao/ImplRepoC.i:
-	* tao/InterceptorC.i:
-	* tao/InterfaceC.i:
-	* tao/MessagingC.i:
-	* tao/POAC.i:
-	* tao/PolicyC.i:
-	* tao/PollableC.i:
-	* tao/TAOC.i:
-	  Changes to hand-crafted files reflecting the changes to generated 
-	  code.
+        * tao/CurrentC.h:
+        * tao/DomainC.h:
+        * tao/DynAnyC.h:
+        * tao/IORC.h:
+        * tao/ImplRepoC.h:
+        * tao/InterceptorC.h:
+        * tao/InterfaceC.h:
+        * tao/MessagingC.h:
+        * tao/POAC.h:
+        * tao/PolicyC.h:
+        * tao/PollableC.h:
+        * tao/TAOC.h:
+        * tao/CurrentC.i:
+        * tao/DomainC.i:
+        * tao/DynAnyC.i:
+        * tao/IORC.i:
+        * tao/ImplRepoC.i:
+        * tao/InterceptorC.i:
+        * tao/InterfaceC.i:
+        * tao/MessagingC.i:
+        * tao/POAC.i:
+        * tao/PolicyC.i:
+        * tao/PollableC.i:
+        * tao/TAOC.i:
+          Changes to hand-crafted files reflecting the changes to generated
+          code.
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Addition of varbase.h and some missing generated .i files to the
-	  projects.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Addition of varbase.h and some missing generated .i files to the
+          projects.
 
-	  This closes out [BUGID:562]. Thanks to Carlos for his help. And
-	  thanks to Greg Hall <Greg.Hall@Australia.Boeing.com> for reporting
-	  this bug.
+          This closes out [BUGID:562]. Thanks to Carlos for his help. And
+          thanks to Greg Hall <Greg.Hall@Australia.Boeing.com> for reporting
+          this bug.
 
 Fri May 12 09:17:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
