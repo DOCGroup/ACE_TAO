@@ -34,7 +34,7 @@ Server_i::init_naming_service (CORBA::Environment& env)
       PortableServer::POA_var child_poa
 	= this->orb_manager_.child_poa ();
 
-      TAO_debug_level = 1; // ******
+      TAO_debug_level = 1;
       int return_val =
 	this->naming_server_.init (orb.in (),
 				   child_poa.in ());
@@ -59,7 +59,6 @@ Server_i::init_naming_service (CORBA::Environment& env)
 				  echo_obj.in (),
 				  env);
       TAO_CHECK_ENV_RETURN (env, -1);
-
     }
   TAO_CATCHANY
     {
@@ -78,17 +77,12 @@ Server_i::parse_args (void)
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "do: ");
   int c;
 
-  // @@ I think that by default, we should use the naming service.
-  // Can you please check how things work for IDL_Cubit and follow the
-  // same conventions?
-
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag.
 	 TAO_debug_level++;  ///*****
         break;
-
       case 'o':  // output the IOR toi a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
@@ -97,11 +91,9 @@ Server_i::parse_args (void)
                               get_opts.optarg),
 			     -1);
         break;
-
       case 's': // don't use the naming service
 	this->using_naming_service_ = 0;
         break;
-
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,20 +114,19 @@ Server_i::parse_args (void)
 int
 Server_i::init (int argc,
 		char *argv[],
-		CORBA::Environment &env)
+		CORBA::Environment &TAO_TRY_ENV)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
 					 argv,
 					 "child_poa",
-					 env) == -1)
+					 TAO_TRY_ENV) == -1)
    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-
-  TAO_CHECK_ENV_RETURN (env, -1);
+  TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -150,16 +141,14 @@ Server_i::init (int argc,
   // Stash our ORB pointer for later reference.
   this->servant_.orb (orb.in ());
 
-  // @@ Please change this, as well!
   // Activate the servant in the POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("echo",
 						 &this->servant_,
-						 env);
+						 TAO_TRY_ENV);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
-
   if (this->ior_output_file_)
     {
       ACE_OS::fprintf (this->ior_output_file_,
@@ -169,16 +158,15 @@ Server_i::init (int argc,
     }
 
   if (this->using_naming_service_)
-    return this->init_naming_service (env);
-
+    return this->init_naming_service (TAO_TRY_ENV);
   return 0;
 }
 
 int
-Server_i::run (CORBA::Environment &env)
+Server_i::run (CORBA::Environment &TAO_TRY_ENV)
 {
   // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (env) == -1)
+  if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);
