@@ -186,57 +186,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                                 << "\"";
         }
 
-      // Include the Messaging files if AMI is enabled.
-      if (be_global->ami_call_back () == I_TRUE)
-        {
-          // Include Messaging skeleton file.
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Messaging/Messaging.h");
-
-          // Turn on generation of files from the Valuetype library.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.valuetype_seen_);
-        }
-
-      idl_global->root ();
-
-      if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.abstract_iface_seen_))
-        {
-          // Include the AbstractBase file from the Valuetype library.
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/AbstractBase.h");
-
-          // Turn on generation of the rest of the Valuetype library files.
-          ACE_SET_BITS (idl_global->decls_seen_info_,
-                        idl_global->decls_seen_masks.valuetype_seen_);
-        }
-
-      if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.valuetype_seen_))
-        {
-          // Include files from the Valuetype library.
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/ValueBase.h");
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/Value_VarOut_T.h");
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/Valuetype_Adapter_Impl.h");
-
-          // @@@@ (JP) These can be logically separated later 
-          // with additional checks.
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/ValueFactory.h");
-          this->gen_standard_include (this->client_header_,
-                                      "tao/Valuetype/Sequence_T.h");
-        }
-
-      // Include the smart proxy base class if smart proxies are enabled.
-      if (be_global->gen_smart_proxies () == I_TRUE)
-        {
-          this->gen_standard_include (this->client_header_,
-                                      "tao/SmartProxies/Smart_Proxies.h");
-        }
+      this->gen_orb_file_includes (this->client_header_);
 
       size_t nfiles = idl_global->n_included_idl_files ();
 
@@ -1404,3 +1354,88 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
           << included_file
           << end_delimiter;
 }
+
+void
+TAO_CodeGen::gen_orb_file_includes (TAO_OutStream *stream)
+{
+  // Include the Messaging files if AMI is enabled.
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      // Include Messaging skeleton file.
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Messaging/Messaging.h");
+
+      // Turn on generation of files from the Valuetype library.
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.valuetype_seen_);
+    }
+
+  // Include the smart proxy base class if smart proxies are enabled.
+  if (be_global->gen_smart_proxies () == I_TRUE)
+    {
+      this->gen_standard_include (this->client_header_,
+                                  "tao/SmartProxies/Smart_Proxies.h");
+    }
+
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.abstract_iface_seen_))
+    {
+      // Include the AbstractBase file from the Valuetype library.
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Valuetype/AbstractBase.h");
+
+      // Turn on generation of the rest of the Valuetype library files.
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.valuetype_seen_);
+    }
+
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.valuetype_seen_))
+    {
+      // Include files from the Valuetype library.
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Valuetype/ValueBase.h");
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Valuetype/Value_VarOut_T.h");
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Valuetype/Valuetype_Adapter_Impl.h");
+
+      // @@@@ (JP) These can be logically separated later 
+      // with additional checks.
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Valuetype/ValueFactory.h");
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Valuetype/Sequence_T.h");
+    }
+
+  this->gen_arg_file_include (idl_global->decls_seen_masks.basic_arg_seen_,
+                              "tao/Basic_Arguments.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.bd_string_arg_seen_,
+                              "tao/BD_String_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_array_arg_seen_,
+                              "tao/Fixed_Array_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.fixed_size_arg_seen_,
+                              "tao/Fixed_Size_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.object_arg_seen_,
+                              "tao/Object_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.special_basic_arg_seen_,
+                              "tao/Special_Basic_Arguments.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.ub_string_arg_seen_,
+                              "tao/UB_String_Arguments.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.var_array_arg_seen_,
+                              "tao/Var_Array_Argument_T.h");
+  this->gen_arg_file_include (idl_global->decls_seen_masks.var_size_arg_seen_,
+                              "tao/Var_Size_Argument_T.h");
+}
+
+void
+TAO_CodeGen::gen_arg_file_include (ACE_UINT64 mask, const char *filepath)
+{
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       mask))
+    {
+      this->gen_standard_include (this->client_header_,
+                                  filepath);
+    }
+}
+

@@ -194,9 +194,19 @@ IDL_GlobalData::IDL_GlobalData (void)
 
   const ACE_UINT64 cursor = 1U;
 
-  ACE_SET_BITS (this->decls_seen_masks.valuetype_seen_,       cursor);
-  ACE_SET_BITS (this->decls_seen_masks.abstract_iface_seen_,  cursor << 1);
-  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,       cursor << 2);
+  ACE_SET_BITS (this->decls_seen_masks.valuetype_seen_,         cursor);
+  ACE_SET_BITS (this->decls_seen_masks.abstract_iface_seen_,    cursor << 1);
+  ACE_SET_BITS (this->decls_seen_masks.iface_seq_seen_,         cursor << 2);
+
+  ACE_SET_BITS (this->decls_seen_masks.basic_arg_seen_,         cursor << 32);
+  ACE_SET_BITS (this->decls_seen_masks.bd_string_arg_seen_,     cursor << 33);
+  ACE_SET_BITS (this->decls_seen_masks.fixed_array_arg_seen_,   cursor << 34);
+  ACE_SET_BITS (this->decls_seen_masks.fixed_size_arg_seen_,    cursor << 35);
+  ACE_SET_BITS (this->decls_seen_masks.object_arg_seen_,        cursor << 36);
+  ACE_SET_BITS (this->decls_seen_masks.special_basic_arg_seen_, cursor << 37);
+  ACE_SET_BITS (this->decls_seen_masks.ub_string_arg_seen_,     cursor << 38);
+  ACE_SET_BITS (this->decls_seen_masks.var_array_arg_seen_,     cursor << 39);
+  ACE_SET_BITS (this->decls_seen_masks.var_size_arg_seen_,      cursor << 40);
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)

@@ -400,6 +400,9 @@ private:
   void gen_standard_include (TAO_OutStream *stream,
                              const char *included_file);
 
+  void gen_orb_file_includes (TAO_OutStream *stream);
+  void gen_arg_file_include (ACE_UINT64, const char *);
+
 private:
   TAO_OutStream *client_header_;
   // Client header stream.

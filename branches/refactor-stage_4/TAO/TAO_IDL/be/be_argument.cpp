@@ -53,6 +53,7 @@ be_argument::be_argument (AST_Argument::Direction d,
 {
   be_type *bt = be_type::narrow_from_decl (ft);
   bt->seen_in_operation (I_TRUE);
+  this->set_arg_seen_bit (bt);
 }
 
 
