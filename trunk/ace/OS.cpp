@@ -964,10 +964,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	      // Set the priority of the new thread and then let it
 	      // continue, but only if the user didn't start it suspended
 	      // in the first place!
-	      ACE_OS::thr_setprio (*thr_id, priority);
+	      ACE_OS::thr_setprio (*thr_handle, priority);
 
 	      if (start_suspended == 0)
-		ACE_OS::thr_continue (*thr_id);
+		ACE_OS::thr_continue (*thr_handle);
 	    }
 	}
 #if 0
