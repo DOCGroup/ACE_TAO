@@ -398,59 +398,54 @@ fe_populate_global_scope (AST_Module *m)
                          );
   m->fe_add_predefined_type (pdt);
 
-# ifdef IDL_HAS_VALUETYPE
-  if (idl_global->obv_support ())
-    {
-      pdt =
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("abstract")
-                              );
-      m->fe_add_predefined_type (pdt);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("abstract")
+                          );
+  m->fe_add_predefined_type (pdt);
 
-      pdt =
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("custom")
-                              );
-      m->fe_add_predefined_type (pdt);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("custom")
+                          );
+  m->fe_add_predefined_type (pdt);
 
-      pdt =
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("private")
-                              );
-      m->fe_add_predefined_type (pdt);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("private")
+                          );
+  m->fe_add_predefined_type (pdt);
 
-      pdt =
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("public")
-                              );
-      m->fe_add_predefined_type (pdt);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("public")
+                          );
+  m->fe_add_predefined_type (pdt);
 
-      pdt =
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("supports")
-                              );
-      m->fe_add_predefined_type (pdt);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("supports")
+                          );
+  m->fe_add_predefined_type (pdt);
 
-      pdt =
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("truncatable")
-                              );
-      m->fe_add_predefined_type (pdt);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("truncatable")
+                          );
+  m->fe_add_predefined_type (pdt);
 
-      pdt =
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("valuetype")
-                              );
-      m->fe_add_predefined_type (pdt);
-    }
-# endif /* IDL_HAS_VALUETYPE */
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            create_scoped_name ("valuetype")
+                          );
+  m->fe_add_predefined_type (pdt);
 }
 
 // Populate idl_global's hash map with upper case versions of
