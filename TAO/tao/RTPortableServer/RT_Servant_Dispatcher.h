@@ -114,8 +114,11 @@ private:
   // Poa of the target servant.
   TAO_POA &poa_;
 
-  // Original priority of the thread.
-  RTCORBA::Priority original_priority_;
+  // Original native priority of the thread.
+  RTCORBA::Priority original_native_priority_;
+
+  // Original CORBA priority of the thread.
+  RTCORBA::Priority original_CORBA_priority_;
 };
 
 #include "ace/post.h"

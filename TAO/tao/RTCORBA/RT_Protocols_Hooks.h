@@ -117,11 +117,22 @@ public:
    * some critical components.
    */
   //@{
-  virtual int get_thread_priority (CORBA::Short &priority,
-                                   CORBA::Environment &ACE_TRY_ENV);
+  virtual int get_thread_CORBA_priority (CORBA::Short &,
+                                         CORBA::Environment &);
 
-  virtual int set_thread_priority (CORBA::Short  priority,
-                                   CORBA::Environment &ACE_TRY_ENV);
+  virtual int get_thread_native_priority (CORBA::Short &,
+                                          CORBA::Environment &);
+
+  virtual int get_thread_CORBA_and_native_priority (CORBA::Short &,
+                                                    CORBA::Short &,
+                                                    CORBA::Environment &);
+
+  virtual int set_thread_CORBA_priority (CORBA::Short,
+                                         CORBA::Environment &);
+
+  virtual int set_thread_native_priority (CORBA::Short,
+                                          CORBA::Environment &);
+
   //@}
 
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets

@@ -37,8 +37,8 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
   TAO_Protocols_Hooks *tph = invocation->orb_core ()->get_protocols_hooks (ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (tph->get_thread_priority (client_priority,
-                                ACE_TRY_ENV)
+  if (tph->get_thread_CORBA_priority (client_priority,
+                                      ACE_TRY_ENV)
       == -1)
     ACE_THROW (CORBA::DATA_CONVERSION (1,
                CORBA::COMPLETED_NO));
@@ -204,8 +204,9 @@ TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation,
     {
       // Get Client priority.
 
-      int status = protocol_hooks->get_thread_priority (p, // side effect
-                                                        ACE_TRY_ENV);
+      int status =
+        protocol_hooks->get_thread_CORBA_priority (p, // side effect
+                                                   ACE_TRY_ENV);
       ACE_CHECK;
       if (status == -1)
         {
@@ -502,5 +503,3 @@ TAO_Priority_Protocol_Selector::is_multihomed (TAO_Endpoint *endpoint)
 TAO_Bands_Protocol_Selector::~TAO_Bands_Protocol_Selector (void)
 {
 }
-
-

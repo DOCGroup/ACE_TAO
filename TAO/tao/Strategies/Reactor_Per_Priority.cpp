@@ -44,8 +44,8 @@ TAO_Reactor_Per_Priority::reactor (void)
   ACE_CHECK_RETURN (0);
 
   CORBA::Short priority = 0;
-  if (tph->get_thread_priority (priority,
-                                ACE_TRY_ENV)
+  if (tph->get_thread_CORBA_priority (priority,
+                                      ACE_TRY_ENV)
       == -1)
     {
       if (TAO_debug_level > 3)
@@ -117,8 +117,8 @@ TAO_Reactor_Per_Priority::leader_follower (void)
   ACE_CHECK_RETURN (*leader_follower);
 
   CORBA::Short priority = 0;
-  if (tph->get_thread_priority (priority,
-                                ACE_TRY_ENV)
+  if (tph->get_thread_CORBA_priority (priority,
+                                      ACE_TRY_ENV)
       == -1)
     return *leader_follower;
 

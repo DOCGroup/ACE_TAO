@@ -36,8 +36,8 @@ TAO_RT_Current::the_priority (CORBA::Environment &ACE_TRY_ENV)
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  int result = tph->get_thread_priority (priority,
-                                         ACE_TRY_ENV);
+  int result = tph->get_thread_CORBA_priority (priority,
+                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   if (result == -1)
@@ -55,11 +55,10 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority,
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_TRY_ENV);
   ACE_CHECK;
 
-  int result = tph->set_thread_priority (the_priority,
-                                         ACE_TRY_ENV);
+  int result = tph->set_thread_CORBA_priority (the_priority,
+                                               ACE_TRY_ENV);
   ACE_CHECK;
 
   if (result == -1)
     ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 }
-

@@ -28,7 +28,7 @@ TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks (void)
 {
 }
 
-void 
+void
 TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
@@ -127,8 +127,8 @@ TAO_RT_Protocols_Hooks::rt_service_context (TAO_Stub *stub,
           ACE_CHECK;
 
           CORBA::Short client_priority;
-          int status = this->get_thread_priority (client_priority,
-                                                  ACE_TRY_ENV);
+          int status = this->get_thread_CORBA_priority (client_priority,
+                                                        ACE_TRY_ENV);
           if (status == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
@@ -233,14 +233,31 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
 }
 
 int
-TAO_RT_Protocols_Hooks::get_thread_priority (CORBA::Short &priority,
-                                             CORBA::Environment &)
+TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority,
+                                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::Short native_priority = 0;
+  int result =
+    this->get_thread_CORBA_and_native_priority (priority,
+                                                native_priority,
+                                                ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (result == -1)
+    return result;
+
+  return 0;
+}
+
+int
+TAO_RT_Protocols_Hooks::get_thread_native_priority (CORBA::Short &native_priority,
+                                                    CORBA::Environment &)
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
-  int native_priority;
-  if (ACE_Thread::getprio (current, native_priority) == -1)
+  int priority;
+  if (ACE_Thread::getprio (current, priority) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
@@ -249,6 +266,22 @@ TAO_RT_Protocols_Hooks::get_thread_priority (CORBA::Short &priority,
 
       return -1;
     }
+
+  native_priority =
+    CORBA::Short (priority);
+  return 0;
+}
+
+int
+TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (CORBA::Short &priority,
+                                                              CORBA::Short &native_priority,
+                                                              CORBA::Environment &ACE_TRY_ENV)
+{
+  int result =
+    this->get_thread_native_priority (native_priority,
+                                      ACE_TRY_ENV);
+  if (result == -1)
+    return result;
 
   TAO_Priority_Mapping *priority_mapping =
     this->mapping_manager_.in ()->mapping ();
@@ -266,8 +299,8 @@ TAO_RT_Protocols_Hooks::get_thread_priority (CORBA::Short &priority,
 }
 
 int
-TAO_RT_Protocols_Hooks::set_thread_priority (CORBA::Short priority,
-                                             CORBA::Environment &)
+TAO_RT_Protocols_Hooks::set_thread_CORBA_priority (CORBA::Short priority,
+                                                   CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Priority_Mapping *priority_mapping =
     this->mapping_manager_.in ()->mapping ();
@@ -276,6 +309,14 @@ TAO_RT_Protocols_Hooks::set_thread_priority (CORBA::Short priority,
   if (priority_mapping->to_native (priority, native_priority) == 0)
     return -1;
 
+  return this->set_thread_native_priority (native_priority,
+                                           ACE_TRY_ENV);
+}
+
+int
+TAO_RT_Protocols_Hooks::set_thread_native_priority (CORBA::Short native_priority,
+                                                    CORBA::Environment &)
+{
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
@@ -368,5 +409,3 @@ template class ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>;
 #pragma instantiate ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
