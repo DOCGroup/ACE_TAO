@@ -81,9 +81,9 @@ private:
   int create_new_instance (int perms = 0);
 
 #if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-  ACE_OVERLAPPED        overlapped_;
-  ACE_Manual_Event      event_;
-  char                  already_connected_;
+  ACE_OVERLAPPED overlapped_;
+  ACE_Manual_Event event_;
+  int already_connected_;
 #endif /* ACE_WIN32 */
 
 };

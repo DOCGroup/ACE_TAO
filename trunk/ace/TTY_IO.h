@@ -65,6 +65,8 @@ public:
     int rcvenb;
 
     //Win32
+    int dsrenb;  // SadreevAA
+
     int xonlim;  // min bytes in input buffer before xon
     int xofflim; // max bytes in input buffer before xoff
   };

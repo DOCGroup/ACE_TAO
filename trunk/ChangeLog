@@ -1,3 +1,18 @@
+Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/SPIPE_Acceptor.{h,cpp}: Fixed the use of "char" for "already_connected_"
+	  to be "int".  Thanks to Johnny Willemsen for reporting this.
+
+	* ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
+	  Thanks to Chris Kohloff for contributing this and to
+	  Jan Kalin <jan.kalin@zag.si> for motivating this.
+
+	* ace/TTY_IO.cpp: Fixed numerous bugs in the control() method.  Thanks to
+	  Airat A. Sadreev <airatsa@nm.ru> for reporting this.
+	
+	* ace/TTY_IO.h: Add a new field for Win32.  Thanks to
+	  Airat A. Sadreev <airatsa@nm.ru> for reporting this.
+
 Thu Sep 27 06:12:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/config-win32.h: Added a special-case for Borland C++ Builder,
