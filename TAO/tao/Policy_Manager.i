@@ -266,6 +266,8 @@ ACE_INLINE CORBA::PolicyList *
 TAO_Policy_Current::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
@@ -276,6 +278,8 @@ ACE_INLINE void
 TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add,
                                           CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CORBA_InvalidPolicies))
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
