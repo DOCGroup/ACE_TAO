@@ -11,6 +11,9 @@ void traverse_package (Deployment::PackageConfiguration* &pc,
                        Deployment::DeploymentPlan &plan,
                        REF_MAP &ref_map, REF_MAP &primary_ref_map)
 {
+  // traverse the package configuration structure to get to the
+  // BasePackage which consists of assemblies.
+  //
   for (CORBA::ULong x = 0; x < pc->basePackage.length (); ++x)
     {
       for (CORBA::ULong y = 0; 
@@ -22,6 +25,9 @@ void traverse_package (Deployment::PackageConfiguration* &pc,
             {
               Deployment::ComponentAssemblyDescription assembly =
                 cid.assemblyImpl[z];
+              //
+              // traverse the individual assembly.
+              //
               traverse_assembly (assembly, plan, ref_map, primary_ref_map);
             }
         }
@@ -32,6 +38,9 @@ void traverse_assembly (Deployment::ComponentAssemblyDescription &assembly,
                         Deployment::DeploymentPlan &plan,
                         REF_MAP &ref_map, REF_MAP &primary_ref_map)
 {
+  // traverse the assembly (ComponentAssemblyDescription) and 
+  // processes the instances and the connection within the assembly.
+  //
   for (CORBA::ULong k = 0; k < assembly.instance.length (); ++k)
     {
       Deployment::SubcomponentInstantiationDescription ins =
@@ -63,6 +72,11 @@ void traverse_assembly_connection (Deployment::ComponentAssemblyDescription
                                    &assembly_connection,
                                    Deployment::DeploymentPlan &plan)
 {
+  // traverse the assembly connection and get information about the
+  // portName and the instances at each end of the connection.
+  // Also traverse the InterfaceDescriptions for each of those instances
+  // and populate the portKind information.
+  //
   CORBA::ULong con_length (plan.connection.length ());
   plan.connection.length (con_length + 1);
   for (CORBA::ULong n = 0;
@@ -101,6 +115,9 @@ void traverse_interface (Deployment::SubcomponentInstantiationDescription
                          Deployment::PlanSubcomponentPortEndpoint
                          &pspe)
 {
+  // traverse the InterfaceDescription of the instance and get information
+  // about the portkind of the port.
+  //
   for (CORBA::ULong m = 0; m < instance.package.length (); ++m)
     {
       Deployment::ComponentPackageDescription
@@ -127,6 +144,11 @@ void traverse_assembly_instance (Deployment::
 			         Deployment::DeploymentPlan &plan, int l,
                                  REF_MAP &ref_map, REF_MAP &primary_ref_map)
 {
+  // Each instance has a package.
+  //   Each package has an implementation and their correspoding artifacts.
+  // Traverse this information and populate the artifact and the
+  // implementation information within the DeploymentPlan.
+  //
   ART_REF_MAP art_ref_map;
 
   for (CORBA::ULong m = 0; m < instance.package.length (); ++m)
