@@ -175,7 +175,7 @@ static CEC_Factory "-CECDispatching reactive ....."
               <CODE>ProxyPullConsumers</CODE>.
               The argument is a colon separated list of flags, with
               the following semantics:
-              <TABLE>
+              <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
               <TR><TH>Flag</TH><TH>Description</TH>
               </TR>
               <TR>
@@ -183,22 +183,30 @@ static CEC_Factory "-CECDispatching reactive ....."
                 <TD>Use regular mutexes and/or condition
                   variables for serialization.
                 </TD>
+                </tr>
+              <TR>
                 <TD>ST</TD>
                 <TD>Use null mutexes and/or condition
                   variables for serialization.
                 </TD>
+                </tr>
+              <TR>
                 <TD>LIST</TD>
                 <TD>Implement the collection using an ordered list,
                   fast for iteration (i.e. during event dispatching),
                   but slow for insertion and removal (i.e. when
                   clients connect and disconnect from the EC).
                 </TD>
+                </tr>
+              <TR>
                 <TD>RB_TREE</TD>
                 <TD>Implement the collection using a Red-Black tree,
                   slow for iteration (i.e. during event dispatching),
                   but fast for insertion and removal (i.e. when
                   clients connect and disconnect from the EC).
                 </TD>
+                </tr>
+              <TR>
                 <TD>IMMEDIATE</TD>
                 <TD>Threads block until they can execute a change on
                   the data structure, the system must use other
@@ -206,6 +214,8 @@ static CEC_Factory "-CECDispatching reactive ....."
                   invalidated during event dispatching.  For example,
                   use a separate dispatching thread.
                 </TD>
+                </tr>
+              <TR>
                 <TD>COPY_ON_READ</TD>
                 <TD>Before initiating an iteration to dispatch events
                   (or similar tasks) a copy of the complete collection
@@ -214,10 +224,14 @@ static CEC_Factory "-CECDispatching reactive ....."
                   but introduces a significant source of overhead and
                   priority inversions on the critical path.
                 </TD>
-                <TD>COPY_ON_WRITE <STRONG>UNIMPLEMENTED</STRONG></TD>
+                </tr>
+              <TR>
+                <TD>COPY_ON_WRITE</TD>
                 <TD>Similar to the previous one, but the copy is only
                   performed when needed.
                 </TD>
+                </tr>
+              <TR>
                 <TD>DELAYED</TD>
                 <TD>Threads that need to change the collection can
                   detect if that change will invalidate iterators used
@@ -275,7 +289,7 @@ static CEC_Factory "-CECDispatching reactive ....."
       ConsumerAdmin, SupplierAdmin, ProxyPushConsumer,
       ProxyPushSupplier, ProxyPullConsumer and the ProxyPullSupplier
       objects;
-      this POAs must have the <CODE>IMPLICIT_ACTIVATION</CODE> and the
+      these POAs must have the <CODE>IMPLICIT_ACTIVATION</CODE> and the
       <CODE>SYSTEM_ID</CODE> policies (as the RootPOA does).
     </P>
 
@@ -335,6 +349,19 @@ static CEC_Factory "-CECDispatching reactive ....."
             updates on the collection.
           </TD>
         </TR>
+
+        <TR><TD><CODE>supplier_poa</CODE></TD>
+          <TD>The POA used by the event channel to activate SupplierAdmin
+            and SupplierProxy objects.
+          </TD>
+        </TR>
+
+        <TR><TD><CODE>consumer_poa</CODE></TD>
+          <TD>The POA used by the event channel to activate ConsumerAdmin
+            and ConsumerProxy objects.
+          </TD>
+        </TR>
+
       </TABLE>
     </P>
 
@@ -347,7 +374,7 @@ static CEC_Factory "-CECDispatching reactive ....."
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Mar 23 19:10:16 PST 2000
+Last modified: Fri Apr 20 15:24:09 CDT 2001
 <!-- hhmts end -->
   </body>
 </html>

@@ -1,3 +1,19 @@
+Fri Apr 20 15:51:52 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * docs/ec_options.html:
+        * docs/cec_options.html:
+
+          Update the documentation to better reflect reality.  Includes
+          the following changes:
+
+           - Reformat collection option table for readability
+           - Remove the UNIMPLEMENTED tag from COPY_ON_WRITE
+           - Add the missing attributes
+           - Add discussion of TAO_EC_Sched_Factory
+           - Mark TAO_EC_Sched_Factory option values as such
+           - Add missing option (-ECProxyPushSupplierCollection)
+           - Fix some typos
+
 Fri Apr 20 16:00:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp: 
@@ -37,7 +53,7 @@ Thu Apr 19 14:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
         * examples/PluggableUDP/tests/Basic/client.dsp:
 
           Changed the name as it appears in the workspace slightly.
-  
+
 Thu Apr 19 07:09:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed a typo that was
@@ -128,7 +144,6 @@ Wed Apr 18 12:10:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           Natarajan  <bala@cs.wustl.edu>". Going over the fix from
           scratch as the fix is wrong.
 
->>>>>>> 1.3301
 Wed Apr 18 10:56:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/BiDirectional_NestedUpcall/run_test.pl: Fixed the
