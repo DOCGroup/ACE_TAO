@@ -1,3 +1,11 @@
+Thu Sep 25 11:54:42 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+
+	Renamed the <init> method to <_init>. This avoids warnings on
+	solaris regarding hiding the ACE_Shared_Object::init signature.
+	
 Thu Sep 25 10:08:12 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
