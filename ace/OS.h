@@ -176,6 +176,10 @@
 #   define ACE_DEFAULT_MULTICAST_ADDR "224.9.9.2"
 # endif /* ACE_DEFAULT_MULTICAST_ADDR */
 
+# if !defined (ACE_DEFAULT_WRITEV_MAX)
+#    define ACE_DEFAULT_WRITEV_MAX 16
+# endif /* ACE_DEFAULT_WRITEV_MAX */
+
 // Default port number for HTTP.
 # if !defined (ACE_DEFAULT_HTTP_SERVER_PORT)
 #   define ACE_DEFAULT_HTTP_SERVER_PORT 80
