@@ -273,8 +273,10 @@ ACE_Blob_Writer::send_request (void)
   ACE_NEW_RETURN (mesg, char [mesglen], -1);
 
   // Create the header, store the actual length in mesglen
-  mesglen = ACE_OS::sprintf (mesg, "%s /%s %s %d\n\n",
-                             request_prefix_, filename_, request_suffix_, length_);
+  mesglen = ACE_OS::sprintf (mesg, "%s /%s %s "
+                             ACE_SIZE_T_FORMAT_SPECIFIER"\n\n",
+                             request_prefix_, filename_, request_suffix_,
+                             length_);
 
   // Send the header followed by the data
 

@@ -1,3 +1,10 @@
+Tue Jun 12 20:35:26 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* clients/Blobby/Blob_Handler.cpp:
+
+	  Fixed a size_t printf to make gcc happy on IA-64 Linux.
+
+
 Sun Feb 18 09:33:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* server/IO.cpp (handle): Added a const to the handle() method
@@ -108,7 +115,7 @@ Wed Mar 22 12:36:00 2000  James Hu  <jxh@cs.wustl.edu>
 Tue Sep 21 11:47:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* server/HTTP_Server.cpp (init):
-	
+
 	  Changed cast style to make gcc 2.95.1 happy.  Thanks to Jeffrey
 	  Franks <Jeffrey_Franks@i-o.com> for reporting the problems.
 
