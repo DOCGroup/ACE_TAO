@@ -56,10 +56,10 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   int init (size_t max_samples);
 
   /// Useful helper to calculate diff in sec.
-  static double diff_sec (ACE_hrtime_t& before, ACE_hrtime_t& after);
+  static double diff_sec (ACE_UINT64 before, ACE_UINT64 after);
 
   /// Useful helper to calculate diff in usec.
-  static ACE_UINT32 diff_usec (ACE_hrtime_t& before, ACE_hrtime_t& after);
+  static ACE_UINT32 diff_usec (ACE_UINT64 before, ACE_hrtime_t after);
 
   /// Set the base time value.
   void base_time (ACE_hrtime_t time);
@@ -68,7 +68,7 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   void end_time (ACE_hrtime_t time);
 
   /// Record a sample
-  int sample (ACE_UINT64& inv_start_time, ACE_UINT64& inv_end_time);
+  int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
 
   void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples);
 

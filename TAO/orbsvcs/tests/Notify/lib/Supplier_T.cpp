@@ -45,8 +45,8 @@ TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Supplier_T
   ACE_ENV_ARG_PARAMETER);
 }
 
-template <class Supplier_Traits> TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (TAO_NS_Supplier_T<Supplier_Traits>::Admin_Ext_Traits_PTR admin_ptr
+template <class Supplier_Traits> ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
+TAO_NS_Supplier_T<Supplier_Traits>::obtain_proxy (ACE_TYPENAME TAO_NS_Supplier_T<Supplier_Traits>::Admin_Ext_Traits_PTR admin_ptr
                                              , CosNotification::QoSProperties& qos
                                              ACE_ENV_ARG_DECL)
 {

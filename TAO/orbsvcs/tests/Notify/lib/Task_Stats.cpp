@@ -44,13 +44,13 @@ Task_Stats::init (size_t max_samples)
 }
 
 void
-Task_Stats::base_time (ACE_hrtime_t time)
+Task_Stats::base_time (ACE_UINT64 time)
 {
   base_time_ = time;
 }
 
 void
-Task_Stats::end_time (ACE_hrtime_t time)
+Task_Stats::end_time (ACE_UINT64 time)
 {
   end_time_ = time;
 }
@@ -74,7 +74,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
   {
         ACE_OS::sprintf (out_msg,
                    "# No samples recorded\n");
-    ACE_OS::fprintf (output_file, "%s",out_msg);
+        ACE_OS::fprintf (output_file, "%s",out_msg);
         ACE_OS::fclose (output_file);
 
         return;
