@@ -1,3 +1,8 @@
+Sun Jun 13 14:22:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* bin/README.html: Updated the information about the ACE
+	  documentation tools to be more helpful.
+
 Fri Jun 11 20:04:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/Process_Unix.pm:
