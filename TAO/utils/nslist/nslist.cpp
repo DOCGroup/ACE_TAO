@@ -16,7 +16,6 @@
 //
 // ============================================================================
 
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 
 CORBA::ORB_var orb;
