@@ -37,19 +37,7 @@ main (int    argc, char   *argv[])
   int			idle = -1;
   int			debug_level = 1;
 
-#if defined (VXWORKS)
-
-  char          *oa_name = "mv2604d:1000";
-  int           dummy = 1;
-
-  orb_ptr = CORBA_ORB_init (dummy, (char **)0, orb_name, env);
-
-#else
-
   orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
-
-#endif
-
   if (env.exception () != 0) {
     print_exception (env.exception (), "ORB init");
     return 1;
