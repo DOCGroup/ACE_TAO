@@ -178,15 +178,15 @@ int be_visitor_array_ch::visit_array (be_array *node)
   // the _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
   os->indent ();
-  *os << "static " << node->nested_type_name (scope, "_slice") << " *";
+  *os << "TAO_NAMESPACE_STORAGE_CLASS " << node->nested_type_name (scope, "_slice") << " *";
   *os << node->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
-  *os << "static " << node->nested_type_name (scope, "_slice") << " *";
+  *os << "TAO_NAMESPACE_STORAGE_CLASS " << node->nested_type_name (scope, "_slice") << " *";
   *os << node->nested_type_name (scope, "_dup") << " (const ";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
-  *os << "static void " << node->nested_type_name (scope, "_copy") << " (";
+  *os << "TAO_NAMESPACE_STORAGE_CLASS void " << node->nested_type_name (scope, "_copy") << " (";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_to, const ";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_from);" << be_nl;
-  *os << "static void " << node->nested_type_name (scope, "_free") << " (";
+  *os << "TAO_NAMESPACE_STORAGE_CLASS void " << node->nested_type_name (scope, "_free") << " (";
   *os << node->nested_type_name (scope, "_slice") << " *_tao_slice);" << be_nl;
 
   // is this a typedefined array? if so, then let the typedef deal with
