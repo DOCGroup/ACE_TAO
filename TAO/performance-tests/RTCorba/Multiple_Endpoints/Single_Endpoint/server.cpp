@@ -3,6 +3,7 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
+#include "tao/RTCORBA/RTCORBA.h"  // link in the RTCORBA libraries.
 
 const char *ior_output_file = "test.ior";
 
@@ -118,7 +119,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception in Single_Endpoint:server");
+                           "Caught exception in Single_Endpoint:server");
       return 1;
     }
   ACE_ENDTRY;

@@ -1,3 +1,30 @@
+Wed Jun 13 13:00:30 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
+
+          Added RTCORBA includes and service configurator directives to load
+          RTCORBA and RTPortableServer.
+
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+          
+          Removed unnecessary RTCORBA include.
+
+        * tests/RTCORBA/Server_Declared/client.dsp:
+        * tests/RTCORBA/Server_Declared/server.dsp:
+
+          Fixed include paths in release build.  It seems to build now.
+
 Wed Jun 13 10:35:50 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tests/Makefile:

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "testC.h"
-#include "tao/TAOC.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
@@ -228,7 +228,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception: in Single_Endpoint client::main");
+                           "Caught exception: in Single_Endpoint client::main");
       return 1;
     }
   ACE_ENDTRY;
@@ -325,8 +325,8 @@ Client::svc (void)
     {
       char message[100];
       ACE_OS::sprintf (message,
-                       "Single_Endpoint::client: Exception in thread with native priority = %d, on iteration = %d",
-                       this->id_,
+                       "Single_Endpoint::client: Exception in thread with corba priority = %d, on iteration = %d",
+                       priorities[this->id_],
                        i);
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
     }
