@@ -18,6 +18,7 @@
 #include "ImR_Activator_i.h"
 #include "Activator_Options.h"
 
+#include "ace/Reactor.h"
 #include "tao/ORB_Core.h"
 
 /**
