@@ -145,7 +145,7 @@ public:
     CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ())
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        TAO_IOP::TAO_IOR_Manipulation::NotFound
+        TAO_IOP::NotFound
       ));
 
   virtual CORBA::ULong get_profile_count (
@@ -153,7 +153,7 @@ public:
     CORBA::Environment &ACE_TRY_ENV = CORBA::default_environment ())
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList
+        TAO_IOP::EmptyProfileList
       ));
 };
 
