@@ -68,11 +68,8 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                                     max_wait_time);
 
   // Set the result.
-  if (!ch->successful () && result != -1)
+  if (ch->error_detected () && result != -1)
     result = -1;
-
-  // @@todo We need to use a auto_ptr<>-like object here!
-  // TAO_Transport::release(transport);
 
   return result;
 }

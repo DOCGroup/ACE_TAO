@@ -93,6 +93,7 @@ TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !ST
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Single_Read/run_test.pl:
 TAO/tests/Connection_Timeout/run_test.pl: !MINIMUM
+TAO/tests/Connection_Failure/run_test.pl
 TAO/tests/MProfile_Connection_Timeout/run_test.pl: !MINIMUM
 TAO/tests/Codec/run_test.pl
 TAO/tests/IDL_Test/run_test.pl

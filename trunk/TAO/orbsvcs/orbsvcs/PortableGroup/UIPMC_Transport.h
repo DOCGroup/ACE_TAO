@@ -60,9 +60,9 @@ public:
   ~TAO_UIPMC_Transport (void);
 
   /// Look for the documentation in Transport.h.
-  virtual int handle_input_i (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_wait_time = 0,
-                              int block = 0);
+  virtual int handle_input (TAO_Resume_Handle &rh,
+                            ACE_Time_Value *max_wait_time = 0,
+                            int block = 0);
 protected:
   /** @name Overridden Template Methods
    *
@@ -72,22 +72,20 @@ protected:
 
   virtual ACE_Event_Handler * event_handler_i (void);
   virtual TAO_Connection_Handler *connection_handler_i (void);
-  virtual TAO_Connection_Handler * invalidate_event_handler_i (void);
-
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
   /// Write the complete Message_Block chain to the connection.
-  virtual ssize_t send_i (iovec *iov, int iovcnt,
-                          size_t &bytes_transferred,
-                          const ACE_Time_Value *max_wait_time);
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *max_wait_time);
 
 
   /// Read len bytes from into buf.
-  virtual ssize_t recv_i (char *buf,
-                          size_t len,
-                          const ACE_Time_Value *s = 0);
+  virtual ssize_t recv (char *buf,
+                        size_t len,
+                        const ACE_Time_Value *s = 0);
 
-  virtual int register_handler_i (void);
+  virtual int register_handler (void);
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful

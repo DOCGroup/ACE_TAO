@@ -1,3 +1,643 @@
+Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* The following changes are related to improving memory management
+	  of Event Handlers when they interact with Reactors (and Timer
+	  Queues).  When a handler is registered with the Reactor, the
+	  Reactor increments the reference count on the handler.  The
+	  Reactor also increments this reference count when making upcalls
+	  on the handler.  The reference count is decremented when an
+	  upcall completes or when the handler is removed from the
+	  Reactor.
+
+	  This mechanism is similar to what happens between POAs and
+	  Servants and it allows for the safe deletion of handlers.  This
+	  mechanism is particularly need for multi-threaded applications
+	  that can have multiple threads executing upcalls on a handler
+	  that needs to be shutdown in a safe manner.  The following
+	  illustrates an example of how this mechanism works:
+
+	  - When a handler is created, it reference count is one. 
+	  
+	  - After the handler is registered with the Reactor, it reference
+	  count becomes two.
+
+	  - At this point, the handler creator can let go of the handler
+	  reference, bringing down the reference count to one.
+
+	  - For each thread executing upcalls on the handler, the Reactor
+	  increments the reference count by one. So if three threads were
+	  simultaneously making upcalls on a handler, the reference count
+	  would be four.
+
+	  - Assuming an external event (and thread) decides to close the
+	  handler.  It simply removes the handler from the Reactor.  This
+	  decreases the reference count to three.  
+
+	  - As each thread completes their upcall, the reference reduces.
+
+	  - Once the final thread exits the upcall, the reference reaches
+	  zero, and the handler is finally deleted.	
+
+	  This mechanism ensures that the handler is not deleted until the
+	  final upcall thread exits the handler.  
+
+	  Reference counting on handlers is optional and is disabled by
+	  default.  To enable reference counting on a handler, reset its
+	  reference counting policy to "ENABLED".  
+
+	  To facilitate reference counting of handlers, an
+	  ACE_Event_Handler_var class was added.  This class is akin to
+	  the PortableServer::ServantBase_var class.
+
+	  Similar reference counting related changes were made to the
+	  Timer Queues so that handlers can be used in a thread safe
+	  manner with the queues.
+
+	  The Connector implementation was completely revised to utilize
+	  the new memory management mechanisms and remove existing
+	  concurrency bugs.
+
+	  Several new examples/tests were added:  
+
+	  - tests\Reference_Counted_Event_Handler_Test 
+	  - tests\MT_Reference_Counted_Event_Handler_Test 
+	  - tests\MT_Reference_Counted_Notify_Test
+	  - tests\Timer_Queue_Reference_Counting_Test 
+	  - tests\NonBlocking_Conn_Test 
+	  - tests\Reactor_Registration_Test 
+	  - tests\WFMO_Reactor_Test 
+	  - tests\Timer_Cancellation_Test
+
+	  Details follow below:
+
+	Fri May 09 20:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Event_Handler: 
+
+	  Added reference counting capabilities to the event handler.  The
+	  reference counting will be used for event handler memory
+	  management by Reactors that will call add_reference() and
+	  remove_reference() during registrations, removals, and upcalls.
+	  This mechanism is similar to the protocol between servants and
+	  POAs.
+
+	  Reference counting is configurable and can be controlled by the
+	  Reference_Counting_Policy which is disabled by default.
+
+	  Added a ACE_Event_Handler_var auto pointer like class for
+	  Event Handlers.  This class calls
+	  ACE_Event_Handler::remove_reference() in its destructor.
+
+	  Added reactor_timer_interface() method that returns the
+	  Reactor's timer related interface.
+
+	* ace\Reactor_Timer_Interface.h: 
+
+	  Added a new class ACE_Reactor_Timer_Interface that contains
+	  timer related (pure virtual) methods of the Reactor.  This
+	  allows us to make timer related calls on the Reactor from the
+	  Timer Queue without having to include Reactor.h.
+
+	* ace\Reactor: 
+
+	  Vastly improved documentation, specially with respect to how the
+	  reference counting works.
+
+	  Made the Reactor class inherit from ACE_Reactor_Timer_Interface
+	  so that timer related calls can be made on the Reactor from the
+	  Timer Queue without having to include Reactor.h.
+
+	* ace\Reactor: 
+	* ace\Reactor_Impl: 
+	* ace\Select_Reactor_T: 
+	* ace\WFMO_Reactor: 
+
+	  Added a new find_handler() method that returns the event handler
+	  associated with a <handle>.
+
+	* ace\Select_Reactor_Base.cpp: 
+
+	  - bind(): Make sure that the user is not registering a different
+	  handler for an existing handle in the
+	  Reactor_Handler_Repository.  Also, if it is a new entry, call
+	  add_reference() if reference counting is needed.
+
+	  - unbind(): Call remove_reference() if the removal is complete
+	  and reference counting is needed. Also, Bala's change:
+
+	  Mon Apr  7 16:58:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	  is no longer necessary since handle_close() is now only called
+	  once the Reactor state has been completely updated.
+
+	  - mask_ops(): If the handle is not suspended, then set the ops
+	  on the <wait_set_>, otherwise set the <suspend_set_>.
+
+	  - handler_i(): Add to reference count of event handler before
+	  returning to the user if reference counting is needed.
+
+	  - ACE_Select_Reactor_Notify::dispatch_notify():
+	  - ACE_Select_Reactor_Notify::purge_pending_notifications():
+	  - ACE_Select_Reactor_Notify::notify():
+
+	  Added reference counting for notifies.
+
+	* ace\Select_Reactor_T: 
+
+	  notify_handle(): Added reference counting to upcalls.
+
+	* ace\TP_Reactor: 
+
+	  - remove_handler(): All remove_handler() specializations can be
+	  removed since there no longer is the requirement of calling
+	  handle_close() from outside the Reactor lock.
+
+	  - handle_timer_events(): Call preinvoke() and postinvoke() on
+	  the timer queue so that timer upcalls can be reference counted.
+
+	  - handle_socket_events(): Added reference counting to upcalls.
+
+	  - mask_ops(): Specialization no longer necessary since the base
+	  class now does the right thing.
+
+	* ace\WFMO_Reactor: 
+
+	  - handler(): Original handler() method was not locked.
+
+ 	  - bind_i(): Call add_reference() if reference counting is
+	  needed.
+
+	  - make_changes_in_current_infos():
+	  - make_changes_in_suspension_infos(): 
+	  - make_changes_in_to_be_added_infos():
+	
+	  The iteration loop was incorrect.  When an entry was replaced
+	  from the one at the end, the newly shifted entry was skipped and
+	  not evaluated.  make_changes_in_to_be_added_infos() did not need
+	  this change since entries are not moved around in the
+	  <to_be_added_info_> set.
+
+	  Also, call remove_reference() if reference counting if needed.
+
+          - complex_dispatch_handler(): Added reference counting to
+	  upcalls.
+
+	  - ACE_WFMO_Reactor_Notify::purge_pending_notifications():
+	  - ACE_WFMO_Reactor_Notify::notify():
+	  - ACE_WFMO_Reactor_Notify::handle_signal():
+
+	  Added reference counting for notifies.
+
+	* ace\Timer_Queue_T: 
+
+          - Not sure why we were including Test_and_Set.h when we only
+	  needed to include Event_Handler.h.
+
+	  - dispatch_info() and dispatch_info_i(): Made these virtual so
+	  that they can be specialized.	
+	
+	  - ACE_Timer_Node_Dispatch_Info_T: Added <recurring_timer_> so
+	  that we can determine if we need to call remove_reference() if
+	  it is not a recurring timer and if reference counting is
+	  required.  This value is passed to the timeout() method of the
+	  upcall functor.
+
+	  - timeout(): When handle_timeout() returns -1, invoke
+	  cancel_timer() on the reactor if the event handler has a valid
+	  reactor, otherwise invoke cancel() on the timer queue.  It is
+	  necessary to get the same locking as was used when registering
+	  the timer, which was potentially done holding the reactor lock
+	  while the timer queue could have been configured with a null
+	  lock.
+
+	  - schedule():  No longer a pure virtual method.  It now grabs
+	  the lock, call schedule_i(), and finally calls registration() on
+	  the upcall functor.
+
+	  - registration(): This method is called when a timer is
+	  registered.
+
+	  - preinvoke(): Invokes add_reference() on the event handler if
+	  reference counting is required before making the upcall.
+
+	  - upcall(): Changed the signature to pass
+	  ACE_Timer_Node_Dispatch_Info_T instead of the individual
+	  parameters.
+
+	  - postinvoke(): Invokes remove_reference() on the event handler
+	  if reference counting is required after making the upcall.
+
+ 	  - cancel_type() and cancel_timer(): Split cancellation() into
+	  two methods.  cancel_timer() is called when a timer is
+	  cancelled.  cancel_type() is called when a handler is
+	  cancelled. Also added <dont_call> parameter to these method.
+	  cancel_timer() will be used for reference counting and
+	  cancel_type() will be used for calling handle_close().
+
+	  - expire(): Call preinvoke() before calling upcall() and
+	  postinvoke() after calling upcall().
+
+	  - deletion(): Now calls cancel_type() and cancel_timer() for
+	  each timer remaining in the queue.
+	
+	* ace\Timer_List_T: 
+	* ace\Timer_Wheel_T: 
+	* ace\Timer_Heap_T: 
+	* ace\Timer_Hash_T: 
+
+	  - schedule_i(): This method replaces the old schedule() method.
+	  Locking is not necessary anymore.
+
+	  - cancel(): This method will call cancel_timer() once for each
+	  timer cancelled and cancel_type() once for each handler
+	  cancelled.
+
+	  - cancel_i(): The <skip_close> check will be performed in the
+	  upcall functor.
+
+	* ace\Timer_Heap_T: 
+
+	  - ~ACE_Timer_Heap_T(): Don't use <cur_size_> for the for loop
+	  since it reduces after free_node() is called.
+
+	  - cancel(): Not sure why this is the only cancel() where the
+	  upcall is made outside the lock.
+
+	* ace\Timer_Wheel_T: 
+
+	  - expire(): Made this method similar to Timer_Queue_T::expire()
+	  by (a) invoking preinvoke() before calling upcall() and invoking
+	  postinvoke() after calling upcall() and (b) making sure that we
+	  skip past time values that have already "expired" when
+	  rescheduling.
+
+	* ace\Timer_Hash_T: 
+
+ 	  - ACE_Timer_Hash_Upcall: Updated this upcall functor to match
+	  the new APIs. 
+
+	  - ACE_Timer_Hash_Upcall::registration(): 
+	  - ACE_Timer_Hash_Upcall::cancel_type():
+	  - ACE_Timer_Hash_Upcall::cancel_timer():
+
+	  Nothing to be done in these methods since
+	  registration/cancellation will be handled by the upcall functor
+	  of the timer hash.
+
+	  - ACE_Timer_Hash_Upcall::preinvoke():
+	  - ACE_Timer_Hash_Upcall::postinvoke():
+	  - ACE_Timer_Hash_Upcall::preinvoke():
+
+	  Assert that these methods never get invoked since we don't
+	  invoke expire() on the buckets.
+
+	  - ACE_Timer_Hash_Upcall::deletion(): Call up to the upcall
+	  functor of the timer hash since the timer hash does not invoke
+	  deletion() on its upcall functor directly.  This is because
+	  entries are actually registered with the buckets, and this
+	  method will be invoked when the buckets are cleaned up.
+
+	  - Hash_Token: Added TYPE information to the token.  This
+	  required templatizing Hash_Token since TYPE is a template
+	  parameter.	
+
+	  - reschedule(): Cancel the old timer before registering the new
+	  one.  Otherwise, the old timer will always remain in the
+	  buckets.  Also, make sure that the new bucket position is noted.
+
+	  - dispatch_info_i(): This method needs to be specialized to give
+	  the original act and not the modified act.
+
+	  - free_node(): Needs to cancel the timer in addition to freeing
+	  the node.
+
+	  - expire(): Only call cancel() for timers that don't need to be
+	  rescheduled.  reschedule() takes care of removing the old timer
+	  for timers that need to be rescheduled.  Also, made this method
+	  similar to Timer_Queue_T::expire() by invoking preinvoke()
+	  before calling upcall() and invoking postinvoke() after calling
+	  upcall().
+
+	* ace\Proactor: 
+
+	  Updated ACE_Proactor_Handle_Timeout_Upcall upcall functor to
+	  match the new APIs.
+
+	* ace\Connector: 
+
+	  Completely reworked the Connector to utilize the reference
+	  counting provided by the Reactor.  This new design fixes bugs
+	  1405 and 1408.
+
+	  - There used to be a hash map that mapped handles to service
+	  handlers.  There is no need for this map since the Reactor
+	  already keeps this mapping.  We now keep a simple handle set to
+	  remember the non-blocking connects in progress.  This will help
+	  when the Connector is closing down and we need to cancel the
+	  non-blocking connections in progress.
+
+	  - The Connector no longer needs to inherit from
+	  ACE_Service_Object since it does not register with the Reactor.
+	  We now use ACE_NonBlocking_Connect_Handler for handling
+	  non-blocking connects. The resume(), suspend(), and init()
+	  no-ops, and fini() and info() were removed.
+
+	  - The <mutex_> is no longer needed since we use the Reactor lock
+	  to do all our synchronization.  This will solve bug 1408.
+
+	  - We no longer need the <closing_> flag.
+
+	  - Need to add a <reactor_> field since the Connector is no
+	  longer an event handler.
+
+	  - Reference counting of ASTs is no longer needed since event
+	  handlers are reference counted.
+
+	* tests\Reference_Counted_Event_Handler_Test: 
+
+	  This test is used to check reference counting of the Event
+	  Handler when it interacts with the Reactor.
+
+	* tests\MT_Reference_Counted_Event_Handler_Test: 
+
+          This test tries to represents what happens in the TAO ORB wrt to
+	  event handlers, reactors, timer queues, threads, and connection
+	  caches, minus the other complexities.  The following three
+	  Reactors are tested: Select, TP, and WFMO.
+
+          The test checks proper use and shutting down of client-side
+	  event handlers when it is used by invocation threads and/or
+	  event loop threads.  Server-side event handlers are either
+	  threaded or reactive. A purger thread is introduced to check the
+	  connection recycling and cache purging.  Nested upcalls are also
+	  tested.
+
+	* tests\MT_Reference_Counted_Notify_Test:
+
+	  This test is used to check reference counting of the event
+	  handlers when it interacts with the reactor notification
+	  mechanism.
+
+	* tests\Timer_Queue_Reference_Counting_Test: 
+
+	  New test is used to check reference counting of the Event
+	  Handler when it interacts with Timer Queues.
+
+	* tests\NonBlocking_Conn_Test: 
+
+	  This test checks for the proper working of the following:
+          - blocking connections
+          - blocking connections with timeouts
+          - non-blocking connections
+          - non-blocking connections without waiting for completions
+          - non-blocking connections with timeouts
+
+	* tests\Reactor_Registration_Test: 
+	
+          This is a test of registering handlers with the Reactor.
+	
+	* tests\WFMO_Reactor_Test: 
+	  
+	  New test of the WFMO_Reactor.  It makes sure that removals and
+	  suspensions work correctly.
+
+	* tests\Timer_Cancellation_Test:
+
+	  A test to ensure the timer cancellation works correctly.
+
+	* tests\Makefile: 
+	* tests\Makefile.am: 
+	* tests\Makefile.bor: 
+	* tests\run_test.lst:
+	* tests\tests.icp:	
+	* tests\tests.mpc:	
+	* tests\tests.dsw:	
+	
+	  Added new tests:
+
+	  - MT_Reference_Counted_Event_Handler_Test
+	  - MT_Reference_Counted_Notify_Test
+	  - NonBlocking_Conn_Test
+	  - Reactor_Registration_Test	
+	  - Reference_Counted_Event_Handler_Test
+	  - Timer_Cancellation_Test
+	  - Timer_Queue_Reference_Counting_Test
+	  - WFMO_Reactor_Test
+
+	* tests\Conn_Test.cpp: 
+
+	  Updated template instantiations.
+
+	* tests\icc.bat:
+	* tests\run_tests.bat:
+	* tests\run_tests.psosim:	
+
+	  Removed this file since it has become obsolete.
+
+	Wed May 14 17:56:13 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/OS.i: 
+
+	  - event_timedwait(): For relative times, the <timeout> parameter
+	  was being modified.  Instead use a stack variable such that the
+	  <timeout> parameter is not modified.
+
+	* ace/Timer_Hash_T: 
+
+	  - expire(): Remove nodes from the buckets instead of simply
+	  getting them and canceling them later.  Also, if timers were
+	  expired, find the new earliest time.
+
+	  - reschedule(): No need to cancel the timer node since it is now
+	  removed from the bucket in expire().
+
+	  - free_node(): No need for this function since nodes are removed
+	  from the bucket in expire().
+
+	  - cancel(): No need to pass <act> to bucket's cancel() since the
+	  act comes from the Hash Token.  Also, only perform upcall and
+	  related cleanup on successful bucket cancel.
+
+	  - Added asserts in the code since there is not enough error
+	  checking (and recovery) going on.
+
+        * ace/Reactor:
+        * ace/Reactor_Impl:
+        * ace/Select_Reactor_T:
+        * ace/WFMO_Reactor:
+
+	  Renamed handler() to find_handler() since ACE_HANDLE is an "int"
+	  on UNIX platforms and that causes ambiguity between
+	  handler(ACE_HANDLE) and handler(int).
+
+	* ace/Select_Reactor_Base.cpp (unbind): 
+
+	  unbind() and bind(): Minor fixes for UNIX specific code.
+
+	* ace/SOCK_SEQPACK_Association.cpp: 
+
+	  Added template instantiation for ACE_Auto_Array_Ptr<sockaddr_in>.
+
+	* ace/Connector.cpp: 
+
+	  cancel() and close(): Changed calls from Reactor::handler() to
+	  Reactor::find_handler().
+
+	* tests/MT_Reference_Counted_Notify_Test.cpp: 
+	* tests/NonBlocking_Conn_Test.cpp:
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/Timer_Queue_Reference_Counting_Test.cpp:
+	
+	  Added template instantiations.
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+
+	  - main(): Added code to ignore SIGPIPE.
+
+	  - test(): Converted this into template class so that multiple
+	  instances of reactor implementation can be created.
+
+	  - Added additional asserts.
+
+	Thu May 15 18:12:10 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/WFMO_Reactor (find_handler): 
+
+	  Fixed minor oversights.
+
+	* ace/Timer_Hash_T.cpp: 
+	* ace/Connector.cpp: 
+
+	  Fixed unused arg warnings.
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+
+	  - Added a Pipe class. It is a replica of the ACE_Pipe class.
+	  Only difference is that this class always uses two sockets to
+	  create the pipe, even on platforms that support pipes.
+
+	  - Removed some test cases that don't work on Linux.
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/MT_Reference_Counted_Notify_Test.cpp:
+	* tests/Reference_Counted_Event_Handler_Test.cpp:
+	* tests/Reactor_Registration_Test.cpp:
+	* tests/Timer_Cancellation_Test.cpp:
+	* tests/Timer_Queue_Reference_Counting_Test.cpp:
+	
+	  - Fixed member ordering in constructors.
+	  - Fixed unused arg warnings.
+
+	Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ACEXML/common/Mem_Map_Stream.cpp:
+	* apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
+	* apps/Gateway/Peer/Peer.cpp:
+	* apps/JAWS/clients/Blobby/Blob.cpp:
+	* apps/JAWS/clients/Caching/http_handler.cpp:
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+	* examples/Connection/blocking/SPIPE-connector.cpp:
+	* examples/Connection/misc/test_upipe.cpp:
+	* examples/Connection/non_blocking/test_lsock_connector.cpp:
+	* examples/Connection/non_blocking/test_sock_connector.cpp:
+	* examples/Connection/non_blocking/test_spipe_connector.cpp:
+	* examples/Connection/non_blocking/test_tli_connector.cpp:
+	* examples/Web_Crawler/URL_Visitor.cpp:
+	* netsvcs/lib/TS_Clerk_Handler.cpp:
+	* tests/Cached_Accept_Conn_Test.cpp:
+	* tests/Cached_Conn_Test.cpp:
+	* tests/Dev_Poll_Reactor_Test.cpp:
+	* tests/Priority_Reactor_Test.cpp:
+	* tests/Reactor_Performance_Test.cpp:
+	* tests/TP_Reactor_Test.cpp:
+	* tests/CLASSIX/CLASSIX_Con_Acc_Test.cpp:
+
+	  Fixed Connector related template instantiations.
+
+	Fri May 16 16:34:35 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+	* tests/Timer_Queue_Reference_Counting_Test.cpp (cancellation_test): 
+
+	  Fixed static array initialization warnings.	
+
+	Tue May 20 18:33:07 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace/Connector: 
+
+	  Reverted the Connector to inherit from ACE_Service_Object again.
+	  Even though the Connector no longer registers with the Reactor,
+	  it still needs to inherit from ACE_Service_Object so that it can
+	  be used through the Service Configurator primarily for dynamic
+	  linking.  The resume(), suspend(), and init() no-ops, and fini()
+	  and info() were restated.
+
+	Mon Jun 30 16:31:33 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\SSL\ACE_SSL_LIB.dsp: 
+
+	  Fixed the project names - they should be:
+
+	  # Name "ACE_SSL_LIB - Win32 Static Release"
+	  # Name "ACE_SSL_LIB - Win32 Static Debug"
+
+  	  instead of:
+	
+	  # Name "ACE_SSL_LIB - Win32 Release"
+	  # Name "ACE_SSL_LIB - Win32 Debug"
+
+	Wed Jul 02 15:31:33 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* examples\Connection\non_blocking\CPP-connector.cpp:
+
+	  handle_close() on the Connector was being specialized to know
+	  when the connection was not successful.  This is not the correct
+	  approach in the first place since one should look for close() on
+	  the service handler.  In addition, handle_close() is no longer
+	  used by ACE_Connector.  Therefore, I changed this to use close()
+	  on the service handler.
+
+	* apps\JAWS\clients\Caching\http_handler.h: 
+
+	  Included "ace/Svc_Handler.h" explicitly.
+
+	* examples\Logger\Acceptor-server\server_loggerd.cpp: 
+
+	  Included "ace/Test_and_Set.h" explicitly since
+	  ace\Timer_Queue_T.h is no longer including it.
+
+	Thu Jun 26 17:36:13 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* bin\msvc_auto_compile.pl: 
+
+	  Added -tests_TAO and -examples_TAO options to make all projects
+	  in TAO tests and TAO examples.
+
+	Thu May 22 14:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Merged Reactor_RefCount branch with the main truck since all ACE
+	  level changes are now complete.  New branch is
+	  Reactor_RefCount_1.
+
+	Tue May 27 19:59:25 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Merged Reactor_RefCount_1 branch with the main truck to avail
+	  new changes by Bala to the TAO connection handlers.  New branch
+	  is Reactor_RefCount_2.
+
+Mon Jul  7 11:14:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp (visit_enum):
+
+	  Fixed a cut and paste error that was causing the code generation
+	  for the any operators in the stub source file to be skipped. Thanks
+	  to <dyafe@itgil.com> for reporting the bug.
+
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+
+	  Fixed cut and paste error in the explicit template instantiation.
+
 Mon Jul  7 12:31:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:

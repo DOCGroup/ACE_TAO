@@ -50,15 +50,45 @@ public:
   /// Constructor that specifies a Timer_Hash to call up to
   ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash);
 
-  /// This method is called when the timer expires
+  /// This method is called when a timer is registered.
+  int registration (TIMER_QUEUE &timer_queue,
+                    ACE_Event_Handler *handler,
+                    const void *arg);
+
+  /// This method is called before the timer expires.
+  int preinvoke (TIMER_QUEUE &timer_queue,
+                 ACE_Event_Handler *handler,
+                 const void *arg,
+                 int recurring_timer,
+                 const ACE_Time_Value &cur_time,
+                 const void *&upcall_act);
+
+  /// This method is called when the timer expires.
   int timeout (TIMER_QUEUE &timer_queue,
                ACE_Event_Handler *handler,
                const void *arg,
+               int recurring_timer,
                const ACE_Time_Value &cur_time);
 
-  /// This method is called when the timer is cancelled
-  int cancellation (TIMER_QUEUE &timer_queue,
-                    ACE_Event_Handler *handler);
+  /// This method is called after the timer expires.
+  int postinvoke (TIMER_QUEUE &timer_queue,
+                  ACE_Event_Handler *handler,
+                  const void *arg,
+                  int recurring_timer,
+                  const ACE_Time_Value &cur_time,
+                  const void *upcall_act);
+
+  /// This method is called when a handler is cancelled
+  int cancel_type (TIMER_QUEUE &timer_queue,
+                   ACE_Event_Handler *handler,
+                   int dont_call,
+                   int &requires_reference_counting);
+
+  /// This method is called when a timer is cancelled
+  int cancel_timer (TIMER_QUEUE &timer_queue,
+                    ACE_Event_Handler *handler,
+                    int dont_call,
+                    int requires_reference_counting);
 
   /// This method is called when the timer queue is destroyed and
   /// the timer is still contained in it
@@ -169,22 +199,6 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
 
   /**
-   * Schedule <type> that will expire at <future_time>,
-   * which is specified in absolute time.  If it expires then <act> is
-   * passed in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
-   * automatically, using relative time to the current <gettimeofday>.
-   * This method returns a <timer_id> that is a pointer to a token
-   * which stores information about the event. This <timer_id> can be
-   * used to cancel the timer before it expires.  Returns -1 on
-   * failure.
-   */
-  virtual long schedule (const TYPE &type,
-                         const void *act,
-                         const ACE_Time_Value &future_time,
-                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
-
-  /**
    * Resets the interval of the timer represented by <timer_id> to
    * <interval>, which is specified in relative time to the current
    * <gettimeofday>.  If <interval> is equal to
@@ -242,6 +256,27 @@ public:
   virtual ACE_Timer_Node_T<TYPE> *get_first (void);
 
 private:
+
+  /**
+   * Schedule <type> that will expire at <future_time>,
+   * which is specified in absolute time.  If it expires then <act> is
+   * passed in as the value to the <functor>.  If <interval> is != to
+   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * automatically, using relative time to the current <gettimeofday>.
+   * This method returns a <timer_id> that is a pointer to a token
+   * which stores information about the event. This <timer_id> can be
+   * used to cancel the timer before it expires.  Returns -1 on
+   * failure.
+   */
+  virtual long schedule_i (const TYPE &type,
+                           const void *act,
+                           const ACE_Time_Value &future_time,
+                           const ACE_Time_Value &interval);
+
+  /// Non-locking version of dispatch_info ()
+  virtual int dispatch_info_i (const ACE_Time_Value &current_time,
+                               ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
+
   /// Reschedule an "interval" <ACE_Timer_Node>.
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 

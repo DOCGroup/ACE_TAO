@@ -44,7 +44,6 @@ TAO_Transport::cache_map_entry (void)
   return this->cache_map_entry_;
 }
 
-
 ACE_INLINE void
 TAO_Transport::cache_map_entry (
     TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry)
@@ -90,8 +89,6 @@ TAO_Transport::queue_is_empty (void)
   return this->queue_is_empty_i ();
 }
 
-
-
 ACE_INLINE int
 TAO_Transport::flush_timer_pending (void) const
 {
@@ -103,20 +100,6 @@ TAO_Transport::reset_flush_timer (void)
 {
   this->flush_timer_id_ = -1;
   this->current_deadline_ = ACE_Time_Value::zero;
-}
-
-ACE_INLINE int
-TAO_Transport::check_event_handler_i (const char *caller)
-{
-  // if there's no associated event handler, then we act like a null
-  // transport
-  if (this->event_handler_i () == 0)
-    {
-      this->report_invalid_event_handler (caller);
-      errno = ENOENT;
-      return -1;
-    }
-  return 0;
 }
 
 //********************************************************************
@@ -162,17 +145,17 @@ TAO_Transport::first_request_sent (void)
   this->first_request_ = 0;
 }
 
-
-
 /*****************************************************/
+
 ACE_INLINE
 TAO_Transport_Refcount_Guard::TAO_Transport_Refcount_Guard (TAO_Transport *t)
-  :tr_ (TAO_Transport::_duplicate (t))
+  : tr_ (t)
 {
+  this->tr_->add_reference ();
 }
 
 ACE_INLINE
 TAO_Transport_Refcount_Guard::~TAO_Transport_Refcount_Guard (void)
 {
-  TAO_Transport::release (this->tr_);
+  this->tr_->remove_reference ();
 }

@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Foo_Bar Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="ORB_shutdown Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Foo_Bar Server - Win32 Debug
+CFG=ORB_shutdown Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Foo_Bar Server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="Foo_Bar Server - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="ORB_shutdown Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Foo_Bar Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Foo_Bar Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "ORB_shutdown Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "ORB_shutdown Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Foo_Bar Server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Foo_Bar Server - Win32 Release"
+!IF  "$(CFG)" == "ORB_shutdown Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
 
-!ELSEIF  "$(CFG)" == "Foo_Bar Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ORB_shutdown Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -82,8 +82,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Foo_Bar Server - Win32 Release"
-# Name "Foo_Bar Server - Win32 Debug"
+# Name "ORB_shutdown Server - Win32 Release"
+# Name "ORB_shutdown Server - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
@@ -120,7 +120,7 @@ SOURCE=.\Foo_Bar.h
 
 SOURCE=.\Test.idl
 
-!IF  "$(CFG)" == "Foo_Bar Server - Win32 Release"
+!IF  "$(CFG)" == "ORB_shutdown Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
@@ -159,7 +159,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Foo_Bar Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ORB_shutdown Server - Win32 Debug"
 
 USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler

@@ -34,8 +34,8 @@ HTTP_Handler::HTTP_Handler (const char * path)
   // Make the request.
   if ((u_int) this->request_size_ < sizeof (this->request_))
     ACE_OS::sprintf (this->request_,
-		     "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
-		     path);
+                     "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
+                     path);
 
   // Find the filename.
   const char *last = ACE_OS::strrchr (path, '/');
@@ -88,19 +88,19 @@ HTTP_Handler::svc (void)
           buf[count] = '\0';
 
           if (count < 2)
-	    continue;
+            continue;
           done = ACE_OS::strcmp (buf + count - 4, "\n\n") == 0;
 
           if (done)
-	    break;
+            break;
 
           if (count < 4)
-	    continue;
+            continue;
 
           done = ACE_OS::strcmp (buf + count - 4, "\r\n\r\n") == 0;
 
           if (done)
-	    break;
+            break;
         }
 
       if (!done)
@@ -120,11 +120,11 @@ HTTP_Handler::svc (void)
         }
       else
         {
-	  contentlength = ACE_OS::strstr (buf, "\nContent-length:");
+          contentlength = ACE_OS::strstr (buf, "\nContent-length:");
 
           if (!contentlength)
             contentlength =
-	      ACE_OS::strstr (buf, "\nContent-Length:");
+              ACE_OS::strstr (buf, "\nContent-Length:");
         }
 
     }
@@ -136,13 +136,13 @@ HTTP_Handler::svc (void)
                     &this->response_size_) == 1))
     {
       ACE_Filecache_Handle afh (this->filename_,
-				this->response_size_);
+                                this->response_size_);
 
       this->peer ().recv_n (afh.address (), this->response_size_);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "  ``%s'' is now cached.\n",
-		  this->filename_));
+                  "  ``%s'' is now cached.\n",
+                  this->filename_));
     }
   else
     {
@@ -156,7 +156,7 @@ HTTP_Handler::svc (void)
       // Perhaps make ACE_Filecache_Handle more savvy, and allow a
       // constructor which accepts a PEER as a parameter.
       ACE_DEBUG ((LM_DEBUG,
-		  "HTTP_Handler, no content-length header!\n"));
+                  "HTTP_Handler, no content-length header!\n"));
     }
 
   return 0;
@@ -178,8 +178,8 @@ HTTP_Connector::connect (const char * url)
   if (this->parseurl (url, host, &port, path) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "HTTP_Connector, error parsing url: %s\n",
-		  url));
+                  "HTTP_Connector, error parsing url: %s\n",
+                  url));
       return -1;
     }
 
@@ -190,7 +190,7 @@ HTTP_Connector::connect (const char * url)
   if (ACE_Filecache::instance ()->find (hh.filename ()) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "  ``%s'' is already cached.\n",
-		  hh.filename ()));
+                  hh.filename ()));
       return 0;
     }
 
@@ -202,9 +202,9 @@ HTTP_Connector::connect (const char * url)
 // extract the main components of a URL
 int
 HTTP_Connector::parseurl (const char *url,
-			  char *host,
-			  u_short *port,
-			  char *path)
+                          char *host,
+                          u_short *port,
+                          char *path)
 {
   int status = 0;
 
@@ -212,20 +212,20 @@ HTTP_Connector::parseurl (const char *url,
   if (3 != ::sscanf (url, "http://%[^:/]:%hu%s", host, port, path))
     {
       if (2 != ::sscanf (url, "http://%[^:/]:%hu", host, port))
-	{
-	  if (2 != ::sscanf (url, "http://%[^:/]%s", host, path))
-	    {
-	      if (1 != ::sscanf (url, "http://%[^:/]", host))
-		status = -1;
-	      else
-		{
-		  *port = DEFAULT_SERVER_PORT;
-		  ACE_OS::strcpy (path, "/");
-		}
-	    }
-	  else
-	    *port = DEFAULT_SERVER_PORT;
-	}
+        {
+          if (2 != ::sscanf (url, "http://%[^:/]%s", host, path))
+            {
+              if (1 != ::sscanf (url, "http://%[^:/]", host))
+                status = -1;
+              else
+                {
+                  *port = DEFAULT_SERVER_PORT;
+                  ACE_OS::strcpy (path, "/");
+                }
+            }
+          else
+            *port = DEFAULT_SERVER_PORT;
+        }
       else ACE_OS::strcpy (path, "/");
     }
 
@@ -236,20 +236,10 @@ HTTP_Connector::parseurl (const char *url,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<HTTP_Handler>;
+template class ACE_NonBlocking_Connect_Handler<HTTP_Handler>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Connector<HTTP_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<HTTP_Handler>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<HTTP_Handler>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

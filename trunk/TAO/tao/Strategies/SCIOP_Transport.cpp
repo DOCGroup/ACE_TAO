@@ -41,13 +41,6 @@ TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  if (connection_handler_ != 0)
-    {
-      // REFCNT: Matches one of
-      // TAO_Transport::connection_handler_close() or
-      // TAO_Transport::close_connection_shared.
-      this->connection_handler_->incr_refcount();
-    }
   if (flag)
     {
       // Use the lite version of the protocol
@@ -64,7 +57,6 @@ TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
 
 TAO_SCIOP_Transport::~TAO_SCIOP_Transport (void)
 {
-  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
@@ -87,9 +79,9 @@ TAO_SCIOP_Transport::messaging_object (void)
 }
 
 ssize_t
-TAO_SCIOP_Transport::send_i (iovec *iov, int iovcnt,
-                            size_t &bytes_transferred,
-                            const ACE_Time_Value *max_wait_time)
+TAO_SCIOP_Transport::send (iovec *iov, int iovcnt,
+                           size_t &bytes_transferred,
+                           const ACE_Time_Value *max_wait_time)
 {
   ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
                                                              max_wait_time);
@@ -100,9 +92,9 @@ TAO_SCIOP_Transport::send_i (iovec *iov, int iovcnt,
 }
 
 ssize_t
-TAO_SCIOP_Transport::recv_i (char *buf,
-                            size_t len,
-                            const ACE_Time_Value *max_wait_time)
+TAO_SCIOP_Transport::recv (char *buf,
+                           size_t len,
+                           const ACE_Time_Value *max_wait_time)
 {
   ssize_t n = this->connection_handler_->peer ().recv (buf,
                                                        len,
@@ -115,7 +107,7 @@ TAO_SCIOP_Transport::recv_i (char *buf,
       errno != ETIME)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::recv_i, ")
+                  ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m\n"),
                   this->id ()));
     }
@@ -143,32 +135,6 @@ TAO_SCIOP_Transport::recv_i (char *buf,
 }
 
 int
-TAO_SCIOP_Transport::register_handler_i (void)
-{
-  if (TAO_debug_level > 4)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - SCIOP_Transport[%d]::register_handler\n",
-                  this->id ()));
-    }
-
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  if (r == this->connection_handler_->reactor ())
-    return 0;
-
-  // Set the flag in the Connection Handler and in the Wait Strategy
-  // @@Maybe we should set these flags after registering with the
-  // reactor. What if the  registration fails???
-  this->ws_->is_registered (1);
-
-  // Register the handler with the reactor
-  return  r->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
-}
-
-
-int
 TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
                                   TAO_ORB_Core *orb_core,
                                   TAO_OutputCDR &stream,
@@ -184,12 +150,6 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 
       if (tph != 0)
         {
-          ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-          if (this->check_event_handler_i ("SCIOP_Transport::send_request")
-              == -1)
-            return -1;
-
           const char protocol[] = "sciop";
           const char * protocol_type = protocol;
 
@@ -270,9 +230,6 @@ TAO_SCIOP_Transport::send_message_shared (TAO_Stub *stub,
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
-    if (this->check_event_handler_i ("SCIOP_Transport::send_message_shared") == -1)
-      return -1;
-
     if (TAO_debug_level > 6)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
@@ -350,17 +307,6 @@ TAO_SCIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   // 1 (i.e., non-originating side)
   this->bidirectional_flag (1);
 
-  // Just make sure that the connection handler is sane before we go
-  // head and do anything with it.
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->handler_lock_,
-                    -1);
-
-  if (this->check_event_handler_i ("SCIOP_Transport::tear_listen_point_list")
-      == -1)
-    return -1;
-
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
@@ -430,29 +376,17 @@ TAO_SCIOP_Transport::get_listen_point (
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
-  {
-    // Just make sure that the connection handler is sane before we go
-    // head and do anything with it.
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->handler_lock_,
-                      -1);
 
-    if (this->check_event_handler_i ("IIOP_Transport::get_listen_point")
-        == -1)
-      return -1;
-    
-    if (this->connection_handler_->peer ().get_local_addr (local_addr)
-        == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Could not resolve local ")
-                           ACE_TEXT ("host address in ")
-                           ACE_TEXT ("get_listen_point()\n")),
-                          -1);
-      }
-  }
-  
+  if (this->connection_handler_->peer ().get_local_addr (local_addr)
+      == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Could not resolve local ")
+                         ACE_TEXT ("host address in ")
+                         ACE_TEXT ("get_listen_point()\n")),
+                        -1);
+    }
+
   // Note: Looks like there is no point in sending the list of
   // endpoints on interfaces on which this connection has not
   // been established. If this is wrong, please correct me.
@@ -491,14 +425,6 @@ TAO_SCIOP_Transport::get_listen_point (
     }
 
   return 1;
-}
-
-TAO_Connection_Handler *
-TAO_SCIOP_Transport::invalidate_event_handler_i (void)
-{
-  TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
-  return eh;
 }
 
 #endif /* TAO_HAS_SCIOP == 1 */

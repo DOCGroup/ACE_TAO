@@ -3,6 +3,54 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "AMH_Exceptions_Test Client"=.\AMH_Exceptions\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AMH_Exceptions_Test Server"=.\AMH_Exceptions\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AMH_Oneway_Test Client"=.\AMH_Oneway\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "AMH_Oneway_Test Server"=.\AMH_Oneway\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "AMI Timeout Client"=.\AMI_Timeouts\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -88,6 +136,30 @@ Package=<4>
 ###############################################################################
 
 Project: "AMI_Test_Simple_Client"=.\AMI\AMI_Test_Simple_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Abstract Interface Client"=.\Abstract_Interface\Abstract_Interface_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Abstract Interface Server"=.\Abstract_Interface\Abstract_Interface_Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -267,7 +339,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Bug 1020 Basic Regression Client"=.\Bug_1020_Basic_Regression\client.dsp - Package Owner=<4>
+Project: "Bug_1020_Basic_Regression Client"=.\Bug_1020_Basic_Regression\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -279,7 +351,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Bug 1020 Basic Regression Server"=.\Bug_1020_Basic_Regression\server.dsp - Package Owner=<4>
+Project: "Bug_1020_Basic_Regression Server"=.\Bug_1020_Basic_Regression\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -291,7 +363,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Bug 1020 Regression Client"=.\Bug_1020_Regression\client.dsp - Package Owner=<4>
+Project: "Bug_1020_Regression Client"=.\Bug_1020_Regression\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -303,7 +375,67 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Bug 1020 Regression Server"=.\Bug_1020_Regression\server.dsp - Package Owner=<4>
+Project: "Bug_1020_Regression Server"=.\Bug_1020_Regression\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug_1361_Regression Client"=.\Bug_1361_Regression\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug_1361_Regression Server"=.\Bug_1361_Regression\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug_1361_Regression Shutdown"=.\Bug_1361_Regression\shutdown.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug_1482_Regression Client"=.\Bug_1482_Regression\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Bug_1482_Regression Server"=.\Bug_1482_Regression\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -495,6 +627,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Collocation_Test"=.\Collocation_Tests\Collocation_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Connect_Strategy_Test Client"=.\Connect_Strategy_Test\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Connect_Strategy_Test Server"=.\Connect_Strategy_Test\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Connection Purging Client"=.\Connection_Purging\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -508,6 +676,30 @@ Package=<4>
 ###############################################################################
 
 Project: "Connection Purging Server"=.\Connection_Purging\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Connection_Failure Client"=.\Connection_Failure\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Connection_Timeout Client"=.\Connection_Timeout\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -777,6 +969,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "File_IO Client"=.\File_IO\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "File_IO Server"=.\File_IO\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Forwarding Client"=.\Forwarding\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -957,6 +1173,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MProfile_Connection_Timeout Client"=.\MProfile_Connection_Timeout\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MProfile_Connection_Timeout Server"=.\MProfile_Connection_Timeout\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MT Timeout Client"=.\MT_Timeout\MT_Timeout_Client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -970,6 +1210,30 @@ Package=<4>
 ###############################################################################
 
 Project: "MT Timeout Server"=.\MT_Timeout\MT_Timeout_Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_BiDir Client"=.\MT_BiDir\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "MT_BiDir Server"=.\MT_BiDir\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1041,6 +1305,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Manipulation"=.\Policies\Manipulation.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Multiple Client"=.\Multiple\Client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1078,6 +1354,30 @@ Package=<4>
 ###############################################################################
 
 Project: "Multiple Server"=.\Multiple\Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Muxed_GIOP_Versions Client"=.\Muxed_GIOP_Versions\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Muxed_GIOP_Versions Server"=.\Muxed_GIOP_Versions\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1245,6 +1545,66 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Nested_Upcall_Crash Client"=.\Nested_Upcall_Crash\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Nested_Upcall_Crash Scavenger"=.\Nested_Upcall_Crash\scavenger.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Nested_Upcall_Crash Server"=.\Nested_Upcall_Crash\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "No_Server_MT_Connect_Test Client"=.\No_Server_MT_Connect_Test\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "No_Server_MT_Connect_Test Server"=.\No_Server_MT_Connect_Test\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ORB_destroy"=.\ORB_destroy\ORB_destroy.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1258,6 +1618,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ORB_init"=.\ORB_init\ORB_init.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ORB_shutdown Server"=.\ORB_shutdown\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1305,6 +1677,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Objref_Sequence_Test Client"=.\Objref_Sequence_Test\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Objref_Sequence_Test Server"=.\Objref_Sequence_Test\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "OctetSeq"=.\OctetSeq\OctetSeq.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1330,6 +1726,42 @@ Package=<4>
 ###############################################################################
 
 Project: "OctetSeq Server"=.\OctetSeq\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Oneway_Buffering Admin"=.\Oneway_Buffering\admin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Oneway_Buffering Client"=.\Oneway_Buffering\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Oneway_Buffering Server"=.\Oneway_Buffering\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1653,6 +2085,54 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Stack Recursion Client"=.\Stack_Recursion\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Stack_Recursion Server"=.\Stack_Recursion\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Strategies client"=.\Strategies\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Strategies server"=.\Strategies\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Test_DLL"=.\Object_Loader\Test_DLL.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1702,6 +2182,30 @@ Package=<4>
 ###############################################################################
 
 Project: "Timeout Server"=.\Timeout\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Two_Objects Client"=.\Two_Objects\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Two_Objects Server"=.\Two_Objects\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

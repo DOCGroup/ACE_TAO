@@ -15,7 +15,6 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Transport_Connector.cpp
       Transport.cpp
       Incoming_Message_Queue.cpp
-      Notify_Handler.cpp
       Resume_Handle.cpp
       Profile.cpp
       Endpoint.cpp

@@ -13,6 +13,7 @@
 #include "ace/Singleton.h"
 #include "ace/streams.h"
 #include "ace/Log_Record.h"
+#include "ace/Test_and_Set.h"
 
 #include "server_loggerd.h"
 

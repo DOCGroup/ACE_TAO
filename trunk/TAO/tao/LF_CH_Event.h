@@ -75,27 +75,21 @@ private:
    *
    * LFS_TIMEOUT               - The event has timed out.
    *
-   * LFS_CONNECTION_CLOSE_WAIT - A temporary state before complete
-   *                             connection closure. An event
-   *                             handler in this state is supposed to
-   *                             be getting ready for closure.
-   *
    * LFS_CONNECTION_CLOSED     - The connection was closed since
    *                             an error occured while trying to
    *                             establish connection
    *
    *  Event State Diagram
    *  -------------------
-   *                             |----> CLOSED <-|
-   *                             |       ^       |
-   *                             |       |       |
-   *   IDLE ---> CONNECTION_WAIT-|       |     CLOSE_WAIT
-   *                             |       |       ^
-   *                             |       |       |
-   *                             |----> SUCESS--->
+   *                              |----> CLOSED
+   *                              |        ^
+   *                              |        |
+   *   IDLE ---> CONNECTION_WAIT--|        |
+   *                              |        |
+   *                              |        |
+   *                              |----> SUCESS
    *
-   * Timeouts can occur while waiting for connections or during
-   * CLOSE_WAIT state.
+   * Timeouts can occur while waiting for connections.
    *
    */
   virtual void state_changed_i (int new_state);

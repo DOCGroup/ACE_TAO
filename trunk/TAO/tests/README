@@ -77,6 +77,11 @@ how to run the following tests:
           and checks whether cached handlers are purged effectively
           when the process runs out of descriptors.
 
+        . Connection_Failure 
+
+          A simple test for connection failures. The client tries to
+          connect to an non-existent server.
+
 	. Crashed_Callback
 
 	  A regression test for callbacks, sent as a reliable oneway,

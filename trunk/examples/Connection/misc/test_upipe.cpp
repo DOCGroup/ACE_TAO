@@ -23,15 +23,10 @@ template class ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<Server_Service>;
 template class ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>;
 template class ACE_Creation_Strategy<Server_Service>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Scheduling_Strategy<Server_Service>;
 template class ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Svc_Tuple<Client_Service>;
+template class ACE_NonBlocking_Connect_Handler<Client_Service>;
 template class ACE_Thread_Strategy<Server_Service>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>
@@ -39,15 +34,10 @@ template class ACE_Thread_Strategy<Server_Service>;
 #pragma instantiate ACE_Concurrency_Strategy<Server_Service>
 #pragma instantiate ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<Server_Service>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Scheduling_Strategy<Server_Service>
 #pragma instantiate ACE_Strategy_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Svc_Tuple<Client_Service>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Client_Service>
 #pragma instantiate ACE_Thread_Strategy<Server_Service>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -58,7 +48,7 @@ class Server : public ACE_Strategy_Acceptor <Server_Service, ACE_UPIPE_ACCEPTOR>
   //     and creates/activates Server_Service objects.
 public:
   Server (ACE_Thread_Manager *thr_mgr,
-	  ACE_Reactor *reactor)
+          ACE_Reactor *reactor)
     : reactor_ (reactor),
       thr_mgr_ (thr_mgr)
     {
@@ -73,10 +63,10 @@ public:
       ACE_UPIPE_Addr local_addr (l_addr);
 
       if (this->thr_strategy_.open (this->thr_mgr_, THR_DETACHED | THR_NEW_LWP) == -1)
-	return -1;
+        return -1;
       else if (this->open (local_addr, this->reactor_,
-			   0, 0, &this->thr_strategy_) == -1)
-	return -1;
+                           0, 0, &this->thr_strategy_) == -1)
+        return -1;
 
       // Give server a chance to register the STREAM pipe.
       ACE_OS::sleep (ACE_Time_Value (4));
@@ -125,7 +115,7 @@ private:
   ACE_Thread_Manager *thr_mgr_;
 };
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_Service_Config svc_conf;

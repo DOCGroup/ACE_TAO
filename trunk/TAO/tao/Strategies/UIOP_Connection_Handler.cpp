@@ -34,7 +34,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (this->orb_core () != 0);
+  ACE_ASSERT (0);
 }
 
 
@@ -47,17 +47,17 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
                      (TAO_UIOP_Properties *, arg))
 {
   TAO_UIOP_Transport* specific_transport = 0;
-  ACE_NEW(specific_transport,
-          TAO_UIOP_Transport(this, orb_core, flag));
+  ACE_NEW (specific_transport,
+           TAO_UIOP_Transport(this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
-  this->transport(specific_transport);
-  TAO_Transport::release (specific_transport);
+  this->transport (specific_transport);
 }
 
 
 TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
 {
+  delete this->transport ();
 }
 
 int
@@ -116,20 +116,57 @@ TAO_UIOP_Connection_Handler::close_connection (void)
 int
 TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  return this->handle_input_eh (h, this);
+  int result =
+    this->handle_input_eh (h, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
 TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  return this->handle_output_eh (handle, this);
+  int result =
+    this->handle_output_eh (handle, this);
+
+  if (result == -1)
+    {
+      this->close_connection ();
+      return 0;
+    }
+
+  return result;
 }
 
 int
-TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
-                                           ACE_Reactor_Mask rm)
+TAO_UIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+                                             const void *)
 {
-  return this->handle_close_eh (handle, rm, this);
+  // We don't use this upcall for I/O.  This is only used by the
+  // Connector to indicate that the connection timedout.  Therefore,
+  // we should call close().
+  return this->close ();
+}
+
+int
+TAO_UIOP_Connection_Handler::handle_close (ACE_HANDLE,
+                                           ACE_Reactor_Mask)
+{
+  ACE_ASSERT (0);
+  return 0;
+}
+
+int
+TAO_UIOP_Connection_Handler::close (u_long)
+{
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->transport ()->remove_reference ();
+  return 0;
 }
 
 int
