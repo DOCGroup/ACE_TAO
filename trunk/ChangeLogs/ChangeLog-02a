@@ -1,3 +1,13 @@
+Sat Jun 24 19:58:22 2000  John Heitmann <jwh1@cs.wustl.edu>
+
+        * ace/OS.h
+        * ace/OS.i
+        * ace/config-macosx.h
+        * include/makeinclude/platform-macosx.GNU
+          Added preliminary support for Mac OS X Developer Preview 4. Quite
+          a bit is still broken, but the core ACE library works great. Grep
+          for __MACOSX__ in OS* to see the changes.
+
 Thu Jun 22 17:27:35 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (ACE_Log_Msg_Attributes::inherit_hook): Use a
