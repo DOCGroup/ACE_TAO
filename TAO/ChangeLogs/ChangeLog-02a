@@ -1,3 +1,10 @@
+Mon Jul 17 11:17:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/IDL_Test.dsp:
+
+	  Updated project settings for the two newest IDL files in the 
+	  release version.
+
 Mon Jul 17 10:50:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServerC.cpp: Fixed some link errors in Minimum CORBA
