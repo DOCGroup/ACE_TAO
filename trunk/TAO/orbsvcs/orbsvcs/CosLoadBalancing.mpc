@@ -19,6 +19,8 @@ project : orbsvcslib, core, naming, iormanip, portablegroup, ami {
       CosLoadBalancingS.cpp
       LB_ORTC.cpp
       LoadBalancing/LB_LeastLoaded.cpp
+      LoadBalancing/LB_LoadMinimum.cpp
+      LoadBalancing/LB_LoadAverage.cpp
       LoadBalancing/LB_LoadAlert.cpp
       LoadBalancing/LB_LoadAlertInfo.cpp
       LoadBalancing/LB_LoadAlertMap.cpp
