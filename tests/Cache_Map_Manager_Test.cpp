@@ -508,7 +508,7 @@ void functionality_test_cache1 (size_t table_size,
               cache.current_size ()));
   delete[] keys;
   delete[] verify_keys;
-  
+
 }
 
 void functionality_test_hash_cache1 (size_t table_size,
@@ -626,7 +626,7 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_END_TEST;
 
   return 0;
-};
+}
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
