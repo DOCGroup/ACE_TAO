@@ -254,12 +254,15 @@ ACE_Log_Msg::instance (void)
 	  // Allocate the Singleton lock.
 	  ACE_Log_Msg_Manager::get_lock();
 
-	  if (ACE_OS::thr_keycreate (&key_,
-				     &ACE_TSS_cleanup) != 0)
-	    {
-	      ACE_OS::thread_mutex_unlock (&lock);
-	      return 0; // Major problems, this should *never* happen!
-	    }
+	  {
+	    ACE_NO_HEAP_CHECK;
+	    if (ACE_OS::thr_keycreate (&key_,
+				       &ACE_TSS_cleanup) != 0)
+	      {
+	        ACE_OS::thread_mutex_unlock (&lock);
+	        return 0; // Major problems, this should *never* happen!
+	      }
+	  }
 	  // Register cleanup handler.
 	  ::atexit (ACE_Log_Msg_Manager::atexit);
 	  key_created_ = 1;
@@ -291,14 +294,13 @@ ACE_Log_Msg::instance (void)
 
 		  ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
 		  ACE_Log_Msg_Manager::insert(tss_log_msg);
-	  }
 
-      // Store the dynamically allocated pointer in thread-specific
-      // storage.
-      if (ACE_OS::thr_setspecific (key_, 
-				   (void *) tss_log_msg) != 0)
-	return 0; // Major problems, this should *never* happen!
-    }
+		  // Store the dynamically allocated pointer in thread-specific
+		  // storage.
+		  if (ACE_OS::thr_setspecific (key_, 
+					       (void *) tss_log_msg) != 0)
+		    return 0; // Major problems, this should *never* happen!
+          }
 
   return tss_log_msg;
 #endif /* VXWORKS || ACE_HAS_THREAD_SPECIFIC_STORAGE */
