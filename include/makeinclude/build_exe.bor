@@ -1,8 +1,8 @@
-# 
+#
 # Rules for building an executable
 #
 # Inputs:
-# ~~~~~~~ 
+# ~~~~~~~
 # NAME - undecorated name of target
 # CFLAGS - extra compiler flags for building target
 # CPPDIR - list of directories containing source files
@@ -32,13 +32,11 @@ $(TARGET): $(OBJFILES) $(RESOURCE)
 	@del $(TARGET:.exe=.tds)
 !endif
 
-clean:
-	@copy &&!
-@del $(OBJFILES:.obj=.obj ^
-@del ) $(RESOURCE)
-! clean_$(NAME)~.bat 1> NUL
-	-@clean_$(NAME)~.bat 2> NUL
-	@del clean_$(NAME)~.bat
+!include <$(ACE_ROOT)\include\makeinclude\clean.bor>
+
+INSTALL_TYPES = exe
+
+!include <$(ACE_ROOT)\include\makeinclude\install.bor>
 
 !ifdef CPPDIR
 .path.cpp = $(CPPDIR)
@@ -61,5 +59,3 @@ clean:
 	$(RC) -fo$@ $<
 
 .autodepend
-
-

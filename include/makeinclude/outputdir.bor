@@ -68,3 +68,55 @@ MAKE_OBJDIR=$(MKDIR) "$(OBJDIR)"
 # Use default mkdir provided by command shell. May not work on Win9x.
 MAKE_OBJDIR=if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
 !endif
+
+!ifndef INSTALL_EXEDIR
+!ifndef STATIC
+!ifndef DEBUG
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin
+!else
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)
+!endif
+!else
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)
+!endif
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_EXEDIR=$(MKDIR) "$(INSTALL_EXEDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_EXEDIR=if not exist "$(INSTALL_EXEDIR)" mkdir "$(INSTALL_EXEDIR)"
+!endif
+
+!ifndef INSTALL_DLLDIR
+INSTALL_DLLDIR=$(INSTALL_DIR)\bin
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_DLLDIR=$(MKDIR) "$(INSTALL_DLLDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_DLLDIR=if not exist "$(INSTALL_DLLDIR)" mkdir "$(INSTALL_DLLDIR)"
+!endif
+
+!ifndef INSTALL_LIBDIR
+INSTALL_LIBDIR=$(INSTALL_DIR)\lib
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_LIBDIR=$(MKDIR) "$(INSTALL_LIBDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_LIBDIR=if not exist "$(INSTALL_LIBDIR)" mkdir "$(INSTALL_LIBDIR)"
+!endif
+
+!ifndef INSTALL_INCDIR
+INSTALL_INCDIR=$(INSTALL_DIR)\include\$(INCDIR_NAME)
+!endif
+
+!ifdef MKDIR
+MAKE_INSTALL_INCDIR=$(MKDIR) "$(INSTALL_INCDIR)"
+!else
+# Use default mkdir provided by command shell. May not work on Win9x.
+MAKE_INSTALL_INCDIR=if not exist "$(INSTALL_INCDIR)" mkdir "$(INSTALL_INCDIR)"
+!endif
