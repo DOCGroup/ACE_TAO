@@ -1,3 +1,10 @@
+Mon Apr 21 15:23:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/Makefile.in:
+
+	  Removed this generated file.  It shouldn't exist in the CVS
+	  repository.
+
 Mon Apr 21 21:20:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
