@@ -12,7 +12,7 @@
 
 DIRS  = SMI_Iterator
 
-ifneq ($(ami),)
+ifneq ($(ami),0)
   DIRS += \
 	AMI_Iterator \
 	AMI_Observer

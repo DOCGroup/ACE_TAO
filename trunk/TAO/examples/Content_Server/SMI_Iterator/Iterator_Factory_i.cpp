@@ -9,7 +9,7 @@
 ACE_RCSID(SMI_Iterator, Iterator_Factory_i, "$Id$")
 
 void
-Iterator_Factory_i::get_iterator (const char * pathname,
+Iterator_Factory_i::get_iterator (const char *pathname,
                                   Web_Server::Content_Iterator_out contents,
                                   Web_Server::Metadata_Type_out metadata,
                                   CORBA::Environment &ACE_TRY_ENV)
@@ -18,7 +18,7 @@ Iterator_Factory_i::get_iterator (const char * pathname,
   // Based on code available in H&V.
 
   ACE_DEBUG ((LM_DEBUG,
-              "Received request for file: <%s>\n",
+              ACE_TEXT ("Received request for file: <%s>\n"),
               pathname));
 
   struct stat file_status;
@@ -28,8 +28,12 @@ Iterator_Factory_i::get_iterator (const char * pathname,
       // HTTP 1.1 "Internal Server Error"
     }
 
-  Content_Iterator_i * iterator_servant =
-    new Content_Iterator_i (pathname, file_status.st_size);
+  Content_Iterator_i *iterator_servant = 0;
+  ACE_NEW_THROW_EX (iterator_servant,
+                    Content_Iterator_i (pathname,
+                                        file_status.st_size),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
   if (iterator_servant->init () != 0)
     {
@@ -71,7 +75,7 @@ Iterator_Factory_i::get_iterator (const char * pathname,
 }
 
 int
-Iterator_Factory_i::modification_date (struct stat * file_status,
+Iterator_Factory_i::modification_date (struct stat *file_status,
                                        Web_Server::Metadata_Type_out metadata)
 {
   // Get the modification time from the file status structure/
@@ -94,7 +98,7 @@ Iterator_Factory_i::modification_date (struct stat * file_status,
 }
 
 int
-Iterator_Factory_i::content_type (const char * filename,
+Iterator_Factory_i::content_type (const char *filename,
                                   Web_Server::Metadata_Type_out metadata)
 {
   if (filename == 0)
@@ -171,9 +175,9 @@ Iterator_Factory_i::content_type (const char * filename,
     {
       metadata->content_type = CORBA::string_dup ("text/html");
       ACE_ERROR ((LM_WARNING,
-                  "\n  "
-                  "Unknown file type.  "
-                  "Using \"text/html\" content type.\n"));
+                  ACE_TEXT ("\n  ")
+                  ACE_TEXT ("Unknown file type.  ")
+                  ACE_TEXT ("Using \"text/html\" content type.\n")));
     }
 
   return 0;

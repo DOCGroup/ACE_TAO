@@ -120,10 +120,11 @@ private:
   Web_Server::AMI_Content_IteratorHandler_var ami_handler_;
   // Reference to this Reply Handler's self.
 
-  int *request_count_; // Pointer to external status monitoring
-variable. The contents (not // the pointer itself) of the
-<pending_data> parameter will be // decremented when file retrieval
-has completed.  };
+  int *request_count_;
+  // Pointer to external status monitoring variable. The contents (not
+  // the pointer itself) of the<pending_data> parameter will be
+  // decremented when file retrieval has completed.
+};
 
 #include "ace/post.h"
 
