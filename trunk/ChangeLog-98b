@@ -1,26 +1,30 @@
 Tue Jul 28 12:36:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (~ACE_Service_Config): Removed the call
- 	  to ACE_Service_Config::close () from the destructor.  This will
- 	  be called by the Object Manager upon destruction.
+        * ace/Service_Config.cpp (~ACE_Service_Config): Removed the call
+          to ACE_Service_Config::close () from the destructor.  This will
+          be called by the Object Manager upon destruction.
 
 Tue Jul 28 14:49:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO/TAO-INSTALL.html (HREF): The paragraph "A note on Make" was
- 	  duplicated.  Thanks to Jeff McDaniel <jsmcdani@gte.net>
-	  for reporting this.
+        * TAO/TAO-INSTALL.html (HREF): The paragraph "A note on Make" was
+          duplicated.  Thanks to Jeff McDaniel <jsmcdani@gte.net>
+          for reporting this.
 
 Tue Jul 28 11:34:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.{h,i} (strpbrk): Added a const wchar_t version of this
-	  function.  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de>
- 	  for providing the fix.
+        * ace/OS.{h,i} (strpbrk): Added a const wchar_t version of this
+          function.  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de>
+          for providing the fix.
 
 Tue Jul 28 09:52:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Thread_Manager.cpp (exit): only declare local close_handle
           if ACE_USE_ONE_SHOT_AT_THREAD_EXIT.  (ACE_Thread_Descriptor):
           reordered initializers to match declaration order.
+
+        * ace/Dynamic.cpp,Thread_Manager.cpp: moved
+          ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex> instantiation
+          from Thread_Manager.cpp to Dynamic.cpp.
 
 Mon Jul 27 16:31:27 1998    Arturo Montes  <mitosys@colomsat.net.co>
 
