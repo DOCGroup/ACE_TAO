@@ -558,7 +558,7 @@ sub get_flag_overrides {
     }
   }
 
-  return $value;
+  return $self->relative($value);;
 }
 
 
