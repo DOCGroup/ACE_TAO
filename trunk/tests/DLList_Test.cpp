@@ -24,6 +24,7 @@
 typedef ACE_TCHAR *ACE_STRING;
 typedef ACE_DLList<ACE_STRING> STRLIST;
 typedef ACE_DLList_Iterator<ACE_STRING> STRLIST_ITERATOR;
+typedef ACE_DLList_Reverse_Iterator<ACE_STRING> STRLIST_REVERSE_ITERATOR;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_DLList<ACE_STRING>;
@@ -110,19 +111,19 @@ run_test (void)
     }
 
   run_iterate (list);
-  run_reverse_iterate ();
+  run_reverse_iterate (list);
 
   list.delete_tail ();
   list.delete_tail ();
 
   run_iterate (list);
-  run_reverse_iterate ();
+  run_reverse_iterate (list);
 
   list.delete_head ();
   list.delete_head ();
 
   run_iterate (list);
-  run_reverse_iterate ();
+  run_reverse_iterate (list);
 
   return 0;
 }
