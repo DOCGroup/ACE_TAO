@@ -175,9 +175,9 @@ CosEC_ServantBase::deactivate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // Finally we go away..
-  CosEC_Utility_Methods<CosEC_ServantBase>::deactivate (this->thispoa_,
-                                                        this,
-                                                        ACE_TRY_ENV);
+  CosEC_Utility_Methods<CORBA::Object>::deactivate (this->thispoa_,
+                                                    this,
+                                                    ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -185,7 +185,7 @@ void
 CosEC_ServantBase::deactivate_rtec (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate the rtec.
-  CosEC_Utility_Methods<CosEC_ServantBase>::deactivate (this->poa_,
+  CosEC_Utility_Methods<CORBA::Object>::deactivate (this->poa_,
                                                         this->rtec_servant_,
                                                         ACE_TRY_ENV);
   ACE_CHECK;
@@ -195,9 +195,9 @@ void
 CosEC_ServantBase::deactivate_cosec (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate the cosec.
-  CosEC_Utility_Methods<CosEC_ServantBase>::deactivate (this->poa_,
-                                                        this->cosec_servant_,
-                                                        ACE_TRY_ENV);
+  CosEC_Utility_Methods<CORBA::Object>::deactivate (this->poa_,
+                                                    this->cosec_servant_,
+                                                    ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -392,13 +392,13 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
 template class CosEC_Utility_Methods<RtecScheduler::Scheduler>;
 template class CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>;
 template class CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>;
-// template class CosEC_Utility_Methods<CosEC_Utility_NIL>;
+template class CosEC_Utility_Methods<CORBA::Object>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate CosEC_Utility_Methods<RtecScheduler::Scheduler>
 #pragma instantiate CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>
 #pragma instantiate CosEC_Utility_Methods<CosEventChannelAdmin::EventChannel>
-// #pragma instantiate CosEC_Utility_Methods<CosEC_Utility_NIL>
+#pragma instantiate CosEC_Utility_Methods<CORBA::Object>
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
