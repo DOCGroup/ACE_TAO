@@ -1146,8 +1146,7 @@ be_visitor_operation::gen_marshal_and_invoke (
 
   *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
-  *os << "}" << be_uidt << be_uidt_nl  // End inner "else" block.
-      << "}" << be_uidt << be_uidt_nl; // End outer "else" block.
+  *os << "}" << be_uidt << be_uidt_nl;  // End inner "else" block.
 
   // Note that we do NOT catch the PortableInterceptor::ForwardRequest
   // exception here.  It is caught in the
@@ -1156,6 +1155,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   // effort to get an easy (but illegal) way to forward a request.
 
   *os << "\n#if TAO_HAS_INTERCEPTORS == 1"  << be_nl
+      << "}" << be_uidt << be_uidt_nl // End outer "else" block.
       << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl;
@@ -1278,7 +1278,7 @@ be_visitor_operation::gen_marshal_and_invoke (
 
   *os << be_nl
       << "if (_invoke_status != TAO_INVOKE_RESTART)" << be_idt_nl
-      << "break;" << be_uidt << be_uidt_nl
+      << "break;" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_uidt << be_uidt;
 
   return 0;
