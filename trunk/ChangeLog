@@ -1,40 +1,50 @@
+Thu Apr  1 08:34:55 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where relative directory replacement wouldn't take
+          place if the value contained the current directory plus additional
+          subdirectories.  Also, if the relative directory were the same as
+          the current directory the replacement would be invalid and
+          wouldn't point to the correct directory.
+
 Wed Mar 31 23:20:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* apps/JAWS3/bench/mkfiles.cpp:
-	* apps/JAWS3/bench/rqfiles.cpp:
-	* examples/APG/Naming/Makefile.nodelocal:
+        * apps/JAWS3/bench/mkfiles.cpp:
+        * apps/JAWS3/bench/rqfiles.cpp:
+        * examples/APG/Naming/Makefile.nodelocal:
 
 
 Wed Mar 31 18:08:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/MakeProjectCreator/config/bison.mpb:
-	* bin/MakeProjectCreator/config/flex.mpb:
-	* bin/MakeProjectCreator/config/lex.mpb:
-	* examples/APG/Naming/Makefile.netlocal:
-	* examples/APG/Naming/Makefile.netlocal_reader:
-	* examples/APG/Naming/Makefile.nodelocal:
-	* examples/APG/Naming/Makefile.nodelocal_shared:
-	* examples/APG/Naming/Makefile.nodelocal_shared_reader:
-	* examples/APG/Svc_Config/Makefile.dynamic:
-	* examples/APG/Svc_Config/Makefile.static:
-	* examples/APG/Timers/Makefile.singles:
-	* examples/APG/Timers/Makefile.timers:
-	* examples/APG/Timers/Makefile.upcall:
+        * bin/MakeProjectCreator/config/bison.mpb:
+        * bin/MakeProjectCreator/config/flex.mpb:
+        * bin/MakeProjectCreator/config/lex.mpb:
+        * examples/APG/Naming/Makefile.netlocal:
+        * examples/APG/Naming/Makefile.netlocal_reader:
+        * examples/APG/Naming/Makefile.nodelocal:
+        * examples/APG/Naming/Makefile.nodelocal_shared:
+        * examples/APG/Naming/Makefile.nodelocal_shared_reader:
+        * examples/APG/Svc_Config/Makefile.dynamic:
+        * examples/APG/Svc_Config/Makefile.static:
+        * examples/APG/Timers/Makefile.singles:
+        * examples/APG/Timers/Makefile.timers:
+        * examples/APG/Timers/Makefile.upcall:
 
-	  More fuzz warnings.
+          More fuzz warnings.
 
 Wed Mar 31 18:11:18 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Functor_String.h:
-	  Fixed compile problem in wchar builds
+        * ace/Functor_String.h:
+          Fixed compile problem in wchar builds
 
 Wed Mar 31 11:46:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/fuzz.pl:
+        * bin/fuzz.pl:
 
-	  Removed checks for certain things like OS.h inclusions and such
-	  since we may not have time to  fix them before the BFO. Once we
-	  clean the rest of the stuff for BFO, will add this back.
+          Removed checks for certain things like OS.h inclusions and such
+          since we may not have time to  fix them before the BFO. Once we
+          clean the rest of the stuff for BFO, will add this back.
 
 Wed Mar 31 17:31:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -120,25 +130,25 @@ Tue Mar 30 17:53:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Mar 29 20:52:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Functor_String.h:
+        * ace/Functor_String.h:
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Mon Mar 29 12:24:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* examples/Threads/manual_event.cpp (worker):
-	* tests/Upgradable_RW_Test.cpp (run_main):
-	* tests/Conn_Test.cpp (client): Changed the name "barrier"
-	  to "thread_barrier" to fix a problem with macro conflicts on
- 	  certain OS platforms.  Thanks to Levente Torok <tealev@yahoo.com>
-	  for reporting this.
+        * examples/Threads/manual_event.cpp (worker):
+        * tests/Upgradable_RW_Test.cpp (run_main):
+        * tests/Conn_Test.cpp (client): Changed the name "barrier"
+          to "thread_barrier" to fix a problem with macro conflicts on
+          certain OS platforms.  Thanks to Levente Torok <tealev@yahoo.com>
+          for reporting this.
 
 Mon Mar 29 17:02:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h:
-	  Include Functor_T.h instead of Functor.h because of Bala changes of
-	  yesterday. This fixes the compile problems in the daily builds with
-	  this example
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h:
+          Include Functor_T.h instead of Functor.h because of Bala changes of
+          yesterday. This fixes the compile problems in the daily builds with
+          this example
 
 Mon Mar 29 08:03:08 2004  Chad Elliott  <elliott_c@ociweb.com>
 
