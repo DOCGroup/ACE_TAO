@@ -1750,7 +1750,14 @@ typedef tid_t ACE_hthread_t;
 
 // Make it easier to write portable thread code.
 typedef pthread_t ACE_thread_t;
+
+#     if defined (ACE_HAS_TSS_EMULATION)
+typedef pthread_key_t ACE_OS_thread_key_t;
+typedef u_int ACE_thread_key_t;
+#else
 typedef pthread_key_t ACE_thread_key_t;
+#     endif /* ACE_HAS_PTHREAD_T */
+
 #     if !defined (ACE_LACKS_COND_T)
  typedef pthread_mutex_t ACE_mutex_t;
  typedef pthread_cond_t ACE_cond_t;
@@ -5144,15 +5151,29 @@ public:
   static void thr_exit (void *status = 0);
   static int thr_getconcurrency (void);
   static int lwp_getparams (ACE_Sched_Params &);
+#if defined(ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+  static int thr_getspecific (ACE_OS_thread_key_t key,
+                              void **data);
+#endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
   static int thr_getspecific (ACE_thread_key_t key,
                               void **data);
   static int thr_keyfree (ACE_thread_key_t key);
   static int thr_key_detach (void *inst);
 # if defined (ACE_HAS_THR_C_DEST)
+#if defined(ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+  static int thr_keycreate (ACE_OS_thread_key_t *key,
+                            ACE_THR_C_DEST,
+                            void *inst = 0);
+#endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
   static int thr_keycreate (ACE_thread_key_t *key,
                             ACE_THR_C_DEST,
                             void *inst = 0);
 # else
+#if defined(ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+  static int thr_keycreate (ACE_OS_thread_key_t *key,
+                            ACE_THR_DEST,
+                            void *inst = 0);
+#endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
   static int thr_keycreate (ACE_thread_key_t *key,
                             ACE_THR_DEST,
                             void *inst = 0);
@@ -5161,6 +5182,10 @@ public:
   static size_t thr_min_stack (void);
   static int thr_setconcurrency (int hint);
   static int lwp_setparams (const ACE_Sched_Params &);
+#if defined(ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+  static int thr_setspecific (ACE_OS_thread_key_t key,
+                              void *data);
+#endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
   static int thr_setspecific (ACE_thread_key_t key,
                               void *data);
   static int thr_sigsetmask (int how,
@@ -5356,11 +5381,17 @@ private:
   // Array of thread exit hooks (TSS destructors) that are called for each
   // key (that has one) when the thread exits.
 
+#if !defined(ACE_USE_NATIVE_KEYS)
   static void **&tss_base ();
   // Location of current thread's TSS array.
+#else
+  static void **tss_base (void* ts_storage[] = 0);
+  // Location of current thread's TSS array.
+#endif /* ACE_USE_NATIVE_KEYS */
 
 #   if ! defined (VXWORKS)
 public:
+#if !defined(ACE_USE_NATIVE_KEYS)
   // This implementation only works if ::thr_self () returns a small
   // integer.  It is intended for use in testing on Solaris only.
   enum { ACE_TSS_THREADS_MAX = 1024 };
@@ -5368,14 +5399,17 @@ public:
   static void **tss_collection_ [ACE_TSS_THREADS_MAX];
   // Array, indexed by thread handle, of TSS object arrays.  Those
   // are indexed by key.  This is for testing only.
+#endif /* !ACE_USE_NATIVE_KEYS */
 private:
 
-#     if 0 // not implemented yet . . .
+#     if defined(ACE_USE_NATIVE_KEYS)
   // Rely on native thread specific storage for the implementation,
   // but just use one key.
+  static ACE_OS_thread_key_t native_tss_key_;
 
-  static ACE_thread_key_t native_tss_key_;
-#     endif /* 0 */
+  // Used to indicate if native tss key has been allocated
+  static int key_created_;
+#     endif /* ACE_USE_NATIVE_KEYS */
 #   endif /* ! VXWORKS */
 };
 
