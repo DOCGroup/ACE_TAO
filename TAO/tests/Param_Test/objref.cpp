@@ -139,9 +139,9 @@ Test_ObjRef::reset_parameters (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "set coffee attribute");
+      return -1;
     }
   ACE_ENDTRY;
-  return -1;
 
   this->inout_ = Coffee::_nil ();
   this->out_ = Coffee::_nil ();
