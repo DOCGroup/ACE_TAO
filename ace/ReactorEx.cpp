@@ -35,7 +35,7 @@ ACE_ReactorEx::~ACE_ReactorEx (void)
 
 int 
 ACE_ReactorEx::notify (ACE_Event_Handler *eh,
-		       ACE_Reactor_Mask mask);
+		       ACE_Reactor_Mask mask)
 {
   return notify_handler_.notify (eh, mask);
 }

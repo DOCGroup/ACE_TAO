@@ -21,6 +21,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Message_Queue.h"
 #include "ace/Token.h"
+#include "ace/Synch.h"
 
 #if defined (ACE_MT_SAFE)
 
