@@ -75,6 +75,7 @@ call %0 %dopure% Time_Value_Test
 call %0 %dopure% Tokens_Test
 call %0 %dopure% TSS_Test
 call %0 %dopure% UPIPE_SAP_Test
+call %0 %dopure% Upgradable_RW_Test
 
 goto done
 
