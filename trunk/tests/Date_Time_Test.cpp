@@ -33,9 +33,10 @@ main (int, ACE_TCHAR *[])
   long hour    = dt.hour ();
   long minute  = dt.minute ();
   long seconds = dt.second ();
+  long usec    = dt.microsec ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("ACE_Date_Time (m/d/y, h:m:s): %d/%d/%d, %d:%d:%d\n"),
-              month, day, year, hour, minute, seconds));
+              ACE_TEXT ("ACE_Date_Time (m/d/y, h:m:s.u): %d/%d/%d, %d:%d:%d.%d\n"),
+              month, day, year, hour, minute, seconds, usec));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Log thinks it is: %D\n")));
 
   if (month < 1 || month > 12)
@@ -74,7 +75,13 @@ main (int, ACE_TCHAR *[])
                   seconds));
       error = 1;
     }
-
+  if (usec < 0 || usec > 999999)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Microseconds (%d) out of range (0-999999)\n"),
+                  usec));
+      error = 1;
+    }
   ACE_END_TEST;
   return error;
 }
