@@ -1,5 +1,8 @@
 Fri Mar 10 00:17:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* netsvcs/ACE-netsvcs.html: Updated this document.  Thanks to
+	  Charles Meier <cmeier@concentus-tech.com> for contributing this.
+
 	* ace/WIN32_Proactor.cpp (ACE_WIN32_Proactor): Replaced
 	  this->completion_port_ with 0 in the call to
  	  CreateIoCompletionPort() to make it more clear what's going on.
