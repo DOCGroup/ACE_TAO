@@ -50,8 +50,8 @@ Server<Servant>::parse_args (void)
         this->naming_ = 1;
         break;
       case 'i': // For Testing the InterOperable Naming Service.
-	this->ins_ = CORBA::string_dup (get_opts.optarg);
-	break;
+        this->ins_ = CORBA::string_dup (get_opts.optarg);
+        break;
       case 'h':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,24 +81,33 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"Adding (KEY:IOR) %s:%s\n",
-		this->ins_,
-		ior.in ()));
+                "Adding (KEY:IOR) %s:%s\n",
+                this->ins_,
+                ior.in ()));
 
-  
-  CORBA::Object_var table_object =
-    orb->resolve_initial_references ("IORTable");
+  ACE_NEW_TRY_ENV
+    {
+      CORBA::Object_var table_object =
+        orb->resolve_initial_references ("IORTable",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  IORTable::Table_var adapter =
-    IORTable::Table::_narrow (table_object.in ());
-  if (CORBA::is_nil (adapter.in ()))
-    {
-      ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-    }
-  else
-    {
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in ());
+
       adapter->bind (this->ins_, ior.in ());
     }
+  ACE_CATCHANY
+    {
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+
+    }
+  ACE_ENDTRY;
+
+
 
   return 0;
 }
@@ -167,18 +176,18 @@ Server<Servant>::init (const char *servant_name,
                   str.in ()));
 
       if (this->ins_)
-	if (this->test_for_ins (str) != 0)
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "test_for_ins (): failed\n"),
-			    -1);
+        if (this->test_for_ins (str) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "test_for_ins (): failed\n"),
+                            -1);
 
       if (this->ior_output_file_)
-	{
-	  ACE_OS::fprintf (this->ior_output_file_,
-			   "%s",
-			   str.in ());
-	  ACE_OS::fclose (this->ior_output_file_);
-	}
+        {
+          ACE_OS::fprintf (this->ior_output_file_,
+                           "%s",
+                           str.in ());
+          ACE_OS::fclose (this->ior_output_file_);
+        }
 
     }
   ACE_CATCHANY

@@ -1,3 +1,20 @@
+Thu Mar  8 12:39:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/server.cpp (main): 
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+	* examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+	* examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+	* examples/Simulator/Event_Supplier/Event_Con.cpp:
+	* examples/Simulator/Event_Supplier/Event_Con.cpp:
+	* examples/Simple/Simple_util.cpp:
+	* examples/Simple/echo/Echo_i.cpp:
+	* examples/Simple/echo/Echo_i.cpp:
+	* examples/Simple/echo/Echo_i.cpp: Fixed some
+	  resolve_initial_reference fuzz errors.  
+
 Thu Mar  8 09:32:49 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Borland/ChatClientWnd.cpp:

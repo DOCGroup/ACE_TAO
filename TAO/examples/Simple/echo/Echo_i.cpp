@@ -34,7 +34,7 @@ Echo_i::orb (CORBA::ORB_ptr o)
 
 Echo::List *
 Echo_i::echo_list (const char *message,
-                   CORBA::Environment &)
+                   CORBA::Environment &ACE_TRY_ENV)
  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (message);
@@ -48,9 +48,19 @@ Echo_i::echo_list (const char *message,
   list->length (3);
 
   // Just do something to get a list of object references.
-  (*list)[0] = orb_->resolve_initial_references ("NameService");
-  (*list)[1] = orb_->resolve_initial_references ("NameService");;
-  (*list)[2] = orb_->resolve_initial_references ("NameService");;
+  (*list)[0] =
+    orb_->resolve_initial_references ("NameService",
+                                      ACE_TRY_ENV);
+  ACE_CHECK;
+
+  (*list)[1] =
+    orb_->resolve_initial_references ("NameService",
+                                                 ACE_TRY_ENV);;
+  ACE_CHECK;
+  (*list)[2] =
+    orb_->resolve_initial_references ("NameService",
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
 
   return list;
 }
