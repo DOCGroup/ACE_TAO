@@ -1,3 +1,15 @@
+Mon Sep 27 15:26:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+
+	  Added a new exception specification to correct an error in BCB6
+	  builds. 
+	
+	* DAnCE/ciao/CCM_Core.mpc:
+
+	  Deployment_stub should link with CIAO_DnC_Client.
+
 Mon Sep 27 12:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:

@@ -64,6 +64,8 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
 project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
   sharedname   =  CIAO_Deployment_stub
   after        += CIAO_DnC_Client
+ 
+  libs += CIAO_DnC_Client
 
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
