@@ -57,7 +57,7 @@ private:
   CORBA::Flags _flags;
   const CORBA::Char *_FAR _name;
 
-  CORBA_NamedValue (void) : _flags (0), _name (0) { }
+  CORBA_NamedValue (void) : _flags (0), _name (0), refcount_(0) { }
 
   friend class CORBA_NVList;
   friend class CORBA_Request;
