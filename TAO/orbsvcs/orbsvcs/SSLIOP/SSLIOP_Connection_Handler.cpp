@@ -86,10 +86,31 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   int client =
     this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;;
 
-  if (client)
-    tph->client_protocol_properties_at_orb_level (protocol_properties);
-  else
-    tph->server_protocol_properties_at_orb_level (protocol_properties);
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      if (client)
+        {
+          tph->client_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          tph->server_protocol_properties_at_orb_level (
+            protocol_properties
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
