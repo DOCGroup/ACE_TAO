@@ -169,7 +169,27 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
   ACE_OS::strncpy (tmp.inout (), cp + 1, length);
   tmp[length] = '\0';
 
-  this->endpoint_.port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
+  if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
+    {
+      this->endpoint_.port_ =
+        ACE_static_cast (CORBA::UShort, ACE_OS::atoi (tmp.in ()));
+    }
+  else
+    {
+      ACE_INET_Addr ia;
+      if (ia.string_to_addr (tmp.in ()) == -1)
+        {
+          ACE_THROW (CORBA::INV_OBJREF (
+              CORBA::SystemException::_tao_minor_code (
+                  TAO_DEFAULT_MINOR_CODE,
+                  EINVAL),
+              CORBA::COMPLETED_NO));
+        }
+      else
+        {
+          this->endpoint_.port_ = ia.get_port_number ();
+        }
+    }
 
   length = cp - start;
 
