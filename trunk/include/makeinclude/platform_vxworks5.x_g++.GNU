@@ -66,7 +66,7 @@ PIC             =
 AR              = ar$(TOOLENV)
 ARFLAGS         = rv
 RANLIB          = /bin/true
-PRELINK         = nm$(TOOLENV) .obj/$@.o $(ACE_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
+PRELINK         = nm$(TOOLENV) .obj/$@.o $(NMLIBS) $(ACE_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
 LINK.c           = override
