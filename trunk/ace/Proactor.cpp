@@ -8,9 +8,11 @@
 // This only works on Win32 platforms
 
 #include "ace/Task.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Timer_List.h"
 #include "ace/Log_Msg.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Proactor.i"
+#endif /* __ACE_INLINE__ */
 
 class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
   //     
@@ -32,6 +34,7 @@ class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
 {
   friend class ACE_Proactor;
   // Proactor has special privileges
+  // Access needed to: timer_event_
   
 public:
   ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
@@ -42,50 +45,133 @@ protected:
   // words, this method will do the waiting on the earliest timer
   // and event
   
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg = 0);
-  // Framework calls this when a timer expires
-
   ACE_Auto_Event timer_event_;
   // Event to wait on
   
   ACE_Proactor &proactor_;
   // Proactor 
-  
-public:
-  class ACE_Export ACT
-    //     
-    // = TITLE
-    //
-    //     A new ACT that combines the old ACT and Handler
-    // 
-    {
-    public:
-      ACT (ACE_Handler &handler,
-	   const void *act);
-      
-      ACE_Handler &handler_;
-      const void *act_;
-    };
 };
   
-#if !defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
-#endif /* __ACE_INLINE__ */
+ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
+  : proactor_ (proactor),
+    ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_)
+{
+}
+
+int
+ACE_Proactor_Timer_Handler::svc (void)
+{
+  u_long time;
+  ACE_Time_Value absolute_time;
+
+  for (;;)
+    {
+      // default value
+      time = INFINITE;
+
+      // If the timer queue is not empty
+      if (!this->proactor_.timer_queue ()->is_empty ())
+	{
+	  // Get the earliest absolute time
+	  absolute_time 
+	    = this->proactor_.timer_queue ()->earliest_time () 
+	    - this->proactor_.timer_queue ()->gettimeofday ();
+	  
+	  // time to wait
+	  time = absolute_time.msec ();
+	  
+	  // Make sure the time is positive
+	  if (time < 0)
+	    time = 0;
+	}
+      
+      // Wait for event upto <time> milli seconds
+      int result = ::WaitForSingleObject (this->timer_event_.handle (),
+					  time);
+      switch (result)
+	{
+	case WAIT_TIMEOUT:
+	  // timeout: expire timers
+	  this->proactor_.timer_queue ()->expire ();
+	  break;
+	case WAIT_FAILED:
+	  // error 
+	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "WaitForSingleObject"), -1);
+	}
+    }
+
+  return 0;  
+}
+
+ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall (void)
+  : proactor_ (0)
+{
+}
+
+int
+ACE_Proactor_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
+						 ACE_Handler *handler,
+						 const void *act,
+						 const ACE_Time_Value &time)
+{
+  if (this->proactor_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall, no completion port to post timeout to?!@\n"),
+		      -1);
+  
+  // Create the Asynch_Timer
+  ACE_Proactor::Asynch_Timer *asynch_timer 
+    = new ACE_Proactor::Asynch_Timer (*handler,
+				      act,
+				      time);
+  
+  // Post a completion
+  if (::PostQueuedCompletionStatus (this->proactor_->completion_port_, // completion port
+				    0, // number of bytes tranferred 
+				    0,	// completion key 
+				    asynch_timer // overlapped
+				    ) == FALSE)
+    {
+      delete asynch_timer;
+      ACE_ERROR_RETURN ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed\n"), -1);
+    }
+  
+  return 0;
+}
+
+
+int
+ACE_Proactor_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
+						 ACE_Handler *handler)
+{
+  // Do nothing
+  return 0;
+}
+
+int
+ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
+{
+  if (this->proactor_ == 0)
+    {
+      this->proactor_ = &proactor;
+      return 0;
+    }
+  else
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "ACE_Proactor_Handle_Timeout_Upcall is only suppose to be used with ONE (and only one) Proactor\n"), 
+		      -1);
+}
+
+
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads, 
-			    ACE_Timer_Queue *tq)
+			    Timer_Queue *tq)
   : completion_port_ (0), // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
     number_of_threads_ (number_of_threads),
     timer_queue_ (0),
     delete_timer_queue_ (0),
     timer_handler_ (0)
 {
-  ACE_NEW (this->timer_handler_, ACE_Proactor_Timer_Handler (*this));
-
-  // set the timer queue
-  this->timer_queue (tq);
-
   // create the completion port
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,						     
 						     this->completion_port_,
@@ -94,9 +180,16 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
   if (this->completion_port_ == 0)
     ACE_ERROR ((LM_ERROR, "%p\n", "CreateIoCompletionPort"));
 
+  // set the timer queue
+  this->timer_queue (tq);
+
+  // Create the timer handler
+  ACE_NEW (this->timer_handler_, ACE_Proactor_Timer_Handler (*this));
+
   // activate <timer_handler>
   if (this->timer_handler_->activate () == -1)
     ACE_ERROR ((LM_ERROR, "%p Could not create thread\n", "Task::activate"));
+
 }
 
 ACE_Proactor::~ACE_Proactor (void)
@@ -175,37 +268,30 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 			      const ACE_Time_Value &time,
 			      const ACE_Time_Value &interval)
 {
-  // Create a new ACT
-  ACE_Proactor_Timer_Handler::ACT *new_act = 0;
-  ACE_NEW_RETURN (new_act, ACE_Proactor_Timer_Handler::ACT (handler, act), -1);
+  // absolute time
+  ACE_Time_Value absolute_time = this->timer_queue_->gettimeofday () + time;
   
   // Only one guy goes in here at a time
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->timer_queue_->lock (), -1);  
 
-  // absolute time
-  ACE_Time_Value absolute_time = this->timer_queue_->gettimeofday () + time;
-
   // Schedule the timer
-  int result = this->timer_queue_->schedule (this->timer_handler_, 
-					     new_act,
+  int result = this->timer_queue_->schedule (&handler, 
+					     act,
 					     absolute_time,
 					     interval);
-  // Failure of schedule
-  if (result == -1)
-    // cleanup
-    delete new_act;
-  
-  // no failures: check to see if we are the earliest time
-  else if (this->timer_queue_->earliest_time () == absolute_time)
-    // wake up the timer thread
-    if (this->timer_handler_->timer_event_.signal () == -1)
-      {
-	// failure: cleanup
-	delete new_act;
-	// Cancel timer
-	this->timer_queue_->cancel (result);
-	result = -1;
-      }
+  if (result != -1)
+    {
+      // no failures: check to see if we are the earliest time
+      if (this->timer_queue_->earliest_time () == absolute_time)
+	
+	// wake up the timer thread
+	if (this->timer_handler_->timer_event_.signal () == -1)
+	  {
+	    // Cancel timer
+	    this->timer_queue_->cancel (result);
+	    result = -1;
+	  }
+    }
   return result;
 }
 
@@ -216,6 +302,14 @@ ACE_Proactor::cancel_timer (int timer_id,
   // No need to singal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
   return this->timer_queue_->cancel (timer_id, arg);
+}
+
+int 
+ACE_Proactor::cancel_timer (ACE_Handler &handler)
+{
+  // No need to singal timer event here. Even if the cancel timer was
+  // the earliest, we will have an extra wakeup.
+  return this->timer_queue_->cancel (&handler);
 }
 
 int 
@@ -345,14 +439,14 @@ ACE_Proactor::number_of_threads (size_t threads)
   this->number_of_threads_ = threads;
 }
 
-ACE_Timer_Queue *
+ACE_Proactor::Timer_Queue *
 ACE_Proactor::timer_queue (void) const
 {
   return this->timer_queue_;
 }
 
 void 
-ACE_Proactor::timer_queue (ACE_Timer_Queue *tq)
+ACE_Proactor::timer_queue (Timer_Queue *tq)
 {
   // cleanup old timer queue
   if (this->delete_timer_queue_)
@@ -364,7 +458,7 @@ ACE_Proactor::timer_queue (ACE_Timer_Queue *tq)
   // new timer queue
   if (tq == 0)
     {
-      this->timer_queue_ = new ACE_Timer_List;
+      this->timer_queue_ = new Timer_List;
       this->delete_timer_queue_ = 1;
     }
   else
@@ -372,84 +466,9 @@ ACE_Proactor::timer_queue (ACE_Timer_Queue *tq)
       this->timer_queue_ = tq;
       this->delete_timer_queue_ = 0;
     }
-}
 
-ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
-  : proactor_ (proactor),
-    ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_)
-{
-}
-
-int
-ACE_Proactor_Timer_Handler::svc (void)
-{
-  u_long time;
-  ACE_Time_Value absolute_time;
-
-  for (;;)
-    {
-      // default value
-      time = INFINITE;
-
-      // If the timer queue is not empty
-      if (!this->proactor_.timer_queue_->is_empty ())
-	{
-	  // Get the earliest absolute time
-	  absolute_time 
-	    = this->proactor_.timer_queue_->earliest_time () 
-	    - this->proactor_.timer_queue_->gettimeofday ();
-	  
-	  // time to wait
-	  time = absolute_time.msec ();
-	  
-	  // Make sure the time is positive
-	  if (time < 0)
-	    time = 0;
-	}
-      
-      // Wait for event upto <time> milli seconds
-      int result = ::WaitForSingleObject (this->timer_event_.handle (),
-					  time);
-      switch (result)
-	{
-	case WAIT_TIMEOUT:
-	  // timeout: expire timers
-	  this->proactor_.timer_queue_->expire ();
-	  break;
-	case WAIT_FAILED:
-	  // error 
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "WaitForSingleObject"), -1);
-	}
-    }
-
-  return 0;  
-}
-
-int
-ACE_Proactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
-					    const void *arg)
-{
-  ACE_Proactor_Timer_Handler::ACT *new_act 
-    = (ACE_Proactor_Timer_Handler::ACT *) arg;
-
-  // Create the Asynch_Timer
-  ACE_Proactor::Asynch_Timer *asynch_timer 
-    = new ACE_Proactor::Asynch_Timer (new_act->handler_,
-				      new_act->act_,
-				      tv);
-  
-  // Post a completion
-  if (::PostQueuedCompletionStatus (this->proactor_.completion_port_, // completion port
-				    0, // number of bytes tranferred 
-				    0,	// completion key 
-				    asynch_timer // overlapped
-				    ) == FALSE)
-    {
-      ACE_ERROR ((LM_ERROR, "Failure in dealing with timers: PostQueuedCompletionStatus failed"));
-      delete asynch_timer;
-    }
-  
-  return 0;
+  // Set the proactor in the timer queue's functor
+  this->timer_queue_->upcall_functor ().proactor (*this);
 }
 
 ACE_Proactor::Asynch_Timer::Asynch_Timer (ACE_Handler &handler,
@@ -468,13 +487,6 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 				      u_long error)
 {
   this->handler_.handle_timeout (this->time_, this->act ());
-}
-
-ACE_Proactor_Timer_Handler::ACT::ACT (ACE_Handler &handler,
-				      const void *act)
-  : act_ (act),
-    handler_ (handler)
-{
 }
 
 #endif /* ACE_WIN32 */

@@ -20,13 +20,52 @@
 
 #include "ace/Asynch_IO.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Timers.h"
 
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
 
-class ACE_Timer_Queue;
 class ACE_Asynch_Result;
 class ACE_Proactor_Timer_Handler;
+class ACE_Proactor;
+
+class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
+  // = TITLE 
+  //      Functor for Timer_Queues.
+  //
+  // = DESCRIPTION
+  //
+  //      This class implements the functor required by the Timer
+  //      Queue to call <handle_timeout> on ACE_Handlers.
+{
+  friend class ACE_Proactor;
+  // Proactor has special privileges
+  // Access needed to: proactor ()
+
+public:
+  typedef ACE_Timer_Queue_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> TIMER_QUEUE;
+    
+  ACE_Proactor_Handle_Timeout_Upcall (void);
+  // Constructor
+
+  int operator () (TIMER_QUEUE &timer_queue,
+		   ACE_Handler *handler,
+		   const void *arg,
+		   const ACE_Time_Value &cur_time);
+  // This method is called when the timer expires
+    
+  int operator () (TIMER_QUEUE &timer_queue,
+		   ACE_Handler *handler);
+  // This method is called when the timer is canceled
+
+protected:
+    
+  int proactor (ACE_Proactor &proactor);
+  // Set the proactor. This will fail, if one is already set!
+
+  ACE_Proactor *proactor_;
+  // Handle to the proactor. This is needed for the completion port.
+};
 
 class ACE_Export ACE_Proactor
   //     
@@ -39,23 +78,41 @@ class ACE_Export ACE_Proactor
   //     A manager for the I/O completion port.
 {
   friend class ACE_Proactor_Timer_Handler;
-  // Timer Handler has special privileges
+  // Timer Handler has special privileges because
+  // Access needed to: thr_mgr_
+
+  friend class ACE_Proactor_Handle_Timeout_Upcall;  
+  // Access needed to: Asynch_Timer
 
 public:
-  ACE_Proactor (size_t number_of_threads = 0, 
-		ACE_Timer_Queue *tq = 0);
-  // A do nothing constructor.
 
+  // Here are the typedef for Timer_Queue, Timer_List, and Timer_Heap
+  // for the Proactor (add to the ease of use of these template
+  // classes).
+
+  typedef ACE_Timer_Queue_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Queue;
+  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Queue_Iterator;
+
+  typedef ACE_Timer_List_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_List;
+  typedef ACE_Timer_List_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_List_Iterator;
+
+  typedef ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Heap;
+  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> Timer_Heap_Iterator;
+
+  ACE_Proactor (size_t number_of_threads = 0, 
+		Timer_Queue *tq = 0);
+  // A do nothing constructor.
+  
   virtual ~ACE_Proactor (void);
   // Virtual destruction.
-
+  
   virtual int close (void);
   // Close the IO completion port
-
+  
   virtual int register_handle (ACE_HANDLE handle, 
 			       const void *completion_key);
   // This method adds the <handle> to the I/O completion port
-
+  
   // = Timer management. 
   virtual int schedule_timer (ACE_Handler &handler, 
 			      const void *act,
@@ -73,16 +130,20 @@ public:
   virtual int schedule_repeating_timer (ACE_Handler &handler, 
 					const void *act,
 					const ACE_Time_Value &interval);  
-
+  
   // Same as above except <interval> it is used to reschedule the
   // <handler> automatically.
-
+  
   int schedule_timer (ACE_Handler &handler, 
 		      const void *act,
 		      const ACE_Time_Value &time,
 		      const ACE_Time_Value &interval);
   // This combines the above two methods into one. Mostly for backward
   // compatibility.
+
+  virtual int cancel_timer (ACE_Handler &handler);
+  // Cancel all timers associated with this <handler>.  Returns number
+  // of timers cancelled.
 
   virtual int cancel_timer (int timer_id, 
 			    const void **act = 0);
@@ -126,12 +187,12 @@ public:
   void number_of_threads (size_t threads);
   // Number of thread used as a parameter to CreatIoCompletionPort
 
-  ACE_Timer_Queue *timer_queue (void) const;
-  void timer_queue (ACE_Timer_Queue *);
+  Timer_Queue *timer_queue (void) const;
+  void timer_queue (Timer_Queue *);
   // Get/Set timer queue
-
+  
 protected:
-
+  
   void application_specific_code (ACE_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
 				  int success,
@@ -139,7 +200,7 @@ protected:
 				  u_long error);
   // Protect against structured exceptions caused by user code when
   // dispatching handles
-
+  
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
   // before any events occur, return.
@@ -153,8 +214,9 @@ protected:
     //     the <handler>'s handle_timeout method will be called.
     // 
     {
-      friend class ACE_Proactor_Timer_Handler;
+      friend class ACE_Proactor_Handle_Timeout_Upcall;
       // Timer Handler has special privileges
+      // Access needed to: convert Asynch_Timer into an OVERLAPPED
 
     public:
       Asynch_Timer (ACE_Handler &handler,
@@ -167,18 +229,18 @@ protected:
 			     const void *completion_key,
 			     u_long error = 0);  
       // This method calls the <handler>'s handle_timeout method 
-
+      
       ACE_Time_Value time_;
       // Time value requested by caller
     };
-
+  
   ACE_HANDLE completion_port_;
   // Handle for the completion port
-
+  
   size_t number_of_threads_;
   // This number is passed to the CreatIOCompletionPort() system call
 
-  ACE_Timer_Queue *timer_queue_;
+  Timer_Queue *timer_queue_;
   // Timer Queue 
 
   int delete_timer_queue_;
@@ -197,13 +259,12 @@ protected:
 
 #else /* NOT WIN32 */
 
-#include "ace/Timer_Queue.h"
-
 class ACE_Export ACE_Proactor
 {
 public:
+  class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
-		ACE_Timer_Queue * /* tq */ = 0) {}
+		Timer_Queue * /* tq */ = 0) {}
   virtual int handle_events (void) { return -1; }
   virtual int handle_events (ACE_Time_Value &) { return -1; }
 };
