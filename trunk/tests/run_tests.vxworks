@@ -158,10 +158,9 @@ ld < Simple_Message_Block_Test
 write 2, "Simple_Message_Block_Test ", 26
 ace_main; unld "Simple_Message_Block_Test"
 
-#### Page faults:
-#### ld < Message_Block_Test
-#### write 2, "Message_Block_Test ", 19
-#### ace_main; unld "Message_Block_Test"
+ld < Message_Block_Test
+write 2, "Message_Block_Test ", 19
+ace_main; unld "Message_Block_Test"
 
 ld < Priority_Task_Test
 write 2, "Priority_Task_Test ", 19
