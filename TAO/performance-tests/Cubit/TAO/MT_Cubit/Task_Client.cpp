@@ -756,12 +756,12 @@ Client::cube_octet (void)
 
       if (arg_octet != ret_octet)
         {
+          this->error_count_++;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_octet(%d)  (--> %d)\n",
                              arg_octet,
                              ret_octet),
                             -1);
-          this->error_count_++;
         }
       this->call_count_++;
     }
@@ -803,12 +803,12 @@ Client::cube_short (void)
 
       if (arg_short != ret_short)
         {
+          this->error_count_++;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_short(%d)  (--> %d)\n",
                              arg_short ,
                              ret_short),
                             -1);
-          this->error_count_++;
         }
     }
   TAO_CATCHANY
@@ -955,6 +955,7 @@ Client::make_calls (void)
         }
       TAO_ENDTRY;
     }
+  return 0;
 }
 
 int
