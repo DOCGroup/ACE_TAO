@@ -1,3 +1,12 @@
+Tue May 13 16:59:00 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * include/makeinclude/ace_flags.bor:
+
+          Made TAO_PORTABLESERVER_CFLAGS and TAO_PORTABLESERVER_LIB into
+          the aggregation of themselves and TAO_VALUETYPE/TAO_IORINTERCEPTOR/
+          TAO_ORT - CFLAGS and LIB respectively. Should fix link errors on
+          the static build.
+
 Tue May 13 09:04:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
