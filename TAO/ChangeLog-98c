@@ -1,3 +1,8 @@
+Mon Nov 10 19:26:03 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* tao/orbconf.h (SIZEOF_INT): FreeBSD and NetBSD have 4 byte
+	ints. Thanks to Nanbor for pointing this out.
+
 Mon Nov 10 18:30:22 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tao/orbobj.cpp: Added template instantiation for ACE_Atomic_Op.
