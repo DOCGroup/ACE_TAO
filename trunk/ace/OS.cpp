@@ -1,4 +1,4 @@
-g// $Id$
+// $Id$
 
 #include "ace/OS.h"
 #include "ace/Sched_Params.h"
