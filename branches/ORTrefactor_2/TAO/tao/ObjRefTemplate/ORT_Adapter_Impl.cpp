@@ -75,7 +75,7 @@ namespace TAO
   int
   ORT_Adapter_Impl::set_obj_ref_factory (
     PortableInterceptor::ObjectReferenceFactory *cf
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   {
     ort_factory_ = cf;
 

@@ -32,7 +32,7 @@ namespace TAO
   void
   ORT_Adapter_Factory_Impl::destroy (
       TAO::ORT_Adapter * adapter
-      ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
   {
     delete adapter;

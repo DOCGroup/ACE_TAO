@@ -137,7 +137,8 @@ TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
   // add_ior_component_to_profile.  It's a const value and its value
   // never changes.
   PortableInterceptor::ObjectReferenceTemplate *adapter_template =
-    this->poa_->get_adapter_template ();
+    this->poa_->get_adapter_template (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (adapter_template == 0)
     {
@@ -162,7 +163,8 @@ TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
   // can be changed.  The value of the current_factory can be changed
   // only during the call to components_established method.
   PortableInterceptor::ObjectReferenceFactory *adapter_factory =
-    this->poa_->get_obj_ref_factory ();
+    this->poa_->get_obj_ref_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (adapter_factory == 0)
     {

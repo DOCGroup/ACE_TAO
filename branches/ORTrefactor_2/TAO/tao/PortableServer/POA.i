@@ -464,9 +464,10 @@ TAO_POA::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
-TAO_POA::get_adapter_template ()
+TAO_POA::get_adapter_template (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->ORT_adapter ())
+  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
     {
       return this->ort_adapter_->get_adapter_template();
     }
@@ -486,9 +487,10 @@ TAO_POA::get_adapter_template_i ()
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
-TAO_POA::get_obj_ref_factory ()
+TAO_POA::get_obj_ref_factory (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->ORT_adapter ())
+  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
     {
       return this->ort_adapter_->get_obj_ref_factory();
     }

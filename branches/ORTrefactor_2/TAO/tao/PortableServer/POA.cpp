@@ -174,7 +174,7 @@ TAO_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
   ACE_ENV_ARG_DECL)
 {
-  if (this->ORT_adapter ())
+  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
     {
       // Activate a different factory
       this->ort_adapter_->set_obj_ref_factory (current_factory
@@ -422,7 +422,9 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
     TAO::ORT_Adapter_Factory *ort_factory =
       this->ORT_adapter_factory ();
 
-    ort_factory->destroy (this->ort_adapter_);
+    ort_factory->destroy (this->ort_adapter_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
     this->ort_adapter_ = 0;
   }
 
@@ -1941,7 +1943,7 @@ TAO_POA::create_reference_i (const char *intf,
 CORBA::Object_ptr
 TAO_POA::invoke_key_to_object_helper_i (const char * repository_id,
                                         const PortableServer::ObjectId & id
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const PortableInterceptor::ObjectId &user_oid =
@@ -4111,8 +4113,8 @@ TAO_POA::ORT_adapter_i (void)
         // adapter so that in case this fails, we just return 0 and not a not
         // activated adapter
         PortableInterceptor::AdapterName *adapter_name =
-          this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER)
-          ACE_TRY_CHECK;
+          this->adapter_name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
         this->ort_adapter_ =
           ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -4128,7 +4130,9 @@ TAO_POA::ORT_adapter_i (void)
         this->ort_adapter_->activate (this->orb_core_.server_id (),
                                       this->orb_core_.orbid (),
                                       adapter_name,
-                                      this);
+                                      this
+                                      ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
       }
     ACE_CATCHANY
       {
@@ -4145,7 +4149,8 @@ TAO_POA::ORT_adapter_i (void)
 }
 
 TAO::ORT_Adapter *
-TAO_POA::ORT_adapter (void)
+TAO_POA::ORT_adapter (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->ort_adapter_ != 0)
     return this->ort_adapter_;
