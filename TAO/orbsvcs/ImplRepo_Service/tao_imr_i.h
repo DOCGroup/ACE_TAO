@@ -7,7 +7,7 @@
 //    TAO/orbsvcs/ImplRepo_Service
 //
 // = FILENAME
-//    tao_ir_i.h
+//    tao_imr_i.h
 //
 // = DESCRIPTION
 //    This class implements the Implementation Repository helper application.
@@ -17,26 +17,26 @@
 //
 // ============================================================================
 
-#if !defined (TAO_IR_I_H)
-#define TAO_IR_I_H
+#if !defined (TAO_IMR_I_H)
+#define TAO_IMR_I_H
 
 #include "tao/corba.h"
-#include "orbsvcs/ImplRepoC.h"
+#include "tao/ImplRepoC.h"
 
-class TAO_IR_Op;
+class TAO_IMR_Op;
 // Forward Declaration
 
-class TAO_IR_i
+class TAO_IMR_i
 {
   // = TITLE
   //     TAO's command line helper application
   //
   // = DESCRIPTION
-  //     This class talks to the IR and registers/lists/etc.
+  //     This class talks to the IMR and registers/lists/etc.
 public:
   // = Constructor and destructor.
-  TAO_IR_i (void);
-  ~TAO_IR_i (void);
+  TAO_IMR_i (void);
+  ~TAO_IMR_i (void);
 
   int run (void);
   // Execute client code.
@@ -63,20 +63,20 @@ private:
   ImplementationRepository::Administration_var implrepo_;
   // Reference to our implementation repository.
 
-  TAO_IR_Op *op_;
+  TAO_IMR_Op *op_;
   // What we need to do.
 };
 
-class TAO_IR_Op
+class TAO_IMR_Op
 {
 public:
-  static TAO_IR_Op *make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Administration_ptr ir);
+  static TAO_IMR_Op *make_op (const ASYS_TCHAR *op_name, ImplementationRepository::Administration_ptr ir);
   // Factory.
   
-  TAO_IR_Op (ImplementationRepository::Administration_ptr implrepo);
+  TAO_IMR_Op (ImplementationRepository::Administration_ptr implrepo);
   // Constructor.
   
-  virtual ~TAO_IR_Op (void);
+  virtual ~TAO_IMR_Op (void);
   // Virtual Destructor.
 
   virtual int parse (int argc, ASYS_TCHAR **argv) = 0;
@@ -95,11 +95,11 @@ protected:
   // Prints out the information contained in a ServerInformation structure.
 };
 
-class TAO_IR_Op_Activate : public TAO_IR_Op
+class TAO_IMR_Op_Activate : public TAO_IMR_Op
 {
 public:
-  TAO_IR_Op_Activate (ImplementationRepository::Administration_ptr implrepo);
-  ~TAO_IR_Op_Activate (void);
+  TAO_IMR_Op_Activate (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_Activate (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
   virtual int run (void);
@@ -112,11 +112,11 @@ protected:
   // POA server name.
 };
 
-class TAO_IR_Op_Add : public TAO_IR_Op
+class TAO_IMR_Op_Add : public TAO_IMR_Op
 {
 public:
-  TAO_IR_Op_Add (ImplementationRepository::Administration_ptr implrepo);
-  ~TAO_IR_Op_Add (void);
+  TAO_IMR_Op_Add (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_Add (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
   virtual int run (void);
@@ -135,17 +135,29 @@ protected:
   // Working directory.
 
   ImplementationRepository::ActivationMode activation_;
-  // Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT)
+  // Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
 };
 
-
-// Used to list the entries in the IR
-
-class TAO_IR_Op_List : public TAO_IR_Op
+class TAO_IMR_Op_Autostart : public TAO_IMR_Op
 {
 public:
-  TAO_IR_Op_List (ImplementationRepository::Administration_ptr implrepo);
-  ~TAO_IR_Op_List (void);
+  TAO_IMR_Op_Autostart (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_Autostart (void);
+
+  virtual int parse (int argc, ASYS_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  void print_usage (void);
+  // Prints a message about the usage
+};
+
+class TAO_IMR_Op_List : public TAO_IMR_Op
+// Used to list the entries in the IMR
+{
+public:
+  TAO_IMR_Op_List (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_List (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
   virtual int run (void);
@@ -165,11 +177,14 @@ protected:
   // Specialized to only print server information
 };
 
-class TAO_IR_Op_Remove : public TAO_IR_Op
+
+
+class TAO_IMR_Op_Remove : public TAO_IMR_Op
+// Used to remove entries in the IMR
 {
 public:
-  TAO_IR_Op_Remove (ImplementationRepository::Administration_ptr implrepo);
-  ~TAO_IR_Op_Remove (void);
+  TAO_IMR_Op_Remove (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_Remove (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
   virtual int run (void);
@@ -182,11 +197,11 @@ protected:
   // POA server name.
 };
 
-class TAO_IR_Op_Shutdown : public TAO_IR_Op
+class TAO_IMR_Op_Shutdown : public TAO_IMR_Op
 {
 public:
-  TAO_IR_Op_Shutdown (ImplementationRepository::Administration_ptr implrepo);
-  ~TAO_IR_Op_Shutdown (void);
+  TAO_IMR_Op_Shutdown (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_Shutdown (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
   virtual int run (void);
@@ -199,11 +214,11 @@ protected:
   // POA server name.
 };
 
-class TAO_IR_Op_Update : public TAO_IR_Op
+class TAO_IMR_Op_Update : public TAO_IMR_Op
 {
 public:
-  TAO_IR_Op_Update (ImplementationRepository::Administration_ptr implrepo);
-  ~TAO_IR_Op_Update (void);
+  TAO_IMR_Op_Update (ImplementationRepository::Administration_ptr implrepo);
+  ~TAO_IMR_Op_Update (void);
 
   virtual int parse (int argc, ASYS_TCHAR **argv);
   virtual int run (void);
@@ -226,6 +241,12 @@ protected:
 
   ACE_TString working_dir_;
   // Working directory.
+
+  int set_activation_;
+  // True if the activation mode needs to be updated.
+
+  ImplementationRepository::ActivationMode activation_;
+  // Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT, 3 = AUTO_START)
 };
 
-#endif /* TAO_IR_I_H */
+#endif /* TAO_IMR_I_H */

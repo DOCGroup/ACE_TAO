@@ -45,10 +45,18 @@
 // POA Manager
 #include "tao/POAManager.h"
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+// Implementation Repository
+#  include "tao/ImplRepoC.h"
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
-#if defined (_MSC_VER)
-# pragma warning (disable : 4250)
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
 class TAO_POA;
@@ -333,6 +341,9 @@ protected:
   void *time_stamp_;
 };
 
+// Forward Declaration
+class ServerObject_i;
+
 class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
 public:
@@ -536,7 +547,22 @@ protected:
   void set_servant_i (PortableServer::Servant servant,
                       CORBA_Environment &ACE_TRY_ENV);
 
+  void imr_notify_startup (CORBA_Environment &ACE_TRY_ENV);
+  // ImplRepo helper method, notify the ImplRepo on startup
+
+  void imr_notify_shutdown (void);
+  // ImplRepo helper method, notify the ImplRepo on shutdown
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+  CORBA::Object_ptr key_to_object (const TAO_ObjectKey &key,
+                                   const char *type_id,
+                                   TAO_ServantBase *servant = 0,
+                                   CORBA::Boolean collocated = 1,
+                                   CORBA_Environment &ACE_TRY_ENV =
+                                       TAO_default_environment ());
+  // Wrapper for the ORB's key_to_object that will alter the object pointer
+  // if the ImplRepo is used.
 
   int is_servant_in_map (PortableServer::Servant servant);
 
@@ -699,6 +725,12 @@ protected:
 
   PortableServer::ServantBase_var default_servant_;
 
+  ServerObject_i *server_object_;
+  // Implementation Repository Server Object
+
+  int use_imr_;
+  // Flag for whether the IR should be used or not.
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
@@ -752,6 +784,10 @@ protected:
 };
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 # include "tao/POA.i"

@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "tao_ir"=.\tao_ir.dsp - Package Owner=<4>
+Project: "tao_imr"=.\tao_imr.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

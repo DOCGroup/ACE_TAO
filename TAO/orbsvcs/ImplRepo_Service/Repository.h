@@ -24,10 +24,11 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"
+#include "ace/Configuration.h"
 
 class Server_Info
   // = TITLE
-  //   Information about IR registered servers.
+  //   Information about IMR registered servers.
   //
   // = DESCRIPTION
   //   Contains all the necessary information about the server including
@@ -36,7 +37,7 @@ class Server_Info
 public:
   // = Constructors
 
-  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT};
+  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT, AUTO_START};
 
   Server_Info (const ACE_TString POA_name,
                const ACE_TString logical_server_name,
@@ -50,8 +51,7 @@ public:
   ~Server_Info ();
   // The only destructor there is.
 
-  void update_running_info (const ACE_TString host,
-                            const unsigned short port,
+  void update_running_info (const ACE_TString location,
                             const ACE_TString server_object_ior);
   // Updates information that is relevant only when an instance
   // of the server is running.
@@ -62,8 +62,7 @@ public:
                          ActivationMode &activation);
   // Returns startup information.
 
-  void get_running_info (ACE_TString &host,
-                         unsigned short &port,
+  void get_running_info (ACE_TString &location,
                          ACE_TString &server_object_ior);
   // Returns information about a running instance.
 
@@ -94,11 +93,8 @@ private:
   ACE_TString working_dir_;
   // The working directory.
 
-  ACE_TString host_;
-  // Current hostname used by the server.
-
-  unsigned short port_;
-  // Current port used by the server.
+  ACE_TString location_;
+  // Current endpoint used by the server.
 
   ACE_TString server_object_ior_;
   // IOR of the server object in the server.
@@ -125,20 +121,26 @@ public:
   Server_Repository ();
   // Default Constructor
 
+  ~Server_Repository ();
+  // Destructor
+
   typedef ACE_Hash_Map_Entry<ACE_TString,
-                             Server_Info *> HASH_IR_ENTRY;
+                             Server_Info *> HASH_IMR_ENTRY;
 
   typedef ACE_Hash_Map_Manager_Ex<ACE_TString,
                                   Server_Info *,
                                   ACE_Hash<ACE_TString>,
                                   ACE_Equal_To<ACE_TString>,
-                                  ACE_Null_Mutex> HASH_IR_MAP;
+                                  ACE_Null_Mutex> HASH_IMR_MAP;
 
   typedef ACE_Hash_Map_Iterator_Ex<ACE_TString,
                                    Server_Info *,
                                    ACE_Hash<ACE_TString>,
                                    ACE_Equal_To<ACE_TString>,
-                                   ACE_Null_Mutex> HASH_IR_ITER;
+                                   ACE_Null_Mutex> HASH_IMR_ITER;
+
+  int init (ACE_Configuration *config);
+  // Initializes the configuration persistent storage based on <config>
 
   int add (const ACE_TString POA_name,
            const ACE_TString logical_server_name,
@@ -148,8 +150,7 @@ public:
   // Add a new server to the Repository
 
   int update (const ACE_TString POA_name,
-              const ACE_TString host,
-              const unsigned short port,
+              const ACE_TString location,
               const ACE_TString server_object_ior);
   // Update the associated process information.
 
@@ -161,8 +162,7 @@ public:
   // Returns information related to startup.
 
   int get_running_info (const ACE_TString POA_name,
-                        ACE_TString &host,
-                        unsigned short &port,
+                        ACE_TString &location,
                         ACE_TString &server_object_ior);
   // Returns information related to a running copy.
 
@@ -176,14 +176,16 @@ public:
   int remove (const ACE_TString POA_name);
   // Removes the server from the Repository.
 
-  HASH_IR_ITER *new_iterator ();
+  HASH_IMR_ITER *new_iterator ();
   // Returns a new iterator that travels over the repository.
 
   size_t get_repository_size ();
   // Returns the number of entries in the repository.
 
 private:
-  HASH_IR_MAP repository_;
+  HASH_IMR_MAP repository_;
+  ACE_Configuration* config_;
+  ACE_Configuration_Section_Key servers_;
 };
 
 

@@ -55,7 +55,9 @@ POA_FILES = \
   POAS \
   POAManager \
   Active_Object_Map \
-  Servant_Base
+  Servant_Base \
+  ImplRepoC \
+  ImplRepoS
 
 PLUGGABLE_PROTOCOLS_FILES = \
   Pluggable \

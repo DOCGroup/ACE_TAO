@@ -42,10 +42,6 @@ ifndef TAO_ORBSVCS
 
 ifndef minimum_corba
 
-# ImplRepo uses AdapterActivator which is disabled when compiling with
-# minimum CORBA support.
-  TAO_ORBSVCS += ImplRepo
-
 # Trader uses DynAny which is disabled when compiling with minimum
 # CORBA support.  LifeCycle depend on Trader so don't build
 # them either.
@@ -235,18 +231,7 @@ ifneq (,$(findstring Time,$(TAO_ORBSVCS)))
         Time/TAO_UTO \
         Time/TAO_TIO \
         Time/Timer_Helper
-
-  #### TAO's Time Service requires its ImplRepo Service.
-  ifeq (,$(findstring ImplRepo,$(TAO_ORBSVCS)))
-    #### Add ImplRepo
-    TAO_ORBSVCS += ImplRepo
-  endif # ! ImplRepo
 endif # Time
-
-ifneq (,$(findstring ImplRepo,$(TAO_ORBSVCS)))
-  IDL_SRCS += ImplRepo
-  TAO_ORBSVCS_SRCS += IR_Helper
-endif # ImplRepo
 
 ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
   IDL_SRCS += CosNaming

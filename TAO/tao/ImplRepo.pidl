@@ -25,17 +25,13 @@ module ImplementationRepository
     string value;
   };
 
-  struct Address
+  typedef string Address;
   // Specifies the location of the server.
-  {
-    string host;
-    unsigned short port;
-  };
 
   typedef sequence<EnvironmentVariable> EnvironmentList;
   // Complete Environment.
 
-  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT};
+  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT, AUTO_START};
   // The type of Activation 
 
   struct StartupOptions

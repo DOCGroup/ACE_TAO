@@ -39,9 +39,8 @@ class Nestea_i: public POA_Nestea_Bookshelf
   //    number of nestea cans in a bookshelf.  You can drink Nestea to add
   //    it to the bookshelf or crush the cans to remove them.
 public:
-  Nestea_i (const char *filename = "nestea.dat", int shutdown = 0);
-  // Constructor that takes in an optional shutdown parameter which, if nonzero,
-  // will shutdown the server after each call.
+  Nestea_i (const char *filename = "nestea.dat");
+  // Constructor
 
   virtual ~Nestea_i (void);
   // Destructor

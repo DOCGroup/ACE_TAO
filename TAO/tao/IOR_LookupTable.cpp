@@ -8,14 +8,26 @@
 
 ACE_RCSID(tao, IOR_TableLookup, "$Id$")
 
+int 
+TAO_IOR_LookupTable_Callback::find_ior (const ACE_CString &,
+                                        ACE_CString &)
+{
+  // Nothing
+  return -1;
+}
+
 // = Initialization and termination methods.
 TAO_IOR_LookupTable::TAO_IOR_LookupTable (void)
-  : table_ ()
+  : table_ (),
+    delete_callback_ (1)
 {
+  ACE_NEW (this->callback_, TAO_IOR_LookupTable_Callback);
 }
 
 TAO_IOR_LookupTable::~TAO_IOR_LookupTable (void)
 {
+  if (this->delete_callback_)
+    delete this->callback_;
 }
 
 int
@@ -74,10 +86,24 @@ TAO_IOR_LookupTable::find_ior (const ACE_CString &object_name,
   //                 "TAO (%P|%t) IOR Table find <%s>\n",
   //                 object_name.c_str ()));
 
-  return this->table_.find (object_name, ior);
+  int result = this->table_.find (object_name, ior);
 
+  if (result != 0)
+    result = this->callback_->find_ior (object_name, ior);
+
+  return result;
 }
 
+void 
+TAO_IOR_LookupTable::register_callback (TAO_IOR_LookupTable_Callback *callback, 
+                                        int delete_callback)
+{
+  if (this->delete_callback_)
+    delete this->callback_;
+
+  this->callback_ = callback;
+  this->delete_callback_ = delete_callback;
+}
 
 CORBA_ORB_ObjectIdList_ptr
 TAO_IOR_LookupTable::list_initial_services (CORBA::Environment &ACE_TRY_ENV)

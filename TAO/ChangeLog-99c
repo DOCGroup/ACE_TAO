@@ -1,3 +1,165 @@
+Wed Dec 15 20:07:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        Where to start?  The major points:
+
+        - Renamed all IR references to IMR, to be consistent with how most
+          people refer to it these days.
+
+        - The IR_Helper functionality was pushed down into the POA, so the
+          IMR's use on the server side is transparent code-wise (you still
+          will need a command line option to enable it).  [Bug 24]
+
+        - Thanks to a submission by Chris Hafey <chris@stentorsoft.com>, 
+          persistence was added to the Implementation Repository.  The flags 
+          used are -p for specifying a file to save the settings to, and -r 
+          for saving to the Win32 Registry. [Bug 195]
+
+        - The new scheme should also work better with pluggable protocols, 
+          but multiple profiles isn't currently supported. [Bug 134]
+
+        - Another activation mode, AUTO_START was added. This mode means that
+          the server will be automatically started when the ImplRepo_Service
+          executable starts up.  This makes sense now we have persistence.
+
+        - Added a callback method to the IOR lookup table.  This allows me to
+          add support for simple names in the Implementation Repository.  The
+          way this works is that the IMR recognizes Interoperable Naming 
+          Service short names and activates the server and then forwards to 
+          it.  [Note] Even though it works with INS, I still have some changes
+          I want to integrate to make it easier.  Right now there is no way
+          to get the endpoint portion for the IMR IOR without copying it from 
+          the IOR output file.  
+       
+
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/IIOP_Profile.h:
+        * tao/IIOP_Profile.i:
+        * tao/UIOP_Profile.h:
+        * tao/UIOP_Profile.i:
+          
+          Added a new accessor method called get_object_key_delimeter ().
+          It returns the object key delimeter.  It was added so string IORs 
+          could be altered in a pluggable way.
+
+        * orbsvcs/orbsvcs/ImplRepo.idl: (removed)
+        * tao/ImplRepo.pidl: (added)
+        * tao/ImplRepoC.cpp: (added)
+        * tao/ImplRepoC.h: (added)
+        * tao/ImplRepoC.i: (added)
+        * tao/ImplRepoS.cpp: (added)
+        * tao/ImplRepoS.h: (added)
+        * tao/ImplRepoS.i: (added)
+        * tao/ImplRepoS_T.cpp: (added)
+        * tao/ImplRepoS_T.h: (added)
+        * tao/ImplRepoS_T.i: (added)
+
+          Moved the IDL file for the ImplRepo from orbsvcs into TAO itself.
+
+        * orbsvcs/orbsvcs/IR_Helper.cpp: (removed)
+        * orbsvcs/orbsvcs/IR_Helper.h: (removed)
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/POA.cpp:
+        * tao/POA.h:
+
+          Removed the IR_Helper classes and integrated their function into 
+          the POA.  The ORB_Core now supports a new flag, ORBUseIMR, and 
+          keeps track of the ImplRepo IOR.  The POA now does the notify
+          startup and shutdown calls, plus alters the references to point
+          to the IMR.
+
+        * tao/IOR_LookupTable.cpp:
+        * tao/IOR_LookupTable.h:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          
+          Added a callback hook to the IOR Lookup Table so a application 
+          method can be used to create IORs dynamically.  The IMR uses this
+          for activation purposes when a simplified name is used (eg. 
+          iiop://maxixe:5050/NameService).
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.h:
+        * orbsvcs/ImplRepo_Service/tao_imr.cpp: (added)
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp: (added)
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h: (added)
+        * orbsvcs/ImplRepo_Service/tao_ir.cpp:
+        * orbsvcs/ImplRepo_Service/tao_ir_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_ir_i.h:
+
+          Renamed tao_imr, added Chris's persistence changes, integrated
+          better with INS (supports the callback and registers itself as
+          "ImplRepoService"), and changed the way that the forwarding IOR is
+          generated to remove the tight coupling with IIOP.  I also removed
+          the orb_manager while I was visiting.
+
+        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+         
+          Removed all IMR specific code, and have them now register short 
+          names with INS.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Test refers to tao_imr and uses the ORBUseIMR flag.
+
+        * tao/TAO.dsp:
+        * tao/Makefile:
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/ImplRepo_Service/tao_ir.dsp: (removed)
+        * orbsvcs/ImplRepo_Service/tao_imr.dsp: (added)
+        * orbsvcs/ImplRepo_Service/Makefile:
+        * orbsvcs/ImplRepo_Service/ImplRepo.dsw:
+        * orbsvcs/tests/ImplRepo/ImplRepo.dsw:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+        
+          Updated the makefiles/projects because of these changes.
+
+        * orbsvcs/tests/ImplRepo/NameService/README:
+          
+          Readme for an upcoming test that will display how to use the IMR to
+          start common services such as the Trading, Naming, etc. via 
+          resolve_init_references ().
+
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+          
+          Preliminary work for getting the Naming_Service to work with IMR.
+          Changes are minor, changing the child POA name to NameService instead
+          of child_poa, and removing the use of orb_manager while I was there.
+
+        * docs/Options.html:
+
+          Covers the new -ORBUseIMR option.
+          
+        * docs/implrepo/index.html:
+        * docs/implrepo/tao_imr.html: (added)
+        * docs/implrepo/tao_ir.html: (removed)
+        * docs/implrepo/usersguide.html:
+          
+          Changed the documentation to cover all these changes.
+
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+          
+          Added more blocks of disabling MSVC 4250 compiler warnings.
+
 Wed Dec 15 19:00:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp
