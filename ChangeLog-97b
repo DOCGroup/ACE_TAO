@@ -1,3 +1,8 @@
+Tue Nov 18 16:27:32 1997    <irfan@TWOSTEP>
+
+	* ace/config-win32-common.h: If __ACE_INLINE__ is defined to be 0,
+ 	  we will undefine it.
+
 Tue Nov 18 15:59:37 1997  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
