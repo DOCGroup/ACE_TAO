@@ -491,7 +491,7 @@ TAO_AV_RTCP::handle_input (ACE_Message_Block *data,
    * size estimator.  Also, there's valid ssrc so charge errors to it
    */
 
-  
+
   double tmp = (cc + 28) - state->rtcp_avg_size_;
   tmp *= RTCP_SIZE_GAIN;
   state->rtcp_avg_size_ += ACE_static_cast (int, tmp);
@@ -767,7 +767,7 @@ TAO_AV_RTCP_Callback::handle_start (void)
   if (rint < RTCP_MIN_RPT_TIME / 2. * 1000.)
     rint = RTCP_MIN_RPT_TIME / 2. * 1000.;
   this->state_->rint_ = rint;
-  this->timeout_ = int(fmod(double(ACE_OS::rand ()), rint) + rint * .5 + .5);
+  this->timeout_ = int(TAO_AV_RTCP::fmod(double(ACE_OS::rand ()), rint) + rint * .5 + .5);
   return 0;
 }
 
