@@ -40,8 +40,14 @@ inline int QuantifyStopRecordingData ()
 
 #endif /* USING_QUANTIFY */
 
-// Default IOR
+// Default IOR.
 static const char *ior = "file://test.ior";
+
+// Levels at which syncscope policy can be set.
+static const enum LEVEL {ORB, THREAD, OBJECT};
+
+// Default is OBJECT level.
+static LEVEL level = OBJECT;
 
 // Default iterations.
 static CORBA::ULong iterations = 100;
@@ -262,7 +268,7 @@ oneway_payload_test (Test_ptr server,
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ps:k:i:t:m:w:x");
+  ACE_Get_Opt get_opts (argc, argv, "ps:k:i:t:l:m:w:x");
   int error = 0;
   int c;
 
@@ -304,6 +310,21 @@ parse_args (int argc, char *argv[])
           break;
         }
 
+      case 'l':
+        {
+          char *tmp = get_opts.optarg;
+
+          if (!ACE_OS::strcmp (tmp, "orb"))
+            level = ORB;
+          else if (!ACE_OS::strcmp (tmp, "thread"))
+            level = THREAD;
+          else if (!ACE_OS::strcmp (tmp, "object"))
+            level = OBJECT;
+          else
+            error = 1;
+          break;
+        }
+
       case 'm':
         buffering_queue_size = ACE_OS::atoi (get_opts.optarg);
         break;
@@ -330,6 +351,7 @@ parse_args (int argc, char *argv[])
                        "-p <payload based test> "
                        "-i <# of iterations> "
                        "-t <none|transport|server|target|twoway> "
+                       "-l <orb|thread|object> "
                        "-m <message count> "
                        "-w <# of server loops> "
                        "-x shutdown server "
@@ -425,6 +447,25 @@ main (int argc, char *argv[])
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      obj = orb->resolve_initial_references ("ORBPolicyManager",
+                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::PolicyManager_var policy_manager = 
+        CORBA::PolicyManager::_narrow (obj.in (),
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      obj = orb->resolve_initial_references ("PolicyCurrent",
+                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::PolicyCurrent_var policy_current = 
+        CORBA::PolicyCurrent::_narrow (obj.in (),
+                                       ACE_TRY_ENV);
+
+      ACE_TRY_CHECK;
+
       obj = orb->string_to_object (ior,
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -460,19 +501,43 @@ main (int argc, char *argv[])
                                 ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // Set up the sync scope (at the object level).
-          obj = server->_set_policy_overrides (sync_scope_policy_list,
-                                               CORBA::ADD_OVERRIDE,
-                                               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          switch (level)
+          {
+            case ORB:
+              // Set the sync scope policy at the ORB level.
+              policy_manager->set_policy_overrides (sync_scope_policy_list,
+                                                    CORBA::ADD_OVERRIDE,
+                                                    ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              break;
+
+            case THREAD:
+              // Set the sync scope policy at the thread level.
+              policy_current->set_policy_overrides (sync_scope_policy_list,
+                                                    CORBA::ADD_OVERRIDE,
+                                                    ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              break;
+
+            case OBJECT:
+              // Set the sync scope policy at the object level.
+              obj = server->_set_policy_overrides (sync_scope_policy_list,
+                                                   CORBA::ADD_OVERRIDE,
+                                                   ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+
+              // Get the new object reference with the updated policy.
+              server = Test::_narrow (obj.in (),
+                                      ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              break;
+
+            default:
+              break;
+          }
 
           // We are done with this policy.
           sync_scope_policy_list[0]->destroy (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          // Get the new object reference with the updated policy.
-          server = Test::_narrow (obj.in (),
-                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Are we buffering the oneway requests?

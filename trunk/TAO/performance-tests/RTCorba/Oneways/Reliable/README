@@ -10,11 +10,21 @@ Client:
 
 Type 'client' with one or more of the following args:
 
+-k ior		-- input specific IOR.
+-s payload size -- size of payload if payload test is used.
+-p payload test -- use payload test.
 -t test type    -- runs only one type of oneway test.
 -i iterations   -- number of calls in each test.
+-l level	-- selects level at which SyncScope policy is set.
 -m buffer size	-- queue size for buffered oneways.
 -w servant work -- number of loops of 1000 done by servant
 -x		-- shuts down server after testing.
+
+levels:
+
+orb		-- sets SyncScope policy at the ORB level.
+thread		-- sets SyncScope policy at the thread level.
+object		-- sets SyncScope policy at the object level (default);
 
 test types:
 
@@ -64,9 +74,10 @@ policy value of SYNC_WITH_SERVER does not wait on, while the
 other two types of requests mentioned above do.
 
 
-All the above command line options except -x may be used with the
-perl script run_test.pl. If no test type is specified, the script
-will run each test type in turn before the server is shut down.
+All the above command line options except -k, -s, -p and -x may be 
+used with the perl script run_test.pl. If no test type is specified, 
+the script will run each test type in turn before the server is shut 
+down.
 
 There is also a perl script called client_test.pl, which facilitates
 testing with the client and server on different machines. To use

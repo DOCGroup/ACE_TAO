@@ -14,6 +14,7 @@ $bufsize = 4000;
 $work = 10;
 $transport = "";
 $type = "";
+$level = "object";
 $shutdown = "";
 $all = 1;
 $other = "";
@@ -38,7 +39,7 @@ sub run_test
   print STDERR "\n***************** STARTING TEST ******************\n";
 
   $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                         " $transport -t $type -i $iterations "
+                         " $transport -t $type -i $iterations -l $level"
 			 . " -m $bufsize -w $work $shutdown ");
 
   $client = $CL->TimedWait (60);
@@ -55,7 +56,7 @@ sub run_buffered
   print STDERR "\n***************** STARTING TEST ******************\n";
 
   $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                         " -ORBNodelay 0 "
+                         " -ORBNodelay 0 -l $level "
 			 . " -t none -i $iterations -m $bufsize");
 
   $client = $CL->TimedWait (60);
@@ -82,6 +83,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "\n";
       print "-t test type        -- runs only one type of oneway test\n";
       print "-i iterations       -- number of calls in each test\n";
+      print "-l level		 -- level at which policy is set\n";
       print "-m buffer size      -- queue size for buffered oneways\n";
       print "-w servant work	 -- number of loops of 1000 by servant\n";
       exit 0;
@@ -111,6 +113,12 @@ for ($i = 0; $i <= $#ARGV; $i++)
       $i++;
       last SWITCH;
     }
+    if ($ARGV[$i] eq "-l")
+    {
+      $level = $ARGV[$i + 1];
+      $i++;
+      last SWITCH;
+    }
     $other .= $ARGV[$i];
   }
 }
@@ -130,6 +138,10 @@ if ($all == 1) {
     run_buffered ($bufsize);
   }
 }
+
+print STDERR "\nSyncScope policy set at the ";
+print STDERR $level;
+print STDERR " level\n";
 
 foreach $type (@types) {
   run_test ($type);
