@@ -1,5 +1,8 @@
 Fri Sep 19 14:52:53 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
+	* examples/Reactor/Misc: Added reactors.dsp signals_1.dsp
+	  signals_2.dsp. 
+	
 	* ace/OS.cpp (thr_exit): Commented out the call to
  	  ACE_TSS_Cleanup::exit () because ACE_OS::thr_exit is actually
  	  called from ACE_TSS_Cleanup::exit ().
