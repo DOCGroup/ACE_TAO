@@ -1,3 +1,9 @@
+Thu Nov  9 10:38:33 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Makefile:
+          ACE_HAS_GNUG_PRE_2_8 should be used only after
+          wrapper_macros.GNU is included.
+
 Thu Nov  9 10:26:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/make_pretty.pl:
