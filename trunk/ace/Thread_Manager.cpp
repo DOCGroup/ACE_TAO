@@ -66,7 +66,8 @@ ACE_Thread_Descriptor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nthr_handle_ = %d", this->thr_handle_));
   ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
   ACE_DEBUG ((LM_DEBUG, "\nthr_state_ = %d", this->thr_state_));
-  ACE_DEBUG ((LM_DEBUG, "\ncleanup_info_.cleanup_hook_ = %x\n", this->cleanup_info_.cleanup_hook_));
+  ACE_DEBUG ((LM_DEBUG, "\ncleanup_info_.cleanup_hook_ = %x", this->cleanup_info_.cleanup_hook_));
+  ACE_DEBUG ((LM_DEBUG, "\nflags_ = %x\n", this->flags_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -504,7 +505,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 			     *t_handle, 
 			     ACE_THR_SPAWNED, 
 			     grp_id,
-			     task);
+			     task,
+			     flags);
 }
 
 // Create a new thread running <func>.  *Must* be called with the
@@ -619,9 +621,17 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
                                 ACE_hthread_t t_handle,
                                 ACE_Thread_State thr_state,
                                 int grp_id,
-                                ACE_Task_Base *task)
+                                ACE_Task_Base *task,
+				long flags)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
+  // @@ This code will need to be replaced with a loop that will
+  // iterate from 0 to this->max_table_size_ looking for a
+  // thr_table_[i].thr_state_ entry that is set to ACE_THR_IDLE.  Only
+  // if all the entries are in use do we have to reallocate the table.
+  // Note that at some point we should use an "in situ" free list that
+  // is woven through the table...
+
   // Try to resize the array to twice its existing size if we run out
   // of space...
   if (this->current_count_ >= this->max_table_size_ 
@@ -640,6 +650,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
       thr_desc.cleanup_info_.cleanup_hook_ = 0;
       thr_desc.cleanup_info_.object_ = 0;
       thr_desc.cleanup_info_.param_ = 0;
+      thr_desc.flags_ = flags;
 
       this->current_count_++;
       return 0;
@@ -681,7 +692,8 @@ ACE_Thread_Manager::find_thread (ACE_thread_t t_id)
 int
 ACE_Thread_Manager::insert_thr (ACE_thread_t t_id, 
                                 ACE_hthread_t t_handle,
-                                int grp_id)
+                                int grp_id,
+				long flags)
 {
   ACE_TRACE ("ACE_Thread_Manager::insert_thr");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -693,9 +705,12 @@ ACE_Thread_Manager::insert_thr (ACE_thread_t t_id,
   if (grp_id == -1)
     grp_id = this->grp_id_++;
     
-  if (this->append_thr (t_id, t_handle, 
+  if (this->append_thr (t_id,
+			t_handle, 
                         ACE_THR_SPAWNED,
-                        grp_id) == -1)
+                        grp_id,
+			0,
+			flags) == -1)
     return -1;
   else
     return grp_id;
@@ -734,8 +749,14 @@ ACE_Thread_Manager::remove_thr (int i)
 
   this->current_count_--;
 
-  // This compaction strategy should be removed so that we can use the
-  // TSS trick.
+  // @@ This compaction strategy should be removed so that we can use
+  // the TSS trick.  Therefore, we need to use the ACE_THR_IDLE flag
+  // to mark unused slots.  In addition, we need to keep a list of
+  // thread descriptors that have been removed *and* that were also
+  // *not* created with the ACE_THREAD_DETACHED (or where created with
+  // the ACE_THR_JOINABLE) flag.  Therefore, don't actually mark the
+  // thr_table_ entry as being in the ACE_THR_IDLE state *until* we've
+  // joined this thread.
 
   if (this->current_count_ > 0)
     // Compact the table by moving the last item into the slot vacated
@@ -1164,8 +1185,9 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 {
-  // HEY!  What we should do is build a table of threads which have
-  // been removed so that we can ``join'' with them later.
+  // @@ What we should do is build a table of threads which have been
+  // removed so that we can ``join'' with them at this point and also
+  // close down the handles.
 
   ACE_TRACE ("ACE_Thread_Manager::wait");
 
@@ -1182,6 +1204,13 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
       if (this->zero_cond_.wait (timeout) == -1)
         return -1;
   }
+
+  // @@ Hopefully, we can get rid of all this stuff if we keep a list
+  // of threads to join with...  In addition, we should be able to
+  // close down the HANDLE at this point, as well, on NT.  Note that
+  // we can also mark the thr_table_[entry] as ACE_THR_IDLE once we've
+  // joined with it.
+
   // Let go of the guard, giving other threads a chance to run.
 
   // Yield (four times) for each thread that we had to wait on.  This
