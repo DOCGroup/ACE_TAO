@@ -1,3 +1,14 @@
+Mon Jul 05 15:16:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/compiler.html: Added instructions on using environment
+	  variables CPP_LOCATION and TAO_IDL_DEFAULT_CPP_FLAGS.
+	  Also reformatted the document a bit.
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Allow users to
+	  customize the command line options passed to the preprocessor so
+	  it's easier to use TAO_IDL for cross compilation.  Thanks to
+	  David for reporting the problem.
+
 Mon Jul 05 14:01:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Exception.cpp (CORBA_Exception): Made the default
