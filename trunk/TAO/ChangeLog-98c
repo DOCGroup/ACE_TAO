@@ -1,3 +1,10 @@
+Mon Feb  2 22:51:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* rules.tao.GNU (TAO_IDLFLAGS):
+	* orbsvcs/orbsvcs/Makefile (TAO_IDLFLAGS): Changed IDLFLAGS to
+	  TAO_IDLFLAGS to avoid naming conflict with IDLFLAGS for other
+	  IDL compilers.
+
 Mon Feb  2 21:41:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Added Win32 IDL flags for portability.
