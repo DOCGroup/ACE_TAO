@@ -37,20 +37,6 @@ enum TAO_GIOP_Message_Status
   TAO_GIOP_MULTIPLE_MESSAGES
 };
 
-enum TAO_Message_Block_Content_Status
-{
-  /// The buffer has nomore info for processing ie. all information
-  /// have been processed
-  TAO_MESSAGE_BLOCK_COMPLETE = 3,
-
-  /// The buffer has something meaningful and needs processing
-  TAO_MESSAGE_BLOCK_NEEDS_PROCESSING,
-
-  /// The buffer has nothing meaningful. Need to read more data from
-  /// the socket to make the reamaining data meaningful
-  TAO_MESSAGE_BLOCK_INCOMPLETE
-};
-
 /**
  * @class TAO_GIOP_Message_Handler
  *
@@ -71,17 +57,31 @@ public:
                             TAO_GIOP_Message_Base *base,
                             size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
-  /// Read the message from the transport in to the
-  /// <current_buffer_>. This method delegates responsibility of
-  /// parsing to some of the helper methods.
-  int read_parse_message (TAO_Transport *transport);
+
+  /// Reads the message from the <transport> and sets the <wr_ptr> of
+  /// the buffer appropriately.
+  int read_messages (TAO_Transport *transport);
+
+  /// Parse the GIOP message header if we have read bytes suffcient
+  /// bytes. There are four  possibilities
+  ///  - We did not read sufficient bytes, then make the reactor to
+  ///    call us back. (return -2)
+  ///  - We read a piece of message that was left out in the
+  ///    socket. In such cases we just go ahead with more processing
+  ///    (return 0).
+  ///  - We have sufficient info for processing the header and we
+  ///    processed it succesfully. (return 1);
+  ///  - Any errors in processing will return a -1.
+  int parse_message_header (void);
 
   /// Check whether we have atleast one complete message ready for
   /// processing.
-  int is_message_ready (TAO_Transport *transport);
+  int is_message_ready (void);
 
-  /// Do we have more messages for processing?
-  int more_messages (void);
+  /// Return the underlying data block of the <current_buffer_>. At
+  /// the sametime making a new data_block for itself. The read and
+  /// write pointer positions would be reset.
+  ACE_Data_Block *steal_data_block (void);
 
   /// Reset the contents of the <current_buffer_> if no more requests
   /// need to be processed. We reset the contents of the
@@ -94,14 +94,6 @@ public:
   /// Return the pointer to the data block within the message block
   ACE_Data_Block *data_block (void) const;
 
-  /// Return the underlying data block of the <current_buffer_>. At
-  /// the sametime making a new data_block for itself. The read and
-  /// write pointer positions would be reset.
-  ACE_Data_Block *steal_data_block (void);
-
-  /// Return the rd_ptr of the <current_buffer_>
-  char *rd_ptr (void) const;
-
   /// Return the position of the read pointer in the <current_buffer_>
   size_t rd_pos (void) const;
 
@@ -110,8 +102,9 @@ public:
 
 private:
 
-  /// Parses the header information from the <current_buffer_>.
-  int parse_header (void);
+  /// Actually parses the header information from the
+  /// <current_buffer_>.
+  int parse_message_header_i (void);
 
   /// Validates the first 4 bytes that contain the magic word
   /// "GIOP". Also calls the validate_version () on the incoming
@@ -129,11 +122,6 @@ private:
   /// Get the next message from the <supp_buffer_> in to the
   /// <current_buffer_>
   int get_message (void);
-
-  /// Reads the message from the <transport> and sets the <wr_ptr> of
-  /// the buffer appropriately.
-  int read_messages (TAO_Transport *transport);
-
 
 private:
 
