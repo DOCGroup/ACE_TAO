@@ -4,13 +4,14 @@
 #### Notes:
 #### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
 ####    variables be set.  If the target CPU is not a PPC604, then your CPU
-####    environment variable must be set.  If perl is not on your path,
-####    you'll also need to set your PERL_PATH environment variable to
-####    the full path to perl.
+####    environment variable must be set.
 #### 2) If you have problems with munch output not being compilable
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
 ####    add a global variable or function to that .cpp file.  See
 ####    ace/IOStream_T.cpp for an explanation and example.
+#### 3) The TOOL environment variable may be set to "gnu" (default is "diab").
+#### 4) If perl is not on your path, you'll also need to set your PERL_PATH
+####    environment variable to the full path to perl.
 
 VXWORKS = 1
 CROSS-COMPILE = 1
@@ -25,8 +26,10 @@ rtti ?= 1
 threads ?= 1
 exceptions ?= 0
 
-shared_libs =
-static_libs = 1
+shared_libs ?= 0
+static_libs ?= 1
+versioned_so ?= 0
+
 # VxWorks doesn't have rwho
 rwho = 0
 
@@ -146,7 +149,6 @@ endif
 ifeq ("$(TOOL)","gnu")
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
-#
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 ifeq ("$(templates)","automatic")
@@ -157,7 +159,7 @@ endif
 ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
   CPPFLAGS += $(TEMPLATES_FLAG)
 endif
-endif  # TOOl == gnu
+endif  # TOOL == gnu
 
 ifeq ("$(TOOL)","diab")
 ifeq ($(exceptions),1)
@@ -176,11 +178,11 @@ endif
 endif
 
 ifeq (0,$(rtti))
-  #### Don't use RTTI, because Tornado 1.0.x libraries don't support it.
+C++FLAGS += -DACE_LACKS_RTTI
 ifeq ("$(TOOL)","gnu")
-  C++FLAGS += -fno-rtti -DACE_LACKS_RTTI
+  C++FLAGS += -fno-rtti
 else
-  C++FLAGS += -Xrtti-off -DACE_LACKS_RTTI
+  C++FLAGS += -Xrtti-off
 endif
 endif # rtti
 
