@@ -17,6 +17,7 @@
 #ifndef ACE_REGISTER_H
 #define ACE_REGISTER_H
 
+#include "Attributes_T.h"
 #include "Offer_Modifier.h"
 
 template <class TRADER>
