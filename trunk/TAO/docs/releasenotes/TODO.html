@@ -46,8 +46,8 @@
 
       <LI><P><B>EC:</B> Build a COS Event Channel on top of the RTEC
 	Event Service.
-        </P>
         <BR>[ASSIGNED TO:] Pradeep
+        </P>
       </LI>
 
       <LI><P><B>EC:</B> The Event Channel must be profiled,
@@ -449,8 +449,9 @@ class POA_Foo {
         have the same case.
       <P></LI>
 
-      <LI>The operation tables do not need to be statics, they could
-	be created on creation of the first servant of that type.
+      <LI><B>IDL Compiler:</B> The operation tables do not need to be
+        statics, they could be created on creation of the first
+        servant of that type. 
       <P></LI>
       
       <LI><B>IDL Compiler:</B>Support for unions with default cases
@@ -778,7 +779,12 @@ class POA_Foo {
         </P>
       </LI>
 
-      <HR>
+      <LI><P>Currently we use blocking writes for the request, we need
+          to change this so we use the Reactor to send the data
+          instead of blocking directly on the <CODE>writev</CODE> call.
+        </P>
+      </LI>
+    <HR>
 
   <!-- Things below this point are "big" tasks" that -->
   <!-- could require major work -->
