@@ -14,6 +14,13 @@ Tue Dec 24 12:49:21 1996  David L. Levine  <levine@cs.wustl.edu>
 	  can be referenced in the class declaration.  This subproject
 	  still doesn't build, though; I think that Event.h is needed.
 
+	* ace/OS.h (struct ACE_cond_t): declare waiters_done_ as
+	  ACE_sema_t on VxWorks only, to avoid recursive struct
+	  definition with ACE_event_t
+
+	* ace/OS.i (ACE_OS::cond_*): on VxWorks only, use sema
+	  operations on ACE_cond_t::waiters_done_ instead of event ops
+
 Tue Dec 24 10:55:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/task_three.cpp (main): Changed the use of
