@@ -51,9 +51,6 @@ MT_Cubit_Timer::get_elapsed (void)
   // Store the time in secs.
 
 #if defined (VXWORKS)
-  // @@ Naga, can you please make sure that David Levine knows about
-  // this comment?! 
-  //
   // @@ David, these comments are to temporarily fix what seems a bug
   // in the ACE_Long_Long class that is used to calc the elapsed time.
   // It seems that subtraction of two ACE_Long_Long are not done
@@ -63,8 +60,8 @@ MT_Cubit_Timer::get_elapsed (void)
 
   // This is only occuring in VxWorks.  I'll leave these here to debug
   // it later.
-  ACE_timer_t tmp = (ACE_timer_t) delta_t.sec ();
-  ACE_timer_t tmp2 = (ACE_timer_t) delta_t.usec ();
+  ACE_timer_t tmp = (ACE_timer_t) this->delta_.sec ();
+  ACE_timer_t tmp2 = (ACE_timer_t) this->delta_.usec ();
 
   if (tmp > 100000)
     {

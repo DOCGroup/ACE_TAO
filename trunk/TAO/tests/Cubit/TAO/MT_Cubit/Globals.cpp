@@ -88,9 +88,7 @@ Globals::parse_args (int argc, char *argv[])
     }
 
   if (thread_per_rate == 1)
-    // @@ Naga, can you please make this a symbolic constant rather
-    // than the magic number "4"?!
-    num_of_objs = 4;
+    num_of_objs = THREAD_PER_RATE_OBJS;
 
   // Indicates successful parsing of the command-line.
   return 0;
@@ -114,9 +112,7 @@ MT_Priority::get_high_priority (void)
     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
 #else
-  // @@ Naga/Sergio, why is there a "25" here?  This seems like to
-  // much of a "magic" number.  Can you make this more "abstract?"
-  high_priority = ACE_THR_PRI_FIFO_DEF + 25;
+  high_priority = ACE_THR_PRI_FIFO_DEF + PRIORITY_INCR;
 #endif /* VXWORKS */
   return high_priority;
 }
