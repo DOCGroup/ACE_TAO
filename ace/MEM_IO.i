@@ -46,8 +46,8 @@ ACE_MEM_IO::recv (void *buf, size_t n, int flags)
 
   size_t count = 0;
 
-  while (n > 0)
-    {
+//    while (n > 0)
+//      {
       size_t buf_len = this->buf_size_ - this->cur_offset_;
       if (buf_len == 0)
         {
@@ -62,9 +62,9 @@ ACE_MEM_IO::recv (void *buf, size_t n, int flags)
                       (char *) this->recv_buffer_ + this->cur_offset_,
                       length);
       this->cur_offset_ += length;
-      n -= length;
-      count += length;
-    }
+//        n -= length;
+//        count += length;
+//      }
 
   return count;
 }

@@ -65,19 +65,21 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
   else
     {
+      int *len_ptr = 0;
       sockaddr *addr = 0;
       int len = 0;
 
       if (remote_addr != 0)
         {
           len = remote_addr->get_size ();
+          len_ptr = &len;
           addr = (sockaddr *) remote_addr->get_addr ();
         }
 
       do
         new_stream.set_handle (ACE_OS::accept (this->get_handle (),
                                                addr,
-                                               &len));
+                                               len_ptr));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
@@ -90,9 +92,43 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
         remote_addr->set_size (len);
     }
 
-  return this->shared_accept_finish (new_stream,
-                                     in_blocking_mode,
-                                     reset_new_handle);
+  if (this->shared_accept_finish (new_stream,
+                                  in_blocking_mode,
+                                  reset_new_handle) == -1)
+    return -1;
+
+  char buf [MAXPATHLEN];
+  ACE_INET_Addr local_addr;
+  if (new_stream.get_local_addr (local_addr) == -1)
+    return -1;
+
+  // @@ Need to make the filename prefix configurable.  Perhaps we
+  // should have something like ACE_MEM_Addr?
+  ACE_OS::sprintf (buf, "MEM_Acceptor_%d_", local_addr.get_port_number ());
+  char unique [MAXPATHLEN];
+  ACE_OS::unique_name (this, unique, MAXPATHLEN);
+  ACE_OS::strcat (buf, unique);
+
+  // Make sure we have a fresh start.
+  ACE_OS::unlink (buf);
+
+  // Now set up the shared memory malloc pool.
+  if (new_stream.create_shm_malloc (buf) == -1)
+    return -1;
+
+  // @@ Need to handle timeout here.
+  ACE_UINT16 buf_len = ACE_OS::strlen (buf) + 1;
+  ACE_HANDLE new_handle = new_stream.get_handle ();
+
+  // No need to worry about byte-order because both parties should always
+  // be on the same machine.
+  if (ACE::send (new_handle, &buf_len, sizeof (ACE_UINT16)) == -1)
+    return -1;
+
+  // Now send the pathname of the mmap file.
+  if (ACE::send (new_handle, buf, buf_len) == -1)
+    return -1;
+  return 0;
 }
 
 int
@@ -130,33 +166,5 @@ ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
   if (new_handle == ACE_INVALID_HANDLE)
     return -1;
 
-  char buf [MAXPATHLEN];
-  ACE_INET_Addr local_addr;
-  if (new_stream.get_local_addr (local_addr) == -1)
-    return -1;
-
-  // @@ Need to make the filename prefix configurable.  Perhaps we
-  // should have something like ACE_MEM_Addr?
-  ACE_OS::sprintf (buf, "MEM_Acceptor_%d_", local_addr.get_port_number ());
-  ACE_OS::unique_name (this, buf, MAXPATHLEN);
-
-  // Make sure we have a fresh start.
-  ACE_OS::unlink (buf);
-
-  // Now set up the shared memory malloc pool.
-  if (new_stream.create_shm_malloc (buf) == -1)
-    return -1;
-
-  // @@ Need to handle timeout here.
-  ACE_UINT16 buf_len = ACE_OS::strlen (buf) + 1;
-
-  // No need to worry about byte-order because both parties should always
-  // be on the same machine.
-  if (ACE::send (new_handle, &buf_len, sizeof (ACE_UINT16)) == -1)
-    return -1;
-
-  // Now send the pathname of the mmap file.
-  if (ACE::send (new_handle, buf, buf_len) == -1)
-    return -1;
   return 0;
 }
