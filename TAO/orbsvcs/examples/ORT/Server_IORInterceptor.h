@@ -76,4 +76,8 @@ class Server_IORInterceptor :
 
 };
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* SERVER_IORINTERCEPTOR_H */

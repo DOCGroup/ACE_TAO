@@ -75,4 +75,8 @@ class ORT_test_IORInterceptor :
   CORBA::Long components_establish_count_;
 };
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* ORT_TEST_IORINTERCEPTOR_H */

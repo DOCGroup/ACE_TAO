@@ -789,6 +789,10 @@ ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 
 // ****************************************************************
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #if defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
