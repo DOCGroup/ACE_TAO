@@ -1,4 +1,4 @@
-project: server {
+project(MProfile Server): server {
   depends += IORManipulation
   libs    += TAO_IORManip
 
@@ -8,7 +8,7 @@ project: server {
   }
 }
 
-project: client {
+project(MProfile Client): client {
   depends += IORManipulation
   libs    += TAO_IORManip
 

@@ -1,4 +1,4 @@
-project: server {
+project(Big Twoways Server): server {
   Source_Files {
     Coordinator.cpp
     Session_Control.cpp
@@ -6,7 +6,7 @@ project: server {
   }
 }
 
-project(client): server {
+project(Big Twoways Client): server {
   exename  = client
   Source_Files {
     Peer.cpp

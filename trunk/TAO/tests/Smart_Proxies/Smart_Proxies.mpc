@@ -1,4 +1,4 @@
-project: server {
+project(Smart Proxies Server): server {
   idlflags += -Gsp
 
   Source_Files {
@@ -6,7 +6,7 @@ project: server {
   }
 }
 
-project: client {
+project(Smart Proxies Client): client {
   idlflags += -Gsp
 
   Source_Files {

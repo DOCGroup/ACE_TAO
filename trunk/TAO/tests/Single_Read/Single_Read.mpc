@@ -1,11 +1,11 @@
-project: server {
+project(Single Read Server): server {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project: client {
+project(Single Read Client): client {
   Source_Files {
     testC.cpp
     client.cpp

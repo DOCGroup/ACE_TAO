@@ -1,4 +1,4 @@
-project: server {
+project(MProfile Connection Timeout Server): server {
   depends += IORManipulation Messaging
   libs    += TAO_IORManip Messaging
 
@@ -8,7 +8,7 @@ project: server {
   }
 }
 
-project: client {
+project(MProfile Connection Timeout Client): client {
   depends += IORManipulation Messaging
   libs    += TAO_IORManip TAO_Messaging
 

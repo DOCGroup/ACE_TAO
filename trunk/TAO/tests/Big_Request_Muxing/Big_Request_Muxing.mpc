@@ -1,12 +1,12 @@
-project: messaging, corba_messaging {
+project(Big Request Muxing Server): messaging, corba_messaging {
   Source_Files {
     Payload_Receiver.cpp
     server.cpp
   }
 }
 
-project(client): messaging, corba_messaging {
-  exename  = client
+project(Big Request Muxing Client): messaging, corba_messaging {
+  exename = client
 
   Source_Files {
     TestC.cpp

@@ -1,4 +1,4 @@
-project: server {
+project(OBV Factory Server): server {
   idlflags += -Gv
 
   Source_Files {
@@ -8,7 +8,7 @@ project: server {
   }
 }
 
-project: client {
+project(OBV Factory Client): client {
   idlflags += -Gv
 
   Source_Files {

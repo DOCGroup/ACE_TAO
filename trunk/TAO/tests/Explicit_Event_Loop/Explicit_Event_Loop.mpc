@@ -1,10 +1,10 @@
-project: server {
+project(Explicit Event Loop Server): server {
   Source_Files {
     server.cpp
   }
 }
 
-project: client {
+project(Explicit Event Loop Client): client {
   Source_Files {
     timeC.cpp
     client.cpp

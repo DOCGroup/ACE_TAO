@@ -1,11 +1,11 @@
-project: server {
+project(Big Reply Server): server {
   Source_Files {
     Big_Reply_i.cpp
     server.cpp
   }
 }
 
-project(client): server {
+project(Big Reply Client): server {
   exename  = client
   Source_Files {
     Client_Task.cpp

@@ -1,4 +1,4 @@
-project: messaging, minimum_corba {
+project(DSI Gateway Server): messaging, minimum_corba {
   depends  += Dynamic_Interface
   libs     += TAO_DynamicInterface
 
@@ -8,7 +8,7 @@ project: messaging, minimum_corba {
   }  
 }
  
-project(client): messaging, minimum_corba {
+project(DSI Gateway Client): messaging, minimum_corba {
   exename   = client
   depends  += Dynamic_Interface
   libs     += TAO_DynamicInterface
@@ -19,7 +19,7 @@ project(client): messaging, minimum_corba {
   }  
 }
 
-project(gateway): messaging, minimum_corba {
+project(DSI Gateway Gateway): messaging, minimum_corba {
   exename   = gateway
   depends  += Dynamic_Interface
   libs     += TAO_DynamicInterface

@@ -1,4 +1,4 @@
-project: server {
+project(ORT Server): server {
   requires += interceptors
 
   Source_Files {
@@ -9,7 +9,7 @@ project: server {
   }
 }
 
-project: client {
+project(ORT Client): client {
   requires += interceptors
 
   Source_Files {

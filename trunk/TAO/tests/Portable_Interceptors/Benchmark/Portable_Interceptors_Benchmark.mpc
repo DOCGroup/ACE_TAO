@@ -1,4 +1,4 @@
-project: server {
+project(Portable Interceptors Benchmark Server): server {
   requires += interceptors
   Source_Files {
     test_i.cpp
@@ -10,7 +10,7 @@ project: server {
   }
 }
 
-project: client {
+project(Portable Interceptors Benchmark Client): client {
   requires += interceptors
   Source_Files {
     testC.cpp

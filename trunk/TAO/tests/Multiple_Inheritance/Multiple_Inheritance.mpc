@@ -1,10 +1,10 @@
-project: server {
+project(Multiple Inheritance Server): server {
   Source_Files {
     server.cpp
   }
 }
 
-project: client {
+project(Multiple Inheritance Client): client {
   Source_Files {
     Multiple_InheritanceC.cpp
     client.cpp

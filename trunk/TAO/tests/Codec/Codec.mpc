@@ -1,4 +1,4 @@
-project: client {
+project(Codec Client): client {
   Source_Files {
     testC.cpp
     client.cpp

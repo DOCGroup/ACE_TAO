@@ -1,11 +1,11 @@
-project: messaging, corba_messaging {
+project(Blocking Sync None Server): messaging, corba_messaging {
   Source_Files {
     Blocking_Sync_None.cpp
     server.cpp
   }
 }
 
-project(client): messaging, corba_messaging {
+project(Blocking Sync None Client): messaging, corba_messaging {
   exename  = client
 
   Source_Files {

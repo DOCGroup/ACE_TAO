@@ -1,11 +1,11 @@
-project: server {
+project(Nested Upcall Simple Server): server {
   Source_Files {
     server_i.cpp
     server.cpp
   }
 }
 
-project(client): server {
+project(Nested Upcall Simple Client): server {
   exename = client
 
   Source_Files {
