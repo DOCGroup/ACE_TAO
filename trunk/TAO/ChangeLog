@@ -1,3 +1,9 @@
+Tue Jul 22 20:44:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
+
+	  Updated dependencies.
+
 Tue Jul 22 18:57:59 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\TAO_Tests.dsw: 
