@@ -45,4 +45,22 @@ module XX
   typedef long whah;
 };
 
+module A
+{
+  module B
+  {
+  };
+};
+
+module A
+{
+  module B
+  {
+    interface X2
+    {
+      string getX2 ();
+    };
+  };
+};
+
 #endif /* IDL_TEST_REOPEN_INCLUDE2_IDL */
