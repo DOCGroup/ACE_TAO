@@ -295,6 +295,9 @@ public:
   size_t space (void) const;
   // Get the amount of space remaining in the message.
 
+  void crunch (void);
+  // Normalizes data in message block to align with the base.
+
   // = <ACE_Data_Block> methods.
   ACE_Data_Block *data_block (void) const;
   // Get the data block.
