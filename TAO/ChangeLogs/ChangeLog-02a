@@ -1,3 +1,9 @@
+Sun Aug 26 08:20:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
+	  Removed the default value of the argument. This should fix
+	  warnings in GCC 3.0 builds.
+
 Sat Aug 25 23:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/performance-tests/EC_Federated_Latency/server.cpp:
