@@ -30,7 +30,7 @@ ACE_Active_Map_Manager_Key::generation (void) const
 }
 
 ACE_INLINE int 
-ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs)
+ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) const
 {
   return 
     this->index_ == rhs.index_ &&
