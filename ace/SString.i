@@ -1,11 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Malloc.h"
+#include "ace/Malloc_Base.h"
 
 // Default constructor.
 
-ACE_INLINE 
+ACE_INLINE
 ACE_CString::ACE_CString (ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
@@ -19,9 +19,9 @@ ACE_CString::ACE_CString (ACE_Allocator *alloc)
 
 // Constructor that actually copies memory.
 
-ACE_INLINE 
-ACE_CString::ACE_CString (const char *s, 
-                          ACE_Allocator *alloc, 
+ACE_INLINE
+ACE_CString::ACE_CString (const char *s,
+                          ACE_Allocator *alloc,
                           int release)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
@@ -39,9 +39,9 @@ ACE_CString::ACE_CString (const char *s,
   this->set (s, length, release);
 }
 
-ACE_INLINE 
-ACE_CString::ACE_CString (char c, 
-                          ACE_Allocator *alloc)                          
+ACE_INLINE
+ACE_CString::ACE_CString (char c,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
     rep_ (0),
@@ -54,7 +54,7 @@ ACE_CString::ACE_CString (char c,
 
 // Constructor that actually copies memory.
 
-ACE_INLINE 
+ACE_INLINE
 ACE_CString::ACE_CString (const char *s,
                           size_t len,
                           ACE_Allocator *alloc,
@@ -71,7 +71,7 @@ ACE_CString::ACE_CString (const char *s,
 
 // Copy constructor.
 
-ACE_INLINE 
+ACE_INLINE
 ACE_CString::ACE_CString (const ACE_CString &s)
   : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ()),
     len_ (0),
@@ -83,7 +83,7 @@ ACE_CString::ACE_CString (const ACE_CString &s)
   this->set (s.rep_, s.len_, 1);
 }
 
-ACE_INLINE 
+ACE_INLINE
 ACE_CString::~ACE_CString (void)
 {
   ACE_TRACE ("ACE_CString::~ACE_CString");
