@@ -30,7 +30,6 @@
 #   define ACE_LACKS_MEMORY_H
     // Sun C++ 5.0 supports the `using' and `typename' keywords.
 #   define ACE_HAS_TYPENAME_KEYWORD
-#   define ACE_TEMPLATES_REQUIRE_SOURCE
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
