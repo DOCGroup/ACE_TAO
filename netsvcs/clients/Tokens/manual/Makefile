@@ -12,10 +12,6 @@ BIN   	= manual
 
 FILES 	= manual
 
-LSRC   	= $(addsuffix .cpp,$(FILES))
-LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ	= $(addsuffix .so,$(FILES))
-
 BUILD 	= $(VBIN)
 
 #----------------------------------------------------------------------------
@@ -26,7 +22,6 @@ include		$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
 include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
