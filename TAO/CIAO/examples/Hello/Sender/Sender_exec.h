@@ -32,7 +32,7 @@ namespace Sender_Impl
   public:
     /// Default constructor.
     Sender_exec_i ()
-        : message_("Default Message")
+        : message_(CORBA::string_dup ("Default Message"))
     {
     }
 
@@ -47,7 +47,7 @@ namespace Sender_Impl
 
     /// Operation to set the value of the attribute
     virtual void local_message (const char * local_message
-				ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Operation to get the value of the attribute
