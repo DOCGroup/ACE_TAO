@@ -11,10 +11,10 @@
 //
 //
 
-// -- App. Specific Include -- 
+// -- App. Specific Include --
 #include "Policy_Tester.h"
 
-ACE_RCSID(tao, server, "$Id$");
+ACE_RCSID(tao, server, "$Id$")
 
 
 int
@@ -25,7 +25,7 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       Policy_Tester policy_tester;
-      
+
       policy_tester.init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -38,7 +38,7 @@ main (int argc, char *argv[])
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            ACE_TEXT ("CORBA Exception Raised."));
       return 1;
-    }      return 1;
+    }
 
   ACE_ENDTRY;
 
