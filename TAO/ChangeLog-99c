@@ -1,3 +1,10 @@
+Fri May 07 23:49:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/default_server.cpp (parse_args): Fixed
+	  ORBuniqueidpolicyreversedemuxstrategy option.  Thanks to Phil
+	  Mesnier <mesnier_p@ociweb.com> for pointing out that the "user"
+	  option was extra and that the "linear" option was missing.
+
 Fri May 07 22:45:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Trading/Makefile: removed -lTTest from LDLIBS
