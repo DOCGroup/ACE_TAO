@@ -1,3 +1,28 @@
+Mon May  1 10:25:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/POA/FindPOA/FindPOA.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Second_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+        * orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * orbsvcs/tests/Trading/TradingLib.dsp:
+        * performance-tests/Pluggable/client.dsp:
+        * performance-tests/Pluggable/server.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+        * performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+        * tests/AMI/AMI_Test_Client.dsp:
+        * tests/AMI/AMI_Test_Server.dsp:
+        * tests/AMI/AMI_Test_Simple_Client.dsp:
+        * tests/IDL_Test/idl_test.dsp:
+        * tests/Smart_Proxies/client.dsp:
+        * tests/Smart_Proxies/server.dsp:
+
+          All of these files had some problem with either the release 
+          config not being set up correctly or the IDL file compile
+          command not being totally compliant.  
+
 Mon May  1 09:15:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAOC.h:

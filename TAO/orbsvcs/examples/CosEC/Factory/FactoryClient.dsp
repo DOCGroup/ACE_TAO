@@ -133,7 +133,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "FactoryClient - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__COSEV="..\..\..\..\..\bin\tao_idl"	
+USERDEP__COSEV="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\CosEventChannelFactory.idl
 InputName=CosEventChannelFactory

@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aced.lib taod.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
+# ADD LINK32 ace.lib tao.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
 !ELSEIF  "$(CFG)" == "client - Win32 Debug"
 
@@ -121,8 +121,46 @@ SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "client - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
+InputPath=.\test.idl
+InputName=test
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "client - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputPath)
 InputPath=.\test.idl
