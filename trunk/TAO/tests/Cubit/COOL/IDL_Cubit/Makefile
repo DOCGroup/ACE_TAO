@@ -69,13 +69,44 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/cubit.o .obj/cubit.so .shobj/cubit.o .shobj/cubit.so: cubit.cpp cubit.H \
- /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/include/corba/longSeq.H
+.obj/cubit.o .obj/cubit.so .shobj/cubit.o .shobj/cubit.so: cubit.cpp cubit.H
 .obj/sk_cubit.o .obj/sk_cubit.so .shobj/sk_cubit.o .shobj/sk_cubit.so: sk_cubit.C
-.obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp cubit_i.h cubit.H \
- /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/include/corba/cool.H \
- /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/include/corba/longSeq.H
-.obj/clnt.o .obj/clnt.so .shobj/clnt.o .shobj/clnt.so: clnt.cpp \
+.obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp cubit_i.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i cubit.H sk_cubit.H
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Get_Opt.i cubit_i.h cubit.H \
+ sk_cubit.H sk_cubit.C
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -97,10 +128,13 @@ realclean: clean
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i \
  $(ACE_ROOT)/ace/Env_Value_T.h \
- $(ACE_ROOT)/ace/Env_Value_T.i clnt.h \
+ $(ACE_ROOT)/ace/Env_Value_T.i client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i cubit.H \
  /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/include/corba/cool.H \
- /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/include/corba/longSeq.H
+ /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/include/api/api.H \
+ sk_cubit.H
+.obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp cubit.H \
+ /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/include/corba/cool.H
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
