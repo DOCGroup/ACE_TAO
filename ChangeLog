@@ -1,3 +1,8 @@
+Mon Sep 13 12:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added TAO/orbsvcs/orbsvcs/CosNotification_Skel
+
 Mon Sep 13 10:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
