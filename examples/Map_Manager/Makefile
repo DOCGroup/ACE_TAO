@@ -37,7 +37,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_hash_map_manager.o .obj/test_hash_map_manager.o .obj/test_hash_map_manager.o .obj/test_hash_map_manager.o: test_hash_map_manager.cpp \
+.obj/test_hash_map_manager.o .obj/test_hash_map_manager.so .shobj/test_hash_map_manager.o .shobj/test_hash_map_manager.so: test_hash_map_manager.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

@@ -222,7 +222,7 @@ realclean:
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test.o .obj/test.o .obj/test.o .obj/test.o: test.cpp \
+.obj/test.o .obj/test.so .shobj/test.o .shobj/test.so: test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

@@ -46,7 +46,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosECConsumer.o .obj/CosECConsumer.o .obj/CosECConsumer.o .obj/CosECConsumer.o: CosECConsumer.cpp CosECConsumer.h \
+.obj/CosECConsumer.o .obj/CosECConsumer.so .shobj/CosECConsumer.o .shobj/CosECConsumer.so: CosECConsumer.cpp CosECConsumer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -366,7 +366,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i
 
-.obj/CosECSupplier.o .obj/CosECSupplier.o .obj/CosECSupplier.o .obj/CosECSupplier.o: CosECSupplier.cpp CosECSupplier.h \
+.obj/CosECSupplier.o .obj/CosECSupplier.so .shobj/CosECSupplier.o .shobj/CosECSupplier.so: CosECSupplier.cpp CosECSupplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \

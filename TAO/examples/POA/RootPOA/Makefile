@@ -37,7 +37,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/RootPOA.o .obj/RootPOA.o .obj/RootPOA.o .obj/RootPOA.o: RootPOA.cpp \
+.obj/RootPOA.o .obj/RootPOA.so .shobj/RootPOA.o .shobj/RootPOA.so: RootPOA.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

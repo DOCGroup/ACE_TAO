@@ -66,7 +66,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/FooC.o .obj/FooC.o .obj/FooC.o .obj/FooC.o: FooC.cpp FooC.h \
+.obj/FooC.o .obj/FooC.so .shobj/FooC.o .shobj/FooC.so: FooC.cpp FooC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -372,7 +372,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  generic_servant_export.h FooC.i
 
-.obj/FooS.o .obj/FooS.o .obj/FooS.o .obj/FooS.o: FooS.cpp FooS.h FooC.h \
+.obj/FooS.o .obj/FooS.so .shobj/FooS.o .shobj/FooS.so: FooS.cpp FooS.h FooC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -678,7 +678,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  generic_servant_export.h FooC.i FooS_T.h FooS_T.i FooS_T.cpp FooS.i
 
-.obj/MyFooServant.o .obj/MyFooServant.o .obj/MyFooServant.o .obj/MyFooServant.o: MyFooServant.cpp MyFooServant.h FooS.h FooC.h \
+.obj/MyFooServant.o .obj/MyFooServant.so .shobj/MyFooServant.o .shobj/MyFooServant.so: MyFooServant.cpp MyFooServant.h FooS.h FooC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -984,7 +984,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  generic_servant_export.h FooC.i FooS_T.h FooS_T.i FooS_T.cpp FooS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

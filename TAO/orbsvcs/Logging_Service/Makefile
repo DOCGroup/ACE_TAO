@@ -52,7 +52,7 @@ Logging_Service: $(addprefix $(VDIR),$(LOG_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Logging_Service.o .obj/Logging_Service.o .obj/Logging_Service.o .obj/Logging_Service.o: Logging_Service.cpp \
+.obj/Logging_Service.o .obj/Logging_Service.so .shobj/Logging_Service.o .shobj/Logging_Service.so: Logging_Service.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

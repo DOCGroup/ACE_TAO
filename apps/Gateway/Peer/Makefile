@@ -48,7 +48,7 @@ INCLDIRS += -I../Gateway
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Options.o .obj/Options.o .obj/Options.o .obj/Options.o: Options.cpp \
+.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -80,7 +80,7 @@ INCLDIRS += -I../Gateway
  $(ACE_ROOT)/ace/Get_Opt.i \
  Options.h ../Gateway/Event.h
 
-.obj/Peer.o .obj/Peer.o .obj/Peer.o .obj/Peer.o: Peer.cpp Peer.h \
+.obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Peer.cpp Peer.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \

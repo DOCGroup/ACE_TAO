@@ -43,7 +43,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/file-reverse.o .obj/file-reverse.o .obj/file-reverse.o .obj/file-reverse.o: file-reverse.cpp \
+.obj/file-reverse.o .obj/file-reverse.so .shobj/file-reverse.o .shobj/file-reverse.so: file-reverse.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

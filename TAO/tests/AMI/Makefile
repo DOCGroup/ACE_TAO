@@ -68,7 +68,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -380,7 +380,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  ami_testC.i ami_testS_T.h ami_testS_T.i ami_testS_T.cpp ami_testS.i
 
-.obj/simple_client.o .obj/simple_client.o .obj/simple_client.o .obj/simple_client.o: simple_client.cpp \
+.obj/simple_client.o .obj/simple_client.so .shobj/simple_client.o .shobj/simple_client.so: simple_client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -702,7 +702,7 @@ realclean: clean
  ami_testC.i ami_testS.h ami_testS_T.h ami_testS_T.i ami_testS_T.cpp \
  ami_testS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1024,7 +1024,7 @@ realclean: clean
  ami_testC.i ami_testS.h ami_testS_T.h ami_testS_T.i ami_testS_T.cpp \
  ami_testS.i
 
-.obj/ami_test_i.o .obj/ami_test_i.o .obj/ami_test_i.o .obj/ami_test_i.o: ami_test_i.cpp ami_test_i.h ami_testS.h \
+.obj/ami_test_i.o .obj/ami_test_i.so .shobj/ami_test_i.o .shobj/ami_test_i.so: ami_test_i.cpp ami_test_i.h ami_testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1333,7 +1333,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  ami_testC.i ami_testS_T.h ami_testS_T.i ami_testS_T.cpp ami_testS.i
 
-.obj/ami_testC.o .obj/ami_testC.o .obj/ami_testC.o .obj/ami_testC.o: ami_testC.cpp ami_testC.h \
+.obj/ami_testC.o .obj/ami_testC.so .shobj/ami_testC.o .shobj/ami_testC.so: ami_testC.cpp ami_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1641,7 +1641,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  ami_testC.i
 
-.obj/ami_testS.o .obj/ami_testS.o .obj/ami_testS.o .obj/ami_testS.o: ami_testS.cpp ami_testS.h \
+.obj/ami_testS.o .obj/ami_testS.so .shobj/ami_testS.o .shobj/ami_testS.so: ami_testS.cpp ami_testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \

@@ -415,7 +415,7 @@ realclean:
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Object_Adapter.o .obj/Object_Adapter.o .obj/Object_Adapter.o .obj/Object_Adapter.o: Object_Adapter.cpp \
+.obj/Object_Adapter.o .obj/Object_Adapter.so .shobj/Object_Adapter.o .shobj/Object_Adapter.so: Object_Adapter.cpp \
  Object_Adapter.h \
  $(ACE_ROOT)/ace/pre.h \
  Key_Adapters.h \
@@ -658,7 +658,7 @@ realclean:
  Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
-.obj/Key_Adapters.o .obj/Key_Adapters.o .obj/Key_Adapters.o .obj/Key_Adapters.o: Key_Adapters.cpp \
+.obj/Key_Adapters.o .obj/Key_Adapters.so .shobj/Key_Adapters.o .shobj/Key_Adapters.so: Key_Adapters.cpp \
  Key_Adapters.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -813,7 +813,7 @@ realclean:
  POAC.i \
  Key_Adapters.i
 
-.obj/POA.o .obj/POA.o .obj/POA.o .obj/POA.o: POA.cpp \
+.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1090,7 +1090,7 @@ realclean:
  Acceptor_Registry.i \
  Forwarding_Servant.h
 
-.obj/POAC.o .obj/POAC.o .obj/POAC.o .obj/POAC.o: POAC.cpp \
+.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp \
  POAC.h \
  $(ACE_ROOT)/ace/pre.h \
  PolicyC.h \
@@ -1368,7 +1368,7 @@ realclean:
  MProfile.i \
  Stub.i
 
-.obj/POAS.o .obj/POAS.o .obj/POAS.o .obj/POAS.o: POAS.cpp \
+.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp \
  POAS.h \
  $(ACE_ROOT)/ace/pre.h \
  POAC.h \
@@ -1578,7 +1578,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/POAManager.o .obj/POAManager.o .obj/POAManager.o .obj/POAManager.o: POAManager.cpp \
+.obj/POAManager.o .obj/POAManager.so .shobj/POAManager.o .shobj/POAManager.so: POAManager.cpp \
  POAManager.h \
  $(ACE_ROOT)/ace/pre.h \
  POAS.h \
@@ -1767,7 +1767,7 @@ realclean:
  RTCORBAC.i \
  POA.i
 
-.obj/Active_Object_Map.o .obj/Active_Object_Map.o .obj/Active_Object_Map.o .obj/Active_Object_Map.o: Active_Object_Map.cpp \
+.obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp \
  Active_Object_Map.h \
  $(ACE_ROOT)/ace/pre.h \
  Key_Adapters.h \
@@ -1930,7 +1930,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Servant_Base.o .obj/Servant_Base.o .obj/Servant_Base.o .obj/Servant_Base.o: Servant_Base.cpp \
+.obj/Servant_Base.o .obj/Servant_Base.so .shobj/Servant_Base.o .shobj/Servant_Base.so: Servant_Base.cpp \
  Servant_Base.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -2181,7 +2181,7 @@ realclean:
  Server_Request.h \
  Server_Request.i
 
-.obj/Forwarding_Servant.o .obj/Forwarding_Servant.o .obj/Forwarding_Servant.o .obj/Forwarding_Servant.o: Forwarding_Servant.cpp \
+.obj/Forwarding_Servant.o .obj/Forwarding_Servant.so .shobj/Forwarding_Servant.o .shobj/Forwarding_Servant.so: Forwarding_Servant.cpp \
  Forwarding_Servant.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -2343,7 +2343,7 @@ realclean:
  Object_KeyC.i \
  Server_Request.i
 
-.obj/ImplRepoC.o .obj/ImplRepoC.o .obj/ImplRepoC.o .obj/ImplRepoC.o: ImplRepoC.cpp ImplRepoC.h \
+.obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(ACE_ROOT)/ace/pre.h \
  Object.h \
  corbafwd.h \
@@ -2593,7 +2593,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/ImplRepoS.o .obj/ImplRepoS.o .obj/ImplRepoS.o .obj/ImplRepoS.o: ImplRepoS.cpp ImplRepoS.h \
+.obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
  $(ACE_ROOT)/ace/pre.h \
  ImplRepoC.h \
  Object.h \
@@ -2855,7 +2855,7 @@ realclean:
  NVList.h \
  NVList.i
 
-.obj/Pluggable.o .obj/Pluggable.o .obj/Pluggable.o .obj/Pluggable.o: Pluggable.cpp \
+.obj/Pluggable.o .obj/Pluggable.so .shobj/Pluggable.o .shobj/Pluggable.so: Pluggable.cpp \
  Pluggable.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -3102,7 +3102,7 @@ realclean:
  Object_KeyC.i \
  target_specification.i
 
-.obj/Profile.o .obj/Profile.o .obj/Profile.o .obj/Profile.o: Profile.cpp \
+.obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp \
  Profile.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -3329,7 +3329,7 @@ realclean:
  ORB.i \
  Stub.i
 
-.obj/Connector_Registry.o .obj/Connector_Registry.o .obj/Connector_Registry.o .obj/Connector_Registry.o: Connector_Registry.cpp \
+.obj/Connector_Registry.o .obj/Connector_Registry.so .shobj/Connector_Registry.o .shobj/Connector_Registry.so: Connector_Registry.cpp \
  ORB_Core.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -3541,7 +3541,7 @@ realclean:
  Profile.i \
  debug.h
 
-.obj/Acceptor_Registry.o .obj/Acceptor_Registry.o .obj/Acceptor_Registry.o .obj/Acceptor_Registry.o: Acceptor_Registry.cpp \
+.obj/Acceptor_Registry.o .obj/Acceptor_Registry.so .shobj/Acceptor_Registry.o .shobj/Acceptor_Registry.so: Acceptor_Registry.cpp \
  Acceptor_Registry.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
@@ -3758,7 +3758,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Protocol_Factory.o .obj/Protocol_Factory.o .obj/Protocol_Factory.o .obj/Protocol_Factory.o: Protocol_Factory.cpp \
+.obj/Protocol_Factory.o .obj/Protocol_Factory.so .shobj/Protocol_Factory.o .shobj/Protocol_Factory.so: Protocol_Factory.cpp \
  Protocol_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -3914,7 +3914,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IIOP_Factory.o .obj/IIOP_Factory.o .obj/IIOP_Factory.o .obj/IIOP_Factory.o: IIOP_Factory.cpp \
+.obj/IIOP_Factory.o .obj/IIOP_Factory.so .shobj/IIOP_Factory.o .shobj/IIOP_Factory.so: IIOP_Factory.cpp \
  IIOP_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Protocol_Factory.h \
@@ -4200,7 +4200,7 @@ realclean:
  $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
  $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp
 
-.obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.o: IIOP_Lite_Factory.cpp \
+.obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.so .shobj/IIOP_Lite_Factory.o .shobj/IIOP_Lite_Factory.so: IIOP_Lite_Factory.cpp \
  IIOP_Lite_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Protocol_Factory.h \
@@ -4488,7 +4488,7 @@ realclean:
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/IIOP_Profile.o .obj/IIOP_Profile.o .obj/IIOP_Profile.o .obj/IIOP_Profile.o: IIOP_Profile.cpp \
+.obj/IIOP_Profile.o .obj/IIOP_Profile.so .shobj/IIOP_Profile.o .shobj/IIOP_Profile.so: IIOP_Profile.cpp \
  IIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
  Profile.h \
@@ -4780,7 +4780,7 @@ realclean:
  POA.i \
  debug.h
 
-.obj/IIOP_Transport.o .obj/IIOP_Transport.o .obj/IIOP_Transport.o .obj/IIOP_Transport.o: IIOP_Transport.cpp \
+.obj/IIOP_Transport.o .obj/IIOP_Transport.so .shobj/IIOP_Transport.o .shobj/IIOP_Transport.so: IIOP_Transport.cpp \
  IIOP_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
@@ -5062,7 +5062,7 @@ realclean:
  GIOP_Utils.i \
  GIOP_Message_Lite.i
 
-.obj/IIOP_Connector.o .obj/IIOP_Connector.o .obj/IIOP_Connector.o .obj/IIOP_Connector.o: IIOP_Connector.cpp \
+.obj/IIOP_Connector.o .obj/IIOP_Connector.so .shobj/IIOP_Connector.o .shobj/IIOP_Connector.so: IIOP_Connector.cpp \
  IIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Connector.h \
@@ -5351,7 +5351,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/IIOP_Acceptor.o .obj/IIOP_Acceptor.o .obj/IIOP_Acceptor.o .obj/IIOP_Acceptor.o: IIOP_Acceptor.cpp \
+.obj/IIOP_Acceptor.o .obj/IIOP_Acceptor.so .shobj/IIOP_Acceptor.o .shobj/IIOP_Acceptor.so: IIOP_Acceptor.cpp \
  IIOP_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
@@ -5625,7 +5625,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/IIOP_Connect.o .obj/IIOP_Connect.o .obj/IIOP_Connect.o .obj/IIOP_Connect.o: IIOP_Connect.cpp \
+.obj/IIOP_Connect.o .obj/IIOP_Connect.so .shobj/IIOP_Connect.o .shobj/IIOP_Connect.so: IIOP_Connect.cpp \
  IIOP_Connect.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -5910,7 +5910,7 @@ realclean:
  GIOP_Message_Accept_State.i \
  GIOP_Message_Acceptors.i
 
-.obj/UIOP_Factory.o .obj/UIOP_Factory.o .obj/UIOP_Factory.o .obj/UIOP_Factory.o: UIOP_Factory.cpp \
+.obj/UIOP_Factory.o .obj/UIOP_Factory.so .shobj/UIOP_Factory.o .shobj/UIOP_Factory.so: UIOP_Factory.cpp \
  UIOP_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Protocol_Factory.h \
@@ -6198,7 +6198,7 @@ realclean:
  $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
  $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp
 
-.obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.o: UIOP_Lite_Factory.cpp \
+.obj/UIOP_Lite_Factory.o .obj/UIOP_Lite_Factory.so .shobj/UIOP_Lite_Factory.o .shobj/UIOP_Lite_Factory.so: UIOP_Lite_Factory.cpp \
  UIOP_Lite_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Protocol_Factory.h \
@@ -6486,7 +6486,7 @@ realclean:
  $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
  $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp
 
-.obj/UIOP_Profile.o .obj/UIOP_Profile.o .obj/UIOP_Profile.o .obj/UIOP_Profile.o: UIOP_Profile.cpp \
+.obj/UIOP_Profile.o .obj/UIOP_Profile.so .shobj/UIOP_Profile.o .shobj/UIOP_Profile.so: UIOP_Profile.cpp \
  UIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
  Profile.h \
@@ -6781,7 +6781,7 @@ realclean:
  POA.i \
  debug.h
 
-.obj/UIOP_Transport.o .obj/UIOP_Transport.o .obj/UIOP_Transport.o .obj/UIOP_Transport.o: UIOP_Transport.cpp \
+.obj/UIOP_Transport.o .obj/UIOP_Transport.so .shobj/UIOP_Transport.o .shobj/UIOP_Transport.so: UIOP_Transport.cpp \
  UIOP_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
@@ -7066,7 +7066,7 @@ realclean:
  GIOP_Utils.i \
  GIOP_Message_Lite.i
 
-.obj/UIOP_Connector.o .obj/UIOP_Connector.o .obj/UIOP_Connector.o .obj/UIOP_Connector.o: UIOP_Connector.cpp \
+.obj/UIOP_Connector.o .obj/UIOP_Connector.so .shobj/UIOP_Connector.o .shobj/UIOP_Connector.so: UIOP_Connector.cpp \
  UIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
@@ -7359,7 +7359,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.o: UIOP_Acceptor.cpp \
+.obj/UIOP_Acceptor.o .obj/UIOP_Acceptor.so .shobj/UIOP_Acceptor.o .shobj/UIOP_Acceptor.so: UIOP_Acceptor.cpp \
  UIOP_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
@@ -7632,7 +7632,7 @@ realclean:
  MProfile.h \
  MProfile.i
 
-.obj/UIOP_Connect.o .obj/UIOP_Connect.o .obj/UIOP_Connect.o .obj/UIOP_Connect.o: UIOP_Connect.cpp \
+.obj/UIOP_Connect.o .obj/UIOP_Connect.so .shobj/UIOP_Connect.o .shobj/UIOP_Connect.so: UIOP_Connect.cpp \
  UIOP_Connect.h \
  $(ACE_ROOT)/ace/pre.h \
  UIOP_Transport.h \
@@ -7920,7 +7920,7 @@ realclean:
  GIOP_Utils.i \
  GIOP_Message_Lite.i
 
-.obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.o: SHMIOP_Factory.cpp \
+.obj/SHMIOP_Factory.o .obj/SHMIOP_Factory.so .shobj/SHMIOP_Factory.o .shobj/SHMIOP_Factory.so: SHMIOP_Factory.cpp \
  SHMIOP_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -8212,7 +8212,7 @@ realclean:
  $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
  $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp
 
-.obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.o: SHMIOP_Profile.cpp \
+.obj/SHMIOP_Profile.o .obj/SHMIOP_Profile.so .shobj/SHMIOP_Profile.o .shobj/SHMIOP_Profile.so: SHMIOP_Profile.cpp \
  SHMIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -8510,7 +8510,7 @@ realclean:
  POA.i \
  debug.h
 
-.obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.o: SHMIOP_Transport.cpp \
+.obj/SHMIOP_Transport.o .obj/SHMIOP_Transport.so .shobj/SHMIOP_Transport.o .shobj/SHMIOP_Transport.so: SHMIOP_Transport.cpp \
  SHMIOP_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -8798,7 +8798,7 @@ realclean:
  GIOP_Message_Base.i \
  GIOP_Message_Connectors.i
 
-.obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.o: SHMIOP_Connector.cpp \
+.obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.so .shobj/SHMIOP_Connector.o .shobj/SHMIOP_Connector.so: SHMIOP_Connector.cpp \
  SHMIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -9095,7 +9095,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.o: SHMIOP_Acceptor.cpp \
+.obj/SHMIOP_Acceptor.o .obj/SHMIOP_Acceptor.so .shobj/SHMIOP_Acceptor.o .shobj/SHMIOP_Acceptor.so: SHMIOP_Acceptor.cpp \
  SHMIOP_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -9372,7 +9372,7 @@ realclean:
  MProfile.h \
  MProfile.i
 
-.obj/SHMIOP_Connect.o .obj/SHMIOP_Connect.o .obj/SHMIOP_Connect.o .obj/SHMIOP_Connect.o: SHMIOP_Connect.cpp \
+.obj/SHMIOP_Connect.o .obj/SHMIOP_Connect.so .shobj/SHMIOP_Connect.o .shobj/SHMIOP_Connect.so: SHMIOP_Connect.cpp \
  SHMIOP_Connect.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -9663,7 +9663,7 @@ realclean:
  GIOP_Utils.i \
  GIOP_Message_Lite.i
 
-.obj/IORC.o .obj/IORC.o .obj/IORC.o .obj/IORC.o: IORC.cpp \
+.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp \
  IORC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -9912,7 +9912,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/IORS.o .obj/IORS.o .obj/IORS.o .obj/IORS.o: IORS.cpp \
+.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp \
  IORS.h \
  $(ACE_ROOT)/ace/pre.h \
  IORC.h \
@@ -10030,7 +10030,7 @@ realclean:
  Servant_Base.i \
  IORS.i
 
-.obj/IORManipulation.o .obj/IORManipulation.o .obj/IORManipulation.o .obj/IORManipulation.o: IORManipulation.cpp \
+.obj/IORManipulation.o .obj/IORManipulation.so .shobj/IORManipulation.o .shobj/IORManipulation.so: IORManipulation.cpp \
  IORManipulation.h \
  $(ACE_ROOT)/ace/pre.h \
  Object.h \
@@ -10223,7 +10223,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/default_client.o .obj/default_client.o .obj/default_client.o .obj/default_client.o: default_client.cpp \
+.obj/default_client.o .obj/default_client.so .shobj/default_client.o .shobj/default_client.so: default_client.cpp \
  default_client.h \
  $(ACE_ROOT)/ace/pre.h \
  Client_Strategy_Factory.h \
@@ -10437,7 +10437,7 @@ realclean:
  Pluggable_Messaging.i \
  GIOP_Message_State.i
 
-.obj/default_server.o .obj/default_server.o .obj/default_server.o .obj/default_server.o: default_server.cpp \
+.obj/default_server.o .obj/default_server.so .shobj/default_server.o .shobj/default_server.so: default_server.cpp \
  default_server.h \
  $(ACE_ROOT)/ace/pre.h \
  Server_Strategy_Factory.h \
@@ -10643,7 +10643,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/default_resource.o .obj/default_resource.o .obj/default_resource.o .obj/default_resource.o: default_resource.cpp \
+.obj/default_resource.o .obj/default_resource.so .shobj/default_resource.o .shobj/default_resource.so: default_resource.cpp \
  default_resource.h \
  $(ACE_ROOT)/ace/pre.h \
  Resource_Factory.h \
@@ -10897,7 +10897,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/xt_resource.o .obj/xt_resource.o .obj/xt_resource.o .obj/xt_resource.o: xt_resource.cpp \
+.obj/xt_resource.o .obj/xt_resource.so .shobj/xt_resource.o .shobj/xt_resource.so: xt_resource.cpp \
  xt_resource.h \
  $(ACE_ROOT)/ace/pre.h \
  default_resource.h \
@@ -11055,7 +11055,7 @@ realclean:
  Protocol_Factory.h \
  default_resource.i
 
-.obj/qt_resource.o .obj/qt_resource.o .obj/qt_resource.o .obj/qt_resource.o: qt_resource.cpp \
+.obj/qt_resource.o .obj/qt_resource.so .shobj/qt_resource.o .shobj/qt_resource.so: qt_resource.cpp \
  qt_resource.h \
  $(ACE_ROOT)/ace/pre.h \
  default_resource.h \
@@ -11213,7 +11213,7 @@ realclean:
  Protocol_Factory.h \
  default_resource.i
 
-.obj/append.o .obj/append.o .obj/append.o .obj/append.o: append.cpp \
+.obj/append.o .obj/append.so .shobj/append.o .shobj/append.so: append.cpp \
  Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -11377,7 +11377,7 @@ realclean:
  Marshal.i \
  debug.h
 
-.obj/Marshal.o .obj/Marshal.o .obj/Marshal.o .obj/Marshal.o: Marshal.cpp \
+.obj/Marshal.o .obj/Marshal.so .shobj/Marshal.o .shobj/Marshal.so: Marshal.cpp \
  Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -11540,7 +11540,7 @@ realclean:
  ORB.i \
  Marshal.i
 
-.obj/skip.o .obj/skip.o .obj/skip.o .obj/skip.o: skip.cpp \
+.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp \
  Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -11704,7 +11704,7 @@ realclean:
  Marshal.i \
  debug.h
 
-.obj/Managed_Types.o .obj/Managed_Types.o .obj/Managed_Types.o .obj/Managed_Types.o: Managed_Types.cpp \
+.obj/Managed_Types.o .obj/Managed_Types.so .shobj/Managed_Types.o .shobj/Managed_Types.so: Managed_Types.cpp \
  Managed_Types.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -11859,7 +11859,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/Operation_Table.o .obj/Operation_Table.o .obj/Operation_Table.o .obj/Operation_Table.o: Operation_Table.cpp \
+.obj/Operation_Table.o .obj/Operation_Table.so .shobj/Operation_Table.o .shobj/Operation_Table.so: Operation_Table.cpp \
  Operation_Table.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -12017,7 +12017,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/Any.o .obj/Any.o .obj/Any.o .obj/Any.o: Any.cpp \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
  Any.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
@@ -12225,7 +12225,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  debug.h
 
-.obj/CurrentC.o .obj/CurrentC.o .obj/CurrentC.o .obj/CurrentC.o: CurrentC.cpp \
+.obj/CurrentC.o .obj/CurrentC.so .shobj/CurrentC.o .shobj/CurrentC.so: CurrentC.cpp \
  CurrentC.h \
  $(ACE_ROOT)/ace/pre.h \
  Object.h \
@@ -12425,7 +12425,7 @@ realclean:
  ifrfwd.h \
  InterfaceC.i
 
-.obj/CurrentS.o .obj/CurrentS.o .obj/CurrentS.o .obj/CurrentS.o: CurrentS.cpp \
+.obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp \
  CurrentC.h \
  $(ACE_ROOT)/ace/pre.h \
  Object.h \
@@ -12583,7 +12583,7 @@ realclean:
  Object_KeyC.i \
  Server_Request.i
 
-.obj/Exception.o .obj/Exception.o .obj/Exception.o .obj/Exception.o: Exception.cpp \
+.obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -12685,7 +12685,7 @@ realclean:
  Object.i \
  Any.i
 
-.obj/WrongTransactionC.o .obj/WrongTransactionC.o .obj/WrongTransactionC.o .obj/WrongTransactionC.o: WrongTransactionC.cpp \
+.obj/WrongTransactionC.o .obj/WrongTransactionC.so .shobj/WrongTransactionC.o .shobj/WrongTransactionC.so: WrongTransactionC.cpp \
  WrongTransactionC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -12782,7 +12782,7 @@ realclean:
  CDR.h \
  CDR.i
 
-.obj/Environment.o .obj/Environment.o .obj/Environment.o .obj/Environment.o: Environment.cpp \
+.obj/Environment.o .obj/Environment.so .shobj/Environment.o .shobj/Environment.so: Environment.cpp \
  Environment.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -12985,7 +12985,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/Object.o .obj/Object.o .obj/Object.o .obj/Object.o: Object.cpp \
+.obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Object.cpp \
  Object.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -13260,7 +13260,7 @@ realclean:
  Connector_Registry.i \
  debug.h
 
-.obj/LocalObject.o .obj/LocalObject.o .obj/LocalObject.o .obj/LocalObject.o: LocalObject.cpp \
+.obj/LocalObject.o .obj/LocalObject.so .shobj/LocalObject.o .shobj/LocalObject.so: LocalObject.cpp \
  LocalObject.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -13540,7 +13540,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/ObjectIDList.o .obj/ObjectIDList.o .obj/ObjectIDList.o .obj/ObjectIDList.o: ObjectIDList.cpp \
+.obj/ObjectIDList.o .obj/ObjectIDList.so .shobj/ObjectIDList.o .shobj/ObjectIDList.so: ObjectIDList.cpp \
  ObjectIDList.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -13701,7 +13701,7 @@ realclean:
  Any.h \
  Any.i
 
-.obj/ORB.o .obj/ORB.o .obj/ORB.o .obj/ORB.o: ORB.cpp \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
  ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -14008,7 +14008,7 @@ realclean:
  Buffering_Constraint_Policy.h \
  Buffering_Constraint_Policy.i
 
-.obj/corbafwd.o .obj/corbafwd.o .obj/corbafwd.o .obj/corbafwd.o: corbafwd.cpp \
+.obj/corbafwd.o .obj/corbafwd.so .shobj/corbafwd.o .shobj/corbafwd.so: corbafwd.cpp \
  corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -14098,7 +14098,7 @@ realclean:
  varbase.h \
  corbafwd.i
 
-.obj/PolicyC.o .obj/PolicyC.o .obj/PolicyC.o .obj/PolicyC.o: PolicyC.cpp \
+.obj/PolicyC.o .obj/PolicyC.so .shobj/PolicyC.o .shobj/PolicyC.so: PolicyC.cpp \
  PolicyC.h \
  $(ACE_ROOT)/ace/pre.h \
  CurrentC.h \
@@ -14347,7 +14347,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/PolicyS.o .obj/PolicyS.o .obj/PolicyS.o .obj/PolicyS.o: PolicyS.cpp \
+.obj/PolicyS.o .obj/PolicyS.so .shobj/PolicyS.o .shobj/PolicyS.so: PolicyS.cpp \
  PolicyC.h \
  $(ACE_ROOT)/ace/pre.h \
  CurrentC.h \
@@ -14519,7 +14519,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/Encodable.o .obj/Encodable.o .obj/Encodable.o .obj/Encodable.o: Encodable.cpp \
+.obj/Encodable.o .obj/Encodable.so .shobj/Encodable.o .shobj/Encodable.so: Encodable.cpp \
  Encodable.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -14610,7 +14610,7 @@ realclean:
  varbase.h \
  corbafwd.i
 
-.obj/Policy_Factory.o .obj/Policy_Factory.o .obj/Policy_Factory.o .obj/Policy_Factory.o: Policy_Factory.cpp \
+.obj/Policy_Factory.o .obj/Policy_Factory.so .shobj/Policy_Factory.o .shobj/Policy_Factory.so: Policy_Factory.cpp \
  Policy_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -14747,7 +14747,7 @@ realclean:
  RTCORBAS.i \
  RT_Policy_i.i
 
-.obj/DomainC.o .obj/DomainC.o .obj/DomainC.o .obj/DomainC.o: DomainC.cpp \
+.obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp \
  DomainC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -14996,7 +14996,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/DomainS.o .obj/DomainS.o .obj/DomainS.o .obj/DomainS.o: DomainS.cpp DomainC.h \
+.obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -15168,7 +15168,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/TimeBaseC.o .obj/TimeBaseC.o .obj/TimeBaseC.o .obj/TimeBaseC.o: TimeBaseC.cpp \
+.obj/TimeBaseC.o .obj/TimeBaseC.so .shobj/TimeBaseC.o .shobj/TimeBaseC.so: TimeBaseC.cpp \
  TimeBaseC.h \
  $(ACE_ROOT)/ace/pre.h \
  Any.h \
@@ -15277,7 +15277,7 @@ realclean:
  Exception.i \
  Typecode.i
 
-.obj/TimeBaseS.o .obj/TimeBaseS.o .obj/TimeBaseS.o .obj/TimeBaseS.o: TimeBaseS.cpp \
+.obj/TimeBaseS.o .obj/TimeBaseS.so .shobj/TimeBaseS.o .shobj/TimeBaseS.so: TimeBaseS.cpp \
  TimeBaseS.h \
  $(ACE_ROOT)/ace/pre.h \
  TimeBaseC.h \
@@ -15382,7 +15382,7 @@ realclean:
  TimeBaseS_T.cpp \
  TimeBaseS.i
 
-.obj/Principal.o .obj/Principal.o .obj/Principal.o .obj/Principal.o: Principal.cpp \
+.obj/Principal.o .obj/Principal.so .shobj/Principal.o .shobj/Principal.so: Principal.cpp \
  Principal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -15483,7 +15483,7 @@ realclean:
  CDR.h \
  CDR.i
 
-.obj/Sequence.o .obj/Sequence.o .obj/Sequence.o .obj/Sequence.o: Sequence.cpp \
+.obj/Sequence.o .obj/Sequence.so .shobj/Sequence.o .shobj/Sequence.so: Sequence.cpp \
  Sequence.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -15580,7 +15580,7 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp
 
-.obj/Server_Request.o .obj/Server_Request.o .obj/Server_Request.o .obj/Server_Request.o: Server_Request.cpp \
+.obj/Server_Request.o .obj/Server_Request.so .shobj/Server_Request.o .shobj/Server_Request.so: Server_Request.cpp \
  Server_Request.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -15793,7 +15793,7 @@ realclean:
  Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
-.obj/MProfile.o .obj/MProfile.o .obj/MProfile.o .obj/MProfile.o: MProfile.cpp \
+.obj/MProfile.o .obj/MProfile.so .shobj/MProfile.o .shobj/MProfile.so: MProfile.cpp \
  MProfile.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -15963,7 +15963,7 @@ realclean:
  Typecode.i \
  Pluggable.i
 
-.obj/Stub.o .obj/Stub.o .obj/Stub.o .obj/Stub.o: Stub.cpp \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
  Stub.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
@@ -16227,7 +16227,7 @@ realclean:
  Client_Priority_Policy.h \
  Client_Priority_Policy.i
 
-.obj/Typecode.o .obj/Typecode.o .obj/Typecode.o .obj/Typecode.o: Typecode.cpp \
+.obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp \
  Typecode.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -16391,7 +16391,7 @@ realclean:
  Marshal.i \
  debug.h
 
-.obj/ValueBase.o .obj/ValueBase.o .obj/ValueBase.o .obj/ValueBase.o: ValueBase.cpp \
+.obj/ValueBase.o .obj/ValueBase.so .shobj/ValueBase.o .shobj/ValueBase.so: ValueBase.cpp \
  CDR.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -16596,7 +16596,7 @@ realclean:
  ValueBase.h \
  ValueBase.i
 
-.obj/ValueFactory.o .obj/ValueFactory.o .obj/ValueFactory.o .obj/ValueFactory.o: ValueFactory.cpp \
+.obj/ValueFactory.o .obj/ValueFactory.so .shobj/ValueFactory.o .shobj/ValueFactory.so: ValueFactory.cpp \
  ValueFactory.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -16688,7 +16688,7 @@ realclean:
  corbafwd.i \
  ValueFactory.i
 
-.obj/ValueFactory_Map.o .obj/ValueFactory_Map.o .obj/ValueFactory_Map.o .obj/ValueFactory_Map.o: ValueFactory_Map.cpp \
+.obj/ValueFactory_Map.o .obj/ValueFactory_Map.so .shobj/ValueFactory_Map.o .shobj/ValueFactory_Map.so: ValueFactory_Map.cpp \
  ValueFactory_Map.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -16847,7 +16847,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/CDR.o .obj/CDR.o .obj/CDR.o .obj/CDR.o: CDR.cpp \
+.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp \
  Timeprobe.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -17052,7 +17052,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.o: Client_Strategy_Factory.cpp \
+.obj/Client_Strategy_Factory.o .obj/Client_Strategy_Factory.so .shobj/Client_Strategy_Factory.o .shobj/Client_Strategy_Factory.so: Client_Strategy_Factory.cpp \
  Client_Strategy_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -17147,7 +17147,7 @@ realclean:
  varbase.h \
  corbafwd.i
 
-.obj/debug.o .obj/debug.o .obj/debug.o .obj/debug.o: debug.cpp \
+.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp \
  debug.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -17238,7 +17238,7 @@ realclean:
  varbase.h \
  corbafwd.i
 
-.obj/Object_KeyC.o .obj/Object_KeyC.o .obj/Object_KeyC.o .obj/Object_KeyC.o: Object_KeyC.cpp \
+.obj/Object_KeyC.o .obj/Object_KeyC.so .shobj/Object_KeyC.o .shobj/Object_KeyC.so: Object_KeyC.cpp \
  Object_KeyC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -17341,7 +17341,7 @@ realclean:
  Exception.i \
  Typecode.i
 
-.obj/Invocation.o .obj/Invocation.o .obj/Invocation.o .obj/Invocation.o: Invocation.cpp \
+.obj/Invocation.o .obj/Invocation.so .shobj/Invocation.o .shobj/Invocation.so: Invocation.cpp \
  Invocation.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
@@ -17605,7 +17605,7 @@ realclean:
  GIOP_Utils.h \
  GIOP_Utils.i
 
-.obj/operation_details.o .obj/operation_details.o .obj/operation_details.o .obj/operation_details.o: operation_details.cpp \
+.obj/operation_details.o .obj/operation_details.so .shobj/operation_details.o .shobj/operation_details.so: operation_details.cpp \
  operation_details.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -17712,7 +17712,7 @@ realclean:
  target_specification.i \
  operation_details.i
 
-.obj/Interceptor.o .obj/Interceptor.o .obj/Interceptor.o .obj/Interceptor.o: Interceptor.cpp \
+.obj/Interceptor.o .obj/Interceptor.so .shobj/Interceptor.o .shobj/Interceptor.so: Interceptor.cpp \
  corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -17823,7 +17823,7 @@ realclean:
  InterceptorC.i \
  Interceptor.i
 
-.obj/InterceptorC.o .obj/InterceptorC.o .obj/InterceptorC.o .obj/InterceptorC.o: InterceptorC.cpp InterceptorC.h \
+.obj/InterceptorC.o .obj/InterceptorC.so .shobj/InterceptorC.o .shobj/InterceptorC.so: InterceptorC.cpp InterceptorC.h \
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -17931,7 +17931,7 @@ realclean:
  Environment.i \
  InterceptorC.i
 
-.obj/Smart_Proxies.o .obj/Smart_Proxies.o .obj/Smart_Proxies.o .obj/Smart_Proxies.o: Smart_Proxies.cpp \
+.obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp \
  Smart_Proxies.h \
  $(ACE_ROOT)/ace/pre.h \
  Object.h \
@@ -18025,7 +18025,7 @@ realclean:
  Object.i \
  Smart_Proxies.i
 
-.obj/Asynch_Invocation.o .obj/Asynch_Invocation.o .obj/Asynch_Invocation.o .obj/Asynch_Invocation.o: Asynch_Invocation.cpp \
+.obj/Asynch_Invocation.o .obj/Asynch_Invocation.so .shobj/Asynch_Invocation.o .shobj/Asynch_Invocation.so: Asynch_Invocation.cpp \
  Asynch_Invocation.h \
  $(ACE_ROOT)/ace/pre.h \
  Invocation.h \
@@ -18282,7 +18282,7 @@ realclean:
  Transport_Mux_Strategy.h \
  debug.h
 
-.obj/ORB_Core.o .obj/ORB_Core.o .obj/ORB_Core.o .obj/ORB_Core.o: ORB_Core.cpp \
+.obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp \
  ORB_Core.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -18558,7 +18558,7 @@ realclean:
  TAOC.i \
  Sync_Strategies.i
 
-.obj/Leader_Follower.o .obj/Leader_Follower.o .obj/Leader_Follower.o .obj/Leader_Follower.o: Leader_Follower.cpp \
+.obj/Leader_Follower.o .obj/Leader_Follower.so .shobj/Leader_Follower.o .shobj/Leader_Follower.so: Leader_Follower.cpp \
  Leader_Follower.h \
  $(ACE_ROOT)/ace/pre.h \
  ORB_Core.h \
@@ -18763,7 +18763,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  Leader_Follower.i
 
-.obj/Reactor_Registry.o .obj/Reactor_Registry.o .obj/Reactor_Registry.o .obj/Reactor_Registry.o: Reactor_Registry.cpp \
+.obj/Reactor_Registry.o .obj/Reactor_Registry.so .shobj/Reactor_Registry.o .shobj/Reactor_Registry.so: Reactor_Registry.cpp \
  Reactor_Registry.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -18855,7 +18855,7 @@ realclean:
  corbafwd.i \
  Reactor_Registry.i
 
-.obj/Single_Reactor.o .obj/Single_Reactor.o .obj/Single_Reactor.o .obj/Single_Reactor.o: Single_Reactor.cpp \
+.obj/Single_Reactor.o .obj/Single_Reactor.so .shobj/Single_Reactor.o .shobj/Single_Reactor.so: Single_Reactor.cpp \
  Single_Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  Reactor_Registry.h \
@@ -19064,7 +19064,7 @@ realclean:
  Leader_Follower.h \
  Leader_Follower.i
 
-.obj/Reactor_Per_Priority.o .obj/Reactor_Per_Priority.o .obj/Reactor_Per_Priority.o .obj/Reactor_Per_Priority.o: Reactor_Per_Priority.cpp \
+.obj/Reactor_Per_Priority.o .obj/Reactor_Per_Priority.so .shobj/Reactor_Per_Priority.o .shobj/Reactor_Per_Priority.so: Reactor_Per_Priority.cpp \
  Reactor_Per_Priority.h \
  $(ACE_ROOT)/ace/pre.h \
  Reactor_Registry.h \
@@ -19274,7 +19274,7 @@ realclean:
  Leader_Follower.i \
  debug.h
 
-.obj/params.o .obj/params.o .obj/params.o .obj/params.o: params.cpp \
+.obj/params.o .obj/params.so .shobj/params.o .shobj/params.so: params.cpp \
  params.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -19392,7 +19392,7 @@ realclean:
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  params.i
 
-.obj/Resource_Factory.o .obj/Resource_Factory.o .obj/Resource_Factory.o .obj/Resource_Factory.o: Resource_Factory.cpp \
+.obj/Resource_Factory.o .obj/Resource_Factory.so .shobj/Resource_Factory.o .shobj/Resource_Factory.so: Resource_Factory.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -19599,7 +19599,7 @@ realclean:
  ORB_Core.i \
  Client_Strategy_Factory.h
 
-.obj/Server_Strategy_Factory.o .obj/Server_Strategy_Factory.o .obj/Server_Strategy_Factory.o .obj/Server_Strategy_Factory.o: Server_Strategy_Factory.cpp \
+.obj/Server_Strategy_Factory.o .obj/Server_Strategy_Factory.so .shobj/Server_Strategy_Factory.o .shobj/Server_Strategy_Factory.so: Server_Strategy_Factory.cpp \
  Server_Strategy_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -19694,7 +19694,7 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i
 
-.obj/Sync_Strategies.o .obj/Sync_Strategies.o .obj/Sync_Strategies.o .obj/Sync_Strategies.o: Sync_Strategies.cpp \
+.obj/Sync_Strategies.o .obj/Sync_Strategies.so .shobj/Sync_Strategies.o .shobj/Sync_Strategies.so: Sync_Strategies.cpp \
  Sync_Strategies.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -19915,7 +19915,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/TAO_Internal.o .obj/TAO_Internal.o .obj/TAO_Internal.o .obj/TAO_Internal.o: TAO_Internal.cpp \
+.obj/TAO_Internal.o .obj/TAO_Internal.so .shobj/TAO_Internal.o .shobj/TAO_Internal.so: TAO_Internal.cpp \
  TAO_Internal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -20082,7 +20082,7 @@ realclean:
  UIOP_Factory.h \
  SHMIOP_Factory.h
 
-.obj/Typecode_Constants.o .obj/Typecode_Constants.o .obj/Typecode_Constants.o .obj/Typecode_Constants.o: Typecode_Constants.cpp \
+.obj/Typecode_Constants.o .obj/Typecode_Constants.so .shobj/Typecode_Constants.o .shobj/Typecode_Constants.so: Typecode_Constants.cpp \
  Typecode.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -20255,7 +20255,7 @@ realclean:
  PollableC.h \
  PollableC.i
 
-.obj/IOR_LookupTable.o .obj/IOR_LookupTable.o .obj/IOR_LookupTable.o .obj/IOR_LookupTable.o: IOR_LookupTable.cpp \
+.obj/IOR_LookupTable.o .obj/IOR_LookupTable.so .shobj/IOR_LookupTable.o .shobj/IOR_LookupTable.so: IOR_LookupTable.cpp \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -20385,7 +20385,7 @@ realclean:
  Environment.i \
  debug.h
 
-.obj/TAO.o .obj/TAO.o .obj/TAO.o .obj/TAO.o: TAO.cpp \
+.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp \
  TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -20541,7 +20541,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/Wait_Strategy.o .obj/Wait_Strategy.o .obj/Wait_Strategy.o .obj/Wait_Strategy.o: Wait_Strategy.cpp \
+.obj/Wait_Strategy.o .obj/Wait_Strategy.so .shobj/Wait_Strategy.o .shobj/Wait_Strategy.so: Wait_Strategy.cpp \
  Wait_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -20748,7 +20748,7 @@ realclean:
  Leader_Follower.i \
  debug.h
 
-.obj/Transport_Mux_Strategy.o .obj/Transport_Mux_Strategy.o .obj/Transport_Mux_Strategy.o .obj/Transport_Mux_Strategy.o: Transport_Mux_Strategy.cpp \
+.obj/Transport_Mux_Strategy.o .obj/Transport_Mux_Strategy.so .shobj/Transport_Mux_Strategy.o .shobj/Transport_Mux_Strategy.so: Transport_Mux_Strategy.cpp \
  Transport_Mux_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  GIOP_Message_State.h \
@@ -20958,7 +20958,7 @@ realclean:
  Typecode.i \
  Pluggable.i
 
-.obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.o: Reply_Dispatcher.cpp \
+.obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.so .shobj/Reply_Dispatcher.o .shobj/Reply_Dispatcher.so: Reply_Dispatcher.cpp \
  Reply_Dispatcher.h \
  $(ACE_ROOT)/ace/pre.h \
  Request.h \
@@ -21190,7 +21190,7 @@ realclean:
  Leader_Follower.i \
  debug.h
 
-.obj/IOPC.o .obj/IOPC.o .obj/IOPC.o .obj/IOPC.o: IOPC.cpp \
+.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp \
  IOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
@@ -21301,7 +21301,7 @@ realclean:
  Exception.i \
  Typecode.i
 
-.obj/IOPS.o .obj/IOPS.o .obj/IOPS.o .obj/IOPS.o: IOPS.cpp \
+.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp \
  IOPS.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \
@@ -21407,7 +21407,7 @@ realclean:
  IOPS_T.cpp \
  IOPS.i
 
-.obj/PollableC.o .obj/PollableC.o .obj/PollableC.o .obj/PollableC.o: PollableC.cpp PollableC.h \
+.obj/PollableC.o .obj/PollableC.so .shobj/PollableC.o .shobj/PollableC.so: PollableC.cpp PollableC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -21656,7 +21656,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/PollableS.o .obj/PollableS.o .obj/PollableS.o .obj/PollableS.o: PollableS.cpp PollableS.h PollableC.h \
+.obj/PollableS.o .obj/PollableS.so .shobj/PollableS.o .shobj/PollableS.so: PollableS.cpp PollableS.h PollableC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -21753,7 +21753,7 @@ realclean:
  CDR.i \
  PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
-.obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.o: CONV_FRAMEC.cpp \
+.obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
@@ -21864,7 +21864,7 @@ realclean:
  Exception.i \
  Typecode.i
 
-.obj/CONV_FRAMES.o .obj/CONV_FRAMES.o .obj/CONV_FRAMES.o .obj/CONV_FRAMES.o: CONV_FRAMES.cpp \
+.obj/CONV_FRAMES.o .obj/CONV_FRAMES.so .shobj/CONV_FRAMES.o .shobj/CONV_FRAMES.so: CONV_FRAMES.cpp \
  CONV_FRAMES.h \
  $(ACE_ROOT)/ace/pre.h \
  CONV_FRAMEC.h \
@@ -21970,7 +21970,7 @@ realclean:
  CONV_FRAMES_T.cpp \
  CONV_FRAMES.i
 
-.obj/Tagged_Components.o .obj/Tagged_Components.o .obj/Tagged_Components.o .obj/Tagged_Components.o: Tagged_Components.cpp \
+.obj/Tagged_Components.o .obj/Tagged_Components.so .shobj/Tagged_Components.o .shobj/Tagged_Components.so: Tagged_Components.cpp \
  Tagged_Components.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \
@@ -22075,7 +22075,7 @@ realclean:
  CONV_FRAMEC.i \
  Tagged_Components.i
 
-.obj/GIOPC.o .obj/GIOPC.o .obj/GIOPC.o .obj/GIOPC.o: GIOPC.cpp \
+.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp \
  GIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -22190,7 +22190,7 @@ realclean:
  Exception.i \
  Typecode.i
 
-.obj/BoundsC.o .obj/BoundsC.o .obj/BoundsC.o .obj/BoundsC.o: BoundsC.cpp \
+.obj/BoundsC.o .obj/BoundsC.so .shobj/BoundsC.o .shobj/BoundsC.so: BoundsC.cpp \
  BoundsC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -22294,7 +22294,7 @@ realclean:
  Typecode.h \
  Typecode.i
 
-.obj/TAOC.o .obj/TAOC.o .obj/TAOC.o .obj/TAOC.o: TAOC.cpp TAOC.h \
+.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -22416,7 +22416,7 @@ realclean:
  Typecode.h \
  Typecode.i
 
-.obj/TAOS.o .obj/TAOS.o .obj/TAOS.o .obj/TAOS.o: TAOS.cpp TAOS.h \
+.obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp TAOS.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -22507,7 +22507,7 @@ realclean:
  corbafwd.i \
  TAOS_T.h TAOS_T.i TAOS_T.cpp TAOS.i
 
-.obj/Object_Loader.o .obj/Object_Loader.o .obj/Object_Loader.o .obj/Object_Loader.o: Object_Loader.cpp \
+.obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp \
  Object_Loader.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -22621,7 +22621,7 @@ realclean:
  $(ACE_ROOT)/ace/Service_Types.i \
  $(ACE_ROOT)/ace/Service_Repository.i
 
-.obj/Context.o .obj/Context.o .obj/Context.o .obj/Context.o: Context.cpp \
+.obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp \
  Context.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -22784,7 +22784,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/Request.o .obj/Request.o .obj/Request.o .obj/Request.o: Request.cpp \
+.obj/Request.o .obj/Request.so .shobj/Request.o .shobj/Request.so: Request.cpp \
  Request.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -22996,7 +22996,7 @@ realclean:
  Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i
 
-.obj/Services.o .obj/Services.o .obj/Services.o .obj/Services.o: Services.cpp \
+.obj/Services.o .obj/Services.so .shobj/Services.o .shobj/Services.so: Services.cpp \
  Services.h \
  $(ACE_ROOT)/ace/pre.h \
  Sequence.h \
@@ -23107,7 +23107,7 @@ realclean:
  Exception.i \
  Typecode.i
 
-.obj/NVList.o .obj/NVList.o .obj/NVList.o .obj/NVList.o: NVList.cpp \
+.obj/NVList.o .obj/NVList.so .shobj/NVList.o .shobj/NVList.so: NVList.cpp \
  NVList.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -23278,7 +23278,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/MessagingC.o .obj/MessagingC.o .obj/MessagingC.o .obj/MessagingC.o: MessagingC.cpp MessagingC.h \
+.obj/MessagingC.o .obj/MessagingC.so .shobj/MessagingC.o .shobj/MessagingC.so: MessagingC.cpp MessagingC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -23537,7 +23537,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/MessagingS.o .obj/MessagingS.o .obj/MessagingS.o .obj/MessagingS.o: MessagingS.cpp \
+.obj/MessagingS.o .obj/MessagingS.so .shobj/MessagingS.o .shobj/MessagingS.so: MessagingS.cpp \
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -23797,7 +23797,7 @@ realclean:
  Active_Object_Map.i \
  Object_Adapter.i
 
-.obj/Policy_Manager.o .obj/Policy_Manager.o .obj/Policy_Manager.o .obj/Policy_Manager.o: Policy_Manager.cpp \
+.obj/Policy_Manager.o .obj/Policy_Manager.so .shobj/Policy_Manager.o .shobj/Policy_Manager.so: Policy_Manager.cpp \
  Policy_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -24039,7 +24039,7 @@ realclean:
  RTCORBAS.i \
  RT_Policy_i.i
 
-.obj/Messaging_Policy_i.o .obj/Messaging_Policy_i.o .obj/Messaging_Policy_i.o .obj/Messaging_Policy_i.o: Messaging_Policy_i.cpp \
+.obj/Messaging_Policy_i.o .obj/Messaging_Policy_i.so .shobj/Messaging_Policy_i.o .shobj/Messaging_Policy_i.so: Messaging_Policy_i.cpp \
  Messaging_Policy_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -24168,7 +24168,7 @@ realclean:
  Messaging_Policy_i.i \
  debug.h
 
-.obj/Client_Priority_Policy.o .obj/Client_Priority_Policy.o .obj/Client_Priority_Policy.o .obj/Client_Priority_Policy.o: Client_Priority_Policy.cpp \
+.obj/Client_Priority_Policy.o .obj/Client_Priority_Policy.so .shobj/Client_Priority_Policy.o .shobj/Client_Priority_Policy.so: Client_Priority_Policy.cpp \
  Client_Priority_Policy.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -24286,7 +24286,7 @@ realclean:
  TAOC.i \
  Client_Priority_Policy.i
 
-.obj/Buffering_Constraint_Policy.o .obj/Buffering_Constraint_Policy.o .obj/Buffering_Constraint_Policy.o .obj/Buffering_Constraint_Policy.o: Buffering_Constraint_Policy.cpp \
+.obj/Buffering_Constraint_Policy.o .obj/Buffering_Constraint_Policy.so .shobj/Buffering_Constraint_Policy.o .shobj/Buffering_Constraint_Policy.so: Buffering_Constraint_Policy.cpp \
  Buffering_Constraint_Policy.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -24404,7 +24404,7 @@ realclean:
  TAOC.i \
  Buffering_Constraint_Policy.i
 
-.obj/Priority_Mapping.o .obj/Priority_Mapping.o .obj/Priority_Mapping.o .obj/Priority_Mapping.o: Priority_Mapping.cpp \
+.obj/Priority_Mapping.o .obj/Priority_Mapping.so .shobj/Priority_Mapping.o .shobj/Priority_Mapping.so: Priority_Mapping.cpp \
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -24524,7 +24524,7 @@ realclean:
  RTCORBAC.i \
  Priority_Mapping.i
 
-.obj/Linear_Priority_Mapping.o .obj/Linear_Priority_Mapping.o .obj/Linear_Priority_Mapping.o .obj/Linear_Priority_Mapping.o: Linear_Priority_Mapping.cpp \
+.obj/Linear_Priority_Mapping.o .obj/Linear_Priority_Mapping.so .shobj/Linear_Priority_Mapping.o .shobj/Linear_Priority_Mapping.so: Linear_Priority_Mapping.cpp \
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -24649,7 +24649,7 @@ realclean:
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/Direct_Priority_Mapping.o .obj/Direct_Priority_Mapping.o .obj/Direct_Priority_Mapping.o .obj/Direct_Priority_Mapping.o: Direct_Priority_Mapping.cpp \
+.obj/Direct_Priority_Mapping.o .obj/Direct_Priority_Mapping.so .shobj/Direct_Priority_Mapping.o .shobj/Direct_Priority_Mapping.so: Direct_Priority_Mapping.cpp \
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -24774,7 +24774,7 @@ realclean:
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/RT_Current.o .obj/RT_Current.o .obj/RT_Current.o .obj/RT_Current.o: RT_Current.cpp \
+.obj/RT_Current.o .obj/RT_Current.so .shobj/RT_Current.o .shobj/RT_Current.so: RT_Current.cpp \
  RT_Current.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -25010,7 +25010,7 @@ realclean:
  Priority_Mapping.h \
  Priority_Mapping.i
 
-.obj/RT_Mutex.o .obj/RT_Mutex.o .obj/RT_Mutex.o .obj/RT_Mutex.o: RT_Mutex.cpp \
+.obj/RT_Mutex.o .obj/RT_Mutex.so .shobj/RT_Mutex.o .shobj/RT_Mutex.so: RT_Mutex.cpp \
  RT_Mutex.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -25145,7 +25145,7 @@ realclean:
  RTCORBAS.i \
  RT_Mutex.i
 
-.obj/RT_Policy_i.o .obj/RT_Policy_i.o .obj/RT_Policy_i.o .obj/RT_Policy_i.o: RT_Policy_i.cpp \
+.obj/RT_Policy_i.o .obj/RT_Policy_i.so .shobj/RT_Policy_i.o .shobj/RT_Policy_i.so: RT_Policy_i.cpp \
  RT_Policy_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -25280,7 +25280,7 @@ realclean:
  RTCORBAS.i \
  RT_Policy_i.i
 
-.obj/RT_ORB.o .obj/RT_ORB.o .obj/RT_ORB.o .obj/RT_ORB.o: RT_ORB.cpp \
+.obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp \
  RT_ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -25419,7 +25419,7 @@ realclean:
  RT_Mutex.h \
  RT_Mutex.i
 
-.obj/Pool_Per_Endpoint.o .obj/Pool_Per_Endpoint.o .obj/Pool_Per_Endpoint.o .obj/Pool_Per_Endpoint.o: Pool_Per_Endpoint.cpp \
+.obj/Pool_Per_Endpoint.o .obj/Pool_Per_Endpoint.so .shobj/Pool_Per_Endpoint.o .shobj/Pool_Per_Endpoint.so: Pool_Per_Endpoint.cpp \
  Pool_Per_Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -25645,7 +25645,7 @@ realclean:
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/RTCORBAC.o .obj/RTCORBAC.o .obj/RTCORBAC.o .obj/RTCORBAC.o: RTCORBAC.cpp RTCORBAC.h \
+.obj/RTCORBAC.o .obj/RTCORBAC.so .shobj/RTCORBAC.o .shobj/RTCORBAC.so: RTCORBAC.cpp RTCORBAC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -25770,7 +25770,7 @@ realclean:
  Typecode.h \
  Typecode.i
 
-.obj/RTCORBAS.o .obj/RTCORBAS.o .obj/RTCORBAS.o .obj/RTCORBAS.o: RTCORBAS.cpp \
+.obj/RTCORBAS.o .obj/RTCORBAS.so .shobj/RTCORBAS.o .shobj/RTCORBAS.so: RTCORBAS.cpp \
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -25899,7 +25899,7 @@ realclean:
  TimeBaseC.h RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp \
  RTCORBAS.i
 
-.obj/DynAnyC.o .obj/DynAnyC.o .obj/DynAnyC.o .obj/DynAnyC.o: DynAnyC.cpp \
+.obj/DynAnyC.o .obj/DynAnyC.so .shobj/DynAnyC.o .shobj/DynAnyC.so: DynAnyC.cpp \
  DynAnyC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -26099,7 +26099,7 @@ realclean:
  ifrfwd.h \
  InterfaceC.i
 
-.obj/DynAnyS.o .obj/DynAnyS.o .obj/DynAnyS.o .obj/DynAnyS.o: DynAnyS.cpp \
+.obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
  DynAnyC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -26225,7 +26225,7 @@ realclean:
  Typecode.i \
  InterfaceC.i
 
-.obj/DynAny_i.o .obj/DynAny_i.o .obj/DynAny_i.o .obj/DynAny_i.o: DynAny_i.cpp \
+.obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
  DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -26363,7 +26363,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/DynArray_i.o .obj/DynArray_i.o .obj/DynArray_i.o .obj/DynArray_i.o: DynArray_i.cpp \
+.obj/DynArray_i.o .obj/DynArray_i.so .shobj/DynArray_i.o .shobj/DynArray_i.so: DynArray_i.cpp \
  DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -26537,7 +26537,7 @@ realclean:
  ORB.i \
  Marshal.i
 
-.obj/DynEnum_i.o .obj/DynEnum_i.o .obj/DynEnum_i.o .obj/DynEnum_i.o: DynEnum_i.cpp \
+.obj/DynEnum_i.o .obj/DynEnum_i.so .shobj/DynEnum_i.o .shobj/DynEnum_i.so: DynEnum_i.cpp \
  DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -26666,7 +26666,7 @@ realclean:
  DynEnum_i.h \
  InconsistentTypeCodeC.h
 
-.obj/DynSequence_i.o .obj/DynSequence_i.o .obj/DynSequence_i.o .obj/DynSequence_i.o: DynSequence_i.cpp \
+.obj/DynSequence_i.o .obj/DynSequence_i.so .shobj/DynSequence_i.o .shobj/DynSequence_i.so: DynSequence_i.cpp \
  DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -26840,7 +26840,7 @@ realclean:
  ORB.i \
  Marshal.i
 
-.obj/DynStruct_i.o .obj/DynStruct_i.o .obj/DynStruct_i.o .obj/DynStruct_i.o: DynStruct_i.cpp \
+.obj/DynStruct_i.o .obj/DynStruct_i.so .shobj/DynStruct_i.o .shobj/DynStruct_i.so: DynStruct_i.cpp \
  DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -27014,7 +27014,7 @@ realclean:
  Principal.i \
  Marshal.i
 
-.obj/DynUnion_i.o .obj/DynUnion_i.o .obj/DynUnion_i.o .obj/DynUnion_i.o: DynUnion_i.cpp \
+.obj/DynUnion_i.o .obj/DynUnion_i.so .shobj/DynUnion_i.o .shobj/DynUnion_i.so: DynUnion_i.cpp \
  DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -27190,7 +27190,7 @@ realclean:
  ORB.i \
  Marshal.i
 
-.obj/InconsistentTypeCodeC.o .obj/InconsistentTypeCodeC.o .obj/InconsistentTypeCodeC.o .obj/InconsistentTypeCodeC.o: InconsistentTypeCodeC.cpp \
+.obj/InconsistentTypeCodeC.o .obj/InconsistentTypeCodeC.so .shobj/InconsistentTypeCodeC.o .shobj/InconsistentTypeCodeC.so: InconsistentTypeCodeC.cpp \
  InconsistentTypeCodeC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
@@ -27346,7 +27346,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/InterfaceC.o .obj/InterfaceC.o .obj/InterfaceC.o .obj/InterfaceC.o: InterfaceC.cpp InterfaceC.h \
+.obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp InterfaceC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -27595,7 +27595,7 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.o: Pluggable_Messaging.cpp \
+.obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.so .shobj/Pluggable_Messaging.o .shobj/Pluggable_Messaging.so: Pluggable_Messaging.cpp \
  Pluggable_Messaging.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable_Messaging_Utils.h \
@@ -27753,7 +27753,7 @@ realclean:
  Typecode.i \
  Pluggable.i
 
-.obj/Pluggable_Messaging_Utils.o .obj/Pluggable_Messaging_Utils.o .obj/Pluggable_Messaging_Utils.o .obj/Pluggable_Messaging_Utils.o: Pluggable_Messaging_Utils.cpp \
+.obj/Pluggable_Messaging_Utils.o .obj/Pluggable_Messaging_Utils.so .shobj/Pluggable_Messaging_Utils.o .shobj/Pluggable_Messaging_Utils.so: Pluggable_Messaging_Utils.cpp \
  Pluggable_Messaging_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \
@@ -27856,7 +27856,7 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i
 
-.obj/GIOP_Message_Base.o .obj/GIOP_Message_Base.o .obj/GIOP_Message_Base.o .obj/GIOP_Message_Base.o: GIOP_Message_Base.cpp \
+.obj/GIOP_Message_Base.o .obj/GIOP_Message_Base.so .shobj/GIOP_Message_Base.o .shobj/GIOP_Message_Base.so: GIOP_Message_Base.cpp \
  GIOP_Message_Base.h \
  $(ACE_ROOT)/ace/pre.h \
  GIOP_Message_State.h \
@@ -28028,7 +28028,7 @@ realclean:
  Pluggable.i \
  debug.h
 
-.obj/GIOP_Message_Connectors.o .obj/GIOP_Message_Connectors.o .obj/GIOP_Message_Connectors.o .obj/GIOP_Message_Connectors.o: GIOP_Message_Connectors.cpp \
+.obj/GIOP_Message_Connectors.o .obj/GIOP_Message_Connectors.so .shobj/GIOP_Message_Connectors.o .shobj/GIOP_Message_Connectors.so: GIOP_Message_Connectors.cpp \
  GIOP_Message_Connectors.h \
  $(ACE_ROOT)/ace/pre.h \
  GIOP_Message_Base.h \
@@ -28169,7 +28169,7 @@ realclean:
  GIOPC.h \
  GIOPC.i
 
-.obj/GIOP_Message_Acceptors.o .obj/GIOP_Message_Acceptors.o .obj/GIOP_Message_Acceptors.o .obj/GIOP_Message_Acceptors.o: GIOP_Message_Acceptors.cpp \
+.obj/GIOP_Message_Acceptors.o .obj/GIOP_Message_Acceptors.so .shobj/GIOP_Message_Acceptors.o .shobj/GIOP_Message_Acceptors.so: GIOP_Message_Acceptors.cpp \
  GIOP_Message_Acceptors.h \
  $(ACE_ROOT)/ace/pre.h \
  GIOP_Message_Base.h \
@@ -28432,7 +28432,7 @@ realclean:
  Principal.i \
  GIOP_Server_Request.i
 
-.obj/GIOP_Message_Accept_State.o .obj/GIOP_Message_Accept_State.o .obj/GIOP_Message_Accept_State.o .obj/GIOP_Message_Accept_State.o: GIOP_Message_Accept_State.cpp \
+.obj/GIOP_Message_Accept_State.o .obj/GIOP_Message_Accept_State.so .shobj/GIOP_Message_Accept_State.o .shobj/GIOP_Message_Accept_State.so: GIOP_Message_Accept_State.cpp \
  GIOP_Message_Accept_State.h \
  $(ACE_ROOT)/ace/pre.h \
  GIOP_Message_Headers.h \
@@ -28618,7 +28618,7 @@ realclean:
  Any.i \
  NVList.i
 
-.obj/GIOP_Utils.o .obj/GIOP_Utils.o .obj/GIOP_Utils.o .obj/GIOP_Utils.o: GIOP_Utils.cpp \
+.obj/GIOP_Utils.o .obj/GIOP_Utils.so .shobj/GIOP_Utils.o .shobj/GIOP_Utils.so: GIOP_Utils.cpp \
  debug.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -28828,7 +28828,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/GIOP_Message_Headers.o .obj/GIOP_Message_Headers.o .obj/GIOP_Message_Headers.o .obj/GIOP_Message_Headers.o: GIOP_Message_Headers.cpp \
+.obj/GIOP_Message_Headers.o .obj/GIOP_Message_Headers.so .shobj/GIOP_Message_Headers.o .shobj/GIOP_Message_Headers.so: GIOP_Message_Headers.cpp \
  GIOP_Message_Headers.h \
  $(ACE_ROOT)/ace/pre.h \
  Tagged_Profile.h \
@@ -28937,7 +28937,7 @@ realclean:
  Tagged_Profile.i \
  GIOP_Message_Headers.i
 
-.obj/target_specification.o .obj/target_specification.o .obj/target_specification.o .obj/target_specification.o: target_specification.cpp \
+.obj/target_specification.o .obj/target_specification.so .shobj/target_specification.o .shobj/target_specification.so: target_specification.cpp \
  target_specification.h \
  $(ACE_ROOT)/ace/pre.h \
  Object_KeyC.h \
@@ -29042,7 +29042,7 @@ realclean:
  IOPC.i \
  target_specification.i
 
-.obj/GIOP_Server_Request.o .obj/GIOP_Server_Request.o .obj/GIOP_Server_Request.o .obj/GIOP_Server_Request.o: GIOP_Server_Request.cpp \
+.obj/GIOP_Server_Request.o .obj/GIOP_Server_Request.so .shobj/GIOP_Server_Request.o .shobj/GIOP_Server_Request.so: GIOP_Server_Request.cpp \
  GIOP_Server_Request.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
@@ -29305,7 +29305,7 @@ realclean:
  RTCORBAC.i \
  POA.i
 
-.obj/GIOP_Message_Lite.o .obj/GIOP_Message_Lite.o .obj/GIOP_Message_Lite.o .obj/GIOP_Message_Lite.o: GIOP_Message_Lite.cpp \
+.obj/GIOP_Message_Lite.o .obj/GIOP_Message_Lite.so .shobj/GIOP_Message_Lite.o .shobj/GIOP_Message_Lite.so: GIOP_Message_Lite.cpp \
  GIOP_Message_Lite.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
@@ -29572,7 +29572,7 @@ realclean:
  GIOP_Message_Headers.h \
  GIOP_Message_Headers.i
 
-.obj/GIOP_Message_State.o .obj/GIOP_Message_State.o .obj/GIOP_Message_State.o .obj/GIOP_Message_State.o: GIOP_Message_State.cpp \
+.obj/GIOP_Message_State.o .obj/GIOP_Message_State.so .shobj/GIOP_Message_State.o .shobj/GIOP_Message_State.so: GIOP_Message_State.cpp \
  GIOP_Message_State.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable_Messaging.h \
@@ -29783,7 +29783,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/Tagged_Profile.o .obj/Tagged_Profile.o .obj/Tagged_Profile.o .obj/Tagged_Profile.o: Tagged_Profile.cpp \
+.obj/Tagged_Profile.o .obj/Tagged_Profile.so .shobj/Tagged_Profile.o .shobj/Tagged_Profile.so: Tagged_Profile.cpp \
  Tagged_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \

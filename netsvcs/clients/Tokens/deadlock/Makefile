@@ -48,7 +48,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/deadlock_detection_test.o .obj/deadlock_detection_test.o .obj/deadlock_detection_test.o .obj/deadlock_detection_test.o: deadlock_detection_test.cpp \
+.obj/deadlock_detection_test.o .obj/deadlock_detection_test.so .shobj/deadlock_detection_test.o .shobj/deadlock_detection_test.so: deadlock_detection_test.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

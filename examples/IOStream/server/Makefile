@@ -39,7 +39,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/iostream_server.o .obj/iostream_server.o .obj/iostream_server.o .obj/iostream_server.o: iostream_server.cpp \
+.obj/iostream_server.o .obj/iostream_server.so .shobj/iostream_server.o .shobj/iostream_server.so: iostream_server.cpp \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \

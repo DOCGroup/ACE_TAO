@@ -46,7 +46,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_non_existent.o .obj/test_non_existent.o .obj/test_non_existent.o .obj/test_non_existent.o: test_non_existent.cpp \
+.obj/test_non_existent.o .obj/test_non_existent.so .shobj/test_non_existent.o .shobj/test_non_existent.so: test_non_existent.cpp \
  $(ACE_ROOT)/ace/Naming_Context.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -161,7 +161,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Name_Request_Reply.h \
  $(ACE_ROOT)/ace/Name_Space.h
 
-.obj/test_writers.o .obj/test_writers.o .obj/test_writers.o .obj/test_writers.o: test_writers.cpp \
+.obj/test_writers.o .obj/test_writers.so .shobj/test_writers.o .shobj/test_writers.so: test_writers.cpp \
  $(ACE_ROOT)/ace/Naming_Context.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -276,7 +276,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Name_Request_Reply.h \
  $(ACE_ROOT)/ace/Name_Space.h
 
-.obj/test_multiple_contexts.o .obj/test_multiple_contexts.o .obj/test_multiple_contexts.o .obj/test_multiple_contexts.o: test_multiple_contexts.cpp \
+.obj/test_multiple_contexts.o .obj/test_multiple_contexts.so .shobj/test_multiple_contexts.o .shobj/test_multiple_contexts.so: test_multiple_contexts.cpp \
  $(ACE_ROOT)/ace/Naming_Context.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

@@ -66,7 +66,7 @@ realclean:
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_objectC.o .obj/test_objectC.o .obj/test_objectC.o .obj/test_objectC.o: test_objectC.cpp test_objectC.h \
+.obj/test_objectC.o .obj/test_objectC.so .shobj/test_objectC.o .shobj/test_objectC.so: test_objectC.cpp test_objectC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -372,7 +372,7 @@ realclean:
  $(TAO_ROOT)/tao/MessagingS.i \
  test_objectC.i
 
-.obj/test_objectS.o .obj/test_objectS.o .obj/test_objectS.o .obj/test_objectS.o: test_objectS.cpp test_objectS.h test_objectC.h \
+.obj/test_objectS.o .obj/test_objectS.so .shobj/test_objectS.o .shobj/test_objectS.so: test_objectS.cpp test_objectS.h test_objectC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -679,7 +679,7 @@ realclean:
  test_objectC.i test_objectS_T.h test_objectS_T.i test_objectS_T.cpp \
  test_objectS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp client.h test_objectS.h test_objectC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client.h test_objectS.h test_objectC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

@@ -82,7 +82,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ReceiverC.o .obj/ReceiverC.o .obj/ReceiverC.o .obj/ReceiverC.o: ReceiverC.cpp ReceiverC.h \
+.obj/ReceiverC.o .obj/ReceiverC.so .shobj/ReceiverC.o .shobj/ReceiverC.so: ReceiverC.cpp ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -388,7 +388,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  ReceiverC.i
 
-.obj/ReceiverS.o .obj/ReceiverS.o .obj/ReceiverS.o .obj/ReceiverS.o: ReceiverS.cpp ReceiverS.h ReceiverC.h \
+.obj/ReceiverS.o .obj/ReceiverS.so .shobj/ReceiverS.o .shobj/ReceiverS.so: ReceiverS.cpp ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -694,7 +694,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  ReceiverC.i ReceiverS_T.h ReceiverS_T.i ReceiverS_T.cpp ReceiverS.i
 
-.obj/Receiver_i.o .obj/Receiver_i.o .obj/Receiver_i.o .obj/Receiver_i.o: Receiver_i.cpp Receiver_i.h ReceiverS.h ReceiverC.h \
+.obj/Receiver_i.o .obj/Receiver_i.so .shobj/Receiver_i.o .shobj/Receiver_i.so: Receiver_i.cpp Receiver_i.h ReceiverS.h ReceiverC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

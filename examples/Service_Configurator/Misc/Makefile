@@ -47,7 +47,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Timer_Service.o .obj/Timer_Service.o .obj/Timer_Service.o .obj/Timer_Service.o: Timer_Service.cpp Timer_Service.h \
+.obj/Timer_Service.o .obj/Timer_Service.so .shobj/Timer_Service.o .shobj/Timer_Service.so: Timer_Service.cpp Timer_Service.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -140,7 +140,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
-.obj/main.o .obj/main.o .obj/main.o .obj/main.o: main.cpp \
+.obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \

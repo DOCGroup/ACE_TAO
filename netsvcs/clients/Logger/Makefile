@@ -46,7 +46,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/direct_logging.o .obj/direct_logging.o .obj/direct_logging.o .obj/direct_logging.o: direct_logging.cpp \
+.obj/direct_logging.o .obj/direct_logging.so .shobj/direct_logging.o .shobj/direct_logging.so: direct_logging.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -91,7 +91,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i
 
-.obj/indirect_logging.o .obj/indirect_logging.o .obj/indirect_logging.o .obj/indirect_logging.o: indirect_logging.cpp \
+.obj/indirect_logging.o .obj/indirect_logging.so .shobj/indirect_logging.o .shobj/indirect_logging.so: indirect_logging.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

@@ -66,7 +66,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Updates.o .obj/Updates.o .obj/Updates.o .obj/Updates.o: Updates.cpp Updates.h ../lib/Notify_Test_Client.h \
+.obj/Updates.o .obj/Updates.so .shobj/Updates.o .shobj/Updates.so: Updates.cpp Updates.h ../lib/Notify_Test_Client.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \

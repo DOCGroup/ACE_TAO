@@ -71,7 +71,7 @@ consumer:$(addprefix $(VDIR),$(SIMPLE_CON_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosEC_Multiple.o .obj/CosEC_Multiple.o .obj/CosEC_Multiple.o .obj/CosEC_Multiple.o: CosEC_Multiple.cpp CosEC_Multiple.h \
+.obj/CosEC_Multiple.o .obj/CosEC_Multiple.so .shobj/CosEC_Multiple.o .shobj/CosEC_Multiple.so: CosEC_Multiple.cpp CosEC_Multiple.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -406,7 +406,7 @@ consumer:$(addprefix $(VDIR),$(SIMPLE_CON_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i
 
-.obj/CosECConsumer.o .obj/CosECConsumer.o .obj/CosECConsumer.o .obj/CosECConsumer.o: CosECConsumer.cpp CosECConsumer.h \
+.obj/CosECConsumer.o .obj/CosECConsumer.so .shobj/CosECConsumer.o .shobj/CosECConsumer.so: CosECConsumer.cpp CosECConsumer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -752,7 +752,7 @@ consumer:$(addprefix $(VDIR),$(SIMPLE_CON_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
-.obj/CosECSupplier.o .obj/CosECSupplier.o .obj/CosECSupplier.o .obj/CosECSupplier.o: CosECSupplier.cpp CosECSupplier.h \
+.obj/CosECSupplier.o .obj/CosECSupplier.so .shobj/CosECSupplier.o .shobj/CosECSupplier.so: CosECSupplier.cpp CosECSupplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \

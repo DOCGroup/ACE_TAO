@@ -46,7 +46,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ping.o .obj/ping.o .obj/ping.o .obj/ping.o: ping.cpp ping.h \
+.obj/ping.o .obj/ping.so .shobj/ping.o .shobj/ping.so: ping.cpp ping.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -446,7 +446,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Stats.i
 
-.obj/pong.o .obj/pong.o .obj/pong.o .obj/pong.o: pong.cpp pong.h \
+.obj/pong.o .obj/pong.so .shobj/pong.o .shobj/pong.so: pong.cpp pong.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -846,7 +846,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Stats.i
 
-.obj/control.o .obj/control.o .obj/control.o .obj/control.o: control.cpp \
+.obj/control.o .obj/control.so .shobj/control.o .shobj/control.so: control.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

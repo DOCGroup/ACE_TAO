@@ -39,7 +39,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/logging_app.o .obj/logging_app.o .obj/logging_app.o .obj/logging_app.o: logging_app.cpp \
+.obj/logging_app.o .obj/logging_app.so .shobj/logging_app.o .shobj/logging_app.so: logging_app.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
