@@ -21,39 +21,15 @@ endif
 ifeq ($(OSRELEASE),5.4)
 C++FLAGS	+= -DSUNOS54
 endif
- 
-ifdef quantify
-#QDIR    = /pkg/purify/quantify-2.1-solaris2
-QDIR    = /pkg/purify/quantify-3.0-solaris2
-QUANTIFY	= $(QDIR)/quantify -cache-dir=/project/mambo/gokhale/cache -record-register-window-traps
-C++FLAGS += -DUSE_QUANTIFY -I$(QDIR)
-#CLIENT_OBJS    += $(QDIR)/quantify_stubs.a
-#SERVER_OBJS    += $(QDIR)/quantify_stubs.a
-LDFLAGS         += -L$(QDIR) -lquantify_stubs
-else
-ifdef purify
-QUANTIFY	= purify -cache-dir=/project/mambo/gokhale/cache
-else
-ifdef debug
-QUANTIFY	=
-C++FLAGS	+=
-LDFLAGS		+=
-else
-QUANTIFY	=
-C++FLAGS += -O4
-LDFLAGS	+= -O4
-endif
-endif
-endif
 
 client: $(CLIENT_OBJS)
-	$(QUANTIFY) $(C++) $(C++FLAGS) -o client $(CLIENT_OBJS) $(LDFLAGS) $(ITSRV) $(SYSLIBS)
+	$(PRELINK) $(C++) $(C++FLAGS) -o client $(CLIENT_OBJS) $(LDFLAGS) $(ITSRV) $(SYSLIBS)
 
 server: $(SERVER_OBJS)
-	$(QUANTIFY) $(C++) $(C++FLAGS) -o server $(SERVER_OBJS) $(LDFLAGS) $(ITSRV) $(SYSLIBS)
+	$(PRELINK) $(C++) $(C++FLAGS) -o server $(SERVER_OBJS) $(LDFLAGS) $(ITSRV) $(SYSLIBS)
 
-ttcp.h ttcpC.$(C++SUFFIX) ttcpS.$(C++SUFFIX):ttcp.idl        
-	$(IDL) $(IDLFLAGS) $< 
+ttcp.h ttcpC.$(C++SUFFIX) ttcpS.$(C++SUFFIX):ttcp.idl
+	$(IDL) $(IDLFLAGS) $<
 
 .PHONY:	clean
 
@@ -82,4 +58,3 @@ checkout:
 release:
 	test -d $(RDIR)/SII/1way/Orbix || mkdir -p $(RDIR)/SII/1way/Orbix
 	cp *.idl *.cpp *.h Makefile run* README* $(RDIR)/SII/1way/Orbix/.
-
