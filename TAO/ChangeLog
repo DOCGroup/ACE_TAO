@@ -1,3 +1,20 @@
+Mon Oct 13 16:35:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+
+	  Added RMS+MLF scheduling strategy, renamed RMS_Reconfig_Strategy
+	  to RMS_FAIR_Reconfig_Strategy and MUF_Reconfig_Strategy to
+	  MUF_FAIR_Reconfig_Strategy.
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.h:
+	* orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	
+	  Renamed MUF_Reconfig_Strategy to MUF_FAIR_Reconfig_Strategy.
+	
 Mon Oct 13 15:29:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
         * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_client:
