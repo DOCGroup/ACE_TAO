@@ -23,7 +23,7 @@
 #include "ace/Auto_Ptr.h"
 #include "Malloc_Test.h"
 
-ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
+ACE_RCSID(tests, SV_Shared_Memory_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
@@ -46,6 +46,16 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 // handler.  On this plarform, we make sure the remapping will never
 // occur.
 #endif /* linux */
+
+#if defined (ACE_WIN32)
+// When looking for the file to execute a process on Win32, the directory from
+// containing the parent process file is searched first. Since certain Win32
+// configurations (e.g. Borland C++Builder) put the output files in a different
+// directory we will use this feature rather than specifying '.\'.
+#  define EXE_LOCATION ACE_TEXT ("")
+#else
+#  define EXE_LOCATION ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
+#endif /*ACE_WIN32*/
 
 // Parents <ACE_Malloc> base address in shared memory.
 static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
@@ -279,8 +289,7 @@ main (int argc, ASYS_TCHAR *[])
 
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
-      options.command_line (ACE_TEXT (".")
-                            ACE_DIRECTORY_SEPARATOR_STR
+      options.command_line (EXE_LOCATION
                             ACE_TEXT ("Malloc_Test")
                             ACE_PLATFORM_EXE_SUFFIX
                             ACE_TEXT (" run_as_test"));

@@ -5142,6 +5142,10 @@ typedef double ACE_timer_t;
     typedef int ACE_Rusage;
 # endif /* ACE_HAS_PRUSAGE_T */
 
+#if defined (ACE_HAS_SYS_FILIO_H)
+# include /**/ <sys/filio.h>
+#endif /* ACE_HAS_SYS_FILIO_H */
+
 # if defined (ACE_WIN32)
     // = typedef for the _stat data structure
     typedef struct _stat ACE_stat;
@@ -5307,8 +5311,8 @@ private:
   u_long minimum_policed_size_;
   int ttl_;
   int priority_;
-#endif
-
+#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+          defined (ACE_HAS_WINSOCK2_GQOS) */
 };
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)

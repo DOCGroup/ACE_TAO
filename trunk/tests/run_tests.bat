@@ -1,5 +1,5 @@
 @echo off
-rem $Id$
+rem run_tests.bat,v 4.71 1999/11/08 05:39:06 nanbor Exp
 
 rem    To run this script, the first argument must be either bor
 rem    or msc.  This will determine if the borland tests are run, or
@@ -62,7 +62,7 @@ if not "%arg%" == "" goto runtest
 
 :runall
 
-call %run_cmd% %dopure% %platform% ACE_Init_Test
+if not "%platform%" == "bor" call %run_cmd% %dopure% %platform% ACE_Init_Test
 call %run_cmd% %dopure% %platform% Atomic_Op_Test
 call %run_cmd% %dopure% %platform% Auto_IncDec_Test
 call %run_cmd% %dopure% %platform% Barrier_Test
