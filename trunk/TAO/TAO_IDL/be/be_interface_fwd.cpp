@@ -212,7 +212,7 @@ be_interface_fwd::gen_var_impl (char *,
   *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
   *ci << "  : TAO_Base_var ()," << nl;
-  *ci << "    ptr_ (" << this->name () << "::_duplicate (p.ptr ()))" << nl;
+  *ci << "    ptr_ (" << this->local_name () << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor
