@@ -17,22 +17,23 @@
 #include "CosNaming_i.h"
 
 NS_NamingContext::NS_NamingContext (void)
+  : lock_ (0)
 {
   // Deal with faults.
   if (context_.open () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
 
   // Get the lock from the orb that knows what type is appropriate.
-  // @@ Nanbor, there still is an error if I use this function to get
-  // the lock.  this->lock_ = TAO_ORB_Core_instance ()->server_factory
-  // ()->create_servant_lock ();
-  
-  // if orb core returned a null lock, allocate a thread mutex by
-  // default if (this->lock_ == 0)
-  // @@ We may need to add a template instantiation for this if it's
-  // not already defined someplace...
-  ACE_NEW (this->lock_,
-           ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX>);
+  // @@ Nanbor, there still is an error if I use this function to get the lock.
+  //  this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ();
+      
+  // if orb core returned a null pointer, allocate a recursive mutex
+  // by default
+  if (this->lock_ == 0)
+    // @@ We may need to add a template instantiation for this if it's
+    // not already defined someplace...
+    ACE_NEW (this->lock_, 
+	     ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX>);
 }
 
 NS_NamingContext::~NS_NamingContext (void)
@@ -50,7 +51,7 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
   comp_name.length (len - 1);
 
   // resolve
-  CORBA::Object_ptr cont_ref = resolve (comp_name, _env);
+  CORBA::Object_var context = resolve (comp_name, _env);
 
   // Deal with exceptions in resolve: basically, add the last component
   // of the name to <rest_of_name> and rethrow.
@@ -65,7 +66,7 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
 
   // Try narrowing object reference to a context type.
   CosNaming::NamingContext_ptr c;
-  c = CosNaming::NamingContext::_narrow (cont_ref, _env);
+  c = CosNaming::NamingContext::_narrow (context.in (), _env);
   if (_env.exception () != 0)
     {
       _env.print_exception ("NS_NamingContext::get_context - _narrow");
@@ -147,8 +148,8 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 
       ACE_DEBUG ((LM_DEBUG,
                   "bound: <%s,%s>\n",
-                  n[0].id.in ()==0? "nil" : n[0].id.in (),
-                  n[0].kind.in ()==0? "nil" : n[0].kind.in ()));
+                  n[0].id.in () == 0? "nil" : n[0].id.in (),
+                  n[0].kind.in () == 0? "nil" : n[0].kind.in () ));
     }
 }
 
@@ -347,8 +348,8 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
 
   ACE_DEBUG ((LM_DEBUG,
               "Trying to resolve <%s,%s>\n",
-              n[0].id.in (),
-              n[0].kind.in ()));
+              n[0].id.in () == 0? "nil" : n[0].id.in (),
+              n[0].kind.in () == 0? "nil" : n[0].kind.in ()));
 
   // Resolve the first component of the name.
   NS_ExtId name (n[0].id, n[0].kind);
@@ -388,13 +389,13 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       for (CORBA::ULong i = 1; i < len; i++)
         rest_of_name[i-1] = n[i];
 
-      return (cont->resolve (rest_of_name, _env));
+      return cont->resolve (rest_of_name, _env);
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "Resolved <%s,%s> to %08.8x\n",
-              n[0].id.in (),
-              n[0].kind.in (),
+              n[0].id.in () == 0? "nil" : n[0].id.in (),
+              n[0].kind.in () == 0? "nil" : n[0].kind.in (),
               item));
 
   // If the name we had to resolve was simple, we just need to return
