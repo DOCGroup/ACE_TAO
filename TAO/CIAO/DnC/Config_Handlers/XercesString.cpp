@@ -122,7 +122,7 @@ namespace Config_Handler
 
   bool operator== (const XStr& lhs, const XStr& rhs)
   {
-    return XMLString::compareIString (lhs,rhs);
+    return XMLString::compareIString (lhs,rhs) == 0;
   }
 
   bool operator!= (const XStr& lhs, const XStr& rhs)
