@@ -38,10 +38,10 @@ sub parse_line {
   my($ih)          = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = "";
+  my($errorString) = '';
   my($current)     = $self->{'current'};
 
-  if ($line eq "") {
+  if ($line eq '') {
   }
   elsif ($line =~ /^([\w\s]+)\s*{$/) {
     ## Entering a new scope
@@ -60,7 +60,7 @@ sub parse_line {
     }
     else {
       $status = 0;
-      $errorString = "ERROR: Unmatched curly brace";
+      $errorString = 'ERROR: Unmatched curly brace';
     }
   }
   elsif ($line =~ /^(\w+)\s*=\s*(.*)?/) {
@@ -71,7 +71,7 @@ sub parse_line {
       $value = $self->create_array($value);
     }
     else {
-      $value = "";
+      $value = '';
     }
 
     if (!defined $$current[$self->{'cindex'}]->{$name}) {

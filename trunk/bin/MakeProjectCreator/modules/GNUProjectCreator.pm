@@ -22,9 +22,9 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my(%compscript) = ('ACE_COMPONENTS'     => ["--ace",     "--set"],
-                   'TAO_COMPONENTS'     => ["--tao",     "--set"],
-                   'ORBSVCS_COMPONENTS' => ["--orbsvcs", "--append"],
+my(%compscript) = ('ACE_COMPONENTS'     => ['--ace',     '--set'],
+                   'TAO_COMPONENTS'     => ['--tao',     '--set'],
+                   'ORBSVCS_COMPONENTS' => ['--orbsvcs', '--append'],
                   );
 
 # ************************************************************
@@ -32,7 +32,7 @@ my(%compscript) = ('ACE_COMPONENTS'     => ["--ace",     "--set"],
 # ************************************************************
 
 sub sort_files {
-  my($self) = shift;
+  #my($self) = shift;
   return 0;
 }
 
@@ -42,11 +42,11 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne "") {
+  if ($key eq 'depends' && $val ne '') {
     my($arr) = $self->create_array($val);
-    $val = "";
+    $val = '';
     foreach my $entry (@$arr) {
-      $val .= "\"" . $self->project_file_name($entry) . "\" ";
+      $val .= '"' . $self->project_file_name($entry) . '" ';
     }
     $val =~ s/\s+$//;
   }
@@ -55,7 +55,7 @@ sub translate_value {
 
 
 sub convert_slashes {
-  my($self) = shift;
+  #my($self) = shift;
   return 0;
 }
 
@@ -68,9 +68,9 @@ sub fill_value {
   my($tag)   = 'source_files';
   my($names) = $self->{$tag};
 
-  if ($name eq "gnu_source_files") {
+  if ($name eq 'gnu_source_files') {
     my(%vpath) = ();
-    $value = "";
+    $value = '';
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
 
@@ -86,15 +86,15 @@ sub fill_value {
           my($dname) = dirname($item);
 
           $item =~ s/\.[^\.]+$//;
-          if ($dname ne "." && $dname !~ /^\.\.\//) {
+          if ($dname ne '.' && $dname !~ /^\.\.\//) {
             $vpath{$dname} = 1;
           }
-          $value .= "$crlf  $item" . ($i != $#arr ? " \\" : "");
+          $value .= "$crlf  $item" . ($i != $#arr ? " \\" : '');
         }
       }
     }
     foreach my $name (keys %$names) {
-      my($fname) = "";
+      my($fname) = '';
       my($comps) = $$names{$name};
       foreach my $key (sort keys %$comps) {
         $fname = $key;
@@ -102,15 +102,15 @@ sub fill_value {
         last;
       }
 
-      if ($name ne "default") {
-        $fname = "FILES";
+      if ($name ne 'default') {
+        $fname = 'FILES';
         $value .= "$crlf$crlf" . "ifndef $name$crlf" .
                   "  $name = \\$crlf";
         my(@keys) = sort keys %$comps;
         for(my $i = 0; $i <= $#keys; $i++) {
           $keys[$i] =~ s/^\d+_//;
           my($key) = $keys[$i];
-          $value .= "    $key" . ($i != $#keys ? " \\" : "") . $crlf;
+          $value .= "    $key" . ($i != $#keys ? " \\" : '') . $crlf;
         }
         $value .= "endif # $name";
 
@@ -123,27 +123,27 @@ sub fill_value {
     }
     my(@vkeys) = sort keys %vpath;
     if ($#vkeys >= 0) {
-      $value .= "$crlf$crlf" . "VPATH = .";
+      $value .= "$crlf$crlf" . 'VPATH = .';
       foreach my $key (@vkeys) {
         $value .= ":$key";
       }
     }
   }
-  elsif ($name eq "build") {
+  elsif ($name eq 'build') {
     foreach my $name (keys %$names) {
-      if ($name ne "default") {
+      if ($name ne 'default') {
         if (!defined $value) {
-          $value = "BUILD +=";
+          $value = 'BUILD +=';
         }
         $value .= " $name";
       }
     }
   }
-  elsif ($name eq "comptarget") {
+  elsif ($name eq 'comptarget') {
     foreach my $name (keys %$names) {
-      if ($name ne "default") {
+      if ($name ne 'default') {
         if (!defined $value) {
-          $value = "";
+          $value = '';
         }
         $value .= "$crlf.PHONY: $name$crlf" .
                   "$name:$crlf" .
@@ -153,15 +153,15 @@ sub fill_value {
       }
     }
   }
-  elsif ($name eq "compclean") {
+  elsif ($name eq 'compclean') {
     foreach my $name (keys %$names) {
-      if ($name ne "default") {
-        $value = "compclean";
+      if ($name ne 'default') {
+        $value = 'compclean';
         last;
       }
     }
   }
-  elsif ($name eq "notdirfiles") {
+  elsif ($name eq 'notdirfiles') {
     $value = "\$(notdir \$(FILES))";
     foreach my $name (keys %$names) {
       my($comps) = $$names{$name};
@@ -189,25 +189,25 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "Makefile" . ($name eq "" ? "" : ".$name");
+  return 'Makefile' . ($name eq '' ? '' : ".$name");
 }
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
-  return "gnuexe";
+  #my($self) = shift;
+  return 'gnuexe';
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
-  return "gnudll";
+  #my($self) = shift;
+  return 'gnudll';
 }
 
 
 sub get_template {
-  my($self) = shift;
-  return "gnu";
+  #my($self) = shift;
+  return 'gnu';
 }
 
 1;

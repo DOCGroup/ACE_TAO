@@ -21,7 +21,7 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($sname) = "_Static";
+my($sname) = '_Static';
 
 # ************************************************************
 # Subroutine Section
@@ -32,13 +32,13 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne "") {
+  if ($key eq 'depends' && $val ne '') {
     my($wt)  = $self->get_writing_type();
     my($arr) = $self->create_array($val);
-    $val = "";
+    $val = '';
     foreach my $entry (@$arr) {
-      $val .= "\"" . ($wt == 1 ? $self->static_project_file_name($entry) :
-                                 $self->project_file_name($entry)) . "\" ";
+      $val .= '"' . ($wt == 1 ? $self->static_project_file_name($entry) :
+                                 $self->project_file_name($entry)) . '" ';
     }
     $val =~ s/\s+$//;
   }
@@ -47,7 +47,7 @@ sub translate_value {
 
 
 sub convert_slashes {
-  my($self) = shift;
+  #my($self) = shift;
   return 0;
 }
 
@@ -67,7 +67,7 @@ sub crlf {
 
 
 sub separate_static_project {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 
@@ -97,32 +97,32 @@ sub static_project_file_name {
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
-  return "va4iccdllexe";
+  #my($self) = shift;
+  return 'va4iccdllexe';
 }
 
 
 sub get_lib_exe_template_input_file {
-  my($self) = shift;
-  return "va4icclibexe";
+  #my($self) = shift;
+  return 'va4icclibexe';
 }
 
 
 sub get_lib_template_input_file {
-  my($self) = shift;
-  return "va4icclib";
+  #my($self) = shift;
+  return 'va4icclib';
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
-  return "va4iccdll";
+  #my($self) = shift;
+  return 'va4iccdll';
 }
 
 
 sub get_template {
-  my($self) = shift;
-  return "va4icc";
+  #my($self) = shift;
+  return 'va4icc';
 }
 
 

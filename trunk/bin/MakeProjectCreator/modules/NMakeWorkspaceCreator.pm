@@ -31,13 +31,13 @@ sub crlf {
 
 
 sub workspace_file_name {
-  my($self) = shift;
-  return "Makefile";
+  #my($self) = shift;
+  return 'Makefile';
 }
 
 
 sub workspace_per_project {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 
@@ -63,21 +63,21 @@ sub write_project_targets {
     my($chdir)  = 0;
     my($back)   = 1;
 
-    ## If the directory isn't "." then we need
+    ## If the directory isn't '.' then we need
     ## to figure out how to get back to our starting point
-    if ($dir ne ".") {
+    if ($dir ne '.') {
       $chdir = 1;
       my($length) = length($dir);
       for(my $i = 0; $i < $length; $i++) {
-        if (substr($dir, $i, 1) eq "/") {
+        if (substr($dir, $i, 1) eq '/') {
           $back++;
         }
       }
     }
 
-    print $fh ($chdir ? "\tcd $dir$crlf" : "") .
+    print $fh ($chdir ? "\tcd $dir$crlf" : '') .
               "\t\$(MAKE) /f " . basename($project) . " $target$crlf" .
-              ($chdir ? "\tcd " . ("../" x $back) . $crlf : "");
+              ($chdir ? "\tcd " . ('../' x $back) . $crlf : '');
   }
 }
 
@@ -91,11 +91,11 @@ sub write_comps {
   my($crlf)     = $self->crlf();
 
   print $fh "ALL:$crlf";
-  $self->write_project_targets($fh, "CFG=\"\$(CFG)\"", \@list);
+  $self->write_project_targets($fh, 'CFG="$(CFG)"', \@list);
 
   print $fh "$crlf" .
             "CLEAN\tREALCLEAN:$crlf";
-  $self->write_project_targets($fh, "CLEAN", \@list);
+  $self->write_project_targets($fh, 'CLEAN', \@list);
 }
 
 

@@ -25,7 +25,7 @@ use vars qw(@ISA);
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_workspace_name() . ".vcw";
+  return $self->get_workspace_name() . '.vcw';
 }
 
 
@@ -36,7 +36,7 @@ sub pre_workspace {
 
   print $fh "Microsoft eMbedded Visual Tools Workspace File, Format Version 3.00$crlf" .
             "# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!$crlf" .
-            "$crlf";
+            $crlf;
 }
 
 

@@ -21,11 +21,11 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($dynamiclib) = "DLL";
-my($staticlib)  = "LIB";
-my($dynamicexe) = "EXE";
-my($staticexe)  = "Static EXE";
-my($sname)      = "_Static";
+my($dynamiclib) = 'DLL';
+my($staticlib)  = 'LIB';
+my($dynamicexe) = 'EXE';
+my($staticexe)  = 'Static EXE';
+my($sname)      = '_Static';
 
 # ************************************************************
 # Subroutine Section
@@ -50,19 +50,19 @@ sub base_project_name {
   my($self) = shift;
   return $self->transform_file_name(
                $self->remove_type_append($self->project_name()) .
-               ($self->get_writing_type() == 1 ? $sname : ""));
+               ($self->get_writing_type() == 1 ? $sname : ''));
 }
 
 
 sub get_static_append {
-  my($self) = shift;
+  #my($self) = shift;
   return $sname;
 }
 
 
 sub get_type_append {
   my($self) = shift;
-  my($type) = "";
+  my($type) = '';
   if ($self->lib_target()) {
     ## Set the type_append preserving whitespace
     if ($self->get_writing_type() == 1) {
@@ -90,10 +90,10 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne "") {
+  if ($key eq 'depends' && $val ne '') {
     my($arr) = $self->create_array($val);
     my($app) = $dynamiclib;
-    $val = "";
+    $val = '';
 
     ## Only write dependencies for non-static projects
     ## and static exe projects
@@ -142,8 +142,8 @@ sub fill_value {
   my($name)  = shift;
   my($value) = undef;
 
-  if ($name eq "make_file_name") {
-    $value = $self->base_project_name() . ".mak";
+  if ($name eq 'make_file_name') {
+    $value = $self->base_project_name() . '.mak';
   }
 
   return $value;
@@ -151,14 +151,14 @@ sub fill_value {
 
 
 sub separate_static_project {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 
 
 sub project_file_name {
   my($self) = shift;
-  return $self->project_name() . ".dsp";
+  return $self->project_name() . '.dsp';
 }
 
 
@@ -197,32 +197,32 @@ sub override_exclude_component_extensions {
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
-  return "vc6dspdllexe";
+  #my($self) = shift;
+  return 'vc6dspdllexe';
 }
 
 
 sub get_lib_exe_template_input_file {
-  my($self) = shift;
-  return "vc6dsplibexe";
+  #my($self) = shift;
+  return 'vc6dsplibexe';
 }
 
 
 sub get_lib_template_input_file {
-  my($self) = shift;
-  return "vc6dsplib";
+  #my($self) = shift;
+  return 'vc6dsplib';
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
-  return "vc6dspdll";
+  #my($self) = shift;
+  return 'vc6dspdll';
 }
 
 
 sub get_template {
-  my($self) = shift;
-  return "vc6dsp";
+  #my($self) = shift;
+  return 'vc6dsp';
 }
 
 

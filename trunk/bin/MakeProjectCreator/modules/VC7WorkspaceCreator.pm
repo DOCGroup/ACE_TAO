@@ -31,7 +31,7 @@ sub crlf {
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_workspace_name() . ".sln";
+  return $self->get_workspace_name() . '.sln';
 }
 
 
@@ -92,7 +92,7 @@ sub write_comps {
   foreach my $project (@list) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid) = @$pi;
-    if (defined $deps && $deps ne "") {
+    if (defined $deps && $deps ne '') {
       my($darr) = $self->create_array($deps);
       my($i)    = 0;
       foreach my $dep (@$darr) {

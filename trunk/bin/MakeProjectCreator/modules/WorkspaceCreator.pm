@@ -11,7 +11,6 @@ package WorkspaceCreator;
 # ************************************************************
 
 use strict;
-use Cwd;
 use FileHandle;
 use File::Path;
 use File::Basename;
@@ -73,7 +72,7 @@ sub parse_line {
     if ($values[0] eq $self->{'grammar_type'}) {
       my($name)      = $values[1];
       my($typecheck) = $self->{'type_check'};
-      if (defined $name && $name eq "}") {
+      if (defined $name && $name eq '}') {
         my($rp) = $self->{'reading_parent'};
         if (!defined $$rp[0]) {
           ## Fill in all the default values
@@ -86,8 +85,8 @@ sub parse_line {
             $self->write_workspace($generator);
           }
           else {
-            $errorString = "ERROR: Unable to " .
-                           "generate all of the project files";
+            $errorString = 'ERROR: Unable to ' .
+                           'generate all of the project files';
             $status = 0;
           }
 
@@ -200,7 +199,7 @@ sub generate_default_components {
     ## string, so the Project Creator will generate
     ## the default project file.
     if (!defined $$pjf[0]) {
-      push(@$pjf, "");
+      push(@$pjf, '');
     }
   }
 }
@@ -236,7 +235,7 @@ sub write_workspace {
   my($name)      = $self->transform_file_name($self->workspace_file_name());
   my($dir)       = dirname($name);
 
-  if ($dir ne ".") {
+  if ($dir ne '.') {
     mkpath($dir, 0, 0777);
   }
   if (open($fh, ">$name")) {
@@ -263,7 +262,7 @@ sub save_project_info {
   my($pi)       = shift;
   my($c)        = 0;
   foreach my $pj (@$gen) {
-    my($full) = ($dir ne "." ? "$dir/" : "") . $pj;
+    my($full) = ($dir ne '.' ? "$dir/" : '') . $pj;
     push(@$projects, $full);
     $$pi{$full} = $$gpi[$c];
     $c++;
@@ -277,35 +276,34 @@ sub generate_project_files {
   my(@projects)   = ();
   my(%pi)         = ();
   my($generator)  = $self->project_creator();
-  my($cwd)        = getcwd();
+  my($cwd)        = $self->getcwd();
 
   foreach my $file (@{$self->{'project_files'}}) {
     my($dir)  = dirname($file);
-    my($gen)  = [];
 
     ## We must change to the subdirectory for
     ## which this project file is intended
-    if (chdir($dir)) {
+    if ($self->cd($dir)) {
       $status = $generator->generate(basename($file));
 
       ## If any one project file fails, then stop
       ## processing altogether.
       if (!$status) {
-        return $status;
+        return $status, $generator;
       }
 
       ## Get the individual project information and
       ## generated file name(s)
-      $gen = $generator->get_files_written();
+      my($gen) = $generator->get_files_written();
+      my($gpi) = $generator->get_project_info();
 
       ## If we need to generate a workspace file per project
       ## then we generate a temporary project info and projects
       ## array and call write_project().
-      if ($dir ne "." && $self->workspace_per_project()) {
+      if ($dir ne '.' && $self->workspace_per_project()) {
         my(%perpi)       = ();
         my(@perprojects) = ();
-        my($gpi)         = $generator->get_project_info();
-        $self->save_project_info($gen, $gpi, ".", \@perprojects, \%perpi);
+        $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
 
         ## Set our per project information
         $self->{'projects'}     = \@perprojects;
@@ -318,10 +316,13 @@ sub generate_project_files {
         $self->{'projects'}     = [];
         $self->{'project_info'} = {};
       }
-      chdir($cwd);
+      $self->cd($cwd);
+      $self->save_project_info($gen, $gpi, $dir, \@projects, \%pi);
     }
-    my($gpi) = $generator->get_project_info();
-    $self->save_project_info($gen, $gpi, $dir, \@projects, \%pi);
+    else {
+      ## Unable to change to the directory
+      return 0, $generator;
+    }
   }
 
   $self->{'projects'}     = \@projects;
@@ -364,7 +365,7 @@ sub sort_dependencies {
 
   foreach my $project (@list) {
     my($dname) = dirname($project);
-    if ($dname ne ".") {
+    if ($dname ne '.') {
       $prepend{basename($project)} = dirname($project);
     }
   }
@@ -376,13 +377,13 @@ sub sort_dependencies {
     my($pi) = $$pjs{$project};
     my($name, $deps) = @$pi;
 
-    if ($deps ne "") {
+    if ($deps ne '') {
       my($darr)  = $self->create_array($deps);
       my($moved) = 0;
       foreach my $dep (@$darr) {
         my($base) = basename($dep);
         my($full) = (defined $prepend{$base} ?
-                       "$prepend{$base}/" : "") . $base;
+                       "$prepend{$base}/" : '') . $base;
         if ($project ne $full) {
           ## See if the dependency is listed after this project
           for(my $j = $i; $j <= $#list; $j++) {
@@ -429,38 +430,44 @@ sub project_creator {
 }
 
 
+sub sort_files {
+  #my($self) = shift;
+  return 0;
+}
+
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
 
 sub workspace_file_name {
-  my($self) = shift;
-  return "";
+  #my($self) = shift;
+  return '';
 }
 
 
 sub workspace_per_project {
-  my($self) = shift;
+  #my($self) = shift;
   return 0;
 }
 
 
 sub pre_workspace {
-  my($self) = shift;
-  my($fh)   = shift;
+  #my($self) = shift;
+  #my($fh)   = shift;
 }
 
 
 sub write_comps {
-  my($self) = shift;
-  my($fh)   = shift;
-  my($gens) = shift;
+  #my($self) = shift;
+  #my($fh)   = shift;
+  #my($gens) = shift;
 }
 
 
 sub post_workspace {
-  my($self) = shift;
-  my($fh)   = shift;
+  #my($self) = shift;
+  #my($fh)   = shift;
 }
 
 

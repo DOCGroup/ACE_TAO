@@ -24,13 +24,13 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub workspace_file_name {
-  my($self) = shift;
-  return "Makefile.bor";
+  #my($self) = shift;
+  return 'Makefile.bor';
 }
 
 
 sub workspace_per_project {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 
@@ -43,7 +43,7 @@ sub pre_workspace {
   print $fh "#----------------------------------------------------------------------------$crlf" .
             "#       Borland Workspace$crlf" .
             "#----------------------------------------------------------------------------$crlf" .
-            "$crlf";
+            $crlf;
 }
 
 
@@ -57,8 +57,8 @@ sub write_comps {
 
   print $fh "!include <\$(ACE_ROOT)\\include\\makeinclude\\make_flags.bor>$crlf";
 
-  foreach my $target ("all", "clean", "realclean", "install") {
-    print $fh "$crlf" .
+  foreach my $target ('all', 'clean', 'realclean', 'install') {
+    print $fh $crlf .
               "$target\:$crlf";
     foreach my $project (@list) {
       my($dir)    = dirname($project);
@@ -67,11 +67,11 @@ sub write_comps {
 
       ## If the directory isn't "." then we need
       ## to figure out how to get back to our starting point
-      if ($dir ne ".") {
+      if ($dir ne '.') {
         $chdir = 1;
         my($length) = length($dir);
         for(my $i = 0; $i < $length; $i++) {
-          if (substr($dir, $i, 1) eq "/") {
+          if (substr($dir, $i, 1) eq '/') {
             $back++;
           }
         }
@@ -79,15 +79,15 @@ sub write_comps {
 
       ## These commands will work.  In practicality, only the
       ## default configuration can be built at the top level.
-      print $fh ($chdir ? "\t\@cd $dir$crlf" : "") .
+      print $fh ($chdir ? "\t\@cd $dir$crlf" : '') .
                 "\t\$(MAKE) -\$(MAKEFLAGS) \$(MAKE_FLAGS) -f " . basename($project) . " $target$crlf" .
-                ($chdir ? "\t\@cd " . ("../" x $back) . $crlf : "");
+                ($chdir ? "\t\@cd " . ('../' x $back) . $crlf : '');
     }
   }
 
   # Generate a convenient rule for regenerating the workspace.
-  my($cmd) = "perl " . $0 . " " . join(" ", @ARGV);
-  print $fh "$crlf" .
+  my($cmd) = "perl $0 " . join(" ", @ARGV);
+  print $fh $crlf .
             "regenerate:$crlf" .
             "\t$cmd$crlf";
 }

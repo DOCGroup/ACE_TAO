@@ -26,8 +26,8 @@ sub fill_value {
   my($name)  = shift;
   my($value) = undef;
 
-  if ($name eq "make_file_name") {
-    $value = $self->base_project_name() . ".vcn";
+  if ($name eq 'make_file_name') {
+    $value = $self->base_project_name() . '.vcn';
   }
 
   return $value;
@@ -36,43 +36,43 @@ sub fill_value {
 
 sub project_file_name {
   my($self) = shift;
-  return $self->project_name() . ".vcp";
+  return $self->project_name() . '.vcp';
 }
 
 
 sub static_project_file_name {
   my($self) = shift;
-  return $self->project_name() . $self->get_static_append() . ".vcp";
+  return $self->project_name() . $self->get_static_append() . '.vcp';
 }
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
-  return "em3vcpdllexe";
+  #my($self) = shift;
+  return 'em3vcpdllexe';
 }
 
 
 sub get_lib_exe_template_input_file {
-  my($self) = shift;
-  return "em3vcplibexe";
+  #my($self) = shift;
+  return 'em3vcplibexe';
 }
 
 
 sub get_lib_template_input_file {
-  my($self) = shift;
-  return "em3vcplib";
+  #my($self) = shift;
+  return 'em3vcplib';
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
-  return "em3vcpdll";
+  #my($self) = shift;
+  return 'em3vcpdll';
 }
 
 
 sub get_template {
-  my($self) = shift;
-  return "em3vcp";
+  #my($self) = shift;
+  return 'em3vcp';
 }
 
 
