@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 //=============================================================================
 /**
@@ -116,6 +115,10 @@
 
 // Template specialization is supported.
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
+
+// At least for ACE_UNIMPLEMENTED_FUNC in class templates, this is needed to
+// explicitly instantiate a template that has ACE_UNIMPLEMENTED_FUNC.
+# define ACE_NEEDS_FUNC_DEFINITIONS
 
 // ----------------- "derived" defines and includes -----------
 
