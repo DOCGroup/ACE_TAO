@@ -16,7 +16,7 @@
 
 #include <errno.h>
 
-static void sigterm_handler (int /* signum */) { /* No-op. */ }
+extern "C" static void sigterm_handler (int /* signum */) { /* No-op. */ }
 
 
 int
@@ -129,7 +129,7 @@ int main (int argc, char *argv[])
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr<Thread_Args>;
+template class auto_ptr<Thread_Per_Connection_Logging_Server::Thread_Args>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr<Thread_Args>
+#pragma instantiate auto_ptr<Thread_Per_Connection_Logging_Server::Thread_Args>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
