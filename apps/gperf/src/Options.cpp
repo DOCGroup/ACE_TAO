@@ -370,7 +370,7 @@ Options::operator() (int argc, char *argv[])
                              "-T\tPrevents the transfer of the type declaration to the output file.\n"
                              "\tUse this option if the type is already defined elsewhere.\n"
                              "-v\tPrints out the current version number and exits with a value of 0\n"
-                             "-v\tExits silently with a value of 0.\n"
+                             "-V\tExits silently with a value of 0.\n"
                              "-Z\tAllow user to specify name of generated C++ class.  Default\n"
                              "\tname is `Perfect_Hash.'\n",
                              DEFAULT_JUMP_VALUE,
