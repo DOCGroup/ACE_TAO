@@ -11373,7 +11373,9 @@ endif
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any.i uiop_endpoints.i
+  $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/CDR.h \
+  $(TAO_ROOT)/tao/CDR.i uiop_endpoints.i
 
 .obj/sciop_endpoints.o .obj/sciop_endpoints.so .shobj/sciop_endpoints.o .shobj/sciop_endpoints.so: sciop_endpoints.cpp sciop_endpoints.h \
   $(ACE_ROOT)/ace/pre.h \
