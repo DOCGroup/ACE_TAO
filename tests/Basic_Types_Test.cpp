@@ -97,6 +97,9 @@ main (int, ASYS_TCHAR *[])
                    sizeof (long long),
 #endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
                    ACE_SIZEOF_LONG_LONG);
+  errors += check (ASYS_TEXT ("sizeof 64-bit literal: %u%s"),
+                   sizeof ACE_UINT64_LITERAL (1),
+                   8);
   errors += check (ASYS_TEXT ("ACE_SIZEOF_VOID_P: %u%s"),
                    sizeof (void *), ACE_SIZEOF_VOID_P);
   errors += check (ASYS_TEXT ("ACE_SIZEOF_FLOAT: %u%s"),
