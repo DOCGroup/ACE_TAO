@@ -746,26 +746,26 @@ AV_Server::init (int argc,
 int
 AV_Server::run (CORBA::Environment& env){
   int result;
-  this->server_control_addr_.set (VCR_TCP_PORT);
+  //   this->server_control_addr_.set (VCR_TCP_PORT);
 
-  // "listen" on the socket
-  if (this->acceptor_.open (this->server_control_addr_,
-                            TAO_ORB_Core_instance ()->reactor ()) == -1)
-                            //                            0,
-                            //                            0
-                            //                            &this->thread_strategy_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  //   // "listen" on the socket
+  //   if (this->acceptor_.open (this->server_control_addr_,
+  //                             TAO_ORB_Core_instance ()->reactor ()) == -1)
+  //                             //                            0,
+  //                             //                            0
+  //                             //                            &this->thread_strategy_) == -1)
+  //     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) acceptor_handler == %d\n",
-              this->acceptor_.get_handle ()));
+  //   ACE_DEBUG ((LM_DEBUG,
+  //               "(%P|%t) acceptor_handler == %d\n",
+  //               this->acceptor_.get_handle ()));
 
   // Run the ORB event loop
   this->orb_manager_.run (env);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server::run () "
-              "came out of the (acceptor) "
+              "came out of the (ORB) "
               "event loop %p\n",
               "run_event_loop"));
   return 0;
