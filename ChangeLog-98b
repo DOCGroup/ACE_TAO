@@ -23,7 +23,7 @@ Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
           config-mit-pthread.h,config-hpux-10.x.h,config-hpux11.h,
           config-irix6.x-{g++,sgic++}.h,config-mvs.h,config-tandem.h,
           config-osf1-3.2.h,config-osf1-4.0.h,config-sco-5.0.0-mit-pthread.h,
-          config-irix6.x-common.h:
+          config-irix6.x-common.h,README:
           removed ACE_HAS_TID_T and ACE_HAS_PTHREAD_T support.  ACE_hthread_t
           is now a simple typedef of pthread_t.  It was before, also, but not
           so simple :-)  Before, it was a typedef of tid_t on platforms
@@ -39,7 +39,7 @@ Tue Oct 13 07:28:38 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-aix-4.2.x.h,config-fsu-pthread.h,config-hpux-10.x.h,
           config-hpux11.h,config-irix6.x-{g++,sgic++}.h,config-mit-pthread.h,
           config-mvs.h,config-osf1-3.2.h,config-osf1-4.0.h,
-          config-sco-5.0.0-mit-pthread.hconfig-tandem.h:
+          config-sco-5.0.0-mit-pthread.hconfig-tandem.h,README:
           removed ACE_HAS_PTHREAD_EQUAL because it's no longer used.  Thanks
           to Ossama for motivating the above change to thr_cmp, which had
           been the only use of ACE_HAS_PTHREAD_EQUAL.
