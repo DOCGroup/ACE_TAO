@@ -36,7 +36,8 @@ goto setupmsc
 shift
 :setupbor
 set arg=%1
-set exedir=.\bor\bin\
+set exedir=.\Dynamic\Release\
+set PATH=%PATH%;%exedir%
 rem Set deco to whatever decoration you have for the executables
 set deco=
 set platform=bor

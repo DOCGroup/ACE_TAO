@@ -11,6 +11,8 @@
 # ~~~~~~~~
 # CC - name of compiler
 # LD - name of linker
+# AR - name of librarian
+# RC - name of resource compiler
 # COMMON_CFLAGS - compiler flags for all targets
 # COMMON_LFLAGS - linker flags for all targets
 # COMMON_LIBS - linker library files for all targets
@@ -35,6 +37,7 @@
 CC = bcc32
 LD = ilink32
 AR = tlib
+RC = brcc32
 
 #
 # Common flags

@@ -42,11 +42,7 @@ USELIB("..\ace\aced.lib");
 
 #if defined (ACE_WIN32)
 #  define OBJ_SUFFIX ".exe"
-#    if defined (__BORLANDC__)
-#      define OBJ_PREFIX ".\\bor\\bin\\"
-#    else
-#      define OBJ_PREFIX ""
-#    endif /* defined (__BORLANDC__) */
+#  define OBJ_PREFIX ""
 #else
 #  define OBJ_SUFFIX ACE_DLL_SUFFIX
 #  define OBJ_PREFIX "./" ACE_DLL_PREFIX
