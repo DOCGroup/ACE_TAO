@@ -578,11 +578,13 @@ typedef unsigned long long ACE_UINT64;
 
 // Needed for obtaining the MAC address
 // I dont believe this will work under CE, notice the
-// check for UNDER_CE.
-# if defined (_MSC_VER) && !defined (UNDER_CE)
+// check for ACE_HAS_WINCE.
+# if !defined (ACE_HAS_WINCE)
 # include <nb30.h>
-# pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
-# endif /* _MSC_VER */
+#  if !defined (__MINGW32__)
+#   pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
+#  endif
+# endif /* !ACE_HAS_WINCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

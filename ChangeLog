@@ -1,3 +1,13 @@
+Fri Jul 25 09:34:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Also include nb30.h with MinGW and Borland, but don't do a
+          pragma comment with MinGW
+
+        * ace/OS.cpp (getmacaddress):
+          Fixed incorrect trace, with Borland and MinGW use a reinterpret
+          cast instead of a static cast.
+
 Thu Jul 24 17:32:51 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* bin/tao_other_tests.lst:
@@ -13,7 +23,7 @@ Thu Jul 24 16:23:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Thu Jul 24 14:00:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/DEV_IO.h (recv_n): 
+	* ace/DEV_IO.h (recv_n):
 	* ace/DEV_IO.i: The semantics of recv_n () is now changed to have
 	  a timeout and a byte transferred variable. The interface now has
 	  the semantics asscoiated with ACE_OS::recv_n () and ACE::recv_n
