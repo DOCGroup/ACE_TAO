@@ -15,6 +15,7 @@ project(CIDLC) {
     ExecImplHeaderGenerator.cpp
     ExecImplSourceGenerator.cpp
     ExecutorMappingGenerator.cpp
+    RepositoryIdGenerator.cpp
     SizeTypeCalculator.cpp
     ServantGenerator.cpp
     ServantHeaderGenerator.cpp
