@@ -48,7 +48,7 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Also changed the default log file directory on Win32 to be in 
           the log subdirectory.  So now both Unix and NT have the same
-          behavior, the logs will be written to $ACE_wrappers/tests/logs.
+          behavior, the logs will be written to $ACE_ROOT/tests/log.
           
         * tests/ACE_Init_Test.res:  (removed)
 
