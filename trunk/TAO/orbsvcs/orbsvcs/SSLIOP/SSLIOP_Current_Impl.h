@@ -15,7 +15,7 @@
 
 #include "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,7 @@
 #include <openssl/ssl.h>
 
 #include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/Security/Security_Current_Impl.h"
 #include "tao/ORB_Core.h"
 
 /**
@@ -34,7 +35,8 @@
  * This class encapsulates the thread-specific state of an SSL
  * session during a given upcall.
  */
-class TAO_SSLIOP_Export TAO_SSLIOP_Current_Impl
+class TAO_SSLIOP_Current_Impl
+  : public TAO_Security_Current_Impl
 {
 public:
 
@@ -44,6 +46,19 @@ public:
   /// Destructor
   /// Protected to force allocation on the heap.
   ~TAO_SSLIOP_Current_Impl (void);
+
+  /// SSLIOP-specific version of the
+  /// SecurityLevel1::Current::get_attributes() method.
+  virtual Security::AttributeList * get_attributes (
+      const Security::AttributeTypeList &attributes,
+    CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// SSLIOP-specific version of the
+  /// SecurityLevel2::Current::received_credentials() method.
+  virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials (
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the SSL peer certificate associated with the
   /// current request as an octet sequence, i.e. a DER encoded
@@ -59,6 +74,11 @@ public:
 
   /// Return pointer to the SSL session state for the current upcall.
   SSL *ssl (void);
+
+protected:
+
+  /// Return the unique tag that identifies the concrete subclass.
+  virtual CORBA::ULong tag (void) const;
 
 private:
 

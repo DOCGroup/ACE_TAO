@@ -15,13 +15,13 @@
 #include "tao/IIOP_Endpoint.h"
 
 
-
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(TAO_SSLIOP, SSLIOP_Connection_Handler, "$Id$")
-
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Connection_Handler,
+           "$Id$")
 
 
 // ****************************************************************
@@ -46,7 +46,7 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
 
 TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
     TAO_ORB_Core *orb_core,
-    CORBA::Boolean flag,
+    CORBA::Boolean /* flag */, // SSLIOP does *not* suport GIOPlite
     void *arg)
   : TAO_SSL_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
@@ -57,37 +57,38 @@ TAO_SSLIOP_Connection_Handler::TAO_SSLIOP_Connection_Handler (
                      (TAO_IIOP_Properties *, arg))
 {
   TAO_SSLIOP_Transport* specific_transport = 0;
-  ACE_NEW(specific_transport,
-          TAO_SSLIOP_Transport(this, orb_core, 0));
+  ACE_NEW (specific_transport,
+          TAO_SSLIOP_Transport (this, orb_core, 0));
 
   // store this pointer (indirectly increment ref count)
-  this->transport(specific_transport);
+  this->transport (specific_transport);
   TAO_Transport::release (specific_transport);
 }
 
 
 TAO_SSLIOP_Connection_Handler::
-    ~TAO_SSLIOP_Connection_Handler (void)
+~TAO_SSLIOP_Connection_Handler (void)
 {
-  if (this->transport () != 0) {
-    // If the socket has not already been closed.
-    if (this->get_handle () != ACE_INVALID_HANDLE)
-      {
-        // Cannot deal with errors, and therefore they are ignored.
-        this->transport ()->send_buffered_messages ();
-      }
-    else
-      {
-        // Dequeue messages and delete message blocks.
-        this->transport ()->dequeue_all ();
-      }
-  }
+  if (this->transport () != 0)
+    {
+      // If the socket has not already been closed.
+      if (this->get_handle () != ACE_INVALID_HANDLE)
+        {
+          // Cannot deal with errors, and therefore they are ignored.
+          this->transport ()->send_buffered_messages ();
+        }
+      else
+        {
+          // Dequeue messages and delete message blocks.
+          this->transport ()->dequeue_all ();
+        }
+    }
 }
 
 
 
 int
-TAO_SSLIOP_Connection_Handler::open (void*)
+TAO_SSLIOP_Connection_Handler::open (void *)
 {
   if (this->set_socket_option (this->peer (),
                                tcp_properties_->send_buffer_size,
@@ -341,7 +342,8 @@ TAO_SSLIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   int result;
 
   // Set up the SSLIOP::Current object.
-  TAO_SSL_State_Guard ssl_state_guard (this, this->orb_core (),
+  TAO_SSL_State_Guard ssl_state_guard (this,
+                                       this->orb_core (),
                                        result);
 
   if (result == -1)
