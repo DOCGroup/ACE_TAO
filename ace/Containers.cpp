@@ -176,9 +176,10 @@ ACE_Unbounded_Stack<T>::copy_all_nodes (const ACE_Unbounded_Stack<T> &s)
        s_temp != s.head_;
        s_temp = s_temp->next_)
     {
+      ACE_Node<T> *nptr = temp->next_;
       ACE_NEW_MALLOC (temp->next_,
 		      (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
-		      ACE_Node<T> (s_temp->item_, temp->next_));
+		      ACE_Node<T> (s_temp->item_, nptr));
       temp = temp->next_;
     }
   this->cur_size_ = s.cur_size_;
