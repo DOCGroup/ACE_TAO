@@ -1,3 +1,16 @@
+Thu Oct  8 12:15:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	  The new test sends "bursts" of events, without any pause between
+	  each event. Multiple burst can be sent with small pauses in
+	  between.
+	  Shutdown works now, even if multiple suppliers and multiple
+	  consumers are beign used. The ECT_Consumer program only needs to
+	  know the number of suppliers beign used.
+
 Thu Oct 08 09:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: Added #progma

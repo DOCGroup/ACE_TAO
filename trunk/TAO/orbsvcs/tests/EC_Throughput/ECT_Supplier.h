@@ -122,14 +122,17 @@ private:
   int n_suppliers_;
   // The number of suppliers.
 
-  int event_count_;
-  // How many messages we will send in each suppliers.
+  int burst_count_;
+  // How many bursts we will send from each supplier.
 
-  int event_period_;
-  // The time between each event generation, in microseconds.
+  int burst_size_;
+  // The number of events 
 
   int event_size_;
   // The size of the payload on each event.
+
+  int burst_pause_;
+  // The time between each event burst, in microseconds.
 
   int event_a_;
   int event_b_;
