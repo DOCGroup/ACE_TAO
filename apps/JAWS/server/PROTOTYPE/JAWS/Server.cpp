@@ -32,6 +32,14 @@ void
 JAWS_Server::init (int argc, char *argv[])
 {
   this->parse_args (argc, argv);
+
+  JAWS_Thread_Pool_Singleton::instance ()->open (this->flags_,
+                                                 this->nthreads_,
+                                                 this->maxthreads_);
+
+  JAWS_Thread_Per_Singleton::instance ()->open (this->flags_,
+                                                this->maxthreads_);
+
 }
 
 int
@@ -70,7 +78,7 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
       return -1;
     }
 
-  db->addr (&inet_addr);
+  // db->addr (&inet_addr);
   db->handler (handler);
   db->task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
 
@@ -85,7 +93,6 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol)
     : JAWS_Thread_Per_Singleton::instance ()
     ;
 
-  // concurrency->open (this->flags_, this->nthreads_, this->maxthreads_);
   concurrency->put (&mb);
 
   while (ACE_OS::thr_join (0, NULL) != -1)

@@ -20,13 +20,11 @@ class JAWS_Data_Block : public ACE_Data_Block
 //   Defines the communication unit between pipeline components
 {
 public:
-  JAWS_Pipeline_Task *task (void);
-  ACE_INET_Addr *addr (void);
-  JAWS_IO_Handler * handler (void);
-  JAWS_Dispatch_Policy * policy (void);
+  JAWS_Pipeline_Handler *task (void);
+  JAWS_IO_Handler *handler (void);
+  JAWS_Dispatch_Policy *policy (void);
 
   void task (JAWS_Pipeline_Handler *taskp);
-  void addr (ACE_INET_Addr *addrp);
   void handler (JAWS_IO_Handler * handlerp);
   void policy (JAWS_Dispatch_Policy * policyp);
 
@@ -34,7 +32,6 @@ private:
   JAWS_IO_Handler *handler_;
   JAWS_Dispatch_Policy *policy_;
   JAWS_Pipeline_Handler *task_;
-  ACE_INET_Addr *addr_;
 };
 
 class JAWS_Pipeline_Accept_Task : public JAWS_Pipeline_Handler
