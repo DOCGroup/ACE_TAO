@@ -1,79 +1,84 @@
+Wed Jul 15 22:17:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp: added ACE_Unbounded_Set<ACE_SYNCH_CONDITION *>,
+          etc., template instantiations.
+
 Wed Jul 15 21:16:19 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/Trading_Service/Trading_Service.{dsp,dsw}:
-	* orbsvcs/tests/Trading/Trading.dsw:
-	* orbsvcs/tests/Trading/Colocated_Test.dsp:
-	* orbsvcs/tests/Trading/Export_Test.dsp:
-	* orbsvcs/tests/Trading/Import_Test.dsp:
-	* orbsvcs/tests/Trading/TradingLib.dsp:
-	  Project files for the Trading service for MSVC.
+        * orbsvcs/Trading_Service/Trading_Service.{dsp,dsw}:
+        * orbsvcs/tests/Trading/Trading.dsw:
+        * orbsvcs/tests/Trading/Colocated_Test.dsp:
+        * orbsvcs/tests/Trading/Export_Test.dsp:
+        * orbsvcs/tests/Trading/Import_Test.dsp:
+        * orbsvcs/tests/Trading/TradingLib.dsp:
+          Project files for the Trading service for MSVC.
 
 Wed Jul 15 20:12:47 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Changed the warnings that occur when 
-	  a conf file is not found to be debug warnings (only show 
-	  up with -ORBdebug)
+        * tao/ORB_Core.cpp: Changed the warnings that occur when
+          a conf file is not found to be debug warnings (only show
+          up with -ORBdebug)
 
 Wed Jul 15 19:28:51 1998  Seth Widoff  <sbw1@cs.wuslt.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Added trader files.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Added trader files.
 
 Wed Jul 15 18:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tao/Invocation.cpp: Made sure, that all control paths
-	  resume the handler - checking invoke methods.
+          resume the handler - checking invoke methods.
 
 Wed Jul 15 16:27:01 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Simple: Added a new test that is just a simple test
-	  which can be used as a basis for new tests or just to see
-	  the basics of a CORBA client and server.
+        * tests/Simple: Added a new test that is just a simple test
+          which can be used as a basis for new tests or just to see
+          the basics of a CORBA client and server.
 
 Wed Jul 15 16:00:39 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* client.cpp: Changed a few cast statments; added comments
+        * client.cpp: Changed a few cast statments; added comments
 
-	* runtests.pl: New script to automate running of tests
+        * runtests.pl: New script to automate running of tests
 
 Wed Jul 15 15:44:10 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/Invocation.cpp: Carlos corrected his omission of code to
+        * tao/Invocation.cpp: Carlos corrected his omission of code to
           invoke before waiting for a reply.
 
 Wed Jul 15 12:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/Connect.{h,cpp}: Changed handle_input and send_request
-	  of the Client Connection Handler to support global
-	  resources and multiple threads. It is achieved through
-	  the leader follower model.
+        * tao/Connect.{h,cpp}: Changed handle_input and send_request
+          of the Client Connection Handler to support global
+          resources and multiple threads. It is achieved through
+          the leader follower model.
 
-	* tao/Invocation.cpp: The suspended Client Connection Handler
-	  from Connect.cpp get resumed (TAO_GIOP_Invocation::invoke).
+        * tao/Invocation.cpp: The suspended Client Connection Handler
+          from Connect.cpp get resumed (TAO_GIOP_Invocation::invoke).
 
-	* tao/ORB.{h,cpp}: The run method conforms to the rules
-	  of the leader follower model.
+        * tao/ORB.{h,cpp}: The run method conforms to the rules
+          of the leader follower model.
 
-	* tao/ORB_Core.{h,cpp}: The ORB Core now supports all
-	  the variables for the leader follower model.
+        * tao/ORB_Core.{h,cpp}: The ORB Core now supports all
+          the variables for the leader follower model.
 
 Wed Jul 15 12:07:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Servant_Base.cpp: 
-	  Added timeprobes in operation lookup.
+        * tao/Servant_Base.cpp:
+          Added timeprobes in operation lookup.
 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp: 
-	  Added TIMEPROBE_PRINT at the end.
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp:
+          Added TIMEPROBE_PRINT at the end.
 
 Wed Jul 15 12:11:01 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/Makefile: 
-	  Removed unnecessary STL dependencies.
+        * orbsvcs/tests/Property/Makefile:
+          Removed unnecessary STL dependencies.
 
 Wed Jul 15 11:44:57 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/CosPropertyService/Makefile: Removed STL stuff and
-	  did a make depend.
+        * orbsvcs/tests/CosPropertyService/Makefile: Removed STL stuff and
+          did a make depend.
 
 Wed Jul 15 10:55:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -144,12 +149,12 @@ Tue Jul 14 15:56:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/Machine_Properties.{h,cpp}:
         * orbsvcs/tests/AVStreams/Property_Exporter.{h,cpp}:
-	  Removed as they are moved to
-	  orbsvcs/tests/AVStreams/mpeg/source/server.
+          Removed as they are moved to
+          orbsvcs/tests/AVStreams/mpeg/source/server.
 
-        * orbsvcs/tests/AVStreams/Makefile: 
-        * orbsvcs/tests/AVStreams/server.{h,cpp}: 
-	  Removed as they are outdated.
+        * orbsvcs/tests/AVStreams/Makefile:
+        * orbsvcs/tests/AVStreams/server.{h,cpp}:
+          Removed as they are outdated.
 
 Tue Jul 14 15:28:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
