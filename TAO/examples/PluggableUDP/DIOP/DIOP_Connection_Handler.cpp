@@ -124,58 +124,12 @@ TAO_DIOP_Connection_Handler::dgram (void)
 int
 TAO_DIOP_Connection_Handler::open (void*)
 {
-   // @@ Frank: Not needed for DIOP
-   /*
-  if (this->set_socket_option (this->peer (),
-                               this->tcp_properties_->send_buffer_size,
-                               this->tcp_properties_->recv_buffer_size) == -1)
-    return -1;
-
-#if !defined (ACE_LACKS_TCP_NODELAY)
-
-  if (this->peer ().set_option (ACE_IPPROTO_TCP,
-                                TCP_NODELAY,
-                                (void *) &tcp_properties_->no_delay,
-                                sizeof (int)) == -1)
-    return -1;
-#endif  ! ACE_LACKS_TCP_NODELAY
-
-  if (this->transport ()->wait_strategy ()->non_blocking ())
-    {
-      if (this->peer ().enable (ACE_NONBLOCK) == -1)
-        return -1;
-    }
-
-  // Called by the <Strategy_Acceptor> when the handler is
-  // completely connected.
-  ACE_INET_Addr addr;
-
-  char client[MAXHOSTNAMELEN + 16];
-
-  // Get the peername.
-  if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
-
-  // Verify that we can resolve the peer hostname.
-  else if (addr.addr_to_string (client, sizeof (client)) == -1)
-    return -1;
-
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) DIOP connection from client")
-                  ACE_TEXT ("<%s> on %d\n"),
-                  client, this->peer ().get_handle ()));
-    }
-  */
-
-  // @@ Frank: From DIOP_Connect.cpp
   this->udp_socket_.open (this->local_addr_);
 
   ACE_DEBUG ((LM_DEBUG,
               "Opened connector on %s:%d\n",
-              this->addr_.get_host_name (),
-              this->addr_.get_port_number ()));
+              this->local_addr_.get_host_name (),
+              this->local_addr_.get_port_number ()));
 
   // Set the id in the transport now that we're active.
   this->transport ()->id ((int) this->get_handle ());
@@ -189,8 +143,11 @@ TAO_DIOP_Connection_Handler::open_server (void)
   this->udp_socket_.open (this->local_addr_);
   ACE_DEBUG ((LM_DEBUG,
               "Opened acceptor on %s:%d\n",
-              this->addr_.get_host_name (),
-              this->addr_.get_port_number ()));
+              this->local_addr_.get_host_name (),
+              this->local_addr_.get_port_number ()));
+
+  this->transport ()->id ((int) this->get_handle ());
+
   return 0;
 }
 

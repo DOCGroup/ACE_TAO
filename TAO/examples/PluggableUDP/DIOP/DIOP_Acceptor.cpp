@@ -385,10 +385,10 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
   this->connection_handler_->local_addr (addr);
   this->connection_handler_->open_server ();
 
-  /*
+  
   this->orb_core_->reactor ()->register_handler (this->connection_handler_,
                                                  ACE_Event_Handler::READ_MASK);
-  */
+  
   // ------------------------------------
 
 

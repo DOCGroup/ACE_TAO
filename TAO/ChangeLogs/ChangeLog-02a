@@ -1,3 +1,22 @@
+Tue Apr  3 09:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.h:
+
+          Removed some dead code and made optical changes.
+
+        * examples/PluggableUDP/DIOP/Transport.cpp:
+
+          Added in send_i to check for the ACE_MAX_DGRAM_SIZE. If
+          messages are larger than that, they are simply swallowed,
+          nothing is sent. If we find a proper expection to throw,
+          we can change that code to throw an exception.
+
+          Also, left some comments for debugging, as they are currently
+          needed to fix a bug.
+
 Tue Apr  3 08:27:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * tests/MT_Timeout/MT_Timeout.dsw:
