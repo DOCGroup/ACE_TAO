@@ -64,6 +64,14 @@ CORBA::Object_ptr
 IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
                       ACE_ENV_ARG_DECL)
 {
+  if (TAO_FTRTEC::Log::level() > 3)
+  {
+    for (unsigned i = 0; i < list.length(); ++i) {
+      CORBA::String_var str = orb->object_to_string(list[i].in() ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG, "merging ior [%d] = %s\n", i, str.in()));
+    }
+  }
+
   CORBA::Object_var obj = merge_iors(list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(CORBA::Object::_nil());
 
