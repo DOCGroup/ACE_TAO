@@ -363,3 +363,87 @@ ACE_Message_Block::locking_strategy (ACE_Lock *nls)
   this->data_block ()->locking_strategy (nls);
   return ols;
 }
+
+
+ACE_INLINE int 
+ACE_Dynamic_Message_Strategy::is_pending (const ACE_Message_Block & mb, 
+                                          const ACE_Time_Value & tv)
+{
+  return ((mb.msg_priority () < pending_threshold_) || 
+          this->is_beyond_late (mb, tv))
+         ? 0 : 1;
+}
+  // returns true if the message has a pending (not late) priority value
+
+ACE_INLINE u_long 
+ACE_Dynamic_Message_Strategy::static_bit_field_mask (void)
+{
+  return static_bit_field_mask_;
+}
+  // get static bit field mask
+
+ACE_INLINE void 
+ACE_Dynamic_Message_Strategy::static_bit_field_mask (u_long ul)
+{
+  static_bit_field_mask_ = ul;
+}
+  // set static bit field mask
+
+ACE_INLINE u_long 
+ACE_Dynamic_Message_Strategy::static_bit_field_shift (void)
+{
+  return static_bit_field_shift_;
+}
+  // get left shift value to make room for static bit field
+
+ACE_INLINE void 
+ACE_Dynamic_Message_Strategy::static_bit_field_shift (u_long ul)
+{
+  static_bit_field_shift_ = ul;
+}
+  // set left shift value to make room for static bit field
+
+ACE_INLINE u_long 
+ACE_Dynamic_Message_Strategy::pending_threshold (void)
+{
+  return pending_threshold_;
+}
+  // get pending threshold priority value
+
+ACE_INLINE void 
+ACE_Dynamic_Message_Strategy::pending_threshold (u_long ul)
+{
+  pending_threshold_ = ul;
+}
+  // set pending threshold priority value
+
+ACE_INLINE u_long 
+ACE_Dynamic_Message_Strategy::dynamic_priority_max (void)
+{
+  return dynamic_priority_max_;
+}
+  // get maximum supported priority value
+
+ACE_INLINE void 
+ACE_Dynamic_Message_Strategy::dynamic_priority_max (u_long ul)
+{
+  dynamic_priority_max_ = ul;
+}
+  // set maximum supported priority value
+
+ACE_INLINE u_long 
+ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void)
+{
+  return dynamic_priority_offset_;
+}
+  // get axis shift to map signed range into unsigned range
+
+ACE_INLINE void 
+ACE_Dynamic_Message_Strategy::dynamic_priority_offset (u_long ul)
+{
+  dynamic_priority_offset_ = ul;
+}
+  // set axis shift to map signed range into unsigned range
+
+
+
