@@ -98,7 +98,7 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant,
   return str;
 }
 
-// Enter the orb event loop.
+// Enter the ORB event loop.
 
 int
 TAO_ORB_Manager::run (CORBA_Environment &env,
@@ -118,18 +118,20 @@ TAO_ORB_Manager::run (CORBA_Environment &env,
   return 0;
 }
 
-// return the corba orb reference
+// Return the corba orb reference.
+
 CORBA::ORB_ptr
 TAO_ORB_Manager::orb (void)
 {
   return CORBA_ORB::_duplicate (this->orb_);
 }
 
-// Destructor
-TAO_ORB_Manager::~TAO_ORB_Manager ()
+// Destructor.
+
+TAO_ORB_Manager::~TAO_ORB_Manager (void)
 {
   CORBA::Environment env;
-  if (! CORBA::is_nil (this->root_poa_.in ()))
+  if (CORBA::is_nil (this->root_poa_.in ()) == 0)
     this->root_poa_->destroy (CORBA::B_TRUE,
                               CORBA::B_TRUE,
                               env);
