@@ -117,7 +117,7 @@ protected:
                     int reuse_addr,
                     int flags,
                     int perms,
-                    CONNECTION_CACHE_ENTRY *&entry,
+                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
                     int &found);
 
  
@@ -128,7 +128,7 @@ protected:
                                     int reuse_addr,
                                     int flags,
                                     int perms,
-                                    CONNECTION_CACHE_ENTRY *&entry,
+                                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
                                     int &found);
 
   int connect_svc_handler_i (SVC_HANDLER *&sh,
