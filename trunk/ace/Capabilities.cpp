@@ -11,6 +11,10 @@
 
 #define ACE_ESC ((char)0x1b)
 
+ACE_CapEntry::~ACE_CapEntry (void)
+{
+}
+
 ACE_Capabilities::ACE_Capabilities (void)
 {
 }
@@ -20,13 +24,13 @@ ACE_Capabilities::~ACE_Capabilities (void)
   this->resetcaps ();
 }
 
-const char * 
+const char *
 ACE_Capabilities::parse (const char *buf,
                          ACE_CString &cap)
 {
-  while (*buf!='\0' && *buf!=',') 
+  while (*buf!='\0' && *buf!=',')
     {
-      if (*buf == '\\') 
+      if (*buf == '\\')
         {
           buf++;
           if (*buf == 'E' || *buf == 'e')
@@ -53,12 +57,12 @@ ACE_Capabilities::parse (const char *buf,
               buf++;
               continue;
             }
-          else if (*buf == '\\') 
+          else if (*buf == '\\')
             {
               cap += *buf++;
               continue;
             }
-          if (isdigit(*buf)) 
+          if (isdigit(*buf))
             {
               int oc = 0;
               for (int i = 0;
@@ -67,7 +71,7 @@ ACE_Capabilities::parse (const char *buf,
                 oc = oc * 8 + (*buf++ - '0');
 
               cap += (char) oc;
-              continue; 
+              continue;
             }
         }
       cap += *buf++;
@@ -75,7 +79,7 @@ ACE_Capabilities::parse (const char *buf,
   return buf;
 }
 
-const char *  
+const char *
 ACE_Capabilities::parse (const char *buf,
                          int &cap)
 {
@@ -89,7 +93,7 @@ ACE_Capabilities::parse (const char *buf,
   return buf;
 }
 
-void 
+void
 ACE_Capabilities::resetcaps (void)
 {
   for (ACE_Hash_Map_Iterator<ACE_CString, ACE_CapEntry *, ACE_Null_Mutex> iter (caps_);
@@ -105,7 +109,7 @@ ACE_Capabilities::resetcaps (void)
   caps_.open ();
 }
 
-int 
+int
 ACE_Capabilities::fillent (const char *buf)
 {
   this->resetcaps ();
@@ -120,19 +124,19 @@ ACE_Capabilities::fillent (const char *buf)
       while (*buf && isspace(*buf)) buf++;
       // If we get end of line return
 
-      if (*buf=='\0') 
+      if (*buf=='\0')
         break;
 
       if (*buf=='#')
         {
-          while (*buf && *buf!='\n') 
+          while (*buf && *buf!='\n')
             buf++;
           if (*buf=='\n')
             buf++;
           continue;
         }
-      while(*buf && *buf != '=' 
-            && *buf!= '#' 
+      while(*buf && *buf != '='
+            && *buf!= '#'
             && *buf != ',')
         name += *buf++;
 
@@ -185,7 +189,7 @@ ACE_Capabilities::fillent (const char *buf)
   return 0;
 }
 
-int 
+int
 ACE_Capabilities::is_entry (const char *name,
                             const char *line)
 {
@@ -221,7 +225,7 @@ ACE_Capabilities::is_entry (const char *name,
   return 0;
 }
 
-int 
+int
 ACE_Capabilities::getline (FILE *fp,
                            ACE_CString &line)
 
@@ -239,7 +243,7 @@ ACE_Capabilities::getline (FILE *fp,
     return 0;
 }
 
-int 
+int
 ACE_Capabilities::getval (const char *keyname,
                           ACE_CString &val)
 {
@@ -257,7 +261,7 @@ ACE_Capabilities::getval (const char *keyname,
   return 0;
 }
 
-int 
+int
 ACE_Capabilities::getval (const char *keyname,
                           int &val)
 {
@@ -265,7 +269,7 @@ ACE_Capabilities::getval (const char *keyname,
   if (caps_.find (keyname, cap) == -1)
     return -1;
 
-  ACE_IntCapEntry *icap = 
+  ACE_IntCapEntry *icap =
     ACE_dynamic_cast (ACE_IntCapEntry *,
                       cap);
   if (icap != 0)
@@ -285,7 +289,7 @@ ACE_Capabilities::getval (const char *keyname,
   return 0;
 }
 
-static int 
+static int
 is_empty (const char *line)
 {
   while (*line && isspace (*line))
@@ -294,7 +298,7 @@ is_empty (const char *line)
   return *line == '\0' || *line == '#';
 }
 
-static int 
+static int
 is_line (const char *line)
 {
   while (*line && isspace (*line))
@@ -303,14 +307,14 @@ is_line (const char *line)
   return *line != '\0';
 }
 
-int 
+int
 ACE_Capabilities::getent (const char *fname,
                           const char *name)
 {
   FILE *fp = ACE_OS::fopen (fname,
                             "r");
 
-  if (fp == 0) 
+  if (fp == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Can't open %s file\n",
                        fname),
@@ -335,10 +339,10 @@ ACE_Capabilities::getent (const char *fname,
           break;
 
       if (this->is_entry (name, line.c_str()))
-	{
+        {
           ACE_OS::fclose (fp);
           return this->fillent (description.c_str ());
-	}
+        }
 
       line = newline;
       while (!done && is_empty (line.c_str ()))
