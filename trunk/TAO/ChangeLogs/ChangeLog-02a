@@ -1,3 +1,11 @@
+Mon Jul  1 12:24:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+          Changed some comments so yacc doesn't generated nested
+          /* */ pairs.
+
 Mon Jul  1 11:36:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/AbstractBase.h:
