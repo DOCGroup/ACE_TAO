@@ -1,3 +1,14 @@
+Fri Feb 12 15:54:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: Changed to
+	  generate collocation_test executable to collocation/ so it can
+	  use a different default svc.conf file.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.static:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf: Changed to use
+	  global ORB resources.
+
 Fri Feb 12 15:04:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/DynanyC.cpp:
@@ -61,7 +72,7 @@ Thu Feb 11 18:01:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Thu Feb 11 17:37:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time/client.cpp (main): 
+	* examples/Simple/time/client.cpp (main):
 	* examples/Simple/time/Time_Client_i.cpp:
 	* examples/Simple/time/Time_Client_i.h
 	* examples/Simple/echo/client.cpp:
@@ -166,7 +177,7 @@ Thu Feb 11 11:23:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Feb 11 10:34:41 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-        * Use of PHandle in MProfile.{h,cpp} create a name conflict.  
+        * Use of PHandle in MProfile.{h,cpp} create a name conflict.
 	  Added TAO_ to fix this.
 
 	* Thanks to  John Morey <jmorey@tbi.com>
