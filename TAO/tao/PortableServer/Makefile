@@ -24,6 +24,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 CPP_SRCS += \
   PortableServer \
+  PortableServerA \
   PortableServerC \
   POA \
   Default_Acceptor_Filter \

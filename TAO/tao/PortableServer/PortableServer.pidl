@@ -9,7 +9,7 @@
  * PortableServerC.{h,i,cpp}, using the following command:
  *
  * tao_idl.exe \
- *     -o orig -Gp -Gd -Ge 1 -GT -Sc -GA
+ *     -o orig -Gp -Gd -Ge 1 -GT -Sc -GA -I$(TAO_ROOT)
  *          -Wb,export_macro=TAO_PortableServer_Export \
  *          -Wb,export_include="portableserver_export.h" \
  *          -Wb,pre_include="ace/pre.h" \
@@ -200,7 +200,7 @@ module PortableServer
   // ServantManager interface.
   local interface ServantManager {};
 
-  local interface ServantActivator : ServantManager 
+  local interface ServantActivator : ServantManager
   {
 #   pragma version ServantActivator 2.3
 
@@ -215,7 +215,7 @@ module PortableServer
                       in boolean remaining_activations);
   };
 
-  local interface ServantLocator : ServantManager 
+  local interface ServantLocator : ServantManager
   {
 #   pragma version ServantLocator 2.3
 
@@ -234,7 +234,7 @@ module PortableServer
                      in Servant the_servant);
   };
 
-  local interface POA 
+  local interface POA
   {
 #   pragma version POA 2.3
 
@@ -254,7 +254,7 @@ module PortableServer
     POA create_POA (in string adapter_name,
                     in POAManager a_POAManager,
                     in CORBA::PolicyList policies)
-      raises (AdapterAlreadyExists, 
+      raises (AdapterAlreadyExists,
 	      InvalidPolicy);
 
     POA find_POA (in string adapter_name,
@@ -309,8 +309,8 @@ module PortableServer
 
     // Operations for the USE_DEFAULT_SERVANT policy.
 
-    Servant get_servant () 
-      raises (NoServant, 
+    Servant get_servant ()
+      raises (NoServant,
 	      WrongPolicy);
 
     void set_servant (in Servant p_servant)
@@ -319,7 +319,7 @@ module PortableServer
     // Object activation and deactivation.
 
     ObjectId  activate_object (in Servant p_servant)
-      raises (ServantAlreadyActive, 
+      raises (ServantAlreadyActive,
 	      WrongPolicy);
 
     void activate_object_with_id (in ObjectId id,
@@ -342,26 +342,26 @@ module PortableServer
 
     // Identity mapping operations:.
     ObjectId servant_to_id (in Servant p_servant)
-      raises (ServantNotActive, 
+      raises (ServantNotActive,
 	      WrongPolicy);
 
     Object servant_to_reference (in Servant p_servant)
       raises (ServantNotActive, WrongPolicy);
 
     Servant reference_to_servant (in Object reference)
-      raises (ObjectNotActive, 
-	      WrongAdapter, 
+      raises (ObjectNotActive,
+	      WrongAdapter,
 	      WrongPolicy);
 
     ObjectId reference_to_id (in Object reference)
-      raises (WrongAdapter, 
+      raises (WrongAdapter,
 	      WrongPolicy);
 
     Servant id_to_servant (in ObjectId oid)
       raises (ObjectNotActive, WrongPolicy);
 
     Object id_to_reference (in ObjectId oid)
-      raises (ObjectNotActive, 
+      raises (ObjectNotActive,
 	      WrongPolicy);
 
     readonly attribute CORBA::OctetSeq id;
@@ -386,16 +386,16 @@ module PortableServer
   };
 
   // Current interface.
-  local interface Current : CORBA::Current 
+  local interface Current : CORBA::Current
   {
 #   pragma version Current 2.3
 
     exception NoContext {};
 
-    POA get_POA ()       
+    POA get_POA ()
       raises (NoContext);
 
-    ObjectId get_object_id () 
+    ObjectId get_object_id ()
       raises (NoContext);
   };
 };

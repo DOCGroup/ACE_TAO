@@ -33,6 +33,7 @@ project : taolib, core, objreftemplate, iorinterceptor {
     PortableServer.cpp
     PortableServer_ORBInitializer.cpp
     PortableServer_PolicyFactory.cpp
+    PortableServerA.cpp
     PortableServerC.cpp
     Servant_Base.cpp
     Servant_Dispatcher.cpp
