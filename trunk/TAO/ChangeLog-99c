@@ -1,3 +1,10 @@
+Fri Jul 30 11:08:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/Tags.html:
+	  Fixed the ASCII representation for some of the protocol
+	  tags. Thanks to Andres <akruse@cyberlife.co.uk> for pointing
+	  this out.
+
 Fri Jul 30 02:40:24 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* docs/releasenotes/orbcore.html: Added the Connection Caching in
