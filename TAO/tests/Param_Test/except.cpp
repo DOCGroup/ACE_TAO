@@ -114,7 +114,7 @@ Test_Exception::reset_parameters (void)
 
 int
 Test_Exception::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &_env)
+                              CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {

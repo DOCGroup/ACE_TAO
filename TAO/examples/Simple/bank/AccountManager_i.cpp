@@ -44,7 +44,7 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 Bank::Account_ptr
 AccountManager_i::open (const char *name,
 			CORBA::Float initial_balance,
-			CORBA::Environment &_env)
+			CORBA::Environment &TAO_IN_ENV)
 {
   Account_i *result = 0;
 
@@ -93,7 +93,7 @@ AccountManager_i::open (const char *name,
 
 void
 AccountManager_i::close (Bank::Account_ptr account,
-			 CORBA::Environment &_env)
+			 CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {

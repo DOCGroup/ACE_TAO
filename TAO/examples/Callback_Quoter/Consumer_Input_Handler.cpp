@@ -31,7 +31,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  CORBA::Environment _env;
+  CORBA::Environment TAO_IN_ENV;
 
   TAO_TRY
     {
