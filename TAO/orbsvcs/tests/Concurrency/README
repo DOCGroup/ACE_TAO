@@ -49,7 +49,8 @@ repeat command just sets a global variable in the test, i.e. the last
 repeat command is the one that will take effect - the whole script is
 run the specified number of times.
 
-An example of a script (assuming it's called 'test.cfg'):
+An example of a script (assuming it's called 'test.cfg' - comments are
+not supported):
 
   // Start a new CC_client with test.txt as script file
   start test.txt;
@@ -78,3 +79,33 @@ directory:
                                          ./CC_client -e '2;test'
                                          ./CC_client -e '3;test'
   test.dinphil       Dining philosophers. Uses test.phil[1-5]
+
+----------------------------------------
+
+THE IMPLEMENTATION
+
+The implementation of the concurrency service tests is located in
+the $TAO_ROOT/orbsvcs/tests/Concurrency directory and consists of
+the following files:
+
+	CC_client.{h,cpp} contain initialization and the main function.
+
+	CC_tests.{h,cpp} The old tests [-b] and [-e] options to CC_client
+
+	CC_command.{h,cpp} The commands that can be used in the scripting
+		language are implemented in these files. The list of
+		commands to execute is also implemented here.
+
+	CC_command.l The lex file for the script language.
+
+	CC_command.y The yacc file for the script language.
+
+	CC_command.tab.{h,cpp} and lex.CC_command.cpp Derived files from
+		the lex and yacc files.
+
+        CC_naming_service.{h,cpp} A wrapper class around the necessary
+		naming service functinallity for the tests.
+
+	CC_test_utils.{h,cpp} provides a namespace for utility functions.
+
+	test.* Test scripts for the concurrency service.
