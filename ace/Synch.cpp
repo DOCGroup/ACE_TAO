@@ -410,7 +410,6 @@ ACE_Auto_Event::dump (void) const
 
 #if defined (ACE_HAS_THREADS)
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex_Guard)
 
 void
@@ -440,6 +439,31 @@ ACE_Thread_Mutex_Guard::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
+                                                        void *arg)
+#if !defined (ACE_WIN32)
+  : nesting_mutex_ (name, arg),
+    lock_available_ (nesting_mutex_, name, arg),
+    nesting_level_ (0),
+    owner_id_ (ACE_OS::NULL_thread)
+#else /* ACE_WIN32 */
+  : ACE_Thread_Mutex (name, arg)
+#endif /* ACE_WIN32 */
+{
+#if defined (ACE_HAS_FSU_PTHREADS) && ! defined (ACE_WIN32)
+//      Initialize FSU pthreads package.
+//      If called more than once, pthread_init does nothing
+//      and so does no harm.
+   pthread_init ();
+#endif  /*  ACE_HAS_FSU_PTHREADS && ! ACE_WIN32 */
+// ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
+}
+
+#if !defined (ACE_WIN32)
+ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
+
+// The counter part of the following two functions for Win32
+// are located in file Synch.i
 ACE_thread_t
 ACE_Recursive_Thread_Mutex::get_thread_id (void)
 {
@@ -459,22 +483,6 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &rm)
   : lock_available_ ((ACE_Thread_Mutex &) rm.nesting_mutex_)
 {
-}
-
-ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
-                                                        void *arg)
-  : nesting_mutex_ (name, arg),
-    lock_available_ (nesting_mutex_, name, arg),
-    nesting_level_ (0),
-    owner_id_ (ACE_OS::NULL_thread)
-{
-#if defined (ACE_HAS_FSU_PTHREADS)
-//      Initialize FSU pthreads package.
-//      If called more than once, pthread_init does nothing
-//      and so does no harm.
-   pthread_init ();
-#endif  /*  ACE_HAS_FSU_PTHREADS */
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
 }
 
 ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
@@ -587,6 +595,7 @@ ACE_Recursive_Thread_Mutex::dump (void) const
 #endif /* !ACE_HAS_DCETHREADS */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif /* ! ACE_WIN32 */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Condition_Thread_Mutex)
 
