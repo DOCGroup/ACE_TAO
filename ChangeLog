@@ -1,9 +1,15 @@
+Wed Feb 02 21:56:32 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: added -p option to check Purify
+          output for anomaly and leak reports.
+
 Wed Feb 02 16:29:19 2000  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/OS.cpp (lwp_getparam):  if the LWP is in the TS
+        * ace/OS.cpp (lwp_getparam): if the LWP is in the TS
           class, set the policy to ACE_SCHED_OTHER instead of
-          ACE_SCHED_RR.  Thanks to Chris Gill for tracking this
-          bug down.
+          ACE_SCHED_RR.  That's the only thread scheduling policy
+          that's supported in TS class on Solaris, where this function
+          can be used.  Thanks to Chris Gill for tracking this bug down.
 
 Wed Feb 02 12:46:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
