@@ -14,7 +14,6 @@
 #ifndef ACE_TIMEPROBE_T_H
 #define ACE_TIMEPROBE_T_H
 #include "ace/pre.h"
-
 #include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -63,6 +62,12 @@ public:
   /// Self
   typedef ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>
           SELF;
+
+  /**
+   * ACE_Timeprobe
+   */
+  typedef ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator> ACE_Timeprobe;
+
 
   /// We can hold multiple event description tables.
   typedef ACE_Unbounded_Set<ACE_Event_Descriptions>
@@ -173,11 +178,6 @@ private:
 //   ACE_Timeprobe (ACE_Allocator *allocator = ACE_Allocator::instance(),
 //                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 // };
-
-/**
- * ACE_Timeprobe
- */
-typedef ACE_Timeprobe_Ex <ACE_LOCK, ACE_Allocator> ACE_Timeprobe;
 
 /**
  * @class ACE_Function_Timeprobe
