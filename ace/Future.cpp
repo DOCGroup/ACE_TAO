@@ -150,7 +150,7 @@ ACE_Future_Rep<T>::~ACE_Future_Rep (void)
 }
 
 template <class T> int
-ACE_Future_Rep<T>::ready (void)
+ACE_Future_Rep<T>::ready (void) const
 {
   return this->value_ != 0;
 }
@@ -200,7 +200,7 @@ ACE_Future_Rep<T>::set (const T &r,
 
 template <class T> int
 ACE_Future_Rep<T>::get (T &value,
-                        ACE_Time_Value *tv)
+                        ACE_Time_Value *tv) const
 {
   // If the value is already produced, return it.
   if (this->value_ == 0)
@@ -348,7 +348,7 @@ ACE_Future<T>::set (const T &r)
 }
 
 template <class T> int
-ACE_Future<T>::ready (void)
+ACE_Future<T>::ready (void) const
 {
   // We're ready if the ACE_Future_rep is ready...
   return this->future_rep_->ready ();
@@ -356,7 +356,7 @@ ACE_Future<T>::ready (void)
 
 template <class T> int
 ACE_Future<T>::get (T &value,
-                    ACE_Time_Value *tv)
+                    ACE_Time_Value *tv) const
 {
   // We return the ACE_Future_rep.
   return this->future_rep_->get (value, tv);

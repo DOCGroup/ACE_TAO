@@ -113,7 +113,7 @@ private:
   /// Wait up to <tv> time to get the <value>.  Note that <tv> must be
   /// specified in absolute time rather than relative time.
   int get (T &value,
-           ACE_Time_Value *tv);
+           ACE_Time_Value *tv) const;
 
   /**
    * Attaches the specified observer to a subject (i.e. the
@@ -195,7 +195,7 @@ private:
                       ACE_Future_Rep<T> *new_rep);
 
   /// Is result available?
-  int ready (void);
+  int ready (void) const;
 
   /// Pointer to the result.
   T *value_;
@@ -288,7 +288,7 @@ public:
   /// Wait up to <tv> time to get the <value>.  Note that <tv> must be
   /// specified in absolute time rather than relative time.
   int get (T &value,
-           ACE_Time_Value *tv = 0);
+           ACE_Time_Value *tv = 0) const;
 
   /**
    * Type conversion, which obtains the result of the asynchronous
@@ -302,7 +302,7 @@ public:
   operator T ();
 
   /// Check if the result is available.
-  int ready (void);
+  int ready (void) const;
 
   /**
    * Attaches the specified observer to a subject (i.e. the
