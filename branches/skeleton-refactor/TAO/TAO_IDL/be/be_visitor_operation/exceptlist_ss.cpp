@@ -47,7 +47,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << "static CORBA::TypeCode_ptr const * const _tao_exceptions[] = " << be_idt_nl;
+      *os << "static CORBA::TypeCode_ptr const _tao_exceptions[] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
 
       // Initialize an iterator to iterate thru the exception list.
