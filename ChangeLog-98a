@@ -1,5 +1,10 @@
 Fri Apr 10 02:42:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/Log_Msg.{h,cpp} (log_hexdump): 
+	* ace/ACE.{h,cpp} (format_hexdump): The buffer to be hex-dumped should
+	  always be of type (const char *) no matter we have UNICODE
+ 	  system strings or not.
+
 	* ace/OS.{h,cpp} (ACE_CE_Bridge): This new class bridges
 	  a text-based ACE programs with a default window that prints out
 	  the default ACE_Log_Msg output.
