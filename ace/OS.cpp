@@ -3614,6 +3614,122 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
+#if defined (ACE_LACKS_DIFFTIME)
+double
+ACE_OS::difftime (time_t t1, time_t t0)
+{
+  /* return t1 - t0 in seconds */
+  struct tm tms[2], *ptms[2], temp;
+  double seconds;
+  double days;
+  int swap = 0;
+
+  /* extract the tm structure from time_t */
+  ptms[1] = gmtime_r (&t1, &tms[1]);
+  if (ptm[1] == 0) return 0.0;
+
+  ptms[0] = gmtime_r (&t0, &tms[0]);
+  if (ptms[0] == 0) return 0.0;
+
+    /* make sure t1 is > t0 */
+  if (tms[1].tm_year < tms[0].tm_year)
+    swap = 1;
+  else if (tms[1].tm_year == tms[0].tm_year)
+    {
+      if (tms[1].tm_yday < tms[0].tm_yday)
+        swap = 1;
+      else if (tms[1].tm_yday == tms[0].tm_yday)
+        {
+          if (tms[1].tm_hour < tms[0].tm_hour)
+            swap = 1;
+          else if (tms[1].tm_hour == tms[0].tm_hour)
+            {
+              if (tms[1].tm_min < tms[0].tm_min)
+                swap = 1;
+              else if (tms[1].tm_min == tms[0].tm_min)
+                {
+                  if (tms[1].tm_sec < tms[0].tm_sec)
+                    swap = 1;
+                }
+            }
+        }
+    }
+
+  if (swap)
+    temp = tms[0], tms[0] = tms[1], tms[1] = temp;
+
+  seconds = 0.0;
+  if (tms[1].tm_year > tms[0].tm_year)
+    {
+      // Accumulate the time until t[0] catches up to t[1]'s year.
+      seconds = 60 - tms[0].tm_sec;
+      tms[0].tm_sec = 0;
+      tms[0].tm_min += 1;
+      seconds += 60 * (60 - tms[0].tm_min);
+      tms[0].tm_min = 0;
+      tms[0].tm_hour += 1;
+      seconds += 60*60 * (24 - tms[0].tm_hour);
+      tms[0].tm_hour = 0;
+      tms[0].tm_yday += 1;
+
+#define ISLEAPYEAR(y) ((y)&3u?0:(y)%25u?1:(y)/25u&12?0:1)
+
+      if (ISLEAPYEAR(tms[0].tm_year))
+        seconds += 60*60*24 * (366 - tms[0].tm_yday);
+      else
+        seconds += 60*60*24 * (365 - tms[0].tm_yday);
+
+      tms[0].tm_yday = 0;
+      tms[0].tm_year += 1;
+
+      while (tms[1].tm_year > tms[0].tm_year)
+        {
+          if (ISLEAPYEAR(tms[0].tm_year))
+            seconds += 60*60*24 * 366;
+          else
+            seconds += 60*60*24 * 365;
+
+          tms[0].tm_year += 1;
+        }
+    }
+  else
+    {
+      // Normalize
+      tms[1].tm_yday -= tms[0].tm_yday;
+
+      if (tms[1].tm_hour < tms[0].tm_hour)
+        {
+          tms[1].tm_yday -= 1;
+          tms[1].tm_hour = (24 + tms[1].tm_hour) - tms[0].tm_hour;
+        }
+      else
+        tms[1].tm_hour -= tms[0].tm_hour;
+
+      if (tms[1].tm_min < tms[0].tm_min)
+        {
+          tms[1].tm_hour -= 1;
+          tms[1].tm_min += 60;
+        }
+      tms[1].tm_min -= tms[0].tm_min;
+
+      if (tms[1].tm_sec < tms[0].tm_sec)
+        {
+          tms[1].tm_min -= 1;
+          tms[1].tm_sec += 60;
+        }
+      tms[1].tm_sec -= tms[0].tm_sec;
+    }
+
+  // accumulate the seconds
+  seconds += tms[1].tm_sec;
+  seconds += 60 * tms[1].tm_min;
+  seconds += 60*60 * tms[1].tm_hour;
+  seconds += 60*60*24 * tms[1].tm_yday;
+
+  return seconds;
+}
+#endif /* ACE_LACKS_DIFFTIME */
+
 #if defined (ACE_HAS_WINCE)
 wchar_t *
 ACE_OS::ctime (const time_t *t)
