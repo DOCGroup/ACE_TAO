@@ -122,14 +122,14 @@ install (const ::Deployment::ImplementationInfos & impl_infos
     ACE_CHECK;
 
     if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
-				   comp.in ()))
+				   Components::CCMObject::_duplicate (comp.in ())))
       ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
 
     // Set the return value.
     (*retv)[i].component_instance_name
       = impl_infos[i].component_instance_name.in ();
 
-    (*retv)[i].component_ref = comp.in ();
+    (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
   }
   return retv._retn ();
 }
