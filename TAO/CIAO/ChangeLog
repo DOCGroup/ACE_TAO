@@ -1,3 +1,42 @@
+Sun May 30 17:47:10 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/tests/NodeApplicationTest:
+
+          Directory for testing CIAO's NodeApplication entity
+
+        * DnC/tests/NodeApplicationTest/NodAppTest.mpc:
+          mpc file for this test case
+
+        * DnC/tests/NodeApplicationTest/NodeAppTest_RoundTrip.idl:
+        * DnC/tests/NodeApplicationTest/NodeAppTest_RoundTrip.cidl:
+        * DnC/tests/NodeApplicationTest/RoundTripEI.idl:
+
+          A simple component as a test case that provides an interface
+          LatencyTest which has a single operation defined that cubes a
+          long
+
+        * DnC/tests/NodeApplicationTest/RoundTrip_stub_export.h:
+        * DnC/tests/NodeApplicationTest/RoundTrip_svnt_export.h:
+        * DnC/tests/NodeApplicationTest/RoundTrip_exec_export.h:
+
+          Export files to keep windows happy
+
+        * DnC/tests/NodeApplicationTest/RoundTrip_exec.h:
+        * DnC/tests/NodeApplicationTest/RoundTrip_exec.cpp:
+
+          Component implementation definitions
+
+        * DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+
+          Client program that tries to install the RoundTrip home with the
+          NodeApplication aka ComponentServer, create the Component,
+          i.e. RoundTrip, and invoke the cube long operation.
+
+          This test case exercises the call path for home installation,
+          component creation within the new DnC specification. This test
+          case should also have component removal operations, which will
+          be added as and when this is implemented in CIAO.
+
 Sun May 30 15:43:24 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/NodeApplication/NodeApplication.mpc:

@@ -1,0 +1,33 @@
+// $Id$ 
+
+//=============================================================================
+/**
+ * @file RoundTrip.idl
+ *
+ * Definition of the Component that provides the LatencyTest interface
+ *
+ */
+//=============================================================================
+#ifndef NODEAPP_ROUNDTRIP_IDL
+#define NODEAPP_ROUNDTRIP_IDL
+
+#include <Components.idl>
+
+module NodeAppTest
+{
+  interface LatencyTest
+  {
+     long cube_long (in long param);
+  };
+
+  component NodeAppTest_RoundTrip
+  {
+    provides LatencyTest latency;
+  };
+
+  home NodeAppTest_RoundTripHome manages NodeAppTest_RoundTrip
+  {
+  };
+
+};
+#endif /* NODEAPP_ROUNDTRIP_IDL */
