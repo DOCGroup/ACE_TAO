@@ -123,21 +123,12 @@ CORBA_NVList::add_value (const char *name,
     {
       // now initialize the fields
       nv->name_ = CORBA::string_dup (name);
-      if (ACE_BIT_ENABLED (flags, CORBA::IN_COPY_VALUE))
-        // IN_COPY_VALUE means that the parameter is not "borrowed" by
-        // the ORB, but rather that the ORB copies its value.
-        //
-        // Initialize the newly allocated memory using a copy
-        // constructor that places the new "Any" value at just the
-        // right place, and makes a "deep copy" of the data.
-        nv->any_ = value;
-      else
-	{
-	  // The normal behavior for parameters is that the ORB
-	  // "borrows" their memory for the duration of calls.
-	  CORBA::TypeCode_var type = value.type ();
-	  nv->any_.replace (type.in (), value.value_, 0, env);
-	}
+      nv->any_ = value;
+      // We ignore the CORBA::IN_COPY_VALUE flag here because
+      // the value (void*) of the Any may be 0, in which case
+      // the ORB must copy the value anyway. Calling replace()
+      // with a 0 void* will cause a crash when replace() tries
+      // to encode the null pointer into a CDR stream.
 
       return nv;
     }
