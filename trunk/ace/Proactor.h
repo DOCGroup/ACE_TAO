@@ -271,8 +271,7 @@ public:
   // This call is for POSIX <aio_> calls.  This method is used by
   // <ACE_Asynch_Operation> to store some information with the
   // Proactor.  Inserting this <aiocb_ptr> to the array so that
-  // <aio_return> and <aio_error> can make use of that. Inserting
-  // result so that we can call the application back through complete.
+  // <aio_return> and <aio_error> can make use of that.
 #endif /* ACE_HAS_AIO_CALLS */
 
 protected:
