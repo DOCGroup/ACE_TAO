@@ -6,9 +6,9 @@
 #include "ace/QoS_Session_Impl.h"
 #include "ace/SOCK.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#if !defined (__ACE_INLINE__)
 #include "ace/QoS_Session_Impl.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, QoS_Session_Impl, "$Id$")
   

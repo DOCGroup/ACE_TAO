@@ -50,7 +50,7 @@ public:
   };
   // A flag to indicate if this endpoint is a sender or a receiver or both.
 
-  virtual ~ACE_QoS_Session (void);
+  virtual ~ACE_QoS_Session (void) {};
   // to shutup g++.
 
   virtual int open (ACE_INET_Addr dest_addr,
@@ -96,9 +96,9 @@ public:
   virtual int version (void) = 0;
   // Returns the version of the underlying RSVP implementation. Is
   // meaningful only when the underlying implementation has versioning.
-
+   
 protected:
-  
+
   int session_id_;
   // session id for the session.
   
