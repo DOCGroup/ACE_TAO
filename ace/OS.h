@@ -2427,7 +2427,7 @@ public:
 
   ACE_U_LongLong operator+ (const ACE_U_LongLong &) const;
   ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
-  u_long operator/ (u_long) const;
+  u_long operator/ (const u_long) const;
 
   ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
   ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
