@@ -1,14 +1,13 @@
 // $Id$
 
-#include "POA.idl"
-
 interface Foo
-{
-  long doit ()
-    raises (PortableServer::ForwardRequest);
+{    
+  long doit ();
 
   exception Cannot_Forward {};
 
   void forward ()
     raises (Cannot_Forward);
+
 };
+
