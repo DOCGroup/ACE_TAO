@@ -4159,6 +4159,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_POA *, ACE_Hash
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
+template class ACE_Array_Base <IOP::ProfileId>;
 
 //template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_Active_Object_Map>;
@@ -4185,4 +4186,5 @@ template class ACE_Node<TAO_POA *>;
 //#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_Active_Object_Map>
 #pragma instantiate ACE_Node<TAO_POA *>
+#pragma instantiate ACE_Array_Base <IOP::ProfileId>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
