@@ -1,3 +1,25 @@
+Tue Aug 12 17:05:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/corbafwd.cpp:
+        * tao/corbafwd.h:
+
+          Removed CORBA::_tc_Visibility and CORBA::_tc_ValueModifier.
+
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueBase.h:
+
+          Added declaration and initialization to 0 of the above two
+          type codes plus CORBA::_tc_ValueBase. Thanks to Frank
+          Pilhofer <fpilhofe@mc.com> for pointing out the lack of
+          _tc_ValueBase.
+
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+
+          Added default constructor in which to do the actual initialization
+          of the 3 type codes mentioned above. They are released in the
+          destructor.
+
 Tue Aug 12 17:49:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: 
