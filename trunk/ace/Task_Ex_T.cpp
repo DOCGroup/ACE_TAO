@@ -81,10 +81,15 @@ template<ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_Task<ACE_SYNCH_USE> *
 ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::sibling (void)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE>::sibling");
+  /// @todo FIXME Need to impl ACE_Moudle to support ACE_Task as well.
+  /// Now always return 0 for sibling
+  return 0;  
+/*
   if (this->mod_ == 0)
     return 0;
   else
     return this->mod_->sibling (this);
+*/
 }
 
 template<ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> const ACE_TCHAR *
