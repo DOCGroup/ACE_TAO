@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -71,13 +71,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // files defining the different units of the compiler
 
 #include        "ace/ACE.h"             // Most important ACE include file
-
+#include    "ace/streams.h"     // iostreams
 #include	"intlmacros.h"		// Define macros for intl'ion
 
 #include	<stdlib.h>		// POSIX standard defns
 #include	<ctype.h>		// External functions
-
-#include	"ace/stdcpp.h"		// Standard IO library
 
 #include	<sys/types.h>		// POSIX standard types
 

@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -75,22 +75,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-#include	"ace/stdcpp.h"
 #include	"idl_fwd.h"
 #include	"utl_string.h"
 
-class Identifier 
+class Identifier
 {
 public:
   Identifier ();
   // Default Constructor(s)
-  
+
   Identifier (char *s, long x=1, long y=0, long z=I_FALSE);
   // constructor
 
   virtual ~Identifier ();
   // destructor
-  
+
   // =Operations
 
   char	*get_string ();
@@ -98,7 +97,7 @@ public:
 
   long	compare (Identifier *other);
   // compare with other Identifier
-  
+
   // =Dumping
 
   virtual void	dump (ostream &o);
