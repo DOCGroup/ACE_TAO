@@ -47,8 +47,8 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
   if (in_l == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Throwing Exception: DidNotWork\n"));
-      ACE_THROW_RETURN (A::DidNotWork(), 0);
+                  "Throwing Exception: A::DidTheRightThing\n"));
+      ACE_THROW_RETURN (A::DidTheRightThing(), 0);
     }
 
   return 931234;

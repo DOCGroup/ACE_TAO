@@ -1,3 +1,9 @@
+Wed Feb 09 12:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/ami_test.idl,
+	  tests/AMI/simple_client.cpp: Made the exception handling
+	  test more descriptive.
+
 Wed Feb  9 21:26:46 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):

@@ -111,12 +111,15 @@ public:
           excep_holder->raise_foo (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Catched exception:");
+	  ACE_CATCH (A::DidTheRightThing, ex)
+		{
 		  ACE_DEBUG ((LM_DEBUG,
 					  "... exception received successfully\n"));
+		}
+      ACE_CATCHANY
+        {
+		  ACE_DEBUG ((LM_DEBUG,
+					  "... caught the wrong exception -> ERROR\n"));
         }
       ACE_ENDTRY;
     };
@@ -217,7 +220,7 @@ main (int argc, char *argv[])
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Trigger the DidNotWork exception on the server side
+      // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
       ACE_DEBUG ((LM_DEBUG,
                   "Sending asynch message\n"));
