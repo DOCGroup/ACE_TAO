@@ -1,3 +1,15 @@
+Mon Apr 28 15:06:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/g++_metrics.sh:
+          Comment metrics output so it won't confuse the tao_idl
+          compiler, that uses CXX as the preprocessor by default.
+
+        * bin/generate_compile_stats.sh: 
+          Add a new "targets" parameter that allows users to generate
+          a targets file created with the --dry-run option.  This way
+          even if something fails to compile, you still get a list of
+          all targets and their dependencies.
+
 Mon Apr 28 08:44:43 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu_DLL.dsp:

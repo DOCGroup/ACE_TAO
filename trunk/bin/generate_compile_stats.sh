@@ -15,7 +15,7 @@
 
 usage ()
 {
-  echo "usage: $0 <input_file> <destination_directory> [<date> [<fudge_factor>]]"
+  echo "usage: $0 <input_file> <destination_directory> <target_file> [<date> [<fudge_factor>]]"
   exit
 }
 
@@ -126,14 +126,21 @@ parse ()
 
   # set the date from command line
   if [ $# -gt 2 ]; then
-    DATE=$3
+    TARGETS=$3
+  else
+   TARGETS=$INFILE
+  fi
+
+  # set the date from command line
+  if [ $# -gt 3 ]; then
+    DATE=$4
   else
     DATE=`date +%Y/%m/%d-%H:%M`
   fi
 
   # set fudge factor from commandline (for testing)
-  if [ $# -gt 3 ]; then
-    FUDGE_FACTOR=$4
+  if [ $# -gt 4 ]; then
+    FUDGE_FACTOR=$5
   else
     FUDGE_FACTOR=0
   fi
@@ -542,6 +549,7 @@ create_html ()
 
 INFILE=""
 DEST=""
+TARGETS=""
 DATE=""
 FUDGE_FACTOR=0
 
@@ -555,7 +563,7 @@ echo "date = $DATE"
 # grab the compile time metrics for objects only and process them
 grep "compile time:" $INFILE | grep "\.o" | cut -d' ' -f3,4 | process_file
 
-create_composite_list $INFILE
+create_composite_list $TARGETS
 
 cat .metrics/composites.txt | process_composite_objects
 

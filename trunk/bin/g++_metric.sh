@@ -39,7 +39,9 @@ if [ $retval -eq 0 ]; then
 
   # add the path, relative to $ACE_ROOT, to the beginning of the object name
   # so that it can be used to name the object when it's processed.  
-  echo "compile time: ${PWD#$ACE_ROOT/}/${target} $total"
+  # Note that this line is commented so the output won't interfere with the
+  # preprocessor output, i.e., when used by the tao_idl compiler.
+  echo "//compile time: ${PWD#$ACE_ROOT/}/${target} $total"
 fi
 
 exit $retval
