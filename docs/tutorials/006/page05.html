@@ -127,7 +127,7 @@ int
     use the reactor which means that handle_input() and it's fellows
     are not invoked.  */</font>
   if (acceptor->thread_per_connection ())
-    return this->activate ();
+    return this->activate (THR_DETACHED);
 
   <font color=red>// ************************************************************************</font>
   <font color=red>// From here on, we're doing the traditional reactor thing.  If</font>
