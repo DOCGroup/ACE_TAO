@@ -237,7 +237,7 @@ ACE_Streambuf<STREAM>::overflow (int c)
 
           // Reconfigure base () and restore the put pointers.
           setb (pbase_saved_, pbase_saved_ + ACE_STREAMBUF_SIZE, 0);
-          setp (pbase_saved_, epptr_saved_);
+          setp (base (), ebuf ());
 
           // Save the new mode.
           this->cur_mode_ = this->put_mode_;
@@ -335,7 +335,7 @@ ACE_Streambuf<STREAM>::flushbuf (void)
   // Now that we've sent everything in the output buffer, we reset the
   // buffer pointers to appear empty.
   //
-  setp (base (), base ());
+  setp (base (), ebuf ());
 
   return 0;
 }
