@@ -30,7 +30,7 @@ extern "C" {
     unsigned short d_ino;
     unsigned short d_off;
     unsigned short d_reclen;
-    const PACE_TCHAR * d_name;
+    char * d_name;
   } pace_dirent;
 #endif /* PACE_DIRENT_T */
 
@@ -53,7 +53,10 @@ extern "C" {
 
     int started_reading_;
     // A flag to remember if we started reading already.
+
   } PACE_DIR;
+
+  PACE_INLINE void dir_init (PACE_DIR * dir);
 #endif /* PACE_DIR_T */
 
 #if defined (PACE_HAS_CPLUSPLUS)
