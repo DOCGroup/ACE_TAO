@@ -1,3 +1,14 @@
+Sun Mar 14 15:44:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Timeouts.cpp:
+          Cancel scheduled timers before quitting. This fixes the access
+          violations we see in the MinGW build when running these examples.
+          Caused by the fact that the event handler is on the stack and so
+          already destroyed when the singleton reactor is getting destroyed.
+          Thanks to Martin Corino <mcorino@remedy.nl> with helping solving
+          these crashes.
+
 Sun Mar 14 14:21:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.cpp:
