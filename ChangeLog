@@ -1,3 +1,24 @@
+Tue Sep 10 14:06:02 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Obstack_T.cpp:
+        * ace/Obstack_T.h:
+
+          Obstack is no longer restricted to fixed-size chunks. Chunk size
+          is increased by a power of two if we run out of memory in a
+          chunk. Added implementation of unwind operations. Stack can be
+          unwound by giving the address of an object on the stack. Fixed a
+          couple of bugs in the existing implementation when used with
+          WCHAR. We were incrementing the pointers by sizeof (CHAR) as
+          well as multiplying by sizeof (CHAR) to get the number of bytes
+          to be copied. This improvement doesn't deal with the alignment
+          issues as it requires a change in Obchunk which is postponed
+          till ACE 5.2.3 is released.
+
+        * tests/Obstack_Test.cpp:
+
+          New, improved test which exercises all the code paths in the
+          implementation unlike the previous test.
+
 Tue Sep 10 12:32:33 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* ace/Connector.cpp:
