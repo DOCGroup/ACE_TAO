@@ -1,3 +1,11 @@
+Wed Sep 10 08:15:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IOP_IORC.i:
+
+	  Explicitly #undef IOR in this file to work around an HPUX
+	  namespace conflict.  For some reason, the same #undef in
+	  IOP_IORC.h is not enough.
+
 Wed Sep 10 10:05:38 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV.mpc:
