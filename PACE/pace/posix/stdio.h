@@ -16,8 +16,8 @@
 #ifndef PACE_STDIO_H_POSIX
 #define PACE_STDIO_H_POSIX
 
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {

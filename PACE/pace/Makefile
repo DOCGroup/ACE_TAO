@@ -4,22 +4,6 @@
 #       Makefile for the PACE/pace C library release
 #----------------------------------------------------------------------------
 
-ifndef static_libs_only
-  ifndef shared_libs_only
-    static_libs_only = 1
-  endif # ! shared_libs_only
-endif # ! static_libs_only
-
-# If we are inlining the PACE functions then we need to define
-# PACE_HAS_INLINE. Inlining is the default.
-ifndef inline
-  CFLAGS += -DPACE_HAS_INLINE
-endif # ! inline
-
-ifeq (1,$(inline))
-  CFLAGS += -DPACE_HAS_INLINE
-endif # inline
-
 MAKEFILE = Makefile
 LIB      = libPACE.a
 SHLIB    = libPACE.$(SOEXT)
@@ -427,6 +411,22 @@ INSTALL =
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
+
+ifndef static_libs_only
+  ifndef shared_libs_only
+    static_libs_only = 1
+  endif # ! shared_libs_only
+endif # ! static_libs_only
+
+# If we are inlining the PACE functions then we need to define
+# PACE_HAS_INLINE. Inlining is the default.
+ifndef inline
+  CFLAGS += -DPACE_HAS_INLINE
+endif # ! inline
+
+ifeq (1,$(inline))
+  CFLAGS += -DPACE_HAS_INLINE
+endif # inline
 
 #----------------------------------------------------------------------------
 #       Local targets
