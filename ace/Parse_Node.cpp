@@ -327,13 +327,13 @@ ACE_Location_Node::pathname (const char *p)
 }
 
 void 
-ACE_Location_Node::handle (const void *h)
+ACE_Location_Node::handle (const ACE_SHLIB_HANDLE h)
 {
   ACE_TRACE ("ACE_Location_Node::handle");
   this->handle_ = h;
 }
 
-const void *
+const ACE_SHLIB_HANDLE
 ACE_Location_Node::handle (void) const
 {
   ACE_TRACE ("ACE_Location_Node::handle");
@@ -354,7 +354,7 @@ ACE_Location_Node::dispose (void) const
   return this->must_delete_;
 }
 
-const void *
+const ACE_SHLIB_HANDLE
 ACE_Location_Node::open_handle (void)
 {
   ACE_TRACE ("ACE_Location_Node::open_handle");
@@ -367,7 +367,7 @@ ACE_Location_Node::open_handle (void)
 	       dl_pathname, 
 	       (sizeof dl_pathname / sizeof (char)));
   
-  this->handle (ACE_OS::dlopen (dl_pathname, RTLD_LAZY));
+  this->handle (ACE_OS::dlopen (dl_pathname));
 
   if (this->handle () == 0)
     {
@@ -410,7 +410,8 @@ ACE_Object_Node::symbol (void)
   if (this->open_handle () != 0)
     {
       this->symbol_ = (const void *) 
-	ACE_OS::dlsym ((void *) this->handle (), (char *) this->object_name_);
+	ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
+		       (char *) this->object_name_);
 
       if (this->symbol_ == 0)
 	{
@@ -466,7 +467,7 @@ ACE_Function_Node::symbol (void)
       // object.
 
       func = (const void *(*)(void)) 
-	ACE_OS::dlsym ((void *) this->handle (), 
+	ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (), 
 		       (ACE_DL_TYPE) this->function_name_);
 
       if (func == 0)
