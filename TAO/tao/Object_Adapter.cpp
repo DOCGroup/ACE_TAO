@@ -786,7 +786,7 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
-  this->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+  this->object_adapter_.wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Locate the POA.
@@ -896,19 +896,19 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
 }
 
 void
-TAO_Object_Adapter::Servant_Upcall::wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV)
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV)
 {
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
-  while (this->object_adapter_.enable_locking_ &&
-         this->object_adapter_.non_servant_upcall_in_progress_ &&
-         ! ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
+  while (this->enable_locking_ &&
+         this->non_servant_upcall_in_progress_ &&
+         ! ACE_OS::thr_equal (this->non_servant_upcall_thread_,
                               ACE_OS::thr_self ()))
     {
       // If so wait...
       int result =
-        this->object_adapter_.non_servant_upcall_condition_.wait ();
+        this->non_servant_upcall_condition_.wait ();
       if (result == -1)
         ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
@@ -1001,13 +1001,6 @@ TAO_Object_Adapter::Servant_Upcall::servant_cleanup (void)
 
       if (new_count == 0)
         {
-          if (this->poa_->waiting_servant_deactivation_ > 0 &&
-              this->object_adapter_.enable_locking_)
-            {
-              // Wakeup all waiting threads.
-              this->poa_->servant_deactivation_condition_.broadcast ();
-            }
-
           ACE_DECLARE_NEW_CORBA_ENV;
           ACE_TRY
             {
@@ -1021,6 +1014,13 @@ TAO_Object_Adapter::Servant_Upcall::servant_cleanup (void)
               // Ignore errors from servant cleanup ....
             }
           ACE_ENDTRY;
+
+          if (this->poa_->waiting_servant_deactivation_ > 0 &&
+              this->object_adapter_.enable_locking_)
+            {
+              // Wakeup all waiting threads.
+              this->poa_->servant_deactivation_condition_.broadcast ();
+            }
         }
     }
 }

@@ -548,6 +548,12 @@ public:
   TAO_ORB_Core &orb_core (void) const;
   // ORB Core for POA.
 
+  CORBA::Boolean cleanup_in_progress (void);
+
+  TAO_Object_Adapter &object_adapter (void);
+
+  ACE_Lock &lock (void);
+
 protected:
 
   const ACE_CString &name (void) const;
@@ -673,8 +679,6 @@ protected:
                          CORBA_Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-  ACE_Lock &lock (void);
 
   TAO_POA_Policies &policies (void);
 
@@ -829,6 +833,16 @@ protected:
   ACE_SYNCH_CONDITION servant_deactivation_condition_;
 
   CORBA::ULong waiting_servant_deactivation_;
+};
+
+class TAO_POA_Guard
+{
+public:
+  TAO_POA_Guard (TAO_POA &poa,
+                 CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  ACE_Guard<ACE_Lock> guard_;
 };
 
 #if (TAO_HAS_MINIMUM_POA == 0)

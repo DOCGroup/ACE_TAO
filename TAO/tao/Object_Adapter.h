@@ -233,6 +233,8 @@ public:
 
   ACE_Reverse_Lock<ACE_Lock> &reverse_lock (void);
 
+  void wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV);
+
   static CORBA::ULong transient_poa_name_size (void);
 
   void deactivate (CORBA::Boolean wait_for_completion,
@@ -604,7 +606,6 @@ public:
 
   protected:
 
-    void wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV);
     void servant_locator_cleanup (void);
     void single_threaded_poa_setup (CORBA::Environment &ACE_TRY_ENV);
     void single_threaded_poa_cleanup (void);
