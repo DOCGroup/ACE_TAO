@@ -1,3 +1,11 @@
+Wed Jan 19 12:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Fixed stupid copy/paste errors
+
+        * tao/PortableServer/PortableServer.cpp:
+          Added new Servant Retention factorys
+
 Mon Jan 17 11:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RT_POA.{h,cpp}:
