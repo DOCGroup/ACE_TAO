@@ -424,7 +424,7 @@ TAO_Bounded_Object_Sequence<T,MAX>::operator=
   else
     {
       this->buffer_ =
-	TAO_Bounded_Object_Sequence<T>::allocbuf (this->maximum_);
+	TAO_Bounded_Object_Sequence<T,MAX>::allocbuf (this->maximum_);
     }
   TAO_Bounded_Base_Sequence::operator= (rhs);
 
@@ -432,7 +432,6 @@ TAO_Bounded_Object_Sequence<T,MAX>::operator=
   T* *tmp2 = ACE_reinterpret_cast(T* *,rhs.buffer_);
   for (CORBA::ULong i=0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
-  this->release_ = CORBA::B_TRUE;
   return *this;
 }
 
@@ -501,7 +500,7 @@ template<CORBA::ULong MAX>
 TAO_Bounded_String_Sequence<MAX>::
 TAO_Bounded_String_Sequence (void)
   :  TAO_Bounded_Base_Sequence (MAX,
-				TAO_Bounded_Sequence<MAX>::allocbuf(MAX))
+				TAO_Bounded_String_Sequence<MAX>::allocbuf(MAX))
 {
 }
 
