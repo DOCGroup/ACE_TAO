@@ -1,3 +1,9 @@
+Tue May  2 12:48:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/g++dep:
+          Use `pwd` instead of $PWD to get the currenct directory because
+          some shell don't get that one right.
+
 Tue May 02 13:51:21 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: updated comments at top to reflect
