@@ -1,18 +1,14 @@
 project(Assembly_Manager): ciao_server, acexml {
 
-  libs += TAO_IORTable
-  libpaths += $(TAO_ROOT)/tao/IORTable
+  libs += TAO_IORTable CIAO_XML_Helpers
+  libpaths += $(TAO_ROOT)/tao/IORTable ../XML_Helpers
+  depends += XML_Helpers
 
   Source_Files {
     Assembly_Impl.cpp
     Assembly_Visitors.cpp
     Deployment_Configuration.cpp
     Assembly_Manager.cpp                // Main
-    ../XML_Helpers/XML_Utils.cpp
-    ../XML_Helpers/Softpkg_Handlers.cpp
-    ../XML_Helpers/Cascadable_DocHandler.cpp
-    ../XML_Helpers/Assembly_Spec.cpp
-    ../XML_Helpers/Assembly_Handlers.cpp
     Assembly_Service_Impl.cpp
     Assembly_ServiceC.cpp
     Assembly_ServiceS.cpp

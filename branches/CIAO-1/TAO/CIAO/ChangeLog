@@ -1,3 +1,23 @@
+Tue Apr 15 17:07:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Softpkg_Handlers.h:
+	* tools/XML_Helpers/XMLHelpers.mpc:
+	* tools/XML_Helpers/XML_Utils.h:
+	* tools/XML_Helpers/XML_Helpers_Export.h: Refactored these files
+	  to make them into a library.
+
+	* tools/XML_Helpers/XML_Helpers.dsw:
+	* tools/XML_Helpers/Helper_Test.dsp:
+	* tools/Daemon/CIAO_Daemon.dsp:
+	* tools/Daemon/Daemon.dsw:
+	* tools/Daemon/DaemonController.dsp: Removed these project files
+	  and depend solely on MPC generated files.
+
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+	* tools/Daemon/Daemon.mpc: Updated MPC files to link with the new
+	  XML_Helpers library.
+
 Tue Apr 15 11:07:36 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Daemon.idl:

@@ -16,6 +16,7 @@
 #ifndef CIAO_SOFTPKG_HANDLER_H
 #define CIAO_SOFTPKG_HANDLER_H
 
+#include "XML_Helpers_Export.h"
 #include "Cascadable_DocHandler.h"
 
 namespace CIAO
@@ -28,7 +29,8 @@ namespace CIAO
    * This SAX event handler try to regenerate the XML document it
    * reads with correct indentation.
    */
-  class Softpkg_Handler : public CIAO::XMLHelpers::Cascadable_DocHandler
+  class CIAO_XML_HELPERS_Export Softpkg_Handler
+    : public CIAO::XMLHelpers::Cascadable_DocHandler
   {
   public:
     /**
@@ -62,7 +64,7 @@ namespace CIAO
      * This Softpkg_Info combines information from both a component
      * softpkg descriptor and a servant softpkg descriptor.
      */
-    typedef struct Struct_Softpkg_Info
+    typedef struct CIAO_XML_HELPERS_Export Struct_Softpkg_Info
     {
       /// Specify the pathname (should change to URI later) to the
       /// component descriptor file.
