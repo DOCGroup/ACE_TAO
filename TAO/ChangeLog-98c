@@ -1,3 +1,7 @@
+Wed Mar 18 21:32:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.1.8, released Wed Mar 18 21:32:24 1998.
+
 Wed Mar 18 21:26:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/Ior_Multicast.cpp (IOR_Multicast):
