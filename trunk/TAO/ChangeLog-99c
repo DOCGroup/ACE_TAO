@@ -1,3 +1,9 @@
+Wed Jul 14 15:35:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp: set_unexpected() is declared in unexpect.h on MVS.
+	  Thanks to Jim Rogers <jrogers@viasoft.com> for sending the
+	  patches for this.
+
 Wed Jul 14 13:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Client_Strategy_Factory.cpp:
@@ -21,7 +27,7 @@ Wed Jul 14 13:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
 	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
 	* tests/Collocation/svc.conf:
-	  Updated the documentation and the svc.conf files that were using 
+	  Updated the documentation and the svc.conf files that were using
 	  that option.
 
 Wed Jul 14 12:43:51 1999  David L. Levine  <levine@cs.wustl.edu>
