@@ -1,3 +1,7 @@
+Tue Dec 25 12:23:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* Update all dependencies.
+
 Tue Dec 25 08:50:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp: Removed template
