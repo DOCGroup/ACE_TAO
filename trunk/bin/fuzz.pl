@@ -1223,7 +1223,7 @@ sub check_for_non_bool_operators ()
     }
 }
 
-# This test verifies that all filenames are short enough 
+# This test verifies that all filenames are short enough
 
 sub check_for_long_file_names ()
 {
@@ -1231,21 +1231,21 @@ sub check_for_long_file_names ()
     my $max_mpc_filename = $max_filename - 20;
     print "Running file names check\n";
 
-    foreach $file (@files_cpp, @files_inl, @files_h, @files_html, 
-                   @files_dsp, @files_dsw, @files_gnu, @files_idl, 
-                   @files_pl, @files_changelog, @files_makefile, 
+    foreach $file (@files_cpp, @files_inl, @files_h, @files_html,
+                   @files_dsp, @files_dsw, @files_gnu, @files_idl,
+                   @files_pl, @files_changelog, @files_makefile,
                    @files_bor ) {
-        if ( length( basename($file) ) >= $max_filename ) 
+        if ( length( basename($file) ) >= $max_filename )
         {
             print_error ("File name $file exceeds $max_filename chars.");
         }
     }
     foreach $file (@files_mpc) {
-        if ( length( basename($file) ) >= $max_mpc_filename ) 
+        if ( length( basename($file) ) >= $max_mpc_filename )
         {
             print_warning ("File name $file exceeds $max_mpc_filename chars.");
         }
-  
+
     }
 }
 
