@@ -60,7 +60,7 @@ public:
   // uses to ``push'' data associated with <pathname> one ``chunk'' at
   // a time.  The <metadata> reports information about the <pathname>.
 
-  int modification_date (struct stat *file_status,
+  int modification_date (ACE_stat *file_status,
                          Web_Server::Metadata_Type &metadata);
   // Set the file modification date in the metadata structure.
 
