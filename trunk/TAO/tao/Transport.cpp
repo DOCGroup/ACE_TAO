@@ -1937,7 +1937,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
       // REFCNT: Matched by the release before returning.
 
       // This generic class takes care of everything.
-      TAO_Transport_Refcount_Guard (this);
+      TAO_Transport_Refcount_Guard rg (this);
 
       // Let us resume the handle before we go ahead to process the
       // request. This will open up the handle for other threads.
@@ -1959,7 +1959,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
            t == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
     {
       // Please see ..else if (XXX_REQUEST) for whys and whats..
-      TAO_Transport_Refcount_Guard (this);
+      TAO_Transport_Refcount_Guard rg (this);
       rh.resume_handle ();
 
       // @@todo: Maybe the input_cdr can be constructed from the
