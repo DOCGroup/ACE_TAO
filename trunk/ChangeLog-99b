@@ -1,66 +1,72 @@
+Wed Apr 14 17:06:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-vxworks5.x.h: added #define ACE_HAS_DLL 0.
+          Thanks to Thomas Mehrkam <Thomas_Mehrkam@i-o.com> for
+          reporting this.
+
 Wed Apr 14 13:10:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/config-sunos5.7.h:
-	 	Enabled ACE_HAS_AIO_CALLS for Solaris
-	 	7. ACE_POSIX_AIOCB_PROACTOR works now on this. 
-	* examples/Reactor/Proactor/test_aiocb.cpp: Updated comments.
-	* ace/config-sunos5.6.h: Removed the ACE_AIORETURN/ERROR macros. 
-	* ace/Proactor.cpp (ACE_Proactor): Removed debug print statments.
-	* ace/config-lynxos.h: Removed the ACE_AIORETURN/ERROR macros. 
-	* ace/POSIX_Proactor.cpp:
- 	* ace/WIN32_Asynch_IO.h:
-	* ace/WIN32_Asynch_IO.cpp:
-	* ace/WIN32_Proactor.h:
-	* ace/WIN32_Proactor.cpp:
-	* ace/Proactor_Impl.h:
-	Completed committing changes related to the <signal_number>
-	additions done earlier. 	
+        * ace/config-sunos5.7.h:
+                Enabled ACE_HAS_AIO_CALLS for Solaris
+                7. ACE_POSIX_AIOCB_PROACTOR works now on this.
+        * examples/Reactor/Proactor/test_aiocb.cpp: Updated comments.
+        * ace/config-sunos5.6.h: Removed the ACE_AIORETURN/ERROR macros.
+        * ace/Proactor.cpp (ACE_Proactor): Removed debug print statments.
+        * ace/config-lynxos.h: Removed the ACE_AIORETURN/ERROR macros.
+        * ace/POSIX_Proactor.cpp:
+        * ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Proactor.h:
+        * ace/WIN32_Proactor.cpp:
+        * ace/Proactor_Impl.h:
+        Completed committing changes related to the <signal_number>
+        additions done earlier.
 
 Wed Apr 14 09:07:38 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* ace/POSIX_Proactor.cpp:
+        * ace/POSIX_Proactor.cpp:
 
-	  Several methods were missing the "int signal_number" parameter
-	  that was added as mentioned in the log entry below. In addition,
-	  an undefined ACE_SIG_AIO flag was used. I found a log entry in
-	  ChangeLog-98b which says that ACE_SIG_AIO is ACE_SIGRTMIN. So I
-	  replaced the 5 occurrences of ACE_SIG_AIO with ACE_SIGRTMIN. 
+          Several methods were missing the "int signal_number" parameter
+          that was added as mentioned in the log entry below. In addition,
+          an undefined ACE_SIG_AIO flag was used. I found a log entry in
+          ChangeLog-98b which says that ACE_SIG_AIO is ACE_SIGRTMIN. So I
+          replaced the 5 occurrences of ACE_SIG_AIO with ACE_SIGRTMIN.
 
 Wed Apr 14 02:34:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	Added additional parameter <int signal_number> to all the Asynchronos
-	Operation method so that we can specify which real-time signal should 
-	be used for each of  the Asynchronous Operation. This only makes sense
-	in the ACE_SIG_Proactor configuration.
+        Added additional parameter <int signal_number> to all the Asynchronos
+        Operation method so that we can specify which real-time signal should
+        be used for each of  the Asynchronous Operation. This only makes sense
+        in the ACE_SIG_Proactor configuration.
 
-	* ace/Asynch_IO_Impl.h: 
-	* ace/Asynch_IO.h: 
-	* ace/Asynch_IO.cpp: 
-	* ace/POSIX_Asynch_IO.h:
-	* ace/POSIX_Asynch_IO.cpp: 
-	* ace/POSIX_Proactor.h: 
+        * ace/Asynch_IO_Impl.h:
+        * ace/Asynch_IO.h:
+        * ace/Asynch_IO.cpp:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/POSIX_Proactor.h:
 
-	- For each asynchronous call issued, the real-time signal is
-	  registered with the Proactor so that it can wait for the completions
-	  using that signal. Previously, the signal number for all the
-	  operations was the same signal and it was hard coded.
-	
-	- <register_aio_with_proactor> method which earlier existed only for
-	  <AIOCB_Proactor> has been added to <SIG_Proactor>
-	  also. <SIG_Proactor> just takes the <signal_number> from the result
-	  object and registers the signal number. Registering involves,
-	  masking the signal, setting the signal delivery for that RT signal
-	  etc.
-	
-	- Allowing to specify signal number for each operation can be useful,
-	  since the order in which the completions are delivered from the
-	  completion queue, is based on the signal numbers in addition to the 
-	  priority. Applications might want to leverage this.
+        - For each asynchronous call issued, the real-time signal is
+          registered with the Proactor so that it can wait for the completions
+          using that signal. Previously, the signal number for all the
+          operations was the same signal and it was hard coded.
 
-	* ace/OS.h: 
-	OS.h has been defined with ACE_SIGRTMIN and ACE_SIGRTMAX, which are
-	defined to SIGRTMIN and SIGRTMAX respectively, for POSIX4
-	platforms. For others, they are 0. 
+        - <register_aio_with_proactor> method which earlier existed only for
+          <AIOCB_Proactor> has been added to <SIG_Proactor>
+          also. <SIG_Proactor> just takes the <signal_number> from the result
+          object and registers the signal number. Registering involves,
+          masking the signal, setting the signal delivery for that RT signal
+          etc.
+
+        - Allowing to specify signal number for each operation can be useful,
+          since the order in which the completions are delivered from the
+          completion queue, is based on the signal numbers in addition to the
+          priority. Applications might want to leverage this.
+
+        * ace/OS.h:
+        OS.h has been defined with ACE_SIGRTMIN and ACE_SIGRTMAX, which are
+        defined to SIGRTMIN and SIGRTMAX respectively, for POSIX4
+        platforms. For others, they are 0.
 
 
 Tue Apr 13 15:29:37 1999  David L. Levine  <levine@cs.wustl.edu>
