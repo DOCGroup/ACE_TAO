@@ -16,6 +16,7 @@
 
 #define ACE_SIZEOF_LONG_DOUBLE 8
 
+#define ACE_LACKS_STDINT_H
 #define ACE_LACKS_SYSTIME_H
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
