@@ -1,5 +1,8 @@
 Wed May 27 17:56:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* TAO_IDL/be/be_visitor_module.cpp (visit_module): Supress
+	  generation of NT export specifier after TAO_NAMESPACE.
+
 	* tao/CurrentS.cpp (_tao_collocated_Current): Changed
 	  "ACE_NESTED_CLASS (CORBA,Current)" to "CORBA_Current".
 
