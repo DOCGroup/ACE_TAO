@@ -53,8 +53,6 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Transport.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
-	$(OBJDIR)\Interceptor.obj \
-	$(OBJDIR)\InterceptorC.obj \
 	$(OBJDIR)\InterfaceC.obj \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\IOPC.obj \
@@ -173,7 +171,11 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DTAO_BUILD_DLL
 CPPDIR = .
 
 INCDIR_NAME = tao
-INCLUDES = *.h *.i *_T.cpp
+INCLUDES = \
+         *.h *.i *.inl *_T.cpp \
+         TAO_Singleton.cpp \
+         orb.idl \
+         Policy.pidl
 
 LIBFILES = $(ACE_LIB)
 
