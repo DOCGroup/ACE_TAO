@@ -300,18 +300,21 @@ Event_Service::parse_args (int argc, char *argv [])
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 Event_Service::for_consumers (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ec_impl_->for_consumers (ACE_TRY_ENV);
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
 Event_Service::for_suppliers (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->ec_impl_->for_suppliers (ACE_TRY_ENV);
 }
 
 void
 Event_Service::destroy (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->ec_impl_->destroy (ACE_TRY_ENV);
   ACE_CHECK;
@@ -321,6 +324,10 @@ Event_Service::destroy (CORBA::Environment &ACE_TRY_ENV)
 RtecEventChannelAdmin::Observer_Handle
 Event_Service::append_observer (RtecEventChannelAdmin::Observer_ptr observer,
                                 CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((
+          CORBA::SystemException,
+          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+          RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER))
 {
   return this->ec_impl_->append_observer (observer, ACE_TRY_ENV);
 }
@@ -328,6 +335,10 @@ Event_Service::append_observer (RtecEventChannelAdmin::Observer_ptr observer,
 void
 Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle,
                                 CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((
+          CORBA::SystemException,
+          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+          RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER))
 {
   this->ec_impl_->remove_observer (handle, ACE_TRY_ENV);
 }

@@ -37,53 +37,65 @@ public:
   ~Cubit_i (void);
   // Destructor
 
-  virtual void cube_oneway (CORBA::Environment &env);
+  virtual void cube_oneway (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a oneway call.
 
-  virtual void cube_void (CORBA::Environment &env);
+  virtual void cube_void (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Test a twoway call.
 
   virtual CORBA::Octet cube_octet (CORBA::Octet o,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an octet
 
   virtual CORBA::Short cube_short (CORBA::Short s,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a short
 
   virtual CORBA::Long cube_long (CORBA::Long l,
-                                 CORBA::Environment &env);
+                                 CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a long
 
   virtual Cubit::Many cube_struct (const Cubit::Many &values,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a struct.
 
   virtual Cubit::oneof cube_union (const Cubit::oneof &values,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a union.
 
   virtual void cube_long_sequence (const Cubit::long_seq &input,
                                    Cubit::long_seq_out output,
-                                   CORBA::Environment &env);
+                                   CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a sequence.
 
   virtual void cube_octet_sequence (const Cubit::octet_seq &input,
                                     Cubit::octet_seq_out output,
-                                    CORBA::Environment &_env);
+                                    CORBA::Environment &_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an octet sequence.
 
   virtual void cube_many_sequence (const Cubit::many_seq & input,
                                    Cubit::many_seq_out output,
-                                   CORBA::Environment &_tao_environment);
+                                   CORBA::Environment &_tao_environment)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube an Many sequence.
 
   virtual void cube_rti_data (const Cubit::RtiPacket &input,
                               Cubit::RtiPacket_out output,
-                              CORBA::Environment &env);
+                              CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Cube a sequence.
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown routine.
 
 protected:
@@ -106,7 +118,8 @@ public:
   ~Cubit_Factory_i (void);
   // Destructor.
 
-  virtual Cubit_ptr make_cubit (CORBA::Environment &env);
+  virtual Cubit_ptr make_cubit (CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Make a cubit object.
 
 private:

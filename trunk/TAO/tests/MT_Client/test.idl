@@ -8,5 +8,5 @@ interface Simple_Server
 
   long get_number ();
 
-  void shutdown ();
+  oneway void shutdown ();
 };

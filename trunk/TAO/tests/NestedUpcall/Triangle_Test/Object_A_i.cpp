@@ -24,7 +24,7 @@ ACE_RCSID(Triangle_Test, Object_A_i, "$Id$")
 
 // CTOR
 Object_A_i::Object_A_i (void)
-: finish_two_way_call_ (0)
+  : finish_two_way_call_ (0)
 {
 }
 
@@ -38,6 +38,7 @@ Object_A_i::~Object_A_i (void)
 void
 Object_A_i::foo (Initiator_ptr initiator_ptr,
                     CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Object_A_i::foo ()\n"));
@@ -62,6 +63,7 @@ Object_A_i::foo (Initiator_ptr initiator_ptr,
 
 void
 Object_A_i::finish (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) BEGIN Object_A_i::finish ()\n"));

@@ -37,7 +37,8 @@ public:
 
   virtual CORBA::Long yadda (CORBA::Long hop_count,
                              MT_Object_ptr partner,
-                             CORBA::Environment &_tao_environment);
+                             CORBA::Environment &_tao_environment)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
 

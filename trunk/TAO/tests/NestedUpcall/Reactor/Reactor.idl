@@ -46,7 +46,7 @@ interface Reactor
   // Decrements <num> by invoking the <decrement> operation on <eh>
   // and returning that value, finally stopping when it gets to zero.
 
-  void stop ();
+  oneway void stop ();
   // Stops the reactor.
 };
 
