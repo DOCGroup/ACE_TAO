@@ -83,6 +83,7 @@ namespace TAO
       location = this->poa_->servant_present (system_id,
                                               servant
                                               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (TAO_SERVANT_NOT_FOUND);
 
       if (location == TAO_SERVANT_NOT_FOUND)
         {
