@@ -30,6 +30,7 @@ TAO/tao/IFR_Client
 TAO/tao/TypeCodeFactory
 TAO/orbsvcs/orbsvcs/Svc_Utils
 TAO/orbsvcs/orbsvcs/CosNaming
+TAO/orbsvcs/orbsvcs/CosNaming_Serv
 TAO/orbsvcs/orbsvcs/CosProperty
 TAO/orbsvcs/orbsvcs/CosTrading
 TAO/orbsvcs/orbsvcs/AV
