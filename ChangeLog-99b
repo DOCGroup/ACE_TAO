@@ -1,136 +1,164 @@
+Sun Aug 29 21:35:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-g++-common.h:
+          1) Don't #define ACE_HAS_EXPLICIT_INSTANTIATION with
+          ACE_HAS_GNU_REPO, so that -frepo can do its thing. [Bug 248]
+          2) #undef ACE_HAS_STRING_CLASS with ACE_HAS_GNU_REPO, because
+          egcs 2.91.66 can't build IOStream test (due to an unresolved
+          basic_string method instantiation) otherwise.
+
+        * ace/config-aix-4.x.h,ace/config-cygwin32-common.h,
+          ace/config-hpux-10.x-g++.h,ace/config-irix5.3-g++.h,
+          ace/config-irix6.x-g++.h,ace/config-linux-common.h,
+          ace/config-lynxos.h,ace/config-osf1-4.0.h,ace/config-sunos4-g++.h,
+          ace/config-sunos5.4-g++.h,ace/config-sunos5.5.h,
+          ace/config-unixware-2.*-g++.h:
+          moved ACE_HAS_STRING_CLASS #define before #include of
+          config-g++common.h, so that config-g++-common.h can #undef
+          it with ACE_HAS_GNU_REPO.
+
+        * include/makeinclude/rules.lib.GNU: when ace_lib_prelink is
+          enabled, add a link step before building a library.  This is
+          used, for example, to insert template instantiations into
+          object files. [Bug 248]
+
+        * include/makeinclude/wrapper_macros.GNU: set ace_lib_prelink
+          to 1 when repo is enabled.  Added ACE_NUL and ACE_NUL_STDERR
+          macros, for internal use to support the prelink step. [Bug 248]
+
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Signal_Test.cpp: Linux threads are evil because getppid()
-	  isn't the process id of your parent PROCESS, it's the process id
- 	  of your parent THREAD.  Yikes!  Therefore, I had to rearrange
- 	  this test so that it'll work on Linux.
+        * tests/Signal_Test.cpp: Linux threads are evil because getppid()
+          isn't the process id of your parent PROCESS, it's the process id
+          of your parent THREAD.  Yikes!  Therefore, I had to rearrange
+          this test so that it'll work on Linux.
 
-	* ace/config-qnx-neutrino.h,
-	* ace/config-vxworks5.x.h,
-	* ace/config-osf1-4.0.h,
-	* ace/config-sunos5.5.h,
-	* ace/config-linux-common.h: Added support for
-	  the ACE_HAS_SIGTIMEDWAIT and ACE_HAS_SIGSUSPEND macros.
+        * ace/config-qnx-neutrino.h,
+        * ace/config-vxworks5.x.h,
+        * ace/config-osf1-4.0.h,
+        * ace/config-sunos5.5.h,
+        * ace/config-linux-common.h: Added support for
+          the ACE_HAS_SIGTIMEDWAIT and ACE_HAS_SIGSUSPEND macros.
 
-	* ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.  This
-	  implementation is "smarter" than the default behavior of
- 	  sigsuspend(2) because it'll handle NULL sigset_t *'s gracefully.
+        * ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.  This
+          implementation is "smarter" than the default behavior of
+          sigsuspend(2) because it'll handle NULL sigset_t *'s gracefully.
 
-	* ace/Signal: Make the use of ACE_Sig_Set & parameters
- 	  const-correct.
+        * ace/Signal: Make the use of ACE_Sig_Set & parameters
+          const-correct.
 
-	* ace/Signal: Added a new method for ACE_Sig_Action that'll register 
-	  an ACE_Sig_Set's worth of signals simultaneously.
+        * ace/Signal: Added a new method for ACE_Sig_Action that'll register
+          an ACE_Sig_Set's worth of signals simultaneously.
 
-	* ace/Signal: Updated the documentation to explain what the various
-	  constructors do.
+        * ace/Signal: Updated the documentation to explain what the various
+          constructors do.
 
-	* ace/Process.h: Updated the documentation for ACE_Process::spawn()
-	  to explain what the return values are.
+        * ace/Process.h: Updated the documentation for ACE_Process::spawn()
+          to explain what the return values are.
 
-	* tests/Makefile: Added Signal_Test to the list of tests that are
- 	  built automatically.
+        * tests/Makefile: Added Signal_Test to the list of tests that are
+          built automatically.
 
-	* tests: Added a new test, Signal_Test.cpp, that exercises the
-	  various signal handling capabilities supported by ACE on various
- 	  OS platforms.
+        * tests: Added a new test, Signal_Test.cpp, that exercises the
+          various signal handling capabilities supported by ACE on various
+          OS platforms.
 
-	* ace/OS.h,
-	* ace/README,
-	* ace/config-vxworks5.x.h:
-	  Removed all mention of the ACE_LACKS_ATEXIT feature.  This is
- 	  now the default behavior because we ACE_OS_Object_Manager::at_exit()
-	  to get consistent semantics, as described below.  Thanks to David
-	  for pointing this out.
+        * ace/OS.h,
+        * ace/README,
+        * ace/config-vxworks5.x.h:
+          Removed all mention of the ACE_LACKS_ATEXIT feature.  This is
+          now the default behavior because we ACE_OS_Object_Manager::at_exit()
+          to get consistent semantics, as described below.  Thanks to David
+          for pointing this out.
 
-	* ace/OS.i: Changed the implementation of ACE_OS::atexit() to always
-	  use the ACE_OS_Object_Manager::instance ()->at_exit() method so
- 	  that we get consistent semantics across platforms.
-  
+        * ace/OS.i: Changed the implementation of ACE_OS::atexit() to always
+          use the ACE_OS_Object_Manager::instance ()->at_exit() method so
+          that we get consistent semantics across platforms.
+
 Sun Aug 29 18:27:38 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ACE.ifnames:
-	* ace-diff-config.in:
+        * ACE.ifnames:
+        * ace-diff-config.in:
 
-	  Removed ace-diff-config.in and ACE.ifnames from the repository.
-  	  They are only used for internal ACE Configuration Project
- 	  testing.
+          Removed ace-diff-config.in and ACE.ifnames from the repository.
+          They are only used for internal ACE Configuration Project
+          testing.
 
-	* Makefile.am:
-	* configure.in:
+        * Makefile.am:
+        * configure.in:
 
-	  Removed references to ace-diff-config.in and ACE.ifnames.
+          Removed references to ace-diff-config.in and ACE.ifnames.
 
-	* acconfig.h:
-	* configure.in:
+        * acconfig.h:
+        * configure.in:
 
-	  Added entries and tests for the following macros:
+          Added entries and tests for the following macros:
 
-	    ACE_AUTO_PTR_LACKS_RESET
-	    ACE_HAS_LLSEEK
-	    ACE_HAS_EXPLICIT_KEYWORD
-	    ACE_HAS_MUTABLE_KEYWORD
-	    ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-	    ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
-	    ACE_HAS_SIGTIMEDWAIT
-	    ACE_LACKS_ATEXIT
-	    ACE_LACKS_GETPPID
+            ACE_AUTO_PTR_LACKS_RESET
+            ACE_HAS_LLSEEK
+            ACE_HAS_EXPLICIT_KEYWORD
+            ACE_HAS_MUTABLE_KEYWORD
+            ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+            ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
+            ACE_HAS_SIGTIMEDWAIT
+            ACE_LACKS_ATEXIT
+            ACE_LACKS_GETPPID
 
-	* configure.in:
+        * configure.in:
 
-	  Fixed auto_ptr test.  auto_ptr was being used incorrectly.
+          Fixed auto_ptr test.  auto_ptr was being used incorrectly.
 
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Process_Manager_Test.cpp: Changed the names of the signal
-	  handlers to one_child_synchronous_signal_handler() and
- 	  multiple_children_synchronous_signal_handler() to reflect how
- 	  they are used.
+        * tests/Process_Manager_Test.cpp: Changed the names of the signal
+          handlers to one_child_synchronous_signal_handler() and
+          multiple_children_synchronous_signal_handler() to reflect how
+          they are used.
 
-	* ace/OS.[hi]: Added a new wrapper for sigtimedwait() so that
-	  we can encapsulate this.  To make programming more consistent,
- 	  the encapsulation uses an ACE_Time_Value, rather than a struct
- 	  timespec.
+        * ace/OS.[hi]: Added a new wrapper for sigtimedwait() so that
+          we can encapsulate this.  To make programming more consistent,
+          the encapsulation uses an ACE_Time_Value, rather than a struct
+          timespec.
 
-	* ace/config-linux-pthread.h,
-	* ace/config-linux-lxpthreads.h: Removed the 
-	
-	  #define ACE_HAS_SIGWAIT
+        * ace/config-linux-pthread.h,
+        * ace/config-linux-lxpthreads.h: Removed the
 
-	  macro since this was already defined in config-linux-common.h.
+          #define ACE_HAS_SIGWAIT
 
-	* tests/Malloc_Test.cpp: Improved the test by printing out 
-	  additional diagnostic information.  Also validated that it works
- 	  when ACE_DEFAULT_BASE_ADDR == 0 on Solaris using SunCC (with
- 	  purify) and EGCS.
+          macro since this was already defined in config-linux-common.h.
 
-	* ace/Malloc: Added a dump() method to ACE_Malloc_Header.
+        * tests/Malloc_Test.cpp: Improved the test by printing out
+          additional diagnostic information.  Also validated that it works
+          when ACE_DEFAULT_BASE_ADDR == 0 on Solaris using SunCC (with
+          purify) and EGCS.
 
-	* ace/Process_Manager.cpp (ACE_Process_Descriptor): Changed
-	  a -1 to a 0 to prevent a compiler warning.  Thanks to
-	  David Levine and DEC UNIX for reporting this.
+        * ace/Malloc: Added a dump() method to ACE_Malloc_Header.
+
+        * ace/Process_Manager.cpp (ACE_Process_Descriptor): Changed
+          a -1 to a 0 to prevent a compiler warning.  Thanks to
+          David Levine and DEC UNIX for reporting this.
 
 Sun Aug 29 00:14:09 1999  Luther Baker  <ljb1@cs.wustle.edu>
 
-	* ace/Arg_Shifter.h (cur_arg_strncasecmp): Removed and replaced earlier
-	  method 'is_or_contains_ignore_case' with 'cur_arg_strncasecmp.'
-	  This method does less and it is more self-contained, adding protection
-	  and greater flexibility for the program program using it.
+        * ace/Arg_Shifter.h (cur_arg_strncasecmp): Removed and replaced earlier
+          method 'is_or_contains_ignore_case' with 'cur_arg_strncasecmp.'
+          This method does less and it is more self-contained, adding protection
+          and greater flexibility for the program program using it.
 
-	* ace/Arg_Shifter.cpp (cur_arg_strncasecmp): Implementation
-	  corresponding with changes in ACE_Arg_Shifter class.
+        * ace/Arg_Shifter.cpp (cur_arg_strncasecmp): Implementation
+          corresponding with changes in ACE_Arg_Shifter class.
 
 Sun Aug 29 00:13:35 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager.i: Moved the destructor for
-	  ACE_Process_Descriptor out of the *.i file since it's always
- 	  called by vector delete and therefore inlining it is pointless.
+        * ace/Process_Manager.i: Moved the destructor for
+          ACE_Process_Descriptor out of the *.i file since it's always
+          called by vector delete and therefore inlining it is pointless.
 
 Sat Aug 28 23:46:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp (resize): The loop should run
-	  from 0 < this->current_count_ rather than 0 <
- 	  this->max_process_table_size_.
+        * ace/Process_Manager.cpp (resize): The loop should run
+          from 0 < this->current_count_ rather than 0 <
+          this->max_process_table_size_.
 
 Sat Aug 28 16:28:33 1999  David L. Levine  <levine@cs.wustl.edu>
 

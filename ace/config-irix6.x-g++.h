@@ -7,8 +7,11 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
-#include "ace/config-g++-common.h"
+// config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+// this must appear before its #include.
+#define ACE_HAS_STRING_CLASS
 
+#include "ace/config-g++-common.h"
 
 // Platform supports the very odd IRIX 6.2 threads...
 #define ACE_HAS_THREADS
@@ -33,7 +36,6 @@
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-#define ACE_HAS_STRING_CLASS
 #define IRIX6
 
 // Denotes that GNU has cstring.h as standard

@@ -79,6 +79,10 @@
 
 // Then the compiler specific parts
 
+// config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+// this must appear before its #include.
+#define ACE_HAS_STRING_CLASS
+
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #elif defined (__KCC)
@@ -114,8 +118,6 @@
 #endif /* #if ! defined(ACE_HAS_IP_MULTICAST) */
 
 #define ACE_HAS_BIG_FD_SET
-
-#define ACE_HAS_STRING_CLASS
 
 // Linux defines struct msghdr in /usr/include/socket.h
 #define ACE_HAS_MSG
