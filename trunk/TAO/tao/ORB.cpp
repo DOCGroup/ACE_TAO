@@ -1463,7 +1463,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
-#if defined(ACE_HAS_PURIFY)
+#if defined (ACE_HAS_PURIFY)
       char buf [ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else
       // Avoid the initialization overhead if not compiling with

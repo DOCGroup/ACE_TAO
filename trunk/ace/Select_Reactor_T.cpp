@@ -723,7 +723,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> long
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   (ACE_Event_Handler *handler,
    const void *arg,
-   const ACE_Time_Value &delta_time,
+   const ACE_Time_Value &delay_time,
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::schedule_timer");
@@ -732,7 +732,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   return this->timer_queue_->schedule
     (handler,
      arg,
-     timer_queue_->gettimeofday () + delta_time,
+     timer_queue_->gettimeofday () + delay_time,
      interval);
 }
 

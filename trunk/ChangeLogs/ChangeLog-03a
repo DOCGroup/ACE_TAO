@@ -1,3 +1,30 @@
+Sat Sep 22 08:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/High_Res_Timer.{h,i,cpp}: Added comments to explain how
+	  to configure the timers properly on various platforms.  Thanks
+ 	  to Alain Decamps <Alain.Decamps@PIDPA.be> for reporting this.
+
+	* ace/OS.i (ACE_Flow_Spec): Added a check for ACE_HAS_WINSOCK2_GQOS
+	  so that things will compile properly on MinGW32.  Thanks to Jeff
+ 	  McNiel <JMcNiel@datacrit.com> for reporting this.
+
+Fri Sep 21 15:54:55 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS_Dirent.cpp: Fixed all the allocations so they work properly
+	  when used with ACE_TCHAR!  Thanks to Olof Lindfors
+ 	  <olof.lindfors@protegrity.com>.
+
+Tue Sep 18 06:25:22 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/*Reactor*: Changed all uses of "delta_time" to "delay_time".
+	  Thanks to Johnny Willemsen for reporting this.
+
+Sun Sep 16 11:53:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Connector.cpp (handle_output): Fixed the comment to be
+	  ACE_WIN32.  Thanks to Kobi Cohen-Arazi <kobi@mivzak.com> for
+ 	  reporting this.
+
 Fri Sep 21 17:11:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Message_Block.h: Tried rewording some comments in the
@@ -155,22 +182,21 @@ Mon Sep 17 13:49:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Sep 17 11:36:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * tests/run_tests.lst: This is the script used by the shell
-          script in that directory. As the name is confusing this is being
-          moved as a new file.
+	* tests/run_tests.lst: This is the script used by the shell
+	  script in that directory. As the name is confusing this is being
+	  moved as a new file.
 
-        * tests/run_tests_remote.lst: Renamed the run_tests.lst as
-          run_tests_shell.lst. This is invoked by run_tests.sh
+	* tests/run_tests_remote.lst: Renamed the run_tests.lst as
+	  run_tests_shell.lst. This is invoked by run_tests.sh 
 
-        * tests/run_tests.sh: Renamed as a new file.
-
-        * tests/run_tests_remote.sh: Renamed the file run_tests.sh as this
-          one. This script can be used to run tests remotely on a
-          CHORUS/ClassiX/MVME targets. Further this can also be used to
-          run tests on platforms that dont support perl or do not have
-          perl.
-
-
+	* tests/run_tests.sh: Renamed as a new file.
+	
+	* tests/run_tests_remote.sh: Renamed the file run_tests.sh as this
+	  one. This script can be used to run tests remotely on a
+	  CHORUS/ClassiX/MVME targets. Further this can also be used to
+	  run tests on platforms that dont support perl or do not have
+	  perl. 
+  
 Sun Sep 16 11:19:01 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.20 released.

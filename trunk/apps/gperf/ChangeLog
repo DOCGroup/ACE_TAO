@@ -1,3 +1,9 @@
+Sat Sep 22 09:06:10 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* src/Makefile: Removed the rules.lib.GNU file since it didn't
+	  seem to be needed and was causing problems for MinGW.  Thanks to
+ 	  Jeff McNiel <JMcNiel@datacrit.com> for reporting this.
+
 Wed Sep 19 02:29:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
