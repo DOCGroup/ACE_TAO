@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+1<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 
 <!-- $Id$ -->
 
@@ -36,11 +36,11 @@
     <CODE>-ORBEndpoint</CODE> options or by delimiting endpoints with
     a semi-colon (;).  For example:
     <blockquote><CODE>
-        -ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://:10002
+        -ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://10002
       </CODE></blockquote>
     is equivalent to:
     <blockquote><CODE>
-        -ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://:10002'
+        -ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002'
       </CODE></blockquote>
     Notice the single quotes (') in the latter option specification.
     Single quotes are needed to prevent the shell from interpreting
@@ -449,7 +449,7 @@
       directory.  Rendezvous points chosen by TAO are prepended with
       "<CODE>TAO</CODE>."  TAO will always choose rendezvous points
       with absolute paths.
- 
+
     <P>
     <h3>UIOP Endpoint Examples</h3>
     <P>
@@ -467,7 +467,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Thu Oct  5 14:25:05 PDT 2000
+Last modified: Mon Feb 12 00:21:48 Central Standard Time 2001
 <!-- hhmts end -->
   </body>
 </html>
