@@ -1,3 +1,9 @@
+Sat Dec 22 23:03:25 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/Activity.cpp: 
+	* examples/RTCORBA/Activity/Job_i.cpp: 
+	  Fixed compile errors.
+	
 Sat Dec 22 11:28:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Param_Test/Makefile:
