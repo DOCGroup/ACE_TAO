@@ -434,16 +434,6 @@ public:
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
 
-  CORBA::Boolean work_pending (void);
-  // Returns an indication of whether the ORB needs to perform some
-  // work.
-
-  int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero);
-  // This operation performs an implementation-defined unit of
-  // work. Note that the default behavior is not to block; this
-  // behavior can be modified by passing an appropriate
-  // <ACE_Time_Value>.
-
   // Typecode for the above exception.
   static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
 
@@ -492,6 +482,16 @@ public:
   // until all ORB processing (including request processing and object
   // deactivation or other operations associated with object adapters)
   // has completed.
+
+  CORBA::Boolean work_pending (void);
+  // Returns an indication of whether the ORB needs to perform some
+  // work.
+
+  int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero);
+  // This operation performs an implementation-defined unit of
+  // work. Note that the default behavior is not to block; this
+  // behavior can be modified by passing an appropriate
+  // <ACE_Time_Value>.
 
   // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
