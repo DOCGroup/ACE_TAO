@@ -411,7 +411,7 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->rt_info_ =
         server->create (name, TAO_TRY_ENV);
 
-      RtecScheduler::Period period = timeout_interval * 20000;
+      RtecScheduler::Period_t period = timeout_interval * 20000;
 
       server->set (rt_info_,
                    RtecScheduler::VERY_HIGH_CRITICALITY,

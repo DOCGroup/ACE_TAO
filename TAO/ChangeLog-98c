@@ -1,3 +1,16 @@
+Thu Nov 12 17:30:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp
+	  orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp
+	  orbsvcs/tests/EC_Mcast/EC_Mcast.{cpp, h}
+	  orbsvcs/tests/EC_Multiple/EC_Multiple.{cpp, h}
+	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
+	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
+	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h
+	  orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp
+	  orbsvcs/tests/Event_Latency/Event_Latency.cpp: Fixed stray
+          compiler errors caused by RtecSceduler IDL portability changes.
+
 Thu Nov 12 14:21:41 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Logger/README: Made a few edits to reflect added
