@@ -198,7 +198,8 @@ CosNaming_Client::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+
+  return -1;
 }
 
 MT_Test::MT_Test (CORBA::ORB_ptr orb,
