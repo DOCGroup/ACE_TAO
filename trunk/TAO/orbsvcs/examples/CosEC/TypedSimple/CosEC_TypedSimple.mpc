@@ -1,18 +1,19 @@
-project(*Consumer) : event, taoserver {
+project(*Consumer) : event, orbsvcsexe, portableserver {
+  requires += ec_typed_events
+  idlflags +=  -I$(TAO_ROOT)/orbsvcs
   source_files {
     Consumer.cpp
     Country_i.cpp
   }
-
-  includes += $(TAO_ROOT)/orbsvcs
-  idlflags +=  -I$(TAO_ROOT)/orbsvcs
 }
 
-project(*Supplier) : event, taoserver {
+project(*Supplier) : event, orbsvcsexe, portableserver {
+  requires += ec_typed_events
+  after    += CosEC_TypedSimple_Consumer
+  idl_files {
+  }
   source_files {
+    CountryC.cpp
     Supplier.cpp
   }
-
-  includes += $(TAO_ROOT)/orbsvcs
-  idlflags +=  -I$(TAO_ROOT)/orbsvcs
 }
