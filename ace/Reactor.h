@@ -105,7 +105,7 @@ public:
   virtual ~ACE_Reactor (void);
   // Close down and release all resources.
 
-  virtual int open (size_t size,
+  virtual int open (size_t max_number_of_handles,
                     int restart = 0,
                     ACE_Sig_Handler *signal_handler = 0,
                     ACE_Timer_Queue *timer_queue = 0);
