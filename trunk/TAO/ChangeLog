@@ -1,3 +1,11 @@
+Sat Apr  5 15:11:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynCommon.cpp:
+
+	  Changed the type of a cast to const Any *& to eliminate
+	  a build error that somehow didn't show up before the 
+	  last checkin.
+
 Sat Apr  5 09:58:37 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/RT_lib/TAO_RT_NotifyTests.dsp:
