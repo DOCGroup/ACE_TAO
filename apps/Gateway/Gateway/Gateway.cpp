@@ -193,7 +193,7 @@ Gateway::parse_connection_config_file (void)
   // Read config file one line at a time.
 
   for (Connection_Config_Info pci;
-       connection_file.read_entry (pci, line_number) != FP::EOFILE;
+       connection_file.read_entry (pci, line_number) != FP::RT_EOFILE;
        )
     {
       file_empty = 0;
@@ -274,7 +274,7 @@ Gateway::parse_consumer_config_file (void)
 
   // Read config file line at a time.
   for (Consumer_Config_Info cci_entry;
-       consumer_file.read_entry (cci_entry, line_number) != FP::EOFILE;
+       consumer_file.read_entry (cci_entry, line_number) != FP::RT_EOFILE;
        )
     {
       file_empty = 0;

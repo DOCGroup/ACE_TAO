@@ -58,11 +58,11 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
 #endif /* ! __GNUG__ */
     read_result = this->readword (buf);
 
-  if (read_result == FP::SUCCESS)
+  if (read_result == FP::RT_SUCCESS)
     {
       // Check to see if this is the "use the default value" symbol?
       if (buf[0] == '*')
-        return FP::DEFAULT;
+        return FP::RT_DEFAULT;
       else
         {
           // ptr is used for error checking with ACE_OS::strtol.
@@ -73,9 +73,9 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
 
           // check if the buf is a decimal or not
           if (value == 0 && ptr == buf)
-            return FP::PARSE_ERROR;
+            return FP::RT_PARSE_ERROR;
           else
-            return FP::SUCCESS;
+            return FP::RT_SUCCESS;
         }
     }
   else
@@ -109,11 +109,11 @@ File_Parser<ENTRY>::readword (char buf[])
     if (wordlength > 0)
       {
         ungetc (c, this->infile_);
-        return FP::SUCCESS;
+        return FP::RT_SUCCESS;
       }
     else
       // else return EOF so that read loops stop
-      return FP::EOFILE;
+      return FP::RT_EOFILE;
   }
   else if (c == '\n')
     {
@@ -122,19 +122,19 @@ File_Parser<ENTRY>::readword (char buf[])
       if (wordlength > 0)
         ungetc (c, this->infile_);
       else
-        return FP::EOLINE;
+        return FP::RT_EOLINE;
     }
 
   // Skip comments.
   if (this->comments (buf[0]))
     {
       if (this->skipline () == EOF)
-        return FP::EOFILE;
+        return FP::RT_EOFILE;
       else
-        return FP::COMMENT;
+        return FP::RT_COMMENT;
     }
   else
-    return FP::SUCCESS;
+    return FP::RT_SUCCESS;
 }
 
 template <class ENTRY> int
