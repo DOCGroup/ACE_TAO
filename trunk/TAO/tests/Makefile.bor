@@ -75,6 +75,7 @@ DIRS = \
 	Server_Leaks \
         Single_Read \
         Smart_Proxies \
+        Stack_Recursion \
         Strategies \
 	Timed_Buffered_Oneways \
         Timeout \

@@ -50,6 +50,7 @@ DIRS  = CDR \
 	Timeout \
 	Timed_Buffered_Oneways \
 	Smart_Proxies \
+	Stack_Recursion \
 	Portable_Interceptors \
 	ORT \
 	Explicit_Event_Loop \

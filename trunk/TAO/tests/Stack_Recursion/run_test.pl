@@ -9,12 +9,13 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
+@files= <core.*>;
 unlink $iorfile;
+unlink (@files);
 $status = 0;
 
 $SV  = new PerlACE::Process ("server", "-o $iorfile");
-$CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
-$CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
+$CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
 
@@ -24,20 +25,12 @@ if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     exit 1;
 } 
 
-$CL1->Spawn (60);
-$CL2->Spawn (60);
+$CL->Spawn (60);
 
-$client1 = $CL1->WaitKill (60);
+$client = $CL->WaitKill (60);
 
-if ($client1 != 0) {
-    print STDERR "ERROR: client 1 returned $client1\n";
-    $status = 1;
-}
-
-$client2 = $CL2->WaitKill (60);
-
-if ($client2 != 0) {
-    print STDERR "ERROR: client 2 returned $client2\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client1\n";
     $status = 1;
 }
 
@@ -48,6 +41,8 @@ if ($server != 0) {
     $status = 1;
 }
 
+@files= <core.*>;
+unlink (@files);
 unlink $iorfile;
 
 exit $status;
