@@ -20,7 +20,6 @@
 
 #include "ace/ACE.h"
 #include "ace/Thread_Priority.h"
-#include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Priority.i"
