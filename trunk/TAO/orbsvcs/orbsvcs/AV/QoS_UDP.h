@@ -42,14 +42,16 @@ public:
 
 class TAO_AV_UDP_QoS_Flow_Handler;
 
+/**
+ * @class TAO_AV_UDP_QoS_Transport
+ *
+ * @brief A transport abstraction for udp sockets.
+ *
+ * Uses the ACE_SOCK_Dgram to send the data.
+ */
 class TAO_AV_UDP_QoS_Transport
   :public TAO_AV_Transport
 {
-  // = TITLE
-  //     A transport abstraction for udp sockets.
-  //
-  // = DESCRIPTION
-  //     Uses the ACE_SOCK_Dgram to send the data.
 public:
   TAO_AV_UDP_QoS_Transport (void);
 
@@ -67,35 +69,35 @@ public:
 
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
+  /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
-  // Write the complete Message_Block chain to the connection.
 
+  /// Write the contents of the buffer of length len to the connection.
   virtual ssize_t send (const char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0);
-  // Write the contents of the buffer of length len to the connection.
 
+  /// Write the contents of iovcnt iovec's to the connection.
   virtual ssize_t send (const iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0);
-  // Write the contents of iovcnt iovec's to the connection.
 
+  /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0);
-  // Read len bytes from into buf.
 
+  /// Read len bytes from into buf using flags.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         int flags,
                         ACE_Time_Value *s = 0);
-  // Read len bytes from into buf using flags.
 
+  /// Read received data into the iovec buffers.
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0);
-  //  Read received data into the iovec buffers.
 protected:
   TAO_AV_UDP_QoS_Flow_Handler *handler_;
   ACE_Addr *addr_;
@@ -107,10 +109,10 @@ class TAO_AV_UDP_QoS_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
+  /// Constructor.
   TAO_AV_UDP_QoS_Flow_Handler (void);
-  //Ctor
+  /// Destructor.
   ~TAO_AV_UDP_QoS_Flow_Handler (void);
-  // Dtor
   int open (ACE_Addr &address);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
@@ -118,9 +120,9 @@ public:
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   virtual int change_qos (AVStreams::QoS);
+  /// Handles a QoS event. Right now, just
+  /// prints a message.
   virtual int handle_qos (ACE_HANDLE fd);
-  // Handles a QoS event. Right now, just 
-  // prints a message.
   ACE_SOCK_Dgram_Mcast_QoS *get_socket (void);
   virtual ACE_Event_Handler* event_handler (void){ return this; }
   virtual ACE_QoS_Session* qos_session (void);
@@ -138,7 +140,7 @@ public:
 
   void flowspec_entry (TAO_FlowSpec_Entry *entry);
   TAO_FlowSpec_Entry* flowspec_entry (void);
-  
+
   void av_core (TAO_AV_Core *avcore);
   TAO_AV_Core* av_core (void);
 
@@ -147,7 +149,7 @@ protected:
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast_QoS qos_sock_dgram_;
   ACE_QoS_Session *qos_session_;
-  TAO_FlowSpec_Entry *entry_;  
+  TAO_FlowSpec_Entry *entry_;
   TAO_Base_StreamEndPoint *endpoint_;
   AVStreams::Negotiator_ptr negotiator_;
 };
@@ -164,7 +166,7 @@ public:
                     TAO_AV_Flow_Protocol_Factory *factory,
                     TAO_AV_Core::Flow_Component flow_comp =
                         TAO_AV_Core::TAO_AV_DATA);
-  
+
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry,
@@ -177,7 +179,7 @@ public:
   virtual int close (void);
 
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
-  
+
 
 protected:
   TAO_Base_StreamEndPoint *endpoint_;
@@ -270,11 +272,11 @@ public:
   /// Open a QoS Session with the specified address
   ACE_QoS_Session* open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *handler,
 				     ACE_INET_Addr &addr);
-  
+
   /// Activate the QoS handler to receive QoS events
   int activate_qos_handler (ACE_QoS_Session *qos_session,
 			    TAO_AV_UDP_QoS_Flow_Handler *handler);
-  
+
   /// Set the required QoS for the session
   int set_qos (ACE_Flow_Spec& ace_flow_spec,
 	       TAO_AV_UDP_QoS_Flow_Handler *handler);
