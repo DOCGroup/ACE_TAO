@@ -88,6 +88,7 @@ operator delete (void *ptr)
 {
   // We cannot call free here, as it doesn't match the mallocs.  free
   // ((char *) ptr);
+  ACE_UNUSED_ARG (ptr);
 }
 
 #endif /* ACE_HAS_GPERF */
