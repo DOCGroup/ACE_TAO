@@ -51,6 +51,8 @@ TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Server:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Client:
 TAO/tests/Param_Test/Param_Test.dsw, Param_Test Server:
 TAO/tests/Param_Test/Param_Test.dsw, Param_Test Client:
+netsvcs/lib/netsvcs.dsw, NETSVCS Library:
+netsvcs/servers/servers.dsw, NETSVCS Servers:
 tests/tests.dsw, ALL:
 EOD
                      "$Win32_Lists[1]" => <<EOD , # Release
@@ -73,6 +75,8 @@ TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Server:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Client:
 TAO/tests/Param_Test/Param_Test.dsw, Param_Test Server:
 TAO/tests/Param_Test/Param_Test.dsw, Param_Test Client:
+netsvcs/lib/netsvcs.dsw, NETSVCS Library:
+netsvcs/servers/servers.dsw, NETSVCS Servers:
 EOD
                      "$Win32_Lists[2]" => <<EOD , # Unicode Debug
 ace/ace.dsw, ACE dynamic library:
@@ -89,6 +93,8 @@ TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
 TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
+netsvcs/lib/netsvcs.dsw, NETSVCS Library:
+netsvcs/servers/servers.dsw, NETSVCS Servers:
 tests/tests.dsw, ALL:
 EOD
                      "$Alpha_Lists[1]" => <<EOD , # Release
@@ -98,6 +104,8 @@ TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
 TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
+netsvcs/lib/netsvcs.dsw, NETSVCS Library:
+netsvcs/servers/servers.dsw, NETSVCS Servers:
 EOD
                      "$Alpha_Lists[2]" => <<EOD , # Unicode Debug
 ace/ace.dsw, ACE dynamic library:
