@@ -1,3 +1,7 @@
+Tue Feb 24 00:41:48 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+
 Mon Feb 23 22:40:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/cdr.h: removed old, commented out configuration code.

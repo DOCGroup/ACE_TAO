@@ -109,13 +109,13 @@ TAO_PropertySet::define_property (const char *property_name,
 {
   CosProperty_Hash_Key CosProperty_Hash_Key ((CosPropertyService::PropertyName) property_name);
   CosProperty_Hash_Value CosProperty_Hash_Value (property_value);
-
+  
   ACE_DEBUG ((LM_DEBUG,
               "define_property : property_name %s \n",
               property_name));
-
+  
   int ret = this->hash_table_.bind (CosProperty_Hash_Key, CosProperty_Hash_Value);
-
+  
   if (ret == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "define_property: retval : %d \n",
@@ -135,7 +135,7 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
                              env);
     }
 }
-  
+
 // Returns the current number of properties associated with this
 // PropertySet.
 CORBA::ULong 
@@ -147,17 +147,19 @@ TAO_PropertySet::get_number_of_properties ( CORBA::Environment &env)
 //  Returns all of the property names currently defined in the
 //  PropertySet. If the PropertySet contains more than how_many
 //  property names, then the remaining property names are put into the
-//  PropertyNamesIterator. ( Interator not done)
+//  PropertyNamesIterator.  ??Interator not done
 void
 TAO_PropertySet::get_all_property_names (CORBA::ULong how_many, 
                                          CosPropertyService::PropertyNames_out property_names, 
                                          CosPropertyService::PropertyNamesIterator_out rest,
                                          CORBA::Environment &env)
 {
+  // Set the Sequence length appropriately
+  int num_of_properties = get_number_of_properties (env);
+  property_names->length (num_of_properties);
 }
 
 // Returns the value of a property in the PropertySet.
-
 CORBA::Any * 
 TAO_PropertySet::get_property_value (const char *property_name,
                                      CORBA::Environment &env)
@@ -215,10 +217,10 @@ TAO_PropertySet::delete_property (const char *property_name,
 {
   CosProperty_Hash_Key CosProperty_Hash_Key ((CosPropertyService::PropertyName) property_name);
   
-  ACE_DEBUG ((LM_DEBUG, "delete_property : property_name %s, CosProperty_Hash_Key.pname_.in() %s \n", property_name,
+  ACE_DEBUG ((LM_DEBUG, "delete_property : property_name %s, CosProperty_Hash_Key.pname_.in() %s \n",
+              property_name,
               CosProperty_Hash_Key.pname_.in()));
-  
-  // alex: Doing unbinding.. Not getting CosProperty_Hash_Value back... Problem if dynamic allocation is done
+  // Doing unbinding.. Not getting CosProperty_Hash_Value back... Problem if dynamic allocation is done
   if (this->hash_table_.unbind (CosProperty_Hash_Key) != 0)
     ACE_ERROR ((LM_ERROR,
                 "Unbind failed \n"));
