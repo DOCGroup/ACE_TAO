@@ -31,7 +31,6 @@
 #error "You should not include TypeCodeFactoryC.h directly, use TCF_Loader.h"
 #endif /* !TAO_TYPECODEFACTORY_SAFE_INCLUDE */
 
-#include "ace/pre.h"
 #include "typecodefactory_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
