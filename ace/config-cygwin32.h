@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for Linux
+// The following configuration file is designed to work for CygWin
 // platforms using GNU C++.
 
 #ifndef ACE_CONFIG_H
