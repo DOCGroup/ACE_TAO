@@ -170,6 +170,8 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         -ORBEndpoint uiop://
         </CODE></blockquote>
         then a default endpoint will be created for the specified protocol.
+        <P>
+        This is a server side option.
     </TD>
   </TR>
 
@@ -278,7 +280,10 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         The <CODE>-ORBPreconnect</CODE> option uses the same endpoint format as the
         <CODE>-ORBEndpoint</CODE> option.  Specifying IIOP endpoints using a comma
         delimited list of <EM>host<STRONG>:</STRONG>port</EM> pairs is deprecated
-        and will not be supported in the future.</TD>
+        and will not be supported in the future.
+        <P>
+        This is a client side option.
+    </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBCDRTradeoff</CODE> <EM>maxsize</EM></TD>
@@ -312,18 +317,20 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
     <TD><A name="-ORBInitRef"></a> Allows specification of an arbitrary
         object reference for an initial service. The IOR could be in any
-        one of the following formats : OMG IOR, URL, iioploc or
-        file. iioploc is a multiple end-point IOR understood by the
-        string_to_object () and used as a boot-strapping mechanism by the
-        resolve_initial_references (). The mappings specified through this
-        argument override the orb-install-time defaults. The
-        file://<I>pathname</I> interprets the contents of the <I>pathname</I> file
-        as an object reference in any of the above formats. </TD>
+        one of the following formats : OMG IOR, URL, iioploc (including
+        uioploc) or file. iioploc is a multiple end-point IOR understood by
+        the string_to_object () method and used as a boot-strapping
+        mechanism by the resolve_initial_references () method. The mappings
+        specified through this argument override the orb-install-time
+        defaults. The file://<I>pathname</I> interprets the contents of the
+        <I>pathname</I> file as an object reference in any of the above
+        formats.
+    </TD>
   </TR>
 
   <TR>
     <TD><CODE>-ORBDefaultInitRef</CODE> <EM>IOR prefix</EM></TD>
-    <TD><A name="-ORBDefaultInitRef"></a> This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash '/' and a simple object key, forms a new URL to identify an initial object reference. The URL prefix format currently supported is iioploc.</TD>
+    <TD><A name="-ORBDefaultInitRef"></a> This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash '/' ('|' for UIOP pluggable protocol) and a simple object key, forms a new URL to identify an initial object reference. The URL prefix format currently supported is iioploc.</TD>
   </TR>
 
   <TR>
