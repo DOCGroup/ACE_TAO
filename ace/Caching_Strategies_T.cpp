@@ -4,6 +4,7 @@
 #define CACHING_STRATEGIES_T_C
 
 #include "ace/Caching_Strategies_T.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Caching_Strategies_T.i"

@@ -25,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/File_Lock.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 
