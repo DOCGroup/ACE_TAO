@@ -1,3 +1,9 @@
+Sat Nov 15 17:33:15 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_operation.cpp: 
+	  Fixed typo in generated code:
+	  s/_tao_enviroment/_tao_environment/
+
 Sat Nov 15 12:32:37 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_typedef.cpp: Added code to generate the typecode

@@ -581,8 +581,8 @@ be_operation::gen_server_skeletons (void)
 
   // parse the arguments
   *ss << "// parse the arguments" << nl;
-  *ss << "_tao_server_request.params (nvlist, _tao_enviroment);" << nl;
-  *ss << "if (_tao_enviroment.exception ()) return;" << nl;
+  *ss << "_tao_server_request.params (nvlist, _tao_environment);" << nl;
+  *ss << "if (_tao_environment.exception ()) return;" << nl;
 
   // make the upcall
   *ss << "impl = (" << intf->full_skel_name () << "_ptr) _tao_object_reference->get_subclass ();"
@@ -640,7 +640,7 @@ be_operation::gen_server_skeletons (void)
                         -1);
     }
   cg->pop ();
-  *ss << "_tao_enviroment);" << nl;
+  *ss << "_tao_environment);" << nl;
 
   // if there is any return type, send it via the ServerRequest
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
@@ -653,14 +653,14 @@ be_operation::gen_server_skeletons (void)
           {
             *ss << "result = new CORBA::Any (" << rt->tc_name () <<
               ", retval, 0); // ORB does not own" << nl;
-            *ss << "_tao_server_request.result (result, _tao_enviroment);" << nl;
+            *ss << "_tao_server_request.result (result, _tao_environment);" << nl;
           }
           break;
         default:
           {
             *ss << "result = new CORBA::Any (" << rt->tc_name () <<
               ", retval, 1); // ORB owns" << nl;
-            *ss << "_tao_server_request.result (result, _tao_enviroment);" << nl;
+            *ss << "_tao_server_request.result (result, _tao_environment);" << nl;
           }
         }
 #if 0
