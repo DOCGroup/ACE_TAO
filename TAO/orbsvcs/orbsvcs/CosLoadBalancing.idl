@@ -180,7 +180,8 @@ module CosLoadBalancing
     // The following load monitor methods are only used for the PULL
     // load monitoring style.
 
-    // Register a LoadMonitor object for the given location.
+    // Register a LoadMonitor object for "pull" monitoring of the
+    // given location.
     void register_load_monitor (in PortableGroup::Location the_location,
                                 in LoadMonitor load_monitor)
       raises (MonitorAlreadyPresent);

@@ -1,12 +1,13 @@
-// $Id$
-
 #include "IOR_Multicast.h"
 
 #include "tao/debug.h"
 
 #include "ace/SOCK_Connector.h"
+#include "ace/SString.h"
 
-ACE_RCSID(orbsvcs, IOR_Multicast, "$Id$")
+ACE_RCSID (orbsvcs,
+           IOR_Multicast,
+           "$Id$")
 
 ACE_HANDLE
 TAO_IOR_Multicast::get_handle (void) const
@@ -281,5 +282,3 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                 result));
   return 0;
 }
-
-

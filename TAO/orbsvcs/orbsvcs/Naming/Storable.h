@@ -13,6 +13,7 @@
 #define STORABLE_H
 
 #include "tao/corba.h"
+#include "ace/SString.h"
 
 const int szInt =  sizeof(int);
 const int szChar = sizeof(char);
@@ -137,5 +138,3 @@ public:
 #endif /* __ACE_INLINE_ */
 
 #endif
-
-
