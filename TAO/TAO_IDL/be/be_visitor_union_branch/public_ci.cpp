@@ -376,7 +376,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
   *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
@@ -481,7 +481,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
               *os << parent->name () << "::";
             }
 
-          *os << "tao_" << node->local_name () << "_life::tao";
+          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
   *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl

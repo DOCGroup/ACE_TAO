@@ -1,3 +1,22 @@
+Thu Aug  7 17:15:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+
+          Changed over all remaingin ORB code and generated code to
+          use TAO::Objref_Traits<> or TAO::Array_Traits<>, instead
+          of the generated structs used previously. Changes to TAO
+          sequence classes affect only array sequences in this checkin.
+
 Thu Aug  7 15:41:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
