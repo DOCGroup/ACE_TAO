@@ -96,11 +96,11 @@ SOURCE=.\Factory_Trader.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LifeCycle_Service.cpp
+SOURCE=.\Life_Cycle_Service.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LifeCycle_Service_i.cpp
+SOURCE=.\Life_Cycle_Service_i.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -116,11 +116,11 @@ SOURCE=.\Factory_Trader.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LifeCycle_Service.h
+SOURCE=.\Life_Cycle_Service.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LifeCycle_Service_i.h
+SOURCE=.\Life_Cycle_Service_i.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"

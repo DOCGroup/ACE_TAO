@@ -35,7 +35,7 @@ class CosEC_Multiple
   CosEC_Multiple (void);
   // Constructor.
 
-  virtual ~CosEC_Multiple (void);
+  ~CosEC_Multiple (void);
   // Destructor.
 
   int init (int argc, char *argv[]);

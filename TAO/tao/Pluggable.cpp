@@ -1,16 +1,22 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//
+// = FILENAME
+//
+// = DESCRIPTION
+//
+// = AUTHOR
+//
+// ============================================================================
+
 #include "tao/Pluggable.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
-
-#if !defined (__ACE_INLINE__)
-# include "tao/Pluggable.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID(tao, Pluggable, "$Id$")
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : iiop_connector_ (0)
@@ -67,8 +73,7 @@ TAO_Connector_Registry::close_all()
   //    since there is only one!
   if (iiop_connector_)
     return this->iiop_connector_->close ();
-  else
-    return 0;
+  return 0;
 }
 
 int
@@ -92,9 +97,9 @@ TAO_Connector_Registry::preconnect (const char *the_preconnections)
   return result;
 }
 
-int
-TAO_Connector_Registry::connect (TAO_Stub *&obj,
-                                 TAO_Transport *&transport)
+TAO_Profile *
+TAO_Connector_Registry::connect (STUB_Object *&obj,
+                                 CORBA::Environment &env)
 {
   CORBA::ULong req_tag = TAO_IOP_TAG_INTERNET_IOP;
   TAO_Profile *profile = obj->profile_in_use ();
@@ -102,7 +107,9 @@ TAO_Connector_Registry::connect (TAO_Stub *&obj,
   // @@ And the profile selection policy is .... ONLY IIOP, and the
   // @@ first one found!
   if (profile->tag () != req_tag)
-    return -1;
+    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 
   // here is where we get the appropriate connector object but we are
   // the Connector Registry so call get_connector(tag)
@@ -110,46 +117,53 @@ TAO_Connector_Registry::connect (TAO_Stub *&obj,
   TAO_Connector *connector =
     this->get_connector (req_tag);
 
-  return connector->connect (profile, transport);
+  TAO_Transport *transport =
+    connector->connect (profile, env);
+  TAO_CHECK_ENV_RETURN (env, 0);
+
+  if (transport == 0)
+    return 0;
+
+  return profile;
 }
 
-TAO_IOP_Version::~TAO_IOP_Version (void)
+Version::~Version (void)
 {
 }
 
-TAO_IOP_Version::TAO_IOP_Version (const TAO_IOP_Version &src)
+Version::Version (const Version &src)
   : major (src.major),
     minor (src.minor)
 {
 }
 
-TAO_IOP_Version::TAO_IOP_Version (CORBA::Octet maj, CORBA::Octet min)
+Version::Version (CORBA::Octet maj, CORBA::Octet min)
   : major (maj),
     minor (min)
 {
 }
 
 void
-TAO_IOP_Version::set_version (CORBA::Octet maj, CORBA::Octet min)
+Version::set_version (CORBA::Octet maj, CORBA::Octet min)
 {
   this->major = maj;
   this->minor = min;
 }
 
 int
-TAO_IOP_Version::operator== (const TAO_IOP_Version *&src)
+Version::operator== (const Version *&src)
 {
   return this->major == src->major && this->minor == src->minor;
 }
 
 int
-TAO_IOP_Version::operator== (const TAO_IOP_Version &src)
+Version::operator== (const Version &src)
 {
   return this->major == src.major && this->minor == src.minor;
 }
 
-TAO_IOP_Version &
-TAO_IOP_Version::operator= (const TAO_IOP_Version &src)
+Version &
+Version::operator= (const Version &src)
 {
   this->major = src.major;
   this->minor = src.minor;

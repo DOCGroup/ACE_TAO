@@ -21,50 +21,40 @@
 #define TAO_MPROFILE_H
 
 #include "tao/corbafwd.h"
-#include "tao/Pluggable.h"
 
-// @@ Fred, this definitions are of very little use, can you make them
-//    local to the Profile class so we don't pollute the global
-//    namespace
+class TAO_Profile;
 typedef TAO_Profile *TAO_Profile_ptr;
-typedef CORBA::ULong TAO_PHandle;
+typedef CORBA::ULong TAO_PHandle; 
 
-class TAO_Export TAO_MProfile
+class TAO_Export TAO_MProfile 
 {
   // = TITLE
   //   This class implements the basic interface for supporting
   //   multiple profiles.
-  //
+  // 
   // = DESCRIPTION
   //   Multiple profiles can be treated either as a circular queue or
   //   a linear array of profiles.
-  //
+  // 
   //   It is assumed that locking will only be required when a profile
-  //   list is associated with a TAO_Stub.  Thus when the
-  //   TAO_Stub accepts ownership of an MProfile it also assumes
+  //   list is associated with a STUB_Object.  Thus when the
+  //   STUB_Object accepts ownership of an MProfile it also assumes
   //   responsibility for controling access (i.e. locking).
 public:
   // = Initalization and termination methods.
   TAO_MProfile (CORBA::ULong sz);
 
-  TAO_MProfile (const TAO_MProfile &mprofiles);
-  // **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to
+  TAO_MProfile (TAO_MProfile *mprofiles);
+  // **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to 
   //          mprofiles->last_.  Otherwise this->size_ - mprofiles->size_.
   //          Furthermore, current_ is set back to 0!  i.e. rewound.
   // The reference count on any profiles in mprofiles is increment
   // when their references (i.e. pointers) are copied.
 
-  TAO_MProfile& operator= (const TAO_MProfile& mprofiles);
-  // Assigment operator.
-
-  ~TAO_MProfile (void);
-  // Destructor: decrements reference count on all references
-  // profiles!
-
   int set (CORBA::ULong sz);
   // @@ Fred, what does this method do?
 
-  int set (const TAO_MProfile &mprofile);
+  int set (TAO_MProfile *mprofile);
   // Inits this to the values of mprofile.  NOTE: We use
   // mprofile->last_ instead of mprofile->size_ to set this->size_.
   // This is so we can use set () to trim a profile list!!
@@ -93,12 +83,8 @@ public:
   TAO_PHandle get_current_handle (void);
   // Returns the index for the current profile.
 
-  CORBA::ULong profile_count (void) const;
+  CORBA::ULong profile_count (void);
   // Returns the number of profiles stored in the list (last_).
-
-  const TAO_Profile* get_profile (CORBA::ULong index) const;
-  // Return the profile at position <index>.
-  // If <index> is out of range it returns 0.
 
   void rewind (void);
   // Sets the current index back to 0.
@@ -112,11 +98,14 @@ public:
   // this object assumes ownership of this profile!!
 
   void forward_from (TAO_MProfile *mprofiles);
-  // Set a pointer to the MProfile whose 'current' TAO_Profile was
-  // forwarded This object is the set of forwarding profiles.
+  // @@ Fred, can you please change the name of this method to
+  // "forwarded_mprofile()"?  In general, it's better to use complete
+  // names.
+  // Set a pointer to the MProfile whose 'current' TAO_Profile was forwarded
+  // This object is the set of forwarding profiles.
 
   TAO_MProfile *forward_from (void);
-  // Returns a pointer to the profile which was forwarded.
+  // Returns a pointer to the profile which was forwarded.  
 
   CORBA::Boolean is_equivalent (TAO_MProfile *first,
                                 TAO_MProfile *second,
@@ -129,41 +118,42 @@ public:
                      CORBA::Environment &env);
   // @@ FRED: The list should be locked for this!
 
+  ~TAO_MProfile (void);
+  // Deletes this object and decrements reference count on all
+  // references profiles!
+
 protected:
   TAO_Profile_ptr *pfiles (void) const;
   // return the complete list of profiles, this object retains
   // ownership!
 
-
-private:
-  void cleanup (void);
-  // Helper method to implement the destructor
-
 private:
 
   TAO_MProfile  *forward_from_;
-  // Used for chaning references when the current profile is
-  // forwarded.  Note, this will only be valid for an MProfile which
-  // contains a list of forward_profiles for some initial or base
-  // profile.  This is a backward reference to the profile list which
-  // received the relocate message.  The actual profile what was
-  // forwarded will be forward_from_->get_current_profile ()
+  // Used for chaning references when the current profile is forwarded.
+  // Note, this will only be valid for an MProfile which contains a list of
+  // forward_profiles for some initial or base profile.
+  // This is a backward reference to the profile list which received the 
+  // relocate message.  The actual profile what was forwarded will be
+  // forward_from_->get_current_profile ()
 
   TAO_Profile_ptr *pfiles_;
   // Actual list of profiles.
 
   TAO_PHandle current_;
-  // Points to the next profile to be used.  0 ... size_
+  // Points to the next prfoile to be used.
+  // 0 ... size_
 
   TAO_PHandle size_;
   // Max size of array
 
   TAO_PHandle last_;
-  // Index plus 1 of last valid entry!  May be < size_.
+  // Index plus 1 of last valid entry!  May be < size_
 };
 
 #if defined (__ACE_INLINE__)
 # include "tao/MProfile.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_MPROFILE_H */
+// @@ Fred, please don't use #endif // ..., instead, always use #endif /* ... */
+#endif // TAO_MPROFILE_H

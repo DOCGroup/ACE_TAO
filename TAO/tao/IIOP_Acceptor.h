@@ -35,7 +35,7 @@ typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
   // = TITLE
-  //   The IIOP-specific bridge class for the concrete acceptor.
+  //   @@ Fred, please fill in here.
   //
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
@@ -56,15 +56,12 @@ public:
   virtual ACE_Event_Handler *acceptor (void);
   // Return the underlying acceptor object, ACE_Acceptor
 
-  virtual int close (void);
-  // Closes the acceptor
-
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
-  // the concrete acceptor, as a pointer to it's base class.
+  //   @@ Fred, please fill in here.
 
   CORBA::ULong tag_;
-  //  the IOP specific tag.
+  //   @@ Fred, please fill in here.
 };
 
 #endif  /* TAO_IIOP_ACCEPTOR_H */

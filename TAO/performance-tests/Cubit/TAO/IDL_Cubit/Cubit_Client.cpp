@@ -667,7 +667,7 @@ Cubit_Client::cube_many_sequence (int, int l)
 
   // Cube the sequence
   {
-    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_MANY_SEQUENCE_START);
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_SEQUENCE_START);
 
     this->cubit_->cube_many_sequence (input, vout, this->env_);
   }
@@ -770,7 +770,7 @@ Cubit_Client::cube_rti_data (int, int numUpdates, int numAttrs)
     }
 
   {
-    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_RTI_DATA_START);
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_RTI_DATA_START);
 
     this->cubit_->cube_rti_data (input, vout, this->env_);
   }
@@ -900,6 +900,8 @@ Cubit_Client::run ()
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_struct", elapsed_time);
 
+#if 0 /* ASG - temporarily commented out since <<, >> operators for unions are
+         not supported yet */
   // UNION
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -909,6 +911,7 @@ Cubit_Client::run ()
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_union_stub call", elapsed_time);
+#endif /* ASG */
 
   // SMALL LONG SEQUENCES
   this->call_count_ = 0;
@@ -984,6 +987,8 @@ Cubit_Client::run ()
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube mixin (short/octet/long)", elapsed_time);
 
+#if 0 /* ASG - temporarily commented out since <<, >> operators for unions are
+         not supported yet */
   // RTI
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -993,6 +998,7 @@ Cubit_Client::run ()
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_rti_data", elapsed_time);
+#endif /* ASG */
 
   // ONEWAY
   this->call_count_ = 0;
@@ -1018,7 +1024,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 
-      ACE_TRY_NEW_ENV
+      TAO_TRY
         {
           if (this->cubit_factory_key_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1028,13 +1034,13 @@ Cubit_Client::shutdown_server (int do_shutdown)
 
           CORBA::Object_var factory_object =
             this->orb_->string_to_object (this->cubit_factory_key_,
-                                          ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                          TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           this->factory_ =
             Cubit_Factory::_narrow (factory_object.in(),
-                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+                                    TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1043,22 +1049,22 @@ Cubit_Client::shutdown_server (int do_shutdown)
                               -1);
 
           this->cubit_ =
-            this->factory_->make_cubit (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            this->factory_->make_cubit (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-          this->cubit_->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          this->cubit_->shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
           ACE_DEBUG ((LM_DEBUG, "shutdown on shutdown object\n"));
 
           this->env_.print_exception ("server, please ACE_OS::exit");
         }
-      ACE_CATCHANY
+      TAO_CATCHANY
         {
-          ACE_TRY_ENV.print_exception ("Cubit::init");
+          TAO_TRY_ENV.print_exception ("Cubit::init");
           return -1;
         }
-      ACE_ENDTRY;
+      TAO_ENDTRY;
 
     }
   else if (do_shutdown)
@@ -1149,14 +1155,14 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       if (this->testing_collocation_ == 0)
         // turn off collocation if directed to do so.
         TAO_ORB_Core_instance ()->using_collocation (0);
@@ -1176,13 +1182,13 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
 
       CORBA::Object_var factory_object =
         this->orb_->string_to_object (this->cubit_factory_key_,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       this->factory_ =
         Cubit_Factory::_narrow (factory_object.in(),
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1195,20 +1201,20 @@ Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
 
       // Now retrieve the Cubit obj ref corresponding to the key.
       this->cubit_ =
-        this->factory_->make_cubit (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->factory_->make_cubit (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->cubit_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "null cubit objref returned by factory\n"),
                           -1);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Cubit::init");
+      TAO_TRY_ENV.print_exception ("Cubit::init");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return 0;
 }

@@ -131,6 +131,8 @@ public:
   // Get the local endpoint used to send the events.
 
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
+             RtecScheduler::Scheduler_ptr lcl_sched,
+             const char* lcl_name,
              RtecUDPAdmin::AddrServer_ptr addr_server,
              TAO_ECG_UDP_Out_Endpoint* endpoint,
              CORBA::Environment &_env);
@@ -197,6 +199,9 @@ private:
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the
   // subscription list changes.
+
+  RtecScheduler::handle_t lcl_info_;
+  // Our local and remote RT_Infos.
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a consumer) using this proxy.
@@ -283,7 +288,7 @@ public:
   ACE_INLINE int operator== (const TAO_ECG_UDP_Request_Index& rhs) const;
   ACE_INLINE int operator!= (const TAO_ECG_UDP_Request_Index& rhs) const;
   // Compare
-
+  
   ACE_INET_Addr from;
   CORBA::ULong request_id;
 };
@@ -308,7 +313,7 @@ public:
   // TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry& rhs);
   // TAO_ECG_UDP_Request_Entry& operator=(const TAO_ECG_UDP_Request_Entry& rhs);
   ~TAO_ECG_UDP_Request_Entry (void);
-
+  
   TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
                              CORBA::ULong request_id,
                              CORBA::ULong request_size,
@@ -321,7 +326,7 @@ public:
                          CORBA::ULong fragment_offset,
                          CORBA::ULong fragment_id,
                          CORBA::ULong fragment_count) const;
-  // Validate a fragment, it should be rejected if it is invalid..
+  // Validate a fragment, it should be rejected if it is invalid.. 
 
   int test_received (CORBA::ULong fragment_id) const;
   // Has <fragment_id> been received?
@@ -344,7 +349,7 @@ public:
 
   int get_timeout (void) const;
   // Get the timeout counter....
-
+  
 private:
   CORBA::Boolean byte_order_;
   CORBA::ULong request_id_;
@@ -422,6 +427,8 @@ public:
   TAO_ECG_UDP_Receiver (void);
 
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
+             RtecScheduler::Scheduler_ptr lcl_sched,
+             const char* lcl_name,
              TAO_ECG_UDP_Out_Endpoint* ignore_from,
              RtecUDPAdmin::AddrServer_ptr addr_server,
              ACE_Reactor *reactor,
@@ -470,7 +477,10 @@ private:
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the list changes.
 
- RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
+  RtecScheduler::handle_t lcl_info_;
+  // Our RT_Info.
+
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
   // We talk to the EC (as a consumer) using this proxy.
 
   TAO_ECG_UDP_Out_Endpoint* ignore_from_;

@@ -109,8 +109,8 @@ int
 Server_i::init (int argc, char **argv)
 {
   //CORBA::Environment TAO_TRY_ENV;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+
+  ACE_TRY_NEW_ENV
     {
       // Initialize the ORB.
       orb_ = CORBA::ORB_init (argc,
@@ -139,7 +139,7 @@ Server_i::init (int argc, char **argv)
     }
   ACE_CATCHANY 
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i:init_poa ()");
+      ACE_TRY_ENV.print_exception ("Server_i:init_poa ()");
       return 1;
     }
   ACE_ENDTRY;
@@ -157,10 +157,8 @@ Server_i::create_poa (const char *name,
 {
   // CORBA::Environment TAO_TRY_ENV;
   PortableServer::POA_ptr my_poa = 0;
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+ 
+  ACE_TRY_NEW_ENV
     {  
       policies_.length (4);
       
@@ -221,11 +219,10 @@ Server_i::create_poa (const char *name,
     }
   ACE_CATCHANY 
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:create_poa ()");
+      ACE_TRY_ENV.print_exception ("Server_i:create_poa ()");
       return 0;
     }
   ACE_ENDTRY;  
-  ACE_CHECK_RETURN (0);
 
   return my_poa;
 }
@@ -237,9 +234,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
 {
   // CORBA::Environment TAO_TRY_ENV;
    
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     { 
       // An Servant Activator object is created which will activate
       // the servant on demand.
@@ -272,7 +267,7 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
     }
   ACE_CATCHANY 
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:create_activator ()");
+      ACE_TRY_ENV.print_exception ("Server_i:create_activator ()");
       return 1;
     }
   ACE_ENDTRY;  
@@ -286,9 +281,8 @@ int
 Server_i::create_locator (PortableServer::POA_var second_poa)
 {
   // CORBA::Environment TAO_TRY_ENV;
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+   
+  ACE_TRY_NEW_ENV
     { 
       // An Servant Locator object is created which will activate 
       // the servant on demand.
@@ -323,7 +317,7 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
     }
   ACE_CATCHANY 
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:create_locator ()");
+      ACE_TRY_ENV.print_exception ("Server_i:create_locator ()");
       return 1;
     }
   ACE_ENDTRY;   
@@ -338,9 +332,7 @@ Server_i::run (void)
 {
   // CORBA::Environment TAO_TRY_ENV;
    
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     { 
       // Invoke object_to_string on the references created in firstPOA
       // and secondPOA.
@@ -388,7 +380,7 @@ Server_i::run (void)
     }
   ACE_CATCHANY 
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Server_i:run ()");
+      ACE_TRY_ENV.print_exception ("Server_i:run ()");
       return 1;
     }
   ACE_ENDTRY;

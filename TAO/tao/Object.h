@@ -28,14 +28,11 @@
 #include "tao/corbafwd.h"
 
 class TAO_ServantBase;
-class TAO_Stub;
+class STUB_Object;
 
 class TAO_Export CORBA_Object
 {
 public:
-  virtual ~CORBA_Object (void);
-  // destructor
-
   static CORBA_Object_ptr _duplicate (CORBA_Object_ptr obj);
   // increment the ref count
 
@@ -43,8 +40,7 @@ public:
   // return a NUL object
 
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
-                                   CORBA_Environment &TAO_IN_ENV = 
-                                     CORBA::default_environment ());
+                                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // no-op it is just here to simplify some templates.
 
   // These calls correspond to over-the-wire operations, or at least
@@ -53,9 +49,11 @@ public:
   // making such calls, but may be overridden when it appears
   // appropriate.
 
+  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Interface repository related operation
+
   virtual CORBA::Boolean _is_a (const CORBA::Char *logical_type_id,
-                                CORBA_Environment &TAO_IN_ENV = 
-                                  CORBA::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // determine if we are of the type specified by the "logical_type_id"
 
   virtual const char* _interface_repository_id (void) const;
@@ -68,91 +66,35 @@ public:
   virtual CORBA::Boolean _is_collocated (void) const;
   // are we collocated with the servant?
 
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = 
-                                          CORBA::default_environment ());
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
   virtual CORBA::ImplementationDef_ptr
-      _get_implementation (CORBA_Environment &TAO_IN_ENV = 
-                             CORBA::default_environment ());
+      _get_implementation (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // This method is deprecated in the CORBA 2.2 spec, we just return 0
   // every time.
 
-  virtual CORBA::InterfaceDef_ptr _get_interface (CORBA_Environment &TAO_IN_ENV = 
-                                                    CORBA::default_environment ());
+  virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
-  // Interface repository related operations.
-
-  // DII operations to create a request.
+  virtual void _create_request (const CORBA::Char *operation,
+                                CORBA::NVList_ptr arg_list,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::Request_ptr &request,
+                                CORBA::Flags req_flags,
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // DII operation to create a request.
   //
   // The mapping for create_request is split into two forms,
   // corresponding to the two usage styles described in CORBA section
   // 6.2.1.
-
-  virtual void _create_request (CORBA::Context_ptr ctx,
-                                const CORBA::Char *operation,
-                                CORBA::NVList_ptr arg_list,
-                                CORBA::NamedValue_ptr result,
-                                CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA_Environment &TAO_IN_ENV = 
-                                  CORBA::default_environment ());
-
-  virtual void _create_request (CORBA::Context_ptr ctx,
-                                const CORBA::Char *operation,
-                                CORBA::NVList_ptr arg_list,
-                                CORBA::NamedValue_ptr result,
-                                CORBA::ExceptionList_ptr exclist,
-                                CORBA::ContextList_ptr ctxtlist,
-                                CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA_Environment &TAO_IN_ENV = 
-                                  CORBA::default_environment ());
-
+  //
   // The default implementation of this method uses the same simple,
   // multi-protocol remote invocation interface as is assumed by the
   // calls above ... that's how it can have a default implementation.
 
   virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
-                                       CORBA_Environment &TAO_IN_ENV = 
-                                        CORBA::default_environment ());
+                                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // DII operation to create a request.
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-  CORBA::Policy_ptr _get_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::Policy_ptr _get_client_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::Object_ptr _set_policy_overrides (
-      const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::PolicyList * _get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-  CORBA::Boolean _validate_connection (
-      CORBA::PolicyList_out inconsistent_policies,
-      CORBA::Environment &ACE_TRY_ENV =
-        CORBA::default_environment ()
-    );
-#endif /* TAO_HAS_CORBA_MESSAGING */
-
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
-                              CORBA_Environment &TAO_IN_ENV = 
-                                CORBA::default_environment ());
+                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Return a (potentially non-unique) hash value for this object.
   // This method relies on the representation of the object
   // reference's private state.  Since that changes easily (when
@@ -160,25 +102,11 @@ public:
   // implementation.
 
   virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
-                                         CORBA_Environment &TAO_IN_ENV = 
-                                           CORBA::default_environment ());
+                                         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Try to determine if this object is the same as <other_obj>.  This
   // method relies on the representation of the object reference's
   // private state.  Since that changes easily (when different ORB
   // protocols are in use) there is no default implementation.
-
-  virtual TAO_ObjectKey *_key (CORBA_Environment &TAO_IN_ENV = 
-                                 CORBA::default_environment ());
-  // Return the object key as an out parameter.  Caller should release
-  // return value when finished with it.
-
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA_Object_ptr _ptr_type;
-  typedef CORBA_Object_var _var_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
-
-  // = TAO extensions
 
   // = Reference count managment.
   CORBA::ULong _incr_refcnt (void);
@@ -187,12 +115,19 @@ public:
   CORBA::ULong _decr_refcnt (void);
   // Decrement the reference count.
 
-  CORBA_Object (TAO_Stub *p = 0,
+  CORBA_Object (STUB_Object *p = 0,
                 TAO_ServantBase *servant = 0,
                 CORBA::Boolean collocated = 0);
   // constructor
 
-  virtual TAO_Stub *_stubobj (void) const;
+  virtual ~CORBA_Object (void);
+  // destructor
+
+  virtual TAO_ObjectKey *_key (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Return the object key as an out parameter.  Caller should release
+  // return value when finished with it.
+
+  virtual STUB_Object *_stubobj (void);
   // get the underlying stub object
 
   virtual void _use_locate_requests (CORBA::Boolean use_it);
@@ -208,7 +143,7 @@ protected:
   // objects.
 
 private:
-  TAO_Stub *protocol_proxy_;
+  STUB_Object *protocol_proxy_;
   // Pointer to the protocol-specific "object" containing important
   // profiling information regarding this proxy.
   // The protocol proxy is (potentially) shared among several
@@ -292,17 +227,10 @@ public:
   // destructor
 
   virtual void _downcast (CORBA_Object* base_ptr,
-                          CORBA_Environment &TAO_IN_ENV = 
-                            CORBA::default_environment ()) = 0;
+                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   virtual CORBA_Object* _upcast (void) = 0;
   virtual void _release (void) = 0;
 };
-
-extern TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR&, const CORBA_Object*);
-
-extern TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR&, CORBA_Object*&);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Object.i"

@@ -3,7 +3,7 @@
 #include "EC_Conjunction_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Conjunction_Filter.i"
+#include "EC_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
@@ -60,24 +60,6 @@ TAO_EC_Conjunction_Filter::all_received (void) const
         return 0;
     }
   return 0;
-}
-
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Conjunction_Filter::begin (void) const
-{
-  return this->children_;
-}
-
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Conjunction_Filter::end (void) const
-{
-  return this->children_ + this->n_;
-}
-
-int
-TAO_EC_Conjunction_Filter::size (void) const
-{
-  return this->n_;
 }
 
 int
@@ -184,26 +166,14 @@ TAO_EC_Conjunction_Filter::max_event_size (void) const
   return n;
 }
 
-int
-TAO_EC_Conjunction_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+void
+TAO_EC_Conjunction_Filter::event_ids (TAO_EC_Filter::Headers& headers)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      if ((*i)->can_match (header) != 0)
-        return 1;
+      (*i)->event_ids (headers);
     }
-  return 0;
-}
-
-int
-TAO_EC_Conjunction_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info&,
-      CORBA::Environment &)
-{
-  return 0;
 }

@@ -77,7 +77,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                   "  burst count = <%d>\n"
                   "  burst size = <%d>\n"
                   "  event size = <%d>\n"
-                  "  burst pause = <%d>\n"
+                  "  burst size = <%d>\n"
                   "  type start = <%d>\n"
                   "  type count = <%d>\n"
                   "  pid file name = <%s>\n",
@@ -257,16 +257,13 @@ ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
 void
 ECT_Supplier_Driver::dump_results (void)
 {
-  ECT_Driver::Throughput_Stats throughput;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02.2d", i);
 
       this->suppliers_[i]->dump_results (buf);
-      this->suppliers_[i]->accumulate (throughput);
     }
-  throughput.dump_results ("ECT_Supplier", "accumulated");
 }
 
 int
@@ -323,8 +320,8 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
                       "-u <burst count> "
                       "-n <burst size> "
                       "-b <event payload size> "
-                      "-t <burst pause (usecs)> "
-                      "-h <type_start,type_count> "
+                      "-T <burst pause (usecs)> "
+                      "-h <eventa,eventb> "
                       "-p <pid file name> "
                       "\n",
                       argv[0]));
@@ -365,7 +362,7 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
   if (this->n_suppliers_ <= 0)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);
