@@ -232,12 +232,6 @@ TAO_POA::cleanup_in_progress (void)
   return this->cleanup_in_progress_;
 }
 
-ACE_INLINE TAO_Object_Adapter &
-TAO_POA::object_adapter (void)
-{
-  return *this->orb_core_.object_adapter ();
-}
-
 ACE_INLINE ACE_Lock &
 TAO_POA::lock (void)
 {
