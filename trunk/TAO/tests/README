@@ -101,6 +101,11 @@ how to run the following tests:
 	  Regression test for LOCATION_FORWARD messages in the
 	  follower thread.
 
+	. Hello
+
+	  Extremely simple test to establish base line and serve as
+	  code base for other tests.
+
         . IDL_Test
 
           A collection of the IDL examples that have caused problems

@@ -1,3 +1,23 @@
+Fri Mar 23 09:06:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/README:
+        * tests/Hello/README:
+        * tests/Hello/Makefile:
+        * tests/Hello/Makefile.bor:
+        * tests/Hello/server.bor:
+        * tests/Hello/client.bor:
+        * tests/Hello/Test.idl:
+        * tests/Hello/run_test.pl:
+        * tests/Hello/client.cpp:
+        * tests/Hello/server.cpp:
+        * tests/Hello/Hello.h:
+        * tests/Hello/Hello.cpp:
+          Add new super-simple regression test, we lacked one of these, so
+          we were always using more complicated tests to smoke test the
+          ORB.
+
 Fri Mar 23 07:12:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/Notify/Subscribe/Makefile:
