@@ -8,6 +8,28 @@
 #include "Receiver_exec.h"
 #include "CIAO_common.h"
 
+Receiver_Impl::ReceiverSwap_exec_i::ReceiverSwap_exec_i ()
+{
+}
+
+Receiver_Impl::ReceiverSwap_exec_i::~ReceiverSwap_exec_i ()
+{
+}
+
+::Components::EnterpriseComponent_ptr
+Receiver_Impl::ReceiverSwap_exec_i::incarnate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new Receiver_Impl::Receiver_exec_i;
+}
+
+::Components::EnterpriseComponent_ptr
+Receiver_Impl::ReceiverSwap_exec_i::etherealize (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return new Receiver_Impl::Receiver_exec_i;
+}
+
 Receiver_Impl::Receiver_exec_i::Receiver_exec_i ()
 {
 }
@@ -95,6 +117,33 @@ Receiver_Impl::Receiver_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::ccm_passivate\n"));
+  /*
+  CORBA::Object_var comp_object =
+    this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Hello::Receiver_var receiver = Hello::Receiver::_narrow (comp_object.in ()
+                                                    ACE_ENV_ARG_PARAMETER);
+
+  ::Components::ConsumerDescriptions_var cons_desc =
+    receiver->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+  ::Components::FacetDescriptions_var facet_desc =
+    receiver->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+  CORBA::ULong cons_len = cons_desc->length ();
+  CORBA::ULong facet_len = facet_desc->length ();
+  for (CORBA::ULong i = 0; i < cons_len; ++i)
+    {
+      // ACE_DEBUG ((LM_DEBUG, "consumer name is %s\n", cons_desc[i]->name ()));
+    }
+  for (CORBA::ULong i = 0; i < facet_len; ++i)
+    {
+      // ACE_DEBUG ((LM_DEBUG, "facet name is %s\n", facet_desc[i]->name ()));
+    }
+  */
 }
 
 void
@@ -120,9 +169,16 @@ Receiver_Impl::ReceiverHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
                    Components::CCMException))
 {
   Components::EnterpriseComponent_ptr tmp;
+  
+  ACE_NEW_THROW_EX (tmp,
+                    Receiver_Impl::ReceiverSwap_exec_i,
+                    CORBA::NO_MEMORY ());
+  /*  
   ACE_NEW_THROW_EX (tmp,
                     Receiver_Impl::Receiver_exec_i,
                     CORBA::NO_MEMORY ());
+  */
+ 
   return tmp;
 }
 

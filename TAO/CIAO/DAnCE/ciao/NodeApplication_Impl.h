@@ -30,6 +30,8 @@
 
 using CIAO::Utility::write_IOR;
 
+
+
 /**
  *
  * @class NodeApplication_Impl

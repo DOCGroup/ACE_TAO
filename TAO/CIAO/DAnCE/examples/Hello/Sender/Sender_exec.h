@@ -10,18 +10,15 @@
 #ifndef SENDER_EXEC_H
 #define SENDER_EXEC_H
 
+#include "SwapExecC.h"
 #include "SenderEC.h"
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"
+#include "ace/DLL.h"
+#include "ciao/CCM_EventC.h"
 
 namespace Sender_Impl
 {
-  /**
-   * @class Sender_exec_i
-   *
-   * Sender executor implementation class.
-   */
-
   class SENDER_EXEC_Export Sender_exec_i :
       public virtual Sender_Exec,
       public virtual TAO_Local_RefCounted_Object
@@ -124,11 +121,50 @@ namespace Sender_Impl
     Sender_exec_i& component_;
   };
 
+  class SenderSwap_exec_i;
+
+
+  typedef ::Components::EnterpriseComponent_ptr (*ExecFactory) (SenderSwap_exec_i *);
+
   /**
-   * @class SenderHome_exec_i
+   * @class Sender_exec_i
    *
-   * Sender home executor implementation class.
+   * Sender executor implementation class.
    */
+
+  class SENDER_EXEC_Export SenderSwap_exec_i :
+      public virtual CIAO::Swap_Exec,
+      public virtual TAO_Local_RefCounted_Object
+  {
+  public:
+    SenderSwap_exec_i ();
+
+    ~SenderSwap_exec_i ();
+
+    virtual ::Components::EnterpriseComponent_ptr
+    incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual ::Components::EnterpriseComponent_ptr
+    etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    void  consumers (::Components::ConsumerDescriptions *p)
+    {
+      this->consumers_ = p;
+    }
+
+    ::Components::ConsumerDescriptions *consumers (void)
+    {
+      return this->consumers_._retn ();
+    }
+
+  protected:
+    int count_;
+
+    ::Components::ConsumerDescriptions_var consumers_;
+  };
+
   class SENDER_EXEC_Export SenderHome_exec_i :
     public virtual SenderHome_Exec,
     public virtual TAO_Local_RefCounted_Object
@@ -146,6 +182,8 @@ namespace Sender_Impl
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
+
+
   };
 
 }
