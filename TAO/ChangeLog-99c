@@ -1,10 +1,16 @@
+Sat Feb 06 07:33:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/decode.cpp (decode): removed break statement following
+          a return, because some compilers claim that it's not
+          reachable.
+
 Sat Feb 06 01:20:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: No need to
-	  specify THR_BOUND since it is now the default.
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf: No need to
+          specify THR_BOUND since it is now the default.
 
-	* tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
-	  Made THR_BOUND the default thread flags.
+        * tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
+          Made THR_BOUND the default thread flags.
 
 Fri Feb 05 21:59:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -19,7 +25,7 @@ Fri Feb 05 21:59:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/Any.{h,i}::
         * tao/Invocation.cpp:
         * tao/Connect.cpp:
-          The leveraging of the ACE CDR classes into TAO. Compiles 
+          The leveraging of the ACE CDR classes into TAO. Compiles
           cleanly on VC, suncc and g++. Both the ACE and the TAO
           CDR tests are working fine.
 
@@ -29,18 +35,18 @@ Fri Feb 05 21:23:33 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Feb  5 19:44:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* release.chk: 
-	  Cleared all the marks, the file was not up-to-date.
+        * release.chk:
+          Cleared all the marks, the file was not up-to-date.
 
 Fri Feb  5 18:45:36 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-        * tao/Stub.i: 
-	  Rearranged order of declarations.
+        * tao/Stub.i:
+          Rearranged order of declarations.
 
 Fri Feb  5 18:11:33 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * tao/MProfile.cpp
-	  Fixed set () so it would reinitialize the list of profiles.
+          Fixed set () so it would reinitialize the list of profiles.
 
 Fri Feb 05 16:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
@@ -49,43 +55,43 @@ Fri Feb 05 16:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 Fri Feb 05 16:05:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java:
-	  Added -dualECdemo switch that resolves the appropriate event and
-	  scheduling service names for the DualEC_Sup supplier.
+          Added -dualECdemo switch that resolves the appropriate event and
+          scheduling service names for the DualEC_Sup supplier.
 
 Fri Feb  5 15:56:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/client.cpp:
-	* orbsvcs/tests/Property/server.cpp:
-	Added the fixes suggested by jaehrig@desys.com regarding
-	CORBA::Any scopes to all the from_* and to_* methods of Any
-	variables. 
-	* orbsvcs/tests/Property/README: Added this file
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/server.cpp:
+        Added the fixes suggested by jaehrig@desys.com regarding
+        CORBA::Any scopes to all the from_* and to_* methods of Any
+        variables.
+        * orbsvcs/tests/Property/README: Added this file
 
 Fri Feb 05 15:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.{cpp, h}:
-	  Changed to generate navigation, weapons events from separate threads
-	
-        * TAO/orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.cpp: 
-	  fixed a problem valuing the wrong data structure
+          Changed to generate navigation, weapons events from separate threads
+
+        * TAO/orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.cpp:
+          fixed a problem valuing the wrong data structure
 
 Fri Feb  5 15:25:56 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-        * Changed IIOP_Core.{h,cpp} and IIOP_ORB.cpp to use 
+        * Changed IIOP_Core.{h,cpp} and IIOP_ORB.cpp to use
           ACE_INET_Addr in the hash map rather than ACE_Addr.
 
 Fri Feb  5 14:45:25 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-       	* MProfile.{h,cpp} Added descriptive comments and fixed several
+        * MProfile.{h,cpp} Added descriptive comments and fixed several
           cases of mixing int's with unsigned int's.
 
 Fri Feb  5 14:21:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_ORB.cpp: 
-	  Fixed problems in the parsing of URL style IORs.
+        * tao/IIOP_ORB.cpp:
+          Fixed problems in the parsing of URL style IORs.
 
-	* tao/IIOP_Profile.cpp: 
-	  Added some comments for Fred.
+        * tao/IIOP_Profile.cpp:
+          Added some comments for Fred.
 
 Fri Feb 05 13:15:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
@@ -95,10 +101,10 @@ Fri Feb 05 13:15:00 1999 Chris Gill <cdgill@cs.wustl.edu>
           TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java
           TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java
           TAO/orbsvcs/tests/Simulator/DOVEBrowser/make.bat : reorganized
-	  DOVE browser to accept events from multiple named event channels,
-	  using a set of named schedulers.  Synchronized the data handler,
-	  added threaded queueing adapter to do early demultiplexing of ORB
-	  upcalls onto data handler threads.
+          DOVE browser to accept events from multiple named event channels,
+          using a set of named schedulers.  Synchronized the data handler,
+          added threaded queueing adapter to do early demultiplexing of ORB
+          upcalls onto data handler threads.
 
         * TAO/orbsvcs/tests/Simulator/NavWeap.idl
           TAO/orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.{cpp, h}
@@ -106,137 +112,137 @@ Fri Feb 05 13:15:00 1999 Chris Gill <cdgill@cs.wustl.edu>
           TAO/orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.{cpp, dsp, dsw}
           TAO/orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.{cpp, dsp}
           TAO/orbsvcs/tests/Simulator/Event_Supplier/Makefile : reorganized
-	  supplier infrastructure to be able to define an EC and scheduler
-	  per supplier proxy instance.  Added a new supplier, DualEC_Sup,
-	  which creates two event channels and two schedulers, then generates 
-	  events and sends them over two channels.
+          supplier infrastructure to be able to define an EC and scheduler
+          per supplier proxy instance.  Added a new supplier, DualEC_Sup,
+          which creates two event channels and two schedulers, then generates
+          events and sends them over two channels.
 
 Fri Feb  5 11:12:04 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
 
-	  The generated stubs were using IIOP_Object to access the CORBA
-	  object's underlying stub object. However, since the IIOP_Object
-	  class is now removed, we use the STUB_Object class.
-	
+          The generated stubs were using IIOP_Object to access the CORBA
+          object's underlying stub object. However, since the IIOP_Object
+          class is now removed, we use the STUB_Object class.
+
 Fri Feb 05 03:41:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/RT_Task.h: 
-	* orbsvcs/orbsvcs/Event/ReactorTask.h: 
-	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
-	  MSVC++ gets really confused by a default argument of the form
-	  Module::Foo::_nil ()
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
+        * orbsvcs/orbsvcs/Event/ReactorTask.h:
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+          MSVC++ gets really confused by a default argument of the form
+          Module::Foo::_nil ()
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
-	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
-	  Updated to reflect the changes above.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+          Updated to reflect the changes above.
 
 Fri Feb  5 02:34:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
-	* orbsvcs/orbsvcs/Event/RT_Task.h: 
-	* orbsvcs/orbsvcs/Event/ReactorTask.cpp: 
-	* orbsvcs/orbsvcs/Event/ReactorTask.h: 
-	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
-	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
-	  The Event Channel can receive a reference to the scheduler in
-	  its constructor, this reference is propagated to all the modules 
-	  and used instead of the Scheduler_Factory singleton.
-	  This can be used to have more than one Event Channel for process 
-	  or to simplify the testing of multiple Scheduling services.
-	  If no scheduler is specified the Event Channel bootstraps from
-	  the Scheduler_Factory as usual.
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
+        * orbsvcs/orbsvcs/Event/ReactorTask.cpp:
+        * orbsvcs/orbsvcs/Event/ReactorTask.h:
+        * orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+          The Event Channel can receive a reference to the scheduler in
+          its constructor, this reference is propagated to all the modules
+          and used instead of the Scheduler_Factory singleton.
+          This can be used to have more than one Event Channel for process
+          or to simplify the testing of multiple Scheduling services.
+          If no scheduler is specified the Event Channel bootstraps from
+          the Scheduler_Factory as usual.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h: 
-	* orbsvcs/tests/EC_Basic/EC_Basic.cpp: 
-	  It doesn't use the Scheduler_Factory anymore, this illustrates
-	  how the EC can receive the scheduler as an argument.
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+          It doesn't use the Scheduler_Factory anymore, this illustrates
+          how the EC can receive the scheduler as an argument.
 
 
 Fri Feb  5 02:33:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: 
-	  Fixed explicit template instantiations for the new collocation
-	  map, it may not work correctly though.
+        * tao/ORB_Core.cpp:
+          Fixed explicit template instantiations for the new collocation
+          map, it may not work correctly though.
 
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile: 
-	  Updated dependencies.
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+          Updated dependencies.
 
 Thu Feb 04 23:42:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Stub.cpp: It should now include Stub.i instead of
-	  STUB_Object.i.
+        * tao/Stub.cpp: It should now include Stub.i instead of
+          STUB_Object.i.
 
-	* tao/TAO[_Static].dsp: Removed IIOP_Object and added MProfile.
+        * tao/TAO[_Static].dsp: Removed IIOP_Object and added MProfile.
 
 Thu Feb  4 22:18:13 1999 Fred Kuhns <fredk@cs.wustl.edu>
-  
+
         * added public destructor to TAO_IIOP_Profile
 
 Thu Feb  4 21:33:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* utils/catior/catior.cpp:
-	  It included $ACE_ROOT/tao/IIOP_Profile.h explicitly, the file
-	  has been removed. I'm not sure if the program will work, but at
-	  least I could update the Makefile dependencies.
+        * utils/catior/catior.cpp:
+          It included $ACE_ROOT/tao/IIOP_Profile.h explicitly, the file
+          has been removed. I'm not sure if the program will work, but at
+          least I could update the Makefile dependencies.
 
 Thu Feb  4 19:18:51 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Multiple Profiles (MP).
-	  This required the modification of several files, deleting others
-	  as well as adding and removing classes.
+          This required the modification of several files, deleting others
+          as well as adding and removing classes.
 
         * Removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.
-  	  All functionality now resided in the old base class STUB_Object.
+          All functionality now resided in the old base class STUB_Object.
 
         * Changed many files and classes to multiple profiles or to
- 	  account for removing the IIOP_Object class.
+          account for removing the IIOP_Object class.
 
-	   1) IIOP_Connector.cpp
-	   2) IIOP_ORB.{h,cpp}
-	      IIOP_ORB.cpp changed references from IIOP_Object and
-	      Client_Handler to STUB_Object and TAO_Transport.  Also
-	      moved much of the IIOP specific marsheling code to IIOP_Profile.
-	   3) Invocation.{h,i,cpp}
-	      Changed references from IIOP_Object to STUB_Object.
-	   4) ORB.{h,i,cpp}
-	   5) ORB_Core.{h,i,cpp}
-	   6) Object.{i,cpp}
-	   7) Servant_Base.cpp
-	   8) Server_Request.cpp
-	   9) Stub.{h,i,cpp}
-	      All logic from IIOP_Object (minus transport specific stuff) moved to
-	      the STUB_Object.  Also the MProfile class is used for storing all
-	      profiles.
-	  10) decode.cpp
-	      Changed IIOP_Object ref to STUB_Object
-	  11) encode.cpp
-	      Changed IIOP_Object ref to STUB_Object
-	  12) Any.h
-	      Changed "friend class IIOP_Object" to "friend class STUB_Object"
-	  13) corba.h
-	      Added #include's for the Multiple Profile header files.
+           1) IIOP_Connector.cpp
+           2) IIOP_ORB.{h,cpp}
+              IIOP_ORB.cpp changed references from IIOP_Object and
+              Client_Handler to STUB_Object and TAO_Transport.  Also
+              moved much of the IIOP specific marsheling code to IIOP_Profile.
+           3) Invocation.{h,i,cpp}
+              Changed references from IIOP_Object to STUB_Object.
+           4) ORB.{h,i,cpp}
+           5) ORB_Core.{h,i,cpp}
+           6) Object.{i,cpp}
+           7) Servant_Base.cpp
+           8) Server_Request.cpp
+           9) Stub.{h,i,cpp}
+              All logic from IIOP_Object (minus transport specific stuff) moved to
+              the STUB_Object.  Also the MProfile class is used for storing all
+              profiles.
+          10) decode.cpp
+              Changed IIOP_Object ref to STUB_Object
+          11) encode.cpp
+              Changed IIOP_Object ref to STUB_Object
+          12) Any.h
+              Changed "friend class IIOP_Object" to "friend class STUB_Object"
+          13) corba.h
+              Added #include's for the Multiple Profile header files.
 
 Thu Feb  4 15:07:29 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
@@ -244,78 +250,78 @@ Thu Feb  4 15:07:29 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
 Thu Feb  4 14:34:43 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/mpeg_server/Globals.cpp: Added the
- 	  initialization of a missing member variable.  Thanks to Phil
- 	  Ruelle <Phil.Ruelle@adv.sonybpe.com> for the fix.
+        * orbsvcs/tests/AVStreams/mpeg/mpeg_server/Globals.cpp: Added the
+          initialization of a missing member variable.  Thanks to Phil
+          Ruelle <Phil.Ruelle@adv.sonybpe.com> for the fix.
 
 Thu Feb 04 10:55:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Strategies_T.cpp (activate_svc_handler): Fixed unmatched
-	  ACE_TRACE message.
+        * tao/ORB_Strategies_T.cpp (activate_svc_handler): Fixed unmatched
+          ACE_TRACE message.
 
 Thu Feb  4 00:02:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbconf.h: Made sure _WIN32 doesn't get redefined.  Thanks
-	  to Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu> for
-	  pointing this out.
+        * tao/orbconf.h: Made sure _WIN32 doesn't get redefined.  Thanks
+          to Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu> for
+          pointing this out.
 
 Wed Feb 03 15:01:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp (open_services): Do not try to parse the
-	  default svc.conf file is TAO_PLATFORM_SVC_CONF_FILE_NOTSUP is
-	  defined.  You can still use the -f command line option to open a
-	  specific svc.conf file.
+        * tao/TAO_Internal.cpp (open_services): Do not try to parse the
+          default svc.conf file is TAO_PLATFORM_SVC_CONF_FILE_NOTSUP is
+          defined.  You can still use the -f command line option to open a
+          specific svc.conf file.
 
 Wed Feb  3 12:17:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
-	  Wait for all the children to accept their events, then it does.
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+          Wait for all the children to accept their events, then it does.
 
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
-	  Accepts an event if any of its children does.
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+          Accepts an event if any of its children does.
 
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
-	  A filter based on source and/or type.
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+          A filter based on source and/or type.
 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.i:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
-	  This Filter_Builder can use the new filters to support basic
-	  filtering and correlation.
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+          This Filter_Builder can use the new filters to support basic
+          filtering and correlation.
 
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	  A sample configuration based on the filtering above.
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+          A sample configuration based on the filtering above.
 
-	* orbsvcs/orbsvcs/Event/EC_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Filter.cpp:
-	  Use a RB_Tree to represent the set of event types required by a
-	  set of filters; this will let us implement the matching of
-	  consumers and suppliers more effificiently [O(nlog(n))]
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+          Use a RB_Tree to represent the set of event types required by a
+          set of filters; this will let us implement the matching of
+          consumers and suppliers more effificiently [O(nlog(n))]
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	  Call unbind() on the SupplierFiltering strategy, so it can
-	  release our resources.
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+          Call unbind() on the SupplierFiltering strategy, so it can
+          release our resources.
 
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
-	  Added an unbind() method to support automatic destruction.
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp:
+          Added an unbind() method to support automatic destruction.
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	  Updated comments.
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+          Updated comments.
 
 Wed Feb 03 07:07:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
