@@ -1,23 +1,18 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO_SSLIOP
-//
-// = FILENAME
-//     SSLIOP_Connector.h
-//
-// = DESCRIPTION
-//     SSLIOP specific connector processing
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@ece.uci.edu>
-//     Ossama Othman <ossama@ece.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     SSLIOP_Connector.h
+ *
+ *  $Id$
+ *
+ *  SSLIOP specific connector processing
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SSLIOP_CONNECTOR_H
 #define TAO_SSLIOP_CONNECTOR_H
@@ -38,20 +33,21 @@
 
 class TAO_Base_Transport_Property;
 
+/**
+ * @class TAO_SSLIOP_Connector
+ *
+ * @brief IIOP-specific Connector bridge for pluggable protocols.
+ *
+ * Concrete instance of the TAO_Connector class.  Responsible
+ * for establishing a connection with a server and is called from
+ * the Connector_Registry.
+ */
 class TAO_SSLIOP_Export TAO_SSLIOP_Connector : public TAO_IIOP_SSL_Connector
 {
-  // = TITLE
-  //   IIOP-specific Connector bridge for pluggable protocols.
-  //
-  // = DESCRIPTION
-  //   Concrete instance of the TAO_Connector class.  Responsible
-  //   for establishing a connection with a server and is called from
-  //   the Connector_Registry.
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   TAO_SSLIOP_Connector (int no_protection);
-  // Constructor.
 
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h
@@ -65,12 +61,10 @@ public:
 
 
 protected:
+
   // = More TAO_Connector methods, please check the documentation on
   //   Pluggable.h
-  virtual void make_profile (const char *endpoint,
-                             TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV =
-                               TAO_default_environment ());
+  virtual TAO_Profile * make_profile (CORBA::Environment &ACE_TRY_ENV);
 
 public:
 
@@ -91,9 +85,9 @@ public:
 
 private:
 
+  /// If zero, connect to IIOP over SSL port by default.
+  /// Otherwise, connect to the insecure IIOP port.
   int no_protection_;
-  // If zero, connect to IIOP over SSL port by default.
-  // Otherwise, connect to the insecure IIOP port.
 
   /// Our connect strategy
   TAO_SSLIOP_CONNECT_STRATEGY connect_strategy_;

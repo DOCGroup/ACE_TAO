@@ -7,7 +7,9 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 
-ACE_RCSID(TAO_SSLIOP, SSLIOP_Profile, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Profile,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Profile.i"
@@ -45,11 +47,9 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
   this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char *string,
-                                        TAO_ORB_Core *orb_core,
-                                        const SSLIOP::SSL *ssl_component,
-                                        CORBA::Environment &env)
-  : TAO_IIOP_Profile (string, orb_core, env),
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core,
+                                        const SSLIOP::SSL *ssl_component)
+  : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (ssl_component, 0)
 {
   this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
