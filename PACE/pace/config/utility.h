@@ -72,7 +72,7 @@ return ( (errno = ENOTSUP), FAILVALUE)
 # define PACE_DLL_PREFIX ""
 
 /* Turns "FALSE" into -1 */
-# define ACE_ADAPT_RETVAL(OP,RESULT) \
+# define PACE_ADAPT_RETVAL(OP,RESULT) \
   ((RESULT = (OP)) == FALSE ? -1 : 0)
 
 /* If failure, sets errno before returning */
