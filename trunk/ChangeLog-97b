@@ -1,3 +1,9 @@
+Tue Sep 16 18:03:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  It wouldn't report an error when run_tests.sh scream "FAILED",
+	  now it does.
+
 Tue Sep 16 11:42:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS: Added a wrapper for strpbrk() and wcspbrk().  Thanks to
