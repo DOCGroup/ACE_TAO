@@ -1,11 +1,20 @@
+Wed Oct  1 14:26:09 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CompilerElements/Context.hpp: added count () member
+	  function.
+	
+	* CIDLC/RepositoryIdGenerator.hpp:
+	* CIDLC/RepositoryIdGenerator.cpp: implemented first phase of
+	  repository id generation.
+
 Tue Sep 30 09:52:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/mico/mico-thrput-st/client.cc:
 	* performance-tests/mico/mico-thrput-st/server.cc:
 
 	  Fixed fuzz errors.
-	
-	
+
+
 Fri Sep 26 12:13:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
