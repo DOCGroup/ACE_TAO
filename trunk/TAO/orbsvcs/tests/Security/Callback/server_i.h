@@ -22,7 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-class server_i : public virtual POA_server
+class server_i
+  : public virtual POA_server,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
 
