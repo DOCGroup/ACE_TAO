@@ -1,3 +1,8 @@
+Wed Jun 16 09:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_pretty.pl:
+          Zapped this file from the repo, we have now autobuild for this
+
 Wed Jun 16 09:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
