@@ -1813,5 +1813,5 @@ template class TAO_PropertySet<POA_AVStreams::MCastConfigIf>;
 #pragma instantiate TAO_PropertySet<POA_AVStreams::FlowConnection>
 #pragma instantiate TAO_PropertySet<POA_AVStreams::FlowEndPoint>
 #pragma instantiate TAO_PropertySet<POA_AVStreams::FDev>
-#pragma instantiate TAO_PropertySet<POA_AVStreams::MCastConfigIf>;
+#pragma instantiate TAO_PropertySet<POA_AVStreams::MCastConfigIf>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
