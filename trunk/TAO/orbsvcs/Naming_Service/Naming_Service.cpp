@@ -5,103 +5,21 @@
 
 ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 
-  // Default Constructor.
-
+// Default Constructor.
+  
 TAO_Naming_Service::TAO_Naming_Service (void)
-  : ior_output_file_ (0),
-    pid_file_name_ (0),
-    context_size_ (ACE_DEFAULT_MAP_SIZE),
-    persistence_file_name_ (0),
-    base_address_ (TAO_NAMING_BASE_ADDR),
-    time_ (0),
-    multicast_ (1)
+  : time_ (0)
 {
 }
 
 // Constructor taking command-line arguments.
-
 TAO_Naming_Service::TAO_Naming_Service (int argc,
                                         char* argv[])
-  : ior_output_file_ (0),
-    pid_file_name_ (0),
-    context_size_ (ACE_DEFAULT_MAP_SIZE),
-    persistence_file_name_ (0),
-    base_address_ (TAO_NAMING_BASE_ADDR),
-    time_ (0),
-    multicast_ (1)
+  : time_ (0)
 {
   this->init (argc, argv);
 }
 
-int
-TAO_Naming_Service::parse_args (int argc,
-                                char *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:m:");
-  int c;
-  int size, time, result;
-  long address;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag.
-        TAO_debug_level++;
-        break;
-      case 'o': // outputs the naming service ior to a file.
-        this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.optarg, "w");
-
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
-        break;
-      case 'p':
-        this->pid_file_name_ = get_opts.optarg;
-        break;
-      case 'f':
-        this->persistence_file_name_ = get_opts.optarg;
-        break;
-      case 's':
-        size = ACE_OS::atoi (get_opts.optarg);
-        if (size >= 0)
-          this->context_size_ = size;
-        break;
-      case 't':
-         time = ACE_OS::atoi (get_opts.optarg);
-        if (time >= 0)
-          this->time_ = time;
-        break;
-      case 'b':
-        result = ::sscanf (get_opts.optarg,
-                           "%ld",
-                           &address);
-        if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-b> option"),
-                            -1);
-        this->base_address_ = (void *) address;
-        break;
-      case 'm':
-        this->multicast_ = ACE_OS::atoi(get_opts.optarg);
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-NScontextname <contextname> "
-                           "-o <ior_output_file> "
-                           "-p <pid_file_name> "
-                           "-f <persistence_file_name> "
-                           "-b <base_address> "
-                           "-m <1=enable multicast(default), 0=disable multicast "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  return 0;
-}
 
 // Initialize the state of the TAO_Naming_Service object
 int
@@ -109,90 +27,29 @@ TAO_Naming_Service::init (int argc,
                           char *argv[])
 {
   int result;
-  CORBA::ORB_var orb;
-  PortableServer::POA_var child_poa;
-
+ 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_ = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      this->argc_ = argc;
+      this->argv_ = argv;
+      
+      // Initialize the ORB
+      this->orb_ = 
+        CORBA::ORB_init (this->argc_, this->argv_, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Get the POA from the ORB.
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      // Parse the args for '-t' option. If '-t' option is passed, do
+      // the needful and then remove the option from the list of
+      // arguments.
+      this->parse_args (this->argc_, this->argv_); 
 
-      if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          -1);
+      // This function call initializes the naming service and returns
+      // '-1' in case of an exception.
+      result = this->my_naming_server_.init_with_orb (this->argc_, 
+                                                      this->argv_, 
+                                                      this->orb_.in ());
 
-      // Get the POA object.
-      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in (),
-                                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Get the POA_Manager.
-      PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::PolicyList policies (2);
-      policies.length (2);
-
-      // Id Assignment policy
-      policies[0] =
-        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
-                                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Lifespan policy
-      policies[1] =
-        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // We use a different POA, otherwise the user would have to change
-      // the object key each time it invokes the server.
-
-      this->ns_poa_ = this->root_poa_->create_POA ("NameService",
-                                                   poa_manager.in (),
-                                                   policies,
-                                                   ACE_TRY_ENV);
-      // Warning!  If create_POA fails, then the policies won't be
-      // destroyed and there will be hell to pay in memory leaks!
-      ACE_TRY_CHECK;
-
-      // Creation of the new POAs over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0;
-           i < policies.length ();
-           ++i)
-        {
-          CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
-      // Check the non-ORB arguments.  this needs to come before we
-      // initialize my_naming_server so that we can pass on some of
-      // the command-line arguments.
-
-      result = this->parse_args (argc, argv);
-      if (result < 0)
-        return result;
-
-      result = this->my_naming_server_.init (this->orb_.in (),
-                                             this->ns_poa_.in (),
-                                             this->context_size_,
-                                             0,
-                                             0,
-                                             this->persistence_file_name_,
-                                             this->base_address_,
-                                             this->multicast_);
       if (result == -1)
         return result;
     }
@@ -204,32 +61,48 @@ TAO_Naming_Service::init (int argc,
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  if (this->ior_output_file_ != 0)
-    {
-      CORBA::String_var str =
-        this->my_naming_server_.naming_service_ior ();
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
-    }
+  return 0;
+}
 
-  if (this->pid_file_name_ != 0)
+int
+TAO_Naming_Service::parse_args (int argc,
+                                char *argv [])
+{
+  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:t:f:m:");
+  int c;
+  int time;
+  int count_argv = 0;
+
+  while ((c = get_opts ()) != -1)
     {
-      FILE *pidf = fopen (this->pid_file_name_, "w");
-      if (pidf != 0)
+      ++count_argv;
+      switch (c)
         {
-          ACE_OS::fprintf (pidf,
-                           "%ld\n",
-                           ACE_static_cast (long, ACE_OS::getpid ()));
-          ACE_OS::fclose (pidf);
+        case 't':
+          time = ACE_OS::atoi (get_opts.optarg);
+          if (time >= 0)
+            this->time_ = time;
+
+          // Remove the option '-t' from argv []
+          // to avoid any confusion that might result.
+          for (int i = count_argv; i != argc; ++i)
+            argv [i] = argv [i+2];
+          
+          // Decrement the value of this->argc_ to reflect the removal
+          // of '-t' option.
+          argc = argc-2;
+          break;
+        
+      case '?':
+      default:
+        // Donot do anything. The TAO_Naming_Server::parse_args ()
+        // takes care of indicating an error in case of error.
+        break;
         }
-    }
   return 0;
 }
 
 // Run the ORB event loop.
-
 int
 TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 {
@@ -251,17 +124,7 @@ TAO_Naming_Service::run (CORBA_Environment& ACE_TRY_ENV)
 }
 
 // Destructor.
-
 TAO_Naming_Service::~TAO_Naming_Service (void)
 {
-  ACE_TRY_NEW_ENV
-    {
-      this->root_poa_->destroy (1, 1, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore
-    }
-  ACE_ENDTRY;
+  // Destructor 
 }

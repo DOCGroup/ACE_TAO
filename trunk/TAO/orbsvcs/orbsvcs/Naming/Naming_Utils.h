@@ -104,6 +104,15 @@ public:
   // If <enable_multicast> is not zero then the service will respond
   // to multicast location queries.
 
+  int init_with_orb (int argc, 
+                     char *argv [], 
+                     CORBA::ORB_ptr orb);
+  // Initialize the Naming Service with the command line arguments and
+  // the ORB.
+
+  int fini (void);
+  // Destroy the child POA created in <init_with_orb>
+
   ~TAO_Naming_Server (void);
   // Destructor.
 
@@ -129,6 +138,9 @@ protected:
   // If <enable_multicast> is not zero then the service will respond
   // to multicast location queries.
 
+  int parse_args (int argc, char *argv[]);
+  // parses the arguments.
+
   CosNaming::NamingContext_var naming_context_;
   // Root NamingContext_ptr.
 
@@ -142,6 +154,43 @@ protected:
   // Pointer to the object used to create/initialize
   // the Naming Service when local persistent Naming Service is
   // desired.
+
+  CORBA::ORB_var orb_;
+  // The ORB
+
+  PortableServer::POA_var root_poa_;
+  // The Root POA.
+
+  PortableServer::POA_var ns_poa_;
+  // The Naming Service POA.
+
+  FILE *ior_output_file_;
+  // File to output the Naming Service IOR.
+
+  const char *pid_file_name_;
+  // File to output the process id.
+
+  size_t context_size_;
+  // Size of the hash_table allocated upon the creation of the Naming
+  // Service context (if one is created).  Note: all the contexts
+  // created under the given context will use the same size for their
+  // initial hash table allocations.
+
+  const ACE_TCHAR *persistence_file_name_;
+  // Path to the file to be used to store/read in Naming Service
+  // persistent state.
+
+  void *base_address_;
+  // Address to be used for memory mapping Naming Service state file,
+  // identified by the <persistence_file_name_>.
+
+  size_t time_;
+  // After how long the server should stop listening to requests (in
+  // seconds).
+
+  int multicast_;
+  // If not zero multicast is enabled.
+
 };
 
 class TAO_Naming_Export TAO_Naming_Client
