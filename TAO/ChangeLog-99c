@@ -1,3 +1,16 @@
+Fri Jul 16 22:39:15 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Acceptor_Impl: This file contained a class that inherited
+	  from Acceptor and overwrote some of the functions (such as
+	  make_svc_handler() and activate_svc_handler()).  Changed this to
+	  use the Strategy_Acceptor and implemented the appropriate
+	  strategies needed for TAO.
+
+	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+	* tao/UIOP_Acceptor.h (TAO_UIOP_Acceptor):
+
+	  Changed these classes to use the new Strategy Acceptor.
+
 Fri Jul 16 19:57:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Callback_Quoter/run_test.pl:
