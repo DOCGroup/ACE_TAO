@@ -12,42 +12,43 @@ Thu May 13 13:32:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           Increased timeout of the server, the server runs the orb for 120
           seconds and then quits, so in the run_test.pl we now don't wait
           120 seconds but 150, the test looks to be failing on the slower
-          windows systems but almost takes 120 seconds on my fast develoment
-          system.
+          windows systems but almost takes 120 seconds on my fast
+	  development system.
 
 Thu May 13 12:50:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Crash_On_Write/client.cpp:
           Output some more iteration message so that we can better see
           in the daily builds what happens during the crash of this
-          test on Windows
+          test on Windows.
 
 Thu May 13 11:26:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Reply/client.cpp:
           When the client has receivel all replies invoke the shutdown() on
-          the server so that the server stops controlled
+          the server so that the server stops controlled.
 
         * tests/Big_Reply/Client_Task.cpp:
-          Fixed typos and formatting
+          Fixed typos and formatting.
 
         * tests/Big_Reply/server.cpp:
           Added some extra lines so that we can see that the server starts
-          and stops
+          and stops.
 
         * tests/Big_Reply/run_test.pl:
           Use WaitKill instead of TerminateWaitKill on the server. Under
           Windows the TerminateWaitKill just doesn't give any feedback that
-          the server has been killed, WaitKill does give this info correctly
+          the server has been killed, WaitKill does give this info correctly.
 
 Thu May 13 09:22:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Request_Muxing/client.cpp:
         * tests/Big_Request_Muxing/run_test.pl:
         * tests/Big_Request_Muxing/server.cpp:
-          Added some more debug lines and changed timeouts and way of ending the
-          server in the perl script. On Windows it seems the server was killed before
-          it was really finished. On my system this tests runs now without problems.
+          Added some more debug lines and changed timeouts and way of
+	  ending the server in the perl script. On Windows it seems the
+	  server was killed before it was really finished. On my system
+	  this tests runs now without problems.
 
 Wed May 12 21:46:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
