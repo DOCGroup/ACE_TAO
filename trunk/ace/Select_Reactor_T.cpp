@@ -1054,16 +1054,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
       // Perform the Template Method for dispatching all the handlers.
 
-      // Handle timers first since they may have higher latency
-      // constraints.
-
-      if (this->dispatch_timer_handlers (other_handlers_dispatched) == -1)
-        // State has changed or timer queue has failed, exit loop.
-        break;
-      else if (active_handle_count <= 0)
+      // First check for interrupts.
+      if (active_handle_count == -1)
         {
-          // Bail out since we got here since <select> was
-          // interrupted.
+          // Bail out -- we got here since <select> was interrupted.
           if (ACE_Sig_Handler::sig_pending () != 0)
             {
               ACE_Sig_Handler::sig_pending (0);
@@ -1074,8 +1068,21 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
               active_handle_count = this->any_ready (dispatch_set);
             }
           else
-            return io_handlers_dispatched + other_handlers_dispatched;
+            return -1;
         }
+
+      // Handle timers early since they may have higher latency
+      // constraints than I/O handlers.  Ideally, the order of
+      // dispatching should be a strategy...
+
+      else if (this->dispatch_timer_handlers (other_handlers_dispatched) == -1)
+        // State has changed or timer queue has failed, exit loop.
+        break;
+
+      // Check to see if there are no more I/O handles left to
+      // dispatch AFTER we've handled the timers...
+      else if (active_handle_count == 0)
+        return io_handlers_dispatched + other_handlers_dispatched;
 
       // Next dispatch the notification handlers (if there are any to
       // dispatch).  These are required to handle multi-threads that
