@@ -257,9 +257,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
   ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_cancellations = 0;
+  size_t i;
 
   // Walk through the wheel
-  for (size_t i = 0; i < this->wheel_size_; i++)
+  for (i = 0; i < this->wheel_size_; i++)
     {
       ACE_Timer_Node_T<TYPE> *curr = this->wheel_[i]->get_next ();
   
