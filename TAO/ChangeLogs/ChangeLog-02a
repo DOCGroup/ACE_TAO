@@ -1,3 +1,22 @@
+Sat Jan  8 03:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+ 
+	* TAO/docs/releasenotes/index.html
+	  TAO/examples/AMI/FL_Callback/README,
+	  TAO/examples/Buffered_AMI/README,
+	  TAO/tests/AMI/README:
+	  Made the documentation of 'defines' necessary to compile
+	  AMI consistent across various documentations. 
+	  Currently, you need to set TAO_HAS_CORBA_MESSAGING and
+	  TAO_HAS_AMI_CALLBACK to activate AMI code in the TAO library.
+	  (TAO_HAS_VALUETYPE is needed as well, but is defined by default)
+	  IDL_HAS_VALUETYPE needs to be defined for the TAO IDL compiler,
+	  this is due to the fact that AMI uses valuetypes for exception
+	  handling, though this might change in the future, because the
+	  spec might change in this area. Use -GC on the IDL compiler
+	  to generate AMI stubs.
+	  Thanks to "Russell L. Carter" <rcarter@consys.com> for pointing
+	  this out.
+
 Fri Jan  7 15:22:38 2000  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (destroy):
