@@ -1,3 +1,21 @@
+Mon Dec 20 12:15:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Makefile: Compile the Reliable
+	  directory only if we have CORBA Messaging defined since there
+	  is no buffering in TAO without CORBA Messaging.
+
+	* performance-tests/RTCorba/Makefile: Compile the
+	  Multiple_Endpoints directory only if we have RT CORBA defined
+	  since there is no priority mapping in TAO without RT CORBA.
+
+	* examples/Makefile (DIRS): Should be:
+	 
+	  ifeq ($(corba_messaging),1)
+
+	  instead of:
+
+	  ifdef corba_messaging
+
 Mon Dec 20 11:10:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp: Changed some
