@@ -3,7 +3,8 @@ Wed Jan 21 21:37:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/Hash_Map_Manager.cpp (close_i): Removed the HPUX_11
  	  destructor madness by saving the location to be destructed in a
  	  temporary reference instead of calling the destructor from the
- 	  array directly.
+ 	  array directly.  Thanks to Istvan Buki <ibuki@fedex.com> for
+ 	  providing the patch.
 
 Wed Jan 21 20:36:43 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
