@@ -1,3 +1,11 @@
+Thu Mar 17 07:34:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+	  Match "$(TAO_IDL)" instead of "TAO_IDL", to avoid emitting
+	  TAO_IDL/TAO_IDLFLAGS variable definitions for the TAO_IDL
+	  Makefile.am itself.
+
 Wed Mar 16 10:29:28 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
