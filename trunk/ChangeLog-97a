@@ -1,3 +1,22 @@
+Tue Feb 25 17:40:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Updated the 'p' option of the log() method to
+ 	  use the new ACE::sock_error() method for cases where
+ 	  FormatMessage() fails.
+
+	* ace/ACE: Added a new sock_error() method to class ACE which
+ 	  returns the appropriate message for each WinSock error code.
+  	  This makes up for an apparent oversight in Win32.  Thanks to
+ 	  Michael R. MacFaden" <mrm@cisco.com> for this.
+
+Tue Feb 25 01:33:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved <netinet/tcp.h> outside of the VXWORKS #ifdef
+ 	  since it seems to be available on other platforms (e.g.,
+ 	  Solaris).  If people find this not to be the case on all
+ 	  platforms please let me know and I'll #ifdef it.  Thanks to
+ 	  Sumedh Mungee <sumedh@cs.wustl.edu> for reporting this.
+
 Tue Feb 25 16:20:29 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* examples/Connection/non_blocking/CPP-acceptor.cpp: Added a
