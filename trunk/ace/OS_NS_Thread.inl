@@ -3711,8 +3711,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 //   ACE_OS_TRACE ("ACE_OS::thr_getspecific");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_TSS_EMULATION)
-    ACE_KEY_INDEX (key_index, key);
-    if (key_index >= ACE_TSS_Emulation::total_keys ())
+    if (ACE_TSS_Emulation::is_key (key) == 0)
       {
         errno = EINVAL;
         data = 0;
