@@ -32,81 +32,83 @@ class ACE_Command_Base;
 class TAO_RTOLDEvent_Export TAO_EC_Timer_Module
 {
 public:
+  /// The dtor
   virtual ~TAO_EC_Timer_Module (void);
-  // The dtor
 
+  /// Activate the threads, it waits until the threads are up and
+  /// running.
   virtual void activate (void) = 0;
-  // Activate the threads, it waits until the threads are up and
-  // running.
 
+  /// Deactivate the threads, it waits until all the threads have
+  /// terminated.
   virtual void shutdown (void) = 0;
-  // Deactivate the threads, it waits until all the threads have
-  // terminated.
 
+  /// The RT_Info handle for the "task" at <priority>
   virtual RtecScheduler::handle_t
      rt_info (RtecScheduler::OS_Priority priority) = 0;
-  // The RT_Info handle for the "task" at <priority>
 
+  /// Add a timer at the given priority, returns the timer ID.
   virtual int schedule_timer (RtecScheduler::Preemption_Priority_t priority,
                               ACE_Command_Base* act,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval) = 0;
-  // Add a timer at the given priority, returns the timer ID.
 
+  /// Add a timer at the given priority.
   virtual int cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                             int id,
                             ACE_Command_Base*& act) = 0;
-  // Add a timer at the given priority.
 
+  /// Register a handler?????
   virtual int register_handler (RtecScheduler::Preemption_Priority_t priority,
                                 ACE_Event_Handler* eh,
                                 ACE_HANDLE handle) = 0;
-  // Register a handler?????
 
+  /// Obtain the reactor for the given priority.
+  /// @@ This may prove tricky to implement with timer queues not based
+  /// on reactors.
   virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority_t priority) = 0;
-  // Obtain the reactor for the given priority.
-  // @@ This may prove tricky to implement with timer queues not based
-  // on reactors.
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_EC_Timeout_Handler
+ *
+ * @brief Event Service Timeout handler.
+ *
+ * This is used by the Timer_Modules as an adaptor between the
+ * reactor (Event_Handler) and the Command objects.
+ */
 class TAO_RTOLDEvent_Export TAO_EC_Timeout_Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //   Event Service Timeout handler.
-  //
-  // = DESCRIPTION
-  //   This is used by the Timer_Modules as an adaptor between the
-  //   reactor (Event_Handler) and the Command objects.
-  //
 public:
+  /// Default construction.
   TAO_EC_Timeout_Handler (void);
-  // Default construction.
 
 private:
+  /// Casts @ act to ACE_Command_Base and calls execute.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *act);
-  // Casts <act> to ACE_Command_Base and calls execute.
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_EC_ST_Timer_Module
+ *
+ * @brief A single threaded implementation for the timer module.
+ *
+ * This timer module uses a single Reactor to implement the timer,
+ * usually the ORB reactor is used for this purposes.
+ */
 class TAO_RTOLDEvent_Export TAO_EC_ST_Timer_Module : public TAO_EC_Timer_Module
 {
-  // = TITLE
-  //   A single threaded implementation for the timer module.
-  //
-  // = DESCRIPTION
-  //   This timer module uses a single Reactor to implement the timer,
-  //   usually the ORB reactor is used for this purposes.
-  //
 public:
+  /// The ctor.
   TAO_EC_ST_Timer_Module (ACE_Reactor* reactor);
-  // The ctor.
 
+  /// The dtor
   virtual ~TAO_EC_ST_Timer_Module (void);
-  // The dtor
 
   // = The TAO_EC_Timer_Module methods.
   virtual void activate (void);
@@ -126,43 +128,43 @@ public:
   virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority_t priority);
 
 private:
+  /// The reactor.
   ACE_Reactor* reactor_;
-  // The reactor.
 
+  /// To receive the timeouts.
   TAO_EC_Timeout_Handler timeout_handler_;
-  // To receive the timeouts.
 };
 
 // ****************************************************************
 
 class ACE_ES_Reactor_Task;
 
+/**
+ * @class TAO_EC_RPT_Timer_Module
+ *
+ * @brief A timer module using reactor-per-thread.
+ *
+ * This Timer Module uses a pool of ACE_ReactorTask to handle the
+ * dispatching of timeouts. In real-time multi-threaded enviroments
+ * each Reactor runs at a different priority.
+ */
 class TAO_RTOLDEvent_Export TAO_EC_RPT_Timer_Module : public TAO_EC_Timer_Module
 {
-  //
-  // = TITLE
-  //   A timer module using reactor-per-thread.
-  //
-  // = DESCRIPTION
-  //   This Timer Module uses a pool of ACE_ReactorTask to handle the
-  //   dispatching of timeouts. In real-time multi-threaded enviroments
-  //   each Reactor runs at a different priority.
-  //
 public:
+  /// Create the Timer Module
   TAO_EC_RPT_Timer_Module (RtecScheduler::Scheduler_ptr scheduler);
-  // Create the Timer Module
 
+  /// The dtor also shutdowns the Task_Manager.
   virtual ~TAO_EC_RPT_Timer_Module (void);
-  // The dtor also shutdowns the Task_Manager.
 
   typedef ACE_ES_Reactor_Task ReactorTask;
 
+  /// Obtain the ReactorTask for the given priority.
+  /// The Task must have been created already.
   ReactorTask* GetReactorTask(RtecScheduler::Preemption_Priority_t priority);
-  // Obtain the ReactorTask for the given priority.
-  // The Task must have been created already.
 
+  /// Returns a global ThreadManager for the Task pool.
   ACE_RT_Thread_Manager* ThrMgr();
-  // Returns a global ThreadManager for the Task pool.
 
   // = The TAO_EC_Timer_Module methods.
   virtual void activate (void);
@@ -182,20 +184,20 @@ public:
   virtual ACE_Reactor* reactor (RtecScheduler::Preemption_Priority_t priority);
 
 private:
+  /// The reactors are shutdown, do not attempt to restart them.
   int shutdown_;
-  // The reactors are shutdown, do not attempt to restart them.
 
+  /// The set of ReactorTasks
   ReactorTask *reactorTasks[ACE_Scheduler_MAX_PRIORITIES];
-  // The set of ReactorTasks
 
+  /// The thread manager.
   ACE_RT_Thread_Manager thr_mgr;
-  // The thread manager.
 
+  /// To receive the timeouts.
   TAO_EC_Timeout_Handler timeout_handler_;
-  // To receive the timeouts.
 
+  /// The scheduler.
   RtecScheduler::Scheduler_var scheduler_;
-  // The scheduler.
 };
 
 #if defined (__ACE_INLINE__)

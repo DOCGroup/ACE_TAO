@@ -23,13 +23,15 @@
 #include "Local_ESTypes.h"
 #include "RT_Task.h"
 
-class TAO_RTOLDEvent_Export ACE_ES_Reactor_Task : public ACE_RT_Task
-// = TITLE
-//    Event Service Timer Task
-//
-// = DESCRIPTION
-//    An active object that dispatches timers from its own ReactorEx.
+/**
+ * @class ACE_ES_Reactor_Task
+ *
+ * @brief Event Service Timer Task
+ *
+ * An active object that dispatches timers from its own ReactorEx.
+ */
 {
+class TAO_RTOLDEvent_Export ACE_ES_Reactor_Task : public ACE_RT_Task
 public:
   // BBM, added this.
 #if defined (ACE_OLD_STYLE_REACTOR)
@@ -38,44 +40,44 @@ public:
   typedef ACE_Reactor Reactor;
 #endif /* ACE_OLD_STYLE_REACTOR */
 
+  /// Default construction.
   ACE_ES_Reactor_Task (RtecScheduler::Scheduler_ptr scheduler);
-  // Default construction.
 
+  /// Destruction.
   ~ACE_ES_Reactor_Task (void);
-  // Destruction.
 
+  /// Assume ownership of the reactor_.
   virtual int svc_hook(RtecScheduler::OS_Priority);
-  // Assume ownership of the reactor_.
 
+  /// This is a hack for now.
   int open_reactor (RtecScheduler::Period_t &period);
-  // This is a hack for now.
 
+  /// Calls reactor_.handle_events until done_ is set.
   virtual int svc_one();
-  // Calls reactor_.handle_events until done_ is set.
 
+  /// Sets done_ and notifies the reactor_.
   void shutdown_task();
-  // Sets done_ and notifies the reactor_.
 
+  /// ReactorEx accessor.
   Reactor &get_reactor();
-  // ReactorEx accessor.
 
+  /// Deletes this.
   virtual void threads_closed();
-  // Deletes this.
 
 private:
+  /// The timer storage mechanism used by reactor_.
   ACE_Timer_List timer_queue_;
-  // The timer storage mechanism used by reactor_.
 
 #ifndef ACE_OLD_STYLE_REACTOR
+  /// The timer dispatch mechanism.
   ACE_ES_Fast_Reactor fast_reactor_;
-  // The timer dispatch mechanism.
 #endif /* ! ACE_OLD_STYLE_REACTOR */
 
+  /// "Public" handle to fast_reactor_.
   Reactor reactor_;
-  // "Public" handle to fast_reactor_.
 
+  /// When set, end the event loop.
   sig_atomic_t done_;
-  // When set, end the event loop.
 };
 
 #endif /* ACE_ReactorTask_H */
