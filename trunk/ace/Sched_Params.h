@@ -24,7 +24,7 @@
 // for ACE_Time_Value and ACE_SCOPE_PROCESS
 #include "ace/OS.h"  
 
-class ACE_Scheduling_Params
+class ACE_Export ACE_Scheduling_Params
   // = TITLE
   //
   // = DESCRIPTION

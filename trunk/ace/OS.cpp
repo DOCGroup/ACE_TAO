@@ -509,9 +509,12 @@ ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
 #elif defined (ACE_WIN32)
 
   // Set the priority class of this process to the real-time process class.
-  if (!::SetPriorityClass (::GetCurrentProcess (),
-			   scheduling_params.priority ().os_priority_class ())
-    return -1;
+  if (! ::SetThreadPriority (
+          ::GetCurrentThread (),
+          scheduling_params.priority ().os_default_thread_priority ()))
+    {
+      return -1;
+    }
 
   // Set the thread priority on the current thread.
   if (!::SetThreadPriority (::GetCurrentThread (),

@@ -16,6 +16,8 @@
 //
 // ============================================================================
 
+#define ACE_BUILD_DLL
+
 #include "ace/ACE.h"
 #include "ace/Thread_Priority.h"
 #include "ace/OS.h"
@@ -95,7 +97,7 @@ ACE_Thread_Priority::normalize (void)
 long
 ACE_Thread_Priority::normalize (void)
 {
-  switch (priority_class)
+  switch (priority_class_)
   {
     case ACE_LOW_PRIORITY_CLASS :
       os_priority_class_ = IDLE_PRIORITY_CLASS;
