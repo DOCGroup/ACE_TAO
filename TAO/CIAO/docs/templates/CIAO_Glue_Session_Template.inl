@@ -90,12 +90,15 @@ ACE_INLINE void
   if (! CORBA::is_nil (this->ciao_uses_[receptacle name]_.in ()))
     ACE_THROW (::Components::AlreadyConnected ());
 
+  if (CORBA::is_nil (c))
+    ACE_THROW (::Components::InvalidConnection ());
+
   // When do we throw InvalidConnection exception?
   this->ciao_uses_[receptacle name]_ = [uses type]::_duplicate (c);
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Context::disconnect_[receptacle name] ()
+[ciao module name]::[component name]_Context::disconnect_[receptacle name] (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::NoConnection))
 {
@@ -108,13 +111,14 @@ ACE_INLINE [uses type]_ptr
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
 // Multiplex [receptacle name] connection management operations
 ACE_INLINE ::Components::Cookie_ptr
-[ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c)
+[ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c
+                                                                         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceedConnectionLimit,
                        ::Components::InvalidConnection))
 {
   if (CORBA::is_nil (c))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
 
   CIAO::Active_Objref_Map::key_type key;
   this->ciao_muses_[receptacle name]_.bind (c,
@@ -125,7 +129,8 @@ ACE_INLINE ::Components::Cookie_ptr
 }
 
 ACE_INLINE [uses type]_ptr
-[ciao module name]::[component name]_Context::disconnect_[receptacle name] (::Components::Cookie_ptr ck)
+[ciao module name]::[component name]_Context::disconnect_[receptacle name] (::Components::Cookie_ptr ck
+                                                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))
 {
@@ -193,7 +198,7 @@ ACE_INLINE ::Components::Cookie_ptr
 }
 
 ACE_INLINE [eventtype]Consumer_ptr
-unsubscribe_[publish name] (::Components::Cookie_ptr ck
+[ciao module name]::[component name]_Context::unsubscribe_[publish name] (::Components::Cookie_ptr ck
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection));

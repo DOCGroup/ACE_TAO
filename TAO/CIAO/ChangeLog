@@ -1,3 +1,21 @@
+Mon Jan 13 11:18:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Component_Base.idl:
+	* ciao/CCM_Base.idl: Based on Components 1.1 RTF
+	  Events::unsubscribe operations now return the unsubscribed
+	  consumber object reference instead of void.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Filled in most of
+	  the operations for component servant.  Only opeations left
+	  unimplemented include Events::get_*_publishers which I will
+	  implement in the *_Context class later.
+
+	  There are several other oeprations that throw NO_IMPLEMENT
+	  exception or are no-op currently.  Missing them probably is okay
+	  for now.  Next up, Home Servant template.
+
 Mon Jan 13 00:27:03 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/templates/CIAO_Glue_Session_Template.cpp:

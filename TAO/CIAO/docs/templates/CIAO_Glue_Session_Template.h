@@ -417,11 +417,11 @@ namespace CIAO_GLUE
                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
-                       Components::AlreadyConnected,
-                       Components::InvalidConnection));
-    virtual void unsubscribe (const char * publisher_name,
-                              Components::Cookie_ptr ck
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       Components::InvalidConnection,
+                       Components::ExceededConnectionLimit));
+    virtual ::Components::EventConsumerBase_ptr unsubscribe (const char * publisher_name,
+                                                             Components::Cookie_ptr ck
+                                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
                        Components::InvalidConnection));

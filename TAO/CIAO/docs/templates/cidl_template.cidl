@@ -25,3 +25,7 @@ composition session [composition name]
       manages [component executor name];
     };
 };
+
+
+// @@ We should also generate somet sort of implementaion template for
+// users.  E.g., a set of [idl-basename]_impl.* and the MPC files(?).
