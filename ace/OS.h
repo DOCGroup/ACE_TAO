@@ -830,12 +830,24 @@ struct cancel_state
 #include /**/ <thread.h>
 #define ACE_SCOPE_PROCESS P_PID
 #define ACE_SCOPE_LWP P_LWPID
+#define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
 #else
 #define ACE_SCOPE_PROCESS 0
 #define ACE_SCOPE_LWP 1
+#define ACE_SCOPE_THREAD 2
 #endif /* ACE_HAS_STHREADS */
 
+#if ! (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS))
+#define ACE_SCHED_OTHER 0
+#define ACE_SCHED_FIFO 1
+#define ACE_SCHED_RR 2
+#endif /* ! (ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS) */
+
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#define ACE_SCHED_OTHER SCHED_OTHER
+#define ACE_SCHED_FIFO SCHED_FIFO
+#define ACE_SCHED_RR SCHED_RR
+
 // Definitions for mapping POSIX pthreads onto Solaris threads.
 
 #if defined (ACE_HAS_FSU_PTHREADS)
@@ -1155,6 +1167,10 @@ private:
 // Give these things some reasonable value...
 #define ACE_SCOPE_PROCESS 0
 #define ACE_SCOPE_LWP 1
+#define ACE_SCOPE_THREAD 2
+#define ACE_SCHED_OTHER 0
+#define ACE_SCHED_FIFO 1
+#define ACE_SCHED_RR 2
 #define THR_CANCEL_DISABLE      0
 #define THR_CANCEL_ENABLE       0
 #define THR_CANCEL_DEFERRED     0
@@ -2260,8 +2276,13 @@ extern "C" int _xti_error(char *);
 #endif /* UNIXWARE */
 #endif /* ACE_REDEFINES_XTI_FUNCTIONS */
 
+// = The ACE_Sched_Priority type should be used for platform-
+//   independent thread and process priorities, by convention.
+//   int should be used for OS-specific priorities.
+typedef int ACE_Sched_Priority;
+
 // forward declaration
-class ACE_Scheduling_Params;
+class ACE_Sched_Params;
 
 class ACE_Export ACE_OS
   // = TITLE
@@ -2556,7 +2577,7 @@ public:
   static int semop (int int_id, struct sembuf *sops, size_t nsops); 
 
   // = Thread scheduler interface.
-  static int set_sched_params (const ACE_Scheduling_Params &);
+  static int sched_params (const ACE_Sched_Params &);
 
   // = A set of wrappers for System V shared memory.
   static void *shmat (int int_id, void *shmaddr, int shmflg);
@@ -2745,6 +2766,7 @@ public:
   static int thr_kill (ACE_Thread_ID thr_id, int signum);
   static ACE_Thread_ID thr_self (void);
   static int thr_setprio (ACE_Thread_ID thr_id, int prio);
+  static int thr_setprio (const ACE_Sched_Priority prio);
   static int thr_suspend (ACE_Thread_ID target_thread);
   static int thr_cancel (ACE_Thread_ID t_id);
 #endif /* 0 */
@@ -2766,6 +2788,7 @@ public:
   static ACE_thread_t thr_self (void);
   static void thr_self (ACE_hthread_t &);
   static int thr_setprio (ACE_hthread_t thr_id, int prio);
+  static int thr_setprio (const ACE_Sched_Priority prio);
   static int thr_suspend (ACE_hthread_t target_thread);
   static int thr_cancel (ACE_thread_t t_id);
 
