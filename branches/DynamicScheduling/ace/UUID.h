@@ -7,7 +7,8 @@
 #include "ace/SString.h"
 #include "ace/Singleton.h"
 
-typedef unsigned char Octet;
+//typedef unsigned char Octet;
+class ACE_Lock;
 
 /**
  *  @class ACE_UUID
@@ -38,8 +39,8 @@ class ACE_Export ACE_UUID
    */
   struct UUID_node_t 
   {
-    typedef enum { NODE_ID_SIZE = 6 } ;
-    typedef Octet NodeID[NODE_ID_SIZE];
+    typedef enum {NODE_ID_SIZE = 6};
+    typedef u_char NodeID[NODE_ID_SIZE];
     bool operator == (const UUID_node_t& right) const;
     bool operator != (const UUID_node_t& right) const;
     bool operator <  (const UUID_node_t& right) const;
@@ -52,11 +53,11 @@ class ACE_Export ACE_UUID
     ACE_UINT32  timeLow;
     ACE_UINT16  timeMid;    
     ACE_UINT16  timeHiAndVersion;    
-    Octet       clockSeqHiAndReserved;    
-    Octet       clockSeqLow;    
-    ACE_UINT16 thr_id;
-    ACE_UINT32 pid;
-	UUID_node_t node; 
+    u_char      clockSeqHiAndReserved;    
+    u_char      clockSeqLow;    
+    ACE_CString* thr_id;
+    ACE_CString* pid;
+    UUID_node_t node; 
   };
 
   ACE_UUID(void);
@@ -127,13 +128,13 @@ class ACE_Export ACE_UUID_Generator
 {
  public:
 
-  //static ACE_UUID_Generator* instance();
-    
+  enum { ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF };
+  
   // Format timestamp, clockseq, and nodeID into a VI UUID.
   void generateV1(ACE_UUID::UUID_t&);
 
   // Format timestamp, clockseq, and nodeID into a VI UUID.
-  ACE_UUID generateUUID ();
+  ACE_UUID generateUUID (void);
 
   /**
    * Type to represent UTC as a count of 100 nanosecond intervals since
@@ -141,14 +142,25 @@ class ACE_Export ACE_UUID_Generator
    */
   typedef ACE_UINT64 UUID_time_t;
 
-  ACE_UUID_Generator();
+  ACE_UUID_Generator(void);
+  ACE_UUID_Generator(ACE_Lock* lock);
   ~ACE_UUID_Generator();
 
- private:
-
-  //friend class ACE_Singleton< ACE_UUID_Generator, ACE_SYNCH_MUTEX >;
-
   
+  /**
+   * The locking strategy prevents multiple generators
+   * from accessing the UUID_state at the same time.
+   * Get the locking strategy.
+   */
+  ACE_Lock *lock (void);
+
+  /**
+   * Set a new locking strategy and return the hold one.
+   */
+  ACE_Lock *lock (ACE_Lock *lock);
+
+
+ private:
 
   /**
    * The maximum number of uuids that can be generated per tick of the
@@ -191,18 +203,26 @@ class ACE_Export ACE_UUID_Generator
    * the Christian calendar).
    */
   void get_system_time( UUID_time_t& timeNow);
+
   
+  /**
+   * The system time when that last uuid was generated.
+   */
+  UUID_time_t time_last_;
+ 
   /**
    * The UUID generator persistent state.
    */
   UUID_state uuid_state_;
+
+  ACE_Lock* lock_;
   
   // No value semantics
   //ACE_UNIMPLEMENTED_FUNC (ACE_UUID_Generator( const ACE_UUID_Generator&))
   // ACE_UNIMPLEMENTED_FUNC (ACE_UUID_Generator& operator=( const ACE_UUID_Generator&))
 };
 
-typedef ACE_Singleton <ACE_UUID_Generator, ACE_Thread_Mutex> ACE_UUID_GENERATOR;
+typedef ACE_Singleton <ACE_UUID_Generator, ACE_SYNCH_MUTEX> ACE_UUID_GENERATOR;
 
 #if defined (__ACE_INLINE__)
 #include "ace/UUID.i"
