@@ -22,12 +22,12 @@ namespace Deployment
   class Compass_Export ComponentServer
   {
   public:
-    ComponentServer (ConfigValues* config);
+    ComponentServer (ConfigValues* config = 0);
     ~ComponentServer();
 
     ServerActivator* get_server_activator ();
 
-    Container* create_container (ConfigValues* config)
+    Container* create_container (ConfigValues* config = 0)
       ACE_THROW_SPEC ((CreateFailure, InvalidConfiguration));
 
     void remove_container (Container* cref)

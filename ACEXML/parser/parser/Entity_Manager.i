@@ -43,7 +43,7 @@ ACEXML_Entity_Manager::resolve_entity (const ACEXML_Char* ref,
 ACEXML_INLINE int
 ACEXML_Entity_Manager::reset (void)
 {
-  return this->entities_.close();
+  return this->entities_.unbind_all();
 }
 
 

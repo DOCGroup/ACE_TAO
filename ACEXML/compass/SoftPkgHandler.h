@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    PropertyFile_Handler.h
+ *  @file    SoftPkgHandler.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef ACEXML_PROPERTYFILE_HANDLER_H
-#define ACEXML_PROPERTYFILE_HANDLER_H
+#ifndef ACEXML_SOFTPKG_HANDLER_H
+#define ACEXML_SOFTPKG_HANDLER_H
 
 #include "ace/pre.h"
 #include "ACEXML/compass/Compass_Export.h"
@@ -21,28 +21,28 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/DefaultHandler.h"
-#include "ACEXML/compass/Property.h"
+#include "ACEXML/compass/SoftPkg.h"
 
 /**
- * @class ACEXML_PropertyFile_Handler
+ * @class ACEXML_SoftPkgHandler
  *
- * @brief ACEXML_PropertyFile_Handler is an example SAX event handler.
+ * @brief ACEXML_SoftPkgHandler is an example SAX event handler.
  *
  * This SAX event handler try to regenerate the XML document it
  * reads with correct indentation.
  */
-class Compass_Export ACEXML_PropertyFile_Handler : public ACEXML_DefaultHandler
+class Compass_Export ACEXML_SoftPkgHandler : public ACEXML_DefaultHandler
 {
 public:
   /*
    * Default constructor.
    */
-  ACEXML_PropertyFile_Handler (const ACEXML_Char* name);
+  ACEXML_SoftPkgHandler (const ACEXML_Char* name);
 
   /*
    * Default destructor.
    */
-  virtual ~ACEXML_PropertyFile_Handler (void);
+  virtual ~ACEXML_SoftPkgHandler (void);
 
   // Methods inherited from ACEXML_ContentHandler.
 
@@ -173,23 +173,19 @@ public:
                         ACEXML_ENV_ARG_DECL)
     ACE_THROW_SPEC ((ACEXML_SAXException));
 
-  virtual const ACEXML_Property* get_property(void) const;
+  virtual const ACEXML_SoftPkg* get_softpkg(void) const;
 
 private:
   ACEXML_Char* fileName_;
   ACEXML_Locator* locator_;
-  ACEXML_Property* property_;
+  ACEXML_SoftPkg* softpkg_;
   ACEXML_String cdata_;
-  ACEXML_String name_;
-  ACEXML_String attname_;
-  ACEXML_String atttype_;
-  ACEXML_String value_;
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/compass/PropertyFile_Handler.inl"
+#include "ACEXML/compass/SoftPkgHandler.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include "ace/post.h"
 
-#endif /* ACEXML_PROPERTYFILE_HANDLER_H */
+#endif /* ACEXML_SOFTPKG_HANDLER_H */

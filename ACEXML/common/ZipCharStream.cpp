@@ -138,7 +138,10 @@ ACEXML_ZipCharStream::read (ACEXML_Char *str, size_t len)
   if (i == len)
     return len;
   len = len - i;
-  return zzip_fread (str + i, sizeof (ACEXML_Char), len, this->infile_);
+  this->pos_ = 0;
+  this->limit_ = 0;
+  int bytes = zzip_fread (str + i, sizeof (ACEXML_Char), len, this->infile_);
+  return (bytes + i);
 }
 
 int

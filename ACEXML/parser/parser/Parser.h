@@ -871,6 +871,15 @@ private:
   /// T => Internal DTD has parameter entity references
   int has_pe_refs_;
 
+  /// If set, the document is a standalone XML document
+  int standalone_;
+
+  /// If set, the document has an external DTD subset
+  int external_dtd_;
+
+  /// If set, the document has an internal DTD
+  int internal_dtd_;
+
   /// Feature flags
   /// If set, the parser should parse a document without a prolog
   int simple_parsing_;
@@ -884,15 +893,6 @@ private:
   /// If set, the parser should include namespace declarations in the list
   /// of attributes of an element.
   int namespace_prefixes_;
-
-  /// If set, the document is a standalone XML document
-  int standalone_;
-
-  /// If set, the document has an external DTD subset
-  int external_dtd_;
-
-  /// If set, the document has an internal DTD
-  int internal_dtd_;
 
 };
 

@@ -11,6 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/compass/CompassTypes.h"
+#include "ace/Unbounded_Set.h"
 
 namespace Deployment
 {
@@ -59,9 +60,7 @@ namespace Deployment
     ComponentInstallation& operator= (const ComponentInstallation&);
 
   private:
-
     Package_Manager packages_;
-
   };
   typedef ACE_Singleton<ComponentInstallation, ACE_SYNCH_MUTEX> COMP_INSTALL;
 

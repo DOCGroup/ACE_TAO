@@ -40,13 +40,13 @@ ACEXML_Parser::ACEXML_Parser (void)
       external_subset_ (0),
       external_entity_ (0),
       has_pe_refs_ (0),
+      standalone_ (0),
+      external_dtd_ (0),
+      internal_dtd_ (0),
       simple_parsing_ (0),
       validate_ (1),
       namespaces_(1),
-      namespace_prefixes_ (0),
-      standalone_ (0),
-      external_dtd_ (0),
-      internal_dtd_ (0)
+      namespace_prefixes_ (0)
 {
 }
 
@@ -3242,14 +3242,22 @@ ACEXML_Parser::parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL)
 void
 ACEXML_Parser::reset (void)
 {
+  this->dtd_handler_ = 0;
+  this->entity_resolver_ = 0;
+  this->content_handler_ = 0;
+  this->error_handler_ = 0;
+  this->doctype_ = 0;
   if (this->ctx_stack_.pop (this->current_) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Mismatched push/pop of Context stack")));
+  this->current_ = 0;
+
   ACEXML_Char* temp = 0;
   while (this->GE_reference_.pop (temp) != -1)
     ;
   while (this->PE_reference_.pop (temp) != -1)
     ;
   this->obstack_.release();
+  this->alt_stack_.release();
   this->xml_namespace_.reset();
   this->nested_namespace_ = 0;
   this->internal_GE_.reset();

@@ -1,11 +1,12 @@
 // $Id$
 
-#include "PropertyFile_Handler.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ACEXML/compass/PropertyFile_Handler.h"
+#include "ACEXML/compass/EC_Property.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "PropertyFile_Handler.inl"
+# include "ACEXML/compass/PropertyFile_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 
 static const ACEXML_Char empty_string[] = {0};
@@ -20,18 +21,6 @@ ACEXML_PropertyFile_Handler::~ACEXML_PropertyFile_Handler (void)
 {
   delete [] this->fileName_;
   delete this->property_;
-}
-
-const ACEXML_Property*
-ACEXML_PropertyFile_Handler::get_property (void) const
-{
-  return this->property_;
-}
-
-void
-ACEXML_PropertyFile_Handler::startDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
 }
 
 void
@@ -81,26 +70,18 @@ ACEXML_PropertyFile_Handler::endElement (const ACEXML_Char *,
                                          ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  if (this->name_ != qName)
-    {
-      ACE_ERROR ((LM_ERROR, "Mismatched element %s encountered\n", qName));
-      ACEXML_SAXParseException* exception = 0;
-      ACE_NEW_NORETURN (exception,
-                        ACEXML_SAXParseException ("Mismatched Element"));
-      ACEXML_ENV_RAISE (exception);
-    }
-  if (this->name_ == "description")
+  if (ACE_OS::strcmp (qName, "description") == 0)
     this->cdata_.clear();
-  else if (this->name_ == "value")
+  else if (ACE_OS::strcmp (qName, "value") == 0)
     this->value_ = this->cdata_;
-  else if (this->name_ == "simple")
+  else if (ACE_OS::strcmp (qName, "simple") == 0)
     {
       if (this->atttype_ == "string")
         {
           if (this->property_->set (this->attname_, this->value_) != 0)
             {
               ACE_ERROR ((LM_ERROR, "Property %s = %s invalid\n",
-                          this->attname_.c_str(), this->value.c_str()));
+                          this->attname_.c_str(), this->value_.c_str()));
               ACEXML_SAXParseException* exception = 0;
               ACE_NEW_NORETURN (exception,
                                 ACEXML_SAXParseException ("Invalid Property"));
@@ -109,18 +90,21 @@ ACEXML_PropertyFile_Handler::endElement (const ACEXML_Char *,
         }
       else if (this->atttype_ == "long")
         {
-          long value = ACE_OS::strtol (this->value_.c_str(), 10);
+          long value = ACE_OS::strtol (this->value_.c_str(), 0, 10);
           if (this->property_->set (this->attname_, value) != 0)
-             ACE_ERROR ((LM_ERROR, "Property %s = %ld invalid\n",
-                         this->attname_.c_str(), value));
-          ACEXML_SAXParseException* exception = 0;
-          ACE_NEW_NORETURN (exception,
-                            ACEXML_SAXParseException ("Invalid Property"));
-          ACEXML_ENV_RAISE (exception);
+            {
+              ACE_ERROR ((LM_ERROR, "Property %s = %ld invalid\n",
+                          this->attname_.c_str(), value));
+              ACEXML_SAXParseException* exception = 0;
+              ACE_NEW_NORETURN (exception,
+                                ACEXML_SAXParseException ("Invalid Property"));
+              ACEXML_ENV_RAISE (exception);
+            }
         }
       this->value_.clear();
       this->cdata_.clear();
     }
+  this->name_.clear();
   return;
 }
 
@@ -132,98 +116,10 @@ ACEXML_PropertyFile_Handler::characters (const ACEXML_Char *cdata,
 {
   if (this->cdata_.length())
     this->cdata_ += cdata;
-  this->cdata_ = cdata;
+  else
+    this->cdata_ = cdata;
 }
 
-void
-ACEXML_PropertyFile_Handler::endDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-
-}
-
-void
-ACEXML_PropertyFile_Handler::endPrefixMapping (const ACEXML_Char *
-                                               ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-}
-
-void
-ACEXML_PropertyFile_Handler::ignorableWhitespace (const ACEXML_Char *,
-                                                  int,
-                                                  int
-                                                  ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-
-}
-
-void
-ACEXML_PropertyFile_Handler::processingInstruction (const ACEXML_Char *,
-                                                    const ACEXML_Char *
-                                                    ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-
-}
-
-void
-ACEXML_PropertyFile_Handler::setDocumentLocator (ACEXML_Locator * locator)
-{
-  this->locator_ = locator;
-}
-
-void
-ACEXML_PropertyFile_Handler::skippedEntity (const ACEXML_Char *
-                                            ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-}
-
-void
-ACEXML_PropertyFile_Handler::startPrefixMapping (const ACEXML_Char *,
-                                                 const ACEXML_Char *
-                                                 ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-
-}
-
-// *** Methods inherited from ACEXML_DTDHandler.
-
-void
-ACEXML_PropertyFile_Handler::notationDecl (const ACEXML_Char *,
-                                           const ACEXML_Char *,
-                                           const ACEXML_Char *
-                                           ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-  // No-op.
-}
-
-void
-ACEXML_PropertyFile_Handler::unparsedEntityDecl (const ACEXML_Char *,
-                                                 const ACEXML_Char *,
-                                                 const ACEXML_Char *,
-                                                 const ACEXML_Char *
-                                                 ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-  // No-op.
-}
-
-// Methods inherited from ACEXML_EnitityResolver.
-
-ACEXML_InputSource *
-ACEXML_PropertyFile_Handler::resolveEntity (const ACEXML_Char *,
-                                            const ACEXML_Char *
-                                            ACEXML_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-  // No-op.
-  return 0;
-}
 
 // Methods inherited from ACEXML_ErrorHandler.
 

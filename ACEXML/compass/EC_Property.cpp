@@ -54,27 +54,48 @@ ACEXML_EC_Property::set (const ACEXML_String& property, const long value)
 }
 
 ACEXML_Char*
-ACEXML_EC_Property::dump()
+ACEXML_EC_Property::dump() const
 {
   ACEXML_String argv ("-ECDispatching");
-  argv += this->ec_dispatching_ + '\x20';
+  argv += " ";
+  argv += this->ec_dispatching_;
+  argv += " ";
   argv += "-ECFiltering";
-  argv += this->ec_filtering_ + '\x20';
+  argv += " ";
+  argv += this->ec_filtering_;
+  argv += " ";
   argv += "-ECSupplierFiltering";
-  argv += this->ec_supplier_filtering_ + '\x20';
+  argv += " ";
+  argv += this->ec_supplier_filtering_;
+  argv += " ";
   argv += "-ECProxyConsumerLock";
-  argv += this->ec_proxy_consumer_lock_+ '\x20';
+  argv += " ";
+  argv += this->ec_proxy_consumer_lock_;
+  argv += " ";
   argv += "-ECProxySupplierLock";
-  argv += this->ec_proxy_supplier_lock_ + '\x20';
+  argv += " ";
+  argv += this->ec_proxy_supplier_lock_;
+  argv += " ";
   argv += "-ECConsumerControl";
-  argv += this->ec_consumer_control_ + '\x20';
+  argv += " ";
+  argv += this->ec_consumer_control_;
+  argv += " ";
   argv += "-ECSupplierControl";
-  argv += this->ec_supplier_control_ + '\x20';
+  argv += " ";
+  argv += this->ec_supplier_control_;
+  argv += " ";
   argv += "-ECConsumerControlPeriod";
+  argv += " ";
   char temp[20] = {0};
-  ACE_OS::sprintf (temp, "%ld", this->ec_consumer_control_period_);
-  argv += temp + '\x20';
-  ACE_OS::sprintf (temp, "%ld", this->ec_supplier_control_period_);
-  argv += temp + '\x20';
+  int pos = ACE_OS::sprintf (temp, "%ld", this->ec_consumer_control_period_);
+  temp[pos] = 0;
+  argv += temp;
+  argv += " ";
+  argv += "-ECSupplierControlPeriod";
+  argv += " ";
+  pos = ACE_OS::sprintf (temp, "%ld", this->ec_supplier_control_period_);
+  temp[pos] = 0;
+  argv += temp;
+  argv += " ";
   return argv.rep();
 }

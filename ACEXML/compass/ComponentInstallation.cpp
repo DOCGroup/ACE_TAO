@@ -12,7 +12,9 @@ ComponentInstallation::ComponentInstallation()
 {}
 
 ComponentInstallation::~ComponentInstallation()
-{}
+{
+
+}
 
 void
 ComponentInstallation::install (const UUID& implUUID,
@@ -29,13 +31,8 @@ ComponentInstallation::install (const UUID& implUUID,
       ACE_ERROR ((LM_ERROR, "Component Location is an Empty string\n"));
       ACE_THROW (InvalidLocation());
     }
-  else if (this->packages_->bind (implUUID, component_loc) != 0)
-    {
-      ACE_ERROR ((LM_ERROR, "Component %s already installed\n",
-                  implUUID.c_str()));
-      ACE_THROW (InstallationFailure());
-    }
-    ACEXML_StreamFactory factory;
+
+  ACEXML_StreamFactory factory;
   ACEXML_CharStream* stream = factory.create_stream (component_loc.c_str());
   if (!stream)
     {
@@ -43,21 +40,45 @@ ComponentInstallation::install (const UUID& implUUID,
                   "location %s\n", component_loc.c_str()));
       ACE_THROW (InstallationFailure());
     }
-    ACEXML_Char temp[MAXNAMLEN + 1] = "acefileXXXXXX";
+
+  ACEXML_Char temp[MAXNAMLEN + 1] = "acefileXXXXXX";
   if (mkdtemp (temp) == 0)
     {
       ACE_ERROR ((LM_ERROR, "Unable to create safe temporary directory\n"));
       ACE_THROW (InstallationFailure());
     }
-  ACEXML_String dsoname = temp +
-  FILE* dso = ACE_OS::fopen (temp, "w");
+  ACEXML_Char* file = ACE_OS::strrchr (component_loc.c_str(), '/');
+  if (!file)
+    file = component_loc.c_str();
+  else
+    file += 1;
+  ACEXML_String dsoname = temp + '/' + file;
+  ACE_HANDLE dso = ACE_OS::open (dsoname.c_str(),
+                                 O_WRONLY| O_CREAT|O_EXCL, S_IRWXU);
   if (dso == 0)
     {
-
-    ACE_THROW (InstallationFailure());
-
-
-
+      ACE_ERROR ((LM_ERROR, "Unable to unpack the implementation %s : %m\n",
+                  dsoname.c_str()));
+      ACE_THROW (InstallationFailure());
+    }
+  ACEXML_Char buf[65535];
+  int bytes = 0;
+  while ((bytes = stream.read (buf, sizeof(buf))) > 0)
+    {
+      if (ACE_OS::write (dso, buf, bytes) != bytes)
+        {
+          ACE_ERROR ((LM_ERROR, "Unable to unpack the implementation %s: %m\n",
+                      dsoname.c_str()));
+          ACE_THROW (InstallationFailure());
+        }
+    }
+  ACE_OS::close (dso);
+  if (this->packages_->bind (implUUID, dsoname) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, "Component %s already installed\n",
+                  implUUID.c_str()));
+      ACE_THROW (InstallationFailure());
+    }
 }
 
 void
@@ -73,8 +94,7 @@ ComponentInstallation::replace (const UUID& implUUID,
     {
       if (this->packages_->unbind (implUUID) != 0)
         ACE_THROW (InstallationFailure());
-      else if (this->packages_->bind (implUUID, component_loc) != 0)
-        ACE_THROW (InstallationFailure());
+      this->install (implUUID, component_loc);
     }
 }
 

@@ -8,7 +8,7 @@
 
 using namespace Deployment;
 
-ComponentServer::ComponentServer(const ConfigValues& config)
+ComponentServer::ComponentServer(ConfigValues* config)
   : containers_ (0),
     config_ (config),
     activator_ (SERVER_ACTIVATOR::instance())
@@ -20,7 +20,7 @@ ComponentServer::~ComponentServer()
 }
 
 Container*
-ComponentServer::create_container (const ConfigValues& config)
+ComponentServer::create_container (ConfigValues* config)
   ACE_THROW_SPEC ((CreateFailure, InvalidConfiguration))
 {
   Container* ctr = 0;
@@ -43,17 +43,17 @@ void
 ComponentServer::remove()
   ACE_THROW_SPEC ((RemoveFailure))
 {
-  Container* entry = 0;
+  Container** entry = 0;
   for (Containers::iterator iter (*this->containers_);
        iter.next (entry) != 0;
        iter->advance())
-    delete entry;
+    delete *entry;
 
-  ConfigValues* value = 0;
+  ConfigValues** value = 0;
   for (ConfigValues::iterator iter (*this->config_);
        iter.next (value) != 0;
        iter->advance())
-    delete value;
+    delete *value;
 
   this->activator_ = 0;
 }

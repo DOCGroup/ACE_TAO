@@ -17,11 +17,11 @@ ServerActivator::ServerActivator()
 
 ServerActivator::~ServerActivator()
 {
-  ComponentServer* entry = 0;
+  ComponentServer** entry = 0;
   for (ComponentServers::iterator iter (*this->comp_servers_);
        iter.next (entry) != 0;
        iter->advance())
-    delete entry;
+    delete *entry;
 }
 
 ComponentServer*
