@@ -1164,7 +1164,7 @@ CORBA_ORB::register_initial_reference (const char * id,
 }
 
 
-CORBA_ORB_ObjectIdList_ptr
+CORBA_ORB_ObjectIdList *
 CORBA_ORB::list_initial_services (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);

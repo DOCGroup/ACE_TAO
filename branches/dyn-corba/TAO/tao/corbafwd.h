@@ -251,11 +251,6 @@ class TAO_InputCDR;
 class TAO_OutputCDR;
 class TAO_Stub;
 
-class CORBA_ORB_ObjectIdList;
-class CORBA_ORB_ObjectIdList_var;
-class CORBA_ORB_ObjectIdList_out;
-typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
-
 class CORBA_StringSeq;
 class CORBA_StringSeq_var;
 class CORBA_StringSeq_out;
