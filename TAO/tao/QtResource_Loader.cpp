@@ -5,14 +5,19 @@
 
 ACE_RCSID(tao, QtResource_Loader, "$Id$");
 
-namespace TAO {
-
+namespace TAO
+{
   QtResource_Loader::QtResource_Loader (QApplication *qapp)
   {
-    TAO_ORB_Core::set_gui_resource_factory( new QtResource_Factory (qapp) );
+    QtResource_Factory *tmp = 0;
+
+    ACE_NEW (tmp,
+             QtResource_Factory (qapp));
+
+    TAO_ORB_Core::set_gui_resource_factory (tmp);
   }
 
-  QtResource_Loader::~QtResource_Loader ()
+  QtResource_Loader::~QtResource_Loader (void)
   {
   }
 }
