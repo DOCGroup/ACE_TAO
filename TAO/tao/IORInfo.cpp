@@ -5,9 +5,7 @@
 #include "IORInfo.h"
 #include "PolicyC.h"
 #include "IOPC.h"
-#include "CONV_FRAMEC.h"
 #include "MProfile.h"
-#include "GIOP_Message_State.h"
 
 ACE_RCSID (tao, IORInfo, "$Id$")
 
