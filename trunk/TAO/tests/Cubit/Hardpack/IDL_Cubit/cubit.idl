@@ -10,6 +10,11 @@ interface Cubit
   //    This interface encapsulates operations that cube
   //    octets, shorts, longs, structs and unions.
 {
+  oneway void cube_oneway ();
+  // test the basic latency of a nil oneway operation
+
+  void cube_void ();
+  // Test the bassic latency of a nil operation
   octet	cube_octet (in octet o);
   // cube an octet
 

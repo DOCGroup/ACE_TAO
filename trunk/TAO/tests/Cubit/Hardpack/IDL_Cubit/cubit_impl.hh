@@ -1,4 +1,3 @@
-// $Id$
 #ifndef __cubit__impl_hh_def
 #define __cubit__impl_hh_def
 
@@ -17,6 +16,10 @@ public:
 Cubit_impl();
 ~Cubit_impl();
 
+void cube_oneway(
+  );
+void cube_void(
+  );
 CORBA::Octet cube_octet(
           CORBA::Octet o
   );
@@ -29,9 +32,6 @@ CORBA::Long cube_long(
 Cubit::Many cube_struct(
           const Cubit::Many& values
   );
-// Cubit::oneof cube_union(
-//           const Cubit::oneof& values
-//   );
 void cube_long_sequence(
           const Cubit::long_seq& input,
          Cubit::long_seq*& output
@@ -44,39 +44,5 @@ void shutdown(
   );
 private:
 }; // End of class Cubit_impl
-
-
-// //============== Cubit_Shutdown_impl ==============
-// class Cubit_Shutdown_impl;
-// typedef Cubit_Shutdown_impl * Cubit_Shutdown_impl_ptr;
-
-// class Cubit_Shutdown_impl : public virtual _sk_Cubit_Shutdown {
-// public: 
-
-// Cubit_Shutdown_impl();
-// ~Cubit_Shutdown_impl();
-
-// void shutdown(
-//   );
-// private:
-// }; // End of class Cubit_Shutdown_impl
-
-
-//============== Cubit_Factory_impl ==============
-// class Cubit_Factory_impl;
-// typedef Cubit_Factory_impl * Cubit_Factory_impl_ptr;
-
-// class Cubit_Factory_impl : public virtual _sk_Cubit_Factory {
-// public: 
-
-// Cubit_Factory_impl();
-// ~Cubit_Factory_impl();
-
-// Cubit_ptr make_cubit(
-//   );
-// private:
-//   Cubit_impl my_cubit_;
-
-// }; // End of class Cubit_Factory_impl
 
 #endif

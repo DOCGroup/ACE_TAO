@@ -14,6 +14,15 @@ Cubit_impl::~Cubit_impl() {
 
 }
 
+void Cubit_impl::cube_oneway(
+  ) {
+}
+
+
+void Cubit_impl::cube_void(
+  ) {
+}
+
 CORBA::Octet Cubit_impl::cube_octet(
           CORBA::Octet o
   ) {
