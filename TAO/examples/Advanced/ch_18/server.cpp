@@ -19,15 +19,16 @@
 //
 // ============================================================================
 
+#include <iostream>
+#include <fstream>
+#include <strstream>
 #include "server.h"
 #include <algorithm>
 #include "icp.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
-#include <strstream>
-#include <iostream>
-#include <fstream>
 
 const char * Controller_oid = "Controller";
+const unsigned int           DeviceLocator_impl::MAX_EQ_SIZE = 100;
 
 //----------------------------------------------------------------
 
@@ -43,8 +44,10 @@ resolve_init (CORBA::ORB_ptr orb, const char * id)
     throw;
   }
   catch (const CORBA::Exception & e) {
-    cerr << "Cannot get initial reference for "
-         << id << ": " << e << endl;
+    std::cerr << "Cannot get initial reference for "
+         << id << ": " 
+         //<< e 
+         << std::endl;
     throw 0;
   }
   assert (!CORBA::is_nil (obj.in ()));
@@ -54,13 +57,15 @@ resolve_init (CORBA::ORB_ptr orb, const char * id)
     ref = T::_narrow (obj.in ());
   }
   catch (const CORBA::Exception & e) {
-    cerr << "Cannot narrow reference for "
-         << id << ": " << e << endl;
+    std::cerr << "Cannot narrow reference for "
+         << id << ": " 
+         //<< e 
+         << std::endl;
     throw 0;
   }
   if (CORBA::is_nil (ref.in ())) {
-    cerr << "Incorrect type of reference for "
-         << id << endl;
+    std::cerr << "Incorrect type of reference for "
+         << id << std::endl;
     throw 0;
   }
   return ref._retn ();
@@ -365,9 +370,9 @@ Controller_impl (
 ) throw (int) : m_poa (PortableServer::POA::_duplicate (poa)),
                m_asset_file (asset_file)
 {
-    fstream afile (m_asset_file.in (), ios::in|ios::out, 0666);
+    std::ifstream afile (m_asset_file.in (), std::ios::in|std::ios::out);//, 0666);
     if (!afile) {
-        cerr << "Cannot open " << m_asset_file.in () << endl;
+        std::cerr << "Cannot open " << m_asset_file.in () << std::endl;
         throw 0;
     }
     CCS::AssetType anum;
@@ -387,16 +392,16 @@ Controller_impl::
 {
     // Write out the current set of asset numbers
     // and clean up all servant instances.
-    ofstream afile (m_asset_file.in ());
+    std::ofstream afile (m_asset_file.in ());
     if (!afile) {
-        cerr << "Cannot open " << m_asset_file.in () << endl;
+        std::cerr << "Cannot open " << m_asset_file.in () << std::endl;
         assert (0);
     }
     AssetMap::iterator i;
     for (i = m_assets.begin (); i != m_assets.end (); i++) {
-        afile << i->first << endl;
+        afile << i->first << std::endl;
         if (!afile) {
-            cerr << "Cannot update " << m_asset_file.in () << endl;
+            std::cerr << "Cannot update " << m_asset_file.in () << std::endl;
             assert (0);
         }
         delete i->second;
@@ -777,7 +782,9 @@ main (int argc, char * argv[])
         orb->run ();
     }
     catch (const CORBA::Exception & e) {
-        cerr << "Uncaught CORBA exception: " << e << endl;
+        std::cerr << "Uncaught CORBA exception: " 
+                  //<< e 
+                  << std::endl;
         return 1;
     }
     catch (...) {

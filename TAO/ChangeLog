@@ -1,4 +1,14 @@
 
+Tue Mar 16 13:51:18 2004  Amogh Kavimandan  <amoghk@dre.vanderbilt.edu>
+
+  * examples/Advanced/ch_12/client.cpp
+  * examples/Advanced/ch_12/server.cpp
+  * examples/Advanced/ch_12/server.h
+  * examples/Advanced/ch_12/icp.cpp
+  * examples/Advanced/ch_12/icp.h
+
+    Added min() function for vc6.0 so that this example compiles.
+
 Tue Mar 16 11:43:28 2004  Amogh Kavimandan  <amoghk@dre.vanderbilt.edu>
 
   * examples/Advanced/ch_8_and_10/client.cpp
