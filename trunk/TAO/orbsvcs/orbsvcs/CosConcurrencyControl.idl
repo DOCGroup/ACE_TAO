@@ -16,9 +16,12 @@
 //    ftp://www.omg.org/pub/docs/formal/97-11-02.idl
 //
 // = AUTHOR
-//    OMG and Torben Worm <tworm@cs.wustl.edu>
+//    Torben Worm <tworm@cs.wustl.edu>
 //
 // ============================================================================
+
+#ifndef TAO_CONCURRENCY_IDL
+#define TAO_CONCURRENCY_IDL
 
 //CosConcurrencyControl Module, page 7-8
 //Includes the following interfaces:
@@ -193,4 +196,4 @@ module CosConcurrencyControl
     };
 };
 
-
+#endif /* TAO_CONCURRENCY_IDL */

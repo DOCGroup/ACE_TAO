@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef TAO_RTEC_SCHEDULER_IDL
+#define TAO_RTEC_SCHEDULER_IDL
+
 #include "CosTimeBase.idl"
 #pragma prefix ""
 
@@ -357,4 +360,4 @@ module RtecScheduler
   };
 };
 
-
+#endif /* TAO_RTEC_SCHEDULER_IDL */

@@ -1,3 +1,9 @@
+Fri Feb 26 00:43:30 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs: Updated all the ORB services IDL files so that
+ 	  they are protected by #ifndef ... #endifs.  Thanks to Lothar
+ 	  Werzinger <werzinger.lothar@krones.de> for this suggestion.
+
 Fri Feb 26 00:05:16 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.6 released.

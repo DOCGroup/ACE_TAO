@@ -1,11 +1,15 @@
 // $Id$
 
+#ifndef TAO_EVENTCOMM_IDL
+#define TAO_EVENTCOMM_IDL
+
 #pragma prefix "omg.org"
 
 module CosEventComm
 {
   // = TITLE
-  //   IDL module for the Corba Object Service for Event Communication.
+  //   IDL module for the Corba Object Service for Event
+  //   Communication.
 
   exception Disconnected 
     {
@@ -97,3 +101,5 @@ module CosEventComm
       // reference is disposed.
     };
 };
+
+#endif /* TAO_EVENTCOMM_IDL */

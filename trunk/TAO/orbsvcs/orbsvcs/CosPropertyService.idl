@@ -19,6 +19,9 @@
 //
 // ================================================================
 
+#ifndef TAO_PROPERTY_IDL
+#define TAO_PROPERTY_IDL
+
 #pragma prefix "omg.org"
 
 module CosPropertyService
@@ -404,3 +407,5 @@ module CosPropertyService
       // The destroy operation destroys the iterator.
     };
 };
+
+#endif /* TAO_PROPERTY_IDL */

@@ -1,6 +1,7 @@
-//
 // $Id$
-//
+
+#ifndef TAO_RTEC_EVENTCOMM_IDL
+#define TAO_RTEC_EVENTCOMM_IDL
 
 #include "CosTimeBase.idl"
 
@@ -9,8 +10,8 @@
 // if pragmas should survive the file scope...
 #pragma prefix ""
 
-module RtecEventComm {
-
+module RtecEventComm 
+{
   // = TITLE
   //   User defined Event Data.
   //
@@ -24,12 +25,13 @@ module RtecEventComm {
   //   sequence of octet.
 
   typedef sequence<octet> EventPayload;
-  struct EventData {
+  struct EventData 
+  {
     long x;
     long y;
 
     double pad0;
-    long   pad1;
+    long pad1;
     // This two objects ensure that the encapsulated stream below is
     // properly aligned; this makes the decoding of the payload more
     // efficient because we can use the usual demarshalling code
@@ -93,13 +95,17 @@ module RtecEventComm {
   };
   typedef sequence<Event> EventSet;
 
-  interface PushConsumer {
-    oneway void push (in EventSet data);
-    void disconnect_push_consumer();
-  };
+  interface PushConsumer 
+    {
+      oneway void push (in EventSet data);
+      void disconnect_push_consumer ();
+    };
 
-  interface PushSupplier {
-    void disconnect_push_supplier();
-  };
+  interface PushSupplier 
+    {
+      void disconnect_push_supplier ();
+    };
 
 };
+
+#endif /* TAO_RTEC_EVENTCOMM_IDL */
