@@ -43,7 +43,7 @@ class TAO_RSE_Dependency_Visitor :
   //
   // = DESCRIPTION
   //   This class hold the maps and a constructor that
-  //   derived classes may call to pass them in. 
+  //   derived classes may call to pass them in.
 {
 public:
 
@@ -123,8 +123,8 @@ class TAO_RSE_DFS_Visitor :
 public:
 
   TAO_RSE_DFS_Visitor
-    (TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-     TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+    (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
 
 protected:
@@ -170,8 +170,8 @@ class TAO_RSE_SCC_Visitor :
 public:
 
   TAO_RSE_SCC_Visitor
-    (TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-     TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+    (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
 
   int number_of_cycles (void);
@@ -246,8 +246,8 @@ class TAO_RSE_Propagation_Visitor :
 public:
 
   TAO_RSE_Propagation_Visitor
-    (TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
-     TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
+    (ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP & dependency_map,
+     ACE_TYPENAME TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
   // Constructor.
 
   int unresolved_locals (void);
@@ -319,7 +319,7 @@ public:
   // entry.  Priorities are assigned in increasing value
   // order, with lower numbers corresponding to higher
   // priorities.  Returns -1 on error, 1 if a new priority
-  // was assigned, or 0 otherwise. 
+  // was assigned, or 0 otherwise.
 
   int finish ();
   // Finishes scheduler entry priority assignment by iterating over the
@@ -406,5 +406,3 @@ private:
 #endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_T_H */
-
-
