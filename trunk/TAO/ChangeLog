@@ -1,7 +1,14 @@
+Mon Mar 29 11:46:49 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Turn off optimization for both the FE library and tao_idl.  This
+          code causes problems the vc6 and vc71 optimizer.
+
 Sun Mar 28 18:13:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
-	  Borland C++ 6 Update Pack 4 and earlier give a warning about
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Borland C++ 6 Update Pack 4 and earlier give a warning about
           comparing signed and unsigned values in the
           minimum_polulate() and initial_populate() warnings.
           The comparison uses a unsigned long and unsigned short and it
@@ -67,62 +74,62 @@ Fri Mar 26 16:45:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Mar 26 14:32:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor_Adapter.h (destroy_interceptor):
-	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
-	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * tao/IORInterceptor_Adapter.h (destroy_interceptor):
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
 
-	  Made exception specification empty to match the
-	  TAO_ORB_Core::destroy_interceptor() exception specification.
-	  Concrete implementations of this method should not throw
-	  exceptions since they are being called when cleaning up
-	  resources.
+          Made exception specification empty to match the
+          TAO_ORB_Core::destroy_interceptor() exception specification.
+          Concrete implementations of this method should not throw
+          exceptions since they are being called when cleaning up
+          resources.
 
-	* tao/Interceptor_List.h:
-	* tao/Interceptor_List.cpp:
-	* tao/IORInterceptor/IORInterceptor_List.h:
-	* tao/IORInterceptor/IORInterceptor_List.cpp:
+        * tao/Interceptor_List.h:
+        * tao/Interceptor_List.cpp:
+        * tao/IORInterceptor/IORInterceptor_List.h:
+        * tao/IORInterceptor/IORInterceptor_List.cpp:
 
-	  Changed interceptor lists to contain
-	  PortableInterceptor::{Client,Server,IOR}Interceptor_var types
-	  instead of their "_ptr" counterparts.  This cleans up memory
-	  management, and also fixes memory leaks of reference counted
-	  interceptors.  The leak was occurring due to the incremental
-	  reduction in size of the interceptor list array that occurs
-	  during the CORBA::ORB::destroy() call.  The
-	  ~TAO_{Client,Server,IOR}Interceptor_List() destructors iterate
-	  through the interceptor array and call CORBA::release() on each
-	  interceptor reference.  However, by the time
-	  CORBA::ORB::destroy() call completed, the array size was
-	  incrementally reduced to zero (memory not deallocated).  The
-	  Interceptor_List destructors ended up attempting to iterate
-	  through an array of size zero.  Switching the contained type to
-	  a "_var" automated the memory management for us, thus cleaning
-	  up the leaks.
+          Changed interceptor lists to contain
+          PortableInterceptor::{Client,Server,IOR}Interceptor_var types
+          instead of their "_ptr" counterparts.  This cleans up memory
+          management, and also fixes memory leaks of reference counted
+          interceptors.  The leak was occurring due to the incremental
+          reduction in size of the interceptor list array that occurs
+          during the CORBA::ORB::destroy() call.  The
+          ~TAO_{Client,Server,IOR}Interceptor_List() destructors iterate
+          through the interceptor array and call CORBA::release() on each
+          interceptor reference.  However, by the time
+          CORBA::ORB::destroy() call completed, the array size was
+          incrementally reduced to zero (memory not deallocated).  The
+          Interceptor_List destructors ended up attempting to iterate
+          through an array of size zero.  Switching the contained type to
+          a "_var" automated the memory management for us, thus cleaning
+          up the leaks.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (open):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp (open):
 
           By default, OpenSSL attempts to send the entire chunk of data.
-	  This is fine for relatively small chunks of data.  However, if
-	  SSL_write() returns with an SSL_ERROR_WANT_WRITE (basically an
-	  EWOULDBLOCK) when using non-blocking I/O, TAO may attempt to
-	  resend the same data with a potentially different buffer
-	  address.  Such a scenario is prone to happen when sending large
-	  chunks of data that cause flow control to occur.  For most
-	  protocol implementations this is fine. OpenSSL, on the other
-	  hand, requires that the same arguments be passed to SSL_write()
-	  if an SSL_ERROR_WANT_WRITE error occured on a previous
-	  SSL_write() attempt, which cannot be guaranteed by TAO's current
-	  message queuing/construction code, often resulting in a "bad
-	  write retry" OpenSSL error.  To work around this issue, we
-	  enable partial SSL_write()s in SSL/TLS connections created by
-	  TAO's SSLIOP pluggable protocol.  Doing so makes SSL_write()
-	  behave like write(2).  Note that this isn't an issue when using
-	  blocking I/O.   This fixes the SSLIOP "Big_Request" test
-	  failure.  [Bug 1429]
+          This is fine for relatively small chunks of data.  However, if
+          SSL_write() returns with an SSL_ERROR_WANT_WRITE (basically an
+          EWOULDBLOCK) when using non-blocking I/O, TAO may attempt to
+          resend the same data with a potentially different buffer
+          address.  Such a scenario is prone to happen when sending large
+          chunks of data that cause flow control to occur.  For most
+          protocol implementations this is fine. OpenSSL, on the other
+          hand, requires that the same arguments be passed to SSL_write()
+          if an SSL_ERROR_WANT_WRITE error occured on a previous
+          SSL_write() attempt, which cannot be guaranteed by TAO's current
+          message queuing/construction code, often resulting in a "bad
+          write retry" OpenSSL error.  To work around this issue, we
+          enable partial SSL_write()s in SSL/TLS connections created by
+          TAO's SSLIOP pluggable protocol.  Doing so makes SSL_write()
+          behave like write(2).  Note that this isn't an issue when using
+          blocking I/O.   This fixes the SSLIOP "Big_Request" test
+          failure.  [Bug 1429]
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
-	  Corrected typo in comments.
+          Corrected typo in comments.
 
 Fri Mar 26 13:23:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -148,54 +155,54 @@ Thu Mar 25 23:06:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Mar 26 10:36:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface.cpp:
 
-	  Fixed an error with dynamic hash look up. This fixes some more
-	  problems.  Problems largely stemmed from wrong count used in
-	  the generated code for the operation table. The way this was
+          Fixed an error with dynamic hash look up. This fixes some more
+          problems.  Problems largely stemmed from wrong count used in
+          the generated code for the operation table. The way this was
           busted, makes one get a feeling that this was never tested.
 
-	  The counts still seem problematic for GPERF and LINEAR hash. I
-	  haven't touched it, since I am afraid that this could break
-	  things before BFO.
+          The counts still seem problematic for GPERF and LINEAR hash. I
+          haven't touched it, since I am afraid that this could break
+          things before BFO.
 
 Fri Mar 26 10:28:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Sequence.cpp:
+        * tao/Sequence.cpp:
 
-	  Corrected a logic error.
+          Corrected a logic error.
 
 Thu Mar 25 20:47:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Sequence.cpp:
+        * tao/Sequence.cpp:
 
-	  Fixed a compilation problem in builds that have exceptions
-	  turned off.
+          Fixed a compilation problem in builds that have exceptions
+          turned off.
 
 Thu Mar 25 13:14:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Sequence_T.cpp:
-	* tao/Sequence.cpp:
+        * tao/Sequence.cpp:
 
-	  Removed ACE_ASSERT since they are not good for the
-	  middleware. ACE_ASSERT's were used in places where bounds
-	  checking were done.
+          Removed ACE_ASSERT since they are not good for the
+          middleware. ACE_ASSERT's were used in places where bounds
+          checking were done.
 
-	  They have now been replaced with a new macro,
-	  TAO_SEQUENCE_ASSERT. This macro just calls the function
-	  check_bounds () which takes care of things. At this point this
-	  method is structured in such a way to print an error message and
-	  call a hook if we have it defined (this was discussed in the
-	  devo-group sometime back). If native exceptions are turned on,
-	  we throw a BAD_PARAM exception. May be std::out_of_range would be
-	  better. But the thought process is to throw a CORBA exception.
-	  If exceptions are turned off we abort.
+          They have now been replaced with a new macro,
+          TAO_SEQUENCE_ASSERT. This macro just calls the function
+          check_bounds () which takes care of things. At this point this
+          method is structured in such a way to print an error message and
+          call a hook if we have it defined (this was discussed in the
+          devo-group sometime back). If native exceptions are turned on,
+          we throw a BAD_PARAM exception. May be std::out_of_range would be
+          better. But the thought process is to throw a CORBA exception.
+          If exceptions are turned off we abort.
 
-	  We should do something better for non-exception cases. If we
-	  have hooks for these we will be in a much better position.
+          We should do something better for non-exception cases. If we
+          have hooks for these we will be in a much better position.
 
-	  Thanks to Priya Narasimhan <priya@cs.cmu.edu> and Dr. Schmidt
-	  for motivating much of this.
+          Thanks to Priya Narasimhan <priya@cs.cmu.edu> and Dr. Schmidt
+          for motivating much of this.
 
 Thu Mar 25 06:42:49 2004  Chad Elliott  <elliott_c@ociweb.com>
 
