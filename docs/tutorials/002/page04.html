@@ -123,14 +123,20 @@ template <I>defines the interface for a service that exchanges data with
 its connected peer</I>. The first template argument specifies the kind
 of connection we want to have. As mentioned on the previous page, this
 <B>must</B> be compatible with the data type used to accept the connection.
-As for the second argument, I have no idea. Somebody please explain this
+As for the second argument, that's way beyond the scope of what we're
+doing here.  Just do it like you see it & we'll get around to explaining
+that in a later tutorial.
 to me.</LI>
 
 <LI>Our default constructor does nothing. We've moved anything with failure
-potential into the <I>open</I> function. Should the constructor be virtual?</LI>
+potential into the <I>open</I> function.
 
 <LI>This should be called instead of <I>delete</I>. It will shut down the
-object gracefully. I don't fully understand...</LI>
+object gracefully.  The other choice is to have a very busy destructor and
+you typically don't want that.  Even better, if you make your destructor
+protected then <i>delete</i> cannot be used on your object.  Then they have
+to go through <i>destroy()</i> to get rid of it!  There are, of course,
+down sides to that as well...
 
 <LI>Cancel any timer(s) which the reactor associates with this object</LI>
 

@@ -1,67 +1,94 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 005</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="Billy Quinn">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 005</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 005</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 005<BR>
-Creating a MultiThreaded Server </FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>On the road to a multithreaded server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>This is what we do to create an acceptor from the ACE&nbsp;template:</P>
+<P>Now, let's take a look at <I><A HREF="client_acceptor.h">client_acceptor.h</A></I>.&nbsp;
+Since I went on about how it does all the work of letting clients connect
+to us, it must be rather complext.&nbsp; Right?&nbsp; Wrong.
 
-<UL>
-<PRE>        
-
-1.      #include &quot;ace/Acceptor.h&quot;
-
-2.      #include &quot;ace/SOCK_Acceptor.h&quot;
-
-        
-
-3.      typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR&gt; Logging_Acceptor;
-
-</PRE>
-</UL>
+<P>The more you use ACE, the more you'll find that they've already taken
+care of most details for you.&nbsp; With respect to the acceptance of client
+connections:&nbsp; there just aren't that many ways to do it!&nbsp; The
+ACE team has chosen an approach and created a C++&nbsp;template that does
+all of the work for you.&nbsp; All you're required to do is provide it
+with an object type to instantiate when a new connection arrives.
 
 <P>
-<HR></P>
+<HR WIDTH="100%">
 
-<P>Now, if you think that was difficult, you may as well give up now.</P>
+<P><FONT FACE="Arial,Helvetica">// $Id$</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<OL>
-<LI>The <I>Acceptor</I> header file defines the template we're about to
-use. This is a totally generic object where all of the hard work as already
-been done.</LI>
+<P><FONT FACE="Arial,Helvetica">#ifndef&nbsp; CLIENT_ACCEPTOR_H</FONT>
+<BR><FONT FACE="Arial,Helvetica">#define CLIENT_ACCEPTOR_H</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Because we want to accept connections on an <I>ACE_SOCK_Stream</I>,
-we have to pull in this header. It provides the API details that we will
-need.</LI>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;The ACE_Acceptor&lt;> template lives
+in the ace/Acceptor.h header file.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;You'll find a very consitent naming
+convention between the ACE objects</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;and the headers where they can be
+found.&nbsp; In general, the ACE object</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;<I>ACE_Foobar</I> will be found
+in <I>ace/Foobar.h</I>.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Finally, create a <I>Logging_Acceptor</I> object based on the <I>ACE_Acceptor</I>
-template. The first parameter <I>Logging_Handler</I> is an object we will
-develop on the next page. This object will be created by the template-generated
-code whenever a new connection request is accepted. The second parameter
-tells the template what kind of acceptor to create. It is most important
-that the first-parameter object and the second parameter be consistent
-in the connetion types used.</LI>
-</OL>
+<P><FONT FACE="Arial,Helvetica">#include "ace/Acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P>Obviously we're doing things a bit out of order here: <I>main</I> won't
-be happy until it knows what a <I>Logging_Acceptor</I> is and the acceptor
-won't be happy until it knows what a <I>Logging_Handler</I> is. The next
-page pulls in this definition for us, and after the declaration of the
-<I>Logging_Handler</I>, we will tie all the pieces of the server together.</P>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;Since we want to work with sockets,
+we'll need a SOCK_Acceptor to allow</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;the clients to connect to us.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">#include "ace/SOCK_Acceptor.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<CENTER><P>[<A HREF="../../Tutorial">Tutorial Index</A>] [<A HREF="page02.html">Previous
-Page</A>] [<A HREF="page04.html">Continue This Tutorial</A>] </P></CENTER>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;The Client_Handler object we develop
+will be used to handle clients</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;once they're connected.&nbsp; The
+ACE_Acceptor&lt;> template's first parameter</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;requires such an object.&nbsp; In
+some cases, you can get by with just a</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;forward declaration on the class,
+in others you have to have the whole</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;thing.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">#include "client_handler.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;Parameterize the ACE_Acceptor&lt;>
+such that it will listen for socket</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;connection attempts and create Client_Handler
+objects when they happen.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;In Tutorial 001, we wrote the basic
+acceptor logic on our own before</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;we realized that ACE_Acceptor&lt;>
+was available.&nbsp; You'll get spoiled using</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;the ACE templates because they take
+away a lot of the tedious details!</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">typedef ACE_Acceptor &lt; Client_Handler,
+ACE_SOCK_ACCEPTOR > Client_Acceptor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">#endif // CLIENT_ACCEPTOR_H</FONT>
+
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>

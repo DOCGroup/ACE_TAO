@@ -1,4 +1,6 @@
+
 // $Id$
+
 
 #include "ace/Reactor.h"
 ACE_Reactor * g_reactor;
@@ -26,7 +28,7 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting up server logging daemon\n"));
 
   while (!finished)
-    g_reactor-> handle_events ();
+     g_reactor-> handle_events ();
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting down server logging daemon\n"));
 
