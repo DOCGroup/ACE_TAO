@@ -1,3 +1,10 @@
+Thu Apr 15 08:37:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+          Changed location of ACE_OS::getpagesize(). The method must be
+          above the first place where it is used. This fixes a warning
+          in the Tru64 build.
+
 Thu Apr 15 07:14:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadSafety/Tokens.cpp:
