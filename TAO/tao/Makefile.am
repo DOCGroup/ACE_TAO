@@ -799,7 +799,7 @@ nobase_include_HEADERS += \
   PollableC.inl \
   PollableS.inl \
   PollableS_T.inl \
-  PortableInterceptorC.i \
+  PortableInterceptorC.inl \
   Principal.i \
   Profile.i \
   Profile_Transport_Resolver.inl \
