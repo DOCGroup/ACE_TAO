@@ -151,11 +151,11 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
       const int ADD_OBJECT_POLICY  = 0;
       const int ADD_CURRENT_POLICY = 1;
       const int ADD_MANAGER_POLICY = 2;
-          
+
       const int SET_OBJECT_POLICY  = 3;
       const int SET_CURRENT_POLICY = 4;
       const int SET_MANAGER_POLICY = 5;
-          
+
       const int SAVE_CURRENT_POLICIES    = 6;
       const int RESTORE_CURRENT_POLICIES = 7;
       const int SAVE_MANAGER_POLICIES    = 8;
@@ -164,18 +164,18 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
       int operation = r % LAST_OPERATION;
 
       if (operation == ADD_OBJECT_POLICY
-          || operation == ADD_CURRENT_POLICY 
-          || operation == ADD_MANAGER_POLICY 
+          || operation == ADD_CURRENT_POLICY
+          || operation == ADD_MANAGER_POLICY
           || operation ==  SET_OBJECT_POLICY
           || operation ==  SET_CURRENT_POLICY
           || operation ==  SET_MANAGER_POLICY)
         {
           CORBA::Policy_var policy;
-              
+
           CORBA::Any any;
           CORBA::ULong policy_type = 0;
 
-          int type = ACE_OS::rand_r (seed) % 4;
+          int type = ACE_OS::rand_r (seed) % 3;
           if (type == 0)
             {
               TimeBase::TimeT value = 0;
@@ -186,21 +186,13 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
             }
           else if (type == 1)
             {
-              TAO::PrioritySpecification value;
-              any <<= value;
-
-              policy_type =
-                TAO::CLIENT_PRIORITY_POLICY_TYPE;
-            }
-          else if (type == 2)
-            {
               TAO::BufferingConstraint value;
               any <<= value;
 
               policy_type =
                 TAO::BUFFERING_CONSTRAINT_POLICY_TYPE;
             }
-          else // type == 3 (or something else)
+          else // type == 2 (or something else)
             {
               Messaging::SyncScope value = 0;
               any <<= value;
@@ -296,7 +288,7 @@ Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
     }
   ACE_ENDTRY;
 }
-                           
+
 
 int
 Manipulation::svc (void)

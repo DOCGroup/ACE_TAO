@@ -376,6 +376,8 @@ Client::dump_stats (const char* msg, ACE_UINT32 gsf)
 int
 main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR_RETURN ((LM_ERROR,
           "\n TAO::ClientPriorityPolicy must be enabled to run this test!\n"),
                     1);
