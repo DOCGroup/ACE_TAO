@@ -1,9 +1,9 @@
 // $Id$
 
+#include "ace/config.h"
 #include "ace/Log_Msg.h"
 
 #include "Options.h"
-#include "new.h"
 #include "Protocol_Manager.h"
 
 // Returns a pointer to the Drwho_Node associated with HOST_NAME (if

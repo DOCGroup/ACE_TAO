@@ -1,3 +1,9 @@
+Tue Feb 26 09:48:24 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* apps/drwho/Protocol_Manager.cpp: Replace #include "new.h"
+	  with #include "ace/config.h" to eliminate gcc 3.1 warning
+	  about deprecated header.
+
 Tue Feb 25 10:16:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Token_Strategy_Test.cpp:
