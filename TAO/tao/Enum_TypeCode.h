@@ -30,6 +30,7 @@ namespace TAO
 {
   namespace TypeCode
   {
+    template<typename StringType> class Enumerator;
 
     /**
      * @class Enum
@@ -114,7 +115,7 @@ namespace TAO
 
       /// Base attributes containing repository ID and name of
       /// structure type.
-      Base_Attributes base_attributes_;
+      Base_Attributes<StringType> base_attributes_;
 
       /// The number of enumerators in the OMG IDL enumeration.
       CORBA::ULong const nenumerators_;

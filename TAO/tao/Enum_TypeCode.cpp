@@ -4,7 +4,7 @@
 #define TAO_ENUM_TYPECODE_CPP
 
 #include "tao/Enum_TypeCode.h"
-#include "tao/TypeCode_Enumerators.h"
+#include "tao/TypeCode_Enumerator.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Enum_TypeCode.inl"
@@ -210,17 +210,18 @@ TAO::TypeCode::Enum<StringType,
     this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  tc = adapter->_tao_create_enum_tc (this_kind,
-                                     this->base_attributes_.id (),
-                                     ""  /* empty name */,
-                                     tc_enumerators,
-                                     this->nenumerators_
-                                     ACE_ENV_ARG_PARAMETER);
+  CORBA::TypeCode_var tc =
+    adapter->_tao_create_enum_tc (this_kind,
+                                  this->base_attributes_.id (),
+                                  ""  /* empty name */,
+                                  tc_enumerators,
+                                  this->nenumerators_
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   (void) safe_enumerators.release ();
 
-  return tc;
+  return tc._retn ();
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>

@@ -94,7 +94,7 @@ template <typename DISCRIMINATOR_TYPE, typename STRING_TYPE>
 bool
 TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
                                 STRING_TYPE>::equal_label (
-  CORBA::ULong index
+  CORBA::ULong index,
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {

@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TypeCode_Base_Attributes.h"
-
+#include "tao/TypeCode_Default_Case.h"
 
 namespace TAO
 {
@@ -52,10 +52,12 @@ namespace TAO
       /// Constructor.
       Union (char const * id,
              char const * name,
-             CORBA::TypeCode_ptr * discriminant_type,
+             CORBA::TypeCode_ptr const * discriminant_type,
              case_type const * cases,
              CORBA::ULong ncases,
-             CORBA::Long default_index);
+             CORBA::Long default_index,
+             char const * default_member_name,
+             CORBA::TypeCode_ptr const * default_member_type);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -95,7 +97,7 @@ namespace TAO
                                           ACE_ENV_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index
                                                  ACE_ENV_ARG_DECL) const;
-      virtual CORBA::Any * member_label_i (ULong index
+      virtual CORBA::Any * member_label_i (CORBA::ULong index
                                            ACE_ENV_ARG_DECL) const;
       virtual CORBA::TypeCode_ptr discriminator_type_i (
         ACE_ENV_SINGLE_ARG_DECL) const;
@@ -105,7 +107,7 @@ namespace TAO
     private:
 
       /// Get pointer to the underlying @c Case array.
-      case_type const * cases (void) const;
+//       case_type const * cases (void) const;
 
       /// Return the number of cases in the IDL @c union, including
       /// the @c default case.
@@ -126,7 +128,7 @@ namespace TAO
        *       attempt to perform special handling for the @c default
        *       case by shifting the index value by one, for example.
        */
-      case_type const & case (CORBA::ULong index) const;
+      case_type const & the_case (CORBA::ULong index) const;
 
     private:
 
@@ -148,6 +150,13 @@ namespace TAO
 
       /// Type of IDL @c union discriminant.
       CORBA::TypeCode_ptr * const discriminant_type_;
+
+      /// Index of the default union case.
+      /**
+       * This value will be -1 if no default case is found in the
+       * union.
+       */
+      CORBA::Long const default_index_;
 
       /// The number of cases in the OMG IDL union, excluding the
       /// @c default case.

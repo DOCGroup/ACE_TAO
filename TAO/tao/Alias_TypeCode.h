@@ -23,6 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TypeCode_Base_Attributes.h"
+
+
 namespace TAO
 {
   namespace TypeCode
@@ -47,7 +50,7 @@ namespace TAO
       /// Constructor.
       Alias (char const * id,
              char const * name,
-             CORBA::TypeCode_ptr * tc);
+             CORBA::TypeCode_ptr const * tc);
 
       /// Destructor.
       ~Alias (void);
@@ -85,7 +88,7 @@ namespace TAO
         ACE_ENV_SINGLE_ARG_DECL) const;
       virtual char const * id_i (ACE_ENV_SINGLE_ARG_DECL) const;
       virtual char const * name_i (ACE_ENV_SINGLE_ARG_DECL) const;
-      virtual TypeCode_ptr content_type_i (ACE_ENV_SINGLE_ARG_DECL) const;
+      virtual CORBA::TypeCode_ptr content_type_i (ACE_ENV_SINGLE_ARG_DECL) const;
 
     private:
 
@@ -105,7 +108,7 @@ namespace TAO
        * @note This @c TypeCode is released upon destruction of this
        *       @c TypeCode::Alias.
        */
-      CORBA::TypeCode_ptr * content_type_;
+      CORBA::TypeCode_ptr const * content_type_;
 
     };
 

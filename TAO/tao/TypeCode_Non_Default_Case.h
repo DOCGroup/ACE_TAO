@@ -90,7 +90,7 @@ namespace TAO
       /// Constructor.
       Non_Default_Case (DISCRIMINATOR_TYPE member_label,
                         char const * member_name,
-                        CORBA::TypeCode_ptr * member_type);
+                        CORBA::TypeCode_ptr const * member_type);
 
       /**
        * @name @c TAO::TypeCode::Case Methods

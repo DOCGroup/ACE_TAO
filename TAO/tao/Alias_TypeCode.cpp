@@ -9,6 +9,10 @@
 # include "tao/Alias_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+#include "tao/TypeCodeFactory_Adapter.h"
+#include "tao/ORB_Core.h"
+#include "ace/Dynamic_Service.h"
+
 
 template <typename StringType, class RefCountPolicy>
 TAO::TypeCode::Alias<StringType, RefCountPolicy>::~Alias (void)
@@ -20,7 +24,7 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::~Alias (void)
 template <typename StringType, class RefCountPolicy>
 bool
 TAO::TypeCode::Alias<StringType, RefCountPolicy>::tao_marshal (
-  TAO_OutputCDR &) const
+  TAO_OutputCDR & cdr) const
 {
   // A tk_alias TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of
@@ -122,7 +126,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType, RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
-  TAO_TypeCodeFactory_Adapter * adapter =
+  TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
         TAO_ORB_Core::typecodefactory_adapter_name ()
       );
@@ -139,7 +143,7 @@ TAO::TypeCode::Alias<StringType, RefCountPolicy>::get_compact_typecode_i (
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return adapter->create_alias_tc (this->attributes_.id (),
-                                   ""  /* empty name */
+                                   "",  /* empty name */
                                    compact_content_type.in ()
                                    ACE_ENV_ARG_PARAMETER);
 }

@@ -194,6 +194,30 @@ TAO::operator<< (TAO_OutputCDR & cdr,
   return (cdr << kind) && tc->tao_marshal (cdr);
 }
 
+bool
+TAO::operator>> (TAO_InputCDR & cdr,
+                 CORBA::TypeCode *& tc);
+
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  TAO_TypeCodeFactory_Adapter * const adapter =
+    ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
+        TAO_ORB_Core::typecodefactory_adapter_name ()
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        false);
+    }
+
+  return adapter->_tao_make_typecode (cdr, tc);
+
+}
+
+
+
 CORBA::TypeCode_ptr
 TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
                          ACE_ENV_ARG_DECL)

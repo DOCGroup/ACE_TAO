@@ -33,7 +33,6 @@
 
 #include "tao/TypeCode_Base_Attributes.h"
 
-
 namespace TAO
 {
   namespace TypeCode

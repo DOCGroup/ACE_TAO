@@ -87,10 +87,6 @@ namespace TAO
 }  // End namespace TAO
 
 
-#ifdef __ACE_INLINE__
-# include "tao/TypeCode_Enumerator.inl"
-#endif /* __ACE_INLINE__ */
-
 // If we didn't have to worry about better conversion sequence
 // warnings, and drop the Enumerator<>::get_name() method, we could
 // drop the below #include directives and remove the files contained

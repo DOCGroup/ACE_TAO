@@ -43,7 +43,7 @@ TAO::TypeCode::Union<StringType,
 
   for (unsigned int i = 0; i < count; ++i)
     {
-      case_type const & c = this->case (i);
+      case_type const & c = this->the_case (i);
 
       if (!c.marshal (cdr))
         return false;
@@ -111,7 +111,7 @@ TAO::TypeCode::Union<StringType,
 
   for (CORBA::ULong i = 0; i < this_count; ++i)
     {
-      case_type const & lhs_case = this->case (i);
+      case_type const & lhs_case = this->the_case (i);
 
       bool const equal_case =
         lhs_case.equal (i,
@@ -192,7 +192,7 @@ TAO::TypeCode::Union<StringType,
 
       for (CORBA::ULong i = 0; i < this_count; ++i)
         {
-          case_type const & lhs_case = this->case (i);
+          case_type const & lhs_case = this->the_case (i);
 
           bool const equivalent_case =
             lhs_case.equivalent (i,
@@ -251,7 +251,7 @@ TAO::TypeCode::Union<StringType,
           // the compact TypeCode.
           tc_cases[i].name = empty_name;
           tc_cases[i].type =
-            &(this->case (i).type ()->get_compact_typecode (
+            &(this->the_case (i).type ()->get_compact_typecode (
                   ACE_ENV_ARG_PARAMETER));
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
         }
@@ -272,20 +272,21 @@ TAO::TypeCode::Union<StringType,
     this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-  tc = adapter->_tao_create_union_tc (this->base_attributes_.id (),
-                                      "",  /* empty name */
-                                      this->discriminant_type_,
-                                      tc_cases,
-                                      this->ncases_,
-                                      this->default_index_,
-                                      "",
-                                      CORBA::TypeCode_ptr * default_member_type
-                                      ACE_ENV_ARG_PARAMETER);
+  CORBA::TypeCode_var tc =
+    adapter->_tao_create_union_tc (this->base_attributes_.id (),
+                                   "",  /* empty name */
+                                   this->discriminant_type_,
+                                   tc_cases,
+                                   this->ncases_,
+                                   this->default_index_,
+                                   "",
+                                   this->default_case_.type ()
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   (void) safe_cases.release ();
 
-  return tc;
+  return tc._retn ();
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
@@ -331,7 +332,7 @@ TAO::TypeCode::Union<StringType,
   if (index >= this->case_count ())
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-  return this->case (index).name ();
+  return this->the_case (index).name ();
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
@@ -346,21 +347,21 @@ TAO::TypeCode::Union<StringType,
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                       CORBA::TypeCode::_nil ());
 
-  return CORBA::TypeCode::_duplicate (this->case (index).type ());
+  return CORBA::TypeCode::_duplicate (this->the_case (index).type ());
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
 CORBA::Any *
 TAO::TypeCode::Union<StringType,
                      CaseArrayType,
-                     RefCountPolicy>::member_label_i (ULong index
+                     RefCountPolicy>::member_label_i (CORBA::ULong index
                                                       ACE_ENV_ARG_DECL) const
 {
   if (index >= this->case_count ())
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                       0);
 
-  return this->case (index).label (ACE_ENV_ARG_PARAMETER);
+  return this->the_case (index).label (ACE_ENV_ARG_PARAMETER);
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
