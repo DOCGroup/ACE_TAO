@@ -628,8 +628,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                             this,
                             new_thr_desc
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-			    , ACE_LOG_MSG->seh_except_selector()
-			    , ACE_LOG_MSG->seh_except_handler()
+                            , ACE_LOG_MSG->seh_except_selector()
+                            , ACE_LOG_MSG->seh_except_handler()
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                             );
 
