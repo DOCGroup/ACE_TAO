@@ -1252,14 +1252,14 @@ class ACE_Export ACE_TSS_Cleanup_Lock
   //
   // = DESCRIPTION
   //     This class is used to serialize the access
-  //     of ACE_TSS_Cleanup object in OS.cpp.  ACE_TSS_Cleanup
-  //     itself is expected to be managed by ACE_Object_Manager
-  //     later, so this class shall be removed/changed in
-  //     the near future.  Maybe.
+  //     of ACE_TSS_Cleanup object in OS.cpp.
 {
 public:
   static ACE_Thread_Mutex *instance (void);
   // static lock access point
+
+  static void cleanup (void *instance, void *);
+  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
 
 private:
   static ACE_Thread_Mutex *mutex_;

@@ -936,10 +936,42 @@ ACE_TSS_Cleanup_Lock::instance (void)
 {
   // We assume things before main are single threaded.
   if (ACE_TSS_Cleanup_Lock::mutex_ == 0)
+    {
       ACE_NEW_RETURN (ACE_TSS_Cleanup_Lock::mutex_,
 		      ACE_Thread_Mutex, 0);
+
+      // Register for destruction with ACE_Object_Manager.
+#if defined ACE_HAS_SIG_C_FUNC
+      ACE_Object_Manager::at_exit (ACE_TSS_Cleanup_Lock::mutex_,
+                                   ACE_TSS_Cleanup_Lock_cleanup,
+                                   0);
+#else
+      ACE_Object_Manager::at_exit (ACE_TSS_Cleanup_Lock::mutex_,
+                                   ACE_TSS_Cleanup_Lock::cleanup,
+                                   0);
+#endif /* ACE_HAS_SIG_C_FUNC */
+    }
+
   return ACE_TSS_Cleanup_Lock::mutex_;
 }
+
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_TSS_Cleanup_Lock_cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_TSS_Cleanup_Lock_cleanup");
+
+  delete (ACE_Thread_Mutex *) instance;
+}
+#else
+void
+ACE_TSS_Cleanup_Lock::cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_TSS_Cleanup_Lock::cleanup");
+
+  delete (ACE_Thread_Mutex *) instance;
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
 
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
