@@ -1,3 +1,10 @@
+Fri Mar 18 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/EC_MT_Mcast/Consumer.cpp:
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/EC_MT_Mcast/Supplier.cpp:
+          Removed empty explicit template instantiation blocks
+
 Fri Mar 18 10:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.{h,cpp}:
