@@ -256,7 +256,9 @@ AST_Decl::NodeType be_type::base_node_type (void) const
 
 int be_type::write_as_return (TAO_OutStream *, be_type *)
 {
-  return -1;
+  ACE_ERROR_RETURN ((LM_ERROR,
+		     "be_type::write_as_return - internal error,"
+		     " method shouldn't be invoked\n"), -1);
 }
 
 // Visiting methods

@@ -103,8 +103,6 @@ typedef union
 #include <memory.h>
 #endif
 
-#include <values.h>
-
 #ifdef __cplusplus
 
 #ifndef yyerror
@@ -836,8 +834,6 @@ char * yyreds[] =
 /*
  * Copyright (c) 1993 by Sun Microsystems, Inc.
  */
-
-#pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
 
 /*
 ** Skeleton parser driver for yacc output

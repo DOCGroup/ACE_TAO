@@ -3,6 +3,7 @@
 //
 
 #include "idl.h"
+#include "nr_extern.h"
 #include "be.h"
 #include "be_visitor_args.h"
 #include "be_visitor_interface.h"
@@ -45,7 +46,17 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
   *os << "public:\n";
   os->incr_indent ();
 
-  *os << "_tao_collocated (" << node->full_skel_name () << "_ptr "
+  *os << "_tao_collocated (";
+
+  AST_Decl *d = ScopeAsDecl (node->defined_in ());
+  if (d->node_type () == AST_Decl::NT_root)
+    {
+      // The skeleton name is the outermost, we need to printout the
+      // POA_ prefix that goes with it.
+      *os << "POA_";
+    }
+
+  *os << node->local_name () << "_ptr "
       << " servant);\n";
 
   os->indent ();
@@ -194,8 +205,7 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
 	  be_decl *bd = be_decl::narrow_from_decl (d);
 	  // Only printout the operations, nested interfaces and
 	  // structures only go in the main declaration.
-	  if (d->imported () || bd == 0
-	      || bd->node_type () != AST_Decl::NT_op)
+	  if (d->imported () || bd == 0)
 	    {
 	      continue;
 	    }

@@ -24,6 +24,7 @@ BE_FILES	= \
 		be_interface \
 		be_interface_fwd \
 		be_module \
+		be_native \
 		be_operation \
 		be_predefined_type \
 		be_root \
