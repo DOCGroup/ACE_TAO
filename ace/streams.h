@@ -31,7 +31,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 // Do this so the #pragma warning in the MSVC headers do not
 // affect our #pragma warning settings
-#if (_MSC_VER >= 1200)
+#if defined (_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(push)
 #endif /* _MSC_VER >= 1200 */
 
@@ -132,7 +132,7 @@
 
 // Do this so the #pragma warning in the MSVC headers do not
 // affect our #pragma warning settings
-#if (_MSC_VER >= 1200)
+#if defined (_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER >= 1200 */
 
