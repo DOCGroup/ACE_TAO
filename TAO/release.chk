@@ -39,6 +39,10 @@ Legend:
 [  00  ] 	POA/On_Demand_Activation runs
 [  01  ] POA/Explicit_Activation compiles
 [  00  ] 	POA/Explicit_Activation runs
+[xxxxxx] POA/On_Demand_Activation_POA_Ids compiles
+[xxxxxx] 	POA/On_Demand_Activation_POA_Ids runs
+[xxxxxx] POA/Default_Servant compiles
+[xxxxxx] 	POA/Default_Servant runs
      
 [1x11xx] Param_Test compiles
 [xxxxxx] 	DII short
@@ -100,10 +104,11 @@ NOTES
    unsigned int *): referenced in ./svr
 
 * IRIX
-** Event Latency won't work because unproper detection of failures for priority change.
+** Event Latency won't work because unproper detection of failures for
+   priority change.
 ** MT_Cubit does not compile
-An extra library (-lposix4) is only present in Solaris; IMHO that
-should go into the platform file for Solaris/CC
+   An extra library (-lposix4) is only present in Solaris; IMHO that
+   should go into the platform file for Solaris/CC
 
 * Linux/g++
 ** IDL Cubit clnt works, but generates a SEGV on shutdown
