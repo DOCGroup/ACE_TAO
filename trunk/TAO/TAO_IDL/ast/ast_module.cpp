@@ -199,7 +199,7 @@ AST_Module *AST_Module::fe_add_module(AST_Module *t)
 #ifndef ACE_HAS_USING_KEYWORD
     if (referenced(d))
       {
-        String *s = t->file_name ();
+        UTL_String *s = t->file_name ();
         long lineno = t->line ();
         cerr << idl_global->prog_name ()
              << ": warning: "
