@@ -1,9 +1,7 @@
 # $Id$
 
 This test is similar to the $TAO_ROOT/tests/BiDirectional test. The
-only difference is that, this test uses the select_mt reactor, which
-helps the server to make calls to client during the upcall.  Please
-see the README file in $TAO_ROOT/tests/BiDirectional to see why this
-would fail with a TP reactor. Also see bug id #575 in bugzilla to
-understand more about the TP reactors behavior.
+only difference being that the server as a part of the upcall sends a
+bunch of remote calls, to show some nested upcall behaviour. 
+
 
