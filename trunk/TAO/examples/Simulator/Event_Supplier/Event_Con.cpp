@@ -22,8 +22,6 @@
 //
 // ============================================================================
 
-#include <limits.h>
-
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
@@ -33,6 +31,8 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "Event_Con.h"
 #include "NavWeapC.h"
+
+#include <limits.h>
 
 ACE_RCSID(Event_Supplier, Event_Con, "$Id$")
 

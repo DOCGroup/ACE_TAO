@@ -21,8 +21,6 @@
 //
 // ============================================================================
 
-#include <limits.h>
-
 #include "tao/corba.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Get_Opt.h"
@@ -36,6 +34,8 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "DualEC_Sup.h"
 #include "NavWeapC.h"
+
+#include <limits.h>
 
 ACE_RCSID(Event_Supplier, DualEC_Sup, "$Id$")
 
