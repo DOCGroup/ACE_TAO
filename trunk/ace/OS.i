@@ -7801,6 +7801,7 @@ ACE_OS::open (const char *filename,
   return 0;
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (perms);
+  ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock = 0);
 
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
@@ -7841,6 +7842,11 @@ ACE_OS::open (const char *filename,
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_POSIX_SEMANTICS))
     flags |= FILE_FLAG_POSIX_SEMANTICS;
 
+  ACE_MT (if (ACE_BIT_ENABLED (mode, _O_APPEND)) { ace_os_monitor_lock =
+    ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_OS_MONITOR_LOCK); 
+    ace_os_monitor_lock->acquire (); })
+
   ACE_HANDLE h = ::CreateFileA (filename, access,
                                 FILE_SHARE_READ | FILE_SHARE_WRITE,
                                 ACE_OS::default_win32_security_attributes (sa),
@@ -7851,8 +7857,9 @@ ACE_OS::open (const char *filename,
   if (h == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (h);
 
-  if (ACE_BIT_ENABLED (mode, _O_APPEND))
+  ACE_MT (if (ace_os_monitor_lock != 0))
     ::SetFilePointer (h, 0, 0, FILE_END);
+  ACE_MT (ace_os_monitor_lock->release ());
 
   return h;
 #else
