@@ -107,6 +107,9 @@ TAO_EC_Event_Channel::shutdown (CORBA::Environment& ACE_TRY_ENV)
   ACE_CHECK;
   supplier_poa->deactivate_object (supplier_id.in (), ACE_TRY_ENV);
   ACE_CHECK;
+
+  this->consumer_admin_->shutdown (ACE_TRY_ENV);
+  this->supplier_admin_->shutdown (ACE_TRY_ENV);
 }
 
 void

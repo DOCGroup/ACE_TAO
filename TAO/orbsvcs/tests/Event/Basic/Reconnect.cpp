@@ -6,7 +6,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
+ACE_RCSID(EC_Tests_Basic, Reconnect, "$Id$")
 
 int
 main (int argc, char *argv [])
