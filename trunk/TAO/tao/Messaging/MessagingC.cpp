@@ -530,7 +530,6 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 
 
 template<>
-ACE_INLINE
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ExceptionHolder>::to_value (
     CORBA::ValueBase *&_tao_elem

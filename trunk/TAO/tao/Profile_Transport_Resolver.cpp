@@ -165,7 +165,9 @@ namespace TAO
     // If the user has set a roundtrip timeout policy, then throw a
     // timeout exception, else just fall through and return false to
     // look at the next endpoint
-    if (this->transport_ == 0 && errno == ETIME && is_conn_timeout == false)
+    if (this->transport_ == 0 &&
+        errno == ETIME &&
+        is_conn_timeout == false)
       {
         ACE_THROW_RETURN (CORBA::TIMEOUT (
             CORBA::SystemException::_tao_minor_code (
