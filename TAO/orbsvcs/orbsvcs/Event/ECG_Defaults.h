@@ -70,5 +70,9 @@
 # define TAO_ECG_DEFAULT_IIOP_USE_TTL 1 /* use TTL */
 #endif /* TAO_ECG_DEFAULT_IIOP_USE_TTL */
 
+#ifndef TAO_ECG_DEFAULT_IIOP_USE_CONSUMER_PROXY_MAP
+# define TAO_ECG_DEFAULT_IIOP_USE_CONSUMER_PROXY_MAP 1 /* use consumer proxy map */
+#endif /* TAO_ECG_DEFAULT_IIOP_USE_CONSUMER_PROXY_MAP */
+
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_DEFAULTS_H */

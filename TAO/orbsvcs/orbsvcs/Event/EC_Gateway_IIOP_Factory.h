@@ -54,6 +54,9 @@ public:
   /// Accessors to use_ttl flag
   int use_ttl (void) const;
 
+  /// Accessors to use_consumer_proxy_map flag
+  int use_consumer_proxy_map (void) const;
+
 private:
   /// Helper for agrument parsing.  Prints out an error message about
   /// unsupported option value.
@@ -78,6 +81,12 @@ protected:
   /// exists in the gateway setup for the same source/type combination, else
   /// one event will flow continuosly through all gateways.
   int use_ttl_;
+
+  /// The flag for using the consumer proxy map. With 1 the consumer proxy map
+  /// is used, meaning that for each unique source id we use a different
+  /// proxy push consumer, if 0, we only use one proxy push consumer for all
+  /// source ids.
+  int use_consumer_proxy_map_;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Gateway_IIOP_Factory)
