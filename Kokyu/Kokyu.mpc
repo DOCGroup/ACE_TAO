@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(Kokyu) : acelib {
+project(Kokyu) : acelib, core {
   sharedname  = Kokyu
   dynamicflags = KOKYU_BUILD_DLL
 
@@ -20,4 +20,8 @@ project(Kokyu) : acelib {
     DSRT_Dispatch_Item_T.cpp
     DSRT_Sched_Queue_T.cpp    
   }
+
+  Pkgconfig_Files {
+    Kokyu.pc.in 
+  } 
 }
