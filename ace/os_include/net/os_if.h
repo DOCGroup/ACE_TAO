@@ -41,6 +41,12 @@
 #  if defined (ACE_HAS_STL_MAP_CONFLICT)
 #    undef map
 #  endif /* ACE_HAS_STL_MAP_CONFLICT */
+#  if defined (HPUX) && defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition.  See IOP_IORC.h. 
+      Thanks to Torsten Kopper <tkue_0931@fastmail.fm> for this patch.*/
+#    undef IOR
+#  endif /* HPUX && IOR */
 #endif /* !ACE_LACKS_NET_IF_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
