@@ -1,3 +1,9 @@
+Thu Feb 24 01:32:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object.cpp (_non_existent): The collocated servant also
+	  throws exception.  Moved it into the try block.  Thanks to Brian
+	  Wright <bwright@paladyne.com> for reporting this.
+
 Wed Feb 23 18:35:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:

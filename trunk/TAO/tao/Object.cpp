@@ -252,41 +252,42 @@ CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 CORBA::Boolean
 CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 {
-  // If the object is collocated then try locally....
-  if (this->is_collocated_)
-    {
-      // Which collocation strategy should we use?
-      if (this->protocol_proxy_ != 0 &&
-          this->protocol_proxy_->servant_orb_var ()->orb_core ()
-          ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
-        {
-          TAO_Object_Adapter::Servant_Upcall servant_upcall
-            (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
-          servant_upcall.prepare_for_upcall (this->_object_key (),
-                                             "_non_existent",
-                                             ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-          return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
-        }
-
-      // Direct collocation strategy is used.
-      if (this->servant_ != 0)
-        return this->servant_->_non_existent (ACE_TRY_ENV);
-    }
-
   CORBA::Boolean _tao_retval = 0;
-  // Must catch exceptions, if the server raises a
-  // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
-  // propagating the exception.
+
   ACE_TRY
     {
+      // If the object is collocated then try locally....
+      if (this->is_collocated_)
+        {
+          // Which collocation strategy should we use?
+          if (this->protocol_proxy_ != 0 &&
+              this->protocol_proxy_->servant_orb_var ()->orb_core ()
+              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+            {
+              TAO_Object_Adapter::Servant_Upcall servant_upcall
+                (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
+              servant_upcall.prepare_for_upcall (this->_object_key (),
+                                                 "_non_existent",
+                                                 ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+              return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
+            }
+
+          // Direct collocation strategy is used.
+          if (this->servant_ != 0)
+            return this->servant_->_non_existent (ACE_TRY_ENV);
+        }
+
+      // Must catch exceptions, if the server raises a
+      // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
+      // propagating the exception.
       TAO_Stub *istub = this->_stubobj ();
       if (istub == 0)
         ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
       TAO_GIOP_Twoway_Invocation _tao_call (
-	        istub,
+                istub,
           "_non_existent",
           13,
           istub->orb_core ()
