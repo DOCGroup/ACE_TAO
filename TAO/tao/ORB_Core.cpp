@@ -22,6 +22,7 @@
 
 #include "tao/POA.h"
 
+#include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
