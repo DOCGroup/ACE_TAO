@@ -76,6 +76,7 @@ int
 Message_Handler::handle_output (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG, "Message_Handler::handle_output\n"));
+  ACE_UNUSED_ARG (fd);  
 
   // Next time handle_exception will be called 
   this->notification_strategy_.mask (ACE_Event_Handler::EXCEPT_MASK);
@@ -87,6 +88,7 @@ int
 Message_Handler::handle_exception (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG, "Message_Handler::handle_exception\n"));
+  ACE_UNUSED_ARG (fd);  
 
   // Next time handle_input will be called 
   this->notification_strategy_.mask (ACE_Event_Handler::READ_MASK);
@@ -125,7 +127,7 @@ Message_Handler::make_message (void)
   
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Message_Queue_Notifications_Test");
 
