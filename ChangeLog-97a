@@ -1,3 +1,7 @@
+Wed Jun 11 04:47:52 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* tests/Timer_Queue_Test.cpp: Added include file ace/Timer_Queue.h
+
 Tue Jun 10 16:02:52 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/SString.{h,cpp}: Changed the parameters in CString::substring()
