@@ -314,6 +314,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<CORBA::StringSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::StringSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
@@ -371,6 +378,13 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<CORBA::WStringSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::WStringSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125

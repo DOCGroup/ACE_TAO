@@ -1,3 +1,20 @@
+Thu Mar 20 10:28:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/DomainC.cpp:
+        * tao/DynamicC.cpp:
+        * tao/IIOPC.cpp:
+        * tao/IOPC.cpp:
+        * tao/Makefile.tao
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/OctetSeqC.cpp:
+        * tao/Policy_ForwardC.cpp:
+        * tao/StringSeqC.cpp:
+
+	  Added missing explicit instantiations associated
+	  with Any operators for sequences.
+
 Wed Mar 19 21:19:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
