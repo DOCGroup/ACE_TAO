@@ -1,3 +1,8 @@
+Mon Jun 14 14:37:00 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Fixed the throw
+	  specifications for all the CORBA methods.
+
 Mon Jun 14 13:45:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.{h,cpp},
