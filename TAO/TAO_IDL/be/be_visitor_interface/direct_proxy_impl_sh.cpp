@@ -38,7 +38,8 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->direct_proxy_impl_name ();
-  *os << be_idt_nl << ": public virtual TAO_Direct_Object_Proxy_Impl";
+  *os << be_idt_nl 
+      << ": public virtual TAO_Direct_Object_Proxy_Impl" << be_idt;
 
   if (node->n_inherits () > 0)
     {
@@ -49,7 +50,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
           be_interface *inherited =
             be_interface::narrow_from_decl (node->inherits ()[i]);
 
-          *os << "public virtual ";
+          *os << "public virtual ::";
           *os << inherited->full_direct_proxy_impl_name ();
 
           if (i < node->n_inherits () - 1)
@@ -61,7 +62,24 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
         }
     }
 
-  *os << be_uidt_nl;
+  if (node->node_type () == AST_Decl::NT_component)
+    {
+      AST_Component *base = 
+        AST_Component::narrow_from_decl (node)->base_component ();
+
+      if (base != 0)
+        {
+          be_interface *inherited =
+            be_interface::narrow_from_decl (base);
+
+          *os << "," << be_nl
+              << "public virtual "
+              << "::" << inherited->full_direct_proxy_impl_name ();
+        }
+    }
+
+  *os << be_uidt << be_uidt_nl;
+
   *os << "{" << be_nl << "public:" << be_idt_nl;
 
   // Ctor
@@ -76,6 +94,23 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
                          "(%N:%l) direct_proxy_impl_sh::"
                          "visit_interface - "
                          "codegen for scope failed\n"), 
+                        -1);
+    }
+
+  // Generate static collocated operations for operations of our base 
+  // classes.
+  int status =
+    node->traverse_inheritance_graph (
+              be_interface::gen_colloc_op_decl_helper, 
+              os
+            );
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_direct_proxy_impl_sh::"
+                         "visit_interface - "
+                         "inheritance graph traversal failed\n"),
                         -1);
     }
 

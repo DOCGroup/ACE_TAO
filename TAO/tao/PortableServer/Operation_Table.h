@@ -12,6 +12,7 @@
 
 #ifndef TAO_OPTABLE_H
 #define TAO_OPTABLE_H
+
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
@@ -22,6 +23,7 @@
 
 #include "tao/Abstract_Servant_Base.h"
 #include "tao/TAO_Singleton.h"
+
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_Allocator.h"
@@ -39,8 +41,12 @@ public:
   /// Operation name
   const char* opname_;
 
-  /// Skeleton pointer
+  /// Remote skeleton pointer
   TAO_Skeleton skel_ptr_;
+
+  /// Collocated skeleton pointers.
+  TAO_Collocated_Skeleton thruPOA_skel_ptr;
+  TAO_Collocated_Skeleton direct_skel_ptr;
 };
 
 /**
