@@ -1,3 +1,7 @@
+Wed Dec 10 23:57:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+        * ACE version 4.4.4, released Wed Dec 10 23:57:00 1997.
+
 Wed Dec 10 16:24:09 1997    <irfan@TWOSTEP>
 
 	* ace/Auto_Ptr.i: Apparently, the standard states that in order to
