@@ -45,7 +45,7 @@ public class SOCKConnectorTest
 	  if (ack_len == 0)
 	    break;
 	  else
-	    ACE.DEBUG (OS.createString (ack));
+	    ACE.DEBUG (ack.toString ());
 	}
     }
 
