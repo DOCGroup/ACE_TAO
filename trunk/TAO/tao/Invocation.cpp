@@ -451,6 +451,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
                          &(object_ptr),
                          0,
                          env);
+      TAO_CHECK_ENV_SYS;
     }
   TAO_CATCH_SYS (CORBA_SystemException, ex)
     {
@@ -729,8 +730,10 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 TAO_TRY_SYS
                   {
                     tcp = exceptions.item (i, env);
+                    TAO_CHECK_ENV_SYS;
 
                     const char *xid = tcp->id (env);
+                    TAO_CHECK_ENV_SYS;
 
                     if (ACE_OS::strcmp (buf, xid) != 0)
                       loop_continue = 1;
@@ -1000,6 +1003,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                   {
                     tcp = excepts[i].tc;
                     const char *xid = tcp->id (env);
+                    TAO_CHECK_ENV_SYS;
 
                     if (ACE_OS::strcmp (buf, (char *)xid) != 0)
                       loop_continue = 1;
@@ -1011,6 +1015,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                         this->inp_stream_.decode (exception->_type (),
                                                   exception, 0,
                                                   env);
+                        TAO_CHECK_ENV_SYS;
                       }
                   }
                 TAO_CATCH_SYS (CORBA_SystemException, ex)
