@@ -216,15 +216,17 @@ public:
   IpAddress& operator=( const IpAddress &ipaddress);
   // assignment to another IpAddress object overloaded
 
+  // TODO: add ability to set addr given long
+
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  char *friendly_name(int &status);
-  // return the friendly name
-  // returns a NULL string if there isn't one
+  char *resolve_hostname(int& was_found);
+  // return the DNS Fully Qualified Domain Name (host.domain)
+  // on failure returns dotted_quad string
 
   virtual char *to_string() ;
-  // return string representation of object
+  // return string representation of object (dotted quad returned)
 
   virtual operator const char *() const;
   // const char * operator overloaded for streaming output
@@ -257,10 +259,10 @@ public:
 protected:
   char output_buffer[MAX_DISPLAY_SZ];           // output buffer
 
-  char iv_friendly_name[MAX_DISPLAY_SZ];
+  char iv_friendly_name_[MAX_DISPLAY_SZ];
   // friendly name storage
 
-  int  iv_friendly_name_status;
+  int  iv_friendly_name_status_;
   // did resolver call work? some addrs won't resolve 
 
   virtual int parse_address( const char *inaddr);
@@ -285,6 +287,38 @@ protected:
   static int resolve_to_hostname(const in_addr& quad_addr, char *hostname);
   // thread safe routine to lookup name given ip address
   // return <> 0 on error
+
+};
+
+//------------------------------------------------------------------------
+//--------------[ DNS Iterator Class ]------------------------------------
+//------------------------------------------------------------------------
+
+class ACE_Export Address_Iter 
+  // = TITLE
+  //     Defines routines to obtain information on a hostname/FQDN
+  //     such as multiple addresses
+{
+public:
+  Address_Iter(const char *hostname); // fully qualified domain name, hostname
+
+  int valid() const;
+  // did hostname resolve via DNS?
+
+  int how_many_addresses();
+  // how many addresses associated with this hostname
+
+  int next(IpAddress& addr);
+  // return next address
+
+private:
+  Address_Iter(const Address_Iter&);
+  int valid_;		       // ctor status
+  int count_;			// number of addresses
+  char **entry_;		// ptr to current address
+  struct hostent lookupResult_;
+  ACE_HOSTENT_DATA buffer_;
+  int query_dns(const char *hostname);
 };
 
 //------------------------------------------------------------------------
@@ -606,7 +640,7 @@ public:
   // copy an instance of this Value
 
   IpxAddress& operator=( const IpxAddress &ipxaddress);
-  // assignment to another IpAddress object overloaded
+  // assignment to another IpxAddress object overloaded
 
   int get_hostid( MacAddress& mac);
   // get the host id portion of an ipx address
@@ -675,7 +709,7 @@ public:
   // copy an instance of this Value
 
   IpxSockAddress& operator=( const IpxSockAddress &ipxaddr);
-  // assignment to another IpAddress object overloaded
+  // assignment to another IpxAddress object overloaded
 
   SnmpSyntax *clone() const;
   // create a new instance of this Value
