@@ -1,0 +1,4 @@
+project {
+  depends += Strategies
+  libs    += TAO_Strategies
+}

@@ -1,0 +1,36 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n HUDisplay"
+
+project(BasicSP_stub): ciao_client {
+
+  sharedname = BasicSP_stub
+  idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export -Wb,stub_export_include=BasicSP_stub_export.h -Wb,skel_export_macro=BASICSP_SVNT_Export -Wb,skel_export_include=BasicSP_svnt_export.h
+  dllflags   = BASICSP_STUB_BUILD_DLL
+
+  IDL_Files {
+    BasicSP.idl
+  }
+
+  Source_Files {
+    BasicSPC.cpp
+  }
+}
+
+project(BasicSP_svnt) : ciao_server {
+  depends +=  BasicSP_stub
+  sharedname = BasicSP_svnt
+  libs    += BasicSP_stub
+
+  idlflags  +=  -Wb,export_macro=BASICSP_SVNT_Export -Wb,export_include=BasicSP_svnt_export.h
+  dllflags = BASICSP_SVNT_BUILD_DLL
+
+  IDL_Files {
+    BasicSPE.idl
+  }
+
+  Source_Files {
+    BasicSPEC.cpp
+    BasicSPS.cpp
+    BasicSP_svnt.cpp
+  }
+}

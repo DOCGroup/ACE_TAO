@@ -1,0 +1,8 @@
+project : taolib, core {
+  depends    += IFR_Client
+  sharedname  = TAO_TypeCodeFactory
+  libs       += TAO_IFR_Client TAO
+  dllflags    = TAO_TYPECODEFACTORY_BUILD_DLL
+  libout      = ..
+  include_dir = tao/TypeCodeFactory
+}

@@ -1,0 +1,7 @@
+#
+# Makefile for building the avstreams pluggable test
+#
+
+MAKEFILES = ftp.bor server.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

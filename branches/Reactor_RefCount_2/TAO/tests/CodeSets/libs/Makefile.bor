@@ -1,0 +1,8 @@
+#
+# $Id$
+#
+
+DIRS = \
+        IBM1047_ISO8859
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

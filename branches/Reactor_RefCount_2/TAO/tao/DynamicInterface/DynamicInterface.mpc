@@ -1,0 +1,7 @@
+project : taolib, core {
+  sharedname  = TAO_DynamicInterface
+  libs       += TAO TAO_PortableServer
+  dllflags    = TAO_DYNAMICINTERFACE_BUILD_DLL
+  libout      = ..
+  include_dir = tao/DynamicInterface
+}
