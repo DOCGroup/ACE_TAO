@@ -50,25 +50,27 @@ main (int, char *[])
   // no garbage data from a possible aborted run
   ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
 
+  LPCTSTR server_cl = APPLICATION ACE_TEXT ("server.conf");
   ACE_Process_Options server_options;
-  server_options.command_line (APPLICATION ACE_TEXT ("server.conf"));
+  server_options.command_line (server_cl);
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%n; %p (%s).\n",
-                       "Server fork failed", APPLICATION), -1);
+                       "Server fork failed", server_cl), -1);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
 
   ACE_OS::sleep (3);
 
+  LPCTSTR clerk_cl = APPLICATION ACE_TEXT ("clerk.conf");
   ACE_Process_Options clerk_options;
-  clerk_options.command_line (APPLICATION ACE_TEXT ("clerk.conf"));
+  clerk_options.command_line (clerk_cl);
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%n; %p: (%s).\n",
-                       "Clerk fork failed", APPLICATION), -1);
+                       "Clerk fork failed", clerk_cl), -1);
   else
     ACE_DEBUG ((LM_DEBUG, "Clerk forked with pid = %d.\n", clerk.getpid ()));
 
