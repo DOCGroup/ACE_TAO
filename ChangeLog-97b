@@ -1,3 +1,13 @@
+Sun Nov 16 21:58:51 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/*.dsp, ace/*.dsp: Added Release, Unicode Debug, and 
+	  Unicode Release versions for each of the tests.  
+	  
+	  Also found out that precompiled headers take up insane 
+	  amounts of disk space when used with ACE and also slows 
+	  the compilation down.  I turned it off for the tests and
+	  for the ace libraries
+
 Sun Nov 16 13:34:29 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking): 
