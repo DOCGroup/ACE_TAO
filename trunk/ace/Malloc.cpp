@@ -254,7 +254,7 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
-  ACE_ASSERT (0 == "not implemented!");
+  ACE_ASSERT (0); // not implemented!
 }
 
 const char *
@@ -267,7 +267,7 @@ ACE_PI_Control_Block::ACE_Name_Node::name (void) const
 void
 ACE_PI_Control_Block::ACE_Name_Node::name (const char *)
 {
-  ACE_ASSERT (0 == "not implemented yet");
+  ACE_ASSERT (0); // not implemented yet.
 }
 
 ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)

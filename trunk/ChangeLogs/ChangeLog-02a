@@ -1,3 +1,11 @@
+Wed Mar 01 19:25:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Based_Pointer_T.cpp:
+	* ace/Malloc.cpp: Replaced ACE_ASSERT (!"A STRING") with
+	  ACE_ASSERT (0).  Some brain-damaged compilers (i.e., Diab DCC
+	  4.2b) can't handle this.  Thanks to Bob Bouterse
+	  <BBouterse@escient.com> for reporting and fixing this.
+
 Wed Mar  1 16:29:55 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in (ACE_HAS_ALT_CUSERID):
