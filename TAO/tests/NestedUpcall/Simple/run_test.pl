@@ -42,8 +42,8 @@ if ($server != 0) {
 
 unlink $iorfile;
 
-$SV->Arguments ("-f $iorfile -t 2");
-$CL->Arguments ("-k file://$iorfile -x -n 2");
+$SV->Arguments ("-f $iorfile -t 3");
+$CL->Arguments ("-k file://$iorfile -x -n 10");
 
 print STDERR "\nrunning MT version of the client and the server\n\n";
 

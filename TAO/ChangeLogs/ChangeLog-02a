@@ -1,3 +1,21 @@
+Wed Jul 18 19:22:48 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Leader_Follower.i (set/reset_client_leader_thread): Fixed a
+	  subtle bug in the Leader Follower code: <client_leader_thread_>
+	  was marked 1 in set_client_leader_thread() and 0 in
+	  reset_client_leader_thread().  This was a problem when the
+	  client thread was made leader thread multiple times in nested
+	  upcall situations.  Changing the code to increment
+	  <client_leader_thread_> in set_client_leader_thread() and
+	  decrement in reset_client_leader_thread() gave us an accurate
+	  count of how many times the client was made the leader.
+
+	* tao/Asynch_Reply_Dispatcher.cpp: Removed unnecessary include
+	  file "Leader_Followers.h".
+
+	* tests/NestedUpcall/Simple/run_test.pl: Changed MT configuration
+	  to use parameters with which the test was previously failing.
+
 Wed Jul 18 17:44:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
