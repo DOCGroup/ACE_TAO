@@ -3,6 +3,8 @@ Thu Jul 15 11:02:57 1999  David L. Levine  <levine@cs.wustl.edu>
         * examples/Callback_Quoater/Notifier_i.cpp: removed
           ACE_Hash<ACE_CString> and ACE_Equal_To<ACE_CString>
           explicit instantiations, because they're in tao/POA.cpp.
+          Thanks to Denis Ouellet <douellet@gel.ulaval.ca> for
+          reporting this.
 
 Thu Jul 15 02:29:33 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
