@@ -133,6 +133,9 @@ protected:
 
   ACE_TString working_dir_;
   // Working directory.
+
+  ImplementationRepository::ActivationMode activation_;
+  // Activation mode (0 = NORMAL, 1 = MANUAL, 2 = PER_CLIENT)
 };
 
 

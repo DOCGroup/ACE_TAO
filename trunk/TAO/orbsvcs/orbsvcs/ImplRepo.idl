@@ -35,6 +35,9 @@ module ImplementationRepository
   typedef sequence<EnvironmentVariable> EnvironmentList;
   // Complete Environment.
 
+  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT};
+  // The type of Activation 
+
   struct StartupOptions
   // Options used to start up the server.
   {
@@ -46,6 +49,9 @@ module ImplementationRepository
     
     string working_directory;
     // Working directory.
+
+    ActivationMode activation;
+    // Activation Mode
   };
 
   struct ServerInformation
