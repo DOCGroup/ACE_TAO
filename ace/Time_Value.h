@@ -67,6 +67,9 @@ typedef struct timespec
 typedef struct timespec timespec_t;
 # endif /* ACE_LACKS_TIMESPEC_T */
 
+// needed for ACE_UINT64
+#include "ace/Basic_Types.h"
+
 // -------------------------------------------------------------------
 
 /**
