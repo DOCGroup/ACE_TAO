@@ -6,6 +6,7 @@
 #include "ace/ACE.h"
 
 #include "tao/Timeprobe.h"
+#include "tao/CDR.h"
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "orbsvcs/orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/orbsvcs/Time_Utilities.h"
