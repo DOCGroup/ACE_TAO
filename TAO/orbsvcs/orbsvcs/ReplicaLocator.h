@@ -49,8 +49,8 @@ public:
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr adapter,
       const char *operation,
-      PortableServer::ServantLocator::Cookie & the_cookie,
-      CORBA_Environment &ACE_TRY_ENV)
+      PortableServer::ServantLocator::Cookie & the_cookie
+      TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
@@ -59,8 +59,8 @@ public:
       PortableServer::POA_ptr adapter,
       const char *operation,
       PortableServer::ServantLocator::Cookie the_cookie,
-      PortableServer::Servant the_servant,
-      CORBA_Environment &ACE_TRY_ENV);
+      PortableServer::Servant the_servant
+      TAO_ENV_ARG_DECL);
 
 private:
   TAO_LB_LoadBalancer *load_balancer_;
