@@ -1,3 +1,9 @@
+Mon Nov 01 14:30:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/POA.cpp: removed ACE_Hash<ACE_CString> and
+          ACE_Equal_To<ACE_CString> explicit instantiations,
+          because ace/Capabilities.cpp now has them.
+
 Mon Nov 01 13:43:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Trading_Service/Trading_Server.cpp (main):
@@ -12,69 +18,69 @@ Mon Nov  1 12:29:17 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sun Oct 31 22:22:15 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Removed 3rd argument of fstream::open(...)
-	  as some platforms complained. If the defaults permissions are
-	  inadequate, we can use add ACE_OS::chmod (...).
+        * tao/ORB_Core.cpp (init): Removed 3rd argument of fstream::open(...)
+          as some platforms complained. If the defaults permissions are
+          inadequate, we can use add ACE_OS::chmod (...).
 
 Sun Oct 31 20:11:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* tao/orbconf.h:
-	* tao/ORB_Core.cpp:
-	* tao/params.h:
-	* tao/params.cpp:
-	* tao/params.i:
-	* tao/ORB.cpp:
-	* tao/ORB.h:
+        * tao/orbconf.h:
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.cpp:
+        * tao/params.i:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
 
- 	  Abstracted out the code for location of different services through
-	  resolve_initial_references () by the ORB. This reduces the
-	  footprint of the ORB as now there is a single method to locate
-	  services instead of a different method for each service.
+          Abstracted out the code for location of different services through
+          resolve_initial_references () by the ORB. This reduces the
+          footprint of the ORB as now there is a single method to locate
+          services instead of a different method for each service.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-	* orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
 
-	  Made changes in these files to reflect the changes made to the ORB
-	  Core since a single method is now used to get/set the service port.
+          Made changes in these files to reflect the changes made to the ORB
+          Core since a single method is now used to get/set the service port.
 
 Sat Oct 30 21:40:48 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Removed ACE_IOSTREAM_TYPE and replaced
-	  code with either FILE* or ofstream* until I find a macro
-	  that will properly represnt either an ofstream* or FILE*.
-	  When (ACE_LACKS_IOSTREAM_TOTALLY) is defined, it produces a FILE*
-	  that works well with open(FILE*...), but if it is not defined,
-	  it returns an iostream which does not work with
-	  ->open (filename,...,..) For now, depending on what is defined,
-	  we create an explicit FILE* or ofstream* to redirect ACE_DEBUG
-	  and ACE_ERROR to.
+        * tao/ORB_Core.cpp (init): Removed ACE_IOSTREAM_TYPE and replaced
+          code with either FILE* or ofstream* until I find a macro
+          that will properly represnt either an ofstream* or FILE*.
+          When (ACE_LACKS_IOSTREAM_TOTALLY) is defined, it produces a FILE*
+          that works well with open(FILE*...), but if it is not defined,
+          it returns an iostream which does not work with
+          ->open (filename,...,..) For now, depending on what is defined,
+          we create an explicit FILE* or ofstream* to redirect ACE_DEBUG
+          and ACE_ERROR to.
 
 Sat Oct 30 19:32:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Load_Balancing_persistent/README:
-	* examples/Load_Balancing_persistent/Identity_Client.cpp:
-	* examples/Load_Balancing_persistent/Identity_Client.h
-	* examples/Load_Balancing_persistent/Identity_Server.cpp:
-	* examples/Load_Balancing_persistent/Identity_Server.h:
-	* examples/Load_Balancing_persistent/Identity_i.h:
-	* examples/Load_Balancing_persistent/Identity_i.cpp:
-	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
-	* examples/Load_Balancing_persistent/Load_Balancer_i.h:
-	* examples/Load_Balancing_persistent/Load_Balancer_Service.cpp:
-	* examples/Load_Balancing_persistent/Load_Balancer_Service.h:
-	* examples/Load_Balancing_persistent/Load_Balancer.idl:
-	* examples/Load_Balancing_persistent/Identity.idl:
-	* examples/Load_Balancing_persistent/Makefile: An example that
-	  demonstrates how to make a service persistent. This is a simple
-	  extension of the Load_Balancing_Service in
-	  $TAO_ROOT/Load_Balancing. Please refer to the README for more
-	  details.
+        * examples/Load_Balancing_persistent/README:
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Identity_Client.h
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.h:
+        * examples/Load_Balancing_persistent/Identity_i.h:
+        * examples/Load_Balancing_persistent/Identity_i.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.h:
+        * examples/Load_Balancing_persistent/Load_Balancer_Service.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_Service.h:
+        * examples/Load_Balancing_persistent/Load_Balancer.idl:
+        * examples/Load_Balancing_persistent/Identity.idl:
+        * examples/Load_Balancing_persistent/Makefile: An example that
+          demonstrates how to make a service persistent. This is a simple
+          extension of the Load_Balancing_Service in
+          $TAO_ROOT/Load_Balancing. Please refer to the README for more
+          details.
 
 Sat Oct 30 12:16:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Trading_Service/: Split off the main() function into a
-	  separate file (Trading_Server.cpp) so that the Trading Service
- 	  can be used with "3rd-party" main() functions.
+        * orbsvcs/Trading_Service/: Split off the main() function into a
+          separate file (Trading_Server.cpp) so that the Trading Service
+          can be used with "3rd-party" main() functions.
 
         * orbsvcs/Naming_Service/Naming_Server.cpp (main): The error returns
           from the main() functions should be 1, not -1.
@@ -112,8 +118,8 @@ Fri Oct 29 19:36:33 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 Fri Oct 29 19:44:39 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
         * tao/ORB_Core.cpp (init): Added option to allow for
-	  redirection of ACE_DEBUG and ACE_ERROR statements
-	  -ORBLogFile <file>
+          redirection of ACE_DEBUG and ACE_ERROR statements
+          -ORBLogFile <file>
 
 Fri Oct 29 12:58:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
