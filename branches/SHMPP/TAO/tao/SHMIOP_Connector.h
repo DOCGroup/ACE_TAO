@@ -128,7 +128,7 @@ public:
   typedef ACE_Pair<TAO_SHMIOP_Client_Connection_Handler *,
                    TAO_ATTRIBUTES>
           TAO_CACHED_HANDLER;
-  typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
+  typedef ACE_Refcounted_Hash_Recyclable<ACE_MEM_Addr>
           TAO_IADDR;
   typedef ACE_Hash<TAO_IADDR> TAO_HASH_KEY;
   typedef ACE_Equal_To<TAO_IADDR> TAO_COMPARE_KEYS;
@@ -188,6 +188,9 @@ protected:
   // ORB Core.
 
 private:
+  ACE_MEM_Addr address_;
+  // local address
+
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
 

@@ -51,10 +51,6 @@ public:
   ~TAO_SHMIOP_Acceptor (void);
   // Destructor.
 
-  const ACE_INET_Addr& address (void) const;
-  // @@ Helper method for the implementation repository, should go
-  //    away
-
   typedef ACE_Strategy_Acceptor<TAO_SHMIOP_Server_Connection_Handler, ACE_MEM_ACCEPTOR> TAO_SHMIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_SHMIOP_Server_Connection_Handler> TAO_SHMIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_SHMIOP_Server_Connection_Handler> TAO_SHMIOP_CONCURRENCY_STRATEGY;
@@ -65,7 +61,7 @@ public:
   virtual int open (TAO_ORB_Core *orb_core,
                     int version_major,
                     int version_minor,
-                    const char *address,
+                    const char *port,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
                             const char *options = 0);
@@ -76,15 +72,13 @@ public:
   virtual CORBA::ULong endpoint_count (void);
 
 private:
-  int open_i (TAO_ORB_Core* orb_core,
-              const ACE_INET_Addr& addr);
+  int open_i (TAO_ORB_Core* orb_core);
   // Implement the common part of the open*() methods.
 
   virtual int parse_options (const char *options);
   // Parse protocol specific options.
 
 protected:
-  ACE_INET_Addr address_;
   ACE_CString host_;
   // Cache the information about the endpoint serviced by this
   // acceptor.
@@ -92,6 +86,9 @@ protected:
   //    endpoint. For example it the IP address is INADDR_ANY
   //    (0.0.0.0) then there will be possibly a different hostname for
   //    each interface.
+
+  ACE_MEM_Addr address_;
+  // A local endpoint.
 
   TAO_GIOP_Version version_;
   // The GIOP version for this endpoint
@@ -108,6 +105,12 @@ private:
   TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
+  ASYS_TCHAR *mmap_file_prefix_;
+  // Determine the prefix (include path name) of the mmap file.
+
+  off_t mmap_size_;
+  // Determine the minimum size of mmap file.  This dictate the
+  // maximum size of a CORBA method invocation.
 };
 
 #if defined(__ACE_INLINE__)

@@ -34,14 +34,14 @@ ACE_MEM_Acceptor::~ACE_MEM_Acceptor (void)
 
 // General purpose routine for performing server ACE_SOCK creation.
 
-ACE_MEM_Acceptor::ACE_MEM_Acceptor (const u_short local_port,
+ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                                     int reuse_addr,
                                     int backlog,
                                     int protocol)
   : mmap_prefix_ (0)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
-  if (this->open (local_port,
+  if (this->open (remote_sap,
                   reuse_addr,
                   backlog,
                   protocol) == -1)
@@ -49,16 +49,13 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const u_short local_port,
                 "ACE_MEM_Acceptor::ACE_MEM_Acceptor"));
 }
 
-ACE_MEM_Acceptor::open (const u_short local_port,
+ACE_MEM_Acceptor::open (const ACE_MEM_Addr &remote_sap,
                         int reuse_addr,
                         int back_log,
                         int protocol)
 {
   ACE_TRACE ("ACE_MEM_Acceptor::open");
-  ACE_INET_Addr local_addr (local_port,
-                            ASYS_TEXT ("localhost"));
-
-  return this->ACE_SOCK_Acceptor::open (local_addr,
+  return this->ACE_SOCK_Acceptor::open (remote_sap.get_local_addr (),
                                         reuse_addr,
                                         PF_INET,
                                         back_log,
@@ -69,7 +66,7 @@ ACE_MEM_Acceptor::open (const u_short local_port,
 
 int
 ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
-                          u_short *remote_port,
+                          ACE_MEM_Addr *remote_sap,
                           ACE_Time_Value *timeout,
                           int restart,
                           int reset_new_handle)
@@ -95,8 +92,11 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
              && errno == EINTR
              && timeout == 0);
 
-      if (remote_port != 0)
-        *remote_port = (* (sockaddr_in*) addr).sin_port;
+      if (remote_sap != 0)
+        {
+          ACE_INET_Addr temp ((sockaddr_in *) addr, *len_ptr);
+          remote_sap->set_port_number(temp.get_port_number ());
+        }
     }
 
   if (this->shared_accept_finish (new_stream,

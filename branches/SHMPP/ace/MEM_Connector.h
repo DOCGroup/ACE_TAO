@@ -23,8 +23,9 @@
 
 #include "ace/SOCK_Connector.h"
 #include "ace/MEM_Stream.h"
+#include "ace/MEM_Addr.h"
 
-class ACE_Export ACE_MEM_Connector : protected ACE_SOCK_Connector
+class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
   // = TITLE
   //     Defines the format and interface for the connector side of
@@ -35,9 +36,9 @@ public:
   // Default constructor.
 
   ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                     const u_short remote_port,
+                     const ACE_MEM_Addr &remote_sap,
                      ACE_Time_Value *timeout = 0,
-                     const u_short &local_sap = 0,
+                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = 0,
                      int perms = 0,
@@ -57,9 +58,9 @@ public:
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
   int connect (ACE_MEM_Stream &new_stream,
-               const u_short remote_port,
+               const ACE_MEM_Addr &remote_sap,
                ACE_Time_Value *timeout = 0,
-               const u_short &local_sap = 0,
+               const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
@@ -78,8 +79,11 @@ public:
   // the OS do the binding.  If <reuse_addr> == 1 then the
   // <local_addr> is reused, even if it hasn't been cleanedup yet.
 
+  ACE_MEM_SAP::MALLOC_OPTIONS &malloc_options (void);
+  // Accessor to underlying malloc options.
+
   // = Meta-type info
-  typedef u_short PEER_ADDR;
+  typedef ACE_MEM_Addr PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;
 
   void dump (void) const;
@@ -87,6 +91,9 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+private:
+  ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -29,9 +29,9 @@ ACE_MEM_Connector::ACE_MEM_Connector (void)
 
 // Establish a connection.
 ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                                      const u_short remote_port,
+                                      const ACE_MEM_Addr &remote_sap,
                                       ACE_Time_Value *timeout,
-                                      const u_short &local_port,
+                                      const ACE_Addr &local_sap,
                                       int reuse_addr,
                                       int flags,
                                       int perms,
@@ -41,9 +41,9 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
   // This is necessary due to the weird inheritance relationships of
   // ACE_MEM_Stream.
   this->connect (new_stream,
-                 remote_port,
+                 remote_sap,
                  timeout,
-                 local_port,
+                 local_sap,
                  reuse_addr,
                  flags,
                  perms,
@@ -52,9 +52,9 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
 
 int
 ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
-                            const u_short remote_port,
+                            const ACE_MEM_Addr &remote_sap,
                             ACE_Time_Value *timeout,
-                            const u_short &local_port,
+                            const ACE_Addr &local_sap,
                             int reuse_addr,
                             int flags,
                             int perms,
@@ -63,28 +63,12 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
   ACE_SOCK_Stream temp_stream;
-  ACE_INET_Addr remote_sap = ACE_INET_Addr (remote_port,
-                                            ASYS_TEXT ("localhost"));
 
-  if (local_port != 0)
-    {
-      ACE_INET_Addr local_sap = ACE_INET_Addr (local_port,
-                                               ASYS_TEXT ("localhost"));
-
-      if (ACE_SOCK_Connector::connect (temp_stream, remote_sap,
-                                       timeout, local_sap,
-                                       reuse_addr, flags, perms,
-                                       PF_INET, protocol) == -1)
-        return -1;
-    }
-  else
-    {
-      if (ACE_SOCK_Connector::connect (temp_stream, remote_sap,
-                                       timeout, ACE_Addr::sap_any,
-                                       reuse_addr, flags, perms,
-                                       PF_INET, protocol) == -1)
-        return -1;
-    }
+  if (ACE_SOCK_Connector::connect (temp_stream, remote_sap.get_local_addr (),
+                                   timeout, local_sap,
+                                   reuse_addr, flags, perms,
+                                   PF_INET, protocol) == -1)
+    return -1;
 
   ACE_HANDLE new_handle = temp_stream.get_handle ();
   new_stream.set_handle (new_handle);
@@ -102,9 +86,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   if (ACE::recv (new_handle, buf, buf_len) == -1)
     return -1;
 
-  ACE_MEM_SAP::MALLOC_OPTIONS options;
-
-  if (new_stream.create_shm_malloc (buf, &options) == -1)
+  if (new_stream.create_shm_malloc (buf, &this->malloc_options_) == -1)
     return -1;
 
   return 0;

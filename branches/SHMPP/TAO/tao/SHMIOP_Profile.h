@@ -34,7 +34,7 @@
 #include "tao/GIOP.h"
 
 #include "ace/Synch.h"
-#include "ace/INET_Addr.h"
+#include "ace/MEM_Addr.h"
 
 class TAO_SHMIOP_Client_Connection_Handler;
 
@@ -55,7 +55,7 @@ public:
   static const char *prefix (void);
   // Return the char string prefix.
 
-  TAO_SHMIOP_Profile (const ACE_INET_Addr &addr,
+  TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
                       const TAO_ObjectKey &object_key,
                       const TAO_GIOP_Version &version,
                       TAO_ORB_Core *orb_core);

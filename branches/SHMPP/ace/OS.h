@@ -1714,9 +1714,9 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
 
 // Handle ACE_MEM_*
-#   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor, u_short
-#   define ACE_MEM_CONNECTOR ACE_MEM_Connector, u_short
-#   define ACE_MEM_STREAM ACE_MEM_Stream, u_short
+#   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor, ACE_MEM_Addr
+#   define ACE_MEM_CONNECTOR ACE_MEM_Connector, ACE_MEM_Addr
+#   define ACE_MEM_STREAM ACE_MEM_Stream, ACE_Addr
 
 // Handle ACE_LSOCK_*
 #   define ACE_LSOCK_ACCEPTOR ACE_LSOCK_Acceptor, ACE_UNIX_Addr

@@ -2183,6 +2183,33 @@ SOURCE=.\MEM_Acceptor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\MEM_Addr.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\MEM_Connector.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Debug"
@@ -5499,6 +5526,10 @@ SOURCE=.\MEM_Acceptor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\MEM_Addr.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\MEM_Connector.h
 # End Source File
 # Begin Source File
@@ -6344,6 +6375,10 @@ SOURCE=.\Map_T.i
 # Begin Source File
 
 SOURCE=.\MEM_Acceptor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\MEM_Addr.i
 # End Source File
 # Begin Source File
 
