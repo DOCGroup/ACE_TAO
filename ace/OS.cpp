@@ -2183,8 +2183,9 @@ ACE_OS::thr_exit (void *status)
 # elif defined (ACE_HAS_STHREADS)
     ::thr_exit (status);
 # elif defined (ACE_HAS_WTHREADS)
-    // Cleanup the thread-specific resources and exit.
-    ACE_TSS_Cleanup::instance ()->exit (status);
+    // Can't call it here because on NT, thr_exit is actually
+    // called from ACE_TSS_Cleanup::exit ()
+    //    ACE_TSS_Cleanup::instance ()->exit (status);
 # elif defined (VXWORKS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
