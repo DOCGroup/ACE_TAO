@@ -22,12 +22,8 @@
 // Note, for this test the config.h file *must* come first!
 #include "ace/inc_user_config.h"
 
-// Force test of ACE_U_LongLong class on some Unix platforms.
-// ACE_U_LongLong isn't used on those platforms on WIN32 or
-// with ACE_SIZEOF_LONG == 8.
-#if defined (ACE_HAS_HI_RES_TIMER) || \
-   (defined (ACE_HAS_LONGLONG_T) && (ACE_SIZEOF_LONG == 4))
-
+// Force test of ACE_U_LongLong class on Solaris, et al.
+#if defined (ACE_HAS_STHREADS)
 # include <limits.h>
 # undef ULLONG_MAX
 
@@ -45,14 +41,12 @@
 # if defined (ACE_NO_INLINE)
 #   undef ACE_NO_INLINE
 # endif /* ACE_NO_INLINE */
-#endif /* ACE_HAS_HI_RES_TIMER || (ACE_HAS_LONGLONG_T && ACE_SIZEOF_LONG == 4) */
+#endif /* ACE_HAS_STHREADS */
 
 #include "test_config.h"
 #include "ace/ACE.h"
 
-#if defined (ACE_HAS_HI_RES_TIMER) || \
-   (defined (ACE_HAS_LONGLONG_T) && (ACE_SIZEOF_LONG == 4))
-
+#if defined (ACE_HAS_STHREADS)
 static
 u_long
 check_ace_u_longlong (const char *const name,
@@ -107,7 +101,7 @@ test_ace_u_longlong (void)
 
   return errors;
 }
-#endif /* ACE_HAS_HI_RES_TIMER || (ACE_HAS_LONGLONG_T && ACE_SIZEOF_LONG == 4) */
+#endif /* ACE_HAS_STHREADS */
 
 
 int
@@ -137,11 +131,10 @@ main (int, char *[])
   ACE_ASSERT (tv6 == tv1);
   ACE_ASSERT (tv5 == tv7);
 
-#if defined (ACE_HAS_HI_RES_TIMER) || \
-   (defined (ACE_HAS_LONGLONG_T) && (ACE_SIZEOF_LONG == 4))
+#if defined (ACE_HAS_STHREADS)
   if (test_ace_u_longlong () != 0)
     ++ret;
-#endif /* ACE_HAS_HI_RES_TIMER || (ACE_HAS_LONGLONG_T && ACE_SIZEOF_LONG == 4) */
+#endif /* ACE_HAS_STHREADS */
 
   ACE_END_TEST;
   return ret;
