@@ -1,12 +1,5 @@
 Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/config-lynxos.h: Enabled ACE_POSIX_AIOCB_PROACTOR for this
-	platform, since <pthread_sigmask> was not available. Without
-	<pthread_sigmask>, SIG_Proactor can not work correctly.
-
-	* ace/config-linux-lxpthreads.h:
- 	Removed ACE_HAS_AIO_CALLS. Even simple aio calls test is hanging. 
-
 	* ACE_wrappers/ace/POSIX_Asynch_IO.cpp
 	* ACE_wrappers/ace/POSIX_Asynch_IO.h
 	* ACE_wrappers/ace/POSIX_Proactor.cpp
@@ -40,6 +33,19 @@ Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	
 	- Added an example to make use of the real-time signal numbers for the
 	   asynchronous I/O calls.
+	
+	* examples/Reactor/Proactor/test_posix_sig_proactor.cpp: 
+	This program demonstrates how to post fake completions to The
+	Proactor. It also shows the how to specify the particular
+	real-time signals to post completions.
+
+	* ace/config-lynxos.h: Enabled ACE_POSIX_AIOCB_PROACTOR for this
+	platform, since <pthread_sigmask> was not available. Without
+	<pthread_sigmask>, SIG_Proactor can not work correctly.
+
+	* ace/config-linux-lxpthreads.h:
+ 	Removed ACE_HAS_AIO_CALLS. Even simple aio calls test is hanging. 
+
 
 Sat Apr 24 13:09:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
