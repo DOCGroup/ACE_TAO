@@ -1,3 +1,9 @@
+Wed Jul 25 08:41:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Fixed formatting in generation of _unchecked_narrow().
+
 Tue Jul 25 01:00:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/Multicast/run_test.pl:
