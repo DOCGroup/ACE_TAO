@@ -356,12 +356,21 @@ public:
   // be inserted after every put operation so that my transmitted
   // "fields" are always separated.
 
+#if defined (ACE_WIN32)
+  virtual int ipfx (int need = 0) { ACE_UNUSED_ARG (need); return 1; }
+  virtual int ipfx0(void)         { return 1; }  // Optimized ipfx(0)
+  virtual int ipfx1(void)         { return 1; }  // Optimized ipfx(1)
+  virtual void isfx (void)        { /* null */ }
+  virtual int opfx (void)         { return 1; }
+  virtual void osfx (void)        { /* null */ }
+#else
   virtual int ipfx (int need = 0) { return(iostream::ipfx(need)); }
   virtual int ipfx0(void)         { return(iostream::ipfx0()); }  // Optimized ipfx(0)
   virtual int ipfx1(void)         { return(iostream::ipfx1()); }  // Optimized ipfx(1)
   virtual void isfx (void)        { iostream::isfx(); }
   virtual int opfx (void)         { return(iostream::opfx()); }
   virtual void osfx (void)        { iostream::osfx(); }
+#endif /* ACE_WIN32 */
 
 protected:
   ACE_Streambuf<STREAM> *streambuf_;
