@@ -46,10 +46,12 @@ be_visitor_operation_rettype_return_cs::~be_visitor_operation_rettype_return_cs 
 int
 be_visitor_operation_rettype_return_cs::visit_array (be_array *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+   // Grab the out stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
-  //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // os->indent ();
+  // *os << "return _tao_retval;\n";
+
   *os << "_tao_retval";
   return 0;
 }
@@ -60,7 +62,7 @@ be_visitor_operation_rettype_return_cs::visit_enum (be_enum *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -70,8 +72,8 @@ be_visitor_operation_rettype_return_cs::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
-  //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // os->indent ();
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -82,7 +84,7 @@ be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -95,7 +97,7 @@ be_visitor_operation_rettype_return_cs::visit_valuetype (be_valuetype *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -106,7 +108,7 @@ be_visitor_operation_rettype_return_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -122,10 +124,10 @@ be_visitor_operation_rettype_return_cs::visit_predefined_type (be_predefined_typ
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_void:
-      //*os << "return;\n";
+      // *os << "return;\n";
       break;
     default:
-      //*os << "return _tao_retval;\n";
+      // *os << "return _tao_retval;\n";
       *os << "_tao_retval";
       break;
     }
@@ -138,7 +140,7 @@ be_visitor_operation_rettype_return_cs::visit_sequence (be_sequence *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -149,7 +151,7 @@ be_visitor_operation_rettype_return_cs::visit_string (be_string *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -160,7 +162,7 @@ be_visitor_operation_rettype_return_cs::visit_structure (be_structure *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }
@@ -187,7 +189,7 @@ be_visitor_operation_rettype_return_cs::visit_union (be_union *)
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   //os->indent ();
-  //*os << "return _tao_retval;\n";
+  // *os << "return _tao_retval;\n";
   *os << "_tao_retval";
   return 0;
 }

@@ -451,10 +451,61 @@ be_visitor_interface::visit_operation (be_operation *node)
                          ),  -1);
     }
   delete visitor;
+
+  // 
+  // AMI Call back code generation.
+  //
+  
+  // Return if AMI call back is not enabled.
+  if (idl_global->ami_call_back () != I_TRUE)
+    {  
+      return 0;
+    }
+  
+  // Generate AMI stub for this operation, if you are doing client 
+  // side header.
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_INTERFACE_CH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_CH);
+      break;
+
+    case TAO_CodeGen::TAO_INTERFACE_CS:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_CS);
+      break;
+
+    default:
+      // We dont have to do anything for the other cases.
+      return 0;
+    }
+      
+  // Grab the appropriate visitor
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_operation - "
+                         "NUL visitor\n"),
+                        -1);
+    }
+          
+  // Visit the node using this visitor
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_operation - "
+                         "failed to accept visitor\n"),
+                        -1);
+    }
+  delete visitor;
+  
   return 0;
 }
 
-// visit an structure
+// Visit an structure.
 int
 be_visitor_interface::visit_structure (be_structure *node)
 {
