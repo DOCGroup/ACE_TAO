@@ -14,6 +14,8 @@ ACE_RCSID(orbsvcs, Reconfig_Scheduler, "$Id$")
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::TAO_Reconfig_Scheduler ()
   : next_handle_ (0),
+    entry_ptr_array_ (0),
+    entry_ptr_array_size_ (0),
     stability_flags_ (SCHED_NONE_STABLE),
     dependency_count_ (0),
     last_scheduled_priority_ (0)
@@ -239,6 +241,15 @@ TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::close (void)
         }
     }
 
+  // Zero out the scheduling entry pointer array but do not deallocate it.
+  if (entry_ptr_array_size_ > 0)
+    {
+      ACE_OS::memset (entry_ptr_array_, 0, 
+                      sizeof (TAO_Reconfig_Scheduler_Entry *) * 
+                        entry_ptr_array_size_);
+    }
+
+
   // Finally, start over with the lowest handle number.
   next_handle = 0;    
 }
@@ -362,8 +373,8 @@ set (RtecScheduler::handle_t handle,
     }
 
   // Reference the associated scheduling entry.
-  Reconfig_Scheduler_Entry *sched_entry_ptr = 
-    ACE_static_cast (Reconfig_Scheduler_Entry *, rt_info_ptr->volatile_token);
+  TAO_Reconfig_Scheduler_Entry *sched_entry_ptr = 
+    ACE_static_cast (TAO_Reconfig_Scheduler_Entry *, rt_info_ptr->volatile_token);
   if (0 == sched_entry_ptr)
     {
       ACE_THROW_RETURN (RtecScheduler::INTERNAL (), 0);
@@ -650,7 +661,7 @@ create_i (const char *entry_point,
                      RtecScheduler::INTERNAL));
 {
   RtecScheduler::RT_Info* new_rt_info = 0;
-  Reconfig_Scheduler_Entry* new_sched_entry = 0;
+  TAO_Reconfig_Scheduler_Entry* new_sched_entry = 0;
   int result = 0;
 
   // Create a new scheduling entry for the RT_Info.
@@ -663,7 +674,7 @@ create_i (const char *entry_point,
   auto_ptr<RtecScheduler::RT_Info> new_rt_info_ptr (new_rt_info);
 
   // Set some reasonable default values, and store the passed ones.
-  Reconfig_Scheduler_Entry::init_rt_info (*new_rt_info);
+  TAO_Reconfig_Scheduler_Entry::init_rt_info (*new_rt_info);
   new_rt_info->entry_point = entry_point;
   new_rt_info->handle = handle;
 
@@ -704,17 +715,75 @@ create_i (const char *entry_point,
 
   // Create a new scheduling entry for the RT_Info.
   ACE_NEW_THROW_EX (new_sched_entry,
-                    Reconfig_Scheduler_Entry (*new_rt_info),
+                    TAO_Reconfig_Scheduler_Entry (*new_rt_info),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  // Store a pointer to the scheduling entry in the RT_Info.
+  // Make sure the new scheduling entry is cleaned up if we exit abruptly.
+  auto_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (new_sched_entry);
+
+  // Make sure there is room in the scheduling entry pointer array:
+  // expand the array eagerly, to minimize memory allocation overhead
+
+  if (entry_ptr_array_size_ <= handle)
+    {
+      if (entry_ptr_array_size_ > 0)
+        {
+          // Store previous array size.
+          u_long new_size = entry_ptr_array_size_;
+
+          // Double the size of the array until sufficient.
+          do
+            {
+              new_size *= 2;
+            }
+          while (new_size <= handle);
+
+          // Allocate the new array of the proper size, zero it out.
+
+          TAO_Reconfig_Scheduler_Entry ** new_array;
+          ACE_NEW_THROW_EX (new_array,
+                    TAO_Reconfig_Scheduler_Entry * [new_size],
+                    CORBA::NO_MEMORY ());
+         
+          ACE_OS::memset (new_array, 0, 
+                          sizeof (TAO_Reconfig_Scheduler_Entry *) * 
+                            new_size);
+
+          // Copy in the previous array.
+          ACE_OS::memcpy (new_array, entry_ptr_array_, 
+                          sizeof (TAO_Reconfig_Scheduler_Entry *) * 
+                            entry_ptr_array_size_);
+
+          // Free the old array and swap to point to the new one.
+          delete [] entry_ptr_array_;
+          entry_ptr_array_ = new_array;
+          entry_ptr_array_size_ = new_size;
+        }
+      else
+        {
+          // For the first allocation, just start with sufficient space
+          // for the handle that was given.
+          ACE_NEW_THROW_EX (entry_ptr_array_,
+                    TAO_Reconfig_Scheduler_Entry * [handle + 1],
+                    CORBA::NO_MEMORY ());
+          entry_ptr_array_size_ = handle + 1;
+        }
+    }
+
+  // Atore in the scheduling entry pointer array.
+  entry_ptr_array_ [handle] = new_sched_entry;
+
+  // Store a pointer to the scheduling entry in the
+  // scheduling entry pointer array and in the RT_Info.
   new_rt_info->volatile_token =
     ACE_static_cast (CORBA::ULong, new_sched_entry);
 
-  // Release the auto pointer, so its destruction does not
-  // remove the new rt_info that is now in the map and tree.
+  // Release the auto pointers, so their destruction does not
+  // remove the new rt_info that is now in the map and tree,
+  // or the scheduling entry attached to the rt_info.
   new_rt_info_ptr.release ();
+  new_sched_entry_ptr.release ();
 
   // With everything safely registered in the map and tree,
   // just update the next handle counter and return the new info.
@@ -934,44 +1003,33 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::
 dfs_traverse_i (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Reset scheduling entries.
-  this->reset ();
+  int i;  // index into array of scheduling entry pointers
 
-  // Do DFS traversal over the set of registered RT_Infos.
-  for (RtecScheduler::handle_t h = 0; h < this->next_handle_; ++h)
+  // Reset registered RT_Infos.
+  TAO_RSE_Reset_Visitor<RECONFIG_STRATEGY, ACE_LOCK>
+    reset_visitor (this->calling_dependency_set_map_,
+                   this->rt_info_map_);
+  for (i = 0; i < this->next_handle_; ++i)
     {
-      dfs_recurse_i (h, 1, 1, ACE_TRY_ENV);
+      if (reset_visitor.visit (* (entry_ptr_array_ [i])) < 0) 
+        {
+          ACE_THROW (RtecScheduler::INTERNAL ());
+        }
+    }
+
+  // Traverse registered RT_Infos, assigning DFS start, finish order.
+  TAO_RSE_DFS_Visitor<RECONFIG_STRATEGY, ACE_LOCK>
+    dfs_visitor (this->calling_dependency_set_map_,
+                 this->rt_info_map_);
+  for (i = 0; i < this->next_handle_; ++i)
+    {
+      if (dfs_visitor.visit (* (entry_ptr_array_ [i])) < 0) 
+        {
+          ACE_THROW (RtecScheduler::INTERNAL ());
+        }      
     }
 }
 
-// Does depth first recursion over the caller dependency graph.
-
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
-TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::
-dfs_recurse_i (RtecScheduler::handle_t h, int top_level,
-               int forward, CORBA::Environment &ACE_TRY_ENV)
-{
-CDG - TBD - Make sure all these are filled in for the scheduling entry: dfs_status_, discovered_, finished_,
-            is_thread_delineator_, has_unresolved_remote_dependencies_, has_unresolved_local_dependencies_,
-
-  // Obtain a pointer to the RT_Info.
-CDG - TBD - mark appropriately.  If top_level is zero,
-and RT_Info declares no period or threads, not a thread delineator.
-
-CDG - TBD - If already visited, do not recurse further
-
-  // Obtain a pointer to the dependency set.
-CDG - TBD
-
-  // Do DFS recursion over the handles in the set.
-  int set_length = ;
-  for (int i = 0; i < set_length; ++i)
-    {
-CDG - TBD - set fwd start index      
-      dfs_recurse_i ( [i].rt_info, 0, forward, ACE_TRY_ENV);
-CDG - TBD - set fwd end index 
-    }
-}
 
 // Sorts an array of RT_info handles in topological order, then
 // checks for loops, marks unresolved remote dependencies.
@@ -979,7 +1037,29 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::
 detect_cycles_i (CORBA::Environment &ACE_TRY_ENV)
 {
-CDG - TBD
+CDG - TBD - sort entry pointer array into topological order
+
+  // Traverse entries in topological (DFS finish) order,
+  // looking for strongly connected components (cycles).
+  TAO_RSE_SCC_Visitor<RECONFIG_STRATEGY, ACE_LOCK>
+    scc_visitor (this->called_dependency_set_map_,
+                   this->rt_info_map_);
+  for (i = 0; i < this->next_handle_; ++i)
+    {
+      // Each new top level entry marks a potential new cycle.
+      scc_visitor.in_a_cycle (0);
+
+      if (scc_visitor.visit (* (entry_ptr_array_ [i])) < 0) 
+        {
+          ACE_THROW (RtecScheduler::INTERNAL ());
+        }      
+    }
+
+  // Check whether any cycles were detected.
+  if (scc_visitor.number_of_cycles () > 0)
+    {
+      ACE_THROW (RtecScheduler::CYCLIC_DEPENDENCIES ());
+    }
 }
 
 // Propagates effective execution time and period, sets total frame size.
@@ -987,7 +1067,31 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::
 propagate_characteristics_i (CORBA::Environment &ACE_TRY_ENV)
 {
-CDG - TBD
+  // Traverse entries in reverse topological (DFS finish) order,
+  // propagating period and effective execution time from calling
+  // node to called node at each step.
+  TAO_RSE_Propagation_Visitor<RECONFIG_STRATEGY, ACE_LOCK>
+    prop_visitor (this->calling_dependency_set_map_,
+                  this->rt_info_map_);
+  for (i = 0; i < this->next_handle_; ++i)
+    {
+      if (prop_visitor.visit (* (entry_ptr_array_ [this->next_handle_ - i - 1])) < 0) 
+        {
+          ACE_THROW (RtecScheduler::INTERNAL ());
+        }      
+    }
+
+  // Check whether any unresolved local dependencies were detected.
+  if (prop_visitor.unresolved_locals () > 0)
+    {
+      ACE_THROW (RtecScheduler::UNRESOLVED_LOCAL_DEPENDENCIES ());
+    }
+
+  // Check whether any thread specification errors were detected.
+  if (prop_visitor.thread_specification_errors () > 0)
+    {
+      ACE_THROW (RtecScheduler::THREAD_SPECIFICATION ());
+    }
 }
 
 // Sort operations by urgency (done by strategy), then
@@ -997,7 +1101,10 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::
 assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
 {
-CDG - TBD
+CDG - TBD - sort sched entry pointers in priority order (use strategy)
+
+CDG - TBD - traverse using a priority assignment visitor, which uses a strategy
+            to decide when a new priority or subpriority is reached.
 }
 
 // Compute utilization, set last feasible priority.
@@ -1005,7 +1112,9 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::
 compute_utilization_i (CORBA::Environment &ACE_TRY_ENV)
 {
-CDG - TBD
+CDG - TBD - traverse using a utilization visitor, which uses the
+            strategy to determine whether or not an operation is
+            critical.
 }
 
 // Compute dispatching configuration information.
@@ -1013,7 +1122,8 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_STRATEGY, ACE_LOCK>::
 compute_dispatch_config_i (CORBA::Environment &ACE_TRY_ENV)
 {
-CDG - TBD
+CDG - TBD - do this in the strategy
 }
+
 
 
