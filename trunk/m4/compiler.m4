@@ -332,9 +332,6 @@ dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
            fi
 
 	   CXXFLAGS="$CXXFLAGS -instances=explicit"
-	 else
-           CXXFLAGS="$CXXFLAGS -library=iostream"
-           AC_DEFINE([ACE_USES_OLD_IOSTREAMS])           
          fi
 
          CXXFLAGS="$CXXFLAGS"
