@@ -229,9 +229,9 @@ Hash_Addr::operator != (const Hash_Addr &rhs)
 {
   if (this->svc_handler_ == 0)
     {
-      ::fprintf (stderr, "host = %s and port = %d is not in use\n",
-		 this->get_host_name (), 
-		 this->get_port_number ());
+      ACE_DEBUG ((LM_DEBUG, "host = %s and port = %d is not in use\n",
+		  this->get_host_name (), 
+		  this->get_port_number ()));
       // We need this test here in order to satisfy the
       // <ACE_Hash_Map_Manager>'s use of a sentinel node.  Note that
       // this will never be a real match since <svc_handler_> == 0,
@@ -241,11 +241,11 @@ Hash_Addr::operator != (const Hash_Addr &rhs)
     }
   else
     {
-      ::fprintf (stderr, "host = %s and port = %d is %sin use (%d)\n",
-		 this->get_host_name (), 
-		 this->get_port_number (),
-		 this->svc_handler_->in_use () ? "" : "not ",
-		 this->svc_handler_);
+      ACE_DEBUG ((LM_DEBUG, "host = %s and port = %d is %sin use (%d)\n",
+		  this->get_host_name (), 
+		  this->get_port_number (),
+		  this->svc_handler_->in_use () ? "" : "not ",
+		  this->svc_handler_));
       // This function returns "true" (i.e., the addresses don't
       // match) if either the associated <Svc_Handler> is in use or
       // the two addresses aren't equal.  Note that we can't use *this
