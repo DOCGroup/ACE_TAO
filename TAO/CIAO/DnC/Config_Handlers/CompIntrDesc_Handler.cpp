@@ -88,7 +88,7 @@ void CompIntrDesc_Handler::process_comp_property (DOMNodeIterator* iter,
           int argc = 0;
           char ** argv = 0;
           CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
-          DT_Handler::process_DataType (iter, property.type.in (), orb);
+          DT_Handler::process_DataType (iter, property.type.out (), orb);
         }
       else
         {
