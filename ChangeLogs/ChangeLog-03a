@@ -1,3 +1,8 @@
+Tue Oct  2 21:52:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Logging_Client.cpp: Reverted this:
+          Mon Oct  1 18:27:41 2001  Steve Huston  <shuston@riverace.com>
+
 Tue Oct  2 19:52:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Makefile: Removed some of the files that no longer exist in the
