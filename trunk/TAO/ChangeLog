@@ -1,3 +1,30 @@
+Thu Jan 22 16:14:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        
+          Added generation of an empty struct for each array,
+          anonymous or not, in an IDL file. This struct is then
+          used as a tag in the parameter list for the various
+          template classes associated with arrays - _var, _out,
+          _forany, Array_Traits<> and bounded/unbounded array
+          sequences. This added tag disambiguates the types of
+          the above classes for any two arrays in a build, even 
+          if they have the same element type and bound. Thanks
+          to John Morey <jmorey@mmintl.com> for reporting the
+          problem and for sending in the example IDL that
+          reproduced it.
+
 Thu Jan 22 13:28:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:

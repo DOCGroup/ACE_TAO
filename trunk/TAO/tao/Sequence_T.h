@@ -777,7 +777,7 @@ public:
  * the array. For these reasons, we use a special class for
  * sequences of arrays.
  */
-template<class T, class T_slice>
+template <typename T, typename T_slice, typename TAG>
 class TAO_Unbounded_Array_Sequence : public TAO_Unbounded_Base_Sequence
 {
 public:
@@ -797,7 +797,7 @@ public:
 
   /// Copy ctor, deep copies.
   TAO_Unbounded_Array_Sequence (
-      const TAO_Unbounded_Array_Sequence<T,T_slice> &
+      const TAO_Unbounded_Array_Sequence<T,T_slice,TAG> &
     );
 
   /// dtor releases all the contained elements.
@@ -808,8 +808,8 @@ public:
    * members and frees all string members, and then performs a
    * deepcopy to create a new structure.
    */
-  TAO_Unbounded_Array_Sequence<T,T_slice> & operator= (
-      const TAO_Unbounded_Array_Sequence <T,T_slice> &
+  TAO_Unbounded_Array_Sequence<T,T_slice,TAG> & operator= (
+      const TAO_Unbounded_Array_Sequence <T,T_slice,TAG> &
     );
 
   // = Accessors.
@@ -886,7 +886,7 @@ public:
  *
  * Please see the documentation for the unbounded case.
  */
-template<class T, class T_slice, size_t MAX>
+template <typename T, typename T_slice, typename TAG, size_t MAX>
 class TAO_Bounded_Array_Sequence : public TAO_Bounded_Base_Sequence
 {
 public:
@@ -898,16 +898,20 @@ public:
   /// Constructor from data.
   TAO_Bounded_Array_Sequence (CORBA::ULong length,
                               T *value,
-                              CORBA::Boolean release=0);
+                              CORBA::Boolean release = 0);
 
   /// Copy constructor.
-  TAO_Bounded_Array_Sequence (const TAO_Bounded_Array_Sequence<T, T_slice, MAX> &);
+  TAO_Bounded_Array_Sequence (
+      const TAO_Bounded_Array_Sequence<T,T_slice,TAG,MAX> &
+    );
 
   /// destructor
   ~TAO_Bounded_Array_Sequence (void);
 
   /// Assignment from another Bounded sequence.
-  TAO_Bounded_Array_Sequence &operator= (const TAO_Bounded_Array_Sequence<T, T_slice, MAX> &);
+  TAO_Bounded_Array_Sequence &operator= (
+      const TAO_Bounded_Array_Sequence<T,T_slice,TAG,MAX> &
+    );
 
   // = Accessors.
   /// operator []
