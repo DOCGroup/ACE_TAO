@@ -16,20 +16,21 @@
 #ifndef PACE_SYS_TIMES_H_WIN32
 #define PACE_SYS_TIMES_H_WIN32
 
-#include <sys/times.h>
-
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #ifndef PACE_CLOCK_T
 #define PACE_CLOCK_T
-typedef clock_t pace_clock_t;
+  /* Temporary until we emulate this correctly. */
+  typedef int clock_t;
+  typedef clock_t pace_clock_t;
 #endif /* PACE_CLOCK_T */
 
 #ifndef PACE_TMS
 #define PACE_TMS
-typedef struct tms pace_tms;
+  /* Temporary until we emulate this correctly. */
+  typedef struct tms { int a_; } pace_tms;
 #endif /* PACE_TMS */
 
 #if defined (PACE_HAS_CPLUSPLUS)
