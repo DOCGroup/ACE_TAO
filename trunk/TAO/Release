@@ -32,7 +32,8 @@ CONTROLLED_FILES = TAO/COPYING* \
 		   TAO/tao \
 		   TAO/tao-config.1.in \
 		   TAO/tao-config.in \
-		   TAO/taoConf.sh.in \
+        	   ACE_wrappers/TAO/Makefile.am \
+        	   ACE_wrappers/TAO/configure.ac \ 
 		   TAO/tests \
 		   TAO/utils
 

@@ -1,3 +1,10 @@
+Mon Dec 13 04:35:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Release:
+
+	  Removed referebcs to old files and added autoconf specific files
+	  into the release.
+
 Sun Dec 12 19:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
