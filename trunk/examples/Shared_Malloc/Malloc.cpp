@@ -10,44 +10,24 @@ typedef ACE_Thread_Mutex THREAD_MUTEX;
 typedef ACE_Null_Mutex THREAD_MUTEX;
 #endif /* ACE_HAS_THREADS */
 
-// ACE_Process_Mutex will work for non-MT platforms.
-typedef ACE_Process_Mutex PROCESS_MUTEX;
-
-class MMAP_POOL : public ACE_MMAP_Memory_Pool
-  // = TITLE
-  //   This class is an "adapter" that passes certain arguments to the
-  //   constructor of ACE_MMAP_Memory_Pool.
-{
-public:
-  MMAP_POOL (const char *);
-
-  static const char BACKING_STORE[];
-};
-
-const char MMAP_POOL::BACKING_STORE[] = "/tmp/test_malloc";
-
-MMAP_POOL::MMAP_POOL (const char *) 
-  : ACE_MMAP_Memory_Pool (BACKING_STORE, // Name of the backing store.
-			  1, // Use fixed addr.
-			  1) // Write each page of backing store.
-{
-}
-
 // Strategic typedefs for memory allocation.
 
-typedef ACE_Malloc <ACE_Local_Memory_Pool, THREAD_MUTEX> L_ALLOCATOR;
+typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, THREAD_MUTEX> L_ALLOCATOR;
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> M_ALLOCATOR;
 
-#if !defined (ACE_WIN32)
-typedef ACE_Malloc <MMAP_POOL, PROCESS_MUTEX> M_ALLOCATOR;
-typedef ACE_Malloc <ACE_Shared_Memory_Pool, PROCESS_MUTEX> SP_ALLOCATOR;
-typedef ACE_Malloc <ACE_Shared_Memory_Pool, THREAD_MUTEX> ST_ALLOCATOR;
-typedef ACE_Malloc <ACE_Sbrk_Memory_Pool, THREAD_MUTEX> SB_ALLOCATOR;
+#if defined (ACE_LACKS_SYSV_SHMEM)
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, THREAD_MUTEX> SP_ALLOCATOR;
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, THREAD_MUTEX> ST_ALLOCATOR;
 #else
-typedef ACE_Malloc <MMAP_POOL, THREAD_MUTEX> M_ALLOCATOR;
-typedef ACE_Malloc <MMAP_POOL, THREAD_MUTEX> SP_ALLOCATOR;
-typedef ACE_Malloc <MMAP_POOL, THREAD_MUTEX> ST_ALLOCATOR;
-typedef ACE_Malloc <ACE_Local_Memory_Pool, THREAD_MUTEX> SB_ALLOCATOR;
-#endif /* ACE_WIN32 */
+typedef ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex> SP_ALLOCATOR;
+typedef ACE_Malloc <ACE_SHARED_MEMORY_POOL, THREAD_MUTEX> ST_ALLOCATOR;
+#endif /* ACE_LACKS_SYSV_SHMEM */
+
+#if defined (ACE_LACKS_SBRK)
+typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, THREAD_MUTEX> SB_ALLOCATOR;
+#else
+typedef ACE_Malloc <ACE_SBRK_MEMORY_POOL, THREAD_MUTEX> SB_ALLOCATOR;
+#endif /* ACE_LACKS_SBRK */
 
 // Singleton
 ACE_Allocator *Malloc::instance_ = 0;

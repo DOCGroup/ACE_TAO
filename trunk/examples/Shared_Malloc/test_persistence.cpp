@@ -5,8 +5,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Malloc.h"
 
-typedef ACE_Malloc <ACE_MMAP_Memory_Pool, ACE_Null_Mutex> MALLOC;
-typedef ACE_Malloc_Iterator <ACE_MMAP_Memory_Pool, ACE_Null_Mutex> MALLOC_ITERATOR;
+typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
+typedef ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_ITERATOR;
 
 // Shared memory manager.
 static MALLOC *shmem_manager = 0;
@@ -241,6 +241,6 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Malloc <ACE_MMAP_Memory_Pool, ACE_Null_Mutex>;
-template class ACE_Malloc_Iterator <ACE_MMAP_Memory_Pool, ACE_Null_Mutex>;
+template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
