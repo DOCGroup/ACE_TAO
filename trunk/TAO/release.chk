@@ -66,7 +66,7 @@ Legend:
 [1111x ] liborbsvcs compiles
 [1111x ] Naming_Service compiles
 [1111x ] Simple_Naming compiles
-[x0x0x ] 	Simple_Naming runs
+[00x0x ] 	Simple_Naming runs
 [1xx1x ] Logger compiles
 [xxx0x ] 	Logger runs
 [11x11 ] Scheduling_Service compiles
