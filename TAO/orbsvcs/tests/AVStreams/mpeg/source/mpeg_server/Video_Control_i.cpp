@@ -160,24 +160,24 @@ Video_Control_i::set_peer (char * &peer,
 
   ACE_INET_Addr client_data_addr (peer_addr_str);
   // Data (UDP) Address of the client.
-
-   ACE_DEBUG ((LM_DEBUG,
-               "(%P|%t) set_peer called: %s,%s,%d\n",
-               peer,
-               client_data_addr.get_host_addr (),
-               client_data_addr.get_port_number ()));
-
-   char temp_addr [BUFSIZ];
-   if (VIDEO_SINGLETON::instance ()->data_host != 0)
-     ACE_OS::sprintf (temp_addr,"%s:%d",VIDEO_SINGLETON::instance ()->data_host,0);
-   else
-     ACE_OS::sprintf (temp_addr,":%d",0);
- 
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) set_peer called: %s,%s,%d\n",
+              peer,
+              client_data_addr.get_host_addr (),
+              client_data_addr.get_port_number ()));
+  
+  char temp_addr [BUFSIZ];
+  if (VIDEO_SINGLETON::instance ()->data_host != 0)
+    ACE_OS::sprintf (temp_addr,"%s:%d",VIDEO_SINGLETON::instance ()->data_host,0);
+  else
+    ACE_OS::sprintf (temp_addr,":%d",0);
+  
   if (VIDEO_SINGLETON::instance ()->dgram.open (client_data_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "(%P|%t) UDP open failed: %p\n"),
                       0);
-
+  
   // set the socket buffer sizes to 64k.
   int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
