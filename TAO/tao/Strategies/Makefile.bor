@@ -44,7 +44,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_STRATEGIES_CFLAGS) \
 CPPDIR = .
 
 INCDIR_NAME = tao\Strategies
-INCLUDES = *.h
+INCLUDES = *.h *.i *.inl *.pidl
 
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 

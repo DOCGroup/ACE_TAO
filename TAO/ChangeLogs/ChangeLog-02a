@@ -1,3 +1,14 @@
+Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+        * tao/IFR_Client/Makefile.bor:
+        * tao/Strategies/Makefile.bor:
+        * tao/TypeCodeFactory/Makefile.bor:
+        * orbsvcs/orbsvcs/Svc_Utils.bor:
+          Fixed lists of installed include files to add some missing
+          entries. Thanks to Charles Frasch <cfrasch@spawar.navy.mil>
+          for reporting this.
+
 Wed Oct 17 12:22:09 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
