@@ -1,3 +1,15 @@
+Fri Nov 15 14:16:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Exit.h:
+	* ace/Thread_Exit.cpp (cleanup): Changed the type of the argument
+	  <cleanup> takes to the generic (void*) and avoid including
+	  <Synch.h> in Thread_Exit.h.  This eliminated the circular header
+	  dependencies when ACE_LEGACY_MODE is define.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Removed some template files from the build
+	  lists and make sure all template files are not being built.
+
 Fri Nov 15 13:22:41 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: On Win32, check for canceled I/O using
@@ -24,7 +36,7 @@ Fri Nov 15 14:08:11 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 Fri Nov 15 07:48:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/OS_Test.cpp: Added the test cases for itoa from
-	  Joseph Sarbak <joseph.sarbak@csfb.com>. 
+	  Joseph Sarbak <joseph.sarbak@csfb.com>.
 
 Fri Nov 15 07:08:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
