@@ -5,10 +5,10 @@ CIAO_Daemon:
 
 This directory contains CIAO's per-host daemon process implementation
 - CIAO_Daemon.  It includes implementations for two major CCM
-interfaces, namely, ComponentImplementation and ServerActivation.
+interfaces, namely, ComponentInstallation and ServerActivation.
 ComponentInstallation interfaces must be available per-host so all
 ComponentServer running on the same host can query it to acquire
-component impolementations they need.  Likewise, ServerActivator
+component implementations they need.  Likewise, ServerActivator
 interacts with CCM's Assembly framework and is responsible to start up
 new ComponentServer processes on this host.
 
