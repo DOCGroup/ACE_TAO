@@ -13,6 +13,12 @@ ACE_Dirent::open (const char *dirname)
 }
 
 ACE_INLINE 
+ACE_Dirent::ACE_Dirent (void)
+  dirp_ (0)
+{
+}
+
+ACE_INLINE 
 ACE_Dirent::ACE_Dirent (const char *dirname) 
 {
   if (this->open (dirname) == -1)
