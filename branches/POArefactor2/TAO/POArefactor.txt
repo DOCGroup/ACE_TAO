@@ -1,3 +1,10 @@
+Tue Nov  9 14:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp:
+          Extended this test so that we test if the correct exception is
+          thrown when we set a nil servant manager or try to overwrite the
+          servant manager
+
 Tue Nov  9 11:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*Value.{h,cpp}:
