@@ -1,13 +1,10 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/IPC_SAP.h"
-#include "ace/Handle_Set.h"
 #include "ace/ACE.h"
+#include "ace/Handle_Set.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
-#include "ace/SString.h"
-#include "ace/Process.h"
 #include "ace/Object_Manager.h"
 #include "ace/Version.h"
 
