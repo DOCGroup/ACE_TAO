@@ -1,3 +1,14 @@
+Fri Jun  9 14:05:25 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/compiler.h:
+	* pace/config/config.h:
+
+	  Moved PACE_HAS_INLINE from compiler.h to config.h.
+	
+	  Deprecated macros. Left in but I will removed the
+	  deprecated macros once I change the code to use the
+	  current macros.
+
 Fri Jun  9 13:02:26 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/*.h pace/posix/*.inl,c
