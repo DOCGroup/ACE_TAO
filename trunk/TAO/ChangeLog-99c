@@ -1,3 +1,45 @@
+Wed Jun 23 17:53:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/collocated_sh.cpp: We should
+	  generate code using ACE_TRY_ENV instead of TAO_IN_ENV.
+
+	* Any.h:
+	* CDR.h:
+	* CDR_Interpreter.h:
+	* CurrentC.h:
+	* DomainC.h:
+	* DynAnyC.h:
+	* Environment.h:
+	* Exception.h:
+	* Forwarding_Servant.h:
+	* GIOP.h:
+	* GIOP_Server_Request.h:
+	* IIOP_Profile.h:
+	* IORC.h:
+	* Invocation.h:
+	* MProfile.h:
+	* Marshal.h:
+	* MessagingC.h:
+	* MessagingS.h:
+	* NVList.h:
+	* ORB.h:
+	* ORB_Core.h:
+	* Object.h:
+	* POAS.h:
+	* POA_CORBA.h:
+	* Pluggable.h:
+	* PolicyC.h:
+	* PollableC.h:
+	* PollableS.h:
+	* Request.h:
+	* Sequence.h:
+	* Server_Request.h:
+	* Stub.h:
+	* Typecode.h:
+	* UIOP_Profile.h:
+	* corbafwd.h: Replaced all occurences of TAO_TRY_ENV, env, and
+	  _tao_env with ACE_TRY_ENV.
+
 Wed Jun 23 17:38:52 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Quoter/Generic_Factory.cpp:
@@ -5,7 +47,7 @@ Wed Jun 23 17:38:52 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Simple/grid/Grid_i.cpp:
 	* examples/Simple/Time/Time_i.cpp: Fixed unused arguments warnings
 	  in these files.
-	
+
 Wed Jun 23 17:35:00 1999  Chris Gill <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h, i}
@@ -19,7 +61,7 @@ Wed Jun 23 17:35:00 1999  Chris Gill <cdgill@cs.wustl.edu>
 Wed Jun 23 17:19:52 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/tao_ir_i.cpp: Fixed some errors on
-	  g++. 
+	  g++.
 
 Wed Jun 23 16:38:54 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
@@ -39,7 +81,7 @@ Wed Jun 23 16:38:54 1999  John Heitmann  <jwh1@cs.wustl.edu>
 Wed Jun 23 15:54:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/nestea_i.cpp :
-	* orbsvcs/tests/ImplRepo/nestea_server_i.cpp:	
+	* orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
 	* orbsvcs/tests/ImplRepo/airplane_i.cpp:
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (destroy): Fixed
 	  warnings by remving an extra argument.
@@ -54,35 +96,35 @@ Wed Jun 23 15:50:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Cosmetic updates.
 
-	* tao/IIOP_Connector.cpp (make_profile): 
+	* tao/IIOP_Connector.cpp (make_profile):
 	* tao/UIOP_Connector.cpp (make_profile):
 
 	  Comment updates.  No code changes.
-	
+
 Wed Jun 23 15:08:04 1999  Mike Moran  <mm4@cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/Simple_Dynamic.cpp: 
+	* orbsvcs/tests/Trading/Simple_Dynamic.cpp:
 	  Fixed warnings by removing unused parameters to method evalDP().
 
 Wed Jun 23 14:42:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	  Eliminated optimized generated code for CDR operators for 
+	  Eliminated optimized generated code for CDR operators for
 	  bounded octet sequences. The bounded class does not contain
-	  or use message blocks. This undoes a change made earlier 
-	  today. Thanks to Doug Anderson <doug@clark.net> for 
+	  or use message blocks. This undoes a change made earlier
+	  today. Thanks to Doug Anderson <doug@clark.net> for
 	  pointing out this problem.
 
 Wed Jun 23 14:42:01 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/run_test.pl: Modified it to have the
 	  timedout feature.
-	
+
 Wed Jun 23 14:25:09 1999  Mike Moran  <mm4@cs.wustl.edu>
 
 	* orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
 	fixed warning in register_factory, removed unused parameter
-          
+
 Wed Jun 23 14:22:04 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/Echo_i.cpp (echo_list): Added
@@ -90,7 +132,7 @@ Wed Jun 23 14:22:04 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 Wed Jun 23 13:56:52 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* tests/NestedUpcall/Triangle_Test/run_test.pl: 
+	* tests/NestedUpcall/Triangle_Test/run_test.pl:
 	* tests/Multiple_Inheritance/run_test.pl:
 	  Was timing out too soon, increased the wait time to compensate.
 
@@ -99,20 +141,20 @@ Wed Jun 23 12:33:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
 	* orbsvcs/tests/AVStreams/benchmark/server.cpp:
 	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp : 
-	* orbsvcs/orbsvcs/AV/sfp.cpp: 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp :
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
 	  Fixed a few warnings for unused args. Thanks to Carlos for
-	  reporting these. 
-	
-	* orbsvcs/tests/AVStreams/sfp/run_test.pl: 
+	  reporting these.
+
+	* orbsvcs/tests/AVStreams/sfp/run_test.pl:
 	  Added a new run_test.pl for the sfp tests.
 	* orbsvcs/tests/AVStreams/sfp/client.cpp:
 	  Added a new option -a to specify the server address.
 	  Also fixed some warnings. Thanks to Carlos and David for
-	  reporting these.  		
+	  reporting these.
 	* orbsvcs/tests/AVStreams/sfp/common.h:
 	  Made the default server address as localhost:10000.
-			
+
 Wed Jun 23 11:32:29 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
   * /TAO/tests/InterOp-Naming/INS_i.cpp : Fixed a warning for an unused argument.
