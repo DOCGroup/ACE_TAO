@@ -363,7 +363,7 @@ TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,
                      AVStreams::noSuchFlow,
                      AVStreams::notSupported))
 {
-  //ACE_DEBUG ((LM_DEBUG, "Within get_flow_connection\n"));		
+  //ACE_DEBUG ((LM_DEBUG, "Within get_flow_connection\n"));
   TAO_String_Hash_Key flow_name_key (flow_name);
   FlowConnection_Map::ENTRY *flow_connection_entry = 0;
   if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
@@ -1701,7 +1701,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                     this->protocols_[j]) == 0)
                   {
                     // we'll agree upon the first protocol that matches.
-                    this->protocol_ = CORBA::string_copy (peer_protocols [i]);
+                    this->protocol_ = CORBA::string_dup (peer_protocols [i]);
                     break;
                   }
             }
@@ -1985,7 +1985,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
             return 0;
           this->forward_flow_spec_set.insert (entry);
         }
-      
+
 
       result = TAO_AV_CORE::instance ()->init_forward_flows (this,
                                                              this->forward_flow_spec_set,
@@ -3076,11 +3076,11 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                 }
               ACE_ENDTRY;
               ACE_CHECK_RETURN (0);
-              
+
               int result = this->fdev_map_.find (flow_key, flow_dev);
               if (result < 0)
                 ACE_ERROR_RETURN ((LM_ERROR, "fdev_map::find failed\n"), 0);
-              
+
               CORBA::String_var named_fdev;
               AVStreams::FlowEndPoint_var flow_endpoint;
               AVStreams::QoS flow_qos;
@@ -3193,8 +3193,8 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
                    AVStreams::noSuchFlow))
 {
   CORBA::String_var str_ctrl_ior =
-       TAO_ORB_Core_instance ()->orb ()->object_to_string (streamctrl, ACE_TRY_ENV);		
-  //ACE_DEBUG ((LM_DEBUG, "The StreamCtrl IOR is %s\n", str_ctrl_ior.in ()));	
+       TAO_ORB_Core_instance ()->orb ()->object_to_string (streamctrl, ACE_TRY_ENV);
+  //ACE_DEBUG ((LM_DEBUG, "The StreamCtrl IOR is %s\n", str_ctrl_ior.in ()));
   AVStreams::StreamEndPoint_A_ptr sep_a = 0;
   AVStreams::StreamEndPoint_ptr sep = 0;
   ACE_TRY
@@ -3278,7 +3278,7 @@ TAO_MMDevice::add_fdev_i (AVStreams::FDev_ptr fdev,
                   char[64],
                   0);
   CORBA::String_var flow_name = tmp;
-  
+
   ACE_TRY
     {
       // exception implies the flow name is not defined and is system
@@ -3313,11 +3313,11 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
       CORBA::Any_ptr flow_name_any;
       fdev = AVStreams::FDev::_narrow (fdev_obj, ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (flow_name);
-      
+
       if (CORBA::is_nil (fdev.in ()))
           return 0;
-      
-      
+
+
       flow_name_any = fdev->get_property_value ("Flow", ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (flow_name);
 
@@ -3340,7 +3340,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj,
   TAO_String_Hash_Key fdev_name_key (CORBA::string_dup (flow_name.in ()));
   //ACE_DEBUG ((LM_DEBUG, "Before Bind\n"));
 
-  
+
   if (this->fdev_map_.bind (fdev_name_key, AVStreams::FDev::_duplicate (fdev.in ())) != 0)
     ACE_THROW_RETURN (AVStreams::streamOpFailed (), 0);
   //ACE_DEBUG ((LM_DEBUG, "After Bind\n"));
@@ -3891,7 +3891,7 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
       AVStreams::protocolSpec protocols (1);
       protocols.length (1);
       protocols [0] = CORBA::string_dup (this->producer_address_.in ());
-      
+
       if (!this->ip_multicast_)
         {
           //ACE_DEBUG ((LM_DEBUG, "IP MULTICAST = 1\n"));
@@ -3924,14 +3924,14 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
                                           this->producer_address_.in (),
                                           this->fp_name_.inout (),
                                           ACE_TRY_ENV);
-          
+
           //  char * address =
           //             flow_consumer->go_to_listen (the_qos,
           //                                          1,
           //                                          flow_producer,
           //                                          this->fp_name_.inout (),
           //                                          ACE_TRY_ENV);
-          
+
           //            ACE_TRY_CHECK;
         }
       if (CORBA::is_nil (this->mcastconfigif_.in ()))
@@ -4438,7 +4438,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                                                     flowProtocol,
                                                     this->protocol_addresses_ [j]),
                         0);
-        
+
         TAO_AV_Acceptor_Registry *acceptor_registry = TAO_AV_CORE::instance ()->acceptor_registry ();
         this->flow_spec_set_.insert (entry);
         int result = acceptor_registry->open (this,
