@@ -5,42 +5,26 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-static const ACEXML_Char ACEXML_Exception_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
-  '_', 'E', 'x', 'c', 'e', 'p',
-  't', 'i', 'o', 'n', 0};
-const ACEXML_Char *ACEXML_Exception::exception_name_ = ACEXML_Exception_name;
+const ACEXML_Char *ACEXML_Exception::exception_name_ = ACE_TEXT ("ACEXML_Exception");
 
-static const ACEXML_Char ACEXML_Exception_null [] = {0};
-const ACEXML_Char *ACEXML_Exception::null_ = ACEXML_Exception_null;
+const ACEXML_Char *ACEXML_Exception::null_ = ACE_TEXT ("");
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/Exception.i"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_Exception::ACEXML_Exception (void)
+ACEXML_Exception::ACEXML_Exception()
 {
 }
 
-ACEXML_Exception::ACEXML_Exception (const ACEXML_Exception &)
+ACEXML_Exception::~ACEXML_Exception()
 {
-}
-
-
-ACEXML_Exception::~ACEXML_Exception (void)
-{
-
 }
 
 int
 ACEXML_Exception::is_a (const ACEXML_Char *name)
 {
-  if (name == ACEXML_Exception::exception_name_
-      || ACE_OS::strcmp (ACEXML_Exception::exception_name_,
-                         name) == 0)
-    return 1;
-
-  return 0;
+  return ACE_OS::strcmp (ACEXML_Exception::exception_name_, name) == 0;
 }
 
 void
