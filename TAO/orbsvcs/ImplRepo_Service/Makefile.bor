@@ -1,7 +1,0 @@
-#
-# Makefile for building the Implementation Repository executables
-#
-
-MAKEFILES = ImplRepo.bor tao_imr.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

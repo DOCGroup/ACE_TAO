@@ -1,5 +1,0 @@
-# Makefile for building the Naming Service executables
-
-MAKEFILES = Notify_Service.bor NT_Notify_Service.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
