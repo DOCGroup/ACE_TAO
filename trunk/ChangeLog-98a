@@ -8,11 +8,15 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
           warning 610, nonoverriding_function_decl.
 
         * ace/config-chorus.h,config-freebsd*.h,,config-hpux-10.x-g++.h,
-          config-irix{5.3,6.x}-g++.h,config-osf1-4.0.h:
+          config-irix{5.3,6.x}-g++.h,config-osf1-4.0.h,config-m88k.h,
+          config-netbsd.h,config-psosim-g++.h,config-sco-4.2-nothread.h,
+          config-sco-5.0.0-mit-pthread.h:
           migrated to config-g++-common.h.
 
         * ace/config-sunos5.5-egcs*.h: removed.  config-sunos5.5-g++.h
           now supports egcs, via config-g++-common.h.
+
+        * ace/config-sco-5.0.0*.h: added RCS keyword string.
 
         * examples/Reactor/Misc/test_event_handler_t.cpp: renamed
           ACE_Sig_Handler to ACE_Test_Sig_Handler to avoid collision
