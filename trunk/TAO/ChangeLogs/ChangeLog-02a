@@ -1,3 +1,9 @@
+Tue Dec 19 12:16:32 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* utils/nslist/nslist.cpp (main): Added a fix to check if non-existent 
+	  IOR is passed in.  Thanks to Jerry Jiang <javalist@21cn.com> for
+ 	  reporting this problem.
+
 Tue Dec 19 08:53:51 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * TAO_IDL/fe/idl.yy:
