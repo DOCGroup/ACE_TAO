@@ -99,7 +99,12 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_fi
                       CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  return this->filter_admin_.add_filter (new_filter ACE_ENV_ARG_PARAMETER);
+  CosNotifyFilter::FilterID fid =
+    this->filter_admin_.add_filter (new_filter ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(0);
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN(fid);
+  return fid;
 }
 
 template <class SERVANT_TYPE> void

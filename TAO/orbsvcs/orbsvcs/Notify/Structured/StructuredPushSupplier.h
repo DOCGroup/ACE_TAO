@@ -45,6 +45,9 @@ public:
   /// Release
   virtual void release (void);
 
+  /// Retrieve the ior of this peer
+  virtual bool get_ior (ACE_CString & iorstr) const;
+
 protected:
   /// The Supplier
   CosNotifyComm::StructuredPushSupplier_var push_supplier_;

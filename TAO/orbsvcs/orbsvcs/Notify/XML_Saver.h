@@ -37,12 +37,12 @@ public:
   XML_Saver (bool timestamp = true);
 
   virtual ~XML_Saver ();
- 
+
   /// Open the output file.
   /// \param file_name the fully qualified file name
   /// \return true if successful
   bool open (const ACE_CString & file_name, size_t backup_count);
- 
+
   //////////////////////////////////
   // Override Topology_Saver methods
   // see Topology_Saver.h for doc

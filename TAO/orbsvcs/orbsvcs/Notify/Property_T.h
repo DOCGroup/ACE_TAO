@@ -57,8 +57,14 @@ public:
   /// Populate the Property Sequence with this valid value.
   void get (CosNotification::PropertySeq& prop_seq);
 
+  // assign a new value
+  void assign (const TYPE& value);
+
   /// Return the value.
   const TYPE& value (void) const;
+
+  /// Return the name
+  const char * name (void) const;
 
   /// Is the current value valid
   CORBA::Boolean is_valid (void) const;
@@ -124,6 +130,9 @@ public:
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
   int set (const TAO_Notify_PropertySeq& property_seq);
+
+  /// Return the name
+  const char * name (void) const;
 
   /// Return the value.
   const TYPE& value (void) const;

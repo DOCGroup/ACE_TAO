@@ -123,7 +123,7 @@ namespace TAO_NOTIFY
     /// the get_id returns the same thing as id -- we just need someone
     /// to find it for us.
     virtual TAO_Notify_Object_Id get_id () const;
- 
+
     /// \brief Get the path of id's from the root to this object.
     void get_id_path (IdVec & id_path) const;
 

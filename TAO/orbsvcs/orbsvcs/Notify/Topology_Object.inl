@@ -2,7 +2,7 @@
 namespace TAO_NOTIFY
 {
   ACE_INLINE
-  bool 
+  bool
   Topology_Object::is_changed () const
   {
     return this->self_changed_ | this->children_changed_;

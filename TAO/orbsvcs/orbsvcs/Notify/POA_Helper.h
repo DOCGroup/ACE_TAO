@@ -54,11 +54,19 @@ public:
   /// Activate Object, the POA will assign an ID and return its value.
   CORBA::Object_ptr activate (PortableServer::Servant servant, CORBA::Long& id ACE_ENV_ARG_DECL);
 
+  /// Activate Object, using existing ID
+  CORBA::Object_ptr activate_with_id (PortableServer::Servant servant, CORBA::Long id ACE_ENV_ARG_DECL);
+
   /// Deactivate Object with ID
   void deactivate (CORBA::Long id ACE_ENV_ARG_DECL) const;
 
   /// Convert ID to reference.
   CORBA::Object_ptr id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const;
+
+  /// Convert reference to pointer to servant
+  PortableServer::ServantBase * reference_to_servant (CORBA::Object_ptr ptr ACE_ENV_ARG_DECL) const;
+
+  CORBA::Object_ptr servant_to_reference (PortableServer::ServantBase * servant  ACE_ENV_ARG_DECL) const;
 
 protected:
   /// Set default POA policies.

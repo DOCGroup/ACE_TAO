@@ -57,7 +57,20 @@ public:
   /// Release this object.
   virtual void release (void);
 
+  virtual const char * get_admin_type_name () const;
+
+  virtual TAO_NOTIFY::Topology_Object* load_child (
+    const ACE_CString &type,
+    CORBA::Long id,
+    const TAO_NOTIFY::NVPList& attrs
+    ACE_ENV_ARG_DECL);
+
 protected:
+  TAO_NOTIFY::Topology_Object *load_proxy (
+    CORBA::Long id,
+    CosNotifyChannelAdmin::ClientType ctype,
+    const TAO_NOTIFY::NVPList& attrs
+    ACE_ENV_ARG_DECL);
 
   /// = NotifyExt::ConsumerAdmin methods
   virtual CosNotifyChannelAdmin::ProxySupplier_ptr

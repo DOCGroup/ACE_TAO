@@ -89,6 +89,7 @@ public:
   /// The CA parent.
   TAO_Notify_ConsumerAdmin* consumer_admin (void);
 
+//  const char * get_proxy_type_name (void) const;
 protected:
 
   ///= Data Members.
