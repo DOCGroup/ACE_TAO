@@ -49,8 +49,8 @@ handler (int signum)
 {
   if (signal_catcher)
     {
-      // No printout here, to be safe.  Signal handlers must
-      // not acquire locks, etc.
+      // No printout here, to be safe.  Signal handlers must not
+      // acquire locks, etc.
       (*signal_catcher)->signaled (ACE_static_cast (sig_atomic_t, signum));
     }
 }
