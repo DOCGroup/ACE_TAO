@@ -10,7 +10,6 @@
 #
 #----------------------------------------------------------------------------
 MAKEFILE        = Makefile.Bug_1627_Server
-DEPENDENCY_FILE = .depend.Makefile.Bug_1627_Server
 BIN_UNCHECKED   = server
 
 ifndef TAO_ROOT

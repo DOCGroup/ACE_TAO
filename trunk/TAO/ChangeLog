@@ -1,3 +1,19 @@
+Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO/orbsvcs/IFR_Service/Makefile.dependencies:
+        * TAO/orbsvcs/LoadBalancer/Makefile.LoadManager:
+        * TAO/orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+        * TAO/orbsvcs/tests/Bug_1334_Regression/Makefile.Bug_1334_client:
+        * TAO/orbsvcs/tests/Bug_1630_Regression/Makefile.Bug_1630_testclient:
+        * TAO/tests/Bug_1330_Regression/Makefile.Bug_1330_Client:
+        * TAO/tests/Bug_1330_Regression/Makefile.Bug_1330_Server:
+        * TAO/tests/Bug_1627_Regression/Makefile.Bug_1627_Client:
+        * TAO/tests/Bug_1627_Regression/Makefile.Bug_1627_Server:
+        * TAO/tests/Bug_1635_Regression/Makefile.Bug_1635_Client:
+        * TAO/tests/Bug_1636_Regression/Makefile.bug_1636_testclient:
+        * TAO/tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
+          Fixed Fuzz errors.
+
 Wed Dec 24 08:29:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Valuetype/AbstractBase_T.cpp:
