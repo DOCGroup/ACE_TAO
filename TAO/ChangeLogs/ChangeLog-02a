@@ -1,3 +1,8 @@
+Sat Apr 27 17:44:40 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Fixed compile errors.
+	
 Sat Apr 27 17:32:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Created an object
@@ -17,7 +22,7 @@ Sat Apr 27 17:32:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp: Made changes
 	  to this protocol though they are not relevant. May be we should
-	  zap this. But let it be there for the timebeing.
+	  zap this. But let it be there for the time being.
 
 Sat Apr 27 16:55:01 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
 
