@@ -1,3 +1,16 @@
+Tue Dec  7 18:10:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        
+          Fixes to the Contained::move() method implementation,
+          and changes to eliminate the output of the IFR's IOR
+          upon startup - for automatic execution of IFR tests,
+          we don't want so much extranious output.
+
 Tue Dec  7 13:14:17 2004  Greg Bostrom <greg.bostrom@hp.com>
 
         * TAO_IDL/ast/ast_decl.cpp
