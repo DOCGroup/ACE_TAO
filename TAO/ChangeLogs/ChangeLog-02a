@@ -1,3 +1,11 @@
+Sat Mar 24 07:55:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: 
+          Under Win32 the handle() has to be cast before setting the id()
+          field on TAO_Transport.
+
 Fri Mar 23 21:19:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IIOP_Connection_Handler.cpp (activate):
