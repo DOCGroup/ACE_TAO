@@ -1,3 +1,13 @@
+Wed Apr 28 13:00:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mutex.{cpp,inl}:
+          - Improved the dump() method.
+          - Release all resources in the remove()
+          - Changed the constructor not to allocate unnecessary resource
+            (thread mutex) in case process shared mutext is requested
+            *and* supported
+          Change from Martin Corino <mcorino@remedy.nl>
+
 Wed Apr 28 12:53:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Lib_Find.cpp:
