@@ -1,3 +1,10 @@
+Tue Feb 10 14:54:48 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ciao/Container_Impl.h: 
+	* ciao/Container_Base.h: Changes to fix compile errors by adding
+	  default arguments for static configuration related paramters in
+	  the constructor.
+
 Tue Feb 10 11:35:47 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Deployment.idl:
