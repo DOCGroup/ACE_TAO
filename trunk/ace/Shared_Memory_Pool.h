@@ -26,6 +26,8 @@
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 
+#include "ace/os_include/sys/os_mman.h"
+
 /**
  * @class ACE_Shared_Memory_Pool_Options
  *
