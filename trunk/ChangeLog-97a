@@ -33,6 +33,9 @@ Tue Mar 18 08:12:22 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Local_Name_Space.h: removed #include of ace/Service_Config.h.
 
+	* include/makeinclude/wrapper_macros.GNU: put -I. before
+	  -I$(WRAPPER_ROOT) instead of after.
+
 	* tests/IOStream_test.cpp: added checks for receipt of proper values.
 
 Tue Mar 18 01:38:14 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
