@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum.h"
 #include "ast_union.h"
 #include "ast_union_label.h"
+#include "idl_defines.h"
 
 ACE_RCSID (util, 
            utl_err, 
@@ -683,23 +684,29 @@ UTL_Error::error3 (UTL_Error::ErrorCode c,
 void
 UTL_Error::warning0 (UTL_Error::ErrorCode c)
 {
-  idl_error_header (c,
-                    idl_global->lineno (),
-                    idl_global->filename ());
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
+  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+    {
+      idl_error_header (c,
+                        idl_global->lineno (),
+                        idl_global->filename ());
+      ACE_ERROR ((LM_ERROR,
+                  "\n"));
+    }
 }
 
 void
 UTL_Error::warning1 (UTL_Error::ErrorCode c,
                      AST_Decl *d)
 {
-  idl_error_header (c,
-                    idl_global->lineno (),
-                    idl_global->filename ());
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
+  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+    {
+      idl_error_header (c,
+                        idl_global->lineno (),
+                        idl_global->filename ());
+      d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+      ACE_ERROR ((LM_ERROR,
+                  "\n"));
+    }
 }
 
 void
@@ -707,15 +714,18 @@ UTL_Error::warning2 (UTL_Error::ErrorCode c,
                      AST_Decl *d1,
                      AST_Decl *d2)
 {
-  idl_error_header (c,
-                    idl_global->lineno (),
-                    idl_global->filename ());
-  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
-  ACE_ERROR ((LM_ERROR,
-              ", "));
-  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
+  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+    {
+      idl_error_header (c,
+                        idl_global->lineno (),
+                        idl_global->filename ());
+      d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+      ACE_ERROR ((LM_ERROR,
+                  ", "));
+      d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+      ACE_ERROR ((LM_ERROR,
+                  "\n"));
+    }
 }
 
 void
@@ -724,18 +734,21 @@ UTL_Error::warning3 (UTL_Error::ErrorCode c,
                      AST_Decl *d2,
                      AST_Decl *d3)
 {
-  idl_error_header (c,
-                    idl_global->lineno (),
-                    idl_global->filename ());
-  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
-  ACE_ERROR ((LM_ERROR,
-              ", "));
-  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
-  ACE_ERROR ((LM_ERROR,
-              ", "));
-  d3->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
+  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+    {
+      idl_error_header (c,
+                        idl_global->lineno (),
+                        idl_global->filename ());
+      d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+      ACE_ERROR ((LM_ERROR,
+                  ", "));
+      d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+      ACE_ERROR ((LM_ERROR,
+                  ", "));
+      d3->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+      ACE_ERROR ((LM_ERROR,
+                  "\n"));
+    }
 }
 
 // Report a failed coercion attempt.
@@ -1154,13 +1167,16 @@ void
 UTL_Error::name_case_warning (char *b,
                               char *n)
 {
-  idl_error_header (EIDL_NAME_CASE_WARNING,
-                    idl_global->lineno (),
-                    idl_global->filename ());
-  ACE_ERROR ((LM_ERROR,
-              "\"%s\" and \"%s\"\n",
-              b,
-              n));
+  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+    {
+      idl_error_header (EIDL_NAME_CASE_WARNING,
+                        idl_global->lineno (),
+                        idl_global->filename ());
+      ACE_ERROR ((LM_ERROR,
+                  "\"%s\" and \"%s\"\n",
+                  b,
+                  n));
+    }
 }
 
 void
@@ -1178,12 +1194,15 @@ UTL_Error::idl_keyword_error (char *n)
 void
 UTL_Error::idl_keyword_warning (char *n)
 {
-  idl_error_header (EIDL_KEYWORD_WARNING,
-                    idl_global->lineno (),
-                    idl_global->filename ());
-  ACE_ERROR ((LM_ERROR,
-              "\"%s\"\n",
-              n));
+  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+    {
+      idl_error_header (EIDL_KEYWORD_WARNING,
+                        idl_global->lineno (),
+                        idl_global->filename ());
+      ACE_ERROR ((LM_ERROR,
+                  "\"%s\"\n",
+                  n));
+    }
 }
 
 // Report an ambiguous definition of a name.
