@@ -1,3 +1,20 @@
+Sat Jan 24 16:11:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/OS_NS_stdlib.inl:
+          With CBuilderX Preview putenv, wcstod, wcstol and wcstoul are in the
+          std namespace, so added ACE_STD_NAMESPACE which expands to std with
+          Borland, to nothing with other compilers.
+
+	* ace/OS_NS_stdio.inl:
+	  The vswprintf for Dinkum STL is different. CBuilderX Preview has
+	  std::tempnam, so added checking for borland version.
+
+	* ace/OS_NS_stdio.cpp:
+	  vswprintf and vsnprintf are different with CBuilderX Preview
+
+	* ace/config-win32-borland.h:
+	  CBuilderX Preview has no itoa
+
 Sat Jan 24 15:29:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/config-win32-borland.h:
