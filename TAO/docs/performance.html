@@ -14,12 +14,23 @@
     <h3>Overview</h3>
 
     <p>
+<!-- We talk of real-time here and through out this document I dont -->
+<!-- see where we have talked about lower latencies one of the -->
+<!-- important aspects of RT systems. I understand the term -->
+<!-- "throughput" is used for latencies. My understanding is that -->
+<!-- improved latencies can give better throughtput, but better -->
+<!-- throughput doesnt necessarily mean lower latencies. Please -->
+<!-- correct me if I am wrong -->
       TAO is increasingly being used to support high-performance
       distributed real-time and embedded (DRE) applications.  DRE
       applications constitute an important class of distributed
       systems where predictability and efficiency are essential for
       success.  This document describes how to configure <a href
       ="index.html">TAO</a> to enhance its throughput, scalability,
+    <!-- Ossama, let me know if I am offtrack. Would it be better if -->
+    <!-- we mention this as "reduced latencies" instead of improved -->
+    <!-- latencies. I can make the change but thought would discuss -->
+    <!-- with you before jumping on to it. - Bala -->
       and latency for a variety of applications. </p>
 
      <p>
@@ -47,6 +58,10 @@
     </p>
     <ul>
       <li>
+          <!-- Ossama, do we call it optimizing throughput? Shouldnt -->
+          <!-- we mention it as Improving throughput? Because the -->
+          <!-- suggestions that we give seems to show only that. -->
+
 	<a href="#throughput">Optimizing Throughput</a>
 	<ul>
 	  <li>
@@ -101,6 +116,22 @@
     </p>
     <ul>
       <li>
+          <!-- Ossama, I have my jitters on putting this here for the -->
+          <!-- following reasons -->
+          <!-- 1. AMI doesnt have many optimizations built in. Most of -->
+          <!-- the configurations that we mention below wouldnt work -->
+          <!-- with AMI. Say for instance we dont have a RW handler -->
+          <!-- for AMI -->
+          <!-- 2.For long we have been interchanging the terms, -->
+          <!-- "Throughput" and "Latency". AMI is good for -->
+          <!-- "Throughput", you could keep the client thread busy by -->
+          <!-- making more invocations. I doubt whether that leads to -->
+          <!-- better latencies. I dont know. Further the ORB -->
+          <!-- configuration section talks about options that improve -->
+          <!-- latencies. IMHO, lower latencies can lead to improved -->
+          <!-- throughput, but vice-versa may not apply. -->
+          <!-- Please correct me if I am wrong. I am willing to stand -->
+          <!-- corrected.  -->
 	<b>Run-time features</b> offered by the ORB, such as
 	Asynchronous Method Invocations (AMI)
         <!-- Ossama, are there other examples you can list here? -->
@@ -164,6 +195,12 @@
 	      synchronization in the client connection handlers, simply
 	      add:
 	    </p>
+              <!-- Ossama, if we are going to ask people to use ST, -->
+              <!-- they could as well use ST reactor too. TAO uses a -->
+              <!-- reactor for ST and it would be better to use ST -->
+              <!-- reactor instead of TP. BTW, shouldnt we interchange -->
+              <!-- things here for example tell about RW and then go -->
+              <!-- to ST handlers? -->
 
 	    <blockquote>
 	      <code>
@@ -198,6 +235,13 @@
               pending.  The connection is <i>exclusive</i> to a given
               request, thus reducing contention on a connection.
               However, that exclusivity
+              <!-- Ossama, I am not sure I understand that using -->
+              <!-- exclusive connections could lead to reduced -->
+              <!-- throughput. As a matter of fact we have a cache map -->
+              <!-- lookup on the client side for muxed and that would -->
+              <!-- increase the latencies a bit :-). Exclusive takes -->
+              <!-- more resources and that could leade reduced -->
+              <!-- scalability, right?-->
 	      comes at the cost of a smaller number of requests that
 	      may be issued at a given point in time.  To enable this
 	      behaviour, add the following option to the
@@ -413,7 +457,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Sun Dec 16 13:33:48 Pacific Standard Time 2001
+Last modified: Mon Dec 17 07:23:41 CST 2001
 <!-- hhmts end -->
   </body>
 </html>
