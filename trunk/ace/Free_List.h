@@ -46,6 +46,48 @@ public:
 };
 
 template <class T, class LOCK>
+class ACE_Locked_Simple_Free_List : public ACE_Free_List<T>
+// = TITLE
+//      Implement a simple free list
+//
+// = DESCRIPTION
+//      This class maintains a free list.  It is different from
+//      ACE_Locked_Free_List in that it does not allocate or
+//      deallocate elements in free lists when there are too many/few
+//      of them.  It also depends on the type T having get_next () and
+//      set_next () method.  
+{
+public:
+  ACE_Locked_Simple_Free_List ();
+  // Create a Memory free list
+  
+  virtual T *remove ();
+  // get next element in the free list.  Return NULL if the list is empty
+
+  virtual void add (T *);
+  // insert an element into the free list
+
+  virtual ~ACE_Locked_Simple_Free_List ();
+  // Destructor - does *not* delete elements it holds
+
+  virtual size_t size ();
+  // Returns the current size of the free list
+
+  virtual void resize (size_t) { }
+  // This operation doesn't have any meaning here
+
+private:
+  size_t size_ ;
+  // Maintian the current size of the free list
+
+  LOCK lock_;
+  // Integrity keeper
+
+  T *head_;
+  // Free list head;
+};
+
+template <class T, class LOCK>
 class ACE_Locked_Free_List : public ACE_Free_List<T> 
   // = TITLE
   //      Implements a free list
