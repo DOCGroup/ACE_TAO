@@ -3360,13 +3360,13 @@ extern "C"
 
 #   if defined (ACE_HAS_SIGINFO_T)
 #     if !defined (ACE_LACKS_SIGINFO_H)
-#       if defined (__QNX__)
+#       if defined (__QNX__) || defined (__OpenBSD__)
 #         include /**/ <sys/siginfo.h>
 #       elif defined(__rtems__)
 #         include /**/ <signal.h>
-#       else  /* ! __QNX__ */
+#       else  /* __QNX__ || __OpenBSD__ */
 #         include /**/ <siginfo.h>
-#       endif /* ! __QNX__ */
+#       endif /* __QNX__ || __OpenBSD__ */
 #     endif /* ACE_LACKS_SIGINFO_H */
 #     if !defined (ACE_LACKS_UCONTEXT_H)
 #       include /**/ <ucontext.h>
@@ -4787,7 +4787,10 @@ public:
                        FILE *fp);
 
   static int fgetc (FILE* fp);
+
+#if !defined (ACE_LACKS_CLEARERR)
   static void clearerr (FILE* fp);
+#endif /* !ACE_LACKS_CLEARERR */
 
 #if defined (ACE_HAS_WCHAR)
   static wint_t fgetwc (FILE* fp);

@@ -41,12 +41,14 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
     && !(defined (ACE_WIN32) \
          && (defined (ghs) \
              || defined (__MINGW32__) \
-             || (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))))
+             || (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0)))) \
+    && !(defined (__OpenBSD__) && defined (ACE_HAS_PTHREADS))
 #define ACE_TEST_REMAP_ON_FAULT
 // Linux seems to have problem when calling mmap from the signal handler.
 // The Green Hills Native x86 compiler does not support structural exceptions.
 // Mingw's gcc does not support structural exceptions.
 // Win9x doesn't support remaps.
+// OpenBSD causes this test to hang in the child when pthreads are enabled.
 // On these plarforms, we make sure the remapping will never occur.
 #endif /* linux && Win32 GHS*/
 

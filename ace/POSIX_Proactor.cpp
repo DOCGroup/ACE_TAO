@@ -74,6 +74,11 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
 #elif defined(__sgi)
 
   os_id_ = OS_IRIX;   // set family
+
+#elif defined(__OpenBSD)
+
+  os_id_ = OS_OPENBSD; // set family
+
   // do the same
 
 //#else defined (LINUX, __FreeBSD__ ...)
@@ -865,12 +870,12 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
               ACE_LIB_TEXT( "SGI IRIX specific: aio_init!\n")));
 
 //typedef struct aioinit {
-//    int aio_threads;	/* The number of aio threads to start (5) */
-//    int aio_locks;	/* Initial number of preallocated locks (3) */
-//    int aio_num;	/* estimated total simultanious aiobc structs (1000) */
-//    int aio_usedba;	/* Try to use DBA for raw I/O in lio_listio (0) */
-//    int aio_debug;	/* turn on debugging (0) */
-//    int aio_numusers;	/* max number of user sprocs making aio_* calls (5) */
+//    int aio_threads;  /* The number of aio threads to start (5) */
+//    int aio_locks;    /* Initial number of preallocated locks (3) */
+//    int aio_num;      /* estimated total simultanious aiobc structs (1000) */
+//    int aio_usedba;   /* Try to use DBA for raw I/O in lio_listio (0) */
+//    int aio_debug;    /* turn on debugging (0) */
+//    int aio_numusers; /* max number of user sprocs making aio_* calls (5) */
 //    int aio_reserved[3];
 //} aioinit_t;
 

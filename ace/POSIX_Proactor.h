@@ -87,7 +87,8 @@ public:
     OS_HPUX_11  = OS_HPUX | 0x0001,
     OS_LINUX    = 0x0800,          // Linux family
     OS_FREEBSD  = 0x1000,          // FreeBSD family
-    OS_IRIX     = 0x2000           // SGI IRIX family
+    OS_IRIX     = 0x2000,          // SGI IRIX family
+    OS_OPENBSD  = 0x4000           // OpenBSD familty
   };
 
   virtual Proactor_Type  get_impl_type (void);
@@ -100,7 +101,7 @@ public:
 
   /// This function is a no-op function for Unix systems. Returns 0.
   virtual int register_handle (ACE_HANDLE handle,
-			       const void *completion_key);
+                               const void *completion_key);
 
   /**
    * Post a result to the completion port of the Proactor.  If errors
@@ -240,9 +241,9 @@ protected:
    * POSIX Proators.
    */
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-				  size_t bytes_transferred,
-				  const void *completion_key,
-				  u_long error);
+                                  size_t bytes_transferred,
+                                  const void *completion_key,
+                                  u_long error);
 
   /**
    * Post <how_many> completions to the completion port so that all
@@ -394,9 +395,9 @@ protected:
   /// We will call the base class's application_specific_code from
   /// here.
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-				  size_t bytes_transferred,
-				  const void *completion_key,
-				  u_long error);
+                                  size_t bytes_transferred,
+                                  const void *completion_key,
+                                  u_long error);
 
   virtual int register_and_start_aio (ACE_POSIX_Asynch_Result *result,
                                       int op);
