@@ -155,6 +155,7 @@ CONTROLLED_FILES = \
         ltconfig \
         ltmain.sh \
         m4 \
+	man \
         missing \
         mkinstalldirs \
         netsvcs \
