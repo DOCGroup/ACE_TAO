@@ -48,155 +48,11 @@
 #include "../mpeg_shared/sendpt.h"
 #include "proto.h"
 
-#define min(a, b) ((a) > (b) ? (b) : (a))
-#define max(a, b) ((a) > (b) ? (a) : (b))
-
-/* Start codes. */
-
-#define READ_BLOCK_SIZE 512
-#define MAX_TIMER_ADJUST (100 * SPEEDUP_INV_SCALE)
-
-#define SEQ_END_CODE 0x000001b7
-#define SEQ_START_CODE 0x000001b3
-#define GOP_START_CODE 0x000001b8
-#define PICTURE_START_CODE 0x00000100
-#define SLICE_MIN_START_CODE 0x00000101
-#define SLICE_MAX_START_CODE 0x000001af
-#define EXT_START_CODE 0x000001b5
-#define USER_START_CODE 0x000001b2
-
-//extern int Mpeg_Global::drift_ppm;
-//extern int Mpeg_Global::session_limit, Mpeg_Global::session_num;
-
-static int live_source = 0;
-static int video_format;
-
-static int pkts_sent = 0;
-static time_t start_time;
-
-static int conn_tag;
-
-static int normalExit = 1;
-
-static int serviceSocket;
-static int videoSocket = -1;
-
-static char videoFile[PATH_SIZE];
-static FILE *fp;
-static int needHeader = 0;
-static int lastRef[2];
-static int lastRefPtr = 0;
-static int currentUPF = 0;
-static int addedUPF = 0;
-static int addedSignals = 0;
-static int VStimeAdvance;
-static double fps;  /* current frames-per-second: playback speed */
-static double frameRateLimit;
-
-static VideoPacket * packet = NULL;
-static int packetBufSize;
-static int msgsn = 0;
-static int packetsn = 0;
-static int msgsize;
-
-static unsigned char precmd, cmd;
-static int cmdsn;
-static int nextFrame;
-static int nextGroup;
-static int firstPatternSize;
-static char * firstSendPattern = NULL;
-static int sendPatternGops;
-static char sendPattern[PATTERN_SIZE];
-
-#ifdef STAT
-static char * framesSent = NULL;
-#endif
-
-static int fileSize = 0;
-static int maxS = 0, maxG = 0,  maxI = 0, maxP = 0, maxB = 0;
-static int minS=0x7fffffff, minG = 0x7fffffff;
-static int minI = 0x7fffffff, minP = 0x7fffffff, minB = 0x7fffffff;
-static int numS = 0, numG = 0, numF, numI = 0, numP = 0, numB = 0;
-static int averageFrameSize;
-static int horizontalSize;
-static int verticalSize;
-static int pelAspectRatio;
-static int pictureRate;
-static int vbvBufferSize;
-static int firstGopFrames = 0;
-static int patternSize = 0;
-static char pattern[PATTERN_SIZE];
-
-static struct SystemHeader
-{
-  long offset;
-  int size;
-} * systemHeader;
-static struct GopTable
-{
-  int systemHeader;
-  long offset;
-  int headerSize;
-  int size;
-  int totalFrames;
-  int previousFrames;
-  long firstIoffset;
-} * gopTable;
-static struct FrameTable
-{
-  char type;
-  unsigned short size;
-} * frameTable = NULL;
-
-#define FileRead(position, buf, size) \
-	{ \
-	  if (fseek(fp, (position), 0) == -1) \
-	  { \
-	    perror("VS error on fseek VideoFile"); \
-	    return (-1); \
-	  } \
-	  while (fread((buf), (size), 1, fp) == 0) \
-	  { if (errno == EINTR) { errno = 0; continue;}\
-             perror("VS error on fread VideoFile"); \
-             return (-1); \
-	  } \
-	}
-
-/*
-static void FileRead(long position, char * pbuf, int psize)
-{
-  int size = psize;
-  char * buf = pbuf;
-  if (psize == 0)
-    return;
-  
-  if (fseek(fp, position, 0) == -1)
-  {
-    perror("VS error on fseek VideoFile");
-    exit(1);
-  }
-
-  while (size > 0)
-  {
-    int sz = min(size, READ_BLOCK_SIZE);
-    if (size < psize)
-      usleep(10);
-    if (fread(buf, sz, 1, fp) == 0)
-    {
-      if (errno == EINTR)
-	continue;
-      perror("VS error on fread videoFile");
-      exit(1);
-    }
-    buf += sz;
-    size -= sz;
-  }
-}
-*/
-
 static int CmdRead(char *buf, int psize)
 {
-  int res = wait_read_bytes(serviceSocket, buf, psize);
+  int res = wait_read_bytes (VIDEO_SINGLETON::instance ()->serviceSocket, 
+                             buf, 
+                             psize);
   if (res == 0) return(1);
   if (res == -1) {
     fprintf(stderr, "VS error on read cmdSocket, size %d", psize);
@@ -208,9 +64,9 @@ static int CmdRead(char *buf, int psize)
 
 static void CmdWrite(char *buf, int size)
 {
-  int res = wait_write_bytes(serviceSocket, buf, size);
+  int res = wait_write_bytes(VIDEO_SINGLETON::instance ()->serviceSocket, buf, size);
   if (res == -1) {
-    if (errno != EPIPE) perror("VS writes to serviceSocket");
+    if (errno != EPIPE) perror("VS writes to VIDEO_SINGLETON::instance ()->serviceSocket");
     exit(errno != EPIPE);
   }
 }
@@ -1220,7 +1076,7 @@ static int INITvideo(void)
 	      VERSION / 100, VERSION % 100,
 	      para.version / 100, para.version % 100);
     }
-    write_string(serviceSocket, errmsg);
+    write_string(VIDEO_SINGLETON::instance ()->serviceSocket, errmsg);
     exit(0);
   }
   cmdsn = para.sn;
@@ -1240,7 +1096,7 @@ static int INITvideo(void)
       failureType = 101;
       goto failure;
     }
-    live_source = 1;
+    VIDEO_SINGLETON::instance ()->live_source = 1;
 
     fileSize =0x7fffffff;
     maxS = maxG = maxI = maxP = maxB = minS = minG = minI = minP = minB = 1;
@@ -1292,7 +1148,7 @@ static int INITvideo(void)
     reply.patternSize = htonl(patternSize);
     strncpy(reply.pattern, pattern, PATTERN_SIZE);
     
-    reply.live = htonl(live_source);
+    reply.live = htonl(VIDEO_SINGLETON::instance ()->live_source);
     reply.format = htonl(video_format);
     
     CmdWrite((char *)&cmd, 1);
@@ -1304,11 +1160,11 @@ static int INITvideo(void)
     {
       int tmpSocket = videoSocket;
       
-      if (live_source) StartPlayLiveVideo();
+      if (VIDEO_SINGLETON::instance ()->live_source) StartPlayLiveVideo();
       
-      videoSocket = serviceSocket;
+      videoSocket = VIDEO_SINGLETON::instance ()->serviceSocket;
       
-      if (live_source) {
+      if (VIDEO_SINGLETON::instance ()->live_source) {
 	int frame = 0;
 	SendPicture(&frame);
       }
@@ -1321,7 +1177,7 @@ static int INITvideo(void)
       }
       videoSocket = tmpSocket;
       
-      if (live_source) StopPlayLiveVideo();
+      if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo();
     }
 
     return 0;
@@ -1343,7 +1199,7 @@ static int INITvideo(void)
 	  failureType == 100 ? "failed to connect to live video source" :
 	  failureType == 101 ? "live MPEG2 not supported" :
           errmsg;
-    write_string(serviceSocket, msg);
+    write_string(VIDEO_SINGLETON::instance ()->serviceSocket, msg);
     exit(0);
   }
 }
@@ -1379,7 +1235,7 @@ static int POSITIONvideo()
   if (result != 0)
     return result;
 
-  if (live_source) return 0;
+  if (VIDEO_SINGLETON::instance ()->live_source) return 0;
   
 #ifdef NeedByteOrderConversion
   para.nextGroup = ntohl(para.nextGroup);
@@ -1409,7 +1265,7 @@ static int STEPvideo()
 
   cmdsn = para.sn;
 
-  if (!live_source) {
+  if (!VIDEO_SINGLETON::instance ()->live_source) {
     if (para.nextFrame >= numF)  /* send SEQ_END */
     {
       tag = 1;
@@ -1426,9 +1282,9 @@ static int STEPvideo()
         return result;
     }
   }
-  if (live_source) StartPlayLiveVideo();
+  if (VIDEO_SINGLETON::instance ()->live_source) StartPlayLiveVideo();
   
-  if (live_source) {
+  if (VIDEO_SINGLETON::instance ()->live_source) {
     SendPicture(&para.nextFrame);
   }
   else if (video_format == VIDEO_MPEG1) {
@@ -1438,7 +1294,7 @@ static int STEPvideo()
     fprintf(stderr, "VS: wierd1\n");
   }
   
-  if (live_source) StopPlayLiveVideo();
+  if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo();
   return 0;
 }
 
@@ -1664,7 +1520,7 @@ static int FastVideoPlay(void)
   FFpara para;
   int preGroup = -1;
   int preHeader = -1;
-  int nfds = (serviceSocket > videoSocket ? serviceSocket : videoSocket) + 1;
+  int nfds = (VIDEO_SINGLETON::instance ()->serviceSocket > videoSocket ? VIDEO_SINGLETON::instance ()->serviceSocket : videoSocket) + 1;
   
   result = CmdRead((char *)&para, sizeof(para));
   if (result != 0)
@@ -1677,7 +1533,7 @@ static int FastVideoPlay(void)
   para.VStimeAdvance = ntohl(para.VStimeAdvance);
 #endif
 
-  if (live_source) return 0;
+  if (VIDEO_SINGLETON::instance ()->live_source) return 0;
   
   VStimeAdvance = para.VStimeAdvance;
   /*
@@ -1706,7 +1562,7 @@ static int FastVideoPlay(void)
     }
 
     FD_ZERO(&read_mask);
-    FD_SET(serviceSocket, &read_mask);
+    FD_SET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask);
     FD_SET(videoSocket, &read_mask);
 #ifdef _HPUX_SOURCE
     if (select(nfds, (int *)&read_mask, NULL, NULL, NULL) == -1)
@@ -1720,7 +1576,7 @@ static int FastVideoPlay(void)
       exit(1);
       
     }
-    if (FD_ISSET(serviceSocket, &read_mask))   /* stop */
+    if (FD_ISSET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask))   /* stop */
     {
       result = CmdRead((char *)&cmd, 1);
       if (result != 0)
@@ -1815,7 +1671,7 @@ static int PLAYliveVideo(PLAYpara * para)
   int count;
   int first_frame;
   int frame = para->nextFrame;
-  int nfds = (serviceSocket > videoSocket ? serviceSocket : videoSocket) + 1;
+  int nfds = (VIDEO_SINGLETON::instance ()->serviceSocket > videoSocket ? VIDEO_SINGLETON::instance ()->serviceSocket : videoSocket) + 1;
   struct fd_set read_mask;
   struct timeval tval = {0, 0};
   double ratio;
@@ -1848,7 +1704,7 @@ static int PLAYliveVideo(PLAYpara * para)
     frame ++;
     
     FD_ZERO(&read_mask);
-    FD_SET(serviceSocket, &read_mask);
+    FD_SET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask);
     FD_SET(videoSocket, &read_mask);
 #ifdef _HPUX_SOURCE
     if (select(nfds, (int *)&read_mask, NULL, NULL, &tval) == -1)
@@ -1863,7 +1719,7 @@ static int PLAYliveVideo(PLAYpara * para)
       exit(1);
       
     }
-    if (FD_ISSET(serviceSocket, &read_mask))   /* stop */
+    if (FD_ISSET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask))   /* stop */
     {
       unsigned char tmp;
       result = CmdRead((char *)&tmp, 1);
@@ -1971,8 +1827,9 @@ static int PLAYvideo()
     CmdWrite((char *)&ts, sizeof(int));
   }
   
-  if (live_source || video_format != VIDEO_MPEG1) {
-    if (live_source) PLAYliveVideo(&para);
+  if (VIDEO_SINGLETON::instance ()->live_source || video_format != VIDEO_MPEG1) {
+    if (VIDEO_SINGLETON::instance ()->live_source) 
+      PLAYliveVideo (&para);
     return 0;
   }
   
@@ -2003,7 +1860,7 @@ static int PLAYvideo()
     int curHeader = timerHeader;
     char * sp;
     struct fd_set read_mask;
-    int nfds = (serviceSocket > videoSocket ? serviceSocket : videoSocket) + 1;
+    int nfds = (VIDEO_SINGLETON::instance ()->serviceSocket > videoSocket ? VIDEO_SINGLETON::instance ()->serviceSocket : videoSocket) + 1;
     
     if (preGroup != curGroup || curFrame != preFrame)
     {
@@ -2085,7 +1942,7 @@ static int PLAYvideo()
     }
 
     FD_ZERO(&read_mask);
-    FD_SET(serviceSocket, &read_mask);
+    FD_SET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask);
     FD_SET(videoSocket, &read_mask);
 #ifdef _HPUX_SOURCE
     if (select(nfds, (int *)&read_mask, NULL, NULL, NULL) == -1)
@@ -2099,7 +1956,7 @@ static int PLAYvideo()
       exit(1);
       
     }
-    if (FD_ISSET(serviceSocket, &read_mask))   /* stop, speed change, loop swap */
+    if (FD_ISSET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask))   /* stop, speed change, loop swap */
     {
       unsigned char tmp;
       result = CmdRead((char *)&tmp, 1);
@@ -2206,7 +2063,7 @@ static void on_exit_routine(void)
   /*
   fprintf(stderr, "A VS session terminated.\n");
   */
-  if (getpeername(serviceSocket,
+  if (getpeername(VIDEO_SINGLETON::instance ()->serviceSocket,
 		  (struct sockaddr *)&peeraddr_in, &size) == 0 &&
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
@@ -2223,7 +2080,7 @@ static void on_exit_routine(void)
 	     pkts_sent, videoFile);
     }
   }
-  ComCloseConn(serviceSocket);
+  ComCloseConn(VIDEO_SINGLETON::instance ()->serviceSocket);
   ComCloseConn(videoSocket);
 }
 
@@ -2231,7 +2088,7 @@ int VideoServer(int ctr_fd, int data_fd, int rttag, int max_pkt_size)
 {
   int result;
 
-  serviceSocket = ctr_fd;
+  VIDEO_SINGLETON::instance ()->serviceSocket = ctr_fd;
   videoSocket = data_fd;
   conn_tag = max_pkt_size;
   
