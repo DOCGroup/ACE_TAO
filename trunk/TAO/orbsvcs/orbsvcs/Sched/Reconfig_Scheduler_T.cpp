@@ -2646,11 +2646,12 @@ propagate_criticalities_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Sort the pointers to original tuples in ascending admission
   // order, according to the scheduling strategy's admission policy.
+
   ACE_OS::qsort (ACE_reinterpret_cast (void *, tuple_ptr_array_),
                  this->rt_info_tuple_count_,
                  sizeof (TAO_RT_Info_Tuple *),
                  ACE_reinterpret_cast (COMP_FUNC,
-                       RECONFIG_SCHED_STRATEGY::comp_entry_finish_times ));
+                   RECONFIG_SCHED_STRATEGY::comp_tuple_finish_times ));
 
   // Traverse entries in topological (ascending forward DFS
   // finish time) order, propagating aggregate execution
