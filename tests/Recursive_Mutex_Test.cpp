@@ -69,7 +69,6 @@ main (int, char *argv[])
   ACE_START_TEST ("Recursive_Mutex_Test.cpp");
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Service_Config daemon (argv[0]);
   ACE_Recursive_Thread_Mutex rm;
   ACE_Service_Config::thr_mgr ()->spawn_n (n_threads, 
 					   ACE_THR_FUNC (worker), 
