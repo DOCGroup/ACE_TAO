@@ -25,6 +25,48 @@ TAO_EC_ConsumerAdmin::set_default_POA (PortableServer::POA_ptr poa)
     PortableServer::POA::_duplicate (poa);
 }
 
+void
+TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
+				 CORBA::Environment &ACE_TRY_ENV)
+{
+  SupplierSetIterator end = this->all_suppliers_.end ();
+  for (SupplierSetIterator i = this->all_suppliers_.begin ();
+       i != end;
+       ++i)
+    {
+      (*i)->connected (consumer, ACE_TRY_ENV);
+    }
+}
+
+void
+TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
+				    CORBA::Environment &ACE_TRY_ENV)
+{
+  SupplierSetIterator end = this->all_suppliers_.end ();
+  for (SupplierSetIterator i = this->all_suppliers_.begin ();
+       i != end;
+       ++i)
+    {
+      (*i)->disconnected (consumer, ACE_TRY_ENV);
+    }
+}
+
+void
+TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
+				 CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->all_suppliers_.insert (supplier) != 0)
+    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+}
+
+void
+TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
+				    CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->all_suppliers_.remove (supplier) != 0)
+    ACE_THROW (RtecEventChannelAdmin::SUBSCRIPTION_ERROR ());
+}
+
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_EC_ConsumerAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -33,9 +75,6 @@ TAO_EC_ConsumerAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 
   supplier->set_default_POA (
         this->event_channel_->factory ()->supplier_POA ());
-
-  if (this->all_suppliers_.insert (supplier) != 0)
-    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   return supplier->_this (ACE_TRY_ENV);
 }
