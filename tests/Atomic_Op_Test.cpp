@@ -24,7 +24,7 @@
 #include "tests/test_config.h"
 
 int
-main ()
+main (void)
 {
   ACE_START_TEST ("Atomic_Op_Test");
 
@@ -49,3 +49,9 @@ main ()
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
