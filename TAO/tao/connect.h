@@ -53,8 +53,8 @@ public:
   // Constructor.
   
   virtual int open (void *);
-  // Called by the framework when the handler is completely set up.
-  // Argument is unused.
+  // Called by the <Strategy_Acceptor> when the handler is completely
+  // connected.  Argument is unused.
   
   virtual int svc (void);
   // Only used when the handler is turned into an active object by
