@@ -75,6 +75,28 @@ Mon Feb 16 10:14:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           declared inline. Thanks to Michael Kircher (mk1@cs.wustl.edu)
           for reporting this one.
 
+Mon Feb 16 02:34:24 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosPropertyService_i.cpp: Defined some of the
+	functions for the TAO_PropertySet class.
+
+	* orbsvcs/orbsvcs/CosPropertyService_i.h: Defined the  classes for
+	implementing the CosPropertyService for TAO.
+
+	* orbsvcs/tests/CosPropertyService/Makefile:  Added this
+	Makefile ( Makefile for making test program for the
+	PropertyService )
+
+	* orbsvcs/orbsvcs/CosProperty_Hash.cpp:  Added this file. 
+
+	* orbsvcs/orbsvcs/CosProperty_Hash.h (Table): Added this
+	file. This contains  the classes for maintaining Hash Table for
+	storing the PropertySets.
+
+	* orbsvcs/tests/CosPropertyService/main.cpp (main): Added this
+	test file for CosPropertyService
+
+
 Sun Feb 15 20:12:00 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
         * tao/poa.{h,cpp}: Heavily modified several routines to correct
