@@ -1,10 +1,16 @@
+Tue May 25 12:08:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/NodeManager/Node_Daemon.cpp:
+
+          Removed repetitive registration with the IORTable
+
 Tue May 25 12:02:52 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* DnC/Deployment.xsd:
 
 	  Initial set of "normalization" changes.
-	
-	
+
+
         * DnC/Deployment.xsd.orig:
         * DnC/XMI.xsd.orig:
 
