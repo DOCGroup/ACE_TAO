@@ -417,9 +417,11 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'h':
+          ACE_OS::free ((void *) this->server_host_);
 	  this->server_host_ = ACE_OS::strdup (get_opt.optarg);
 	  break;
 	case 'k':
+          ACE_OS::free ((void *) this->logger_key_);
 	  this->logger_key_ = ACE_OS::strdup (get_opt.optarg);
 	  break;
 	case 'p':

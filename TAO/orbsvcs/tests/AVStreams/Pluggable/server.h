@@ -11,8 +11,7 @@
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/Policy.h"
 
-class FTP_Server_StreamEndPoint
-  :public TAO_Server_StreamEndPoint
+class FTP_Server_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
   FTP_Server_StreamEndPoint (void);
@@ -20,8 +19,7 @@ public:
                             TAO_AV_Callback *&callback);
 };
 
-class FTP_Server_Callback
-  :public TAO_AV_Callback
+class FTP_Server_Callback : public TAO_AV_Callback
 {
 public:
   virtual int handle_stop (void);
