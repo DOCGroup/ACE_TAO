@@ -40,8 +40,6 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
   poa.object_adapter ().wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA_Policies::thread (void) const
 {
@@ -53,8 +51,6 @@ TAO_POA_Policies::thread (PortableServer::ThreadPolicyValue value)
 {
   this->thread_ = value;
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 ACE_INLINE PortableServer::LifespanPolicyValue
 TAO_POA_Policies::lifespan (void) const
@@ -516,6 +512,12 @@ TAO_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & 
 }
 
 #endif /* TAO_HAS_RT_CORBA */
+
+ACE_INLINE const CORBA::PolicyList &
+TAO_POA::client_exposed_policies (void)
+{
+  return this->client_exposed_policies_;
+}
 
 //
 // Forwarding related.

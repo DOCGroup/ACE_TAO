@@ -378,6 +378,12 @@ public:
   // Access the priority mapping class, this is a TAO extension but
   // there is no standard way to get to it either.
 
+  TAO_PriorityModelPolicy *default_priority_model (void) const;
+
+  TAO_PriorityModelPolicy *priority_model (void);
+  // This policy is only available at the POA and ORB level; not
+  // available at the object or thread level.
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   int get_thread_priority (CORBA::Short &priority);

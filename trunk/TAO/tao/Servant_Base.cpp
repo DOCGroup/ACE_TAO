@@ -130,7 +130,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 
       stub = servant_orb->create_stub_object (poa_current_impl->object_key (),
                                               this->_interface_repository_id (),
-                                              poa_current_impl->poa()->get_client_exposed_policies(),
+                                              poa_current_impl->poa ()->client_exposed_policies (),
                                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
@@ -402,7 +402,7 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
 
   return poa_current_impl->poa ()->orb_core ().orb ()->create_stub_object (poa_current_impl->object_key (),
                                                                            interface,
-                                                                           poa_current_impl->poa()->get_client_exposed_policies(),
+                                                                           poa_current_impl->poa ()->client_exposed_policies (),
                                                                            ACE_TRY_ENV);
 }
 

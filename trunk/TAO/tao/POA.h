@@ -233,14 +233,11 @@ class TAO_Export TAO_POA_Policies
 {
 public:
 
-  TAO_POA_Policies (void);
-
-#if (TAO_HAS_MINIMUM_POA == 0)
+  TAO_POA_Policies (TAO_ORB_Core &orb_core,
+                    CORBA::Environment &ACE_TRY_ENV);
 
   PortableServer::ThreadPolicyValue thread (void) const;
   void thread (PortableServer::ThreadPolicyValue value);
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicyValue lifespan (void) const;
   void lifespan (PortableServer::LifespanPolicyValue value);
@@ -263,6 +260,12 @@ public:
   void parse_policies (const CORBA::PolicyList &policies,
                        CORBA_Environment &ACE_TRY_ENV);
 
+  enum PriorityModel
+  {
+    CLIENT_PROPAGATED,
+    SERVER_DECLARED
+  };
+
 protected:
 
   void parse_policy (const CORBA::Policy_ptr policy,
@@ -283,6 +286,10 @@ protected:
   PortableServer::ServantRetentionPolicyValue servant_retention_;
 
   PortableServer::RequestProcessingPolicyValue request_processing_;
+
+  PriorityModel priority_model_;
+
+  CORBA::Short server_priority_;
 };
 
 class TAO_Temporary_Creation_Time;
@@ -486,15 +493,11 @@ public:
                      PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
-
-  
-  const CORBA::PolicyList& get_client_exposed_policies();
-  // This method gives the Policies that are exposed to the client,
-  // this policies are shipped within the IOR.
-
-
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
+  const CORBA::PolicyList &client_exposed_policies (void);
+  // This method gives the policies that are exposed to the client.
+  // These policies are shipped within the IOR.
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -843,9 +846,8 @@ protected:
 
   CORBA::ULong waiting_servant_deactivation_;
 
-
-  // Client exposed Policies List
   CORBA::PolicyList client_exposed_policies_;
+  // Client exposed policies List.
 };
 
 
