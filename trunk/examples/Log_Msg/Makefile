@@ -44,8 +44,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/test_log_msg.o .obj/test_log_msg.so .shobj/test_log_msg.o .shobj/test_log_msg.so: test_log_msg.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -79,8 +77,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/test_ostream.o .obj/test_ostream.so .shobj/test_ostream.o .shobj/test_ostream.so: test_ostream.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -114,8 +110,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/test_callback.o .obj/test_callback.so .shobj/test_callback.o .shobj/test_callback.so: test_callback.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
