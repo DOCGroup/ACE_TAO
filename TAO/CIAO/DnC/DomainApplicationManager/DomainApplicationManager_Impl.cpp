@@ -27,10 +27,11 @@ CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 
 int
 CIAO::DomainApplicationManager_Impl::
-init (int num_child_plans, ACE_CString * node_manager_names)
+init (int num_child_plans, const ACE_CString * node_manager_names)
 {
   this->num_child_plans_ = num_child_plans;
-  this->node_manager_names_ = node_manager_names;
+  //@@TODO: const pointer initialized at constructor.
+  //this->node_manager_names_ = node_manager_names;
 
   return 1;
 }
@@ -116,12 +117,12 @@ split_plan ()
         entry->int_id_->artifact[index_art] = 
           (this->plan_.artifact)[artifact_ref];
 
-        // @@ The artifactRef starts from 0 or 1??
+        // @@ The artifactRef starts from 0.
         ulong_seq[iter] = index_art; 
       }
 
       // Change the <artifactRef> field of the "implementation".
-      entry->int_id_->implementation.artifactRef = ulong_seq;
+      entry->int_id_->implementation[index_imp].artifactRef = ulong_seq;
 
       
       // Append the "InstanceDeploymentDescription instance" field with
@@ -133,8 +134,8 @@ split_plan ()
       entry->int_id_->instance[index_ins] = my_instance;
 
       // Change the <implementationRef> field of the "instance".
-      // @@ The implementationRef starts from 0 or 1??
-      entry->int_id_->instance.implementationRef = index_ins;
+      // @@ The implementationRef starts from 0.
+      entry->int_id_->instance[index_ins].implementationRef = index_ins;
     }
 
   return 1;
