@@ -577,7 +577,7 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator_Base (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm, int head)
   : map_man_ (&mm),
-    index_ (head != 0 ? -1 : mm.total_size_),
+    index_ (head != 0 ? -1 : ACE_static_cast (ssize_t, mm.total_size_)),
     next_ (0)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator_Base");
@@ -636,14 +636,14 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
   if (this->next_ == &this->map_man_->table_[this->index_])
     {
       while (++this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_))
-	{
-	  this->next_ = &this->map_man_->table_[this->index_];
-	  if (this->next_->next_ != &this->map_man_->table_[this->index_])
-	    {
-	      this->next_ = this->map_man_->table_[this->index_].next_;
-	      return 1;
-	    }
-	}
+        {
+          this->next_ = &this->map_man_->table_[this->index_];
+          if (this->next_->next_ != &this->map_man_->table_[this->index_])
+            {
+              this->next_ = this->map_man_->table_[this->index_].next_;
+              return 1;
+            }
+        }
       return 0;
     }
   return 1;
@@ -670,14 +670,14 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
   if (this->next_ == &this->map_man_->table_[this->index_])
     {
       while (--this->index_ >= 0)
-	{
-	  this->next_ = &this->map_man_->table_[this->index_];
-	  if (this->next_->prev_ != &this->map_man_->table_[this->index_])
-	    {
-	      this->next_ = this->map_man_->table_[this->index_].prev_;
-	      return 1;
-	    }
-	}
+        {
+          this->next_ = &this->map_man_->table_[this->index_];
+          if (this->next_->prev_ != &this->map_man_->table_[this->index_])
+            {
+              this->next_ = this->map_man_->table_[this->index_].prev_;
+              return 1;
+            }
+        }
       return 0;
     }
 
