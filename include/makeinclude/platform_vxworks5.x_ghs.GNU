@@ -24,15 +24,15 @@
 ####
 #### Here's an example platform_macros.GNU file:
 ####
-#### WIND_BASE = /project/doc/wind
+#### WIND_BASE = /project/doc/pkg/wind
 #### WIND_HOST_TYPE = sun4-solaris2
 ####
-#### ifeq (,$(findstring /project/doc/wind/green,$PATH))
-####   PATH +=:/project/doc/wind/green
+#### ifeq (,$(findstring /project/doc/pkg/wind/green,$PATH))
+####   PATH +=:/project/doc/pkg/wind/green
 #### endif # PATH
 ####
 #### CPU = 86
-#### GHS = /project/doc/wind/green/vx$(CPU)
+#### GHS = /project/doc/pkg/wind/green/vx$(CPU)
 #### include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_ghs.GNU
 
 VXWORKS = 1
@@ -53,7 +53,7 @@ ifeq ($(CPU),86)
   # With GHS' ax, ld386 complains that it can't read the
   # archive symbol table.
   ifndef GHS
-    GHS = /project/doc/wind/green/vx$(CPU)
+    GHS = /project/doc/pkg/wind/green/vx$(CPU)
   endif # GHS
   AR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ar386
   ARFLAGS  = rsu
