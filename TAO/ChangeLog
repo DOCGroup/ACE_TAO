@@ -1,3 +1,9 @@
+Sat Nov 27 14:19:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* utils/catior/catior.cpp:
+	  Fixed incompatibility with ACE_LACKS_IOSTREAM_TOTALLY builds
+	  (VxWorks DIAB).
+
 Fri Nov 26 17:49:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:
