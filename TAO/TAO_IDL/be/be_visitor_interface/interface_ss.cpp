@@ -170,16 +170,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _is_a skeleton.
   {
-    *os << "void " << full_skel_name
-        << "::_is_a_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
-        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << be_nl
-        << "ACE_ENV_ARG_DECL" << be_uidt_nl
-        << ")" << be_uidt_nl;
-    *os << "{" << be_idt_nl;
-
-
     be_predefined_type rt (AST_PredefinedType::PT_boolean, 0);
     // @@ Cheat a little by placing a space before the operation name
     //    to prevent the IDL compiler from interpreting the leading
@@ -206,8 +196,22 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     is_a.be_add_argument (&repository_id);
 
+    ACE_CString is_a_upcall_command_name =
+      "_is_a_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
+
     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
-    upcall_command_visitor.visit (&is_a, full_skel_name);
+    upcall_command_visitor.visit (&is_a,
+                                  full_skel_name,
+                                  is_a_upcall_command_name.c_str ());
+
+    *os << "void " << full_skel_name
+        << "::_is_a_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest & server_request, " << be_nl
+        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
+        << "void * servant" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ")" << be_uidt_nl;
+    *os << "{" << be_idt_nl;
 
     // Generate exception list.
     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
@@ -238,13 +242,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     // Get the right object implementation.
     *os << full_skel_name << " * const impl =" << be_idt_nl
-        << "static_cast<" << be_idt_nl
-        << full_skel_name << " *> (servant);" << be_uidt
+        << "static_cast<"
+        << full_skel_name << " *> (servant);"
         << be_uidt_nl;
 
     // Upcall_Command instantiation.
     *os << be_nl
-        << "Upcall_Command command (" << be_idt_nl
+        << is_a_upcall_command_name.c_str() << " command (" << be_idt_nl
         << "impl";
 
     if (!is_a.void_return_type ()
@@ -266,12 +270,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "upcall_wrapper.upcall (server_request" << be_nl
         << "                       , args" << be_nl
         << "                       , nargs" << be_nl
-        << "                       , command" << be_nl
+        << "                       , command"
         << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
         << "                       , servant_upcall" << be_nl
         << "                       , exceptions" << be_nl
         << "                       , nexceptions"
-        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
+        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
         << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
         << "ACE_CHECK;" << be_nl;
 
@@ -283,16 +287,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _non_existent skeleton.
   {
-    *os << "void " << full_skel_name
-        << "::_non_existent_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
-        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << be_nl
-        << "ACE_ENV_ARG_DECL" << be_uidt_nl
-        << ")" << be_uidt_nl;
-    *os << "{" << be_idt_nl;
-
-
     be_predefined_type rt (AST_PredefinedType::PT_boolean, 0);
     // @@ Cheat a little by placing a space before the operation name
     //    to prevent the IDL compiler from interpreting the leading
@@ -306,8 +300,22 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                                node->is_abstract ());
     non_existent.set_defined_in (node);
 
+    ACE_CString non_exist_upcall_command_name =
+      "_non_existent_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
+
     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
-    upcall_command_visitor.visit (&non_existent, full_skel_name);
+    upcall_command_visitor.visit (&non_existent,
+                                  full_skel_name,
+                                  non_exist_upcall_command_name.c_str ());
+
+    *os << "void " << full_skel_name
+        << "::_non_existent_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest & server_request, " << be_nl
+        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
+        << "void * servant" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ")" << be_uidt_nl;
+    *os << "{" << be_idt_nl;
 
     // Generate exception list.
     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
@@ -337,13 +345,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     // Get the right object implementation.
     *os << full_skel_name << " * const impl =" << be_idt_nl
-        << "static_cast<" << be_idt_nl
-        << full_skel_name << " *> (servant);" << be_uidt
+        << "static_cast<"
+        << full_skel_name << " *> (servant);"
         << be_uidt_nl;
 
     // Upcall_Command instantiation.
     *os << be_nl
-        << "Upcall_Command command (" << be_idt_nl
+        << non_exist_upcall_command_name.c_str() << " command (" << be_idt_nl
         << "impl";
 
     if (!non_existent.void_return_type ()
@@ -365,12 +373,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "upcall_wrapper.upcall (server_request" << be_nl
         << "                       , args" << be_nl
         << "                       , nargs" << be_nl
-        << "                       , command" << be_nl
+        << "                       , command"
         << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
         << "                       , servant_upcall" << be_nl
         << "                       , exceptions" << be_nl
         << "                       , nexceptions"
-        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
+        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
         << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
         << "ACE_CHECK;" << be_nl;
 
@@ -579,8 +587,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Get the right object implementation.
   *os << full_skel_name << " * const impl =" << be_idt_nl
-      << "static_cast<" << be_idt_nl
-      << full_skel_name << " *> (servant);" << be_uidt
+      << "static_cast<"
+      << full_skel_name << " *> (servant);"
       << be_uidt_nl;
 
   *os << "CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
@@ -610,16 +618,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _component skeleton.
   {
-    *os << "void " << full_skel_name
-        << "::_component_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
-        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
-        << "void * servant" << be_nl
-        << "ACE_ENV_ARG_DECL" << be_uidt_nl
-        << ")" << be_uidt_nl;
-    *os << "{" << be_idt_nl;
-
-
     be_predefined_type rt (AST_PredefinedType::PT_object, 0);
     // @@ Cheat a little by placing a space before the operation name
     //    to prevent the IDL compiler from interpreting the leading
@@ -635,8 +633,23 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                                 node->is_abstract ());
     get_component.set_defined_in (node);
 
+    ACE_CString get_component_upcall_command_name =
+      "_get_component_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
+
     be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
-    upcall_command_visitor.visit (&get_component, full_skel_name);
+    upcall_command_visitor.visit (&get_component,
+                                  full_skel_name,
+                                  get_component_upcall_command_name.c_str());
+
+    *os << "void " << full_skel_name
+        << "::_component_skel (" << be_idt << be_idt_nl
+        << "TAO_ServerRequest & server_request, " << be_nl
+        << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
+        << "void * servant" << be_nl
+        << "ACE_ENV_ARG_DECL" << be_uidt_nl
+        << ")" << be_uidt_nl;
+    *os << "{" << be_idt_nl;
+
 
     // Generate exception list.
     be_visitor_operation_exceptlist_ss exception_list (this->ctx_);
@@ -663,13 +676,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     // Get the right object implementation.
     *os << full_skel_name << " * const impl =" << be_idt_nl
-        << "static_cast<" << be_idt_nl
-        << full_skel_name << " *> (servant);" << be_uidt
+        << "static_cast<"
+        << full_skel_name << " *> (servant);"
         << be_uidt_nl;
 
     // Upcall_Command instantiation.
     *os << be_nl
-        << "Upcall_Command command (" << be_idt_nl
+        << get_component_upcall_command_name.c_str ()
+        << " command (" << be_idt_nl
         << "impl";
 
     if (!get_component.void_return_type ()
@@ -692,12 +706,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "upcall_wrapper.upcall (server_request" << be_nl
         << "                       , args" << be_nl
         << "                       , nargs" << be_nl
-        << "                       , command" << be_nl
+        << "                       , command"
         << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
         << "                       , servant_upcall" << be_nl
         << "                       , exceptions" << be_nl
         << "                       , nexceptions"
-        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
+        << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
         << "                       ACE_ENV_ARG_PARAMETER);" << be_nl
         << "ACE_CHECK;" << be_nl;
 
