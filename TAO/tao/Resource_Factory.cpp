@@ -162,6 +162,13 @@ TAO_Resource_Factory::purge_percentage (void) const
 }
 
 int
+TAO_Resource_Factory::max_muxed_connections (void) const
+{
+  return 0;
+}
+
+
+int
 TAO_Resource_Factory::get_parser_names (char **&,
                                         int &)
 {
@@ -173,6 +180,13 @@ TAO_Resource_Factory::create_cached_connection_lock (void)
 {
   return 0;
 }
+
+int
+TAO_Resource_Factory::locked_transport_cache (void)
+{
+  return 0;
+}
+
 
 int
 TAO_Resource_Factory::load_default_protocols (void)

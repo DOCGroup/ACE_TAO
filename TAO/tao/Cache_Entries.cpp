@@ -24,13 +24,14 @@ TAO_Cache_IntId::~TAO_Cache_IntId (void)
 TAO_Cache_IntId&
 TAO_Cache_IntId::operator= (const TAO_Cache_IntId &rhs)
 {
-  if (this != &rhs) {
-    this->recycle_state_ = rhs.recycle_state_;
+  if (this != &rhs)
+    {
+      this->recycle_state_ = rhs.recycle_state_;
 
-    TAO_Transport* old_transport = this->transport_;
-    this->transport_ = TAO_Transport::_duplicate (rhs.transport_);
-    TAO_Transport::release (old_transport);
-  }
+      TAO_Transport* old_transport = this->transport_;
+      this->transport_ = TAO_Transport::_duplicate (rhs.transport_);
+      TAO_Transport::release (old_transport);
+    }
+
   return *this;
 }
-

@@ -1,0 +1,64 @@
+Thu Jan 31 11:23:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Cache_Entries.cpp: Did a cosmetic fix.
+
+	* tao/Cache_Entries.h:
+	* tao/Cache_Entries.inl: Added a new method incr_index () to the
+	  TAO_CacheExtId class. 
+
+	* tao/Resource_Factory.cpp: 
+	* tao/Resource_Factory.h:Added two new methods,
+	  max_muxed_connections () and locked_transport_cache (). The
+	  former returns the number of user specified muxed connections
+	  with a particular property. The latter returns a boolean value
+	  to indicate whether the transport cache needs to have a lock or
+	  not . 
+
+	* tao/default_resource.cpp:
+	* tao/default_resource.h: Concrete implementations for the methods
+	  declared in Resource_Factory.
+	
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/Transport_Cache_Manager.h:
+	* tao/Transport_Cache_Manager.inl: Added support for counted muxed
+	  connections ie. the user can limit the number of remote
+	  connections (with a particular property). If the thread
+	  searching the cache for a free connection doesnt find one that
+	  is free, the thread will wait on a condition variable for the
+	  connection to be released. To accomodate this the following set
+	  of changes were made
+	  
+	  - Added a condition variable to the class
+	  
+	  - Create the type of lock that needs to be used for the cache
+	    locally and use that lock to create the condition variable. If
+	    the cache is free of any locks we dont create a condition
+	    variable. 
+	  
+	  - The creation of lock has been moved to the
+	    Transport_Cache_Manager from the Resource_Factory. 
+
+	  - Added two new methods, wait_for_connection () and
+	    is_wakeup_useful (). The wait_for_connection () blocks the
+	    thread searching for connection, if there is a limit on the
+	    number of muxed connections and if there have been enough
+	    connections created with the same property. The
+	    is_wakeup_useful () method is called by an unblocked thread to
+	    check whether the transport that was returned is the one the
+	    thread was waiting for. 
+
+	  - Removed a version of rebind () and a couple of version of
+	    unbind () calls as they were not used.
+
+
+	* tao/Condition.h:
+	* tao/Condition.cpp:.
+	* tao/Condition.inl: A simple wrapper that wraps a
+	  TAO_SYNCH_CONDITION that can be used with different types of
+	  Mutex classes.
+	  
+
+	  
+
+
+

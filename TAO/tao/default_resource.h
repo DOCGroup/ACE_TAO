@@ -116,7 +116,9 @@ public:
   virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
   virtual int cache_maximum (void) const;
   virtual int purge_percentage (void) const;
+  virtual int max_muxed_connections (void) const;
   virtual ACE_Lock *create_cached_connection_lock (void);
+  virtual int locked_transport_cache (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   virtual TAO_LF_Strategy *create_lf_strategy (void);
@@ -168,6 +170,11 @@ protected:
   /// Specifies the percentage of entries which should get purged on
   /// demand.
   int purge_percentage_;
+
+  /// Specifies the limit on the number of muxed connections
+  /// allowed per-property for the ORB. A value of 0 indicates no
+  /// limit
+  size_t max_muxed_connections_;
 
   /// If <0> then we create reactors with signal handling disabled.
   int reactor_mask_signals_;

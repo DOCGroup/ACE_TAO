@@ -156,6 +156,9 @@ public:
   /// but for the TAO_Transport_Cache_Manager class.
   void index (CORBA::ULong index);
 
+  /// Increment the index value
+  void incr_index (void);
+
   // = Accessors
   /// Get the underlying the property pointer
   TAO_Transport_Descriptor_Interface *property (void) const;

@@ -15,16 +15,15 @@
 #define TAO_CONNECTION_CACHE_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "tao/Cache_Entries.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Synch_T.h"
 
-#include "tao/TAO_Export.h"
-#include "tao/Cache_Entries.h"
-
-#include "tao/Connection_Purging_Strategy.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,7 +35,9 @@
 class TAO_ORB_Core;
 class ACE_Handle_Set;
 class TAO_Resource_Factory;
+class TAO_Connection_Purging_Strategy;
 
+template <class ACE_COND_MUTEX> class TAO_Condition;
 
 typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
 typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
@@ -46,22 +47,18 @@ typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
  * @class TAO_Transport_Cache_Manager
  *
  * @brief The Transport Cache Manager for TAO
+ *
+ * This class provides interfaces associating a TAO_Cache_ExtId
+ * & TAO_Cache_IntId. This class is wrapper around the
+ * ACE_Hash_Map_Manager  class which is used as a container to Cache
+ * the connections. This class protects the entries with a lock. The
+ * map is updated only by holding the lock. The more compelling reason
+ * to have the lock in this class and not in the Hash_Map is that, we
+ * do quite a bit of work in this class for which we need a lock.
+ *
  */
 class TAO_Export TAO_Transport_Cache_Manager
 {
-
-  // = DESCRIPTION
-  //     This class provides interfaces associating a TAO_Cache_ExtId
-  //     & TAO_Cache_IntId. This class manages a ACE_Hash_Map_Manager
-  //     class which is used as a container to Cache the
-  //     connections. This class protects the entries with a lock. The
-  //     map can be updated only by holding the lock.
-
-  //     General Note: This class at present has an interface that may
-  //     not be needed. But, the interface has just been copied from
-  //     the ACE Hash Map Manager classes. The interface wold be
-  //     pruned once I get the purging stuff also in. Till then let
-  //     the interface be there as it is.
 public:
 
   // Some useful typedef's
@@ -78,6 +75,8 @@ public:
   typedef ACE_Hash_Map_Entry <TAO_Cache_ExtId,
                               TAO_Cache_IntId>
   HASH_MAP_ENTRY;
+
+  typedef TAO_Condition<TAO_SYNCH_MUTEX> CONDITION;
 
   // == Public methods
 
@@ -133,19 +132,6 @@ private:
   int find (const TAO_Cache_ExtId &key,
             TAO_Cache_IntId &value);
 
-  /// Reassociate the <key> with <value>. Grabs the lock and calls the
-  /// implementation function find_i.
-  int rebind (const TAO_Cache_ExtId &key,
-              const TAO_Cache_IntId &value);
-
-  /// Remove <key> from the cache.
-  int unbind (const TAO_Cache_ExtId &key);
-
-  /// Remove <key> from the cache, and return the <value> associated with
-  /// <key>.
-  int unbind (const TAO_Cache_ExtId &key,
-              TAO_Cache_IntId &value);
-
   /**
    * Non-Locking version and actual implementation of bind ()
    * call. Calls bind on the Hash_Map_Manager that it holds. If the
@@ -165,17 +151,6 @@ private:
    */
   int find_i (const TAO_Cache_ExtId &key,
               TAO_Cache_IntId &value);
-
-  /// Non-locking version and actual implementation of rebind () call
-  int rebind_i (const TAO_Cache_ExtId &key,
-                const TAO_Cache_IntId &value);
-
-  /// Non-locking version and actual implementation of unbind () call
-  int unbind_i (const TAO_Cache_ExtId &key);
-
-  /// Non-locking version and actual implementation of unbind () call
-  int unbind_i (const TAO_Cache_ExtId &key,
-                TAO_Cache_IntId &value);
 
   /// Non-locking version and actual implementation of make_idle ().
   int make_idle_i (HASH_MAP_ENTRY *&entry);
@@ -229,7 +204,17 @@ private:
   /// the required number of items in the set.
   void close_entries (DESCRIPTOR_SET& sorted_set, int size);
 
+  /// Wait for connections if we have reached the limit on the number
+  /// of muxed connections. If not (ie. if we dont use a muxed
+  /// connection or if we have not reached the limit) this just
+  /// behaves as a no-op. <extid> has all the information about the
+  /// connection that is being searched.
+  int wait_for_connection (TAO_Cache_ExtId &extid);
+
+  /// Is the wakeup useful todo some work?
+  int is_wakeup_useful (TAO_Cache_ExtId &extid);
 private:
+
   /// The percentage of the cache to purge at one time
   int percent_;
 
@@ -239,8 +224,23 @@ private:
   /// The hash map that has the connections
   HASH_MAP cache_map_;
 
-  /// Lock for the map
+  /// The condition variable
+  CONDITION *condition_;
+
+  /// The lock that is used by the cache map
   ACE_Lock *cache_lock_;
+
+  /// Number of allowed muxed connections
+  CORBA::ULong muxed_number_;
+
+  /// Number of threads waiting for connections
+  int no_waiting_threads_;
+
+  /// This is for optimization purposes. In a situation where number
+  /// of threads are waiting for connections, the last connection that
+  /// is put back is cached here. This should prevent all th threads
+  /// trying to search for their required entry.
+  TAO_Cache_ExtId *last_entry_returned_;
 };
 
 #if defined (__ACE_INLINE__)
