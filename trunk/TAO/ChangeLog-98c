@@ -1,3 +1,10 @@
+Wed Oct 29 15:59:30 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/IDL_Cubit/clnt.cpp: OO'ified the code. Added class
+	Cubit_Client.
+	* tests/IDL_Cubit/clnt.h: added this file to contain  the class 
+	definition.
+
 Wed Oct 29 11:01:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL compiler: be_type.cpp::nested_type_name: A quick commit
