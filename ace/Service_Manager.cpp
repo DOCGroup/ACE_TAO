@@ -12,6 +12,7 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace,
            Service_Manager,

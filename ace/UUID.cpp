@@ -9,8 +9,10 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (ace,
            UUID,

@@ -3,6 +3,7 @@
 #include "ACEXML/common/Exception.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 static const ACEXML_Char ACEXML_Exception_name[] = {
   'A', 'C', 'E', 'X', 'M', 'L',

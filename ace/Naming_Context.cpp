@@ -7,6 +7,7 @@
 #include "ace/Registry_Name_Space.h"
 #include "ace/Memory_Pool.h"
 #include "ace/RW_Process_Mutex.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 

@@ -3,6 +3,8 @@
 #include "ace/ACE.h"
 #include "ace/ace_wchar.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/Encoding.h"
 
