@@ -152,6 +152,7 @@ public:
                   size_t length,
                   const char *buffer,
                   CORBA::Boolean orb_owns_tc,
+                  CORBA::ULong size,
                   CORBA::TypeCode_ptr parent = 0);
   // This constructor is used both for typecode constants and for
   // heap-allocated TypeCodes.  The two are distinguished by the

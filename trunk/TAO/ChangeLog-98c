@@ -1,3 +1,31 @@
+Fri Nov 13 16:59:20 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  We now generate the size information for the typecodes by passing
+	  the compiled time knowledge of the size of the data type and
+	  storing it in the typecode. This will (hopefully) solve our
+	  problems of trying to calculate the size of complex data
+	  structures in an interpreted manner.
+
+	* tao/Any.cpp
+	  tao/DynAnyC.cpp
+	  tao/Exception.cpp
+	  tao/ORB.cpp
+	  tao/Object_KeyC.cpp
+	  tao/POAC.cpp
+	  tao/TypeCode.{h, cpp}
+	  tao/Typecode_Constants.cpp
+	  tao/decode.cpp:
+
+	  The TypeCode constructor for complex types now takes an
+	  additional parameter which is the size in bytes of the data
+	  type. This statically known value is stored in the private_tc_
+	  section of the TypeCode. This will save us the size calculation
+	  using the code in IIOP_Interpreter.cpp. Once we have verified
+	  that everything works fine, we can start cleaning up the
+	  unwanted code from IIOP_Interpreter.* files.
+
 Fri Nov 13 15:09:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc):
