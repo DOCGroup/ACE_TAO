@@ -115,7 +115,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
-    svc_config_argv_ (0)
+    svc_config_argv_ (0),
+    refcount_ (1)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -1794,15 +1795,7 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
                        *ACE_Static_Object_Lock::instance ()));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
-
-  // Destroy the ORB_Core.
-  if (this->fini () != 0)
-    {
-      ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_MAYBE));
-    }
 }
-
 
 // Set up listening endpoints.
 
@@ -2317,7 +2310,7 @@ TAO_ORB_Table::~TAO_ORB_Table (void)
        i = this->begin ())
     {
       // Destroy the ORB_Core
-      (*i).int_id_->fini ();
+      (*i).int_id_->_decr_refcnt ();
     }
   this->table_.close ();
 
@@ -2349,6 +2342,7 @@ TAO_ORB_Table::bind (const char *orb_id,
       this->first_orb_ = orb_core;
     }
   ACE_CString id (orb_id);
+  orb_core->_incr_refcnt ();
   return this->table_.bind (id, orb_core);
 }
 
@@ -2369,6 +2363,7 @@ TAO_ORB_Table::unbind (const char *orb_id)
   int result = this->table_.unbind (id, orb_core);
   if (result == 0)
     {
+      orb_core->_decr_refcnt ();
       if (orb_core == this->first_orb_)
         {
           Iterator begin = this->begin ();

@@ -67,8 +67,12 @@ TAO_Stub::TAO_Stub (char *repository_id,
       this->orb_core_ = TAO_ORB_Core_instance ();
     }
 
-  // Duplicate the ORB. This will help us keep the ORB around until
-  // the CORBA::Object we represent dies.
+  // Duplicate the ORB_Core, otherwise the allocators and other
+  // resources that this class references (directly or indirectly)
+  // could be destroyed before it is time.
+  (void) this->orb_core_->_incr_refcnt ();
+
+  // Cache the ORB pointer to respond faster to certain queries.
   this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
 
   this->profile_lock_ptr_ =
@@ -109,6 +113,7 @@ TAO_Stub::~TAO_Stub (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+  this->orb_core_->_decr_refcnt ();
 }
 
 void
