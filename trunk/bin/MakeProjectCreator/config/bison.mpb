@@ -1,3 +1,4 @@
+// $Id$
 project {
   Define_Custom(BISON) {
     automatic        = 1

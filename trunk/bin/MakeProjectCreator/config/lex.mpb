@@ -1,3 +1,4 @@
+// $Id$
 project {
   Define_Custom(LEX) {
     automatic        = 1

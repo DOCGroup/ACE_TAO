@@ -2,6 +2,8 @@
 #
 # Copyright 2003 Addison-Wesley Inc. All Rights Reserved.
 
+MAKEFILE = Makefile.nodelocal_shared_reader
+
 BIN = Nodelocal_shared_reader
 
 SRC = Nodelocal_shared_reader.cpp \
