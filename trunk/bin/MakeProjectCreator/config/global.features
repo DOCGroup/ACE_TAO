@@ -14,7 +14,7 @@
 // settings can be set here.
 
 // By default we disable these.
-ssl           = 0
+ssl           = 1
 qos           = 0
 rapi          = 0
 fl_reactor    = 0
@@ -30,5 +30,4 @@ rpc           = 0
 sctp 	      = 0
 xt_reactor    = 0
 dummy_label   = 0
-cidl          = 0
-wince         = 0
+cidl          = 1
