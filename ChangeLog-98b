@@ -5,6 +5,8 @@ Mon Jun 08 13:22:47 1998  David L. Levine  <levine@cs.wustl.edu>
           Sree Oggu <dharani@sutmyn.com> for reporting this, on
           SolarisX86 with Sun C++.
 
+        * ace/Malloc.cpp (instance): cleaned up comments.
+
 Mon Jun  8 12:12:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/UPIPE_SAP_Test.cpp:
