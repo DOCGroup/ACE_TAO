@@ -12,49 +12,29 @@ TAO_Notify_FilterAdmin_i::~TAO_Notify_FilterAdmin_i (void)
 }
 
 CORBA::Boolean
-TAO_Notify_FilterAdmin_i::match (
-                                 const CORBA::Any& /*filterable_data*/,
-                                 CORBA::Environment & //ACE_TRY_ENV
-  )
+TAO_Notify_FilterAdmin_i::match (const TAO_Notify_Event &event, CORBA::Environment & ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyFilter::UnsupportedFilterableData
-  ))
-{
-  // @@ TODO: later!
-  return 1; // lies, all lies
-}
-
-CORBA::Boolean
-TAO_Notify_FilterAdmin_i::match_structured (
-    const CosNotification::StructuredEvent& filterable_data,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyFilter::UnsupportedFilterableData
-  ))
+                   CORBA::SystemException,
+                   CosNotifyFilter::UnsupportedFilterableData
+                   ))
 {
   // If no filter is active, treat it as a '*' i.e, let all events pass.
-  if (filter_list_.current_size () == 0)
+  // or if its the special type, let it pass.
+  if (filter_list_.current_size () == 0) // || event.is_special_event_type ())
     return 1;
 
   // We want to return true if atleast one constraint matches.
-  FILTER_LIST_ITER iter (filter_list_);
-  FILTER_ENTRY *entry;
+  FILTER_LIST::ITERATOR iter (filter_list_);
+  FILTER_LIST::ENTRY *entry;
   CORBA::Boolean ret_val = 0;
 
-  for (; iter.done () == 0; iter.advance ())
+  for (; iter.next (entry); iter.advance ())
     {
-      if (iter.next (entry) != 0)
-        {
-          ret_val = entry->int_id_->match_structured (filterable_data,
-                                                      ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+      ret_val = event.do_match (entry->int_id_.in (), ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
-          if (ret_val == 1)
-            return 1;
-        }
+      if (ret_val == 1)
+        return 1;
     }
 
   return 0;

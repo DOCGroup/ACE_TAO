@@ -27,29 +27,11 @@ TAO_Notify_ProxyPushSupplier_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::dispatch_event (const CosNotification::StructuredEvent& /*notification*/, CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_ProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV)
 {
-  // todo:
-}
-
-void
-TAO_Notify_ProxyPushSupplier_i::dispatch_event (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV)
-{
-  if (this->is_connected_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,"%t, %p", "dispatch_event to disconnected proxy supplier from EC\n"));
-      return;
-    }
-
-  if (this->is_suspended_ == 1)
-    {
-      // Later: save the event
-      return;
-    }
-
   ACE_TRY
     {
-      this->cosec_push_consumer_->push (data, ACE_TRY_ENV);
+      event.do_push (this->cosec_push_consumer_.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
@@ -60,14 +42,11 @@ TAO_Notify_ProxyPushSupplier_i::dispatch_event (const CORBA::Any & data, CORBA::
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::dispatch_update (EVENTTYPE_LIST& /*added*/, EVENTTYPE_LIST& /*removed*/)
+TAO_Notify_ProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->notify_style_consumer_ == 0)
-    return;
-
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
-      // this->notify_push_consumer_->offer_change (data, ACE_TRY_ENV);
+      this->notify_push_consumer_->offer_change (added, removed, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
@@ -108,7 +87,7 @@ TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushCon
 
   ACE_TRY
     {
-      this->subscribe_for_events_i (ACE_TRY_ENV);
+      this->on_connected (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       this->is_connected_ = 1;
@@ -137,10 +116,62 @@ TAO_Notify_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &AC
   this->cleanup_i (ACE_TRY_ENV);
 }
 
+// = TAO_Notify_CosEC_ProxyPushSupplier_i
+
+TAO_Notify_CosEC_ProxyPushSupplier_i::TAO_Notify_CosEC_ProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager)
+  :notify_proxy_ (consumeradmin, resource_manager)
+{
+  // No-Op.
+}
+
+TAO_Notify_CosEC_ProxyPushSupplier_i::~TAO_Notify_CosEC_ProxyPushSupplier_i (void)
+{
+}
+
+void
+TAO_Notify_CosEC_ProxyPushSupplier_i::init (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->notify_proxy_.init (ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->notify_proxy_.disconnect_push_supplier (ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_CosEC_ProxyPushSupplier_i::connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer, CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventChannelAdmin::AlreadyConnected,
+                     CosEventChannelAdmin::TypeError))
+{
+  this->notify_proxy_.connect_any_push_consumer (push_consumer, ACE_TRY_ENV);
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::ProxyPushSupplier>;
+template class TAO_Notify_Proxy<POA_CosNotifyChannelAdmin::ProxyPushSupplier>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::ProxyPushSupplier>
+#pragma instantiate TAO_Notify_Proxy<POA_CosNotifyChannelAdmin::ProxyPushSupplier>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Unbounded_Queue<TAO_Notify_Event*>;
+template class ACE_Node<TAO_Notify_Event*>;
+template class ACE_Unbounded_Queue_Iterator <TAO_Notify_Event*>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Unbounded_Queue<TAO_Notify_Event*>
+#pragma instantiate ACE_Node<TAO_Notify_Event*>
+#pragma instantiate ACE_Unbounded_Queue_Iterator <TAO_Notify_Event*>;
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,5 +1,4 @@
 // $Id$
-// $Id$
 // ==========================================================================
 //
 // = LIBRARY
@@ -32,8 +31,7 @@ class TAO_Notify_Event_Listener
   //   must specify what kind of events it is interested in.
   //
  public:
-  virtual void dispatch_event (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV) = 0;
-  virtual void dispatch_event (const CosNotification::StructuredEvent & notification, CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV) = 0;
   // Callback methods to supply the event to the listener.
 };
 
@@ -48,7 +46,7 @@ class TAO_Notify_Update_Listener
   //   change messages can implement this interface and register it with
   //   the Event Manager to receive updates.
   //
-  virtual void dispatch_update (EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed) = 0;
+  virtual void dispatch_update (EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &ACE_TRY_ENV) = 0;
   // Callback method to supply updates.
 };
 
