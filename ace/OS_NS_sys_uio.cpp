@@ -32,7 +32,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
   ssize_t length = 0;
   int i;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; ++i)
     if (ACE_static_cast (int, iov[i].iov_len) < 0)
       return -1;
     else
@@ -56,7 +56,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
 
       for (i = 0;
            i < n && copyn > 0;
-           i++)
+           ++i)
         {
           ACE_OS::memcpy (iov[i].iov_base, ptr,
                           // iov_len is int on some platforms, size_t on others
@@ -85,42 +85,43 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
   ACE_OS_TRACE ("ACE_OS::writev_emulation");
 
-  // In case there's a single element, skip the memcpy.
-  if (1 == n)
-    return ACE_OS::write (handle, iov[0].iov_base, iov[0].iov_len);
+  // To avoid having to allocate a temporary buffer to which all of
+  // the data will be copied and then written, this implementation
+  // performs incremental writes.
 
-  size_t length = 0;
-  int i;
+  ssize_t bytes_sent = 0;
 
-  // Determine the total length of all the buffers in <iov>.
-  for (i = 0; i < n; i++)
-    if (ACE_static_cast (int, iov[i].iov_len) < 0)
-      return -1;
-    else
-      length += iov[i].iov_len;
-
-  char *buf;
-
-#   if defined (ACE_HAS_ALLOCA)
-  buf = (char *) alloca (length);
-#   else
-  ACE_NEW_RETURN (buf,
-                  char[length],
-                  -1);
-#   endif /* !defined (ACE_HAS_ALLOCA) */
-
-  char *ptr = buf;
-
-  for (i = 0; i < n; i++)
+  for (int i = 0; i < n; ++i)
     {
-      ACE_OS::memcpy (ptr, iov[i].iov_base, iov[i].iov_len);
-      ptr += iov[i].iov_len;
+      const ssize_t result =
+        ACE_OS::write (handle, iov[i].iov_base, iov[i].iov_len);
+
+      if (result == -1)
+        {
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was sent.  If no data was sent,
+          // then always return -1.  Otherwise return bytes_sent.
+          // This gives the caller an opportunity to keep track of
+          // bytes that have already been sent.
+          if (bytes_sent > 0)
+            break;
+          else
+            return -1;
+        }
+      else
+        {
+          bytes_sent += result;
+
+          // Do not continue on to the next loop iteration if the
+          // amount of data sent was less than the amount data given.
+          // This avoids a subtle problem where "holes" in the data
+          // stream would occur if partial sends of a given buffer in
+          // the iovec array occured.
+          if (ACE_static_cast (size_t, result) < iov[i].iov_len)
+            break;
+        }
     }
 
-  ssize_t result = ACE_OS::write (handle, buf, length);
-#   if !defined (ACE_HAS_ALLOCA)
-  delete [] buf;
-#   endif /* !defined (ACE_HAS_ALLOCA) */
-  return result;
+  return bytes_sent;
 }
 # endif /* ACE_LACKS_WRITEV */
