@@ -1,3 +1,7 @@
+Fri Aug 24 14:59:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (dispatch_socket_events): Cosmetic changes. 
+
 Fri Aug 24 14:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Timer_Queue_T.i:
