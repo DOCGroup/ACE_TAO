@@ -6,6 +6,8 @@
 #if !defined(AFX_STDAFX_H__41816CD6_CE58_4714_8C74_1C67651B50ED__INCLUDED_)
 #define AFX_STDAFX_H__41816CD6_CE58_4714_8C74_1C67651B50ED__INCLUDED_
 
+#ifdef USING_PCH
+
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
@@ -22,4 +24,5 @@
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
+#endif // USING_PCH
 #endif // !defined(AFX_STDAFX_H__41816CD6_CE58_4714_8C74_1C67651B50ED__INCLUDED_)
