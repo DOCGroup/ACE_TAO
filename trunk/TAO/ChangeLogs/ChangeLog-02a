@@ -42,7 +42,7 @@ Wed Apr 26 14:06:28 2000  Carlos O'Ryan  <coryan@uci.edu>
           interface or it can pull events without having to implement the
           ProxyPullConsumer interface.  The disadvantage is that the
           application will not receive any notifications if the event
-          channel terminates.
+          channel terminates.  This fixes [BUGID:507]
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
         * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
