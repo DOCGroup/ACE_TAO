@@ -42,14 +42,15 @@ DEFINE_GUID (IID_STUB_Object,
 	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 CORBA_ORB::CORBA_ORB (void)
-  : open_called_(CORBA::B_FALSE),
+  : refcount_ (1),
+    open_called_(CORBA::B_FALSE),
     client_factory_ (0),
     client_factory_from_service_config_ (CORBA::B_FALSE),
     server_factory_ (0),
     server_factory_from_service_config_ (CORBA::B_FALSE),
-    should_shutdown_(CORBA::B_FALSE)
+    should_shutdown_(CORBA::B_FALSE),
+    name_service_ (CORBA_Object::_nil ())
 {
-  this->refcount_ = 1;
 }
 
 CORBA_ORB::~CORBA_ORB (void)
@@ -349,6 +350,70 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   return 0;
 }
 
+CORBA_Object_ptr 
+CORBA_ORB::resolve_poa (void)
+{
+  ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
+}
+
+CORBA_Object_ptr 
+CORBA_ORB::resolve_name_service (void)
+{
+  // First check to see if we've already initialized this.
+  if (this->name_service_ != CORBA_Object::_nil ())
+    // @@ Someone please double-check this ;-)
+    return CORBA_Object::_duplicate (this->name_service_);
+
+  const char *name_service_ior =
+    TAO_ORB_Core_instance ()->orb_params ()->name_service_ior ();
+
+  // Second, check to see if the user has give us a parameter on
+  // the command-line.
+  if (name_service_ior == 0)
+    // Third, check to see if the user has an environment variable.
+    name_service_ior = ACE_OS::getenv ("NameService");
+
+  if (name_service_ior != 0)
+    {
+      this->name_service_ =
+        this->string_to_object (name_service_ior);
+      return this->name_service_;
+    }
+
+  // Fourth, use UDP multicast to locate the naming service.
+  else
+    {
+      // First, see if the user has given us a multicast port number
+      // for the name service on the command-line;
+      u_short port = TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+
+      if (port == 0)
+        {
+          const char *port_number = ACE_OS::getenv ("NameServicePort");
+
+          if (port_number != 0)
+            port = ACE_OS::atoi (port_number);
+        }
+
+      if (port == 0)
+        port = TAO_DEFAULT_NAME_SERVER_PORT;
+
+      // This is where the code must go to implement the multicast
+      // Naming Service locator.
+      ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
+    }
+}
+
+CORBA_Object_ptr 
+CORBA_ORB::resolve_initial_references (CORBA::String name)
+{
+  if (ACE_OS::strcmp (name, "NameService") == 0)
+    return this->resolve_name_service ();
+  else if (ACE_OS::strcmp (name, "RootPOA") == 0)
+    return this->resolve_poa ();
+  else
+    return CORBA_Object::_nil ();
+}
 
 #define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
