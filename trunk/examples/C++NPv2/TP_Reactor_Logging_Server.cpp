@@ -11,6 +11,11 @@
 
 #include <string>
 
+#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
+#  error "Must add to config.h: #define ACE_HAS_STANDARD_CPP_LIBRARY 1"
+#endif
+
 #include "Reactor_Logging_Server.h"
 #include "Logging_Acceptor_Ex.h"
 
@@ -74,7 +79,7 @@ static void *controller (void *arg) {
 
   for (;;) {
     std::string user_input;
-    getline (cin, user_input, '\n');
+    std::getline (cin, user_input, '\n');
     if (user_input == "quit") {
       reactor->notify (quit_handler);
       break;
