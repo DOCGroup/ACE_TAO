@@ -1185,23 +1185,6 @@ TAO_Policy_Current_Impl::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV)
 {
-#if (TAO_HAS_RT_CORBA == 1)
-
-  // Validity check.  Make sure policies of interest are allowed
-  // at this scope.
-  for (CORBA::ULong i = 0; i < ts.length ();  ++i)
-    {
-      CORBA::ULong type = ts[i];
-
-      if (type == RTCORBA::THREADPOOL_POLICY_TYPE
-          || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
-          || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
-                          0);
-    }
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   return this->manager_impl_.get_policy_overrides (ts, ACE_TRY_ENV);
 }
 
