@@ -37,7 +37,7 @@ Thu Aug  7 15:41:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Removed the T_var template parameter from TAO_Pseudo_Object_Manager,
           TAO_Unbounded_Pseudo_Sequence, and TAO_Bounded_Pseudo_Sequence,
-          in the template classes themselves, instantiaions in ORB code,
+          in the template classes themselves, instantiations in ORB code,
           and in generated code.
 
 Thu Aug  7 13:35:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
