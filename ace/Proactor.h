@@ -159,7 +159,8 @@ protected:
   // Helper to initiate.
 
   int dispatch (ACE_Overlapped_IO *overlapped, 
-		u_long bytes_transfered);
+		u_long bytes_transfered,
+		int error);
   // Helper function which dispatches results to Event_Handlers.
 
   ACE_HANDLE completion_port_;
@@ -171,7 +172,7 @@ protected:
   size_t number_of_threads_;
   // Max threads that will be allowed to run in a completion port.
 
-  ACE_Manual_Event shared_event_;
+  ACE_Auto_Event shared_event_;
   // Win32 HANDLE associated with every operation that signals when
   // any operation completes (used to transparently integrate the
   // <ACE_Proactor> with the <ACE_ReactorEx>).
