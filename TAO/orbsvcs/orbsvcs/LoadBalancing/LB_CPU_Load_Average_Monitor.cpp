@@ -6,6 +6,9 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/sys/os_pstat.h"
 #include "ace/os_include/sys/os_loadavg.h"
+#if defined(__NetBSD__)
+#include <sys/sysctl.h>
+#endif
 
 ACE_RCSID (LoadBalancing,
            LB_CPU_Load_Average_Monitor,
@@ -159,6 +162,33 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   else
     ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
 
+#elif defined (__NetBSD__)
+
+  double loadavg[1];
+
+  const int samples = ::getloadavg (loadavg, 1);
+
+  if (samples == 1)
+    {
+      int mib[2], num_processors;
+      size_t len;
+
+      mib[0] = CTL_HW;
+      mib[1] = HW_NCPU;
+      len = sizeof(num_processors);
+
+      sysctl(mib, 2, &num_processors, &len, NULL, 0);
+
+      ACE_ASSERT (num_processors > 0);
+
+      if (num_processors > 0)
+        load = loadavg[0] / num_processors;
+      else
+        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+    }
+  else
+    ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+
 #elif defined (hpux)
 
   struct pst_dynamic psd;
@@ -179,7 +209,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif
 
-#if defined (WINDOWS) || defined (linux) || defined (sun) || defined (hpux)
+#if defined (WINDOWS) || defined (linux) || defined (sun) || defined (hpux) || defined(__NetBSD__)
 
   CosLoadBalancing::LoadList * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -205,6 +235,6 @@ TAO_LB_CPU_Load_Average_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   ACE_UNUSED_ARG (load);
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 
-#endif  /* WINDOWS || linux || sun || hpux */
+#endif  /* WINDOWS || linux || sun || hpux  || __NetBSD__ */
 
 }

@@ -1,3 +1,9 @@
+Wed Sep  8 09:53:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+
+	  Added support for getting load average on NetBSD.
+
 Wed Sep  8 09:02:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/CosEvent.mpc:
