@@ -41,7 +41,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
-#elif !defined (ACE_LACKS_UNIX_SYSLOG)
+#elif !defined (ACE_LACKS_UNIX_SYSLOG) && !defined (ACE_HAS_WINCE)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_UNIX_Syslog
 #else
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_IPC
