@@ -27,10 +27,7 @@ print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 
 $server_args =
     "-n $iorfile1 -o $iorfile2 -b bands.unix -ORBSvcConf $server_conf "
-   ."-p 37 -w 51 "
-   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=39 "
-   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=46 "
-   ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=50 ";
+   ."-p 37 -w 51 ";
 
 $client_args =
     "-n file://$iorfile1 -o file://$iorfile2 "
@@ -39,10 +36,7 @@ $client_args =
 if ($^O eq "MSWin32") {
     $server_args =
         "-n $iorfile1 -o $iorfile2 -b bands.nt -ORBSvcConf $server_conf "
-        ."-p 1 -w 7 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 ";
+        ."-p 1 -w 7 ";
 
     $client_args =
         "-n file://$iorfile1 -o file://$iorfile2 "
@@ -52,10 +46,7 @@ if ($^O eq "MSWin32") {
 if ($^O eq "dec_osf") {
     $server_args =
         "-n $iorfile1 -o $iorfile2 -b bands.tru64 -ORBSvcConf $server_conf "
-       ."-p 20 -w 34 "
-       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=23 "
-       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=28 "
-       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=33 ";
+       ."-p 20 -w 34 ";
 
     $client_args =
         "-n file://$iorfile1 -o file://$iorfile2 "
