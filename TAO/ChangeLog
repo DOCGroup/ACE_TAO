@@ -139,8 +139,8 @@ Fri Aug 23 09:45:05 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 Fri Aug 23 11:29:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * TAO_IDL/be_be_visitor_constant/constant_ch.cpp:
-        * TAO_IDL/be_be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
 
           Made code generation for constants always inline
           in the header file, since we no longer support
