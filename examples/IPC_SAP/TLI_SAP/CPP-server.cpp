@@ -8,18 +8,18 @@
 ACE_RCSID(TLI_SAP, CPP_server, "$Id$")
 
 #if defined (ACE_HAS_TLI)
-// ACE_TLI Server 
+// ACE_TLI Server
 
-int 
+int
 main (int argc, char *argv[])
 {
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
   ACE_Time_Value timeout (argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_TIMEOUT);
 
-  // Create a server address. 
+  // Create a server address.
   ACE_INET_Addr addr (port);
 
-  // Create a server, reuse the addr. 
+  // Create a server, reuse the addr.
   ACE_TLI_Acceptor peer_acceptor;
 
   // Not sure why but reuse_addr set to true/1 causes problems for
@@ -30,21 +30,21 @@ main (int argc, char *argv[])
                        "open"),
                       -1);
 
-  ACE_TLI_Stream new_stream;                                   
+  ACE_TLI_Stream new_stream;
 
   ACE_DEBUG ((LM_DEBUG,
-              "starting server at host %s\n", 
+              "starting server at host %s\n",
               addr.get_host_name ()));
 
-  // Performs the iterative server activities 
+  // Performs the iterative server activities
 
-  for (;;) 
+  for (;;)
     {
-      char buf[BUFSIZ];                                          
-                                                                     
+      char buf[BUFSIZ];
+
       // Create a new ACE_TLI_Stream endpoint (note automatic restart
       // if errno == EINTR).
-      if (peer_acceptor.accept (new_stream, 
+      if (peer_acceptor.accept (new_stream,
 				&addr,
                                 &timeout) == -1)
 	{
@@ -52,15 +52,15 @@ main (int argc, char *argv[])
                       "%p\n",
                       "accept"));
 	  continue;
-	}          
-                                                                 
+	}
+
       ACE_DEBUG ((LM_DEBUG,
                   "client %s connected\n",
                   addr.get_host_name ()));
 
       // Read data from client (terminate on error).
 
-      for (int r_bytes; 
+      for (int r_bytes;
 	   (r_bytes = new_stream.recv (buf, sizeof buf)) > 0; )
         if (ACE_OS::write (ACE_STDOUT,
                            buf,
@@ -70,7 +70,7 @@ main (int argc, char *argv[])
                       "ACE::send_n"));
 
 	// Close new endpoint (listening endpoint stays open).
-      if (new_stream.close () == -1) 
+      if (new_stream.close () == -1)
 	ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "close"));
@@ -80,7 +80,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform isn't configured to support TLI\n"),
