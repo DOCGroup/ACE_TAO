@@ -15,6 +15,8 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/orbsvcs/Event/RT_Task.h"
 
+class ACE_Command_Base;
+
 class TAO_ORBSVCS_Export TAO_EC_Timer_Module
 {
   // = TITLE
@@ -46,15 +48,14 @@ public:
   // The RT_Info handle for the "task" at <priority>
 
   virtual int schedule_timer (RtecScheduler::Preemption_Priority_t priority,
-                              ACE_Event_Handler* eh,
-                              void* act,
+                              ACE_Command_Base* act,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval) = 0;
   // Add a timer at the given priority, returns the timer ID.
 
   virtual int cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                             int id,
-                            const void*& act) = 0;
+                            ACE_Command_Base*& act) = 0;
   // Add a timer at the given priority.
 
   virtual int register_handler (RtecScheduler::Preemption_Priority_t priority,
@@ -66,6 +67,27 @@ public:
   // Obtain the reactor for the given priority.
   // @@ This may prove tricky to implement with timer queues not based
   // on reactors.
+};
+
+// ****************************************************************
+
+class TAO_ORBSVCS_Export TAO_EC_Timeout_Handler : public ACE_Event_Handler
+{
+  // = TITLE
+  //   Event Service Timeout handler.
+  //
+  // = DESCRIPTION
+  //   This is used by the Timer_Modules as an adaptor between the
+  //   reactor (Event_Handler) and the Command objects.
+  //
+public:
+  TAO_EC_Timeout_Handler (void);
+  // Default construction.
+
+private:
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *act);
+  // Casts <act> to ACE_Command_Base and calls execute.
 };
 
 // ****************************************************************
@@ -92,13 +114,12 @@ public:
   virtual RtecScheduler::handle_t
      rt_info (RtecScheduler::Preemption_Priority_t priority);
   virtual int schedule_timer (RtecScheduler::Preemption_Priority_t priority,
-                              ACE_Event_Handler* eh,
-                              void* act,
+                              ACE_Command_Base* act,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval);
   virtual int cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                             int id,
-                            const void*& act);
+                            ACE_Command_Base*& act);
   virtual int register_handler (RtecScheduler::Preemption_Priority_t priority,
                                 ACE_Event_Handler* eh,
                                 ACE_HANDLE handle);
@@ -107,6 +128,9 @@ public:
 private:
   ACE_Reactor* reactor_;
   // The reactor.
+
+  TAO_EC_Timeout_Handler timeout_handler_;
+  // To receive the timeouts.
 };
 
 // ****************************************************************
@@ -146,13 +170,12 @@ public:
   virtual RtecScheduler::handle_t
      rt_info (RtecScheduler::Preemption_Priority_t priority);
   virtual int schedule_timer (RtecScheduler::Preemption_Priority_t priority,
-                              ACE_Event_Handler* eh,
-                              void* act,
+                              ACE_Command_Base* act,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval);
   virtual int cancel_timer (RtecScheduler::Preemption_Priority_t priority,
                             int id,
-                            const void*& act);
+                            ACE_Command_Base*& act);
   virtual int register_handler (RtecScheduler::Preemption_Priority_t priority,
                                 ACE_Event_Handler* eh,
                                 ACE_HANDLE handle);
@@ -167,6 +190,9 @@ private:
 
   ACE_RT_Thread_Manager thr_mgr;
   // The thread manager.
+
+  TAO_EC_Timeout_Handler timeout_handler_;
+  // To receive the timeouts.
 };
 
 #if defined (__ACE_INLINE__)

@@ -685,7 +685,7 @@ ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
 
 ACE_INLINE int
 ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
-				  const ACE_ES_Timer_ACT *act,
+				  const ACE_Command_Base *act,
 				  RtecScheduler::Preemption_Priority_t preemption_priority,
 				  const RtecScheduler::Time &delta,
 				  const RtecScheduler::Time &interval)
@@ -721,33 +721,19 @@ ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
   ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
 
   return this->timer_module ()->schedule_timer (preemption_priority,
-						&this->timer_,
-						ACE_const_cast(ACE_ES_Timer_ACT*,act),
-						tv_delta, tv_interval);
+						ACE_const_cast(ACE_Command_Base*,act),
+						tv_delta,
+                                                tv_interval);
 }
 
 ACE_INLINE int
 ACE_EventChannel::cancel_timer (RtecScheduler::OS_Priority preemption_priority,
 				int id,
-				ACE_ES_Timer_ACT *&act)
+				ACE_Command_Base *&act)
 {
-  const void *vp;
-
-  int result =
-    this->timer_module ()->cancel_timer (preemption_priority,
-					      id,
-					      vp);
-
-  if (result == 0)
-    {
-      ACE_ERROR ((LM_ERROR, "ACE_ES_Priority_Timer::cancel_timer: "
-                  "Tried to cancel nonexistent timer.\n"));
-      act = 0;
-    }
-  else
-    act = (ACE_ES_Timer_ACT *) vp;
-
-  return result;
+    return this->timer_module ()->cancel_timer (preemption_priority,
+                                                id,
+                                                act);
 }
 
 // ************************************************************

@@ -23,4 +23,10 @@ TAO_EC_RPT_Timer_Module::ThrMgr()
   return &thr_mgr;
 }
 
+// ****************************************************************
+
+ACE_INLINE
+TAO_EC_Timeout_Handler::TAO_EC_Timeout_Handler (void)
+{
+}
 

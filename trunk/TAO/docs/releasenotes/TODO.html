@@ -50,6 +50,17 @@
         <BR>[ASSIGNED TO:] Pradeep
       </LI>
 
+      <LI><P><B>EC:</B>The <CODE>UDP_Receiver</CODE> class has some
+          problems on Win32 platforms because a
+          <CODE>recvfrom()</CODE> call fails if the buffer is to small
+          for the datagram, even if the <CODE>MSG_PEEK</CODE> flag is
+          used.  We may need to modify the
+          <CODE>ACE_OS::recvfrom()</CODE> call to match the unix
+          semantics.
+        </P>
+        <BR>[ASSIGNED TO:] Carlos
+      </LI>
+
     </OL>
 
     <HR>
@@ -193,14 +204,6 @@
 
     <H4>New features and Bug fixes</H4>
     <OL>
-      <LI><P><B>EC:</B> When shuting down a reactive Event Channel the
-          timeouts for the EC have to be cancelled.
-          It would seem like the proper way to do that is to do it in
-          the <CODE>shutdown()</CODE> method of the
-          <CODE>Timer_Module</CODE>.
-        </P>
-      </LI>
-
       <LI><P><B>EC:</B> Some applications are both suppliers and
           consumers of events,
           they may be interested in all the
@@ -247,16 +250,6 @@
           messages. This is important for an effective implementation
           of the multicast version of the EC. The classes affected
           include <CODE>UDP_Receiver</CODE> and <CODE>UDP_Sender</CODE>.
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B>The <CODE>UDP_Receiver</CODE> class has some
-          problems on Win32 platforms because a
-          <CODE>recvfrom()</CODE> call fails if the buffer is to small
-          for the datagram, even if the <CODE>MSG_PEEK</CODE> flag is
-          used.  We may need to modify the
-          <CODE>ACE_OS::recvfrom()</CODE> call to match the unix
-          semantics.
         </P>
       </LI>
 
@@ -992,6 +985,15 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>EC:</B> When shuting down a reactive Event Channel the
+          timeouts for the EC have to be cancelled.
+          It would seem like the proper way to do that is to do it in
+          the <CODE>shutdown()</CODE> method of the
+          <CODE>Timer_Module</CODE>.
+          <BR>[DONE]
+        </P>
+      </LI>
+
       <LI><B>EC:</B> Improve configuration support in the EC, give an
 	example of a single threaded EC, support different dispatching
 	strategies, etc.

@@ -37,6 +37,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Map_Manager.h"
+#include "ace/Functor.h"
 
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -147,30 +148,6 @@ private:
 
 // ************************************************************
 
-class ACE_ES_Timer_ACT;
-class ACE_EventChannel;
-
-class TAO_ORBSVCS_Export TAO_EC_Timeout_Handler : public ACE_Event_Handler
-{
-  // = TITLE
-  //   Event Service Timeout handler.
-  //
-  // = DESCRIPTION
-  //   Receives the timeouts from the Timer_Module and dispatches them
-  //   as Event Channel events.
-  //
-public:
-  TAO_EC_Timeout_Handler (void);
-  // Default construction.
-
-private:
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *act);
-  // Casts <act> to ACE_ES_Timer_ACT and calls execute.
-};
-
-// ************************************************************
-
 // Chesire cat.
 class ACE_ES_Priority_Timer;
 // Forward declarations.
@@ -228,8 +205,6 @@ public:
   ACE_ES_Subscription_Module *subscription_module_;
   ACE_ES_Supplier_Module *supplier_module_;
 
-  TAO_EC_Timeout_Handler timer_;
-
   void report_connect (u_long);
   // Consumer or supplier connected.
 
@@ -284,7 +259,7 @@ public:
 
   // = Timer managment
   int schedule_timer (RtecScheduler::handle_t rt_info,
-                      const ACE_ES_Timer_ACT *act,
+                      const ACE_Command_Base *act,
                       RtecScheduler::OS_Priority preemption_priority,
                       const RtecScheduler::Time& delta,
                       const RtecScheduler::Time& interval = ORBSVCS_Time::zero);
@@ -293,7 +268,7 @@ public:
 
   int cancel_timer (RtecScheduler::OS_Priority preemption_priority,
                     int id,
-                    ACE_ES_Timer_ACT *&act);
+                    ACE_Command_Base *&act);
   // Cancel the timer associated with the priority of
   // <preemption_priority> and <id>.  <act> is filled in with the
   // Timer_ACT used when scheduling the timer.  Returns 0 on success,
@@ -432,19 +407,6 @@ protected:
 };
 
 // ************************************************************
-
-class TAO_ORBSVCS_Export ACE_ES_Timer_ACT
-// = TITLE
-//    Timer Asynchronous Completion Token
-//
-// = DESCRIPTION
-//    Implements Command pattern with timers.
-{
-public:
-  virtual void execute (void) = 0;
-};
-
-// ************************************************************
 // Forward decl.
 class ACE_ES_Consumer_Rep_Timeout;
 
@@ -533,7 +495,7 @@ private:
 // Forward decl.
 class ACE_ES_Consumer_Correlation;
 
-class TAO_ORBSVCS_Export ACE_ES_Consumer_Rep : public ACE_ES_Timer_ACT
+class TAO_ORBSVCS_Export ACE_ES_Consumer_Rep : public ACE_Command_Base
 // = TITLE
 //    Consumer Representation.
 //
@@ -541,7 +503,7 @@ class TAO_ORBSVCS_Export ACE_ES_Consumer_Rep : public ACE_ES_Timer_ACT
 //    These are stored in the subscription module.  They store
 //    information that allows optimized correlations.  It represents
 //    the consumer that will handle *one* type of event.  This
-//    probably shouldn't inherit from ACE_ES_Timer_ACT since it's used
+//    probably shouldn't inherit from ACE_Command_Base since it's used
 //    only by ACE_ES_Consumer_Rep_Timeout.  However, this allows me to
 //    minimize dynamic allocation.
 {
@@ -627,7 +589,7 @@ protected:
   int disconnected_;
   // Whether the rep should be removed from all subscription lists.
 
-  virtual void execute (void);
+  virtual int execute (void* arg = 0);
   // This is called when timeouts occur.  This implementation prints
   // out an error message (since it really shouldn't be implemented in
   // this class).
@@ -681,7 +643,7 @@ public:
   void preemption_priority (RtecScheduler::OS_Priority pp);
 
 protected:
-  virtual void execute (void);
+  virtual int execute (void* arg = 0);
   // This is called when timeouts occur.  Calls correlation_->
 
   int timer_id_;
