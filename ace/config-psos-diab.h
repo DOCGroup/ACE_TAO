@@ -22,6 +22,8 @@
 
 #define ACE_LACKS_FILELOCKS
 
+#define ACE_LACKS_FSYNC
+
 #define ACE_LACKS_INLINE_FUNCTIONS
 
 #define ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER
@@ -36,6 +38,8 @@
 #define ACE_HAS_IP_MULTICAST
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
+
+#define ACE_HAS_BROKEN_EXPLICIT_TYPECAST_OPERATOR_INVOCATION
 
 #define ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS
 
@@ -91,7 +95,7 @@
 #define ACE_LACKS_READV
 
 // rename the main entry point
-// #define ACE_MAIN extern "C" void root
+#define ACE_MAIN extern "C" void root
 
 // All this was commented out for the single threaded port
 
@@ -214,6 +218,8 @@
 // #define ACE_PSOS_LACKS_PHILE
 
 #define ACE_PSOS_SNARFS_HEADER_INFO
+
+#define ACE_PSOS_LACKS_ARGC_ARGV
 
 #if !defined (ACE_PSOS)
 #define ACE_PSOS

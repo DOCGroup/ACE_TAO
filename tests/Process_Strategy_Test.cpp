@@ -217,7 +217,7 @@ Options::parse_args (int argc, char *argv[])
                       -1);
       break;
 #else
-      ACE_ASSERT (!"PROCESS invalid on this platform");
+      ACE_ASSERT ("PROCESS invalid on this platform" == 0);
 #endif /* !defined (ACE_LACKS_FORK) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)

@@ -11,8 +11,8 @@
 //
 // = DESCRIPTION
 //    Non-inlinable method definitions for non-templatized classes
-//    implementing the GOF Command Pattern, also known as functors
-//    or function objects.
+//    and template specializations implementing the GOF Command Pattern,
+//    and STL-style functors.
 //
 // = AUTHOR
 //    Chris Gill           <cdgill@cs.wustl.edu>
@@ -22,6 +22,10 @@
 //    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
 //    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+//    and on STL-style functor implementations originally done by
+//
+//    Irfan Pyarali  <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
