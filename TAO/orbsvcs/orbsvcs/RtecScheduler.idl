@@ -2,40 +2,37 @@
 
 #include "CosTimeBase.idl"
 
-module RtecScheduler {
-
-  typedef TimeBase::TimeT Time;
+module RtecScheduler
+{
+  // Module TimeBase defines the OMG Time Service.
+  typedef TimeBase::TimeT Time; // 100 nanoseconds
   typedef Time Quantum;
 
-  typedef long Period;
-  // In units of 100 nanoseconds.
+  typedef long Period; // 100 nanoseconds
 
-  //
-  // TODO: This differ from the ones documented in the TAO paper,
-  // namely:
-  // INTERRUPT
-  // IO_SERVICE
-  // CRITICAL
-  // HARD_DEADLINE
-  // BACKGROUND
-  // Notice that the order is inverted and, of course, the names don't
-  // match.
-  //
-  enum Importance {
-    VERY_LOW,
-    LOW,
-    MEDIUM,
-    HIGH,
-    VERY_HIGH
+  enum Importance
+  // Defines the importance of the operation,
+  // which can be used by the Scheduler as a
+  // "tie-breaker" when other scheduling
+  // parameters are equal.
+  {
+    VERY_LOW_IMPORTANCE,
+    LOW_IMPORTANCE,
+    MEDIUM_IMPORTANCE,
+    HIGH_IMPORTANCE,
+    VERY_HIGH_IMPORTANCE
   };
 
   typedef long handle_t;
-  // RT_Info's are assignned per-application unique identifiers.
+  // RT_Info's are assigned per-application
+  // unique identifiers.
 
-  struct Dependency_Info {
+  struct Dependency_Info
+  {
     long number_of_calls;
     handle_t rt_info;
-    // Notice the reference to the RT_Info we depend on.
+    // Notice the reference to the RT_Info we
+    // depend on.
   };
 
   typedef sequence<Dependency_Info> Dependency_Set;
@@ -46,49 +43,53 @@ module RtecScheduler {
 
   struct RT_Info
     // = TITLE
-    //   Describes the QoS for an "operation".
+    //   Describes the QoS for an "RT_Operation".
     //
     // = DESCRIPTION
-    //   The CPU requirements and QoS for each "entity" implementing
-    //   an application operation is described by the following
-    //   information.
+    // The CPU requirements and QoS for each
+    // "entity" implementing an application
+    // operation is described by the following
+    // information.
   {
-    // Application defined string that uniquely identifies the
-    // operation.
+    // Application-defined string that uniquely
+    // identifies the operation.
     string entry_point;
 
-    // The scheduler defined unique identifier.
+    // The scheduler-defined unique identifier.
     handle_t handle;
 
-    // Execution times
+    // Execution times.
     Time worst_case_execution_time;
     Time typical_execution_time;
 
     // To account for server data caching.
     Time cached_execution_time;
 
-    // For rate operations this defines the period of the rate.
-    // 0 means "completely pasive", i.e., this operation only executes
-    // when called.
+    // For rate-base operations, this expresses
+    // the rate.  0 means "completely pasive",
+    // i.e., this operation only executes when
+    // called.
     Period period;
 
-    // Operation importance (used to "break ties").
+    // Operation importance, used to "break ties".
     Importance importance;
 
     // For time-slicing (for BACKGROUND operations only).
     Quantum quantum;
 
-    // The following attributes are defined by the Scheduler once the
-    // off-line scheduling is computed.
-
-    // The number of threads that will execute this operation?
-    // TODO: clarify this.
+    // The number of internal threads contained by
+    // the operation.
     long threads;
+
+    // The following attributes are defined by
+    // the Scheduler once the off-line schedule
+    // is computed.
 
     // The operations we depend upon.
     Dependency_Set dependencies;
 
-    // The OS por processing the events generated from this RT_Info.
+    // The OS por processing the events generated
+    // from this RT_Info.
     OS_Priority priority;
 
     // For ordering RT_Info's with equal priority.
