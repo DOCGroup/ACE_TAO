@@ -1,6 +1,15 @@
+Tue Mar  2 13:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport.cpp (drain_queue_helper):
+
+	  Check for EAGAIN in addition to EWOULDBLOCK. POSIX conformant
+	  implementations can use either EWOULDBLOCK or EAGAIN. Thanks to
+	  Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing this out. 
+
 Tue Mar  2 07:43:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:
+	
           Add file missing from previous checkin.
 
 Tue Mar  2 19:09:33 2004  Olli Savia  <ops@iki.fi>
@@ -18,9 +27,8 @@ Tue Mar  2 13:59:33 2004  David Smith  <dts@prismtechnologies.com>
         * tao/Any_Impl_T.cpp:
         * tao/Any_Dual_Impl_T.cpp:
 
-        Fixed compile problem with aCC 3.37.
-        Thanks to Kris Dekeyser <Kris.Dekeyser@lms.be> for pointing
-        this out.
+          Fixed compile problem with aCC 3.37. Thanks to Kris Dekeyser
+	  <Kris.Dekeyser@lms.be> for pointing  this out.
 
 Tue Mar  2 09:05:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
