@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $ior = PerlACE::LocalFile ("supplier.ior");
 $notifyior = PerlACE::LocalFile ("notify.ior");
+$notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 
 $status = 0;
 
@@ -21,9 +22,9 @@ $TS = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
                             "localhost:$port/NameService " .
                             "-IORoutput $notifyior -ORBSvcConf " .
                             "$notify_conf" );
-$STS = new PerlACE::Process ("Structured_Supplier");
+$STS = new PerlACE::Process ("Supplier");
 
-$STC = new PerlACE::Process ("Structured_Consumer");
+$STC = new PerlACE::Process ("Consumer");
 
 $args = " -ORBInitRef NameService=iioploc://localhost:$port/NameService ";
 $cargs = "-f -n100 -c2 ";

@@ -38,10 +38,10 @@ CD_IMPLEMENT_ENTITY(SequencePushSupplier)
 ConnectDisconnect::ConnectDisconnect (void)
   :any_consumer_ (0),
    structured_consumer_ (0),
-   // sequence_consumer_ (0),
+   sequence_consumer_ (0),
    any_supplier_ (0),
    structured_supplier_ (0),
-   // sequence_supplier_ (0),
+   sequence_supplier_ (0),
    count_ (10),
    consumers_ (10),
    suppliers_ (10)
@@ -239,8 +239,6 @@ ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
           ACE_CHECK;
           this->sequence_consumer_[i]->connect (this->consumer_admin_.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-          sequence_consumer_[i]->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
       for (i = 0; i < this->suppliers_; ++i)
@@ -292,8 +290,8 @@ ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
 
           // Disconnect Sequence Consumers.
           this->sequence_consumer_[i]->disconnect (
-                                           ACE_ENV_SINGLE_ARG_PARAMETER
-                                         );
+                                         ACE_ENV_SINGLE_ARG_PARAMETER
+                                     );
           ACE_CHECK;
         }
 

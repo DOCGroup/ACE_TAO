@@ -1,18 +1,16 @@
 // $Id$
 
 #include "Throughput.h"
+
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "ace/OS.h"
-#include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
-#include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
-#include "orbsvcs/Notify/Notify_Default_EMO_Factory.h"
+#include "ace/Dynamic_Service.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
+#include "orbsvcs/Notify/Service.h"
+#include "orbsvcs/Time_Utilities.h"
 
 ACE_RCSID (Notify_Tests, Throughput, "$Id$")
 
@@ -341,12 +339,6 @@ Notify_Throughput::parse_args(int argc, char *argv[])
         {
           this->colocated_ec_ = 1;
           arg_shifter.consume_arg ();
-
-          // Init Factories
-          TAO_Notify_Default_CO_Factory::init_svc ();
-          TAO_Notify_Default_POA_Factory::init_svc ();
-          TAO_Notify_Default_Collection_Factory::init_svc ();
-          TAO_Notify_Default_EMO_Factory::init_svc ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter ("-consumers")))
         {
@@ -434,9 +426,18 @@ Notify_Throughput::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->colocated_ec_ == 1)
     {
+      TAO_NS_Service* notify_service = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
+
+      if (notify_service == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
+          return;
+        }
+
+      // Activate the factory
       this->notify_factory_ =
-        TAO_Notify_EventChannelFactory_i::create (this->root_poa_.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        notify_service->create (this->root_poa_.in ()
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
