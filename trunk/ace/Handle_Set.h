@@ -167,6 +167,10 @@ public:
   /// Default dtor.
   ~ACE_Handle_Set_Iterator (void);
 
+  /// Reset the state of the iterator by reinitializing the state
+  /// that we maintain.
+  void reset_state (void);
+
   /**
    * "Next" operator.  Returns the next unseen <ACE_HANDLE> in the
    * <Handle_Set> up to <handle_set_.max_handle_>).  When all the
