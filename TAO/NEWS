@@ -53,20 +53,26 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
   Done.
 
-- (JTC) Changed #includes of orbsvcs header files to be consistant.  
+- (JTC) Changed #includes of orbsvcs header files to be consistant.
   The pathname now always contains a "orbsvcs/" prefix.
 
   Done.
 
 - (JTC) Split ORB Services into stub, skeleton, and implementation libraries.
 
-  Changes to the Naming, Trading, Event, Notification, and Logging Services 
+  Changes to the Naming, Trading, Event, Notification, and Logging Services
   have been commited.
 
 - (OCI) Install common utilities (tao_imr, tao_ifr, nslist, nsadd,
   nsdel, NamingViewer) in $ACE_ROOT/bin.
 
   Sat Sep 11 12:25:07 2004  Steve Totten  <totten_s@ociweb.com>
+
+- (OCI) New pluggable protocol for GIOP over HTBP, known as HTIOP.
+  Source in orbsvcs/orbsvcs/HTIOP.
+
+  Mon Oct 25 23:13:31 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.2 and TAO-1.4.3
 ====================================================
