@@ -1,3 +1,9 @@
+Sat Jul 25 11:34:25 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Typed_SV_Message_Queue.i (send): Fixed this call to use a
+ 	  const cast AND a reinterpret cast.  Thanks to David Levine for
+ 	  reporting this.
+
 Fri Jul 24 23:14:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/thread_specific.cpp (cleanup): Added an
