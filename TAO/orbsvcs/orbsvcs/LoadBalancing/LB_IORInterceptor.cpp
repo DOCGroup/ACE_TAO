@@ -48,7 +48,7 @@ void
 TAO_LB_IORInterceptor::establish_components (
     PortableInterceptor::IORInfo_ptr
     ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
