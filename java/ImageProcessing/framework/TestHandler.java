@@ -104,6 +104,9 @@ public class TestHandler extends SvcHandler
 	
 	ImageFilter filter = (ImageFilter) filterTable_.get (filterName);
 	    
+	// Reset the image -- in case it was modified earlier
+	this.parent_.resetImage ();
+
 	// Start the timer
 	timer_.start ();
 	
@@ -114,8 +117,6 @@ public class TestHandler extends SvcHandler
 	long time = timer_.elapsedTime ();
 	
 	this.write ("done (" + ((double) time)/1000 + " seconds).\n");
-	
-	this.parent_.resetImage ();
       }
   }
    
