@@ -2205,6 +2205,16 @@ namespace DynamicAny
 // Traits specializations.
 namespace TAO
 {
+  // Hand crafted.
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_DynamicAny_Export Objref_Traits<DynamicAny::DynAny>
+  {
+    static DynamicAny::DynAny_ptr tao_duplicate (DynamicAny::DynAny_ptr);
+    static void tao_release (DynamicAny::DynAny_ptr);
+    static DynamicAny::DynAny_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (DynamicAny::DynAny_ptr p,
+                                       TAO_OutputCDR & cdr);
+  };
 };
 
 // TAO_IDL - Generated from

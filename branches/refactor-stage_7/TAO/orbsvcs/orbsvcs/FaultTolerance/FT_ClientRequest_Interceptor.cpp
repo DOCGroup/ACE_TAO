@@ -3,6 +3,7 @@
 #include "FT_ClientRequest_Interceptor.h"
 #include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/CORBA_String.h"
+#include "tao/debug.h"
 #include "ace/UUID.h"
 
 ACE_RCSID (FaultTolerance,

@@ -18,7 +18,9 @@
 #include "CEC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_Reactive_SupplierControl, "$Id$")
+ACE_RCSID (CosEvent, 
+           CEC_Reactive_SupplierControl, 
+           "$Id$")
 
 TAO_CEC_Reactive_SupplierControl::
      TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,

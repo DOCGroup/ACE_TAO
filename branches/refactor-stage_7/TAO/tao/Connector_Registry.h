@@ -17,27 +17,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
 
 // Forward declarations.
-class ACE_Addr;
-class ACE_Reactor;
-
 class TAO_ORB_Core;
 class TAO_Connector;
-
-class TAO_Transport_Descriptor_Interface;
-class TAO_Stub;
 class TAO_MProfile;
 class TAO_Profile;
-class TAO_Resource_Factory;
-class TAO_GIOP_Invocation;
+class TAO_InputCDR;
 
 typedef TAO_Connector** TAO_ConnectorSetIterator;
 

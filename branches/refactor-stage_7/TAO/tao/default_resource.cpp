@@ -4,25 +4,17 @@
 
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
-
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
-
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
 #include "tao/Leader_Follower_Flushing_Strategy.h"
-
-#include "tao/Leader_Follower.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
-
 #include "tao/LF_Strategy_Complete.h"
 #include "tao/Codeset_Manager.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Memory_Pool.h"
 #include "ace/Malloc.h"
 #include "ace/Codeset_Registry.h"
 

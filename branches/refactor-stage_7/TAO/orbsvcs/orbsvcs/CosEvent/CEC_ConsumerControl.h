@@ -12,15 +12,17 @@
 
 #ifndef TAO_CEC_CONSUMERCONTROL_H
 #define TAO_CEC_CONSUMERCONTROL_H
+
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/event_export.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
+#include "tao/Objref_VarOut_T.h"
+#include "orbsvcs/CosEvent/event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushSupplier;

@@ -2,9 +2,7 @@
 
 #include "Connection_Handler.h"
 #include "ORB_Core.h"
-#include "Server_Strategy_Factory.h"
 #include "debug.h"
-#include "Object.h"
 #include "Resume_Handle.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"

@@ -3,7 +3,9 @@
 #include "tao/Collocation_Resolver.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(tao, Collocation_Resolver, "$Id$")
+ACE_RCSID (tao, 
+           Collocation_Resolver, 
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Collocation_Resolver.i"

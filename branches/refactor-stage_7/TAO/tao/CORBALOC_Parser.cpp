@@ -1,7 +1,6 @@
 #include "CORBALOC_Parser.h"
 #include "ORB_Core.h"
 #include "Stub.h"
-#include "MProfile.h"
 #include "Connector_Registry.h"
 #include "tao/debug.h"
 

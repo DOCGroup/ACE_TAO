@@ -33,18 +33,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/PolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Sequence_T.h"
-#include "tao/Objref_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-
-#include "PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

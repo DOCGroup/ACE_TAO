@@ -12,6 +12,7 @@
 #include "tao/DynamicInterface/Request.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+#include "tao/debug.h"
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)

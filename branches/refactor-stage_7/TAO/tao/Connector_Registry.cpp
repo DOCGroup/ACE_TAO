@@ -7,10 +7,8 @@
 #include "Profile.h"
 #include "Transport_Connector.h"
 #include "Protocol_Factory.h"
-#include "Endpoint.h"
 #include "Environment.h"
 #include "debug.h"
-#include "Transport_Descriptor_Interface.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
