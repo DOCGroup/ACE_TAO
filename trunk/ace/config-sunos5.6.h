@@ -4,7 +4,7 @@
 // The following configuration file is designed to work for SunOS 5.6
 // platforms using the SunC++ 4.x or g++ compilers.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 
 // ACE_CONFIG_H is defined by one of the following #included headers.
 

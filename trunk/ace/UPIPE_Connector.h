@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_UPIPE_CONNECTOR_H)
+#ifndef ACE_UPIPE_CONNECTOR_H
 #define ACE_UPIPE_CONNECTOR_H
 
 #include "ace/UPIPE_Stream.h"

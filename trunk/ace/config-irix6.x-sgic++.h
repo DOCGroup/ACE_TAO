@@ -4,7 +4,7 @@
 // Use this file for IRIX 6.[234] if you have the pthreads patches
 // installed.
 
-#if !defined (ACE_CONFIG_IRIX6X_H)
+#ifndef ACE_CONFIG_IRIX6X_H
 #define ACE_CONFIG_IRIX6X_H
 
 // Include basic (non-threaded) configuration

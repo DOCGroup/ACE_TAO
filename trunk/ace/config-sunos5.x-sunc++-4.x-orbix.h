@@ -5,10 +5,10 @@
 // 5.[56] platforms using the SunC++ 4.x compiler. This works with the
 // Orbix 2.x CORBA IDL compiler.
 
-#include "ace/config-sunos5.5-sunc++-4.x.h"
-
-#if !defined (ACE_CONFIG_ORBIX_H)
+#ifndef ACE_CONFIG_ORBIX_H
 #define ACE_CONFIG_ORBIX_H
+
+#include "ace/config-sunos5.5-sunc++-4.x.h"
 
 // Platform contains the Orbix CORBA implementation.
 #define ACE_HAS_ORBIX 1

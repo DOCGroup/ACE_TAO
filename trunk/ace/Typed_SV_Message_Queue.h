@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TYPED_MESSAGE_QUEUE_H)
+#ifndef ACE_TYPED_MESSAGE_QUEUE_H
 #define ACE_TYPED_MESSAGE_QUEUE_H
 
 #include "ace/SV_Message_Queue.h"

@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_LOCAL_NAME_SPACE_T_H)
+#ifndef ACE_LOCAL_NAME_SPACE_T_H
 #define ACE_LOCAL_NAME_SPACE_T_H
 
 #include "ace/Name_Space.h"

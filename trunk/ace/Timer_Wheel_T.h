@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TIMER_WHEEL_T_H)
+#ifndef ACE_TIMER_WHEEL_T_H
 #define ACE_TIMER_WHEEL_T_H
 
 #include "ace/Timer_Queue_T.h"

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_NAMING_CONTEXT_H)
+#ifndef ACE_NAMING_CONTEXT_H
 #define ACE_NAMING_CONTEXT_H
 
 #include "ace/ACE.h"

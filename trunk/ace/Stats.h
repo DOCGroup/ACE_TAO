@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_STATS_H)
+#ifndef ACE_STATS_H
 #define ACE_STATS_H
 
 #include "ace/ACE.h"

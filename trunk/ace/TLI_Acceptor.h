@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TLI_ACCEPTOR_H)
+#ifndef ACE_TLI_ACCEPTOR_H
 #define ACE_TLI_ACCEPTOR_H
 
 #include "ace/TLI.h"

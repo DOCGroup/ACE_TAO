@@ -18,7 +18,7 @@
 
 // Since this files gets included from config-irix6.x-sgic++.h we
 // cannot use ACE_CONFIG_H here.
-#if !defined (ACE_CONFIG_IRIX6X_NTHR_H)
+#ifndef ACE_CONFIG_IRIX6X_NTHR_H
 #define ACE_CONFIG_IRIX6X_NTHR_H
 
 // Include this file to set the _MIPS_SIM*ABI* macros.

@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TOKEN_H)
+#ifndef ACE_TOKEN_H
 #define ACE_TOKEN_H
 
 #include "ace/Synch.h"

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SELECT_REACTOR_BASE_H)
+#ifndef ACE_SELECT_REACTOR_BASE_H
 #define ACE_SELECT_REACTOR_BASE_H
 
 #include "ace/Signal.h"

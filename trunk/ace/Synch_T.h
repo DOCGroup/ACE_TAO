@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SYNCH_T_H)
+#ifndef ACE_SYNCH_T_H
 #define ACE_SYNCH_T_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

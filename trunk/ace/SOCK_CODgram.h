@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SOCK_CODGRAM_H)
+#ifndef ACE_SOCK_CODGRAM_H
 #define ACE_SOCK_CODGRAM_H
 
 #include "ace/SOCK_IO.h"

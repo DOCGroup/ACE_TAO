@@ -5,7 +5,7 @@
 // specific configuration file.  It provides config information common
 // to all g++ platforms, including egcs.
 
-#if !defined (ACE_GNUG_COMMON_H)
+#ifndef ACE_GNUG_COMMON_H
 #define ACE_GNUG_COMMON_H
 
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)

@@ -21,7 +21,7 @@
 //    breaksw
 //
 
-#if !defined (ACE_KCC_COMMON_H)
+#ifndef ACE_KCC_COMMON_H
 #define ACE_KCC_COMMON_H
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)

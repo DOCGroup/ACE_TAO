@@ -5,7 +5,7 @@
 // for the SGI Indigo2EX running Irix 5.3 platform using 
 // the SGI C++ Compiler.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #define IRIX5

@@ -6,7 +6,7 @@
 
 // Notice that the threaded version of ACE is only supported for -current.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)

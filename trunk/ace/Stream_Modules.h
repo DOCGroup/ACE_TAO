@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_STREAM_MODULES)
+#ifndef ACE_STREAM_MODULES
 #define ACE_STREAM_MODULES
 
 template <ACE_SYNCH_DECL>

@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TRACE_H)
+#ifndef ACE_TRACE_H
 #define ACE_TRACE_H
 
 class ACE_Export ACE_Trace

@@ -3,7 +3,7 @@
 
 // The following configuration file is designed to work
 // for Unixware platforms running UnixWare 2.01.
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // See README for what the ACE_HAS... and ACE_LACKS... macros mean

@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TLI_STREAM_H)
+#ifndef ACE_TLI_STREAM_H
 #define ACE_TLI_STREAM_H
 
 #include "ace/TLI.h"

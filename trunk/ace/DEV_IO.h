@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_DEV_IO_H) 
+#ifndef ACE_DEV_IO_H 
 #define ACE_DEV_IO_H
 
 #include "ace/DEV.h"

@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TLI_H)
+#ifndef ACE_TLI_H
 #define ACE_TLI_H
 
 #include "ace/IPC_SAP.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_LOCAL_SOCK_CONNECTOR_H)
+#ifndef ACE_LOCAL_SOCK_CONNECTOR_H
 #define ACE_LOCAL_SOCK_CONNECTOR_H
 
 #include "ace/SOCK_Connector.h"

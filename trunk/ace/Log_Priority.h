@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_LOG_PRIORITY_H)
+#ifndef ACE_LOG_PRIORITY_H
 #define ACE_LOG_PRIORITY_H
 
 enum ACE_Log_Priority

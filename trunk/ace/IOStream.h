@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_IOSTREAM_H)
+#ifndef ACE_IOSTREAM_H
 #define ACE_IOSTREAM_H
 
 #include "ace/OS.h"

@@ -3,7 +3,7 @@
 // The following configuration file is designed to work for LynxOS 2.50
 // platforms using the GNU g++ compiler (version 2.7.2 or later).
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)

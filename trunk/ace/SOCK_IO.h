@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SOCK_IO_H)
+#ifndef ACE_SOCK_IO_H
 #define ACE_SOCK_IO_H
 
 #include "ace/SOCK.h"

@@ -15,8 +15,8 @@
 //
 // ============================================================================
 
-#if !defined (_CORBA_HANDLER_H)
-#define _CORBA_HANDLER_H
+#ifndef ACE_CORBA_HANDLER_H
+#define ACE_CORBA_HANDLER_H
 
 #include "ace/Service_Config.h"
 #include "ace/Pipe.h"

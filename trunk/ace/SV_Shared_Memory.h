@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SV_SHARED_MEMORY_H)
+#ifndef ACE_SV_SHARED_MEMORY_H
 #define ACE_SV_SHARED_MEMORY_H
 
 #include "ace/ACE.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SYNCH_OPTIONS_H)
+#ifndef ACE_SYNCH_OPTIONS_H
 #define ACE_SYNCH_OPTIONS_H
 
 #include "ace/ACE.h"

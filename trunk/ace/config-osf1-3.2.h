@@ -4,7 +4,7 @@
 // The following configuration file is designed to work for OSF1 3.2
 // platforms with the DEC 5.1 C++ compiler.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #define ACE_LACKS_SETSCHED

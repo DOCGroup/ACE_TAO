@@ -24,7 +24,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_TOKEN_COLLECTION_H)
+#ifndef ACE_TOKEN_COLLECTION_H
 #define ACE_TOKEN_COLLECTION_H
 
 #include "ace/Map_Manager.h"

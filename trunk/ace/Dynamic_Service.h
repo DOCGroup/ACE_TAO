@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_DYNAMIC_SERVICE_H)
+#ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

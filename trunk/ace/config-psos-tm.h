@@ -4,7 +4,7 @@
 // The following configuration file is designed to work for pSOSystem V2.2.1,
 // using the Diab Data D-C++ 4.1a compiler
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // #if ! defined (__ACE_INLINE__)

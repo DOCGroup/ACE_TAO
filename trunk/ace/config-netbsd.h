@@ -6,7 +6,7 @@
 // The following configuration file is designed to work for NetBSD
 // platforms using GNU g++.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)

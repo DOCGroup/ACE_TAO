@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_NT_SERVICE_H)
+#ifndef ACE_NT_SERVICE_H
 #define ACE_NT_SERVICE_H
 
 #include "ace/inc_user_config.h"

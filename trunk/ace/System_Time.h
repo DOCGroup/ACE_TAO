@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SYSTEM_TIME_H)
+#ifndef ACE_SYSTEM_TIME_H
 #define ACE_SYSTEM_TIME_H
 
 #include "ace/OS.h"

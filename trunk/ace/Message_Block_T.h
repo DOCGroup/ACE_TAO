@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_MESSAGE_BLOCK_T_H)
+#ifndef ACE_MESSAGE_BLOCK_T_H
 #define ACE_MESSAGE_BLOCK_T_H
 
 #include "ace/Message_Block.h"

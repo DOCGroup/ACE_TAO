@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_NAME_SPACE_H)
+#ifndef ACE_NAME_SPACE_H
 #define ACE_NAME_SPACE_H
 
 #include "ace/ACE.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_OBSTACK_H)
+#ifndef ACE_OBSTACK_H
 #define ACE_OBSTACK_H
 
 #include "ace/Malloc.h"

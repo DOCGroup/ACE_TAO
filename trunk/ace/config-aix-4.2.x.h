@@ -5,7 +5,7 @@
 // platforms running AIX 4.2.x using the IBM C++ compiler (xlC) or
 // g++/egcs.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if defined (__xlC__)

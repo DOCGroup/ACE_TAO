@@ -4,7 +4,7 @@
 // The following configuration file is designed to work for the SGI
 // Indigo2EX running Irix 5.3 platform using the GNU C++ Compiler
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #include "ace/config-g++-common.h"

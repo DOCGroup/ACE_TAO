@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_PROCESS_MANAGER_H)
+#ifndef ACE_PROCESS_MANAGER_H
 #define ACE_PROCESS_MANAGER_H
 
 #include "ace/Synch.h"

@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SERVICE_MANAGER_H)
+#ifndef ACE_SERVICE_MANAGER_H
 #define ACE_SERVICE_MANAGER_H
 
 #include "ace/SOCK_Stream.h"

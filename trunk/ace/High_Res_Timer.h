@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_HIGH_RES_TIMER_H)
+#ifndef ACE_HIGH_RES_TIMER_H
 #define ACE_HIGH_RES_TIMER_H
 
 #include "ace/ACE.h"

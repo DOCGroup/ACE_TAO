@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_DIRENT_H)
+#ifndef ACE_DIRENT_H
 #define ACE_DIRENT_H
 
 #include "ace/OS.h"

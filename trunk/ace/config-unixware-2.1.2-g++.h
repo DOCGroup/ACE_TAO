@@ -4,7 +4,7 @@
 // The following configuration file is designed to work
 // for Unixware platforms running UnixWare 2.1.2 and gcc version 2.7.2.2
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // See README for what the ACE_HAS... and ACE_LACKS... macros mean

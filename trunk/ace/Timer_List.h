@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TIMER_LIST_H)
+#ifndef ACE_TIMER_LIST_H
 #define ACE_TIMER_LIST_H
 
 #include "ace/Timer_List_T.h"

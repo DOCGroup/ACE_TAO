@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SERVICE_REPOSITORY_H)
+#ifndef ACE_SERVICE_REPOSITORY_H
 #define ACE_SERVICE_REPOSITORY_H
 
 #include "ace/Service_Types.h"

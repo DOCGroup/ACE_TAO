@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_TP_REACTOR_H)
+#ifndef ACE_TP_REACTOR_H
 #define ACE_TP_REACTOR_H
 
 #include "ace/Select_Reactor.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SVC_HANDLER_H)
+#ifndef ACE_SVC_HANDLER_H
 #define ACE_SVC_HANDLER_H
 
 // Forward decls.

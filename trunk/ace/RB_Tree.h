@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_RB_TREE_H)
+#ifndef ACE_RB_TREE_H
 #define ACE_RB_TREE_H
 
 #include "ace/ACE.h"

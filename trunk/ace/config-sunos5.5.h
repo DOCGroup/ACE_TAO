@@ -5,7 +5,7 @@
 // using the SunC++ 4.x or g++ (version 2.7.2 or later) compilers.  If
 // using SunC++, it's best to use version 4.2, patched as noted below.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // Compiler version-specific settings:

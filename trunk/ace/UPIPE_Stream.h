@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined ACE_UPIPE_STREAM_H
+#ifndef ACE_UPIPE_STREAM_H
 #define ACE_UPIPE_STREAM_H
 
 #include "ace/Stream.h"

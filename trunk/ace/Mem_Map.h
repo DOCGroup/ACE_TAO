@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_MEM_MAP_H)
+#ifndef ACE_MEM_MAP_H
 #define ACE_MEM_MAP_H
 
 #include "ace/ACE.h"

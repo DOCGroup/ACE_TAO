@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TIME_VALUE_H)
+#ifndef ACE_TIME_VALUE_H
 #define ACE_TIME_VALUE_H
 
 // This file is no longer used and is only here due to backwards

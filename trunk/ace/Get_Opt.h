@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_GET_OPT_H)
+#ifndef ACE_GET_OPT_H
 #define ACE_GET_OPT_H
 
 #include "ace/ACE.h"

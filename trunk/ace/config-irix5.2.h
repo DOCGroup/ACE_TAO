@@ -5,7 +5,7 @@
 // Indigo2EX running Irix 5.2 platform using the gcc v2.6.x compiler
 // and libg++ v2.6.x.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // Platform supports STREAM pipes (note that this is disabled by

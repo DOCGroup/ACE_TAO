@@ -7,7 +7,7 @@
 // architecture, compiler (g++ or egcs), and libc (libc5 or glibc),
 // and configures based on those.
 
-#if !defined (ACE_LINUX_COMMON_H)
+#ifndef ACE_LINUX_COMMON_H
 #define ACE_LINUX_COMMON_H
 
 #define ACE_HAS_BYTESEX_H

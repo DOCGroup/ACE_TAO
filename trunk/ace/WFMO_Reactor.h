@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_WFMO_REACTOR_H)
+#ifndef ACE_WFMO_REACTOR_H
 #define ACE_WFMO_REACTOR_H
 
 #include "ace/Signal.h"

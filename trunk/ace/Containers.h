@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_CONTAINERS_H)
+#ifndef ACE_CONTAINERS_H
 #define ACE_CONTAINERS_H
 
 #include "ace/OS.h"

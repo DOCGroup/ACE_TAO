@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #define ACE_HAS_BROKEN_ENUMS

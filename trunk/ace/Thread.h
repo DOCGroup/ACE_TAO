@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_THREAD_H)
+#ifndef ACE_THREAD_H
 #define ACE_THREAD_H
 
 #include "ace/ACE.h"

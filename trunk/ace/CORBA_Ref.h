@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_CORBA_REF_H)
+#ifndef ACE_CORBA_REF_H
 #define ACE_CORBA_REF_H
 
 #include "ace/ACE.h"

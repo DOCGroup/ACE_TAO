@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_PARSE_NODE_H)
+#ifndef ACE_PARSE_NODE_H
 #define ACE_PARSE_NODE_H
 
 #include "ace/Service_Types.h"

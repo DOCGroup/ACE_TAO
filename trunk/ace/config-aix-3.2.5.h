@@ -4,6 +4,9 @@
 // The following configuration file is designed to work for AIX 3.2.5
 // with xlC.  Thanks to Bob Olson <olson@mcs.anl.gov> for this.
 
+#ifndef ACE_CONFIG_H
+#define ACE_CONFIG_H
+
 /*#define ACE_HAS_PTHREADS*/
 
 #define MAXNAMELEN 1024
@@ -39,3 +42,5 @@
 
 // Platform supports STREAMS.
 /*#define ACE_HAS_STREAMS*/
+
+#endif /* ACE_CONFIG_H */

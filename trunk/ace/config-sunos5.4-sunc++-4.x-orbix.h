@@ -5,7 +5,7 @@
 // platforms using the SunC++ 4.0.x compiler.  This works with the
 // MT-Orbix CORBA IDL compiler.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)

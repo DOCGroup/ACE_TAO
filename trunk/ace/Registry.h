@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_REGISTRY_H)
+#ifndef ACE_REGISTRY_H
 #define ACE_REGISTRY_H
 
 #include "ace/OS.h"

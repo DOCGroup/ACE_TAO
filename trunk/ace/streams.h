@@ -21,7 +21,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_STREAMS_H)
+#ifndef ACE_STREAMS_H
 #define ACE_STREAMS_H
 
 #include "ace/inc_user_config.h"

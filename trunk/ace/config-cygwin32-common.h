@@ -7,7 +7,7 @@
 // architecture, compiler (g++ or egcs), and libc (libc5 or glibc),
 // and configures based on those.
 
-#if !defined (ACE_CYGWIN32_COMMON_H)
+#ifndef ACE_CYGWIN32_COMMON_H
 #define ACE_CYGWIN32_COMMON_H
 #define CYGWIN32
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS

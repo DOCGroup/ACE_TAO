@@ -3,7 +3,7 @@
 
 // Config file for MVS with OpenEdition
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // The following #defines are hacks to get around things

@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_IOSTREAM_T_H)
+#ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H
 
 #include "ace/IOStream.h"

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SERVICE_CONFIG_H)
+#ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H
 
 #include "ace/Service_Object.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_FILE_CONNECTOR_H)
+#ifndef ACE_FILE_CONNECTOR_H
 #define ACE_FILE_CONNECTOR_H
 
 #include "ace/FILE_IO.h"

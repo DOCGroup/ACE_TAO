@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_REACTOR_H)
+#ifndef ACE_REACTOR_H
 #define ACE_REACTOR_H
 
 class ACE_Reactor_Impl;

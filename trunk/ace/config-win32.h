@@ -5,7 +5,7 @@
 // Windows NT 3.51 and Windows NT 4.0 platforms using the Microsoft Visual C++
 // compilers 2.0, 4.0, 4.1, 4.2 and 5.0
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if defined (ACE_HAS_WINCE) || defined (UNDER_CE)

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SV_SEMAPHORE_SIMPLE_H)
+#ifndef ACE_SV_SEMAPHORE_SIMPLE_H
 #define ACE_SV_SEMAPHORE_SIMPLE_H
 
 #include "ace/ACE.h"

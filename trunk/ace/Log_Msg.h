@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_LOG_MSG_H)
+#ifndef ACE_LOG_MSG_H
 #define ACE_LOG_MSG_H
 
 // This stuff must come first to avoid problems with circular

@@ -16,7 +16,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TTY_IO_H)
+#ifndef ACE_TTY_IO_H
 #define ACE_TTY_IO_H
 
 #include "ace/OS.h"

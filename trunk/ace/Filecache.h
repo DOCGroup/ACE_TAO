@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_FILECACHE_H)
+#ifndef ACE_FILECACHE_H
 #define ACE_FILECACHE_H
 
 #include "ace/Mem_Map.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SVC_CONF_H)
+#ifndef ACE_SVC_CONF_H
 #define ACE_SVC_CONF_H
 
 // Globally visible macros, type decls, and extern var decls for

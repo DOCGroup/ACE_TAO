@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_DATE_TIME_H)
+#ifndef ACE_DATE_TIME_H
 #define ACE_DATE_TIME_H
 
 #include "ace/ACE.h"

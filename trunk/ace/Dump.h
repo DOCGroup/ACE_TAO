@@ -48,7 +48,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_DUMP_H)
+#ifndef ACE_DUMP_H
 #define ACE_DUMP_H
 
 #include "ace/Synch.h"

@@ -24,7 +24,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_FUNCTOR_H)
+#ifndef ACE_FUNCTOR_H
 #define ACE_FUNCTOR_H
 
 #include "ace/OS.h"
