@@ -1,0 +1,57 @@
+# $Id$
+
+	This directory will contain a simple, small-scale reliable
+multicast framework for ACE.  The framework is based on the ASX
+components of the ACE library: the protocol is implemented as a stack
+of interchangeable "modules", each one in charge of a very small task.
+For example, one module implements fragmentation and reassembly, other
+modules implement retransmission, send ACK and NAK messages, and
+maintain receiver membership.
+
+	The modules are replaced to achieve different levels of
+reliability.  For example, the retransmission module can be either the
+"Best_Effort", "Semi_Reliable" or "Reliable" implementation.  In the
+first case no retransmissions are performed, but lost messages are
+detected and reported to the receiver.  The "Semi_Reliable" case
+messages are held for a pre-specified amount of time, and
+re-transmited if requested, but it is possible to loose some messages
+if multiple re-transmissions fail.  As in the "Best_Effort" case the
+lost messages are detected and flagged to the application.  Finally
+in the "Reliable" mode the senders are flowed controlled until enough
+messages are successfully transmitted.
+
+	In general the stack looks like this:
+
+
+SENDER:
+
+----------------------------------------------------------------
+Buffering	:	Save lost messages
+Retransmission	:	Retransmit 
+----------------------------------------------------------------
+Fragmentation   :	Fragment messages in smaller chunks
+Reassembly	:	and ensure that the IOVMAX limit is not
+		:	reached
+----------------------------------------------------------------
+Tranport	:	Encapsulate the specific transport media
+		:	such as TCP/IP, ATM, or shared memory
+		:	Demuxes incoming data to the right chain
+		:	Change control messages and data messages
+		:	to the right dynamic types.
+----------------------------------------------------------------
+
+RECEIVER:
+
+----------------------------------------------------------------
+Lost detection	:	Detect lost messages and send control
+		:	messages back
+----------------------------------------------------------------
+Reassembly	:	Reassemble messages, fragment control
+Fragmentation	:	data
+----------------------------------------------------------------
+Transport	:	Group membership, ACT reception,
+		:	handle keep-alive messages...
+----------------------------------------------------------------
+
+
+@@ TODO: Piggybacking...
