@@ -2,7 +2,8 @@ Sun Jul 16 13:58:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/POA.h:
 	* tao/POA.cpp: Fixed a few compile errors from SunCC5 and Minimum
-	  CORBA builds. 
+	  CORBA builds. They were mostly due to mismatched exception
+	  specifications. 
 
 Fri Jul 14 21:37:16 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
