@@ -3,6 +3,7 @@ Fri Jan 26 09:07:14 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/DLL_Parser.h:
           Documented DLL IORs in more detail.
 
+        * tests/README:
         * tests/Forwarding/README:
         * tests/LongUpcalls/README:
         * tests/Object_Loader/README:
