@@ -1,3 +1,19 @@
+Sun Jul  4 17:59:10 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/MCast.cpp: 
+	  Added Multicast Pluggable Data Protocol classes.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/sfp.h:
+	  Added support for the Multicast data protocols.
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Pluggable/server.{h,cpp}: 
+	  Added handler for Multicast Pluggable Data Protocol and if given
+	  a multicast address on the command line to ftp it will multicast
+	  the file to that address. 
+
 Sun Jul  4 13:59:05 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Pluggable/ftp.{h,cpp}: 
