@@ -1,65 +1,87 @@
+Fri Aug 28 11:19:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Sequence.{i,cpp} (TAO_String_Manager::out):
+          uninlined to avoid use before definition.  It calls
+          CORBA::string_free (), which is defined in tao/ORB.i.
+          That file is included after Sequence.i:
+
+          tao/corba.h
+          [...]
+           tao/ORB.h
+            tao/corba.h
+            tao/Sequence.h
+             tao/Sequence.i        <==== called CORBA::string_free ()
+            tao/Sequence_T.h
+             tao/Sequence_T.i
+             tao/Sequence_T.cpp
+              tao/Sequence_T.h
+            tao/Object_KeyC.h
+             tao/Object_KeyC.i
+            tao/Union.h
+            tao/ORB.i              <==== CORBA::string_free () defined here
+
 Fri Aug 28 02:45:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/TIE/client.cpp (run_test): Fixed the use of explicit
- 	  template functions so that this test can work with the CC
- 	  compiler.
+        * tests/POA/TIE/client.cpp (run_test): Fixed the use of explicit
+          template functions so that this test can work with the CC
+          compiler.
 
 Thu Aug 27 21:48:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html:
-	* tao/ORB_Core.cpp (parse_args): Renamed the option
-	  -ORBlockfreedreactor of Resource_Factory to -ORBreactorlock.
-	  Valid options become "null"/"token".  Default is "token".
+        * docs/Options.html:
+        * tao/ORB_Core.cpp (parse_args): Renamed the option
+          -ORBlockfreedreactor of Resource_Factory to -ORBreactorlock.
+          Valid options become "null"/"token".  Default is "token".
 
 Thu Aug 27 20:09:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Interpreter.h:
-	  The TAO_attribute_calculator typedef had a default value. This
-	  is illegal. Thanks to John Mulhern for pointing this out.
+        * tao/IIOP_Interpreter.h:
+          The TAO_attribute_calculator typedef had a default value. This
+          is illegal. Thanks to John Mulhern for pointing this out.
 
 Thu Aug 27 20:01:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils/IOR-parser: Added a number of enhancements from Priya
- 	  Narasimhan <priya@lambda.ece.ucsb.edu> and cleaned up the code a
- 	  bit more to make it more ACE/TAO-like!
+        * utils/IOR-parser: Added a number of enhancements from Priya
+          Narasimhan <priya@lambda.ece.ucsb.edu> and cleaned up the code a
+          bit more to make it more ACE/TAO-like!
 
 Thu Aug 27 17:52:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/tie_si.cpp:
-	* TAO_IDL/be/be_visitor_interface/tie_si.cpp:
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
-	  The destructor for the _tie classes was trying to release an
-	  object of type POA_var; there is no need to do that.
+        * TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+          The destructor for the _tie classes was trying to release an
+          object of type POA_var; there is no need to do that.
 
 Thu Aug 27 17:20:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Param_Test/:
-		Modified the Makefiles and the following source files to
-		have the IDL-compiler-generated  stubs to have "Ser.h" &
-		"Ser.cpp" suffixes and the skeletons to have "Cli.h" &
-		"Cli.cpp". Just an example to show the newly added IDL
-		compiler options for optional file name endings.
+        * tests/Param_Test/:
+                Modified the Makefiles and the following source files to
+                have the IDL-compiler-generated  stubs to have "Ser.h" &
+                "Ser.cpp" suffixes and the skeletons to have "Cli.h" &
+                "Cli.cpp". Just an example to show the newly added IDL
+                compiler options for optional file name endings.
 
-	Modified Files:
-	Makefile any.h bd_long_seq.h bd_short_seq.h bd_str_seq.h
-	bd_string.h bd_struct_seq.h client.dsp client.h except.h
-	fixed_array.h fixed_struct.h helper.h nested_struct.h objref.h
-	objref_struct.h param_test_i.h server.dsp short.h tmplinst.cpp
-	typecode.h ub_any_seq.h ub_long_seq.h ub_objref_seq.h
-	ub_short_seq.h ub_str_seq.h ub_string.h ub_struct_seq.h
-	ulonglong.h var_array.h var_struct.h
+        Modified Files:
+        Makefile any.h bd_long_seq.h bd_short_seq.h bd_str_seq.h
+        bd_string.h bd_struct_seq.h client.dsp client.h except.h
+        fixed_array.h fixed_struct.h helper.h nested_struct.h objref.h
+        objref_struct.h param_test_i.h server.dsp short.h tmplinst.cpp
+        typecode.h ub_any_seq.h ub_long_seq.h ub_objref_seq.h
+        ub_short_seq.h ub_str_seq.h ub_string.h ub_struct_seq.h
+        ulonglong.h var_array.h var_struct.h
 
 Thu Aug 27 17:20:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/POA/Makefile (DIRS): Added TIE and Forwarding to the list
- 	  of directories that are built and tested.
+        * tests/POA/Makefile (DIRS): Added TIE and Forwarding to the list
+          of directories that are built and tested.
 
 Thu Aug 27 15:41:44 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp: Deleted some unnecessary
- 	ACE_DEBUG statements.  Cleaned up code.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp: Deleted some unnecessary
+        ACE_DEBUG statements.  Cleaned up code.
 
 Thu Aug 27 12:38:20 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
