@@ -314,14 +314,11 @@ private:
 class TAO_Default_Reactor : public ACE_Reactor
 {
   // = TITLE
+  //
   //   Force TAO to use Select Reactor.
 public:
-  // = Initialization and termination methods.
   TAO_Default_Reactor (void);
-  ~TAO_Default_Reactor (void);
-
-private:
-  ACE_Reactor_Impl *reactor_impl_;
+  virtual ~TAO_Default_Reactor (void);
 };
 
 class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
