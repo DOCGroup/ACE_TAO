@@ -51,9 +51,9 @@ Thread_Cancel: $(addprefix $(VDIR),$(CLIENT_OBJS))
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
 
-# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT DELETE THIS LINE -- depgen.pl uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
+.obj/Thread_Cancel.o .obj/Thread_Cancel.so .shobj/Thread_Cancel.o .shobj/Thread_Cancel.so:
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
