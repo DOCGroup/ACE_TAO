@@ -1,3 +1,10 @@
+Thu May 20 13:51:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: I forgot to put '/**/' between
+	  #include and <blah.h> which caused MSVC to generate warnings
+	  when checking file dependencies.  Thanks to Christian Schuderer
+	  <Christian.Schuderer@erl9.siemens.de> for reporting this.
+
 Thu May 20 13:52:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: build with threads if
