@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/DLL.h"
 
+#include "ace/ACE.h"
+
 ACE_RCSID(ace, DLL, "$Id$")
 
 // Default constructor. Also, by default, the object will be closed
