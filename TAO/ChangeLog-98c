@@ -1,3 +1,9 @@
+Wed Oct 07 11:33:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (state): Fully qualified the enums of the
+ 	  POA_Manager's Processing_State.  Thanks to John Morey
+ 	  <jmorey@tbi.com> for helping with this.
+
 Wed Oct  7 10:53:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Supplier_i.cpp: 
