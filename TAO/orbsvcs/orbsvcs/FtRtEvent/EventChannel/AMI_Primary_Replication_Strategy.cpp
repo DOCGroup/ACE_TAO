@@ -41,9 +41,9 @@ int  AMI_Primary_Replication_Strategy::release (void)
 }
 
 
-int AMI_Primary_Replication_Strategy::init(ACE_ENV_SINGLE_ARG_DECL)
+int AMI_Primary_Replication_Strategy::init()
 {
-    return this->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->activate();
 }
 
 int AMI_Primary_Replication_Strategy::svc()
@@ -127,7 +127,9 @@ AMI_Primary_Replication_Strategy::replicate_request(
                     CORBA::NO_MEMORY());
 
 
-   Request_Context_Repository().set_transaction_depth(0);
+   Request_Context_Repository().set_transaction_depth(0 ACE_ENV_ARG_PARAMETER);
+   ACE_CHECK;
+
    for (size_t i = 0; i < num_backups; ++i)  {
        ACE_TRY_NEW_ENV {
          PortableServer::ObjectId oid;

@@ -50,7 +50,7 @@ public:
    *
    */
   FtRtecEventChannelAdmin::EventChannel_ptr
-    activate(MEMBERSHIP membership ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    activate(MEMBERSHIP membership ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Registers a listener to accept the notication when this object

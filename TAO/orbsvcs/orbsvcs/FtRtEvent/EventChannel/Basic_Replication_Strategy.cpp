@@ -17,7 +17,9 @@ Basic_Replication_Strategy::Basic_Replication_Strategy()
 void
 Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
 {
-    FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number();
+    FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
     ACE_DEBUG((LM_DEBUG, "check_validity : sequence no = %d\n", sequence_num_));
 
     if (this->sequence_num_ == 0) {
@@ -48,8 +50,9 @@ Basic_Replication_Strategy::replicate_request(
   ACE_UNUSED_ARG(rollback);
   ACE_UNUSED_ARG(oid);
 
-    FTRT::TransactionDepth transaction_depth =
-      Request_Context_Repository().get_transaction_depth();
+  FTRT::TransactionDepth transaction_depth =
+    Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   GroupInfoPublisherBase * info_publisher = GroupInfoPublisher::instance();
   FtRtecEventChannelAdmin::EventChannel_var successor = info_publisher->successor();
@@ -62,7 +65,8 @@ Basic_Replication_Strategy::replicate_request(
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    Request_Context_Repository().set_transaction_depth(transaction_depth-1);
+    Request_Context_Repository().set_transaction_depth(transaction_depth-1 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
     if (transaction_depth > 1) {
       successor->set_update(state
@@ -72,6 +76,7 @@ Basic_Replication_Strategy::replicate_request(
       ACE_TRY {
         successor->oneway_set_update(state
           ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
       }
       ACE_CATCHANY {
       }
