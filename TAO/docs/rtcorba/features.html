@@ -48,7 +48,7 @@ Maps CORBA priorities directly to native priorities.</dd>
 <dd>
 Maps each individual native priority to a contiguous range of CORBA priorities,
 so that the complete CORBA priority range is used up for the mapping. See
-<tt>$TAO_ROOT/tao/Strategies/Linear_Priority_Mapping.cpp
+<tt>$TAO_ROOT/tao/RTCORBA/Linear_Priority_Mapping.cpp
 </tt>for
 more details.</dd>
 
@@ -112,8 +112,8 @@ below demonstrate how to perform each of these tasks.</li>
 <br><tt>TAO::PriorityMappingManager::_narrow (object.in ());</tt>
 <p>Overriding priority mapping/policy in effect with another ORB-defined
 mapping/policy combination:
-<br><tt>#include "tao/Strategies/Linear_Priority_Mapping.h"</tt>
-<br><tt>#include "tao/Strategies/Direct_Priority_Mapping.h"</tt>
+<br><tt>#include "tao/RTCORBA/Linear_Priority_Mapping.h"</tt>
+<br><tt>#include "tao/RTCORBA/Direct_Priority_Mapping.h"</tt>
 <br><tt>...</tt>
 <p><tt>RTCORBA::PriorityMapping *pm =</tt>
 <br><tt>new TAO_Linear_Priority_Mapping (policy);</tt>
@@ -730,7 +730,7 @@ POA without the network priority set on it.
 The RTCORBA to network priority mapping framework is similar to the RTCORBA
 to native thread priority mapping framework. As mentioned in section 2.1.2
 this is implemented by providing the native interface NetworkPriorityMapping.
-The native interface is implemented in the RTCORBAC.h as: 
+The native interface is implemented in the RTCORBAC.h as:
 
 <p><tt>typedef TAO_Network_Priority_Mapping
 NetworkPriorityMapping;</tt></dd>
