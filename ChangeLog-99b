@@ -1,3 +1,9 @@
+Sun Jan 24 20:25:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Map_Manager: Renamed methods that may become identical if
+ 	  INT_ID is the same as size_t.  Thanks to Ossama for helping with
+ 	  this.
+
 Sun Jan 24 19:46:55 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR.{h,i,cpp}:
