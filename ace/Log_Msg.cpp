@@ -1616,11 +1616,13 @@ ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
     template class ACE_Cleanup_Adapter<ACE_Log_Msg>;
 #else
 template class ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >;
 # endif /* ! ACE_MT_SAFE */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Log_Msg>
 #else
 #pragma instantiate ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_Recursive_Thread_Mutex> >
 # endif /* ! ACE_MT_SAFE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
