@@ -224,7 +224,10 @@ public:
     ACE_HANDLE handle (void) const;
     // I/O handle used for reading.
 
-  protected:    
+    // protected:    
+    //
+    // These two should really be protected.  But sometimes it
+    // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
 	    ACE_HANDLE handle,
 	    ACE_Message_Block &message_block,
@@ -232,7 +235,7 @@ public:
 	    const void* act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Read_Stream factory.
+    // ACE_Asynch_Read_Stream factory.  
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
@@ -240,6 +243,7 @@ public:
 			   u_long error = 0);
     // ACE_Proactor will call this method when the read completes. 
 
+  protected:    
     u_long bytes_to_read_;
     // Bytes requested when the asynchronous read was initiated.
 
@@ -314,7 +318,10 @@ public:
     ACE_HANDLE handle (void) const;
     // I/O handle used for writing.
 
-  protected:
+    // protected:    
+    //
+    // These two should really be protected.  But sometimes it
+    // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
 	    ACE_HANDLE handle,
 	    ACE_Message_Block &message_block,
@@ -322,7 +329,7 @@ public:
 	    const void* act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Write_Stream factory.
+    // ACE_Asynch_Write_Stream factory.  
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
@@ -330,6 +337,7 @@ public:
 			   u_long error = 0);
     // ACE_Proactor will call this method when the write completes. 
 
+  protected:    
     u_long bytes_to_write_;
     // The number of bytes which were requested at the start of the
     // asynchronous write.
@@ -396,7 +404,10 @@ public:
     friend class ACE_Asynch_Read_File;
     // The factory has special privileges.
     
-  protected:
+    // protected:    
+    //
+    // These two should really be protected.  But sometimes it
+    // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
 	    ACE_HANDLE handle,
 	    ACE_Message_Block &message_block,
@@ -406,7 +417,7 @@ public:
 	    u_long offset_high,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Read_File factory.
+    // ACE_Asynch_Read_File factory.  
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
@@ -470,7 +481,10 @@ public:
     friend class ACE_Asynch_Write_File;
     // The factory has special privileges.
     
-  protected:
+    // protected:    
+    //
+    // These two should really be protected.  But sometimes it
+    // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
 	    ACE_HANDLE handle,
 	    ACE_Message_Block &message_block,
@@ -480,7 +494,7 @@ public:
 	    u_long offset_high,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Write_File factory.
+    // ACE_Asynch_Write_File factory.  
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
@@ -556,7 +570,10 @@ public:
     ACE_HANDLE accept_handle (void) const;
     // I/O handle for the new connection.
     
-  protected:
+    // protected:    
+    //
+    // These two should really be protected.  But sometimes it
+    // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
 	    ACE_HANDLE listen_handle,
 	    ACE_HANDLE accept_handle,
@@ -565,7 +582,7 @@ public:
 	    const void* act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Accept factory.
+    // ACE_Asynch_Accept factory.  
     
     virtual void complete (u_long bytes_transferred,
 			   int success,
@@ -573,6 +590,7 @@ public:
 			   u_long error = 0);
     // ACE_Proactor will call this method when the accept completes.
     
+  protected:
     u_long bytes_to_read_;
     // Bytes requested when the asynchronous read was initiated.
 
@@ -674,7 +692,10 @@ public:
     u_long flags (void) const;
     // Flags which were passed into transmit file.
 
-  protected:
+    // protected:    
+    //
+    // These two should really be protected.  But sometimes it
+    // simplifies code to be able to "fake" a result.  Use carefully.
     Result (ACE_Handler &handler,
 	    ACE_HANDLE socket,
 	    ACE_HANDLE file,
@@ -687,7 +708,7 @@ public:
 	    const void *act,
 	    ACE_HANDLE event);
     // Constructor is protected since creation is limited to
-    // ACE_Asynch_Transmit_File factory.
+    // ACE_Asynch_Transmit_File factory.  
 
     virtual void complete (u_long bytes_transferred,
 			   int success,
@@ -695,6 +716,7 @@ public:
 			   u_long error = 0);
     // ACE_Proactor will call this method when the write completes. 
     
+  protected:
     ACE_HANDLE socket_;
     // Network I/O handle.
 

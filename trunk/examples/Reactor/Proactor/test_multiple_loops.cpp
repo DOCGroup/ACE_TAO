@@ -110,5 +110,10 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
   
   ACE_Thread_Manager::instance ()->wait ();
+
+  // Remove from reactor
+  ACE_Reactor::instance ()->remove_handler (&proactor, 
+                                            ACE_Event_Handler::DONT_CALL);
+
   return 0;
 }
