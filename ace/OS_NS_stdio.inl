@@ -709,14 +709,14 @@ ACE_OS::fgets (char *buf, int size, FILE *fp)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgets (buf, size, fp), char *, 0);
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FGETWS)
 ACE_INLINE wchar_t *
 ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fgets");
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetws (buf, size, fp), wchar_t *, 0);
 }
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
 #if !defined (ACE_WIN32)
 // Win32 implementation of fopen () is in OS_NS_stdio.cpp.
@@ -749,14 +749,14 @@ ACE_OS::fputs (const char *s, FILE *stream)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputs (s, stream), int, -1);
 }
 
-#if defined (ACE_HAS_WCHAR)
+#if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FPUTWS)
 ACE_INLINE int
 ACE_OS::fputs (const wchar_t *s, FILE *stream)
 {
   ACE_OS_TRACE ("ACE_OS::fputs");
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputws (s, stream), int, -1);
 }
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_HAS_WCHAR && !ACE_LACKS_FPUTWS */
 
 ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
