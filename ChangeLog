@@ -1,3 +1,8 @@
+Thu Nov  6 07:37:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/asnmp/smival.h:
+          Added os_include/os_stddef.h to get size_t
+
 Thu Nov  6 07:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Connection/blocking/SPIPE-acceptor.cpp:
