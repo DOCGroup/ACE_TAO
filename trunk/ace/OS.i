@@ -5131,6 +5131,9 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     return 0;
   else
 #if defined (ACE_PSOS_TM)  //JINLU
+    // @@ It would be good to rework this so the ACE_PSOS_TM specific
+    //    branch is not needed, but prying it out of ACE_LACKS_UNIX_SIGNALS
+    //    will take some extra work - deferred for now.
     return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) || !defined (ACE_LACKS_UNIX_SIGNALS)
 # if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS_SIGNALS)
@@ -7679,7 +7682,7 @@ ACE_OS::shm_open (const char *filename,
 ACE_INLINE void
 ACE_OS::tzset (void)
 {
-# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS)
+# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS)
 #   if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
 #   else
@@ -7687,13 +7690,13 @@ ACE_OS::tzset (void)
 #   endif /* ACE_WIN32 */
 # else
   errno = ENOTSUP;
-# endif /* !ACE_HAS_WINCE && !VXWORKS */
+# endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */
 }
 
 ACE_INLINE long
 ACE_OS::timezone (void)
 {
-# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS)
+# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS)
 #   if defined (ACE_WIN32)
   return ::_timezone;  // For Win32.
 #   elif defined(__Lynx__)
@@ -7707,7 +7710,7 @@ ACE_OS::timezone (void)
 #   endif
 # else
   ACE_NOTSUP_RETURN (-1);
-# endif /* !ACE_HAS_WINCE && !VXWORKS */
+# endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */
 }
 
 #if !defined (ACE_LACKS_DIFFTIME)
