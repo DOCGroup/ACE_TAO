@@ -11,6 +11,7 @@ IOStream_Test
 Map_Manager_Test
 Mem_Map_Test
 Message_Queue_Test
+Message_Queue_Notifications_Test
 Simple_Message_Block_Test
 Message_Block_Test
 MM_Shared_Memory_Test
