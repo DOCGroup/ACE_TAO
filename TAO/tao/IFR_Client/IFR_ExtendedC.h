@@ -65,19 +65,6 @@ TAO_NAMESPACE  CORBA
   // TAO_IDL - Generated from
   // be/be_visitor_typedef/typedef_ch.cpp:334
 
-  typedef CORBA::Short ValueModifier;
-  typedef CORBA::Short_out ValueModifier_out;
-
-  // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ValueModifier;
-
-  // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Visibility;
-
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:52
 

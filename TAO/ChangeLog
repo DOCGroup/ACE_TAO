@@ -1,3 +1,14 @@
+Thu Mar  6 11:35:10 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IFR_Client/IFR_ExtendedC.h:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+
+	  Removed duplicate declarations and definitions of the
+	  CORBA::_tc_{Visibility,ValueModifier} TypeCodes.  They are
+	  already declared in tao/corbafwd.h, and set in
+	  tao/IFR_Client/IFR_Client_Adapter_Impl.cpp.  Fixes "multiple
+	  definition" errors in static builds.
+
 Thu Mar 06 12:26:36 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
@@ -19,7 +30,7 @@ Wed Mar  5 16:09:19 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * tests/CodeSets/simple/server.cpp:
 
         Fix fuzz errors
-        
+
 Wed Mar  5 12:53:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO.dsp:
