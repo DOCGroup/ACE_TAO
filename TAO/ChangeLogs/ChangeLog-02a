@@ -1,3 +1,33 @@
+Sat Mar  9 20:02:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_Lite.cpp: 
+	* tao/IIOP_Transport.cpp:
+	* tao/Pluggable_Messaging.h: The state of the GIOP version that
+	  got shared between threads created problems if the threads
+	  processed messages of different GIOP versions. With muxed
+	  connections one could expect different GIOP versions on the same
+	  connection which is perfectly valid with latest CORBA specs. 
+
+	  Removed shared state information of the GIOP version from the
+	  GIOP_Message_Base class. All the state information is now on the
+	  stack of the thread processing the request.  This should fix
+	  [BUG 1159]. 
+	
+	* tao/TAO_Server_Request.cpp: If the upcall thread sends an
+	  exception to the client, we were creating a new output CDR
+	  stream instead of using the one that was already
+	  created. Removed creation of a new CDR stream. 
+
+	  The above two fixes should solve the problem reported in
+	  tao-users newsgroup under the thread "wide-strings in
+	  exceptions". Thanks to Val Dumiterscu
+	  <val.dumitrescu@am-beo.com> for reporting the problem and Duane
+	  Binder <duane.binder@veritas.com> for helping me to narrow down
+	  the problem. 
+
 Sat Mar  9 16:22:25 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* performance-tests/Latency/Thread_Per_Connection/Test.idl:

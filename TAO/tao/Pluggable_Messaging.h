@@ -36,7 +36,7 @@ class TAO_Queued_Data;
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
 // (1) Parametrize this class with the "Messaging Object". Then the
-//     implementations  can just redirect the request to the class
+//     implementations	can just redirect the request to the class
 //     that it has been specialised with
 // (2) Use a bridge pattern here ie. the interface exposed by this
 //     class will redirect the request to the implementation which
@@ -102,8 +102,8 @@ public:
    * number of bytes that needs to be read from the connection.
    */
   virtual int read_message (TAO_Transport *transport,
-                            int block = 0,
-                            ACE_Time_Value *max_wait_time = 0) = 0;
+			    int block = 0,
+			    ACE_Time_Value *max_wait_time = 0) = 0;
 
   /// Format the message in the <cdr>. May not be needed in
   /// general.
@@ -111,7 +111,7 @@ public:
 
   /// Do any initialisations that may be needed.
   virtual void init (CORBA::Octet major,
-                     CORBA::Octet minor) = 0;
+		     CORBA::Octet minor) = 0;
 
   /// Parse the incoming messages..
   virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
@@ -128,20 +128,20 @@ public:
    * 0 if there are no more messages in <incoming>.
   */
   virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *&qd) = 0;
+				    TAO_Queued_Data *&qd) = 0;
 
   /// Check whether the node <qd> needs consolidation from <incoming>
   virtual int consolidate_node (TAO_Queued_Data *qd,
-                                ACE_Message_Block &incoming) = 0;
+				ACE_Message_Block &incoming) = 0;
 
   /// @@Bala:Docu??
   virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd) = 0;
+				     const TAO_Queued_Data *sqd) = 0;
 
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_Queued_Data *qd) = 0;
+				       TAO_Queued_Data *qd) = 0;
 
 
   /// Parse the reply message that we received and return the reply
@@ -159,7 +159,7 @@ public:
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  virtual int is_ready_for_bidirectional (void) = 0;
+  virtual int is_ready_for_bidirectional (TAO_OutputCDR &msg) = 0;
 
   /// Reset the messaging the object
   virtual void reset (void) = 0;
