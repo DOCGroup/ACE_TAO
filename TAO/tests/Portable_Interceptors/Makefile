@@ -10,9 +10,11 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Dynamic\
-	Benchmark\
-	Service_Context_Manipulation
+DIRS  = \
+  Dynamic \
+  Benchmark \
+  Service_Context_Manipulation \
+  IORInterceptor
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
