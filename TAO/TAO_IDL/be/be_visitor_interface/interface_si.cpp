@@ -48,7 +48,34 @@ be_visitor_interface_si::visit_interface (be_interface *node)
 
   os = this->ctx_->stream ();
 
+  // determine if we are in some form of a multiple inheritance
+  if (node->traverse_inheritance_graph
+      (be_interface::in_mult_inheritance_helper, 0) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_si::visit_interface "
+                         "error determining mult inheritance\n"),
+                        -1);
+    }
+
   os->indent (); // start with whatever indentation level we are at
+  *os << "ACE_INLINE CORBA::Boolean" << be_nl;
+  *os << node->name () << "::in_mult_inheritance (void)" << be_nl
+      << "{" << be_idt_nl;
+  switch (node->in_mult_inheritance ())
+    {
+    case 0:
+      *os << "return 0;";
+      break;
+    case 1:
+      *os << "return 1;";
+      break;
+    default:
+      // error
+      return -1;
+    }
+  *os << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the

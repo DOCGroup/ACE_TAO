@@ -107,10 +107,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
-      << "CORBA::Environment &_tao_environment" << be_uidt
-      << ");\n" << be_uidt;
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
-  os->indent ();
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
       << ");\n" << be_uidt;
@@ -133,6 +132,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   os->indent ();
   *os << "static void _non_existent_skel (CORBA::ServerRequest &req, " <<
     "void *obj, void *context, CORBA::Environment &_tao_enviroment);\n\n";
+
+  // add a method that says whether we are involved in a multiple inheritance
+  // or not
+  os->indent ();
+  *os << "CORBA::Boolean in_mult_inheritance (void);\n\n";
 
   // generate skeletons for operations of our base classes. These skeletons
   // just cast the pointer to the appropriate type before invoking the call
