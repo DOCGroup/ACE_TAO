@@ -5,7 +5,6 @@
 #if !defined (ACE_LOCATOR_REQUEST_REPLY_C)
 #define ACE_LOCATOR_REQUEST_REPLY_C
 
-#define ACE_BUILD_DLL
 #include "Locator_Request_Reply.h"
 
 #if !defined (__ACE_INLINE__)
@@ -15,6 +14,7 @@
 #include "URL_Properties.h"
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"
+#include "ace/Auto_Ptr.h"
 
 int
 ACE_URL_Locator_Request::url_query (const int how,
@@ -94,7 +94,7 @@ ACE_URL_Locator_Request::encode (void)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::encode");
 
-  size_t buf_size = this->bsize ();
+  size_t buf_size = this->size ();
   size_t total_length = 0;
 
   ACE_NEW_RETURN (this->buffer_, char [buf_size], 0);
@@ -115,16 +115,22 @@ ACE_URL_Locator_Request::encode (void)
   // Encode valide pointer flag.
 
   if (this->seq1_ != 0)
-    total_length += ace_array_encode (this->buffer_ + total_length, *this->seq1_);
+    {
+      ENCODE_UINT32 (this->buffer_, total_length, this->seq1_->size ());
+      total_length += ace_array_encode (this->buffer_ + total_length, *this->seq1_);
+    }
   if (this->seq2_ != 0)
-    total_length += ace_array_encode (this->buffer_ + total_length, *this->seq2_);
+    {
+      ENCODE_UINT32 (this->buffer_, total_length, this->seq2_->size ());
+      total_length += ace_array_encode (this->buffer_ + total_length, *this->seq2_);
+    }
   if (this->offer_ != 0)
     total_length += this->offer_->encode (this->buffer_ + total_length);
 
   total_length += ACE_WString_Helper::encode (this->buffer_ + total_length,
-					      &this->id_);
+					      this->id_);
   total_length += ACE_WString_Helper::encode (this->buffer_ + total_length,
-					      &this->url_);
+					      this->url_);
 
   ACE_ASSERT (total_length == buf_size);
   return total_length;
@@ -137,48 +143,52 @@ ACE_URL_Locator_Request::decode (void *buffer)
 
   if (buffer == 0)
     return 0;
-  // Check if we have a buffer available.
-  delete [] this->buffer_;
-  this->buffer_ = (char*) buffer;
+  // Check if we have a valid buffer available.
 
-  size_t buf_size = 0;
+  char *cbuffer = (char *) buffer;
+
+  size_t buf_size;
   size_t total_length = 0;
   
-  DECODE_UINT32 (this->buffer_, total_length, buf_size);
+  DECODE_UINT32 (cbuffer, total_length, buf_size);
   // Decode length of buffer size first.
 
-  DECODE_UINT32 (this->buffer_, total_length, this->code_);
+  DECODE_UINT32 (cbuffer, total_length, this->code_);
   // Get the operation code.
   
-  DECODE_UINT32 (this->buffer_, total_length, this->how_);
+  DECODE_UINT32 (cbuffer, total_length, this->how_);
   // Decode selection criteria.
   
-  DECODE_UINT32 (this->buffer_, total_length, this->how_many_);
+  DECODE_UINT32 (cbuffer, total_length, this->how_many_);
   // Decode number of offers interested.
 
-  DECODE_UINT32 (this->buffer_, total_length, this->valid_ptr_);
+  DECODE_UINT32 (cbuffer, total_length, this->valid_ptr_);
   // Decode valide pointer flag.
 
-  if (this->valid_ptr_ | VALID_SEQ1 != 0)
+  if ((this->valid_ptr_ & VALID_SEQ1) != 0)
     {
-      ACE_NEW_RETURN (this->seq1_, ACE_URL_Property_Seq (1), 0);
-      total_length += ace_array_decode (this->buffer_ + total_length, *this->seq1_);
+      size_t n;
+      DECODE_UINT32 (cbuffer, total_length, n);
+      ACE_NEW_RETURN (this->seq1_, ACE_URL_Property_Seq (n), 0);
+      total_length += ace_array_decode (cbuffer + total_length, *this->seq1_);
     }
-  if (this->valid_ptr_ | VALID_SEQ2 != 0)
+  if ((this->valid_ptr_ & VALID_SEQ2) != 0)
     {
-      ACE_NEW_RETURN (this->seq2_, ACE_URL_Property_Seq (1), 0);
-      total_length += ace_array_decode (this->buffer_ + total_length, *this->seq2_);
+      size_t n;
+      DECODE_UINT32 (cbuffer, total_length, n);
+      ACE_NEW_RETURN (this->seq2_, ACE_URL_Property_Seq (n), 0);
+      total_length += ace_array_decode (cbuffer + total_length, *this->seq2_);
     }
-  if (this->valid_ptr_ | VALID_OFFER != 0)
+  if ((this->valid_ptr_ & VALID_OFFER) != 0)
     {
       ACE_NEW_RETURN (this->offer_, ACE_URL_Offer, 0);
-      total_length += this->offer_->decode (this->buffer_ + total_length);
+      total_length += this->offer_->decode (cbuffer + total_length);
     }
   
-  total_length += ACE_WString_Helper::decode (this->buffer_ + total_length);
-  this->id_ = ACE_WString ((ACE_USHORT16 *) (this->buffer_ + total_length));
-  total_length += ACE_WString_Helper::decode (this->buffer_ + total_length);
-  this->url_ = ACE_WString ((ACE_USHORT16 *) (this->buffer_ + total_length));
+  this->id_ = ACE_WString ((ACE_USHORT16 *) (cbuffer + total_length));
+  total_length += ACE_WString_Helper::decode (cbuffer + total_length);
+  this->url_ = ACE_WString ((ACE_USHORT16 *) (cbuffer + total_length));
+  total_length += ACE_WString_Helper::decode (cbuffer + total_length);
 
   ACE_ASSERT (total_length == buf_size);
   return total_length;
@@ -186,9 +196,9 @@ ACE_URL_Locator_Request::decode (void *buffer)
 
 
 size_t
-ACE_URL_Locator_Request::bsize (void)
+ACE_URL_Locator_Request::size (void)
 {
-  ACE_TRACE ("ACE_URL_Locator_Request::bsize");
+  ACE_TRACE ("ACE_URL_Locator_Request::size");
 
   size_t total_length = 5 * sizeof (ACE_UINT32);
   // There are 5 UINT32 variables at the beginning
@@ -201,21 +211,21 @@ ACE_URL_Locator_Request::bsize (void)
   if (this->seq1_ != 0)
     {
       this->valid_ptr_ |= VALID_SEQ1;
-      total_length += ace_array_bsize (*this->seq1_);
+      total_length += ace_array_size (*this->seq1_);
     }
   if (this->seq2_ != 0)
     {
       this->valid_ptr_ |= VALID_SEQ2;
-      total_length += ace_array_bsize (*this->seq2_);
+      total_length += ace_array_size (*this->seq2_);
     }
   if (this->offer_ != 0)
     {
       this->valid_ptr_ |= VALID_OFFER;
-      total_length += this->offer_->bsize ();
+      total_length += this->offer_->size ();
     }
   
-  total_length += ACE_WString_Helper::bsize (&this->id_);
-  total_length += ACE_WString_Helper::bsize (&this->url_);
+  total_length += ACE_WString_Helper::size (this->id_);
+  total_length += ACE_WString_Helper::size (this->url_);
 
   return total_length;
 }
@@ -225,50 +235,49 @@ ACE_URL_Locator_Request::dump (void) const
 {
   //ACE_TRACE ("ACE_URL_Locator_Request::dump");
 
+  size_t i;
+
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  size_t i;
-  
-  switch (this->code_)
-    {
-    case ACE_URL_Locator::QUERY:
-      ACE_DEBUG ((LM_DEBUG, "Query Request:\nSelection: "));
-      switch (this->how_)
-	{
-	case ACE_URL_Locator::NONE:
-	  ACE_DEBUG ((LM_DEBUG, "NONE.\n"));
-	  break;
-	case ACE_URL_Locator::SOME:
-	  ACE_DEBUG ((LM_DEBUG, "SOME.\n"));
-	  break;
-	case ACE_URL_Locator::ALL:
-	  ACE_DEBUG ((LM_DEBUG, "ALL.\n"));
-	  break;
-	default:
-	  ACE_DEBUG ((LM_DEBUG, "Invalid Selection??\n"));
-	  break;
-	}
-      ACE_DEBUG ((LM_DEBUG, "At most %d reply.\n", this->how_many_));
-      for (i = 0; i < this->seq1_->size (); i++)
+  if (this->code_ < ACE_URL_Locator::INVALID_OPERATION)
+    ACE_DEBUG ((LM_DEBUG, "%s Request:\n", ACE_URL_Locator::opname[this->code_]));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Invalid Operation: %d\n", this->code_));
+
+  if (this->how_ < ACE_URL_Locator::INVALID_SELECTION)
+    ACE_DEBUG ((LM_DEBUG, "Select: %s\n", ACE_URL_Locator::selection_name[this->how_]));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Invalid selection method: %d\n", this->how_));
+
+  ACE_DEBUG ((LM_DEBUG, "At most %d reply.\n", this->how_many_));
+
+  ACE_DEBUG ((LM_DEBUG, "Valid pointer pattern: %x\n", this->valid_ptr_));
+
+  ACE_DEBUG ((LM_DEBUG, "Property sequence 1: %x\n", this->seq1_));
+  if (this->seq1_ != 0)
+    for (i = 0; i < this->seq1_->size (); i++)
       (*this->seq1_)[i].dump ();
-      break;
-    case ACE_URL_Locator::EXPORT:
-      ACE_DEBUG ((LM_DEBUG, "Export Request:\n"));
-      break;
-    case ACE_URL_Locator::WITHDRAW:
-      ACE_DEBUG ((LM_DEBUG, "Withdraw Request:\n"));
-      break;
-    case ACE_URL_Locator::DESCRIBE:
-      ACE_DEBUG ((LM_DEBUG, "Describe Request:\n"));
-      break;
-    case ACE_URL_Locator::MODIFY:
-      ACE_DEBUG ((LM_DEBUG, "Modify Request:\n"));
-      break;
-    default:
-      // Invalid data encountered. Stop encoding now.
-      ACE_DEBUG ((LM_DEBUG, "Invalid Request.\n"));
-      break;
-    }
+
+  ACE_DEBUG ((LM_DEBUG, "Property sequence 2: %x\n", this->seq2_));
+  if (this->seq2_ != 0)
+    for (i = 0; i < this->seq2_->size (); i++)
+      (*this->seq2_)[i].dump();
+
+  ACE_DEBUG ((LM_DEBUG, "Offer: %x\n", this->offer_));
+  if (this->offer_ != 0)
+    this->offer_->dump ();
+
+  if (this->id_.length () > 0)
+    ACE_DEBUG ((LM_DEBUG, "Offer ID: %s\n",
+		ACE_Auto_Basic_Array_Ptr<char> (this->id_.char_rep ()).get ()));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Offer ID: \"\"\n"));
+
+  if (this->url_.length () > 0)
+    ACE_DEBUG ((LM_DEBUG, "URL: %s\n",
+		ACE_Auto_Basic_Array_Ptr<char> (this->url_.char_rep ()).get ()));
+  else
+    ACE_DEBUG ((LM_DEBUG, "URL: \"\"\n"));
   
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -312,7 +321,7 @@ ACE_URL_Locator_Reply::encode (void)
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::encode");
 
-  size_t buf_size = this->bsize ();
+  size_t buf_size = this->size ();
   size_t total_length = 0;
 
   ACE_NEW_RETURN (this->buffer_, char [buf_size], 0);
@@ -332,8 +341,16 @@ ACE_URL_Locator_Reply::encode (void)
   ENCODE_UINT32 (this->buffer_, total_length, this->valid_ptr_);
   // Encode valid pointers mask.
 
-  // Encode request for network communication.  If succeed,
-  // returns the size of the buffer, otherwise, return 0.
+  if (this->offer_ != 0)
+    total_length += this->offer_->encode (this->buffer_ + total_length);
+
+  if (this->offers_ != 0)
+    {
+      ENCODE_UINT32 (this->buffer_, total_length, this->offers_->size ());
+      total_length += ace_array_encode (this->buffer_ + total_length, *this->offers_);
+    }
+
+  ACE_ASSERT (total_length == buf_size);
   return 0;
 }
  
@@ -342,15 +359,52 @@ ACE_URL_Locator_Reply::decode (void *buffer)
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::decode");
 
-  // Restore from network data.  Returns size of the buffer
-  // if succeed, 0 otherwise.
+  if (buffer == 0)
+    return 0;
+  // Check if we have a buffer available.
+
+  char *cbuffer = (char *) buffer;
+
+  size_t buf_size;
+  size_t total_length = 0;
+
+  DECODE_UINT32 (cbuffer, total_length, buf_size);
+  // Get the length of the buffer first.
+
+  DECODE_UINT32 (cbuffer, total_length, this->code_);
+  // Decode Op code.
+
+  DECODE_UINT32 (cbuffer, total_length, this->status_);
+  // Decode Op result status.
+
+  DECODE_UINT32 (cbuffer, total_length, this->num_offers_);
+  // Decode number of offers in this->offers_.
+
+  DECODE_UINT32 (cbuffer, total_length, this->valid_ptr_);
+  // Decode valid pointers mask.
+
+  if ((this->valid_ptr_ & VALID_OFFER) != 0)
+    {
+      ACE_NEW_RETURN (this->offer_, ACE_URL_Offer, 0);
+      total_length += this->offer_->decode (cbuffer + total_length);
+    }
+
+  if ((this->valid_ptr_ & VALID_OFFERS) != 0)
+    {
+      size_t n;
+      DECODE_UINT32 (cbuffer, total_length, n);
+      ACE_NEW_RETURN (this->offers_, ACE_URL_Offer_Seq (n), 0);
+      total_length += ace_array_decode (cbuffer + total_length, *this->offers_);
+    }
+  
+  ACE_ASSERT (total_length ==buf_size);
   return 0;
 }
  
 size_t
-ACE_URL_Locator_Reply::bsize (void)
+ACE_URL_Locator_Reply::size (void)
 {
-  ACE_TRACE ("ACE_URL_Locator_Reply:bsize");
+  ACE_TRACE ("ACE_URL_Locator_Reply:size");
 
   size_t total_length = 5 * sizeof (ACE_UINT32);
   // size for 5 ACE_UINT32 objects: <buffer size>, <code_>,
@@ -360,12 +414,12 @@ ACE_URL_Locator_Reply::bsize (void)
   if (this->offer_ != 0)
     {
       this->valid_ptr_ |= VALID_OFFER;
-      total_length += this->offer_->bsize ();
+      total_length += this->offer_->size ();
     }
   if (this->offers_ != 0)
     {
       this->valid_ptr_ |= VALID_OFFERS;
-      total_length += ace_array_bsize (this->offers_);
+      total_length += ace_array_size (*this->offers_);
     }
   return total_length;
 }
@@ -375,5 +429,31 @@ ACE_URL_Locator_Reply::dump (void) const
 {
   //ACE_TRACE ("ACE_URL_Locator_Reply::dump");
 
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  if (this->code_ < ACE_URL_Locator::INVALID_OPERATION)
+    ACE_DEBUG ((LM_DEBUG, "Original request: %s\n", ACE_URL_Locator::opname[this->code_]));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Invalid Original Request: %d\n", this->code_));
+
+  if (this->status_ < ACE_URL_Locator::MAX_URL_ERROR)
+    ACE_DEBUG ((LM_DEBUG, "Reply status: %s\n", ACE_URL_Locator::err_name[this->status_]));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Invalid reply status: %d\n", this->status_));
+
+  ACE_DEBUG ((LM_DEBUG, "Number of offers: %d\n", this->num_offers_));
+
+  ACE_DEBUG ((LM_DEBUG, "Valid pointer pattern: %x\n", this->valid_ptr_));
+
+  ACE_DEBUG ((LM_DEBUG, "Offer: %x\n", this->offer_));
+  if (this->offer_ != 0)
+    this->offer_->dump ();
+
+  ACE_DEBUG ((LM_DEBUG, "Offer sequence: %x\n", this->offers_));
+  if (this->offers_ != 0)
+    for (size_t i = 0; i < this->offers_->size (); i++)
+      (*this->offers_)[i].dump();
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 #endif /* ACE_LOCATOR_REQUEST_REPLY_C */

@@ -22,13 +22,16 @@
 
 #define ACE_OFFER_ID_LENGTH 21
 
-class ACE_Export ACE_ID_Generator
-// Nanbor, please make sure you use the official ACE "= TITLE" syntax
-// here.  Also, what is "beckry's algorithm?"  Do you mean "Berkeley's
-// algorithm?"
-// Generate an offer ID according to current time and
-// avoid duplicate ID.  Using a similar method like 
-// beckry's algorithm.
+class ACE_ID_Generator
+  // = TITLE
+  //     An unique ID generator.  
+  //
+  // = DESCRIPTION
+
+  //     Generate an offer ID according to current time and avoid
+  //     duplicate ID.  It guarantees ID uniqueness within a process,
+  //     i.e. no two threads may get the same ID string.  Using a
+  //     similar method like the backery algorithm.
 {
 public:
   static char *get_new_id (char *id);

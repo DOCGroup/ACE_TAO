@@ -20,7 +20,7 @@
 
 #include "URL_Properties.h"
 
-class ACE_Export ACE_URL_Locator
+class ACE_SVC_Export ACE_URL_Locator
   // = TITLE
   //     Abstract Base class designates what interfaces a URL_Locator
   //     should provide.
@@ -36,7 +36,7 @@ public:
   // Request type
   enum ACE_URL_Locator_Op_Type
   {
-    QUERY,
+    QUERY = 0,
     EXPORT,
     WITHDRAW,
     DESCRIBE,
@@ -44,18 +44,24 @@ public:
     INVALID_OPERATION		// LAST
   };
 
+  static const char * const opname[];
+  // Human Readable operation name.
+  
   // = Specify how to select offers.
   enum ACE_Selection_Criteria
   { 
-    NONE,			// URL that contains none of the properties.
+    NONE = 0,			// URL that contains none of the properties.
     SOME,			// URL that contains some of the properties.
     ALL,			// URL that contains all of the properties.
     INVALID_SELECTION		// Invalid.
   };
 
+  static const char * const selection_name[];
+
   enum ACE_URL_Locator_Error
     // errno will set to one of these value.
   {
+    OK,				// Everything is fine.
     OFFER_EXIST,		// trying to register an offer.
 				// that is already exist in repository.
     NO_SUCH_OFFER,		// No such offer in the repository.
@@ -64,7 +70,10 @@ public:
     UNKNOWN,			// Unknown error.
     MAX_URL_ERROR
   };
-  // Possible error code of URL_Locator
+  // Possible error code of URL_Locator.
+
+  static const char * const err_name[];
+  // Human readable error status.
 
   virtual ~ACE_URL_Locator (void) = 0;
   // Default destructor.
@@ -91,7 +100,7 @@ public:
   // Query a specific offer.
 
   virtual int modify_offer (const ACE_WString &offer_id,
-			    const char *url = 0,
+			    const ACE_WString *url = 0,
 			    const ACE_URL_Property_Seq *del = 0,
 			    const ACE_URL_Property_Seq *modify = 0) = 0;
   // Modify a previously registered offer.
