@@ -2,6 +2,8 @@
 
 #include "DomainApplicationManager_Impl.h"
 
+#include "Deployment_Configuration.h"
+
 //===============================================================
 //============   DomainApplicationManager_Impl  =================
 //===============================================================
@@ -10,11 +12,13 @@ CIAO::DomainApplicationManager_Impl::
 DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   	                           PortableServer::POA_ptr poa,
                                Deployment::TargetManager_ptr manager,
-                               Deployment::DeploymentPlan & plan)
+                               Deployment::DeploymentPlan & plan,
+                               ACE_CString & deployment_file)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     target_manager_ (manager),
-    plan_ (plan)
+    plan_ (plan),
+    deployment_file_ (deployment_file)
 {
   // @@ 
 }
@@ -34,6 +38,12 @@ init (int num_child_plans, const ACE_CString * node_manager_names)
   //this->node_manager_names_ = node_manager_names;
 
   return 1;
+}
+
+
+bool check_validity ()
+{
+  return true;
 }
 
 
