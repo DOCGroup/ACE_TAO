@@ -52,7 +52,7 @@ Tue Nov  9 15:12:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
   
           in all generated header files. This will restore the original
 	  value even if it was modified from the default. Also removed
-	  the first half of the pair from generated *_S.cpp file - it
+	  the first half of the pair from generated *S_T.cpp file - it
 	  is unneeded.
 	  Thanks to David Hauck <davidh@realtimeint.com> and
 	  Jovan Kilibarda <jovank@realtimeint.com> for
