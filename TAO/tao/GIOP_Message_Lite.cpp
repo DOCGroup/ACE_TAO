@@ -1669,6 +1669,16 @@ TAO_GIOP_Message_Lite::set_queued_data_from_message_header (
   ACE_UNUSED_ARG (mb);
 }
 
+void
+TAO_GIOP_Message_Lite::set_request_id_from_peek (
+  TAO_Queued_Data* qd,
+  const ACE_Message_Block* mb
+) const
+{
+  ACE_UNUSED_ARG (qd);
+  ACE_UNUSED_ARG (mb);
+}
+
 int
 TAO_GIOP_Message_Lite::check_for_valid_header (
   const ACE_Message_Block &mb

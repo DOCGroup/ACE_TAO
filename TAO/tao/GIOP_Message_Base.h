@@ -125,6 +125,11 @@ public:
     const ACE_Message_Block &mb) const;
 
 
+  /// Peek at the request ID and load it into the queued data.
+  virtual void set_request_id_from_peek (
+    TAO_Queued_Data* qd,
+    const ACE_Message_Block* mb) const;
+
 
   /// Parse the reply message that we received and return the reply
   /// information through @a reply_info
