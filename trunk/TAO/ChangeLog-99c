@@ -1,3 +1,13 @@
+Wed Sep 15 21:40:21 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Invocation.cpp:
+	  Added a missing return statement.
+
+	* tao/TAOC.h:
+	  Included "varout.h" which wasn't getting included on vxworks
+	  (because it is included through other includes from a template cpp file).
+	
+
 Wed Sep 15 17:26:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/DsLogAdmin.idl:
