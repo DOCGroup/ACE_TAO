@@ -1,3 +1,18 @@
+Tue Jun 15 15:27:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        *  Dnc/NodeApplication/NodeApplication.cpp
+        *  Dnc/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        *  Dnc/NodeApplicationManager/NodeApplicationManager_Impl.h
+        *  Dnc/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        *  Dnc/NodeManager/NodeDaemon_Impl.cpp
+        *  Dnc/NodeManager/NodeDaemon_Impl.h
+        *  Dnc/NodeManager/Node_Daemon.cpp
+
+           Fixed memory leak problems. Now "NodeDaemon" process and
+           "NodeApplication" process should have no memomry leak problem.
+           Further test will be based on deploying and tearing down a
+           deploymentplan many times and try to find memory leak.
+
 Tue Jun 15 10:48:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         *  DnC/RepositoryManager/Repository_Manager.cpp:
