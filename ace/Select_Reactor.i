@@ -123,8 +123,8 @@ ACE_Select_Reactor::cancel_timer (ACE_Event_Handler *handler,
 				  int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Select_Reactor::cancel_timer");
-  return this->timer_queue_->cancel (handler, 
-				     dont_call_handle_close);
+  return this->timer_queue_ != 0 && 
+    this->timer_queue_->cancel (handler, dont_call_handle_close);
 }
 
 ACE_INLINE int
