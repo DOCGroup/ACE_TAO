@@ -382,8 +382,41 @@ int be_visitor_args_compiled_marshal_cs::visit_predefined_type (be_predefined_ty
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
-          *os << arg->local_name ();
-          break;
+          switch (node->pt ())
+            {
+            case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_any:
+            case AST_PredefinedType::PT_long:
+            case AST_PredefinedType::PT_ulong:
+            case AST_PredefinedType::PT_longlong:
+            case AST_PredefinedType::PT_ulonglong:
+            case AST_PredefinedType::PT_short:
+            case AST_PredefinedType::PT_ushort:
+            case AST_PredefinedType::PT_float:
+            case AST_PredefinedType::PT_double:
+            case AST_PredefinedType::PT_longdouble:
+              *os << arg->local_name ();
+              break;
+            case AST_PredefinedType::PT_char:
+              *os << "CORBA::Any::to_char (" << arg->local_name () << ")";
+              break;
+            case AST_PredefinedType::PT_wchar:
+              *os << "CORBA::Any::to_wchar (" << arg->local_name () << ")";
+              break;
+            case AST_PredefinedType::PT_boolean:
+              *os << "CORBA::Any::to_boolean (" << arg->local_name () << ")";
+              break;
+            case AST_PredefinedType::PT_octet:
+              *os << "CORBA::Any::to_octet (" << arg->local_name () << ")";
+              break;
+            default:
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_operation_rettype_compiled_marshal_cs::"
+                                 "visit_array - "
+                                 "Bad predefined type\n"),
+                                -1);
+            }
+           break;
         case AST_Argument::dir_OUT:
           switch (node->pt ())
             {
