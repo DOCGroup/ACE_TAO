@@ -85,9 +85,9 @@ acquire_release (void)
   // To see if we really are the only holder of the mutex below,
   // we'll try to create a file with exclusive access. If the file
   // already exists, we're not the only one holding the mutex.
-  char mutex_check[MAXNAMLEN];
-  ACE_OS::strcpy (mutex_check, mutex_name);
-  ACE_OS::strcat (mutex_check, ACE_TEXT ("_checker"));
+  char mutex_check[MAXPATHLEN+1];
+  ACE_OS::strncpy (mutex_check, mutex_name, MAXPATHLEN);
+  ACE_OS::strncat (mutex_check, ACE_TEXT ("_checker"), MAXPATHLEN);
 
   // Grab the lock
   ACE_ASSERT (mutex.acquire () == 0);
@@ -151,6 +151,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_START_TEST (ACE_TEXT ("Process_Mutex_Test"));
+#     if !defined( ACE_HAS_SYSV_IPC) || defined( ACE_USES_MUTEX_FOR_PROCESS_MUTEX )
+      // When Process_Mutex is pthreads based, then the owner of mutex destroys it
+      // in destructor. This may disturb the other processes which still uses the
+      // mutex. It is safer then to hold the mutex in main process, and destroy it after 
+      // children finish. This is temporary solution, and in future pthread base 
+      // Process_Mutex shall control the destruction of mutex better.
+      ACE_Process_Mutex mutex( ACE_TEXT_CHAR_TO_TCHAR( mutex_name ) );
+#     endif
       ACE_INIT_LOG ("Process_Mutex_Test-children");
 
       ACE_Process_Options options;
