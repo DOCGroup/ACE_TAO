@@ -1,3 +1,11 @@
+Mon May  8 11:02:49 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/CE-status.txt:
+
+          I will not get a chance to update this before the beta, so
+          I just put in a note mentioning that it is out of date and
+          will be updated next time.
+
 Mon May  8 12:30:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_kcc.GNU: Added
