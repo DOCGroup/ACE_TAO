@@ -23,6 +23,11 @@
 // types - some are specifically defined in DynUnion_i.cpp.
 
 template <class Type>
+DU_Extractor<Type>::~DU_Extractor ()
+{
+}
+
+template <class Type>
 CORBA::Boolean
 DU_Extractor<Type>::check_match (const CORBA_Any& inside_any,
                                  const CORBA_Any& outside_any)
