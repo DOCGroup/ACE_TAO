@@ -38,10 +38,6 @@ $MODULE='ACE_wrappers';
 # Find out the command name.
 $CMD = basename($0);
 
-$single_threaded = 0;
-$minimum_corba = 0;
-$ami = 0;
-$smart_proxies = 0;
 $dont_update = 0;
 $dont_run = 0;
 $pre_realclean = 0;
@@ -49,6 +45,7 @@ $post_realclean = 0;
 $report_success = 0;
 $debug = 0;
 @BUILD_LIST= ();
+@CONFIGURATION_OPTIONS = ();
 
 @ARGS = ();
 while ($#ARGV >= 0) {
@@ -56,16 +53,33 @@ while ($#ARGV >= 0) {
     push @ARGS, $ARGV[0];
     shift;
   } elsif ($ARGV[0] eq "-single_threaded") {
-    $single_threaded = 1;
+    print STDERR "$CMD: obsolete option $ARGV[0], "
+      ."please use -config instead\n";
+    push @CONFIGURATION_OPTIONS, 'ST';
     shift;
   } elsif ($ARGV[0] eq "-minimum_corba") {
-    $minimum_corba = 1;
+    print STDERR "$CMD: obsolete option $ARGV[0], "
+      ."please use -config instead\n";
+    push @CONFIGURATION_OPTIONS, 'MINIMUM';
     shift;
   } elsif ($ARGV[0] eq "-ami") {
-    $ami =1;
+    print STDERR "$CMD: obsolete option $ARGV[0], "
+      ."please use -config instead\n";
+    push @CONFIGURATION_OPTIONS, 'AMI';
     shift;
   } elsif ($ARGV[0] eq "-smart_proxies") {
-    $smart_proxies = 1;
+    print STDERR "$CMD: obsolete option $ARGV[0], "
+      ."please use -config instead\n";
+    push @CONFIGURATION_OPTIONS, 'SMART_PROXIES';
+    shift;
+  } elsif ($ARGV[0] eq "-static") {
+    print STDERR "$CMD: obsolete option $ARGV[0], "
+      ."please use -config instead\n";
+    push @CONFIGURATION_OPTIONS, 'STATIC';
+    shift;
+  } elsif ($ARGV[0] eq "-config") {
+    shift;
+    push @CONFIGURATION_OPTIONS, $ARGV[0];
     shift;
   } elsif ($ARGV[0] eq "-build_list") {
     shift;
@@ -129,10 +143,10 @@ if ($debug) {
   print "MAIL = $MAIL\n";
   print "ACE_ROOT = $ENV{ACE_ROOT}\n";
   print "TAO_ROOT = $ENV{TAO_ROOT}\n";
+  print "CONFIGURATION_OPTIONS = ", @CONFIGURATION_OPTIONS, "\n";
 }
 
 push @INC, $CHECKOUT . '/' . $MODULE . '/bin';
-require run_all_list;
 
 if ($#BUILD_LIST == -1) {
   @BUILD_LIST=
@@ -142,19 +156,41 @@ if ($#BUILD_LIST == -1) {
      'apps/gperf',
      'TAO');
 }
-if ($debug) {
-
-  @BUILD_LIST = ('ace');
-  @RUN_LIST = ('TAO/tests/OctetSeq , run_test.pl');
-  @SINGLE_THREADED_LIST = ('TAO/tests/OctetSeq , run_test.pl');
-  @MINIMUM_CORBA_LIST = ('TAO/tests/OctetSeq , run_test.pl');
-  $ADMIN = $ENV{'LOGNAME'};
-
-}
 
 sub mydie {
   unlink $disable_file;
   die $_ . "\n";
+}
+
+@RUN_LIST = ();
+
+if ($debug) {
+
+  @BUILD_LIST = ('ace');
+  @RUN_LIST = ('TAO/tests/OctetSeq/run_test.pl');
+  $ADMIN = $ENV{'LOGNAME'};
+
+} else {
+  my $line;
+  open (LIST, "<".$CHECKOUT . '/' . $MODULE . '/bin/auto_run_tests.lst')
+    || mydie "Cannot open auto_run_tests list\n";
+
+  LIST_ELEMENT: while (<LIST>) {
+    # ignore comments and blank lines
+    next if (/^\#/ || /^\s*$/);
+
+    chomp;
+    my @stuff = split ":";
+
+    foreach my $config (@CONFIGURATION_OPTIONS) {
+      if (/$config/) {
+	next LIST_ELEMENT;
+      }
+    }
+    my $program = shift @stuff;
+    $program =~ s/\s*//g;  #remove any extra whitepace
+    push @RUN_LIST, $program;
+  }
 }
 
 sub report_errors {
@@ -213,7 +249,7 @@ if (-f $disable_file) {
 }
 
 open (DISABLE, '>' . $disable_file)
-    || die "cannot open disable file";
+    || die "cannot open disable file <$disable_file>\n";
 print DISABLE "auto_compile <$date> is running\n";
 close (DISABLE)
     || die "cannot close disable file";
@@ -375,22 +411,18 @@ foreach $i (@BUILD_LIST) {
 print LOG "#################### Tests\n";
 
 if ($dont_run == 0) {
-  @LIST = @RUN_LIST;
-  if ($single_threaded) {
-    @LIST = @SINGLE_THREADED_LIST;
-  } elsif ($minimum_corba) {
-    @LIST = @MINIMUM_CORBA_LIST;
-  } elsif ($ami) {
-      @LIST = @AMI_CORBA_LIST;
-  }
+  foreach my $i (@RUN_LIST) {
 
-  foreach $i (@LIST) {
-    local @test_info = split (/\ \,\ /, $i);
-    local $directory = $test_info[0];
-    local $program = $test_info[1];
+    local $directory = '.';
+    local $program = $i;
+
+    if ($i =~ /(.*)\/([^\/]*)$/) {
+        $directory = $1;
+        $program = $2;
+    }
 
     $date = localtime;
-    print LOG "$CMD: =============================================\n";
+    print LOG "\n\n$CMD: =============================================\n";
     print LOG "$CMD: running $program in $directory at ", $date, "\n";
     local $subdir =
         $CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;

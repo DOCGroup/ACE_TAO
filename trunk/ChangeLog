@@ -1,3 +1,19 @@
+Tue Sep 26 10:09:32 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Modified to use the auto_run_tests.lst file to select the list
+          of tests to run.
+          Add new -config option to disable one or more tests, this will
+          allow us select new configurations that disable one or more
+          tests without requiring changes to the auto_compile script.
+
+        * bin/auto_run_tests.lst:
+          Disable some tests in STATIC builds and under linux.
+
+        * bin/run_all_list.pm:
+          This file is no longer used by auto_compile, add comments to
+          that effect.
+
 Tue Sep 26 11:51:27 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.h: Add #include "ace/config-all.h" to be sure that
@@ -6,34 +22,34 @@ Tue Sep 26 11:51:27 2000  Steve Huston  <shuston@riverace.com>
 
 Mon Sep 25 16:00:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.h: Clarify that the ACE_Auto_Event and ACE_Manual_Event
-	  classes only support USYNC_PROCESS on Win32.  Thanks to Andreas
- 	  Schuelke <Andreas.Schuelke@med.siemens.de> for motivating this
- 	  change.
+        * ace/Synch.h: Clarify that the ACE_Auto_Event and ACE_Manual_Event
+          classes only support USYNC_PROCESS on Win32.  Thanks to Andreas
+          Schuelke <Andreas.Schuelke@med.siemens.de> for motivating this
+          change.
 
 Mon Sep 25 23:03:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
+        * bin/run_all_list.pm:
 
-	  Added TAO/tests/RTCORBA/Client_Propagated and
-	  TAO/tests/RTCORBA/Server_Protocol to the list of auto daily
-	  tests.
+          Added TAO/tests/RTCORBA/Client_Propagated and
+          TAO/tests/RTCORBA/Server_Protocol to the list of auto daily
+          tests.
 
 Mon Sep 25 16:58:22 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ltcf-c.sh:
-	* ltcf-cxx.sh:
-	* ltconfig:
-	* ltmain.sh:
+        * ltcf-c.sh:
+        * ltcf-cxx.sh:
+        * ltconfig:
+        * ltmain.sh:
 
-	  Updates from upstream libtool multi-language CVS branch.
+          Updates from upstream libtool multi-language CVS branch.
 
 Mon Sep 25 14:24:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* Static_performance.dsw:
+        * Static_performance.dsw:
 
-	  Added the modular IDL compiler projects, and set
-	  the dependencies.
+          Added the modular IDL compiler projects, and set
+          the dependencies.
 
 Mon Sep 25 11:45:53 2000  Steve Huston  <shuston@riverace.com>
 
@@ -44,37 +60,37 @@ Mon Sep 25 11:45:53 2000  Steve Huston  <shuston@riverace.com>
 Sat Sep 23 16:55:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/Makefile:
-	  Add new components to the RMCast library.
+          Add new components to the RMCast library.
 
         * ace/RMCast/RMCast_Proxy.h:
         * ace/RMCast/RMCast_Proxy.i:
         * ace/RMCast/RMCast_Proxy.cpp:
-	  All proxies must derive from this class, it offers methods to
-	  send back replies directly to the peer.
+          All proxies must derive from this class, it offers methods to
+          send back replies directly to the peer.
 
         * ace/RMCast/RMCast.h:
-	  The Proxy source is propagate among layers.
+          The Proxy source is propagate among layers.
 
         * ace/RMCast/RMCast_IO_UDP.cpp:
-	  All proxies are modules.
+          All proxies are modules.
 
         * ace/RMCast/RMCast_Membership.h:
         * ace/RMCast/RMCast_Membership.i:
         * ace/RMCast/RMCast_Membership.cpp:
-	  New module to keep an explicit collection of all the peers,
-	  detecting join and leave messages and computing the messages
-	  successfully received by all the peers using the Ack
-	  information.
+          New module to keep an explicit collection of all the peers,
+          detecting join and leave messages and computing the messages
+          successfully received by all the peers using the Ack
+          information.
 
         * ace/RMCast/RMCast_Retransmission.h:
         * ace/RMCast/RMCast_Retransmission.i:
         * ace/RMCast/RMCast_Retransmission.cpp:
-	  Buffer messages to allow retransmission.
+          Buffer messages to allow retransmission.
 
         * ace/RMCast/RMCast_UDP_Proxy.h:
         * ace/RMCast/RMCast_UDP_Proxy.i:
         * ace/RMCast/RMCast_UDP_Proxy.cpp:
-	  Modified to inherit from the new RMCast_Proxy class.
+          Modified to inherit from the new RMCast_Proxy class.
 
 Fri Sep 22 15:13:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -183,19 +199,19 @@ Fri Sep 22 12:27:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Sep 22 12:01:06 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Basic_Types.h (ACE_ULongLong):
+        * ace/Basic_Types.h (ACE_ULongLong):
 
-	  This class does't use the ACE_ALLOC_HOOK_DEFINE macro so there
-	  was no point in using the corresponding ACE_ALLOC_HOOK_DECLARE
-	  macro.  Removed ACE_ALLOC_HOOK_DECLARE from the ACE_ULongLong
-	  class.
+          This class does't use the ACE_ALLOC_HOOK_DEFINE macro so there
+          was no point in using the corresponding ACE_ALLOC_HOOK_DECLARE
+          macro.  Removed ACE_ALLOC_HOOK_DECLARE from the ACE_ULongLong
+          class.
 
-	* ace/OS.h:
-	* ace/config-all.h:
+        * ace/OS.h:
+        * ace/config-all.h:
 
-	  Moved ACE_ALLOC_HOOK* macros to `ace/config-all.h' so that it
-	  isn't necessary to include `ace/OS.h' just to pull in the
-	  definition of those macros.
+          Moved ACE_ALLOC_HOOK* macros to `ace/config-all.h' so that it
+          isn't necessary to include `ace/OS.h' just to pull in the
+          definition of those macros.
 
 Fri Sep 22 13:02:41 2000  Steve Huston  <shuston@riverace.com>
 
