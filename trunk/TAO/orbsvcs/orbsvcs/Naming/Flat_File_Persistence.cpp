@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 #include "Flat_File_Persistence.h"
 
-TAO_NS_FlatFileStream::TAO_NS_FlatFileStream (const ACE_CString & file, 
+TAO_NS_FlatFileStream::TAO_NS_FlatFileStream (const ACE_CString & file,
                                               const char * mode)
   : fl_ (0)
 {
@@ -66,7 +66,7 @@ TAO_NS_FlatFileStream::open()
                        file_.c_str(), mode_.c_str(),
                        errno, ACE_OS::strerror(errno)),
                       -1);
-#endif  
+#endif
   this->fl_ = ACE_OS::fdopen(filelock_.handle_, fdmode);
   if (this->fl_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -86,7 +86,7 @@ TAO_NS_FlatFileStream::close()
   ACE_OS::flock_destroy (&filelock_, 0);
 #else
   ACE_OS::fclose (fl_);
-#endif  
+#endif
   fl_ = 0;
   return 0;
 }
@@ -104,7 +104,7 @@ TAO_NS_FlatFileStream::flock (int whence, int start, int len)
     ACE_OS::flock_rdlock(&filelock_, whence, start, len);
   else
     ACE_OS::flock_wrlock(&filelock_, whence, start, len);
-#endif  
+#endif
   return 0;
 }
 
@@ -118,7 +118,7 @@ TAO_NS_FlatFileStream::funlock (int whence, int start, int len)
   ACE_UNUSED_ARG (len);
 #else
   ACE_OS::flock_unlock(&filelock_, whence, start, len);
-#endif  
+#endif
   return 0;
 }
 
@@ -152,7 +152,7 @@ TAO_NS_FlatFileStream::operator >>(
   int destroyed;
 
   ACE_OS::rewind(this->fl_);
-  fscanf(fl_, "%d\n", &size);
+  fscanf(fl_, "%u\n", &size);
   header.size(size);
 
   fscanf(fl_, "%d\n", &destroyed);
@@ -255,7 +255,7 @@ TAO_NS_FlatFileStream::operator >>(
   unsigned int counter = 0;
 
   ACE_OS::rewind(this->fl_);
-  fscanf(fl_, "%d\n", &counter);
+  fscanf(fl_, "%u\n", &counter);
   global.counter(counter);
 
   return *this;
@@ -264,7 +264,7 @@ TAO_NS_FlatFileStream::operator >>(
 
 
 TAO_Storable_Base *TAO_NS_FlatFileFactory::create_stream(
-                                                       const ACE_CString & file, 
+                                                       const ACE_CString & file,
                                                        const char * mode)
 {
   ACE_TRACE("create_stream");
