@@ -20,7 +20,7 @@ sub run_test
   my $type = shift(@_);
 
   $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
-                         "$debug -ORBobjrefstyle url -ORBport $port -o ".
+                         "$debug -ORBport $port -o ".
                          $iorfile);
   
   ACE::waitforfile ($iorfile);
