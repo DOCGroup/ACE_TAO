@@ -1,4 +1,6 @@
 Wed Feb 20 11:20:00 2002  Daniel Troesser  <troesser_d@ociweb.com>
+        
+        * Fixing Bugzilla Bug 1139:
 
 	* tests/RTCORBA/check_supported_priorities.cpp
 
