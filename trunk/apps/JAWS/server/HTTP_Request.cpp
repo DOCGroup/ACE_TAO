@@ -231,7 +231,8 @@ HTTP_Request::path_info (void) const
   return this->path_info_;
 }
 
-int HTTP_Request::got_request_line (void) const
+int
+HTTP_Request::got_request_line (void) const
 {
   return this->got_request_line_;
 }
