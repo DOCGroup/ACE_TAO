@@ -108,6 +108,7 @@ realclean: clean
  SSLIOP/IIOP_SSL_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -115,7 +116,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -291,6 +291,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -511,6 +512,7 @@ realclean: clean
  SSLIOP/IIOP_SSL_Connection_Handler.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -518,7 +520,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -693,6 +694,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -899,6 +901,7 @@ realclean: clean
  SSLIOP/IIOP_SSL_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -906,7 +909,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1082,6 +1084,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1271,6 +1274,7 @@ realclean: clean
  SSLIOP/IIOP_SSL_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1278,7 +1282,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1454,6 +1457,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1693,6 +1697,7 @@ realclean: clean
  SSLIOP/SSLIOP_Credentials.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1700,7 +1705,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
  SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
@@ -1876,7 +1880,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- SSLIOP/SSLIOP_Export.h \
+ Security/security_export.h \
  SecurityLevel1C.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -1903,6 +1907,7 @@ realclean: clean
  SSLIOP/SSLIOP_ReceivedCredentials.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1910,7 +1915,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
  SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
@@ -2086,7 +2090,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- SSLIOP/SSLIOP_Export.h \
+ Security/security_export.h \
  SecurityLevel1C.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2113,6 +2117,7 @@ realclean: clean
  SSLIOP/SSLIOP_TargetCredentials.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2120,7 +2125,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
  SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
@@ -2296,7 +2300,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- SSLIOP/SSLIOP_Export.h \
+ Security/security_export.h \
  SecurityLevel1C.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2323,6 +2327,7 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  SecurityReplaceableC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2330,7 +2335,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -2503,7 +2507,6 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Security/security_export.h \
  SecurityLevel2C.h \
- SSLIOP/SSLIOP_Export.h \
  SecurityLevel1C.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -2526,6 +2529,7 @@ realclean: clean
  SecurityLevel2C.i \
  SecurityReplaceableC.i \
  SSLIOPC.h \
+ SSLIOP/SSLIOP_Export.h \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_Export.h \
  SSLIOP/SSLIOP_X509.h SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
@@ -2535,6 +2539,7 @@ realclean: clean
 .obj/SSLIOP_Current.o .obj/SSLIOP_Current.so .shobj/SSLIOP_Current.o .shobj/SSLIOP_Current.so: SSLIOP/SSLIOP_Current.cpp SSLIOP/SSLIOP_Current.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2542,7 +2547,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/SSLIOP_Current_Impl.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -2718,6 +2722,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2819,6 +2824,7 @@ realclean: clean
 .obj/SSLIOP_Current_Impl.o .obj/SSLIOP_Current_Impl.so .shobj/SSLIOP_Current_Impl.o .shobj/SSLIOP_Current_Impl.so: SSLIOP/SSLIOP_Current_Impl.cpp \
  SSLIOP/SSLIOP_Current_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2826,7 +2832,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -3001,6 +3006,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3108,6 +3114,7 @@ realclean: clean
  SSLIOP/SSLIOP_Invocation_Interceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3115,7 +3122,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOPC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -3290,6 +3296,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3313,6 +3320,7 @@ realclean: clean
  SSLIOP/SSLIOP_ORBInitializer.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3320,7 +3328,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -3493,7 +3500,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- SSLIOP/SSLIOP_Export.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3512,13 +3519,13 @@ realclean: clean
  SecurityC.i \
  SSLIOP/SSLIOP_Vault.h \
  SecurityReplaceableC.h \
- Security/security_export.h \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
  SecurityLevel2C.i \
  SecurityReplaceableC.i \
  SSLIOPC.h \
+ SSLIOP/SSLIOP_Export.h \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/debug.h \
  SSLIOP/SSLIOP_Current.h SSLIOP/SSLIOP_Current_Impl.h \
@@ -3607,6 +3614,7 @@ realclean: clean
 .obj/SSLIOP_Factory.o .obj/SSLIOP_Factory.so .shobj/SSLIOP_Factory.o .shobj/SSLIOP_Factory.so: SSLIOP/SSLIOP_Factory.cpp SSLIOP/SSLIOP_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3614,7 +3622,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -3787,7 +3794,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- SSLIOP/SSLIOP_Export.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -3827,6 +3834,7 @@ realclean: clean
  SSLIOP/SSLIOP_Acceptor.h SSLIOP/IIOP_SSL_Acceptor.h \
  SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
+ SSLIOP/SSLIOP_Export.h \
  SSLIOPC.i \
  $(TAO_ROOT)/tao/IIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
@@ -4022,11 +4030,11 @@ realclean: clean
  $(TAO_ROOT)/tao/Connector_Impl.cpp \
  SSLIOP/SSLIOP_ORBInitializer.h \
  Security/Security_ORBInitializer.h \
- Security/security_export.h \
  Security/Security_PolicyFactory.h
 
 .obj/SSLIOP_Profile.o .obj/SSLIOP_Profile.so .shobj/SSLIOP_Profile.o .shobj/SSLIOP_Profile.so: SSLIOP/SSLIOP_Profile.cpp SSLIOP/SSLIOP_Profile.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4034,7 +4042,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/SSLIOP_Endpoint.h SSLIOP/SSLIOP_Export.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -4218,6 +4225,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -4258,6 +4266,7 @@ realclean: clean
 .obj/SSLIOP_Endpoint.o .obj/SSLIOP_Endpoint.so .shobj/SSLIOP_Endpoint.o .shobj/SSLIOP_Endpoint.so: SSLIOP/SSLIOP_Endpoint.cpp SSLIOP/SSLIOP_Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4265,7 +4274,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4448,6 +4456,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -4650,6 +4659,7 @@ realclean: clean
  SSLIOP/SSLIOP_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
  SSLIOP/SSLIOP_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4657,7 +4667,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/Transport.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -4979,6 +4988,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -5102,6 +5112,7 @@ realclean: clean
 .obj/SSLIOP_Connector.o .obj/SSLIOP_Connector.so .shobj/SSLIOP_Connector.o .shobj/SSLIOP_Connector.so: SSLIOP/SSLIOP_Connector.cpp \
  SSLIOP/SSLIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5109,7 +5120,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Connector.h \
  $(ACE_ROOT)/ace/SSL/SSL_Export.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.h \
@@ -5319,6 +5329,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -5536,6 +5547,7 @@ realclean: clean
 
 .obj/SSLIOP_Acceptor.o .obj/SSLIOP_Acceptor.so .shobj/SSLIOP_Acceptor.o .shobj/SSLIOP_Acceptor.so: SSLIOP/SSLIOP_Acceptor.cpp SSLIOP/SSLIOP_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5543,7 +5555,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/IIOP_SSL_Acceptor.h SSLIOP/SSLIOP_Export.h \
  SSLIOP/IIOP_SSL_Connection_Handler.h \
  SSLIOPC.h \
@@ -5720,6 +5731,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -5960,6 +5972,7 @@ realclean: clean
 .obj/SSLIOP_Connection_Handler.o .obj/SSLIOP_Connection_Handler.so .shobj/SSLIOP_Connection_Handler.o .shobj/SSLIOP_Connection_Handler.so: SSLIOP/SSLIOP_Connection_Handler.cpp \
  SSLIOP/SSLIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5967,7 +5980,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -6288,6 +6300,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -6350,21 +6363,22 @@ realclean: clean
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.inl \
- $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
- $(TAO_ROOT)/tao/Resume_Handle.h \
- $(TAO_ROOT)/tao/Resume_Handle.inl \
- $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
- $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.h \
  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Messaging/MessagingC.i \
- $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.i
+ $(TAO_ROOT)/tao/Messaging/Messaging_Policy_i.i \
+ $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Resume_Handle.h \
+ $(TAO_ROOT)/tao/Resume_Handle.inl \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i
 
 .obj/SSLIOP_Util.o .obj/SSLIOP_Util.so .shobj/SSLIOP_Util.o .shobj/SSLIOP_Util.so: SSLIOP/SSLIOP_Util.cpp SSLIOP/SSLIOP_Util.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6372,7 +6386,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  SSLIOP/SSLIOP_Connection_Handler.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -6694,6 +6707,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -6749,6 +6763,7 @@ realclean: clean
 
 .obj/SSLIOP_X509.o .obj/SSLIOP_X509.so .shobj/SSLIOP_X509.o .shobj/SSLIOP_X509.so: SSLIOP/SSLIOP_X509.cpp SSLIOP/SSLIOP_X509.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6756,12 +6771,12 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/varbase.h \
  SSLIOP/SSLIOP_X509.inl
 
 .obj/SSLIOP_EVP_PKEY.o .obj/SSLIOP_EVP_PKEY.so .shobj/SSLIOP_EVP_PKEY.o .shobj/SSLIOP_EVP_PKEY.so: SSLIOP/SSLIOP_EVP_PKEY.cpp SSLIOP/SSLIOP_EVP_PKEY.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6769,7 +6784,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/varbase.h \
  SSLIOP/SSLIOP_EVP_PKEY.inl
 
@@ -6777,6 +6791,7 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6784,7 +6799,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -6957,6 +6971,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  SSLIOP/SSLIOP_Export.h \
  SecurityC.h \
+ Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -6979,6 +6994,7 @@ realclean: clean
 .obj/SSLIOPC.o .obj/SSLIOPC.so .shobj/SSLIOPC.o .shobj/SSLIOPC.so: SSLIOPC.cpp SSLIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -6986,7 +7002,6 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -7157,7 +7172,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- SSLIOP/SSLIOP_Export.h SecurityC.h \
+ SSLIOP/SSLIOP_Export.h SecurityC.h Security/security_export.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
