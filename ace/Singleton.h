@@ -22,7 +22,7 @@
 
 #include "ace/Synch.h"
 
-template <class TYPE, class LOCK>
+template <class TYPE, class ACE_LOCK>
 class ACE_Singleton : public ACE_Cleanup
   // = TITLE
   //     A Singleton Adapter the uses the Adapter pattern to turn
@@ -32,7 +32,7 @@ class ACE_Singleton : public ACE_Cleanup
   // = DESCRIPTION
   //     This implementation is a slight variation on the GoF
   //     Singleton pattern.  In particular, a single
-  //     <ACE_Singleton<TYPE, LOCK> > instance is allocated here, not
+  //     <ACE_Singleton<TYPE, ACE_LOCK> > instance is allocated here, not
   //     a <TYPE> instance.  The reason for this is to allow
   //     registration with the <ACE_Object_Manager>, so that the
   //     Singleton can be cleaned up when the process exits.  For this
@@ -59,21 +59,21 @@ protected:
   // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  static ACE_Singleton<TYPE, LOCK> *singleton_;
+  static ACE_Singleton<TYPE, ACE_LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
 
   static LOCK ace_singleton_lock_;
   // Lock the creation of the singleton.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-  static ACE_Singleton<TYPE, LOCK> *&instance_i (void);
+  static ACE_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
   // Get pointer to the Singleton instance.
 
   static LOCK &singleton_lock_i (void);
   // Get reference to Singleton lock.
 };
 
-template <class TYPE, class LOCK>
+template <class TYPE, class ACE_LOCK>
 class ACE_TSS_Singleton : public ACE_Cleanup
   // = TITLE
   //     This class uses the Adapter pattern to turn ordinary classes
@@ -111,7 +111,7 @@ protected:
   // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  static ACE_TSS_Singleton<TYPE, LOCK> *singleton_;
+  static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
 
   static LOCK ace_singleton_lock_;

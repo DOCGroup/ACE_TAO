@@ -135,15 +135,15 @@ public:
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
   // Use ACE_Reactor::end_event_loop() instead.
 
-  static sig_atomic_t reactor_event_loop_done (void);
+  static int reactor_event_loop_done (void);
   // Report if the Reactor's event loop is finished.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
   // Use ACE_Reactor::event_loop_done() instead.
 
-  static sig_atomic_t reconfig_occurred (void);
+  static int reconfig_occurred (void);
   // True if reconfiguration occurred.
 
-  static void reconfig_occurred (sig_atomic_t);
+  static void reconfig_occurred (int);
   // Indicate that reconfiguration occurred.
 
   static void reconfigure (void);

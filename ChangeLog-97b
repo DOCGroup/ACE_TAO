@@ -1,3 +1,17 @@
+Sat Oct  4 11:57:25 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * ace: Replaced all uses of the template param LOCK with ACE_LOCK
+ 	  to avoid conflicts with some systems that have a macro named
+ 	  LOCK.
+
+	* ace/IOStream_T.h: Added ACE_LACKS_ACE_IOSTREAM to the
+ 	  IOStream_T.* files.  Thanks to Torbjorn Lindgren <tl@funcom.no>
+ 	  for reporting this.
+
+	* ace/{Proactor,Service_Config,ACE_Sig_Handler}: Removed the use
+ 	  of sig_atomic_t as a return type.  Thanks to Torbjorn Lindgren
+ 	  <tl@funcom.no> for reporting this.
+
 Sat Oct 04 03:14:46 1997    <irfan@TWOSTEP>
 
 	* ace/WFMO_Reactor.cpp (add_network_events_i): While looking

@@ -484,7 +484,7 @@ ACE_Service_Config::end_reactor_event_loop (void)
 }
 
 /* static */
-sig_atomic_t
+int
 ACE_Service_Config::reactor_event_loop_done (void)
 {
   ACE_TRACE ("ACE_Service_Config::reactor_event_loop_done");
@@ -547,15 +547,15 @@ ACE_Service_Config::~ACE_Service_Config (void)
 // ************************************************************
 
 /* static */
-sig_atomic_t
+int
 ACE_Service_Config::reconfig_occurred (void)
 {
   ACE_TRACE ("ACE_Service_Config::reconfig_occurred");
-  return ACE_Service_Config::reconfig_occurred_;
+  return ACE_Service_Config::reconfig_occurred_ != 0;
 }
 
 void
-ACE_Service_Config::reconfig_occurred (sig_atomic_t config_occurred)
+ACE_Service_Config::reconfig_occurred (int config_occurred)
 {
   ACE_TRACE ("ACE_Service_Config::reconfig_occurred");
   ACE_Service_Config::reconfig_occurred_ = config_occurred;
