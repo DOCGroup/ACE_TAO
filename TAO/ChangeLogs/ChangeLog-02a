@@ -1,3 +1,8 @@
+Sat Mar 10 16:51:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/index.html:
+	  Fixed misleading instructions in the document.
+
 Sat Mar 10 16:08:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
