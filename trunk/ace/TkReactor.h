@@ -67,7 +67,7 @@ public:
   virtual ~ACE_TkReactor (void);
 
   // = Timer operations.
-  virtual long schedule_timer (ACE_Event_Handler *handler,
+  virtual long schedule_timer (ACE_Event_Handler *event_handler,
                                const void *arg,
                                const ACE_Time_Value &delay,
                                const ACE_Time_Value &interval);

@@ -105,14 +105,15 @@ private:
   /**
    * @param buffering_constraint The constraints defined by the
    *        application
+   * @param current_deadline The current deadline
    * @param set_timer Return 1 if the timer should be set
-   * @param interval Return the timer interval value
+   * @param new_deadline Return the timer interval value
    *
    * @return Returns 1 if the deadline has already expired and
    *         flushing must commence immediately.  If the function
    *         returns 0 then flushing may need to be delayed, use @c
-   *         set_timer and 
-   *         
+   *         set_timer and
+   *
    */
   int timer_check (const TAO::BufferingConstraint &buffering_constraint,
                    const ACE_Time_Value &current_deadline,
