@@ -203,7 +203,7 @@ Scheduler::svc (void)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
-      ACE_Auto_Ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
+      auto_ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG, "(%t) calling method object\n"));
       // Call it.
@@ -393,7 +393,7 @@ template class ACE_Future<const char *>;
 template class ACE_Future<u_long>;
 template class ACE_Future_Rep<char const *>;
 template class ACE_Future_Rep<u_long>;
-template class ACE_Auto_Ptr<ACE_Method_Object>;
+template class auto_ptr<ACE_Method_Object>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Object>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
@@ -401,7 +401,7 @@ template class ACE_Auto_Basic_Ptr<ACE_Method_Object>;
 #pragma instantiate ACE_Future<u_long>
 #pragma instantiate ACE_Future_Rep<char const *>
 #pragma instantiate ACE_Future_Rep<u_long>
-#pragma instantiate ACE_Auto_Ptr<ACE_Method_Object>
+#pragma instantiate auto_ptr<ACE_Method_Object>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Object>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

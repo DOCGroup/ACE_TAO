@@ -3,6 +3,8 @@
 
 // Auto_Ptr.i
 
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+
 template<class X> ACE_INLINE void
 ACE_Auto_Basic_Ptr<X>::operator= (ACE_Auto_Basic_Ptr<X> &rhs)
 {
@@ -65,18 +67,20 @@ ACE_Auto_Basic_Ptr<X>::reset (X *p)
 }
 
 template<class X> ACE_INLINE
-ACE_Auto_Ptr<X>::ACE_Auto_Ptr (X *p)
+auto_ptr<X>::auto_ptr (X *p)
   : ACE_Auto_Basic_Ptr<X> (p)
 {
   ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
 }
 
 template<class X> ACE_INLINE X *
-ACE_Auto_Ptr<X>::operator-> () const 
+auto_ptr<X>::operator-> () const 
 {
-  ACE_TRACE ("ACE_Auto_Ptr<X>::operator->");
+  ACE_TRACE ("auto_ptr<X>::operator->");
   return p_;
 }
+
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
 template<class X> ACE_INLINE
 ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (X *p) 

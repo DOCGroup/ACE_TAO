@@ -21,10 +21,12 @@
 
 #include "ace/ACE.h"
 
+#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+
 template <class X>
 class ACE_Auto_Basic_Ptr 
   // = TITLE
-  //     Implements the draft C++ standard ACE_Auto_Ptr abstraction.
+  //     Implements the draft C++ standard auto_ptr abstraction.
   //     This class allows one to work on non-object (basic) types
 {
 public:
@@ -53,22 +55,23 @@ protected:
 };
 
 template <class X>
-class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
+class auto_ptr : public ACE_Auto_Basic_Ptr <X>
   // = TITLE
-  //     Implements the draft C++ standard ACE_Auto_Ptr abstraction.
+  //     Implements the draft C++ standard auto_ptr abstraction.
 {
 public:
   // = Initialization and termination methods
-  ACE_Auto_Ptr (X *p = 0);
+  auto_ptr (X *p = 0);
 
   X *operator-> () const;  
 };
 
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
 template<class X>
 class ACE_Auto_Basic_Array_Ptr 
   // = TITLE
-  //     Implements an extension to the draft C++ standard ACE_Auto_Ptr
+  //     Implements an extension to the draft C++ standard auto_ptr
   //     abstraction.  This class allows one to work on non-object
   //     (basic) types
 {
@@ -102,7 +105,7 @@ protected:
 template<class X>
 class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
   // = TITLE
-  //     Implements an extension to the draft C++ standard ACE_Auto_Ptr
+  //     Implements an extension to the draft C++ standard auto_ptr
   //     abstraction.
 {
 public:

@@ -209,7 +209,7 @@ Scheduler::svc (void)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
-      ACE_Auto_Ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
+      auto_ptr<ACE_Method_Object> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG, " (%t) calling method object\n"));
       // Call it.
@@ -264,7 +264,7 @@ Scheduler::name (void)
 	  // This scheduler is inactive... so we execute the user
 	  // request right away...
 
-	  ACE_Auto_Ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
+	  auto_ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
 
 	  mo->call ();
 	  // Smart pointer destructor automatically deletes mo.
@@ -289,7 +289,7 @@ Scheduler::work (u_long newparam, int newcount)
 
       if (this->thr_count () == 0)
 	{
-	  ACE_Auto_Ptr<ACE_Method_Object> mo
+	  auto_ptr<ACE_Method_Object> mo
 	    (new Method_Object_work (this, newparam, newcount, new_future));
 	  mo->call ();
 	  // Smart pointer destructor automatically deletes it.
@@ -515,7 +515,7 @@ template class ACE_Future<char *>;
 template class ACE_Future<u_long>;
 template class ACE_Future_Rep<char *>;
 template class ACE_Future_Rep<u_long>;
-template class ACE_Auto_Ptr<ACE_Method_Object>;
+template class auto_ptr<ACE_Method_Object>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Object>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
@@ -523,7 +523,7 @@ template class ACE_Auto_Basic_Ptr<ACE_Method_Object>;
 #pragma instantiate ACE_Future<u_long>
 #pragma instantiate ACE_Future_Rep<char *>
 #pragma instantiate ACE_Future_Rep<u_long>
-#pragma instantiate ACE_Auto_Ptr<ACE_Method_Object>
+#pragma instantiate auto_ptr<ACE_Method_Object>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Object>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
