@@ -23,12 +23,13 @@ Please see the file `COPYING' in the top level ACE directory for
 additional details.])
 
 
-dnl Require GNU Autoconf 2.58 or better.
+dnl Require GNU Autoconf 2.58 or better.  Previous versions did not
+dnl correctly support HP-UX.
 AC_PREREQ([2.58])
 
 AC_CONFIG_SRCDIR([ace/ACE.cpp])
 
-AC_CONFIG_AUX_DIR([aux])
+AC_CONFIG_AUX_DIR([autotools])
 AC_CONFIG_MACRO_DIR([m4])
 
 dnl Check what platform we are running on.
