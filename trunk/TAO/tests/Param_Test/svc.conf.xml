@@ -5,5 +5,6 @@
  <!--  -->
  <!--  Please read $TAO_ROOT/docs/Options.html for details. -->
  <!--  -->
+ <static id="Resource_Factory" params="-ORBNativeWCharCodeset 0x00010001"/>
  <static id="Server_Strategy_Factory" params="-ORBtablesize 128"/>
 </ACE_Svc_Conf>
