@@ -1,7 +1,9 @@
 // $Id$
 
+#include "ace/ACE.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
 #include "ace/Logging_Strategy.h"

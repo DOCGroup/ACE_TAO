@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)

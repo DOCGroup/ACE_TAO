@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/ACE.h"
+
 #if defined (ACE_WIN32)
 
 ACE_INLINE PROCESS_INFORMATION
