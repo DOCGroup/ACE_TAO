@@ -1,3 +1,18 @@
+Sun Jul  4 19:05:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* examples/handcrafted/BasicSP_EC/BasicSP.mpc:
+	* examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/BasicSP_EC/EC/EC.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/BasicSP_EC2/EC/EC.mpc:
+
+	  Do not compile these. They wouldn't compile at all. These are
+	  useful examples that are needed for EC integration. 
+
 Sun Jul  4 18:59:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* examples/Hello/Receiver/Receiver_exec.cpp:
