@@ -84,7 +84,6 @@ ACE_HAS_NONSTATIC_OBJECT_MANAGER	Causes the ACE_Object_Manager instance to be cr
 ACE_HAS_THR_KEYDELETE			Platform supports thr_keydelete (e.g,. UNIXWARE)
 ACE_HAS_THR_MINSTACK			Platform calls thr_minstack() rather than thr_min_stack() (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T		The rusage_t structure has only two fields.
-ACE_HAS_LONGLONG_T			Compiler/platform supports the "long long" datatype.
 ACE_HAS_LONG_FDMASK			Compiler/platform has typedef u_long fdmask (e.g., Linux).
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as a long constant.
 ACE_HAS_MALLOC_STATS                    Enabled malloc statistics collection.
@@ -228,6 +227,7 @@ ACE_LACKS_GETPGID			Platform lacks getpgid() call (e.g., Win32, Chorus, and Free
 ACE_LACKS_GETSERVBYNAME			Platforms lacks getservbyname() (e.g., VxWorks and Chorus).
 ACE_LACKS_IOSTREAM_FX			iostream header does not declare ipfx (), opfx (), etc.
 ACE_LACKS_LINEBUFFERED_STREAMBUF	Platform lacks streambuf "linebuffered ()".
+ACE_LACKS_LONGLONG_T			Compiler/platform does no supports the unsigned long long datatype.
 ACE_LACKS_MADVISE			Platform lacks madvise() (e.g., Linux)
 ACE_LACKS_MALLOC_H			Platform lacks malloc.h
 ACE_LACKS_MEMORY_H			Platform lacks memory.h (e.g., VxWorks and Chorus)
@@ -406,24 +406,6 @@ ACE_HAS_HI_RES_TIMER:
 
   Notes:
      TBA
-
-
-ACE_HAS_LONGLONG_T:
--------------------
-
-  Used In:
-     libsrc/Misc/High_Res_Timer.i
-     libsrc/Misc/High_Res_Timer.C
-     include/High_Res_Timer.i
-
-  Solaris:
-     has long long
-
-  OSF1:
-     has 64 bit long
-
-  HPUX:
-     doesn't.
 
 
 ACE_LACKS_T_ERRNO:
