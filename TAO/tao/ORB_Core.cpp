@@ -247,10 +247,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   ACE_NEW_THROW_EX (this->svc_config_argv_,
                     char *[argc + 1],
                     CORBA::NO_MEMORY (
-                                      CORBA_SystemException::_tao_minor_code (
-                                                                              TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                              ENOMEM),
-                                      CORBA::COMPLETED_NO));
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_ORB_CORE_INIT_LOCATION_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (-1);
 
   // Be certain to copy the program name so that service configurator
@@ -914,53 +914,34 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBSetUID")))
         {
-          // Set the effective user ID of the current ORB process.
-          uid_t orb_uid =
-            ACE_static_cast (uid_t, ACE_OS::atoi (current_arg));
+          // @@ This option introduces a security hole.  Do not
+          //    reinstate it.
 
-          arg_shifter.consume_arg ();
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("-ORBSetUID is deprecated.\n")));
 
-          if (ACE_OS::setuid (orb_uid) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Error setting effective user ")
-                          ACE_TEXT ("ID for ORB <%s>%p\n"),
-                          this->orbid_,
-                          ACE_TEXT("")));
-
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                                  CORBA_SystemException::_tao_minor_code (
-                                                                                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                          0),
-                                                  CORBA::COMPLETED_NO),
-                                -1);
-            }
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                              CORBA_SystemException::_tao_minor_code (
+                                TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                EINVAL),
+                              CORBA::COMPLETED_NO),
+                            -1);
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBSetGID")))
         {
-          // Set the effective group ID of the current ORB process.
+          // @@ This option introduces a security hole.  Do not
+          //    reinstate it.
 
-          uid_t orb_gid =
-            ACE_static_cast (gid_t, ACE_OS::atoi (current_arg));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("-ORBSetGID is deprecated.\n")));
 
-          arg_shifter.consume_arg ();
-
-          if (ACE_OS::setgid (orb_gid) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Error setting effective group ")
-                          ACE_TEXT ("ID for ORB <%s>%p\n"),
-                          this->orbid_,
-                          ACE_TEXT("")));
-
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                                                  CORBA_SystemException::_tao_minor_code (
-                                                                                          TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                                                                          0),
-                                                  CORBA::COMPLETED_NO),
-                                -1);
-            }
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                              CORBA_SystemException::_tao_minor_code (
+                                TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                EINVAL),
+                              CORBA::COMPLETED_NO),
+                            -1);
         }
 
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -1694,8 +1675,8 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
   // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
   // but we are stuck in platforms without exceptions!
   CORBA::Object_ptr x;
-  
-  // The constructor sets the proxy broker as the 
+
+  // The constructor sets the proxy broker as the
   // Remote one.
   ACE_NEW_RETURN (x,
                   CORBA_Object (stub, 0),
@@ -2719,7 +2700,7 @@ TAO_ORB_Core_instance (void)
 TAO_ORB_Core::TAO_Collocation_Strategies
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 {
-  
+
   TAO_Stub *stub = object->_stubobj ();
   if (stub->servant_orb_ptr () != 0 &&
       stub->servant_orb_var ()->orb_core () != 0 &&
@@ -2728,14 +2709,15 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
       switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
         {
         case THRU_POA:
-          return TAO_ORB_Core::TAO_Collocation_Strategies::THRU_POA_STRATEGY;
+          return TAO_ORB_Core::THRU_POA_STRATEGY;
 
         case DIRECT:
-          return TAO_ORB_Core::TAO_Collocation_Strategies::THRU_POA_STRATEGY;
+          return TAO_ORB_Core::DIRECT_STRATEGY;
         }
     }
+
   // In this case the Object is a client.
-  return TAO_ORB_Core::TAO_Collocation_Strategies::REMOTE_STRATEGY;
+  return TAO_ORB_Core::REMOTE_STRATEGY;
 }
 
 

@@ -4,6 +4,7 @@
 // on all of these data structures.
 
 #include "ace/streams.h"
+#include "ace/SString.h"
 #include "tao/Exception.h"
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
@@ -92,8 +93,8 @@ CORBA_Exception::_type (void) const
 int
 CORBA_Exception::_is_a (const char* repository_id) const
 {
-  return ACE_OS::strcmp (repository_id,
-                         "IDL:omg.org/CORBA/Exception:1.0") == 0;
+  return ACE_OS_String::strcmp (repository_id,
+                                "IDL:omg.org/CORBA/Exception:1.0") == 0;
 }
 
 void
@@ -104,15 +105,15 @@ CORBA_Exception::_tao_print_exception (const char *user_provided_info,
               ACE_TEXT ("(%P|%t) EXCEPTION, %s\n")
               ACE_TEXT ("%s\n"),
               user_provided_info,
-              this->_info ().c_str ()));
+              this->_info ()));
 }
 
-ACE_CString
+const char *
 CORBA_Exception::_info (void) const
 {
   CORBA::SystemException *system_exception =
     CORBA_SystemException::_downcast (ACE_const_cast (CORBA_Exception *,
-                                                    this));
+                                                      this));
 
   if (system_exception != 0)
     return system_exception->_info ();
@@ -123,7 +124,7 @@ CORBA_Exception::_info (void) const
   ACE_CString user_exception_info = "user exception, ID '";
   user_exception_info += this->_id ();
   user_exception_info += "'";
-  return user_exception_info;
+  return user_exception_info.c_str ();
 }
 
 void
@@ -210,8 +211,8 @@ CORBA_UserException::operator= (const CORBA_UserException &src)
 int
 CORBA_UserException::_is_a (const char* interface_id) const
 {
-  return ACE_OS::strcmp (interface_id,
-                         "IDL:omg.org/CORBA/UserException:1.0") == 0
+  return ACE_OS_String::strcmp (interface_id,
+                                "IDL:omg.org/CORBA/UserException:1.0") == 0
     || CORBA_Exception::_is_a (interface_id);
 }
 
@@ -262,8 +263,8 @@ CORBA_SystemException::operator= (const CORBA_SystemException &src)
 int
 CORBA_SystemException::_is_a (const char* interface_id) const
 {
-  return ACE_OS::strcmp (interface_id,
-                         "IDL:omg.org/CORBA/SystemException:1.0") == 0
+  return ACE_OS_String::strcmp (interface_id,
+                                "IDL:omg.org/CORBA/SystemException:1.0") == 0
     || CORBA_Exception::_is_a (interface_id);
 }
 
@@ -377,10 +378,10 @@ CORBA_SystemException::_tao_print_system_exception (FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("(%P|%t) system exception, ID '%s'\n"),
-              this->_info ().c_str ()));
+              this->_info ()));
 }
 
-ACE_CString
+const char *
 CORBA_SystemException::_info (void) const
 {
   // @@ there are a other few "user exceptions" in the CORBA scope,
@@ -567,7 +568,7 @@ CORBA_SystemException::_info (void) const
       info += buffer;
     }
 
-  return info;
+  return info.c_str ();
 }
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (void)
@@ -605,8 +606,9 @@ CORBA_UnknownUserException::exception (void)
 int
 CORBA_UnknownUserException::_is_a (const char *interface_id) const
 {
-  return ((ACE_OS::strcmp (interface_id,
-                           "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
+  return ((ACE_OS_String::strcmp (
+               interface_id,
+               "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
           || CORBA_UserException::_is_a (interface_id));
 }
 
@@ -746,12 +748,12 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   const char suffix[] = ":1.0";
   char * full_id =
     CORBA::string_alloc (sizeof prefix
-                         + ACE_OS::strlen (name)
+                         + ACE_OS_String::strlen (name)
                          + sizeof suffix);
 
-  ACE_OS::strcpy (full_id, prefix);
-  ACE_OS::strcat (full_id, name);
-  ACE_OS::strcat (full_id, suffix);
+  ACE_OS_String::strcpy (full_id, prefix);
+  ACE_OS_String::strcat (full_id, name);
+  ACE_OS_String::strcat (full_id, suffix);
 
   CORBA::Boolean result = stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
     || stream.write_string (full_id) == 0
@@ -897,7 +899,7 @@ TAO_Exceptions::create_system_exception (const char *id,
 #define TAO_SYSTEM_EXCEPTION(name) \
   { \
     const char* xid = "IDL:omg.org/CORBA/" #name ":1.0"; \
-    if (ACE_OS::strcmp (id, xid) == 0) \
+    if (ACE_OS_String::strcmp (id, xid) == 0) \
       return new CORBA:: name; \
   }
   STANDARD_EXCEPTION_LIST
@@ -932,7 +934,7 @@ TAO_Exceptions::fini (void)
 int \
 CORBA_##name ::_is_a (const char* interface_id) const \
 { \
-  return ((ACE_OS::strcmp (interface_id, \
+  return ((ACE_OS_String::strcmp (interface_id, \
                            "IDL:omg.org/CORBA/" #name ":1.0") == 0) \
           || CORBA_SystemException::_is_a (interface_id)); \
 }
@@ -1073,7 +1075,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
           CORBA::String_var interface_repository_id; \
           if (!(stream >> interface_repository_id.out ())) \
             return 0; \
-          if (ACE_OS::strcmp (interface_repository_id.in (), \
+          if (ACE_OS_String::strcmp (interface_repository_id.in (), \
                               "IDL:omg.org/CORBA/" #name ":1.0")) \
             return 0; \
           tmp->_tao_decode (stream, ACE_TRY_ENV); \

@@ -26,11 +26,10 @@
 
 #ifndef TAO_CORBAFWD_H
 #define TAO_CORBAFWD_H
+
 #include "ace/pre.h"
 
-// @@ TODO take the portion that we need of ace/CDR_Stream.h into
-// ace/CDR_Types.h
-#include "ace/CDR_Stream.h"
+#include "ace/CDR_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -32,6 +32,8 @@
 #include "tao/RTCORBAS.h"
 #include "tao/LocalObject.h"
 
+#include "ace/SString.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -504,9 +506,9 @@ public:
     ACE_THROW_SPEC (());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes the CDR encapsulation of an instance of 
+  // This method writes the CDR encapsulation of an instance of
   // UnixDomainProperties. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
+  // so there is no order of encapsulation specified in the
   // RT CORBA Spec. The current implementation encodes the field
   // according to the order of declaration (i.e. first is encoded
   // send_buffer_size and then recv_buffer_size).
@@ -514,7 +516,7 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads an instance of UnixDomainProperties from
   // a CDR encapsulation. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
+  // so there is no order of encapsulation specified in the
   // RT CORBA Spec. The current implementation expect the field
   // according to the order of declaration.
 
@@ -576,19 +578,19 @@ public:
     ACE_THROW_SPEC (());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes the CDR encapsulation of an instance of 
+  // This method writes the CDR encapsulation of an instance of
   // SMEMProperties. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
+  // so there is no order of encapsulation specified in the
   // RT CORBA Spec. The current implementation encodes the field
   // according to the order of declaration.
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads an instance of SMEMProperties from
   // a CDR encapsulation. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
+  // so there is no order of encapsulation specified in the
   // RT CORBA Spec. The current implementation expect the field
   // according to the order of declaration.
-  
+
 private:
 
   // = Attributes.

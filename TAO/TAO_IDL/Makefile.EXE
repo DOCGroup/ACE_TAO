@@ -88,6 +88,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -147,8 +148,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -165,8 +165,9 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_labellist.h include/utl_decllist.h include/idl_global.h \
  include/utl_err.h include/utl_indenter.h include/global_extern.h \
  include/fe_extern.h include/drv_private.h include/drv_extern.h \
- be_include/be.h \
- $(ACE_ROOT)/ace/Process.h \
+ be_include/be.h $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -220,6 +221,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -279,8 +281,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -299,6 +300,8 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h include/drv_private.h be_include/be.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -351,6 +354,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -410,8 +414,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -459,6 +462,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -518,8 +522,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -537,8 +540,9 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h include/drv_private.h include/drv_extern.h \
- be_include/be.h \
- $(ACE_ROOT)/ace/Process.h \
+ be_include/be.h $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
  be_include/TAO_IDL_BE_Export.h be_include/be_global.h \
@@ -591,6 +595,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_string.h include/utl_identifier.h include/ast.h \
  include/utl_scoped_name.h include/ast_decl.h include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -650,8 +655,7 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  include/utl_scope.h include/ast_type.h include/ast_concrete_type.h \
  include/ast_predefined_type.h include/ast_module.h include/ast_root.h \
@@ -680,6 +684,8 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Process.i \
  $(ACE_ROOT)/ace/Process_Manager.i \
  $(ACE_ROOT)/ace/Env_Value_T.h \

@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -7,7 +8,7 @@
 //    TAO
 //
 // = FILENAME
-//    except.h
+//    Exception.h
 //
 // = DESCRIPTION
 //     This file defines way in which CORBA exceptions are reported.
@@ -27,6 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 // This is used in the implementation of the _raise methods
 #if defined (TAO_HAS_EXCEPTIONS)
 #define TAO_RAISE(EXCEPTION) throw EXCEPTION
@@ -34,7 +36,10 @@
 #define TAO_RAISE(EXCEPTION)
 #endif /* TAO_HAS_EXCEPTIONS */
 
+
 class CORBA_Any;
+class TAO_OutputCDR;
+class TAO_InputCDR;
 
 class TAO_Export CORBA_Exception
 {
@@ -83,7 +88,7 @@ public:
   // Print the exception <ex> to output determined by <f>.  This
   // function is not CORBA compliant.
 
-  ACE_CString _info (void) const;
+  const char *_info (void) const;
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
@@ -205,7 +210,7 @@ public:
   // Print the system exception <ex> to output determined by f.  This
   // function is not CORBA compliant.
 
-  ACE_CString _info (void) const;
+  const char *_info (void) const;
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
