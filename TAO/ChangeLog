@@ -1,4 +1,4 @@
-Tue May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+Sun May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/Naming_Service/Naming_Service.{h,cpp} (parse_args):
           Made argc a reference so that parse_args() can properly remove
