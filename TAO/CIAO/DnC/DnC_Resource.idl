@@ -1,0 +1,58 @@
+//$Id$
+
+#if !defined (DNC_RESOURCE_IDL)
+#define DNC_RESOURCE_IDL
+
+#include <orb.idl>
+
+module CORBA {
+  typedef sequence <unsigned long> ULongSeq;
+  typedef sequence <string> StringSeq;
+};
+
+module Deployment {
+
+  enum SatisfierPropertyKind {
+    Quantity,
+    Capacity,
+    Minimum,
+    Maximum,
+    _Attribute,
+    Selection
+  };
+
+  struct SatisfierProperty {
+    string name;
+    SatisfierPropertyKind kind;
+    any value;
+  };
+
+  typedef sequence < SatisfierProperty > SatisfierProperties;
+
+  struct SharedResource {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    ::CORBA::ULongSeq nodeRef;
+    SatisfierProperties property;
+  };
+
+  typedef sequence < SharedResource > SharedResources;
+
+  struct Resource {
+    string name;
+    ::CORBA::StringSeq resourceType;
+    SatisfierProperties property;
+  };
+
+  typedef sequence < Resource > Resources;
+
+  exception ResourceNotAvailable {
+    string name;
+    string resourceType;
+    string propertyName;
+    string elementName;
+    string resourceName;
+  };
+
+};
+#endif /* DNC_RESOURCE_IDL */
