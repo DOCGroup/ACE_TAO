@@ -1,3 +1,10 @@
+Sat Nov 20 07:40:48 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/DLL.cpp:
+	  Doug needs to write 500 times on the board "I will not commit
+	  before compiling."  Missing a value in a return statement from a
+	  function returning int.
+
 Fri Nov 19 14:42:00 2004  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
         * ACEXML/common/NamespaceSupport.cpp:
