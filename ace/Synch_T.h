@@ -115,8 +115,8 @@ public:
   // <is_set_>.
 
   virtual int handle_signal (int signum,
-			     siginfo_t * = 0,
-			     ucontext_t * = 0);
+                             siginfo_t * = 0,
+                             ucontext_t * = 0);
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
 
@@ -238,6 +238,13 @@ class ACE_TSS
   //     thread-specific functions.  It uses the C++ operator->() to
   //     shield applications from the details of accessing
   //     thread-specific storage.
+  //
+  //     NOTE:  TYPE cannot be a built-in type, but instead must be a
+  //     user-defined class.  (Some compilers will allow a built-in
+  //     type, but shouldn't.  Sun C++ won't, properly detecting the
+  //     improper return type from operator-> ().)  See template class
+  //     ACE_TSS_Type_Adapter, below, for adapting built-in types to
+  //     work with ACE_TSS.
 public:
   // = Initialization and termination methods.
 
@@ -269,10 +276,10 @@ public:
   // associated with the <key_>.
 
   operator TYPE *(void) const;
-  // return or create and return the calling threads TYPE object.
+  // Return or create and return the calling threads TYPE object.
 
   virtual TYPE *make_TSS_TYPE (void) const;
-  // hook for construction parameters.
+  // Hook for construction parameters.
 
   // = Utility methods.
 
@@ -308,6 +315,41 @@ protected:
   ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS<TYPE> &))
 };
 
+template <class TYPE>
+class ACE_TSS_Type_Adapter
+{
+  // = TITLE
+  //     Adapter that allows built-in types to be used with ACE_TSS.
+  //
+  // = DESCRIPTION
+  //     Wraps a value of a built-in type, providing conversions to
+  //     and from the type.  Example use with ACE_TSS:
+  //
+  //       ACE_TSS<ACE_TSS_Type_Adapter<int> > i;
+  //       *i = 37;
+  //       ACE_OS::fprintf (stderr, "%d\n", *i);
+  //
+  //     Unfortunately, though, some compilers have trouble with the
+  //     implicit type conversions.  This seems to work better:
+  //
+  //       ACE_TSS<ACE_TSS_Type_Adapter<int> > i;
+  //       i->operator int & () = 37;
+  //       ACE_OS::fprintf (stderr, "%d\n", i->operator int ());
+public:
+  ACE_TSS_Type_Adapter (const TYPE value = 0) : value_ (value) {}
+  // Constructor.  Inlined here so that it should _always_ be inlined.
+
+  operator TYPE () { return value_; };
+  // TYPE conversion.  Inlined here so that it should _always_ be inlined.
+
+  operator TYPE & () { return value_; };
+  // TYPE & conversion.  Inlined here so that it should _always_ be inlined.
+
+private:
+  TYPE value_;
+  // The wrapped value.
+};
+
 template <class ACE_LOCK>
 class ACE_Guard
 {
@@ -322,8 +364,8 @@ class ACE_Guard
   //     <remove> methods.
 public:
   // = Initialization and termination methods.
-  ACE_Guard (ACE_LOCK &l): lock_ (&l) 
-  { 
+  ACE_Guard (ACE_LOCK &l): lock_ (&l)
+  {
     this->acquire ();
   }
 
@@ -337,10 +379,10 @@ public:
   // Implicitly and automatically acquire (or try to acquire) the
   // lock.
 
-  ~ACE_Guard (void) 
-  { 
+  ~ACE_Guard (void)
+  {
     int error = errno;
-    this->release (); 
+    this->release ();
     errno = error;
   }
   // Implicitly release the lock.
@@ -356,12 +398,12 @@ public:
   int release (void)
     {
       if (this->owner_ != -1)
-	{
-	  this->owner_ = -1;
-	  return this->lock_->release ();
-	}
+        {
+          this->owner_ = -1;
+          return this->lock_->release ();
+        }
       else
-	return 0;
+        return 0;
     }
   // Explicitly release the lock, but only if it is held!
 
@@ -407,8 +449,8 @@ public:
   // = Initialization method.
 
   ACE_Write_Guard (ACE_LOCK &m): ACE_Guard<ACE_LOCK> (&m)
-    { 
-      this->acquire_write (); 
+    {
+      this->acquire_write ();
     }
   // Implicitly and automatically acquire a write lock.
 
@@ -457,8 +499,8 @@ public:
   // = Initialization methods.
 
   ACE_Read_Guard (ACE_LOCK& m): ACE_Guard<ACE_LOCK> (&m)
-    { 
-      this->acquire_read (); 
+    {
+      this->acquire_read ();
     }
 
   ACE_Read_Guard (ACE_LOCK &m, int block): ACE_Guard<ACE_LOCK> (&m)
@@ -660,7 +702,7 @@ class ACE_Condition
 public:
   // = Initialiation and termination methods.
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
-		 LPCTSTR name = 0, void *arg = 0);
+                 LPCTSTR name = 0, void *arg = 0);
   // Initialize the condition variable.
 
   ~ACE_Condition (void);
