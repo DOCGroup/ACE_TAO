@@ -46,9 +46,10 @@
 	</P>
       </LI>
       
-      <LI>Implement an Implementation Repository for TAO.
-	<BR>[STATUS] Darrell is working on this.
-      <P></LI>
+      <LI><P>Implement an Implementation Repository for TAO.
+	  <BR>[STATUS] Darrell is working on this.
+	</P>
+      </LI>
 
     </OL>
 
@@ -123,6 +124,28 @@
       </P>
       </LI>
 
+      <LI><P>Once the memory for incoming data is taken from an
+	  allocator we can implement different approaches to manage
+	  that memory:
+	<UL>
+	  <LI>The allocator is global, allowing applications to keep
+	    the incoming buffer even after the upcall has finished.
+	  </LI>
+	  <LI>The allocator is TSS, giving maximum performance for
+	    applications that do not wish to preserve the buffer
+	    after the upcall.
+	  </LI>
+	  <LI>The allocator is a TSS cache for a global memory pool,
+	    this tries to strike a balance, by practically eliminating
+	    the locking on each allocator/deallocation. Some strategy
+	    is required to return the memory to the global pool,
+	    consider, for example,
+	    an application that will always allocate memory from one
+	    thread and deallocate it in another thread.
+	  </LI>
+	</UL>
+      </P>
+      </LI>
     </OL>
 
     <H4>New features</H4>
