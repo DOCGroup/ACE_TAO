@@ -1,16 +1,22 @@
+Sat Mar 31 10:16:01 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ACE-INSTALL.html:
+          Removed broken link, the web page does not exist anymore. Thanks
+          to John R. Ashmun <john.ashmun@esca.com> for pointing this out.
+
 Fri Mar 30 14:08:18 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* performance-tests/TTCP/C/new-ttcp.cpp:
-	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
-	  Zapped the gettimeofday() method since it didn't seem to be
- 	  used.  Also, #include "ace/Log_Msg.h".  Thanks to Thomas Groth
- 	  <groth.th@nord-com.net> for reporting this.
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+          Zapped the gettimeofday() method since it didn't seem to be
+          used.  Also, #include "ace/Log_Msg.h".  Thanks to Thomas Groth
+          <groth.th@nord-com.net> for reporting this.
 
-	* ace/OS.h: Changed all the ACE_DEFAULT_* default ports of the
- 	  various services to start with 200xx rather than 100xx to avoid
- 	  conflicts on AIX, which apparently hijacks port 10002 for
- 	  various things.  Thanks to David Sperry
- 	  <sperryd@res.raytheon.com> for reporting this.
+        * ace/OS.h: Changed all the ACE_DEFAULT_* default ports of the
+          various services to start with 200xx rather than 100xx to avoid
+          conflicts on AIX, which apparently hijacks port 10002 for
+          various things.  Thanks to David Sperry
+          <sperryd@res.raytheon.com> for reporting this.
 
 Sat Mar 31 02:06:09 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
