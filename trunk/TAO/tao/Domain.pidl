@@ -17,6 +17,10 @@
 //
 // ================================================================
 
+#if !defined POLICY_DOMAIN_IDL
+#define POLICY_DOMAIN_IDL
+
+
 
 #pragma prefix "omg.org"
 
@@ -41,3 +45,5 @@ module CORBA
 
   typedef sequence <DomainManager> DomainManagerList;
 };
+
+#endif /* !defined POLICY_DOMAIN_IDL */
