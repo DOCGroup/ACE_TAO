@@ -154,39 +154,18 @@ private:
   // The hash table data structure.
 };
 
-class TAO_Export TAO_Linear_OpTable_Entry
-{
-  // = TITLE
-  //   Table entry for linear search lookup strategy.
-public:
-  CORBA::String opname_;
-  // holds the operation name
-
-  TAO_Skeleton skel_ptr_;
-  // Holds a pointer to the skeleton corresponding to the operation
-  // name.
-
-  TAO_Linear_OpTable_Entry (void);
-  // constructor.
-
-  ~TAO_Linear_OpTable_Entry (void);
-  // destructor
-};
-
-class TAO_Export TAO_Linear_OpTable : public TAO_Operation_Table
+class TAO_Export TAO_Linear_Search_OpTable : public TAO_Operation_Table
 {
   // = TITLE
   //    Operation table lookup strategy based on
   //    linear search.  Not efficient, but it works.
 public:
   // = Initialization and termination methods.
-  TAO_Linear_OpTable (const TAO_operation_db_entry *db,
-                      CORBA::ULong dbsize);
-  // Initialize the linear search operation table with a database of
-  // operation names
+  TAO_Linear_Search_OpTable (void);
+  // Default constructor.
 
-  ~TAO_Linear_OpTable (void);
-  // destructor.
+  ~TAO_Linear_Search_OpTable (void);
+  // Destructor.
 
   virtual int find (const char *opname,
 		    TAO_Skeleton &skel_ptr);
@@ -200,14 +179,9 @@ public:
   // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
 
 private:
-  CORBA::ULong next_;
-  // Keeps track of the next available slot to be filled.
-
-  CORBA::ULong tablesize_;
-  // Size of the internal table.
-
-  TAO_Linear_OpTable_Entry *tbl_;
-  // The table itself.
+  // = Method that should defined by the subclasses. GPERF program
+  //   will generate this routine routines.
+  virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
 };
 
 class TAO_Export TAO_Active_Demux_OpTable_Entry
@@ -332,7 +306,7 @@ public:
 private:
   // = Method that should defined by the subclasses. GPERF program
   //   will generate this routine routines.
-  virtual const TAO_operation_db_entry* lookup (const char *str, unsigned int len) = 0;
+  virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
 };
 
 

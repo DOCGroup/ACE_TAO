@@ -80,75 +80,37 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
 
 // Linear search strategy
 
-TAO_Linear_OpTable::TAO_Linear_OpTable (const TAO_operation_db_entry *db,
-                                        CORBA::ULong dbsize)
-  : next_ (0),
-    tablesize_ (dbsize),
-    tbl_ (new TAO_Linear_OpTable_Entry[dbsize])
+TAO_Linear_Search_OpTable::TAO_Linear_Search_OpTable (void)
 {
-  // The job of the constructor is to go thru each entry of the
-  // database and bind the operation name to its corresponding
-  // skeleton.
-
-  for (CORBA::ULong i=0; i < dbsize; i++)
-    // @@ (ASG): what happens if bind fails ???
-    (void)this->bind (db[i].opname_, db[i].skel_ptr_);
 }
 
-TAO_Linear_OpTable::~TAO_Linear_OpTable (void)
+TAO_Linear_Search_OpTable::~TAO_Linear_Search_OpTable (void)
 {
-  delete [] this->tbl_;
 }
 
 int
-TAO_Linear_OpTable::bind (const char *opname,
-                          const TAO_Skeleton skel_ptr)
+TAO_Linear_Search_OpTable::bind (const char *opname,
+                                 const TAO_Skeleton skel_ptr)
 {
-  CORBA::ULong i = this->next_;
-
-  if (i < this->tablesize_)
-    {
-      this->tbl_[i].opname_ = CORBA::string_dup (opname);
-      this->tbl_[i].skel_ptr_ = skel_ptr;
-      this->next_++;
-      return 0; // success
-    }
-
-  return -1; // error
+  ACE_UNUSED_ARG (opname);
+  ACE_UNUSED_ARG (skel_ptr);
+  return 0;
 }
 
 int
-TAO_Linear_OpTable::find (const char *opname,
-                          TAO_Skeleton& skel_ptr)
+TAO_Linear_Search_OpTable::find (const char *opname,
+                                 TAO_Skeleton& skelfunc)
 {
-  ACE_ASSERT (this->next_ <= this->tablesize_);
+  const TAO_operation_db_entry *entry = lookup (opname);
+  if (entry == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO_Linear_Search_Table:find failed\n"),
+                      -1);
 
-  for (CORBA::ULong i = 0; i < this->next_; i++)
+  // Valid entry. Figure out the skel_ptr.
+  skelfunc = entry->skel_ptr_;
 
-    if (ACE_OS::strncmp (this->tbl_[i].opname_,
-                         opname,
-                         ACE_OS::strlen (opname)) == 0)
-      {
-        skel_ptr = this->tbl_[i].skel_ptr_;
-        return 0; // success
-      }
-
-  return -1;  // not found
-}
-
-// constructor
-TAO_Linear_OpTable_Entry::TAO_Linear_OpTable_Entry (void)
-{
-  opname_ = 0;
-  skel_ptr_ = 0;
-}
-
-// destructor
-TAO_Linear_OpTable_Entry::~TAO_Linear_OpTable_Entry (void)
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  this->skel_ptr_ = 0;  // cannot delete this as we do not own it
+  return 0;
 }
 
 // Active Demux search strategy
@@ -271,8 +233,7 @@ int
 TAO_Binary_Search_OpTable::find (const char *opname,
                                 TAO_Skeleton &skelfunc)
 {
-  const TAO_operation_db_entry *entry = lookup (opname,
-                                                ACE_OS::strlen (opname));
+  const TAO_operation_db_entry *entry = lookup (opname);
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_Binary_Search_Table:find failed\n"),
