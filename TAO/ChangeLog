@@ -1,3 +1,10 @@
+Tue Apr  1 13:55:04 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,i}:
+
+	  Use ACE_Unbounded_Set_Ex instead of ACE_Unbounded_Set.
+	  This fixes Bugzilla entries 1460, 1465.
+
 Tue Apr 01 12:13:33 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/libs/IBM1047_ISO8859/Makefile.bor: Added this
