@@ -43,6 +43,7 @@ public abstract class TimedWait
    * overrides it. 
    * IMPORTANT: This method assumes it is called with the object_'s
    * monitor lock already held.
+   *@exception InterruptedException Interrupted during wait
    */
   public final void timedWait () throws InterruptedException
   {
@@ -70,6 +71,8 @@ public abstract class TimedWait
    * IMPORTANT: This method assumes it is called with the object_'s
    * monitor lock already held.
    *@param tv Amount of time to do wait for.
+   *@exception java.lang.InterruptedException Interrupted during wait
+   *@exception JACE.ASX.TimeoutException Reached timeout specified
    */
   public final void timedWait (TimeValue tv)
     throws InterruptedException,

@@ -65,7 +65,8 @@ class NotEmptyCondition extends TimedWait
  * consiste of <tt>MessageBlock</tt>s.
  *</blockquote>
  *
- *@see MessageBlock,TimeValue
+ *@see MessageBlock
+ *@see TimeValue
  */
 public class MessageQueue
 {
@@ -116,6 +117,8 @@ public class MessageQueue
    * Enqueue a <MessageBlock> into the <MessageQueue> in accordance
    * with its <msgPriority> (0 is lowest priority). Note that the
    * call will block (unless the queue has been deactivated).
+   *
+   *@exception java.lang.InterruptedException Interrupted while accessing queue
    *@param newItem item to enqueue onto the Message Queue
    *@return -1 on failure, else the number of items still on the queue.
    */
@@ -134,6 +137,7 @@ public class MessageQueue
    * (unless operation completes before)
    *@return -1 on failure, else the number of items still on the
    * queue. 
+   *@exception java.lang.InterruptedException Interrupted while accessing queue
    */
   public synchronized int enqueue (MessageBlock newItem, 
 				   TimeValue tv) throws InterruptedException
@@ -169,6 +173,7 @@ public class MessageQueue
      * that the call will block (unless the queue has been deactivated).
      *@param newItem item to enqueue onto the Message Queue
      *@return -1 on failure, else the number of items still on the queue.
+     *@exception java.lang.InterruptedException Interrupted while accessing queue
      */
   public synchronized int enqueueTail (MessageBlock newItem) throws InterruptedException
   {
@@ -183,6 +188,7 @@ public class MessageQueue
      *@param tv amount of time (TimeValue) to wait before returning
      * (unless operation completes before)
      *@return -1 on failure, else the number of items still on the queue.
+     *@exception java.lang.InterruptedException Interrupted while accessing queue
      */
   public synchronized int enqueueTail (MessageBlock newItem,
 				       TimeValue tv) throws InterruptedException
@@ -218,6 +224,7 @@ public class MessageQueue
      * that the call will block (unless the queue has been deactivated).
      *@param newItem item to enqueue onto the Message Queue
      *@return -1 on failure, else the number of items still on the queue.
+     *@exception java.lang.InterruptedException Interrupted while accessing queue
      */
   public synchronized int enqueueHead (MessageBlock newItem) throws InterruptedException
   {
@@ -232,6 +239,7 @@ public class MessageQueue
      *@param tv amount of time (TimeValue) to wait before returning
      * (unless operation completes before)
      *@return -1 on failure, else the number of items still on the queue.
+     *@exception java.lang.InterruptedException Interrupted while accessing queue
      */
   public synchronized int enqueueHead (MessageBlock newItem,
 				       TimeValue tv) throws InterruptedException
@@ -267,6 +275,7 @@ public class MessageQueue
      * <MessageQueue>. Note that the call will block (unless the queue
      * has been deactivated). 
      *@return null on failure, else the <MessageBlock> at the head of queue.
+     *@exception java.lang.InterruptedException Interrupted while accessing queue
      */
   public synchronized MessageBlock dequeueHead () throws InterruptedException
   {
@@ -278,6 +287,7 @@ public class MessageQueue
      * <MessageQueue>. Note that the call will return if <timeout>
      * amount of time expires or if the queue has been deactivated.
      *@return null on failure, else the <MessageBlock> at the head of queue.
+     *@exception InterruptedException Interrupted while accessing queue
      */
   public synchronized MessageBlock dequeueHead (TimeValue tv) throws InterruptedException
   {

@@ -36,7 +36,8 @@ import JACE.ASX.TimeValue;
  * portion will make any sense or fit into the Java model for I/O.
  *</blockquote>
  *
- *@see TimerQueue,Reactor
+ *@see TimerQueue
+ *@see Reactor
  */
 public interface EventHandler
 {

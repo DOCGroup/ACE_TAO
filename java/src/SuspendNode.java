@@ -17,13 +17,11 @@ package JACE.ServiceConfigurator;
 
 import java.io.*;
 import JACE.OS.*;
-import java_cup.runtime.*;
 
 class SuspendNode extends ParseNode 
 {
-  public SuspendNode (int act_num)
+  public SuspendNode ()
   {
-    super(act_num);
   }
 
   public void apply () 

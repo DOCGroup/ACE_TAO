@@ -57,6 +57,7 @@ public class StrategyAcceptor
    * Initialize the Strategy Acceptor. The method creates the
    * appropriate strategies as needed.
    *@param port port number where the server will listen for connections
+   *@exception IOException Socket level error
    */
   public void open (int port) throws IOException
     {
@@ -72,6 +73,11 @@ public class StrategyAcceptor
 
   /**
    * Accept a connection using the appropriate strategies.
+   *
+   *@exception SocketException Socket level error
+   *@exception InstantiationException Problem creating a handler
+   *@exception IllegalAccessException No strategy available
+   *@exception IOException Socket level error
    */
   public void accept () throws SocketException, 
       InstantiationException, 
@@ -94,9 +100,10 @@ public class StrategyAcceptor
    * creStrategy_.  If no strategy is passed in, the default behavior
    * of this method is to use the default CreationStrategy.
    *@return a new instance of the Svc Handler
+   *@exception InstantiationException Couldn't create SvcHandler
+   *@exception IllegalAccessException No strategy available
    */
-  protected SvcHandler makeSvcHandler () throws InstantiationException, 
-    IllegalAccessException
+  protected SvcHandler makeSvcHandler () throws InstantiationException, IllegalAccessException
     {
       // Create a new handler for the connection
       return this.creStrategy_.makeSvcHandler ();
@@ -111,9 +118,10 @@ public class StrategyAcceptor
    * use the default AcceptStrategy. 
    *@param sh Svc Handler in which to accept the connection
    *@return result of accepting a connection using the accept strategy
+   *@exception SocketException Socket level error
+   *@exception IOException Socket level error
    */
-  protected int acceptSvcHandler (SvcHandler sh) throws
-  SocketException, IOException
+  protected int acceptSvcHandler (SvcHandler sh) throws SocketException, IOException
   {
     // Delegate responsibility to the appropriate strategy
     return this.acceptStrategy_.acceptSvcHandler (sh);

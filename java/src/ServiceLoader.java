@@ -58,6 +58,7 @@ public class ServiceLoader extends ClassLoader
 
   /**
    * Load a class from across the network 
+   *@exception ClassNotFoundException Couldn't find the class
    */
   public Class loadClass (URL url, boolean resolve) throws ClassNotFoundException
   {
@@ -106,6 +107,7 @@ public class ServiceLoader extends ClassLoader
    *           Java space, though, so it's impossible to cast them
    *           to something useful.  Use a wrapper and reflection
    *           as in ServiceRecords.
+   *@exception ClassNotFoundException Couldn't find the class
    */
   public Class loadClass (String fn, boolean resolve) throws ClassNotFoundException
   {

@@ -17,13 +17,11 @@ package JACE.ServiceConfigurator;
 
 import java.io.*;
 import JACE.OS.*;
-import java_cup.runtime.*;
 
 class ResumeNode extends ParseNode
 {
-  public ResumeNode (int act_num) 
+  public ResumeNode () 
   {
-    super(act_num);
   }
 
   public void apply ()
