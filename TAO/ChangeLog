@@ -1,3 +1,8 @@
+Wed Dec 24 11:01:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+          Added ../idl to includes
+
 Wed Dec 24 08:55:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent.mpc:
@@ -211,7 +216,7 @@ Tue Dec 23 19:04:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Dec 23 18:17:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Object_T.cpp:
-	 
+
 	  Fixed a compilation error in builds where exceptions have been
 	  turned off.
 
@@ -224,8 +229,8 @@ Tue Dec 23 17:47:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* TAO_IDL/be_include/be_visitor_interface/interface_cs.h:
 
 	  Added code generation for _unchecked_narrow (). Thanks to Jon
-	  Biggar and Milan Cvetkovic for motivating this. 
-	
+	  Biggar and Milan Cvetkovic for motivating this.
+
 	* tao/Object_T.cpp:
 	* tao/Object_T.h:
 	* tao/Valuetype/AbstractBase_T.cpp:
@@ -234,7 +239,7 @@ Tue Dec 23 17:47:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Provided interfaces that can be called by the generated
 	  code. The implementation of _unchecked_narrow () for interfaces
 	  and abstract interfaces stay within the ORB.
-	
+
 Tue Dec 23 21:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * *.bor:
@@ -253,7 +258,7 @@ Tue Dec 23 14:51:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
 
 	  Fixed compile errors and that were showing up in my workspace with
-	  g++.  
+	  g++.
 
 Tue Dec 23 20:14:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -314,7 +319,7 @@ Tue Dec 23 12:53:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
 	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
 	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
-	
+
 	  Because these tutorials using orbsvcs, base the projects on
           orbsvcsexe instead of taoexe because with taoexe we lack the
 	  $(TAO_ROOT)/orbsvcs include path
