@@ -13,6 +13,7 @@
 
 #ifndef TAO_RESOURCE_FACTORY_H
 #define TAO_RESOURCE_FACTORY_H
+
 #include "ace/pre.h"
 
 #include "ace/Service_Object.h"
@@ -22,11 +23,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/Pluggable.h"
-#include "tao/Protocol_Factory.h"
-#include "tao/orbconf.h"
 #include "ace/Unbounded_Set.h"
+#include "ace/SString.h"
 
+class TAO_Protocol_Factory;
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
 
@@ -212,4 +212,5 @@ protected:
 };
 
 #include "ace/post.h"
+
 #endif /* TAO_RESOURCE_FACTORY_H */

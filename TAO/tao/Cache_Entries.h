@@ -15,7 +15,7 @@
 #define TAO_CACHE_ENTRIES_H
 #include "ace/pre.h"
 
-#include "tao/Transport_Descriptor_Interface.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +23,7 @@
 
 #include "ace/Recyclable.h"
 
+class TAO_Transport_Descriptor_Interface;
 class TAO_Transport;
 
 #ifdef index
@@ -39,12 +40,9 @@ class TAO_Transport;
  * they can be stored together as a <value> for a <key> in a
  * table holding the state of the Transport Cache.
  */
-class TAO_Export TAO_Cache_IntId
+class TAO_Cache_IntId
 {
-
 public:
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Cache_IntId (void);
@@ -90,11 +88,13 @@ public:
   TAO_Transport *relinquish_transport (void);
 
 private:
+
   /// The transport that needs to be cached.
   TAO_Transport *transport_;
 
   /// The state of the handle
   ACE_Recyclable_State recycle_state_;
+
 };
 
 
@@ -105,12 +105,10 @@ private:
  * several  data items, so they can be stored together as a
  * <value> for a <key> in a hash table holding the state of the
  * Transport Cache.
- *
  */
-class TAO_Export TAO_Cache_ExtId
+class TAO_Cache_ExtId
 {
 public:
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Cache_ExtId (void);
@@ -135,7 +133,7 @@ public:
   int operator!= (const TAO_Cache_ExtId &rhs) const;
 
   /// <hash> function is required in order for this class to be usable by
-  /// ACE_Hash_Map_Manager.
+  /// ACE_Hash_Map_Manager_Ex.
   u_long hash (void) const;
 
   /// Make a deep copy of the underlying pointer
@@ -154,12 +152,11 @@ public:
   TAO_Transport_Descriptor_Interface *property (void) const;
 
 private:
-  // = Data members.
 
   /// A property object that we represent.
   TAO_Transport_Descriptor_Interface *transport_property_;
 
-  /// Do we need to delete transport_propert_?
+  /// Do we need to delete transport_property?
   CORBA::Boolean is_delete_;
 
   /**
@@ -169,6 +166,7 @@ private:
    * details.
    */
   CORBA::ULong index_;
+
 };
 
 
