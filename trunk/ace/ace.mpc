@@ -76,6 +76,8 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
 
     Utils {
       ACE.cpp
+      ACE_crc32.cpp
+      ACE_crc_ccitt.cpp
       Active_Map_Manager.cpp
       Arg_Shifter.cpp
       Capabilities.cpp
