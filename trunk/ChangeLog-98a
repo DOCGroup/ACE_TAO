@@ -22,6 +22,11 @@ Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
           "myallocator" to avoid conflict with STL.  Thanks to Ben Eng
           <ben@jetpen.com> for the patch.
 
+        * include/makeinclude/platform_linux_lxpthread.GNU: protect
+          PRELIB definition with ifndef PRELIB, to allow overriding
+          without modifying the platform_macros.GNU file.  Thanks to
+          James Johnson <jcej@lads.com> for this suggestion.
+
         * ace/IOStream_T.cpp: restored ACE_HAS_IOSTREAMH_INCLUSION
           protection around the old g++ munch hack.  There's no need
           to trouble all (g++) platforms with its (4 byte) space penalty.
