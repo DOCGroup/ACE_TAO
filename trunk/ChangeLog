@@ -1,3 +1,8 @@
+Sun Mar 14 12:48:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/Network_Events.cpp:
+          Fixed warnings in MinGW build
+
 Sun Mar 14 12:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
