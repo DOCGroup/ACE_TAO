@@ -1,3 +1,12 @@
+Thu Mar  4 07:59:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-lynxos.h:
+        * include/makeinclude/platform_lynxos.GNU:
+
+          Enable alloca for LynxOS and remove the -ansi option from CCFLAGS
+          (which allows users to use alloca).  Thanks to Olli Savia
+          <ops@iki.fi> for providing this patch.
+          
 Thu Mar  4 06:39:11 2004  Olli Savia  <ops@iki.fi>
 
         * tests/Max_Default_Port_Test_IPV6.cpp

@@ -101,7 +101,7 @@ pipes ?= 1
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -mthreads -ansi -Wpointer-arith
+CFLAGS          += -mthreads -Wpointer-arith
 #### -Winline complains a lot with -O2.
 #### CFLAGS          += -Winline
 #### LynxOS 3.0.0's g++ has a lot of warnings about non-virtual base class

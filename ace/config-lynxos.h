@@ -51,12 +51,6 @@
 #endif /* __LYNXOS_SDK_VERSION */
 
 #if defined (__x86__)
-  // PowerPC libraries don't seem to have alloca (), so only use with x86.
-// Although ACE does have alloca() on this compiler/platform combination, it is
-// disabled by default since it can be dangerous.  Uncomment the following line
-// if you ACE to use it.
-//# define ACE_HAS_ALLOCA
-# define ACE_HAS_ALLOCA_H
 # define ACE_HAS_PENTIUM
 #elif defined (__powerpc__)
   // It looks like the default stack size is 15000.
@@ -68,6 +62,8 @@
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0)
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+#define ACE_HAS_ALLOCA
+#define ACE_HAS_ALLOCA_H
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_BROKEN_READV
 #define ACE_HAS_BROKEN_SETRLIMIT
@@ -207,10 +203,6 @@
 // LSOCK.cpp uses a macro from param.h, not included
 #define ALIGNBYTES (sizeof(int) - 1)
 #define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
-
-// Linking problems with alloca
-#undef ACE_HAS_ALLOCA
-#undef ACE_HAS_ALLOCA_H
 
 // Requested for example: $ACE_ROOT/examples/IPC_SAP/DEV_SAP 
 #define ACE_HAS_TERM_IOCTLS
