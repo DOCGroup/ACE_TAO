@@ -69,7 +69,8 @@ endif
 
 # -qextchk is handy, but produces false type mismatches when linking
 # netsvcs with 3.1.4, so it's disabled.  IBM reports this fixed in 3.6.4.
-CCFLAGS     += $(CFLAGS) -qtempinc -qinfo
+TEMPINCDIR   = tempinc
+CCFLAGS     += $(CFLAGS) -qtempinc=$(TEMPINCDIR) -qinfo
 
 # IBM C/C++ compiler 3.6.x produces a bazillion warnings about 0-valued
 # preprocessor defs. Since both 3.1 and 3.4 could be installed, don't ask
@@ -114,7 +115,6 @@ LDFLAGS	    += -bI:/lib/pse.exp
 OCCFLAGS    += -O2 -qarch=com
 RANLIB	    = ranlib
 SOFLAGS	    = -p 0
-TEMPINCDIR  = tempinc
 
 SOVERSION  =
 SONAME     =
