@@ -1,3 +1,10 @@
+Sat Mar 20 19:16:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/RTScheduling/Scheduling_Interceptor/Makefile:
+
+	  The SRC target was incompletely defined which lead to problems
+	  while dependencies were regenerated.
+
 Sat Mar 20 18:39:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
