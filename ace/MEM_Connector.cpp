@@ -87,7 +87,7 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   // Do not close the handle.
 
   // now we should setup the mmap malloc.
-  char buf[MAXPATHLEN];
+  TCHAR buf[MAXPATHLEN];
 
   // @@ Need to handle timeout here.
   ACE_INT16 buf_len;

@@ -31,7 +31,7 @@ ACE_MEM_SAP::ACE_MEM_SAP (void)
 }
 
 int
-ACE_MEM_SAP::create_shm_malloc (const char *name,
+ACE_MEM_SAP::create_shm_malloc (LPCTSTR name,
                                 MALLOC_OPTIONS *options)
 {
   ACE_TRACE ("ACE_MEM_SAP::create_shm_malloc");
