@@ -30,6 +30,7 @@ CPP_SRCS += \
   DIOP_Acceptor \
   DIOP_Connection_Handler \
   DIOP_Endpoint \
+  DIOP
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

@@ -21,10 +21,14 @@
 #include "ace/High_Res_Timer.h"
 #include "testC.h"
 
+// The following include file forces DIOP to be linked into the
+// executable and initialized for static builds.
+#include "examples/PluggableUDP/DIOP/DIOP.h"
+
 #if defined (VXWORKS)
 # undef ACE_MAIN
 # define ACE_MAIN testClient
-#endif 
+#endif
 
 const char *iorFile = "file://test.ior";
 ACE_UINT32 niter = 10;
@@ -33,7 +37,7 @@ ACE_UINT32 SIZE_BLOCK= 256;
 class Client
 {
   // = TITLE
-  //   Run the client thread 
+  //   Run the client thread
   //
   // = DESCRIPTION
   //   Use the ACE_Task_Base class to run the client threads.
@@ -60,10 +64,10 @@ private:
 int main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
-    {       
+    {
       CORBA::ORB_var orb =
           CORBA::ORB_init (argc,
-                           argv, 
+                           argv,
                            "ORB_Test_Client",
                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -85,14 +89,14 @@ int main (int argc, char *argv[])
         }
 
       CORBA::String_var string =
-        orb->object_to_string (server.in (), 
+        orb->object_to_string (server.in (),
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Client: orb->object_to_string:\n%s\n",
                   string.in ()));
-      
+
       Client client (server.in (), niter);
 
       client.svc ();
@@ -143,7 +147,7 @@ Client::svc (void)
       ACE_TRY_CHECK;
 
       timer.start ();
-      
+
       ACE_UINT32 client_count = 0;
       for (ACE_UINT32 i = 0; i < this->niterations_; ++i)
         {
@@ -164,15 +168,15 @@ Client::svc (void)
       //ACE_DEBUG ((LM_DEBUG, "...finished\n"));
 
       long dur = measured.sec () * 1000000 + measured.usec ();
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Time for %u Msgs: %u usec \n",
-                  this->niterations_, 
+                  this->niterations_,
                   measured.sec () * 1000000 + measured.usec ()));
 
-      ACE_DEBUG ((LM_DEBUG, "Time for 1 Msg: %u usec, %u calls/sec\n", 
-                  dur / this->niterations_, 
+      ACE_DEBUG ((LM_DEBUG, "Time for 1 Msg: %u usec, %u calls/sec\n",
+                  dur / this->niterations_,
                   1000000 / (dur / this->niterations_)));
-      
+
       server_->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
