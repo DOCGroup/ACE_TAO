@@ -140,6 +140,10 @@ protected:
 
   size_t total_bytes_;
   // The total number of bytes sent/received to the gatewayd thus far.
+
+  int first_time_;
+  // Used to call register_stdin_handle only once.  Otherwise, thread
+  // leak will occur on Win32.
 };
 
 class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>

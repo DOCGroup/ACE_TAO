@@ -10,7 +10,7 @@
 //    Event_Channel.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Doug Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -47,8 +47,11 @@ public:
   // Close down the Channel.
 
   // = Proxy management methods.
-  int initiate_connection_connection (Connection_Handler *);
+  int initiate_connection_connection (Connection_Handler *, int sync_directly = 0);
   // Initiate the connection of the <Connection_Handler> to its peer.
+  // Second paratemer is used for thread connection-handler which will
+  // block the connecting procedure directly, need not care
+  // Options::blocking_semantics().
 
   int complete_connection_connection (Connection_Handler *);
   // Complete the initialization of the <Connection_Handler> once it's
@@ -56,6 +59,8 @@ public:
 
   int reinitiate_connection_connection (Connection_Handler *);
   // Reinitiate a connection asynchronously when the Peer fails.
+  int cancel_connection_connection (Connection_Handler *);
+  // Cancel a asynchronous connection.
 
   int bind_proxy (Connection_Handler *);
   // Bind the <Connection_Handler> to the <connection_map_>.
