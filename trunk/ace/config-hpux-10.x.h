@@ -115,6 +115,8 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 #define ACE_HAS_STREAMS
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
+// But the putmsg signature doesn't have it as const...
+#define ACE_LACKS_CONST_STRBUF_PTR
 
 // Platform supports STREAM pipes
 // This is possible, but not by default - need to rebuild the kernel to
@@ -151,7 +153,10 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 #  define ACE_HAS_THREADS
 #  define ACE_HAS_DCETHREADS
 #  define ACE_HAS_DCE_DRAFT4_THREADS
-#  define ACE_HAS_POSIX_SEM
+// POSIX real-time semaphore definitions are in the header files, and it
+// will compile and link with this in place, but will not run.  HP says 
+// the functions are not implemented.
+//#  define ACE_HAS_POSIX_SEM
 #  define ACE_HAS_PTHREAD_T
 
 // Platform has pthread_attr_delete instead of pthread_attr_destroy
@@ -181,13 +186,11 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // Platform lacks pthread_attr_setstackaddr
 #  define ACE_LACKS_THREAD_STACK_ADDR
 
-// Platform uses int for select() rather than fd_set.
-// HP's DCE threads redefine a bunch of system I/O calls to wrappered
-// versions to avoid blocking the whole process when a call blocks.
-// One of them is select(), and it only has the int* (not fd_set*)
-// variety.  So, until HP does kernel threads, switch to int select
-// when building with threads.
-//#  define ACE_SELECT_USES_INT
+// If this is not turned on, the CMA wrappers will redefine a bunch of
+// system calls with wrappers - one being select() and it only defines
+// select with int arguments (not fd_set).  So, as long as _CMA_NOWRAPPERS_
+// is set, the regular fd_set arg types are used for select().
+// Without threads being compiled in, the fd_set/int thing is not an issue.
 #  define _CMA_NOWRAPPERS_
 
 // This is a def for this file only
