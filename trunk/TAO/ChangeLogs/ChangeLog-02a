@@ -1,3 +1,10 @@
+Mon Feb  5 12:33:44 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp
+	  (send_request):
+
+	  Corrected typo.  ACE_TRY_CHECK --> ACE_TRY_ENV.
+
 Mon Feb  5 12:27:14 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (fini):
