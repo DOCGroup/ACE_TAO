@@ -38,7 +38,6 @@ SUBDIRS = \
 EXTRA_DIST = \
   ACE-INSTALL.html \
   ACE-install.sh \
-  BIBLIOGRAPHY \
   FAQ \
   PROBLEM-REPORT-FORM \
   VERSION \
