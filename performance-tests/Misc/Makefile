@@ -13,13 +13,14 @@ BIN     = basic_perf \
 	  context_switch_time \
 	  preempt \
 	  test_mutex \
+	  test_guard \
 	  test_singleton \
 	  test_naming
 
 # Only build static library for optimum run-time speed.
 LIB	= libPerf.a
 FILES   = basic_func
-LSRC	= $(addsuffix .cpp,$(FILES)) 
+LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
 LDLIBS 	= -lPerf
 VLDLIBS = $(LDLIBS:%=%$(VAR))
