@@ -7,13 +7,13 @@
 
 ACE_RCSID(ImplRepo, server_impl, "$Id$")
 
-Server_Impl::Server_Impl (void)
+Server_i::Server_i (void)
   : ior_output_file_ (0)
 {
 }
 
 int
-Server_Impl::parse_args (void)
+Server_i::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:f:");
   int c;
@@ -47,7 +47,7 @@ Server_Impl::parse_args (void)
 }
 
 int
-Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
+Server_i::init (int argc, char** argv, CORBA::Environment& env)
 {
   TAO_TRY 
     {
@@ -106,7 +106,7 @@ Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Server_Impl::init");
+      TAO_TRY_ENV.print_exception ("Server_i::init");
       return -1;
     }
   TAO_ENDTRY;
@@ -115,19 +115,19 @@ Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
 }
 
 int
-Server_Impl::run (CORBA::Environment& env)
+Server_i::run (CORBA::Environment& env)
 {
   if (this->orb_manager_.run (env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Server_Impl::run"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "Server_i::run"), -1);
   return 0;
 }
 
-Server_Impl::~Server_Impl (void)
+Server_i::~Server_i (void)
 {
 }
 
 int
-Server_Impl::read_ir_ior (void)
+Server_i::read_ir_ior (void)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle_ = ACE_OS::open ("implrepo.ior", 0);

@@ -116,7 +116,7 @@ query (const char *type,
     }
 
   // Retrieve the type description struct from the Service Type Repos.
-  const TAO_Support_Attributes_Impl& support_attrs =
+  const TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
@@ -910,7 +910,7 @@ export (CORBA::Object_ptr reference,
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = 0;
-  TAO_Support_Attributes_Impl& support_attrs =
+  TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
@@ -1026,7 +1026,7 @@ modify (const char *id,
     TAO_THROW (CosTrading::NotImplemented ());
 
   char* type = 0;
-  TAO_Support_Attributes_Impl& support_attrs =
+  TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
@@ -1073,7 +1073,7 @@ withdraw_using_constraint (const char *type,
                    CosTrading::IllegalConstraint,
                    CosTrading::Register::NoMatchingOffers))
 {
-  TAO_Support_Attributes_Impl&
+  TAO_Support_Attributes_i&
     support_attrs = this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();

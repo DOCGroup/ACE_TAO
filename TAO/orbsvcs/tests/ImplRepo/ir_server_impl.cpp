@@ -6,7 +6,7 @@
 
 ACE_RCSID(ImplRepo, ir_server_impl, "$Id$")
 
-IR_Server_Impl::IR_Server_Impl (void)
+IR_Server_i::IR_Server_i (void)
   : ior_output_file_ (0),
     server_key_ (0),
     server_impl_ (0) 
@@ -16,7 +16,7 @@ IR_Server_Impl::IR_Server_Impl (void)
 // Reads the Server factory ior from a file
 
 int
-IR_Server_Impl::read_ior (char *filename)
+IR_Server_i::read_ior (char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
@@ -39,7 +39,7 @@ IR_Server_Impl::read_ior (char *filename)
 }
 
 int
-IR_Server_Impl::parse_args (void)
+IR_Server_i::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "df:o:");
   int c;
@@ -83,7 +83,7 @@ IR_Server_Impl::parse_args (void)
 }
 
 int
-IR_Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
+IR_Server_i::init (int argc, char** argv, CORBA::Environment& env)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
@@ -112,7 +112,7 @@ IR_Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
                       -1);
 */
 
-  this->server_impl_ = new IR_Simple_Impl (this->orb_manager_.orb (),
+  this->server_impl_ = new IR_Simple_i (this->orb_manager_.orb (),
                                            this->orb_manager_.child_poa (),
                                            server_object.in ());
 
@@ -132,14 +132,14 @@ IR_Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
 }
 
 int
-IR_Server_Impl::run (CORBA::Environment& env)
+IR_Server_i::run (CORBA::Environment& env)
 {
   if (this->orb_manager_.run (env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "IR_Server_Impl::run"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "IR_Server_i::run"), -1);
   return 0;
 }
 
-IR_Server_Impl::~IR_Server_Impl (void)
+IR_Server_i::~IR_Server_i (void)
 {
   if (this->server_impl_ != 0)
     delete server_impl_;

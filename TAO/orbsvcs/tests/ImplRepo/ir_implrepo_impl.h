@@ -24,16 +24,16 @@
 #include "tao/TAO.h"
 
 // Forward declarations.
-class IR_ImplRepo_Impl;
-class IR_Simple_Impl;
+class IR_iRepo_i;
+class IR_Simple_i;
 
 // Typedefs.
-typedef IR_ImplRepo_Impl *IR_ImplRepo_Impl_ptr;
-typedef IR_ImplRepo_Impl_ptr IR_ImplRepo_Impl_ref;
-typedef IR_Simple_Impl *IR_Simple_Impl_ptr;
-typedef IR_Simple_Impl_ptr IR_Simple_Impl_ref;
+typedef IR_iRepo_i *IR_iRepo_i_ptr;
+typedef IR_iRepo_i_ptr IR_iRepo_i_ref;
+typedef IR_Simple_i *IR_Simple_i_ptr;
+typedef IR_Simple_i_ptr IR_Simple_i_ref;
 
-class IR_ImplRepo_Impl : public POA_Implementation_Repository
+class IR_iRepo_i : public POA_iementation_Repository
 {
   // = TITLE
   //    Implementation Repository 
@@ -43,8 +43,8 @@ class IR_ImplRepo_Impl : public POA_Implementation_Repository
   //    Implementation Repository.
 public:
   // = Constructor and destructor
-  IR_ImplRepo_Impl (void);
-  ~IR_ImplRepo_Impl (void);
+  IR_iRepo_i (void);
+  ~IR_iRepo_i (void);
 
   // = Interface methods
 //  virtual void register_server (const char *server,
@@ -67,7 +67,7 @@ public:
   // Starts the program registered as <server>
 
 private:
-  IR_Simple_Impl *server_impl_;
+  IR_Simple_i *server_impl_;
 
   int parse_args (void);
   // Parses the commandline arguments.
@@ -95,7 +95,7 @@ private:
 };
 
 
-class IR_Simple_Impl: public POA_simple_object
+class IR_Simple_i: public POA_simple_object
 {
   // = TITLE
   //    Simple Object Implementation
@@ -105,11 +105,11 @@ class IR_Simple_Impl: public POA_simple_object
   //    returns the cube of a long, another that shuts down the server.
 public:
   //  = Constructor and Destructor
-  IR_Simple_Impl (CORBA::ORB_ptr orb_ptr,
+  IR_Simple_i (CORBA::ORB_ptr orb_ptr,
                   PortableServer::POA_ptr poa_ptr,
-                  IR_ImplRepo_Impl *ir_impl);
+                  IR_iRepo_i *ir_impl);
 
-  ~IR_Simple_Impl (void);
+  ~IR_Simple_i (void);
 
   // = Interface methods
   virtual CORBA::Long simple_method (CORBA::Long l,
@@ -126,7 +126,7 @@ public:
 private:
   int forward (CORBA::Environment &env);
 
-  class IR_ImplRepo_Impl *ir_impl_;
+  class IR_iRepo_i *ir_impl_;
 
   CORBA::ORB_var orb_var_;
   PortableServer::POA_var poa_var_;

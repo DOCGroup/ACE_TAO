@@ -23,13 +23,13 @@
 #include "Impl_RepoS.h"
 
 // Forward declarations.
-class IR_Simple_Impl;
+class IR_Simple_i;
 
 // Typedefs.
-typedef IR_Simple_Impl *IR_Simple_Impl_ptr;
-typedef IR_Simple_Impl_ptr IR_Simple_Impl_ref;
+typedef IR_Simple_i *IR_Simple_i_ptr;
+typedef IR_Simple_i_ptr IR_Simple_i_ref;
 
-class IR_Simple_Impl: public POA_simple_object
+class IR_Simple_i: public POA_simple_object
 {
   // = TITLE
   //    Simple Object Implementation
@@ -38,12 +38,12 @@ class IR_Simple_Impl: public POA_simple_object
   //    Implementation of a simple object that has two methods, one that 
   //    returns the cube of a long, another that shuts down the server.
 public:
-  IR_Simple_Impl (CORBA::ORB_ptr orb_ptr,
+  IR_Simple_i (CORBA::ORB_ptr orb_ptr,
                   PortableServer::POA_ptr poa_ptr,
                   CORBA::Object_ptr forward_to_ptr);
   // Constructor
 
-  ~IR_Simple_Impl (void);
+  ~IR_Simple_i (void);
   // Destructor
 
   virtual CORBA::Long simple_method (CORBA::Long l,

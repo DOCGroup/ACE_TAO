@@ -7,7 +7,7 @@ ACE_RCSID(ImplRepo, server, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  Server_Impl server;
+  Server_i server;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tSimple_Server\n\n"));
   TAO_TRY

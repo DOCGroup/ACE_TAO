@@ -24,7 +24,7 @@
 #include "simple_object_impl.h"
 #include "tao/TAO.h"
 
-class Server_Impl
+class Server_i
 {
   // = TITLE
   //   CORBA Server Implementation
@@ -33,10 +33,10 @@ class Server_Impl
   //   
 public:
   // = Initialization and termination methods.
-  Server_Impl (void);
+  Server_i (void);
   // Default constructor
 
-  ~Server_Impl (void);
+  ~Server_i (void);
   // Destructor
 
   int init (int argc, char **argv, CORBA::Environment& env);
@@ -46,7 +46,7 @@ public:
   // Run the orb 
 
 private:
-  Simple_Impl server_impl;
+  Simple_i server_impl;
 
   int read_ir_ior (void);
 

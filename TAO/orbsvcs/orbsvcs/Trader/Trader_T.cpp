@@ -123,7 +123,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock (void)
 
 template <class IF>
 TAO_Trader_Components<IF>::
-TAO_Trader_Components (const TAO_Trading_Components_Impl& comps) 
+TAO_Trader_Components (const TAO_Trading_Components_i& comps) 
   : comps_ (comps)
 {
 }
@@ -164,7 +164,7 @@ TAO_Trader_Components<IF>::link_if (CORBA::Environment& _env)
 }
 template <class IF> 
 TAO_Support_Attributes<IF>::
-TAO_Support_Attributes (const TAO_Support_Attributes_Impl& attrs) 
+TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs) 
   : attrs_ (attrs)
 {
 }
@@ -199,7 +199,7 @@ TAO_Support_Attributes<IF>::type_repos (CORBA::Environment& _env)
 
 template <class IF> 
 TAO_Import_Attributes<IF>::
-TAO_Import_Attributes (const TAO_Import_Attributes_Impl& attrs)
+TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs)
   : attrs_ (attrs)
 {
 }
@@ -283,7 +283,7 @@ TAO_Import_Attributes<IF>::max_follow_policy (CORBA::Environment& _env)
 
 template <class IF> 
 TAO_Link_Attributes<IF>::
-TAO_Link_Attributes (const TAO_Link_Attributes_Impl& attrs)
+TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs)
   : attrs_ (attrs)
 {
 }
