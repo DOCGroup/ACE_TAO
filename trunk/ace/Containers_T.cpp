@@ -416,7 +416,7 @@ ACE_Unbounded_Queue<T>::dump (void) const
   for (ACE_Unbounded_Queue_Iterator<T> iter (*(ACE_Unbounded_Queue<T> *) this);
        iter.next (item) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("count = %d\n"), count++));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("count = %d\n"), count++));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

@@ -169,6 +169,21 @@ private:
   // dispatch the <ACE_Event_Handlers> that are passed in via the
   // notify pipe before breaking out of its <recv> loop.  By default,
   // this is set to -1, which means "iterate until the pipe is empty."
+
+#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+  ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_set_;
+  // Keeps track of allocated arrays of type
+  // <ACE_Notification_Buffer>.
+
+  ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_set_;
+  // Keeps track of all pending notifications.
+
+  ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_set_;
+  // Keeps track of all free buffers.
+
+  ACE_SYNCH_MUTEX notify_queue_lock_;
+  // synchronization for handling of queues
+#endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 };
 
 class ACE_Export ACE_Select_Reactor_Handler_Repository
