@@ -1,3 +1,14 @@
+Thu Jul 24 13:36:48 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\RTScheduling\Scheduler.cpp: 
+	* tests\RTScheduling\VoidData\test_client.cpp (main): 
+	* tests\RTScheduling\Scheduling_Interceptor\test_client.cpp (main): 
+	* tests\RTScheduling\Current\test.cpp: 
+	* tests\RTScheduling\Current\Thread_Task.cpp: 
+	* tests\RTScheduling\Thread_Cancel\Thread_Task.cpp: 
+
+	  Fixed use of ACE_ENV.
+
 Thu Jul 24 13:01:46 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTCORBA\Priority_Inversion_With_Bands\test_i.cpp
