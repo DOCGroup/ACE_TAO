@@ -70,10 +70,13 @@ clone:
 
 CONTROLLED_FILES = ACE-INSTALL.html \
                 ACE-categories \
+                ACE-inheritance.pdf.gz \
+                ACE-inheritance.ps.gz \
                 ACE-install.sh \
                 ACE-lessons.html \
                 ASNMP \
                 BIBLIOGRAPHY \
+                COPYING \
                 ChangeLog \
 		ChangeLog-98a \
 		ChangeLog-97b \
