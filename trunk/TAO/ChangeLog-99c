@@ -25,9 +25,17 @@ Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* examples/Simple/echo/Makefile
 	* examples/Simple/grid/Makefile
 	* examples/Logging/Makefile
+	* orbsvcs/Concurrency_Service/Makefile
+	* orbsvcs/CosEC/Factory/Makefile
+	* orbsvcs/Time_Service/Makefile
+	* orbsvcs/tests/Concurrency/Makefile
+	* orbsvcs/tests/Property/Makefile
+	* orbsvcs/tests/Time/Makefile
+	* orbsvcs/tests/Sched_Conf/Makefile
+	* orbsvcs/tests/CosEC_Multiple/Makefile
+	* orbsvcs/tests/AVStreams/benchmark/Makefile
 	  Updated inclusions and makefile dependencies to reflect the
 	  change above.
-
 
 Mon Oct 04 15:20:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
