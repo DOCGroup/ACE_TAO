@@ -1,3 +1,16 @@
+Mon Aug 12 20:03:09 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+
+	  Added missing CPU load retrieval code.  Currently, only Linux
+	  and Windows are supported.
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing (CPP_SRCS):
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor (OBJFILES):
+
+	  Previously neglected to add LB_CPU_Monitor source to these
+	  lists.  Added it.
+
 Mon Aug 12 18:48:34 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:

@@ -39,8 +39,8 @@ OBJFILES = \
 	$(OBJDIR)\LB_IORInterceptor.obj \
 	$(OBJDIR)\LB_ObjectReferenceFactory.obj \
 	$(OBJDIR)\LB_ORBInitializer.obj \
-	$(OBJDIR)\LB_Component.obj
-
+	$(OBJDIR)\LB_Component.obj \
+	$(OBJDIR)\LB_CPU_Monitor.obj
 
 RESOURCE = $(OBJDIR)\LoadBalancing.res
 
