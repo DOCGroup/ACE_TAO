@@ -1,3 +1,11 @@
+Thu Sep 23 02:02:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Updated the idl files compilation guidelines.
+	  We can use a utility project to handle the IDL compilation part
+	  to avoid setting up the custom rules twice.  Thanks to Dmitri
+	  Katchalov <Dmitri.Katchalov@computershare.com.au> for suggesting
+	  the change.
+
 Wed Sep 22 13:13:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/DynAnyC.h:
