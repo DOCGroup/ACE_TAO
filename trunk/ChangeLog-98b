@@ -1,40 +1,46 @@
 Thu Aug 27 19:40:32 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i: Changed an erroneous ACE_HAS_PTHREAD_DRAFT6 to
-	  ACE_HAS_PTHREADS_DRAFT6.  Thanks to Chuck Gehr for catching this.
+        * ace/OS.i: Changed an erroneous ACE_HAS_PTHREAD_DRAFT6 to
+          ACE_HAS_PTHREADS_DRAFT6.  Thanks to Chuck Gehr for catching this.
 
 Thu Aug 27 15:47:34 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Proactor.cpp (handle_signal): Fixed code for looping around
- 	  handle_events().  Thanks to Marc Penner <mpenner@rst.inri.com>
- 	  for pointing out the problem.
+        * ace/Proactor.cpp (handle_signal): Fixed code for looping around
+          handle_events().  Thanks to Marc Penner <mpenner@rst.inri.com>
+          for pointing out the problem.
 
-	* ace/OS.cpp (ACE_Countdown_Time::stop): Removed the setting of
- 	  errno to ETIME when we have used all of timeout.  This was
- 	  necessary since this errno was interfering with errno being set
- 	  by other parts of ACE.
+        * ace/OS.cpp (ACE_Countdown_Time::stop): Removed the setting of
+          errno to ETIME when we have used all of timeout.  This was
+          necessary since this errno was interfering with errno being set
+          by other parts of ACE.
 
 Thu Aug 27 13:45:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h:  Added /**/ between "#include" and
-	  "<ace/sys_conf.h>".  Otherwise, MSVC spits out warnings, tons of
-	  them.
+        * ace/OS.h:  Added /**/ between "#include" and
+          "<ace/sys_conf.h>".  Otherwise, MSVC spits out warnings, tons of
+          them.
 
-	* ace/Profile_Timer.h (ACE_Profile_Timer): Remove the Win32
-	  section.  Win32 (except CE) actually uses the code in
-	  ACE_HAS_GETRUSAGE. 
+        * ace/Profile_Timer.h (ACE_Profile_Timer): Remove the Win32
+          section.  Win32 (except CE) actually uses the code in
+          ACE_HAS_GETRUSAGE.
 
 Thu Aug 27 13:12:04 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_proactor.cpp : 
-	test_proactor_with_aio.cpp is removed.
- 	test_proactor.cpp should do well on Win as well as other 
-	POSIX4 compliant platforms (with some known bugs in Solaris2.6).
+        * examples/Reactor/Proactor/test_proactor.cpp :
+        test_proactor_with_aio.cpp is removed.
+        test_proactor.cpp should do well on Win as well as other
+        POSIX4 compliant platforms (with some known bugs in Solaris2.6).
 
 Thu Aug 27 11:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/ACE-guidelines.html: added rule to declare a loop index
           before the loop, if it's used after the loop.
+
+        * ace/OS.h,README: added ACE_LACKS_RTTI support, for use with
+          ACE_HAS_ANSI_CASTS without dynamic_cast.
+
+        * ace/config-sunos5.5.h (Sun CC only), config-osf1-4.0.h:
+          added conditional ACE_LACKS_RTTI.
 
 Wed Aug 26 23:43:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
