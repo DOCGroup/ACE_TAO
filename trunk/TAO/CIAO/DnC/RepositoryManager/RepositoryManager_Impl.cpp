@@ -48,7 +48,20 @@ installPackage (const char* installation_name,
      CIAO::Config_Handler::Utils::create_parser ();
   DOMDocument* top_pc_doc = tpd_parser->parseURI (location);
   auto_ptr<DOMBuilder> cleanup_parser (tpd_parser);
-  CIAO::Config_Handler::TPD_Handler top_pc_handler (top_pc_doc,
+
+  XercesDOMParser *new_parser = new XercesDOMParser;
+  XercesDOMParser::ValSchemes val_schema = XercesDOMParser::Val_Auto;
+  new_parser->setValidationScheme (val_schema);
+  new_parser->setDoNamespaces (true);
+  new_parser->setDoSchema (true);
+  new_parser->setValidationSchemaFullChecking (true);
+  new_parser->setCreateEntityReferenceNodes (false);
+  new_parser->setIncludeIgnorableWhitespace (false);
+  new_parser->parse (location);
+
+  DOMDocument* ano_doc = new_parser->getDocument ();
+
+  CIAO::Config_Handler::TPD_Handler top_pc_handler (ano_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
   ACE_TString package_location = top_pc_handler.
@@ -57,7 +70,19 @@ installPackage (const char* installation_name,
      CIAO::Config_Handler::Utils::create_parser ();
   auto_ptr<DOMBuilder> cleanup_pc_parser (pc_parser);
   DOMDocument* pc_doc = pc_parser->parseURI (package_location.c_str());
-  CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,
+
+  XercesDOMParser *ano_new_parser = new XercesDOMParser;
+  XercesDOMParser::ValSchemes ano_val_schema = XercesDOMParser::Val_Auto;
+  ano_new_parser->setValidationScheme (ano_val_schema);
+  ano_new_parser->setDoNamespaces (true);
+  ano_new_parser->setDoSchema (true);
+  ano_new_parser->setValidationSchemaFullChecking (true);
+  ano_new_parser->setCreateEntityReferenceNodes (false);
+  ano_new_parser->setIncludeIgnorableWhitespace (false);
+  ano_new_parser->parse (package_location.c_str());
+  DOMDocument* ano_ano_doc = ano_new_parser->getDocument ();
+
+  CIAO::Config_Handler::PC_Handler pc_handler (ano_ano_doc,
                                                DOMNodeFilter::SHOW_ELEMENT |
                                                DOMNodeFilter::SHOW_TEXT);
   pc_handler.process_PackageConfiguration (this->pc_);
@@ -132,6 +157,7 @@ findNamesByType (const char*
 {
   // @@ (OO) It appears that you should returning a sequence of length
   //         zero.  Please confirm.
+  return 0;
 }
 
 // @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
@@ -144,6 +170,7 @@ getAllNames (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 {
   // @@ (OO) It appears that you should returning a sequence of length
   //         zero.  Please confirm.
+  return 0;
 }
 
 // @@ (OO) Method definitions should never use "_WITH_DEFAULTS"

@@ -1,3 +1,12 @@
+Wed Jun 23 12:31:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/RepositoryManager_Impl.h:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Made changes to allow "read local URL" work in
+          Windows machines as well.
+
 Wed Jun 23 11:48:10 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/Config_Handlers/Process_Element.h:

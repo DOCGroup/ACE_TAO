@@ -24,10 +24,12 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // top level package URL
-  ACE_TCHAR* package_url = 0;
+  XercesDOMParser::ValSchemes val_schema = XercesDOMParser::Val_Auto;
+  
+  char* package_url = 0;
 
   // deployment plan URL
-  ACE_TCHAR* plan_url = 0;
+  char* plan_url = 0;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:d:k:t:"));
   int c;
@@ -74,11 +76,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DOMBuilder* parser = CIAO::Config_Handler::Utils::
                            create_parser ();
 
+      XercesDOMParser *new_parser = new XercesDOMParser;
+      new_parser->setValidationScheme (val_schema);
+      new_parser->setDoNamespaces (true);
+      new_parser->setDoSchema (true);
+      new_parser->setValidationSchemaFullChecking (true);
+      new_parser->setCreateEntityReferenceNodes (false);
+      new_parser->setIncludeIgnorableWhitespace (false);
+      new_parser->parse (plan_url);
+
       // use the parser to parse the deployment plan URL and create
       // a DOM document.
       DOMDocument* dup_doc = parser->parseURI (plan_url);
+      DOMDocument* ano_doc = new_parser->getDocument ();
 
       if (dup_doc == NULL)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
+                      May be the URL is wrong!!\n"));
+          throw Null_Dom_Document ();
+        }
+
+      if (ano_doc == NULL)
         {
           ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
                       May be the URL is wrong!!\n"));
@@ -89,7 +108,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       auto_ptr<DOMBuilder> cleanup_parser (parser);
 
       // call the Deployment Plan handler to parse the XML descriptor.
-      CIAO::Config_Handler::Plan_Handler plan_handler (dup_doc,
+      CIAO::Config_Handler::Plan_Handler plan_handler (ano_doc,
                                                   DOMNodeFilter::SHOW_ELEMENT |
                                                   DOMNodeFilter::SHOW_TEXT);
       Deployment::DeploymentPlan plan;
