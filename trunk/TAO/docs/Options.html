@@ -489,6 +489,16 @@ more flexible address notations for IORs.</td>
         is <em> no </em>.
         </tr>
       <tr>
+        <td><code>-ORBLingerTimeout</code> <em>timeout</em></td>
+        <td><a name="-ORBLingerTimeout"></a> This option allows users to
+        set the linger timeout on a TCP socket before closing it.  Hence,
+        this option is only useful when using IIOP.  The
+        <code>timeout</code> value can be in the range of zero to the
+        maximum signed integer value for the particular platform on which
+        TAO is running.
+        </td>
+      </tr>
+      <tr>
         <td><code>-ORBListenEndpoints</code> <em>endpoint</em></td>
         <td><a name="-ORBListenEndpoints"></a> This option was
         introduced with the CORBA <a
