@@ -72,9 +72,10 @@ public:
   /// Return the underlying transport
   const TAO_Transport *transport (void) const;
 
+  /// Set <recycle_state>.
   void recycle_state (ACE_Recyclable_State new_state);
 
-  /// Get/Set <recycle_state>.
+  /// Get <recycle_state>.
   ACE_Recyclable_State recycle_state (void);
 
   /// Relinquish ownership of the TAO_Transport object associated with
@@ -140,9 +141,11 @@ public:
   /// Make a deep copy of the underlying pointer
   void duplicate (void);
 
+  //@{
   /// Return the index value
   CORBA::ULong index (void);
   CORBA::ULong index (void) const;
+  //@}
 
   /// Set the index value. This calls should not be used by any users
   /// but for the TAO_Transport_Cache_Manager class.
