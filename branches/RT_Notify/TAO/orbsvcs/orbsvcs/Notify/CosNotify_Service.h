@@ -27,19 +27,19 @@ class TAO_NS_Properties;
 class TAO_NS_EventChannelFactory;
 
 /**
- * @class TAO_NS_CosNotify_Service
+ * @class TAO_CosNotify_Service
  *
  * @brief A service object for creating the  Notify Service Factory.
  *
  */
-class TAO_Notify_Export TAO_NS_CosNotify_Service : public TAO_NS_Service
+class TAO_Notify_Export TAO_CosNotify_Service : public TAO_Notify_Service
 {
 public:
   /// Constuctor
-  TAO_NS_CosNotify_Service (void);
+  TAO_CosNotify_Service (void);
 
   /// Destructor
-  virtual ~TAO_NS_CosNotify_Service ();
+  virtual ~TAO_CosNotify_Service ();
 
   /// = Service_Object virtual method overloads.
   virtual int init (int argc, char *argv[]);
@@ -77,8 +77,8 @@ protected:
   TAO_NS_Builder* builder_;
 };
 
-//ACE_STATIC_SVC_DECLARE (TAO_NS_CosNotify_Service)
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_CosNotify_Service)
+ACE_STATIC_SVC_DECLARE (TAO_CosNotify_Service)
+ACE_FACTORY_DECLARE (TAO_Notify, TAO_CosNotify_Service)
 
 ACE_STATIC_SVC_DECLARE (TAO_Notify_Default_EMO_Factory_OLD)
 
