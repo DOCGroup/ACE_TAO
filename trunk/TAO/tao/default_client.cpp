@@ -55,51 +55,55 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
 
   for (curarg = 0; curarg < argc && argv[curarg]; curarg++)
     {
-      if (ACE_OS::strcmp (argv[curarg], "-ORBiiopprofilelock") == 0)
+      if (ACE_OS::strcasecmp (argv[curarg],
+                              "-ORBIIOPProfileLock") == 0)
         {
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "thread") == 0)
+            if (ACE_OS::strcasecmp (name,
+                                    "thread") == 0)
               this->iiop_profile_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name, "null") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "null") == 0)
               this->iiop_profile_lock_type_ = TAO_NULL_LOCK;
           }
         }
 
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBclientconnectionhandler") == 0)
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-ORBClientConnectionHandler") == 0)
         {
           curarg++;
           if (curarg < argc)
             {
               char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, "MT") == 0)
-                {
-                  this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
-                }
-              else if (ACE_OS::strcasecmp (name, "ST") == 0)
-                {
-                  this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
-                }
-              else if (ACE_OS::strcasecmp (name, "RW") == 0)
-                {
-                  this->wait_strategy_ = TAO_WAIT_ON_READ;
-                }
+              if (ACE_OS::strcasecmp (name,
+                                      "MT") == 0)
+                this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
+              else if (ACE_OS::strcasecmp (name,
+                                           "ST") == 0)
+                this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
+              else if (ACE_OS::strcasecmp (name,
+                                           "RW") == 0)
+                this->wait_strategy_ = TAO_WAIT_ON_READ;
             }
         }
-      else if (ACE_OS::strcmp (argv[curarg], "-ORBTransportMuxStrategy") == 0)
+      else if (ACE_OS::strcmp (argv[curarg],
+                               "-ORBTransportMuxStrategy") == 0)
         {
           curarg++;
           if (curarg < argc)
             {
               char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, "MUXED") == 0)
+              if (ACE_OS::strcasecmp (name,
+                                      "MUXED") == 0)
                 this->transport_mux_strategy_ = TAO_MUXED_TMS;
-              else if (ACE_OS::strcasecmp (name, "EXCLUSIVE") == 0)
+              else if (ACE_OS::strcasecmp (name,
+                                           "EXCLUSIVE") == 0)
                 this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
             }
         }
@@ -110,7 +114,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
 ACE_Lock *
 TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
 {
-  ACE_Lock* the_lock = 0;
+  ACE_Lock *the_lock = 0;
 
   if (this->iiop_profile_lock_type_ == TAO_NULL_LOCK)
     ACE_NEW_RETURN (the_lock,
@@ -137,17 +141,13 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (void)
   TAO_Transport_Mux_Strategy *tms = 0;
 
   if (this->transport_mux_strategy_ == TAO_MUXED_TMS)
-    {
-      ACE_NEW_RETURN (tms,
-                      TAO_Muxed_TMS,
-                      0);
-    }
+    ACE_NEW_RETURN (tms,
+                    TAO_Muxed_TMS,
+                    0);
   else
-    {
-      ACE_NEW_RETURN (tms,
-                      TAO_Exclusive_TMS,
-                      0);
-    }
+    ACE_NEW_RETURN (tms,
+                    TAO_Exclusive_TMS,
+                    0);
 
   return tms;
 }
@@ -158,23 +158,17 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
   TAO_Wait_Strategy *ws = 0;
 
   if (this->wait_strategy_ == TAO_WAIT_ON_READ)
-    {
-      ACE_NEW_RETURN (ws,
-                      TAO_Wait_On_Read (transport),
-                      0);
-    }
+    ACE_NEW_RETURN (ws,
+                    TAO_Wait_On_Read (transport),
+                    0);
   else if (this->wait_strategy_ == TAO_WAIT_ON_REACTOR)
-    {
-      ACE_NEW_RETURN (ws,
-                      TAO_Wait_On_Reactor (transport),
-                      0);
-    }
+    ACE_NEW_RETURN (ws,
+                    TAO_Wait_On_Reactor (transport),
+                    0);
   else
-    {
-      ACE_NEW_RETURN (ws,
-                      TAO_Wait_On_Leader_Follower (transport),
-                      0);
-    }
+    ACE_NEW_RETURN (ws,
+                    TAO_Wait_On_Leader_Follower (transport),
+                    0);
 
   return ws;
 }

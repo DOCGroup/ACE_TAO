@@ -1279,9 +1279,10 @@ CORBA::ORB_init (int &argc,
         {
           char *current_arg = arg_shifter.get_current ();
 
-          const char orbid_opt[] = "-ORBid";
+          const char orbid_opt[] = "-ORBId";
           const int orbid_len = sizeof (orbid_opt) - 1;
-          if (ACE_OS::strcmp (current_arg, orbid_opt) == 0)
+          if (ACE_OS::strcmp (current_arg,
+                              orbid_opt) == 0)
             {
               arg_shifter.consume_arg ();
               if (arg_shifter.is_parameter_next ())
