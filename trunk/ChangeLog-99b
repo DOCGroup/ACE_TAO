@@ -1,10 +1,17 @@
+Wed Jan 27 13:47:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: use
+          double double quotes around COMPILE argument to ace_ld,
+          but only on WIN32 hosts.  Thanks to Peter Weat <weatp@syntron.com>
+          for figuring this out.
+
 Wed Jan 27 13:04:55 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.17 released.
 
 Wed Jan 27 12:32:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ACE-INSTALL.html include/makeinclude/platform_vxworks5.x_g++.GNU:
+        * ACE-INSTALL.html,include/makeinclude/platform_vxworks5.x_g++.GNU:
           default PERL_PATH to "perl", and added notes to set it to the full
           perl path if perl is not on your path.
 
