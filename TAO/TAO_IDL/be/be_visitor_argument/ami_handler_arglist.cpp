@@ -92,6 +92,9 @@ be_visitor_args_ami_handler_arglist::visit_array (be_array *node)
       *os << "const " << this->type_name (node);
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -108,6 +111,9 @@ be_visitor_args_ami_handler_arglist::visit_enum (be_enum *node)
       *os << this->type_name (node);
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -124,6 +130,9 @@ be_visitor_args_ami_handler_arglist::visit_interface (be_interface *node)
       *os << this->type_name (node, "_ptr");
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -140,6 +149,9 @@ be_visitor_args_ami_handler_arglist::visit_interface_fwd (be_interface_fwd *node
       *os << this->type_name (node, "_ptr");
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -156,6 +168,9 @@ be_visitor_args_ami_handler_arglist::visit_native (be_native *node)
       *os << this->type_name (node);
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -174,7 +189,10 @@ be_visitor_args_ami_handler_arglist::visit_predefined_type (be_predefined_type *
         case AST_Argument::dir_OUT:
           *os << "const " << this->type_name (node) << " &";
           return 1;
-      /* NOT REACHED */
+          /* NOT REACHED */
+        default:
+          // Do nothing
+          break;
         } // end switch direction
     } // end of if
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
@@ -186,6 +204,9 @@ be_visitor_args_ami_handler_arglist::visit_predefined_type (be_predefined_type *
           *os << this->type_name (node, "_ptr");
           return 1;
           /* NOT REACHED */
+        default:
+          // Do nothing
+          break;
         } // end switch direction
     } // end else if
   else // simple predefined types
@@ -197,6 +218,9 @@ be_visitor_args_ami_handler_arglist::visit_predefined_type (be_predefined_type *
           *os << this->type_name (node);
           return 1;
           /* NOT REACHED */
+        default:
+          // Do nothing
+          break;
         } // end switch direction
     } // end of else
 
@@ -215,6 +239,9 @@ be_visitor_args_ami_handler_arglist::visit_sequence (be_sequence *node)
       *os << "const " << this->type_name (node) << " &";
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -238,6 +265,9 @@ be_visitor_args_ami_handler_arglist::visit_string (be_string *node)
         }
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -254,6 +284,9 @@ be_visitor_args_ami_handler_arglist::visit_structure (be_structure *node)
       *os << "const " << this->type_name (node) << " &";
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -270,6 +303,9 @@ be_visitor_args_ami_handler_arglist::visit_union (be_union *node)
       *os << "const " << this->type_name (node) << " &";
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -305,6 +341,9 @@ be_visitor_args_ami_handler_arglist::visit_valuetype (be_valuetype *node)
       *os << this->type_name (node) << " *";
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
@@ -321,6 +360,9 @@ be_visitor_args_ami_handler_arglist::visit_valuetype_fwd (be_valuetype_fwd *node
       *os << "const " << this->type_name (node) << " *";
       return 1;
       /* NOT REACHED */
+    default:
+      // Do nothing
+      break;
     }
   return 0;
 }
