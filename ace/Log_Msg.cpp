@@ -131,6 +131,15 @@ ACE_Log_Msg_Manager::close (WIND_TCB *tcb)
 void
 ACE_Log_Msg_Manager::close (void)
 {
+  // Delete the main thread's Log_Msg.
+  ACE_Log_Msg *tss_log_msg = 0;
+  if (ACE_OS::thr_getspecific (key_,
+			       (void **) &tss_log_msg) != -1)
+    {
+      delete tss_log_msg;
+      tss_log_msg = 0;
+    }
+
   ACE_OS::thr_keyfree (key_);
 
   // Ugly, ugly, but don't know a better way.
@@ -272,6 +281,7 @@ ACE_Log_Msg::instance (void)
 	// Store the dynamically allocated pointer in thread-specific
 	// storage.  It gets deleted via the ACE_TSS_cleanup function
 	// when the thread terminates.
+
 	if (ACE_OS::thr_setspecific (key_, (void *) tss_log_msg) != 0)
 	  return 0; // Major problems, this should *never* happen!
       }
