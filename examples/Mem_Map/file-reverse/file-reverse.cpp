@@ -29,7 +29,6 @@ int
 main (int argc, char **argv)
 {
   ACE_LOG_MSG->open (argv[0]);
-  void *cp;
 
   if (argc != 2)
     ACE_ERROR_RETURN ((LM_ERROR, "usage: %n file\n%a"), -1);
