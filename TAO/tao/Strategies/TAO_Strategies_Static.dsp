@@ -127,14 +127,6 @@ SOURCE=.\FIFO_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_NonReactive_Base.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_NonReactive_Handler.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\LFU_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -251,14 +243,6 @@ SOURCE=.\DIOP_Transport.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_NonReactive_Base.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_NonReactive_Handler.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reactor_Per_Priority.h
 # End Source File
 # Begin Source File
@@ -360,14 +344,6 @@ SOURCE=.\DIOP_Profile.i
 # Begin Source File
 
 SOURCE=.\DIOP_Transport.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_NonReactive_Base.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_NonReactive_Handler.inl
 # End Source File
 # Begin Source File
 
