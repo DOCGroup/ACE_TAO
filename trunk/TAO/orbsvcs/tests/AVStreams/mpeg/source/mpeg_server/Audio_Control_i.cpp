@@ -151,6 +151,12 @@ Audio_Control_i::set_peer (char *&peer,
   char* peer_addr_str = new char [BUFSIZ];
   ACE_OS::strcpy (peer_addr_str,peer);
   ACE_OS::strtok_r (peer_addr_str, "=", &peer_addr_str);
+
+  char *delim = ACE_OS::strchr (peer_addr_str, ';');
+  
+  *delim = ':';
+
+  /*
   char peer_addr [BUFSIZ];     
 
   ACE_OS::sprintf (peer_addr,
@@ -159,6 +165,8 @@ Audio_Control_i::set_peer (char *&peer,
                    ACE_OS::strtok (0, ";")
                    );
 
+  */
+  
   ACE_INET_Addr client_data_addr (peer);
   // Data (UDP) Address of the client.
   
