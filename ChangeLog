@@ -1,3 +1,8 @@
+Tue Dec 23 20:19:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * *.{mpc,mwc}:
+          Added $Id$ to MPC files to fix fuzz errors.
+
 Tue Dec 22 12:31:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* Kokyu/Dispatcher_Impl.h:

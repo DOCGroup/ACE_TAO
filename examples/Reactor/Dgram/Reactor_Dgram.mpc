@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*CO) : aceexe {
   exename = codgram
   Source_Files {

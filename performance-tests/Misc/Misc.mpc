@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*basic_perf) : aceexe {
   Source_Files {
     basic_func.cpp

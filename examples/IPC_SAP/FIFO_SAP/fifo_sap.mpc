@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*client) : aceexe {
   exename = FIFO-client
   Source_Files {

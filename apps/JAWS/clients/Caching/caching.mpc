@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(http_client) : aceexe {
   Source_Files {
     http_handler.cpp

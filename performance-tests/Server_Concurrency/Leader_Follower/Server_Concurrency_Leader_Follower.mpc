@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : aceexe {
   source_files {
     leader_follower.cpp

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*client) : aceexe, qos {
   exename = client
   requires += qos
