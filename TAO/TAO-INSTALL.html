@@ -19,7 +19,7 @@
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5, 2.6, and 7, Windows NT (MSVC++ 4.x, 5.0, and 6.0),
+    <td>Solaris 2.5, 2.6, and 7, Windows NT (MSVC 5.0 and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0
         and 5.0, and IRIX 6.x
     </td>
@@ -184,24 +184,24 @@ target.<p>
 <HR><P>
 <H3>On Windows NT</H3>
 
-<P><CODE>TAO_IDL</CODE>, as of 5.02, will use the ACE_CC_COMPILER macro
-as the default compiler program on Win32.  For example, when compiling 
-<CODE>TAO_IDL</CODE> on MSVC, it will default to &quot;CL.EXE&quot;. In
-the setup where MSVC was installed and the compiler is in the path, no
-extra work needs to be done, since the default will work. But if the 
-compiler isn't in the path, you will need to add the variable 
-<CODE>CPP_LOCATION</CODE> to your environment and set it to the compiler 
-you want to use (for example, with MSVC 5 installed in its default directory,
-CPP_LOCATION should be "C:\Program Files\DevStudio\VC\bin\CL.EXE").  
-This variable will override the default. </P>
+<P><CODE>TAO_IDL</CODE> does not contain its own preprocessor, so it
+needs to use an external preprocessor.  Depending on which compiler was
+used to build <CODE>TAO_IDL</CODE>, the default preprocessor will change.
+For example, if compiled with MSVC, <CODE>TAO_IDL</CODE> will look for 
+CL.EXE in the path. There are cases where this will not work, such as in cross-compiling
+or if the preprocessor is not in the path.  These situations require that 
+environment variables are set on the machine to override the
+built-in settings.  More information about these environment variables can 
+be found in the <a href="docs/compiler.html#idl_env">TAO_IDL documentation.</a></P>
 
-<P>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in the <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html"> ACE
-installation notes</A>.  Alternatively, you can use <code> TAO_ROOT </code>
-environment variable if you have customized TAO installation.  This is only
-required if you are planning to use the &lt;orb.idl&gt; standard include in your
-IDL code.  Notice that some of the TAO services use this feature, so you are
-better off definining the environment variable in all cases.  </P>
+<P>It is also advisable to set either the <CODE>ACE_ROOT</CODE> environment 
+variable as outlined in the 
+<a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
+installation notes</A> or the <code>TAO_ROOT</code> environment variable.  
+This is only required if you are planning to use the &lt;orb.idl&gt; 
+standard include in your IDL code.  Notice that some of the TAO services 
+use this feature, so you are better off definining the environment variable 
+in all cases.  </P>
 
 <p><a href="http://www.torus-software.com/">Barry
 Hoggard</a> maintains a <a

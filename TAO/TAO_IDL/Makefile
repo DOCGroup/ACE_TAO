@@ -175,11 +175,17 @@ else  # ! CROSS-COMPILE
   endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife
-  ifeq ($(CPP_LOCATION),)
-    CPPFLAGS += -DCPP_LOCATION=\"$(strip $(CXX))\"
-  else
-    CPPFLAGS += -DCPP_LOCATION=\"$(CPP_LOCATION)\"
+  ifneq ($(CPP_LOCATION),)
+    echo "Warning: CPP_LOCATION is deprecated and will be removed in the future.  Please"
+    echo "use TAO_IDL_PREPROCESSOR instead"
+    TAO_IDL_PREPROCESSOR = $(CPP_LOCATION)
   endif # !def CPP_LOCATION
+
+  ifneq ($(TAO_IDL_PREPROCESSOR),)
+    CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
+  else
+    CPPFLAGS += -DTAO_IDL_PREPROCESSOR =\"$(TAO_IDL_PREPROCESSOR)\"
+  endif # !def TAO_IDL_PREPROCESSOR 
 
   realclean:
 	$(RM) tao_idl TAGS

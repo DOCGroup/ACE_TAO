@@ -98,11 +98,14 @@ DRV_init()
 
   idl_global->set_prog_name(NULL);
 
-#if defined (ACE_WIN32)
-  idl_global->set_cpp_location(ACE_CC_COMPILER);
+#if defined (TAO_IDL_PREPROCESSOR)
+  idl_global->set_cpp_location(TAO_IDL_PREPROCESSOR);
+#elif defined (ACE_CC_PREPROCESSOR)
+  idl_global->set_cpp_location(ACE_CC_PREPROCESSOR);
 #else
-  idl_global->set_cpp_location(CPP_LOCATION);
-#endif
+  // Just default to cc
+  idl_global->set_cpp_location("cc");
+#endif /* TAO_IDL_PREPROCESSOR */
 
   idl_global->set_be("");
 

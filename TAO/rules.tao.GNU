@@ -19,13 +19,13 @@ endif
 
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
-  ifndef CPP_LOCATION
+  ifndef TAO_IDL_PREPROCESSOR
     #### Assume we have Bourne shell and sed.  Otherwise, the user
-    #### should find out here that the CPP_LOCATION environment
+    #### should find out here that the TAO_IDL_PREPROCESSOR environment
     #### variable must be set explicitly!
-    CPP_LOCATION := $(shell type $(CXX) | sed 's/.* is //')
-  endif # ! CPP_LOCATION
-endif # ! CPP_LOCATION
+    TAO_IDL_PREPROCESSOR := $(shell type $(CXX) | sed 's/.* is //')
+  endif # ! TAO_IDL_PREPROCESSOR
+endif # COMSPEC
 
 
 ####

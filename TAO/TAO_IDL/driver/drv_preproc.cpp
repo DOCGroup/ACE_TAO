@@ -109,7 +109,7 @@ DRV_cpp_putarg(const char *str)
          << GTDEVEL(" arguments to preprocessor\n");
     exit (99);
   }
-  arglist[argcount++] = str;
+  arglist[argcount++] = str == 0 ? 0 : ACE::strnew(str);
 }
 
 /*
@@ -120,103 +120,101 @@ DRV_cpp_init (void)
 {
   // @@ There are two "one time" memory leaks in this function.
   //    They will not blow off the program but should be fixed at some point.
-  const char *cpp_loc;
+  const char *cpp_loc, *cpp_args;
 
-  // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
-  ACE_Env_Value<char*> cpp_path ("CPP_LOCATION", (char *) 0);
+  // See if TAO_IDL_PREPROCESSOR is defined.
 
-  if (cpp_path != 0)
-      cpp_loc = cpp_path;
-#if defined (_MSC_VER)
+  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR", (char *) 0);
+
+  // Set cpp_loc to the built in location, unless it has been overriden by
+  // environment variables.
+
+  if (preprocessor != 0)
+    cpp_loc = preprocessor;
   else
     {
-      cpp_path.open ("MSVCDir", (char*) 0);
-
+      // Check for the deprecated CPP_LOCATION environment variable
+      ACE_Env_Value<char*> cpp_path ("CPP_LOCATION", (char *) 0);
       if (cpp_path != 0)
         {
-          char* tmp = new char[BUFSIZ];
-          ACE_OS::strcpy (tmp, cpp_path);
-          ACE_OS::strcat (tmp, "\\bin\\CL.exe");
-		  cpp_loc = tmp;
+          ACE_ERROR ((LM_ERROR,
+                      "Warning: The environment variable CPP_LOCATION has been deprecated.  \n"
+                      "         Please use TAO_IDL_PREPROCESSOR instead.\n"));
+          cpp_loc = cpp_path;
         }
       else
-        cpp_loc = idl_global->cpp_location();
+        cpp_loc = idl_global->cpp_location ();
     }
 
-#else
-  else
-      cpp_loc = idl_global->cpp_location();
-#endif /* _MSC_VER */
 
   DRV_cpp_putarg (cpp_loc);
-  DRV_cpp_putarg("-DIDL");
+  DRV_cpp_putarg ("-DIDL");
   DRV_cpp_putarg ("-I.");
 
-  // Added some customisable preprocessor options
+  // Added some customizable preprocessor options
 
-  ACE_Env_Value<char*> cpp_flags ("TAO_IDL_DEFAULT_CPP_FLAGS", (char *) 0);
+  ACE_Env_Value<char*> args1 ("TAO_IDL_PREPROCESSOR_ARGS", (char *) 0);
 
-  if (cpp_flags == 0)
+  if (args1 != 0)
+    cpp_args = args1;
+  else
     {
-      // If no cpp flag was defined by the user, we define some
-      // platform specific flags here.
-#if defined (__BORLANDC__)
-      DRV_cpp_putarg("-P-");
-      DRV_cpp_putarg("-ocon");
-#else
-#if defined (ACE_WIN32)
-      DRV_cpp_putarg ("-nologo");
-#endif /* ACE_WIN32 */
-#if defined (ACE_MVS)
-      DRV_cpp_putarg ("-+");
-#endif /* ACE_MVS */
-      DRV_cpp_putarg ("-E");
-#if defined (__HP_aCC)
-      DRV_cpp_putarg ("+W");
-      DRV_cpp_putarg ("67");     // Ignore "invalid #pragma directive"
-#endif /* __HP_aCC */
-#if defined (__IBMCPP__) && (__IBMCPP__ < 400)  // IBM C++ 3.6
-      DRV_cpp_putarg ("-qflag=w:w");  // Ignore info msg; invalid #pragma
-#endif /* __IBM_CPP__ */
-#endif /* !defined (__BORLANDC__) */
-
-      // So we can find the required orb.idl file.
-      char* option = new char[BUFSIZ];
-      ACE_OS::strcpy (option, "-I");
-      const char* TAO_ROOT =
-        ACE_OS::getenv ("TAO_ROOT");
-      if (TAO_ROOT != 0)
+      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment variable
+      ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS", (char *) 0);
+      if (args2 != 0)
         {
-          ACE_OS::strcat (option, TAO_ROOT);
-          ACE_OS::strcat (option, "/tao");
+            ACE_ERROR ((LM_ERROR,
+                        "Warning: The environment variable TAO_IDL_DEFAULT_CPP_FLAGS has been deprecated.  \n"
+                        "         Please use TAO_IDL_PREPROCESSOR_ARGS instead.\n"));
+            cpp_args = args2;
         }
       else
         {
-          const char* ACE_ROOT =
-            ACE_OS::getenv ("ACE_ROOT");
-          if (ACE_ROOT != 0)
+          // If no cpp flag was defined by the user, we define some
+          // platform specific flags here.
+          char* option = new char[BUFSIZ];
+
+#if defined (TAO_IDL_PREPROCESSOR_ARGS)
+          cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
+#elif defined (ACE_CC_PREPROCESSOR_ARGS)
+          cpp_args = ACE_CC_PREPROCESSOR_ARGS;
+#else
+          cpp_args = "-E";
+#endif /* TAO_IDL_PREPROCESSOR_ARGS */
+
+          // So we can find the required orb.idl file.
+          ACE_OS::strcpy (option, "-I");
+          const char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+          if (TAO_ROOT != 0)
             {
-              ACE_OS::strcat (option, ACE_ROOT);
-              ACE_OS::strcat (option, "/TAO/tao");
+              ACE_OS::strcat (option, TAO_ROOT);
+              ACE_OS::strcat (option, "/tao");
             }
           else
             {
-              ACE_ERROR ((LM_ERROR,
-                          "TAO_IDL: neither TAO_ROOT nor ACE_ROOT defined\n"));
-              ACE_OS::strcat (option, ".");
+              const char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+              if (ACE_ROOT != 0)
+                {
+                  ACE_OS::strcat (option, ACE_ROOT);
+                  ACE_OS::strcat (option, "/TAO/tao");
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "Note: The environment variables TAO_ROOT and ACE_ROOT are not defined.\n"
+                              "      TAO_IDL may not be able to locate orb.idl\n"));
+                  ACE_OS::strcat (option, ".");
+                }
             }
-        }
 
-      DRV_cpp_putarg (option);
-    }
-  else
-    {
-      // Users specify their own.  Add them to cpp's arglist.
-      ACE_ARGV arglist (cpp_flags);
+          DRV_cpp_putarg (option);
+      }
+  }
 
-      for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
-        DRV_cpp_putarg (arglist[arg_cnt]);
-    }
+  // Add any flags in cpp_args to cpp's arglist.
+  ACE_ARGV arglist (cpp_args);
+  for (size_t arg_cnt = 0; arg_cnt < arglist.argc (); ++arg_cnt)
+    DRV_cpp_putarg (arglist[arg_cnt]);
 }
 
 /*
@@ -384,6 +382,7 @@ DRV_pre_proc(const char *myfile)
   DRV_cpp_putarg (tmp_ifile);
   DRV_cpp_putarg (0); // Null terminate the arglist.
   cpp_options.command_line (arglist);
+  
   ACE_HANDLE fd = ACE_OS::open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
   if (fd == ACE_INVALID_HANDLE) {
     cerr << idl_global->prog_name()

@@ -129,7 +129,7 @@ OBJFILES = \
 	$(OBJDIR)\utl_strlist.obj
 
 CFLAGS = -I.. -Ibe_include -Ife -Iinclude -Iutil \
-	-DIDL_CFE_VERSION=\"1.3.0\" -DCPP_LOCATION=\"cpp32\" $(ACE_CFLAGS)
+	-DIDL_CFE_VERSION=\"1.3.0\" $(ACE_CFLAGS)
 
 LIBFILES = $(ACE_LIB)
 
