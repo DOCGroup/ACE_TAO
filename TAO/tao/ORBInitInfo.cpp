@@ -80,9 +80,6 @@ IOP::CodecFactory_ptr
 TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // The CodecFactory is stateless and reentrant, so share a single
-  // instance between all ORBs.
-
   if (CORBA::is_nil (this->codec_factory_.in ()))
     {
       // A new instance must be allocated since the application code
@@ -91,7 +88,7 @@ TAO_ORBInitInfo::codec_factory (ACE_ENV_SINGLE_ARG_DECL)
       // with the ORB.
       IOP::CodecFactory_ptr codec_factory;
       ACE_NEW_THROW_EX (codec_factory,
-                        TAO_CodecFactory,
+                        TAO_CodecFactory (this->orb_core_),
                           CORBA::NO_MEMORY (
                             CORBA::SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
