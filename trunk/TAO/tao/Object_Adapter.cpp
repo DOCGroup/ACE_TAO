@@ -1061,7 +1061,7 @@ TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)
     object_id_ (),
     object_key_ (0),
     servant_ (0),
-    priority_ (TAO_DEFAULT_PRIORITY),
+    priority_ (TAO_INVALID_PRIORITY),
     previous_current_impl_ (0),
     setup_done_ (0)
 {
