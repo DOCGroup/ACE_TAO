@@ -39,6 +39,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "fault_tol_export.h"
+
 /// Policy factory for all FTCORBA related policies.
 class TAO_FT_Export TAO_FT_PolicyFactory :
   public PortableInterceptor::PolicyFactory,
