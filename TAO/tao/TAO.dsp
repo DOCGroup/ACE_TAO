@@ -199,6 +199,10 @@ SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BiDir_Adapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.cpp
 # End Source File
 # Begin Source File
