@@ -1,3 +1,8 @@
+Sat Nov 16 12:43:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
+          Fixes error in this BCB makefile.
+
 Fri Nov 15 18:29:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.h:
