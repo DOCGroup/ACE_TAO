@@ -312,6 +312,14 @@ public:
   // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
+		    int flags = 0);
+  // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
+  // should be initialized prior to being activated.  Right now, the
+  // only flag that is processed is <ACE_NONBLOCK>, which enabled
+  // non-blocking I/O on the <SVC_HANDLER> when it is opened.
+  // Default strategies would be created and used.
+
+  virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
 		    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
 		    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
 		    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
