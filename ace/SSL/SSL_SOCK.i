@@ -27,18 +27,18 @@ ACE_SSL_SOCK::set_option (int level,
 		     void *optval, 
 		     int optlen) const
 {
-  switch (option)
-    {
+//   switch (option)
+//     {
 //     case SO_SNDBUF:
 //       return ::BIO_set_write_buffer_size (this->io_bio_, *((int *) optval));
 //     case SO_RCVCBUF:
 //       return ::BIO_set_read_buffer_size (this->io_bio_, *((int *) optval));
-    default:
+//     default:
       return ACE_OS::setsockopt (this->get_handle (),
 				 level, 
 				 option, (char *) optval,
 				 optlen);
-    }
+//    }
 }
 
 // Provides access to the ACE_OS::getsockopt system call.
@@ -49,16 +49,16 @@ ACE_SSL_SOCK::get_option (int level,
 		     void *optval, 
 		     int *optlen) const
 {
-  switch (option)
-    {
+//  switch (option)
+//    {
 //     case SO_SNDBUF:
 //       return ::BIO_get_write_buffer_size (this->io_bio_, *((int *) optval));
 //     case SO_RCVCBUF:
 //       return ::BIO_get_read_buffer_size (this->io_bio_, *((int *) optval));
-    default:
+//    default:
       return ACE_OS::getsockopt (this->get_handle (),
 				 level, 
 				 option, (char *) optval,
 				 optlen);
-    }
+//    }
 }

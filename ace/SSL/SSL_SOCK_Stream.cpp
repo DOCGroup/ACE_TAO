@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/Handle_Set.h"
 
 #if defined (ACE_HAS_SSL)

@@ -3,7 +3,6 @@
 
 // SSL_SOCK_Acceptor.i
 
-#if defined (ACE_HAS_SSL)
 
 // Do nothing routine for constructor.
 
@@ -81,6 +80,3 @@ ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor");
 }
-
-
-#endif /* ACE_HAS_SSL */
