@@ -1051,6 +1051,8 @@ Cubit_Client::cube_any (int i,
 
       *ret_any >>= ret_long;
 
+      delete ret_any;
+
       this->call_count_++;
 
       if (TAO_debug_level > 2)
@@ -1113,6 +1115,8 @@ Cubit_Client::cube_any_struct (int i,
       ACE_TRY_CHECK;
 
       *ret_any >>= ret_struct;
+
+      delete ret_any;
 
       if (TAO_debug_level > 2)
         {
