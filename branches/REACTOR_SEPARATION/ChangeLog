@@ -1,3 +1,11 @@
+Fri Dec 10 22:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* bin/MakeProjectCreator/config/global.features (Message):
+	Disabled by default ace_With_xt and ace_with_x11.
+
+	* include/makeinclude/wrapper_macros.GNU (Module):
+	Replace qt_rector variables by qt, as MPC currently uses qt feature.
+
 Fri Dec 10 01:04:52 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* examples/Misc/.cvsignore (Module):
