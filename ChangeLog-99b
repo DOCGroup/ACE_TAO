@@ -1,4 +1,6 @@
-Fri Mar 26 22:56:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Mar 26 23:35:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Added ACE_NEEDS_SCHED_H.
 
 	* ace/config-irix6.x-g++.h:
 	* ace/config-irix6.x-kcc.h:
