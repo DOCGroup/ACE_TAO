@@ -241,12 +241,13 @@ Roadmap</h3>
       the overhead compared with using a regular mutex
       lock.</li><P>
 
-  <li> <a NAME="orbsvcs"></a><b>orbsvcs Library</b> -- By default, the
-      TAO orbsvcs library contains all of the services that TAO
-      currently supports. To reduce build time and library size, you
-      can exclude unused services. To do that, define a
-      <tt>TAO_ORBSVCS</tt> variable using one of these
-      approaches:</li><P>
+  <li> <a NAME="orbsvcs"></a><b>orbsvcs Library</b> -- 
+      By default,
+      TAO's Makefiles build all the services that TAO
+      supports.
+      To reduce build time you can exclude unused services,
+      by defining the <tt>TAO_ORBSVCS</tt> makefile variable.
+      We recommend using one of these two approaches:</li><P>
 
       <ol>
         <li>In your
