@@ -23,4 +23,9 @@ namespace TAO
     , mode_ (mode)
   {
   }
+
+  ACE_INLINE
+  Invocation_Adapter::~Invocation_Adapter (void)
+  {
+  }
 }
