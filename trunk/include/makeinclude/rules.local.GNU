@@ -165,24 +165,20 @@ ifndef MAKEFILE
 MAKEFILE=Makefile
 endif
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # TAO_ROOT
+
 depend.local: $(MAKEFILE)
 	@$(RM) -f $(MAKEFILE).old
 	@cp $(MAKEFILE) $(MAKEFILE).old
 	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC)
 	@cat $(MAKEFILE) | \
-		if [ $(TAO_ROOT). = "." ] ;\
-		then \
-		sed -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
-		    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
-		    -e "/:$$/d" \
-		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o $(VSHDIR)\1.$(SOEXT):;" ;\
-		else \
-		sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
-		    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
-		    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
-		    -e "/:$$/d" \
-		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o $(VSHDIR)\1.$(SOEXT):;" ;\
-		fi \
+	sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
+	    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
+	    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
+	    -e "/:$$/d" \
+	    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .obj/\1.$(SOEXT) $(VSHDIR)\1.o $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
 	@mv $(MAKEFILE).new $(MAKEFILE)
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
