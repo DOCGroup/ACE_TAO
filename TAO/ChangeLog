@@ -1,3 +1,17 @@
+Thu Aug  7 12:06:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Object.h:
+
+	  Removed unnecessary "tao/Object_KeyC.h" include, a
+	  "TAO::ObjectKey" forward declaration is enough.
+
+	  Removed obsolete "TAO_ObjectKey" declaration.
+
+	* tao/Tagged_Profile.h:
+
+	  Included "tao/Object_KeyC.h" to pull in TAO::ObjectKey class
+	  declaration.  Necessitated by above change.
+
 Thu Aug  7 11:14:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:

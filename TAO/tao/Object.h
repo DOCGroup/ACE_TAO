@@ -27,7 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object_KeyC.h"
 #include "tao/Pseudo_VarOut_T.h"
 //#include "ace/Synch.h"
 class ACE_Lock;
@@ -37,8 +36,14 @@ class ACE_Lock;
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_Object_Proxy_Broker;
-class TAO_ObjectKey;
 class TAO_ORB_Core;
+
+class ACE_Lock;
+
+namespace TAO
+{
+  class ObjectKey;
+}
 
 namespace CORBA
 {
