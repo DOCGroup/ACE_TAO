@@ -1,6 +1,12 @@
+Wed Jun 16 16:54:11 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object.cpp (CORBA_Object): Check for a non-zero
+	  <protocol_proxy_> before accessing it.  Thanks to Mark
+	  L. Boriack <mboriack@sito.saic.com> for this suggestion.
+
 Wed Jun 16 16:05:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/POA/Object_Creation_And_Registration/run_test.pl: 
+	* performance-tests/POA/Object_Creation_And_Registration/run_test.pl:
 	* examples/POA/Identity/run_test.pl:
 	* examples/POA/RootPOA/run_test.pl:
 	  Added scripts to timeout the test in case of failure
