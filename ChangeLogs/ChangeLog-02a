@@ -1,3 +1,73 @@
+Mon Apr 17 16:33:17 2000  Ossama Othman  <ossama@uci.edu>
+
+	* acconfig.h (ACE_LACKS_ACE_OTHER, ACE_LACKS_ACE_SVCCONF,
+	  ACE_LACKS_ACE_TOKEN):
+
+	  Added support for these macros.  They are used when enabling
+	  subsetting.
+
+	* configure.in:
+
+	  lseek64() and llseek() test has been moved to
+	  `m4/acinclude.m4'.
+
+	  Include `sys/types.h' when running the TLI/XTI tests.  Some
+	  platforms use typedefs such as "ulong" but such typedefs may not
+	  be defined in the TLI/XTI headers.
+
+	  (ACE_HAS_BROKEN_T_ERROR):
+
+	  Corrected test for broken t_error().  A variable, "errmsg" was
+	  being passed to the t_error() call in the test, but the variable
+	  was declared as "ace_errmsg."  Thanks to Roland Gigler
+	  <roland@mch.pn.siemens.de> for pointing this out.
+
+	  (ACE_MAJOR, ACE_MINOR, ACE_BETA):
+
+	  If any of these variables is evaluates to the empty string, then
+	  set it to zero.  This fixes a problem that was occuring when the
+	  the ACE version contained no beta number (e.g. "5.1" instead
+	  "5.1.0").  Libtool didn't like the fact that one of the numbers
+	  was an empty string.
+
+	* ace/Makefile.am (libACE_IPC_la_SOURCES, libACE_Other_la_SOURCES,
+	  HEADER_FILES, INLINE_FILES):
+
+	  Synchronized the sources associated with these Makefile
+	  variables with those in the classical ACE Makefile.
+
+	* m4/acinclude.m4 (ACE_CHECK_LSEEK64):
+
+	  Moved checks for lseek64() and llseek() from configure.in to
+	  this file.  The beginnings of a test for a 64 bit offset type
+	  have also been added, but that test is currently not in use.
+
+	* m4/ace.m4 (ACE_COMPILATION_OPTIONS):
+
+	  Removed check for exception support in C compiler.  It didn't
+	  make too much sense to check for exception support in a C
+	  compiler.
+
+	  Since exception support is disabled by default, make sure
+	  "-fno-exceptions" is set when using g++ with the default ACE
+	  exception configuration value.
+
+	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+	  Fixed typos where "$GXX" was used instead of "$CXX."  "$GXX" is
+	  set to yes when GNU C++ is being used, and "$CXX" is set to the
+	  compiler being used (e.g. "c++").  Thanks to Rich Seibel
+          <seibel_r@ociweb.com> for pointing this out.
+
+	  This also fixes a problem where "-fcheck-new" wasn't being added
+	  to the C++ flags ($CXXFLAGS).
+
+	* m4/subsets.m4 (ACE_LACKS_ACE_OTHER, ACE_LACKS_ACE_SVCCONF,
+	  ACE_LACKS_ACE_TOKEN):
+
+	  When disabling the "Other," "SvcConf" and/or the "Token" subset,
+	  then define the corresponding preprocessor macro.
+
 Sat Apr 15 21:49:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.cpp:
