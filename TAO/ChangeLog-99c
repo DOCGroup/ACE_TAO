@@ -1,3 +1,11 @@
+Fri Sep 24 11:09:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Stub.cpp:
+	  The set_policy_overrides method did not copy the servant orb,
+	  this is important for collocated objects.
+	  Thanks to Stefan Ullrich <SUllrich@heimannsystems.com> for
+	  pointing this out and providing a fix.
+
 Thu Sep 23 15:40:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB.h (CORBA_ORB): Added "= TAO_default_environment ()" to 
