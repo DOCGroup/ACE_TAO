@@ -1,3 +1,9 @@
+Wed Nov 26 14:21:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	  If ACE_HAS_REGEX is defined include ace/OS_NS_regex.h to fix compile
+	  errors in Solaris Forte8 build.
+
 Wed Nov 26 14:13:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
