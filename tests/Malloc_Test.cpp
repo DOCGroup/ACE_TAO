@@ -41,7 +41,7 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 // mapped into a different address in the child's virtual memory.
 static const void *CHILD_BASE_ADDR =
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-       64 * 1024 + 
+       64 * 1024 +
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
        ACE_DEFAULT_BASE_ADDR;
 
@@ -180,7 +180,7 @@ child (void)
   // new name called "bar" in <ACE_Malloc>.  This isn't really a good
   // design -- it's just to test that synchronization is working
   // across processes via <ACE_Malloc>.
-  while (myallocator ()->find ("bar", 
+  while (myallocator ()->find ("bar",
                                bar) == -1)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%P) spinning in child!\n")));
@@ -270,11 +270,12 @@ template class ACE_Based_Pointer<Long_Test>;
 
 #else
 int
-main (int argc, ASYS_TCHAR *[])
+main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("process creation is not supported on this platform\n")));
+              ASYS_TEXT ("process creation is not supported on this ")
+              ASYS_TEXT ("platform\n")));
   ACE_END_TEST;
   return 0;
 }
