@@ -28,6 +28,7 @@
 # define ACE_HAS_TANDEM_SIGNALS
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
+# define ACE_LACKS_ACE_IOSTREAM  /* MVME lacks signed and unsigned char */
 #else  /* ! __GNUG__ && ! ghs */
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
