@@ -1,3 +1,9 @@
+Wed Sep 29 12:29:44 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/TMCast/MTQueue.cpp: (new file)
+	* ace/TMCast/Group.cpp: Added/fixed explicit template instantiations
+	  to get build working on Solaris, Forte 7.
+
 Wed Sep 29 12:20:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Smart_Pointers/widget_test.cpp: Include "ace/Null_Mutex.h"
