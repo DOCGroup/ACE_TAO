@@ -1,3 +1,9 @@
+Tue Feb  1 10:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServerObject*.*:
+        * tao/PortableServer/ImplRepo*.*:
+          Regenerated with the latest version of the TAO_IDL compiler
+
 Mon Jan 31 20:42:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
