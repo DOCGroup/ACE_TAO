@@ -128,7 +128,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "                             op_len);" << be_nl << be_nl
       << "if (status == -1)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_THROW (CORBA::BAD_OPERATION (2, CORBA::COMPLETED_NO));" << be_uidt_nl
+      << "ACE_THROW (CORBA::BAD_OPERATION (VMCID | 2, CORBA::COMPLETED_NO));" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
