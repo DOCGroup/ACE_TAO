@@ -1,3 +1,17 @@
+Thu Nov 27 17:52:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
+	  Added FT_ORBUtils
+
+	* orbsvcs/tests/IOR_MCast/server.bor:
+	* orbsvcs/tests/Property/client.bor:
+	* orbsvcs/tests/Property/server.bor:
+	* orbsvcs/tests/Time/client.bor:
+	* orbsvcs/tests/Redundant_Naming/makefile.bor:
+	* orbsvcs/tests/Simple_Naming/makefile.bor:
+	* orbsvcs/tests/Concurrency/CC_client.bor:
+	  Added Messaging library
+
 Thu Nov 27 10:55:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsp:
@@ -17,7 +31,7 @@ Thu Nov 27 10:55:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Portable_Interceptors/IORInterceptor/server.dsp:
 
 	  Fixed linking errors in Win32 builds.
-	
+
 Thu Nov 27 16:22:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Starter.bor:
