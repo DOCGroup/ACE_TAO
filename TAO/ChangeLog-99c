@@ -198,6 +198,13 @@ Mon Nov 22 12:10:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
         * orbsvcs/orbsvcs/orbsvcs.dsp: Fixed custom build rule for
           DsLogAdmin.idl.
 
+Mon Nov 22 11:42:21 1999  Steve Totten  <totten_s@ociweb.com>
+
+        * examples/DeveloperGuideExamples.txt:
+
+          Added this file describing where to find the example source code
+          from OCI's TAO Developer's Guide.
+
 Sun Nov 21 19:15:10 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
