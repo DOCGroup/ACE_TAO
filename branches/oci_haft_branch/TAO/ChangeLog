@@ -1,3 +1,14 @@
+Mon Aug 25 16:28:22 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Fault_Notifier/.cvsignore:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
+          First pass at Fault notifier service (not working, but it builds.)
+
+        These changes were made in the oci_haft branch.
+
 Wed Aug 20 09:38:28 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * tests/FT_App/FT_Replica.cpp:

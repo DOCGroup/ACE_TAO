@@ -1,0 +1,7 @@
+project : taoserver, fault_tolerance {
+  exename  = Fault_Notifier
+  Source_Files {
+    FT_Notifier_i.cpp
+    Fault_Notifier_Main.cpp
+  }
+}
