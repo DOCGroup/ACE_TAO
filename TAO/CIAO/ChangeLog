@@ -1,3 +1,12 @@
+Sun May 16 12:39:40 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DnC_Dump.h:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+
+          Added dump functions to print out values encoded within a
+          CORBA::Any. Currently, this handles only basic types, support
+          for types encoded using CORBA::DnyAny needs to be incorporated.
+
 Sun May 16 01:17:44 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.idl:
