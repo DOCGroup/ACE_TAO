@@ -86,12 +86,19 @@ namespace CIAO_GLUE_BasicSP
   BMClosedED_Servant *sv)
   : home_ (::Components::CCMHome::_duplicate (home)),
   container_ (c),
-  servant_ (sv)
+  servant_ (sv),
+  // START new event code
+  ciao_proxy_out_avail_consumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_nil ())
+  // END new
   {
   }
 
   BMClosedED_Context::~BMClosedED_Context (void)
   {
+    // START new event code
+    this->ciao_uses_event_channel_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    // END new
   }
 
   // Operations from ::Components::CCMContext.
@@ -250,17 +257,17 @@ namespace CIAO_GLUE_BasicSP
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
 
-    // NEW
+    // START new event code
     RtecEventComm::EventSet events (1);
     events.length (1);
     events[0].header.source = ACE_ES_EVENT_SOURCE_ANY + 3;
     events[0].header.type = ACE_ES_EVENT_UNDEFINED + 2;
-    ::Components::EventBase * ev_base = ev;
+    Components::EventBase * any_event = ev;
     ev->_add_ref ();
-    events[0].data.any_value <<= ev_base;
-    ciao_proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    // END NEW
+    events[0].data.any_value <<= any_event;
+    ciao_proxy_out_avail_consumer_->push (events ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+    // END new
 
     /*
     ACE_Active_Map_Manager<::BasicSP::DataAvailableConsumer_var>::iterator end =
@@ -295,35 +302,15 @@ namespace CIAO_GLUE_BasicSP
   ::Components::ExceededConnectionLimit))
   {
 
-    // NEW
-    char * argv[1] = { "BMClosedED_exec" };
-    int argc = sizeof (argv) / sizeof (argv[0]);
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-		ACE_CHECK;
+    if (CORBA::is_nil (c))
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    }
 
-    if (CORBA::is_nil (this->ciao_proxy_consumer_.in ()))
-      {
-        ::CORBA::Object_var me =
-          this->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK;
+    if (CORBA::is_nil (this->ciao_proxy_out_avail_consumer_.in ()))
+      this->connect_event_supplier ();
+    return this->connect_event_consumer (c);
 
-        CORBA::String_var ior = orb->object_to_string
-          (me.in () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-
-        this->ciao_uses_event_channel_->connect_supplier
-          ("DataAvailable", "out_avail", ior.in () ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-    
-    CORBA::String_var ior = orb->object_to_string (c ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    ciao_uses_event_channel_->connect_consumer
-      ("DataAvailable", "data_ready", ior.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    return 0;
-    // END NEW
 
     /*
     if (CORBA::is_nil (c))
@@ -344,6 +331,95 @@ namespace CIAO_GLUE_BasicSP
     */
   }
 
+  void
+  BMClosedED_Context::connect_event_supplier ()
+  {
+
+    // ACE_DEBUG ((LM_DEBUG, "BMDevice_Context::connect_event_supplier\n"));
+
+    // Get a reference to the ORB.
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
+
+    RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+      this->ciao_uses_event_channel_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    this->ciao_proxy_out_avail_consumer_ =
+      supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    // Create and register supplier servant
+    MyImpl::RTEventServiceSupplier_impl * supplier_servant;
+    ACE_NEW (supplier_servant,
+             MyImpl::RTEventServiceSupplier_impl (orb.in ()));
+    RtecEventComm::PushSupplier_var push_supplier =
+      supplier_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    // Set QoS properties and connect
+    ACE_SupplierQOS_Factory qos;
+    qos.insert (ACE_ES_EVENT_SOURCE_ANY + 3,
+                ACE_ES_EVENT_UNDEFINED + 2,
+                0,
+                1);
+
+    this->ciao_proxy_out_avail_consumer_->connect_push_supplier (push_supplier.in (),
+                                                               qos.get_SupplierQOS ()
+                                                               ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  ::Components::Cookie *
+  BMClosedED_Context::connect_event_consumer (
+  ::BasicSP::DataAvailableConsumer_ptr c)
+  {
+
+    // ACE_DEBUG ((LM_DEBUG, "EC_Context::connect_event_consumer\n"));
+
+    // @@ Bala, am I reference counting parameter 'c' correctly?
+
+    // Get a reference to the ORB.
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
+
+    ::BasicSP::DataAvailableConsumer_var dup =
+      ::BasicSP::DataAvailableConsumer::_duplicate (c);
+
+    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+      this->ciao_uses_event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+    RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier =
+      consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    // Create and register consumer servant
+    MyImpl::RTEventServiceConsumer_impl * consumer_servant;
+    ACE_NEW_RETURN (consumer_servant,
+                    MyImpl::RTEventServiceConsumer_impl (orb.in (), dup.in ()),
+                    0);
+    RtecEventComm::PushConsumer_var push_consumer =
+      consumer_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    // Set QoS properties and connect
+    ACE_ConsumerQOS_Factory qos;
+    qos.start_logical_and_group (2);
+    qos.insert_type (ACE_ES_EVENT_UNDEFINED + 2,
+                     0);
+    qos.insert_source (ACE_ES_EVENT_SOURCE_ANY + 3,
+                       0);
+    proxy_supplier->connect_push_consumer (push_consumer.in (),
+                                           qos.get_ConsumerQOS ()
+                                           ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    dup._retn ();
+
+    ::Components::Cookie * return_cookie;
+    ACE_NEW_RETURN (return_cookie,
+                    ::CIAO::Object_Reference_Cookie (push_consumer.in ()),
+                    0);
+    return return_cookie;
+  }
+
   ::BasicSP::DataAvailableConsumer_ptr
   BMClosedED_Context::unsubscribe_out_avail (
   ::Components::Cookie *ck
@@ -353,6 +429,30 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection))
   {
 
+    CORBA::Object_var obj = CORBA::Object::_nil ();
+    ::BasicSP::DataAvailableConsumer_var return_consumer;
+
+    if (ck == 0 || ::CIAO::Object_Reference_Cookie::extract (ck, obj.out ()) == -1)
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BasicSP::DataAvailableConsumer::_nil ());
+      }
+
+    RtecEventComm::PushConsumer_var push_consumer =
+      ::RtecEventComm::PushConsumer::_narrow (obj.in ());
+
+    if (CORBA::is_nil (push_consumer.in ()))
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BasicSP::DataAvailableConsumer::_nil ());
+      }
+
+    push_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    // @@ Bala, what should I return here?
     return ::BasicSP::DataAvailableConsumer::_nil ();
 
     /*
@@ -377,27 +477,18 @@ namespace CIAO_GLUE_BasicSP
     */
   }
 
-  // NEW
-  void
-  BMClosedED_Context::connect_proxy_consumer (
-  RtecEventChannelAdmin::ProxyPushConsumer * proxy_consumer)
-  {
-    ciao_proxy_consumer_ = proxy_consumer;
-  }
-  // END NEW
-
-  ::BasicSP::RTEventChannel_ptr
+  ::RtecEventChannelAdmin::EventChannel_ptr
   BMClosedED_Context::get_connection_event_channel (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return ::BasicSP::RTEventChannel::_duplicate (
+    return ::RtecEventChannelAdmin::EventChannel::_duplicate (
     this->ciao_uses_event_channel_.in ());
   }
 
   void
   BMClosedED_Context::connect_event_channel (
-  ::BasicSP::RTEventChannel_ptr c
+  ::RtecEventChannelAdmin::EventChannel_ptr c
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
@@ -415,10 +506,10 @@ namespace CIAO_GLUE_BasicSP
     }
 
     this->ciao_uses_event_channel_ =
-    ::BasicSP::RTEventChannel::_duplicate (c);
+    ::RtecEventChannelAdmin::EventChannel::_duplicate (c);
   }
 
-  ::BasicSP::RTEventChannel_ptr
+  ::RtecEventChannelAdmin::EventChannel_ptr
   BMClosedED_Context::disconnect_event_channel (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -429,7 +520,7 @@ namespace CIAO_GLUE_BasicSP
     {
       ACE_THROW_RETURN (
       ::Components::NoConnection (),
-      ::BasicSP::RTEventChannel::_nil ());
+      ::RtecEventChannelAdmin::EventChannel::_nil ());
     }
 
     return this->ciao_uses_event_channel_._retn ();
@@ -679,7 +770,7 @@ namespace CIAO_GLUE_BasicSP
 
   void
   BMClosedED_Servant::connect_event_channel (
-  ::BasicSP::RTEventChannel_ptr c
+  ::RtecEventChannelAdmin::EventChannel_ptr c
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
   ::CORBA::SystemException,
@@ -691,7 +782,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_ENV_ARG_PARAMETER);
   }
 
-  ::BasicSP::RTEventChannel_ptr
+  ::RtecEventChannelAdmin::EventChannel_ptr
   BMClosedED_Servant::disconnect_event_channel (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -702,7 +793,7 @@ namespace CIAO_GLUE_BasicSP
     ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
-  ::BasicSP::RTEventChannel_ptr
+  ::RtecEventChannelAdmin::EventChannel_ptr
   BMClosedED_Servant::get_connection_event_channel (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -823,8 +914,8 @@ namespace CIAO_GLUE_BasicSP
 
     if (ACE_OS::strcmp (name, "event_channel") == 0)
     {
-      ::BasicSP::RTEventChannel_var _ciao_conn =
-      ::BasicSP::RTEventChannel::_narrow (
+      ::RtecEventChannelAdmin::EventChannel_var _ciao_conn =
+      ::RtecEventChannelAdmin::EventChannel::_narrow (
       connection
       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -912,19 +1003,6 @@ namespace CIAO_GLUE_BasicSP
   }
 
   // Operations for Events interface.
-
-  // NEW
-  void
-  BMClosedED_Servant::connect_publisher (
-  RtecEventChannelAdmin::ProxyPushConsumer * proxy_consumer
-  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-  ::CORBA::SystemException,
-  ::Components::InvalidName))
-  {
-    this->context_->connect_proxy_consumer (proxy_consumer);
-  }
-  // END NEW
 
   ::Components::EventConsumerBase_ptr
   BMClosedED_Servant::get_consumer (

@@ -29,6 +29,8 @@
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Active_Map_Manager_T.h"
 
+#include "CIAO_ValueC.h"
+
 namespace MyImpl
 {
   /**
@@ -47,26 +49,41 @@ namespace MyImpl
     /// Default destructor.
     ~RTEventService_exec_impl ();
 
-    // Operations from BasicSP::CCM_RTEventService
+    // Operations from RtecEventChannel::CCM_EventChannel
 
-    virtual void connect_consumer (
-        const char * event_type,
-        const char * sink_name,
-        const char * consumer_oid
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
+    virtual ::RtecEventChannelAdmin::ConsumerAdmin_ptr
+    for_consumers (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual ::RtecEventChannelAdmin::SupplierAdmin_ptr
+    for_suppliers (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void
+    destroy (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual RtecEventChannelAdmin::Observer_Handle
+    append_observer (
+    RtecEventChannelAdmin::Observer_ptr gw
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_APPEND_OBSERVER
       ));
 
-    virtual void connect_supplier (
-        const char * event_type,
-        const char * source_name,
-        const char * supplier_oid
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
+    virtual void
+    remove_observer (
+    RtecEventChannelAdmin::Observer_Handle gw
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
+        RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER
       ));
 
     // Operations from Components::SessionComponent
@@ -92,7 +109,7 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
 
-    virtual BasicSP::CCM_RTEventChannel_ptr
+    virtual RtecEventChannelAdmin::CCM_EventChannel_ptr
     get_rt_event_channel (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -103,10 +120,6 @@ namespace MyImpl
 
     // Reference to event channel
     RtecEventChannelAdmin::EventChannel_var event_channel_;
-
-    ACE_Active_Map_Manager<
-    ::RtecEventChannelAdmin::ProxyPushSupplier_var>
-    proxy_supplier_map_;
 
     CORBA::ORB_var orb_;
 
@@ -139,13 +152,12 @@ namespace MyImpl
                        Components::CCMException));
   };
 
-  // NEW
-  class RTEventServiceSupplier_impl :
+  class RTEVENTSERVICE_EXEC_Export RTEventServiceSupplier_impl :
     public virtual POA_RtecEventComm::PushSupplier,
     public virtual PortableServer::RefCountServantBase
   {
-  public:
 
+  public:
     RTEventServiceSupplier_impl (void);
 
     RTEventServiceSupplier_impl (CORBA::ORB_ptr orb);
@@ -157,12 +169,12 @@ namespace MyImpl
     CORBA::ORB_var orb_;
   };
 
-  class RTEventServiceConsumer_impl :
+  class RTEVENTSERVICE_EXEC_Export RTEventServiceConsumer_impl :
     public virtual POA_RtecEventComm::PushConsumer,
     public virtual PortableServer::RefCountServantBase
   {
-  public:
 
+  public:
     RTEventServiceConsumer_impl (void);
 
     RTEventServiceConsumer_impl (CORBA::ORB_ptr orb,
@@ -177,7 +189,41 @@ namespace MyImpl
     CORBA::ORB_var orb_;
     Components::EventConsumerBase_var event_consumer_;
   };
-  // END NEW
+
+}
+
+namespace CIAO
+{
+
+  class RTEVENTSERVICE_EXEC_Export Object_Reference_Cookie
+    : public virtual OBV_CIAO::Cookie
+  {
+
+  public:
+    Object_Reference_Cookie ();
+
+    Object_Reference_Cookie (CORBA::Object_ptr obj);
+
+    virtual ::CORBA::OctetSeq * get_cookie (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+    ~Object_Reference_Cookie ();
+
+    int insert (CORBA::Object_ptr obj);
+
+    static int extract (::Components::Cookie *c,
+                        CORBA::Object_ptr obj);
+  };
+
+  class Object_Reference_Cookie_init : public virtual ::Components::Cookie_init
+  {
+
+  public:
+    Object_Reference_Cookie_init (void);
+
+    virtual ~Object_Reference_Cookie_init (void);
+
+    virtual CORBA::ValueBase * create_for_unmarshal (void);
+  };
 
 }
 

@@ -20,7 +20,7 @@ module BasicSP
 
   component RTEventService
     {
-      provides RTEventChannel rt_event_channel;
+      provides RtecEventChannelAdmin::EventChannel rt_event_channel;
     };
 
   home RTEventServiceHome manages RTEventService
