@@ -490,10 +490,3 @@ TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
   ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, long>;
-template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, long>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, long>
-#pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, long>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
