@@ -6,14 +6,43 @@
 ACE_ALLOC_HOOK_DEFINE (ACE_QtReactor)
 
 // Must be called with lock held
-ACE_QtReactor::ACE_QtReactor (QApplication *qapp,
-                              size_t size,
-                              int restart,
-                              ACE_Sig_Handler *handler)
-  : ACE_Select_Reactor(size, restart, handler),
+
+ACE_QtReactor::ACE_QtReactor (QApplication *qapp ,
+    ACE_Sig_Handler *sh,
+    ACE_Timer_Queue *tq,
+    int disable_notify_pipe,
+    ACE_Reactor_Notify *notify,
+    int mask_signals,
+    int s_queue ):
+    ACE_Select_Reactor( sh, tq, disable_notify_pipe,
+        notify, mask_signals, s_queue),
     qapp_(qapp),
     qtime_ (0)
-  
+{
+    reopen_notification_pipe();
+}
+
+// Must be called with lock held
+ACE_QtReactor::ACE_QtReactor (size_t size,
+    QApplication *qapp,
+    int restart,
+    ACE_Sig_Handler *sh,
+    ACE_Timer_Queue *tq,
+    int disable_notify_pipe,
+    ACE_Reactor_Notify *notify,
+    int mask_signals,
+    int s_queue):
+    ACE_Select_Reactor( size, restart, sh, tq,
+        disable_notify_pipe, notify, mask_signals,
+        s_queue ),
+    qapp_(qapp),
+    qtime_ (0)
+
+{
+    reopen_notification_pipe();
+}
+
+void ACE_QtReactor::reopen_notification_pipe( void)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
   // pipe and registers it with the register_handler_i() method. The
@@ -27,13 +56,16 @@ ACE_QtReactor::ACE_QtReactor (QApplication *qapp,
   // notification handler in the constructor of the QtReactor.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  this->notify_handler_->close ();
+    if ( initialized_ )
+    {
+        this->notify_handler_->close ();
 
-  // Patch for MS Windows: close and open doesn't clear the read
-  // fd_set, so reset it manually
-  this->wait_set_.rd_mask_.reset ();
+        // Patch for MS Windows: close and open doesn't clear the read
+        // fd_set, so reset it manually
+        this->wait_set_.rd_mask_.reset ();
 
-  this->notify_handler_->open (this, 0);
+        this->notify_handler_->open (this, 0);
+    }
 #endif /* ACE_MT_SAFE */
 }
 

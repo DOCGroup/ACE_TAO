@@ -121,10 +121,10 @@
 #define ACE_LACKS_WCSDUP
 
 // The default value of FD_SETSIZE is 32, but actually x86 NTO
-// supports at least 1024 descriptors in fd_set.
+// supports by default at least 1000 descriptors in fd_set.
 #if defined( FD_SETSIZE )
 #undef FD_SETSIZE
 #endif
-#define FD_SETSIZE 1024
+#define FD_SETSIZE 1000
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_QNX_RTP_62x_H*/

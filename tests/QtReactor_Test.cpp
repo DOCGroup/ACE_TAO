@@ -89,11 +89,16 @@ void QTestApplication::exec( int msec )
 #endif /* ACE_HAS_QT */
 
 // maximum time for testing QtReactor (msec)
-const int TotalTestTime = 5000; 
+const int TotalTestTime = 8000; 
 
 // how many handlers for each event handler class should be started ?
+#ifndef __QNXNTO__
 const int HandlersNo = 8 ; 
-
+#else /* __QNXNTO__ */
+// it seems that Qt 3.1 for NTO 6.2 is compiled with rather small FD_SETSIZE 
+// Nevertheless, test works fine with native select reactor
+const int HandlersNo = 4;
+#endif
 // base port for sending datagrams
 const u_short BaseDgramPort = 5931;
 
