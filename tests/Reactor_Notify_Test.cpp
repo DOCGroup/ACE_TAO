@@ -394,6 +394,6 @@ main (int, ASYS_TCHAR *[])
 template class auto_ptr<ACE_Reactor>;
 template class auto_ptr<ACE_Select_Reactor>;
 #else
-#pragma instantiate auto_ptr<ACE_Reactor>
-#pragma instantiate auto_ptr<ACE_Select_Reactor>
+#pragma instantiate auto_ptr <ACE_Reactor>
+#pragma instantiate auto_ptr <ACE_Select_Reactor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
