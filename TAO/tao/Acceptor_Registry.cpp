@@ -549,6 +549,9 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                                    address.c_str (),
                                    options) == -1)
             {
+              /* Need to save the errno value from the acceptor->open(),
+               * because errno will get reset when we delete acceptor */ 
+              int errno_value = errno;
               delete acceptor;
 
               if (TAO_debug_level > 0)
@@ -562,7 +565,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
               ACE_THROW_RETURN (CORBA::BAD_PARAM (
                   CORBA_SystemException::_tao_minor_code (
                     TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                    EINVAL),
+                    errno_value),
                   CORBA::COMPLETED_NO),
                 -1);
             }
