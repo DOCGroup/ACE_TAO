@@ -1,3 +1,9 @@
+Thu Aug 12 07:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_gcc.GNU:
+          Removed support for buildbits=64 again, the way I tried it doesn't
+          work
+
 Wed Aug 11 22:20:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/fuzz.pl:
