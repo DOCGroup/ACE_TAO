@@ -234,13 +234,14 @@ public:
 // Listing 10
 
   // Listing 1000 code/ch18
-  int open (void)
+  virtual int open (void *arg,
+                    Module *head = 0, Module *tail = 0)
   {
-    Module *endModule;
-    ACE_NEW_RETURN (endModule,
-                    Module ("End Module", new EndTask ()),
-                    -1);
-    this->inherited::open ((void *)0, (Module *)0, endModule);
+    if (tail == 0)
+      ACE_NEW_RETURN (tail,
+                      Module ("End Module", new EndTask ()),
+                      -1);
+    this->inherited::open (arg, head, tail);
     // Listing 1000
 
     // Listing 1001 code/ch18
@@ -376,7 +377,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   RecordingStream *recording_stream;
   ACE_NEW_RETURN (recording_stream, RecordingStream, -1);
 
-  if (recording_stream->open () < 0)
+  if (recording_stream->open (0) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("RecordingStream->open()")),

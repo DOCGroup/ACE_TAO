@@ -99,8 +99,8 @@ TextListener::TextListener (TextListenerAcceptor *acceptor)
 {
   ACE_TRACE (ACE_TEXT ("TextListener ctor"));
 
-  ACE_NEW (this->command_stream_, CommandStream ());
-  this->command_stream_->open (&(this->peer_));
+  ACE_NEW (this->command_stream_, CommandStream (&(this->peer_)));
+  this->command_stream_->open (0);
 }
 // Listing 01
 
@@ -116,7 +116,7 @@ int TextListener::answer_call (void)
               ACE_TEXT ("TextListener::answer_call()\n")));
 
   Command *c = new Command ();
-  c->command_ = Command::ANSWER_CALL;
+  c->command_ = Command::CMD_ANSWER_CALL;
   c->extra_data_ = this->acceptor_;
 
   c = this->command_stream_->execute (c);
@@ -137,7 +137,7 @@ CallerId *TextListener::retrieve_callerId (void)
               ACE_TEXT ("TextListener::retrieve_callerId()\n")));
 
   Command *c = new Command ();
-  c->command_ = Command::RETRIEVE_CALLER_ID;
+  c->command_ = Command::CMD_RETRIEVE_CALLER_ID;
 
   c = this->command_stream_->execute (c);
 
@@ -153,7 +153,7 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
   if (type->is_text ())
     {
       Command *c = new Command ();
-      c->command_ = Command::PLAY_MESSAGE;
+      c->command_ = Command::CMD_PLAY_MESSAGE;
       c->extra_data_ = &addr;
 
       c = this->command_stream_->execute (c);
@@ -181,7 +181,7 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
 MessageType *TextListener::record_message (ACE_FILE_Addr &addr)
 {
   Command *c = new Command ();
-  c->command_ = Command::RECORD_MESSAGE;
+  c->command_ = Command::CMD_RECORD_MESSAGE;
   c->extra_data_ = &addr;
 
   c = this->command_stream_->execute (c);

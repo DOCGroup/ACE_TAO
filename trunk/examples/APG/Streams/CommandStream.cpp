@@ -1,17 +1,23 @@
 // $Id$
 
+#include "ace/Log_Msg.h"
+#include "ace/OS_Memory.h"
 #include "CommandStream.h"
+#include "Command.h"
+#include "CommandModule.h"
 #include "CommandTasks.h"
 
 // Gotcha: superclass' open() won't open head/tail modules
 // Gotcha!! Must open the stream before pushing modules!
 
 // Listing 01 code/ch18
-int CommandStream::open (ACE_SOCK_Stream *peer)
+int CommandStream::open (void *arg,
+                         ACE_Module<ACE_MT_SYNCH> *head,
+                         ACE_Module<ACE_MT_SYNCH> *tail)
 {
   ACE_TRACE (ACE_TEXT ("CommandStream::open(peer)"));
 
-  if (this->inherited::open (0) == -1)
+  if (this->inherited::open (arg, head, tail) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Failed to open superclass")),
                       -1);
@@ -20,22 +26,22 @@ int CommandStream::open (ACE_SOCK_Stream *peer)
   // Listing 02 code/ch18
   CommandModule *answerCallModule;
   ACE_NEW_RETURN (answerCallModule,
-                  AnswerCallModule (peer),
+                  AnswerCallModule (this->peer_),
                   -1);
 
   CommandModule *retrieveCallerIdModule;
   ACE_NEW_RETURN (retrieveCallerIdModule,
-                  RetrieveCallerIdModule (peer),
+                  RetrieveCallerIdModule (this->peer_),
                   -1);
 
   CommandModule *playMessageModule;
   ACE_NEW_RETURN (playMessageModule,
-                  PlayMessageModule (peer),
+                  PlayMessageModule (this->peer_),
                   -1);
 
   CommandModule *recordMessageModule;
   ACE_NEW_RETURN (recordMessageModule,
-                  RecordMessageModule (peer),
+                  RecordMessageModule (this->peer_),
                   -1);
   // Listing 02
 

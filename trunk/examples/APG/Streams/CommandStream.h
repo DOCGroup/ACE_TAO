@@ -7,9 +7,9 @@
 #include "ace/Module.h"
 #include "ace/Stream.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Synch_Traits.h"
 
 #include "Command.h"
-#include "CommandTasks.h"
 
 // A CommandStream is a bidirectional ACE_Stream implementing a chain
 // of commands. A message will move down the stream until a
@@ -25,9 +25,19 @@ class CommandStream : public ACE_Stream<ACE_MT_SYNCH>
 public:
   typedef ACE_Stream<ACE_MT_SYNCH> inherited;
 
-  CommandStream () : inherited()  { }
-  int open (ACE_SOCK_Stream *peer);
+  CommandStream (ACE_SOCK_Stream *peer)
+    : peer_(peer), inherited()  { }
+
+  virtual int open (void *arg,
+                    ACE_Module<ACE_MT_SYNCH> *head = 0,
+                    ACE_Module<ACE_MT_SYNCH> *tail = 0);
+
   Command *execute (Command *command);
+
+private:
+  CommandStream () { }
+
+  ACE_SOCK_Stream *peer_;
 };
 // Listing 01
 

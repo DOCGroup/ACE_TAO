@@ -13,18 +13,18 @@ class Command : public ACE_Data_Block
 public:
   // Result Values
   enum {
-    PASS    = 1,
-    SUCCESS = 0,
-    FAILURE = -1
+    RESULT_PASS    = 1,
+    RESULT_SUCCESS = 0,
+    RESULT_FAILURE = -1
   };
 
   // Commands
   enum {
-    UNKNOWN            = -1,
-    ANSWER_CALL        = 10,
-    RETRIEVE_CALLER_ID,
-    PLAY_MESSAGE,
-    RECORD_MESSAGE
+    CMD_UNKNOWN            = -1,
+    CMD_ANSWER_CALL        = 10,
+    CMD_RETRIEVE_CALLER_ID,
+    CMD_PLAY_MESSAGE,
+    CMD_RECORD_MESSAGE
   } commands;
 
   int flags_;
