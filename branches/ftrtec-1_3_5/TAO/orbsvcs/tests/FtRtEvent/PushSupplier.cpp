@@ -170,11 +170,15 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
         ior += proxy_consumer_file_;
         CORBA::Object_var obj = orb_->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
-        RtecEventComm::PushConsumer_var consumer = 
-          RtecEventComm::PushConsumer::_narrow(obj.in());
-        ACE_OS::sleep(1);
-        consumer->push(event ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        if (!CORBA::is_nil(obj.in())) {
+          RtecEventComm::PushConsumer_var consumer = 
+            RtecEventComm::PushConsumer::_narrow(obj.in());
+          if (!CORBA::is_nil(obj.in())) {
+            ACE_OS::sleep(1);
+            consumer->push(event ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+        }
       }
     }
   }
