@@ -10,16 +10,31 @@ project {
   }
 
   Define_Custom(IDL) {
-    automatic         = 1
-    dependent         = 1
-    command           = $(TAO_IDL)
-    libpath           = $(ACE_ROOT)/lib
-    inputext          = .idl
-    pre_extension     = C, S
-    source_outputext  = .cpp, .cxx, .cc, .C
-    header_outputext  = .h, .hpp, .hxx, .hh
-    inline_outputext  = .i, .inl
-    keyword idlflags  = commandflags
+    automatic            = 1
+    dependent            = 1
+    command              = $(TAO_IDL)
+    libpath              = $(ACE_ROOT)/lib
+    inputext             = .idl
+    source_pre_extension = C, S
+    header_pre_extension = C, S
+    inline_pre_extension = C, S
+    source_outputext     = .cpp, .cxx, .cc, .C
+    header_outputext     = .h, .hpp, .hxx, .hh
+    inline_outputext     = .i, .inl
+    keyword idlflags     = commandflags
+
+    optional(source_pre_extension) {
+      commandflags(-GA) += A
+    }
+    optional(template_outputext) {
+      commandflags(!-Sc) += S_T.cpp, S_T.cxx, S_T.cc, S_T.C
+    }
+    optional(header_pre_extension) {
+      commandflags(!-Sc) += S_T
+    }
+    optional(inline_pre_extension) {
+      commandflags(!-Sc) += S_T
+    }
   }
 
   after    += TAO_IDL_EXE
