@@ -39,7 +39,7 @@ Consumer_Router::open (void *)
   char *argv[3];
 
   argv[0] = (char *) this->name ();
-  argv[1] = options.consumer_file ();
+  argv[1] = (char *) options.consumer_file ();
   argv[2] = 0;
 
   if (this->init (1, &argv[1]) == -1)

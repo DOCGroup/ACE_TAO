@@ -52,8 +52,7 @@ class ACE_RB_Tree_Node : public ACE_RB_Tree_Node_Base
   //   Implements a node in a Red-Black Tree ADT.
   //
 public:
-
-  // Initialization and termination methods.
+  // = Initialization and termination methods.
 
   ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
   // Constructor.
@@ -111,7 +110,6 @@ private:
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_;
   // Pointer to node's right child.
 };
-
 
 class ACE_RB_Tree_Base
 {
@@ -537,11 +535,8 @@ protected:
 
 };
 
-
-
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-class ACE_RB_Tree_Iterator :
-  public ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
+class ACE_RB_Tree_Iterator : public ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
 {
   // = TITLE
   //   Implements an iterator for a Red-Black Tree ADT.
@@ -619,8 +614,7 @@ public:
 };
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-class ACE_RB_Tree_Reverse_Iterator :
-  public ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
+class ACE_RB_Tree_Reverse_Iterator : public ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
 {
   // = TITLE
   //   Implements a reverse iterator for a Red-Black Tree ADT.

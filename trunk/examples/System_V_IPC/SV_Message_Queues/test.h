@@ -16,7 +16,9 @@
 class Message_Data
 {
 public:
-  Message_Data (long p = -1, const char user[] = "", char text[] = ""): pid_ (p)
+  Message_Data (long p = -1,
+                const char user[] = "",
+                const char text[] = ""): pid_ (p)
   {
     ::strncpy (this->username_, user, 9);
     ::strncpy (this->mtext_, text, MSGSZ);
@@ -47,8 +49,8 @@ class Message_Block : public ACE_SV_Message, public Message_Data
 public:
   Message_Block (long t,
                  long p = 0,
-                 char login[] = "",
-                 char message[] = "")
+                 const char login[] = "",
+                 const char message[] = "")
   : ACE_SV_Message (t),
     Message_Data (p, login, message)
   {}
