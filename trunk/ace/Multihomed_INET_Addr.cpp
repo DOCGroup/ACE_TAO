@@ -140,6 +140,16 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
   return ACE_INET_Addr::set(port_number, primary_ip_addr, encode);
 }
 
+void
+ACE_Multihomed_INET_Addr::set_port_number (u_short port_number, int encode)
+{
+  size_t i = 0;
+  while (i < secondaries.size())
+    secondaries[i++].set_port_number(port_number, encode);
+  
+  this->ACE_INET_Addr::set_port_number(port_number, encode);
+}
+
 int
 ACE_Multihomed_INET_Addr::get_secondary_addresses(ACE_INET_Addr *secondary_addrs,
                                                   size_t size) const
