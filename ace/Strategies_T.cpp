@@ -46,11 +46,12 @@ ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy (void)
 // Create a Singleton SVC_HANDLER by always returning the same
 // SVC_HANDLER.
 
-template <class SVC_HANDLER> SVC_HANDLER *
-ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler (void)
+template <class SVC_HANDLER> int
+ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler");
-  return this->svc_handler_;
+  sh = this->svc_handler_;
+  return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Creation_Strategy)
@@ -80,11 +81,14 @@ ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *t
 // Default behavior is to make a new SVC_HANDLER, passing in the
 // Thread_Manager (if any).
 
-template <class SVC_HANDLER> SVC_HANDLER *
-ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler (void)
+template <class SVC_HANDLER> int
+ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler");
-  return new SVC_HANDLER (this->thr_mgr_);
+
+  if (sh == 0)
+    ACE_NEW_RETURN (sh, SVC_HANDLER (this->thr_mgr_), -1);
+  return 0;
 }
 
 template <class SVC_HANDLER> 
@@ -130,20 +134,22 @@ ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (void)
 
 // Create a SVC_HANDLER by dynamically linking it from a DLL.
 
-template <class SVC_HANDLER> SVC_HANDLER *
-ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (void)
+template <class SVC_HANDLER> int
+ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler");
   // Open the shared library.
   void *handle = (void *) ACE_OS::dlopen (this->shared_library_);
 
   // Extract the factory function.
-  SVC_HANDLER *(*factory)(void) = (SVC_HANDLER *(*)(void)) ACE_OS::dlsym (handle, 
-									  this->factory_function_);
+  SVC_HANDLER *(*factory)(void) = (SVC_HANDLER *(*)(void)) ACE_OS::dlsym 
+    (handle, this->factory_function_);
   
   // Call the factory function to obtain the new SVC_Handler (should
   // use RTTI here when it becomes available...)
-  SVC_HANDLER *svc_handler = (*factory)();
+  SVC_HANDLER *svc_handler;
+  
+  ACE_ALLOCATOR_RETURN (svc_handler, (*factory)(), -1);
 
   if (svc_handler != 0)
     {
@@ -154,7 +160,8 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (void)
       // @@ Somehow, we need to deal with this->thr_mgr_...
     }
 
-  return svc_handler;
+  sh = svc_handler;
+  return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Concurrency_Strategy)
@@ -270,7 +277,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open 
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr, int restart)
 {
-  return this->peer_acceptor_.open (local_addr, restart);
+  return this->acceptor_.open (local_addr, restart);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
@@ -291,7 +298,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler");
 
-  if (this->peer_acceptor_.accept (svc_handler->peer ()) == -1)
+  if (this->acceptor_.accept (svc_handler->peer ()) == -1)
     {
       svc_handler->close (0);
       return -1;
@@ -304,24 +311,68 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_HANDLE
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle (void) const
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle");
-  return this->peer_acceptor_.get_handle ();
+  return this->acceptor_.get_handle ();
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_PEER_ACCEPTOR &
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor (void) const
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor");
-  return (ACE_PEER_ACCEPTOR &) this->peer_acceptor_;
+  return (ACE_PEER_ACCEPTOR &) this->acceptor_;
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (void)
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy");
-  if (this->peer_acceptor_.close () == -1)
+
+  if (this->acceptor_.close () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "close"));
 }
 
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> void
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump (void) const
+{
+  ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump");
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
+  (SVC_HANDLER *&sh,
+   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+   ACE_Time_Value *timeout,
+   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+   int reuse_addr,
+   int flags,
+   int perms)
+{
+  ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler");
+
+  return this->connector_.connect (sh->peer (), remote_addr,
+				   timeout, local_addr,
+				   reuse_addr, flags, perms);
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ACE_PEER_CONNECTOR &
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connector (void) const
+{
+  ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connector");
+  return (ACE_PEER_CONNECTOR &) this->connector_;
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Connect_Strategy (void)
+{
+  ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Connect_Strategy");
+}
+
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::~ACE_Connect_Strategy (void)
+{
+  ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::~ACE_Connect_Strategy");
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Connect_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Strategy)
 
 template <class SVC_HANDLER> void

@@ -63,7 +63,7 @@ public:
   int send_peers (ACE_Message_Block *mb);
   // Send the <ACE_Message_Block> to the peer(s).
 
-  Peer_Handler *make_svc_handler (void);
+  int make_svc_handler (Peer_Handler *&sh);
   // Create a new <Peer_Handler> for each connection.
 
   // = Set/Get Router Task.
