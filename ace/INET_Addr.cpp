@@ -335,7 +335,7 @@ static int get_port_number_from_name (const char port_name[],
 
   // We try to resolve port number from its name.
 
-#if defined (VXWORKS) || defined (CHORUS) || defined (ACE_LACKS_GETSERVBYNAME)
+#if defined (ACE_LACKS_GETSERVBYNAME)
   port_number = 0;
   ACE_UNUSED_ARG (port_name);
   ACE_UNUSED_ARG (protocol);
@@ -349,7 +349,7 @@ static int get_port_number_from_name (const char port_name[],
                                          buf);
   if (sp != 0)
     port_number = sp->s_port;
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_GETSERVBYNAME */
 
   return port_number;
 }
