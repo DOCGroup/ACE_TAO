@@ -2,6 +2,7 @@
 
 #if TAO_HAS_SCIOP == 1
 
+
 #ifndef IPPROTO_SCTP
 #include "netinet/sctp.h"
 #else // !IPPROTO_SCTP
