@@ -1,3 +1,9 @@
+Fri Dec 13 16:05:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp (timeout): Optimize Steve's patch below
+	  for the case where the upcall is coming from a reactor.  Thanks
+ 	  to Irfan for pointing this out.
+  
 Fri Dec 13 21:12:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/test_config.h: Add __hpux to the conditions needed to instantiate
