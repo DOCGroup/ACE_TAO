@@ -1,237 +1,231 @@
+#
+# $Id$
+#
 # This is a listing of the web directories and the builds contained in
 # them.
-# The types used are:
-# - WIN32    - This is the naming style used by Darrell's scripts
-#              where there are 3 files per build and Build_MMDD_HHMM.txt
-#              or Build_MMDD.txt
-# - UNIX     - This is the naming style used by Carlos's scripts, where
-#              they are named Build_MonDD_YYYY.txt or .log
-# - TIMEONLY - This is new naming scheme which is in the format
-#              YYYY_MM_DD_HH_MM.txt
+#
+# Each entry starts with the name in brackets such as [build_name].  
+# The name cannot contain spaces.
+#
+# Then several properties that can be used:
+#
+# LIST   = URL for the directory of build logs (required)
+# WEB    = Link to a build specific page for the builds
+# STATUS = URL to a page that contains build status info
+# GROUP  = Name of the group that the build belongs in 
+# MANUAL = URL to someplace that can start the build
+# ORANGE = Number of hours until timestamp turns orange (default: 24)
+# RED    = Number of hours until timestamp turns red (default: 48)
+#
 
 [Win2000_DLL_Core]
-TYPE = TIMEONLY
-LIST = http://tao.doc.wustl.edu/bugzilla/Core/
-WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?core
+LIST   = http://tao.doc.wustl.edu/bugzilla/Core/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?core
+STATUS = http://tao.doc.wustl.edu/bugzilla/core/status.txt
 
 [Win2000_DLL_Debug]
-TYPE = TIMEONLY
-LIST = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/
-WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_debug
+LIST   = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_debug
+STATUS = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/status.txt
 
 [Win2000_DLL_Release]
-TYPE = TIMEONLY
-LIST = http://tao.doc.wustl.edu/bugzilla/DLL_Release/
-WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_release
+LIST   = http://tao.doc.wustl.edu/bugzilla/DLL_Release/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?dll_release
+STATUS = http://tao.doc.wustl.edu/bugzilla/DLL_Release/status.txt
 
 [Win2000_Borland]
-TYPE = TIMEONLY
-LIST = http://tao.doc.wustl.edu/bugzilla/Borland/
-WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland
+LIST   = http://tao.doc.wustl.edu/bugzilla/Borland/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland
+STATUS = http://tao.doc.wustl.edu/bugzilla/Borland/status.txt
+
+[Win2000_Borland_Wchar]
+LIST   = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland_wchar
+STATUS = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/status.txt
 
 [Win2000_Fuzz]
-TYPE = TIMEONLY
-LIST = http://tao.doc.wustl.edu/bugzilla/Fuzz/
-WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
+LIST   = http://tao.doc.wustl.edu/bugzilla/Fuzz/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
+STATUS = http://tao.doc.wustl.edu/bugzilla/Fuzz/status.txt
 
 [Win2000_WChar_Unicode]
-TYPE = TIMEONLY
-LIST = http://tao.doc.wustl.edu/bugzilla/Unicode/
-WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?unicode
+LIST   = http://tao.doc.wustl.edu/bugzilla/Unicode/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?unicode
+STATUS = http://tao.doc.wustl.edu/bugzilla/Unicode/status.txt
 
 [Win2000_WChar]
-TYPE = TIMEONLY
-LIST = http://tao.doc.wustl.edu/bugzilla/wchar/
-WEB  = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
+LIST   = http://tao.doc.wustl.edu/bugzilla/wchar/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
+STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
 
 [Win2000_LIB_Debug]
-TYPE = TIMEONLY
-LIST = http://ringil.ece.uci.edu/bugzilla/lib_debug/
-WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_debug
+LIST   = http://ringil.ece.uci.edu/bugzilla/lib_debug/
+WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_debug
+STATUS = http://ringil.ece.uci.edu/bugzilla/lib_debug/status.txt
 
 [Win2000_LIB_Release]
-TYPE = TIMEONLY
-LIST = http://ringil.ece.uci.edu/bugzilla/lib_release/
-WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_release
+LIST   = http://ringil.ece.uci.edu/bugzilla/lib_release/
+WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?lib_release
+STATUS = http://ringil.ece.uci.edu/bugzilla/lib_release/status.txt
 
 [Win2000_Legacy]
-TYPE = TIMEONLY
-LIST = http://ringil.ece.uci.edu/bugzilla/legacy/
-WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?legacy
+LIST   = http://ringil.ece.uci.edu/bugzilla/legacy/
+WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?legacy
+STATUS = http://ringil.ece.uci.edu/bugzilla/legacy/status.txt
 
 [Win2000_Unicode]
-TYPE = TIMEONLY
-LIST = http://ringil.ece.uci.edu/bugzilla/unicode/
-WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?unicode
+LIST   = http://ringil.ece.uci.edu/bugzilla/unicode/
+WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?unicode
+STATUS = http://ringil.ece.uci.edu/bugzilla/unicode/status.txt
 
 [WinCE_All]
-TYPE = TIMEONLY
-LIST = http://ringil.ece.uci.edu/bugzilla/wince/
-WEB  = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?wince
+LIST   = http://ringil.ece.uci.edu/bugzilla/wince/
+WEB    = http://ringil.ece.uci.edu/scripts/show_log_dir.pl?wince
+STATUS = http://ringil.ece.uci.edu/bugzilla/wince/status.txt
 
 [Debian_KCC]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/doc_KCC/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?doc_KCC
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/doc_KCC/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?doc_KCC
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/doc_KCC/status.txt
 
 [Debian_Minimum]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Minimum
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Minimum
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/status.txt
 
 [Debian_Full]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/sirion_Full/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?sirion_Full
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/sirion_Full/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?sirion_Full
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/sirion_Full/status.txt
 
 [Debian_Core]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Core
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Core
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/status.txt
 
 [Debian_WChar]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_Unicode/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?rumba_Unicode
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_Unicode/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?rumba_Unicode
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_Unicode/status.txt
 
 [Debian_NoInline]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/tango_NoInline/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?tango_NoInline
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/tango_NoInline/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?tango_NoInline
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/tango_NoInline/status.txt
 
 [Debian_GCC_3.0.2]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_GCC_3.0/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?rumba_GCC_3.0
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_GCC_3.0/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?rumba_GCC_3.0
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/rumba_GCC_3.0/status.txt
 
 [RedHat_Static]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?maglor_Static
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?maglor_Static
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/maglor_Static/status.txt
 
 [RedHat_Single_Threaded]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/curufin_SingleThreaded/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?curufin_SingleThreaded
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/curufin_SingleThreaded/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?curufin_SingleThreaded
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/curufin_SingleThreaded/status.txt
 
 [RedHat_Implicit_Templates]
-TYPE = TIMEONLY
-LIST = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/amrod_ImplicitTemplates/
-WEB  = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?amrod_ImplicitTemplates
+LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/amrod_ImplicitTemplates/
+WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?amrod_ImplicitTemplates
+STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/amrod_ImplicitTemplates/status.txt
 
 [SunOS_FORTE_UP_1]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_FORTE_UPDATE_1/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_FORTE_UPDATE_1
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_FORTE_UPDATE_1/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_FORTE_UPDATE_1
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_FORTE_UPDATE_1/status.txt
 
-# the build changed from CC5 to 51
 [SunOS_SunCC51]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC51/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC51
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC51/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC51
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC51/status.txt
 
 [SunOS_KCC]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC4.0/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC4.0
-
-[SunOS_SunCC42]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_SUNOS_SUNCC/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_SUNOS_SUNCC
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC4.0/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_SUNOS_KCC4.0
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_SUNOS_KCC4.0/status.txt
 
 [SunOS_GCC_2_95]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_EGCS/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_EGCS
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_EGCS/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_EGCS
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_EGCS/status.txt
 
 [Tru64_CXX]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/guajira.cs.wustl.edu_TRU64_CXX/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?guajira.cs.wustl.edu_TRU64_CXX
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/guajira.cs.wustl.edu_TRU64_CXX/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?guajira.cs.wustl.edu_TRU64_CXX
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/guajira.cs.wustl.edu_TRU64_CXX/status.txt
 
 # Temporarily disabled
 #[Tru64_4.0f_CXX_63]
-#TYPE = TIMEONLY
-#LIST = http://spe121.mro-x.dec.com/~buildlog/auto_compile_logs/spe121.mro-x.dec.com_Tru64_CXX/
-#WEB  = http://spe121.mro-x.dec.com/cgi-bin/show_log_dir.cgi?spe121_Tru64_CXX
-
-[VxWorks_GCC]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_VXWORKS_GCC/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_VXWORKS_GCC
+#LIST   = http://spe121.mro-x.dec.com/~buildlog/auto_compile_logs/spe121.mro-x.dec.com_Tru64_CXX/
+#WEB    = http://spe121.mro-x.dec.com/cgi-bin/show_log_dir.cgi?spe121_Tru64_CXX
+#GROUP  = External
 
 # Temporarily disabled
 #[VxWorks_5.4_GCC]
-#TYPE = TIMEONLY
-#LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/maggie_VXWORKS_GCC/
-#WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?maggie_VXWORKS_GCC
+#LIST   = http://prince.ociweb.com/buildlogs/auto_compile_logs/maggie_VXWORKS_GCC/
+#WEB    = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?maggie_VXWORKS_GCC
+#GROUP  = External
 
 # Temporarily disabled
 #[Chorus_4.0.1_GCC]
-#TYPE = TIMEONLY
-#LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/lisa_CHORUS_4_0_1_GCC/
-#WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?lisa_CHORUS_4_0_1_GCC
-
-[Lynx_I386]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/danzon_LYNX_I386/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?danzon_LYNX_I386
-
-[Lynx_PPC]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
-
-# Build not running anymore
-#[SunOS_GCC272]
-#TYPE = TIMEONLY
-#LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_GCC272/
-#WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_GCC272
-
-[RedHat_7.1_Full]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Full/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_Full
-
-[RedHat_7.1_Core]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Core/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_Core
-
-[RedHat_7.1_No_AMI_Messaging]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_NO_AMI_MESSAGING
-
-[RedHat_IA64_Linux]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/toutatis_Full
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?toutatis_Full
-
-[Debian_NoInterceptors]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Full
-
-[Debian_Minimum_Static]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Minimum
+#LIST   = http://prince.ociweb.com/buildlogs/auto_compile_logs/lisa_CHORUS_4_0_1_GCC/
+#WEB    = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?lisa_CHORUS_4_0_1_GCC
+#GROUP  = External
 
 # Temporarily disabled
 #[HPUX_ACC]
-#TYPE = TIMEONLY
-#LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
-#WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
+#LIST   = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
+#WEB    = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
+#GROUP  = External
 
 # Commented out for the timebeing
 #[AIX_VAC]
-#TYPE = TIMEONLY
-#LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/tripoli_AIX_VAC/
-#WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?tripoli_AIX_VAC
+#LIST   = http://prince.ociweb.com/buildlogs/auto_compile_logs/tripoli_AIX_VAC/
+#WEB    = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?tripoli_AIX_VAC
+#GROUP  = External
+
+[Lynx_PPC]
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/ace_LYNX_PPC/status.txt
+
+[RedHat_7.1_Full]
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Full/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_Full
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Full/status.txt
+
+[RedHat_7.1_Core]
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Core/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_Core
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Core/status.txt
+
+[RedHat_7.1_No_AMI_Messaging]
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_NO_AMI_MESSAGING
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/status.txt
+
+[RedHat_IA64_Linux]
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/toutatis_Full
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?toutatis_Full
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/toutatis_Full/status.txt
+
+[Debian_NoInterceptors]
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Full
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/status.txt
+
+[Debian_Minimum_Static]
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Minimum
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/status.txt
 
 [Solaris8_FORTE_UP_1]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/chipper_SOLARIS8_FORTE_UPDATE1/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?chipper_SOLARIS8_FORTE_UPDATE1
+LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/chipper_SOLARIS8_FORTE_UPDATE1/
+WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?chipper_SOLARIS8_FORTE_UPDATE1
+STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/chipper_SOLARIS8_FORTE_UPDATE1/status.txt
+ORANGE = 48
+RED    = 72
