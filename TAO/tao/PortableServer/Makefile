@@ -39,7 +39,9 @@ CPP_SRCS += \
   Collocated_Object \
   PolicyS \
   ORB_Manager \
-  ServerRequestInfo
+  ServerRequestInfo \
+  Default_Servant_Dispatcher \
+  Servant_Dispatcher
 
 ifeq ($(minimum_corba),0)
 
@@ -59,7 +61,8 @@ endif # corba_messaging
 ifeq ($(rt_corba),1)
 
 CPP_SRCS += \
-  RT_Acceptor_Filters
+  RT_Acceptor_Filters \
+  RT_Servant_Dispatcher
 
 endif # rt_corba
 
