@@ -1053,8 +1053,10 @@ nobase_include_HEADERS += \
   FT_CORBA_ORBS_T.h \
   FaultTolerance/FT_IOGR_Property.h \
   FaultTolerance/FT_ORB_Utils_export.h \
+  PortableGroup_Simple_export.h \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSS.h \
+  PortableGroup_Simple_DSS_T.h \
   FT_CORBA_ORBC.inl \
   FT_CORBA_ORBS.inl \
   FT_CORBA_ORBS_T.inl \
@@ -1064,6 +1066,7 @@ nobase_include_HEADERS += \
   PortableGroup_Simple_DSS_T.inl \
   FT_CORBA_ORBS_T.cpp \
   FT_CORBA_ORB.idl \
+  PortableGroup_Simple_DSS_T.cpp \
   PortableGroup_Simple_DS.idl
 
 endif !BUILD_MINIMUM_CORBA
