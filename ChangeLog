@@ -1,3 +1,10 @@
+Fri Mar 02 17:50:40 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+        * ace/QtReactor.cpp:
+          Thanks to Stefan Scherer <stefan_scherer@sepp.de> for reporting
+          and fixing the problem - crashing of TAO/tests/QtTests/ client
+          example after moving the slider.
+          
 Fri Mar 02 15:35:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ MEM_Acceptor.cpp:

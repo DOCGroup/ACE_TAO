@@ -28,6 +28,11 @@ ACE_QtReactor::ACE_QtReactor (QApplication *qapp,
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_->close ();
+
+  // Patch for MS Windows: close and open doesn't clear the read
+  // fd_set, so reset it manually
+  this->wait_set_.rd_mask_.reset ();
+
   this->notify_handler_->open (this, 0);
 #endif /* ACE_MT_SAFE */
 }
@@ -94,7 +99,7 @@ ACE_QtReactor::read_event (int handle)
   // Send read event
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
-  dispatch_set.rd_mask_.set_bit (handle);
+  dispatch_set.rd_mask_.set_bit (ACE_HANDLE(handle));
   this->dispatch (1, dispatch_set);
 }
 
@@ -104,7 +109,7 @@ ACE_QtReactor::write_event (int handle)
   // Send write event
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
-  dispatch_set.wr_mask_.set_bit (handle);
+  dispatch_set.wr_mask_.set_bit (ACE_HANDLE(handle));
   this->dispatch (1, dispatch_set);
 }
 
@@ -114,7 +119,7 @@ ACE_QtReactor::exception_event (int handle)
   // Send exception event
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
-  dispatch_set.ex_mask_.set_bit(handle);
+  dispatch_set.ex_mask_.set_bit(ACE_HANDLE(handle));
   dispatch (1, dispatch_set);
 }
 
@@ -183,7 +188,7 @@ ACE_QtReactor::register_handler_i (ACE_HANDLE handle ,
         }
       
       ACE_NEW_RETURN (qsock_read_notifier,
-                      QSocketNotifier (handle, QSocketNotifier::Read),
+                      QSocketNotifier (int(handle), QSocketNotifier::Read),
                       -1);
       
       this->read_notifier_.bind (handle,
@@ -217,7 +222,7 @@ ACE_QtReactor::register_handler_i (ACE_HANDLE handle ,
         }
       
       ACE_NEW_RETURN (qsock_write_notifier,
-                      QSocketNotifier (handle, QSocketNotifier::Write),
+                      QSocketNotifier (int(handle), QSocketNotifier::Write),
                       -1);
       
       this->write_notifier_.bind (handle,
@@ -250,7 +255,7 @@ ACE_QtReactor::register_handler_i (ACE_HANDLE handle ,
         }
       
       ACE_NEW_RETURN (qsock_excpt_notifier,
-                      QSocketNotifier (handle, QSocketNotifier::Exception),
+                      QSocketNotifier (int(handle), QSocketNotifier::Exception),
                       -1);
       
       this->exception_notifier_.bind (handle,
