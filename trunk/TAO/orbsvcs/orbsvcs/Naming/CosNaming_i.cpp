@@ -121,7 +121,9 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 	  return;
 	}
       ACE_DEBUG ((LM_DEBUG, "bound: <%s,%s>\n",
-		  n[0].id.in (), n[0].kind.in ()));
+		  n[0].id.in ()==0? "nil":n[0].id.in (),
+		  n[0].kind.in ()==0? "nil":n[0].kind.in (),
+		  ));
     }
 }
 
