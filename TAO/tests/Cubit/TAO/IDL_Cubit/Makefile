@@ -10,6 +10,7 @@
 #----------------------------------------------------------------------------
 
 LDLIBS     =  -lTAO
+MUNCHED = ../../../../tao/libTAO.a
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS =	$(IDL_SRC) svr.cpp clnt.cpp
