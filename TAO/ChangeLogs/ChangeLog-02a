@@ -1,3 +1,39 @@
+Tue Mar  5 15:21:51 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+	  Improve the implementation of stop_all_threads(), it is more
+	  efficient to stop them all and then simultaneously wait for all
+	  the threads to finish.
+	  Fixed a number of bugs in the template, it was only working
+	  because some global variables were visible at the point of
+	  instantiation.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RT_Class.cpp:
+	  Run the process at the right priority, it was runnning at the
+	  minimum priority + 1, while it is supposed to be (min+max)/2
+
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+	  Do not return if there is a single exception, simply continue
+	  the loop.  Add a bunch of debug messages, only to find out that
+	  the ORB is dead-locking in the Leader/Followers code (yuck!)
+
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	  Add debugging messages.
+	  Use the new Low_Priority_Setup constructor.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.dispatching_reactive.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.dispatching_rtcorba.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.dispatching_threaded.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.supplier_filter_null.conf:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/ec.supplier_filter_per_supplier.conf:
+	  Add service configurator files required for the test.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/run_dispatching.sh:
+	  Add a simple test driver
+
+	
 Tue Mar  5 11:37:52 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile:

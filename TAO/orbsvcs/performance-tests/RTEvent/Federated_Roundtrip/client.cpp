@@ -206,10 +206,10 @@ int main (int argc, char *argv[])
           disable_low_priority ? 0 : 1,
           rt_class.priority_low (),
           rt_class.thr_sched_class (),
+          low_priority_period,
           supplier_poa.in (),
           consumer_poa.in (),
           ec.in (),
-          &my_thread_manager,
           &barrier
           ACE_ENV_ARG_PARAMETER);
 
@@ -241,10 +241,14 @@ int main (int argc, char *argv[])
                                                      &high_priority_task);
       }
 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - high priority task completed\n"));
+
       if (disable_low_priority == 0)
         {
           low_priority_setup.stop_all_threads ();
         }
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - low priority task(s) stopped\n"));
 
       ACE_Sample_History &history =
         high_priority_group.consumer ()->sample_history ();

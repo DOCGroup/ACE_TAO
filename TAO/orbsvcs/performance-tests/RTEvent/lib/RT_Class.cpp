@@ -20,9 +20,8 @@ RT_Class::RT_Class (void)
   , thr_sched_class_ (THR_SCHED_FIFO)
 {
   int priority =
-    ACE_Sched_Params::next_priority (
-        this->prc_sched_class_,
-        ACE_Sched_Params::priority_min (this->prc_sched_class_));
+    (ACE_Sched_Params::priority_min (this->prc_sched_class_)
+     + ACE_Sched_Params::priority_max (this->prc_sched_class_))/2;
 
   if (ACE_OS::sched_params (ACE_Sched_Params (this->prc_sched_class_,
                                               priority,
