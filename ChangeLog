@@ -1,3 +1,10 @@
+Wed May 26 10:36:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+	  Added these two mpb files to ease the mpc file writing for
+	  CIAO DnC run time.
+
 Wed May 26 10:40:36 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* ace/TMCast/README: Added description of architecture that
