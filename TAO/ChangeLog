@@ -1,3 +1,10 @@
+Mon Aug 30 08:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Twoways/Session.cpp:
+          When catching an exception in the svc method print out the number
+          of messages send. This test fails in some builds, maybe it is
+          just taking a long time, this should give us some more info.
+
 Mon Aug 30 07:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
