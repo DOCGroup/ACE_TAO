@@ -1,3 +1,10 @@
+Tue Aug 24 09:49:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/examples/Load_Balancing/client.dsp:
+	* TAO/examples/Load_Balancing/server.dsp:
+	* TAO/examples/Load_Balancing/service.dsp:
+	  Corrected the project paths.
+
 Tue Aug 24 5:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp,
