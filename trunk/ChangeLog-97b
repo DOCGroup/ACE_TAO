@@ -13,6 +13,21 @@ Mon Sep 29 13:28:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* apps/JAWS/server/HTTP_Server_T.cpp (accept): fixed typo,
 	  "remote_address" instead of "remote_adrress".
 
+	* tests/Time_Value_Test.cpp (test_ace_u_longlong): replaced
+	  ACE_ASSERTs with calls to a static function that prints out
+	  why the test failed.
+
+	* ace/OS.h:  1) Use u_long for ACE_hrtime_t if ACE_HAS_64BIT_LONGS.
+	  2) Added ACE_NO_INLINE support to allow wrapper_macros.GNU to
+	  disable inlining from the command line.   3) Added
+	  ACE_HAS_VERBOSE_NOTSUP support.
+
+	* include/makeinclude/wrapper_macros.GNU: added "inline" flag to
+	  allow enabling/disabling of inlining from the command line or
+	  platform_macros.GNU.
+
+	* ace/config-vxworks*.h: added ACE_HAS_VERBOSE_NOTSUP.
+
 Mon Sep 29 11:15:10 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/OS.h (ace_cleanup_destroyer): Made this an export function.
