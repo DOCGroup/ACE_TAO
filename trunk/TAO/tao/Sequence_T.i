@@ -119,7 +119,7 @@ TAO_Bounded_Sequence<T, MAX>::freebuf (T *buffer)
 
 template <class T, CORBA::ULong MAX> ACE_INLINE
 TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (void)
-  : TAO_Bounded_Base_Sequence (MAX, 0, allocbuf (MAX), 0)
+  : TAO_Bounded_Base_Sequence (MAX, 0, allocbuf (MAX), 1)
 {
 }
 
