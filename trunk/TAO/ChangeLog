@@ -22,7 +22,7 @@ Mon Mar 10 08:10:02 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Corrected CORBA::LongLong/ULongLong mismatches.
 
-	  Use the ACE_UINT64_DBLCAST_ADAPTER when casting a
+	  Use the ACE_UINT64_DBLCAST_ADAPTER macro when casting a
 	  CORBA::ULongLong to a double to work around problems when
 	  CORBA::ULongLong is an emulated type.
 
