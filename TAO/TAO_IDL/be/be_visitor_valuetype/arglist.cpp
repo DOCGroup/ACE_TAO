@@ -105,7 +105,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       /***********************************************************/
       if (is_amh_exception_holder (node))
         {
-          *os << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED";
+          *os << "ACE_ENV_SINGLE_ARG_DECL";
         }
       /***********************************************************/
       else
@@ -168,7 +168,26 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       /***********************************************************/
       if (is_amh_exception_holder (node))
         {
-          *os << "{ this->exception->_raise (); }"
+          // We need to throw an exceptions that was assigned in a
+          // different place (by the app-developer).  ACE_THROW does
+          // not fit the bill since the ACE_THROW macro contructs the
+          // exception passed to it.  Also exception->raise_() is
+          // ruled out since in platforms without native exception
+          // support, the raise() function does not do anything.  What
+          // is left as an alternative is tthe hack below where we
+          // explicitly take care of both the cases (platforms with
+          // and without native exception support).
+          *os << be_nl
+              << "{" << be_nl
+              << "#if defined (TAO_HAS_EXCEPTIONS)" << be_idt_nl
+              << "auto_ptr<CORBA::Exception> safety (exception);" << be_nl
+              << "// Direct throw because we don't have the ACE_TRY_ENV." << be_nl
+              << "exception->_raise ();" << be_uidt_nl
+              << "#else" << be_idt_nl
+              << "// We can not use ACE_THROW here." << be_nl
+              << "ACE_TRY_ENV.exception (this->exception);" << be_uidt_nl
+              << "#endif" << be_nl
+              << "}" 
               << be_uidt_nl;
         }
       /***********************************************************/
