@@ -92,7 +92,6 @@ main (int, char *[])
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Message_Queue<ACE_NULL_SYNCH>;
 template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
 template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
