@@ -1,3 +1,10 @@
+Wed Mar  1 08:29:42 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/default_resource.cpp:
+
+	  Added missing template instantation for
+	  ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>.
+
 Wed Mar  1 09:59:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
@@ -50,6 +57,12 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
         * TAO_IDL/driver/drv_args.cpp:
 
           Now uses the ACE::get_temp_dir () method.
+
+Mon Feb 28 10:35:10 2000  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile:
+
+	  Updated dependencies.
 
 Mon Feb 28 09:56:34 2000  Ossama Othman  <ossama@uci.edu>
 
