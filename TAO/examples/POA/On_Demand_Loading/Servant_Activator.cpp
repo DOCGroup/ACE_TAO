@@ -19,7 +19,9 @@
 
 #include "Servant_Activator.h"
 
-ACE_RCSID(On_Demand_Loading, Servant_Activator, "$Id$")
+ACE_RCSID (On_Demand_Loading, 
+           Servant_Activator, 
+           "$Id$")
 
 // Initialization.
 

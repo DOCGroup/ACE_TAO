@@ -24,23 +24,24 @@
 #include "DualEC_Sup.h"
 #include "NavWeapC.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
-#include "tao/corba.h"
-#include "tao/ORB_Core.h"
-
-#include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
-//#include "ace/Profile_Timer.h"
-#include "ace/OS.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
+#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/ORB_Core.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Sched_Params.h"
+#include "ace/OS.h"
+
 #include <limits.h>
 
-ACE_RCSID(Event_Supplier, DualEC_Sup, "$Id$")
+ACE_RCSID (Event_Supplier, 
+           DualEC_Sup, 
+           "$Id$")
 
 static const char usage [] =
 "[[-?]\n"
