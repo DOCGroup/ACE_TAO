@@ -948,7 +948,7 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment &)
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
-                            ACE_Time_Value *timeout,
+                            ACE_Time_Value * /*timeout*/,
                             CORBA::Environment& ACE_TRY_ENV)
 {
   const char * env_service_ior [] =
