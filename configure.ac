@@ -539,6 +539,8 @@ ACE_CHECK_LACKS_HEADERS(errno.h)
 
 ACE_CHECK_LACKS_HEADERS(fcntl.h)
 
+ACE_CHECK_HAS_HEADERS(pthread_np.h)
+
 ACE_CHECK_LACKS_HEADERS(search.h)
 
 ACE_CHECK_HAS_HEADERS(select.h)
@@ -1266,28 +1268,25 @@ dnl structure we are testing for.
 
 dnl Thanks to Konstantinos Margaritis <kmargar@cc.uoa.gr> for pointing out
 dnl that struct siginfo_t may also be defined in signal.h
-ACE_CACHE_CHECK([for struct siginfo_t],[ace_cv_struct_siginfo_t],
-  [
-   dnl Since we are checking for siginfo_t in more than one header
-   dnl we can't use the ACE_CHECK_STRUCT macro so we have to do things
-   dnl manually.
-   ACE_TRY_COMPILE_STRUCT([siginfo_t],[siginfo.h],
-     [
-      ace_cv_struct_siginfo_t=yes
-     ],
-     [
-      ACE_TRY_COMPILE_STRUCT([siginfo_t],[signal.h],
-        [
-         ace_cv_struct_siginfo_t=yes
-        ],
-        [
-         ace_cv_struct_siginfo_t=no
-        ])
-     ])
-  ],
-  [
-   AC_DEFINE([ACE_HAS_SIGINFO_T])
-  ],)
+AC_CHECK_TYPE([siginfo_t],
+	      [AC_DEFINE([ACE_HAS_SIGINFO_T], 1,
+			 [Define to 1 if the system has the type `siginfo_t'.])],
+	      [],
+	      [#include <signal.h>
+#ifndef ACE_LACKS_SIGINFO_H
+#include <siginfo.h>
+#endif])
+
+if test "$ac_cv_type_siginfo_t" = yes; then
+  AC_CHECK_MEMBER([siginfo_t.si_addr],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_SI_ADDR], 1,
+			     [Define to 1 if `si_addr' is not a member of `siginfo_t'.])],
+		  [#include <signal.h>
+#ifndef ACE_LACKS_SIGINFO_H
+#include <siginfo.h>
+#endif])
+fi
 
 dnl Some platforms need to include sys/types.h before sys/socket.h
 dnl in order for struct msghdr to work.

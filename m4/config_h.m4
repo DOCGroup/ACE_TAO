@@ -650,8 +650,6 @@ AH_TEMPLATE([ACE_HAS_SET_T_ERRNO],
 
 AH_TEMPLATE([ACE_HAS_SHM_OPEN],[Platform has shm_open()])
 
-AH_TEMPLATE([ACE_HAS_SIGINFO_T],[Platform supports SVR4 extended signals])
-
 AH_TEMPLATE([ACE_HAS_SIGISMEMBER_BUG],
 [Platform has bug with sigismember() (HP/UX 11).])
 
