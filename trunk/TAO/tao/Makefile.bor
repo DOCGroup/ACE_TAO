@@ -185,7 +185,9 @@ OBJFILES = \
 	$(OBJDIR)\Thread_Lane_Resources_Manager.obj \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\Transport.obj \
+	$(OBJDIR)\Transport_Acceptor.obj \
 	$(OBJDIR)\Transport_Cache_Manager.obj \
+	$(OBJDIR)\Transport_Connector.obj \
 	$(OBJDIR)\Transport_Descriptor_Interface.obj \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
 	$(OBJDIR)\Transport_Timer.obj \
