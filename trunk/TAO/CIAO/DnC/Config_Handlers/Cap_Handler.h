@@ -57,7 +57,7 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
-BEGIN_DEPPLOYMENT_NAMESPACE
+BEGIN_DEPLOYMENT_NAMESPACE
 
 /**
  * @class CAP_Handler
@@ -81,8 +81,7 @@ public:
   CAP_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
-  void process_Capability (DOMNodeIterator * iter,
-                           Deployment::Capability &ret_struct);
+  void process_Capability (Deployment::Capability &ret_struct);
   // process elements of type Capability definitions in
   // the descriptor files
 };

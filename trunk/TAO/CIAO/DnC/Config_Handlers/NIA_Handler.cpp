@@ -7,6 +7,9 @@
 #include "IAD_Handler.h"
 #include "NIA_Handler.h"
 
+#include "Process_Basic_Type.h"
+#include "Process_Element.h"
+
 #include <iostream>
 
 using std::cerr;

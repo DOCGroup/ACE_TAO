@@ -68,12 +68,12 @@ public:
   typedef void (OBJ::*func_type) (DATA&);
   typedef DATA data_type;
 
-  Process_Member_Function(OBJ& obj, func_type f)
+  Process_Member_Function_Remote(OBJ& obj, func_type f)
     : obj_(&obj), f_(f)
   {
   }
 
-  Process_Member_Function(OBJ* obj, func_type f)
+  Process_Member_Function_Remote(OBJ* obj, func_type f)
     : obj_(obj), f_(f)
   {
   }
@@ -292,10 +292,10 @@ process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 }
 
 // Process function for non-sequential non-local elements
-template<typename DATA, typename OBJECT, typename OBJECT, typename ELEMENT, typename FUNCTION>
+template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
 inline bool
-process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* note,
-                       XStr& node_name, const chat*name,
+process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                       XStr& node_name, const char *name,
                        ELEMENT& elem, FUNCTION func,
                        REF_MAP& id_map)
 {
@@ -303,7 +303,7 @@ process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* note,
 
   if (result == true)
     {
-      OBJECT handler (iter_, false);
+      OBJECT obj (iter, false);
 
       if (node->hasAttributes ())
         {
@@ -314,7 +314,7 @@ process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* note,
             pf(&obj, func);
 
           if (length == 1)
-              pf(elem);
+              pf(0, elem);
           else
               process_element_attributes(named_node_map, doc, 0, 0, elem, &pf, id_map);
         }

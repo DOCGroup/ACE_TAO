@@ -44,7 +44,7 @@ using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 
-BEGIN_DEPLOY_REQUIREMENT
+BEGIN_DEPLOYMENT_NAMESPACE
 
 class NIA_Handler: public Basic_Handler
 {
@@ -62,7 +62,7 @@ public:
   void process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
 };
 
-END_DEPLOY_REQUIREMENT
+END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 
