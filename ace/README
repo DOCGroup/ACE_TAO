@@ -34,6 +34,7 @@ ACE_HAS_BSTRING				Platform has <bstring.h> (which contains bzero() prototype)
 ACE_HAS_CANCEL_IO			Platform supports the Win32 CancelIO() function (WinNT 4.0 and beyond).
 ACE_HAS_CHARPTR_DL			OS/platform uses char * for dlopen/dlsym args, rather than const char *.
 ACE_HAS_CHARPTR_SOCKOPT			OS/platform uses char * for sockopt, rather than const char *
+ACE_HAS_CLOCK_GETTIME			Platform supports POSIX 1.b clock_gettime ()
 ACE_HAS_COMPLEX_LOCK			Platform supports non-standard readers/writer locks...
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES 	Prototypes for both signal() and struct sigaction are consistent.
 ACE_HAS_CPLUSPLUS_HEADERS		Compiler/platform has correctly prototyped header files
