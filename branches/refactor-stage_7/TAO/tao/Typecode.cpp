@@ -2783,11 +2783,9 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
 
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_THROW_EX (impl,
-                        TAO::Unknown_IDL_Type (
-                            CORBA::TypeCode::_duplicate (label_tc),
-                            out.begin (),
-                            ACE_CDR_BYTE_ORDER
-                          ),
+                        TAO::Unknown_IDL_Type (label_tc,
+                                               out.begin (),
+                                               ACE_CDR_BYTE_ORDER),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
@@ -2802,10 +2800,12 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
           || this->skip_typecode (stream) == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TypeCode::private_member_label ")
-                        ACE_TEXT ("error getting typecode for member %d\n"),
-                        i));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TypeCode::private_member_label ")
+                          ACE_TEXT ("error getting typecode for member %d\n"),
+                          i));
+            }
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                             0);
         }
