@@ -22,7 +22,7 @@ ACE_FILE::dump (void) const
   ACE_IO_SAP::dump ();
 }
 
-/* This is the do-nothing constructor. */
+// This is the do-nothing constructor. 
 
 ACE_FILE::ACE_FILE (void)
 {
