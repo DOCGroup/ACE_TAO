@@ -1,3 +1,9 @@
+Thu Sep 19 22:13:13 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/HttpCharStream.cpp: Added license for the FSM in
+          HttpCharStream.cpp. It is a shortened BSD license which is
+          compatible with ACE/TAO licensing.
+
 Wed Sep 18 12:26:22 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/Misc/test_trace.cpp: The call to activate() was
@@ -18,7 +24,7 @@ Tue Sep 17 17:26:40 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Sep 17 01:35:54 UTC 2002 Don Hinton  <dhinton@ieee.org>
 
-	* ace/OS.h: Remove redundant MAXPATHLEN definition when 
+	* ace/OS.h: Remove redundant MAXPATHLEN definition when
 	  building VxWorks.  Thanks to Rob Andzik <andzik@rtlogic.com>
 	  for pointing this out.
 
