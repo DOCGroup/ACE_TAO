@@ -3,6 +3,7 @@
 #if !defined (SPIPE_ACCEPTOR_C)
 #define SPIPE_ACCEPTOR_C
 
+#include "ace/OS_NS_string.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Proactor.h"

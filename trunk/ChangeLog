@@ -1,3 +1,32 @@
+Wed May  5 14:52:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* apps/soreduce/Library.cpp:
+	* apps/soreduce/Obj_Module.cpp:
+	* apps/soreduce/Sig_List.cpp:
+	* apps/soreduce/SO_Group.cpp:
+	* examples/Connection/blocking/SPIPE-acceptor.cpp:
+	* examples/Connection/blocking/SPIPE-connector.cpp:
+	* examples/OS/Process/process.cpp:
+	* examples/Reactor/Proactor/test_end_event_loop.cpp:
+	* examples/Reactor/Proactor/post_completions.cpp:
+	* examples/Reactor/Proactor/test_proactor.cpp:
+	* examples/Reactor/Proactor/test_timeout.cpp:
+	* examples/Reactor/Proactor/test_udp_proactor.cpp:
+	* examples/Service_Configurator/Misc/Timer_Service.cpp:
+	* examples/Threads/cancel.cpp:
+	* examples/Web_Crawler/Command_Processor.cpp:
+	* examples/Web_Crawler/HTTP_URL.cpp:
+	* examples/Web_Crawler/Options.{h cpp}:
+	* examples/Web_Crawler/URL_Visitor.cpp: Added #includes for various
+	  "ace/OS_NS_*.h" files to let Visual Age C++ see missing methods.
+
+	* apps/soreduce/Obj_Module.h: Added forward declaration for
+	  ACE_Message_Block.
+
+	* examples/Misc/test_XtReactor1.cpp:
+	* examples/Misc/test_XtReactor2.cpp:
+	* examples/OS/Process/imore.cpp: Added #include "ace/Log_Msg.h".
+
 Wed May  5 09:18:00 2004  Justin Michel  <michel_j@ociweb.com>
 
 	* ace/OS_NS_unistd.inl:

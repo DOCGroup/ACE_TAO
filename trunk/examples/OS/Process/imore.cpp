@@ -28,6 +28,7 @@
 #include "ace/FIFO_Send.h"
 #include "ace/Pipe.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 #include "ace/Process.h"
 #include "ace/Signal.h"
 

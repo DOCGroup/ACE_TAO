@@ -17,6 +17,7 @@
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
 
+#include "ace/Null_Mutex.h"
 #include "ace/Singleton.h"
 #include "ace/Time_Value.h"
 

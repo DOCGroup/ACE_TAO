@@ -1,6 +1,11 @@
+// -*- C++ -*-
+// $Id$
 
+// File: SO_Group.cpp
+
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
-
 #include "ace/Process.h"
 #include "ace/Pipe.h"
 

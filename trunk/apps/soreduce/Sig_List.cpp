@@ -1,10 +1,10 @@
-
 // $Id$
 
 // File: Sig_List.cpp
 
 // Author: Phil Mesnier
 
+#include "ace/OS_NS_string.h"
 #include "Sig_List.h"
 
 ACE_RCSID(src, Sig_List, "$Id$")

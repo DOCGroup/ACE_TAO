@@ -10,10 +10,12 @@
 // outputting usage metrics for the various object modules contained in the
 // library.
 
-
 #include "ace/OS_NS_dirent.h"
-#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/Log_Msg.h"
 
 #include "Library.h"
 

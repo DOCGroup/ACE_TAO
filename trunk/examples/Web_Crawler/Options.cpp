@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 #include "URL_Addr.h"
 #include "Options.h"
 #include "ace/OS_NS_string.h"

@@ -7,6 +7,7 @@
 #include "ace/XtReactor.h"
 #include "ace/Reactor.h"
 #include "ace/Message_Block.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_XtReactor2, "$Id$")
 
