@@ -1,3 +1,15 @@
+Mon Feb 11 16:04:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Fault_Tolerance_Service.h: 
+	* tao/Connection_Handler.h:
+	* tao/Fault_Tolerance_Service.h:
+	* tao/GIOP_Message_Generator_Parser.h:
+	* tao/GIOP_Message_Generator_Parser_10.h:
+	* tao/GIOP_Message_Generator_Parser_11.h:
+	* tao/GIOP_Message_Generator_Parser_12.h: Removed the #pragma
+	  warning (push) from the above files as they are needed in the
+	  first place. Thanks to Ossama for pointing these out. 
+
 Sun Feb 10 13:16:45 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/ImplRepo_Service/Options.cpp:
