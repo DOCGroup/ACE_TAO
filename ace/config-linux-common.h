@@ -168,6 +168,8 @@
 
 #define ACE_HAS_GPERF
 
+#define ACE_HAS_DIRENT
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
