@@ -90,9 +90,6 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
-// Compiler/platform supports the "long long" datatype.
-#define ACE_HAS_LONGLONG_T
-
 // Compiler/platform supports alloca()
 #define ACE_HAS_ALLOCA 
 
