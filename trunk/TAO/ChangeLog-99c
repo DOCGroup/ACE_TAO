@@ -1,3 +1,8 @@
+Mon May 03 15:26:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Object_Adapter.h: added "class" in friend
+          declarations.
+
 Mon May 03 10:39:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.3.21 released.
