@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Message_Handler.h"
 #include "tao/GIOP_Utils.h"
 
 class TAO_Pluggable_Reply_Params;
@@ -145,18 +145,6 @@ private:
   /// Send error messages
   int  send_error (TAO_Transport *transport);
 
-  /// Parses the header of the GIOP messages for validity
-  int parse_header (void);
-
-  /// Validates the first 4 bytes that contain the magic word
-  /// "GIOP". Also calls the validate_version () on the incoming
-  /// stream.
-  int parse_magic_bytes (void);
-
-  /// This will do a validation of the stream that arrive in the
-  /// transport.
-  int validate_version (void);
-
   /// Set the state
   void set_state (CORBA::Octet major,
                   CORBA::Octet minor);
@@ -190,9 +178,9 @@ private:
 
 private:
 
-  /// The message state. It represents the status of the messages that
-  /// have been read from the connection.
-  TAO_GIOP_Message_State message_state_;
+  /// Thr message handler object that does reading and parsing of the
+  /// incoming messages
+  TAO_GIOP_Message_Handler message_handler_;
 
   /// Output CDR
   TAO_OutputCDR *output_;

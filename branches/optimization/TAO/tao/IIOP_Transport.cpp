@@ -146,6 +146,18 @@ TAO_IIOP_Transport::recv (char *buf,
 }
 
 
+ssize_t
+TAO_IIOP_Transport::read (char *buf,
+                          size_t len,
+                          const ACE_Time_Value *max_wait_time)
+{
+  return ACE::recv (this->handle (),
+                    (void *) buf,
+                    len);
+}
+
+
+
 int
 TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
                                           int block)

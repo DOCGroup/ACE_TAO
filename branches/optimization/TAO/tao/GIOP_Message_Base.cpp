@@ -14,20 +14,15 @@
 # include "tao/GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-// Constants for GIOP. They are declared static as that will put them
-// in file scope.
-static const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
-static const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
-static const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
-static const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
-static const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
-static const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
+
 
 
 ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
 
+
+
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core)
-  : message_state_ (orb_core),
+  : message_handler_ (orb_core),
     output_ (0),
     cdr_buffer_alloc_ (
         orb_core->resource_factory ()->output_cdr_buffer_allocator ()
@@ -85,9 +80,9 @@ void
 TAO_GIOP_Message_Base::reset (int reset_flag)
 {
   // Reset the message state
-  this->message_state_.reset (reset_flag);
+  this->message_handler_.message_state ().reset (reset_flag);
+  this->message_handler_.message_block ()->reset ();
 
-  //What else???
 }
 
 int
@@ -192,109 +187,34 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
                                      int /*block */,
                                      ACE_Time_Value *max_wait_time)
 {
-  if (this->message_state_.header_received () == 0)
+  // Call the handler to read and do a simple parse of the header of
+  // the message.
+  if (this->message_handler_.read_parse_message (transport) == -1)
+    return -1;
+
+  // Get the message state
+  TAO_GIOP_Message_State &state =
+    this->message_handler_.message_state ();
+
+  // Set the state internally for parsing and generating messages
+  this->set_state (state.giop_version.major,
+                   state.giop_version.minor);
+
+  if (TAO_debug_level >= 4)
     {
-      int retval =
-        TAO_GIOP_Utils::read_bytes_input (transport,
-                                          message_state_.cdr,
-                                          TAO_GIOP_MESSAGE_HEADER_LEN ,
-                                          max_wait_time);
-      if (retval == -1)
-        {
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - \n")
-                          ACE_TEXT ("TAO_GIOP_Message_Base::read_message \n")));
-            }
+      size_t len = TAO_GIOP_MESSAGE_HEADER_LEN ;
 
-          return -1;
-        }
+      char *buf = this->message_handler_.message_block ()->rd_ptr ();
+      buf -= len;
+      size_t msg_len =
+        this->message_handler_.message_block ()->length () + len;
 
-      if (this->parse_magic_bytes () == -1)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) -"),
-                        ACE_TEXT ("TAO_GIOP_Message_Base::handle_input, parse_magic_bytes \n")));
-          return -1;
-        }
-
-      // Read the rest of the stuff. That should be read by the
-      // corresponding states
-      if (this->parse_header () == -1)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t|%N%l) -\n"),
-                        ACE_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
-          return -1;
-        }
-
-      if (this->message_state_.cdr.grow (TAO_GIOP_MESSAGE_HEADER_LEN  +
-                                         this->message_state_.message_size) == -1)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t|%N|%l) - %p\n"),
-                        ACE_TEXT ("ACE_CDR::grow")));
-          return -1;
-        }
-
-      // Growing the buffer may have reset the rd_ptr(), but we want
-      // to leave it just after the GIOP header (that was parsed
-      // already);
-      this->message_state_.cdr.skip_bytes (TAO_GIOP_MESSAGE_HEADER_LEN);
+      TAO_GIOP_Message_Base::dump_msg ("recv",
+                                       ACE_reinterpret_cast (u_char *,
+                                                             buf),
+                                       msg_len);
     }
-
-  size_t missing_data =
-    this->message_state_.message_size - this->message_state_.current_offset;
-
-  ssize_t n =
-    TAO_GIOP_Utils::read_buffer (transport,
-                                 this->message_state_.cdr.rd_ptr ()
-                                 + this->message_state_.current_offset,
-                                 missing_data,
-                                 max_wait_time);
-
-   if (n == -1)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                    ACE_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[1] \n")));
-      return -1;
-    }
-  else if (n == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                    ACE_TEXT ("TAO_GIOP_Message_Base::handle_input, read_buffer[2]\n")));
-      return -1;
-    }
-
-   this->message_state_.current_offset += n;
-
-  if (this->message_state_.current_offset ==
-      this->message_state_.message_size)
-    {
-      if (TAO_debug_level >= 4)
-        {
-          size_t header_len = TAO_GIOP_MESSAGE_HEADER_LEN ;
-
-          // Need to include GIOPlite too.
-          char *buf = this->message_state_.cdr.rd_ptr ();
-          buf -= header_len;
-          size_t msg_len = this->message_state_.cdr.length () + header_len;
-          this->dump_msg ("recv",
-                          ACE_reinterpret_cast (u_char *,
-                                                buf),
-                          msg_len);
-        }
-    }
-
-  return this->message_state_.is_complete ();
+  return this->message_handler_.is_message_ready ();
 }
 
 
@@ -353,7 +273,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 TAO_Pluggable_Message_Type
 TAO_GIOP_Message_Base::message_type (void)
 {
-  switch (this->message_state_.message_type)
+  switch (this->message_handler_.message_state ().message_type)
     {
     case TAO_GIOP_REQUEST:
     case TAO_GIOP_LOCATEREQUEST:
@@ -395,7 +315,10 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // @@@@Is it necessary  here?
   this->output_->reset ();
 
-  //
+  // Get the Message Block from the handler
+  ACE_Message_Block *msg_block =
+    this->message_handler_.message_block ();
+
   // Take out all the information from the <message_state> and reset
   // it so that nested upcall on the same transport can be handled.
   //
@@ -404,9 +327,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // time because the reactor does not call handle_input() for the
   // same Event_Handler in two threads at the same time.
 
-  // Steal the input CDR from the message state.
-  TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (this->message_state_.cdr),
+  // Steal the input CDR from the message block
+  TAO_InputCDR input_cdr (msg_block->data_block (),
+                          ACE_CDR_BYTE_ORDER,
                           orb_core);
+
+
+
 
   // Send the message state for the service layer like FT to log the
   // messages
@@ -415,11 +342,13 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   // Reset the message state. Now, we are ready for the next nested
   // upcall if any.
-  this->message_state_.reset (0);
+  // ###########Wrong????
+  msg_block->reset ();
+  this->message_handler_.message_state ().reset (0);
 
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
-  switch (this->message_state_.message_type)
+  switch (this->message_handler_.message_state ().message_type)
     {
     case TAO_GIOP_REQUEST:
       // Should be taken care by the state specific invocations. They
@@ -442,16 +371,31 @@ TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params
   )
 {
+  // Get the Message Block from the handler
+  ACE_Message_Block *msg_block =
+    this->message_handler_.message_block ();
+
+  // Steal the input CDR from the message block
+  TAO_InputCDR input_cdr (msg_block->data_block (),
+                          ACE_CDR_BYTE_ORDER,
+                          orb_core);
+
+  // Reset the message state. Now, we are ready for the next nested
+  // upcall if any.
+  // ###########Wrong????
+  msg_block->reset ();
+  this->message_handler_.message_state ().reset (0);
+
   // We know we have some reply message. Check whether it is a
   // GIOP_REPLY or GIOP_LOCATE_REPLY to take action.
-  switch (this->message_state_.message_type)
+  switch (this->message_handler_.message_state ().message_type)
     {
     case TAO_GIOP_REPLY:
       // Should be taken care by the state specific parsing
-      return this->generator_parser_->parse_reply (this->message_state_.cdr,
+      return this->generator_parser_->parse_reply (input_cdr,
                                                    params);
     case TAO_GIOP_LOCATEREPLY:
-      return this->generator_parser_->parse_locate_reply (this->message_state_.cdr,
+      return this->generator_parser_->parse_locate_reply (input_cdr,
                                                           params);
     default:
       return -1;
@@ -936,151 +880,6 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
     }
 
   return result;
-}
-
-
-int
-TAO_GIOP_Message_Base::parse_header (void)
-{
-  char *buf = this->message_state_.cdr.rd_ptr ();
-
-  // Let us be specific that it is for 1.0
-  if (this->message_state_.giop_version.minor == 0 &&
-      this->message_state_.giop_version.minor == 1)
-    {
-      this->message_state_.byte_order =
-        buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET];
-      if (TAO_debug_level > 2
-          && this->message_state_.byte_order != 0 &&
-          this->message_state_.byte_order != 1)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) invalid byte order <%d>")
-                      ACE_TEXT (" for version <1.0>\n"),
-                      this->message_state_.byte_order));
-          return -1;
-        }
-    }
-  else
-    {
-      // Read teh byte ORDER
-      this->message_state_.byte_order     =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x01);
-
-      // Read the fragment bit
-      this->message_state_.more_fragments =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
-
-      if (TAO_debug_level > 2
-          && (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) invalid flags for <%d>")
-                      ACE_TEXT (" for version <%d %d> \n"),
-                      buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
-                      this->message_state_.giop_version.major,
-                      this->message_state_.giop_version.minor));
-          return -1;
-        }
-    }
-
-  // Get the message type
-  this->message_state_.message_type =
-    buf[TAO_GIOP_MESSAGE_TYPE_OFFSET];
-
-  // Reset our input CDR stream
-  this->message_state_.cdr.reset_byte_order (this->message_state_.byte_order);
-
-
-  this->message_state_.cdr.skip_bytes (TAO_GIOP_MESSAGE_SIZE_OFFSET);
-  this->message_state_.cdr.read_ulong (this->message_state_.message_size);
-
-  if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n"),
-                  this->message_state_.giop_version.major,
-                  this->message_state_.giop_version.minor,
-                  this->message_state_.byte_order,
-                  this->message_state_.message_type,
-                  this->message_state_.message_size));
-    }
-
-  return 1;
-}
-
-
-int
-TAO_GIOP_Message_Base::parse_magic_bytes (void)
-{
-  // Grab the read pointer
-  char *buf = this->message_state_.cdr.rd_ptr ();
-
-  // The values are hard-coded to support non-ASCII platforms.
-  if (!(buf [0] == 0x47      // 'G'
-        && buf [1] == 0x49   // 'I'
-        && buf [2] == 0x4f   // 'O'
-        && buf [3] == 0x50)) // 'P'
-    {
-      // For the present...
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"),
-                    buf[0],
-                    buf[1],
-                    buf[2],
-                    buf[3]));
-      return -1;
-    }
-
-  if (this->validate_version () == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%N|%l|%P|%t) Error in validating")
-                      ACE_TEXT ("revision \n")));
-          return -1;
-        }
-    }
-
-  return 0;
-}
-
-
-int
-TAO_GIOP_Message_Base::validate_version (void)
-{
-  // Grab the read pointer
-  char *buf = this->message_state_.cdr.rd_ptr ();
-
-  CORBA::Octet incoming_major =
-    buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
-  CORBA::Octet incoming_minor =
-    buf[TAO_GIOP_VERSION_MINOR_OFFSET];
-
-  if (this->tao_giop_impl_.check_revision (incoming_major,
-                                           incoming_minor) == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t|%N|%l) bad version <%d.%d>\n"),
-                      incoming_major, incoming_minor));
-        }
-
-      return -1;
-    }
-
-  // Sets the version
-  this->message_state_.giop_version.minor = incoming_minor;
-  this->message_state_.giop_version.major = incoming_major;
-
-  // Sets the state
-  this->set_state (incoming_major,
-                   incoming_minor);
-
-  return 0;
 }
 
 

@@ -1316,6 +1316,25 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Handler.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Lite.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3825,6 +3844,10 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Lite.h
 # End Source File
 # Begin Source File
@@ -4550,6 +4573,10 @@ SOURCE=.\GIOP_Message_Generator_Parser_12.inl
 # Begin Source File
 
 SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Handler.inl
 # End Source File
 # Begin Source File
 
