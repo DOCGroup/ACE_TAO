@@ -13,7 +13,6 @@
 #include "tao/debug.h"
 #include "tao/TSS_Resources.h"
 #include "tao/PortableServer/ServantRetentionStrategyRetain.h"
-#include "tao/PortableServer/LifespanStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
