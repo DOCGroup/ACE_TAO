@@ -949,6 +949,33 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
 // class TAO_Reconfig_Sched_Strategy_Base //
 ////////////////////////////////////////////
 
+
+// Ordering function to compare the DFS finish times of
+// two RT_Info_Tuples
+int
+TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (const void *first, const void *second)
+{
+  // Convert the passed pointers: the double cast is needed to
+  // make Sun C++ 4.2 happy.
+  TAO_RT_Info_Tuple **first_tuple =
+    ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
+                          ACE_const_cast (void *, first));
+
+  //volatile_token is a TAO_Reconfig_Scheduler_Entry*, but we need to treat it as a void*
+  void * first_entry = ACE_LONGLONG_TO_PTR (void *,
+                         (*first_tuple)->volatile_token);
+
+  TAO_RT_Info_Tuple **second_tuple =
+    ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
+                          ACE_const_cast (void *, second));
+
+  //volatile_token is a TAO_Reconfig_Scheduler_Entry*, but we need to treat it as a void*
+  void * second_entry = ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
+                          (*second_tuple)->volatile_token);
+
+  return TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times(first_entry,second_entry);
+}
+
 // Ordering function to compare the DFS finish times of
 // two task entries, so qsort orders these in topological
 // order, with the higher times *first*
