@@ -664,7 +664,7 @@ sub create_kit () {
     }
   }
 
-  $md5sum_command =
+  my $md5sum_command =
     "for p in $archives; do " .
       "$rm $dest/\$p.md5; " .
       "$md5sum \$p > $dest/\$p.md5; " .
