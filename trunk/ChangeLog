@@ -1,3 +1,9 @@
+Tue Nov 12 11:53:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Change FIFO_Test from !MSVC to !Win32 to
+          prevent it from running with Borland on Windows. Thanks to
+          Johnny Willemsen for pointing this out.
+
 Tue Nov 12 14:11:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.h:
