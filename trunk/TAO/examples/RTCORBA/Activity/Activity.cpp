@@ -436,7 +436,7 @@ main (int argc, char *argv[])
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
 
   ACE_Timer_Heap timer_queue;
-  ACE_Reactor::instance ()->set_timer_queue (&timer_queue);
+  ACE_Reactor::instance ()->timer_queue (&timer_queue);
 
   ACE_TRY_NEW_ENV
     {
