@@ -17,12 +17,20 @@ Peer::~Peer (void)
 
 Test::Session_ptr
 Peer::create_session (Test::Session_Control_ptr control,
+                      CORBA::ULong payload_size,
+                      CORBA::ULong thread_count,
+                      CORBA::ULong message_count,
+                      CORBA::ULong peer_count,
                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Session *session_impl;
   ACE_NEW_THROW_EX (session_impl,
-                    Session (control),
+                    Session (control,
+                             payload_size,
+                             thread_count,
+                             message_count,
+                             peer_count),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (Test::Session::_nil ());
   PortableServer::ServantBase_var transfer_ownership (session_impl);
@@ -36,9 +44,6 @@ Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, waiting for threads\n"));
-
-  // Wait for all the threads.
-  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, shutting down ORB\n"));

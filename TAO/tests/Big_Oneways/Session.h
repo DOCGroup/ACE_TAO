@@ -23,7 +23,11 @@ class Session
 {
 public:
   /// Constructor
-  Session (Test::Session_Control_ptr control);
+  Session (Test::Session_Control_ptr control,
+           CORBA::ULong payload_size,
+           CORBA::ULong thread_count,
+           CORBA::ULong message_count,
+           CORBA::ULong peer_count);
 
   /// Destructor
   virtual ~Session (void);
@@ -33,9 +37,6 @@ public:
 
   // = The skeleton methods
   virtual void start (const Test::Session_List &other_sessions,
-                      CORBA::ULong payload_size,
-                      CORBA::ULong thread_count,
-                      CORBA::ULong message_count,
                       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test::Already_Running,
@@ -45,6 +46,9 @@ public:
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void destroy (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   /// Helper function used to report any problems and destroy local
   /// resources
@@ -52,10 +56,8 @@ private:
                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC (());
 
-  /// Helper function used to report any problems and destroy local
-  /// resources
-  void check_for_termination (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC (());
+  /// Return 1 if all the work in this session has been completed
+  int more_work (void) const;
 
 private:
   /// Synchronize the internal state
@@ -89,6 +91,9 @@ private:
 
   /// Helper class to run svc() in a separate thread
   Session_Task task_;
+
+  /// Barrier to start all threads simultaenously
+  ACE_Thread_Barrier barrier_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
