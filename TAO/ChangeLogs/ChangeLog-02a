@@ -1,3 +1,31 @@
+Thu Jun 15 12:44:55 2000  Ossama Othman  <ossama@uci.edu>
+	  
+	* tao/Any.h (type_):
+
+	  Changed the variable that contains the type for the Any from a
+	  TypeCode_ptr to a TypeCode_var to improve exception safety, and
+	  to simplify memory management.
+
+	* tao/Any.cpp (type, operator=, ~CORBA_Any, _tao_replace):
+
+	  No need to explicitly release the member TypeCode before
+	  assigning a new value to it since the variable is a now "_var"
+	  type.
+
+	  (_tao_encode, _tao_decode):
+
+	  Use ".in()" accessor method when passing the type_ member as an
+	  argument to fix compiler warnings.
+
+	* tao/IIOP_Connector.cpp (make_profile):
+	* tao/ORB.cpp (_get_collocated_servant):
+
+	  Cosmetic update.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Thu Jun 15 14:23:53 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/diffs/PolicyC.h.diff:
