@@ -129,7 +129,9 @@ module Components
 
     void remove()
       raises (RemoveFailure);
+
     ComponentPortDescription get_all_ports ();
+
     attribute UUID component_UUID;
   };
 
