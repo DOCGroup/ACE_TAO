@@ -292,7 +292,7 @@ namespace TAO
                                      servant,
                                      cleanup_in_progress
                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          ACE_CHECK;
         }
     }
 
