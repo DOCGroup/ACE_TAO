@@ -21,45 +21,83 @@
 #include "ace/Service_Config.h"
 #include "test_config.h"
 
-template <int NUMBER>
+#define VARIETIES 3
+
+u_int error = 0;
+
+// This should be a template class, with singleton instantiations.
+// But to avoid having to deal with compilers that want template
+// declarations in separate files, it's just a plain class.  The
+// instance argument differentiates the "singleton" instances.
+// It also demonstrates the use of the param arg to the cleanup ()
+// function.
 class Test_Singleton
 {
 public:
-  static Test_Singleton *instance (void);
+  static Test_Singleton *instance (u_short variety);
   static void cleanup (void *, void *);
 private:
-  static Test_Singleton *instance_;
+  u_short variety_;
+  static u_short current_;
 
-  Test_Singleton (void) { ACE_DEBUG ((LM_DEBUG, "Test_Singleton %d ctor\n", NUMBER)); }
-  // We can't reliably use ACE_Log_Msg in a destructor that is called by
-  // ACE_Object_Manager.  Yet.
-  ~Test_Singleton (void) { /* ACE_DEBUG ((LM_DEBUG, "Test_Singleton %d dtor\n", NUMBER)); */ }
+  Test_Singleton (u_short variety);
+  ~Test_Singleton (void);
 
   friend class misspelled_verbase_friend_declaration_to_avoid_compiler_warning_with_private_ctor;
 };
 
-Test_Singleton<1> *Test_Singleton<1>::instance_ = 0;
-Test_Singleton<2> *Test_Singleton<2>::instance_ = 0;
-Test_Singleton<3> *Test_Singleton<3>::instance_ = 0;
+u_short Test_Singleton::current_ = 0;
 
-template <int NUMBER>
-Test_Singleton<NUMBER> *
-Test_Singleton<NUMBER>::instance (void)
+Test_Singleton *
+Test_Singleton::instance (u_short variety)
 {
-  if (instance_ == 0)
+  static Test_Singleton *instances[VARIETIES] = { 0 };
+
+  if (instances[variety] == 0)
     {
-      ACE_NEW_RETURN (instance_, Test_Singleton, 0);
-      ACE_Object_Manager::at_exit (instance_, cleanup, 0);
+      ACE_NEW_RETURN (instances[variety], Test_Singleton (variety), 0);
     }
 
-  return instance_;
+  ACE_Object_Manager::at_exit (instances[variety], cleanup, (void *) variety);
+
+  return instances[variety];
 }
 
-template <int NUMBER>
 void
-Test_Singleton<NUMBER>::cleanup (void *object, void *)
+Test_Singleton::cleanup (void *object, void *param)
 {
+  // We can't reliably use ACE_Log_Msg in a cleanup hook.  Yet.
+  ACE_UNUSED_ARG (param);
+  /* ACE_DEBUG ((LM_DEBUG, "cleanup %d\n", (u_short) param)); */
+
   delete (Test_Singleton *) object;
+}
+
+Test_Singleton::Test_Singleton (u_short variety)
+  : variety_ (variety)
+{
+  if (variety_ != current_++)
+    {
+      ACE_DEBUG ((LM_ERROR, "ERROR: instance %u created out of order!\n",
+                 variety_));
+      ++error;
+    }
+}
+
+// We can't reliably use ACE_Log_Msg in a destructor that is called by
+// ACE_Object_Manager.  Yet.
+Test_Singleton::~Test_Singleton (void)
+{
+  /* ACE_DEBUG ((LM_DEBUG, "Test_Singleton %u dtor\n", variety_)); */
+
+  if (variety_ != --current_)
+    {
+      ACE_OS::fprintf (stderr, "ERROR: instance %u destroyed out of order!\n",
+                       variety_);
+      /* ACE_DEBUG ((LM_ERROR, "ERROR: instance %u destroyed out of order!\n",
+                 variety_)); */
+      ++error;
+    }
 }
 
 static void
@@ -81,26 +119,18 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Service_Config_Test");
 
-  Test_Singleton<1> &one = *Test_Singleton<1>::instance ();
-  Test_Singleton<2> &two = *Test_Singleton<2>::instance ();
-  Test_Singleton<3> &three = *Test_Singleton<3>::instance ();
+  for (u_int i = 0; i < VARIETIES; ++i)
+    {
+      Test_Singleton &s = *Test_Singleton::instance (i);
 
-  if (&one == 0  ||  &two == 0  || &three == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "instance () allocate failed!\n"), 1);
+      if (&s == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "instance () allocate failed!\n"), 1);
+        }
+    }
 
   run_test (argc, argv);
 
   ACE_END_TEST;
-  return 0;
+  return error == 0 ? 0 : 1;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Test_Singleton<1>;
-template class Test_Singleton<2>;
-template class Test_Singleton<3>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Test_Singleton<1>
-#pragma instantiate Test_Singleton<2>
-#pragma instantiate Test_Singleton<3>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
