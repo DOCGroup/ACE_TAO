@@ -15,10 +15,13 @@ endif # ! TAO_ROOT
 
 LDLIBS     =  -lorbsvcs -lTAO
 
-SRC = server.cpp client.cpp $TAO_ROOT/orbsvcs/orbsvcs/Log/Logger_i/cpp
+SRC = 	server.cpp \
+	client.cpp \
+	client_i.cpp \
+	server_i.cpp 
 
-logger_SERVER_OBJS = server.o
-logger_CLIENT_OBJS = client.o
+logger_SERVER_OBJS = server_i.o server.o 
+logger_CLIENT_OBJS = client_i.o client.o
 
 BIN = server client
 BUILD = $(BIN)
