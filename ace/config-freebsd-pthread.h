@@ -56,7 +56,7 @@ enum schedparam_policy {
 };
 
 // This won't be necessary after it is fixed in the system include headers.
-char * cuserid (char *s);
+extern "C" { char * cuserid (char *s); }
 
 // Platform supports POSIX timers via struct timespec.
 #define ACE_HAS_POSIX_TIME
