@@ -145,9 +145,6 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
   be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
@@ -176,9 +173,6 @@ be_visitor_typedef_cdr_op_cs::visit_array (be_array *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
   be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
@@ -206,9 +200,6 @@ be_visitor_typedef_cdr_op_cs::visit_enum (be_enum *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
   be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
@@ -236,9 +227,6 @@ be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
   be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef
@@ -266,9 +254,6 @@ be_visitor_typedef_cdr_op_cs::visit_structure (be_structure *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-  be_typedef *tdef = this->ctx_->tdef (); // typedef node
-  be_decl *scope = this->ctx_->scope (); // scope in which it is used
   be_type *bt;
 
   if (this->ctx_->alias ()) // typedef of a typedef

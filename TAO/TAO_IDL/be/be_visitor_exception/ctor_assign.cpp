@@ -43,7 +43,6 @@ be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign (void)
 
 int be_visitor_exception_ctor_assign::visit_exception (be_exception *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
 
   if (this->visit_scope (node) == -1)
@@ -60,7 +59,6 @@ int be_visitor_exception_ctor_assign::visit_exception (be_exception *node)
 
 int be_visitor_exception_ctor_assign::visit_field (be_field *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
   this->ctx_->node (node); // save the argument node
 
   // retrieve the type
