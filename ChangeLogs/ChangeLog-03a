@@ -1,3 +1,17 @@
+Mon Apr 15 08:49:23 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Makefile.bor:
+        * examples/Timer_Queue/Makefile.bor:
+        * exmaples/Timer_Queue/Async_Timer_Queue_Test.bor:
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.bor:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.bor:
+          Added BCB makefiles
+
+        * examples/Timer_Queue/main_async.cpp:
+        * examples/Timer_Queue/main_reactor.cpp:
+        * examples/Timer_Queue/main_thread.cpp:
+          Made the example compiling in an unicode build
+
 Mon Apr 15 07:39:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:

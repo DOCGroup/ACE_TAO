@@ -31,7 +31,7 @@ typedef Timer_Queue_Test_Driver<Thread_Timer_Queue,
 	THREAD_TIMER_QUEUE_TEST_DRIVER;
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Auto ptr ensures that the driver memory is released
   // automatically.

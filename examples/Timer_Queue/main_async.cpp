@@ -4,9 +4,9 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
-//    main_async.cpp             
+//    main_async.cpp
 //
 // = DESCRIPTION
 //      Implements an asynchronous timer queue.
@@ -15,8 +15,8 @@
 //
 // = AUTHORS
 //    Douglas Schmidt      <schmidt@cs.wustl.edu> &&
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>  
-// 
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
 // ============================================================================
 
 #include "ace/Auto_Ptr.h"
@@ -31,14 +31,14 @@ typedef Timer_Queue_Test_Driver<Async_Timer_Queue *,
         ASYNC_TIMER_QUEUE_TEST_DRIVER;
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ASYNC_TIMER_QUEUE_TEST_DRIVER *tqtd;
   ACE_NEW_RETURN (tqtd, Async_Timer_Queue_Test_Driver, -1);
   // Auto ptr ensures that the driver memory is released
   // automatically.
   auto_ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);
-  
+
   return driver->run_test ();
 }
 
