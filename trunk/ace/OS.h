@@ -3945,6 +3945,10 @@ private:
   int trace_depth_;
   // Depth of the nesting for printing traces.
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
+
+  friend class ACE_Thread_Adapter_Has_Private_Destructor;
+  // Friend declaration to avoid compiler warning:  only defines a private
+  // destructor and has no friends.
 };
 
 class ACE_Export ACE_OS
