@@ -1,3 +1,16 @@
+Wed May 19 08:57:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_Thread.inl: Fixed the ACE_OS::thr_self() call so that 
+	  it doesn't use the ACE_OSCALL_RETURN macro, which compares the
+ 	  return value of pthread_self() with -1 to see if the function
+ 	  encountered an error.  However, pthread_t may be an opaque value
+ 	  (a pointer, a struct, etc.) that may not be able to be compared
+ 	  with a literal without an error.  Furthermore, the pthreads and
+ 	  X/Open XPG standards do not define any error conditions for
+ 	  pthread_self(), so checking the return value with -1 is
+ 	  meaningless.  Thanks to J.T. Conklin <jtc@acorntoolworks.com>
+	  for reporting this problem and providing a fix.
+
 Wed May 19 07:20:35 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:

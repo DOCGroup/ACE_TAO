@@ -573,7 +573,7 @@ Andy Marchewka <AndyM at who dot net>
 Neal Norwitz <nnorwitz at arinc dot com>
 Frederic Maria <fmaria at lucent dot com>
 David Hooker <DHooker at uniview dot net>
-Christian dot Destor <Christian dot Destor at alcatel dot fr>
+Christian Destor <Christian dot Destor at alcatel dot fr>
 Andrew Hobson <ahobson at eng dot mindspring dot net>
 Andre Folkers <folkers at informatik dot mu-leubeck dot de>
 Torsten Kuepper <torsten dot kuepper at nokia dot com>
@@ -1878,6 +1878,8 @@ Bill Cassanova <BCassanova at weather dot com>
 Matthew Corey <mcorey at neovest dot com>
 Vinod Kumar <vinod_kumar at agilent dot com>
 Mirek Pabich <miropabich at tenbit dot pl>
+Christian Egeler <Christian dot Egeler at motorola dot com>
+J.T. Conklin <jtc at acorntoolworks dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
