@@ -73,7 +73,7 @@ client:
 To build the client for VxWorks, for running the server and client
 on a single target:
 
-  % make BIN=client ACELIB= LDLIBS=$ACE_ROOT/ace/.obj/High_Res_Timer.o $ACE_ROOT/ace/.obj/gethrtime.o
+  % make BIN=client ACELIB= LDLIBS="$ACE_ROOT/ace/.obj/High_Res_Timer.o $ACE_ROOT/ace/.obj/gethrtime.o"
 
 To run the server and client on a single target:
 
