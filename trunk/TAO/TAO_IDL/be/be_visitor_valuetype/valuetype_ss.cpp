@@ -119,54 +119,6 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
 
-  // the _this () operation.
-  *os << node->full_name () << " *" << be_nl
-      << node->full_skel_name ()
-      << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
-      << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);"
-      << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
-      << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
-
-  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
-      << be_nl
-      << "if (stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ())" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "tmp," << be_nl
-      << "CORBA::Object (" << be_idt << be_idt_nl
-      << "stub," << be_nl
-      << "1," << be_nl
-      << "this" << be_uidt_nl
-      << ")," << be_uidt_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "tmp," << be_nl
-      << "CORBA::Object (" << be_idt << be_idt_nl
-      << "stub," << be_nl
-      << "0," << be_nl
-      << "this" << be_uidt_nl
-      << ")," << be_uidt_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
-
-  *os << "CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl
-      << "return ";
-
-  *os << concrete->name ();
-
-  *os << "::_unchecked_narrow (obj.in ());"
-      << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   return 0;
 }
 
