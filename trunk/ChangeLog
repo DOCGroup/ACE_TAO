@@ -1,3 +1,8 @@
+Sun Jan  7 08:59:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/DLL_Test.cpp: Added a message in a ACE_ERROR statement.  
+	* tests/run_test.lst: Disabled MEM_Stream_Test in Linux. 
+
 Thu Jan  4 17:14:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp (dispatch_i): Eliminate a portion of the

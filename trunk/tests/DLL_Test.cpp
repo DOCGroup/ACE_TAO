@@ -92,8 +92,7 @@ main (int argc, ACE_TCHAR *argv[])
                          OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-		               dll.error ()),
+                       ACE_TEXT ("Error in DLL Open\n")),
                       -1);
 
   // Just because the ANSI C++ spec says you can no longer cast a
