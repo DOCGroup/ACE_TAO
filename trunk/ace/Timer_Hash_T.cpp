@@ -137,9 +137,7 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::deletion (TIMER_QUEUE &,
   // Call up to the upcall functor of the timer hash since the timer
   // hash does not invoke deletion() on its upcall functor directly.
   Hash_Token<TYPE> *h =
-    ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                          ACE_const_cast (void *,
-                                          arg));
+    reinterpret_cast<Hash_Token<TYPE> *> (const_cast<void *> (arg));
 
   int result =
     this->timer_hash_->upcall_functor ().
@@ -167,7 +165,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::first (void)
 {
   for (this->position_ = 0;
        this->position_ < this->timer_hash_.table_size_;
-       this->position_++)
+       ++this->position_)
     {
       // Check for an empty entry
       if (!this->timer_hash_.table_[this->position_]->is_empty ())
@@ -194,9 +192,9 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::next (void)
   // If there is no more in the current bucket, go to the next
   if (this->iter_->isdone ())
     {
-      for (this->position_++;
+      for (++this->position_;
            this->position_ < this->timer_hash_.table_size_;
-           this->position_++)
+           ++this->position_)
         {
           // Check for an empty entry
           if (!this->timer_hash_.table_[this->position_]->is_empty ())
@@ -264,7 +262,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (size_t tabl
 
   for (size_t i = 0;
        i < table_size;
-       i++)
+       ++i)
     {
       ACE_NEW (this->table_[i],
                BUCKET (&this->table_functor_,
@@ -299,7 +297,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *up
 
   for (size_t i = 0;
        i < this->table_size_;
-       i++)
+       ++i)
     {
       ACE_NEW (this->table_[i],
                BUCKET (&this->table_functor_,
@@ -323,7 +321,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::~ACE_Timer_Hash_T (void)
 
   for (size_t i = 0;
        i < this->table_size_;
-       i++)
+       ++i)
     delete this->table_[i];
 
   delete [] this->table_;
@@ -356,7 +354,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntable_size_ = %d"), this->table_size_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nearliest_position_ = %d"), this->earliest_position_));
 
-  for (size_t i = 0; i < this->table_size_; i++)
+  for (size_t i = 0; i < this->table_size_; ++i)
     if (!this->table_[i]->is_empty ())
       ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nBucket %d contains nodes"), i));
 
@@ -374,9 +372,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
   ACE_TRACE ("ACE_Timer_Hash_T::reschedule");
 
   Hash_Token<TYPE> *h =
-    ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                          ACE_const_cast (void *,
-                                          expired->get_act ()));
+    reinterpret_cast<Hash_Token<TYPE> *> (
+      const_cast<void *> (expired->get_act ()));
 
   h->pos_ =
     expired->get_timer_value ().sec () % this->table_size_;
@@ -456,12 +453,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (const TYPE &type,
   // size of a pointer is 64 bits, but a long is 32. Since this class
   // is not much used, I'm hacking this, at least for now. If it becomes
   // an issue, I'll look at it again then.
-  ptrdiff_t hi = ACE_reinterpret_cast (ptrdiff_t, h);
+  ptrdiff_t hi = reinterpret_cast<ptrdiff_t> (h);
   if (this->pointer_base_ == 0)
     this->pointer_base_ = hi & 0xffffffff00000000;
-  return ACE_static_cast (long, hi & 0xffffffff);
+  return static_cast<long> (hi & 0xffffffff);
 #else
-  return ACE_reinterpret_cast (long, h);
+  return reinterpret_cast<long> (h);
 #endif
 }
 
@@ -481,14 +478,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reset_interval (long timer_id
 
 
 #if defined (ACE_WIN64)
-  unsigned long timer_offset = ACE_static_cast (unsigned long, timer_id);
+  unsigned long timer_offset = static_cast<unsigned long> (timer_id);
   Hash_Token<TYPE> *h =
-    ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                          (this->pointer_base_ + timer_offset));
+    reinterpret_cast<Hash_Token<TYPE> *> (this->pointer_base_ + timer_offset);
 #else
   Hash_Token<TYPE> *h =
-    ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                          timer_id);
+    reinterpret_cast<Hash_Token<TYPE> *> (timer_id);
 #endif /* ACE_WIN64 */
 
   return this->table_[h->pos_]->reset_interval (h->orig_id_,
@@ -512,14 +507,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
     return 0;
 
 #if defined (ACE_WIN64)
-  unsigned long timer_offset = ACE_static_cast (unsigned long, timer_id);
+  unsigned long timer_offset = static_cast<unsigned long> (timer_id);
   Hash_Token<TYPE> *h =
-    ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                          (this->pointer_base_ + timer_offset));
+    reinterpret_cast<Hash_Token<TYPE> *> (this->pointer_base_ + timer_offset);
 #else
   Hash_Token<TYPE> *h =
-    ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                          timer_id);
+    reinterpret_cast<Hash_Token<TYPE> *> (timer_id);
 #endif /* ACE_WIN64 */
 
   int result = this->table_[h->pos_]->cancel (h->orig_id_,
@@ -578,7 +571,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
 
   for (i = 0;
        i < this->table_size_;
-       i++)
+       ++i)
     {
       ACE_Timer_Queue_Iterator_T<TYPE,
                                  ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>,
@@ -590,15 +583,14 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
            iter.next ())
         if (iter.item ()->get_type () == type)
           timer_ids[pos++] =
-            ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                                  ACE_const_cast (void *,
-                                                  iter.item ()->get_act ()));
+            reinterpret_cast<Hash_Token<TYPE> *> (
+              const_cast<void *> (iter.item ()->get_act ()));
     }
 
   if (pos > this->size_)
     return -1;
 
-  for (i = 0; i < pos; i++)
+  for (i = 0; i < pos; ++i)
     {
       int result =
         this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_,
@@ -636,7 +628,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
                                             cookie);
     }
 
-  return ACE_static_cast (int, pos);
+  return static_cast<int> (pos);
 }
 
 // Removes the earliest node and finds the new earliest position
@@ -662,7 +654,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::remove_first (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> void
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::find_new_earliest (void)
 {
-  for (size_t i = 0; i < this->table_size_; i++)
+  for (size_t i = 0; i < this->table_size_; ++i)
     if (!this->table_[i]->is_empty ())
       if (this->table_[this->earliest_position_]->is_empty ()
           || this->earliest_time () == ACE_Time_Value::zero
@@ -694,9 +686,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dispatch_info_i (const ACE_Ti
   if (result == 1)
     {
       Hash_Token<TYPE> *h =
-        ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                              ACE_const_cast (void *,
-                                              info.act_));
+        reinterpret_cast<Hash_Token<TYPE> *> (const_cast<void *> (info.act_));
 
       info.act_ = h->act_;
     }
@@ -728,7 +718,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
 
   for (size_t i = 0;
        i < this->table_size_;
-       i++)
+       ++i)
     {
       while (!this->table_[i]->is_empty ()
              && this->table_[i]->earliest_time () <= cur_time)
@@ -738,9 +728,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
           int reclaim = 1;
 
           Hash_Token<TYPE> *h =
-            ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                                  ACE_const_cast (void *,
-                                                  act));
+            reinterpret_cast<Hash_Token<TYPE> *> (const_cast<void *> (act));
 
           ACE_ASSERT (h->pos_ == i);
 
@@ -789,7 +777,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
               delete h;
             }
 
-          number_of_timers_expired++;
+          ++number_of_timers_expired;
          }
     }
 
