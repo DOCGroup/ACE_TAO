@@ -11,6 +11,14 @@ NameService via the options described in
 
 $TAO_ROOT/docs/Options.html
 
+If invoked as:
+
+% nslist
+
+The contents of the default NameService will be displayed,
+including the protocol and endpoint of each object reference.
+
+
 nslist accepts two other options:
 
 % nslist --ior

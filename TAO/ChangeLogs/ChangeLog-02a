@@ -1,3 +1,12 @@
+Tue May 29 21:58:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+       * utils/nslist/nslist.cpp:
+       * utils/nslist/README:
+
+         Enhancement to print the protocol and endpoint of each
+         object reference registered in the Naming Service.
+
+
 Tue May 29 18:44:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_module.cpp (fe_add_interface_fwd, add_to_previous):
