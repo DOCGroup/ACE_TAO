@@ -149,12 +149,9 @@ Cubit_Server::~Cubit_Server (void)
       factory_name.length (2);
       factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
       factory_name[1].id = CORBA::string_dup ("cubit_factory");
-      // this->naming_context_->unbind (factory_name,TAO_TRY_ENV);
       this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
       factory_name.length (1);
-      //      this->naming_context_->unbind
-      //      (factory_name,TAO_TRY_ENV);
       this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
       // Destroy all the POAs.
