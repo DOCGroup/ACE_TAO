@@ -1,9 +1,10 @@
 // $Id$
 
 #include "Activation_Manager.h"
+#include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (lib, 
-           TAO_Activation_Manager, 
+ACE_RCSID (lib,
+           TAO_Activation_Manager,
            "$Id$")
 
 #include "LookupManager.h"
