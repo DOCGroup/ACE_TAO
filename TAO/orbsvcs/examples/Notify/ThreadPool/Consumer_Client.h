@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_CONSUMER_CLIENT_H
 #define TAO_Notify_CONSUMER_CLIENT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "ace/Task.h"
@@ -76,5 +76,5 @@ protected:
   long delay_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_CONSUMER_CLIENT_H */
