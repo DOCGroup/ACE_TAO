@@ -1,3 +1,9 @@
+Thu Oct 16 14:21:34 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Proactor.cpp: Replaced #include "ace/Servie_Config.h" with
+	  #include "ace/Object_Manager.h" for declaration of
+	  ACE_Static_Object_Lock.
+
 Thu Oct 16 10:22:48 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Timer_Heap_T.h: 
