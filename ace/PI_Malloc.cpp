@@ -21,7 +21,7 @@
 
 #include "ace/Synch_T.h"
 
-ACE_RCSID(ace, Malloc, "$Id$")
+ACE_RCSID(ace, PI_Malloc, "$Id$")
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 void

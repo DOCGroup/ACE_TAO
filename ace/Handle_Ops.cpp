@@ -6,7 +6,7 @@
 #include "ace/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID(ace, ACE, "$Id$")
+ACE_RCSID(ace, Handle_Ops, "$Id$")
 
 ACE_HANDLE
 ACE_Handle_Ops::handle_timed_open (ACE_Time_Value *timeout,
