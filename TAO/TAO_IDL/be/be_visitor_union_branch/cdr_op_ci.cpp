@@ -305,8 +305,21 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "result = _tao_union."
-          << f->local_name () << " ()->marshal (strm);";
+      if (node->is_defined ())
+        {
+          *os << "result = _tao_union."
+              << f->local_name () << " ()->marshal (strm);";
+        }
+      else
+        {
+          *os << "result =" << be_idt_nl
+              << "tao_" << node->flat_name () << "_marshal ("
+              << be_idt << be_idt_nl
+              << "_tao_union." << f->local_name () << " ()," << be_nl
+              << "strm" << be_uidt_nl
+              << ");" << be_uidt << be_uidt;
+        }
+
       break;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:

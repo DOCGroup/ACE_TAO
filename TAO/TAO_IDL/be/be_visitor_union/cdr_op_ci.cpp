@@ -81,17 +81,17 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA_Any::from_boolean tmp (_tao_union._d ());" << be_nl
+        *os << "CORBA::Any::from_boolean tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA_Any::from_char tmp (_tao_union._d ());" << be_nl
+        *os << "CORBA::Any::from_char tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA_Any::from_wchar tmp (_tao_union._d ());" << be_nl
+        *os << "CORBA::Any::from_wchar tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
@@ -152,17 +152,17 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA_Any::to_boolean tmp (_tao_discriminant);" << be_nl
+        *os << "CORBA::Any::to_boolean tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA_Any::to_char tmp (_tao_discriminant);" << be_nl
+        *os << "CORBA::Any::to_char tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA_Any::to_wchar tmp (_tao_discriminant);" << be_nl
+        *os << "CORBA::Any::to_wchar tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
