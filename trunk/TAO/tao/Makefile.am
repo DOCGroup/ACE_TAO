@@ -543,7 +543,7 @@ nobase_include_HEADERS = \
   IIOP_Transport.h \
   IOP.pidl \
   IOPC.h \
-  IOPC.i \
+  IOPC.inl \
   IOPS.h \
   IOPS_T.h \
   IOP_Codec.pidl \
