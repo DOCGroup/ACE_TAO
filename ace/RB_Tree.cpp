@@ -1075,7 +1075,7 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_I
    : tree_ (&tree), node_ (0)
 {
   ACE_TRACE("ACE_RB_Tree_Iterator_Base (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, const EXT_ID& key)");
-  ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry = 0;
   tree.find_i(key, entry);
   node_ = entry;
 }
