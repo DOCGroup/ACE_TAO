@@ -26,6 +26,8 @@
 
 #include "tao/orbconf.h"
 
+#include "ace/Thread_Mutex.h"
+
 
 namespace TAO
 {

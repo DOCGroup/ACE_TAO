@@ -27,6 +27,11 @@ CORBA::TypeCode::TypeCode (void)
 {
 }
 
+ACE_INLINE
+CORBA::TypeCode::~TypeCode (void)
+{
+}
+
 ACE_INLINE CORBA::TypeCode_ptr
 CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 {

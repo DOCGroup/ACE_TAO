@@ -65,7 +65,7 @@ TAO::TypeCode::Value<StringType,
                      Kind,
                      RefCountPolicy>::tao_duplicate (void)
 {
-  this->RefCountPolicy::add_ref (void);
+  this->RefCountPolicy::add_ref ();
 }
 
 template <typename StringType,
@@ -78,7 +78,7 @@ TAO::TypeCode::Value<StringType,
                      Kind,
                      RefCountPolicy>::tao_release (void)
 {
-  this->RefCountPolicy::remove_ref (void);
+  this->RefCountPolicy::remove_ref ();
 }
 
 template <typename StringType,
@@ -306,7 +306,7 @@ TAO::TypeCode::Value<StringType,
           tc_fields[i].name = empty_name;
           tc_fields[i].type =
             &(*(this->fields_[i].type)->get_compact_typecode (
-                  ACE_ENV_ARG_PARAMETER));
+                  ACE_ENV_SINGLE_ARG_PARAMETER));
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
           tc_fields[i].visibility = this->fields_[i].visibility;
         }

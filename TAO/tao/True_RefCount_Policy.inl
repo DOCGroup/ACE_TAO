@@ -2,6 +2,10 @@
 //
 // $Id$
 
+
+#include "ace/Guard_T.h"
+
+
 ACE_INLINE
 TAO::True_RefCount_Policy::True_RefCount_Policy (void)
   : lock_ (),
@@ -9,7 +13,7 @@ TAO::True_RefCount_Policy::True_RefCount_Policy (void)
 {
 }
 
-ACE_INLINE
+ACE_INLINE void
 TAO::True_RefCount_Policy::add_ref (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
@@ -17,7 +21,7 @@ TAO::True_RefCount_Policy::add_ref (void)
   ++this->refcount_;
 }
 
-ACE_INLINE
+ACE_INLINE void
 TAO::True_RefCount_Policy::remove_ref (void)
 {
   {

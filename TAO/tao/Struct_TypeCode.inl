@@ -2,7 +2,10 @@
 //
 // $Id$
 
-#include "TypeCode_Struct_Field.h"
+#include "tao/TypeCode_Struct_Field.h"
+#include "tao/True_RefCount_Policy.h"
+
+#include "ace/Auto_Ptr.h"
 
 
 template <typename StringType,
@@ -41,20 +44,22 @@ TAO::TypeCode::Struct<StringType,
 // Member specializations
 // -------------------------------------------------------------
 
-ACE_INLINE TAO::TypeCode::Field<CORBA::String_var> const *
-TAO::TypeCode::Struct<CORBA::String_var,
-                      ACE_Auto_Ptr_Array<Field<CORBA::String_var> const>,
-                      CORBA::tk_struct,
-                      TAO::True_RefCount_Policy>::fields (void) const
+ACE_INLINE TAO::TypeCode::Struct_Field<CORBA::String_var> const *
+TAO::TypeCode::Struct<
+  CORBA::String_var,
+  ACE_Auto_Array_Ptr<TAO::TypeCode::Struct_Field<CORBA::String_var> const>,
+  CORBA::tk_struct,
+  TAO::True_RefCount_Policy>::fields (void) const
 {
   return this->fields_.get ();
 }
 
-ACE_INLINE TAO::TypeCode::Field<CORBA::String_var> const *
-TAO::TypeCode::Struct<CORBA::String_var,
-                      ACE_Auto_Ptr_Array<Field<CORBA::String_var> const>,
-                      CORBA::tk_except,
-                      TAO::True_RefCount_Policy>::fields (void) const
+ACE_INLINE TAO::TypeCode::Struct_Field<CORBA::String_var> const *
+TAO::TypeCode::Struct<
+  CORBA::String_var,
+  ACE_Auto_Array_Ptr<TAO::TypeCode::Struct_Field<CORBA::String_var> const>,
+  CORBA::tk_except,
+  TAO::True_RefCount_Policy>::fields (void) const
 {
   return this->fields_.get ();
 }

@@ -58,7 +58,7 @@ TAO::TypeCode::Union<StringType,
                      CaseArrayType,
                      RefCountPolicy>::tao_duplicate (void)
 {
-  this->RefCountPolicy::add_ref (void);
+  this->RefCountPolicy::add_ref ();
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
@@ -67,7 +67,7 @@ TAO::TypeCode::Union<StringType,
                      CaseArrayType,
                      RefCountPolicy>::tao_release (void)
 {
-  this->RefCountPolicy::remove_ref (void);
+  this->RefCountPolicy::remove_ref ();
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>

@@ -16,6 +16,7 @@ ACE_RCSID (tao,
 #include "CDR.h"
 #include "ORB_Constants.h"
 #include "Struct_TypeCode.h"
+#include "Null_RefCount_Policy.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -240,23 +241,23 @@ namespace TAO
 
     char const tc_bounds_id[]   = "IDL:omg.org/CORBA/TypeCode/Bounds:1.0";
     char const tc_bounds_name[] = "Bounds";
-    Struct_TypeCode<char const *,
-                    Struct_Field<char const *>,
-                    CORBA::tk_except,
-                    TAO::Null_RefCount_Policy> tc_Bounds (tc_bounds_id,
-                                                          tc_bounds_name,
-                                                          0,
-                                                          0);
+    Struct<char const *,
+           Struct_Field<char const *> const *,
+           CORBA::tk_except,
+           TAO::Null_RefCount_Policy> tc_Bounds (tc_bounds_id,
+                                                 tc_bounds_name,
+                                                 0,
+                                                 0);
 
     char const tc_bad_kind_id[]   = "IDL:omg.org/CORBA/TypeCode/BadKind:1.0";
     char const tc_bad_kind_name[] = "BadKind";
-    Struct_TypeCode<char const *,
-                    Struct_Field<char const *>,
-                    CORBA::tk_except,
-                    TAO::Null_RefCount_Policy> tc_BadKind (tc_bad_kind_id,
-                                                           tc_bad_kind_name,
-                                                           0,
-                                                           0);
+    Struct<char const *,
+           Struct_Field<char const *> const *,
+           CORBA::tk_except,
+           TAO::Null_RefCount_Policy> tc_BadKind (tc_bad_kind_id,
+                                                  tc_bad_kind_name,
+                                                  0,
+                                                  0);
   }
 }
 
