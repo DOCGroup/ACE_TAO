@@ -1,0 +1,72 @@
+Running the Workspace Generator
+-------------------------------
+
+The most common way to use the Make Project Creator is to run the
+workspace generator (mwc.pl).  This script will generate projects and a
+single workspace that contains the generated projects.  If no input file
+(.mwc file) is specified, it will recurse into the directory in which the
+script was started.  It looks for .mpc files and generates a project or
+projects for each one found.
+
+
+Usage: mwc.pl [-global <file>] [-include <directory>]
+              [-template <file>] [-ti <dll | exe | lib>:<file>]
+              [-type <gnu | nma | vc6 | vc7>] [files]
+
+       -global     Specifies the global input file.  Values stored
+                   within this file are applied to all projects.
+       -include    Specifies a directory to search when looking for base
+                   projects, template input files and templates.  This
+                   option can be used multiple times to add directories.
+       -ti         Specifies the template input file (with no extension)
+                   for the specific type as shown above
+                   (ex. -ti exe:vc8exe)
+       -type       Specifies the type of project file to generate.  This
+                   option can be used multiple times to generate multiple
+                   types.
+
+
+The default global input file
+(ACE_wrappers/bin/MakeProjectCreator/config/global.mpb) is used if -global
+is not specified on the command line.
+
+Two include directories are used by default
+(ACE_wrappers/bin/MakeProjectCreator/config and
+ACE_wrappers/bin/MakeProjectCreator/templates) if -include is not used.
+
+Each project creator has a default template input file for each type of
+project (exe, dll, lib).  You can override the default template input file
+name with the -ti option.  The file must have a 'mpt' extension and must
+reside within the include search directories.  NOTE: the 'lib' template
+input file is only used if the project creator makes a separate project file
+for dynamic libraries and static libraries.
+
+The -type option can be used multiple times on the same command line to
+generate projects of different types per mpc file.  NOTE: The -ti option
+overrides the template input file for all types specified.
+
+
+Running only the Project Generator
+----------------------------------
+
+Most of what is stated about the Workspace Generator applies to the Project
+Generator except that it only generates projects.  If an input file (.mpc
+file) is not provided, the project creator will attempt to create a default
+project in the directory from which the script was started.
+
+
+Usage: mpc.pl [-global <file>] [-include <directory>]
+              [-template <file>] [-ti <dll | exe | lib>:<file>]
+              [-type <bor | ghs | gnu | nma | vc6 | vc7>] [files]
+
+       -global     Specifies the global input file.  Values stored
+                   within this file are applied to all projects.
+       -include    Specifies a directory to search when looking for base
+                   projects, template input files and templates.  This
+                   option can be used multiple times to add directories.
+       -ti         Specifies the template input file (with no extension)
+                   for the specific type as shown above
+                   (ex. -ti exe:vc8exe)
+       -type       Specifies the type of project file to generate.  This
+                   option can be used multiple times to generate multiple
+                   types.
