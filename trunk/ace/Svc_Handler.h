@@ -138,7 +138,9 @@ public:
   ACE_PEER_STREAM &peer (void) const;
 
   /// Overloaded new operator.  This method unobtrusively records if a
-  /// <Svc_Handler> is allocated dynamically.
+  /// <Svc_Handler> is allocated dynamically, which allows it to clean
+  /// itself up correctly whether or not it's allocated statically or
+  /// dynamically.
   void *operator new (size_t n);
 
   /// This operator permits "placement new" on a per-object basis.
