@@ -3,6 +3,9 @@ Thu Apr 16 20:34:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/ORB_Core.cpp (TAO_ORB_Core): reordered initializers to
           match declaration order.
 
+        * tao/Exception.cpp: added ACE_Unbounded_Queue<CORBA::TypeCode_ptr>
+          instantiation.
+
 Thu Apr 16 19:22:10 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface.cpp:
