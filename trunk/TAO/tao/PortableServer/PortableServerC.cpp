@@ -137,7 +137,7 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_shrink_b
 void
 PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_downcast (
     void* target,
-    CORBA_Object *src
+    CORBA::Object *src
     ACE_ENV_ARG_DECL
   )
 {
@@ -146,7 +146,7 @@ PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_downcast
   ACE_CHECK;
 }
 
-CORBA_Object*
+CORBA::Object*
 PortableServer::_TAO_Unbounded_Object_Sequence_PortableServer_POAList::_upcast (void *src) const
 {
   PortableServer::POA **tmp = ACE_static_cast (PortableServer::POA**, src);
