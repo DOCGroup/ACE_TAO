@@ -572,7 +572,7 @@ changequote([, ])dnl
    case "${enableval}" in
     yes)
       if test -z "$GXX"; then
-        case "$target" in
+        case "$host" in
           *solaris*)
                ace_user_enable_rtti=yes
                ;;
