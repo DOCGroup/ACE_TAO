@@ -1,3 +1,9 @@
+Tue Aug 17 22:18:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	  Added instantiation of ACE_Locked_Data_Block<> it used to be
+	  instantiated in TAO, but it isn't used there anymore.
+
 Tue Aug 17 20:51:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/default_resource.cpp:

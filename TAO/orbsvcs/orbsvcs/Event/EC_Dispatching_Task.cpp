@@ -96,3 +96,13 @@ TAO_EC_Push_Command::execute (CORBA::Environment& ACE_TRY_ENV)
   this->proxy_->push_to_consumer (this->event_, ACE_TRY_ENV);
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
