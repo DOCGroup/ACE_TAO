@@ -2961,6 +2961,9 @@ struct ACE_Cleanup_Info
   // = TITLE
   //     Hold cleanup information for thread/process
 {
+  ACE_Cleanup_Info (void) : object_ (0), cleanup_hook_ (0), param_ (0) {}
+  // Default constructor.
+
   void *object_;
   // Point to object that gets passed into the <cleanup_hook_>.
 
