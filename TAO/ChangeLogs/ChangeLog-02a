@@ -1,33 +1,33 @@
 Fri Jul 14 21:37:16 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Advanced/ch_18: Added a number of minor fixes so that
-	  this code compiles on Linux with GCC 2.95.2.  Thanks to Craig
- 	  Rodrigues <crodrigu@bbn.com> for contributing this.
+        * examples/Advanced/ch_18: Added a number of minor fixes so that
+          this code compiles on Linux with GCC 2.95.2.  Thanks to Craig
+          Rodrigues <crodrigu@bbn.com> for contributing this.
 
 Fri Jul 14 12:05:13 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Updated "Recent Work" section in the Load Balancer release
-	  notes.
+          Updated "Recent Work" section in the Load Balancer release
+          notes.
 
 Fri Jul 14 13:42:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/Contained_i.cpp:
-	* orbsvcs/IFR_Service/Contained_i.h:
-	* orbsvcs/IFR_Service/Container_i.h:
-	* orbsvcs/IFR_Service/IFR_Service.cpp:
-	* orbsvcs/IFR_Service/IFR_macro.h:
-	* orbsvcs/IFR_Service/Options.cpp:
-	* orbsvcs/IFR_Service/Options.h:
-	* orbsvcs/IFR_Service/Repository_i.cpp:
+        * orbsvcs/IFR_Service/Contained_i.cpp:
+        * orbsvcs/IFR_Service/Contained_i.h:
+        * orbsvcs/IFR_Service/Container_i.h:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_macro.h:
+        * orbsvcs/IFR_Service/Options.cpp:
+        * orbsvcs/IFR_Service/Options.h:
+        * orbsvcs/IFR_Service/Repository_i.cpp:
 
-	  Fixed errors from last night's checkin, and added
-	  locking option to Options.*.
+          Fixed errors from last night's checkin, and added
+          locking option to Options.*.
 
-	* orbsvcs/IFR_Service/IFR_Service.dsp:
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
 
-	  Added IFR_macro.h to project file.
+          Added IFR_macro.h to project file.
 
 Fri Jul 14 11:38:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -52,275 +52,275 @@ Fri Jul 14 11:38:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Jul 14 06:50:57 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PolicyS.cpp (_dispatch): Replaced with new dispatch code.
+        * tao/PolicyS.cpp (_dispatch): Replaced with new dispatch code.
 
-	* tao/PolicyC.cpp (_unchecked_narrow): Removed call to Smart
-	  Proxy.
+        * tao/PolicyC.cpp (_unchecked_narrow): Removed call to Smart
+          Proxy.
 
-	* tao/PortableServerC.h (ThreadPolicyValue and
-	  ImplicitActivationPolicyValue): These two enums should be
-	  outside the minimum POA scope.
+        * tao/PortableServerC.h (ThreadPolicyValue and
+          ImplicitActivationPolicyValue): These two enums should be
+          outside the minimum POA scope.
 
-	* examples/POA/NewPOA/NewPOA.cpp (print_poa): Changed use of
-	  ACE_TRY_CHECK to ACE_CHECK.
+        * examples/POA/NewPOA/NewPOA.cpp (print_poa): Changed use of
+          ACE_TRY_CHECK to ACE_CHECK.
 
-	* tao/diffs: Updated diffs:
+        * tao/diffs: Updated diffs:
 
-	  - PolicyC.cpp.diff
-	  - PolicyS.cpp.diff
-	  - PortableServerC.h.diff
+          - PolicyC.cpp.diff
+          - PolicyS.cpp.diff
+          - PortableServerC.h.diff
 
-	* Updated throw specs in the following files:
+        * Updated throw specs in the following files:
 
-	  - examples/POA/Adapter_Activator/server.cpp
-	  - examples/POA/Forwarding/Servant_Locator.cpp
-	  - examples/POA/Forwarding/Servant_Locator.h
-	  - examples/POA/Loader/Servant_Activator.cpp
-	  - examples/POA/Loader/Servant_Activator.h
-	  - examples/POA/Loader/Servant_Locator.cpp
-	  - examples/POA/Loader/Servant_Locator.h
-	  - examples/POA/NewPOA/NewPOA.cpp
-	  - examples/POA/On_Demand_Activation/Servant_Activator.cpp
-	  - examples/POA/On_Demand_Activation/Servant_Activator.h
-	  - examples/POA/On_Demand_Activation/Servant_Locator.cpp
-	  - examples/POA/On_Demand_Activation/Servant_Locator.h
-	  - examples/POA/On_Demand_Loading/Servant_Activator.cpp
-	  - examples/POA/On_Demand_Loading/Servant_Activator.h
-	  - examples/POA/On_Demand_Loading/Servant_Locator.cpp
-	  - examples/POA/On_Demand_Loading/Servant_Locator.h
-	  - orbsvcs/IFR_Service/Servant_Locator.cpp
-	  - orbsvcs/IFR_Service/Servant_Locator.h
-	  - orbsvcs/ImplRepo_Service/ImplRepo_i.cpp
-	  - orbsvcs/ImplRepo_Service/ImplRepo_i.h
-	  - orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp
-	  - orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h
-	  - tao/Object_Adapter.cpp
-	  - tao/Object_Adapter.h
-	  - tao/POA.cpp
-	  - tao/POA.h
-	  - tao/POA.i
-	  - tao/POAManager.cpp
-	  - tao/POAManager.h
-	  - tao/POAManager.i
-	  - tests/MProfile_Forwarding/Servant_Locator.cpp
-	  - tests/MProfile_Forwarding/Servant_Locator.h
+          - examples/POA/Adapter_Activator/server.cpp
+          - examples/POA/Forwarding/Servant_Locator.cpp
+          - examples/POA/Forwarding/Servant_Locator.h
+          - examples/POA/Loader/Servant_Activator.cpp
+          - examples/POA/Loader/Servant_Activator.h
+          - examples/POA/Loader/Servant_Locator.cpp
+          - examples/POA/Loader/Servant_Locator.h
+          - examples/POA/NewPOA/NewPOA.cpp
+          - examples/POA/On_Demand_Activation/Servant_Activator.cpp
+          - examples/POA/On_Demand_Activation/Servant_Activator.h
+          - examples/POA/On_Demand_Activation/Servant_Locator.cpp
+          - examples/POA/On_Demand_Activation/Servant_Locator.h
+          - examples/POA/On_Demand_Loading/Servant_Activator.cpp
+          - examples/POA/On_Demand_Loading/Servant_Activator.h
+          - examples/POA/On_Demand_Loading/Servant_Locator.cpp
+          - examples/POA/On_Demand_Loading/Servant_Locator.h
+          - orbsvcs/IFR_Service/Servant_Locator.cpp
+          - orbsvcs/IFR_Service/Servant_Locator.h
+          - orbsvcs/ImplRepo_Service/ImplRepo_i.cpp
+          - orbsvcs/ImplRepo_Service/ImplRepo_i.h
+          - orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp
+          - orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h
+          - tao/Object_Adapter.cpp
+          - tao/Object_Adapter.h
+          - tao/POA.cpp
+          - tao/POA.h
+          - tao/POA.i
+          - tao/POAManager.cpp
+          - tao/POAManager.h
+          - tao/POAManager.i
+          - tests/MProfile_Forwarding/Servant_Locator.cpp
+          - tests/MProfile_Forwarding/Servant_Locator.h
 
 Thu Jul 13 17:45:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/reopen_include1.idl:
-	* tests/IDL_Test/reopen_include2.idl:
+        * tests/IDL_Test/reopen_include1.idl:
+        * tests/IDL_Test/reopen_include2.idl:
 
-	  New idl files included in reopened_modules.idl, to
-	  test use cases where modules are reopened in
-	  several files.
+          New idl files included in reopened_modules.idl, to
+          test use cases where modules are reopened in
+          several files.
 
-	* namespace_check.cpp:
+        * namespace_check.cpp:
 
-	  Generated files from the two new idl files are included
-	  here, conditionally so platforms without namespaces won't
-	  see them.
+          Generated files from the two new idl files are included
+          here, conditionally so platforms without namespaces won't
+          see them.
 
-	* Makefile:
-	* Makefile.bor:
-	* IDL_Test.dsp:
+        * Makefile:
+        * Makefile.bor:
+        * IDL_Test.dsp:
 
-	  Updated to reflect the above changes.
+          Updated to reflect the above changes.
 
 Thu Jul 13 13:03:57 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP.dsp:
-	* orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
+        * orbsvcs/orbsvcs/Security.dsp:
 
-	  Removed dependency on TAO_Svc_Utils{d}.lib.  It isn't needed.
-	  Added appropriate export header file to list of header files.
+          Removed dependency on TAO_Svc_Utils{d}.lib.  It isn't needed.
+          Added appropriate export header file to list of header files.
 
 Thu Jul 13 07:21:05 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/Makefile.Security:
 
-	  Updated dependencies.  These didn't get updated with the rest of
-	  the Makefiles since they require some "special handling."
+          Updated dependencies.  These didn't get updated with the rest of
+          the Makefiles since they require some "special handling."
 
 Thu Jul 13 06:29:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao: Updated Makefile dependencies.
+        * tao: Updated Makefile dependencies.
 
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
-	* orbsvcs/IFR_Service/Servant_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+        * orbsvcs/IFR_Service/Servant_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
 
-	  Fixed incorrect includes.
+          Fixed incorrect includes.
 
 Thu Jul 13 03:55:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao: Updated Makefile dependencies.
+        * tao: Updated Makefile dependencies.
 
-	* tao/CurrentC.cpp: Added missing include.
+        * tao/CurrentC.cpp: Added missing include.
 
-	* tao/ORB.cpp (resolve_policy_current): Removed extra argument.
+        * tao/ORB.cpp (resolve_policy_current): Removed extra argument.
 
-	* tao/POA.cpp (the_children_i): Fixed use of guard macro.
+        * tao/POA.cpp (the_children_i): Fixed use of guard macro.
 
 Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Current.pidl: Made CORBA::Current interface local per CCM
-	  spec.  Generated diff files.  CurrentS.cpp is no longer needed.
+        * tao/Current.pidl: Made CORBA::Current interface local per CCM
+          spec.  Generated diff files.  CurrentS.cpp is no longer needed.
 
-	* tao/Policy.pidl: Marked Current, Policy_Manager, and
-	  Policy_Current to be local.
+        * tao/Policy.pidl: Marked Current, Policy_Manager, and
+          Policy_Current to be local.
 
-	* tao/PortableServer.pidl: New file replaces old POA.pidl file.
-	  This name is more suitable since this is what OMG names it in
-	  the distribution of pidl files.  Note that almost all interfaces
-	  are made local. Generated diff files.  POAS.* files are no
-	  longer needed.
+        * tao/PortableServer.pidl: New file replaces old POA.pidl file.
+          This name is more suitable since this is what OMG names it in
+          the distribution of pidl files.  Note that almost all interfaces
+          are made local. Generated diff files.  POAS.* files are no
+          longer needed.
 
-	* tao/POA:
+        * tao/POA:
 
-	  - All interfaces in the PortableServer module were made local.
+          - All interfaces in the PortableServer module were made local.
 
-	  - All policy classes now inherit from
-	  TAO_Local_RefCounted_Object instead of RefCountServantBase.
+          - All policy classes now inherit from
+          TAO_Local_RefCounted_Object instead of RefCountServantBase.
 
-	  - New method was added the_children().
+          - New method was added the_children().
 
-	  - Code in ~POA() was running too late for many applications.
-	  Therefore, that code was moved to complete_destruction_i(),
-	  which executes as soon as a POA can be destroyed.
+          - Code in ~POA() was running too late for many applications.
+          Therefore, that code was moved to complete_destruction_i(),
+          which executes as soon as a POA can be destroyed.
 
-	  - <check_for_destruction> flag was added to TAO_POA_Guard.  This
-	  allows POA::destroy() to be called even after a call to
-	  ORB::shutdown(), even though ORB::shutdown() will destroy all
-	  POAs.  This was done for backward compatibility.
+          - <check_for_destruction> flag was added to TAO_POA_Guard.  This
+          allows POA::destroy() to be called even after a call to
+          ORB::shutdown(), even though ORB::shutdown() will destroy all
+          POAs.  This was done for backward compatibility.
 
-	  - No more calls to "delete this"; instead call
-	  complete_destruction_i().
+          - No more calls to "delete this"; instead call
+          complete_destruction_i().
 
-	  - Policy::destroy() are now no-ops.
+          - Policy::destroy() are now no-ops.
 
-	* tao/Object_Adapter.cpp (poa_cleanup): Call
-	  "poa_->complete_destruction_i()" instead of "delete poa_"
-	  because of the change in what TAO_POA inherits from.
+        * tao/Object_Adapter.cpp (poa_cleanup): Call
+          "poa_->complete_destruction_i()" instead of "delete poa_"
+          because of the change in what TAO_POA inherits from.
 
         * tao/Object_Adapter.h: TAO_Export'ed all the classes.
 
-	* tao/POAManager.cpp (remove_poa): Call "CORBA::release (this)"
-	  instead of "delete this" because of the change in what
-	  TAO_POA_Manager inherits from.
+        * tao/POAManager.cpp (remove_poa): Call "CORBA::release (this)"
+          instead of "delete this" because of the change in what
+          TAO_POA_Manager inherits from.
 
-	* tao/LocalObject:
+        * tao/LocalObject:
 
-	  - Fixed signature of copy constructor and asssignment operator.
+          - Fixed signature of copy constructor and asssignment operator.
 
-	  - Added a new class TAO_Local_RefCounted_Object.  This class
-	  adds default reference counting to local objects.
+          - Added a new class TAO_Local_RefCounted_Object.  This class
+          adds default reference counting to local objects.
 
         * tao: Changed inheritance from CORBA::LocalObject to
-	  TAO_Buffering_Constraint_Policy.  This way we can remove
-	  _add_ref() and _remove_ref() for the following classes:
+          TAO_Buffering_Constraint_Policy.  This way we can remove
+          _add_ref() and _remove_ref() for the following classes:
 
-	  - TAO_Buffering_Constraint_Policy
-	  - TAO_Client_Priority_Policy
-	  - TAO_RelativeRoundtripTimeoutPolicy
-	  - TAO_Sync_Scope_Policy
-	  - TAO_RT_Mutex
-	  - TAO_PriorityModelPolicy
-	  - TAO_ThreadpoolPolicy
-	  - TAO_PrivateConnectionPolicy
-	  - TAO_PriorityBandedConnectionPolicy
-	  - TAO_ServerProtocolPolicy
-	  - TAO_ClientProtocolPolicy
-	  - TAO_TCP_Properties
-	  - TAO_GIOP_Properties
+          - TAO_Buffering_Constraint_Policy
+          - TAO_Client_Priority_Policy
+          - TAO_RelativeRoundtripTimeoutPolicy
+          - TAO_Sync_Scope_Policy
+          - TAO_RT_Mutex
+          - TAO_PriorityModelPolicy
+          - TAO_ThreadpoolPolicy
+          - TAO_PrivateConnectionPolicy
+          - TAO_PriorityBandedConnectionPolicy
+          - TAO_ServerProtocolPolicy
+          - TAO_ClientProtocolPolicy
+          - TAO_TCP_Properties
+          - TAO_GIOP_Properties
 
-	* tao: Made the following local interfaces inherit from
-	  TAO_Local_RefCounted_Object to get the proper reference
-	  counting:
+        * tao: Made the following local interfaces inherit from
+          TAO_Local_RefCounted_Object to get the proper reference
+          counting:
 
-	  - TAO_POA_Manager
-	  - TAO_POA_Current
-	  - TAO_Policy_Manager
-	  - TAO_Policy_Current
+          - TAO_POA_Manager
+          - TAO_POA_Current
+          - TAO_Policy_Manager
+          - TAO_Policy_Current
 
-	* tao/POA_CORBA.h (POA_CORBA): Skeletons for Current,
-	  Policy_Manager, and Policy_Current were removed since these
-	  interfaces are local.
+        * tao/POA_CORBA.h (POA_CORBA): Skeletons for Current,
+          Policy_Manager, and Policy_Current were removed since these
+          interfaces are local.
 
-	* tao/Policy_Manager.h: Changed TAO_Policy_Manager to inherit from
-	  CORBA::PolicyManager rather than inherit from
-	  POA_CORBA::PolicyManager.  Also, changed TAO_Policy_Current to
-	  inherit from CORBA::PolicyCurrent rather than inherit from
-	  POA_CORBA::PolicyCurrent.
+        * tao/Policy_Manager.h: Changed TAO_Policy_Manager to inherit from
+          CORBA::PolicyManager rather than inherit from
+          POA_CORBA::PolicyManager.  Also, changed TAO_Policy_Current to
+          inherit from CORBA::PolicyCurrent rather than inherit from
+          POA_CORBA::PolicyCurrent.
 
-	* tao/POAManager.h: Changed TAO_POA_Manager to inherit from
-	  PortableServer::POAManager rather than inherit from
-	  POA_PortableServer::POAManager.
+        * tao/POAManager.h: Changed TAO_POA_Manager to inherit from
+          PortableServer::POAManager rather than inherit from
+          POA_PortableServer::POAManager.
 
-	* tao/Object_Adapter: Changed TAO_POA_Current to inherit from
-	  PortableServer::Current rather than inherit from
-	  POA_PortableServer::Current.
+        * tao/Object_Adapter: Changed TAO_POA_Current to inherit from
+          PortableServer::Current rather than inherit from
+          POA_PortableServer::Current.
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  - Since all locality constraint policies were removed, all the
-	  #defines related to remote and locality constraint policies were
-	  removed.
+          - Since all locality constraint policies were removed, all the
+          #defines related to remote and locality constraint policies were
+          removed.
 
-	  - Added new macros to deal with the environment missing in
-	  preinvoke(), postinvoke(), etherealize(), and incarnate() in
-	  some cases.
+          - Added new macros to deal with the environment missing in
+          preinvoke(), postinvoke(), etherealize(), and incarnate() in
+          some cases.
 
-	* tao/Servant_Base: TAO_Locality_Constrained_ServantBase was used
-	  for servants that did register with the POA but do not produce a
-	  valid stub, i.e., object references of this servant cannot be
-	  exported.  This class was used by the POA policies.  Since these
-	  policy classes were made local, there is no need for
-	  TAO_Locality_Constrained_ServantBase anymore and it was removed
-	  from TAO.
+        * tao/Servant_Base: TAO_Locality_Constrained_ServantBase was used
+          for servants that did register with the POA but do not produce a
+          valid stub, i.e., object references of this servant cannot be
+          exported.  This class was used by the POA policies.  Since these
+          policy classes were made local, there is no need for
+          TAO_Locality_Constrained_ServantBase anymore and it was removed
+          from TAO.
 
-	* tao/ORB_Core:
+        * tao/ORB_Core:
 
-	  - Since TAO_POA is a subclass of the reference, there is no need
-	  to keep a separate POA_var variable.
+          - Since TAO_POA is a subclass of the reference, there is no need
+          to keep a separate POA_var variable.
 
-	  - In destructor of ORB_Core, remember to release RootPOA.
+          - In destructor of ORB_Core, remember to release RootPOA.
 
-	  - In shutdown(), make sure to destroy RootPOA (which also
-	  implies that all descendent POAs have also been destroyed), if
-	  the user has not destroyed the it yet.
+          - In shutdown(), make sure to destroy RootPOA (which also
+          implies that all descendent POAs have also been destroyed), if
+          the user has not destroyed the it yet.
 
-	* tao/ORB.cpp (resolve_poa_current, resolve_policy_manager,
-	  resolve_policy_current):
+        * tao/ORB.cpp (resolve_poa_current, resolve_policy_manager,
+          resolve_policy_current):
 
-	  Since POA, Policy_Manager, and Policy_Current are now local
-	  interfaces, they do not have _this() methods.  Changed the code
-	  to call _duplicate() instead of _this().
+          Since POA, Policy_Manager, and Policy_Current are now local
+          interfaces, they do not have _this() methods.  Changed the code
+          to call _duplicate() instead of _this().
 
-	* tao/DomainS.cpp (_tao_collocated_ConstructionPolicy): Update old
-	  name of collocated Policy stub.
+        * tao/DomainS.cpp (_tao_collocated_ConstructionPolicy): Update old
+          name of collocated Policy stub.
 
-	* tao/Makefile:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Added new files (PortableServerC.*) and removed old files
-	  (POAC.* and POAS.*).
+          Added new files (PortableServerC.*) and removed old files
+          (POAC.* and POAS.*).
 
         * tao: Changed the include from POAC.h to PortableServerC.h for
-	  the following files:
+          the following files:
 
-	  - DynAnyS.cpp
-	  - Forwarding_Servant.cpp
-	  - GIOP_Server_Request.cpp
-	  - ImplRepoS.h
-	  - Key_Adapters.h
-	  - MessagingS.h
-	  - ORB_Core.h
-	  - Server_Request.cpp
-	  - TAO.h
-	  - Object_Adapter
-	  - POAManager.h
+          - DynAnyS.cpp
+          - Forwarding_Servant.cpp
+          - GIOP_Server_Request.cpp
+          - ImplRepoS.h
+          - Key_Adapters.h
+          - MessagingS.h
+          - ORB_Core.h
+          - Server_Request.cpp
+          - TAO.h
+          - Object_Adapter
+          - POAManager.h
 
         * examples/tests/apps: The following examples, tests, and
           applications were changed to deal with the new local
@@ -369,25 +369,25 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Wed Jul 12 11:41:53 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing.bor (OBJFILES):
+        * orbsvcs/orbsvcs/LoadBalancing.bor (OBJFILES):
 
-	  Removed `DSI_ForwardingProxy.obj' from the list of object
-	  files.  This corresponding source for this file no longer
-	  exists.  Thanks to Angelo for pointing this problem out.
+          Removed `DSI_ForwardingProxy.obj' from the list of object
+          files.  This corresponding source for this file no longer
+          exists.  Thanks to Angelo for pointing this problem out.
 
 Wed Jul 12 12:02:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
 
-	  Added "InterfaceRepository" to list of strings to compare
-	  in handle_events(). Multicast discovery of IFR now works,
-	  and has been tested locally on NT, locally on Solaris, and
-	  remotely between the two platforms in both directions.
+          Added "InterfaceRepository" to list of strings to compare
+          in handle_events(). Multicast discovery of IFR now works,
+          and has been tested locally on NT, locally on Solaris, and
+          remotely between the two platforms in both directions.
 
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/README:
-	* docs/releasenotes.index.html:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/README:
+        * docs/releasenotes.index.html:
 
-	  Documentation updated with the above info.
+          Documentation updated with the above info.
 
 Wed Jul 12 09:46:13 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
 
@@ -1871,7 +1871,7 @@ Tue Jun 20 11:50:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/IOP.pidl: Added some definitions from FT_CORBA spec that
           have been defined in the IOP module.
 
-Tue Jun 20 00:25:51 2000  Craig Rodrigues <crodrigu@bbn.com>h
+Tue Jun 20 00:25:51 2000  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/mpeg/source/client/Makefile
         * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile
