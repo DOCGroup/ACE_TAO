@@ -1,3 +1,8 @@
+Fri Jan 21 18:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated supported platforms matrix
+
 Fri Jan 21 08:42:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB.cpp (ORB_init):
