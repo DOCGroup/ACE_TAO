@@ -132,8 +132,7 @@ ACE_Log_Msg_Manager::close (void)
   ACE_Log_Msg_Manager::lock_ = 0;
 
   // Destroy the static message queue instance.
-  if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
-    ACE_Log_Msg_message_queue->close ();
+  ACE_Log_Msg_message_queue->close ();
   delete ACE_Log_Msg_message_queue;
   ACE_Log_Msg_message_queue = 0;
 }
