@@ -50,7 +50,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
   // = Set by command-line options.
 char ACE_Service_Config::debug_ = 1;
 char ACE_Service_Config::be_a_daemon_ = 0;
-char ACE_Service_Config::no_static_svcs_ = 0;
+char ACE_Service_Config::no_static_svcs_ = 1;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
@@ -197,7 +197,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
   ACE_TRACE ("ACE_Service_Config::parse_args");
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ASYS_TEXT ("bdf:k:ns:S:"),
+                      ASYS_TEXT ("bdf:k:nys:S:"),
                       1); // Start at argv[1].
 
   for (int c; (c = getopt ()) != -1; )
@@ -217,6 +217,9 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
+        break;
+      case 'y':
+        ACE_Service_Config::no_static_svcs_ = 0;
         break;
       case 's':
         {
