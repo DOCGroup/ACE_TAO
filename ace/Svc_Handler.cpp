@@ -25,6 +25,22 @@ ACE_RCSID(ace, Svc_Handler, "$Id$")
 #define PR_ST_2 ACE_PEER_STREAM_2
 
 template <PR_ST_1, ACE_SYNCH_DECL> void *
+ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t n,
+                                                        void *p)
+{
+  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (NOOP, 2 parameters)");
+  return p;
+}
+
+template <PR_ST_1, ACE_SYNCH_DECL> void
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *,
+                                                          void *)
+{
+  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::delete (NOOP, 2 parameters)");
+  return;
+}
+
+template <PR_ST_1, ACE_SYNCH_DECL> void *
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new");
