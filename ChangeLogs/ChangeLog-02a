@@ -1,3 +1,11 @@
+Fri Dec 15 14:36:33 2000  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * include/makeinclude/clean.bor:
+        * include/makeinclude/recurse.bor:
+
+          Added new 'realclean' target to Borland makefiles for
+          removing all generated files (both intermediate and final).
+
 Fri Dec 15 14:29:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/generate_doxygen.pl:
