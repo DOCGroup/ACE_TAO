@@ -1,3 +1,16 @@
+Mon Oct 26 17:37:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h: 
+	* ace/config-sunos5.4-sunc++-4.x.h: 
+	* ace/config-sunos5.5.h: 
+	  Sun/CC throws the ::xalloc exception when operator new cannot
+	  allocate the memory, thanks to Terry Rosenbaum
+	  <Terry.Rosenbaum@Radiology.MSU.edu> for reporting this and
+	  providing a patch.
+
+	* ace/Makefile: 
+	  Updated dependencies.
+
 Mon Oct 26 17:02:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Thread_Pool_Reactor_Test.cpp: Reduced the number of
