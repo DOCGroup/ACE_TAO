@@ -13,9 +13,6 @@
 // Global thread manager.
 static ACE_Thread_Manager thr_mgr;
 
-// Message list.
-static ACE_Message_Queue<ACE_MT_SYNCH> msg_queue;
-
 // The producer reads data from the stdin stream, creates a message,
 // and then queues the message in the message list, where it is
 // removed by the consumer thread.  A 0-sized message is enqueued when
@@ -105,10 +102,13 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
   return 0;
 }
 
-/* Spawn off two threads that copy stdin to stdout. */
+// Spawn off two threads that copy stdin to stdout.
 
 int main (int, char *[])
 {
+  // Message list.
+  ACE_Message_Queue<ACE_MT_SYNCH> msg_queue;
+
   if (thr_mgr.spawn (ACE_THR_FUNC (producer), (void *) &msg_queue,
 			 THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);

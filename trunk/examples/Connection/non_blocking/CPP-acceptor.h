@@ -53,7 +53,7 @@ public:
 private:
   typedef ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> inherited;
 
-  PEER_ADDR server_addr_;
+  ACE_PEER_ACCEPTOR_ADDR server_addr_;
   // Address of this server.
 
   ACE_Synch_Options options_;

@@ -1,7 +1,7 @@
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.0.1 or earlier
 # *not* using Orbix
 CC		= cc
-CXX		= CC -mt -pta -noex # This option should solve some evil problems with Solaris
+CXX		= CC +w -mt -pta -noex # This option should solve some evil problems with Solaris
 DLD		= $(CXX) 
 LDFLAGS		+= -R $(WRAPPER_ROOT)/ace 
 LIBS		+= -lsocket -ldl -lnsl -lgen # -lposix4

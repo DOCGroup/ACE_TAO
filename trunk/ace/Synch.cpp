@@ -36,6 +36,8 @@ ACE_Process_Mutex::ACE_Process_Mutex (LPCTSTR name, void *arg)
   : lock_ (name)
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
+  name = name;
+  arg = arg;
 // ACE_TRACE ("ACE_Process_Mutex::ACE_Process_Mutex");
 }
 
@@ -319,6 +321,8 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
   : lock_ (name, ACE_SV_Semaphore_Complex::ACE_CREATE, count)
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
+  arg = arg;
+  max = max;
 // ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
 }
 
