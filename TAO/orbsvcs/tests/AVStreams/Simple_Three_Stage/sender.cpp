@@ -60,7 +60,7 @@ Sender::Sender (void)
     input_file_ (0),
     frame_rate_ (10),
     mb_ (BUFSIZ),
-    protocol_object_ (0),
+    protocol_object_ (0)
 {
 }
 

@@ -1,3 +1,10 @@
+Thu Mar 29 14:40:51 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp: 
+	  Fixed compile errors in g++. 
+
 Thu Mar 29 11:14:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/tutorials/Quoter/AMI/Handler_i.cpp:
