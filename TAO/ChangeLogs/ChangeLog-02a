@@ -1,3 +1,7 @@
+Wed Feb 28 14:17:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Makefile: Added AMI_Timeouts to the list of directories.  
+
 Wed Feb 28 14:16:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Stub.h:
