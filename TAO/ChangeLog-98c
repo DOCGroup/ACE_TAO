@@ -1,3 +1,17 @@
+Thu Mar  5 17:45:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/cdr.i: 
+	  If CORBA::WChar is an alias for CORBA::Short we cannot overload
+	  operator<< on it.
+
+	* tao/corbacom.h: 
+	* tao/typecode.h: 
+	  MSVC++ does not like a class forward declared as a structure.
+
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile: 
+	  -lm is required in IRIX.
+
 Thu Mar 05 16:18:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poa.cpp (ObjectId_to_wstring and ObjectId_to_const_wstring):
