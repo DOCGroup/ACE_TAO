@@ -764,6 +764,14 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS:
       return new be_visitor_valuetype_ami_exception_holder_cs (new_ctx);
 
+    // AMH 
+
+    case TAO_CodeGen::TAO_INTERFACE_AMH_SS:
+      return new be_visitor_amh_interface_ss (new_ctx);
+
+    case TAO_CodeGen::TAO_OPERATION_AMH_SS:
+      return new be_visitor_amh_operation_ss (new_ctx);
+
     default:
       // cannot handle it; delegate it to the common visitor factory
       delete new_ctx;

@@ -317,6 +317,12 @@ public:
   virtual idl_bool ami_call_back (void);
   // Return the flag.
 
+  virtual void gen_amh_classes (idl_bool value);
+  // To enable or disable AMH in the generated code.
+
+  virtual idl_bool gen_amh_classes (void);
+  // Return the flag.
+
   virtual void gen_tie_classes (idl_bool value);
   // Toggle the generation of tie classes and files.
 
@@ -446,6 +452,9 @@ private:
   // Flag to indicate whether the AMI Call back feature of the
   // Messaging specification should be enabled for the generated files
   // or not.
+
+  idl_bool gen_amh_classes_;
+  // Flag for generating AMH classes.
 
   idl_bool gen_tie_classes_;
   // Flag to indicate whether we generate the tie classes and

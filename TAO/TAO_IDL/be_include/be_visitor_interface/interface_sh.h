@@ -41,6 +41,9 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // set the right context and make a visitor
+
+protected:
+  virtual void this_method (be_interface *node);
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_SH_H_ */

@@ -254,6 +254,10 @@ SOURCE=.\be\be_visitor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_amh_pre_proc.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_ami_pre_proc.cpp
 # End Source File
 # Begin Source File

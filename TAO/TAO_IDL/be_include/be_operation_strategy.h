@@ -162,4 +162,25 @@ public:
                                             int is_extra_state = 0);
 };
 
-#endif  // if !defined
+
+// AMH strategy
+
+class be_operation_amh_strategy 
+  : public be_operation_strategy
+{
+public:
+  be_operation_amh_strategy (be_operation *node);
+
+  virtual ~be_operation_amh_strategy ();
+
+  // overridden methods.
+  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                    int is_extra_state = 0);
+
+  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+
+
+private:
+};
+
+#endif  // TAO_BE_OPERATION_STRATEGY_H

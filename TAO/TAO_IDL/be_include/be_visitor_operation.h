@@ -52,6 +52,7 @@
 #include "be_visitor_operation/rettype_post_upcall_ss.h"
 #include "be_visitor_operation/rettype_marshal_ss.h"
 #include "be_visitor_operation/rettype_pre_invoke_cs.h"
+#include "be_visitor_operation/amh_ss.h"
 #include "be_visitor_operation/ami_ch.h"
 #include "be_visitor_operation/ami_cs.h"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_ch.h"

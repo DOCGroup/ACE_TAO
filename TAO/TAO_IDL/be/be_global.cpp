@@ -776,6 +776,18 @@ BE_GlobalData::ami_call_back (void)
 }
 
 void
+BE_GlobalData::gen_amh_classes (idl_bool val)
+{
+  this->gen_amh_classes_ = val;
+}
+
+idl_bool
+BE_GlobalData::gen_amh_classes (void)
+{
+  return this->gen_amh_classes_;
+}
+
+void
 BE_GlobalData::gen_tie_classes (idl_bool val)
 {
   this->gen_tie_classes_ = val;
