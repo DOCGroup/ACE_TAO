@@ -30,9 +30,6 @@
 //          -Wb,post_include="ace/post.h" \
 //          IIOP_Endpoints.pidl
 //
-//   Use the patch in diff/IIOP_Endpoints.diff to patch the generated
-//   code.
-//
 // ================================================================
 
 #ifndef _TAO_IIOP_ENDPOINTS_IDL_
