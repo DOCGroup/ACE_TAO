@@ -1,3 +1,9 @@
+Thu Dec 04 09:57:40 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.GNU: allow enabling of
+          WARNING_FLAGS by setting CXX_VER to POST_5X.  Thanks to
+          James Johnson for this suggestion.
+
 Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
 
 	* ace/Makefile (Svc_Conf_l.cpp): Changed the sed macros to produce
