@@ -758,12 +758,12 @@ void
 TAO_IR_Op::display_server_information (const ImplementationRepository::ServerInformation &info)
 {
   // Print out information
-  ACE_DEBUG ((LM_DEBUG, "Server <%s>\n", info.server));
+  ACE_DEBUG ((LM_DEBUG, "Server <%s>\n", info.server.in ()));
   ACE_DEBUG ((LM_DEBUG, 
               "  Command Line: %s\n"
               "  Working Directory: %s\n",
-              info.startup.command_line,
-              info.startup.working_directory));
+              info.startup.command_line.in (),
+              info.startup.working_directory.in ()));
   // @@ add environment and logical server once implemented
 
   // I am assuming that a blank host means currently not running.
@@ -772,7 +772,7 @@ TAO_IR_Op::display_server_information (const ImplementationRepository::ServerInf
                 "  Running at \n"
                 "    Host: %s\n"
                 "    Port: %d\n",
-                info.location.host,
+                info.location.host.in (),
                 info.location.port));
   else
     ACE_DEBUG ((LM_DEBUG, 
@@ -789,5 +789,5 @@ TAO_IR_Op_List::display_server_information (const ImplementationRepository::Serv
   if (this->verbose_server_information_)
     TAO_IR_Op::display_server_information (info);
   else
-    ACE_DEBUG ((LM_DEBUG, "<%s>\n", info.server));
+    ACE_DEBUG ((LM_DEBUG, "<%s>\n", info.server.in ()));
 }
