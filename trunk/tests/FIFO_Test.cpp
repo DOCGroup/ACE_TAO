@@ -23,6 +23,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_sys_wait.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
 #include "ace/FIFO_Send_Msg.h"
 #include "ace/FIFO_Recv_Msg.h"
