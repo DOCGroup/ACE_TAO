@@ -23,7 +23,7 @@ Receiver_i::receive_call (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Doing a ping... \n"));
+              "(%P|%t)  Doing a ping... \n"));
 
   this->sender_->ping (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
