@@ -1,3 +1,23 @@
+Tue Sep 30 19:25:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+
+          Updated code generation for implementation class copy
+          constructor initialization of base classes. This closes
+          [BUGID:1601]. Thanks to Alain Dupont <adupont@positron.qc.ca>
+          for reporting the problem.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+          Removed extra whitespace.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+
+          Removed extra generated newlines in static method that helps
+          generate copy constructor base class initialization. Also 
+          removed methods no longer used in code generation.
+
 Tue Sep 30 17:15:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.h (TAO): Fixed a simple compile errors in

@@ -170,9 +170,6 @@ public:
   virtual void gen_def_ctors (TAO_OutStream* os);
   // Call the default constructors of all the base classes.
 
-  virtual void gen_copy_ctors (TAO_OutStream* os);
-  // Call the copy constructors of all the base classes.
-
   virtual void gen_stub_ctor (TAO_OutStream* os);
   // Generated the global hooks used for non-defined forward
   // declared interfaces, and the contructor from stub object.
@@ -290,13 +287,6 @@ public:
                                    TAO_OutStream *os);
 
   // Helper method to generate a call to the default
-  // constructors of all the base classes.
-
-  static int gen_copy_ctors_helper (be_interface *node,
-                                    be_interface *base,
-                                    TAO_OutStream *os);
-
-  // Helper method to generate a call to the copy
   // constructors of all the base classes.
 
   static int gen_abstract_init_helper (be_interface *node,
