@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "UIOP_Transport.h"
@@ -22,7 +21,9 @@
 # include "UIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (Strategies, UIOP_Transport, "$Id$")
+ACE_RCSID (Strategies,
+           UIOP_Transport,
+           "$Id$")
 
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
@@ -75,8 +76,11 @@ TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
                           const ACE_Time_Value *max_wait_time)
 {
-  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
-                                                             max_wait_time);
+  const ssize_t retval =
+    this->connection_handler_->peer ().sendv (iov,
+                                              iovcnt,
+                                              max_wait_time);
+
   if (retval > 0)
     bytes_transferred = retval;
 
@@ -88,9 +92,9 @@ TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
                           const ACE_Time_Value *max_wait_time)
 {
-  ssize_t n = this->connection_handler_->peer ().recv (buf,
-                                                       len,
-                                                       max_wait_time);
+  const ssize_t n = this->connection_handler_->peer ().recv (buf,
+                                                             len,
+                                                             max_wait_time);
 
   // Most of the errors handling is common for
   // Now the message has been read
@@ -159,10 +163,10 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
-                                         message_semantics,
-                                         stream.begin (),
-                                         max_wait_time);
+  const ssize_t n = this->send_message_shared (stub,
+                                               message_semantics,
+                                               stream.begin (),
+                                               max_wait_time);
 
   if (n == -1)
     {

@@ -1,71 +1,129 @@
-Wed Jun  2 00:37:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Fri Jun  4 00:16:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO/tao/Acceptor_Registry.cpp:
-	* TAO/tao/Any.cpp:
-	* TAO/tao/Any_Array_Impl_T.cpp:
-	* TAO/tao/Any_Basic_Impl_T.cpp:
-	* TAO/tao/Any_Dual_Impl_T.cpp:
-	* TAO/tao/Any_Impl.cpp:
-	* TAO/tao/Any_Impl_T.cpp:
-	* TAO/tao/Any_Special_Impl_T.cpp:
-	* TAO/tao/Any_SystemException.cpp:
-	* TAO/tao/Array_VarOut_T.cpp:
-	* TAO/tao/Array_VarOut_T.inl:
-	* TAO/tao/Base_Transport_Property.cpp:
-	* TAO/tao/CDR.i:
-	* TAO/tao/CDR_Encaps_Codec.cpp:
-	* TAO/tao/CORBALOC_Parser.cpp:
-	* TAO/tao/CORBA_String.cpp:
-	* TAO/tao/ClientRequestInfo_i.cpp:
-	* TAO/tao/Fixed_Array_Argument_T.inl:
-	* TAO/tao/GIOP_Message_Generator_Parser_10.cpp:
-	* TAO/tao/GIOP_Message_Generator_Parser_12.cpp:
-	* TAO/tao/GIOP_Message_State.cpp:
-	* TAO/tao/IIOP_Connection_Handler.cpp:
-	* TAO/tao/IIOP_Connector.cpp:
-	* TAO/tao/IIOP_Endpoint.cpp:
-	* TAO/tao/IIOP_Profile.cpp:
-	* TAO/tao/Invocation_Base.cpp:
-	* TAO/tao/LocalObject.cpp:
-	* TAO/tao/MCAST_Parser.cpp:
-	* TAO/tao/NVList.i:
-	* TAO/tao/ORB_Core.cpp:
-	* TAO/tao/ORB_Table.cpp:
-	* TAO/tao/Object.cpp:
-	* TAO/tao/Object_Ref_Table.cpp:
-	* TAO/tao/ParameterMode.cpp:
-	* TAO/tao/Sequence.i:
-	* TAO/tao/Sequence_T.i:
-	* TAO/tao/Service_Context.cpp:
-	* TAO/tao/Sync_Strategies.cpp:
-	* TAO/tao/Tagged_Components.cpp:
-	* TAO/tao/Tagged_Profile.i:
-	* TAO/tao/TimeBaseC.cpp:
-	* TAO/tao/Transport.cpp:
-	* TAO/tao/Transport_Connector.cpp:
-	* TAO/tao/Var_Array_Argument_T.inl:
-	* TAO/tao/orbconf.h:
-	* TAO/tao/target_specification.i:
+	* tao/CORBA_String.cpp (string_dup):
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Transport.cpp:
+
+	  Minor "const correctness" improvements.
+
+	* tao/Exception.h (initialized_):
+
+	  This member is now a "bool" instead of an "int."  The former is
+	  the more appropriate type in this case.
+
+	* tao/Exception.cpp (init):
+
+	  Made array containing exception names static since its contents
+	  are fixed.
+
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i:
+	* tao/Strategies/UIOP_Acceptor.cpp:
+	* tao/Strategies/UIOP_Connector.cpp:
+
+	  Made arrays with fixed content static.  Reduces footprint
+	  slightly.
 
           Converted all ACE cast macro calls to their ANSI C++ cast
           counterparts.
 
-	* TAO/tao/Array_VarOut_T.h (nocopy_):
+	  Minor "const correctness" improvements.
+
+          Use prefix {in,dec}rement operators where applicable instead of
+          postfix operators.  The former are more efficient.
+
+	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+
+	  Reordered some class members/attributes to prevent the compiler
+	  from necessarily adding alignment padding.  Reduces the size of
+	  this class.
+
+	* tao/IIOP_Connector.h (lite_flag_):
+	* tao/Strategies/UIOP_Acceptor.h:
+	* tao/Strategies/UIOP_Connector.h:
+
+	  No need to declare this member as a "CORBA::Boolean".  The
+	  standard C++ "bool" is fine, particularly since this flag is
+	  used internally.
+
+	* tao/Strategies/UIOP_Endpoint.cpp:
+
+          Converted all ACE cast macro calls to their ANSI C++ cast
+          counterparts.
+
+Wed Jun  2 00:37:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Acceptor_Registry.cpp:
+	* tao/Any.cpp:
+	* tao/Any_Array_Impl_T.cpp:
+	* tao/Any_Basic_Impl_T.cpp:
+	* tao/Any_Dual_Impl_T.cpp:
+	* tao/Any_Impl.cpp:
+	* tao/Any_Impl_T.cpp:
+	* tao/Any_Special_Impl_T.cpp:
+	* tao/Any_SystemException.cpp:
+	* tao/Array_VarOut_T.cpp:
+	* tao/Array_VarOut_T.inl:
+	* tao/Base_Transport_Property.cpp:
+	* tao/CDR.i:
+	* tao/CDR_Encaps_Codec.cpp:
+	* tao/CORBALOC_Parser.cpp:
+	* tao/CORBA_String.cpp:
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/Fixed_Array_Argument_T.inl:
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	* tao/GIOP_Message_State.cpp:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Endpoint.cpp:
+	* tao/IIOP_Profile.cpp:
+	* tao/Invocation_Base.cpp:
+	* tao/LocalObject.cpp:
+	* tao/MCAST_Parser.cpp:
+	* tao/NVList.i:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Table.cpp:
+	* tao/Object.cpp:
+	* tao/Object_Ref_Table.cpp:
+	* tao/ParameterMode.cpp:
+	* tao/Sequence.i:
+	* tao/Sequence_T.i:
+	* tao/Service_Context.cpp:
+	* tao/Sync_Strategies.cpp:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Profile.i:
+	* tao/TimeBaseC.cpp:
+	* tao/Transport.cpp:
+	* tao/Transport_Connector.cpp:
+	* tao/Var_Array_Argument_T.inl:
+	* tao/orbconf.h:
+	* tao/target_specification.i:
+
+          Converted all ACE cast macro calls to their ANSI C++ cast
+          counterparts.
+
+	* tao/Array_VarOut_T.h (nocopy_):
 
 	  Made this attribute "const."  Its value never changes.
 
-	* TAO/tao/Asynch_Queued_Message.cpp:
-	* TAO/tao/Codeset_Manager.cpp:
-	* TAO/tao/Exception.cpp:
-	* TAO/tao/IIOP_Transport.cpp:
-	* TAO/tao/Incoming_Message_Queue.cpp:
-	* TAO/tao/ORB.cpp:
-	* TAO/tao/Object_KeyC.cpp:
-	* TAO/tao/Synch_Queued_Message.cpp:
-	* TAO/tao/Transport_Cache_Manager.cpp:
-	* TAO/tao/UTF16_BOM_Translator.cpp:
-	* TAO/tao/append.cpp:
-	* TAO/tao/skip.cpp:
+	* tao/Asynch_Queued_Message.cpp:
+	* tao/Codeset_Manager.cpp:
+	* tao/Exception.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/ORB.cpp:
+	* tao/Object_KeyC.cpp:
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/UTF16_BOM_Translator.cpp:
+	* tao/append.cpp:
+	* tao/skip.cpp:
 
           Converted all ACE cast macro calls to their ANSI C++ cast
           counterparts.
@@ -73,34 +131,34 @@ Wed Jun  2 00:37:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
           Use prefix {in,dec}rement operators where applicable instead of
           postfix operators.  The former are more efficient.
 
-	* TAO/tao/CORBA_String.h (operator CORBA::WChar *):
-	* TAO/tao/CORBA_String.inl (operator CORBA::WChar *):
+	* tao/CORBA_String.h (operator CORBA::WChar *):
+	* tao/CORBA_String.inl (operator CORBA::WChar *):
 
 	  Corrected this conversion operator.  The latest C++ mapping
 	  requires that the conversion return "CORBA::WChar *&" instead.
 
-	* TAO/tao/GIOPC.h:
+	* tao/GIOPC.h:
 
 	  No need to include "tao/Any.h".
 
-	* TAO/tao/PortableInterceptorC.h:
+	* tao/PortableInterceptorC.h:
 
 	  No need to include "tao/Any.h", nor "tao/PolicyC.h".  Include
 	  the much lighterweight "tao/Policy_ForwardC.h" instead.
 
-	* TAO/tao/Var_Array_Argument_T.cpp:
+	* tao/Var_Array_Argument_T.cpp:
 
 	  Nuked trailing whitespace.
 
-	* TAO/tao/default_resource.cpp:
-	* TAO/tao/default_server.cpp:
+	* tao/default_resource.cpp:
+	* tao/default_server.cpp:
 
           Use prefix {in,dec}rement operators where applicable instead of
           postfix operators.  The former are more efficient.
 
-	* TAO/tao/Messaging/Asynch_Invocation.cpp:
-	* TAO/tao/Messaging/Asynch_Timeout_Handler.cpp:
-	* TAO/tao/Messaging/Messaging_PolicyFactory.cpp:
+	* tao/Messaging/Asynch_Invocation.cpp:
+	* tao/Messaging/Asynch_Timeout_Handler.cpp:
+	* tao/Messaging/Messaging_PolicyFactory.cpp:
 
 	  Corrected ACE_RCSID macro arguments.  "tao" -> "Messaging".
 

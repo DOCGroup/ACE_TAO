@@ -22,7 +22,11 @@
 # include "UIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(Strategies, UIOP_Connection_Handler, "$Id$")
+
+ACE_RCSID (Strategies,
+           UIOP_Connection_Handler,
+           "$Id$")
+
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_SVC_HANDLER (t, 0 , 0),
@@ -38,13 +42,13 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
 }
 
 
-TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                          CORBA::Boolean flag,
-                                                          void *arg)
+TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (
+  TAO_ORB_Core *orb_core,
+  CORBA::Boolean flag,
+  void *arg)
   : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    uiop_properties_ (ACE_static_cast
-                     (TAO_UIOP_Properties *, arg))
+    uiop_properties_ (static_cast<TAO_UIOP_Properties *> (arg))
 {
   TAO_UIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -116,7 +120,7 @@ TAO_UIOP_Connection_Handler::close_connection (void)
 int
 TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
-  int result =
+  const int result =
     this->handle_input_eh (h, this);
 
   if (result == -1)
@@ -131,7 +135,7 @@ TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  const int result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)

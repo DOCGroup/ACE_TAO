@@ -249,7 +249,7 @@ CORBA::ORB::work_pending (ACE_Time_Value &tv ACE_ENV_ARG_DECL)
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  int result = this->orb_core_->reactor ()->work_pending (tv);
+  const int result = this->orb_core_->reactor ()->work_pending (tv);
   if (result == 0 || (result == -1 && errno == ETIME))
     return 0;
 
@@ -266,7 +266,7 @@ CORBA::ORB::work_pending (ACE_ENV_SINGLE_ARG_DECL)
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  int result = this->orb_core_->reactor ()->work_pending ();
+  const int result = this->orb_core_->reactor ()->work_pending ();
   if (result == 0)
     return 0;
 
@@ -280,8 +280,8 @@ CORBA::ORB::work_pending (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 CORBA::ORB::create_list (CORBA::Long count,
-                        CORBA::NVList_ptr &new_list
-                        ACE_ENV_ARG_DECL)
+                         CORBA::NVList_ptr &new_list
+                         ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
 
@@ -319,7 +319,7 @@ CORBA::ORB::create_list (CORBA::Long count,
 
 void
 CORBA::ORB::create_exception_list (CORBA::ExceptionList_ptr &list
-                                  ACE_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   TAO_Dynamic_Adapter *dynamic_adapter =
     ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
@@ -1021,7 +1021,7 @@ CORBA::Object_ptr
 CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
                              ACE_ENV_ARG_DECL_NOT_USED)
 {
-  const char * env_service_port [] =
+  static const char * env_service_port[] =
   {
     "NameServicePort",
     "TradingServicePort",
@@ -1029,7 +1029,7 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
     "InterfaceRepoServicePort"
   };
 
-  u_short default_service_port [] =
+  static const unsigned short default_service_port[] =
   {
     TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
     TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
@@ -1037,14 +1037,14 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
     TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT
   };
 
-  CORBA::Object_var return_value = CORBA::Object::_nil ();
+  CORBA::Object_var return_value;
 
   // By now, the table filled in with -ORBInitRef arguments has been
   // checked.  We only get here if the table didn't contain an initial
   // reference for the requested Service.
 
   // First, determine if the port was supplied on the command line
-  u_short port =
+  unsigned short port =
   this->orb_core_->orb_params ()->service_port (mcast_service_id);
 
   if (port == 0)
@@ -1054,14 +1054,14 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
       ACE_OS::getenv (env_service_port[mcast_service_id]);
 
     if (port_number != 0)
-      port = (u_short) ACE_OS::atoi (port_number);
+      port = static_cast<unsigned short> (ACE_OS::atoi (port_number));
     else
       port = default_service_port[mcast_service_id];
   }
 
   // Set the port value in ORB_Params: modify the default mcast
   // value.
-  const char prefix[] = "mcast://:";
+  static const char prefix[] = "mcast://:";
 
   char port_char[256];
 
@@ -1500,7 +1500,7 @@ CORBA::ORB_init (int &argc,
   // It doesn't make sense for argc to be zero and argv to be
   // non-empty/zero, or for argc to be greater than zero and argv be
   // zero.
-  size_t argv0_len =
+  const size_t argv0_len =
     (command_line.get_TCHAR_argv ()
      ? (*command_line.get_TCHAR_argv ()
         ? ACE_OS::strlen (*command_line.get_TCHAR_argv ())
@@ -1529,7 +1529,7 @@ CORBA::ORB_init (int &argc,
         {
           const ACE_TCHAR *current_arg = arg_shifter.get_current ();
 
-          const ACE_TCHAR orbid_opt[] = ACE_TEXT ("-ORBid");
+          static const ACE_TCHAR orbid_opt[] = ACE_TEXT ("-ORBid");
           size_t orbid_len = ACE_OS::strlen (orbid_opt);
           if (ACE_OS::strcasecmp (current_arg,
                                   orbid_opt) == 0)
@@ -1756,7 +1756,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
       // Now hexify the encapsulated CDR data into a string, and
       // return that string.
 
-      size_t total_len = cdr.total_length ();
+      const size_t total_len = cdr.total_length ();
 
       char *cp;
       ACE_ALLOCATOR_RETURN (cp,
@@ -1946,7 +1946,7 @@ CORBA::ORB::ior_string_to_object (const char *str
       // Some platforms define 'byte' as a macro, solve the problem
       // here.
 #undef byte
-      u_char byte;
+      unsigned char byte;
 
       if (!(isxdigit (tmp [0]) && isxdigit (tmp [1])))
         break;

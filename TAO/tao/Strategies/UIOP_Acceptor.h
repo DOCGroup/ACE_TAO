@@ -1,26 +1,22 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
+//=============================================================================
+/**
+ *  @file    UIOP_Acceptor.h
+ *
+ *  $Id$
+ *
+ *  Unix Domain Socket (UIOP) specific acceptor processing
+ *
+ *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+//=============================================================================
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    UIOP_Acceptor.h
-//
-// = DESCRIPTION
-//    Unix Domain Socket (UIOP) specific acceptor processing
-//
-// = AUTHOR
-//    Fred Kuhns <fredk@cs.wustl.edu>
-//    Ossama Othman <othman@cs.wustl.edu>
-//
-// ============================================================================
 
 #ifndef TAO_UIOP_ACCEPTOR_H
 #define TAO_UIOP_ACCEPTOR_H
+
 #include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
 
@@ -29,12 +25,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # if TAO_HAS_UIOP == 1
-#include "tao/Transport_Acceptor.h"
-#include "ace/Acceptor.h"
-#include "ace/LSOCK_Acceptor.h"
 #include "UIOP_Connection_Handler.h"
+
+#include "tao/Transport_Acceptor.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
+
+#include "ace/Acceptor.h"
+#include "ace/LSOCK_Acceptor.h"
 
 /**
  * @class TAO_UIOP_Acceptor
@@ -131,10 +129,10 @@ private:
   /// Flag that determines whether or not the rendezvous point should
   /// be unlinked on close.  This is really only used when an error
   /// occurs.
-  int unlink_on_close_;
+  bool unlink_on_close_;
 
   /// Should we use GIOP lite??
-  CORBA::Boolean lite_flag_;
+  const bool lite_flag_;
 
   /// Properties for all connections accepted by this acceptor.
   TAO_UIOP_Properties uiop_properties_;
@@ -143,4 +141,5 @@ private:
 # endif /* TAO_HAS_UIOP == 1 */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_UIOP_ACCEPTOR_H */

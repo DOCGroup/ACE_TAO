@@ -138,7 +138,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
       if (tph != 0)
         {
-          int result =
+          const int result =
             tph->update_client_protocol_properties (stub,
                                                     this,
                                                     "iiop");
@@ -186,10 +186,10 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
-                                         message_semantics,
-                                         stream.begin (),
-                                         max_wait_time);
+  const ssize_t n = this->send_message_shared (stub,
+                                               message_semantics,
+                                               stream.begin (),
+                                               max_wait_time);
 
   if (n == -1)
     {

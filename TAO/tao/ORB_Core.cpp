@@ -282,20 +282,20 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
   // int giop_lite = 0;
 
-  CORBA::Boolean use_ior = 1;
+  bool use_ior = true;
   int cdr_tradeoff = ACE_DEFAULT_CDR_MEMCPY_TRADEOFF;
 
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
 
   // Name Service port use for Multicast
-  u_short ns_port = 0;
+  unsigned short ns_port = 0;
 
   // Trading Service port used for Multicast
-  u_short ts_port = 0;
+  unsigned short ts_port = 0;
 
   // Implementation Repository Service port #.
-  u_short ir_port = 0;
+  unsigned short ir_port = 0;
 
   // Buffer sizes for kernel socket buffers
   // @@ should be a default defined for each protocol implementation?
@@ -473,7 +473,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           const ACE_TCHAR *opt = current_arg;
           if (ACE_OS::strcasecmp (opt,
                                   ACE_LIB_TEXT("URL")) == 0)
-            use_ior = 0;
+            use_ior = false;
 
           arg_shifter.consume_arg ();
         }
@@ -690,7 +690,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-          FILE* output_stream = ACE_OS::fopen (file_name, ACE_LIB_TEXT("a"));
+          FILE* output_stream = ACE_OS::fopen (file_name, ACE_LIB_TEXT ("a"));
 
           ACE_LOG_MSG->msg_ostream (output_stream, 1);
 
@@ -728,9 +728,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_LIB_TEXT("-ORBVerboseLogging"))))
         {
-          // Use dotted decimal addresses
-          // @@ this should be renamed.  See above comment. fredk
-          u_long verbose_logging = ACE_OS::atoi (current_arg);
+          unsigned long verbose_logging = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
 
@@ -1659,7 +1657,8 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
     {
       TAO_Profile * profile;
 
-      for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
+      const CORBA::ULong count = mprofile.profile_count ();
+      for (CORBA::ULong i = 0; i < count; ++i)
         {
           // Get the ith profile
           profile = mprofile.get_profile (i);
@@ -1705,10 +1704,8 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
                               0));
 
     TAO_ORB_Table *table = TAO_ORB_Table::instance ();
-    TAO_ORB_Table::Iterator end = table->end ();
-    for (TAO_ORB_Table::Iterator i = table->begin ();
-         i != end;
-         ++i)
+    const TAO_ORB_Table::Iterator end = table->end ();
+    for (TAO_ORB_Table::Iterator i = table->begin (); i != end; ++i)
       {
         TAO_ORB_Core *other_core = (*i).int_id_;
 
@@ -1750,9 +1747,7 @@ TAO_ORB_Core::initialize_object (TAO_Stub *stub,
 
     TAO_ORB_Table *table = TAO_ORB_Table::instance ();
     TAO_ORB_Table::Iterator end = table->end ();
-    for (TAO_ORB_Table::Iterator i = table->begin ();
-         i != end;
-         ++i)
+    for (TAO_ORB_Table::Iterator i = table->begin (); i != end; ++i)
       {
         TAO_ORB_Core *other_core = (*i).int_id_;
 
@@ -2291,11 +2286,11 @@ CORBA::ORB::ObjectIdList *
 TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Unsupported initial services should NOT be included in the below list!
-  const char *initial_services[] = { TAO_LIST_OF_INITIAL_SERVICES };
+  static const char *initial_services[] = { TAO_LIST_OF_INITIAL_SERVICES };
   // Make sure the "terminating" zero is the last array element so
   // that there is a stop condition when iterating through the list.
 
-  const size_t initial_services_size =
+  static const size_t initial_services_size =
     sizeof (initial_services) / sizeof (initial_services[0]);
 
   const size_t total_size =
@@ -2311,7 +2306,7 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ORB::ObjectIdList_var list = tmp;
+  CORBA::ORB::ObjectIdList_var list (tmp);
   list->length (static_cast<CORBA::ULong> (total_size));
 
   CORBA::ULong index = 0;
@@ -2335,7 +2330,7 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
     list[index] = CORBA::string_dup ((*i).ext_id_);
 
   // References registered via INS.
-  InitRefMap::iterator end = this->init_ref_map_.end ();
+  const InitRefMap::iterator end = this->init_ref_map_.end ();
 
   for (InitRefMap::iterator j = this-> init_ref_map_.begin ();
        j != end;
@@ -2878,13 +2873,12 @@ TAO_ORB_Core_instance (void)
           // exist in the ORB table after the ORB reference is
           // destroyed.
 
-          CORBA::ORB_var orb;
-
-          int argc = 0;
           ACE_DECLARE_NEW_CORBA_ENV;
           ACE_TRY
             {
-              orb = CORBA::ORB_init (argc, 0, 0 ACE_ENV_ARG_PARAMETER);
+              int argc = 0;
+              CORBA::ORB_var orb =
+                CORBA::ORB_init (argc, 0, 0 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -2910,7 +2904,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
       TAO_ORB_Core *orb_core =
         stub->servant_orb_var ()->orb_core ();
 
-      int collocated =
+      const int collocated =
         orb_core->collocation_resolver ().is_collocated (object
                                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);

@@ -14,7 +14,7 @@ TAO_ORB_Core::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
-    this->refcount_--;
+    --this->refcount_;
     if (this->refcount_ != 0)
       return this->refcount_;
   }
@@ -296,8 +296,8 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
   // If the TSS array isn't large enough, then increase its size.
   // We're guaranteed not to exceed the number of allocated slots by
   // the above check.
-  size_t old_size = tss_resources->ts_objects_.size ();
-  size_t new_size = slot_id + 1;
+  const size_t old_size = tss_resources->ts_objects_.size ();
+  const size_t new_size = slot_id + 1;
   if (slot_id >= old_size
       && tss_resources->ts_objects_.size (new_size) != 0)
     return -1;
