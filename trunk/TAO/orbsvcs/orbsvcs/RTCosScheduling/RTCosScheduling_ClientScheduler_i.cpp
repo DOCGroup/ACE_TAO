@@ -62,7 +62,7 @@ namespace TAO
         // The tasks were successfully read in, create the client interceptor
         else
           {
-#ifdef TAO_HAS_INTERCEPTORS
+#if (TAO_HAS_INTERCEPTORS == 1)
             ACE_NEW_THROW_EX (this->client_interceptor_,
                               RTCosScheduling_ClientScheduler_Interceptor(orb),
                               CORBA::NO_MEMORY());
@@ -100,7 +100,7 @@ namespace TAO
              orb_core->add_interceptor(this->client_interceptor_
                                        ACE_ENV_ARG_PARAMETER);
            }
-#endif /* TAO_HAS_INTERCEPTORS */
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
          /// Now resolve a reference to the Real Time ORB
          CORBA::Object_var rt_obj =
@@ -157,9 +157,9 @@ namespace TAO
 RTCosScheduling_ClientScheduler_i::~RTCosScheduling_ClientScheduler_i (void)
 {
   delete this->pm_;
-#ifdef TAO_HAS_INTERCEPTORS
+#if (TAO_HAS_INTERCEPTORS == 1)
   delete this->client_interceptor_;
-#endif /* TAO_HAS_INTERCEPTORS */
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 
@@ -288,6 +288,9 @@ RTCosScheduling_ClientScheduler_i::tasks(
 
   return 1;
 }
+
+
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 RTCosScheduling_ClientScheduler_Interceptor::RTCosScheduling_ClientScheduler_Interceptor() : name_("RTCosScheduling_Client_Interceptor")
 {
@@ -448,5 +451,7 @@ RTCosScheduling_ClientScheduler_Interceptor::send_request (
     }
    ACE_ENDTRY;
 }
+
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 }
