@@ -87,7 +87,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -DTAO_ORBSVCS_HAS_AV
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs -DTAO_ORBSVCS_HAS_AV
 
 #
 # Extra dependencies not caught by make depend.
@@ -2745,7 +2745,7 @@ AVSVC_COMPONENTS:
  sfpC.h \
  sfpC.i \
  AV/Policy.h AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h \
- AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \ \
+ AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \
  AV/RTCP.h \
  AV/UDP.h \
  AV/RTP.h \
