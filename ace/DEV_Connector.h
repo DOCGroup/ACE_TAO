@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_DEV_Connector : public ACE_DEV
+class ACE_Export ACE_DEV_Connector 
 {
   // = TITLE
   //     Defines an active connection factory for the ACE_DEV wrappers.
