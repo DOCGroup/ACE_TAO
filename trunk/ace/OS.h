@@ -819,6 +819,9 @@ typedef char TCHAR;
 #if !defined (FILE_FLAG_OVERLAPPED)
 # define FILE_FLAG_OVERLAPPED 0
 #endif /* !defined FILE_FLAG_OVERLAPPED */
+#if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
+#define FILE_FLAG_SEQUENTIAL_SCAN 0
+#endif /* !defined FILE_FLAG_SEQUENTIAL_SCAN */
 
 struct ACE_OVERLAPPED
 {
@@ -5659,6 +5662,32 @@ struct ACE_Export ACE_IO_Vector :
   void buffer (void *new_buffer);
 };
 
+#if defined (ACE_WIN32)
+typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
+typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
+typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
+
+#define ACE_INFINITE INFINITE
+#define ACE_STATUS_TIMEOUT STATUS_TIMEOUT
+#define ACE_WAIT_FAILED WAIT_FAILED
+#define ACE_WAIT_TIMEOUT WAIT_TIMEOUT
+#else /* ACE_WIN32 */
+struct ACE_TRANSMIT_FILE_BUFFERS
+{
+  void *Head;
+  size_t HeadLength;
+  void *Tail;
+  size_t TailLength;
+};
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_PTRANSMIT_FILE_BUFFERS;
+typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
+
+#define ACE_INFINITE LONG_MAX
+#define ACE_STATUS_TIMEOUT LONG_MAX
+#define ACE_WAIT_FAILED LONG_MAX
+#define ACE_WAIT_TIMEOUT LONG_MAX
+#endif /* ACE_WIN32 */
+
 #if defined (UNICODE)
 
 # if !defined (ACE_DEFAULT_NAMESPACE_DIR)
@@ -5792,36 +5821,18 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 # define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
-#if defined (ACE_WIN32)
-typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
-typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
-typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;
+// Byte swapping macros to deal with differences between little endian and big
+// endian machines.
+#define ACE_SWAP_LONG(L) ((SWAP_WORD ((L) & 0xFFFF) << 16) \
+                          | SWAP_WORD(((L) >> 16) & 0xFFFF))
+#define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
 
-#define ACE_INFINITE INFINITE
-#define ACE_STATUS_TIMEOUT STATUS_TIMEOUT
-#define ACE_WAIT_FAILED WAIT_FAILED
-#define ACE_WAIT_TIMEOUT WAIT_TIMEOUT
-
-#define ACE_FALSE FALSE
-#define ACE_TRUE TRUE
-#else /* ACE_WIN32 */
-struct ACE_TRANSMIT_FILE_BUFFERS
-{
-  void *Head;
-  size_t HeadLength;
-  void *Tail;
-  size_t TailLength;
-};
-typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_PTRANSMIT_FILE_BUFFERS;
-typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
-
-#define ACE_INFINITE LONG_MAX
-#define ACE_STATUS_TIMEOUT LONG_MAX
-#define ACE_WAIT_FAILED LONG_MAX
-#define ACE_WAIT_TIMEOUT LONG_MAX
-
-#define ACE_TRUE 1
-#define ACE_FALSE 0
-#endif /* ACE_WIN32 */
+#if defined (ACE_LITTLE_ENDIAN)
+#define ACE_HTONL(X) ACE_SWAP_LONG (X)
+#define ACE_NTOHL(X) ACE_SWAP_LONG (X)
+#else
+#define ACE_HTONL(X) X
+#define ACE_NTOHL(X) X
+#endif /* ACE_LITTLE_ENDIAN */
 
 #endif  /* ACE_OS_H */
