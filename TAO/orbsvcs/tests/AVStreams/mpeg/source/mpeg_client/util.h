@@ -22,10 +22,12 @@
 
 /* Status codes for bit stream i/o operations. */
 
+#if !defined (AV_UTIL_H)
+#define AV_UTIL_H
+
 #define NO_VID_STREAM -1
 #define UNDERFLOW -2
 #define OK 1
-
 /* Size increment of extension data buffers. */
 
 #define EXT_BUF_SIZE 1024
@@ -361,3 +363,6 @@ extern unsigned int *bitBuffer;
 #endif
 
 #define UTIL2
+
+#endif /* if !defined (AV_UTIL_H) */
+

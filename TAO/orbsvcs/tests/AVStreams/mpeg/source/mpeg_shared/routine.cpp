@@ -401,7 +401,7 @@ void setsignal(int sig, void (func)(int))
     perror("");
     exit(1);
   }
-#elif defined(SunOS) || defined(FreeBSD) || defined(ULTRIX) || defined(LINUX)
+#elif defined(sun) || defined(FreeBSD) || defined(ULTRIX) || defined(LINUX)
   {
     struct sigaction act;
     act.sa_handler = func;
