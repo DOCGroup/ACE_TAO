@@ -32,7 +32,6 @@
 #ifndef TAO_IOP_IOR_PIDL
 #define TAO_IOP_IOR_PIDL
 
-#include <orb.idl>
 #include <OctetSeq.pidl>
 
 #pragma prefix "omg.org"
