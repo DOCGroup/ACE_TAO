@@ -1,3 +1,12 @@
+Thu Mar 24 14:12:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Rather than hand-set all
+	  needed macros and library references for multithreading, use the
+	  compiler's -mt option if not on a .2x compiler version. -mt was
+	  added at 03.30, so 03.2x doesn't have it - maintain the hand-set
+	  values for that. This leaves out .1x versions which probably
+	  aren't used any longer anyway.
+
 Thu Mar 24 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Containers/Hash_Map_Hash.h:
