@@ -98,8 +98,8 @@ sub run_program ($)
 {
     my $program = shift;
 
-    local $log = "log/".$program.".log";
-    unlink $log;
+    local $all_logs = "log/".$program."*.log";
+    unlink $all_logs;
     unlink "core";
 
     my $P = new PerlACE::Process ($program);
@@ -126,7 +126,7 @@ sub run_program ($)
         print STDERR "Error: $program FAILED with exit status $status\n";
     }
 
-    check_log ($program, $log);
+    check_log ($program);
 }
 
 ################################################################################
@@ -170,12 +170,13 @@ sub purify_program ($)
 
 ################################################################################
 
-sub check_log ($$)
+sub check_log ($)
 {
     my $program = shift;
-    my $log = shift;
 
     ### Check the logs
+
+    local $log = "log/".$program.".log";
 
     if (-e "core") {
         print STDERR "Error: $program dumped core\n";
@@ -239,7 +240,47 @@ sub check_log ($$)
                 }
                 print STDERR "======= End Log File \n";
             }
-        }
+
+            # Now check for any sub-logs. If either the main log or a
+            # sub-log has an error, print the sub-log.
+            opendir (THISDIR, "log");
+            local $sublognames = "$program\-.*\.log";
+            @sublogs = grep (/$sublognames/, readdir (THISDIR));
+            closedir (THISDIR);
+            foreach $log (@sublogs) {
+                # Just like the main log, but no start/end check
+                if (open (LOG, "<log/".$log) == 0) {
+                    print STDERR "Error: Cannot open sublog file $log\n";
+                }
+                else {
+                    while (<LOG>) {
+                        chomp;
+                        if (/LM\_ERROR\@(.*)$/) {
+                            print STDERR "Error: ($log): $1\n";
+                            $print_log = 1;
+                        }
+                        if (/LM\_WARNING\@(.*)$/) {
+                            print STDERR "Warning: ($log): $1\n";
+                            $print_log = 1;
+                        }
+                    }
+
+                    close (LOG); # ignore errors
+                    if ($print_log == 1) {
+                        print STDERR "======= Begin Sublog File ".$log."\n";
+                        if (open (LOG, "<log/".$log) == 0) {
+                            print STDERR "Error: Cannot open sublog file $log\n";
+                        }
+                        else {
+                            my @log = <LOG>;
+                            print STDERR @log;
+                            close (LOG);
+                        }
+                        print STDERR "======= End Sublog File \n";
+                    }
+		}
+            }
+	}
     }
 }
 
