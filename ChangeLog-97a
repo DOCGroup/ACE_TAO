@@ -1,3 +1,10 @@
+Thu Jan 30 06:57:50 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Thread_Priority.cpp (convert_to_os_priority): changed
+	  switch (priority_class) to switch (priority_class_).
+	  Thanks to Chris Lahey <CLahey@cccis.com> for pointing this out.
+	  Also, return -1 on other than Solaris, Win32, and VxWorks.
+
 Wed Jan 29 09:03:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: moved ACE_id_t and ACE_pri_t typedefs out of the
