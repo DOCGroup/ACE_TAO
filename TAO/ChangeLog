@@ -1,3 +1,20 @@
+Wed Nov 19 19:43:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DomainC.cpp:
+
+          Cosmetic changes, to keep line lengths under 80 characters.
+
+        * tao/ORB.cpp:
+
+          Changed the exception thrown by create_operation_list() to
+          INTF_REPOS, since we are call IFR_Client in this function.
+          Also added .inout() to a couple uses of String_var.
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp (create_operation_list):
+
+          Plugged memory leak, made changes to conform to the ACE style
+          guidelines, and several other changes to clean up the code.
+
 Wed Nov 19 19:24:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB.cpp:
