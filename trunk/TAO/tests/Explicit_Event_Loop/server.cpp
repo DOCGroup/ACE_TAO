@@ -23,11 +23,6 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 
-// The following headers are #included automatically by ACE+TAO.
-// Therefore, they don't need to be included explicitly.
-//#include <time.h>
-//#include <iostream.h>
-
 const char *ior_output_file = "server.ior";
 int done = 0;
 
@@ -88,8 +83,6 @@ void do_something_else()
 int
 main (int argc, char *argv[])
 {
-  int ret = 0;
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -101,76 +94,98 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       // Get reference to Root POA.
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA",
                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in (),
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Activate POA manager
+      // Activate POA manager.
       PortableServer::POAManager_var mgr
         = poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       mgr->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Create an object
+      // Create an object.
       Time_impl time_servant;
 
-      // Write its stringified reference to stdout
+      // Write its stringified reference to stdout.
       Time_var tm = time_servant._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       CORBA::String_var str = orb->object_to_string (tm.in (),
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      cout << str.in () << endl;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s\n",
+                  str.in ()));
 
       if (ior_output_file != 0)
-         {
-           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-           if (output_file == 0)
-             ACE_ERROR_RETURN ((LM_ERROR,
-                                "Cannot open output file for writing IOR: %s",
-                                ior_output_file),
-                               1);
-           ACE_OS::fprintf (output_file, "%s", str.in ());
-           ACE_OS::fclose (output_file);
-         }
+        {
+          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 
-      // Explicit Event Loop
+          if (output_file == 0)
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  "Cannot open output file for writing IOR: %s",
+                  ior_output_file
+                ),
+                1
+              );
+            }
+
+          ACE_OS::fprintf (output_file, 
+                           "%s", 
+                           str.in ());
+          ACE_OS::fclose (output_file);
+        }
+
+      // Explicit Event Loop.
       while (!done)
         {
           CORBA::Boolean pending =
-            orb->work_pending(ACE_TRY_ENV);
+            orb->work_pending (ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
           if (pending)
             {
-              orb->perform_work(ACE_TRY_ENV);
+              orb->perform_work (ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
-          do_something_else();
+          do_something_else ();
         }
+
       orb->shutdown ();
       orb->destroy ();
     }
 
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA exception occured");
-      ret = 1;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "server: a CORBA exception occured");
+      return 1;
     }
   ACE_CATCHALL
     {
-      cerr << "An unknown exception was caught" << endl;
-      ret = 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s\n",
+                         "client: an unknown exception was caught\n"),
+                         1);
     }
   ACE_ENDTRY;
 
-  return ret;
+  return 0;
 }
