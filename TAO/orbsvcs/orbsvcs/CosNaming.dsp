@@ -1,24 +1,26 @@
 # Microsoft Developer Studio Project File - Name="CosNaming" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
-# ** DO NOT EDIT **
+# ** NICHT BEARBEITEN **
 
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=CosNaming - Win32 Debug
-!MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
+CFG=CosNaming - Win32 mfc Debug
+!MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
+!MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
 !MESSAGE 
 !MESSAGE NMAKE /f "CosNaming.mak".
 !MESSAGE 
-!MESSAGE You can specify a configuration when running NMAKE
-!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
+!MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
 !MESSAGE 
-!MESSAGE NMAKE /f "CosNaming.mak" CFG="CosNaming - Win32 Debug"
+!MESSAGE NMAKE /f "CosNaming.mak" CFG="CosNaming - Win32 mfc Debug"
 !MESSAGE 
-!MESSAGE Possible choices for configuration are:
+!MESSAGE Für die Konfiguration stehen zur Auswahl:
 !MESSAGE 
-!MESSAGE "CosNaming - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "CosNaming - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosNaming - Win32 Release" (basierend auf  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosNaming - Win32 Debug" (basierend auf  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosNaming - Win32 mfc Release" (basierend auf  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "CosNaming - Win32 mfc Debug" (basierend auf  "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -84,54 +86,246 @@ LINK32=link.exe
 # ADD LINK32 TAOd.lib aced.lib TAO_Svc_Utilsd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "CosNaming___Win32_mfc_Release"
+# PROP BASE Intermediate_Dir "CosNaming___Win32_mfc_Release"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\Release\CosNamingMFC"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_NAMING_BUILD_DLL" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_NAMING_BUILD_DLL" /D ACE_HAS_MFC=1 /FD /c
+# SUBTRACT CPP /YX
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ace.lib TAO.lib TAO_Svc_Utils.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosNaming.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib TAOmfc.lib TAO_Svc_Utilsmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosNamingmfc.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "CosNaming___Win32_mfc_Debug"
+# PROP BASE Intermediate_Dir "CosNaming___Win32_mfc_Debug"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\Debug\CosNaming"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /D ACE_HAS_MFC=1 /FD /c
+# SUBTRACT CPP /YX
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 TAOd.lib aced.lib TAO_Svc_Utilsd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# SUBTRACT BASE LINK32 /profile
+# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_Svc_Utilsmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# SUBTRACT LINK32 /profile
+
 !ENDIF 
 
 # Begin Target
 
 # Name "CosNaming - Win32 Release"
 # Name "CosNaming - Win32 Debug"
+# Name "CosNaming - Win32 mfc Release"
+# Name "CosNaming - Win32 mfc Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
 SOURCE=.\CosNamingC.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosNamingS.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Entries.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Hash_Naming_Context.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Context_Interface.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Utils.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Context_Index.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Entries.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Naming_Context.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Naming\Transient_Naming_Context.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# ADD CPP /D ACE_HAS_MFC=1
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -267,6 +461,51 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+# PROP BASE Ignore_Default_Tool 1
+# PROP Ignore_Default_Tool 1
+USERDEP__COSNA="..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\CosNaming.idl
+InputName=CosNaming
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming\naming_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# PROP BASE Ignore_Default_Tool 1
+# PROP Ignore_Default_Tool 1
+
 !ENDIF 
 
 # End Source File
@@ -289,12 +528,52 @@ SOURCE=.\CosNamingS.i
 # Begin Source File
 
 SOURCE=.\Naming\Bindings_Iterator_T.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\CosNamingS_T.cpp
+
+!IF  "$(CFG)" == "CosNaming - Win32 Release"
+
 # PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
+
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target

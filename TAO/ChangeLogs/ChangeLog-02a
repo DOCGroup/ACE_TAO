@@ -1,10 +1,31 @@
+Fri Jul 14 11:38:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency.dsp:
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosProperty.dsp:
+        * orbsvcs/orbsvcs/CosTime.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent.dsp:
+        * orbsvcs/orbsvcs/RTSched.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils.dsp: Added MFC configurations.  Thanks
+          to Jochen Linkohr <jochen.linkohr@daimlerchrysler.com> for
+          contributing the patches.
+
 Fri Jul 14 06:50:57 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PolicyS.cpp (_dispatch): Replaced with new dispatch code.
 
 	* tao/PolicyC.cpp (_unchecked_narrow): Removed call to Smart
 	  Proxy.
-	
+
 	* tao/PortableServerC.h (ThreadPolicyValue and
 	  ImplicitActivationPolicyValue): These two enums should be
 	  outside the minimum POA scope.
@@ -19,7 +40,7 @@ Fri Jul 14 06:50:57 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - PortableServerC.h.diff
 
 	* Updated throw specs in the following files:
-	
+
 	  - examples/POA/Adapter_Activator/server.cpp
 	  - examples/POA/Forwarding/Servant_Locator.cpp
 	  - examples/POA/Forwarding/Servant_Locator.h
@@ -59,7 +80,7 @@ Thu Jul 13 17:45:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tests/IDL_Test/reopen_include2.idl:
 
 	  New idl files included in reopened_modules.idl, to
-	  test use cases where modules are reopened in 
+	  test use cases where modules are reopened in
 	  several files.
 
 	* namespace_check.cpp:
@@ -94,9 +115,9 @@ Thu Jul 13 06:29:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Updated Makefile dependencies.
 
-	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp: 
-	* orbsvcs/IFR_Service/Servant_Factory.h: 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp: 
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+	* orbsvcs/IFR_Service/Servant_Factory.h:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
 
 	  Fixed incorrect includes.
 
@@ -114,7 +135,7 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Current.pidl: Made CORBA::Current interface local per CCM
 	  spec.  Generated diff files.  CurrentS.cpp is no longer needed.
-	
+
 	* tao/Policy.pidl: Marked Current, Policy_Manager, and
 	  Policy_Current to be local.
 
@@ -124,10 +145,10 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  are made local. Generated diff files.  POAS.* files are no
 	  longer needed.
 
-	* tao/POA: 
+	* tao/POA:
 
 	  - All interfaces in the PortableServer module were made local.
-	  
+
 	  - All policy classes now inherit from
 	  TAO_Local_RefCounted_Object instead of RefCountServantBase.
 
@@ -157,8 +178,8 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  instead of "delete this" because of the change in what
 	  TAO_POA_Manager inherits from.
 
-	* tao/LocalObject: 
-	
+	* tao/LocalObject:
+
 	  - Fixed signature of copy constructor and asssignment operator.
 
 	  - Added a new class TAO_Local_RefCounted_Object.  This class
@@ -167,7 +188,7 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tao: Changed inheritance from CORBA::LocalObject to
 	  TAO_Buffering_Constraint_Policy.  This way we can remove
 	  _add_ref() and _remove_ref() for the following classes:
-	  
+
 	  - TAO_Buffering_Constraint_Policy
 	  - TAO_Client_Priority_Policy
 	  - TAO_RelativeRoundtripTimeoutPolicy
@@ -185,12 +206,12 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao: Made the following local interfaces inherit from
 	  TAO_Local_RefCounted_Object to get the proper reference
 	  counting:
-	  
+
 	  - TAO_POA_Manager
 	  - TAO_POA_Current
 	  - TAO_Policy_Manager
-	  - TAO_Policy_Current	  
-	
+	  - TAO_Policy_Current
+
 	* tao/POA_CORBA.h (POA_CORBA): Skeletons for Current,
 	  Policy_Manager, and Policy_Current were removed since these
 	  interfaces are local.
@@ -209,7 +230,7 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  PortableServer::Current rather than inherit from
 	  POA_PortableServer::Current.
 
-	* tao/orbconf.h: 
+	* tao/orbconf.h:
 
 	  - Since all locality constraint policies were removed, all the
 	  #defines related to remote and locality constraint policies were
@@ -227,7 +248,7 @@ Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  TAO_Locality_Constrained_ServantBase anymore and it was removed
 	  from TAO.
 
-	* tao/ORB_Core: 
+	* tao/ORB_Core:
 
 	  - Since TAO_POA is a subclass of the reference, there is no need
 	  to keep a separate POA_var variable.
