@@ -10,7 +10,7 @@ Sat Jan 22 21:10:49 2000  Ossama Othman  <ossama@uci.edu>
 	  ACE_SET_COMPILER_FLAGS macro, so added an
 	  AC_REQUIRE([ACE_SET_COMPILER_FLAGS]).
 
-	* m4/compilers.m4 (ACE_SET_COMPILER_FLAGS):
+	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
 
 	  Moved check for old GNU C++ from configure.in to here.
 
