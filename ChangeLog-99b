@@ -1,3 +1,9 @@
+Thu Jan 28 19:08:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Active_Map_Manager_T.h: 
+	  Steve's change didn't make it, so I changed BASE to
+	  ACE_AMM_BASE, I don't know about the pragma.
+
 Thu Jan 28 16:43:17 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Active_Map_Manager_T.(h i): Renamed BASE to ACE_AMM_BASE - BASE
