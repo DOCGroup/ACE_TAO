@@ -46,7 +46,7 @@ Push_Iterator_Factory_i::register_callback
   handler->run (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  struct stat file_status;
+  ACE_stat file_status;
   if (ACE_OS::stat (pathname,
                     &file_status) == -1)
     // HTTP 1.1 "Internal Server Error".
@@ -78,7 +78,7 @@ Push_Iterator_Factory_i::register_callback
 
 int
 Push_Iterator_Factory_i::modification_date
-  (struct stat *file_status,
+  (ACE_stat *file_status,
    Web_Server::Metadata_Type & metadata)
 {
   // Get the modification time from the file status structure/

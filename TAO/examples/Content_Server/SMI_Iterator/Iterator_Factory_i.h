@@ -29,7 +29,7 @@
 
 
 // Forward declarations
-struct stat;
+ACE_stat;
 class Content_Iterator_i;
 
 class Iterator_Factory_i : virtual public POA_Web_Server::Iterator_Factory
@@ -57,7 +57,7 @@ public:
   // at a time.  The <metadata> reports information about the
   // <contents>.
 
-  int modification_date (struct stat *file_status,
+  int modification_date (ACE_stat *file_status,
                          Web_Server::Metadata_Type_out metadata);
   // Set the file modification date in the metadata structure.
 
