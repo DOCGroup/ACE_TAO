@@ -192,10 +192,14 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                              int &has_synchronization,
                              int &scope)
 {
-  CORBA::Policy_var policy = 0;
+  CORBA::Policy_var policy;
 
   if (stub == 0)
-    orb_core->stubless_sync_scope (policy);
+    {
+      CORBA::Policy_ptr tmp;
+      orb_core->stubless_sync_scope (tmp);
+      policy = tmp;
+    }
   else
     policy = stub->sync_scope ();
 
