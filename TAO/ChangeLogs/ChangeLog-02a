@@ -1,3 +1,10 @@
+Sun Feb 11 23:45:41 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RT_ORBInitializer.cpp (register_policy_factories):
+
+	  Fixed "unused parameter" warning that occured when native
+	  exceptions were enabled.
+
 2001-02-12  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
