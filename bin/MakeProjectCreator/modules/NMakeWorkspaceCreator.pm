@@ -107,13 +107,13 @@ sub write_comps {
             'CFG=' . $default . $crlf .
             '!MESSAGE No configuration specified. ' .
             'Defaulting to ' . $default . '.' . $crlf .
-            '!ENDIF' . $crlf . $crlf .
-            'ALL:' . $crlf;
-  $self->write_project_targets($fh, 'CFG="$(CFG)"', \@list);
+            '!ENDIF' . $crlf;
 
-  print $fh "$crlf" .
-            "CLEAN\tREALCLEAN:$crlf";
-  $self->write_project_targets($fh, 'CLEAN', \@list);
+  foreach my $target ('ALL', 'DEPEND', 'IDL_STUBS', 'CLEAN', 'REALCLEAN') {
+    print $fh $crlf .
+              $target . ':' . $crlf;
+    $self->write_project_targets($fh, 'CFG="$(CFG)" ' . $target, \@list);
+  }
 }
 
 

@@ -1,3 +1,10 @@
+Wed Mar 19 07:27:59 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Added depend, idl_stubs and realclean targets.
+
 Tue Mar 18 07:24:26 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
