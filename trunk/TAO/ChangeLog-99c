@@ -1,3 +1,24 @@
+Sun Jun 27 20:29:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/orbconf.h: By default generate a no-op macro for
+	  TAO_EXPORT_NESTED_MACRO.
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp,
+	  tao/Sequence.i: Updated all ACE_TEMPLATE_SPECIALIZATION
+	  macros that are used for *methods* to be
+ 	  ACE_TEMPLATE_METHOD_SPECIALIZATION to make certain compilers
+ 	  like SunC++ 5.0 happy.
+
+	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Reformatted a lot of this
+	  file so it'll conform to the ACE+TAO programming guidelines.
+
+	* tao/Object_Adapter.cpp: Cleanedup the programming style to make
+	  it conform to ACE.
+
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n): Fixed
+	  an error by returning 0 if we get an exception.  Thanks to David
+ 	  Levine for reporting this.
+
 Sun Jun 27 20:02:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DynArray_i.cpp:
@@ -6,47 +27,12 @@ Sun Jun 27 20:02:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/DynStruct_i.cpp:
 	  Fixed minor syntax errors and typos in these files.
 
-Sun Jun 27 18:30:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
-
-	* tao/DynArray_i.cpp:
-	* tao/DynEnum_i.cpp:
-	* tao/DynSequence_i.cpp:
-	* tao/DynStruct_i.cpp:
-	  Added all the necessary ACE_CHECK stuff.
-	  DynUnion_i.cpp is left to do.
-
-Sun Jun 27 17:56:19 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
-
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp,
-	  tao/Sequence.i: Updated all ACE_TEMPLATE_SPECIALIZATION
-	  macros that are used for *methods* to be
- 	  ACE_TEMPLATE_METHOD_SPECIALIZATION to make certain compilers
- 	  like SunC++ 5.0 happy.
-
-Sun Jun 27 17:10:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tests/TAO-Tests.dsw:
-	* tests/Faults/Faults.dsw:
-	* tests/Faults/client.dsp:
-	* tests/Faults/server.dsp: Added new workspace/projects and
-	  updated test workspace.
-
-Sun Jun 27 17:15:45 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
-
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
-	  Replaced ACE_TRY_ENV.print_exceptions with
-	  ACE_PRINT_EXCEPTION. Thanks to Carlos for reporting these.
-
-Sun Jun 27 16:57:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
 	* tao/IIOP_Connect.cpp:
 	* tao/UIOP_Connect.cpp:
 	  Do not return 1 from a handle_input() call
 
 	* tao/default_resource.cpp:
 	  Cleanup ACE_LOG_MSG->errnum() before creating Reactor.
-
-Sun Jun 27 16:48:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile:
 	* tests/Faults/Makefile:
@@ -62,20 +48,22 @@ Sun Jun 27 16:48:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  server and/or the client; it doesn't cover all the possible
 	  cases, but at least it is a start.
 
-Sun Jun 27 17:18:29 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+          Fixed misuse of ACE_TRY_ENV, thanks to Doug and David for
+          pointing it out.
 
-	* TAO_IDL/be/be_type.cpp (gen_nested_typename): Fixed a bug where
-	  we were generating incorrect relative path in a specific
- 	  scenario where the "use" scope of a type shares only a few
- 	  ancestors of the scope in which the type is defined.  Our code
- 	  would work only when either of the "use" scope or the "defined"
- 	  scope was a subset of the other.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Fixed type mismatch, it wasn't obvious except on NT, thanks to
+          Marina for reporting this one.
+  
+Sun Jun 27 18:30:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	  Thanks to Brian Peterson <bpeterson@globalmt.com> for sending
- 	  the bug report and fixes. We have used a slightly different
- 	  solution than his suggested fixes.
-
-Sun Jun 27 15:23:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+	* tao/DynArray_i.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	  Added all the necessary ACE_CHECK stuff.
+	  DynUnion_i.cpp is left to do.
 
 	* TAO/tests/Param_Test/any.cpp:
         * TAO/tests/Param_Test/bd_long_seq.cpp:
@@ -111,39 +99,38 @@ Sun Jun 27 15:23:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Changed ACE_NOTREACHED (return foo); to ACE_NOTREACHED (return
  	  foo;)
 
-Sun Jun 27 11:02:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Sun Jun 27 17:10:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n): Fixed
-	  an error by returning 0 if we get an exception.  Thanks to David
- 	  Levine for reporting this.
+	* tests/TAO-Tests.dsw:
+	* tests/Faults/Faults.dsw:
+	* tests/Faults/client.dsp:
+	* tests/Faults/server.dsp: Added new workspace/projects and
+	  updated test workspace.
 
-Sun Jun 27 11:54:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+Sun Jun 27 17:15:45 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
-          Fixed misuse of ACE_TRY_ENV, thanks to Doug and David for
-          pointing it out.
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	  Replaced ACE_TRY_ENV.print_exceptions with
+	  ACE_PRINT_EXCEPTION. Thanks to Carlos for reporting these.
 
-        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-          Fixed type mismatch, it wasn't obvious except on NT, thanks to
-          Marina for reporting this one.
+Sun Jun 27 17:18:29 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_type.cpp (gen_nested_typename): Fixed a bug where
+	  we were generating incorrect relative path in a specific
+ 	  scenario where the "use" scope of a type shares only a few
+ 	  ancestors of the scope in which the type is defined.  Our code
+ 	  would work only when either of the "use" scope or the "defined"
+ 	  scope was a subset of the other.
+
+	  Thanks to Brian Peterson <bpeterson@globalmt.com> for sending
+ 	  the bug report and fixes. We have used a slightly different
+ 	  solution than his suggested fixes.
 
 Sun Jun 27 09:17:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/DynAny_i.cpp: added ACE_Auto_Basic_Ptr explicit template
           instantiations.  Thanks to Alex for reporting that they're
           necessary without __ACE_INLINE__.
-
-Sun Jun 27 11:02:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Reformatted a lot of this file so it'll conform
-	  to the ACE+TAO programming guidelines.
-
-	* tao/Object_Adapter.cpp: Cleanedup the programming style to make
-	  it conform to ACE.
-
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n): Fixed
-	  an error by returning 0 if we get an exception.  Thanks to David
- 	  Levine for reporting this.
 
 Sat Jun 26 19:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -279,7 +266,7 @@ Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
         * TAO/tao/Object_Adapter.cpp: BCB4 doesn't accept constructor
           syntax for static member variables.
 
-        * TAO/tao/Sequence.i Need ACE_TEMPLATE_SPECIALIZE on
+        * TAO/tao/Sequence.i Need ACE_TEMPLATE_METHOD_SPECIALIZE on
           specializations.
 
         * TAO/tao/orbconf.h: Added TAO_EXPORT_NESTED_CLASSES macro to
