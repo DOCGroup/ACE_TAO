@@ -201,8 +201,9 @@ public:
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler *,
-                                           ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  virtual int purge_pending_notifications (
+      ACE_Event_Handler *,
+      ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -430,7 +431,7 @@ public:
   };
 
   /// Constructor.
-  ACE_Select_Reactor_Impl (void);
+  ACE_Select_Reactor_Impl (bool mask_signals = true);
 
   friend class ACE_Select_Reactor_Notify;
   friend class ACE_Select_Reactor_Handler_Repository;
@@ -464,8 +465,17 @@ protected:
   /// suspended. Returns 0 if not, 1 if so.
   virtual int is_suspended_i (ACE_HANDLE handle) = 0;
 
+  /// When register/unregister occur, then we need to re-eval our
+  /// wait/suspend/dispatch set.
+  virtual void clear_dispatch_mask (ACE_HANDLE handle,
+                                    ACE_Reactor_Mask mask);
+
   /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
   ACE_Select_Reactor_Handler_Repository handler_rep_;
+
+
+  /// Tracks handles that are ready for dispatch from <select>
+  ACE_Select_Reactor_Handle_Set dispatch_set_;
 
   /// Tracks handles that are waited for by <select>.
   ACE_Select_Reactor_Handle_Set wait_set_;
@@ -524,7 +534,15 @@ protected:
    * whether we need to make another trip through the
    * <Select_Reactor>'s <wait_for_multiple_events> loop.
    */
-  int state_changed_;
+  bool state_changed_;
+
+  /**
+   * If 0 then the Reactor will not mask the signals during the event
+   * dispatching.  This is useful for applications that do not
+   * register any signal handlers and want to reduce the overhead
+   * introduce by the kernel level locks required to change the mask.
+   */
+  bool mask_signals_;
 
   /// Controls/access whether the notify handler should renew the
   /// Select_Reactor's token or not.

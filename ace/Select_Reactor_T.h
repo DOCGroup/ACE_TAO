@@ -753,14 +753,6 @@ protected:
   /// events or not.
   sig_atomic_t deactivated_;
 
-  /**
-   * If 0 then the Reactor will not mask the signals during the event
-   * dispatching.  This is useful for applications that do not
-   * register any signal handlers and want to reduce the overhead
-   * introduce by the kernel level locks required to change the mask.
-   */
-  int mask_signals_;
-
 private:
   /// Deny access since member-wise won't work...
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))

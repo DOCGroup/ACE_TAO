@@ -38,7 +38,7 @@ ACE_Event_Tuple::ACE_Event_Tuple (void)
 
 ACE_INLINE
 ACE_Event_Tuple::ACE_Event_Tuple (ACE_Event_Handler* eh,
-				  ACE_HANDLE h)
+                                  ACE_HANDLE h)
 : handle_ (h),
   event_handler_ (eh)
 {
@@ -57,16 +57,17 @@ ACE_Event_Tuple::operator!= (const ACE_Event_Tuple &rhs) const
 }
 
 ACE_INLINE
-ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl ()
-    : handler_rep_ (*this),
-      timer_queue_ (0),
-      delete_timer_queue_ (0),
-      delete_signal_handler_ (0),
-      delete_notify_handler_ (0),
-      requeue_position_ (-1), // Requeue at end of waiters by default.
-      initialized_ (0),
-      state_changed_ (0),
-      supress_renew_ (0)
+ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
+  : handler_rep_ (*this)
+  , timer_queue_ (0)
+  , delete_timer_queue_ (0)
+  , delete_signal_handler_ (0)
+  , delete_notify_handler_ (0)
+  , requeue_position_ (-1) // Requeue at end of waiters by default.
+  , initialized_ (0)
+  , state_changed_ (0)
+  , mask_signals_ (ms)
+  , supress_renew_ (0)
 {
 }
 

@@ -100,3 +100,12 @@ ACE_TP_Reactor::clear_handle_read_set (ACE_HANDLE handle)
   this->ready_set_.ex_mask_.clr_bit (handle);
   this->ready_set_.rd_mask_.clr_bit (handle);
 }
+
+ACE_INLINE void
+ACE_TP_Reactor::clear_dispatch_mask (ACE_HANDLE ,
+                                     ACE_Reactor_Mask )
+{
+  this->ready_set_.rd_mask_.reset ();
+  this->ready_set_.wr_mask_.reset ();
+  this->ready_set_.ex_mask_.reset ();
+}

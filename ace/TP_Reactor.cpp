@@ -516,7 +516,6 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
 int
 ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
 {
-
   // If the reactor handler state has changed, clear any remembered
   // ready bits and re-scan from the master wait_set.
   if (this->state_changed_)
@@ -524,7 +523,8 @@ ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
       this->ready_set_.rd_mask_.reset ();
       this->ready_set_.wr_mask_.reset ();
       this->ready_set_.ex_mask_.reset ();
-      this->state_changed_ = 0;
+
+      this->state_changed_ = false;
     }
   else
     {

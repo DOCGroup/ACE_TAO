@@ -308,7 +308,7 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
       // Note the fact that we've changed the state of the <wait_set_>,
       // which is used by the dispatching loop to determine whether it can
       // keep going or if it needs to reconsult select().
-      this->select_reactor_.state_changed_ = 1;
+      // this->select_reactor_.state_changed_ = 1;
     }
 
   // If new entry, call add_reference() if needed.
@@ -347,7 +347,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
   // Note the fact that we've changed the state of the <wait_set_>,
   // which is used by the dispatching loop to determine whether it can
   // keep going or if it needs to reconsult select().
-  this->select_reactor_.state_changed_ = 1;
+  // this->select_reactor_.state_changed_ = 1;
 
   // If there are no longer any outstanding events on this <handle>
   // then we can totally shut down the Event_Handler.
@@ -398,13 +398,19 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
           // We've deleted the last entry, so we need to figure out
           // the last valid place in the array that is worth looking
           // at.
-          ACE_HANDLE wait_rd_max = this->select_reactor_.wait_set_.rd_mask_.max_set ();
-          ACE_HANDLE wait_wr_max = this->select_reactor_.wait_set_.wr_mask_.max_set ();
-          ACE_HANDLE wait_ex_max = this->select_reactor_.wait_set_.ex_mask_.max_set ();
+          ACE_HANDLE wait_rd_max =
+            this->select_reactor_.wait_set_.rd_mask_.max_set ();
+          ACE_HANDLE wait_wr_max =
+            this->select_reactor_.wait_set_.wr_mask_.max_set ();
+          ACE_HANDLE wait_ex_max =
+            this->select_reactor_.wait_set_.ex_mask_.max_set ();
 
-          ACE_HANDLE suspend_rd_max = this->select_reactor_.suspend_set_.rd_mask_.max_set ();
-          ACE_HANDLE suspend_wr_max = this->select_reactor_.suspend_set_.wr_mask_.max_set ();
-          ACE_HANDLE suspend_ex_max = this->select_reactor_.suspend_set_.ex_mask_.max_set ();
+          ACE_HANDLE suspend_rd_max =
+            this->select_reactor_.suspend_set_.rd_mask_.max_set ();
+          ACE_HANDLE suspend_wr_max =
+            this->select_reactor_.suspend_set_.wr_mask_.max_set ();
+          ACE_HANDLE suspend_ex_max =
+            this->select_reactor_.suspend_set_.ex_mask_.max_set ();
 
           // Compute the maximum of six values.
           this->max_handlep1_ = wait_rd_max;
@@ -1097,7 +1103,8 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
     return -1;
 
 #if !defined (ACE_WIN32)
-  ACE_Sig_Guard sb; // Block out all signals until method returns.
+  ACE_Sig_Guard sb (0,
+                    this->mask_signals_); // Block out all signals until method returns.
 #endif /* ACE_WIN32 */
 
   ACE_FDS_PTMF ptmf  = &ACE_Handle_Set::set_bit;
@@ -1120,6 +1127,11 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
       break;
     case ACE_Reactor::CLR_MASK:
       ptmf = &ACE_Handle_Set::clr_bit;
+      // State was changed. we need to reflect that change in the
+      // dispatch_mask I assume that only ACE_Reactor::CLR_MASK should
+      // be treated here  which means we need to clear the handle|mask
+      // from the current dispatch handler
+      this->clear_dispatch_mask (handle, mask);
       /* FALLTHRU */
     case ACE_Reactor::SET_MASK:
       /* FALLTHRU */
@@ -1172,6 +1184,51 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
     }
   return omask;
 }
+
+void
+ACE_Select_Reactor_Impl::clear_dispatch_mask (ACE_HANDLE handle,
+                                              ACE_Reactor_Mask mask)
+{
+  ACE_TRACE ("ACE_Select_Reactor_Impl::clear_dispatch_mask");
+
+  //  Use handle and mask in order to modify the sets
+  // (wait/suspend/ready/dispatch), that way, the dispatch_io_set loop
+  // will not be interrupt, and there will no reason to rescan the
+  // wait_set and re-calling select function, which is *very*
+  // expensive. It seems that wait/suspend/ready sets are getting
+  // updated in register/remove bind/unbind etc functions.  The only
+  // thing need to be updated is the dispatch_set (also can  be found
+  // in that file code as dispatch_mask).  Because of that, we need
+  // that dispatch_set to be member of the ACE_Select_Reactor_impl in
+  // Select_Reactor_Base.h file  That way we will have access to that
+  // member in that function.
+
+  // We kind of invalidate the iterator in dispatch_io_set because its
+  // an array and index built from the original dispatch-set. Take a
+  // look at dispatch_io_set for more details.
+
+  // We only need to clr_bit, because we are interested in clearing the
+  // handles that was removed, so no dispatching to these handles will
+  // occur.
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK) ||
+      ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+    {
+      this->dispatch_set_.rd_mask_.clr_bit (handle);
+    }
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
+    {
+      this->dispatch_set_.wr_mask_.clr_bit (handle);
+    }
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
+    {
+      this->dispatch_set_.ex_mask_.clr_bit (handle);
+    }
+
+  // That will make the dispatch_io_set iterator re-start and rescan
+  // the dispatch set.
+  this->state_changed_ = true;
+}
+
 
 int
 ACE_Select_Reactor_Impl::resumable_handler (void)
