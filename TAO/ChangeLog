@@ -1,3 +1,19 @@
+Fri Aug 29 14:16:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_generator.h:
+
+          Removed AST_Generator::create_expr (unsigned long), and
+          replaced its remaining uses with the version taking
+          ACE_UINT64 and AST_Expression::ExprType, which has subsumed
+          its function. This change should eliminate a problem
+          BCB has disambiguating AST_Generator::create_expr (unsigned long)
+          and be_generator::create_expr (UTL_IdList *) in the derived
+          class.
+
 Fri Aug 29 11:07:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:

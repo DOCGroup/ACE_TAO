@@ -3023,7 +3023,10 @@ sequence_type_spec
 
                   $$ =
                     idl_global->gen ()->create_sequence (
-                        idl_global->gen ()->create_expr ((unsigned long) 0),
+                        idl_global->gen ()->create_expr (
+                                                (ACE_UINT64) 0,
+                                                AST_Expression::EV_ulong
+                                              ),
                         tp,
                         &sn,
                         s->is_local (),
@@ -3107,7 +3110,8 @@ string_type_spec
            */
           $$ =
             idl_global->gen ()->create_string (
-                idl_global->gen ()->create_expr ((unsigned long) 0)
+                idl_global->gen ()->create_expr ((ACE_UINT64) 0,
+                                                 AST_Expression::EV_ulong)
               );
           /*
            * Add this AST_String to the types defined in the global scope.
@@ -3176,7 +3180,8 @@ wstring_type_spec
            */
           $$ =
             idl_global->gen ()->create_wstring (
-                idl_global->gen ()->create_expr ((unsigned long) 0)
+                idl_global->gen ()->create_expr ((ACE_UINT64) 0,
+                                                 AST_Expression::EV_ulong)
               );
           /*
            * Add this AST_String to the types defined in the global scope.
