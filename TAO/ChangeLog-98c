@@ -1,3 +1,12 @@
+Tue Nov 11 20:45:26 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/iioporb.cpp (iiop_string_to_object): Added a cast of (char
+ 	  *) 0 to disambiguate one of the methods.
+
+	* tao/iiopobj.cpp: Moved the constructors and destructors of
+ 	  IIOP_Object from the *.i file to the *.cpp file and made them
+ 	  non-inline.
+
 Tue Nov 11 18:19:16 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/iiopobj.{h,cpp}: Added two new constructors one of which is
