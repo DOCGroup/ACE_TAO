@@ -1,3 +1,9 @@
+Fri Feb 26 11:09:47 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.i (sema_destroy): ACE_OSCALL and ACE_OSCALL_RETURN macro
+	  calls for sem_destroy, sem_unlink and sem_close had too few
+	  arguments.  Added the missing arguments for the macros.
+
 Fri Feb 26 10:59:45 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor/test_talker.cpp (main): Fixed to

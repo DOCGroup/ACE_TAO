@@ -2640,7 +2640,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
     {
       // Only destroy the semaphore if we're the ones who
       // initialized it.
-      ACE_OSCALL (::sem_destroy (s->sema_));
+      ACE_OSCALL (::sem_destroy (s->sema_),int, -1, result);
       ACE_OS::shm_unlink (s->name_);
       delete s->name_;
       return result;
@@ -2648,14 +2648,14 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #else
   if (s->name_)
     {
-      ACE_OSCALL (::sem_unlink (s->name_));
+      ACE_OSCALL (::sem_unlink (s->name_), int, -1, result);
       ACE_OS::free ((void *) s->name_);
-      ACE_OSCALL_RETURN (::sem_close (s->sema_));
+      ACE_OSCALL_RETURN (::sem_close (s->sema_), int, -1);
     }
 #   endif /*  ACE_LACKS_NAMED_POSIX_SEM */
   else
     {
-      ACE_OSCALL (::sem_destroy (s->sema_));
+      ACE_OSCALL (::sem_destroy (s->sema_), int, -1, result);
       delete s->sema_;
       s->sema_ = 0;
       return result;
@@ -2776,7 +2776,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                       -1);
       ACE_OSCALL_RETURN (::sem_init (s->sema_,
                                      type != USYNC_THREAD,
-                                     count);
+                                     count), int, -1);
     }
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
