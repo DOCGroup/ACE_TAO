@@ -3437,6 +3437,8 @@ TAO_POA::imr_notify_startup (TAO_ENV_SINGLE_ARG_DECL)
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
+      // Avoid warnings on platforms with native C++ exceptions
+      ACE_UNUSED_ARG (sysex);
       ACE_RE_THROW;
     }
   ACE_CATCHANY
