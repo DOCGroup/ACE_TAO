@@ -174,6 +174,12 @@ public:
    * the close to avoid losing data).  */
   int close (void);
 
+  /**
+   * Abort the association according to RFC 2960 9.1 through the API
+   * in draft-ietf-tsvwg-sctpsocket-09 7.1.4.
+   */
+  int abort (void);
+
   // = Meta-type info
   typedef ACE_Multihomed_INET_Addr PEER_ADDR;
 

@@ -39,6 +39,33 @@ ACE_SOCK_SEQPACK_Association::close (void)
   return ACE_SOCK::close ();
 }
 
+// Developed according to the API discussed in 7.1.4 of
+// draft-ietf-tsvwg-sctpsocket-09.txt to abruptly free a transport
+// transport association's resources.
+int
+ACE_SOCK_SEQPACK_Association::abort (void)
+{
+  //
+  // setsockopt() SO_LINGER configures socket to reap immediately.
+  // Normal close then aborts the association.
+  //
+  linger slinger;
+
+  slinger.l_onoff = 1;
+  slinger.l_linger = 0;
+
+  if (-1 == ACE_OS::setsockopt (this->get_handle (),
+                                SOL_SOCKET,
+                                SO_LINGER,
+                                ACE_reinterpret_cast (const char *, &slinger),
+                                sizeof (linger)))
+  {
+    return -1;
+  }
+
+  return this->close ();
+}
+
 int
 ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &size) const
 {
