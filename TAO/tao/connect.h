@@ -78,6 +78,15 @@ public:
   // response (including errors).  In case of errors, -1 is returned
   // and additional information carried in <env>.
 
+  virtual void handle_request (TAO_GIOP_RequestHeader hdr,
+                               CDR &request_body,
+                               CDR &response,
+                               TAO_Dispatch_Context *some_info,
+                               CORBA::Environment &env);
+  // Once a request is found in a message, this finds the appropriate
+  // POA and dispatches it, then takes care to properly format any
+  // response.
+  
   virtual void send_response (CDR &response);
   // Send <response> to the client on the other end.
 

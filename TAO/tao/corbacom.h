@@ -654,6 +654,9 @@ public:
 };
 
 typedef CORBA::OctetSeq TAO_opaque;
+typedef CORBA::OctetSeq TAO_ObjectKey;
+typedef TAO_ObjectKey  *TAO_ObjectKey_ptr;
+
 extern CORBA::TypeCode TC_opaque;
 
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
