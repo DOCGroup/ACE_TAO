@@ -23,6 +23,9 @@ Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.cpp (inet_aton): return 0 if addr argument is 0.  Thanks
           to Wei for reporting this.
 
+        * ace/config-linux.common.h: set an ACE_DEFAULT_BASE_ADDR, on Alpha
+          for now.  This might be necessary on Intel as well.
+
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
 	* tests/test_config.h: Removed code for
