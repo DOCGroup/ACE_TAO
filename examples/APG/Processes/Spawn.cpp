@@ -100,7 +100,7 @@ private:
   int setEnvVariable (ACE_Process_Options &options)
   {
     ACE_TRACE (ACE_TEXT ("Manager::setEnvVariables"));
-    return options.setenv ("PRIVATE_VAR=/that/seems/to/be/it");
+    return options.setenv (ACE_TEXT("PRIVATE_VAR=/that/seems/to/be/it"));
   }
  // Listing 2
 
