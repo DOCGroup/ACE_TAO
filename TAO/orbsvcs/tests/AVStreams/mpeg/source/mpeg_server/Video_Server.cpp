@@ -109,7 +109,7 @@ Video_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  //  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
 
   switch (signum)
     {
@@ -240,16 +240,33 @@ Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Server_StreamEndPoint::handle_connection_requested:() %s \n",
               the_spec[0]));
-
+  
   char *server_string;
 
   server_string = CORBA::string_dup ((const char *) the_spec [0]);
   CORBA::Boolean result;
   result = VIDEO_CONTROL_I::instance ()->set_peer (server_string,env);
   // Get media control from my vdev and call set_peer on that.
-  
-  the_spec.length (1);
-  the_spec [0]=server_string;
 
+  char server_addr [BUFSIZ];
+
+  ACE_OS::sprintf (server_addr,
+                   "%s=%s",
+                   "UDP",
+                   server_string);
+  
+  TAO_Reverse_FlowSpec_Entry server_entry ("video",
+                              "OUT",
+                              "MIME:video/mpeg",
+                              "UDP",
+                              server_addr);
+     
+  ACE_DEBUG ((LM_DEBUG,"\nServer Entry = %s\n", server_entry.entry_to_string ()));
+
+  the_spec.length (1);
+  
+  the_spec [0]= server_entry.entry_to_string ();
+  ACE_DEBUG ((LM_DEBUG,"\nThe Spec = %s\n", the_spec [0].in ()));
+  
   return result;
 }
