@@ -4,6 +4,8 @@ Tue Feb 18 21:24:57 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE_LACKS_IOSTREAM_FX.
 
 	* ace/config-{mvs,win*}.h: added #define ACE_LACKS_IOSTREAM_FX.
+	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for pointing
+	  out the need for this support for MVS.
 
 	* examples/Reactor/Misc/test_demuxing.cpp: removed unused
 	  variable "done".
