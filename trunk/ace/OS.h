@@ -6701,8 +6701,12 @@ ace_main_i (int, ASYS_TCHAR *[]);                  /* forward declaration */ \
 int \
 ACE_MAIN (int argc, ASYS_TCHAR *argv[]) /* user's entry point, e.g., main */ \
 { \
-  ACE_MAIN_OBJECT_MANAGER \
-  return ace_main_i (argc, argv);           /* what the user calls "main" */ \
+  /*  ACE_MAIN_OBJECT_MANAGER \ */ \
+  ACE::init(); \
+  int ace_main_status = ace_main_i (argc, argv); \
+  ACE::fini(); \
+  return ace_main_status; \
+  /*  return ace_main_i (argc, argv);      what the user calls "main" */ \
 } \
 int \
 ace_main_i
