@@ -277,35 +277,6 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                     TAO_ORB_Core_instance ()->orb (),
                                     the_poa,
                                     env);
-  /*
-
-  // This is code, which could be used alternatively,
-  // we have to discuss that, though there
-  // are Input/Output CDR conversion problems.
-
-  TAO_OutputCDR out_stream (repbuf, sizeof(repbuf));
-  TAO_GIOP::start_message (TAO_GIOP::Request,
-                           out_stream);
-
-  CORBA::Principal_ptr anybody = 0;
-  TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
-
-  out_stream << svc_ctx;
-  out_stream.write_ulong (locateRequestHeader.request_id);
-  out_stream.write_boolean (CORBA::B_TRUE);
-  out_stream << locateRequestHeader.object_key;
-  out_stream.write_string ("_non_existent");
-  out_stream << anybody;
-  out_stream.good_bit ();
-
-  // marshall all the parameters
-
-  IIOP_ServerRequest serverRequest (out_stream,
-                                    dummy_output,
-                                    TAO_ORB_Core_instance ()->orb (),
-                                    the_poa,
-                                    env);
-  */
 
   the_poa->dispatch_servant (serverRequest.object_key (),
                              serverRequest,
@@ -316,29 +287,26 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   CORBA::Object_var forward_location_var;
   TAO_GIOP_LocateStatusType status;
 
-  if (env.exception () != 0)
-    // now, either we got an exception because something is wrong and the 
-    // object is not here,
-    // or we got a Forward Request Exception, which tells us where the 
-    // object is.
+  if (serverRequest.exception_type () == TAO_GIOP_NO_EXCEPTION
+     && env.exception () == 0)
   {
-     // Try to narrow to ForwardRequest
-    PortableServer::ForwardRequest_ptr forward_request_ptr =
-        PortableServer::ForwardRequest::_narrow (env.exception ());
-
-
-    // If narrowing of exception succeeded
-    if (forward_request_ptr != 0)
+    // we got no exception, so the object is here
+    status = TAO_GIOP_OBJECT_HERE;
+    ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: found\n"));
+  }
+  else if (serverRequest.exception_type () != TAO_GIOP_NO_EXCEPTION)
+  {
+    forward_location_var = serverRequest.forward_location ();
+    if (!CORBA::is_nil (forward_location_var.in ()))
     {
       status = TAO_GIOP_OBJECT_FORWARD;
-      forward_location_var = forward_request_ptr->forward_reference;
-      //ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
+      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
     }
     else
     {
       // Normal exception, so the object is not here
       status = TAO_GIOP_UNKNOWN_OBJECT;
-      //ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
+      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
     }
 
     // the locate_servant call might have thrown an exception
@@ -347,14 +315,36 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
     // Remove the exception
     env.clear ();
-  } 
-  else 
-  {
-    // we got no exception, so the object is here
-    status = TAO_GIOP_OBJECT_HERE;
-    //ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: found\n"));
   }
+  else
+  {
+     // Try to narrow to ForwardRequest
+    PortableServer::ForwardRequest_ptr forward_request_ptr =
+        PortableServer::ForwardRequest::_narrow (env.exception ());
 
+    // If narrowing of exception succeeded
+    if (forward_request_ptr != 0)
+    {
+      status = TAO_GIOP_OBJECT_FORWARD;
+      forward_location_var = forward_request_ptr->forward_reference;
+      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
+    }
+    else
+    {
+      // Normal exception, so the object is not here
+      status = TAO_GIOP_UNKNOWN_OBJECT;
+      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
+    }
+
+    // the locate_servant call might have thrown an exception
+    // but we don't want to marshal it because it is no failure.
+    // The proper Locacte_Reply will tell the client what is going on.
+
+    // Remove the exception
+    env.clear ();
+  }
+  
+  
   // Create the response.
   TAO_GIOP::start_message (TAO_GIOP::LocateReply, output);
   output.write_ulong (locateRequestHeader.request_id);
@@ -715,7 +705,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
 		             ACE_ERROR ((LM_ERROR,
 			                       "(%P|%t) TAO_Client_Connection_Handler::send_request: "
 			                       "Failed to add a follower thread\n"));
-	                           this->cond_response_available_->wait ();     
+               this->cond_response_available_->wait ();  
 	          }
 	        // now somebody woke us up to become a leader or
 	        // to handle our input. We are already removed from the 
@@ -867,6 +857,9 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
       // we are a leader, which got a response for one of the followers, 
       // which means we are now a thread running the wrong Client_Connection_Handler
     
+      // at this point we might fail to remove the follower, because
+      // it has been already chosen to become the leader, so it is awake and
+      // will get this too.
       orb_Core_ptr->remove_follower (this->cond_response_available_);
       
       if (orb_Core_ptr->leader_follower_lock ().release () == -1)
@@ -875,8 +868,7 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
 		                       "Failed to release the lock.\n"),
 			                      -1);
       
-      
-      orb_Core_ptr->reactor ()->suspend_handler (this);
+        orb_Core_ptr->reactor ()->suspend_handler (this);
       // We should wake suspend the thread before we wake him up.
       // resume_handler is called in TAO_GIOP_Invocation::invoke
       

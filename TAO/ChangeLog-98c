@@ -1,3 +1,20 @@
+Tue Jul 21 10:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/Connect.cpp: Improved the location forwarding, now we check
+	  the environment for exceptions and the Server Request.
+
+	* tao/ORB.{h,cpp}: Moved the leader_follower model variables form 
+	  the ORB_Core to in here. The ORB_Core has methods to access
+	  all the variables.
+
+	* tao/ORB_Core.{h,cpp}: Removed the leader_follower model variables
+	  but kept the accessing methods.
+
+	* tao/Server_Request.{h,cpp}: Changed the exception handling slightly.
+	  A forwarding exception has the type USER_EXCEPTION now.
+	  Also, two accessor methods were added to get the forward location
+	  and the exception type. This is all used in the Server_Connection_Handler.
+
 Mon Jul 20 23:09:21 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* docs/release_notes.html: Updated the status on the Audio/Video

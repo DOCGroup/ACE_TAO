@@ -316,19 +316,6 @@ private:
   // A string of comma-separated <{host}>:<{port}> pairs used to
   // pre-establish connections using <preconnect>.
 
-  static ACE_SYNCH_MUTEX leader_follower_lock_; 
-  // do protect the access to the following three members
-
-  static ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
-  // keep a set of followers around (protected)
-
-  static int leaders_; 
-  // 0 if no leader is around, 1 if there is a leader
-  // > 1 if we do nested upcalls (protected)
-
-  static ACE_thread_t leader_thread_ID_;
-  // thread ID of the leader thread (protected)
-
 };
 
 class TAO_Default_Reactor : public ACE_Reactor
