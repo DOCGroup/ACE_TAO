@@ -1,3 +1,8 @@
+Mon Jan 14 14:04:36 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Regenerated
+	  dependencies.
+
 Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/ETCL/ETCL.dsp:
@@ -36,7 +41,7 @@ Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Changes to ETCL and Notification Service files to complete
           the implementation of the ETCL library and to make the
-          Notification Service use this library to filter events, 
+          Notification Service use this library to filter events,
           instead of using the Trading Service's Trader Constraint
           Language, as it did previously.
 
@@ -52,7 +57,7 @@ Mon Jan 14 13:09:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
 
-          Added .in() to instances of TAO_String_Manager and 
+          Added .in() to instances of TAO_String_Manager and
           TAO_Object_Manager when used in the rhs of an expression,
           and made other cosmetic changes.
 
@@ -77,7 +82,7 @@ Mon Jan 14 10:01:12 2002  Ossama Othman  <ossama@uci.edu>
 Mon Jan 14 10:32:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
-	  
+
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
 	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp: Fixed the
 	  libraries that are linked to.
@@ -85,7 +90,7 @@ Mon Jan 14 10:32:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Mon Jan 14 10:25:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp (RSC): Added the right
-	  library for linking in the debug  builds. 
+	  library for linking in the debug  builds.
 
 Mon Jan 14 09:34:35 2002  Chad Elliott  <elliott_c@ociweb.com>
 
