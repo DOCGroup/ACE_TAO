@@ -534,8 +534,10 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
+  int result = this->orb_core_->reactor ()->resume_handler (handler);
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result == 0);
 
   switch (m)
     {
@@ -812,8 +814,10 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
+  int result = this->orb_core_->reactor ()->resume_handler (handler);
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result == 0);
 
   switch (m)
     {
@@ -1058,8 +1062,10 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  this->orb_core_->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
+  int result = this->orb_core_->reactor ()->resume_handler (handler);
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result == 0);
 
   switch (m)
     {
