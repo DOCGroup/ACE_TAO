@@ -145,6 +145,7 @@ ifeq ($(CPU),SPARC)
   CCFLAGS += -fno-implicit-templates
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sparc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = sparc
+else
 ifeq ($(CPU),MC68020)
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68020 -m68020 -m68881
   CCFLAGS += -fno-implicit-templates -DACE_VXWORKS=0x540
@@ -174,9 +175,10 @@ ifeq ($(CPU),MC68060)
 else
   BINXSYM_NAME = xsym
   CCFLAGS += -fno-implicit-templates
-endif # MC68020
-endif # MC68030
+endif # MC68060
 endif # MC68040
+endif # MC68030
+endif # MC68020
 endif # SPARC
 endif # SIMSPARCSOLARIS
 endif # I80386
