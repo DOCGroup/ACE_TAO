@@ -25,12 +25,12 @@
 #include "tao/orbconf.h"
 #include "tao/Collocation_Strategy.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/Exception.h"
 #include "ace/CORBA_macros.h"
 
 namespace CORBA
 {
   class Environment;
-  class Exception;
 
   class Object;
   typedef Object *Object_ptr;
