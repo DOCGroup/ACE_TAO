@@ -414,11 +414,3 @@ TAO_Bounded_String_Sequence (CORBA::ULong length,
 {
 }
 
-template<CORBA::ULong MAX> ACE_INLINE TAO_SeqElem_String_Manager
-TAO_Bounded_String_Sequence<MAX>::operator[] (CORBA::ULong index) const
-{
-  ACE_ASSERT (index < this->maximum_);
-  char **const tmp = ACE_reinterpret_cast (char ** ACE_CAST_CONST,
-                                           this->buffer_);
-  return TAO_SeqElem_String_Manager (tmp + index, this->release_);
-}
