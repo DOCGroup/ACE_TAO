@@ -1,3 +1,23 @@
+Mon Feb 21 18:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*Strategy*.{h,cpp}:
+          For the strategies we don't need virtual inheritance, normal
+          inheritance is enough. Also removed all the not needed empty
+          destructors and make the factory classes a little bit smaller.
+
+        * tao/PortableServer/ServantRetentionStrategy.cpp:
+        * tao/PortableServer/IdUniquenessStrategy.cpp:
+          Removed these files, the destructors are now gone and these
+          classes now have only pure virtual methods
+
+        * tao/PortableServer/POA_Guard.{h,cpp}:
+          Fixed compile errors with the Sun compiler
+
+        * tao/Codeset_Manager.cpp:
+        * tao/UTF16_BOM_Translator.cpp:
+          Changed formatting of a debug statement so that it matches the
+          normal way done in TAO
+
 Mon Feb 21 09:23:32 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/GIOP_Fragments/PMB_With_Fragments/README:
