@@ -31,7 +31,7 @@ sub name_server
 sub client
 {
   my $args = $_[0]." "."-ORBnameserviceport $nsmport";
-  my $prog = "client".$Process::EXE_EXT;
+  my $prog = $EXEPREFIX."client".$Process::EXE_EXT;
     
   system ($prog." ".$args);
 }
