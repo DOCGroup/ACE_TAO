@@ -1,3 +1,38 @@
+Sun Dec 26 21:50:46 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  The following existing files were changed for the ACE QoS API.
+	
+	* SOCK.h:
+	* SOCK.cpp: 
+	  Added a QoS session set to the ACE_SOCK. Also methods to join 
+	  a new QoS session.
+
+	* SOCK_Dgram_Mcast.h:
+	* SOCK_Dgram_Mcast.cpp:
+	  The QoS subscribe method was changed to accommodate QoS.
+
+	  The following new files were added.
+
+	* QoS_Session.h: Has the abstract base class for concrete QoS 
+	  implementations.
+
+	* QoS_Session_Factory.{h,cpp}: Concrete Factory for QoS 
+	  implementations. Currently two implementations are 
+	  supported, RAPI and GQoS.
+
+	* QoS_Session_Impl.{h,cpp,i}: Has the QoS implementation classes.
+	  RAPI and GQoS are supported.
+
+	* ace/Makefile: Added the new QoS classes.
+
+	* include/makeinclude/wrapper_macros.GNU (): Added the
+	  ACE_HAS_RAPI flag. For ACE to have RAPI support it should be 
+	  built with "make rapi=1". The platform_macros.GNU should have
+	  
+	  PLATFORM_RAPI_CPPFLAGS=
+	  PLATFORM_RAPI_LIBS=-lrsvp
+	  PLATFORM_RAPI_LDFLAGS=
+
 Sun Dec 26 16:43:16 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* ace/OS.i: 
