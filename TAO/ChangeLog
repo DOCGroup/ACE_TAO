@@ -1,8 +1,14 @@
+Wed Apr 23 07:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/RTCORBA/Activity/Makefile:
+          Added ACTIVITY_BUILD_DLL to the list of compiler flags to fix Cygwin
+          compiler crash.
+
 Tue Apr 22 21:49:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.h:
 	* docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp: Fixed
-	  non-portable code. 
+	  non-portable code.
 	* docs/tutorials/Quoter/On_Demand_Activation/Makefile: Updated
 	  dependencies. This should fix errors in a few builds.
 
@@ -16,7 +22,7 @@ Tue Apr 22 21:39:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* TAO_IDL/be/be_interface.cpp: Fixed warnings in g++ builds.
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp:
 	  Added a .in () operator to the _var variable. Assigning a _var
-	  to a _out is a no-no. 
+	  to a _out is a no-no.
 
 Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
@@ -68,7 +74,7 @@ Tue Apr 22 19:33:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Tue Apr 22 20:15:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests\RTCorba\Thread_Pool\server.cpp: 
+	* performance-tests\RTCorba\Thread_Pool\server.cpp:
 
 	  - Run the orb in a RT thread rather than in the main thread.
 	  Otherwise, the value returned from the_priority() can be
@@ -78,7 +84,7 @@ Tue Apr 22 20:15:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Added call to check_supported_priorities().
 
-	* $ACE_ROOT/bin/tao_orb_tests.lst: 
+	* $ACE_ROOT/bin/tao_orb_tests.lst:
 
 	  tests/RTCORBA/Persistent_IOR creates multiple threads - don't
 	  run in single-threaded configurations.
@@ -99,7 +105,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         TAO_HAS_SEQUENCE_TEMPLATES is not defined. The generated code
         within the ORB ie. $TAO_ROOT/tao still has references to
         TAO_HAS_SEQUENCE_TEMPLATES which needs to be cleaned up in the
-        next round. 
+        next round.
 
 	For more gory details please see below
 
@@ -129,9 +135,9 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         Tue Apr 22 06:30:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* be/be_visitor_sequence/sequence_ch.cpp: 
+	* be/be_visitor_sequence/sequence_ch.cpp:
 	* be/be_visitor_sequence/sequence_cs.cpp: Use the new managed type
-	  out classes when the IDL compiler comes across managed types. 
+	  out classes when the IDL compiler comes across managed types.
 
 	Tue Apr 22 06:22:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -145,8 +151,8 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  around when we had to have a seperate out class for managed
 	  types. This was needed since the operator[] for managed types
 	  had a return type a bit different from regular sequences. Even
-	  with this change, not all of orbsvcs compile. 
-	  
+	  with this change, not all of orbsvcs compile.
+
 	* tao/Array_VarOut_T.h:
 	* tao/DomainC.h:
 	* tao/DynamicC.h:
@@ -167,11 +173,11 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IORManipulation/IORC.h:
 	* tao/PortableServer/PortableServerC.h: Replaced existing
 	  inclusions of tao/Seq_varOut_T.h with two inclusions,
-	  viz. tao/Seq_Out_T.h and tao/Seq_Var_T.h. 
+	  viz. tao/Seq_Out_T.h and tao/Seq_Var_T.h.
 
 	* tao/Seq_VarOut_T.h:
 	* tao/Seq_VarOut_T.cpp:
-	* tao/Seq_VarOut_T.inl: Removed from the repo. 
+	* tao/Seq_VarOut_T.inl: Removed from the repo.
 
         Mon Apr 21 14:09:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -184,10 +190,10 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         Mon Apr 21 13:11:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/AMH_Exceptions/Makefile:
-	* tests/Bug_1482_Regression/Makefile: Updated dependencies. 
+	* tests/Bug_1482_Regression/Makefile: Updated dependencies.
 
 	* tests/OBV/Forward/Test_impl.cpp: Fixed compilation errors with
-	  g++. 
+	  g++.
 
         Mon Apr 21 13:07:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -319,14 +325,14 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:
         * TAO_IDL/be/be_visitor_array/array_ci.cpp:
 
-          Added generated code to make the array's *_alloc function 
+          Added generated code to make the array's *_alloc function
           generically callable outside the IDL compiler, where its full
           name is not known.
 
         * tao/Array_VarOut_T.h:
         * tao/Array_VarOut_T.inl:
 
-          Added a static method to TAO_Array_Forany_T<> to make the 
+          Added a static method to TAO_Array_Forany_T<> to make the
           *_alloc method (which was made visible to TAO_Array_Forany_T<>
           by the changes above) visible to the Any impl class
           TAO_Any_Array_Impl_T<>, where it is used in extraction.
@@ -341,7 +347,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* Merged with the main trunk and compiled the core ORB and the IDL
 	  compiler on Linux GCC32. Moved the stuff to a new branch by name
 	  refactor_statge_1.  Added the following files from the branch
-	  into the new branch. 
+	  into the new branch.
 
 	* tao/Pseudo_Value_VarOut_T.cpp:
 	* tao/Pseudo_Value_VarOut_T.h:
@@ -366,8 +372,8 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Value_VarOut_T.inl:
 	* tao/VarOut_T.cpp:
 	* tao/VarOut_T.h:
-	* tao/VarOut_T.inl: 
-        
+	* tao/VarOut_T.inl:
+
           New files in to this new branch.
 
         Tue Apr  1 000:37:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -512,7 +518,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/TypeCodeFactory/TypeCodeFactoryC.h:
         * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
 
-          Regenerated all hand-crafted files and made fixes to 
+          Regenerated all hand-crafted files and made fixes to
           code generation.
 
         Sun Mar 30 12:32:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -609,7 +615,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/corbafwd.h:
 
           Changed sequence generation to create a class that inherits
-          from the template class instead of just a typedef. Also 
+          from the template class instead of just a typedef. Also
           regenerated hand-crafted files in the TAO library.
 
         Fri Mar 28 19:12:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -838,7 +844,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Cut out an ELSE block to get this to work with
 	  changes Phil Mesnier <mesnier_p@ociweb.com> has
 	  made to ACE - his corresponding TAO changes are
-	  blocked by the branch. This file will get in 
+	  blocked by the branch. This file will get in
 	  sync again when the branch is merged.
 
 	Tue Mar 25 21:44:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -890,7 +896,7 @@ Tue Apr 22 14:58:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDLbe_include/be_visitor_array/array_ci.h:
         * TAO_IDLinclude/ast_type.h:
 
-	  Other changes to support template _var and _out 
+	  Other changes to support template _var and _out
 	  classes.
 
 	Sat Mar 22 18:34:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -1036,12 +1042,12 @@ Tue Apr 22 13:51:45 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
 
-          Only #include <sys/loadavg.h> if ACE_HAS_SYS_LOADAVG_H is defined. 
+          Only #include <sys/loadavg.h> if ACE_HAS_SYS_LOADAVG_H is defined.
           It only exists with SunOS 5.7 and later.
 
 Tue Apr 22 14:26:31 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: 
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
 
 	  In pre_invoke_remote_request(),
 	  get_thread_CORBA_and_native_priority() was getting called
@@ -1066,15 +1072,15 @@ Tue Apr 22 12:35:44 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Mon Apr 21 14:20:00 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:   
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
 
 	  Removed extra ACE_CHECK_RETURN.
 
-	* tests/RTCORBA/check_supported_priorities.cpp: 
+	* tests/RTCORBA/check_supported_priorities.cpp:
 
 	  Initialized <name> in sched_policy_name().
-	
-	* tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp: 
+
+	* tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
 
 	  - Removed unused <servant_activation_succeeded>.
 
@@ -1093,7 +1099,7 @@ Sun Apr 20 07:50:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw:
 	* tests/Bug_1020_Regression/client.dsp:
 	* tests/Bug_1020_Regression/server.dsp: Removed them from the
-	  repo. They dont compile with VC6.0 and spoils our daily builds. 
+	  repo. They dont compile with VC6.0 and spoils our daily builds.
 
 Fri Apr 18 18:13:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1105,7 +1111,7 @@ Fri Apr 18 18:13:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           operation is defined in a valuetype. Since operations
           in valuetypes are executed locally, the arguments are
           not marshaled and there is no problem with a local
-          interface parameter. Thanks to Proum Chauk-Mean 
+          interface parameter. Thanks to Proum Chauk-Mean
           <Chauk-Mean.Proum@fr.thalesgroup.com> and Nanbor Wang
           <nanbor@cse.wustl.edu> for reporting the problem.
 
@@ -1113,8 +1119,8 @@ Fri Apr 18 17:17:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
 
-          Fixed bug in assignment operator. Thanks to Ossama Othman 
-          <ossama@uci.edu> for reporting the problem in the 
+          Fixed bug in assignment operator. Thanks to Ossama Othman
+          <ossama@uci.edu> for reporting the problem in the
           PICurrent test.
 
 Fri Apr 18 18:04:44 2003  Irfan Pyarali  <irfan@oomworks.com>
@@ -1128,7 +1134,7 @@ Fri Apr 18 18:04:44 2003  Irfan Pyarali  <irfan@oomworks.com>
 
           Added VC project files for Bug_1020_Regression and
 	  Bug_1020_Basic_Regression tests.
-	
+
 	* tests/TAO_Tests.dsw:
 
 	  Updated to include project files for Bug_1020_Regression and
