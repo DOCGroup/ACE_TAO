@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,8 +16,6 @@
  *  classes.  Remember that since the new Standard C++ Library code
  *  for streams uses templates, simple forward declaration will not
  *  work.
- *
- *
  */
 //=============================================================================
 
