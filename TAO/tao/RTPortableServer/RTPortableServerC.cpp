@@ -58,7 +58,7 @@ namespace TAO
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTPortableServer::POA_ptr
-TAO::Objref_Traits<RTPortableServer::POA>::tao_duplicate (
+TAO::Objref_Traits<RTPortableServer::POA>::duplicate (
     RTPortableServer::POA_ptr p
   )
 {
@@ -67,7 +67,7 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_duplicate (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
-TAO::Objref_Traits<RTPortableServer::POA>::tao_release (
+TAO::Objref_Traits<RTPortableServer::POA>::release (
     RTPortableServer::POA_ptr p
   )
 {
@@ -76,14 +76,14 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_release (
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTPortableServer::POA_ptr
-TAO::Objref_Traits<RTPortableServer::POA>::tao_nil (void)
+TAO::Objref_Traits<RTPortableServer::POA>::nil (void)
 {
   return RTPortableServer::POA::_nil ();
 }
 
 ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
-TAO::Objref_Traits<RTPortableServer::POA>::tao_marshal (
+TAO::Objref_Traits<RTPortableServer::POA>::marshal (
     RTPortableServer::POA_ptr p,
     TAO_OutputCDR & cdr
   )
@@ -92,7 +92,7 @@ TAO::Objref_Traits<RTPortableServer::POA>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*RTPortableServer__TAO_POA_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -103,7 +103,7 @@ RTPortableServer::POA::POA (void)
 RTPortableServer::POA::~POA (void)
 {}
 
-void 
+void
 RTPortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
@@ -121,10 +121,10 @@ RTPortableServer::POA::_narrow (
     {
       return POA::_nil ();
     }
-  
+
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-  
+
   return POA::_duplicate (proxy);
 }
 
@@ -138,10 +138,10 @@ RTPortableServer::POA::_unchecked_narrow (
     {
       return POA::_nil ();
     }
-  
+
   POA_ptr proxy =
     dynamic_cast<POA_ptr> (_tao_objref);
-  
+
   return POA::_duplicate (proxy);
 }
 
@@ -152,7 +152,7 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -214,7 +214,7 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T<
         RTPortableServer::POA
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         RTPortableServer::POA
@@ -231,11 +231,10 @@ RTPortableServer::POA::marshal (TAO_OutputCDR &)
     TAO_Objref_Var_T< \
         RTPortableServer::POA
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         RTPortableServer::POA
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
