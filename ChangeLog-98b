@@ -21,6 +21,13 @@ Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
         * ACE-INSTALL.html: updated Linux and LynxOS version status,
           and egcs --enable-shared discussion.
 
+        * ace/Hash_Map_Manager.cpp (operator *): only declare local "result"
+          without ACE_NDEBUG, to avoid compile warning with debug=0.
+
+        * ace/Synch.cpp (ACE_Recursive_Thread_Mutex::release): only
+          declare local "t_id" without ACE_NDEBUG, to avoid compile warning
+          with debug=0.
+
 Tue Oct 20 19:40:41 1998  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Added
