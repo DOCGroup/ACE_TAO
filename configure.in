@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.63 $)dnl
+AC_REVISION($Revision 0.65 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -46,7 +46,7 @@ dnl continue any further.  The idea is to prevent automatically
 dnl generated files from being checked into the repository.  This
 dnl will prevent accidental overwrites of ACE's current Makefiles by
 dnl the automatically generated ones, for example.
-ACE_CHECK_FOR_CVS_DIR
+dnl ACE_CHECK_FOR_CVS_DIR
 
 dnl Check what platform we are running on.
 AC_CANONICAL_SYSTEM
@@ -92,10 +92,11 @@ dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
 changequote(, )dnl
   if g++ --version | egrep -v '^2\.[0-7]' > /dev/null; then
 changequote([, ])dnl
-    acenothinghere=""
+    ace_has_old_gcc=no
   else
     AC_DEFINE(ACE_HAS_GNUG_PRE_2_8) dnl
     AC_DEFINE(ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS) dnl
+    ace_has_old_gcc=yes
   fi
 fi
 
@@ -693,6 +694,24 @@ AC_ARG_WITH(orbix,
                   ;;
                esac
               ],)
+
+#AC_ARG_WITH(tao,
+#              [  --with-tao              build TAO (the ACE ORB)         [default=yes]],
+#              [
+#               case "${withval}" in
+#                yes)
+#                  ace_user_with_tao=yes
+#                  ;;
+#                no)
+#                  ;;
+#                *)
+#                  AC_MSG_ERROR(bad value ${withval} for --with-tao)
+#                  ;;
+#               esac
+#              ],
+#              [
+#               ace_user_with_tao=yes
+#              ])
 
 AC_ARG_WITH(tli-device,
               [  --with-tli-device[=DEV] device for TCP on TLI           [default=/dev/tcp]],
@@ -1914,7 +1933,10 @@ ACE_CACHE_CHECK(for union semun,
 #include <sys/sem.h>
         ],
         [
-         semun us;
+/* We could also check if the macro _SEM_SEMUN_UNDEFINED is defined.
+   No big deal. */
+
+semun us;
         ],
         [
          ace_cv_lib_posix_defines_union_semun=yes
@@ -2857,7 +2879,7 @@ EOF
    dnl Create the Main test file
    cat > conftestMain.$ac_ext <<EOF
 #include "conftest.h"
-int main ()
+int main (int, char **)
 {
  Foo<int> foo (15);
 
@@ -2873,13 +2895,13 @@ EOF
    dnl Now try to link them
    if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext}; then
      rm -rf conftest*
-     dnl Restore the original link variable NOW not later
+     dnl Restore the original link variable NOW, not later.
      ac_link="$ace_save_ac_link"
 
-     dnl Template source is not required
+     dnl Template source is not required.
      ace_cv_feature_templates_require_source=no
    else
-     dnl Now try including the template source
+     dnl Now try including the template source.
      cat >> conftestMain.$ac_ext <<EOF
 
 #include "conftest.$ac_ext"
@@ -2893,7 +2915,7 @@ EOF
        dnl Template source is required!
        ace_cv_feature_templates_require_source=yes
      else
-       dnl if we get then we have no idea what is needed!
+       dnl if we get here, then we have no idea what is needed!
        echo "configure: failed program was:" >&AC_FD_CC
        echo "conftest.h:" >&AC_FD_CC
        cat conftest.h >&AC_FD_CC
@@ -3481,7 +3503,7 @@ AC_CHECK_FUNC(poll, dnl
          dnl action if cross-compiling
          ace_cv_poll_is_broken=no
         ])
-     ], AC_DEFINE(ACE_POLL_IS_BROKEN), AC_DEFINE(ACE_USE_POLL))
+     ], AC_DEFINE(ACE_POLL_IS_BROKEN),)
   ],)
 
 AC_CHECK_FUNC(gethrtime, dnl
@@ -6529,14 +6551,14 @@ fi
 dnl Additional flags to set by the configure script
 
 if test -n "$GXX"; then
-  ACE_CXXFLAGS="$ACE_CXXFLAGS -Wall -Wpointer-arith"
+  ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
   if test "$ace_user_enable_repo" = no; then
     ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
   fi
 fi
 
 if test -n "$GCC"; then
-  ACE_CFLAGS="$ACE_CFLAGS -Wall -Wpointer-arith"
+  ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
 fi
 
 dnl Combine package set flags with user's flags.
@@ -6761,6 +6783,15 @@ AC_SUBST(ACE_LIBDIR)
 AC_SUBST(ACE_LIBS)
 AC_SUBST(ACE_INCLUDEDIR)
 
+dnl These definitions are expanded in the makefile and ace-config
+#TAO_LIBDIR='-L${libdir}'
+#TAO_LIBS="-lACE ${LIBS}"
+#TAO_INCLUDEDIR='-I${includedir}'
+#
+#AC_SUBST(TAO_LIBDIR)
+#AC_SUBST(TAO_LIBS)
+#AC_SUBST(TAO_INCLUDEDIR)
+
 dnl Force CXXFLAGS to be substituted in Makefiles that don't "need" them.
 AC_SUBST(CXXFLAGS)
 
@@ -6771,33 +6802,49 @@ dnl
 dnl We can finally create all the files listed here; Makefile is
 dnl created from Makefile.in, etc.  Top-level Makefiles should be
 dnl created first.
-AC_OUTPUT([
-           Makefile
-           ace-config
-           ace/Makefile
-           apps/Makefile
-           apps/gperf/Makefile
-           apps/gperf/src/Makefile
-           man/Makefile
-           man/man3/Makefile
-           netsvcs/Makefile
-           netsvcs/clients/Makefile
-           netsvcs/clients/Logger/Makefile
-           netsvcs/clients/Naming/Makefile
-           netsvcs/clients/Naming/Client/Makefile
-           netsvcs/clients/Naming/Dump_Restore/Makefile
-           netsvcs/clients/Tokens/Makefile
-           netsvcs/clients/Tokens/collection/Makefile
-           netsvcs/clients/Tokens/deadlock/Makefile
-           netsvcs/clients/Tokens/invariant/Makefile
-           netsvcs/clients/Tokens/manual/Makefile
-           netsvcs/clients/Tokens/mutex/Makefile
-           netsvcs/clients/Tokens/rw_lock/Makefile
-           netsvcs/lib/Makefile
-           netsvcs/servers/Makefile
-           tests/Makefile
-          ])
 
-echo ""
-echo "Configuration of ACE is now complete."
-echo ""
+AC_OUTPUT([
+  Makefile
+  ace-config
+  ace/Makefile
+  apps/Makefile
+  apps/gperf/Makefile
+  apps/gperf/src/Makefile
+  man/Makefile
+  man/man3/Makefile
+  netsvcs/Makefile
+  netsvcs/clients/Makefile
+  netsvcs/clients/Logger/Makefile
+  netsvcs/clients/Naming/Makefile
+  netsvcs/clients/Naming/Client/Makefile
+  netsvcs/clients/Naming/Dump_Restore/Makefile
+  netsvcs/clients/Tokens/Makefile
+  netsvcs/clients/Tokens/collection/Makefile
+  netsvcs/clients/Tokens/deadlock/Makefile
+  netsvcs/clients/Tokens/invariant/Makefile
+  netsvcs/clients/Tokens/manual/Makefile
+  netsvcs/clients/Tokens/mutex/Makefile
+  netsvcs/clients/Tokens/rw_lock/Makefile
+  netsvcs/lib/Makefile
+  netsvcs/servers/Makefile
+  tests/Makefile
+dnl  TAO/Makefile
+dnl  TAO/TAO_IDL/Makefile
+dnl  TAO/TAO_IDL/ast/Makefile
+dnl  TAO/TAO_IDL/be/Makefile
+dnl  TAO/TAO_IDL/be_include/Makefile
+dnl  TAO/TAO_IDL/driver/Makefile
+dnl  TAO/TAO_IDL/fe/Makefile
+dnl  TAO/TAO_IDL/include/Makefile
+dnl  TAO/TAO_IDL/narrow/Makefile
+dnl  TAO/TAO_IDL/util/Makefile
+dnl  TAO/tao/Makefile
+dnl  TAO/tao-config
+ ],
+ [
+  chmod 755 ace-config #TAO/tao-config
+  echo ""
+  echo "Configuration of ACE is now complete."
+  echo ""
+ ])
+
