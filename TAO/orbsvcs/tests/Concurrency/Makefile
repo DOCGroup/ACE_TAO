@@ -56,7 +56,9 @@ lex.CC_command.cpp:	CC_command.l CC_command.tab.h
 
 CC_command.tab.cpp CC_command.tab.h:	CC_command.y
 		bison -p CC_command -d CC_command.y
-		mv CC_command.tab.c CC_command.tab.cpp
+		rm -f CC_command.tab.cpp
+		sed 's/^#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi)/#if (!defined (__STDC__) \&\& defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi) || defined (__DECCXX_VER)/g' CC_command.tab.c > CC_command.tab.cpp
+		rm -f CC_command.tab.c
 
 CC_client:	$(addprefix $(VDIR),$(CC_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
