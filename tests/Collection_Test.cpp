@@ -30,7 +30,7 @@ UglyThing::UglyThing (void* alloc, deletion_func dfunc)
 {
 }
 
-int
+bool
 UglyThing::operator== (const UglyThing& r) const
 {
   return this->alloc_ == r.alloc_;

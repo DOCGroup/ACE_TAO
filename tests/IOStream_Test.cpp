@@ -76,7 +76,7 @@ public:
 
   qchar operator= (char c) { return c_ = c; }
 
-  int operator== (char c) { return c_ == c; }
+  bool operator== (char c) { return c_ == c; }
 
   friend ACE_SOCK_IOStream &operator>> (ACE_SOCK_IOStream & stream, qchar * buf);
   friend ACE_SOCK_IOStream &operator<< (ACE_SOCK_IOStream & stream, qchar * buf);
