@@ -1,3 +1,8 @@
+Sat Sep 12 18:45:03 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: Guarded the
+	  print_RTIpacket statements with TAO_debug_level > 0 condition.
+
 Sat Sep 12 18:05:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Invocation.cpp: 
