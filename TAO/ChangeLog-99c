@@ -1,3 +1,16 @@
+Wed Aug 18 17:04:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+	  There is a generated boolean variable called
+	  'result' that holds the status of the CDR op for
+	  the union's case, whichever it may be. This variable
+	  was initialized to 0. But if the discriminator is set
+	  to an implicit default value, the operator will just
+	  exit with a value of 0 and the (de)marshal will fail.
+	  Thanks to Anthony Shipman <als@aaii.oz.au> for 
+	  pointing this out and suggesting a fix (initialize
+	  the result variable to 1).
+
 Wed Aug 18 16:22:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
