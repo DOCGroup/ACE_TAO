@@ -1,3 +1,16 @@
+Wed Dec 24 13:44:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor/IORInterceptorC.{h,cpp}:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.{h,cpp}:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/Valuetype/AbstractBase.h:
+          Removed not needed ; after c++ namespace closure.
+
 Wed Dec 24 13:28:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any_Dual_Impl_T.h:
