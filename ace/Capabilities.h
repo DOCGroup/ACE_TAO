@@ -164,6 +164,24 @@ private:
   // This is the set of ACE_CapEntry.
 };
 
+static int
+is_empty (const ACE_TCHAR *line)
+{
+  while (*line && isspace (*line))
+    line++;
+
+  return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
+}
+
+static int
+is_line (const ACE_TCHAR *line)
+{
+  while (*line && isspace (*line))
+    line++;
+
+  return *line != ACE_TEXT ('\0');
+}
+
 #if defined (__ACE_INLINE__)
 #include "ace/Capabilities.i"
 #endif /* __ACE_INLINE__ */
