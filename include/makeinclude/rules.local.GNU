@@ -110,6 +110,12 @@ $(VDIR)%.o: %.cxx $(VDIR)%.creation_stamp
 	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
 	${MVCMD}
 
+  ifneq (,$(COMPILE.rc))
+$(VDIR)%.rc.o: %.rc $(VDIR)%.creation_stamp
+	$(COMPILE.rc) $< $@
+	${MVCMD}
+  endif # COMPILE.rc
+
 # If SOLINK is defined, then the .$(SOEXT) file is built from the
 # .$(OBJEXT) file via separate rules in the same directory.
 # Otherwise, the .$(SOEXT) and .$(OBJEXT) are built via the same rule.
