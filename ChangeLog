@@ -83,7 +83,7 @@ Thu May 13 14:40:12 2004  Steve Huston  <shuston@riverace.com>
 	  ACE_OS::default_win32_security_attributes_r().
 
 	Tue Mar 16 2004 <Ivan.Murphy@siemens.com> ACE version 5.4 P4
-	* ace/Service_Config.cpp: Insert component into repository before 
+	* ace/Service_Config.cpp: Insert component into repository before
           calling init as in the init the component may access the service
 	  repository.
 
