@@ -55,7 +55,7 @@ RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
 	        ACE_wrappers/ACE-lessons.html \
 		ACE_wrappers/ASNMP \
 	        ACE_wrappers/BIBLIOGRAPHY \
-	        ACE_wrappers/ChangeLog-97b \
+	        ACE_wrappers/ChangeLog \
 	        ACE_wrappers/ChangeLog-97a \
 	        ACE_wrappers/ChangeLog-96b \
 	        ACE_wrappers/ChangeLog-96a \
@@ -86,7 +86,7 @@ RELEASE_LIB_FILES = \
 #### If creating the "official" ACE release:
 #### 1) Check that the workspace is up-to-date, and bail out if not.
 #### 2) Update the timestamp in the VERSION file.
-#### 3) Add a ChangeLog entry to the newest ChangeLog plain file.
+#### 3) Add a ChangeLog entry to the ChangeLog plain file.
 #### Detect if we are creating the "official" release by looking at the PWD.
 #### To disable this feature, add "TIMESTAMP=" to the make command line.
 #### NOTE: if the version number in the VERSION file contains three components,
@@ -97,8 +97,7 @@ RELEASE_LIB_FILES = \
 ####       final release.
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
   TIMESTAMP = (lynx -dump ACE-INSTALL.html > ACE-INSTALL; \
-		CHANGELOG=`/pkg/gnu/bin/find -name 'ChangeLog*' -maxdepth 1 \
-                -type f | xargs ls -1t | head -1`; export CHANGELOG; \
+		CHANGELOG='ChangeLog'; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
               cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; s/$$/\\\n  /g'`; cd ACE_wrappers; \
