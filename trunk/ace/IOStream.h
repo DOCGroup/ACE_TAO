@@ -17,64 +17,6 @@
 //
 // ============================================================================
 
-/*
-    Changes 4/5/97
-
-    ACE_Streambuf
-	
-	New public functions added
-
-	    char * reset_get_buffer( char * newbuf, u_int bufsiz, u_int inuse )
-	    char * reset_put_buffer( char * newbuf, u_int bufsiz, u_int inuse )
-
-		Resets the get/put buffer and returns a pointer to the
-		previous buffer.
-
-		If newbuf is not NULL and bufsiz matches the current
-		streambuf_size_ value, then the current buffer will
-		be replaced by newbuf.  If the stream sizes do not match,
-		a NULL pointer is returned and the buffer left unchanged.
-
-		If newbuf is NULL, a new buffer will be allocated from
-		the heap.
-
-		This kind of thing is handy if you're chaining streams.
-		For instance, I have a stream built on a message queue
-		which marshals and sends data from one thread to another.
-		The receiving thread then sends that data to a peer()
-		via a stream built on a socket.  It is more efficient
-		to simply replace the socket stream's put buffer with that
-		of the message queue rather than copying the data from
-		one to another.
-
-	    u_int streambuf_size( void )
-
-		Get the size of the stream buffers.  Note that the get
-		and put buffers are the same size.
-
-	New protected functions added
-
-	    void reset_base( void )
-
-		Resets the base() pointers which toggle between get
-		and put mode as well as the cur_mode_ value.
-
-	Constructor changed
-
-	    Initialization of the get/put buffers was moved here from
-	    the derived class/template ACE_Streambuf_T<...>
-
-	    At the same time, the new functions reset_get/put_buffer
-	    are now used instead of the previous monolithic function.
-
-    ACE_Streambuf_T<...>
-
-	Constructor changed:
-
-	    Initialization of the get/put buffers has been moved to the
-	    baseclass ACE_Streambuf.  This will reduce template bloat
-	    as well as giving us more functionality as described above.
- */
 
 #if !defined (ACE_IOSTREAM_H)
 #define ACE_IOSTREAM_H

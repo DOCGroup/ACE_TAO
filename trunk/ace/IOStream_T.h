@@ -30,6 +30,15 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
+#if defined (ACE_HAS_STRING_CLASS)
+
+template <class STREAM> STREAM & operator>> (STREAM & stream, QuotedString & str);
+template <class STREAM> STREAM & operator<< ( STREAM & stream, QuotedString & str);
+
+#endif // defined (ACE_HAS_STRING_CLASS)
+
+///////////////////////////////////////////////////////////////////////////
+
 template <class STREAM>
 class ACE_Streambuf_T : public ACE_Streambuf
 {
@@ -129,12 +138,6 @@ public:
   virtual ACE_IOStream_T<STREAM> & operator<<(ACE_IOStream_String & v);
   // The converse of the String put operator.
 
-  virtual ACE_IOStream_T<STREAM> & operator>>(QuotedString &v);
-  // A more clever operator that handles quoted strings so that we
-  // can get strings containing whitespace!
-
-  virtual ACE_IOStream_T<STREAM> & operator<<(QuotedString &v);
-  // The converse of the QuotedString put operator.
 #endif /* ACE_HAS_STRING_CLASS */
 
   // = Using the macros to provide get/set operators.

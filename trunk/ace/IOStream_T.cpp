@@ -132,56 +132,46 @@ ACE_IOStream_T<STREAM>::operator<< (ACE_IOStream_String & v)
 // A more clever put operator for strings that knows how to
 // deal with quoted strings containing back-quoted quotes.
 //
-template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator>> (QuotedString & str)
+template <class STREAM> STREAM &
+operator>> (STREAM & stream, QuotedString & str)
 {
-  if (ipfx0 ())
-    {
       char c;
 
-      if (! (*this >> c)) // eat space up to the first char
-	// this->set (ios::eofbit|ios::failbit);
-	return *this;
+      if (! (stream >> c)) // eat space up to the first char
+	// stream.set (ios::eofbit|ios::failbit);
+	return stream;
 
       str = "";	// Initialize the string
 
       // if we don't have a quote, append until we see space
       if (c != '"')
-	for (str = c ; this->get (c) && !isspace (c) ; str += c)
+	for (str = c ; stream.get (c) && !isspace (c) ; str += c)
 	  continue;
       else
-	for (; this->get (c) && c != '"' ; str += c)
+	for (; stream.get (c) && c != '"' ; str += c)
 	  if (c == '\\')
 	    {
-	      this->get (c);
+	      stream.get (c);
 	      if (c != '"')
 		str += '\\';
 	    }
-    }
-
-  isfx ();
 	
-  return *this;
+  return stream;
 }
 
-template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator<< (QuotedString & str)
+template <class STREAM> STREAM &
+operator<< ( STREAM & stream, QuotedString & str)
 {
-  if (opfx ())
-  {
-	this->put ('"');
+	stream.put ('"');
 	for (u_int i = 0 ; i < str.length () ; ++i)
 	{
 		if (str[i] == '"')
-			this->put ('\\');
-		this->put (str[i]);
+			stream.put ('\\');
+		stream.put (str[i]);
 	}
-	this->put ('"');
-  }
+	stream.put ('"');
 
-  osfx ();
-
-  return *this;
+  return stream;
 }
 
 #endif /* ACE_HAS_STRING_CLASS */
