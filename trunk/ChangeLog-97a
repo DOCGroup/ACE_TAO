@@ -1,3 +1,32 @@
+Tue Mar 18 01:38:14 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+        * ace/ace.mdp: Add DllMain as the entry point of ace.dll.  This
+	  allows us to call WSAStartup when ace.dll is loaded in and
+	  WSACleanup when ace.dll is unloaded.  People using ace as a
+	  static library are still out in the cold with respect of getting
+	  WSACleanup called before the process exits. 
+ 	
+	  I am not sure of two cases: (1) What happens when an application
+ 	  crashes and was not able to call WSACleanup and (2) if the
+	  application wants to continue using sockets when ace.dll is
+	  unloaded.  I hope this solves more problems than it creates ;-)
+
+Tue Mar 18 01:38:14 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Parse_Node.cpp: Added END_OF_LINE characters to some
+ 	  ACE_ERRORs.
+
+	* netsvcs/{lib,servers}: Fixed the project files to produce and
+	  use the dll in the correct place (which is netsvcs/lib).
+
+	* ace/Log_Record.cpp: Corrected format string for fprintf().
+
+	* examples/Threads/test.mdp: Added context_switch_time.cpp to the
+	  project.
+
+	  All of the above bugs were reported by Luca Priorelli
+	  <lucapri@mbox.vol.it>.  Thanks for the contribution.
+
 Mon Mar 17 12:59:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,i}: added nanosleep (), currently supported only
