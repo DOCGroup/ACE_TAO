@@ -35,6 +35,8 @@ typedef ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
 typedef ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
   TAO_Persistent_IntId> CONTEXT;
 
+  virtual ~TAO_Index (void);
+  // Destructor.
 
   virtual int bind (const char *poa_id,
                     ACE_UINT32* & counter,

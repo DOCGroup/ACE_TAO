@@ -93,7 +93,7 @@ TAO_Persistent_Bindings_Map::destroy (void)
   allocator_->free (map_);
 }
 
-HASH_MAP*
+HASH_MAP *
 TAO_Persistent_Bindings_Map::map (void)
 {
   return map_;
@@ -218,7 +218,7 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IndId>;
+template class ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Shared_Hash_Map<TAO_Persistent_ExtId, TAO_Persistent_IndId>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
