@@ -1,18 +1,40 @@
 Fri Jul 06 11:39:41 2001  Steve Huston  <shuston@riverace.com>
-
+  
         * ace/INET_Addr.h: Clarified (and improved doxygenation) of
           constructor and set() methods regarding byte orders.
 
         * tests/Max_Default_Port_Test.icc: New file for this test.
         * tests/tests.icp: Added Max_Default_Port_Test
 
+Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Makefile (LOGGING_FILES): Added support for
+	  Log_Msg_UNIX_Syslog.  
+
+	* ace/Log_Msg_UNIX_Syslog.{h,cpp}: 
+	* ace/Log_Msg.cpp,
+	* ace/OS.h: Added support for a new UNIX syslog backend for the
+	  ACE_Log_Msg class.  Thanks to Jerry D. De Master
+ 	  <jdemaster@rite-solutions.com> and Robert Davidson
+ 	  <robert@rdavidson.freeserve.co.uk>.
+
+	* ace/SOCK_Dgram.h: Fixed a typo in one of the send() method
+	  comments.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be> for
+ 	  reporting this.
+
+	* ace/config-macosx.h: Added a new file courtesy of John
+	  Zorko so that things will work on MacOSX.
+
 Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
 
-        * netsvcs/Makefile:
+        * netsvcs/Makefile: Don't build this if ACE_COMPONENTS does not
+	  contain Other.  The netsvcs library requires Naming_Context.
+	
+Thu Jul  5 23:22:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-          Don't build this if ACE_COMPONENTS does not contain Other.
-          The netsvcs library requires Naming_Context.
-
+	  Fixes that were required for fixing bug 575. Merged in from
+	  branch bug_575_stage_2.  
+  
 Thu Jul  5 23:22:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  Fixes that were required for fixing bug 575. Merged in from
@@ -70,8 +92,6 @@ Fri Jun 22 16:52:13 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 	  incrementing the ref count) if it is on the heap.
 
 	END of entries from bug_575_stage_2.
-	
-
 
 Thu Jul  5 22:07:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -391,7 +411,7 @@ Fri Jun 29 10:14:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  this.
 
 	* include/makeinclude/platform_macosx.GNU (CC): Changed
-	  the -fimplict-templates to -fno-implicit-templates.  Thanks to
+	  the -fno-implict-templates to -fimplicit-templates.  Thanks to
  	  John Zorko <j.zorko@att.net> for contributing this.
 
 Wed Jun 27 12:00:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
