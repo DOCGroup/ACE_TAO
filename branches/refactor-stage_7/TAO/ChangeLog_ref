@@ -1,3 +1,7 @@
+Sat Oct  4 23:13:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Client_Task.cpp: Cosmetic fix.
+
 Sat Oct  4 23:09:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp: Call
