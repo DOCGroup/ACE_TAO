@@ -1,3 +1,10 @@
+Mon Dec 18 23:17:58 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/DomainS.cpp:
+
+	  Fixed compile-time error that occurs when Interface Repository
+	  support is enabled.
+
 Mon Dec 18 19:18:51 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Server_Protocol/server.cpp : 
@@ -5,7 +12,7 @@ Mon Dec 18 19:18:51 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  In check_default_server_protocol, changed the type of the
 	  variable server_protocol to CORBA::Policy * and later did the
 	  necessary narrows.
-	
+
 Mon Dec 18 19:03:10 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/TAO.dsp

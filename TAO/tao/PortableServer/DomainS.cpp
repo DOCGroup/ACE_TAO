@@ -806,6 +806,7 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
     );
   POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager ri (
       _tao_server_request,
+      _tao_impl,
       object_type.in (),
       constr_policy,
       ACE_TRY_ENV
