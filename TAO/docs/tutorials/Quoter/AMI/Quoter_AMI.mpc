@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver, ami  {
+project(*client) : taoexe, portableserver, ami, exceptions  {
   requires += exceptions
   source_files {
     client.cpp
@@ -9,8 +9,7 @@ project(*client) : taoexe, portableserver, ami  {
   }
 }
 
-project(*server) : taoexe, portableserver, ami {
-  requires += exceptions
+project(*server) : taoserver, ami, exceptions {
   source_files {
     server.cpp
     Stock_Factory_i.cpp

@@ -1,9 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoexe, portableserver {
+project : taoserver, exceptions {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../../idl
-  requires += exceptions
 }

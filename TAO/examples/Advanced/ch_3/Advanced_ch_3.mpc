@@ -1,15 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver {
-  requires += exceptions corba_messaging
+project(*client) : taoclient, exceptions {
+  requires += corba_messaging
   source_files {
+    timeC.cpp
     client.cpp
   }
 }
 
-project(*server) : taoexe, portableserver {
-  requires += exceptions
+project(*server) : taoserver, exceptions {
   source_files {
     server.cpp
   }

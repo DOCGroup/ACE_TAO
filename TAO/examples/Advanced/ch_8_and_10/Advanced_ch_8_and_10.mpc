@@ -1,15 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoexe, portableserver {
-  requires += exceptions dummy_label
+project(*client) : taoexe, portableserver, exceptions {
+  requires += dummy_label
   source_files {
     client.cpp
   }
 }
 
-project(*server) : taoexe, portableserver {
-  requires += exceptions dummy_label
+project(*server) : taoserver, exceptions {
+  requires += dummy_label
   source_files {
     server.cpp
     icp.cpp

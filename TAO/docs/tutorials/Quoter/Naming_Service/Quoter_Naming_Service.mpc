@@ -1,8 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : orbsvcsexe, portableserver, naming  {
-  requires += exceptions
+project(*client) : orbsvcsexe, portableserver, naming, exceptions  {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../idl
@@ -11,8 +10,7 @@ project(*client) : orbsvcsexe, portableserver, naming  {
   }
 }
 
-project(*server) : orbsvcsexe, portableserver, naming {
-  requires += exceptions
+project(*server) : orbsvcsexe, portableserver, naming, exceptions {
   libs += Quoter_Idl_Lib
   after += Quoter_Idl_Lib
   includes += ../idl
