@@ -1,9 +1,15 @@
+Sat Feb 20 00:33:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Do not check for library type on CE.
+
+	* ace/config-WinCE.h: Defined ACE_HAS_WINCE as 1.
+
 Fri Feb 19 22:54:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h: 
+	* ace/OS.h:
 	  Fixed the return types for ACE_OS_WString and ACE_OS_CString
 	  assignment operators, even though they are not defined they
-	  should be declared to return something, otherwise egcs give us a 
+	  should be declared to return something, otherwise egcs give us a
 	  ton of warnings.
 
 Fri Feb 19 21:02:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -15,7 +21,7 @@ Fri Feb 19 21:02:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Feb 19 21:44:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ace/OS.i: Was using two many arguments to thread_mutex_lock () 
+        * ace/OS.i: Was using two many arguments to thread_mutex_lock ()
           and ACE_OS::thread_mutex_trylock ().
 
         * ace/Synch.i: Typo in comment
