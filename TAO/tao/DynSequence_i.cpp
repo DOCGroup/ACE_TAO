@@ -415,7 +415,7 @@ TAO_DynSequence_i::current_component (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
 
       this->da_members_[this->current_index_] =
-        TAO_DynAny_i::create_dyn_any (tc,
+        TAO_DynAny_i::create_dyn_any (tc.in (),
                                       ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
     }

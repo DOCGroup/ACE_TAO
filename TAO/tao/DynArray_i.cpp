@@ -72,7 +72,7 @@ TAO_DynArray_i::TAO_DynArray_i (const CORBA_Any& any)
               ACE_TRY_CHECK;
 
               // Move to the next field in the CDR stream.
-              cdr.skip (field_tc);
+              cdr.skip (field_tc.in ());
             }
         }
       else
