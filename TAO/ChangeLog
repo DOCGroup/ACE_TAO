@@ -1,3 +1,9 @@
+Wed Dec  3 08:23:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+          Replaced NULL with 0 and initialised local variable with 0 to
+          fix Solaris warning
+
 Wed Dec  3 08:11:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ORT/ORT.mpc:
