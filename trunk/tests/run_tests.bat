@@ -64,6 +64,7 @@ if not "%arg%" == "" goto runtest
 
 call %run_cmd% %dopure% %platform% ACE_Init_Test
 call %run_cmd% %dopure% %platform% Atomic_Op_Test
+call %run_cmd% %dopure% %platform% Auto_IncDec_Test
 call %run_cmd% %dopure% %platform% Barrier_Test
 call %run_cmd% %dopure% %platform% Basic_Types_Test
 call %run_cmd% %dopure% %platform% Buffer_Stream_Test
