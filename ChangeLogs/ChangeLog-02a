@@ -1,3 +1,17 @@
+Sat Dec 22 23:12:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Misc/Misc.dsw:
+	* examples/Misc/test_XtReactor1.dsp:
+	* examples/Misc/test_XtReactor2.dsp:
+	* examples/Misc/test_dump.dsp:
+	* examples/Misc/test_get_opt.dsp:
+	* examples/Misc/test_profile_timer.dsp:
+	* examples/Misc/test_read_buffer.dsp:
+	* examples/Misc/test_set.dsp:
+	* examples/Misc/test_sstring.dsp:
+	* examples/Misc/test_trace.dsp:
+	  Add yet more missing project files.
+
 Sat Dec 22 11:27:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/auto_compile:
