@@ -43,7 +43,6 @@ LOGGING_FILES = \
   Dump \
   Log_Msg \
   Log_Msg_Manager \
-  Log_Msg_s \
   Log_Record \
   Trace
 THREADS_FILES = \
@@ -330,15 +329,17 @@ ifneq (,$(findstring Memory,$(ACE_COMPONENTS)))
   FILES += $(MEMORY_FILES)
 endif # Memory
 
-ifneq (,$(findstring Token,$(ACE_COMPONENTS)))
+ifeq (,$(findstring Token,$(ACE_COMPONENTS)))
+  CCFLAGS += -DACE_LACKS_ACE_TOKEN
+else  # ! Token
   FILES += $(TOKEN_FILES)
-endif # Token
+endif # ! Token
 
 ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
   CCFLAGS += -DACE_LACKS_ACE_OTHER
-else
+else  # ! Other
   FILES += $(OTHER_FILES)
-endif # Other
+endif # ! Other
 
 ifeq ($(AIX_TEMPLATE_HACK),1)
   FILES = 0_ACE_All_Src
@@ -347,12 +348,34 @@ endif
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
-BUILD += ACE_COMPONENTS
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+
+ifeq (1,$(VXWORKS))
+  ifeq (1,$(shared_libs))
+    BUILD += libACE_s.a
+
+    ifneq (,$(findstring OS,$(ACE_COMPONENTS)))
+      ACE_STATIC_FILES += OS_s
+    endif # OS
+    ifneq (,$(findstring Utils,$(ACE_COMPONENTS)))
+      ACE_STATIC_FILES += Object_Manager_s
+    endif # Utils
+    ifneq (,$(findstring Logging,$(ACE_COMPONENTS)))
+      ACE_STATIC_FILES += Log_Msg_s
+    endif # Logging
+  endif # shared_libs
+
+  ACE_STATIC_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(ACE_STATIC_FILES)))
+
+  libACE_s.a: $(ACE_STATIC_OBJS)
+	$(AR) $(ARFLAGS) $@ $?
+endif # VXWORKS
+
+BUILD += ACE_COMPONENTS
+
 #### Disable installs in this ($(ACE_ROOT)/ace) directory, because this
 #### is the (default) destination of installs anyways.  This line prevents
 #### creation of a link from the ACE library to itself when the build of

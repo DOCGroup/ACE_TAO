@@ -6991,6 +6991,77 @@ private:
   // use by this thread.
 };
 
+class ACE_TSS_Cleanup
+  // = TITLE
+  //     Singleton that knows how to clean up all the thread-specific
+  //     resources for Win32.
+  //
+  // = DESCRIPTION
+  //     All this nonsense is required since Win32 doesn't
+  //     automatically cleanup thread-specific storage on thread exit,
+  //     unlike real operating systems... ;-)
+  //
+  //     For internal use by ACE, only!
+{
+public:
+  static ACE_TSS_Cleanup *instance (void);
+
+  ~ACE_TSS_Cleanup (void);
+
+  void exit (void *status);
+  // Cleanup the thread-specific objects.  Does _NOT_ exit the thread.
+
+  int insert (ACE_thread_key_t key, void (*destructor)(void *), void *inst);
+  // Insert a <key, destructor> tuple into the table.
+
+  int remove (ACE_thread_key_t key);
+  // Remove a <key, destructor> tuple from the table.
+
+  int detach (void *inst);
+  // Detaches a tss_instance from its key.
+
+  void key_used (ACE_thread_key_t key);
+  // Mark a key as being used by this thread.
+
+  int free_all_keys_left (void);
+  // Free all keys left in the table before destruction.
+
+  static int lockable () { return instance_ != 0; }
+  // Indication of whether the ACE_TSS_CLEANUP_LOCK is usable, and
+  // therefore whether we are in static constructor/destructor phase
+  // or not.
+
+protected:
+  void dump (void);
+
+  ACE_TSS_Cleanup (void);
+  // Ensure singleton.
+
+private:
+  // Array of <ACE_TSS_Info> objects.
+  typedef ACE_TSS_Info ACE_TSS_TABLE[ACE_DEFAULT_THREAD_KEYS];
+  typedef ACE_TSS_Info *ACE_TSS_TABLE_ITERATOR;
+
+  ACE_TSS_TABLE table_;
+  // Table of <ACE_TSS_Info>'s.
+
+  ACE_thread_key_t in_use_;
+  // Key for the thread-specific array of whether each TSS key is in use.
+
+  ACE_TSS_Keys *tss_keys ();
+  // Accessor for this threads ACE_TSS_Keys instance.
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  ACE_thread_key_t in_use_key_;
+  // Key that is used by in_use_.  We save this key so that we know
+  // not to call its destructor in free_all_keys_left ().
+#endif /* ACE_HAS_TSS_EMULATION */
+
+  // = Static data.
+  static ACE_TSS_Cleanup *instance_;
+  // Pointer to the singleton instance.
+};
+
 # endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
 
 class ACE_Export ACE_OS_WString
