@@ -88,8 +88,11 @@ Session::svc (void)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-  this->_remove_ref();
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
@@ -135,12 +138,14 @@ Session::start (const Test::Session_List &other_sessions
         // access to this object....
         ACE_TRY
           {
-            this->_add_ref ();
+            this->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
 
             if (this->task_.activate (
                     THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
               {
-                this->_remove_ref ();
+                this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+                ACE_TRY_CHECK;
               }
             else
               {

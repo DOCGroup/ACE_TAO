@@ -208,10 +208,11 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &,
                                 PortableServer::Servant servant,
                                 CORBA::Boolean,
                                 CORBA::Boolean
-                                ACE_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  servant->_remove_ref ();
+  servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 int

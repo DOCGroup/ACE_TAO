@@ -1,3 +1,24 @@
+Thu Sep 18 09:56:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Abstract_Servant_Base.cpp:
+	* tao/Abstract_Servant_Base.h: Added environment variables to the
+	  the _add_ref and _remove_ref operations. 
+	
+	* tao/PortableServer/POA.cpp
+	* tao/PortableServer/Servant_Base.cpp
+	* tao/PortableServer/Servant_Base.h:
+	* tao/Utils/Servant_Var.inl:
+	* tests/Big_Oneways/Session.cpp:
+	* tests/Big_Oneways/server.cpp:
+	* tests/Big_Twoways/Session.cpp:
+	* tests/Big_Twoways/server.cpp:
+	* tests/Objref_Sequence_Test/server.cpp:
+	* tests/POA/Etherealization/Etherealization.cpp:
+	* tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
+	* tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.cpp:
+	* tests/RTScheduling/VoidData/testC.h: Changes forced by the above
+	  change.
+	
 Thu Sep 18 09:11:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:

@@ -1141,7 +1141,8 @@ TAO_POA::get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
       // conforming caller need not invoke _remove_ref on the returned
       // Servant if the type of the Servant uses the default reference
       // counting inherited from ServantBase.
-      result->_add_ref ();
+      result->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       return result;
     }
@@ -1189,7 +1190,8 @@ TAO_POA::set_servant_i (PortableServer::Servant servant
       TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
-      servant->_add_ref ();
+      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -1357,7 +1359,8 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // least once on the Servant argument before returning. When the POA
   // no longer needs the Servant, it will invoke _remove_ref on it the
   // same number of times.
-  servant->_add_ref ();
+  servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
 
   return user_id._retn ();
@@ -1480,7 +1483,8 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // _add_ref at least once on the Servant argument before
   // returning. When the POA no longer needs the Servant, it will
   // invoke _remove_ref on it the same number of times.
-  servant->_add_ref ();
+  servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -1750,7 +1754,8 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
           TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          active_object_map_entry->servant_->_remove_ref ();
+          active_object_map_entry->servant_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
         }
     }
 
@@ -2076,7 +2081,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
       // is invoked at least once on the Servant argument before
       // returning. Otherwise, the POA does not increment or decrement
       // the reference count of the Servant passed to this function.
-      servant->_add_ref ();
+      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       return user_id._retn ();
     }
@@ -2190,7 +2196,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // is invoked at least once on the Servant argument before
       // returning. Otherwise, the POA does not increment or decrement
       // the reference count of the Servant passed to this function.
-      servant->_add_ref ();
+      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       return system_id._retn ();
     }
@@ -2377,7 +2384,8 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
       // conforming caller need not invoke _remove_ref on the returned
       // Servant if the type of the Servant uses the default reference
       // counting inherited from ServantBase.
-      servant->_add_ref ();
+      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       return servant;
     }
@@ -2538,7 +2546,8 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id
       // conforming caller need not invoke _remove_ref on the returned
       // Servant if the type of the Servant uses the default reference
       // counting inherited from ServantBase.
-      servant->_add_ref ();
+      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
       return servant;
     }
