@@ -1,3 +1,43 @@
+Tue Oct 10 14:52:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/Any.i:
+	* tao/Any.cpp:
+
+	  Added missing insertion/extraction operators for
+	  Any_var and bounded wstrings. Thanks to
+	  Mateu Batle <mbatle@iname.com> for reporting
+	  this bug. Also made cosmetic changes to all Any 
+	  files.
+
+	* tao/ifrfwd.h:
+
+	  Removed the 'TAO_Export' from the DefinitionKind
+	  enum in the IR namespace. Since the namespace is
+	  exported, the enum shouldn't be, and none of the other
+	  enums are.
+
+	* tao/DomainC.h:
+	* tao/DomainC.cpp:
+	* tao/PortableServer/DomainS.h:
+	* tao/PortableServer/DomainS.cpp:
+
+	  Made the constructor signature and the private member
+	  types agree for the portable interceptor classes
+	  TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager
+	  and
+	  TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager.
+	  The generated code has already been fixed in the IDL compiler.
+
+	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for reporting 
+	  the above pair of bugs.
+
+	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+
+	  While investigatiing the last bug above, came across another 
+	  mismatch of the same type, for interfaces and pseudo objects, 
+	  but only on the skeleton side.
+
 Tue Oct 10 14:15:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Makefile.bor (DIRS): Updated the list of subdirectories
