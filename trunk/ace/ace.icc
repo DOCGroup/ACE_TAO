@@ -225,11 +225,13 @@ group DEMUX_INCLUDES =
 group CONNECTION_FILES =
   "Asynch_IO.cpp",
   "Asynch_IO_Impl.cpp",
+  "Asynch_Pseudo_Task.cpp",
   "POSIX_Asynch_IO.cpp"
 
 group CONNECTION_INCLUDES =
   "Asynch_IO.h",
   "Asynch_IO_Impl.h",
+  "Asynch_Pseudo_Task.h",
   "POSIX_Asynch_IO.h"
 
 group SOCKETS_FILES =
@@ -486,6 +488,7 @@ group TEMPLATE_FILES =
 	   "Unbounded_Set.cpp",
 	   "Unbounded_Queue.cpp",
            "Asynch_Acceptor.cpp",
+           "Asynch_Connector.cpp",
            "Auto_IncDec_T.cpp",
            "Auto_Ptr.cpp",
            "Based_Pointer_T.cpp",
