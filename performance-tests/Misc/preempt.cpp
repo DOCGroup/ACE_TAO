@@ -140,10 +140,6 @@ High_Priority_Task::open (void *)
 int
 High_Priority_Task::svc (void)
 {
-  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
-  // ACE way to do that . . .
-  ACE_OS::thr_setprio (priority_);
-
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -242,10 +238,6 @@ Low_Priority_Task::open (void *)
 int
 Low_Priority_Task::svc (void)
 {
-  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
-  // ACE way to do that . . .
-  ACE_OS::thr_setprio (priority_);
-
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
