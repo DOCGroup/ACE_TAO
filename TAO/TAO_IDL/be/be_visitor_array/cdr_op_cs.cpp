@@ -132,7 +132,7 @@ be_visitor_array_cdr_op_cs::visit_typedef (be_typedef *)
 
 // helper
 int
-be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
+be_visitor_array_cdr_op_cs::visit_node (be_type *)
 {
   return 0;
 }
