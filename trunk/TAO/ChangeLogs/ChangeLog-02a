@@ -1,3 +1,17 @@
+Fri Oct 19 12:14:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/tao_ifr.cpp:
+
+          The tao_ifr backend initializes an ORB, and any -ORBxxx
+          args passed in are stripped away by ORB_init(). However,
+          if tao_ifr is processing more than one file at a time, the
+          child process(es) are spawned AFTER this happens, (for a
+          reason too lengthy to explain here) and so they are not seeing
+          these args. So a method was added to save the -ORBxxx args
+          before the backend is initialized, concatentate them, and
+          pass them to DRV_fork() where the rest of the command line
+          args are appended before being passed to ACE_Process::spawn().
+
 Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:
