@@ -1,3 +1,10 @@
+Tue Feb 22 13:28:19 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp: 
+	
+          Fixed compile errors on Redhat Linux. Thanks to
+          Alex Luk <fluk7@ie.cuhk.edu.hk> for reporting this.
+	
 Tue Feb 22 10:33:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
