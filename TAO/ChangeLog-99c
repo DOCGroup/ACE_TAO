@@ -1,3 +1,9 @@
+Tue May 25 10:06:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Request.cpp: Moved the #endif for TAO_HAS_MINIMUM_CORBA
+	  after the template instantiations.  Thanks to Andreas
+	  <andreas.terstegge@nokia.com> for pointing this out.
+
 Tue May 25 10:23:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/SOCK_Send_Recv_Test.cpp:
@@ -6,7 +12,7 @@ Tue May 25 10:23:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  reinterpret_cast.
 
 	* TAO_IDL/be/be_union.cpp:
-	  Fixed a signed/unsigned mismatch and an unused 
+	  Fixed a signed/unsigned mismatch and an unused
 	  variable warning.
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
