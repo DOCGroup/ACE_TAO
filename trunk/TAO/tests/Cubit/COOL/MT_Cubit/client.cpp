@@ -39,6 +39,8 @@ initialize (void)
 int
 do_priority_inversion_test (Task_State &ts)
 {
+  u_int i = 0;
+
   // Create the clients
   Client high_priority_client (&ts);
   Client low_priority_client (&ts);
@@ -72,7 +74,7 @@ do_priority_inversion_test (Task_State &ts)
   
   // Drop the priority, so that the priority of clients will increase
   // with increasing client number.
-  for (int i = 0; i < ts.thread_count_; i++)
+  for (i = 0; i < ts.thread_count_; i++)
     priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                     priority,
                                                     ACE_SCOPE_THREAD);
@@ -82,7 +84,7 @@ do_priority_inversion_test (Task_State &ts)
               ts.thread_count_ - 1,
               priority));
 
-  for (u_int i = 0; i < ts.thread_count_ - 1; i++)
+  for (i = 0; i < ts.thread_count_ - 1; i++)
     {
       // The first thread starts at min + 1, since the minimum
       // priority thread is the utilization thread.
