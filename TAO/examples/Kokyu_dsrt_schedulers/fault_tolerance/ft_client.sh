@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source ~/.linux.sh
-./ft_client
+./ft_client -n 10

@@ -105,13 +105,7 @@ main (int argc, char *argv[])
 
 //  TAO_debug_level =1;
 
-   CPULoad::calibrate(10);
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
-
-//print out the start time of the program.
-  ACE_Time_Value start_time=ACE_OS::gettimeofday();
-  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
-  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
   ACE_TRY_NEW_ENV
     {
@@ -226,6 +220,15 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
+
+  ACE_OS::printf ( ACE_TEXT ("The Client_and_Server has generated %s\n"),ior_output_file);
+
+  CPULoad::calibrate(5);
+
+//print out the start time of the program.
+  ACE_Time_Value start_time=ACE_OS::gettimeofday();
+  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
