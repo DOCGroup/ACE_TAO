@@ -6,7 +6,7 @@
 #  include "ace/Service_Config.h"
 #endif /* !ACE_HAS_WINCE */
 #include "ace/SString.h"
-#include "Auto_Ptr.h"
+#include "ace/Auto_Ptr.h"
 
 #include "ace/streams.h"
 
