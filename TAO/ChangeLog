@@ -1,3 +1,14 @@
+Tue Sep 16 20:21:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp (visit_sequence):
+
+          Added code to set the field_node_ member of the sequence
+          being visited, which ensures the correct name will be
+          generated for anonymous sequence members of valuetypes,
+          similarly to the way it works for structs and unions.
+          Thanks to Jeff Dugan <jdugan@orincon.com> for sending in
+          the example IDL file that uncovered the bug.
+
 Tue Sep 16 12:23:45 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/Utils/Utils.mpc:
