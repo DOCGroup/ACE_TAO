@@ -9,7 +9,11 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	benchmark \
-	sfp
+	Pluggable \
+	Full_Profile \
+	Multicast \
+	Multicast_Full_Profile
+ 
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
