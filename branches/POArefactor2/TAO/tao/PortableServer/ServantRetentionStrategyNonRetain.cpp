@@ -9,15 +9,15 @@
  */
 //=============================================================================
 
-#include "ServantRetentionStrategyNonRetain.h"
-#include "Request_Processing_Strategy.h"
-#include "ImplicitActivationStrategy.h"
-#include "tao/PortableServer/Id_Uniqueness_Strategy.h"
-#include "Lifespan_Strategy.h"
-#include "Non_Servant_Upcall.h"
-#include "Servant_Upcall.h"
-#include "POA_Current_Impl.h"
-#include "POA.h"
+#include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/ImplicitActivationStrategy.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
+#include "tao/PortableServer/LifespanStrategy.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/POA.h"
 #include "tao/debug.h"
 #include "tao/TSS_Resources.h"
 

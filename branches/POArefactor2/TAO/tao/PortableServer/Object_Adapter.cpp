@@ -54,7 +54,7 @@
 #include "RequestProcessingPolicyFactory.h"
 #include "ServantRetentionPolicyFactory.h"
 
-#include "Lifespan_Strategy.h"
+#include "LifespanStrategy.h"
 
 #include "ace/Dynamic_Service.h"
 

@@ -45,10 +45,10 @@ ACE_RCSID (PortableServer,
 #include "poa_macros.h"
 #include "POA_Guard.h"
 
-#include "tao/PortableServer/Request_Processing_Strategy.h"
-#include "tao/PortableServer/Lifespan_Strategy.h"
-#include "tao/PortableServer/Id_Uniqueness_Strategy.h"
-#include "tao/PortableServer/Id_Assignment_Strategy.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/LifespanStrategy.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
+#include "tao/PortableServer/IdAssignmentStrategy.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 
 // auto_ptr class

@@ -10,10 +10,10 @@
 //=============================================================================
 
 #include "ServantRetentionStrategyRetain.h"
-#include "Request_Processing_Strategy.h"
+#include "RequestProcessingStrategy.h"
 #include "ImplicitActivationStrategy.h"
-#include "tao/PortableServer/Id_Uniqueness_Strategy.h"
-#include "Lifespan_Strategy.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
+#include "LifespanStrategy.h"
 #include "tao/ORB_Core.h"
 #include "Non_Servant_Upcall.h"
 #include "Servant_Upcall.h"
