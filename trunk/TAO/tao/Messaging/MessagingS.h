@@ -25,7 +25,7 @@
 #include "ace/pre.h"
 
 #include "messaging_export.h"
-#include "MessagingC.h"
+#include "Messaging.h"
 #include "tao/PortableServer/PolicyS.h"
 #include "tao/TimeBaseS.h"
 #include "tao/Messaging_SyncScopeC.h"

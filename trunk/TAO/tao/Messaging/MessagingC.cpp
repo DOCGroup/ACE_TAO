@@ -19,7 +19,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "MessagingC.h"
+#include "Messaging.h"
 
 #include "tao/Stub.h"
 #include "tao/Invocation.h"

@@ -22,6 +22,10 @@
 #ifndef _TAO_IDL_ORIG_MESSAGINGC_H_
 #define _TAO_IDL_ORIG_MESSAGINGC_H_
 
+#ifndef TAO_MESSAGING_SAFE_INCLUDE
+#error "You should not include MessagingC.h directly, use Messaging.h"
+#endif /* !TAO_MESSAGING_SAFE_INCLUDE */
+
 #include "ace/pre.h"
 #include "tao/orbconf.h"
 
@@ -79,82 +83,82 @@ TAO_NAMESPACE  Messaging
   typedef CORBA::Short RebindMode;
   typedef CORBA::Short_out RebindMode_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RebindMode;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short TRANSPARENT;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short NO_REBIND;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short NO_RECONNECT;
-  
+
   typedef CORBA::Short RoutingType;
   typedef CORBA::Short_out RoutingType_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RoutingType;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ROUTE_NONE;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ROUTE_FORWARD;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ROUTE_STORE_AND_FORWARD;
-  
+
   typedef TimeBase::TimeT Timeout;
   typedef TimeBase::TimeT_out Timeout_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Timeout;
-  
+
   typedef CORBA::Short Priority;
   typedef CORBA::Short_out Priority_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Priority;
-  
+
   typedef CORBA::UShort Ordering;
   typedef CORBA::UShort_out Ordering_out;
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Ordering;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort ORDER_ANY;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort ORDER_TEMPORAL;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort ORDER_PRIORITY;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort ORDER_DEADLINE;
-  
+
 #if (TAO_HAS_REBIND_POLICY == 1)
 
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REBIND_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_REBINDPOLICY___PTR_CH_)
 #define _MESSAGING_REBINDPOLICY___PTR_CH_
-  
+
   class RebindPolicy;
   typedef RebindPolicy *RebindPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REBINDPOLICY___VAR_CH_)
 #define _MESSAGING_REBINDPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export RebindPolicy_var : public TAO_Base_var
   {
   public:
     RebindPolicy_var (void); // default constructor
-    RebindPolicy_var (RebindPolicy_ptr p) : ptr_ (p) {} 
+    RebindPolicy_var (RebindPolicy_ptr p) : ptr_ (p) {}
     RebindPolicy_var (const RebindPolicy_var &); // copy constructor
     ~RebindPolicy_var (void); // destructor
-    
+
     RebindPolicy_var &operator= (RebindPolicy_ptr);
     RebindPolicy_var &operator= (const RebindPolicy_var &);
     RebindPolicy_ptr operator-> (void) const;
-    
+
     operator const RebindPolicy_ptr &() const;
     operator RebindPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RebindPolicy_ptr in (void) const;
     RebindPolicy_ptr &inout (void);
     RebindPolicy_ptr &out (void);
     RebindPolicy_ptr _retn (void);
     RebindPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RebindPolicy_ptr tao_duplicate (RebindPolicy_ptr);
@@ -165,7 +169,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RebindPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -175,11 +179,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REBINDPOLICY___OUT_CH_)
 #define _MESSAGING_REBINDPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export RebindPolicy_out
   {
   public:
@@ -192,24 +196,24 @@ TAO_NAMESPACE  Messaging
     operator RebindPolicy_ptr &();
     RebindPolicy_ptr &ptr (void);
     RebindPolicy_ptr operator-> (void);
-  
+
   private:
     RebindPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::RebindPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REBINDPOLICY_CH_)
 #define _MESSAGING_REBINDPOLICY_CH_
-  
+
   class TAO_Messaging_Export RebindPolicy
     : public virtual CORBA::Policy
   {
@@ -220,94 +224,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RebindPolicy_ptr _duplicate (RebindPolicy_ptr obj);
-    
+
     static RebindPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RebindPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RebindPolicy_ptr _nil (void)
       {
         return (RebindPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual Messaging::RebindMode rebind_mode (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RebindPolicy (void);
-    
+
     virtual ~RebindPolicy (void);
-  
+
   private:
     RebindPolicy (const RebindPolicy &);
     void operator= (const RebindPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RebindPolicy;
-  
+
 #endif /* TAO_HAS_REBIND_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SYNC_SCOPE_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___PTR_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY___PTR_CH_
-  
+
   class SyncScopePolicy;
   typedef SyncScopePolicy *SyncScopePolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___VAR_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export SyncScopePolicy_var : public TAO_Base_var
   {
   public:
     SyncScopePolicy_var (void); // default constructor
-    SyncScopePolicy_var (SyncScopePolicy_ptr p) : ptr_ (p) {} 
+    SyncScopePolicy_var (SyncScopePolicy_ptr p) : ptr_ (p) {}
     SyncScopePolicy_var (const SyncScopePolicy_var &); // copy constructor
     ~SyncScopePolicy_var (void); // destructor
-    
+
     SyncScopePolicy_var &operator= (SyncScopePolicy_ptr);
     SyncScopePolicy_var &operator= (const SyncScopePolicy_var &);
     SyncScopePolicy_ptr operator-> (void) const;
-    
+
     operator const SyncScopePolicy_ptr &() const;
     operator SyncScopePolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     SyncScopePolicy_ptr in (void) const;
     SyncScopePolicy_ptr &inout (void);
     SyncScopePolicy_ptr &out (void);
     SyncScopePolicy_ptr _retn (void);
     SyncScopePolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static SyncScopePolicy_ptr tao_duplicate (SyncScopePolicy_ptr);
@@ -318,7 +322,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     SyncScopePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -328,11 +332,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___OUT_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export SyncScopePolicy_out
   {
   public:
@@ -345,24 +349,24 @@ TAO_NAMESPACE  Messaging
     operator SyncScopePolicy_ptr &();
     SyncScopePolicy_ptr &ptr (void);
     SyncScopePolicy_ptr operator-> (void);
-  
+
   private:
     SyncScopePolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::SyncScopePolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY_CH_
-  
+
   class TAO_Messaging_Export SyncScopePolicy
     : public virtual CORBA::Policy
   {
@@ -373,77 +377,77 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static SyncScopePolicy_ptr _duplicate (SyncScopePolicy_ptr obj);
-    
+
     static SyncScopePolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static SyncScopePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static SyncScopePolicy_ptr _nil (void)
       {
         return (SyncScopePolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual Messaging::SyncScope synchronization (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     SyncScopePolicy (void);
-    
+
     virtual ~SyncScopePolicy (void);
-  
+
   private:
     SyncScopePolicy (const SyncScopePolicy &);
     void operator= (const SyncScopePolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SyncScopePolicy;
-  
+
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_PRIORITY_POLICIES == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_PRIORITY_POLICY_TYPE;
-  
+
   struct PriorityRange;
   class PriorityRange_var;
-  
+
   struct TAO_Messaging_Export PriorityRange
   {
-    
+
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef PriorityRange_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static void _tao_any_destructor (void*);
-    
+
     ACE_NESTED_CLASS (Messaging, Priority) min;
     ACE_NESTED_CLASS (Messaging, Priority) max;
-    
+
   };
-  
+
   class TAO_Messaging_Export PriorityRange_var
   {
   public:
@@ -453,67 +457,67 @@ TAO_NAMESPACE  Messaging
     // Fixed-size types only.
     PriorityRange_var (const PriorityRange &);
     ~PriorityRange_var (void);
-    
+
     PriorityRange_var &operator= (PriorityRange *);
     PriorityRange_var &operator= (const PriorityRange_var &);
     // Fixed-size types only.
     PriorityRange_var &operator= (const PriorityRange &);
     PriorityRange *operator-> (void);
     const PriorityRange *operator-> (void) const;
-    
+
     operator const PriorityRange &() const;
     operator PriorityRange &();
     operator PriorityRange &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const PriorityRange &in (void) const;
     PriorityRange &inout (void);
     PriorityRange &out (void);
     PriorityRange _retn (void);
     PriorityRange *ptr (void) const;
-  
+
   private:
     PriorityRange *ptr_;
   };
-  
+
   typedef PriorityRange &PriorityRange_out;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PriorityRange;
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___PTR_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY___PTR_CH_
-  
+
   class RequestPriorityPolicy;
   typedef RequestPriorityPolicy *RequestPriorityPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___VAR_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export RequestPriorityPolicy_var : public TAO_Base_var
   {
   public:
     RequestPriorityPolicy_var (void); // default constructor
-    RequestPriorityPolicy_var (RequestPriorityPolicy_ptr p) : ptr_ (p) {} 
+    RequestPriorityPolicy_var (RequestPriorityPolicy_ptr p) : ptr_ (p) {}
     RequestPriorityPolicy_var (const RequestPriorityPolicy_var &); // copy constructor
     ~RequestPriorityPolicy_var (void); // destructor
-    
+
     RequestPriorityPolicy_var &operator= (RequestPriorityPolicy_ptr);
     RequestPriorityPolicy_var &operator= (const RequestPriorityPolicy_var &);
     RequestPriorityPolicy_ptr operator-> (void) const;
-    
+
     operator const RequestPriorityPolicy_ptr &() const;
     operator RequestPriorityPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RequestPriorityPolicy_ptr in (void) const;
     RequestPriorityPolicy_ptr &inout (void);
     RequestPriorityPolicy_ptr &out (void);
     RequestPriorityPolicy_ptr _retn (void);
     RequestPriorityPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RequestPriorityPolicy_ptr tao_duplicate (RequestPriorityPolicy_ptr);
@@ -524,7 +528,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RequestPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -534,11 +538,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___OUT_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export RequestPriorityPolicy_out
   {
   public:
@@ -551,24 +555,24 @@ TAO_NAMESPACE  Messaging
     operator RequestPriorityPolicy_ptr &();
     RequestPriorityPolicy_ptr &ptr (void);
     RequestPriorityPolicy_ptr operator-> (void);
-  
+
   private:
     RequestPriorityPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::RequestPriorityPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY_CH_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY_CH_
-  
+
   class TAO_Messaging_Export RequestPriorityPolicy
     : public virtual CORBA::Policy
   {
@@ -579,90 +583,90 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RequestPriorityPolicy_ptr _duplicate (RequestPriorityPolicy_ptr obj);
-    
+
     static RequestPriorityPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestPriorityPolicy_ptr _nil (void)
       {
         return (RequestPriorityPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual ::Messaging::PriorityRange priority_range (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RequestPriorityPolicy (void);
-    
+
     virtual ~RequestPriorityPolicy (void);
-  
+
   private:
     RequestPriorityPolicy (const RequestPriorityPolicy &);
     void operator= (const RequestPriorityPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestPriorityPolicy;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REPLY_PRIORITY_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY___PTR_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY___PTR_CH_
-  
+
   class ReplyPriorityPolicy;
   typedef ReplyPriorityPolicy *ReplyPriorityPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY___VAR_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export ReplyPriorityPolicy_var : public TAO_Base_var
   {
   public:
     ReplyPriorityPolicy_var (void); // default constructor
-    ReplyPriorityPolicy_var (ReplyPriorityPolicy_ptr p) : ptr_ (p) {} 
+    ReplyPriorityPolicy_var (ReplyPriorityPolicy_ptr p) : ptr_ (p) {}
     ReplyPriorityPolicy_var (const ReplyPriorityPolicy_var &); // copy constructor
     ~ReplyPriorityPolicy_var (void); // destructor
-    
+
     ReplyPriorityPolicy_var &operator= (ReplyPriorityPolicy_ptr);
     ReplyPriorityPolicy_var &operator= (const ReplyPriorityPolicy_var &);
     ReplyPriorityPolicy_ptr operator-> (void) const;
-    
+
     operator const ReplyPriorityPolicy_ptr &() const;
     operator ReplyPriorityPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ReplyPriorityPolicy_ptr in (void) const;
     ReplyPriorityPolicy_ptr &inout (void);
     ReplyPriorityPolicy_ptr &out (void);
     ReplyPriorityPolicy_ptr _retn (void);
     ReplyPriorityPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ReplyPriorityPolicy_ptr tao_duplicate (ReplyPriorityPolicy_ptr);
@@ -673,7 +677,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ReplyPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -683,11 +687,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY___OUT_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export ReplyPriorityPolicy_out
   {
   public:
@@ -700,24 +704,24 @@ TAO_NAMESPACE  Messaging
     operator ReplyPriorityPolicy_ptr &();
     ReplyPriorityPolicy_ptr &ptr (void);
     ReplyPriorityPolicy_ptr operator-> (void);
-  
+
   private:
     ReplyPriorityPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::ReplyPriorityPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY_CH_)
 #define _MESSAGING_REPLYPRIORITYPOLICY_CH_
-  
+
   class TAO_Messaging_Export ReplyPriorityPolicy
     : public virtual CORBA::Policy
   {
@@ -728,94 +732,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ReplyPriorityPolicy_ptr _duplicate (ReplyPriorityPolicy_ptr obj);
-    
+
     static ReplyPriorityPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyPriorityPolicy_ptr _nil (void)
       {
         return (ReplyPriorityPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual ::Messaging::PriorityRange priority_range (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ReplyPriorityPolicy (void);
-    
+
     virtual ~ReplyPriorityPolicy (void);
-  
+
   private:
     ReplyPriorityPolicy (const ReplyPriorityPolicy &);
     void operator= (const ReplyPriorityPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyPriorityPolicy;
-  
+
 #endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
 
 #if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_START_TIME_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___PTR_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY___PTR_CH_
-  
+
   class RequestStartTimePolicy;
   typedef RequestStartTimePolicy *RequestStartTimePolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export RequestStartTimePolicy_var : public TAO_Base_var
   {
   public:
     RequestStartTimePolicy_var (void); // default constructor
-    RequestStartTimePolicy_var (RequestStartTimePolicy_ptr p) : ptr_ (p) {} 
+    RequestStartTimePolicy_var (RequestStartTimePolicy_ptr p) : ptr_ (p) {}
     RequestStartTimePolicy_var (const RequestStartTimePolicy_var &); // copy constructor
     ~RequestStartTimePolicy_var (void); // destructor
-    
+
     RequestStartTimePolicy_var &operator= (RequestStartTimePolicy_ptr);
     RequestStartTimePolicy_var &operator= (const RequestStartTimePolicy_var &);
     RequestStartTimePolicy_ptr operator-> (void) const;
-    
+
     operator const RequestStartTimePolicy_ptr &() const;
     operator RequestStartTimePolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RequestStartTimePolicy_ptr in (void) const;
     RequestStartTimePolicy_ptr &inout (void);
     RequestStartTimePolicy_ptr &out (void);
     RequestStartTimePolicy_ptr _retn (void);
     RequestStartTimePolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RequestStartTimePolicy_ptr tao_duplicate (RequestStartTimePolicy_ptr);
@@ -826,7 +830,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RequestStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -836,11 +840,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___OUT_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export RequestStartTimePolicy_out
   {
   public:
@@ -853,24 +857,24 @@ TAO_NAMESPACE  Messaging
     operator RequestStartTimePolicy_ptr &();
     RequestStartTimePolicy_ptr &ptr (void);
     RequestStartTimePolicy_ptr operator-> (void);
-  
+
   private:
     RequestStartTimePolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::RequestStartTimePolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY_CH_
-  
+
   class TAO_Messaging_Export RequestStartTimePolicy
     : public virtual CORBA::Policy
   {
@@ -881,94 +885,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RequestStartTimePolicy_ptr _duplicate (RequestStartTimePolicy_ptr obj);
-    
+
     static RequestStartTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestStartTimePolicy_ptr _nil (void)
       {
         return (RequestStartTimePolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual ::TimeBase::UtcT start_time (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RequestStartTimePolicy (void);
-    
+
     virtual ~RequestStartTimePolicy (void);
-  
+
   private:
     RequestStartTimePolicy (const RequestStartTimePolicy &);
     void operator= (const RequestStartTimePolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestStartTimePolicy;
-  
+
 #endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
 
 #if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_END_TIME_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___PTR_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY___PTR_CH_
-  
+
   class RequestEndTimePolicy;
   typedef RequestEndTimePolicy *RequestEndTimePolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export RequestEndTimePolicy_var : public TAO_Base_var
   {
   public:
     RequestEndTimePolicy_var (void); // default constructor
-    RequestEndTimePolicy_var (RequestEndTimePolicy_ptr p) : ptr_ (p) {} 
+    RequestEndTimePolicy_var (RequestEndTimePolicy_ptr p) : ptr_ (p) {}
     RequestEndTimePolicy_var (const RequestEndTimePolicy_var &); // copy constructor
     ~RequestEndTimePolicy_var (void); // destructor
-    
+
     RequestEndTimePolicy_var &operator= (RequestEndTimePolicy_ptr);
     RequestEndTimePolicy_var &operator= (const RequestEndTimePolicy_var &);
     RequestEndTimePolicy_ptr operator-> (void) const;
-    
+
     operator const RequestEndTimePolicy_ptr &() const;
     operator RequestEndTimePolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RequestEndTimePolicy_ptr in (void) const;
     RequestEndTimePolicy_ptr &inout (void);
     RequestEndTimePolicy_ptr &out (void);
     RequestEndTimePolicy_ptr _retn (void);
     RequestEndTimePolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RequestEndTimePolicy_ptr tao_duplicate (RequestEndTimePolicy_ptr);
@@ -979,7 +983,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RequestEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -989,11 +993,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___OUT_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export RequestEndTimePolicy_out
   {
   public:
@@ -1006,24 +1010,24 @@ TAO_NAMESPACE  Messaging
     operator RequestEndTimePolicy_ptr &();
     RequestEndTimePolicy_ptr &ptr (void);
     RequestEndTimePolicy_ptr operator-> (void);
-  
+
   private:
     RequestEndTimePolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::RequestEndTimePolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY_CH_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY_CH_
-  
+
   class TAO_Messaging_Export RequestEndTimePolicy
     : public virtual CORBA::Policy
   {
@@ -1034,94 +1038,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RequestEndTimePolicy_ptr _duplicate (RequestEndTimePolicy_ptr obj);
-    
+
     static RequestEndTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RequestEndTimePolicy_ptr _nil (void)
       {
         return (RequestEndTimePolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual ::TimeBase::UtcT end_time (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RequestEndTimePolicy (void);
-    
+
     virtual ~RequestEndTimePolicy (void);
-  
+
   private:
     RequestEndTimePolicy (const RequestEndTimePolicy &);
     void operator= (const RequestEndTimePolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestEndTimePolicy;
-  
+
 #endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
 
 #if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REPLY_START_TIME_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___PTR_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY___PTR_CH_
-  
+
   class ReplyStartTimePolicy;
   typedef ReplyStartTimePolicy *ReplyStartTimePolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export ReplyStartTimePolicy_var : public TAO_Base_var
   {
   public:
     ReplyStartTimePolicy_var (void); // default constructor
-    ReplyStartTimePolicy_var (ReplyStartTimePolicy_ptr p) : ptr_ (p) {} 
+    ReplyStartTimePolicy_var (ReplyStartTimePolicy_ptr p) : ptr_ (p) {}
     ReplyStartTimePolicy_var (const ReplyStartTimePolicy_var &); // copy constructor
     ~ReplyStartTimePolicy_var (void); // destructor
-    
+
     ReplyStartTimePolicy_var &operator= (ReplyStartTimePolicy_ptr);
     ReplyStartTimePolicy_var &operator= (const ReplyStartTimePolicy_var &);
     ReplyStartTimePolicy_ptr operator-> (void) const;
-    
+
     operator const ReplyStartTimePolicy_ptr &() const;
     operator ReplyStartTimePolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ReplyStartTimePolicy_ptr in (void) const;
     ReplyStartTimePolicy_ptr &inout (void);
     ReplyStartTimePolicy_ptr &out (void);
     ReplyStartTimePolicy_ptr _retn (void);
     ReplyStartTimePolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ReplyStartTimePolicy_ptr tao_duplicate (ReplyStartTimePolicy_ptr);
@@ -1132,7 +1136,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ReplyStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1142,11 +1146,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___OUT_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export ReplyStartTimePolicy_out
   {
   public:
@@ -1159,24 +1163,24 @@ TAO_NAMESPACE  Messaging
     operator ReplyStartTimePolicy_ptr &();
     ReplyStartTimePolicy_ptr &ptr (void);
     ReplyStartTimePolicy_ptr operator-> (void);
-  
+
   private:
     ReplyStartTimePolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::ReplyStartTimePolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY_CH_
-  
+
   class TAO_Messaging_Export ReplyStartTimePolicy
     : public virtual CORBA::Policy
   {
@@ -1187,94 +1191,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ReplyStartTimePolicy_ptr _duplicate (ReplyStartTimePolicy_ptr obj);
-    
+
     static ReplyStartTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyStartTimePolicy_ptr _nil (void)
       {
         return (ReplyStartTimePolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual ::TimeBase::UtcT start_time (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ReplyStartTimePolicy (void);
-    
+
     virtual ~ReplyStartTimePolicy (void);
-  
+
   private:
     ReplyStartTimePolicy (const ReplyStartTimePolicy &);
     void operator= (const ReplyStartTimePolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyStartTimePolicy;
-  
+
 #endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
 
 #if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REPLY_END_TIME_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY___PTR_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY___PTR_CH_
-  
+
   class ReplyEndTimePolicy;
   typedef ReplyEndTimePolicy *ReplyEndTimePolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY___VAR_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export ReplyEndTimePolicy_var : public TAO_Base_var
   {
   public:
     ReplyEndTimePolicy_var (void); // default constructor
-    ReplyEndTimePolicy_var (ReplyEndTimePolicy_ptr p) : ptr_ (p) {} 
+    ReplyEndTimePolicy_var (ReplyEndTimePolicy_ptr p) : ptr_ (p) {}
     ReplyEndTimePolicy_var (const ReplyEndTimePolicy_var &); // copy constructor
     ~ReplyEndTimePolicy_var (void); // destructor
-    
+
     ReplyEndTimePolicy_var &operator= (ReplyEndTimePolicy_ptr);
     ReplyEndTimePolicy_var &operator= (const ReplyEndTimePolicy_var &);
     ReplyEndTimePolicy_ptr operator-> (void) const;
-    
+
     operator const ReplyEndTimePolicy_ptr &() const;
     operator ReplyEndTimePolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ReplyEndTimePolicy_ptr in (void) const;
     ReplyEndTimePolicy_ptr &inout (void);
     ReplyEndTimePolicy_ptr &out (void);
     ReplyEndTimePolicy_ptr _retn (void);
     ReplyEndTimePolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ReplyEndTimePolicy_ptr tao_duplicate (ReplyEndTimePolicy_ptr);
@@ -1285,7 +1289,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ReplyEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1295,11 +1299,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY___OUT_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export ReplyEndTimePolicy_out
   {
   public:
@@ -1312,24 +1316,24 @@ TAO_NAMESPACE  Messaging
     operator ReplyEndTimePolicy_ptr &();
     ReplyEndTimePolicy_ptr &ptr (void);
     ReplyEndTimePolicy_ptr operator-> (void);
-  
+
   private:
     ReplyEndTimePolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::ReplyEndTimePolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY_CH_)
 #define _MESSAGING_REPLYENDTIMEPOLICY_CH_
-  
+
   class TAO_Messaging_Export ReplyEndTimePolicy
     : public virtual CORBA::Policy
   {
@@ -1340,94 +1344,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ReplyEndTimePolicy_ptr _duplicate (ReplyEndTimePolicy_ptr obj);
-    
+
     static ReplyEndTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyEndTimePolicy_ptr _nil (void)
       {
         return (ReplyEndTimePolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual ::TimeBase::UtcT end_time (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     ReplyEndTimePolicy (void);
-    
+
     virtual ~ReplyEndTimePolicy (void);
-  
+
   private:
     ReplyEndTimePolicy (const ReplyEndTimePolicy &);
     void operator= (const ReplyEndTimePolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyEndTimePolicy;
-  
+
 #endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
 
 #if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RELATIVE_REQ_TIMEOUT_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___PTR_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___PTR_CH_
-  
+
   class RelativeRequestTimeoutPolicy;
   typedef RelativeRequestTimeoutPolicy *RelativeRequestTimeoutPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___VAR_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export RelativeRequestTimeoutPolicy_var : public TAO_Base_var
   {
   public:
     RelativeRequestTimeoutPolicy_var (void); // default constructor
-    RelativeRequestTimeoutPolicy_var (RelativeRequestTimeoutPolicy_ptr p) : ptr_ (p) {} 
+    RelativeRequestTimeoutPolicy_var (RelativeRequestTimeoutPolicy_ptr p) : ptr_ (p) {}
     RelativeRequestTimeoutPolicy_var (const RelativeRequestTimeoutPolicy_var &); // copy constructor
     ~RelativeRequestTimeoutPolicy_var (void); // destructor
-    
+
     RelativeRequestTimeoutPolicy_var &operator= (RelativeRequestTimeoutPolicy_ptr);
     RelativeRequestTimeoutPolicy_var &operator= (const RelativeRequestTimeoutPolicy_var &);
     RelativeRequestTimeoutPolicy_ptr operator-> (void) const;
-    
+
     operator const RelativeRequestTimeoutPolicy_ptr &() const;
     operator RelativeRequestTimeoutPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RelativeRequestTimeoutPolicy_ptr in (void) const;
     RelativeRequestTimeoutPolicy_ptr &inout (void);
     RelativeRequestTimeoutPolicy_ptr &out (void);
     RelativeRequestTimeoutPolicy_ptr _retn (void);
     RelativeRequestTimeoutPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RelativeRequestTimeoutPolicy_ptr tao_duplicate (RelativeRequestTimeoutPolicy_ptr);
@@ -1438,7 +1442,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RelativeRequestTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1448,11 +1452,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___OUT_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export RelativeRequestTimeoutPolicy_out
   {
   public:
@@ -1465,24 +1469,24 @@ TAO_NAMESPACE  Messaging
     operator RelativeRequestTimeoutPolicy_ptr &();
     RelativeRequestTimeoutPolicy_ptr &ptr (void);
     RelativeRequestTimeoutPolicy_ptr operator-> (void);
-  
+
   private:
     RelativeRequestTimeoutPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::RelativeRequestTimeoutPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY_CH_
-  
+
   class TAO_Messaging_Export RelativeRequestTimeoutPolicy
     : public virtual CORBA::Policy
   {
@@ -1493,94 +1497,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RelativeRequestTimeoutPolicy_ptr _duplicate (RelativeRequestTimeoutPolicy_ptr obj);
-    
+
     static RelativeRequestTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RelativeRequestTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RelativeRequestTimeoutPolicy_ptr _nil (void)
       {
         return (RelativeRequestTimeoutPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual TimeBase::TimeT relative_expiry (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RelativeRequestTimeoutPolicy (void);
-    
+
     virtual ~RelativeRequestTimeoutPolicy (void);
-  
+
   private:
     RelativeRequestTimeoutPolicy (const RelativeRequestTimeoutPolicy &);
     void operator= (const RelativeRequestTimeoutPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RelativeRequestTimeoutPolicy;
-  
+
 #endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong RELATIVE_RT_TIMEOUT_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___PTR_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___PTR_CH_
-  
+
   class RelativeRoundtripTimeoutPolicy;
   typedef RelativeRoundtripTimeoutPolicy *RelativeRoundtripTimeoutPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy_var : public TAO_Base_var
   {
   public:
     RelativeRoundtripTimeoutPolicy_var (void); // default constructor
-    RelativeRoundtripTimeoutPolicy_var (RelativeRoundtripTimeoutPolicy_ptr p) : ptr_ (p) {} 
+    RelativeRoundtripTimeoutPolicy_var (RelativeRoundtripTimeoutPolicy_ptr p) : ptr_ (p) {}
     RelativeRoundtripTimeoutPolicy_var (const RelativeRoundtripTimeoutPolicy_var &); // copy constructor
     ~RelativeRoundtripTimeoutPolicy_var (void); // destructor
-    
+
     RelativeRoundtripTimeoutPolicy_var &operator= (RelativeRoundtripTimeoutPolicy_ptr);
     RelativeRoundtripTimeoutPolicy_var &operator= (const RelativeRoundtripTimeoutPolicy_var &);
     RelativeRoundtripTimeoutPolicy_ptr operator-> (void) const;
-    
+
     operator const RelativeRoundtripTimeoutPolicy_ptr &() const;
     operator RelativeRoundtripTimeoutPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RelativeRoundtripTimeoutPolicy_ptr in (void) const;
     RelativeRoundtripTimeoutPolicy_ptr &inout (void);
     RelativeRoundtripTimeoutPolicy_ptr &out (void);
     RelativeRoundtripTimeoutPolicy_ptr _retn (void);
     RelativeRoundtripTimeoutPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (RelativeRoundtripTimeoutPolicy_ptr);
@@ -1591,7 +1595,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RelativeRoundtripTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1601,11 +1605,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy_out
   {
   public:
@@ -1618,24 +1622,24 @@ TAO_NAMESPACE  Messaging
     operator RelativeRoundtripTimeoutPolicy_ptr &();
     RelativeRoundtripTimeoutPolicy_ptr &ptr (void);
     RelativeRoundtripTimeoutPolicy_ptr operator-> (void);
-  
+
   private:
     RelativeRoundtripTimeoutPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::RelativeRoundtripTimeoutPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_
-  
+
   class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy
     : public virtual CORBA::Policy
   {
@@ -1646,77 +1650,77 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RelativeRoundtripTimeoutPolicy_ptr _duplicate (RelativeRoundtripTimeoutPolicy_ptr obj);
-    
+
     static RelativeRoundtripTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RelativeRoundtripTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RelativeRoundtripTimeoutPolicy_ptr _nil (void)
       {
         return (RelativeRoundtripTimeoutPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual TimeBase::TimeT relative_expiry (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RelativeRoundtripTimeoutPolicy (void);
-    
+
     virtual ~RelativeRoundtripTimeoutPolicy (void);
-  
+
   private:
     RelativeRoundtripTimeoutPolicy (const RelativeRoundtripTimeoutPolicy &);
     void operator= (const RelativeRoundtripTimeoutPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RelativeRoundtripTimeoutPolicy;
-  
+
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_ROUTING_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong ROUTING_POLICY_TYPE;
-  
+
   struct RoutingTypeRange;
   class RoutingTypeRange_var;
-  
+
   struct TAO_Messaging_Export RoutingTypeRange
   {
-    
+
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef RoutingTypeRange_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static void _tao_any_destructor (void*);
-    
+
     ACE_NESTED_CLASS (Messaging, RoutingType) min;
     ACE_NESTED_CLASS (Messaging, RoutingType) max;
-    
+
   };
-  
+
   class TAO_Messaging_Export RoutingTypeRange_var
   {
   public:
@@ -1726,67 +1730,67 @@ TAO_NAMESPACE  Messaging
     // Fixed-size types only.
     RoutingTypeRange_var (const RoutingTypeRange &);
     ~RoutingTypeRange_var (void);
-    
+
     RoutingTypeRange_var &operator= (RoutingTypeRange *);
     RoutingTypeRange_var &operator= (const RoutingTypeRange_var &);
     // Fixed-size types only.
     RoutingTypeRange_var &operator= (const RoutingTypeRange &);
     RoutingTypeRange *operator-> (void);
     const RoutingTypeRange *operator-> (void) const;
-    
+
     operator const RoutingTypeRange &() const;
     operator RoutingTypeRange &();
     operator RoutingTypeRange &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const RoutingTypeRange &in (void) const;
     RoutingTypeRange &inout (void);
     RoutingTypeRange &out (void);
     RoutingTypeRange _retn (void);
     RoutingTypeRange *ptr (void) const;
-  
+
   private:
     RoutingTypeRange *ptr_;
   };
-  
+
   typedef RoutingTypeRange &RoutingTypeRange_out;
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RoutingTypeRange;
-  
-  
+
+
 #if !defined (_MESSAGING_ROUTINGPOLICY___PTR_CH_)
 #define _MESSAGING_ROUTINGPOLICY___PTR_CH_
-  
+
   class RoutingPolicy;
   typedef RoutingPolicy *RoutingPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_ROUTINGPOLICY___VAR_CH_)
 #define _MESSAGING_ROUTINGPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export RoutingPolicy_var : public TAO_Base_var
   {
   public:
     RoutingPolicy_var (void); // default constructor
-    RoutingPolicy_var (RoutingPolicy_ptr p) : ptr_ (p) {} 
+    RoutingPolicy_var (RoutingPolicy_ptr p) : ptr_ (p) {}
     RoutingPolicy_var (const RoutingPolicy_var &); // copy constructor
     ~RoutingPolicy_var (void); // destructor
-    
+
     RoutingPolicy_var &operator= (RoutingPolicy_ptr);
     RoutingPolicy_var &operator= (const RoutingPolicy_var &);
     RoutingPolicy_ptr operator-> (void) const;
-    
+
     operator const RoutingPolicy_ptr &() const;
     operator RoutingPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RoutingPolicy_ptr in (void) const;
     RoutingPolicy_ptr &inout (void);
     RoutingPolicy_ptr &out (void);
     RoutingPolicy_ptr _retn (void);
     RoutingPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static RoutingPolicy_ptr tao_duplicate (RoutingPolicy_ptr);
@@ -1797,7 +1801,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     RoutingPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1807,11 +1811,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_ROUTINGPOLICY___OUT_CH_)
 #define _MESSAGING_ROUTINGPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export RoutingPolicy_out
   {
   public:
@@ -1824,24 +1828,24 @@ TAO_NAMESPACE  Messaging
     operator RoutingPolicy_ptr &();
     RoutingPolicy_ptr &ptr (void);
     RoutingPolicy_ptr operator-> (void);
-  
+
   private:
     RoutingPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::RoutingPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_ROUTINGPOLICY_CH_)
 #define _MESSAGING_ROUTINGPOLICY_CH_
-  
+
   class TAO_Messaging_Export RoutingPolicy
     : public virtual CORBA::Policy
   {
@@ -1852,94 +1856,94 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static RoutingPolicy_ptr _duplicate (RoutingPolicy_ptr obj);
-    
+
     static RoutingPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RoutingPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static RoutingPolicy_ptr _nil (void)
       {
         return (RoutingPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual ::Messaging::RoutingTypeRange routing_range (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RoutingPolicy (void);
-    
+
     virtual ~RoutingPolicy (void);
-  
+
   private:
     RoutingPolicy (const RoutingPolicy &);
     void operator= (const RoutingPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RoutingPolicy;
-  
+
 #endif /* TAO_HAS_ROUTING_POLICY == 1 */
 
 #if (TAO_HAS_MAX_HOPS_POLICY == 1)
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong MAX_HOPS_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_MAXHOPSPOLICY___PTR_CH_)
 #define _MESSAGING_MAXHOPSPOLICY___PTR_CH_
-  
+
   class MaxHopsPolicy;
   typedef MaxHopsPolicy *MaxHopsPolicy_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_MAXHOPSPOLICY___VAR_CH_)
 #define _MESSAGING_MAXHOPSPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export MaxHopsPolicy_var : public TAO_Base_var
   {
   public:
     MaxHopsPolicy_var (void); // default constructor
-    MaxHopsPolicy_var (MaxHopsPolicy_ptr p) : ptr_ (p) {} 
+    MaxHopsPolicy_var (MaxHopsPolicy_ptr p) : ptr_ (p) {}
     MaxHopsPolicy_var (const MaxHopsPolicy_var &); // copy constructor
     ~MaxHopsPolicy_var (void); // destructor
-    
+
     MaxHopsPolicy_var &operator= (MaxHopsPolicy_ptr);
     MaxHopsPolicy_var &operator= (const MaxHopsPolicy_var &);
     MaxHopsPolicy_ptr operator-> (void) const;
-    
+
     operator const MaxHopsPolicy_ptr &() const;
     operator MaxHopsPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     MaxHopsPolicy_ptr in (void) const;
     MaxHopsPolicy_ptr &inout (void);
     MaxHopsPolicy_ptr &out (void);
     MaxHopsPolicy_ptr _retn (void);
     MaxHopsPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static MaxHopsPolicy_ptr tao_duplicate (MaxHopsPolicy_ptr);
@@ -1950,7 +1954,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     MaxHopsPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1960,11 +1964,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_MAXHOPSPOLICY___OUT_CH_)
 #define _MESSAGING_MAXHOPSPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export MaxHopsPolicy_out
   {
   public:
@@ -1977,24 +1981,24 @@ TAO_NAMESPACE  Messaging
     operator MaxHopsPolicy_ptr &();
     MaxHopsPolicy_ptr &ptr (void);
     MaxHopsPolicy_ptr operator-> (void);
-  
+
   private:
     MaxHopsPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::MaxHopsPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_MAXHOPSPOLICY_CH_)
 #define _MESSAGING_MAXHOPSPOLICY_CH_
-  
+
   class TAO_Messaging_Export MaxHopsPolicy
     : public virtual CORBA::Policy
   {
@@ -2005,96 +2009,96 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static MaxHopsPolicy_ptr _duplicate (MaxHopsPolicy_ptr obj);
-    
+
     static MaxHopsPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static MaxHopsPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static MaxHopsPolicy_ptr _nil (void)
       {
         return (MaxHopsPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual CORBA::UShort max_hops (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     MaxHopsPolicy (void);
-    
+
     virtual ~MaxHopsPolicy (void);
-  
+
   private:
     MaxHopsPolicy (const MaxHopsPolicy &);
     void operator= (const MaxHopsPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MaxHopsPolicy;
-  
+
 #endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
 
 
-  
+
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong QUEUE_ORDER_POLICY_TYPE;
-  
-  
+
+
 #if !defined (_MESSAGING_QUEUEORDERPOLICY___PTR_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY___PTR_CH_
-  
+
   class QueueOrderPolicy;
   typedef QueueOrderPolicy *QueueOrderPolicy_ptr;
-  
-#endif /* end #if !defined */
-  
 
-  
-  
+#endif /* end #if !defined */
+
+
+
+
 #if !defined (_MESSAGING_QUEUEORDERPOLICY___VAR_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY___VAR_CH_
-  
+
   class TAO_Messaging_Export QueueOrderPolicy_var : public TAO_Base_var
   {
   public:
     QueueOrderPolicy_var (void); // default constructor
-    QueueOrderPolicy_var (QueueOrderPolicy_ptr p) : ptr_ (p) {} 
+    QueueOrderPolicy_var (QueueOrderPolicy_ptr p) : ptr_ (p) {}
     QueueOrderPolicy_var (const QueueOrderPolicy_var &); // copy constructor
     ~QueueOrderPolicy_var (void); // destructor
-    
+
     QueueOrderPolicy_var &operator= (QueueOrderPolicy_ptr);
     QueueOrderPolicy_var &operator= (const QueueOrderPolicy_var &);
     QueueOrderPolicy_ptr operator-> (void) const;
-    
+
     operator const QueueOrderPolicy_ptr &() const;
     operator QueueOrderPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     QueueOrderPolicy_ptr in (void) const;
     QueueOrderPolicy_ptr &inout (void);
     QueueOrderPolicy_ptr &out (void);
     QueueOrderPolicy_ptr _retn (void);
     QueueOrderPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static QueueOrderPolicy_ptr tao_duplicate (QueueOrderPolicy_ptr);
@@ -2105,7 +2109,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     QueueOrderPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2115,11 +2119,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_QUEUEORDERPOLICY___OUT_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY___OUT_CH_
-  
+
   class TAO_Messaging_Export QueueOrderPolicy_out
   {
   public:
@@ -2132,24 +2136,24 @@ TAO_NAMESPACE  Messaging
     operator QueueOrderPolicy_ptr &();
     QueueOrderPolicy_ptr &ptr (void);
     QueueOrderPolicy_ptr operator-> (void);
-  
+
   private:
     QueueOrderPolicy_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::QueueOrderPolicy
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_QUEUEORDERPOLICY_CH_)
 #define _MESSAGING_QUEUEORDERPOLICY_CH_
-  
+
   class TAO_Messaging_Export QueueOrderPolicy
     : public virtual CORBA::Policy
   {
@@ -2160,70 +2164,70 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static QueueOrderPolicy_ptr _duplicate (QueueOrderPolicy_ptr obj);
-    
+
     static QueueOrderPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static QueueOrderPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static QueueOrderPolicy_ptr _nil (void)
       {
         return (QueueOrderPolicy_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual Messaging::Ordering allowed_orders (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     QueueOrderPolicy (void);
-    
+
     virtual ~QueueOrderPolicy (void);
-  
+
   private:
     QueueOrderPolicy (const QueueOrderPolicy &);
     void operator= (const QueueOrderPolicy &);
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_QueueOrderPolicy;
-  
+
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
   // Valuetype class
   class ExceptionHolder;
-  
+
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___PTR_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___PTR_CH_
-  
+
   typedef ExceptionHolder *ExceptionHolder_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___VAR_CH_
-  
+
   class TAO_Messaging_Export ExceptionHolder_var
   {
   public:
@@ -2232,31 +2236,31 @@ TAO_NAMESPACE  Messaging
     ExceptionHolder_var (const ExceptionHolder*); // (TAO extension)
     ExceptionHolder_var (const ExceptionHolder_var &); // copy constructor
     ~ExceptionHolder_var (void); // destructor
-    
+
     ExceptionHolder_var &operator= (ExceptionHolder*);
     ExceptionHolder_var &operator= (const ExceptionHolder_var &);
     ExceptionHolder* operator-> (void) const;
-    
+
     operator const ExceptionHolder* () const;
     operator ExceptionHolder* ();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ExceptionHolder* in (void) const;
     ExceptionHolder* &inout (void);
     ExceptionHolder* &out (void);
     ExceptionHolder* _retn (void);
     ExceptionHolder* ptr (void) const;
-  
+
   private:
     ExceptionHolder* ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___OUT_CH_
-  
+
   class TAO_Messaging_Export ExceptionHolder_out
   {
   public:
@@ -2269,28 +2273,28 @@ TAO_NAMESPACE  Messaging
     operator ExceptionHolder* &();
     ExceptionHolder* &ptr (void);
     ExceptionHolder* operator-> (void);
-    
+
   private:
     ExceptionHolder* &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
 
-  
+
 #if !defined (_MESSAGING_EXCEPTIONHOLDER_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER_CH_
-  
+
   class TAO_Messaging_Export ExceptionHolder
     : public virtual CORBA_ValueBase
   {
   public:
-    
+
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef ExceptionHolder* _ptr_type;
     typedef ExceptionHolder_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
-    
+
     static ExceptionHolder* _downcast (CORBA::ValueBase* );
     // The address of static _downcast is implicit used as type id
 
@@ -2301,45 +2305,45 @@ TAO_NAMESPACE  Messaging
       );
     virtual const char* _tao_obv_repository_id () const;
     static const char* _tao_obv_static_repository_id ();
-    
+
     static void _tao_any_destructor (void *);
-    
+
     virtual void is_system_exception (CORBA::Boolean) = 0;    // set
     virtual CORBA::Boolean is_system_exception (void) const = 0;     // get method
-    
+
     virtual void byte_order (CORBA::Boolean) = 0;    // set
     virtual CORBA::Boolean byte_order (void) const = 0;     // get method
-    
-    
+
+
 #if !defined (_MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER__TAO_SEQ_OCTET_CH_
-    
+
     class _tao_seq_Octet;
-    
+
     // *************************************************************
     // _tao_seq_Octet
     // *************************************************************
-    
-    class TAO_Messaging_Export _tao_seq_Octet : public 
+
+    class TAO_Messaging_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       _tao_seq_Octet (void); // default ctor
       _tao_seq_Octet (CORBA::ULong max); // uses max size
       _tao_seq_Octet (
-          CORBA::ULong max, 
-          CORBA::ULong length, 
-          CORBA::Octet *buffer, 
+          CORBA::ULong max,
+          CORBA::ULong length,
+          CORBA::Octet *buffer,
           CORBA::Boolean release = 0
         );
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void);
       static void _tao_any_destructor (void*);
-      
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
           CORBA::ULong length,
@@ -2347,11 +2351,11 @@ TAO_NAMESPACE  Messaging
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
-      
+
     };
-    
+
 #endif /* end #if !defined */
-    
+
     #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _marshaled_exception_seq;
   #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
@@ -2359,8 +2363,8 @@ TAO_NAMESPACE  Messaging
       virtual void marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &) = 0;    // set
     virtual const Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void) const = 0;     // get method (read only)
     virtual Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void) = 0;     // get method (read/write only)
-    
-    
+
+
   protected:
     ExceptionHolder ();
     virtual ~ExceptionHolder ();
@@ -2369,78 +2373,78 @@ TAO_NAMESPACE  Messaging
     virtual void *_tao_obv_narrow (ptr_arith_t);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+
   private:
     ExceptionHolder (const ExceptionHolder &);
     void operator= (const ExceptionHolder &);
-    
+
   protected:
     virtual CORBA::Boolean _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &) = 0;
     virtual CORBA::Boolean _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &) = 0;
-    
+
   };
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___INIT_CH_
-  
+
   class TAO_Messaging_Export ExceptionHolder_init : public virtual CORBA_ValueFactoryBase
   {
   public:
     ExceptionHolder_init ();
     virtual ~ExceptionHolder_init ();
-    
-    
+
+
     static ExceptionHolder_init* _downcast (CORBA_ValueFactoryBase* );
-    
+
     virtual CORBA_ValueBase* create_for_unmarshal (void);
-    
+
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
 
   };
-  
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExceptionHolder;
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYHANDLER___PTR_CH_)
 #define _MESSAGING_REPLYHANDLER___PTR_CH_
-  
+
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
-  
+
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYHANDLER___VAR_CH_)
 #define _MESSAGING_REPLYHANDLER___VAR_CH_
-  
+
   class TAO_Messaging_Export ReplyHandler_var : public TAO_Base_var
   {
   public:
     ReplyHandler_var (void); // default constructor
-    ReplyHandler_var (ReplyHandler_ptr p) : ptr_ (p) {} 
+    ReplyHandler_var (ReplyHandler_ptr p) : ptr_ (p) {}
     ReplyHandler_var (const ReplyHandler_var &); // copy constructor
     ~ReplyHandler_var (void); // destructor
-    
+
     ReplyHandler_var &operator= (ReplyHandler_ptr);
     ReplyHandler_var &operator= (const ReplyHandler_var &);
     ReplyHandler_ptr operator-> (void) const;
-    
+
     operator const ReplyHandler_ptr &() const;
     operator ReplyHandler_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ReplyHandler_ptr in (void) const;
     ReplyHandler_ptr &inout (void);
     ReplyHandler_ptr &out (void);
     ReplyHandler_ptr _retn (void);
     ReplyHandler_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ReplyHandler_ptr tao_duplicate (ReplyHandler_ptr);
@@ -2451,7 +2455,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     ReplyHandler_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2461,11 +2465,11 @@ TAO_NAMESPACE  Messaging
 
 
 #endif /* end #if !defined */
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYHANDLER___OUT_CH_)
 #define _MESSAGING_REPLYHANDLER___OUT_CH_
-  
+
   class TAO_Messaging_Export ReplyHandler_out
   {
   public:
@@ -2478,30 +2482,30 @@ TAO_NAMESPACE  Messaging
     operator ReplyHandler_ptr &();
     ReplyHandler_ptr &ptr (void);
     ReplyHandler_ptr operator-> (void);
-  
+
   private:
     ReplyHandler_ptr &ptr_;
   };
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   // *************************************************************
   // Messaging::ReplyHandler
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:106
   // *************************************************************
-  
-  
+
+
 #if !defined (_MESSAGING_REPLYHANDLER_CH_)
 #define _MESSAGING_REPLYHANDLER_CH_
-  
+
   // Forward Classes Declaration.
   class _TAO_ReplyHandler_Proxy_Impl;
   class _TAO_ReplyHandler_Remote_Proxy_Impl;
   class _TAO_ReplyHandler_Proxy_Broker;
   class _TAO_ReplyHandler_Remote_Proxy_Broker;
-  
+
   class TAO_Messaging_Export ReplyHandler
     : public virtual CORBA_Object
   {
@@ -2512,116 +2516,116 @@ TAO_NAMESPACE  Messaging
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     static int _tao_class_id;
-    
+
     // The static operations.
     static ReplyHandler_ptr _duplicate (ReplyHandler_ptr obj);
-    
+
     static ReplyHandler_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyHandler_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ReplyHandler_ptr _nil (void)
       {
         return (ReplyHandler_ptr)0;
       }
-    
+
     static void _tao_any_destructor (void*);
-    
+
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   private:
     _TAO_ReplyHandler_Proxy_Broker *the_TAO_ReplyHandler_Proxy_Broker_;
-    
+
   protected:
     ReplyHandler (int collocated = 0);
-    
+
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode
     virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
-    
+
     ReplyHandler (
-        TAO_Stub *objref, 
+        TAO_Stub *objref,
         CORBA::Boolean _tao_collocated = 0,
         TAO_Abstract_ServantBase *servant = 0
       );
-    
+
     friend class _TAO_ReplyHandler_Remote_Proxy_Impl;
     friend class _TAO_ReplyHandler_ThruPOA_Proxy_Impl;
     friend class _TAO_ReplyHandler_Direct_Proxy_Impl;
-    
+
     virtual ~ReplyHandler (void);
-  
+
   private:
     ReplyHandler (const ReplyHandler &);
     void operator= (const ReplyHandler &);
   };
-  
+
   // The Proxy Implementations are used by each interface to
   // perform a call. Each different implementation encapsulate
   // an invocation logics.
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    Base Proxy Impl. Declaration
   //
-  
+
   class TAO_Messaging_Export _TAO_ReplyHandler_Proxy_Impl
     : public virtual TAO_Object_Proxy_Impl
   {
   public:
     virtual ~_TAO_ReplyHandler_Proxy_Impl (void) { }
-    
+
   protected:
     _TAO_ReplyHandler_Proxy_Impl (void);
   };
-  
+
   //
   //               End Base Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                Remote Proxy Impl. Declaration
   //
-  
+
   class TAO_Messaging_Export _TAO_ReplyHandler_Remote_Proxy_Impl
     : public virtual _TAO_ReplyHandler_Proxy_Impl,
       public virtual TAO_Remote_Object_Proxy_Impl
   {
   public:
     _TAO_ReplyHandler_Remote_Proxy_Impl (void);
-    
+
     virtual ~_TAO_ReplyHandler_Remote_Proxy_Impl (void) { }
-    
+
   };
-  
+
   //
   //             End Remote Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
+
   // The Proxy Brokers are used by each interface to get
-  // the right proxy for performing a call. In the new 
+  // the right proxy for performing a call. In the new
   // collocation scheme, the proxy to be used can vary on
   // a call by call basis.
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
-  //                 Base Proxy Broker Declaration 
+  //                 Base Proxy Broker Declaration
   //
-  
+
     class TAO_Messaging_Export _TAO_ReplyHandler_Proxy_Broker
   {
   public:
@@ -2630,55 +2634,55 @@ TAO_NAMESPACE  Messaging
         ReplyHandler *object
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       ) = 0;
-    
+
   protected:
     _TAO_ReplyHandler_Proxy_Broker (void);
-    
+
   };
-  
+
   //
-  //              End Base Proxy Broker Declaration 
+  //              End Base Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-    
+
+
   ///////////////////////////////////////////////////////////////////////
-  //                 Remote Proxy Broker Declaration 
+  //                 Remote Proxy Broker Declaration
   //
-  
+
   class TAO_Messaging_Export _TAO_ReplyHandler_Remote_Proxy_Broker
     : public virtual _TAO_ReplyHandler_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_ReplyHandler_Remote_Proxy_Broker (void);
-    
+
     virtual ~_TAO_ReplyHandler_Remote_Proxy_Broker (void);
-    
+
     virtual _TAO_ReplyHandler_Proxy_Impl &select_proxy (
         ReplyHandler *object
         ACE_ENV_ARG_DECL
       );
-    
+
   private:
     _TAO_ReplyHandler_Remote_Proxy_Impl remote_proxy_impl_;
-  
+
   public:
     // This member function is used to get an handle to the unique instance
     // of the Remote Proxy Broker that is available for a given
     // interface.
     static _TAO_ReplyHandler_Remote_Proxy_Broker *the_TAO_ReplyHandler_Remote_Proxy_Broker (void);
   };
-  
+
   //
-  //              End Remote Proxy Broker Declaration 
+  //              End Remote Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
 #endif /* end #if !defined */
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyHandler;
-  
+
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-  
+
 }
 TAO_NAMESPACE_CLOSE // module Messaging
 
@@ -2701,7 +2705,7 @@ TAO_NAMESPACE  OBV_Messaging
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___OBV_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
-  
+
   // OBV_ class
   class TAO_Messaging_Export ExceptionHolder
     : public virtual Messaging::ExceptionHolder,
@@ -2710,10 +2714,10 @@ TAO_NAMESPACE  OBV_Messaging
   public:
     virtual void is_system_exception (CORBA::Boolean);    // set
     virtual CORBA::Boolean is_system_exception (void) const;     // get method
-    
+
     virtual void byte_order (CORBA::Boolean);    // set
     virtual CORBA::Boolean byte_order (void) const;     // get method
-    
+
     #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _marshaled_exception_seq;
   #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
@@ -2721,23 +2725,23 @@ TAO_NAMESPACE  OBV_Messaging
       virtual void marshaled_exception (const Messaging::ExceptionHolder::_tao_seq_Octet &);    // set
     virtual const Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void) const;     // get method (read only)
     virtual Messaging::ExceptionHolder::_tao_seq_Octet &marshaled_exception (void);     // get method (read/write only)
-    
-    
+
+
   protected:
     virtual CORBA::Boolean _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &);
     CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-  
+
   private:
     CORBA::Boolean _pd_is_system_exception;
     CORBA::Boolean _pd_byte_order;
     _tao_seq_Octet _pd_marshaled_exception;
-    
+
   };
-  
+
 #endif /* end #if !defined */
-  
+
   }
 TAO_NAMESPACE_CLOSE
 
