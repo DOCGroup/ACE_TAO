@@ -713,6 +713,31 @@ namespace TAO
           ACE_CHECK;
         }
     }
+
+    PortableServer::ObjectId *
+    Retain_Servant_Retention_Strategy::servant_to_id (PortableServer::Servant servant
+                          ACE_ENV_ARG_DECL)
+    {
+      /**
+       * If the POA has both the RETAIN and the UNIQUE_ID policy and the
+       * specified servant is active, the Object Id associated with that
+       * servant is returned.
+       *
+       * If the POA has both the RETAIN and the IMPLICIT_ACTIVATION policy and
+       * either the POA has the MULTIPLE_ID policy or the specified servant is
+       * not active, the servant is activated using a POA-generated Object Id
+       * and the Interface Id associated with the servant, and that Object Id
+       * is returned.
+       *
+       * If the POA has the USE_DEFAULT_SERVANT policy, the servant specified
+       * is the default servant, and the operation is being invoked in the
+       * context of executing a request on the default servant, then the
+       * ObjectId associated with the current invocation is returned.
+       *
+       * Otherwise, the ServantNotActive exception is raised.
+       */
+      // todo
+    }
   }
 }
 
@@ -925,6 +950,25 @@ namespace TAO
     {
       return;
     }
+
+    PortableServer::ObjectId *
+    Non_Retain_Servant_Retention_Strategy::servant_to_id (PortableServer::Servant servant
+                          ACE_ENV_ARG_DECL)
+    {
+      // todo
+      /*
+       * If the POA has the USE_DEFAULT_SERVANT policy, the servant specified
+       * is the default servant, and the operation is being invoked in the
+       * context of executing a request on the default servant, then the
+       * ObjectId associated with the current invocation is returned.
+       */
+
+      /*
+       * Otherwise, the ServantNotActive exception is raised.
+       */
+    }
+
+
   }
 }
 

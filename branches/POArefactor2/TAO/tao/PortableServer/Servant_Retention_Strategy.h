@@ -126,6 +126,10 @@ namespace TAO
         TAO_Active_Object_Map::Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL) = 0;
 
+      virtual
+      PortableServer::ObjectId *
+      servant_to_id (PortableServer::Servant servant
+                          ACE_ENV_ARG_DECL) = 0;
 
     protected:
       TAO_POA* poa_;
@@ -214,6 +218,11 @@ namespace TAO
       cleanup_servant (
         TAO_Active_Object_Map::Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL);
+
+      virtual
+      PortableServer::ObjectId *
+      servant_to_id (PortableServer::Servant servant
+                          ACE_ENV_ARG_DECL);
 
     protected:
       void
@@ -305,7 +314,10 @@ namespace TAO
         TAO_Active_Object_Map::Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL);
 
-
+      virtual
+      PortableServer::ObjectId *
+      servant_to_id (PortableServer::Servant servant
+                          ACE_ENV_ARG_DECL);
     };
   }
 }
