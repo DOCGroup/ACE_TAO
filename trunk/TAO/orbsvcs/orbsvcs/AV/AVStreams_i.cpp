@@ -707,7 +707,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                         "(%P|%t) TAO_StreamCtrl::bind_devs: "
                         "a_party or b_party is null"
                         "Multicast mode\n"));
-      
+
       // Request a_party to create the endpoint and vdev
       CORBA::Boolean met_qos;
       CORBA::String_var named_vdev;
@@ -845,11 +845,11 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                     }
                   ACE_CATCHANY
                     {
-                      if (TAO_debug_level > 0) 
+                      if (TAO_debug_level > 0)
                         ACE_DEBUG ((LM_DEBUG, " %s ", flows[i].in ()));
-                      
+
                       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "producer_check: not a producer");
-                          
+
                     }
                   ACE_ENDTRY;
                   ACE_CHECK_RETURN (0);
@@ -927,8 +927,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           ACE_CHECK_RETURN (0);
           if (!connect_leaf_success)
             {
-	      if (TAO_debug_level > 0)
-		ACE_DEBUG ((LM_DEBUG,"TAO_StreamCtrl::bind_devs Multiconnect\n")); 
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,"TAO_StreamCtrl::bind_devs Multiconnect\n"));
               AVStreams::flowSpec connect_flows = the_flows;
               this->sep_a_->multiconnect (the_qos, connect_flows, ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -2542,7 +2542,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                                                                     mcast_addr),
                                         0);
                         flow_spec[i] = CORBA::string_dup (new_entry->entry_to_string ());
-			//new_entry->is_multicast (1);
+                        //new_entry->is_multicast (1);
                         this->forward_flow_spec_set.insert (new_entry);
                         TAO_AV_Acceptor_Registry *acceptor_registry = TAO_AV_CORE::instance ()->acceptor_registry ();
                         result = acceptor_registry->open (this,
@@ -2787,7 +2787,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   CORBA::Boolean result = 0;
   ACE_TRY
     {
-      if (TAO_debug_level > 0) 
+      if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) TAO_VDev::set_peer: called"));
 
       CORBA::String_var ior = TAO_ORB_Core_instance ()->orb ()->object_to_string (the_peer_dev,
@@ -3850,7 +3850,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
               char buf [BUFSIZ];
               mcast_addr.addr_to_string (buf, BUFSIZ);
               ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (), buf);
-	    
+
             }
           else
             {
@@ -4490,7 +4490,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
         TAO_AV_Acceptor_Registry *acceptor_registry = TAO_AV_CORE::instance ()->acceptor_registry ();
         this->flow_spec_set_.insert (entry);
         int result = acceptor_registry->open (this,
-					      TAO_AV_CORE::instance (),
+                                              TAO_AV_CORE::instance (),
                                               this->flow_spec_set_);
         if (result < 0)
           return 0;
@@ -4661,7 +4661,7 @@ TAO_FlowProducer::connect_mcast (AVStreams::QoS & /* the_qos */,
     {
       // choose the protocol which supports multicast.
     }
-  
+
   if (address == 0)
     if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "TAO_FlowProducer::connect_mcast address is 0\n"));
@@ -4832,8 +4832,9 @@ TAO_Tokenizer::parse (const char *string, char delimiter)
       ACE_CString substring;
       if (slash_pos != new_string.npos)
         {
-          substring = new_string.substring (pos, slash_pos);
-          pos += slash_pos+1;
+          substring = new_string.substring (pos,
+                                            slash_pos - pos);
+          pos = slash_pos + 1;
         }
       else
         {
@@ -5160,4 +5161,3 @@ template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -1,3 +1,32 @@
+Fri Mar 09 12:54:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (parse): Fixed
+	  TAO_Tokenizer::parse().  It was not delimiting strings
+	  correctly.
+
+	* orbsvcs/tests/AVStreams/Simple: Made the following changes to
+	  make things run more smoothly:
+
+	  - Updated README.  Added information about defaults.
+
+	  - ftp and server: Changed <ftp::client_mmdevice_> and
+	  <ftp::streamctrl_> and <server::mmdevice> to be dynamic and use
+	  servant reference counting to manage their lifetime. Otherwise,
+	  things will crash on exit.
+
+	  - ftp: Added defaults to all user specified parameters.
+
+	  - ftp: Address should default to "localhost:0".
+
+	  - ftp: Removed <Client::flowname> and <Client::frame_rate> since
+	  they are not used.
+
+	  - ftp: Changed CString to use operator= rather than set() since
+	  it is more intuitive.
+
+	  - ftp: <flow_spec.length> should be called *before* slot [0] is
+	  used.
+
 Fri Mar  9 10:30:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
