@@ -63,6 +63,8 @@ PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
                                PortableServer::POA_ptr poa
                                TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
 
@@ -88,6 +90,7 @@ ServantActivator_i::etherealize (const PortableServer::ObjectId &oid,
                                  CORBA::Boolean,
                                  CORBA::Boolean remaining_activations
                                  TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant object, deactivate it by calling the garbage_collection_function.

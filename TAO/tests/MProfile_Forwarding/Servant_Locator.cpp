@@ -39,10 +39,12 @@ Servant_Locator::~Servant_Locator ()
 
 PortableServer::Servant
 Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
-                                PortableServer::POA_ptr /* poa_ptr */,
-                                const char * /*operation*/,
-                                PortableServer::ServantLocator::Cookie & /* cookie */
+                            PortableServer::POA_ptr /* poa_ptr */,
+                            const char * /*operation*/,
+                            PortableServer::ServantLocator::Cookie & /* cookie */
                             TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
 
@@ -80,6 +82,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &,
                              PortableServer::ServantLocator::Cookie ,
                              PortableServer::Servant
                              TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

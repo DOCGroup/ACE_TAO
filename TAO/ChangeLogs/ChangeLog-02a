@@ -1,3 +1,58 @@
+Fri Jul 14 06:50:57 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PolicyS.cpp (_dispatch): Replaced with new dispatch code.
+
+	* tao/PolicyC.cpp (_unchecked_narrow): Removed call to Smart
+	  Proxy.
+	
+	* tao/PortableServerC.h (ThreadPolicyValue and
+	  ImplicitActivationPolicyValue): These two enums should be
+	  outside the minimum POA scope.
+
+	* examples/POA/NewPOA/NewPOA.cpp (print_poa): Changed use of
+	  ACE_TRY_CHECK to ACE_CHECK.
+
+	* tao/diffs: Updated diffs:
+
+	  - PolicyC.cpp.diff
+	  - PolicyS.cpp.diff
+	  - PortableServerC.h.diff
+
+	* Updated throw specs in the following files:
+	
+	  - examples/POA/Adapter_Activator/server.cpp
+	  - examples/POA/Forwarding/Servant_Locator.cpp
+	  - examples/POA/Forwarding/Servant_Locator.h
+	  - examples/POA/Loader/Servant_Activator.cpp
+	  - examples/POA/Loader/Servant_Activator.h
+	  - examples/POA/Loader/Servant_Locator.cpp
+	  - examples/POA/Loader/Servant_Locator.h
+	  - examples/POA/NewPOA/NewPOA.cpp
+	  - examples/POA/On_Demand_Activation/Servant_Activator.cpp
+	  - examples/POA/On_Demand_Activation/Servant_Activator.h
+	  - examples/POA/On_Demand_Activation/Servant_Locator.cpp
+	  - examples/POA/On_Demand_Activation/Servant_Locator.h
+	  - examples/POA/On_Demand_Loading/Servant_Activator.cpp
+	  - examples/POA/On_Demand_Loading/Servant_Activator.h
+	  - examples/POA/On_Demand_Loading/Servant_Locator.cpp
+	  - examples/POA/On_Demand_Loading/Servant_Locator.h
+	  - orbsvcs/IFR_Service/Servant_Locator.cpp
+	  - orbsvcs/IFR_Service/Servant_Locator.h
+	  - orbsvcs/ImplRepo_Service/ImplRepo_i.cpp
+	  - orbsvcs/ImplRepo_Service/ImplRepo_i.h
+	  - orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp
+	  - orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.h
+	  - tao/Object_Adapter.cpp
+	  - tao/Object_Adapter.h
+	  - tao/POA.cpp
+	  - tao/POA.h
+	  - tao/POA.i
+	  - tao/POAManager.cpp
+	  - tao/POAManager.h
+	  - tao/POAManager.i
+	  - tests/MProfile_Forwarding/Servant_Locator.cpp
+	  - tests/MProfile_Forwarding/Servant_Locator.h
+
 Thu Jul 13 17:45:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/reopen_include1.idl:

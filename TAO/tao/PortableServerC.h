@@ -456,14 +456,15 @@ TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SERVANT_RETENTION_POLICY_ID;
 
 TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong REQUEST_PROCESSING_POLICY_ID;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 enum ThreadPolicyValue
 {
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL,
     ThreadPolicyValue_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
 };
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 typedef ThreadPolicyValue &ThreadPolicyValue_out;
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ThreadPolicyValue;
 
@@ -976,14 +977,15 @@ private:
 
 #endif /* end #if !defined */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 enum ImplicitActivationPolicyValue
 {
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION,
     ImplicitActivationPolicyValue_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
 };
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ImplicitActivationPolicyValue;
 
