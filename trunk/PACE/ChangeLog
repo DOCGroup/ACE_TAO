@@ -1,3 +1,10 @@
+Tue Jul 11 4:28:00 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* rules.common.GNU:
+	  Added functionality so that PACE_SYSVER on Linux is in the
+	  same format as LINUX_VERSION_CODE from the Linux source code.
+	  For example, Linux version 2.2.12 -> 0x02020C == 131596
+
 Tue Jul 11 10:24:03 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * tests/Makefile: 
