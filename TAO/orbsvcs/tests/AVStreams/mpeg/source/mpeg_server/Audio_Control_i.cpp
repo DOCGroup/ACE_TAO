@@ -34,7 +34,8 @@ Audio_Control_i::init_audio (const Audio_Control::INITaudioPara & para,
   int result;
   int failureType; /* 0 - can't open file, 1 - can't open live source */
 
-  for (int i=0 ; i< para.audiofile.length (); i++)
+  int i = 0;
+  for (i=0 ; i< para.audiofile.length (); i++)
     this->audio_global_->audioFile[i] = para.audiofile [i];
   this->audio_global_->audioFile [i] = 0;
 

@@ -105,6 +105,8 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
 
   reply->pattern.length (VIDEO_SINGLETON::instance ()->patternSize);
 
+  int i = 0;
+
   // copy the sequence of char..
   for ( i = 0; i < VIDEO_SINGLETON::instance ()->patternSize; i++)
     reply->pattern [i] = VIDEO_SINGLETON::instance ()->pattern [i];
