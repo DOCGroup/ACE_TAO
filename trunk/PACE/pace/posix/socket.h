@@ -44,7 +44,7 @@ extern "C" {
 
 #ifndef PACE_SA_FAMILY_T
 #define PACE_SA_FAMILY_T
-# if PACE_LYNXOS != 0x300 && PACE_LYNXOS != 0x310 && PACE_SUNOS != 551
+# if PACE_LYNXOS != 0x300 && PACE_LYNXOS != 0x310 && PACE_SUNOS != 551 && (PACE_HPUX)
     typedef sa_family_t pace_family_t;
 # endif /* PACE_LYNXOS != 0x300 && PACE_LYNXOS != 0x310 */
 #endif /* PACE_SA_FAMILY_T */
