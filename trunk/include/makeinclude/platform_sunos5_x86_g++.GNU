@@ -22,7 +22,4 @@ SOBUILD 	= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK 	= cp $< $@
 # SOLINK 	= ln -s $< $@
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
-PRELIB		= (echo "int main() { return 0; }" > gcctemp.c && \
-		  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-		  $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) -lACE $(LIBS); \
-		  status=$$?; rm -f gcctemp*; exit $$status)
+PRELIB		= @true
