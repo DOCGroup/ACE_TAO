@@ -127,7 +127,6 @@ public:
   ACE_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
                  int flags = 0);
 
-
   /**
    * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
