@@ -88,12 +88,14 @@ Read_Handler::open (void *)
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Read_Handler::open, "
-                       "cannot set non blocking mode"), -1);
+                       "cannot set non blocking mode"),
+                      -1);
 
   if (reactor ()->register_handler (this, READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Read_Handler::open, "
-                       "cannot register handler"), -1);
+                       "cannot register handler"),
+                      -1);
 
   // A number larger than the actual number of priorities, so some
   // clients are misbehaved, hence pusnished.
@@ -166,7 +168,9 @@ Write_Handler::svc (void)
     {
       if (this->peer ().send_n (ACE_ALPHABET,
                                 sizeof (ACE_ALPHABET) - 1) == -1)
-          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n",
+                      "send_n"));
       ACE_OS::sleep (pause);
     }
 
@@ -177,8 +181,10 @@ Write_Handler::svc (void)
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *connection_addr = (ACE_INET_Addr *) arg;
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) running client\n"));
+  ACE_INET_Addr *connection_addr = 
+    ACE_reinterpret_cast (ACE_INET_Addr *, arg);
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) running client\n"));
   CONNECTOR connector;
 
   Write_Handler *writer = 0;
@@ -202,7 +208,8 @@ client (void *arg)
           tmp += options.timeout ();
           options.timeout (tmp);
           writer = 0;
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) still trying to connect\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) still trying to connect\n"));
         }
       else
         {
@@ -212,7 +219,8 @@ client (void *arg)
           // then close the connection and release the Svc_Handler.
           writer->destroy ();
 
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) finishing client\n"));
           return 0;
         }
     }
@@ -250,12 +258,14 @@ main (int argc, char *argv[])
         break;
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR, "Usage: Priority_Reactor_Test "
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Usage: Priority_Reactor_Test "
                            "   [-d] (disable priority reactor)\n"
                            "   [-c nchildren] (number of threads/processes)\n"
                            "   [-l loops] (number of loops per child)\n"
                            "   [-m maxretries] (attempts to connect)\n"
-                           "   [-t max_time] (limits test duration)\n"), -1);
+                           "   [-t max_time] (limits test duration)\n"),
+                          -1);
         ACE_NOTREACHED (break);
       }
 
@@ -284,9 +294,12 @@ main (int argc, char *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1
+  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) %p\n",
+                       "open"),
+                      -1);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting server at port %d\n",
@@ -304,7 +317,9 @@ main (int argc, char *argv[])
           (ACE_THR_FUNC (client),
            (void *) &connection_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) %p\n%a",
+                    "thread create failed"));
     }
 #elif !defined (ACE_LACKS_FORK)
   for (i = 0; i < opt_nchildren; ++i)
@@ -312,7 +327,8 @@ main (int argc, char *argv[])
       switch (ACE_OS::fork ("child"))
         {
         case -1:
-          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n%a", "fork failed"));
           exit (-1);
           /* NOTREACHED */
         case 0:
@@ -343,7 +359,8 @@ main (int argc, char *argv[])
                   "probably due to failed connections.\n"));
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting for the children...\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) waiting for the children...\n"));
 
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Manager::instance ()->wait ();
@@ -351,7 +368,9 @@ main (int argc, char *argv[])
   for (i = 0; i < opt_nchildren; ++i)
     {
       pid_t pid = ACE_OS::wait();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) child %d terminated\n", pid));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) child %d terminated\n",
+                  pid));
     }
 #else
   /* NOTREACHED */

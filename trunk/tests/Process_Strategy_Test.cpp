@@ -528,16 +528,20 @@ main (int argc, char *argv[])
 
   // Bind acceptor to any port and then find out what the port was.
   // Note that this implicitly creates the Reactor singleton.
-  if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any,
+  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
                      ACE_Reactor::instance(),
                      0,
                      0,
                      OPTIONS::instance ()->concurrency_strategy ()) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
+                      -1);
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) starting server at port %d\n",
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
@@ -547,7 +551,9 @@ main (int argc, char *argv[])
       switch (pid)
         {
         case -1:
-          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n%a",
+                      "fork failed"));
           exit (-1);
           /* NOTREACHED */
         case 0:
@@ -565,13 +571,17 @@ main (int argc, char *argv[])
           (ACE_THR_FUNC (server),
            (void *) 0,
            THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) %p\n%a",
+                    "thread create failed"));
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
            (void *) &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) %p\n%a",
+                    "thread create failed"));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
