@@ -37,6 +37,8 @@ extern "C" STATUS vmeDevCreate (char *);
 
 class Client_i : public virtual MT_Priority
 {
+  // = TITLE
+  //     Helper class implementing the Multi-Threaded Cubit client.
 public:
   Client_i (void);
   //constructor.

@@ -1,3 +1,8 @@
+Fri Sep 11 22:08:25 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit: Added my name to the authors in the
+	  header files and also added some comments.
+
 Fri Sep 11 17:49:31 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/TypeCode.{h,cpp}:
