@@ -1,3 +1,10 @@
+Mon Apr 10 16:21:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Object_Loader/driver.dsp:
+	* tests/Object_Loader/Test_DLL.dsp:
+	  Fixed the project files, now the test builds on both Unix and
+	  NT.
+
 Mon Apr 10 16:11:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/Object_Loader/Makefile:
