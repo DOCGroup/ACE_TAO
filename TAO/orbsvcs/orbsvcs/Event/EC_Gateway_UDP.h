@@ -338,9 +338,9 @@ public:
   
 private:
   CORBA::Boolean byte_order_;
-  CORBA::Boolean request_id_;
-  CORBA::Boolean request_size_;
-  CORBA::Boolean fragment_count_;
+  CORBA::ULong request_id_;
+  CORBA::ULong request_size_;
+  CORBA::ULong fragment_count_;
   // This attributes should remain constant in all the fragments, used
   // for validation....
 

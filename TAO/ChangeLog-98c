@@ -1,3 +1,18 @@
+Mon Dec 28 11:49:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* */Makefile: 
+	  Updated dependencies.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	  Fixed egcs 1.1.1 warning, thanks to David for reporting this
+	  one.
+
+	* tao/ORB.h: 
+	  Removed _tc_alias and _tc_except from the list of TypeCode
+	  constants, thanks to Jerry De Master <jdemaste@ipdinc.com> for
+	  reporting this problem.
+
 Mon Dec 28 10:07:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: re-enabled sfp build.  It
