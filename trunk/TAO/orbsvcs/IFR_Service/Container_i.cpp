@@ -67,7 +67,7 @@ TAO_Container_i::destroy (CORBA::Environment &ACE_TRY_ENV)
           // This entry may already have been destroyed.
           if (status == 0)
             {
-              TAO_IDLType_i *impl = 
+              TAO_IDLType_i *impl =
                 this->repo_->servant_factory ()->create_idltype (entry_key,
                                                                  ACE_TRY_ENV);
               ACE_CHECK;
@@ -153,9 +153,20 @@ TAO_Container_i::destroy (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-IR::Contained_ptr 
+IR::Contained_ptr
 TAO_Container_i::lookup (const char *search_name,
                          CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->lookup_i (search_name,
+                         ACE_TRY_ENV);
+}
+
+IR::Contained_ptr
+TAO_Container_i::lookup_i (const char *search_name,
+                           CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key iter_key;
@@ -187,7 +198,7 @@ TAO_Container_i::lookup (const char *search_name,
     {
       pos = work_string.find ("::");
       so_far_so_good = 0;
-          
+
       ACE_Configuration_Section_Key defns_key;
       status =
         this->repo_->config ()->open_section (iter_key,
@@ -224,7 +235,7 @@ TAO_Container_i::lookup (const char *search_name,
       if (so_far_so_good)
         {
           if (pos != ACE_TString::npos)
-            {                                            
+            {
               work_string = work_string.substr (pos + 2);
               continue;
             }
@@ -243,7 +254,7 @@ TAO_Container_i::lookup (const char *search_name,
 
               def_kind = ACE_static_cast (IR::DefinitionKind, kind);
 
-              if (def_kind == IR::dk_Interface 
+              if (def_kind == IR::dk_Interface
                   || def_kind == IR::dk_Value)
                 {
                   ACE_Configuration_Section_Key attrs_key;
@@ -371,7 +382,7 @@ TAO_Container_i::contents (IR::DefinitionKind limit_type,
                            CORBA::Boolean exclude_inherited,
                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   if (limit_type == IR::dk_none)
     return 0;
 
@@ -513,7 +524,7 @@ TAO_Container_i::lookup_name (const char *search_name,
                                limit_type,
                                exclude_inherited,
                                ACE_TRY_ENV);
-  
+
   size_t size = kind_queue.size ();
 
   IR::ContainedSeq *holder;
@@ -556,7 +567,7 @@ TAO_Container_i::describe_contents (IR::DefinitionKind limit_type,
                                     CORBA::Long max_returned_objs,
                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   IR::ContainedSeq_var contents = this->contents (limit_type,
                                                   exclude_inherited,
                                                   ACE_TRY_ENV);
@@ -568,8 +579,8 @@ TAO_Container_i::describe_contents (IR::DefinitionKind limit_type,
   if (max_returned_objs == -1)
     ret_len = length;
   else
-    ret_len = length < ACE_static_cast (CORBA::ULong, max_returned_objs) 
-              ? length 
+    ret_len = length < ACE_static_cast (CORBA::ULong, max_returned_objs)
+              ? length
               : max_returned_objs;
 
   IR::Container::DescriptionSeq *desc_seq;
@@ -589,7 +600,7 @@ TAO_Container_i::describe_contents (IR::DefinitionKind limit_type,
       desc = contents[i]->describe (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      retval[i].contained_object = 
+      retval[i].contained_object =
         IR::Contained::_duplicate (contents[i]);
 
       retval[i].kind = desc->kind;
@@ -600,28 +611,28 @@ TAO_Container_i::describe_contents (IR::DefinitionKind limit_type,
   return retval._retn ();
 }
 
-IR::ModuleDef_ptr 
+IR::ModuleDef_ptr
 TAO_Container_i::create_module (const char *id,
                                 const char *name,
                                 const char *version,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_Module,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ModuleDef::_nil ());
 
   if (!legal_op)
     return IR::ModuleDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ModuleDef::_nil ());
 
   if (bad_params)
     return IR::ModuleDef::_nil ();
-  
+
   ACE_Configuration_Section_Key defns_key;
 
   // Create/open section for members defined in this scope.
@@ -633,9 +644,9 @@ TAO_Container_i::create_module (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Module);
@@ -658,7 +669,7 @@ TAO_Container_i::create_module (const char *id,
                                  ACE_TRY_ENV);
 }
 
-IR::ConstantDef_ptr 
+IR::ConstantDef_ptr
 TAO_Container_i::create_constant (const char *id,
                                   const char *name,
                                   const char *version,
@@ -666,22 +677,22 @@ TAO_Container_i::create_constant (const char *id,
                                   const CORBA::Any &value,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_Constant,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ConstantDef::_nil ());
 
   if (!legal_op)
     return IR::ConstantDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ConstantDef::_nil ());
 
   if (bad_params)
     return IR::ConstantDef::_nil ();
-  
+
   // Create/open section for members defined in this scope.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -692,21 +703,21 @@ TAO_Container_i::create_constant (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Constant);
 
 
   // Get the path to our type and store it.
-  PortableServer::ObjectId_var oid = 
+  PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (type,
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ConstantDef::_nil ());
 
-  CORBA::String_var type_path = 
+  CORBA::String_var type_path =
     PortableServer::ObjectId_to_string (oid.in ());
 
   this->repo_->config ()->set_string_value (new_key,
@@ -756,7 +767,7 @@ TAO_Container_i::create_constant (const char *id,
                                    ACE_TRY_ENV);
 }
 
-IR::StructDef_ptr 
+IR::StructDef_ptr
 TAO_Container_i::create_struct (const char *id,
                                 const char *name,
                                 const char *version,
@@ -770,15 +781,15 @@ TAO_Container_i::create_struct (const char *id,
 
   if (!legal_op)
     return IR::StructDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::StructDef::_nil ());
 
   if (bad_params)
     return IR::StructDef::_nil ();
-  
+
   // Create/open section for members defined in this scope.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -789,9 +800,9 @@ TAO_Container_i::create_struct (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Struct);
@@ -825,7 +836,7 @@ TAO_Container_i::create_struct (const char *id,
                                                 "name",
                                                 name);
 
-      PortableServer::ObjectId_var oid = 
+      PortableServer::ObjectId_var oid =
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (IR::StructDef::_nil ());
@@ -860,7 +871,7 @@ TAO_Container_i::create_struct (const char *id,
                                  ACE_TRY_ENV);
 }
 
-IR::UnionDef_ptr 
+IR::UnionDef_ptr
 TAO_Container_i::create_union (const char *id,
                                const char *name,
                                const char *version,
@@ -868,22 +879,22 @@ TAO_Container_i::create_union (const char *id,
                                const IR::UnionMemberSeq &members,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_Union,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::UnionDef::_nil ());
 
   if (!legal_op)
     return IR::UnionDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::UnionDef::_nil ());
 
   if (bad_params)
     return IR::UnionDef::_nil ();
-  
+
   // Create new section, or open if it already exists.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -894,22 +905,22 @@ TAO_Container_i::create_union (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Union);
 
   // Add a field to hold the path to the discriminator type.
-  PortableServer::ObjectId_var oid = 
+  PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (discriminator_type,
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::UnionDef::_nil ());
 
   CORBA::String_var disc_path =
     PortableServer::ObjectId_to_string (oid.in ());
-   
+
   this->repo_->config ()->set_string_value (new_key,
                                             "disc_path",
                                             disc_path.in ());
@@ -943,7 +954,7 @@ TAO_Container_i::create_union (const char *id,
                                                 "name",
                                                 name);
 
-      PortableServer::ObjectId_var oid = 
+      PortableServer::ObjectId_var oid =
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (IR::UnionDef::_nil ());
@@ -982,7 +993,7 @@ TAO_Container_i::create_union (const char *id,
                                 ACE_TRY_ENV);
 }
 
-IR::EnumDef_ptr 
+IR::EnumDef_ptr
 TAO_Container_i::create_enum (const char *id,
                               const char *name,
                               const char *version,
@@ -996,15 +1007,15 @@ TAO_Container_i::create_enum (const char *id,
 
   if (!legal_op)
     return IR::EnumDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::EnumDef::_nil ());
 
   if (bad_params)
     return IR::EnumDef::_nil ();
-  
+
   // Create new section, or open if it already exists.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -1015,9 +1026,9 @@ TAO_Container_i::create_enum (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Enum);
@@ -1028,7 +1039,7 @@ TAO_Container_i::create_enum (const char *id,
                                              "count",
                                              count);
 
-  // Create a section for each member, named for 
+  // Create a section for each member, named for
   // its ordinal position in the enum,
   for (CORBA::ULong i = 0; i < count; i++)
     {
@@ -1067,29 +1078,29 @@ TAO_Container_i::create_enum (const char *id,
                                ACE_TRY_ENV);
 }
 
-IR::AliasDef_ptr 
+IR::AliasDef_ptr
 TAO_Container_i::create_alias (const char *id,
                                const char *name,
                                const char *version,
                                IR::IDLType_ptr original_type,
                                CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_Alias,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::AliasDef::_nil ());
 
   if (!legal_op)
     return IR::AliasDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::AliasDef::_nil ());
 
   if (bad_params)
     return IR::AliasDef::_nil ();
-  
+
   // Create new section.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -1100,20 +1111,20 @@ TAO_Container_i::create_alias (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Alias);
 
   // Get the path to our original type and store it.
-  PortableServer::ObjectId_var oid = 
+  PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (original_type,
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::AliasDef::_nil ());
 
-  CORBA::String_var unalias_path = 
+  CORBA::String_var unalias_path =
     PortableServer::ObjectId_to_string (oid.in ());
 
   this->repo_->config ()->set_string_value (new_key,
@@ -1131,7 +1142,7 @@ TAO_Container_i::create_alias (const char *id,
                                 ACE_TRY_ENV);
 }
 
-IR::InterfaceDef_ptr 
+IR::InterfaceDef_ptr
 TAO_Container_i::create_interface (const char *id,
                                    const char *name,
                                    const char *version,
@@ -1140,22 +1151,22 @@ TAO_Container_i::create_interface (const char *id,
                                    CORBA::Boolean is_local,
                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_Interface,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::InterfaceDef::_nil ());
 
   if (!legal_op)
     return IR::InterfaceDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::InterfaceDef::_nil ());
 
   if (bad_params)
     return IR::InterfaceDef::_nil ();
-  
+
   // Create new section.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -1166,9 +1177,9 @@ TAO_Container_i::create_interface (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Interface);
@@ -1197,7 +1208,7 @@ TAO_Container_i::create_interface (const char *id,
       // Store the path to each base interface.
       for (CORBA::ULong i = 0; i < length; i++)
         {
-          PortableServer::ObjectId_var oid = 
+          PortableServer::ObjectId_var oid =
             this->repo_->ir_poa ()->reference_to_id (base_interfaces[i],
                                                      ACE_TRY_ENV);
           ACE_CHECK_RETURN (IR::InterfaceDef::_nil ());
@@ -1224,7 +1235,7 @@ TAO_Container_i::create_interface (const char *id,
                                     ACE_TRY_ENV);
 }
 
-IR::ValueDef_ptr 
+IR::ValueDef_ptr
 TAO_Container_i::create_value (const char * /* id */,
                                const char * /* name */,
                                const char * /* version */,
@@ -1237,34 +1248,34 @@ TAO_Container_i::create_value (const char * /* id */,
                                const IR::InitializerSeq & /* initializers */,
                                CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   // TODO
   return 0;
 }
 
-IR::ValueBoxDef_ptr 
+IR::ValueBoxDef_ptr
 TAO_Container_i::create_value_box (const char *id,
                                    const char *name,
                                    const char *version,
                                    IR::IDLType_ptr original_type_def,
                                    CORBA::Environment &ACE_TRY_ENV )
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_ValueBox,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ValueBoxDef::_nil ());
 
   if (!legal_op)
     return IR::ValueBoxDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ValueBoxDef::_nil ());
 
   if (bad_params)
     return IR::ValueBoxDef::_nil ();
-  
+
   // Create new section.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -1275,20 +1286,20 @@ TAO_Container_i::create_value_box (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_ValueBox);
 
   // Get the path to our original type and store it.
-  PortableServer::ObjectId_var oid = 
+  PortableServer::ObjectId_var oid =
     this->repo_->ir_poa ()->reference_to_id (original_type_def,
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ValueBoxDef::_nil ());
 
-  CORBA::String_var boxed_path = 
+  CORBA::String_var boxed_path =
     PortableServer::ObjectId_to_string (oid.in ());
 
   this->repo_->config ()->set_string_value (new_key,
@@ -1306,29 +1317,29 @@ TAO_Container_i::create_value_box (const char *id,
                                    ACE_TRY_ENV);
 }
 
-IR::ExceptionDef_ptr 
+IR::ExceptionDef_ptr
 TAO_Container_i::create_exception (const char *id,
                                    const char *name,
                                    const char *version,
                                    const IR::StructMemberSeq &members,
                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_Exception,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ExceptionDef::_nil ());
 
   if (!legal_op)
     return IR::ExceptionDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::ExceptionDef::_nil ());
 
   if (bad_params)
     return IR::ExceptionDef::_nil ();
-  
+
   // Create/open section for members defined in this scope.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -1339,9 +1350,9 @@ TAO_Container_i::create_exception (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Exception);
@@ -1373,7 +1384,7 @@ TAO_Container_i::create_exception (const char *id,
                                                 "name",
                                                 name);
 
-      PortableServer::ObjectId_var oid = 
+      PortableServer::ObjectId_var oid =
         this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (IR::ExceptionDef::_nil ());
@@ -1397,28 +1408,28 @@ TAO_Container_i::create_exception (const char *id,
                                     ACE_TRY_ENV);
 }
 
-IR::NativeDef_ptr 
+IR::NativeDef_ptr
 TAO_Container_i::create_native (const char *id,
                                 const char *name,
                                 const char *version,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
-{ 
+{
   CORBA::Boolean legal_op = this->valid_container (IR::dk_Native,
                                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::NativeDef::_nil ());
 
   if (!legal_op)
     return IR::NativeDef::_nil ();
-  
-  CORBA::Boolean bad_params = this->pre_exist (id, 
-                                               name, 
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (IR::NativeDef::_nil ());
 
   if (bad_params)
     return IR::NativeDef::_nil ();
-  
+
   // Create new section.
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -1429,9 +1440,9 @@ TAO_Container_i::create_native (const char *id,
   // Common to all IR objects created in IR::Container.
   ACE_Configuration_Section_Key new_key;
   ACE_TString path = this->create_common (defns_key,
-                                          new_key, 
-                                          id, 
-                                          name, 
+                                          new_key,
+                                          id,
+                                          name,
                                           version,
                                           "defns\\",
                                           IR::dk_Native);
@@ -1447,7 +1458,7 @@ TAO_Container_i::create_native (const char *id,
                                  ACE_TRY_ENV);
 }
 
-void 
+void
 TAO_Container_i::lookup_name_recursive (
       ACE_Unbounded_Queue<IR::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
@@ -1498,7 +1509,7 @@ TAO_Container_i::lookup_name_recursive (
               if (!ACE_OS::strcmp (name.c_str (), search_name))
                 {
                   kind_queue.enqueue_tail (def_kind);
-              
+
                   ACE_TString id;
                   this->repo_->config ()->get_string_value (defn_key,
                                                             "id",
@@ -1669,7 +1680,7 @@ TAO_Container_i:: lookup_attr (
     }
 }
 
-void 
+void
 TAO_Container_i::lookup_op (
       ACE_Unbounded_Queue<IR::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
@@ -1806,7 +1817,7 @@ TAO_Container_i::name_exists (const char *name,
 
           if (member_name == name)
             {
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (3, 
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (3,
                                                   CORBA::COMPLETED_NO),
                                 1);
             }
@@ -1841,13 +1852,13 @@ TAO_Container_i::name_exists (const char *name,
 
           if (defn_name == name)
             {
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (3, 
+              ACE_THROW_RETURN (CORBA::BAD_PARAM (3,
                                                   CORBA::COMPLETED_NO),
                                 1);
             }
         }
     }
-                                                      
+
   // If we are an interface, check the inherited members.
   IR::DefinitionKind def_kind = this->def_kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (1);
@@ -1887,16 +1898,16 @@ TAO_Container_i::name_exists (const char *name,
 
               if (base_name == name)
                 {
-                  ACE_THROW_RETURN (CORBA::BAD_PARAM (5, 
+                  ACE_THROW_RETURN (CORBA::BAD_PARAM (5,
                                                       CORBA::COMPLETED_NO),
                                     1);
                 }
             }
         }
     }
-                                                      
+
   return 0;
-}                          
+}
 
 CORBA::Boolean
 TAO_Container_i::id_exists (const char *id,
@@ -1910,7 +1921,7 @@ TAO_Container_i::id_exists (const char *id,
                                                 holder)
        == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (2, 
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (2,
                                           CORBA::COMPLETED_NO),
                         1);
     }
@@ -1919,7 +1930,7 @@ TAO_Container_i::id_exists (const char *id,
 }
 
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Container_i::pre_exist (const char *id,
                             const char *name,
                             CORBA::Environment &ACE_TRY_ENV)
@@ -2010,7 +2021,7 @@ TAO_Container_i::create_common (
   this->repo_->config ()->set_string_value (new_key,
                                             "container_id",
                                             container_id);
-  
+
   ACE_TString path;
   if (container_id == "") // This Container is the Repository.
     {
@@ -2088,7 +2099,7 @@ TAO_Container_i::valid_container (const IR::DefinitionKind op_kind,
 
   if (error_flag == 1)
     {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (4, 
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (4,
                                           CORBA::COMPLETED_NO),
                         0);
     }
