@@ -25,11 +25,13 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl)
 
   if (this->implementation () == 0)
     {
-#if defined (ACE_WIN32) && !defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (impl, ACE_WFMO_Reactor);
-#else /* ACE_WIN32 && !ACE_USE_SELECT_REACTOR_AS_REACTOR */
+#if defined (ACE_WIN32)
+#if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
       ACE_NEW (impl, ACE_Select_Reactor);
-#endif /* ACE_WIN32 && !ACE_USE_SELECT_REACTOR_AS_REACTOR */
+#else /* We have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
+      ACE_NEW (impl, ACE_WFMO_Reactor);
+#endif /* ! (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
+#endif /* ACE_WIN32 */
       this->implementation (impl);
       this->delete_implementation_ = 1;
     }
