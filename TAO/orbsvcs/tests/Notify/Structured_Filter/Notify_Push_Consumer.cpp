@@ -74,7 +74,7 @@ Any_String (const CORBA::Any& any)
 void
 Notify_Push_Consumer::push_structured_event (
     const CosNotification::StructuredEvent& event
-    ACE_ENV_ARG_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

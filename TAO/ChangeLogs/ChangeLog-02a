@@ -1,3 +1,9 @@
+Wed Jan 30 07:39:09 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp
+	  (Notify_Push_Consumer::push_structured_event): Corrected
+	  usage of ACE_ENV_ARG_DECL_NOT_USED.
+
 Tue Jan 29 17:13:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
