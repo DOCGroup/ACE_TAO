@@ -1781,6 +1781,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
+                   PortableServer::POA::WrongAdapter,
                    PortableServer::POA::WrongPolicy))
 {
   // This operation requires the RETAIN policy or the

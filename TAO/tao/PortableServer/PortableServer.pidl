@@ -273,7 +273,7 @@ module PortableServer {
         Object servant_to_reference(in Servant              p_servant)
                                     raises (ServantNotActive, WrongPolicy);
         Servant reference_to_servant(in Object              reference)
-                                    raises(ObjectNotActive, WrongPolicy);
+                                    raises(ObjectNotActive, WrongAdapter, WrongPolicy);
         ObjectId reference_to_id(   in Object               reference)
                                     raises (WrongAdapter, WrongPolicy);
         Servant id_to_servant(      in ObjectId             oid)
