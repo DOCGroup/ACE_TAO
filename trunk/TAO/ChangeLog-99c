@@ -1,3 +1,11 @@
+Sun Mar  7 17:27:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Pluggable/client.cpp:
+	  Removed ACE_OS::thr_exit(). this was borrowed from
+	  IDL_Cubit/client.cpp. It has been decided that this
+	  usage is a "Bad Thing"[TM], and that line has been removed
+	  from the IDL Cubit client as well.
+
 Sun Mar 07 16:39:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/client.cpp (main):
