@@ -152,11 +152,6 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 {
   ACE_TRACE ("ACE_SOCK_Dgram::open");
 
-#if defined (ACE_HAS_IPV6)
-  if(local.get_type() == AF_INET6)
-    protocol_family = PF_INET6;
-#endif
-
   if (ACE_SOCK::open (SOCK_DGRAM,
                       protocol_family,
                       protocol,
