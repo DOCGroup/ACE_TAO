@@ -1,5 +1,20 @@
 Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-
+  
+	* TAO_IDL/be/be_visitor_factory.cpp
+	* TAO_IDL/be_include/be_codegen.h
+	* tao/Asynch_Invocation.cpp
+	* tao/Asynch_Invocation.h
+	* tao/Asynch_Invocation.i
+	* tao/Invocation.cpp
+	* tao/Invocation.h
+  
+  	  Moved the transport_->idle () to the derived class'
+	  constructors.  
+  
+	* tests/AMI/test.idl
+	  
+  	  Just commented out the other methods. Left only get_number. 
+    	  
 	* Makefile
 	* client.tss.conf
         * server.dsp
