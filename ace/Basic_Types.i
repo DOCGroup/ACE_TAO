@@ -177,21 +177,87 @@ ACE_U_LongLong::operator+= (const ACE_U_LongLong &n)
   return *this;
 }
 
+#define ACE_HIGHBIT (~(~0UL >> 1))
+
+ACE_UINT32
+ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out)
+{
+  const ACE_UINT32 b = (a << 1) | c_in;
+  *c_out = (*c_out << 1) + ((a & ACE_HIGHBIT) > 0);
+
+  return b;
+}
+
+ACE_U_LongLong
+ACE_U_LongLong::ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
+                           ACE_UINT32 *c_out)
+{
+  ACE_U_LongLong b;
+
+  b.lo_ = (a.lo_ << 1) | c_in;
+  c_in = ((a.lo_ & ACE_HIGHBIT) > 0);
+  b.hi_ = (a.hi_ << 1) | c_in;
+  *c_out = (*c_out << 1) + ((a.hi_ & ACE_HIGHBIT) > 0);
+
+  return b;
+}
+
+ACE_U_LongLong
+ACE_U_LongLong::ull_add (ACE_U_LongLong a, ACE_U_LongLong b, ACE_UINT32 *carry)
+{
+  ACE_U_LongLong r (0, 0);
+  ACE_UINT32 c1, c2, c3, c4;
+
+  c1 = a.lo_ % 2;
+  c2 = b.lo_ % 2;
+  c3 = 0;
+
+  r.lo_ = a.lo_/2 +  b.lo_/2 + (c1+c2)/2;
+  r.lo_ = ul_shift (r.lo_, (c1+c2)%2, &c3);
+
+  c1 = a.hi_ % 2;
+  c2 = b.hi_ % 2;
+  c4 = 0;
+
+  r.hi_ = a.hi_/2 + b.hi_/2 + (c1+c2+c3)/2;
+  r.hi_ = ul_shift (r.hi_, (c1+c2+c3)%2, &c4);
+
+  *carry = c4;
+
+  return r;
+}
+
+ACE_U_LongLong
+ACE_U_LongLong::ull_mult (ACE_U_LongLong a, ACE_UINT32 b, ACE_UINT32 *carry)
+{
+  register ACE_UINT32 mask = ACE_HIGHBIT;
+  const ACE_U_LongLong zero (0, 0);
+  ACE_U_LongLong accum (0, 0);
+  ACE_UINT32 c;
+
+  *carry = 0;
+  if (b > 0)
+    do
+      {
+        accum = ull_shift (accum, 0U, carry);
+        if (b & mask)
+          accum = ull_add (accum, a, &c);
+        else
+          accum = ull_add (accum, zero, &c);
+        *carry += c;
+        mask >>= 1;
+      }
+    while (mask > 0);
+
+  return accum;
+}
+
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator*= (const ACE_UINT32 n)
 {
-  // Save the current lo_.
-  const ACE_UINT32 lo = lo_;
+  ACE_UINT32 carry;  // will throw the carry away
 
-  lo_ = 0;
-  if (n == 0)
-    hi_ = 0;
-
-  // Repeatedly add in the lo_ value that was saved above.
-  for (ACE_UINT32 i = 0; i < n; ++i)
-    operator+= (lo);
-
-  return *this;
+  return *this = ull_mult (*this, n, &carry);
 }
 
 ACE_INLINE ACE_U_LongLong &

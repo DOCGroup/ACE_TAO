@@ -262,7 +262,18 @@
 
   private:
     ACE_UINT32 hi_;
+    // High 32 bits.
     ACE_UINT32 lo_;
+    // Low 32 bits.
+
+    ACE_UINT32 ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out);
+    ACE_U_LongLong ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
+                              ACE_UINT32 *c_out);
+    ACE_U_LongLong ull_add (ACE_U_LongLong a, ACE_U_LongLong b,
+                            ACE_UINT32 *carry);
+    ACE_U_LongLong ull_mult (ACE_U_LongLong a, ACE_UINT32 b,
+                             ACE_UINT32 *carry);
+    // These functions are used to implement multiplication.
   };
 
   typedef ACE_U_LongLong ACE_UINT64;
