@@ -93,6 +93,122 @@ private:
 };
 
 
+class TAO_FT_Export TAO_FT_Heart_Beat_Policy:
+  public FT::HeartbeatPolicy,
+  public TAO_Local_RefCounted_Object
+{
+  // = TITLE
+  //   FT::HeartBeatPolicy
+  //
+  // = DESCRIPTION
+  //   If this  policy is set, it enables the client ORB to send
+  //   heartbeats to the server ORB over the open connections.
+  //
+public:
+
+  TAO_FT_Heart_Beat_Policy (const CORBA::Boolean boolean,
+                            const TimeBase::TimeT &interval,
+                            const TimeBase::TimeT &timeout);
+  // Constructor.
+
+  TAO_FT_Heart_Beat_Policy (const TAO_FT_Heart_Beat_Policy &rhs);
+  // Copy constructor.
+
+  static CORBA::Policy_ptr create (const CORBA::Any& val,
+                                   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Helper method for the implementation of
+  // CORBA::ORB::create_policy.
+
+  virtual TAO_FT_Heart_Beat_Policy *clone (void) const;
+  // Returns a copy of <this>.
+
+  // = The FT::HeartBeatPolicy methods
+  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::PolicyType policy_type (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Policy_ptr copy (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void destroy (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void set_time_value (ACE_Time_Value &time_value,
+                       const TimeBase::TimeT &timebase);
+  // Change the CORBA representation to the ACE representation.
+
+private:
+
+  // The attributes
+  CORBA::Boolean heartbeat_;
+  // <heartbeat_> indicates whether heartbeating is enabled or not.
+
+  TimeBase::TimeT heartbeat_interval_;
+  // Intervals in which heartbeat messages need to be sent
+
+  TimeBase::TimeT heartbeat_timeout_;
+  // The timeouts for the heartbeats
+};
+
+
+class TAO_FT_Export TAO_FT_Heart_Beat_Enabled_Policy:
+  public FT::HeartbeatEnabledPolicy,
+  public TAO_Local_RefCounted_Object
+{
+  // = TITLE
+  //   FT::HeartBeatEnabledPolicy
+  //
+  // = DESCRIPTION
+  //   If this  policy is set, it enables the server ORB to set
+  //   the TAG_FT_HEARTBEAT_ENABLED component in the IOP profile of
+  //   the IOR that it exposes
+  //
+public:
+
+  TAO_FT_Heart_Beat_Enabled_Policy (const CORBA::Boolean boolean);
+  // Constructor.
+
+  TAO_FT_Heart_Beat_Enabled_Policy (
+      const TAO_FT_Heart_Beat_Enabled_Policy &rhs);
+  // Copy constructor.
+
+  static CORBA::Policy_ptr create (const CORBA::Any& val,
+                                   CORBA::Environment &ACE_TRY_ENV =
+                                   TAO_default_environment ());
+  // Helper method for the implementation of
+  // CORBA::ORB::create_policy.
+
+  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone (void) const;
+  // Returns a copy of <this>.
+
+  // = The FT::HeartBeatPolicy methods
+  virtual CORBA::Boolean heartbeat_enabled_policy_value (
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::PolicyType policy_type (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Policy_ptr copy (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void destroy (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+
+  CORBA::Boolean heartbeat_enabled_value_;
+  // indicates whether heartbeating is enabled or not.
+};
+
 #if defined (__ACE_INLINE__)
 #include "FT_Policy_i.i"
 #endif /* __ACE_INLINE__ */
