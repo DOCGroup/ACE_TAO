@@ -23,6 +23,7 @@
 
 #include "orbsvcs/SecurityLevel2C.h"
 #include "tao/ORB_Core.h"
+#include "tao/LocalObject.h"
 
 #include "Security_Current_Impl.h"
 
