@@ -1,3 +1,8 @@
+Mon Aug  3 15:05:39 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/Makefile: Added this Makefile
+	which compiles the AVStreams mpeg application.
+
 Mon Aug  3 14:23:22 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* tests/CDR/basic_types.cpp: 
