@@ -104,7 +104,7 @@ worker (void *data)
 }
 
 int 
-main (void)
+main (int argc, char** argv)
 {
   event_handler.iterations_ = 5;
   ACE_ASSERT (ACE_Reactor::instance ()->register_handler (&event_handler, 
