@@ -1,3 +1,43 @@
+Thu Apr 25 16:42:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.i:
+        * tao/ClientRequestInfo_i.cpp:
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/IOPC.cpp:
+        * tao/ORB.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.i:
+        * tao/PollableC.cpp:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.i:
+        * tao/Typecode.cpp:
+        * tao/WrongTransactionC.cpp:
+        * tao/WrongTransactionC.i:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.i:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.i:
+        * tao/RTCORBA/RTCORBAC.cpp:
+
+          Added missing methods _rep_id() and _name() to class 
+          CORBA::Exception, as well as a new member name_ to hold the
+          char* local name. Also changed the constructor signatures
+          to pass in the new local name argument, and IDL compiler
+          hand-crafted code and other exception code to use the new
+          signatures. Thanks to Andy Alvarez <andy_alvarez@baxter.com>
+          for pointing out the lack of these spec-required methods. 
+
 Thu Apr 25 16:37:28 2002 Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Protocol/run_test.pl: For a change the hack
