@@ -9,74 +9,24 @@
 #include "orbsvcs/AV/Transport.h"
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
+#include "orbsvcs/AV/Policy.h"
 
 class FTP_Server_StreamEndPoint
   :public TAO_Server_StreamEndPoint
 {
 public:
   FTP_Server_StreamEndPoint (void);
-  virtual int make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler);
-  // call to make a new flow handler for a dgram flow.
-  virtual int make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler);
-  // call to make a new flow handler for a dgram flow.
-  virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
-  // call to make a new flow handler for a mcast dgram flow.
-
-  virtual int get_sfp_callback (const char *flowname,
-                                TAO_SFP_Callback *&callback);
+  virtual int get_callback (const char *flowname,
+                            TAO_AV_Callback *&callback);
 };
 
-class FTP_Server_Flow_Handler
-  :public virtual TAO_AV_Flow_Handler
+class FTP_Server_Callback
+  :public TAO_AV_Callback
 {
 public:
-  FTP_Server_Flow_Handler (void);
-  virtual int input (ACE_HANDLE fd);
-  virtual int start (void);
-  virtual int stop (void);
-};
-
-class FTP_Server_UDP_Flow_Handler
-  :public TAO_AV_UDP_Flow_Handler,
-   public FTP_Server_Flow_Handler
-{
-public:
-  virtual int handle_input (ACE_HANDLE fd);
-};
-
-class FTP_Server_TCP_Flow_Handler
-  :public TAO_AV_TCP_Flow_Handler,
-   public FTP_Server_Flow_Handler
-{
-public:
-  virtual int start (void);
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int get_handle (void) const;
-};
-
-class FTP_Server_UDP_MCast_Flow_Handler
-  :public TAO_AV_UDP_MCast_Flow_Handler,
-   public FTP_Server_Flow_Handler
-{
-public:
-  virtual int handle_input (ACE_HANDLE fd);
-};
-
-class FTP_SFP_Callback
-  :public TAO_SFP_Callback
-{
-  virtual int start_failed (void);
-  // This is called for both active and passive start.
-
-  virtual int stream_established (void);
-  // This is a callback for both active and passive stream
-  // establshment.
-
+  virtual int handle_stop (void);
   virtual int receive_frame (ACE_Message_Block *frame);
-  // upcall to the application to receive a frame.
-
-  virtual void end_stream (void);
-  // called when the EndofStream message is received.
+  virtual int handle_end_stream (void);
 };
 
 class Server

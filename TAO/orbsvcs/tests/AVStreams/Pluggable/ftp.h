@@ -14,74 +14,33 @@
 #include "orbsvcs/AV/MCast.h"
 
 class FTP_Client_Flow_Handler
-  :public virtual TAO_AV_Flow_Handler
+  :public virtual ACE_Event_Handler
 {
 public:
-  FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager);
+  FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
+                           ACE_Time_Value &timeout);
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
+  virtual int start (void);
+  virtual int stop (void);
+  virtual int set_protocol_object (TAO_AV_Protocol_Object *object);
 protected:
   TAO_ORB_Manager *orb_manager_;
   long timer_id_;
   int count_;
+  TAO_AV_Protocol_Object *protocol_object_;
+  ACE_Time_Value timeout_;
 };
 
-class FTP_Client_UDP_Flow_Handler
-:public FTP_Client_Flow_Handler,
- public TAO_AV_UDP_Flow_Handler
+class FTP_Client_Callback
+  :public TAO_AV_Callback
 {
 public:
-  FTP_Client_UDP_Flow_Handler (TAO_ORB_Manager *orb_manager = 0);
-  virtual int start (void);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-};
-
-class FTP_Client_TCP_Flow_Handler
-:public FTP_Client_Flow_Handler,
- public TAO_AV_TCP_Flow_Handler
-{
-public:
-  FTP_Client_TCP_Flow_Handler (TAO_ORB_Manager *orb_manager = 0);
-  virtual int start (void);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-};
-
-class FTP_Client_SFP_Flow_Handler
-  :public FTP_Client_Flow_Handler,
-   public ACE_Event_Handler
-{
-public:
-  FTP_Client_SFP_Flow_Handler (TAO_ORB_Manager *orb_manager);
-  virtual int start (void);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-  virtual TAO_AV_Transport *transport (void);
-  virtual void set_sfp_object (TAO_SFP_Object *object);
+  FTP_Client_Callback (FTP_Client_Flow_Handler *handler);
+  virtual int handle_start (void);
+  virtual int handle_stop (void);
 protected:
-  TAO_SFP_Object *sfp_object_;
-};
-
-class FTP_Client_UDP_MCast_Flow_Handler
-  :public FTP_Client_Flow_Handler,
-   public TAO_AV_UDP_MCast_Flow_Handler
-{
-public:
-  FTP_Client_UDP_MCast_Flow_Handler (TAO_ORB_Manager *orb_manager = 0);
-  virtual int start (void);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-};
-
-class FTP_SFP_Object
-  :public TAO_SFP_Object
-{
-public:
-  FTP_SFP_Object (FTP_Client_SFP_Flow_Handler *handler);
-  virtual int start (void);
-protected:
-  FTP_Client_SFP_Flow_Handler *handler_;
+  FTP_Client_Flow_Handler *handler_;
 };
 
 class FTP_Client_StreamEndPoint
@@ -90,19 +49,15 @@ class FTP_Client_StreamEndPoint
 public:
   FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manager = 0);
 
-  virtual int make_udp_flow_handler (TAO_AV_UDP_Flow_Handler *&handler);
-  // call to make a new flow handler for a dgram flow.
+  virtual int get_callback (const char *flowname,
+                            TAO_AV_Callback *&callback);
 
-  virtual int make_tcp_flow_handler (TAO_AV_TCP_Flow_Handler *&handler);
-  // call to make a new flow handler for a dgram flow.
-  
-  virtual int make_dgram_mcast_flow_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
-  // call to make a new flow handler for a mcast dgram flow.
-
-  virtual int get_sfp_object (const char *flowname,
-                              TAO_SFP_Object *&sfp_object);
+  virtual int set_protocol_object (const char *flowname,
+                                   TAO_AV_Protocol_Object *object);
 protected:
   TAO_ORB_Manager *orb_manager_;
+  FTP_Client_Flow_Handler *handler_;
+  FTP_Client_Callback *callback_;
 };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A<FTP_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> ENDPOINT_STRATEGY;
@@ -132,6 +87,7 @@ public:
   int init (int argc, char **argv);
   int run (void);
   FILE *file (void);
+  char *flowname (void);
   TAO_StreamCtrl* streamctrl (void);
 private:
   int parse_args (int argc, char **argv);
@@ -151,6 +107,7 @@ private:
   TAO_Naming_Client my_naming_client_;
   FILE *fp_;
   char *protocol_;
+  char *flowname_;
   int use_sfp_;
 };
 
