@@ -1,3 +1,14 @@
+Wed Jan  7 13:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+          When usign gnuace generate LDLIBS += $(MATHLIB) at the place of
+          the local marker. This test uses sqrt and some Unix versions
+          then need to link their mathlib.
+
+        * tests/Smart_Proxies/Policy/Smart_Proxies_Policy.mpc:
+          Use taoserver and taoclient as base project so that exenames are
+          set to the names the run_test.pl expects.
+
 Tue Jan  6 20:43:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
