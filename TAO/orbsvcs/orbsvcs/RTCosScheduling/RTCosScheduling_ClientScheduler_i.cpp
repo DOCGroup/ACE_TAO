@@ -37,7 +37,7 @@ namespace TAO
 
 /// Constructor
 RTCosScheduling_ClientScheduler_i::RTCosScheduling_ClientScheduler_i (
-  const CORBA::ORB_var orb,
+  CORBA::ORB_var orb,
   char *node_name,
   char *file)
 {
