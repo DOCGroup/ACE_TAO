@@ -30,6 +30,13 @@ Tue Jan 21 09:19:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Thread_Pool_Test.cpp (open):  added return 0 at end.
 
+Tue Jan 21 11:00:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Gateway.cpp (parse_args): There was a small
+ 	  bug in parse_args (latest beta), it mixed proxy and consumer
+ 	  conf files.  Thanks to Per Andersson
+ 	  <Per.Andersson@hfera.ericsson.se> for reporting this.
+
 Mon Jan 20 13:29:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i, ace/Task.h, and ace/Thread_Manager.h: changed a few

@@ -112,9 +112,9 @@ Gateway::parse_args (int argc, char *argv[])
 	  this->event_channel_.options ().blocking_semantics_ = 0;
 	  break;
 	case 'C': // Use a different proxy config filename.
-	  ACE_OS::strncpy (this->proxy_config_file_, 
+	  ACE_OS::strncpy (this->consumer_config_file_,
 			   get_opt.optarg, 
-			   sizeof this->proxy_config_file_);
+			   sizeof this->consumer_config_file_);
 	  break;
 	case 'c': // We are (also?) playing the Connector role.
 	  this->event_channel_.options ().connector_role_ = 1;
@@ -123,9 +123,9 @@ Gateway::parse_args (int argc, char *argv[])
 	  this->debug_ = 1;
 	  break;
 	case 'P': // Use a different consumer config filename.
-	  ACE_OS::strncpy (this->consumer_config_file_,
+	  ACE_OS::strncpy (this->proxy_config_file_, 
 			   get_opt.optarg, 
-			   sizeof this->consumer_config_file_);
+			   sizeof this->proxy_config_file_);
 	  break;
 	case 'p': // Use a different acceptor port.
 	  this->event_channel_.options ().acceptor_port_ = 
