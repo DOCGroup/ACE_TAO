@@ -427,7 +427,7 @@ private:
   static int be_a_daemon_;
 
   /// Pathname of file to write process id.
-  static char *pid_file_name_;
+  static ACE_TCHAR *pid_file_name_;
 
   /// Should we avoid loading the static services?
   static int no_static_svcs_;
