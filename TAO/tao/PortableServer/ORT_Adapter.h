@@ -58,10 +58,6 @@ namespace TAO
     : public ACE_Service_Object
   {
   public:
-
-    /// The virtual destructor
-    virtual ~ORT_Adapter (void);
-
     /// Activate the ORT library
     virtual int activate (const char *server_id,
                           const char *orb_id,

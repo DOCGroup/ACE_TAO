@@ -39,8 +39,6 @@ namespace TAO
     : public ORT_Adapter_Factory
   {
   public:
-    virtual ~ORT_Adapter_Factory_Impl (void);
-
     /// Create an adapter
     virtual TAO::ORT_Adapter * create ();
 

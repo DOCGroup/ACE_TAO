@@ -42,10 +42,6 @@ namespace TAO
     : public ORT_Adapter
   {
   public:
-
-    /// Destructor
-    virtual ~ORT_Adapter_Impl (void);
-
     /// Activate this adapter
     virtual int activate (const char *server_id,
                           const char *orb_id,
