@@ -94,6 +94,7 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 ace \
                 apps \
                 bin \
+		docs \
                 etc \
                 examples \
                 include \
