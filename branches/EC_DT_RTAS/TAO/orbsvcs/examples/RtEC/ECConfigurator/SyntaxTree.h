@@ -156,6 +156,10 @@ class ECConfiguration : public VisitableSyntax
 {
 public:
 
+  ECConfiguration (void)
+    :driver(NULL)
+  {}
+
   virtual ~ECConfiguration (void)
   {}
 
@@ -180,6 +184,15 @@ public:
 class Event : public VisitableSyntax
 {
 public:
+
+  Event (void)
+    : period(NULL)
+    , phase(NULL)
+    , criticality(NULL)
+    , importance(NULL)
+    , worstexecution(NULL)
+    , typicalexecution(NULL)
+  {}
 
   virtual ~Event (void)
   {}
@@ -253,6 +266,11 @@ class Timeout : public VisitableSyntax
 {
 public:
 
+  Timeout (void)
+    : period(NULL)
+    , phase(NULL)
+  {}
+
   virtual ~Timeout (void)
   {}
 
@@ -277,6 +295,10 @@ public:
 class LocalEventChannel : public VisitableSyntax
 {
 public:
+
+  LocalEventChannel (void)
+    : schedulingstrategy(NULL)
+  {}
 
   virtual ~LocalEventChannel (void)
   {}
@@ -303,6 +325,10 @@ public:
 class RemoteEventChannel : public VisitableSyntax
 {
 public:
+
+  RemoteEventChannel (void)
+    : iorfile(NULL)
+  {}
 
   virtual ~RemoteEventChannel (void)
   {}
@@ -353,6 +379,11 @@ public:
 class Consumer : public VisitableSyntax
 {
 public:
+
+  Consumer (void)
+    : subscriptions(NULL)
+    , dependants(NULL)
+  {}
 
   virtual ~Consumer (void)
   {}
@@ -420,6 +451,11 @@ public:
 class Supplier : public VisitableSyntax
 {
 public:
+
+  Supplier (void)
+    : publications(NULL)
+    , triggers(NULL)
+  {}
 
   virtual ~Supplier (void)
   {}
@@ -489,6 +525,11 @@ class TestDriver : public Driver
 {
 public:
 
+  TestDriver (void)
+    : startcondition(NULL)
+    , stopcondition(NULL)
+  {}
+
   virtual ~TestDriver (void)
   {}
 
@@ -510,6 +551,10 @@ public:
 class StartCondition : public VisitableSyntax
 {
 public:
+
+  StartCondition (void)
+    : time(NULL)
+  {}
 
   virtual ~StartCondition (void)
   {}
@@ -538,6 +583,10 @@ public:
 class StopCondition : public VisitableSyntax
 {
 public:
+
+  StopCondition (void)
+    : value(NULL)
+  {}
 
   virtual ~StopCondition (void)
   {}
