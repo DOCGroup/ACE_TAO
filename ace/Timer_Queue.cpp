@@ -24,6 +24,11 @@ ACE_Timer_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_Timer_Node::ACE_Timer_Node (void)
+{
+  ACE_TRACE ("ACE_Timer_Node::ACE_Timer_Node");
+}
+
 ACE_Timer_Node::ACE_Timer_Node (ACE_Event_Handler *h, 
 				const void *a, 
 				const ACE_Time_Value &t, 
@@ -148,7 +153,8 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 	this->cancel (handler);
 
       if (reclaim)
-	delete expired;
+	// Call the factory method to free up the node.
+	this->free_node (expired);
 
       number_of_timers_expired++;
     }

@@ -29,7 +29,7 @@
 static int max_iterations = ACE_DEFAULT_MAX_TIMERS;
 
 // Keep track of the timer ids that were assigned to us.
-static int *timer_ids;
+static int *timer_ids = 0;
 
 class Example_Handler : public ACE_Event_Handler
 {
@@ -166,8 +166,9 @@ struct Timer_Queues
 
 static Timer_Queues timer_queues[] =
 {
+  { 0, "ACE_Timer_Heap (preallocated)" },
+  { 0, "ACE_Timer_Heap (non-preallocated)" },
   { new ACE_Timer_List, "ACE_Timer_List" },
-  { new ACE_Timer_Heap, "ACE_Timer_Heap" },
   { 0, 0 },
 };
 
@@ -178,6 +179,16 @@ main (int argc, char *argv[])
 
   if (argc > 1)
     max_iterations = ACE_OS::atoi (argv[1]);
+
+  // Preallocate memory.
+  ACE_NEW_RETURN (timer_queues[0].queue_,
+		  ACE_Timer_Heap (max_iterations, 1),
+		  -1);
+
+  // Don't preallocate memory.
+  ACE_NEW_RETURN (timer_queues[1].queue_,
+		  ACE_Timer_Heap (max_iterations),
+		  -1);
 
   ACE_NEW_RETURN (timer_ids,
 		  int[max_iterations],

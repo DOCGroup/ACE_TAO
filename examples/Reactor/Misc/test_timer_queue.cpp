@@ -1,7 +1,7 @@
-
 // $Id$
 
-#include "ace/Timer_Queue.h"
+#include "ace/Timer_Heap.h"
+#include "ace/Timer_List.h"
 
 class Example_Handler : public ACE_Event_Handler
 {
@@ -71,14 +71,11 @@ static Timer_Queues timer_queues[] =
 int
 main (int, char *[])
 {
-  ACE_START_TEST ("Timer_Queue_Test");
-
   for (int i = 0; timer_queues[i].name_ != 0; i++)
     {
       test_functionality (timer_queues[i].queue_);
       delete timer_queues[i].queue_;
     }
 
-  ACE_END_TEST;
   return 0;
 }

@@ -379,11 +379,13 @@ void
 ACE_Thread_Manager::remove_thr (int i)
 {
   ACE_TRACE ("ACE_Thread_Manager::remove_thr");
-  if (this->current_count_ > 1)
-    // Structure assignment.
-    this->thr_table_[i] = this->thr_table_[this->current_count_ - 1];
 
   this->current_count_--;
+
+  if (this->current_count_ > 0)
+    // Compact the table by moving the last item into the slot vacated
+    // by the index being removed (this is a structure assignment).
+    this->thr_table_[i] = this->thr_table_[this->current_count_];
 
 #if defined (ACE_HAS_THREADS)
   // Tell all waiters when there are no more threads left in the pool.

@@ -11,6 +11,7 @@ class Options
   // = TITLE
   //     Option Singleton for Event Server.
 {
+  friend class ACE_Shutup_GPlusPlus; // Turn off g++ warning...
 public:
   static Options *instance (void);
 
@@ -93,6 +94,8 @@ private:
 
   static Options *instance_;
   // Static Singleton.
+
+
 };
 
 #include "Options.i"
