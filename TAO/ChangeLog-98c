@@ -1,3 +1,27 @@
+Thu Oct  1 22:05:39 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/DynAny.pidl:
+	* tao/InconsistentTypeCode.pidl:
+	* tao/DynAnyC.{h,i,cpp}:
+	* tao/DynAnyS.cpp:
+	* tao/DynAny_i.{h,cpp}:
+	* tao/DynArray_i.{h,cpp}:
+	* tao/DynEnum_i.{h,cpp}:
+	* tao/DynSequence_i.{h,cpp}:
+	* tao/DynStruct_i.{h,cpp}:
+	* tao/DynUnion_i.{h,cpp}:
+	* tao/DynUnion_i_T.{h,cpp}:
+	* tao/InconsistentTypeCode.{h,cpp}:
+	* tao/corba.h:
+	* tao/ORB.{h,i,cpp}:
+	* tao/POA_CORBA.h:
+	* tao/Makefile:
+	* tao/TAO.dsp:
+	  All the DynAny stuff, plus the necessary additions to
+	  other TAO files, plus mods to Unix Makefile and VC
+	  project file. Builds were successful using VC5, Sun cc
+	  and GNU g++.
+
 Thu Oct 01 21:21:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
