@@ -4,17 +4,14 @@
 #include "tao/ORB_Core.h"
 #include "tao/Wait_Strategy.h"
 
-#if !defined (__ACE_INLINE__)
-#include "tao/Synch_Reply_Dispatcher.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(tao, Synch_Reply_Dispatcher, "$Id$")
 
 // Constructor.
-TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
-                                                        IOP::ServiceContextList &sc)
+TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
+    TAO_ORB_Core *orb_core,
+    IOP::ServiceContextList &sc
+  )
   : reply_service_info_ (sc),
-    reply_status_ (100), //Just a invalid reply status
     message_state_ (orb_core),
     reply_received_ (0),
     orb_core_ (orb_core),
@@ -41,13 +38,14 @@ TAO_Synch_Reply_Dispatcher::reply_received (void)
 }
 
 int
-TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
-                                            const TAO_GIOP_Version & /*version*/,
-                                            IOP::ServiceContextList &reply_ctx,
-                                            TAO_GIOP_Message_State *message_state)
+TAO_Synch_Reply_Dispatcher::dispatch_reply (
+    CORBA::ULong reply_status,
+    const TAO_GIOP_Version & /* version */,
+    IOP::ServiceContextList &reply_ctx,
+    TAO_GIOP_Message_State *message_state
+  )
 {
   this->reply_status_ = reply_status;
-  //this->version_ = version;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
@@ -75,9 +73,13 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   if (this->wait_strategy_ != 0)
     {
       if (this->wait_strategy_->reply_dispatched (
-                  this->reply_received_,
-                  this->leader_follower_condition_variable_) == -1)
-        return -1;
+                    this->reply_received_,
+                    this->leader_follower_condition_variable_
+                  ) 
+          == -1)
+        {
+          return -1;
+        }
     }
 
   return 1;
@@ -103,7 +105,8 @@ TAO_Synch_Reply_Dispatcher::connection_closed (void)
   if (this->wait_strategy_ != 0)
     {
       this->wait_strategy_->connection_closed (
-                  this->reply_received_,
-                  this->leader_follower_condition_variable_);
+                                this->reply_received_,
+                                this->leader_follower_condition_variable_
+                              );
     }
 }
