@@ -239,7 +239,8 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
   // not this thread which is making the upcall.
   while (this->enable_locking_ &&
          this->non_servant_upcall_in_progress_ &&
-         this->non_servant_upcall_thread_ != ACE_OS::thr_self ())
+         ! ACE_OS::thr_equal (this->non_servant_upcall_thread_,
+                              ACE_OS::thr_self ()))
     {
       // If so wait...
       int result = this->non_servant_upcall_condition_.wait ();
