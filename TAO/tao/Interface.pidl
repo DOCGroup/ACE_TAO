@@ -216,7 +216,8 @@ module IR
         in Identifier name,
         in VersionSpec version,
         in InterfaceDefSeq base_interfaces,
-        in boolean is_abstract
+        in boolean is_abstract,
+	in boolean is_local
       );
     ValueDef create_value (
         in RepositoryId id,

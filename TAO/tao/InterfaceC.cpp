@@ -6393,6 +6393,7 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
     const char * version,
     const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
+    CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -6451,7 +6452,6 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
@@ -6462,7 +6462,8 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
               (_tao_out << name) &&
               (_tao_out << version) &&
               (_tao_out << base_interfaces) &&
-              (_tao_out << CORBA::Any::from_boolean (is_abstract))
+              (_tao_out << CORBA::Any::from_boolean (is_abstract)) &&
+              (_tao_out << CORBA::Any::from_boolean (is_local))
           ))
           TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
@@ -7377,6 +7378,7 @@ IR_InterfaceDef_ptr TAO_IR_Container_Smart_Proxy_Base::create_interface  (
     const char * version,
     const IR_InterfaceDefSeq & base_interfaces,
     CORBA::Boolean is_abstract,
+    CORBA::Boolean is_local,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -7389,6 +7391,7 @@ IR_InterfaceDef_ptr TAO_IR_Container_Smart_Proxy_Base::create_interface  (
       version,
       base_interfaces,
       is_abstract,
+      is_local,
       ACE_TRY_ENV
     );
 
