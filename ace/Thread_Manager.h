@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Thread_Manager.h 
+//    Thread_Manager.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_THREAD_MANAGER_H)
@@ -76,7 +76,7 @@ public:
 private:
   ACE_thread_t thr_id_;
   // Unique thread ID.
-    
+
   ACE_hthread_t thr_handle_;
   // Unique handle to thread (used by Win32 and AIX).
 
@@ -87,7 +87,7 @@ private:
   // Current state of the thread.
 
   ACE_Cleanup_Info cleanup_info_;
-  // Stores the cleanup info for a thread.  
+  // Stores the cleanup info for a thread.
   // @@ Note, this should be generalized to be a stack of
   // <ACE_Cleanup_Info>s.
 
@@ -149,39 +149,43 @@ public:
   int open (size_t size = 0);
   // No-op.  Currently unused.
 
-  int close (void);		
+  int close (int automatic_wait = 1);
   // Release all resources.
+  // By default, this method will wait till all threads
+  // exit.  However, when called from <close_singleton>, most global resources
+  // are destroyed and thus, we don't try to wait but just clean up the thread
+  // descriptor list.
 
-  int spawn (ACE_THR_FUNC func, 
+  int spawn (ACE_THR_FUNC func,
 	     void *args = 0,
-	     long flags = THR_NEW_LWP, 
-	     ACE_thread_t * = 0, 
+	     long flags = THR_NEW_LWP,
+	     ACE_thread_t * = 0,
 	     ACE_hthread_t *t_handle = 0,
 	     long priority = ACE_DEFAULT_THREAD_PRIORITY,
 	     int grp_id = -1,
-	     void *stack = 0, 
+	     void *stack = 0,
 	     size_t stack_size = 0);
-  // Create a new thread, which executes <func>.  
+  // Create a new thread, which executes <func>.
   // Returns: on success a unique group id that can be used to control
   // other threads added to the same group.  On failure, returns -1.
 
-  int spawn_n (size_t n, 
-	       ACE_THR_FUNC func, 
+  int spawn_n (size_t n,
+	       ACE_THR_FUNC func,
 	       void *args = 0,
 	       long flags = THR_NEW_LWP,
 	       long priority = ACE_DEFAULT_THREAD_PRIORITY,
 	       int grp_id = -1,
 	       ACE_Task_Base *task = 0,
 	       ACE_hthread_t thread_handles[] = 0);
-  // Create N new threads, all of which execute <func>.  
+  // Create N new threads, all of which execute <func>.
   // Returns: on success a unique group id that can be used to control
   // all of the threads in the same group.  On failure, returns -1.
 
-  int spawn_n (ACE_thread_t thread_ids[], 
-	       size_t n, 
-	       ACE_THR_FUNC func, 
+  int spawn_n (ACE_thread_t thread_ids[],
+	       size_t n,
+	       ACE_THR_FUNC func,
 	       void *args,
-	       long flags, 
+	       long flags,
 	       long priority = ACE_DEFAULT_THREAD_PRIORITY,
 	       int grp_id = -1,
 	       void *stack[] = 0,
@@ -205,7 +209,7 @@ public:
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in
   // which case <status> is passed as the exit value of the thread.
 
-  int wait (const ACE_Time_Value *timeout = 0);	
+  int wait (const ACE_Time_Value *timeout = 0);
   // Block until there are no more threads running in the
   // <Thread_Manager> or <timeout> expires.  Note that <timeout> is
   // treated as "absolute" time.  Returns 0 on success and -1 on
@@ -253,7 +257,7 @@ public:
 
   // = Suspend methods, which isn't supported on POSIX pthreads (will not block).
   int suspend_all (void);
-  // Suspend all threads 
+  // Suspend all threads
   int suspend (ACE_thread_t);
   // Suspend a single thread.
   int suspend_grp (int grp_id);
@@ -263,7 +267,7 @@ public:
 
   // = Resume methods, which isn't supported on POSIX pthreads (will not block).
   int resume_all (void);
-  // Resume all stopped threads 
+  // Resume all stopped threads
   int resume (ACE_thread_t);
   // Resume a single thread.
   int resume_grp (int grp_id);
@@ -273,7 +277,7 @@ public:
 
   // = Kill methods, send signals -- which isn't supported on Win32 (will not block).
   int kill_all (int signum);
-  // Send signum to all stopped threads 
+  // Send signum to all stopped threads
   int kill (ACE_thread_t, int signum);
   // Kill a single thread.
   int kill_grp (int grp_id, int signum);
@@ -297,7 +301,7 @@ public:
   // methods in <ACE_Thread Manager>. For example, the <apply_task>
   // method resembles the <apply_thr> method, and <suspend_task>
   // resembles <suspend_thr>.
-  
+
   // = Operations on ACE_Tasks.
   int wait_task (ACE_Task_Base *task);
   // Block until there are no more threads running in <task>.  Returns
@@ -321,20 +325,20 @@ public:
   int num_threads_in_task (ACE_Task_Base *task);
   // Returns the number of threads in an <ACE_Task_Base>.
 
-  int task_list (int grp_id, 
+  int task_list (int grp_id,
 		 ACE_Task_Base *task_list[],
 		 size_t n);
   // Returns in <task_list> a list of up to <n> <ACE_Tasks> in a
   // group.  The caller must allocate the memory for <task_list>
 
-  int thread_list (ACE_Task_Base *task, 
+  int thread_list (ACE_Task_Base *task,
 		   ACE_thread_t thread_list[],
 		   size_t n);
   // Returns in <thread_list> a list of up to <h> thread ids in an
   // <ACE_Task_Base>.  The caller must allocate the memory for
   // <thread_list>.
 
-  int hthread_list (ACE_Task_Base *task, 
+  int hthread_list (ACE_Task_Base *task,
 		    ACE_hthread_t hthread_list[],
 		    size_t n);
   // Returns in <hthread_list> a list of up to <n> thread handles in
@@ -370,14 +374,14 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  virtual int spawn_i (ACE_THR_FUNC func, 
-		       void *args, 
-		       long flags, 
-		       ACE_thread_t * = 0, 
+  virtual int spawn_i (ACE_THR_FUNC func,
+		       void *args,
+		       long flags,
+		       ACE_thread_t * = 0,
 		       ACE_hthread_t *t_handle = 0,
 		       long priority = ACE_DEFAULT_THREAD_PRIORITY,
 		       int grp_id = -1,
-		       void *stack = 0, 
+		       void *stack = 0,
 		       size_t stack_size = 0,
 		       ACE_Task_Base *task = 0);
   // Create a new thread (must be called with locks held).
@@ -404,7 +408,7 @@ protected:
 		  long flags = 0);
   // Insert a thread in the table (checks for duplicates).
 
-  int append_thr (ACE_thread_t t_id, ACE_hthread_t, 
+  int append_thr (ACE_thread_t t_id, ACE_hthread_t,
 		  ACE_Thread_State,
 		  int grp_id,
 		  ACE_Task_Base *task = 0,
@@ -413,7 +417,7 @@ protected:
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
-  void remove_thr (ACE_Thread_Descriptor *tda);	
+  void remove_thr (ACE_Thread_Descriptor *tda);
   // Remove thread from the table.
 
   void remove_thr_self(void);
@@ -500,7 +504,7 @@ class ACE_Export ACE_Thread_Control
   //     <ACE_Thread_Manager>.
 {
 public:
-  ACE_Thread_Control (ACE_Thread_Manager *tm = 0, 
+  ACE_Thread_Control (ACE_Thread_Manager *tm = 0,
 		      int insert = 0);
   // Initialize the thread control object.  If <insert> != 0, then
   // register the thread with the Thread_Manager.
@@ -596,4 +600,3 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_THREAD_MANAGER_H */
-
