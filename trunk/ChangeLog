@@ -1,3 +1,9 @@
+Fri Sep  3 07:43:12 UTC 2004  Johnny WIllemsen  <jwillemsen@remedy.nl>
+
+        * examples/DLL/test_dll.cpp:
+        * examples/Export/test.cpp:
+          Fixed for unicode builds
+
 Thu Sep  2 16:39:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-linux-common.h:
