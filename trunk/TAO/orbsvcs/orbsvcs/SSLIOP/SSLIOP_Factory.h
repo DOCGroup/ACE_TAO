@@ -73,7 +73,7 @@ private:
   // instead of the secure IIOP over SSL port.
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_SSLIOP_Protocol_Factory)
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 ACE_STATIC_SVC_REQUIRE (TAO_SSLIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)
 

@@ -1,3 +1,13 @@
+Mon Jan 14 21:42:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	From Bruce Trask <trask_b@ociweb.com>
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+
+	  Use the ACE_STATIC_SVC_DECLARE_EXPORT macro instead of
+	  ACE_STATIC_SVC_DECLARE to force the static service descriptor to
+	  be exported on Windows, and thus allow it to be used when the
+	  TAO SSLIOP pluggable protocol is linked statically.
+
 Tue Jan 15 00:01:09 2002  Rob Ruff <rruff@scires.com>
                           Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -1481,7 +1491,6 @@ Tue Jan  1 09:38:58 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* examples/RTCORBA/Activity/Activity.cpp:
 	  examples/RTCORBA/Activity/Builder.cpp:
 	  Fixed compile errors.
-<<<<<<< ChangeLog
 
 Mon Dec 31 16:51:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
