@@ -146,12 +146,12 @@ namespace CIAO_GLUE
 
 #end
 
-  // Operations for provides interfaces.
+    // Operations for provides interfaces.
 #foreach <facet name> with <facet type> in (list of all provided interfaces) generate:
     <facet type> provide_<facet name> ();
 #end foreach <facet name> with <facet type>
 
-  // Operations for receptacles interfaces.
+    // Operations for receptacles interfaces.
 
   // Operations for emits interfaces.
 
