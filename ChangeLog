@@ -1,3 +1,7 @@
+Sun Mar 16 10:12:12 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.i (recursive_mutex_cond_unlock): Fixed typo
+
 Sat Mar 15 13:50:18 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.mpc: Added Recursive_Condition_Bug_Test.

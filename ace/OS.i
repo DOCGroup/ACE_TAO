@@ -2628,7 +2628,7 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // it. Remember how many times, and reacquire it that many more times when
   // the condition is signaled.
   state.relock_count_ = 0;
-  while (m->LockCount > 0 && m->RecusionCount > 1)
+  while (m->LockCount > 0 && m->RecursionCount > 1)
     {
       // This may fail if the current thread doesn't own the mutex. If it
       // does fail, it'll be on the first try, so don't worry about resetting
