@@ -1,3 +1,10 @@
+Fri Aug 27 11:38:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (process_directives): Remember to close
+	  down the svc.conf file pointers once they are processed.  Thanks
+	  to Lothar Werzinger <werzinger.lothar@krones.de> for pointing
+	  this out.
+
 Fri Aug 27 11:29:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.*: moved ACE_OS_Recursive_Thread_Mutex_Guard from
