@@ -8,8 +8,8 @@ ACE_Date_Time::update (void)
 {
   ACE_TRACE ("ACE_Date_Time::update");
 
-  time_t time;
-  ACE_OS::time (&time);
+  ACE_Time_Value now = ACE_OS::gettimeofday ();
+  time_t time = now.sec ();
   struct tm *tm_time = ACE_OS::localtime (&time);
   this->day_ = tm_time->tm_mday;
   this->month_ = tm_time->tm_mon + 1;    // localtime's months are 0-11
@@ -17,6 +17,7 @@ ACE_Date_Time::update (void)
   this->hour_ = tm_time->tm_hour;
   this->minute_ = tm_time->tm_min;
   this->second_ = tm_time->tm_sec;
+  this->microsec_ = now.usec ();
 }
 
 ASYS_INLINE

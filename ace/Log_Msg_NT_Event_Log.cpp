@@ -23,7 +23,6 @@ ACE_Log_Msg_NT_Event_Log::~ACE_Log_Msg_NT_Event_Log (void)
 int
 ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
 {
-  ACE_UNUSED_ARG (logger_key);
   // ACE's "resource module" contains the message resource required
   // for event logging.
   ACE_TCHAR msg_file [MAXPATHLEN];
@@ -41,7 +40,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
                   ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
   int reg_key_length = ACE_OS::strlen(reg_key);
   ACE_OS::strncat (reg_key,
-                   ACE_Log_Msg::program_name (),
+                   logger_key ? logger_key : ACE_Log_Msg::program_name (),
                    MAXPATHLEN - reg_key_length);
 
   // Add the event source to the registry. Note that if this fails it

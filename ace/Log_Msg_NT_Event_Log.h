@@ -40,6 +40,13 @@ public:
   virtual ~ACE_Log_Msg_NT_Event_Log (void);
 
   /// Open a new event log.
+  /**
+   * Initialize the event logging facility.
+   * @param logger_key The name of the calling program. This name is
+   *                   used in the Source field of the event log. If
+   *                   it is 0 (no name), the application name as
+   *                   returned from ACE_Log_Msg::program_name() is used.
+   */
   virtual int open (const ACE_TCHAR *logger_key);
 
   /// Reset the backend.
