@@ -1,3 +1,10 @@
+Mon Dec 13 04:25:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Release:
+
+	  Added protocols directory.  Thanks to JT for letting me know
+	  this. 
+
 Mon Dec 13 00:14:01 2004  Olli Savia  <ops@iki.fi>
 
         * protocols/ace/HTBP/HTBP_Filter.cpp:
