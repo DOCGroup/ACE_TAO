@@ -1,3 +1,24 @@
+Mon Dec 16 16:34:23 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.i: Applied the following patch from Eugene Alterman
+          <EugeneA@bremer-inc.com>.
+
+          It appears that Win32 mmap() emulation implements MAP_FIXED
+          semantic under the wrong assumption about MapViewOfFileEx()
+          behavior.  In fact if a non-null base address is supplied to
+          MapViewOfFileEx() it behaves like mmap() with MAP_FIXED set - it
+          maps at that address or fails if it unable to do it. If a null
+          base address is supplied it behaves like mmap() with MAP_FIXED
+          not set.
+
+          This means that if MAP_FIXED is not set the emulation should set
+          the base address argument to 0, and it should fail if MAP_FIXED
+          is set and <addr> is 0.
+
+          Besides, it makes sense for WinCE emulation to fail whenever
+          MAP_FIXED is set since WinCE does not support MAP_FIXED
+          semantic.
+
 Wed Dec 18 08:29:04 2002  Rich Seibel <seibel_r@ociweb.com>
 
         * ace/Timer_Wheel_T.cpp:
@@ -7,9 +28,9 @@ Wed Dec 18 08:29:04 2002  Rich Seibel <seibel_r@ociweb.com>
 
 Wed Dec 18 05:42:52 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/High_Res_Timer.cpp (global_scale_factor): The INTEL compiler
-	  can also set the global scale factor.  Thanks to Chris Kohlhoff
- 	  for reporting this.
+        * ace/High_Res_Timer.cpp (global_scale_factor): The INTEL compiler
+          can also set the global scale factor.  Thanks to Chris Kohlhoff
+          for reporting this.
 
 Tue Dec 17 11:22:31 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -24,7 +45,7 @@ Tue Dec 17 11:22:31 2002  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/CDR_Stream.i:
 
           Stripped out the reference counting on translator objects to avoid
-          build problems. 
+          build problems.
 
 Tue Dec 17 11:30:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 

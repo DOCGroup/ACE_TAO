@@ -2885,6 +2885,24 @@ ACE_OS::mmap (void *addr,
 #endif /* !defined (ACE_WIN32) || defined (ACE_HAS_PHARLAP) */
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+
+#  if defined(ACE_HAS_WINCE)
+  ACE_UNUSED_ARG (addr);
+  if(ACE_BIT_ENABLED (flags, MAP_FIXED)     // not supported
+  {
+    errno = EINVAL;
+    return MAP_FAILED;
+  }
+#  else
+  if (!ACE_BIT_ENABLED (flags, MAP_FIXED))
+    addr = 0;
+  else if (addr == 0)   // can not map to address 0
+  {
+    errno = EINVAL;
+    return MAP_FAILED;
+  }
+#  endif
+
   int nt_flags = 0;
   ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
 
@@ -2958,17 +2976,11 @@ ACE_OS::mmap (void *addr,
                                           len,
                                           addr);
 #  else
-  ACE_UNUSED_ARG (addr);        // WinCE doesn't allow specifying <addr>.
   void *addr_mapping = ::MapViewOfFile (*file_mapping,
                                         nt_flags,
                                         0,
                                         off,
                                         len);
-
-  if (addr_mapping != 0) {
-      addr = addr_mapping;
-  }
-
 #  endif /* ! ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
@@ -2977,13 +2989,6 @@ ACE_OS::mmap (void *addr,
 
   if (addr_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
-
-  else if (ACE_BIT_ENABLED (flags, MAP_FIXED)
-           && addr_mapping != addr)
-    {
-      errno = EINVAL;
-      return MAP_FAILED;
-    }
   else
     return addr_mapping;
 #elif defined (__Lynx__)
