@@ -1,3 +1,11 @@
+Thu Sep 30 14:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/MessagingC.h,
+	  tao/MessagingC.cpp,
+	  tao/MessagingS.h,
+	  tao/MessagingS.cpp: Generated direct and thru-poa
+	  collocated classes and put them in place.
+
 Thu Sep 30 13:27:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
