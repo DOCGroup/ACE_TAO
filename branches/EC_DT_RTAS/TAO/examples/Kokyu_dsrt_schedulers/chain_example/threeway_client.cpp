@@ -35,7 +35,7 @@ int period2 = 4;
 int left_work = 1;
 int count = 0;
 
-int ID_BEGIN = 0;
+int ID_BEGIN = 1;
 
 /*
   class Time_Handler : public ACE_Event_Handler
@@ -246,13 +246,15 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): main thread prio is %d\n", prio));
 
   CPULoad::calibrate(10);
+  ACE_DEBUG((LM_DEBUG,"TEST 4\n"));
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      ACE_DEBUG((LM_DEBUG,"TEST 3\n"));
+     if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
@@ -271,6 +273,7 @@ main (int argc, char *argv[])
                             1);
         }
 
+      ACE_DEBUG((LM_DEBUG,"Test 2\n"));
       if (enable_dynamic_scheduling)
         {
           ACE_DEBUG ((LM_DEBUG, "Dyn Sched enabled\n"));
@@ -372,6 +375,7 @@ main (int argc, char *argv[])
               "(%t|%T) cannot activate worker thread.\n"));
               }
       */
+      ACE_DEBUG((LM_DEBUG,"Test 1\n"));
       Worker worker2 (orb.in (),
                       server.in (),
                       current.in (),
@@ -598,7 +602,7 @@ Worker::svc (void)
           DSTRM_EVENT (WORKER_GROUP_FAM, UPDATE_SCHED_SEGMENT_END, 0, sizeof(Object_ID), (char*)&oid);
         }
 
-      //  TAO_debug_level = 1;
+        TAO_debug_level = 1;
       if (i==0)
 	start_t =  ACE_OS::gettimeofday ();
       else {
@@ -607,6 +611,7 @@ Worker::svc (void)
 
       timeval tv;
 
+//      ACE_DEBUG((LM_DEBUG,"OBJECT id is %d\n",oid.id));
       DSTRM_EVENT (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
       tv.tv_sec = server_load_-1;

@@ -38,7 +38,7 @@ int period2 = 4;
 int left_work = 1;
 int count = 0;
 
-int ID_BEGIN = 0;
+int ID_BEGIN = 1;
 
 /*
   class Time_Handler : public ACE_Event_Handler
