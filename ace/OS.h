@@ -342,15 +342,6 @@ private:
 #  define ACE_NO_HEAP_CHECK
 #endif /* ACE_WIN32 */
 
-// Increase the range of "address families".
-#define AF_ANY (-1)
-#define AF_SPIPE (AF_MAX + 1)
-#if !defined (AF_FILE)
-# define AF_FILE (AF_MAX + 2)
-#endif /* ! AF_FILE */
-#define AF_DEV (AF_MAX + 3)
-#define AF_UPIPE (AF_SPIPE)
-
 // Turn a number into a string.
 #define ACE_ITOA(X) #X
 
@@ -2850,6 +2841,17 @@ struct ifafilt;
 #else
   #include /**/ <sys/socket.h>
 #endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
+
+// Increase the range of "address families".  Please note that this
+// must appear _after_ the include of sys/socket.h, for the AF_FILE
+// definition on Linux/glibc2.
+#define AF_ANY (-1)
+#define AF_SPIPE (AF_MAX + 1)
+#if !defined (AF_FILE)
+# define AF_FILE (AF_MAX + 2)
+#endif /* ! AF_FILE */
+#define AF_DEV (AF_MAX + 3)
+#define AF_UPIPE (AF_SPIPE)
 
 extern "C"
 {
