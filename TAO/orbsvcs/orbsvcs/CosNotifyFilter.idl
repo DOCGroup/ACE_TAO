@@ -17,10 +17,11 @@
 
 #ifndef _COS_NOTIFY_FILTER_IDL_
 #define _COS_NOTIFY_FILTER_IDL_
-#pragma prefix "omg.org"
 
 #include "orb.idl"
 #include "CosNotifyComm.idl"
+
+#pragma prefix "omg.org"
 
 module CosNotifyFilter {
 

@@ -17,12 +17,13 @@
 
 #ifndef _COS_NOTIFY_CHANNEL_ADMIN_IDL_
 #define _COS_NOTIFY_CHANNEL_ADMIN_IDL_
-#pragma prefix "omg.org"
 
 #include "CosNotification.idl"
 #include "CosNotifyFilter.idl"
 #include "CosNotifyComm.idl"
 #include "CosEventChannelAdmin.idl"
+
+#pragma prefix "omg.org"
 
 module CosNotifyChannelAdmin {
 
