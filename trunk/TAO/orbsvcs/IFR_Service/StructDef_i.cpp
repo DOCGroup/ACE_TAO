@@ -220,7 +220,7 @@ TAO_StructDef_i::members (const IR::StructMemberSeq &members,
     }
 
   this->repo_->config ()->set_integer_value (refs_key,
-                                                 "count",
-                                                 count);
+                                             "count",
+                                             count);
 }
 
