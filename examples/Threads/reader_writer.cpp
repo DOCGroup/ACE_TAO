@@ -1,8 +1,7 @@
-// This test program verifies the functionality of the ACE_OS
 // $Id$
 
+// This test program verifies the functionality of the ACE_OS
 // implementation of readers/writer locks on Win32 and Posix pthreads.
-
 
 #include "ace/Synch.h"
 #include "ace/Thread.h"
@@ -24,9 +23,9 @@ static int n_readers = 6;
 static int n_writers = 2;
 
 // Thread id of last writer.
-static volatile int shared_data;  
+static volatile ACE_thread_t shared_thr_id;  
 
-// Lock for shared_data.
+// Lock for shared_thr_id.
 static ACE_RW_Mutex rw_mutex;     
 
 // Count of the number of readers and writers.
@@ -73,8 +72,8 @@ parse_args (int argc, char *argv[])
   }
 }
 
-// Iterate <n_iterations> each time checking that nobody modifies the data
-// while we have a read lock.
+// Iterate <n_iterations> each time checking that nobody modifies the
+// data while we have a read lock.
 
 static void *
 reader (void *)
@@ -82,28 +81,29 @@ reader (void *)
   ACE_Thread_Control tc (&thr_mgr);
   ACE_DEBUG ((LM_DEBUG, "(%t) reader starting\n"));
   
-  for (int iterations = 1; iterations <= n_iterations; iterations++)
+  for (int iterations = 1;
+       iterations <= n_iterations; iterations++)
     {
       ACE_Read_Guard<ACE_RW_Mutex> g(rw_mutex);
-      //int n = ++current_readers;
-      //ACE_DEBUG ((LM_DEBUG, "(%t) I'm reader number %d\n", n));
+
+      ++current_readers;
 
       if (current_writers > 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) writers found!!!\n"));
 	
-      int data = shared_data;
+      ACE_thread_t thr_id = shared_thr_id;
 
       for (int loop = 1; loop <= n_loops; loop++)
         {
 	  ACE_Thread::yield();
-	  if (shared_data != data)
+
+	  if (ACE_OS::thr_equal (shared_thr_id, thr_id) == 0)
             ACE_DEBUG ((LM_DEBUG, 
 			"(%t) somebody changed %d to %d\n", 
-			data, shared_data));
+			thr_id, shared_thr_id));
         }
 
       --current_readers;
-      //ACE_DEBUG ((LM_DEBUG, "(%t) done with reading guarded data\n"));
 
       ACE_Thread::yield ();
     }
@@ -119,12 +119,13 @@ writer (void *)
   ACE_Thread_Control tc (&thr_mgr);
   ACE_DEBUG ((LM_DEBUG, "(%t) writer starting\n"));
   
-  for (int iterations = 1; iterations <= n_iterations; iterations++)
+  for (int iterations = 1; 
+       iterations <= n_iterations;
+       iterations++)
     {
       ACE_Write_Guard<ACE_RW_Mutex> g(rw_mutex);
 
       ++current_writers;
-      //ACE_DEBUG ((LM_DEBUG, "(%t) writing to guarded data\n"));
 
       if (current_writers > 1)
         ACE_DEBUG ((LM_DEBUG, "(%t) other writers found!!!\n"));
@@ -132,19 +133,20 @@ writer (void *)
       if (current_readers > 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) readers found!!!\n"));
 	
-      int self = (int) ACE_Thread::self ();
-      shared_data = self;
+      ACE_thread_t self = ACE_Thread::self ();
+      shared_thr_id = self;
 
       for (int loop = 1; loop <= n_loops; loop++)
         {
 	  ACE_Thread::yield();
-	  if (shared_data != self)
-            ACE_DEBUG ((LM_DEBUG, "(%t) somebody wrote on my data %d\n", shared_data));
+
+	  if (ACE_OS::thr_equal (shared_thr_id, self) == 0)
+            ACE_DEBUG ((LM_DEBUG, "(%t) somebody wrote on my data %d\n", 
+			shared_thr_id));
         }
 
       --current_writers;
 
-      //ACE_DEBUG ((LM_DEBUG, "(%t) done with guarded data\n"));
       ACE_Thread::yield ();
     }
   return 0;
