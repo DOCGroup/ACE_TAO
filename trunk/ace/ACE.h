@@ -384,11 +384,13 @@ public:
   // <ACE::set_handle_limit>.
 
   // = String functions
+#if !defined (ACE_HAS_WINCE)
   static char *strenvdup (const char *str);
   // Return a dynamically allocated duplicate of <str>, substituting
   // the environment variable if <str[0] == '$'>.  Note that the
   // pointer is allocated with <ACE_OS::malloc> and must be freed by
   // <ACE_OS::free>
+#endif /* ACE_HAS_WINCE */
 
   static char *strecpy (char *s, const char *t);
   // Copies <t> to <s>, returning a pointer to the end of the copied
@@ -417,11 +419,24 @@ public:
   // Returns the "basename" of a <pathname>.
 
 #if defined (ACE_HAS_UNICODE)
+  // A collection of wide string functions.  See above for details.
+
+  static wchar_t *strecpy (wchar_t *s, const wchar_t *t);
+
+  static wchar_t *strsplit_r (wchar_t *s,
+                              const wchar_t *token,
+                              wchar_t *&next_start);
+
+  static size_t strrepl (wchar_t *s, wchar_t search, wchar_t replace);
+
+  static const wchar_t *execname (const wchar_t *pathname);
+
   static const wchar_t *basename (const wchar_t *pathname,
 				  wchar_t delim);
   // Returns the "basename" of a <pathname>.
 #endif /* ACE_HAS_UNICODE */
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
   static char *timestamp (char date_and_time[],
 			  int time_len);
   // Returns the current timestamp in the form
@@ -429,6 +444,10 @@ public:
   // also stored in the beginning of the date_and_time array.  Returns
   // 0 if unsuccessful, else returns pointer to beginning of the
   // "time" portion of <day_and_time>.
+#else
+  static wchar_t *timestamp (wchar_t date_and_time[],
+                             int time_len);
+#endif /* ACE_HAS_UNICODE_ONLY */
 
   static int daemonize (const char pathname[] = "/",
                         int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES);
@@ -436,6 +455,9 @@ public:
   // all open file handles are closed.
 
   // = Methods for searching and opening shared libraries.
+
+#if !defined (ACE_HAS_WINCE)
+  // @@ I'll leave the best part to the very last. ;)
 
   static int ldfind (const char *filename, 
                      char *pathname, 
@@ -453,9 +475,11 @@ public:
   // Uses <ldopen> to locate and open the appropriate <filename> and
   // returns a pointer to the file, else it returns a NULL
   // pointer. <type> specifies how the file should be open.
+#endif /* !ACE_HAS_WINCE */
 
   // = Shield us from Win32's inability to select on STDIN.
 
+#if !defined (ACE_HAS_WINCE)
   static void *read_adapter (void *event_handler);
   // Used to read from non-socket ACE_HANDLEs in our own thread to
   // work around Win32 limitations that don't allow us to select() on
@@ -477,15 +501,21 @@ public:
   static int remove_stdin_handler (ACE_Reactor *reactor,
                                    ACE_Thread_Manager *thr_mgr);
   // Performs the inverse of the <register_stdin_handler> method.
+#endif /* ACE_HAS_WINCE */
 
   // = Miscelleous functions.
   static size_t round_to_pagesize (off_t length);
   // Rounds the request to a multiple of the page size.
 
+#if !defined (ACE_HAS_UNICODE_ONLY)
   static int format_hexdump (const char *buffer, int size, char *obuf,
                              int obuf_sz);
   // Format buffer into printable format.  This is useful for
   // debugging.
+#else
+  static int format_hexdump (const wchar_t *buffer, int size, wchar_t *obuf,
+                             int obuf_sz);
+#endif /* ACE_HAS_UNICODE_ONLY */  
 
   static u_long hash_pjw (const char *str);
   // Computes the hash value of <str> using the ``Hash PJW'' routine.

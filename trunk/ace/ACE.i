@@ -72,6 +72,21 @@ ACE::strecpy (char *s, const char *t)
   return dscan - 1;
 }
 
+#if defined (ACE_HAS_UNICODE)
+inline wchar_t *
+ACE::strecpy (wchar_t *s, const wchar_t *t)
+{
+  ACE_TRACE ("ACE::strecpy");
+  register wchar_t *dscan = s;
+  register const wchar_t *sscan = t;
+
+  while ((*dscan++ = *sscan++) != '\0')
+    continue;
+
+  return dscan - 1;
+}
+#endif /* ACE_HAS_UNICODE */
+
 // Return flags currently associated with handle.
 
 inline int
