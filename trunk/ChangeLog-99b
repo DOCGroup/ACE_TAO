@@ -1,11 +1,7 @@
-Wed Jun 09 10:11:29 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/config-g++-common.h: added #define of
-          ACE_NEW_THROWS_EXCEPTIONS, with egcs if ACE_HAS_EXCEPTIONS is
-          #defined.  That allows ACE's New_Fail_Test to pass.  Thanks
-          to Jake Hamby <jehamby@anobject.com> for providing the fix.
-
 Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Fixed a bizzarre problem with lower-case ace_os::.
+	  Thanks to Andy for pointing this out.
 
         * ace/Svc_Conf.y: Don't enable YYDEBUG by default so that we can
           save some space in the generated code.
@@ -26,6 +22,13 @@ Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           ACE_Message_Blocks in an ACE_Message_Queue until (1) the queue
           is "full" or (2) a period of time elapses, at which point the
           queue is "flushed" via sendv_n() to the peer.
+
+Wed Jun 09 10:11:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-g++-common.h: added #define of
+          ACE_NEW_THROWS_EXCEPTIONS, with egcs if ACE_HAS_EXCEPTIONS is
+          #defined.  That allows ACE's New_Fail_Test to pass.  Thanks
+          to Jake Hamby <jehamby@anobject.com> for providing the fix.
 
 Tue Jun  8 22:44:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
