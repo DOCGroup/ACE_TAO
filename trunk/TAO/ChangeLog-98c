@@ -7,6 +7,10 @@ Sat Oct 03 09:54:14 1998  David L. Levine  <levine@cs.wustl.edu>
           Client.cpp,Srv_Main.cpp: replace USE_QUANTIFY with
           ACE_HAS_QUANTIFY.
 
+        * TAO_IDL/be/be_visitor_scope.cpp (next_elem): initialized
+          local "node" to 0 to avoid g++ warning about possible
+          uninitialized used.
+
 Fri Oct  2 23:03:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * docs/releasenotes/ec.html:
