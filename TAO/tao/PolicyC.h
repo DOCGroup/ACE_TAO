@@ -23,7 +23,6 @@
 #include "tao/Exception.h"
 #include "tao/Sequence.h"
 
-
 #include "tao/Encodable.h"
 
 class TAO_Export CORBA_PolicyError : public CORBA::UserException
@@ -206,23 +205,17 @@ public:
     );
   virtual const char* _interface_repository_id (void) const;
 
-
-  // The following methods are overloaded from Serializable
-  // and are necessary to stream the contents of the policy
-  // so that it is possible to externalize their contents
-  // and embedd it, for example, in the IOR.
-  // The following method are not part of the standard CORBA::Policy
-  // interface, but are used by the ORB to ship the policy between
-  // client and server and vice-versa.
+  // The following methods are used for embedding client-exposed
+  // policies into an IOR.  These methods are not part of the idl
+  // compiler generated code: they were added by hand.
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  //  Encode the Policy into a CDR representation. 
+  //  Encode the Policy into a CDR representation.  Returns true on
+  //  success and false on failure.
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  //  Decode the Policy from a CDR representation. If the CDR
-  //  given has the wrong format than the method will return
-  //  false.
-
+  //  Decode the Policy from a CDR representation.
+  //  Returns true on success and false on failure.
 
 protected:
   CORBA_Policy (void); // default constructor

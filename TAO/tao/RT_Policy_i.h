@@ -84,21 +84,21 @@ public:
                                          TAO_default_environment ());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of the current object
-  
+  // This method writes a CDR representation of the object state.
+
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation
+  // This method reads the object state from a CDR representation.
 
 protected:
 
+  // @@ Angelo, Do we want this friendship or should we just make the
+  // default constructor public?  Check with Irfan or Carlos...
   friend class Policy_Factory;
   TAO_PriorityModelPolicy (void);
-  // This constructor is needed to create and instance
-  // and then restore its state from the CDR stream. In
-  // fact the logic of how the policy is streamed out and
-  // in a CDR stream is encapsulated in the class.
+  // This constructor is used by TAO_Policy_Factory when decoding
+  // policies from tagged components in an IOR.
 
-
+  // @@ Angelo, please don't use 'in fact' in your comments.
 private:
 
   RTCORBA::PriorityModel priority_model_;
@@ -223,20 +223,27 @@ public:
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object
-  
+
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads the object state from a CDR representation
+  // This method reads the object state from a CDR representation.
+
+  // @@ Angelo, please use dot at the end of all your comments.
 
 protected:
 
   friend class Policy_Factory;
+  // @@ Angelo, spaces and voids...
   TAO_PriorityBandedConnectionPolicy();
   // This constructor is needed to create and instance
   // and then restore its state from the CDR stream. In
   // fact the logic of how the policy is streamed out and
   // in a CDR stream is encapsulated in the class.
 
-
+  // @@ Angelo, please look at how I changed a copy of the comment for
+  // default constructor above in PriorityModelPolicy implementation
+  // class.  Reword and clarify the comment above or just paste the
+  // modified version from PriorityModelPolicy.
+  // Apply the same fix to other classes.
 private:
 
   RTCORBA::PriorityBands priority_bands_;
@@ -279,15 +286,16 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
-  ///////////////////////////////////////////////////////////////
-  // CDR Encoder/Decoder
+  // = CDR Encoder/Decoder.
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object
-  
+
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation
 
+  // @@ Angelo, the ServerProtocolPolicy is not client-exposed, the
+  // ClientProtocolPolicy is.
 
 protected:
 
@@ -340,7 +348,7 @@ public:
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
-  
+
 private:
 
   RTCORBA::ProtocolList protocols_;
@@ -350,7 +358,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties
-                                 
+
 {
   // = TITLE
   //   RTCORBA::TCPProtocolProperties implementation
@@ -420,8 +428,8 @@ public:
 
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes a CDR representation of the current object
-  
+  // This method writes a CDR representation of TCPProtocolProperties.
+
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation
 
@@ -435,36 +443,43 @@ private:
   CORBA::Boolean no_delay_;
 };
 
+// @@ Angelo, please use words, i.e., Protocol instead of Proto
+// below.  You are only saving 3 chars but adding confusion.
 class  TAO_Proto_Properties_Factory;
 
-class TAO_Export TAO_GIOP_Properties : public RTCORBA::GIOPProtocolProperties
+class TAO_Export TAO_GIOP_Properties :
+  public RTCORBA::GIOPProtocolProperties
 {
+public:
   virtual ~TAO_GIOP_Properties ();
+
 protected:
   friend class TAO_Export TAO_Proto_Properties_Factory;
-  TAO_GIOP_Properties ();
+  TAO_GIOP_Properties (void);
 };
 
-class TAO_Export TAO_Proto_Properties_Factory {
-  
+class TAO_Export TAO_Proto_Properties_Factory
+{
 public:
-  
-  static RTCORBA::ProtocolProperties* create_transport_protocol_property (IOP::ProfileId id);
-  // Creates the proper ProtocolProperties subclass that matches 
-  // the IOP::ProfileId. 
-  // NOTE: At each IOP::ProfileId corresponds a couple of protocol 
-  // properties one that describes the transport protocol and one 
-  // that describes the ORB protocol.
-  
-  static RTCORBA::ProtocolProperties* create_orb_protocol_property (IOP::ProfileId id);
-  // Creates the proper ProtocolProperties subclass that matches 
-  // the IOP::ProfileId. 
-  // NOTE: At each IOP::ProfileId corresponds a couple of protocol 
-  // properties one that describes the transport protocol and one 
-  // that describes the ORB protocol.
+
+  static RTCORBA::ProtocolProperties*
+  create_transport_protocol_property (IOP::ProfileId id);
+  // Creates the proper transport ProtocolProperties subclass that matches
+  // the IOP::ProfileId.
+  // NOTE: Each IOP::ProfileId corresponds to two sets of protocol
+  // properties: one describes the transport protocol and the other
+  // describes the ORB messaging protocol.
+
+  static RTCORBA::ProtocolProperties*
+  create_orb_protocol_property (IOP::ProfileId id);
+  // Creates the proper orb ProtocolProperties subclass for
+  // IOP::ProfileId.
+  // NOTE: Each IOP::ProfileId corresponds to two sets of protocol
+  // properties: one describes the transport protocol and the other
+  // describes the ORB messaging protocol.
 
 protected:
-  TAO_Proto_Properties_Factory ();
+  TAO_Proto_Properties_Factory (void);
 };
 
 #if defined (__ACE_INLINE__)

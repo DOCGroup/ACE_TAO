@@ -130,7 +130,8 @@ public:
 private:
 
   void create_policy_list (int length);
-
+  // @@ Angelo, please add a comment explaining what it does and why
+  // it's needed.
 
 private:
   TAO_MProfile *forward_to_i (void);
