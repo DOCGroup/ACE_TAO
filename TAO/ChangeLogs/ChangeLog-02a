@@ -1,3 +1,13 @@
+Thu Feb  8 12:21:35 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/stub.cpp:
+	* tao/Policy_Manager.cpp:
+	  Fixed policy object reference counting in several places
+	  to fix bad pointer references when running the RT Corba
+	  Client Protocol Unit Test.  Thanks to Nanbor for most of 
+	  the changes and thanks to Christian Ewald
+ 	  <christian.ewald@zuehlke.com> for reporting this.
+
 Wed Feb  7 14:31:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/Makefile:

@@ -1002,14 +1002,14 @@ void
 TAO_Policy_Manager_Impl::server_protocol (TAO_ServerProtocolPolicy *server_protocol)
 {
   CORBA::release (this->server_protocol_);
-  this->server_protocol_ = server_protocol;
+  this->server_protocol_ = RTCORBA::ServerProtocolPolicy::_duplicate (server_protocol);
 }
 
 void
 TAO_Policy_Manager_Impl::client_protocol (TAO_ClientProtocolPolicy *client_protocol)
 {
   CORBA::release (this->client_protocol_);
-  this->client_protocol_ = client_protocol;
+  this->client_protocol_ = RTCORBA::ClientProtocolPolicy::_duplicate (client_protocol);
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
