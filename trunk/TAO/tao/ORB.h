@@ -616,6 +616,9 @@ public:
                              CORBA::Object_ptr obj);
   // Add a mapping ObjectID->IOR to the table.
 
+  int _tao_del_from_IOR_table (const ACE_CString &object_id);
+  // Remove <object_id> from the table
+
   int _tao_find_in_IOR_table (const ACE_CString &object_id,
                               CORBA::Object_ptr &obj);
   // Find the given ObjectID in the table.
@@ -787,6 +790,12 @@ private:
   TAO_ORB_Core *orb_core_;
   // The ORB_Core that created us....
 
+  int argc_;
+  // To be used in <create_object>
+
+  char *argv_ [];
+  // To be used in <create_object> 
+  
 #if defined (TAO_HAS_VALUETYPE)
   TAO_ValueFactory_Map *valuetype_factory_map_;
   // If non-0 then this is the Factory for OBV unmarshaling
