@@ -1,3 +1,17 @@
+Tue Jan 25 14:15:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+	* tests/Reference_Counted_Event_Handler_Test.cpp:
+	* tests/Reactor_Registration_Test.cpp:
+
+	Tidied up resource management (i.e. close pipes in eventhandler
+        destructors) since VxWorks does not automatically release those
+        when a dynamically loaded app module is finished.
+
+	* tests/Reactor_Dispatch_Order_Test.cpp:
+
+	Tidied up resource management and fixed handling superfluous output
+	event (like OpenBSD and Lynx).
+
 Mon Jan 24 23:10:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Process_Manager.cpp (terminate):

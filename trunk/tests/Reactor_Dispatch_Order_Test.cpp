@@ -35,6 +35,8 @@ class Handler : public ACE_Event_Handler
 public:
   Handler (ACE_Reactor &reactor);
 
+  ~Handler();
+
   int handle_timeout (const ACE_Time_Value &tv,
                       const void *arg);
 
@@ -75,6 +77,11 @@ Handler::Handler (ACE_Reactor &reactor)
   ACE_ASSERT (result == 0);
 }
 
+Handler::~Handler (void)
+{
+  this->pipe_.close ();
+}
+
 int
 Handler::handle_timeout (const ACE_Time_Value &,
                          const void *)
@@ -96,6 +103,7 @@ Handler::handle_output (ACE_HANDLE)
               "Handler::handle_output\n"));
 
 #if defined (__OpenBSD__) || \
+	defined (ACE_VXWORKS) || \
   ( defined (__Lynx__) && _POSIX_VERSION <= 199506L ) // LynxOS 3.x
   // All that we need written has been written, so don't
   // call handle_output again.
