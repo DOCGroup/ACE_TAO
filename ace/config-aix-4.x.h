@@ -45,6 +45,9 @@
 #    undef WIFEXITED
 #    undef WEXITSTATUS
 #    if (__IBMCPP__ >= 500)  /* Visual Age C++ 5 */
+#      if !defined (ACE_HAS_USING_KEYWORD)
+#        define ACE_HAS_USING_KEYWORD            1
+#      endif /* ACE_HAS_USING_KEYWORD */
 #      define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #      if !defined (__TEMPINC__)

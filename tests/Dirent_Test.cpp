@@ -31,13 +31,13 @@
 
 ACE_RCSID(tests, Dirent_Test, "$Id$")
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) || defined(CHORUS)
 #define TEST_DIR "."
 #define TEST_ENTRY ".."
 #else
 #define TEST_DIR "../tests"
 #define TEST_ENTRY "Dirent_Test.cpp"
-#endif /* VXWORKS */
+#endif /* VXWORKS || CHORUS */
 
 // Number of entries in the directory.
 static int entrycount = 0;
