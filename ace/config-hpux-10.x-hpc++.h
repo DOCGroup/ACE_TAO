@@ -81,7 +81,7 @@
 // then we're using the -AA option, so we have standard C++ library,
 // including the standard iostreams. Else, we have the old iostreams.
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#    define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+#    define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #  else
 #    define ACE_USES_OLD_IOSTREAMS
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
