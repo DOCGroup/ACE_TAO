@@ -287,7 +287,7 @@ public:
 
   // = Public helper methods.
 
-  size_t current_size (void);
+  size_t current_size (void) const;
   // Returns the current number of nodes in the tree.
 
   void operator= (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
