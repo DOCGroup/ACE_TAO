@@ -1,3 +1,8 @@
+Wed Dec 31 23:29:59 1997  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* tao/nvlist.cpp (add_value_consume): Added a space between * and
+ 	  /* to avoid warning messages on NT.
+
 Thu Jan 01 14:22:34 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.50, released Thu Jan 01 14:22:34 1998.
