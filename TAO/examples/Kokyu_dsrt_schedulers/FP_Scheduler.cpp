@@ -6,6 +6,22 @@
 #include "tao/ORB_Constants.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
+FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy ()
+{
+}
+
+FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy (
+    const FP_Segment_Sched_Param_Policy &rhs
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (),
+  ACE_NESTED_CLASS (CORBA, Policy) (),
+  ACE_NESTED_CLASS (CORBA, LocalObject) (),
+  FP_Scheduling::SegmentSchedulingParameterPolicy (),
+  TAO_Local_RefCounted_Object (),
+  value_ (rhs.value_)
+{
+}
+
 FP_Scheduling::SegmentSchedulingParameter
 FP_Segment_Sched_Param_Policy::value (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED
@@ -27,6 +43,23 @@ FP_Segment_Sched_Param_Policy::value (
       ))
 {
   this->value_ = value;
+}
+
+CORBA::Policy_ptr FP_Segment_Sched_Param_Policy::copy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  FP_Segment_Sched_Param_Policy* tmp;
+  ACE_NEW_THROW_EX (tmp, FP_Segment_Sched_Param_Policy (*this),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return tmp;
+}
+
+void FP_Segment_Sched_Param_Policy::destroy ()
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
 }
 
 Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb,

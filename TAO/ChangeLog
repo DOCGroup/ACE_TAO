@@ -1,3 +1,13 @@
+Thu Mar 18 12:13:36 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.{h,cpp}: 
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.{h,cpp}: 
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.{h,cpp}:
+	  
+	  Added implementations for pure virtual functions - copy and
+	  destroy for policy classes. This fixes compile errors on a lot
+	  of builds.
+
 Thu Mar 18 12:21:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/FloatSeqS.h:
