@@ -1689,6 +1689,10 @@ SOURCE=.\Object_SArgument_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
@@ -2925,6 +2929,11 @@ SOURCE=.\Object_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\Object_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
