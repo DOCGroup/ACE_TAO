@@ -189,24 +189,26 @@ sub adjust_value {
 sub set_current_values {
   my($self) = shift;
   my($name) = shift;
+  my($set)  = 0;
 
   ## If any value within a foreach matches the name
   ## of a hash table within the template input we will
   ## set the values of that hash table in the current scope
-  my($ti) = $self->{'ti'};
-  if (defined $ti) {
+  if (defined $self->{'ti'}) {
     my($counter) = $self->{'foreach'}->{'count'};
     if ($counter >= 0) {
-      my($value) = $ti->get_value($name);
+      my($value) = $self->{'ti'}->get_value($name);
       if (defined $value && UNIVERSAL::isa($value, 'HASH')) {
         my(%copy) = ();
         foreach my $key (keys %$value) {
           $copy{$key} = $self->adjust_value($key, $$value{$key});
         }
         $self->{'foreach'}->{'temp_scope'}->[$counter] = \%copy;
+        $set = 1;
       }
     }
   }
+  return $set;
 }
 
 
@@ -359,6 +361,7 @@ sub get_value_with_default {
     }
     else {
 #      print "DEBUG: WARNING: $name using default value of $value\n";
+      $value = $self->adjust_value($name, $value);
     }
     $value = $self->relative($value);
   }
@@ -401,6 +404,23 @@ sub process_foreach {
     $$scope{'fornotlast'}  = 1;
     $$scope{'forfirst'}    = 1;
     $$scope{'fornotfirst'} = 0;
+
+    ## If the foreach values are mixed (HASH and SCALAR), then
+    ## remove the SCALAR values.
+    my($pset) = undef;
+    for(my $i = 0; $i <= $#values; ++$i) {
+      my($set) = $self->set_current_values($values[$i]);
+      if (!defined $pset) {
+        $pset |= $set;
+      }
+      else {
+        if ($pset && !$set) {
+          splice(@values, $i, 1);
+          $i = 0;
+          $pset = undef;
+        }
+      }
+    }
 
     for(my $i = 0; $i <= $#values; ++$i) {
       my($value) = $values[$i];

@@ -44,3 +44,47 @@ Static Debug {
   runtime_library  = 3
 }
 
+MFC Release {
+  common_defines   = WIN32 _WINDOWS
+  defines          = NDEBUG _AFXDLL ACE_HAS_MFC
+  output_dir       = MFC_Release
+  intermediate_dir = MFC_Release
+  lib_modifier     = mfc
+  runtime_library  = 2
+  use_mfc          = 2
+}
+
+MFC Debug {
+  optimization     = 0
+  debug            = 1
+  common_defines   = WIN32 _WINDOWS
+  defines          = _DEBUG _AFXDLL ACE_HAS_MFC
+  output_dir       = MFC_Debug
+  intermediate_dir = MFC_Debug
+  lib_modifier     = mfcd
+  runtime_library  = 3
+  use_mfc          = 2
+}
+
+Static MFC Release {
+  defines          = NDEBUG _AFXDLL ACE_HAS_MFC
+  output_dir       = Static_MFC_Release
+  intermediate_dir = Static_MFC_Release
+  lib_modifier     = mfcs
+  need_libflags    = 1
+  runtime_library  = 2
+  use_mfc          = 2
+}
+
+Static MFC Debug {
+  optimization     = 0
+  debug            = 1
+  defines          = _DEBUG _AFXDLL ACE_HAS_MFC
+  output_dir       = Static_MFC_Debug
+  intermediate_dir = Static_MFC_Debug
+  lib_modifier     = mfcsd
+  need_libflags    = 1
+  runtime_library  = 3
+  use_mfc          = 2
+}
+
