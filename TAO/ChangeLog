@@ -1,3 +1,8 @@
+Fri Oct 17 21:09:30 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/FTRT_Event_Service/Readme
+          Updated the Readme file to provide more detailed information.
+
 Fri Oct 17 18:11:20 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 	* orbsvcs/tests/Makefile: Changed criteria for building
@@ -6,20 +11,20 @@ Fri Oct 17 18:11:20 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 Fri Oct 17 17:37:05 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTCosScheduling: 
+	* orbsvcs/orbsvcs/Makefile.RTCosScheduling:
 	* orbsvcs/orbsvcs/RTCosScheduling.mpc: Fixed dependency problem
 	  for RH71 Static build - Moved directory RTScheduling after
 	  RTSchedulingC(S).cpp in Source_Files section.
-	
+
 Fri Oct 17 21:17:03 UTC 2003 Kevin Bryan <bryank@cs.uri.edu>
-    * orbsvcs/tests/RTCosScheduling/README
-    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.dsp
-    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client_Static.dsp
-    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server.dsp
-    * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server_Static.dsp
-    * orbsvcs/tests/RTCosScheduling/run_test.pl:
-    Fixed the Windows files so all the include and library directories are
-    there.  Update the README file.  Fixed a small bug in the run_test.pl.
+        * orbsvcs/tests/RTCosScheduling/README
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client.dsp
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Client_Static.dsp
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server.dsp
+        * orbsvcs/tests/RTCosScheduling/RTCosScheduling_Server_Static.dsp
+        * orbsvcs/tests/RTCosScheduling/run_test.pl:
+          Fixed the Windows files so all the include and library directories are
+          there.  Update the README file.  Fixed a small bug in the run_test.pl.
 
 Fri Oct 17 12:32:53 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
@@ -34,14 +39,14 @@ Fri Oct 17 12:32:53 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
 Fri Oct 17 06:52:27 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc: 
-	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server: 
-	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client: 
-	* orbsvcs/tests/RTCosScheduling/Makefile: 
+	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc:
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server:
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client:
+	* orbsvcs/tests/RTCosScheduling/Makefile:
 	* orbsvcs/tests/RTCosScheduling/Makefile.commonlib: Fixed the mpc
 	  files - added a new project called common which will be built
 	  before client and server. Regenerated the Makefiles. The
-	  Makefile was not generated using mpc before. 
+	  Makefile was not generated using mpc before.
 
 Fri Oct 17 12:37:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -58,7 +63,7 @@ Fri Oct 17 07:40:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.cpp
           Fixed problems in emulated exception case
-	
+
 Fri Oct 17 01:28:53 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp
