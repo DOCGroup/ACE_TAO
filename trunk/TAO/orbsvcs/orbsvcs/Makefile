@@ -77,7 +77,7 @@ ifneq (,$(findstring AV,$(TAO_ORBSVCS)))
         AV/AVStreams_i \
         AV/Endpoint_Strategy \
         AV/Endpoint_Strategy_T\
-	AV/sfp
+        AV/sfp
 endif # AV
 
 ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
@@ -111,14 +111,14 @@ ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
         Event/EC_Timeout_Filter \
         Event/EC_Timeout_Generator \
         Event/EC_Reactive_Timeout_Generator \
-	Event/EC_Priority_Dispatching \
-	Event/EC_MT_Dispatching \
-	Event/EC_Dispatching_Task \
-	Event/EC_Sched_Filter \
-	Event/EC_Sched_Filter_Builder \
-	Event/EC_Scheduling_Strategy \
-	Event/EC_Null_Scheduling \
-	Event/EC_Priority_Scheduling
+        Event/EC_Priority_Dispatching \
+        Event/EC_MT_Dispatching \
+        Event/EC_Dispatching_Task \
+        Event/EC_Sched_Filter \
+        Event/EC_Sched_Filter_Builder \
+        Event/EC_Scheduling_Strategy \
+        Event/EC_Null_Scheduling \
+        Event/EC_Priority_Scheduling
 
   #### TAO's Event requires its Sched Service.
   ifeq (,$(findstring Sched,$(TAO_ORBSVCS)))
@@ -134,7 +134,7 @@ ifneq (,$(findstring CosEvent,$(TAO_ORBSVCS)))
         CosEvent/EventChannel_i \
         CosEvent/ProxyPushConsumer_i \
         CosEvent/ProxyPushSupplier_i \
-	CosEvent_Utilities
+        CosEvent_Utilities
 endif # CosEvent
 
 ifneq (,$(findstring Event,$(TAO_ORBSVCS)))
@@ -255,7 +255,7 @@ ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
         Naming/Naming_Context \
         Naming/Hash_Naming_Context \
         Naming/Persistent_Naming_Context \
-	Naming/Transient_Naming_Context \
+        Naming/Transient_Naming_Context \
         Naming/Persistent_Entries \
         Naming/Entries \
         Naming/Persistent_Context_Index \
@@ -309,11 +309,11 @@ idl_stubs: $(addsuffix .h, $(IDL_FILES))
 
 realclean: clean
 	-$(RM) $(foreach file, $(IDL_SRCS), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
-	@$(ACE_ROOT)/bin/ace_components --orbsvcs --remove
+	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --remove
 
 .PHONY: ORBSVCS_COMPONENTS
 ORBSVCS_COMPONENTS:
-	@$(ACE_ROOT)/bin/ace_components --orbsvcs --set " $(TAO_ORBSVCS) "
+	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --set ' $(TAO_ORBSVCS) '
 
 #----------------------------------------------------------------------------
 #       Dependencies

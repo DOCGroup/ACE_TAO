@@ -279,10 +279,10 @@ LDFLAGS += $(RLDFLAGS)
 
 .PHONY: TAO_COMPONENTS
 TAO_COMPONENTS:
-	@$(ACE_ROOT)/bin/ace_components --tao --set " $(TAO_COMPONENTS) "
+	@sh $(ACE_ROOT)/bin/ace_components --tao --set ' $(TAO_COMPONENTS) '
 
 realclean:
-	@$(ACE_ROOT)/bin/ace_components --tao --remove
+	@sh $(ACE_ROOT)/bin/ace_components --tao --remove
 
 #----------------------------------------------------------------------------
 #       Dependencies
