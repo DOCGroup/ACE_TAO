@@ -32,7 +32,7 @@ public:
           TimeBase::TimeT deadline,
           long importance,
           CORBA::Long server_load);
-    //          int sleep_time);
+  //          int sleep_time);
   // ctor
 
   virtual int svc (void);
@@ -86,6 +86,9 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  /* MEASURE: Program start time */
+  DSUI_EVENT_LOG(MAIN_GROUP, START,1,0,NULL);
+
   EDF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
   int prio;
@@ -94,10 +97,18 @@ main (int argc, char *argv[])
   int sched_scope = ACE_SCOPE_THREAD;
   long flags;
 
-  if (sched_policy == ACE_SCHED_RR)
+  if (sched_policy == ACE_SCHED_RR) {
+    /* MEASURE (DP): Schedule policy */
+    char* policy = "ACE_SCHED_RR";
+    DSUI_EVENT_LOG (MAIN_GROUP, SCHEDULE_SETUP, 1, strlen (policy), policy);
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
-  else 
+  }
+  else {
+    /* MEASURE (DP): Schedule policy */
+    char* policy = "ACE_SCHED_FIFO";
+    DSUI_EVENT_LOG (MAIN_GROUP, SCHEDULE_SETUP, 1, strlen (policy), policy);
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
+  }
 
   ACE_hthread_t main_thr_handle;
   ACE_Thread::self (main_thr_handle);
@@ -181,6 +192,9 @@ main (int argc, char *argv[])
                                          sched_policy,
                                          sched_scope), -1);
 
+	  /* MEASURE: Scheduler start time */
+	  DSUI_EVENT_LOG (MAIN_GROUP, SCHEDULER_STARTED, 1, 0, NULL);
+
           manager->rtscheduler (scheduler);
 
           CORBA::Object_var object =
@@ -215,8 +229,15 @@ main (int argc, char *argv[])
                       "(%t|%T) cannot activate worker thread.\n"));
         }
 
+      /* MEASURE: Worker thread activated */
+      DSUI_EVENT_LOG (MAIN_GROUP, WORKER_ACTIVATED, 1, 0, NULL);
 
       worker1.wait ();
+
+      /* MEASURE: Wait for worker thread done in main thread */
+      // char* msg = "(%t): wait for worker threads done in main thread\n";
+      // Get thread id
+      // DSUI_EVENT_LOG (MAIN_GROUP, WORKER_WAIT_DONE, 1, strlen(msg), msg);
 
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t): wait for worker threads done in main thread\n"));
@@ -239,9 +260,17 @@ main (int argc, char *argv[])
             }
 
             ACE_DEBUG ((LM_DEBUG, "(%t): about to call server shutdown\n"));
+	    
+	    /* MEASURE: Call to shutdown server */
+	    // char* msg = "(%t): wait for worker threads done in main thread\n";
+	    // Get thread id
+	    DSUI_EVENT_LOG (MAIN_GROUP, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
+
             server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
+	    /* MEASURE: After call to server shutdown */
+	    DSUI_EVENT_LOG (MAIN_GROUP, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
             ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
 
 
@@ -253,6 +282,9 @@ main (int argc, char *argv[])
         }
 
       scheduler->shutdown ();
+     
+      /* MEASURE: Scheduler stop time */
+      DSUI_EVENT_LOG (MAIN_GROUP, SCHEDULER_SHUTDOWN, 1, 0, NULL);
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
     }
   ACE_CATCHANY
@@ -263,6 +295,8 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  /* MEASURE: Program stop time */
+  DSUI_EVENT_LOG(MAIN_GROUP, STOP, 1, 0, NULL);
   return 0;
 }
 
@@ -290,6 +324,9 @@ Worker::Worker (CORBA::ORB_ptr orb,
 int
 Worker::svc (void)
 {
+  /* MEASURE: Worker start time */
+  DSUI_EVENT_LOG (WORKER_GROUP, WORKER_STARTED, 1, 0, NULL);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   const char * name = 0;
   /*
@@ -327,19 +364,32 @@ Worker::svc (void)
       sched_param.deadline = deadline_;
       sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
       CORBA::Policy_var implicit_sched_param = sched_param_policy;
+      
+      /* MEASURE: Start of scheduling segment */
+      DSUI_EVENT_LOG (WORKER_GROUP, BEGIN_SCHED_SEGMENT, 1, 0, NULL);
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):before begin_sched_segment\n"));
+
       scheduler_current_->begin_scheduling_segment (name,
                                                     sched_param_policy.in (),
                                                     implicit_sched_param.in ()
                                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
+
+      /* MEASURE: End of scheduling segment */
+      DSUI_EVENT_LOG (WORKER_GROUP, END_SCHED_SEGMENT, 1, 0, NULL);
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
     }
 
+  /* MEASURE: One way call start */
+  DSUI_EVENT_LOG (WORKER_GROUP, ONE_WAY_CALL_START, 1, 0, NULL);
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):about to make one way call\n"));
-//  TAO_debug_level = 1;
+  //  TAO_debug_level = 1;
   server_->test_method (server_load_ ACE_ENV_ARG_PARAMETER);
+
   ACE_CHECK_RETURN (-1);
+
+  /* MEASURE: One way call done */
+  DSUI_EVENT_LOG (WORKER_GROUP, ONE_WAY_CALL_DONE, 1, 0, NULL);
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):one way call done\n"));
 
   if (enable_dynamic_scheduling)
