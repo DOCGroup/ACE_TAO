@@ -1,3 +1,8 @@
+Mon May 19 03:12:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Makefile.am:
+          Added new Test_Output.la and Main.cpp to all *SOURCE variables.
+
 Sun May 18 20:00:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/ACE_Init_Test.cpp:
