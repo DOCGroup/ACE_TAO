@@ -23,7 +23,12 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
   this->base_set (sa.get_type (), sa.get_size ());
 
   if (sa.get_type () == AF_ANY)
-    this->filename_[0] = '\0';
+    {
+      // Create a temporary file.
+      ACE_OS::strcpy (this->filename_,
+                      ACE_DEFAULT_TEMP_FILE);
+      ACE_OS::mktemp (this->filename_);
+    }
   else
     (void) ACE_OS::strncpy (this->filename_,
                             sa.filename_,

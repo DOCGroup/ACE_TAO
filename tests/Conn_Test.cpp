@@ -648,7 +648,7 @@ main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Conn_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("c:i:s:"), 1);
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("c:i:s:"));
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {

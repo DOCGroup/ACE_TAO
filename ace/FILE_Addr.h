@@ -38,7 +38,8 @@ public:
   // Copy constructor.
 
   int set (const ACE_FILE_Addr &sa);
-  // Acts like a copy constructor.
+  // Acts like a copy constructor.  If <sa> == ACE_Addr::sap_any then
+  // create a temporary filename using <ACE_OS::mktemp>.
 
   ACE_FILE_Addr (LPCTSTR filename);
   // Create a ACE_FILE_Addr from a pathname.

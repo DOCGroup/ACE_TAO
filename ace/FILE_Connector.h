@@ -85,9 +85,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  // = Meta-type info
+  // = Meta-type "trait" information.
   typedef ACE_FILE_Addr PEER_ADDR;
-  typedef ACE_FILE_IO   PEER_STREAM;
+  typedef ACE_FILE_IO PEER_STREAM;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
