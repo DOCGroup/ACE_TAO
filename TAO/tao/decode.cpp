@@ -132,9 +132,9 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
                            &elem_tc.out (),
                            0,
                            env);
-  TAO_CHECK_CONDITION_ENV_RETURN (env, \
-                                  || retval != CORBA::TypeCode::TRAVERSE_CONTINUE, \
-                                  retval);
+  TAO_CHECK_ENV_RETURN (env, retval);
+  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return retval;
 
   // Let the Any maintain a pointer to the CDR stream
   // @@ ASG + CORYAN - The following commented line would have been a great
@@ -169,9 +169,10 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
 
   begin = stream->rd_ptr ();
   retval = temp.skip (elem_tc.in (), env);
-  TAO_CHECK_CONDITION_ENV_RETURN (env, \
-                                  || retval != CORBA::TypeCode::TRAVERSE_CONTINUE, \
-                                  retval);
+  TAO_CHECK_ENV_RETURN (env, retval);
+
+  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return retval;
 
   end = temp.rd_ptr ();
 
@@ -191,9 +192,9 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   TAO_OutputCDR out (cdr);
 
   retval = out.append (elem_tc.in (), stream, env);
-  TAO_CHECK_CONDITION_ENV_RETURN (env, \
-                                  || retval != CORBA::TypeCode::TRAVERSE_CONTINUE, \
-                                  retval);
+  TAO_CHECK_ENV_RETURN (env, retval);
+  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    return retval;
 
   ACE_Message_Block::release (any->cdr_);
   if (any->any_owns_data_ && any->value_ != 0)
@@ -840,7 +841,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 			      // CORBA::Object is a little different.
 			      // @@ TODO maybe equivalent() is the right
 			      // method here.
-			      CORBA::Boolean is_corba_object = 
+			      CORBA::Boolean is_corba_object =
 				param->equal (CORBA::_tc_Object, env);
 			      if (env.exception () == 0)
 				{
@@ -855,7 +856,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 				    }
 				  else
 				    {
-				      CORBA_Object_ptr* tmp = 
+				      CORBA_Object_ptr* tmp =
 					ACE_reinterpret_cast(CORBA_Object_ptr*,
 							     ACE_const_cast(void*,data));
 				      *tmp = object;
