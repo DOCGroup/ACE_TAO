@@ -21,6 +21,27 @@ On successfull initialization, the server displays a message that it is running 
 
 if the [-o <ior_output_file>] option is not specified on the command line then the the server will write the IOR of the server CORBA object to a default file - "chat.ior".
 
+Passing the server IOR to clients:
+---------------------------------
+
+To keep this example simple, the server advertises its IOR in the following manner -
+The server program writes its server object's IOR to a ior_file.
+Later on, the client reads this IOR from the specified ior_file and uses the
+<string_to_object> method to obtain a reference to the server object.
+
+For this mechanism to work, the file must be readable and writable. If it doesn't exist, a
+new file is created by the server.
+Moreover, the file path must be accessible to both the client and server.
+
+If the client and server are on different machine, then there must be a shared directory
+accessible by both. On UNIX system's this is typically done via the NFS mount command.
+On Windows, the 'explorer' application provides an option to share drives.
+
+In general if no such file sharing option is available, then using the the Naming Service
+mechanism is the only alternative.
+To preserve its simplicity, this example does not provide the feature to use a Naming
+Service. An example of such a use is $TAO_ROOT/examples/Event_Comm
+
 client:
 -------
 
