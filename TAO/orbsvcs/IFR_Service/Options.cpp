@@ -8,7 +8,8 @@ Options::Options ()
   : ior_output_file_ (ACE_OS::strdup ("if_repo.ior")),
     persistent_ (0),
     persistent_file_ (ACE_OS::strdup ("ifr_default_backing_store")),
-    using_registry_ (0)
+    using_registry_ (0),
+    enable_locking_ (0)
 {
 }
 
@@ -21,7 +22,7 @@ Options::~Options ()
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:pb:r");
+  ACE_Get_Opt get_opts (argc, argv, "o:pb:mr");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -36,6 +37,11 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'b':
         this->persistent_file_ = get_opts.optarg;
+        break;
+      case 'm':
+#if defined (ACE_HAS_THREADS)
+        this->enable_locking_ = 1;
+#endif /* ACE_HAS_THREADS */
         break;
       case 'r': // win32 registry implementation
 #if defined (ACE_WIN32)
@@ -56,6 +62,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                            "Usage:  %s"
                            " [-o] <ior_output_file>"
                            " [-r]"
+                           " [-m]"
                            " [-p]"
                            " [-b] <persistence_file>"
                             "\n",
@@ -89,6 +96,12 @@ int
 Options::using_registry (void) const
 {
   return this->using_registry_;
+}
+
+int
+Options::enable_locking (void) const
+{
+  return this->enable_locking_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

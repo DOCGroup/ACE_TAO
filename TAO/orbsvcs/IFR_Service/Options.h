@@ -54,6 +54,9 @@ public:
   int using_registry (void) const;
   // Are we using a WIN32 registry as the backing store?
 
+  int enable_locking (void) const;
+  // Should the repository have a real mutex or a null mutex?
+
 private:
   char *ior_output_file_;
   // File where the IOR of the server object is stored.
@@ -66,6 +69,9 @@ private:
 
   int using_registry_;
   // Are we using a WIN32 registry as the backing store?
+
+  int enable_locking_;
+  // Should the repository have a real mutex or a null mutex?
 };
 
 // Typedef an Options Singleton. 

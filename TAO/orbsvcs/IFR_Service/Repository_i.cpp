@@ -4,6 +4,7 @@
 #include "Repository_i.h"
 #include "IDLType_i.h"
 #include "ExceptionDef_i.h"
+#include "Options.h"
 #include "Servant_Factory.h"
 #include "ace/Auto_Ptr.h"
 
@@ -18,12 +19,11 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
     ir_poa_ (poa),
     config_ (config),
     servant_factory_ (0),
-    extension_ (CORBA::string_dup ("TAO_IFR_name_extension"))
+    extension_ (CORBA::string_dup ("TAO_IFR_name_extension")),
     lock_ (0)
 {
-#if defined (ACE_HAS_THREADS)
 
-  if (1) //enable_locking
+  if (OPTIONS::instance ()->enable_locking ())
     {
       ACE_NEW (this->lock_,
                ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ());
@@ -33,13 +33,6 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
       ACE_NEW (this->lock_,
                ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ());
     }
-
-#else
-
-  ACE_NEW (this->lock_,
-           ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ());
-
-#endif /* ACE_HAS_THREADS */
 
   ACE_TRY_NEW_ENV
     {
