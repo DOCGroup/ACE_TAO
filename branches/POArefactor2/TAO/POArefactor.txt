@@ -1,3 +1,15 @@
+Fri Dec  3 10:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+          Include PortableServer.h
+
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/LifespanStrategyTransient.cpp:
+          Made get_state_i public, need it for the lifespan strategy. I used
+          the get_state previously, but this tries to acquire a lock and this
+          doesn't work on Linux where the locks are non-recursive
+
 Thu Dec  2 14:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
