@@ -117,7 +117,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     root_poa_ (),
     portable_group_poa_hooks_ (0),
     orb_params_ (),
-    init_ref_map_ (),
+    init_ref_map_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE),
     object_ref_table_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
