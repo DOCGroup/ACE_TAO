@@ -77,7 +77,6 @@ typedef long      id_t;
 // specific values in config.h files.
 #include "ace/Default_Constants.h"
 
-
 # if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
     // Control message size to pass a file descriptor.
 #   define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
@@ -438,7 +437,6 @@ typedef struct
 #     define MAP_FIXED 0
 #   endif /* ACE_LACKS_MMAP */
 
-
 typedef int ACE_exitcode;
 
 typedef ACE_HANDLE ACE_SHLIB_HANDLE;
@@ -587,7 +585,6 @@ private:
 #   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
 # endif /* ACE_DEFAULT_BASE_ADDR */
 
-
 // This fudge factor can be overriden for timers that need it, such as on
 // Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
 // header.
@@ -627,8 +624,6 @@ extern "C" pthread_t pthread_self (void);
 #   endif
 # endif /* ACE_HAS_PTHREADS_STD */
 
-
-
 // By default we perform no tracing on the OS layer, otherwise the
 // coupling between the OS layer and Log_Msg is too tight.  But the
 // application can override the default if they wish to.
@@ -654,6 +649,10 @@ typedef int clockid_t;
 #     define CLOCK_REALTIME 0
 #   endif /* CLOCK_REALTIME */
 # endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
+
+#if !defined (E2BIG)
+#  define E2BIG 7
+#endif /* E2BIG */
 
 /**
  * @class ACE_Countdown_Time

@@ -442,6 +442,11 @@ public:
   /// chained <Message_Block>s.
   size_t total_size (void) const;
 
+  /// Get the total number of bytes and total length in all
+  /// <Message_Block>s, including chained <Message_Block>s.
+  void total_size_and_length (size_t &mb_size,
+                              size_t &mb_length) const;
+
   /// Get the number of bytes in the top-level <Message_Block> (i.e.,
   /// does not consider the bytes in chained <Message_Block>s).
   size_t size (void) const;
