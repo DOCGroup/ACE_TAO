@@ -187,6 +187,9 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
+// Platfor supports template specialization
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
