@@ -197,9 +197,7 @@ module CosTrading
        
        union SpecifiedProps switch ( HowManyProps )
          {
-         case none: boolean none_;
          case some: PropertyNameSeq prop_names;
-         case all: boolean all_;
          };
        
        exception IllegalPreference {
