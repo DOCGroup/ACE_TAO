@@ -34,6 +34,7 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /D NDEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # ADD BASE RSC /l 0x409
@@ -42,7 +43,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /out:"client.exe" /libpath:"$(TAO_ROOT)\tao" /libpath:"$(ACE_ROOT)\ace" /version:1.2.8
+# ADD LINK32 advapi32.lib user32.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /out:"client.exe" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /version:1.2.8
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Bug 1395 Client EXE - Win32 Debug"
 
@@ -50,6 +52,7 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "..\..\..\\" /I "..\..\..\..\\" /D _DEBUG=1 /D WIN32=1 /D _CONSOLE=1 /FD /c
 # ADD BASE RSC /l 0x409
@@ -58,7 +61,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 advapi32.lib user32.lib TAOd.lib ACEd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"client.exe" /libpath:"$(TAO_ROOT)\tao" /libpath:"$(ACE_ROOT)\ace" /version:1.2.8
+# ADD LINK32 advapi32.lib user32.lib TAOd.lib ACEd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /out:"client.exe" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /version:1.2.8
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
