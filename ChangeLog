@@ -1,35 +1,42 @@
+Thu May 27 17:55:38 2004  Olli Savia  <ops@iki.fi>
+
+        * ACE-INSTALL.html:
+
+          Updated LynxOS resource advises. These were unnesessary large.
+          This fixes bugzilla bug 1154.
+        
 Wed May 26 23:51:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_string.cpp:
+        * ace/OS_NS_string.cpp:
 
-	  Converted all ACE cast macro calls to their ANSI C++ cast
-	  counterparts.
+          Converted all ACE cast macro calls to their ANSI C++ cast
+          counterparts.
 
-	* ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_sys_socket.inl:
 
-	  Use prefix {in,dec}rement operators where applicable instead of
-	  postfix operators.  The former are more efficient.
+          Use prefix {in,dec}rement operators where applicable instead of
+          postfix operators.  The former are more efficient.
 
 Wed May 26 23:44:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Reactor_Registration_Test.cpp (Event_Handler):
-	  (handle_input):
+        * tests/Reactor_Registration_Test.cpp (Event_Handler):
+          (handle_input):
 
-	  Fixed "comparison between signed and unsigned integer"
-	  warnings.
+          Fixed "comparison between signed and unsigned integer"
+          warnings.
 
 Wed May 26 10:36:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
-	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
-	  Added these two mpb files to ease the mpc file writing for
-	  CIAO DnC run time.
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+          Added these two mpb files to ease the mpc file writing for
+          CIAO DnC run time.
 
 Wed May 26 10:40:36 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* ace/TMCast/README: Added description of architecture that
-	  I prepared for Carlos some time ago but never actually
-	  committed it.
+        * ace/TMCast/README: Added description of architecture that
+          I prepared for Carlos some time ago but never actually
+          committed it.
 
 Tue May 25 22:08:42 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
@@ -46,27 +53,27 @@ Tue May 25 21:32:17 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Mon May 24 12:16:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Corrected comments in the pthread_rwlock-related
-	  checks. They had cut/paste errors and said signinfo_t. Thanks to
-	  J.T. Conklin <jtc@acorntoolworks.com> for this fix.
+        * configure.ac: Corrected comments in the pthread_rwlock-related
+          checks. They had cut/paste errors and said signinfo_t. Thanks to
+          J.T. Conklin <jtc@acorntoolworks.com> for this fix.
 
 Fri May 21 16:44:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc: Removed the pch
-	  specs from this and replaced with a normal exe-producing set of
-	  specs and files. There were no pch directives in the files, and this
-	  drove MSVC nuts at compile time, complaining of a missing #endif
-	  where there clearly was none.
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc: Removed the pch
+          specs from this and replaced with a normal exe-producing set of
+          specs and files. There were no pch directives in the files, and this
+          drove MSVC nuts at compile time, complaining of a missing #endif
+          where there clearly was none.
 
-	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.{cpp h}: Moved #include
-	  "ace/Log_Msg.h" from .h to .cpp, as nothing in the .h file needs it.
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.{cpp h}: Moved #include
+          "ace/Log_Msg.h" from .h to .cpp, as nothing in the .h file needs it.
 
 Fri May 21 15:28:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Makefile.am: Removed OS_Export.h and Sock_Connect.i as they're
-	  no longer valid files. Please also see:
-	  Tue May 18 11:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-	  Fri May  7 09:11:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * ace/Makefile.am: Removed OS_Export.h and Sock_Connect.i as they're
+          no longer valid files. Please also see:
+          Tue May 18 11:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+          Fri May  7 09:11:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu May 20 21:19:44 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -83,49 +90,49 @@ Thu May 20 21:19:44 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Thu May 20 18:23:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/SOCK_Dgram_Bcast_Test.cpp: When sending a datagram, only send
-	  the formatted text string, noth the whole buffer. Some OSes (i.e.
-	  AIX) don't allow a broadcast of that large a buffer. Also, fixed
-	  the style, indentation, and narrow/wide text capability.
+        * tests/SOCK_Dgram_Bcast_Test.cpp: When sending a datagram, only send
+          the formatted text string, noth the whole buffer. Some OSes (i.e.
+          AIX) don't allow a broadcast of that large a buffer. Also, fixed
+          the style, indentation, and narrow/wide text capability.
 
 Thu May 20 10:21:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Reactor/Client.cpp: In handle_input(), use "%.*C",
-	  not "%*C" to limit output to string length. In handle_timeout (),
-	  referring to a buffer in ACE_Message_Block's ctor doesn't copy the
-	  data; it simply refers to it. This would produce garbage output.
-	  Thanks to Dale Hawkins <dhawkins@cdrgts.com> for these fixes.
+        * examples/APG/Reactor/Client.cpp: In handle_input(), use "%.*C",
+          not "%*C" to limit output to string length. In handle_timeout (),
+          referring to a buffer in ACE_Message_Block's ctor doesn't copy the
+          data; it simply refers to it. This would produce garbage output.
+          Thanks to Dale Hawkins <dhawkins@cdrgts.com> for these fixes.
 
-	* examples/APG/Containers/Queues.cpp (runStackUnboundedQueue): The
-	  DataElement arrays inserted into the queue should be defined outside
-	  their 'for' loops to avoid repeated, unnecessary constructor and
-	  destruction. Thanks to Bill Hopkins <bill.hopkins@level3.com> for
-	  this suggestion.
+        * examples/APG/Containers/Queues.cpp (runStackUnboundedQueue): The
+          DataElement arrays inserted into the queue should be defined outside
+          their 'for' loops to avoid repeated, unnecessary constructor and
+          destruction. Thanks to Bill Hopkins <bill.hopkins@level3.com> for
+          this suggestion.
 
-	* THANKS: Added Dale Hawkins and Bill Hopkins.
+        * THANKS: Added Dale Hawkins and Bill Hopkins.
 
 Wed May 19 12:46:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_SOCK.i: Added missing #include "ace/OS_NS_sys_socket.h"
+        * ace/SSL/SSL_SOCK.i: Added missing #include "ace/OS_NS_sys_socket.h"
 
 Wed May 19 12:14:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Reactor_Registration_Test.cpp: Fixed string types to work
-	  for both narrow and wide chars; fixed size types to work for
-	  64-bit platforms.
+        * tests/Reactor_Registration_Test.cpp: Fixed string types to work
+          for both narrow and wide chars; fixed size types to work for
+          64-bit platforms.
 
 Wed May 19 08:57:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_Thread.inl: Fixed the ACE_OS::thr_self() call so that
-	  it doesn't use the ACE_OSCALL_RETURN macro, which compares the
- 	  return value of pthread_self() with -1 to see if the function
- 	  encountered an error.  However, pthread_t may be an opaque value
- 	  (a pointer, a struct, etc.) that may not be able to be compared
- 	  with a literal without an error.  Furthermore, the pthreads and
- 	  X/Open XPG standards do not define any error conditions for
- 	  pthread_self(), so checking the return value with -1 is
- 	  meaningless.  Thanks to J.T. Conklin <jtc@acorntoolworks.com>
-	  for reporting this problem and providing a fix.
+        * ace/OS_NS_Thread.inl: Fixed the ACE_OS::thr_self() call so that
+          it doesn't use the ACE_OSCALL_RETURN macro, which compares the
+          return value of pthread_self() with -1 to see if the function
+          encountered an error.  However, pthread_t may be an opaque value
+          (a pointer, a struct, etc.) that may not be able to be compared
+          with a literal without an error.  Furthermore, the pthreads and
+          X/Open XPG standards do not define any error conditions for
+          pthread_self(), so checking the return value with -1 is
+          meaningless.  Thanks to J.T. Conklin <jtc@acorntoolworks.com>
+          for reporting this problem and providing a fix.
 
 Wed May 19 07:20:35 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -192,7 +199,7 @@ Tue May 18 11:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/SOCK_Dgram.{h,cpp,i}:
         * ace/SOCK_Dgram_Bcast.{cpp,h,i}
         * ace/SOCK_Dgram_Mcast.i:
-        * ace/SOCK_IO.{h,cpp,ï):
+        * ace/SOCK_IO.{h,cpp,Ã¯):
           Instead of using ACE_LACKS_INLINE_FUNCTIONS use __ACE_INLINE__ to
           check whether to enabling inlining or not. The last is the way
           we now use and the first is not really working. In fact, all files
