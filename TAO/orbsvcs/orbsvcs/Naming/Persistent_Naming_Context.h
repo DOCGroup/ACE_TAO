@@ -73,7 +73,7 @@ public:
 
   // = Name bindings manipulation methods.
 
-  int virtual bind (const char *id,
+  virtual int bind (const char *id,
                     const char *kind,
                     CORBA::Object_ptr obj,
                     CosNaming::BindingType type);
@@ -81,7 +81,7 @@ public:
   // Return 0 on success and -1 on failure, 1 if there already is a
   // binding with <id> and <kind>.
 
-  int virtual rebind (const char *id,
+  virtual int rebind (const char *id,
                       const char *kind,
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type);

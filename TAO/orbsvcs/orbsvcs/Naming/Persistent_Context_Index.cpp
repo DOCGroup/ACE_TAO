@@ -204,7 +204,11 @@ TAO_Persistent_Context_Index::recreate_all (void)
 
   ACE_Auto_Basic_Ptr<INDEX::ITERATOR> it (index_iter);
 
-  INDEX::ENTRY *entry = 0;
+  // Because of broken old g++!!!
+  typedef ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
+    TAO_Persistent_Index_IntId>  IND_DEF;
+
+  IND_DEF::ENTRY *entry = 0;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file... \n"));
