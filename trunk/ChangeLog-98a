@@ -1,3 +1,8 @@
+Wed Mar 18 09:25:30 1998  Chris Gill  <cdgill@tango.cs.wustl.edu>
+
+        * ace/ace.dsw: added user32.lib to link for dynamic library on NT
+          for all builds.
+
 Wed Mar 18 09:22:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers.cpp,Hash_Map_Manager.cpp,Map_Manager.cpp
