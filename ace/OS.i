@@ -3409,6 +3409,9 @@ ACE_OS::event_timedwait (ACE_event_t *event,
     {
     case WAIT_OBJECT_0:
       return 0;
+    case WAIT_TIMEOUT:
+      errno = ETIME;
+      return -1;
     default:
       // This is a hack, we need to find an appropriate mapping...
       errno = ::GetLastError ();
