@@ -224,8 +224,8 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("(%P|%t) Transport_Connector::connect - ")
-                    ACE_LIB_TEXT ("got an existing transport with id %d\n"),
+                    "TAO (%P|%t) - Transport_Connector::connect, "
+                    "got an existing Transport[%d]\n",
                     base_transport->id ()));
 
       TAO_Transport *&transport = invocation->transport ();

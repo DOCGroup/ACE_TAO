@@ -1,3 +1,17 @@
+Tue Jun 18 14:31:39 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/GIOP_Message_State.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/LF_Connect_Strategy.cpp:
+	* tao/Leader_Follower.cpp:
+	* tao/Transport.cpp:
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/Transport_Connector.cpp:
+	  More normalization of debug messages.
+
+	* tao/IIOP_Connection_Handler.cpp:
+	  Add assertions to uncover memory management bugs.
+
 Tue Jun 18 11:53:10 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * docs/releasenotes/OBV.html:

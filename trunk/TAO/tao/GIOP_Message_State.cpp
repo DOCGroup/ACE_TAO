@@ -48,7 +48,9 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - parsing header\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - GIOP_Message_State::parse_message_header_i\n"
+                  ));
     }
 
   // Grab the rd_ptr_ from the message block..
@@ -137,7 +139,8 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Getting version info.. \n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - GIOP_Message_State::get_version_info\n"));
     }
 
   // We have a GIOP message on hand. Get its revision numbers
@@ -173,7 +176,8 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 {
   if (TAO_debug_level > 8)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Getting byte order info.. \n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - GIOP_Message_State::get_byte_order_info\n"));
     }
 
     // Let us be specific that this is for 1.0
@@ -188,8 +192,8 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
         {
           if (TAO_debug_level > 2)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - invalid byte order <%d>")
-                        ACE_TEXT (" for version <1.0>\n"),
+                        "TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, "
+                        "invalid byte order <%d> for version <1.0>\n",
                         this->byte_order_));
           return -1;
         }
