@@ -1,3 +1,9 @@
+Thu Aug 27 20:09:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Interpreter.h: 
+	  The TAO_attribute_calculator typedef had a default value. This
+	  is illegal. Thanks to John Mulhern for pointing this out.
+
 Thu Aug 27 20:01:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/IOR-parser: Added a number of enhancements from Priya
