@@ -1,3 +1,10 @@
+Thu Sep 23 19:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/streams.h:
+          Removed explicit check of _MSC_VER >= 1200, just check for _MSC_VER,
+          version 1200 is msvc6, the oldest msvc compiler we support, this
+          compiler and newer have pragma warning push/pop
+
 Thu Sep 23 12:07:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/ACE.cpp:

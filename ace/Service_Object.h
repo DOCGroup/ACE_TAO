@@ -60,7 +60,7 @@ class ACE_Service_Type_Impl;
  * @class ACE_Service_Type
  *
  * @brief Keeps track of information related to the various
- * <ACE_Service_Type_Impl> subclasses.
+ * ACE_Service_Type_Impl subclasses.
  *
  * This class acts as the interface of the "Bridge" pattern.
  */
