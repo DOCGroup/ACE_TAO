@@ -34,9 +34,27 @@ module Half_Anon
   typedef sequence<unsigned short, 7> bd_ushort_seq_array[11];
 };
 
-// Neither array nor sequence are typedef'd.
 module All_Anon
 {
+  // Tests generation of unique template parameter type
+  // names when identical bounded strings are used
+  // repeatedly as parameters and/or return types.
+  interface anon_bd_string_test
+  {
+    const long test_string_size = 25;
+
+    string<test_string_size> TestFunc ();
+    string<test_string_size> TestFunc2 ();
+    string<test_string_size> TestFunc3 ();
+    string<test_string_size> TestFunc23 ();
+
+    void TestFunc4 (in string<test_string_size> inarg);
+    void TestFunc41 (in string<test_string_size> inarg);
+    void TestFunc42 (in string<test_string_size> inarg);
+    void TestFunc43 (in string<test_string_size> inarg);
+  };
+
+  // Neither array nor sequence are typedef'd.
   exception Nested_Anon 
   {
     sequence<float> float_seq_array[6];
