@@ -23,6 +23,7 @@
 ////////////////////
 // Forward Reference
 class FT_ReplicaFactory_i;
+class TAO_ORB_Manager;
 
 /**
  * Implement the TestReplica IDL interface.
@@ -33,7 +34,7 @@ class FT_ReplicaFactory_i;
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
-  FT_TestReplica_i (FT_ReplicaFactory_i * factory, int identity = 0);
+  FT_TestReplica_i (FT_ReplicaFactory_i * factory, long factoryId);
   virtual ~FT_TestReplica_i ();
 
   /**
@@ -43,7 +44,7 @@ public:
    * @param argv classic C argv
    * @return 0 if ok, otherwise process exit code.
    */
-  virtual int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, char *argv[]);
 
   /**
    * provide information to appear in a "usage" display.
@@ -51,7 +52,20 @@ public:
    *  usage: [program] &lt;usageMessage()&gt; [other usage]
    * @returns c-style string containing "bare" usage options.
    */
-  virtual const char * usage_options();
+  const char * usage_options();
+
+  /**
+   * Initialize this object.
+   * @param orbManager our ORB -- we keep var to it.
+   * @return zero for success; nonzero is process return code for failure.
+   */
+  int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL);
+
+  /**
+   * Prepare to exit.
+   * @return zero for success; nonzero is process return code for failure.
+   */
+  int fini (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
    * idle time activity.
@@ -61,6 +75,14 @@ public:
   int idle(int &result);
 
   void requestQuit();
+
+  long factoryId()const;
+
+  ::FT_TEST::TestReplica_ptr objectReference();
+  ::PortableServer::ObjectId * objectId();
+  char * IOR();
+
+
 
 private:
   ///////////////////////////
@@ -125,6 +147,8 @@ private:
    */
   void store(long value);
 
+  void suicide(const char *);
+
   ///////////////
   // data members
 private:
@@ -141,9 +165,23 @@ private:
   /**
    * a replica number to distinguish between multiple replicas in trace messages.
    */
-  int identity_;
+  long factoryId_;
 
+  /**
+   * the factory that created thsi replica
+   */
   FT_ReplicaFactory_i * factory_;
+
+  /**
+   * The orb used to activate this object
+   */
+  TAO_ORB_Manager * orbManager_;
+
+  /**
+   * The CORBA object id assigned to this object.
+   */
+  CORBA::String_var objectId_;
+
 };
 
 #include "ace/post.h"

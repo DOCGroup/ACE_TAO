@@ -12,10 +12,10 @@
 //=============================================================================
 #include "FT_ReplicaFactory_i.h"
 #include "FT_TestReplica_i.h"
-#include "ace/Get_Opt.h"
-#include "orbsvcs/CosNamingC.h"
-#include "tao/PortableServer/ORB_Manager.h"
-#include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
+#include <ace/Get_Opt.h>
+#include <orbsvcs/CosNamingC.h>
+#include <tao/PortableServer/ORB_Manager.h>
+#include <orbsvcs/PortableGroup/PG_Properties_Decoder.h>
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -46,9 +46,10 @@
 // FT_ReplicaFactory_i  Construction/destruction
 
 FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
-  : ior_output_file_(0)
+  : iorOutputFile(0)
   , nsName_(0)
   , quitOnIdle_(0)
+  , testOutputFile_(0)
   , emptySlots_(0)
   , quitRequested_(0)
 {
@@ -106,20 +107,20 @@ void FT_ReplicaFactory_i::shutdown_i()
   }
 }
 
-int FT_ReplicaFactory_i::write_IOR()
+int FT_ReplicaFactory_i::writeIOR(const char * outputFile, const char * ior)
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (outputFile, "w");
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", static_cast<const char *>(ior_));
+    ACE_OS::fprintf (out, "%s", ior);
     ACE_OS::fclose (out);
     result = 0;
   }
   else
   {
     ACE_ERROR ((LM_ERROR,
-      "Open failed for %s\n", ior_output_file_
+      "Open failed for %s\n", outputFile
     ));
   }
   return result;
@@ -130,7 +131,7 @@ int FT_ReplicaFactory_i::write_IOR()
 
 int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:q");
+  ACE_Get_Opt get_opts (argc, argv, "o:t:r:q");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -138,12 +139,27 @@ int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
     switch (c)
     {
       case 'o':
-        ior_output_file_ = get_opts.opt_arg ();
+      {
+        iorOutputFile = get_opts.opt_arg ();
         break;
+      }
+      case 'r':
+      {
+        const char * id = get_opts.opt_arg ();
+        identity_ = "ReplicaFactory ";
+        identity_ += id;
+        break;
+      }
       case 'q':
       {
         quitOnIdle_ = 1;
         break;
+      }
+
+      case 't':
+      {
+        testOutputFile_ = get_opts.opt_arg ();
+
       }
 
       case '?':
@@ -192,10 +208,10 @@ int FT_ReplicaFactory_i::idle (int & result)
 
 int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (ior_output_file_ != 0)
+  if (iorOutputFile != 0)
   {
-    ACE_OS::unlink (ior_output_file_);
-    ior_output_file_ = 0;
+    ACE_OS::unlink (iorOutputFile);
+    iorOutputFile = 0;
   }
   if (nsName_ != 0)
   {
@@ -210,21 +226,27 @@ int FT_ReplicaFactory_i::init (TAO_ORB_Manager & orbManager
   ACE_ENV_ARG_DECL)
 {
   int result = 0;
+  orbManager_ = & orbManager;
   orb_ = orbManager.orb();
-  // todo: improve poa handling -- 
-  //   -- allow separate poas for the factory and replicas
-  poa_ = orbManager.root_poa();
 
   // Register with the ORB.
   ior_ = orbManager.activate (this
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (ior_output_file_ != 0)
+
+  if (testOutputFile_ != 0)
+  {
+    FT_TestReplica_i * replica = createReplica ();
+    CORBA::String_var replicaIOR = replica->IOR ();
+    writeIOR (testOutputFile_, replicaIOR);
+  }
+
+  if (iorOutputFile != 0)
   {
     identity_ = "file:";
-    identity_ += ior_output_file_;
-    result = write_IOR();
+    identity_ += iorOutputFile;
+    result = writeIOR (iorOutputFile, ior_);
   }
   else
   {
@@ -270,7 +292,8 @@ void FT_ReplicaFactory_i::removeReplica(CORBA::ULong id, FT_TestReplica_i * repl
   {
     if(replicas_[id] == replica)
     {
-      delete replicas_[id];
+      replica->fini();
+      delete replica;
       replicas_[id] = 0;
       emptySlots_ += 1;
     }
@@ -336,25 +359,15 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     ACE_THROW ( PortableGroup::InvalidCriteria() );
   }
 
-  CORBA::ULong replicaId = allocateId();
-
-
-  // NOTE: ACE_NEW is incompatable with ACE_Auto_Basic_Ptr
-  // so create a bare pointer first.
-  FT_TestReplica_i * pFTReplica = 0;
-
-  ACE_NEW_NORETURN(pFTReplica, FT_TestReplica_i(
-    this,
-    replicaId    
-    ));
-  if (pFTReplica == 0)
+  FT_TestReplica_i * replica = createReplica();
+  if (replica == 0)
   {
     ACE_ERROR ((LM_ERROR,
       "New Replica_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
     ACE_THROW ( PortableGroup::ObjectNotCreated() );
   }
-  ACE_Auto_Basic_Ptr<FT_TestReplica_i> replica(pFTReplica);
+
 
   ACE_NEW_NORETURN ( factory_creation_id,
     PortableGroup::GenericFactory::FactoryCreationId);
@@ -366,24 +379,29 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
 
     ACE_THROW ( PortableGroup::ObjectNotCreated() );
   }
+  (*factory_creation_id) <<= replica->factoryId();
 
-  // assign id and capture replica object before
-  // activating it so it will be there when remove is called
-  (*factory_creation_id) <<= replicaId;
-  replicas_.push_back(replica.release());
+  ::FT_TEST::TestReplica_var obj = replica->objectReference();
+  METHOD_RETURN(FT_ReplicaFactory_i::create_object) obj._retn();
+}
 
-  PortableServer::ObjectId_var id =
-    poa_->activate_object (pFTReplica
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+FT_TestReplica_i * FT_ReplicaFactory_i::createReplica()
+{
+  CORBA::ULong replicaId = allocateId();
 
-  CORBA::Object_var obj =
-    this->poa_->id_to_reference (id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  // NOTE: ACE_NEW is incompatable with auto_ptr
+  // so create a bare pointer first.  The auto_ptr
+  // is for exception safeness during the init call.
+  FT_TestReplica_i * pFTReplica = 0;
+  ACE_NEW_NORETURN(pFTReplica, FT_TestReplica_i(
+    this,
+    replicaId    
+    ));
+  auto_ptr<FT_TestReplica_i> replica(pFTReplica);
 
-  METHOD_RETURN(FT_ReplicaFactory_i::create_object)
-    obj._retn();
+  replica->init (*orbManager_ ACE_ENV_ARG_PARAMETER);
+  replicas_.push_back(replica.release());  // transfer ownership to container
+  return pFTReplica;
 }
 
 void FT_ReplicaFactory_i::delete_object (

@@ -7,7 +7,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <orbsvcs/CosNotifyChannelAdminS.h>
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include <orbsvcs/FT_NotifierC.h>
 
 //////////////////////
