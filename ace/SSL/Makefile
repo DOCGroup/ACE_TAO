@@ -53,8 +53,7 @@ endif # HPUX_VERS
 
 
 .obj/SSL_Context.o .obj/SSL_Context.so .shobj/SSL_Context.o .shobj/SSL_Context.so: SSL_Context.cpp SSL_Context.h \
- $(ACE_ROOT)/ace/pre.h \
- SSL_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -77,6 +76,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -155,8 +156,7 @@ endif # HPUX_VERS
  SSL_Context.inl sslconf.h
 
 .obj/SSL_SOCK.o .obj/SSL_SOCK.so .shobj/SSL_SOCK.o .shobj/SSL_SOCK.so: SSL_SOCK.cpp SSL_SOCK.h \
- $(ACE_ROOT)/ace/pre.h \
- SSL_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -178,6 +178,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -197,12 +199,10 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- SSL_SOCK.i
+ $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i
 
 .obj/SSL_SOCK_Acceptor.o .obj/SSL_SOCK_Acceptor.so .shobj/SSL_SOCK_Acceptor.o .shobj/SSL_SOCK_Acceptor.so: SSL_SOCK_Acceptor.cpp SSL_SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/pre.h \
- SSL_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -225,6 +225,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -244,9 +246,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- SSL_SOCK.i SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -319,21 +320,13 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/OS_QoS.h \
- SSL_SOCK_Acceptor.i
+ SSL_SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i
 
 .obj/SSL_SOCK_Connector.o .obj/SSL_SOCK_Connector.so .shobj/SSL_SOCK_Connector.o .shobj/SSL_SOCK_Connector.so: SSL_SOCK_Connector.cpp SSL_SOCK_Connector.h \
- $(ACE_ROOT)/ace/pre.h \
- SSL_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -356,6 +349,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -375,9 +370,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- SSL_SOCK.i SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -450,17 +444,10 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/OS_QoS.h \
- SSL_SOCK_Connector.i
+ SSL_SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i
 
 .obj/SSL_SOCK_Stream.o .obj/SSL_SOCK_Stream.so .shobj/SSL_SOCK_Stream.o .shobj/SSL_SOCK_Stream.so: SSL_SOCK_Stream.cpp \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -484,6 +471,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -513,9 +502,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- SSL_SOCK.i SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SOCK.i SSL_SOCK.i \
+ SSL_Context.h $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/String_Base_Const.h \
  $(ACE_ROOT)/ace/String_Base.i \
@@ -581,8 +569,8 @@ endif # HPUX_VERS
  SSL_SOCK_Stream.i
 
 .obj/SSL_Asynch_Stream.o .obj/SSL_Asynch_Stream.so .shobj/SSL_Asynch_Stream.o .shobj/SSL_Asynch_Stream.so: SSL_Asynch_Stream.cpp SSL_Asynch_Stream.h \
- $(ACE_ROOT)/ace/pre.h \
- SSL_Context.h SSL_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSL_Context.h \
+ SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -605,6 +593,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -692,6 +682,7 @@ endif # HPUX_VERS
  SSL_Asynch_BIO.h \
  $(ACE_ROOT)/ace/POSIX_Proactor.h \
  $(ACE_ROOT)/ace/Proactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
@@ -701,6 +692,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Test_and_Set.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
  $(ACE_ROOT)/ace/POSIX_Asynch_IO.h \
@@ -734,8 +727,7 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/Proactor.i
 
 .obj/SSL_Asynch_BIO.o .obj/SSL_Asynch_BIO.so .shobj/SSL_Asynch_BIO.o .shobj/SSL_Asynch_BIO.so: SSL_Asynch_BIO.cpp SSL_Asynch_BIO.h \
- $(ACE_ROOT)/ace/pre.h \
- SSL_Export.h \
+ $(ACE_ROOT)/ace/pre.h SSL_Export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -759,6 +751,8 @@ endif # HPUX_VERS
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
