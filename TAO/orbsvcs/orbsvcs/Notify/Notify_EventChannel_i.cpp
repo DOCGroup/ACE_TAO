@@ -109,13 +109,15 @@ TAO_Notify_EventChannel_i::get_event_manager (void)
 }
 
 void
-TAO_Notify_EventChannel_i::consumer_admin_destroyed (CosNotifyChannelAdmin::AdminID /*CA_ID*/)
+TAO_Notify_EventChannel_i::consumer_admin_destroyed (CosNotifyChannelAdmin::AdminID CA_ID)
 {
+  this->consumer_admin_ids_.put (CA_ID);
 }
 
 void
-TAO_Notify_EventChannel_i::supplier_admin_destroyed (CosNotifyChannelAdmin::AdminID /*SA_ID*/)
+TAO_Notify_EventChannel_i::supplier_admin_destroyed (CosNotifyChannelAdmin::AdminID SA_ID)
 {
+  this->supplier_admin_ids_.put (SA_ID);
 }
 
 PortableServer::POA_ptr
@@ -242,6 +244,7 @@ TAO_Notify_EventChannel_i::new_for_consumers (CosNotifyChannelAdmin::InterFilter
   this->event_listener_list_->connected (consumer_admin, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::ConsumerAdmin::_nil ());
 
+  this->consumer_admin_ids_.next ();
   return CosNotifyChannelAdmin::ConsumerAdmin::_narrow (obj.in ());
 }
 
@@ -273,6 +276,7 @@ TAO_Notify_EventChannel_i::new_for_suppliers (CosNotifyChannelAdmin::InterFilter
                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::SupplierAdmin::_nil ());
 
+  this->supplier_admin_ids_.next ();
   return CosNotifyChannelAdmin::SupplierAdmin::_narrow (obj.in ());
 }
 

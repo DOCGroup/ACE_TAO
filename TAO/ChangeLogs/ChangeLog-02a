@@ -1,3 +1,23 @@
+Sat Mar 10 22:27:58 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+	  Added the following fixes for bugs reported by
+	  Sergey Logvin <S.Logvin@telesens.com.ua> -
+          + Filters are destroyed correctly.
+	  + Fixed memory leak in EventChannelFactory.
+	  + Implemented TAO_Notify_FilterAdmin_i::remove_all_filters.
+	  + Fixed ConsumerAdmin::get_all_filters.
+	  + Fixed SupplierAdmin::get_all_filters.
+	  + Fixed CosNotifyFilter::Filter::get_constraints.
+	  + Fixed Filter::get_all_constraints.
+
 Sat Mar 10 18:17:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/NestedUpcall/MT_Client_Test/client.cpp (main):

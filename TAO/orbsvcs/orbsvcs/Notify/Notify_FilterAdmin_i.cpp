@@ -63,20 +63,22 @@ TAO_Notify_FilterAdmin_i::add_filter (
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       0);
   else
-    return new_id;
+    {
+      filter_ids_.next ();
+      return new_id;
+    }
 }
 
-void TAO_Notify_FilterAdmin_i::remove_filter (
-    CosNotifyFilter::FilterID filter,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+void TAO_Notify_FilterAdmin_i::remove_filter (CosNotifyFilter::FilterID filter_id, CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyFilter::FilterNotFound
-  ))
+                   CORBA::SystemException,
+                   CosNotifyFilter::FilterNotFound
+                   ))
 {
-  if (filter_list_.unbind (filter) == -1)
+  if (filter_list_.unbind (filter_id) == -1)
     ACE_THROW (CosNotifyFilter::FilterNotFound ());
+
+  filter_ids_.put (filter_id);
 }
 
 CosNotifyFilter::Filter_ptr
@@ -109,14 +111,23 @@ TAO_Notify_FilterAdmin_i::get_all_filters (CORBA::Environment & ACE_TRY_ENV)
 }
 
 void
-TAO_Notify_FilterAdmin_i::remove_all_filters (
-                                              CORBA::Environment & /*ACE_TRY_ENV*/
-  )
+TAO_Notify_FilterAdmin_i::remove_all_filters (CORBA::Environment & ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
-  //Add your implementation here
+  CosNotifyFilter::FilterIDSeq* id_list =
+    this->get_all_filters (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  for (CORBA::ULong i = 0; i < id_list->length (); ++i)
+    {
+      CosNotifyFilter::FilterID id = (*id_list)[i];
+      this->remove_filter (id, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  delete id_list;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
