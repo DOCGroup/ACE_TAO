@@ -25,10 +25,11 @@ static const int READ_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
 static const int WRITE_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
                                 FILE_FLAG_OVERLAPPED |
                                 O_RDWR |
-                                O_CREAT);
+                                O_CREAT |
+                                O_TRUNC);
 #else
 static const int READ_FLAGS = O_RDONLY;
-static const int WRITE_FLAGS = O_RDWR | O_CREAT;
+static const int WRITE_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 #endif /* ACE_WIN32 */
 
 // static data members
@@ -387,13 +388,14 @@ JAWS_File::acquire (void)
             this->handle_ = ACE_OS::open (this->tempname_, READ_FLAGS, R_MASK);
             if (this->handle_ == ACE_INVALID_HANDLE)
               {
-                this->error (JAWS_File::OPEN_FAILED, "JAWS_File::acquire");
+                this->error (JAWS_File::OPEN_FAILED,
+                             "JAWS_File::acquire: open");
               }
             else if (this->mmap_.map (this->handle_, -1,
-                                      PROT_READ, MAP_PRIVATE) != 0
-                     || this->mmap_.map (this->tempname_) != 0)
+                                      PROT_READ, MAP_PRIVATE) != 0)
               {
-                this->error (JAWS_File::MEMMAP_FAILED, "JAWS_File::acquire");
+                this->error (JAWS_File::MEMMAP_FAILED,
+                             "JAWS_File::acquire: map");
                 ACE_OS::close (this->handle_);
                 this->handle_ = ACE_INVALID_HANDLE;
               }
@@ -404,12 +406,28 @@ JAWS_File::acquire (void)
             this->handle_ = ACE_OS::open (this->tempname_, WRITE_FLAGS, W_MASK);
             if (this->handle_ == ACE_INVALID_HANDLE)
               {
-                this->error (JAWS_File::OPEN_FAILED, "JAWS_File::acquire");
+                this->error (JAWS_File::OPEN_FAILED,
+                             "JAWS_File::acquire: open");
+              }
+            else if (ACE_OS::lseek (this->handle_, this->size_ - 1, SEEK_SET)
+                     == -1)
+              {
+                this->error (JAWS_File::OPEN_FAILED,
+                             "JAWS_File::acquire: lseek");
+                ACE_DEBUG ((LM_DEBUG, "hey--> %d, %u, %d\n", this->handle_, this->size_, SEEK_SET));
+                ACE_OS::close (this->handle_);
+              }
+            else if (ACE_OS::write (this->handle_, "", 1) != 1)
+              {
+                this->error (JAWS_File::WRITE_FAILED,
+                             "JAWS_File::acquire: write");
+                ACE_OS::close (this->handle_);
               }
             else if (this->mmap_.map (this->handle_, this->size_,
                                       PROT_RDWR, MAP_SHARED) != 0)
               {
-                this->error (JAWS_File::MEMMAP_FAILED, "JAWS_File::acquire");
+                this->error (JAWS_File::MEMMAP_FAILED,
+                             "JAWS_File::acquire: map");
                 ACE_OS::close (this->handle_);
               }
             break;
@@ -500,7 +518,7 @@ JAWS_File::error (void) const
 int
 JAWS_File::error (int error_value, const char * s)
 {
-  ACE_ERROR ((LM_ERROR, "%p memory mapping for read.\n", s));
+  ACE_ERROR ((LM_ERROR, "%p.\n", s));
   return (this->error_ = error_value);
 }
 
