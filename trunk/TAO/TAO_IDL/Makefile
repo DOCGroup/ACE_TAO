@@ -158,7 +158,6 @@ ifndef CROSS-COMPILE
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 endif # ! CROSS-COMPILE
 
-
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
