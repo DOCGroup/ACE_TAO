@@ -1,3 +1,20 @@
+Wed Jul 23 16:25:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Kokyu/Makefile:
+
+	  Modified Makefile to add the RTKokyuEvent library to the
+	  list of libraries.
+
+	* orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+	
+	  Removed the capability to run in config mode. Running in config
+	  mode used to generate a Schedule.h file, which needs to be
+	  included and compiled to enable running in "non-config"
+	  mode. After these changes, the scheduler regenerates the
+	  schedule on each run (based on the RT_Infos registered with it)
+	  and the EC_Kokyu dispatcher gets the schedule info dynamically
+	  from the scheduler and sets up the dispatch lanes.
+	
 Wed Jul 23 16:18:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* README:

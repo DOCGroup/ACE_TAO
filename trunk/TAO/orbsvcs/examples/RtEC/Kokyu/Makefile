@@ -25,6 +25,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 
 Service_OBJS=$(addsuffix .o, Service Supplier Consumer)
 
+#
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
