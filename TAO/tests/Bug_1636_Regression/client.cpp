@@ -7,6 +7,7 @@
 
 int main (int argc, char* argv[])
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
   {
     CORBA::ORB_var orb =
