@@ -54,11 +54,13 @@ Subject: [area]: [synopsis]
     TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
     COMPILER NAME AND VERSION (AND PATCHLEVEL):
 
-    CONTENTS OF $ACE_ROOT/ace/config.h [if you use a link to a platform-
+    THE $ACE_ROOT/ace/config.h FILE [if you use a link to a platform-
     specific file, simply state which one]:
 
-    CONTENTS OF $ACE_ROOT/include/makeinclude/platform_macros.GNU (unless
-    this isn't used in this case, e.g., with Microsoft Visual C++):
+    THE $ACE_ROOT/include/makeinclude/platform_macros.GNU FILE [if you
+    use a link to a platform-specific file, simply state which one
+    (unless this isn't used in this case, e.g., with Microsoft Visual
+    C++)]: 
 
     CONTENTS OF $ACE_ROOT/bin/MakeProjectCreator/config/default.features
     (used by MPC when you generate your own makefiles):
