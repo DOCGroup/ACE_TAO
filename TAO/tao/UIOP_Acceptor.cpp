@@ -131,9 +131,8 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (major >= 0 && minor >= 0)
     this->version_.set_version (ACE_static_cast (CORBA::Octet, major),
                                 ACE_static_cast (CORBA::Octet, minor));
-  ACE_UNIX_Addr addr (address.c_str ());
 
-  return this->open_i (orb_core, addr);
+  return this->open_i (orb_core, address.c_str ());
 }
 
 int
@@ -144,16 +143,18 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core)
   if (tempname.get () == 0)
     return -1;
 
-  ACE_UNIX_Addr addr (tempname.get ());
-
-  return this->open_i (orb_core, addr);
+  return this->open_i (orb_core, tempname.get ());
 }
 
 int
 TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
-                           const ACE_UNIX_Addr& addr)
+                           const char *rendezvous)
 {
   this->orb_core_ = orb_core;
+
+  ACE_UNIX_Addr addr;
+
+  this->rendezvous_point (addr, rendezvous);
 
   if (this->base_acceptor_.open (orb_core, addr) != 0)
     return -1;
@@ -170,6 +171,50 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     }
 
   return 0;
+}
+
+void
+TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
+                                     const char *rendezvous)
+{
+  // To guarantee portability, local IPC rendezvous points (including
+  // the path and filename) should not be longer than 99 characters
+  // long. Some platforms may support longer rendezvous points,
+  // usually 108 characters including the null terminator, but
+  // Posix.1g only requires that local IPC rendezvous point arrays
+  // contain a maximum of at least 100 characters, including the null
+  // terminator.  If an endpoint is longer than what the platform
+  // supports then it will be truncated so that it fits, and a warning
+  // will be issued.
+
+  // Avoid using relative paths in your UIOP endpoints.  If possible,
+  // use absolute paths instead.  Imagine that the server is given an
+  // endpoint to create using -ORBEndpoint uiop://foobar.  A local IPC
+  // rendezvous point called foobar will be created in the current
+  // working directory.  If the client is not started in the directory
+  // where the foobar rendezvous point exists then the client will not
+  // be able to communicate with the server since its point of
+  // communication, the rendezvous point, was not found. On the other
+  // hand, if an absolute path was used, the client would know exactly
+  // where to find the rendezvous point.  It is up to the user to
+  // make sure that a given UIOP endpoint is accessible by both the
+  // server and the client.
+
+  addr.set (rendezvous);
+
+  size_t length = ACE_OS::strlen (addr.get_path_name ());
+
+  // Check if rendezvous point was truncated by ACE_UNIX_Addr since
+  // most UNIX domain socket rendezvous points can only be less than
+  // 108 characters long.
+  if (length < ACE_OS::strlen (rendezvous))
+    {
+      ACE_DEBUG ((LM_WARNING,
+                  "TAO (%P|%t) UIOP rendezvous point was truncated to <%s>\n"
+                  "since it was longer than %d characters long.\n",
+                  addr.get_path_name (),
+                  length));
+    }
 }
 
 CORBA::ULong

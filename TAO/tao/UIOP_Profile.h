@@ -123,11 +123,6 @@ public:
   // Return a pointer to the rendezvous point string.
   // This object maintains ownership of the returned string.
 
-  const char *rendezvous_point (const char *rendezvous);
-  // Set the rendezvous point and verify that it is 
-  // valid (e.g. wasn't truncated because it was too long).
-  // This object maintains ownership of the returned string.
-
   const TAO_GIOP_Version &version (void) const;
   // Return a pointer to this profile's version.  This object
   // maintains ownership.
