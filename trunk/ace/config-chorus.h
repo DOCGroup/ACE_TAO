@@ -16,6 +16,7 @@
 #undef linux
 #endif
 
+#define ACE_LACKS_GETPGID
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_LACKS_KEY_T

@@ -12,16 +12,20 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if ! defined (__ACE_INLINE__)
+#define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 // Platform specific directives
 #define FreeBSD
 #define _THREAD_SAFE
-
+#define ACE_LACKS_GETPGID
+#define ACE_HAS_SIG_MACROS
 // Platform supports POSIX timers via timestruct_t.
 #define ACE_HAS_POSIX_TIME
 #define ACE_NEEDS_SYSTIME_H
 
 #define ACE_LACKS_STRRECVFD
-#define ACE_HAS_SIG_MACROS
 
 #define ACE_HAS_SIN_LEN
 

@@ -11,8 +11,11 @@
 # instruction to build your own.  You must have at least 3.0-current as
 # of 2/9/1997 to take advantage of the latest feature of pthread library.
 
-CC              = gcc -w
-CXX		= gcc -w -I. -fno-strict-prototypes -D__ACE_INLINE__  -D_POSIX_THREADS
+CC              = gcc
+CXX		= g++
+CFLAGS          += $(DCFLAGS) -w -O2 -fno-strict-prototypes -D_POSIX_THREADS
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates
+DCFLAGS         += -g
 DLD             = ld
 LD		= $(CXX) 
 LIBS            += -lc_r -lstdc++ -lcompat
@@ -24,7 +27,4 @@ RANLIB          = ranlib
 # SOFLAGS = $(CPPFLAGS) -shared
 SOFLAGS = -Bshareable -x
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-PRELIB  = (echo "int main() { return 0; }" > gcctemp.c && \
-          $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-          $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(LIBS); \
-          status=$$?; exit $$status)
+PRELIB = @echo
