@@ -438,8 +438,9 @@ namespace
 
   struct ContextEmitter : Traversal::Component, EmitterBase
   {
-    ContextEmitter (Context& c)
-      : EmitterBase (c)
+    ContextEmitter (Context& c, CommandLine const& cl)
+      : EmitterBase (c),
+        cl_ (cl)
     {}
 
   // Nested classes used by this emitter.
@@ -739,9 +740,13 @@ namespace
          
       os << "class " << t.name () << "_Servant;" << endl;
 
+      string swap_option = cl_.get_value ("custom-container", "");
+      bool swapping = (swap_option == "upgradeable");
+      
       os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Context" << endl
-         << "  : public virtual CIAO::Context_Impl<" << endl
+         << "  : public virtual CIAO::"
+         << (swapping ? "Upgradeable_" : "") << "Context_Impl<" << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_Context," << endl
          << "      " << t.name () << "_Servant," << endl
@@ -764,8 +769,20 @@ namespace
          << "    " << t.scoped_name () << "_var" << endl
          << "  > ctx_svnt_base;" << endl;
 
+      if (swapping)
+        {
+          os << "/// Another hack for VC6." << endl
+             << "typedef CIAO::Upgradeable_Context_Impl<" << endl
+             << "    " << t.scoped_name ().scope_name () << "::CCM_"
+             << t.name () << "_Context," << endl
+             << "    " << t.name () << "_Servant," << endl
+             << "    " << t.scoped_name () << "," << endl
+             << "    " << t.scoped_name () << "_var" << endl
+             << "  > ug_ctx_svnt_base;" << endl;
+        }
+
       os << t.name () << "_Context (" << endl
-         << "::Components::CCMHome_ptr home," << endl
+         << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c," << endl
          << t.name () << "_Servant *sv);" << endl;
 
@@ -792,6 +809,24 @@ namespace
         defines.node_traverser (ports_emitter);
 
         component_emitter.traverse (t);
+      }
+
+      // Extra *_Context methods for swapping container.
+      if (swapping)
+      {
+        os << "// Operations defined in " << t.scoped_name ().scope_name ()
+           << "::CCM_" << t.name () << "_Context" << endl
+           << "// that enable component swapping in the container"
+           << endl << endl;
+           
+        os << "virtual " << STRS[COMP_CD] << " *" << endl
+           << "get_registered_consumers (" << endl
+           << "const char *publisher_name" << endl
+           << STRS[ENV_HDR] << ")" << endl
+           << STRS[EXCP_START] << endl
+           << STRS[EXCP_SYS] << "," << endl
+           << STRS[EXCP_IN] << "," << endl
+           << STRS[EXCP_IC] << "));" << endl;
       }
 
       os << "// CIAO-specific." << endl << endl;
@@ -849,6 +884,9 @@ namespace
       // Namespace closer.
       os << "}";
     }
+    
+  private:
+    CommandLine const& cl_;
   };
 
   struct ServantEmitter : Traversal::Component, EmitterBase
@@ -1237,19 +1275,20 @@ namespace
          << "public:" << endl;
 
       os << "/// Hack for VC6." << endl
-               << "typedef CIAO::Servant_Impl<" << endl
-               << "    POA_" << stripped << "," << endl
+         << "typedef CIAO::Servant_Impl<" << endl
+         << "    POA_" << stripped << "," << endl
          << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
          << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "_var," << endl
          << "    " << t.name () << "_Context" << endl
          << "  > comp_svnt_base;" << endl << endl;
-
+         
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr executor," << endl
-         << "::Components::CCMHome_ptr home," << endl
+         << "::Components::CCMHome_ptr h," << endl
+         << "::CIAO::Home_Servant_Impl_Base *hs," << endl
          << "::CIAO::Session_Container *c);" << endl << endl;
 
       os << "virtual ~" << t.name () << "_Servant (void);"
@@ -1487,8 +1526,9 @@ namespace
 
   struct HomeEmitter : Traversal::Home, EmitterBase
   {
-    HomeEmitter (Context& c)
+    HomeEmitter (Context& c, CommandLine const& cl)
       : EmitterBase (c),
+        cl_ (cl),
         type_name_emitter_ (c.os ()),
         simple_type_name_emitter_ (c.os ()),
         enclosing_type_name_emitter_ (c.os ())
@@ -1697,15 +1737,19 @@ namespace
     virtual void pre (Type& t)
     {
       os << STRS[GLUE_NS]
-          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-          << "{";
-
+         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+         << "{"
+         << "class " << ctx.export_macro () << " " << t.name ()
+         << "_Servant" << endl
+         << "  : public virtual CIAO::";
+         
+      string swap_option = cl_.get_value ("custom-container", "");
+      bool swapping = (swap_option == "upgradeable");
+         
       ScopedName scoped (t.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
-      os << "class " << ctx.export_macro () << " " << t.name ()
-         << "_Servant" << endl
-         << "  : public virtual CIAO::Home_Servant_Impl<" << endl
+      os << (swapping ? "Swapping_" : "") << "Home_Servant_Impl<" << endl
          << "      POA_" << stripped << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
@@ -1748,7 +1792,8 @@ namespace
          << "{"
          << "public:" << endl
          << "/// Hack for VC6." << endl
-         << "typedef CIAO::Home_Servant_Impl<" << endl
+         << "typedef CIAO::"
+         << (swapping ? "Swapping_" : "") << "Home_Servant_Impl<" << endl
          << "    POA_" << stripped << "," << endl
          << "    " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
@@ -2005,6 +2050,7 @@ namespace
     }
 
   private:
+    CommandLine const& cl_;
     TypeNameEmitter type_name_emitter_;
     SimpleTypeNameEmitter simple_type_name_emitter_;
     EnclosingTypeNameEmitter enclosing_type_name_emitter_;
@@ -2114,7 +2160,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
      << "#define " << guard << endl << endl
      << "#include /**/ \"ace/pre.h\"" << endl << endl;
 
-  string export_include = cl_.get_value ("export-include", "");
+  string export_include = cl_.get_value ("svnt-export-include", "");
 
   if (!export_include.empty ())
   {
@@ -2143,10 +2189,21 @@ ServantHeaderEmitter::pre (TranslationUnit&)
      << "# pragma once" << endl
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */" << endl << endl;
 
-  os << "#include \"ciao/Container_Base.h\"" << endl
+  string swap_option = cl_.get_value ("custom-container", "");
+  bool swapping = (swap_option == "upgradeable");
+         
+  os << "#include \"ciao/"
+     << (swapping ? "Swapping_Container.h" : "Container_Base.h")
+     << "\"" << endl
+     << "#include \"ciao/"
+     << (swapping ? "Upgradeable_Context_Impl_T.h"
+                  : "Context_Impl_T.h")
+     << "\"" << endl
      << "#include \"ciao/Servant_Impl_T.h\"" << endl
-     << "#include \"ciao/Context_Impl_T.h\"" << endl
-     << "#include \"ciao/Home_Servant_Impl_T.h\"" << endl
+     << "#include \"ciao/"
+     << (swapping ? "Swapping_Servant_Home_Impl_T.h" 
+                  : "Home_Servant_Impl_T.h")
+     << "\"" << endl
      << "#include \"ace/Active_Map_Manager_T.h\"" << endl << endl;
 }
 
@@ -2227,9 +2284,9 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   home_executor.edge_traverser (implements);
 
   //--
-  ContextEmitter context_emitter (c);
+  ContextEmitter context_emitter (c, cl_);
   ServantEmitter servant_emitter (c);
-  HomeEmitter home_emitter (c);
+  HomeEmitter home_emitter (c, cl_);
   implements.node_traverser (context_emitter);
   implements.node_traverser (servant_emitter);
   implements.node_traverser (home_emitter);

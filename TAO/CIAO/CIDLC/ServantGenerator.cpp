@@ -82,6 +82,11 @@ void ServantGenerator::options (CL::Description& d)
                   "Suppress generation of code to register eventtype "
                   "factories for event sinks.",
                   true));
+  d.add_option (CL::OptionDescription (
+                  "custom-container",
+                  "type",
+                  "Generate code for custom container of the provided type.",
+                  true));
 }
 
 

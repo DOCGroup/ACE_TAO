@@ -1016,6 +1016,203 @@ NullReturnEmitter::traverse (SemanticGraph::Home& h)
 
 // ====================================================================
 
+AceCheckReturnEmitter::AceCheckReturnEmitter (ostream& os_)
+  : TypeNameEmitter (os_)
+{
+}
+
+void
+AceCheckReturnEmitter::traverse (Void&)
+{
+  os << "ACE_CHECK;";
+}
+
+void
+AceCheckReturnEmitter::traverse (Boolean&)
+{
+  os << "ACE_CHECK_RETURN (false);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Octet&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Char&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Wchar&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Short&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (UnsignedShort&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Long&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (UnsignedLong&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (LongLong&)
+{
+  os << "ACE_CHECK_RETURN (ACE_CDR_LONGLONG_INITIALIZER);";
+}
+
+void
+AceCheckReturnEmitter::traverse (UnsignedLongLong&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Float&)
+{
+  os << "ACE_CHECK_RETURN (0.0f);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Double&)
+{
+  os << "ACE_CHECK_RETURN (0.0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (String&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Wstring&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Object&)
+{
+  os << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());";
+}
+
+void
+AceCheckReturnEmitter::traverse (ValueBase&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (Any&)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::Enum& e)
+{
+  os << e.scoped_name () << " retval;"
+     << "ACE_UNUSED_ARG (retval);"
+     << "ACE_CHECK_RETURN (retval);";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::Struct& s)
+{
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (var_size)
+  {
+    os << "ACE_CHECK_RETURN (0);";
+  }
+  else
+  {
+    os << s.scoped_name () << " retval;"
+       << "ACE_UNUSED_ARG (retval);"
+       << "ACE_CHECK_RETURN (retval);";
+  }
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::Union& u)
+{
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (var_size)
+  {
+    os << "ACE_CHECK_RETURN (0);";
+  }
+  else
+  {
+    os << u.scoped_name () << " retval;"
+       << "ACE_UNUSED_ARG (retval);"
+       << "ACE_CHECK_RETURN (retval);";
+  }
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::UnboundedSequence& s)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::Interface& i)
+{
+  os << "ACE_CHECK_RETURN (" << i.scoped_name () << "::_nil ());";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::ValueType& v)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::EventType& e)
+{
+  os << "ACE_CHECK_RETURN (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::Component& c)
+{
+  os << "ACE_CHECK_RETURN (" << c.scoped_name () << "::_nil ());";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::Home& h)
+{
+  os << "ACE_CHECK_RETURN (" << h.scoped_name () << "::_nil ());";
+}
+
+// ====================================================================
+
 NullRHSEmitter::NullRHSEmitter (ostream& os_)
   : TypeNameEmitter (os_)
 {
@@ -1329,13 +1526,13 @@ ExtractedTypeDeclEmitter::traverse (SemanticGraph::Enum& e)
 void
 ExtractedTypeDeclEmitter::traverse (SemanticGraph::Struct& s)
 {
-  os << s.scoped_name () << " " << STRS[EXTRACT] << ";";
+  os << s.scoped_name () << " * " << STRS[EXTRACT] << " = 0;";
 }
 
 void
 ExtractedTypeDeclEmitter::traverse (SemanticGraph::Union& u)
 {
-  os << u.scoped_name () << " " << STRS[EXTRACT] << ";";
+  os << u.scoped_name () << " * " << STRS[EXTRACT] << " = 0;";
 }
 
 void
@@ -1493,14 +1690,32 @@ AssignFromExtractedEmitter::traverse (SemanticGraph::Enum&)
 }
 
 void
-AssignFromExtractedEmitter::traverse (SemanticGraph::Struct&)
+AssignFromExtractedEmitter::traverse (SemanticGraph::Struct& s)
 {
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = s.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (!var_size)
+  {
+    os << "*";
+  }
+  
   os << STRS[EXTRACT];
 }
 
 void
-AssignFromExtractedEmitter::traverse (SemanticGraph::Union&)
+AssignFromExtractedEmitter::traverse (SemanticGraph::Union& u)
 {
+  // This should always be in the context, since the SizeTypeCalculator
+  // is executed before the servant code generators.
+  bool var_size = u.context ().get<bool> (STRS[VAR_SIZE]);
+  
+  if (!var_size)
+  {
+    os << "*";
+  }
+  
   os << STRS[EXTRACT];
 }
 
