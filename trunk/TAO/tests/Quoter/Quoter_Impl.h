@@ -34,8 +34,9 @@ class Quoter_Impl: public POA_Stock::Quoter
   //   Actual Quoter Implementation class.  Returns a quoter for a given stock
   //   and provides an example for the lifecycle functionality.
 public:
-  Quoter_Impl (const char *obj_name = "");
-  // Constructor
+  Quoter_Impl (const char *obj_name = "",  const unsigned char use_LifeCycle_Service = 0);
+  // Constructor (use_LifeCycle_Service is 1 if the LifeCycle_Service should be used 
+  // instead of the Quoter Generic_Factory
 
   ~Quoter_Impl (void);
   // Destructor
@@ -59,6 +60,10 @@ public:
   virtual void remove (CORBA::Environment &_tao_environment);
   // Removes the object.
 
+private:  
+  unsigned char use_LifeCycle_Service_;
+  // This flag defines if a Generic Factory is used (0 by default) or 
+  // the more sophisticated LifeCycle Service
 };
 
 // Forward declaration.
