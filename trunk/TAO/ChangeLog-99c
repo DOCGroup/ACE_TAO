@@ -1,3 +1,13 @@
+Mon Mar 29 15:55:23 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Request.h (CORBA_Request): 
+	Put a default argument for calls send_oneway () and invoke ()
+	as CORBA::Environment::default_environment(). This is for 
+	users who are using the native exception. But users using
+	the non-native exceptions should pass in their environment
+	to get the exception back. This change is attributed to 
+	Barry Hoggard <hoggardb@cfx.xom>
+	
 Sun Mar 28 21:37:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/grid/Grid_Client_i.cpp (run): fixed
