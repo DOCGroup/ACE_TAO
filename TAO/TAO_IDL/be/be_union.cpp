@@ -791,7 +791,7 @@ be_union::compute_default_value (void)
       break;
     case AST_Expression::EV_long:
     case AST_Expression::EV_ulong:
-      if (total_case_members > ACE_UINT32_MAX)
+      if ((unsigned int) total_case_members > ACE_UINT32_MAX)
         this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_longlong:
@@ -916,7 +916,7 @@ be_union::compute_default_value (void)
       // instantiate a scope iterator.
       
       int break_loop = 0;
-      unsigned long enum_member = 0;
+      
       while (!(si->is_done ()) && !break_loop)
         {
           // get the next AST decl node
