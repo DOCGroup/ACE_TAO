@@ -90,7 +90,7 @@ test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 test_i::initialize (CORBA::ULong total_iterations
-                    ACE_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->total_iterations_ = total_iterations;
