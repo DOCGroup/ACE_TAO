@@ -1,3 +1,16 @@
+Mon Apr 22 11:20:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Svc_Conf_y.cpp:
+          Removed some strange characters from this file
+
+        * ace/config-doxygen.h:
+          Added define of __cplusplus so that the file Svc_Conf_y.cpp and
+          Svc_Conf_l.cpp are correctly parsed. We parsed the c-code and
+          we got the following defines which we don't want:
+          #define const
+          Also there was a global variable 'int size' which cluttered other
+          documentation.
+
 Mon Apr 22 08:55:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.h:
