@@ -59,7 +59,7 @@ sub pre_workspace {
             "# $0 @ARGV", $crlf,
             '#', $crlf,
             '#-------------------------------------------------------------------------', $crlf,
-            'MAKEFILE = GNUmakefile', $crlf;
+            'MAKEFILE = ', $self->get_current_output_name(), $crlf;
 }
 
 
@@ -135,7 +135,8 @@ sub write_comps {
     print $fh $crlf;
     if ($need_dirs) {
       foreach my $dir (@dirs) {
-        print $fh "\t\$(KEEP_GOING)\@cd $dir && \$(MAKE) \$(\@)$crlf";
+        print $fh "\t\$(KEEP_GOING)\@cd $dir && ",
+                  "\$(MAKE) -f \$(MAKEFILE) \$(\@)$crlf";
       }
     }
 
@@ -182,7 +183,8 @@ sub write_comps {
   }
   if ($need_dirs) {
     foreach my $dir (@dirs) {
-      print $fh "\t\$(KEEP_GOING)\@cd $dir && \$(MAKE) \$(\@)$crlf";
+      print $fh "\t\$(KEEP_GOING)\@cd $dir && ",
+                "\$(MAKE) -f \$(MAKEFILE) \$(\@)$crlf";
     }
   }
   print $fh $crlf;
