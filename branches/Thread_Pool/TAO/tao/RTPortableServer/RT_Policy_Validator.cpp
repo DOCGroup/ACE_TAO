@@ -288,6 +288,35 @@ TAO_POA_RT_Policy_Validator::validate_thread_pool (TAO_Policy_Set &policies,
   ACE_CHECK;
 }
 
+void
+TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies,
+                                                  CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::Policy_var policy =
+    this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
+  if (!CORBA::is_nil (policy.in ()))
+    {
+      policies.set_policy (policy.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  CORBA::Policy_var protocol =
+    this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
+  if (!CORBA::is_nil (protocol.in ()))
+    {
+      policies.set_policy (protocol.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  CORBA::Policy_var thread_pool =
+    this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
+  if (!CORBA::is_nil (thread_pool.in ()))
+    {
+      policies.set_policy (thread_pool.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
 /* static */
 TAO_Thread_Pool *
 TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,

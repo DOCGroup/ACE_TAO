@@ -144,6 +144,18 @@ RT_Priority_Model_Processing::pre_invoke (
   else
     priority_model = "RTCORBA::SERVER_DECLARED";
 
+  char thread_pool_id[BUFSIZ];
+  if (TAO_debug_level > 0)
+    {
+      if (thread_pool == 0)
+        ACE_OS::strcpy (thread_pool_id,
+                        "default thread pool");
+      else
+        ACE_OS::sprintf (thread_pool_id,
+                         "thread pool %d",
+                         thread_pool->id ());
+    }
+
   // Change the priority of the current thread for the duration of
   // request.
   if (target_priority != TAO_INVALID_PRIORITY &&
@@ -152,10 +164,11 @@ RT_Priority_Model_Processing::pre_invoke (
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%s processing ")
+                      ACE_TEXT ("%s processing using %s ")
                       ACE_TEXT ("(%P|%t): original thread priority %d ")
                       ACE_TEXT ("temporarily changed to %d\n"),
                       priority_model,
+                      thread_pool_id,
                       original_priority_,
                       target_priority));
         }
@@ -169,10 +182,11 @@ RT_Priority_Model_Processing::pre_invoke (
     }
   else if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%s processing ")
+                ACE_TEXT ("%s processing using %s ")
                 ACE_TEXT ("(%P|%t): original thread priority = ")
                 ACE_TEXT ("target priority = %d\n"),
                 priority_model,
+                thread_pool_id,
                 target_priority));
 }
 

@@ -46,6 +46,12 @@ public:
                  CORBA::Environment &ACE_TRY_ENV);
 
   /**
+   * Add/merge policies.
+   **/
+  void merge_policies (TAO_Policy_Set &policies,
+                       CORBA::Environment &ACE_TRY_ENV);
+
+  /**
    * Return whether the specified policy type is legal for the
    * current configuration.  This is needed since the user can
    * potentially specify policies that are unknown to an
@@ -66,6 +72,9 @@ public:
 protected:
   virtual void validate_impl (TAO_Policy_Set &policies,
                               CORBA::Environment &ACE_TRY_ENV) = 0;
+
+  virtual void merge_policies_impl (TAO_Policy_Set &policies,
+                                    CORBA::Environment &ACE_TRY_ENV) = 0;
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) = 0;
 

@@ -110,3 +110,9 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
           type == PortableServer::SERVANT_RETENTION_POLICY_ID ||
           type == PortableServer::REQUEST_PROCESSING_POLICY_ID);
 }
+
+void
+TAO_POA_Default_Policy_Validator::merge_policies_impl (TAO_Policy_Set &,
+                                                       CORBA::Environment &)
+{
+}
