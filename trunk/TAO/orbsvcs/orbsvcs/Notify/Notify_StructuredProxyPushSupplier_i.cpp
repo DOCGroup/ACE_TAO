@@ -81,8 +81,7 @@ TAO_Notify_StructuredProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &ev
     {
       ACE_DEBUG ((LM_DEBUG, "Exception dispatching structured event\n"));
       // misbehaving client, 
-      this->shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      this->shutdown (ACE_TRY_ENV);  // FUZZ: ignore check_for_ace_check
     }
   ACE_ENDTRY;
 }
