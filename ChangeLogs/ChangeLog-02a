@@ -1,5 +1,8 @@
 Fri May 11 10:25:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/OS_Dirent.h (ACE_OS_Dirent): Missed a conversion of "DIR" to
+ 	  "ACE_DIR".
+
 	* ace/Synch.cpp (get_nesting_level): Added better protection for the
 	  case where ACE_HAS_RECURSIVE_MUTEXES -- only return
  	  RecursionCount if ACE_WIN32 is defined.  Thanks to Corey Trager
