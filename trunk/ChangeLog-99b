@@ -1,10 +1,25 @@
+Tue Jun 29 14:45:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/run_tests.bat: Removed New_Fail_Test from the
+	  run_tests.bat (the script for NT).  This tests takes too long to
+	  run and swaps out the entire machine making is impossible to do
+	  useful things while the test is running.  Note that the test is
+	  still there and can be run by hand (i.e., on its own, without
+	  the run_tests.bat script).
+
+	* ace/Future: Changed the observer collection to be an unbounded
+	  set and changed the future map to map manager.  These are
+	  temporary changes to get things compiling again.  Once we figure
+	  out the correct hashing functions, we can restore the original
+	  code.
+
 Tue Jun 29 13:38:52 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* AUTHORS:
 
 	  Added an AUTHORS file to bring ACE closer to recent software
 	  distribution conventions.
-	
+
 	* Makefile:
 
 	  Added Carlos' websvcs directory to the release, in addition to
@@ -30,13 +45,13 @@ Tue Jun 29 12:07:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile:
 
-	  Added the THANKS file to the list of controlled files so that it 
+	  Added the THANKS file to the list of controlled files so that it
 	  gets distributed with ACE.
 
 Tue Jun 29 11:27:23 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* ace/Containers_T.i: Modified next method in ACE_DLList_Iterator
-	  to avoid segfaults (a bad thing). 
+	  to avoid segfaults (a bad thing).
 
 Tue Jun 29 10:54:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

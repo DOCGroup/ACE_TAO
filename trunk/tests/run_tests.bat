@@ -90,7 +90,7 @@ call %run_cmd% %dopure% %platform% MT_Reactor_Timer_Test
 call %run_cmd% %dopure% %platform% MM_Shared_Memory_Test
 call %run_cmd% %dopure% %platform% MT_SOCK_Test
 call %run_cmd% %dopure% %platform% Naming_Test
-call %run_cmd% %dopure% %platform% New_Fail_Test
+rem call %run_cmd% %dopure% %platform% New_Fail_Test
 call %run_cmd% %dopure% %platform% Notify_Performance_Test
 call %run_cmd% %dopure% %platform% OrdMultiSet_Test
 call %run_cmd% %dopure% %platform% Pipe_Test
