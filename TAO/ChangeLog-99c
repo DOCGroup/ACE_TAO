@@ -1,3 +1,9 @@
+Mon Mar 15 19:09:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO.cpp (run): Added the other run() methods to the
+	  ORB_Manager.  Thanks to Jean-Marc Strauss
+	  <jms97@club-internet.fr> for pointing this out.
+
 Mon Mar 15 02:27:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Environment.{h,cpp}:
