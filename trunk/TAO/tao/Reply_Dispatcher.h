@@ -212,7 +212,7 @@ private:
   const TAO_Reply_Handler_Skeleton reply_handler_skel_;
   // Skeleton for the call back method in the Reply Handler.
 
-  Messaging::ReplyHandler_ptr reply_handler_;
+  Messaging::ReplyHandler_var reply_handler_;
   // Reply Handler passed in the Asynchronous Invocation.
 
   TAO_Transport *transport_;
