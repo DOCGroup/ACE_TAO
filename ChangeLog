@@ -7,6 +7,16 @@ Sat Jun  3 18:51:46 2000  Darrell Brunsch <brunsch@uci.edu>
           its name.  Now it will search for " DLL " or " LIB " 
           instead of "DLL" or "LIB".
 
+        * bin/fuzz.pl:
+
+          Was giving false positives for TEXT, changed it to search
+          for "TEXT (" to remove it (so it will not detect "MUTEXTYPE"
+          like words.  
+
+          Also disabled the 80 character check for ACE_RCSID lines,
+          since they are difficult to reduce in size, since they contain
+          the CVS ID string.
+
 Sat Jun  3 17:00:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
