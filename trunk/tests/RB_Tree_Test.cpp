@@ -230,31 +230,37 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Const_Binary_Functor_Base<char *, char *>;
-template class RB_Tree<int, int>;
-template class RB_Tree_Node<int, int>;
-template class RB_Tree_Iterator<int, int>;
-template class RB_Tree<int, char *>;
-template class RB_Tree_Node<int, char *>;
-template class RB_Tree_Iterator<int, char *>;
-template class RB_Tree<char *, int>;
-template class RB_Tree_Node<char *, int>;
-template class RB_Tree_Iterator<char *, int>;
-template class RB_Tree<char *, char *>;
-template class RB_Tree_Node<char *, char *>;
-template class RB_Tree_Iterator<char *, char *>;
+template class ACE_Const_Binary_Functor_Base<int, int>;
+template class ACE_Less_Than_Functor<char *, char *>;
+template class ACE_Less_Than_Functor<int, int>;
+template class ACE_RB_Tree<int, int>;
+template class ACE_RB_Tree_Node<int, int>;
+template class ACE_RB_Tree_Iterator<int, int>;
+template class ACE_RB_Tree<int, char *>;
+template class ACE_RB_Tree_Node<int, char *>;
+template class ACE_RB_Tree_Iterator<int, char *>;
+template class ACE_RB_Tree<char *, int>;
+template class ACE_RB_Tree_Node<char *, int>;
+template class ACE_RB_Tree_Iterator<char *, int>;
+template class ACE_RB_Tree<char *, char *>;
+template class ACE_RB_Tree_Node<char *, char *>;
+template class ACE_RB_Tree_Iterator<char *, char *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Const_Binary_Functor_Base<char *, char *>
-#pragma instantiate RB_Tree<int, int>
-#pragma instantiate RB_Tree_Node<int, int>
-#pragma instantiate RB_Tree_Iterator<int, int>
-#pragma instantiate RB_Tree<int, char *>
-#pragma instantiate RB_Tree_Node<int, char *>
-#pragma instantiate RB_Tree_Iterator<int, char *>
-#pragma instantiate RB_Tree<char *, int>
-#pragma instantiate RB_Tree_Node<char *, int>
-#pragma instantiate RB_Tree_Iterator<char *, int>
-#pragma instantiate RB_Tree<char *, char *>
-#pragma instantiate RB_Tree_Node<char *, char *>
-#pragma instantiate RB_Tree_Iterator<char *, char *>
+#pragma instantiate ACE_Const_Binary_Functor_Base<int, int>
+#pragma instantiate ACE_Less_Than_Functor<char *, char *>
+#pragma instantiate ACE_Less_Than_Functor<int, int>
+#pragma instantiate ACE_RB_Tree<int, int>
+#pragma instantiate ACE_RB_Tree_Node<int, int>
+#pragma instantiate ACE_RB_Tree_Iterator<int, int>
+#pragma instantiate ACE_RB_Tree<int, char *>
+#pragma instantiate ACE_RB_Tree_Node<int, char *>
+#pragma instantiate ACE_RB_Tree_Iterator<int, char *>
+#pragma instantiate ACE_RB_Tree<char *, int>
+#pragma instantiate ACE_RB_Tree_Node<char *, int>
+#pragma instantiate ACE_RB_Tree_Iterator<char *, int>
+#pragma instantiate ACE_RB_Tree<char *, char *>
+#pragma instantiate ACE_RB_Tree_Node<char *, char *>
+#pragma instantiate ACE_RB_Tree_Iterator<char *, char *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
