@@ -1,66 +1,72 @@
+Fri Mar 31 08:15:39 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+          removed extraneous unprintable character in an #include
+          directive.  Thanks to Andy for reporting this.
+
 Fri Mar 31 03:27:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTEvent (ACE_SHLIBS): Changed library
-	  name RTSched to TAO_RTSched.
+        * orbsvcs/orbsvcs/Makefile.RTEvent (ACE_SHLIBS): Changed library
+          name RTSched to TAO_RTSched.
 
 Thu Mar 30 00:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO/tao/Smart_Proxies.{h,i,cpp}:
-	  A new class TAO_Smart_Proxy_Base was added which is the base class
-	  for all the smart proxy interface base classes and contains the
-	  <base_proxy_> member.
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
-	  Added <get_proxy> method which downcasts the CORBA_Object member
-	  of TAO_Smart_Proxy_Base to the appropriate proxy interface. Added
-	  a default constructor definition and removed the previously
-	  defined constructor.
-	* TAO_IDL/be/be_visitor_operation/smart_proxy_cs.cpp:
-	  Added delegation of every operation to the <get_proxy> method.
-	* TAO_IDL/be_include/be_type.h:
-	* TAO_IDL/be/be_type.cpp (nested_sp_type_name):
-	  Added a nested name generation method for smart proxy base.
-	  classes and also put the common code into a new method
-	  <nested_name>.
-	* tao/Makefile: Added Smart_Proxies entry
-	* tao/corba.h: Included Smart_PRoxies.h
-	* tao/Smart_proxies.{h,i,cpp}: Contains the TAO_Smart_Proxy_Base
-	  class.
-	* tests/Smart_Proxies/Smart_Proxy_Impl.cpp:
-	* tests/Smart_Proxies/On_Demand/Smart_Proxy_Impl.cpp:
-	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
-	  Added delegation of the real proxy to TAO_Smart_Proxy_Base
-	  instead of the local proxy base class.
-	* docs/Smart_Proxies.html: Added a paragraph about this addition
-	  to the Smart Proxies in TAO.
+        * TAO/tao/Smart_Proxies.{h,i,cpp}:
+          A new class TAO_Smart_Proxy_Base was added which is the base class
+          for all the smart proxy interface base classes and contains the
+          <base_proxy_> member.
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+          Added <get_proxy> method which downcasts the CORBA_Object member
+          of TAO_Smart_Proxy_Base to the appropriate proxy interface. Added
+          a default constructor definition and removed the previously
+          defined constructor.
+        * TAO_IDL/be/be_visitor_operation/smart_proxy_cs.cpp:
+          Added delegation of every operation to the <get_proxy> method.
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be/be_type.cpp (nested_sp_type_name):
+          Added a nested name generation method for smart proxy base.
+          classes and also put the common code into a new method
+          <nested_name>.
+        * tao/Makefile: Added Smart_Proxies entry
+        * tao/corba.h: Included Smart_PRoxies.h
+        * tao/Smart_proxies.{h,i,cpp}: Contains the TAO_Smart_Proxy_Base
+          class.
+        * tests/Smart_Proxies/Smart_Proxy_Impl.cpp:
+        * tests/Smart_Proxies/On_Demand/Smart_Proxy_Impl.cpp:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+          Added delegation of the real proxy to TAO_Smart_Proxy_Base
+          instead of the local proxy base class.
+        * docs/Smart_Proxies.html: Added a paragraph about this addition
+          to the Smart Proxies in TAO.
 
-	The above changes are a modified version of the implementation
-	inheritance changes contributed by Brian Wallis
-	<brian.wallis.ot.com.au>. Thanks to Brian Wallis for this
-	wonderful contibution towards the Smart Proxies feature in TAO.
+        The above changes are a modified version of the implementation
+        inheritance changes contributed by Brian Wallis
+        <brian.wallis.ot.com.au>. Thanks to Brian Wallis for this
+        wonderful contibution towards the Smart Proxies feature in TAO.
 
 Thu Mar 30 15:45:25 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/SHMIOP_Acceptor.cpp (TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor):
-	* tao/IIOP_Acceptor.cpp (TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor):
-	* tao/UIOP_Acceptor.cpp (TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor):
+        * tao/SHMIOP_Acceptor.cpp (TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor):
+        * tao/IIOP_Acceptor.cpp (TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor):
+        * tao/UIOP_Acceptor.cpp (TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor):
 
-	  Make sure we close down before we start destroying the
-	  strategies.  This will make sure that the base class will not
-	  try to access the destroyed strategies in its destructor.
-	  TAO_UIOP_Acceptor::close() needed a little modification that
-	  would make it ok to call it multiple times.  Thanks to Sangwoo
-	  Jin <swjinjin@sei.co.kr> for reporting this bug.
+          Make sure we close down before we start destroying the
+          strategies.  This will make sure that the base class will not
+          try to access the destroyed strategies in its destructor.
+          TAO_UIOP_Acceptor::close() needed a little modification that
+          would make it ok to call it multiple times.  Thanks to Sangwoo
+          Jin <swjinjin@sei.co.kr> for reporting this bug.
 
 Thu Mar 30 12:16:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.{h.cpp}:
-	  Added several startup options to the Notify Service.
-	  See the README for details.
-	  Thanks to Wei Chiang <Wei.Chiang@nokia.com> for contributing these
-	  options to the Notify_Service.
-	* orbsvcs/Notify_Service/README:
-	  Updated the README.
+        * orbsvcs/Notify_Service/Notify_Service.{h.cpp}:
+          Added several startup options to the Notify Service.
+          See the README for details.
+          Thanks to Wei Chiang <Wei.Chiang@nokia.com> for contributing these
+          options to the Notify_Service.
+        * orbsvcs/Notify_Service/README:
+          Updated the README.
 
 Wed Mar 29 12:57:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
