@@ -22,6 +22,12 @@ Test_i::test_method (CORBA::Environment&) ACE_THROW_SPEC (())
 }
 
 void
+Test_i::time_stamp (CORBA::ULong &, CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}  
+
+void
 Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -6,5 +6,7 @@ interface Test
 {
   void test_method ();
 
-  oneway void shutdown ();
+  // void time_stamp (inout unsigned long index);
+
+  // oneway void shutdown ();
 };
