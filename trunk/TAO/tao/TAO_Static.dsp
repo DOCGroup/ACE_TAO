@@ -366,10 +366,6 @@ SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Mux_Strategy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.cpp
 # End Source File
 # Begin Source File
@@ -415,6 +411,10 @@ SOURCE=.\TimeBaseC.cpp
 # Begin Source File
 
 SOURCE=.\TimeBaseS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Mux_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -718,10 +718,6 @@ SOURCE=.\request.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Mux_Strategy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.h
 # End Source File
 # Begin Source File
@@ -767,6 +763,10 @@ SOURCE=.\TAO_Internal.h
 # Begin Source File
 
 SOURCE=.\Timeprobe.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Mux_Strategy.h
 # End Source File
 # Begin Source File
 
