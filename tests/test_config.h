@@ -185,7 +185,13 @@ ACE_Test_Output::set_output (const char *filename, int append)
   char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
 
-  ACE_OS::sprintf (temp, "%s%s%s",
+  char *test_dir = ACE_OS::getenv ("ACE_TEST_DIR");
+
+  if (test_dir)
+    test_dir = "";
+
+  ACE_OS::sprintf (temp, "%s%s%s%s",
+                   test_dir,
                    ACE_LOG_DIRECTORY_A,
                    ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
                    ".log");
