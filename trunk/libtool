@@ -891,7 +891,7 @@ compiler."
     dlprefiles=
     export_dynamic=no
     export_symbols=
-    gen erated=
+    generated=
     hardcode_libdirs=
     finalize_hardcode_libdirs=
     libobjs=
@@ -1085,7 +1085,7 @@ compiler."
 	  if test -n "$export_dynamic_flag_spec"; then
 	    eval arg=\"$export_dynamic_flag_spec\"
 	  else
-	   arg=
+	    arg=
 	  fi
 	fi
 	;;
@@ -1547,7 +1547,7 @@ compiler."
       fi
 
       if test -n "$xrpath"; then
-	$echo "$modename: warning:  \`-R' is ignored for archives" 1>&2
+	$echo "$modename: warning: \`-R' is ignored for archives" 1>&2
       fi
 
       if test -n "$vinfo"; then
@@ -1701,7 +1701,7 @@ compiler."
 
 	linux)
 	  major=.`expr $current - $age`
-	 versuffix="$major.$age.$revision"
+	  versuffix="$major.$age.$revision"
 	  ;;
 
 	osf)
@@ -2085,7 +2085,7 @@ EOF
 	for cmd in $cmds; do
 	  IFS="$save_ifs"
 	  $show "$cmd"
-	  $run eval "$cmd" || exit $ ?
+	  $run eval "$cmd" || exit $?
 	done
 	IFS="$save_ifs"
 
@@ -2236,7 +2236,7 @@ EOF
 	    if test -n "$libdir"; then
 	      eval flag=\"$hardcode_libdir_flag_spec\"
 
-	      compile_command="$comile_command $flag"
+	      compile_command="$compile_command $flag"
 	    fi
 
 	    libdir="$saved_libdir"
@@ -2631,7 +2631,7 @@ else
   progdir=\"\$thisdir/$objdir\"
   program='$outputname'
 
-  if test -f \"\$ progdir/\$program\"; then"
+  if test -f \"\$progdir/\$program\"; then"
 
 	# Export our shlibpath_var if we have one.
 	if test -n "$shlibpath_var" && test -n "$temp_rpath"; then
@@ -2792,7 +2792,7 @@ current=$current
 age=$age
 revision=$revision
 
-# Is this an already istalled library?
+# Is this an already installed library?
 installed=no
 
 # Directory that this library needs to be installed in:
@@ -3256,7 +3256,7 @@ libdir='$install_libdir'\
       echo "     during execution"
     fi
     if test -n "$runpath_var"; then
-      echo "   - add  LIBDIR to the \`$runpath_var' environment variable"
+      echo "   - add LIBDIR to the \`$runpath_var' environment variable"
       echo "     during linking"
     fi
     if test -n "$hardcode_libdir_flag_spec"; then
@@ -3409,7 +3409,7 @@ libdir='$install_libdir'\
       exit 1
     else
       # Display what would be done.
-      eval "\$echo \"\$shlibpath_ar=\$$shlibpath_var\""
+      eval "\$echo \"\$shlibpath_var=\$$shlibpath_var\""
       $echo "export $shlibpath_var"
       $echo "$cmd$args"
       exit 0

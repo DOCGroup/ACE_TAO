@@ -195,6 +195,9 @@ dnl
 dnl SECTION 2: Configure script command line options
 dnl
 
+dnl Determine which subsets to build
+dnl This is done using the autoconf "--enable-foobar" mechanism.
+ACE_CHECK_SUBSETS
 
 AC_ARG_ENABLE(debug,
               [  --enable-debug          enable debugging                [default=yes]],
@@ -280,7 +283,7 @@ AC_ARG_ENABLE(inline,
                esac
               ],
               [
-               AC_DEFINE(__ACE_INLINE__) 
+               AC_DEFINE(__ACE_INLINE__)
               ])
 
 AC_ARG_ENABLE(log-msg-prop,
@@ -665,8 +668,7 @@ AC_ARG_WITH(gperf,
                  AC_MSG_WARN(existing gperf may be overwritten during installation)
                fi
               ])
-AM_CONDITIONAL(COMPILE_GPERF,
-               test X$ace_user_with_gperf = Xyes)
+AM_CONDITIONAL(COMPILE_GPERF, test X$ace_user_with_gperf = Xyes)
 
 AC_ARG_WITH(orbix,
               [  --with-orbix[=DIR]      compile ACE with Orbix          [default=no]],
@@ -6093,7 +6095,6 @@ dnl created from Makefile.in, etc.  Top-level Makefiles should be
 dnl created first.
 AC_OUTPUT([
            Makefile
-           NEWS
            ace-config
            ace-diff-config
            ace/Makefile
