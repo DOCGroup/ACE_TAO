@@ -183,6 +183,16 @@ compiler) add a variable <CODE>CPP_LOCATION</CODE> to your environment
 and set it to the compiler you want to use.  This variable will
 override the default.  </P>
 
+<P>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in the
+    <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">
+	ACE installation notes</A>.
+      This is only required if you are planning to use the
+      &lt;orb.idl&gt; standard include in your IDL code.
+      Notice that some of the TAO services use this feature, so you
+      are better off definining the environment variable in all
+      cases.
+</P>
+
 <p><a href="http://www.torus-software.com/">Barry
 Hoggard</a> maintains a <a
 href="http://www.torus-software.com/corba/">CORBA Page</a>

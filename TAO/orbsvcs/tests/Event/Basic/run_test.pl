@@ -12,21 +12,50 @@ unshift @INC, '../../../../../bin';
 require Process;
 require Uniqueid;
 
+$prefix = "." . $DIR_SEPARATOR;
+$status = 0;
+
 print STDERR "\n\nReconnect suppliers and consumers,",
   " using disconnect/connect calls\n";
-system ("Reconnect -suppliers 100 -consumers 100 -d 100");
+$T = Process::Create ($prefix . "Reconnect",
+		      " -suppliers 100 -consumers 100 -d 100");
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
 
 print STDERR "\n\nReconnect suppliers and consumers, using connect calls\n";
-system ("Reconnect -suppliers 100 -consumers 100 -d 100 -s -c");
+$T = Process::Create ($prefix . "Reconnect",
+		      " -suppliers 100 -consumers 100 -d 100 -s -c");
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
+
 
 print STDERR "\n\nShutdown EC with clients still attached\n";
-system ("Shutdown -verbose -suppliers 5 -consumers 5");
+$T = Process::Create ($prefix . "Shutdown",
+		      " -verbose -suppliers 5 -consumers 5");
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
+
 
 print STDERR "\n\nComplex event channel test,",
   "multiple ECs connected through gateways\n";
-system ("Observer -ORBsvcconf observer.conf"
-        ." -consumer_tshift 0 -consumers 5"
-        ." -supplier_tshift 0 -suppliers 2"
-        ." -burstsize 10 -burstcount 10 -burstpause 0");
+$T = Process::Create ($prefix . "Observer",
+		      " -ORBsvcconf observer.conf"
+		      ." -consumer_tshift 0 -consumers 5"
+		      ." -supplier_tshift 0 -suppliers 2"
+		      ." -burstsize 10 -burstcount 10 -burstpause 0");
+if ($T->TimedWait (60) == -1) {
+  print STDERR "ERROR: Test timedout\n";
+  $status = 1;
+  $T->Kill (); $T->TimedWait (1);
+}
 
-exit 0;
+exit $status;
