@@ -1272,7 +1272,8 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-void operator<<= (CORBA::Any &any, const CORBA::name &ex) \
+void \
+CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
 { \
   TAO::Any_Dual_Impl_T<CORBA::name >::insert_copy ( \
       any, \
@@ -1286,7 +1287,8 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-void operator<<= (CORBA::Any &any, CORBA::name *ex) \
+void \
+CORBA::operator<<= (CORBA::Any &any, CORBA::name *ex) \
 { \
   TAO::Any_Dual_Impl_T<CORBA::name >::insert ( \
       any, \
