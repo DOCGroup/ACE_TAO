@@ -26,8 +26,10 @@ extern "C" {
 #define PACE_SCHED_FIFO SCHED_FIFO
 #define PACE_SCHED_OTHER SCHED_RR
 
-typedef struct sched_param pace_sched_param;
-
+#ifndef PACE_SCHED_PARAM
+#define PACE_SCHED_PARAM
+  typedef struct sched_param pace_sched_param;
+#endif /* PACE_SCHED_PARAM */
   /**
      PACE's implementation of the POSIX function sched_get_priority_max.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;

@@ -38,14 +38,14 @@ typedef struct dirent pace_dirent;
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.1.2.
    */
-  PACE_INLINE DIR * pace_opendir (const char * dirname);
+  PACE_INLINE PACE_DIR * pace_opendir (const char * dirname);
 
   /**
      PACE's implementation of the POSIX function readdir.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 5.1.2.
    */
-  PACE_INLINE struct dirent * pace_readdir (PACE_DIR * dirp);
+  PACE_INLINE pace_dirent * pace_readdir (PACE_DIR * dirp);
 
   /**
      PACE's implementation of the POSIX function readdir_r.

@@ -29,7 +29,7 @@ pace_fchmod (int fildes, pace_mode_t mode)
 
 PACE_INLINE
 int
-pace_fstat (int fildes, struct stat * buf)
+pace_fstat (int fildes, pace_stat_s * buf)
 {
   return fstat (fildes, buf);
 }
@@ -50,7 +50,7 @@ pace_mkfifo (const char * path, pace_mode_t mode)
 
 PACE_INLINE
 int
-pace_stat (const char * path, struct stat * buf)
+pace_stat (const char * path, pace_stat_s * buf)
 {
   return stat (path, buf);
 }
