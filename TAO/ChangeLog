@@ -1,3 +1,24 @@
+Tue Jul 22 09:31:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.cpp (parse_string_i):  This
+	  methoid assumed that the port part of the ior is always an integer
+	  even though the comments suggested otherwise. This made it
+	  difficult to corbaloc in the following format 
+
+	  -ORBInitRef NameService=corbaloc:iiop:NameService/NameService
+
+	  but the following worked 
+
+	   -ORBEndPoint iiop://localhost:NameService 
+
+	  if there is an entry for NameService in the network service
+	  database. Thanks to Charlie Spawar  Frasch
+	  <charlie.frasch@navy.mil> for detecting the problem and
+	  providing the patches. 
+	
+It would be really helpful if the port could be specified using a name in the network services database
+
 Tue Jul 22 06:11:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_Sched.{h,cpp}:
