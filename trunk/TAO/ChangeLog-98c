@@ -1,3 +1,7 @@
+Sat Oct 17 13:04:50 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.30 released.
+
 Sat Oct 17 10:34:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/Sequence: Added a hash() method to TAO_Base_Sequence().
