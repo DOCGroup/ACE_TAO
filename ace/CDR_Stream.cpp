@@ -607,7 +607,8 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
                             size_t size,
                             ACE_CDR::Long offset)
-  : start_ (rhs.start_.data_block ()->duplicate ()),
+  : start_ (rhs.start_,
+            ACE_CDR::MAX_ALIGNMENT),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (0),
@@ -615,10 +616,16 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     major_version_ (rhs.major_version_),
     minor_version_ (rhs.minor_version_)
 {
-  char* newpos = rhs.start_.rd_ptr() + offset;
-  if (this->start_.base () <= newpos
-      && newpos <= this->start_.end ()
-      && newpos + size <= this->start_.end ())
+  // Align the base pointer assuming that the incoming stream is also
+  // aligned the way we are aligned
+  char *incoming_start = ACE_ptr_align_binary (rhs.start_.base (),
+                                               ACE_CDR::MAX_ALIGNMENT);
+
+  size_t newpos =
+    (rhs.start_.rd_ptr() - incoming_start)  + offset;
+
+  if (newpos <= this->start_.size ()
+      && newpos + size <= this->start_.size ())
     {
       this->start_.rd_ptr (newpos);
       this->start_.wr_ptr (newpos + size);
@@ -631,7 +638,8 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
                             size_t size)
-  : start_ (rhs.start_.data_block ()->duplicate ()),
+  : start_ (rhs.start_,
+            ACE_CDR::MAX_ALIGNMENT),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (0),
@@ -639,10 +647,16 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
     major_version_ (rhs.major_version_),
     minor_version_ (rhs.minor_version_)
 {
-  char* newpos = rhs.start_.rd_ptr();
-  if (this->start_.base () <= newpos
-      && newpos <= this->start_.end ()
-      && newpos + size <= this->start_.end ())
+  // Align the base pointer assuming that the incoming stream is also
+  // aligned the way we are aligned
+  char *incoming_start = ACE_ptr_align_binary (rhs.start_.base (),
+                                               ACE_CDR::MAX_ALIGNMENT);
+
+  size_t newpos =
+    rhs.start_.rd_ptr() - incoming_start;
+
+  if (newpos <= this->start_.size ()
+      && newpos + size <= this->start_.size ())
     {
       // Notice that ACE_Message_Block::duplicate may leave the
       // wr_ptr() with a higher value that what we actually want.
@@ -660,7 +674,8 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 }
 
 ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
-  : start_ (rhs.start_.data_block ()->duplicate ()),
+  : start_ (rhs.start_,
+            ACE_CDR::MAX_ALIGNMENT),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (rhs.char_translator_),
@@ -668,8 +683,13 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
     major_version_ (rhs.major_version_),
     minor_version_ (rhs.minor_version_)
 {
-  this->start_.rd_ptr (rhs.start_.rd_ptr ());
-  this->start_.wr_ptr (rhs.start_.wr_ptr ());
+  char *buf = ACE_ptr_align_binary (rhs.start_.base (),
+                                    ACE_CDR::MAX_ALIGNMENT);
+
+  size_t rd_offset = rhs.start_.rd_ptr () - buf;
+  size_t wr_offset = rhs.start_.rd_ptr () - buf;
+  this->start_.rd_ptr (rd_offset);
+  this->start_.wr_ptr (wr_offset);
 }
 
 ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
