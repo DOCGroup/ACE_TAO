@@ -147,13 +147,13 @@ if ($OSNAME ne "MSWin32")
   $CL = Process::Create ($exepref . "client".$EXE_EXT,
                          " $clflags $clnsflags -x");
 
-  $client = $CL->TimedWait (60);
+  $client = $CL->TimedWait (120);
   if ($client == -1) {
     print STDERR "ERROR: client timedout\n";
     $CL->Kill (); $CL->TimedWait (1);
   }
 
-  $server = $SV->TimedWait (10);
+  $server = $SV->TimedWait (30);
   if ($server == -1) {
     print STDERR "ERROR: server timedout\n";
     $SV->Kill (); $SV->TimedWait (1);
