@@ -117,8 +117,9 @@ protected:
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
   // Get/Set <recycle_state> (non-locking version).
 
-  virtual int cleanup_hint_i (const void *recycling_act);
-  // Cleanup hint.
+  virtual int cleanup_hint_i (const void *recycling_act,
+                              void **act_holder);
+  // Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
 
   // = Helpers
   int check_hint_i (SVC_HANDLER *&sh,

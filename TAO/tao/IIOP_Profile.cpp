@@ -369,10 +369,7 @@ void
 TAO_IIOP_Profile::reset_hint (void)
 {
   if (this->hint_)
-    {
-      this->hint_->cleanup_hint ();
-      this->hint_ = 0;
-    }
+    this->hint_->cleanup_hint ((void **) &this->hint_);
 }
 
 TAO_IIOP_Profile &

@@ -78,9 +78,10 @@ public:
   // will have no effect (and the accessor will return
   // ACE_RECYCLABLE_UNKNOWN).
 
-  virtual void cleanup_hint (void);
+  virtual void cleanup_hint (void **act_holder = 0);
   // When the svc_handle is no longer needed around as a hint, call
-  // this method.
+  // this method. In addition, reset <*act_holder> to zero if
+  // <act_holder != 0>.
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ASYS_TCHAR *argv[]);
