@@ -1,3 +1,8 @@
+Sun Jun  6 13:32:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_message): Fixed what appeared to be
+ 	  an unbalanced '}' in the TAO_HAS_EXCEPTIONS block.
+
 Sun Jun 06 12:54:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Trader.cpp: added
