@@ -484,6 +484,16 @@ void TAO::FT_ReplicationManager::shutdown_i (
   // this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+// Get the type_id associated with an object group.
+char * TAO::FT_ReplicationManager::type_id (
+  PortableGroup::ObjectGroup_ptr object_group
+  ACE_ENV_ARG_DECL)
+{
+  // Delegate to our ObjectGroupManager.
+  return this->object_group_manager_.type_id (
+    object_group ACE_ENV_ARG_PARAMETER);
+}
+
 //////////////////////////////////////////////////////
 // PortableGroup::PropertyManager methods
 

@@ -1,3 +1,15 @@
+Fri Oct 31 11:38:07 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Added type_id() to get the type id of an object group.
+          Delegates to PortableGroup's PG_ObjectGroupManager.
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+          Use FT_ReplicationManager's type_id() method to get the type
+          id of a failed object group so we can unregister factories by
+          location and type.
+
 Fri Oct 31 10:14:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
