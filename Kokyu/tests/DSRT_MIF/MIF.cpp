@@ -7,7 +7,7 @@
 #include "ace/Synch.h"
 #include "Kokyu_dsrt.h"
 
-ACE_Atomic_Op<ACE_Thread_Mutex, long> guid=0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> guid=0;
 
 struct mif_scheduler_traits
 {
