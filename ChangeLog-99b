@@ -1,3 +1,10 @@
+Thu May 20 12:12:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp},Sched_Params.cpp: with ACE_HAS_PRIOCNTL,
+          moved #include of sys/{rt,ts}priocntl.h from OS.cpp and
+          Sched_Params.cpp to OS.h, so that USYNC_THREAD and USYNC_PROCESS
+          #defines can be protected effectively.
+
 Thu May 20 11:19:45 1999  Joe Hoffert <joeh@cs.wustl.edu>
 
         * ace/ATM_Addr.cpp: Added ACE_UNUSED_ARG for selector parameter
