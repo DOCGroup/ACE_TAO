@@ -137,6 +137,36 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       *os << be_nl << be_nl;
     }
 
+  AST_Type *rt = 0;
+  be_type *brt = 0;
+  AST_Decl::NodeType bnt;
+  be_predefined_type *bpt = 0;
+  AST_PredefinedType::PredefinedType pdt;
+
+  if (!this->void_return_type (bt))
+    {
+      rt = node->return_type ();
+      brt = be_type::narrow_from_decl (rt);
+      bnt = brt->base_node_type ();
+
+      if (bnt == AST_Decl::NT_pre_defined)
+        {
+          bpt = be_predefined_type::narrow_from_decl (brt);
+          pdt = bpt->pt ();
+
+          if (pdt == AST_PredefinedType::PT_longlong)
+            {
+              *os << "CORBA::LongLong _tao_retval = "
+                  << "ACE_CDR_LONGLONG_INITIALIZER;" << be_nl << be_nl;
+            }
+          else if (pdt == AST_PredefinedType::PT_longdouble)
+            {
+              *os << "CORBA::LongDouble _tao_retval = "
+                  << "ACE_CDR_LONG_DOUBLE_INITIALIZER;" << be_nl << be_nl;
+            }
+        }
+    }
+
   // Generate code that retrieves the proper proxy implementation
   // using the proxy broker available, and perform the call
   // using the proxy implementation provided by the broker.
@@ -148,10 +178,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (!this->void_return_type (bt))
     {
       *os << "ACE_CHECK_RETURN (";
-
-      AST_Type *rt = node->return_type ();
-      bt = be_type::narrow_from_decl (rt);
-      AST_Decl::NodeType bnt = bt->base_node_type ();
 
       if (bnt == AST_Decl::NT_enum)
         {
@@ -168,6 +194,18 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
               // is not a pointer, so we call the default constructor
               // and return the result.
               *os << bt->name () << " ());";
+            }
+          else
+            {
+              *os << "0);";
+            }
+        }
+      else if (bnt == AST_Decl::NT_pre_defined)
+        {
+          if (pdt == AST_PredefinedType::PT_longlong
+              || pdt == AST_PredefinedType::PT_longdouble)
+            {
+              *os << "_tao_retval);";
             }
           else
             {
