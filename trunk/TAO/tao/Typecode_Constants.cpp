@@ -39,6 +39,8 @@
 #include "tao/WrongTransactionC.h"
 #include "tao/Services.h"
 #include "tao/NVList.h"
+#include "tao/BoundsC.h"
+
 #if defined(TAO_POLLER)
 #include "tao/PollableC.h"
 #endif /* TAO_POLLER */
@@ -157,6 +159,7 @@ TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_exception_type, 0)
 TAO_NAMESPACE_END
 
+
 // Some more typecodes in the CORBA namespace. We keep adding
 // to this list as we find more and more things being introduced
 // to the CORBA namespace.
@@ -175,6 +178,11 @@ TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
+TAO_NAMESPACE_END
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Bounds, 0)
 TAO_NAMESPACE_END
 
 CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
@@ -1821,6 +1829,30 @@ TAO_TypeCodes::init (void)
                          (char *) &oc_completion_status,
                          1,
                          sizeof (CORBA::CompletionStatus));
+
+  static const CORBA::Long _oc_CORBA_Bounds[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    29, 
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f426f), 
+    ACE_NTOHL (0x756e6473), 
+    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
+    7, 
+    ACE_NTOHL (0x426f756e), 
+    ACE_NTOHL (0x64730000),  // name = Bounds
+    0, // member count
+  };
+ CORBA::_tc_Bounds = 
+   new CORBA::TypeCode (CORBA::tk_except, 
+                        sizeof (_oc_CORBA_Bounds), 
+                        (char *) &_oc_CORBA_Bounds, 
+                        0, 
+                        sizeof (CORBA_Bounds));
 }
 
 // destroy all the typecodes owned by the ORB
@@ -1961,8 +1993,11 @@ TAO_TypeCodes::fini (void)
    CORBA::release (CORBA::_tc_ServiceDetail);
    CORBA::release (CORBA::_tc_ServiceInformation);
 
+   CORBA::release (CORBA::_tc_Bounds);
+
   // TAO specific
   CORBA::release (TC_opaque);
+
 
 #if 0
   CORBA::release (TC_ServiceContextList);
