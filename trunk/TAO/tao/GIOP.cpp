@@ -684,7 +684,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
   // Read until all the header is received.  There should be no
   // problems with locking, the header is only a few bytes so they
   // should all be available on the socket, otherwise there is a
-  // problem with the underlying transport, in which case we have more 
+  // problem with the underlying transport, in which case we have more
   // problems than just this small loop.
 
   char* buf = payload->rd_ptr ();
@@ -1004,7 +1004,7 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
 
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) closing conn %d after C++ exception %p\n",
-                  transport.get_handle (),
+                  transport->handle (),
                   "TAO_GIOP::process_server_message"));
       return -1;
     }
