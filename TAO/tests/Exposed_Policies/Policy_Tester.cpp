@@ -83,6 +83,30 @@ Policy_Tester::init (int argc,
             RT_Properties::read_from (arg, ACE_TRY_ENV);
           ACE_CHECK_RETURN (-1);
         }
+      else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
+        {
+          if (this->rt_poa_properties_ == 0)
+            {
+              ACE_NEW_THROW_EX (this->rt_poa_properties_,
+                                RT_Properties,
+                                CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                                  CORBA::COMPLETED_NO));
+              ACE_CHECK;
+            }
+          this->rt_poa_properties_->ior_source (arg);
+        }
+      else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
+        {
+          if (this->rt_object_properties_ == 0)
+            {
+              ACE_NEW_THROW_EX (this->rt_object_properties_,
+                                RT_Properties,
+                                CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                                  CORBA::COMPLETED_NO));
+              ACE_CHECK;
+            }
+          this->rt_object_properties_->ior_source (arg);
+        }
       else
         arg_shifter.consume_arg ();
     }

@@ -8,9 +8,9 @@ OBJFILES = \
 	$(OBJDIR)\RTPortableServer.obj \
 	$(OBJDIR)\RTPortableServerC.obj \
 	$(OBJDIR)\RT_Acceptor_Filters.obj \
+	$(OBJDIR)\RT_Collocation_Resolver.obj \
 	$(OBJDIR)\RT_Object_Adapter_Factory.obj \
 	$(OBJDIR)\RT_POA.obj \
-	$(OBJDIR)\RT_POA_Initializer.obj \
 	$(OBJDIR)\RT_Policy_Validator.obj \
 	$(OBJDIR)\RT_Servant_Dispatcher.obj
 

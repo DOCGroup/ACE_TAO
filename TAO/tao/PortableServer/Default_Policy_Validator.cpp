@@ -7,10 +7,14 @@
 ACE_RCSID(tao, POA, "$Id$")
 
 
-TAO_POA_Default_Policy_Validator::~TAO_POA_Default_Policy_Validator (void)
+TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (TAO_ORB_Core &orb_core)
+  : TAO_POA_Policy_Validator (orb_core)
 {
 }
 
+TAO_POA_Default_Policy_Validator::~TAO_POA_Default_Policy_Validator (void)
+{
+}
 
 void
 TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
@@ -52,7 +56,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS);
   PortableServer::IdUniquenessPolicy_var iup =
     PortableServer::IdUniquenessPolicy::_narrow (policy.in (),
-                                                      ACE_TRY_ENV);
+                                                 ACE_TRY_ENV);
   ACE_CHECK;
   PortableServer::IdUniquenessPolicyValue id_uniqueness =
     iup->value (ACE_TRY_ENV);
@@ -71,7 +75,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT);
   PortableServer::IdAssignmentPolicy_var idap =
     PortableServer::IdAssignmentPolicy::_narrow (policy.in (),
-                                                       ACE_TRY_ENV);
+                                                 ACE_TRY_ENV);
   ACE_CHECK;
   PortableServer::IdAssignmentPolicyValue id_assignment =
     idap->value (ACE_TRY_ENV);
@@ -105,4 +109,10 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
           type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID ||
           type == PortableServer::SERVANT_RETENTION_POLICY_ID ||
           type == PortableServer::REQUEST_PROCESSING_POLICY_ID);
+}
+
+void
+TAO_POA_Default_Policy_Validator::merge_policies_impl (TAO_Policy_Set &,
+                                                       CORBA::Environment &)
+{
 }

@@ -2,17 +2,9 @@ $Id$
 
 Description:
 This is a simple test for a RT thread-pool server.  It creates a
-server process with a variable number of threads, multiple clients can
-send requests to it, the requests are handled in different threads.
+server process with multiple thread pools, POAs, and servants.  The
+test also spawns multiple clients for each servant.  The servants with
+multiple threads in their thread-pool respond faster than the servants
+with a single thread thread-pool.
 
-Expected output:
-The server prints out the IOR of the object it serves and the thread
-that handles each request.
-
-How to run:
-You can use the run_test.pl script to run it or:
-
-$ server 
-$ client 
-$ client 
-$ client -x 
+See run_test.pl to see how to run this test.

@@ -30,6 +30,25 @@
 #include "tao/Invocation_Endpoint_Selectors.h"
 
 /**
+ * @class TAO_RT_Default_Endpoint_Selector
+ *
+ * @brief TAO_RT_Default_Endpoint_Selector
+ *
+ * This strategy is used when the only policy that might be set is the
+ * private connection policy.
+ *
+ **/
+class TAO_RTCORBA_Export TAO_RT_Default_Endpoint_Selector :
+  public TAO_Default_Endpoint_Selector
+{
+public:
+  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
+                                CORBA::Environment &ACE_TRY_ENV);
+};
+
+// ****************************************************************
+
+/**
  * @class TAO_Priority_Endpoint_Selector
  *
  * @brief TAO_Priority_Endpoint_Selector
@@ -49,8 +68,7 @@ public:
   virtual ~TAO_Priority_Endpoint_Selector (void);
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+                                CORBA::Environment &ACE_TRY_ENV);
 private:
   /// Helper for <select_endpoint>.
   int is_multihomed (TAO_Endpoint *endpoint);
@@ -78,8 +96,7 @@ public:
   virtual ~TAO_Bands_Endpoint_Selector (void);
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+                                CORBA::Environment &ACE_TRY_ENV);
 };
 
 // ****************************************************************
@@ -105,15 +122,12 @@ public:
   virtual ~TAO_Protocol_Endpoint_Selector (void);
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+                                CORBA::Environment &ACE_TRY_ENV);
   virtual void next (TAO_GIOP_Invocation *invocation,
-                     CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+                     CORBA::Environment &ACE_TRY_ENV);
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
+                        CORBA::Environment &ACE_TRY_ENV);
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
 };

@@ -272,35 +272,19 @@ realclean: clean
   $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.h \
   $(TAO_ROOT)/tao/RTCORBA/RT_Policy_i.i \
   $(TAO_ROOT)/tao/RTCORBA/RT_ORB.h \
-  $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.h \
-  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Thread_Manager.h \
-  $(ACE_ROOT)/ace/Containers.h \
-  $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Containers_T.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i \
-  $(ACE_ROOT)/ace/Task_T.h \
-  $(ACE_ROOT)/ace/Message_Queue.h \
-  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.h \
-  $(ACE_ROOT)/ace/Message_Queue_T.i \
-  $(ACE_ROOT)/ace/Message_Queue_T.cpp \
-  $(ACE_ROOT)/ace/Strategies.h \
-  $(ACE_ROOT)/ace/Strategies_T.h \
-  $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Handle_Set.h \
@@ -315,37 +299,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Synch_Options.h \
-  $(ACE_ROOT)/ace/Synch_Options.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
-  $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
-  $(ACE_ROOT)/ace/Functor_T.i \
-  $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
-  $(ACE_ROOT)/ace/Strategies_T.i \
-  $(ACE_ROOT)/ace/Strategies_T.cpp \
-  $(ACE_ROOT)/ace/Service_Repository.h \
-  $(ACE_ROOT)/ace/Service_Types.h \
-  $(ACE_ROOT)/ace/Service_Types.i \
-  $(ACE_ROOT)/ace/Service_Repository.i \
-  $(ACE_ROOT)/ace/WFMO_Reactor.h \
-  $(ACE_ROOT)/ace/Process_Mutex.h \
-  $(ACE_ROOT)/ace/Process_Mutex.inl \
-  $(ACE_ROOT)/ace/WFMO_Reactor.i \
-  $(ACE_ROOT)/ace/Strategies.i \
-  $(ACE_ROOT)/ace/Message_Queue.i \
-  $(ACE_ROOT)/ace/Task_T.i \
-  $(ACE_ROOT)/ace/Task_T.cpp \
-  $(ACE_ROOT)/ace/Module.h \
-  $(ACE_ROOT)/ace/Module.i \
-  $(ACE_ROOT)/ace/Module.cpp \
-  $(ACE_ROOT)/ace/Stream_Modules.h \
-  $(ACE_ROOT)/ace/Stream_Modules.cpp \
-  $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.i \
   $(TAO_ROOT)/tao/RTCORBA/RT_ORB.i
 
 .obj/Policy_Verifier.o .obj/Policy_Verifier.so .shobj/Policy_Verifier.o .shobj/Policy_Verifier.so: Policy_Verifier.cpp Policy_Verifier.h CounterC.h \

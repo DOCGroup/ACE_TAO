@@ -64,15 +64,7 @@ public:
     TAO_REACTOR_TP
   };
 
-  // = Reactor mappings strategy
-  enum
-  {
-    TAO_SINGLE_REACTOR,
-    TAO_REACTOR_PER_PRIORITY
-  };
-
   // = Resource Retrieval
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
   virtual int init_protocol_factories (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);

@@ -611,3 +611,8 @@ TAO_POA::cached_policies (void)
   return this->cached_policies_;
 }
 
+ACE_INLINE void *
+TAO_POA::thread_pool (void) const
+{
+  return 0;
+}

@@ -43,14 +43,16 @@ class TAO_RTCORBA_Export TAO_RT_ORBInitializer :
 {
 public:
   // Priority mapping types
-  enum 
+  enum
   {
+    TAO_PRIORITY_MAPPING_CONTINUOUS,
     TAO_PRIORITY_MAPPING_LINEAR,
     TAO_PRIORITY_MAPPING_DIRECT
   };
 
   TAO_RT_ORBInitializer (int priority_mapping_type,
-                         int sched_policy);
+                         long sched_policy,
+                         long scope_policy);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -74,11 +76,14 @@ private:
   /// a single instance between all ORBs.
   TAO_RT_PolicyFactory policy_factory_;
 
-  /// Initial priority mapping type.
+  /// Priority mapping type.
   int priority_mapping_type_;
 
-  /// Initial scheduling policy.
-  int sched_policy_;
+  /// Scheduling policy.
+  long sched_policy_;
+
+  /// Scope policy.
+  long scope_policy_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

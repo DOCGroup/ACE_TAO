@@ -15,41 +15,27 @@ unlink $iorfile1;
 unlink $iorfile2;
 $status = 0;
 
-$server_conf = PerlACE::LocalFile ("server.conf");
-
 # CORBA priorities 65, 70 and 75 are for the SCHED_OTHER class on
 # Solaris.  May need to use different values for other platforms
 # depending on their native priorities scheme, i.e., based on the
 # available range.
 
 $server_args =
-    "-p $iorfile1 -o $iorfile2 -a 65 -b 75 -c 70 -ORBSvcConf $server_conf "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=65 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=73 ";
+    "-p $iorfile1 -o $iorfile2 -a 65 -b 75";
 
 print STDERR "Value is " . $^O;
 
 if ($^O eq "MSWin32") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf $server_conf "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
+        "-p $iorfile1 -o $iorfile2 -a 1 -b 2";
 }
 elsif ($^O eq "dec_osf") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 20 -b 30 -c 25 -ORBSvcConf $server_conf "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=20 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=30 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=28 ";
+        "-p $iorfile1 -o $iorfile2 -a 20 -b 30";
 }
 elsif ($^O eq "hpux") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 17 -b 29 -c 24 -ORBSvcConf $server_conf "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=17 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=29 "
-        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=27 ";
+        "-p $iorfile1 -o $iorfile2 -a 17 -b 29";
 }
 
 $client_args = "-p file://$iorfile1 -o file://$iorfile2";

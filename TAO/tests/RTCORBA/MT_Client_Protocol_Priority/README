@@ -6,6 +6,7 @@ when multiple threads are making invocations.
 
 NOTE:
 -----
+
 Since output verification script relies on ORB debug messages, i.e.,
 it checks for certain debug messages, it is BRITTLE.  Whenever ORB
 developers modify/remove certain debug messages in the ORB, the output
@@ -16,10 +17,8 @@ process-output.pl must be updated to reflect debug output changes.
 Description
 -----------
 
-Server creates a POA threadpool with lanes (until POA threadpools are
-fully supported, this is emulated with global threadpools), creates an
-object with RTCORBA::CLIENT_PROPAGATED priority model, and writes its
-IOR to the file.
+Server creates an object with RTCORBA::CLIENT_PROPAGATED priority
+model, and writes its IOR to the file.
 
 Client spawns two threads of different priorities.  Each thread sets
 RTCORBA::ClientProtocolPolicy override to a single protocol on the
@@ -37,103 +36,6 @@ verifying the output of the test using process-output.pl perl script.
 a sizeable output, which is impractical to verify manually).
 
 run_test.pl does both, i.e., it runs client and server and then runs
-the verification script on the output.  Below are instructions on how
-to run both  client/server and the verification script. 
-
-
-To run (on Unix):
--------
-$./server [-o <ior_output_file>]
-           -ORBdebuglevel 1 -ORBSvcConf server.conf
-           -ORBendpoint iiop://targethost:0/priority=<priority1>
-           -ORBendpoint iiop://targethost:0/priority=<priority2>
-           -ORBendpoint shmiop://targethost:0/priority=<priority1>
-           -ORBendpoint shmiop://targethost:0/priority=<priority2>
-           [more endpoints if desired]
-
-$./client [-o <ior> -n <iterations>]
-           -a <client_priority1> -b <client_priority2> 
-           [-e <protocol_id1> -f <protocol_id2>]
-
-
-To run output verification script:
-
-$./process-output.pl <data-file-name> 
-                     <number-of-iterations> 
-                     <priority1> 
-                     <priority2>
-
-where 
-
-<data_file_name> is the name of the file where output from running
-                 server and client was collected
-<number_of_iterations> number of iterations specified to the client
-                       with -n command-line option
-<priority1> priority for the first client thread (was specified to the
-                 client with -a command-line option)
-
-<priority2> priority for the second client thread (was specified to the
-                 client with -a command-line option)
-
-Note: Verification script is currently hardcoded to assume that
-      protocol used for one of the threads is iiop, and for the other
-      is shmiop.
-
-
-Options:
---------
-         Server:
-
--o <ior_output_file>   Default: test.ior
-                       Filename for output of object's IOR.
-
--ORBdebuglevel 1        Default: none
-                        This ORB option should be supplied to the
-                        server in order to obtain ORB debug output,
-                        which can then be verified with
-                        process-output.pl for correctness.
-
-The following are the required server ORB options for this test.
-These options help set up server resources to emulate POA
-threadpool with ORB pool.  Once POA threadpools are implemented, these
-options will go away.
--ORBSvcConf server.conf
--ORBendpoint xxx://targethost:0/priority=<priority1>
--ORBendpoint xxxx://targethost:0/priority=<priority2>
-... 
-For an example, see run_test.pl
-
-         Client:
-
--o <ior>               Default: file://test.ior
-                       IOR for the server object.
-
--n <n_iterations>      Default: 100
-                       Number of invocations each client thread will
-                       make on the server.
-
--a <client_priority1>   Default: -1, must be overridden.
-                        CORBA thread priority of the first client
-                        thread. 
-
--b <client_priority2>   Default: -1, must be overridden.
-                        CORBA thread priority of the second client
-                        thread. 
-
--e <profile_id1>        Default: 1413566210 (SHMIOP)
-                        Protocol for ClientProtocolPolicy override for
-                        the first client thread.
-
--f <profile_id2>        Default: 0 (IIOP)
-                        Protocol for ClientProtocolPolicy override for
-                        the second client thread.
-
-
-Expected output:
-----------------
-If there are no problems, run_test.pl will output
-
-
-********** MT Client Protocol & CLIENT_PROPAGATED combo Test
-
-Test output is ok 
+the verification script on the output.  See run_test.pl for
+instructions on how to run both client/server and the verification
+script.

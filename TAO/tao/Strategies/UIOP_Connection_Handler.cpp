@@ -17,6 +17,7 @@
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Resume_Handle.h"
+#include "tao/Thread_Lane_Resources.h"
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Connection_Handler.inl"
@@ -227,18 +228,17 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->transport_cache ()->cache_transport (&prop,
-                                                                 this->transport ());
+  return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
+                                                                                  this->transport ());
 }
-
 
 int
 TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   this->incr_pending_upcalls ();
 
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   this->get_handle ());
 
   int retval =
     this->transport ()->handle_input_i (resume_handle);

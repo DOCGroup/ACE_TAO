@@ -60,18 +60,20 @@ public:
   // = The TAO_Acceptor methods, check the documentation in
   //   Pluggable.h for details.
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *port,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile);
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint* endpoint);
   virtual CORBA::ULong endpoint_count (void);
@@ -85,19 +87,21 @@ public:
   // use.
 
 private:
-  int open_i (TAO_ORB_Core* orb_core);
+  int open_i (TAO_ORB_Core* orb_core,
+              ACE_Reactor *reactor);
   // Implement the common part of the open*() methods.
 
   virtual int parse_options (const char *options);
   // Parse protocol specific options.
 
-  int create_profile (const TAO_ObjectKey &object_key,
-                      TAO_MProfile &mprofile);
-  // Create a SHMIOP profile representing this acceptor.  Factors out
-  // common functionality of <create_mprofile> and <create_shared_mprofile>.
+  int create_new_profile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile,
+                          CORBA::Short priority);
+  // Create a SHMIOP profile representing this acceptor.
 
   int create_shared_profile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile);
+                             TAO_MProfile &mprofile,
+                             CORBA::Short priority);
   // Add the endpoints on this acceptor to a shared profile.
 
 protected:

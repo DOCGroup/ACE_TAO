@@ -24,7 +24,7 @@
 
 class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
 {
- public:
+public:
 
   /// destructor
   virtual ~TAO_Default_Protocols_Hooks (void);
@@ -57,12 +57,11 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
                                   &is_client_propagated,
                                   CORBA::Short &server_priority);
 
-  virtual void get_selector_bands_policy_hook (
-                           CORBA::Policy *bands_policy,
-                           CORBA::Short &min_priority,
-                           CORBA::Short &max_priority,
-                           CORBA::Short &p,
-                           int &in_range);
+  virtual void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
+                                               CORBA::Short &min_priority,
+                                               CORBA::Short &max_priority,
+                                               CORBA::Short &p,
+                                               int &in_range);
 
   virtual int get_thread_CORBA_priority (CORBA::Short &,
                                          CORBA::Environment &);
@@ -81,6 +80,9 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
                                           CORBA::Environment &);
 
   virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV);
+
+  virtual int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
+                                                  CORBA::Environment &ACE_TRY_ENV);
 
 };
 

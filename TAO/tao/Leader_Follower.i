@@ -4,7 +4,8 @@
 // ****************************************************************
 
 ACE_INLINE
-TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core)
+TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core,
+                                          TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
     reverse_lock_ (lock_),
     leaders_ (0),
@@ -12,7 +13,8 @@ TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core)
     reactor_ (0),
     client_thread_is_leader_ (0),
     event_loop_threads_waiting_ (0),
-    event_loop_threads_condition_ (lock_)
+    event_loop_threads_condition_ (lock_),
+    new_leader_generator_ (new_leader_generator)
 {
 }
 
@@ -28,6 +30,13 @@ TAO_Leader_Follower::follower_available (void) const
   return !this->follower_set_.empty ();
 }
 
+ACE_INLINE void
+TAO_Leader_Follower::no_leaders_available (void)
+{
+  if (this->new_leader_generator_)
+    this->new_leader_generator_->no_leaders_available ();
+}
+
 ACE_INLINE int
 TAO_Leader_Follower::elect_new_leader (void)
 {
@@ -40,6 +49,10 @@ TAO_Leader_Follower::elect_new_leader (void)
       else if (this->follower_available ())
         {
           return this->elect_new_leader_i ();
+        }
+      else
+        {
+          this->no_leaders_available ();
         }
     }
   return 0;

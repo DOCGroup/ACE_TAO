@@ -2,13 +2,10 @@
 
 #include "testC.h"
 #include "Client_ORBInitializer.h"
-
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
-
 #include "ace/Get_Opt.h"
-#include "ace/Sched_Params.h"
-
+#include "../check_supported_priorities.cpp"
 
 const char *ior = "file://test.ior";
 
@@ -40,36 +37,12 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
   ACE_TRY_NEW_ENV
     {
-      // First check that we have sufficient priority range to run the
-      // test.
-      int max_priority =
-        ACE_Sched_Params::priority_max (ACE_SCHED_OTHER);
-      int min_priority =
-        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
-
-      if (max_priority > min_priority)
-        {
-          if ((max_priority + min_priority) / 2 + 2 > max_priority)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Not enough priority levels on this platform"
-                          "to run the test, aborting\n"));
-              return 0;
-            }
-        }
-      else
-        {
-          if ((max_priority + min_priority) / 2 + 2 > min_priority)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Not enough priority levels on this platform"
-                          "to run the test, aborting\n"));
-              return 0;
-            }
-        }
-
       // Register the interceptors to check for the RTCORBA
       // service contexts in the reply messages.
       PortableInterceptor::ORBInitializer_ptr temp_initializer;
@@ -154,6 +127,11 @@ main (int argc, char *argv[])
       RTCORBA::PriorityMapping *pm =
         mapping_manager->mapping ();
 
+      int max_priority =
+        ACE_Sched_Params::priority_max (ACE_SCHED_OTHER);
+      int min_priority =
+        ACE_Sched_Params::priority_min (ACE_SCHED_OTHER);
+
       CORBA::Short native_priority =
         (max_priority + min_priority) / 2;
 
@@ -165,11 +143,11 @@ main (int argc, char *argv[])
                            native_priority),
                           1);
 
-      current->the_priority (desired_priority, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       for (int i = 0; i < 3; ++i)
         {
+          current->the_priority (desired_priority, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           CORBA::Short priority =
             current->the_priority (ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -185,9 +163,6 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           desired_priority++;
-
-          current->the_priority (desired_priority, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
 
       // Shut down Server ORB.
@@ -211,6 +186,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
-
-

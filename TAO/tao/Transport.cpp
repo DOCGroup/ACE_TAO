@@ -16,6 +16,7 @@
 #include "Asynch_Queued_Message.h"
 #include "Flushing_Strategy.h"
 #include "Transport_Cache_Manager.h"
+#include "Thread_Lane_Resources.h"
 #include "debug.h"
 #include "Resume_Handle.h"
 
@@ -26,7 +27,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Transport, "$Id$")
-
 
 TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
   : ACE_Refcountable (refcount)
@@ -118,7 +118,7 @@ TAO_Transport::~TAO_Transport (void)
     // outside the TAO_Transport.
     if (this->cache_map_entry_ != 0)
       {
-        this->orb_core_->transport_cache ()->purge_entry (
+        this->orb_core_->lane_resources ().transport_cache ().purge_entry (
           this->cache_map_entry_);
       }
 }
@@ -602,12 +602,12 @@ int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
   // First purge our entry
-  this->orb_core_->transport_cache ()->purge_entry (
+  this->orb_core_->lane_resources ().transport_cache ().purge_entry (
     this->cache_map_entry_);
 
   // Then add ourselves to the cache
-  return this->orb_core_->transport_cache ()->cache_transport (desc,
-                                                               this);
+  return this->orb_core_->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                                this);
 }
 
 void
@@ -615,8 +615,7 @@ TAO_Transport::purge_entry (void)
 {
   if (this->cache_map_entry_ != 0)
     {
-      (void) this->orb_core_->transport_cache ()->purge_entry (
-               this->cache_map_entry_);
+      (void) this->orb_core_->lane_resources ().transport_cache ().purge_entry (this->cache_map_entry_);
     }
 }
 
@@ -625,7 +624,7 @@ TAO_Transport::make_idle (void)
 {
   if (this->cache_map_entry_ != 0)
     {
-      return this->orb_core_->transport_cache ()->make_idle (
+      return this->orb_core_->lane_resources ().transport_cache ().make_idle (
                this->cache_map_entry_);
     }
   return -1;
@@ -639,7 +638,7 @@ TAO_Transport::close_connection (void)
   // Purge the entry
   if (this->cache_map_entry_ != 0)
     {
-      this->orb_core_->transport_cache ()->purge_entry (
+      this->orb_core_->lane_resources ().transport_cache ().purge_entry (
         this->cache_map_entry_);
     }
 }

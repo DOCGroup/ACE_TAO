@@ -2,9 +2,9 @@
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
+#include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
-
 #include "tao/Strategies/advanced_resource.h"
 
 class Test_i : public POA_Test
@@ -90,9 +90,8 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
   // Users should never write code like below.
   // It is for testing purposes only! (Unfortunately, there
   // is no standard way to access ORB default policies).
-  CORBA_ORB *tao_orb = ACE_dynamic_cast (CORBA_ORB *, orb);
   CORBA::Policy_var server_protocol =
-    tao_orb->orb_core ()->get_default_policies ()->get_policy (RTCORBA::SERVER_PROTOCOL_POLICY_TYPE);
+    orb->orb_core ()->get_default_policies ()->get_policy (RTCORBA::SERVER_PROTOCOL_POLICY_TYPE);
 
   RTCORBA::ServerProtocolPolicy_var policy =
     RTCORBA::ServerProtocolPolicy::_narrow (server_protocol.in (),
@@ -167,9 +166,7 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);

@@ -44,7 +44,6 @@ Policy_Verifier::init (int argc,
           this->rt_object_properties_ =
             RT_Properties::read_from (arg, ACE_TRY_ENV);
           ACE_CHECK;
-
         }
       else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {

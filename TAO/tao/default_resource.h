@@ -92,20 +92,12 @@ public:
     TAO_ALLOCATOR_THREAD_LOCK
   };
 
-  // = Reactor mappings strategy
-  enum
-  {
-    TAO_SINGLE_REACTOR,
-    TAO_REACTOR_PER_PRIORITY
-  };
-
   /// Modify and get the source for the CDR allocators
   int cdr_allocator_source (void);
 
   // = Resource Retrieval
   virtual int use_tss_resources (void) const;
   virtual int use_locked_data_blocks (void) const;
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
   virtual ACE_Reactor *get_reactor (void);
   virtual void reclaim_reactor (ACE_Reactor *);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);

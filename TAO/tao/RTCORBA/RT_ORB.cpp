@@ -5,6 +5,8 @@
 #include "RT_Mutex.h"
 #include "Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
+#include "tao/RTCORBA/Thread_Pool.h"
+#include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_ORB.i"
@@ -12,85 +14,19 @@
 
 ACE_RCSID(TAO, RT_ORB, "$Id$")
 
-class TAO_RT_CORBA_Priority_Normalizer : public TAO_CORBA_Priority_Normalizer
-{
-public:
-  /// Constructor.
-  TAO_RT_CORBA_Priority_Normalizer (TAO_ORB_Core *orb_core);
-
-  /// Normalize CORBA Priority
-  CORBA::Boolean normalize (CORBA::Short corba_priority,
-                            CORBA::Short &normalized_corba_priority);
-
-private:
-  // Reference to the priority mapping.
-  RTCORBA::PriorityMapping *priority_mapping_;
-};
-
-TAO_RT_CORBA_Priority_Normalizer::TAO_RT_CORBA_Priority_Normalizer (TAO_ORB_Core *orb_core)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Save a reference to the priority mapping manager.
-      CORBA::Object_var obj =
-        orb_core->object_ref_table ().resolve_initial_references (
-          TAO_OBJID_PRIORITYMAPPINGMANAGER,
-          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      TAO_Priority_Mapping_Manager_var mapping_manager =
-        TAO_Priority_Mapping_Manager::_narrow (obj.in (),
-                                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (mapping_manager.in ()))
-        ACE_TRY_THROW (CORBA::INTERNAL ());
-
-      this->priority_mapping_ =
-        mapping_manager->mapping ();
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) ERROR: Problem in CORBA Priority "
-                           "Normalizer constructor.\n");
-
-      return;
-    }
-  ACE_ENDTRY;
-}
-
-CORBA::Boolean
-TAO_RT_CORBA_Priority_Normalizer::normalize (CORBA::Short corba_priority,
-                                             CORBA::Short &normalized_corba_priority)
-{
-  CORBA::Short native_priority;
-
-  CORBA::Boolean result =
-    this->priority_mapping_->to_native (corba_priority,
-                                        native_priority);
-  if (result == 0)
-    return 0;
-
-  result =
-    this->priority_mapping_->to_CORBA (native_priority,
-                                       normalized_corba_priority);
-  if (result == 0)
-    return 0;
-
-  return 1;
-}
-
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (orb_core)
+    tp_manager_ (0)
 {
-  TAO_RT_CORBA_Priority_Normalizer *corba_priority_normalizer = 0;
-  ACE_NEW (corba_priority_normalizer,
-           TAO_RT_CORBA_Priority_Normalizer (this->orb_core_));
-  this->orb_core_->corba_priority_normalizer (corba_priority_normalizer);
+  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager =
+    &this->orb_core_->thread_lane_resources_manager ();
+
+  TAO_RT_Thread_Lane_Resources_Manager *rt_thread_lane_resources_manager =
+    (TAO_RT_Thread_Lane_Resources_Manager *) thread_lane_resources_manager;
+
+  this->tp_manager_ =
+    &rt_thread_lane_resources_manager->tp_manager ();
 }
 
 TAO_RT_ORB::~TAO_RT_ORB (void)
@@ -327,14 +263,14 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->tp_manager_.create_threadpool (stacksize,
-                                              static_threads,
-                                              dynamic_threads,
-                                              default_priority,
-                                              allow_request_buffering,
-                                              max_buffered_requests,
-                                              max_request_buffer_size,
-                                              ACE_TRY_ENV);
+  return this->tp_manager_->create_threadpool (stacksize,
+                                               static_threads,
+                                               dynamic_threads,
+                                               default_priority,
+                                               allow_request_buffering,
+                                               max_buffered_requests,
+                                               max_request_buffer_size,
+                                               ACE_TRY_ENV);
 }
 
 RTCORBA::ThreadpoolId
@@ -347,13 +283,13 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->tp_manager_.create_threadpool_with_lanes (stacksize,
-                                                         lanes,
-                                                         allow_borrowing,
-                                                         allow_request_buffering,
-                                                         max_buffered_requests,
-                                                         max_request_buffer_size,
-                                                         ACE_TRY_ENV);
+  return this->tp_manager_->create_threadpool_with_lanes (stacksize,
+                                                          lanes,
+                                                          allow_borrowing,
+                                                          allow_request_buffering,
+                                                          max_buffered_requests,
+                                                          max_request_buffer_size,
+                                                          ACE_TRY_ENV);
 }
 
 void
@@ -362,8 +298,8 @@ TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
-  this->tp_manager_.destroy_threadpool (threadpool,
-                                        ACE_TRY_ENV);
+  this->tp_manager_->destroy_threadpool (threadpool,
+                                         ACE_TRY_ENV);
 }
 
 RTCORBA::PriorityModelPolicy_ptr
@@ -455,6 +391,12 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
   ACE_CHECK_RETURN (RTCORBA::ClientProtocolPolicy::_nil ());
 
   return tmp;
+}
+
+TAO_Thread_Pool_Manager &
+TAO_RT_ORB::tp_manager (void)
+{
+  return *this->tp_manager_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

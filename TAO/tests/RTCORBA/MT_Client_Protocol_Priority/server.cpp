@@ -3,9 +3,9 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Pool_Per_Endpoint.h"
-
+#include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
+#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
@@ -92,7 +92,11 @@ check_for_nil (CORBA::Object_ptr obj, const char *msg)
 int
 main (int argc, char *argv[])
 {
-  ACE_TRY_NEW_ENV
+   // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities ();
+
+ ACE_TRY_NEW_ENV
     {
       // ORB.
       CORBA::ORB_var orb =
@@ -180,11 +184,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Start ORB event loop.
-      // @@ Currently we are using Reactor per priority to emulate
-      // threadpool with lanes.  Once POA threadpools are implemented,
-      // this code should be replaced with standard threadpool apis.
-      TAO_Pool_Per_Endpoint pool (orb.in ());
-      pool.run (ACE_TRY_ENV);
+      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
@@ -199,4 +199,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

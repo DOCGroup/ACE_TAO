@@ -23,8 +23,10 @@
 
 #include "rtportableserver_export.h"
 #include "tao/PortableServer/POA.h"
-#include "tao/RTCORBA/RTCORBA.h"
-#include "RTPortableServer.h"
+
+#define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
+#include "RTPortableServerC.h"
+#undef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,6 +40,10 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+class TAO_Thread_Pool;
+class TAO_Thread_Lane;
+class TAO_PriorityBandedConnectionPolicy;
 
 class TAO_RTPortableServer_Export TAO_RT_POA :
   public virtual RTPortableServer::POA,
@@ -262,6 +268,8 @@ public:
 
   virtual ~TAO_RT_POA (void);
 
+  void *thread_pool (void) const;
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -280,8 +288,8 @@ protected:
                                    CORBA::Short priority,
                                    CORBA_Environment &ACE_TRY_ENV);
 
-  void valid_priority (RTCORBA::Priority priority,
-                       CORBA_Environment &ACE_TRY_ENV);
+  void validate_priority (RTCORBA::Priority priority,
+                          CORBA_Environment &ACE_TRY_ENV);
 
   void validate_policies (CORBA::Environment &ACE_TRY_ENV);
 
@@ -289,6 +297,20 @@ protected:
   // cached policy instance.
   void parse_rt_policies (TAO_POA_Policy_Set &policies,
                           CORBA::Environment &ACE_TRY_ENV);
+
+  size_t endpoint_count (void);
+
+  TAO_Stub *create_stub_object (const TAO_ObjectKey &object_key,
+                                const char *type_id,
+                                CORBA::PolicyList *policy_list,
+                                TAO_Acceptor_Filter *filter,
+                                TAO_PriorityBandedConnectionPolicy *priority_bands,
+                                CORBA::Environment &ACE_TRY_ENV);
+
+  int lane_required (TAO_Thread_Lane *lane,
+                     TAO_PriorityBandedConnectionPolicy *priority_bands);
+
+  TAO_Thread_Pool *thread_pool_;
 
 };
 

@@ -67,18 +67,20 @@ public:
    * Pluggable.h for details.
    */
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile);
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority);
   virtual int is_collocated (const TAO_Endpoint *endpoint);
   virtual CORBA::ULong endpoint_count (void);
 
@@ -111,7 +113,8 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr);
+  virtual int open_i (const ACE_INET_Addr &addr,
+                      ACE_Reactor *reactor);
 
   /**
    * Probe the system for available network interfaces, and initialize
@@ -126,7 +129,6 @@ protected:
    * Parse protocol specific options.
    *
    * Currently supported:
-   *    priority -- specifies the RT CORBA priority for the endpoint
    *    portspan -- specifies the range of ports over which the acceptor
    *                should scan looking for a free port (this is convenient
    *                for situations where you might normally use an ephemeral
@@ -141,13 +143,15 @@ protected:
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profiles (const TAO_ObjectKey &object_key,
-                           TAO_MProfile &mprofile);
+  int create_new_profile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile,
+                          CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
   int create_shared_profile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile);
+                             TAO_MProfile &mprofile,
+                             CORBA::Short priority);
 
 protected:
 

@@ -31,12 +31,6 @@ TAO_ORB_Core::locking_strategy (void)
   return 0;
 }
 
-ACE_INLINE TAO_Transport_Cache_Manager *
-TAO_ORB_Core::transport_cache (void)
-{
-  return this->transport_cache_;
-}
-
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::bidir_giop_policy (void)
 {
@@ -59,12 +53,6 @@ ACE_INLINE TAO_Flushing_Strategy *
 TAO_ORB_Core::flushing_strategy (void)
 {
   return this->flushing_strategy_;
-}
-
-ACE_INLINE TAO_POA_Extension_Initializer *
-TAO_ORB_Core::poa_extension_initializer (void)
-{
-  return this->poa_extension_initializer_;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -232,12 +220,6 @@ ACE_INLINE TAO_Connector_Registry *
 TAO_ORB_Core::connector_registry (void)
 {
   return TAO_OC_RETRIEVE (connector_registry);
-}
-
-ACE_INLINE TAO_Acceptor_Registry *
-TAO_ORB_Core::acceptor_registry (void)
-{
-  return TAO_OC_RETRIEVE (acceptor_registry);
 }
 
 ACE_INLINE TAO_Parser_Registry *

@@ -1032,9 +1032,12 @@ realclean:
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.h \
   $(TAO_ROOT)/tao/Invocation_Endpoint_Selectors.i \
   $(TAO_ROOT)/tao/Invocation.i \
+  $(TAO_ROOT)/tao/PortableInterceptor.h \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
   $(TAO_ROOT)/tao/ClientRequestInfo.h \
   $(TAO_ROOT)/tao/ClientRequestInfo.inl \
-  $(TAO_ROOT)/tao/RequestInfo_Util.h
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
+  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/dataS.o .obj/dataS.so .shobj/dataS.o .shobj/dataS.so: dataS.cpp dataS.h dataC.h \
   $(TAO_ROOT)/tao/corba.h \
@@ -1356,9 +1359,12 @@ realclean:
   $(TAO_ROOT)/tao/MProfile.i \
   $(TAO_ROOT)/tao/Stub.i \
   $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
+  $(TAO_ROOT)/tao/PortableInterceptor.h \
+  $(TAO_ROOT)/tao/RequestInfo_Util.h \
   $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
   $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
-  $(TAO_ROOT)/tao/RequestInfo_Util.h \
+  $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.h \
+  $(TAO_ROOT)/tao/PortableServer/ServerInterceptorAdapter.inl \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \

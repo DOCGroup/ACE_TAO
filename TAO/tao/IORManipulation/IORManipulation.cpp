@@ -121,7 +121,6 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
   TAO_Stub *stub = orb_core->create_stub (id._retn (), // give the id string
                                           Merged_Profiles,
-                                          orb_core,
                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -226,7 +225,6 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   TAO_Stub *stub = orb_core->create_stub (id._retn (), // give the id string
                                           Diff_Profiles,
-                                          orb_core,
                                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

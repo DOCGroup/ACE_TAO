@@ -1313,8 +1313,8 @@ ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
       return -1;
     }
 
-  if (ACE_OS::priority_control ((idtype_t) (sched_params.scope () == ACE_SCOPE_THREAD  
-                                            ? ACE_SCOPE_PROCESS  
+  if (ACE_OS::priority_control ((idtype_t) (sched_params.scope () == ACE_SCOPE_THREAD
+                                            ? ACE_SCOPE_PROCESS
                                             : sched_params.scope ()),
                                 id,
                                 PC_SETPARMS,
@@ -1505,7 +1505,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 #   else
   ACE_UNUSED_ARG (id);
 
-  if (sched_params.scope () != ACE_SCOPE_PROCESS 
+  if (sched_params.scope () != ACE_SCOPE_PROCESS
       || sched_params.quantum () != ACE_Time_Value::zero)
     {
       // Win32 only allows setting priority class (therefore, policy)
@@ -1536,8 +1536,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   // There is only one class of priorities on VxWorks, and no time
   // quanta.  So, just set the current thread's priority.
 
-  if (sched_params.policy () != ACE_SCHED_FIFO  
-      || sched_params.scope () != ACE_SCOPE_PROCESS  
+  if (sched_params.policy () != ACE_SCHED_FIFO
+      || sched_params.scope () != ACE_SCOPE_PROCESS
       || sched_params.quantum () != ACE_Time_Value::zero)
     {
       errno = EINVAL;
@@ -2707,7 +2707,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
           || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
         {
+#         if defined (ACE_CONFIG_LINUX_H)
+          // LinuxThreads do not have support for PTHREAD_SCOPE_PROCESS.
+          int scope = PTHREAD_SCOPE_SYSTEM;
+#         else /* ACE_CONFIG_LINUX_H */
           int scope = PTHREAD_SCOPE_PROCESS;
+#         endif /* ACE_CONFIG_LINUX_H */
           if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
             scope = PTHREAD_SCOPE_SYSTEM;
 
@@ -3168,7 +3173,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM)
           || ACE_BIT_ENABLED (flags, THR_SCOPE_PROCESS))
         {
+#         if defined (ACE_CONFIG_LINUX_H)
+          // LinuxThreads do not have support for PTHREAD_SCOPE_PROCESS.
+          int scope = PTHREAD_SCOPE_SYSTEM;
+#         else /* ACE_CONFIG_LINUX_H */
           int scope = PTHREAD_SCOPE_PROCESS;
+#         endif /* ACE_CONFIG_LINUX_H */
           if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
             scope = PTHREAD_SCOPE_SYSTEM;
 
