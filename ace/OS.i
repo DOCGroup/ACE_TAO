@@ -5340,9 +5340,10 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                        NULL,
                        NULL);
 
-        if (result == SOCKET_ERROR)
-                ACE_DEBUG ((LM_DEBUG, "SOCKET ERROR\n"));
-
+        // @@ ACE_OS should *not* depend on ACE_Log_Msg in any way!
+        //      -Ossama
+        // if (result == SOCKET_ERROR)
+        //   ACE_DEBUG ((LM_DEBUG, "SOCKET ERROR\n"));
       
         ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
                                         qos->SendingFlowspec.TokenBucketSize,
