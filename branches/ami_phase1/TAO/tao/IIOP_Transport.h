@@ -39,8 +39,8 @@ class TAO_Export TAO_IIOP_Transport : public TAO_Transport
   //   @@ Fred, please fill in here.
 public:
   TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
-                      TAO_IIOP_Request_Multiplexing_Strategy *rms = 0,
-                      TAO_IIOP_Wait_Strategy *ws = 0);
+                      TAO_Request_Mux_Strategy *rms = 0,
+                      TAO_Wait_Strategy *ws = 0);
   // Base object's creator method. 
 
   ~TAO_IIOP_Transport (void);
@@ -125,8 +125,8 @@ class TAO_Export TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
   //   @@ Fred, please fill in here.
 public:
   TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler,
-                             TAO_IIOP_Request_Multiplexing_Strategy *rms = 0,
-                             TAO_IIOP_Wait_Strategy *ws = 0);
+                             TAO_Request_Mux_Strategy *rms = 0,
+                             TAO_Wait_Strategy *ws = 0);
   // Constructor.  Note, TAO_IIOP_Handler_Base is the base class for
   // both TAO_Client_Connection_Handler and
   // TAO_Server_Connection_Handler.
