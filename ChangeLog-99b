@@ -1,3 +1,21 @@
+Mon Nov 29 14:34:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/config-win32-borland.h:
+	* ace/config-win32-common.h:
+
+	  The ACE_HAS_BROKEN_IMPLICIT_CONST_CAST macro I previously
+	  removed is used in TAO's IDL_Test.  Thanks to Jeff for pointing
+	  this out.
+
+	* ace/OS.i (sema_init):
+
+	  The call to sem_init() for the process shared case incorrectly
+	  used USYNC_THREAD for the second argument.  For the
+	  USYNC_PROCESS case, the second argument to ::sem_init() should
+	  be "type == USYNC_PROCESS" since it will evaluate to "1" in this
+	  case.  A conditional is used since some platforms may	not define
+	  USYNC_PROCESS to be a non-zero value.
+
 Mon Nov 29 12:15:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Auto_IncDec_Test.cpp: Updated this test to use multiple
