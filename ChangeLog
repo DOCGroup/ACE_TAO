@@ -1,3 +1,8 @@
+Fri Aug 27 10:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/security.mpb:
+          Security library uses valuetype, so added valuetype as base project
+
 Fri Aug 27 09:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/QOS/Change_Receiver_FlowSpec/QoS_Util.{h,cpp}:
