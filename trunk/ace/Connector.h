@@ -148,10 +148,14 @@ public:
   virtual int connect_n (size_t n,
 			 SVC_HANDLER *svc_handlers[],
 			 ACE_PEER_CONNECTOR_ADDR remote_addrs[],
+                         char failed_svc_handlers[] = 0,
 			 const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults);
   // Initiate connection of <n> <svc_handlers> to peers at
   // <remote_addrs> using <synch_options>.  Returns -1 if failure
-  // occurs, otherwise returns the number of handlers connected.
+  // occurs and 0 otherwise.  If <failed_svc_handlers> is non-NULL, a
+  // 1 is placed in the corresponding index of <failed_svc_handler>
+  // for each <svc_handlers[i]> that failed to connect, else a 0 is
+  // placed in that index.
 
   virtual int cancel (SVC_HANDLER *svc_handler);
   // Cancel a <svc_handler> that was started asynchronously. Note that

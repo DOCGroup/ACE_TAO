@@ -182,6 +182,11 @@ client (void *arg)
   ACE_NEW_RETURN (temp_writers, Write_Handler *[opt_nconnections], 0);
   writers = temp_writers;
 
+  ACE_Auto_Basic_Array_Ptr <char> failed_svc_handlers;
+  char *temp_failed;
+  ACE_NEW_RETURN (temp_failed, char[opt_nconnections], 0);
+  failed_svc_handlers = temp_failed;
+
   // Automagic memory cleanup
   ACE_Auto_Array_Ptr <ACE_INET_Addr> addresses;
   ACE_INET_Addr *temp_addresses;
@@ -198,9 +203,21 @@ client (void *arg)
   // Connection all <opt_nconnections> svc_handlers
   int result = connector.connect_n (opt_nconnections, 
                                     writers.get (), 
-                                    addresses.get ());
+                                    addresses.get (),
+                                    failed_svc_handlers.get ());
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "connects failed"), 0);
+    {
+      // Print out the connections that failed...
+      for (size_t i = 0; i < opt_nconnections; i++)
+        if (failed_svc_handlers.get ()[i] != 0)
+          {
+            ACE_INET_Addr &failed_addr = failed_svc_handlers.get ()[i];
+            ACE_ERROR ((LM_ERROR, "(%t) connection failed to %s, %d\n",
+                        failed_addr.get_host_name (),
+                        failed_addr.get_port_number ()));
+          }
+      return 0;
+    }
   
   // Iterate to send data
   for (int j = 0; j < opt_nloops; j++)
@@ -350,6 +367,7 @@ template class ACE_Map_Manager<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MU
 template class ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>;
 template class ACE_Svc_Tuple<Write_Handler>;
+template class ACE_Auto_Basic_Array_Ptr <char>;
 template class ACE_Auto_Basic_Array_Ptr <Write_Handler *>;
 template class ACE_Auto_Basic_Array_Ptr <ACE_INET_Addr>;
 template class ACE_Auto_Array_Ptr <ACE_INET_Addr>;
@@ -365,6 +383,7 @@ template class ACE_Auto_Array_Ptr <ACE_INET_Addr>;
 #pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>
 #pragma instantiate ACE_Svc_Tuple<Write_Handler>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr <char>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr <Write_Handler *>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr <ACE_INET_Addr>
 #pragma instantiate ACE_Auto_Array_Ptr <ACE_INET_Addr>
