@@ -81,7 +81,7 @@ public:
    */
   virtual int generate_reply_header (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params &params) = 0;
+      TAO_Pluggable_Reply_Params_Base &params) = 0;
 
   /**
    * Write the locate reply header
@@ -91,7 +91,7 @@ public:
    */
   virtual int generate_locate_reply_header (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params &params) = 0;
+      TAO_Pluggable_Reply_Params_Base &params) = 0;
 
   /**
    * This method reads the message on the connection. Returns 0 when
@@ -133,7 +133,7 @@ public:
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params &params,
+      TAO_Pluggable_Reply_Params_Base &params,
       CORBA::Exception &x) = 0;
 
   /// Is the messaging object ready for processing BiDirectional

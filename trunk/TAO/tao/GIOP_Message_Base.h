@@ -67,12 +67,14 @@ public:
   virtual int generate_locate_request_header (
       TAO_Operation_Details &op,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &cdr);
+      TAO_OutputCDR &cdr
+    );
 
   /// Write the reply header
   virtual int generate_reply_header (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params &params);
+      TAO_Pluggable_Reply_Params_Base &params
+    );
 
   /// This method reads the message on the connection. Returns 0 when
   /// there is short read on the connection. Returns 1 when the full
@@ -110,13 +112,15 @@ public:
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
-      TAO_Pluggable_Reply_Params &reply_info);
+      TAO_Pluggable_Reply_Params &reply_info
+    );
 
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params &params,
-      CORBA::Exception &x);
+      TAO_Pluggable_Reply_Params_Base &params,
+      CORBA::Exception &x
+    );
 
 private:
 
@@ -172,7 +176,7 @@ private:
   /// Write the locate reply header
   virtual int generate_locate_reply_header (
       TAO_OutputCDR & /*cdr*/,
-      TAO_Pluggable_Reply_Params & /*params*/);
+      TAO_Pluggable_Reply_Params_Base & /*params*/);
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?

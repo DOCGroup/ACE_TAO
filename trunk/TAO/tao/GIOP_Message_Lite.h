@@ -70,7 +70,8 @@ public:
   /// Write the reply header
   virtual int generate_reply_header (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params &params);
+      TAO_Pluggable_Reply_Params_Base &params
+    );
 
   /// This method reads the message on the connection. Returns 0 when
   /// there is short read on the connection. Returns 1 when the full
@@ -113,8 +114,9 @@ public:
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
-      TAO_Pluggable_Reply_Params &params,
-      CORBA::Exception &x);
+      TAO_Pluggable_Reply_Params_Base &params,
+      CORBA::Exception &x
+    );
 
 private:
 
@@ -182,7 +184,7 @@ private:
   /// Write the locate reply header
   virtual int generate_locate_reply_header (
       TAO_OutputCDR & /*cdr*/,
-      TAO_Pluggable_Reply_Params & /*params*/);
+      TAO_Pluggable_Reply_Params_Base & /*params*/);
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
@@ -205,7 +207,7 @@ private:
   /// Write the reply header in to <output>
   int write_reply_header (
       TAO_OutputCDR &output,
-      TAO_Pluggable_Reply_Params &reply,
+      TAO_Pluggable_Reply_Params_Base &reply,
       CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));

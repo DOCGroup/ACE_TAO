@@ -47,26 +47,30 @@ public:
   virtual int write_request_header (
       const TAO_Operation_Details &opdetails,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &msg);
+      TAO_OutputCDR &msg
+    );
 
   /// Write the LocateRequest header
   virtual int write_locate_request_header (
       CORBA::ULong request_id,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &msg);
+      TAO_OutputCDR &msg
+    );
 
   /// Write the reply header in to <output>
   virtual int write_reply_header (
       TAO_OutputCDR &output,
-      TAO_Pluggable_Reply_Params &reply,
-      CORBA::Environment &ACE_TRY_ENV)
+      TAO_Pluggable_Reply_Params_Base &reply,
+      CORBA::Environment &ACE_TRY_ENV
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Writes the locate _reply message in to the <output>
   virtual int write_locate_reply_mesg (
       TAO_OutputCDR &output,
       CORBA::ULong request_id,
-      TAO_GIOP_Locate_Status_Msg &status);
+      TAO_GIOP_Locate_Status_Msg &status
+    );
 
   /// Parse the Request Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
@@ -75,7 +79,8 @@ public:
   /// Parse the LocateRequest Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
   virtual int parse_locate_header (
-      TAO_GIOP_Locate_Request_Header &);
+      TAO_GIOP_Locate_Request_Header &
+    );
 
   /// Parse the reply message
   virtual int parse_reply (TAO_InputCDR &input,
