@@ -1,3 +1,11 @@
+Mon Apr 16 22:15:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Commented out some tests that are
+	  failing on SUNCC 5.1. The failure is because of a compiler
+	  bug. The problem is that the compiler seems to have difficulty
+	  in calling the virtual method in a class hierarchy which is
+	  built with multiple inheritance.
+
 Mon Apr 16 20:24:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/Config_Test.cpp (main): Remoted the test_io() function.
