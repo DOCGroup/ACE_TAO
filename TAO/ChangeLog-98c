@@ -1,3 +1,10 @@
+Tue Aug 11 13:51:00 1998  Carlos O'Ryan  <coryan@CHA-CHA>
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+	   Under Win32 we need to convert backslashes into double
+	   backslashes before printing the file name in the #line
+	   directive, otherwise the C++ preprocessor gets confused.
+
 Tue Aug 11 13:47:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.cpp: removed unnecessary trailing semicolons
@@ -86,12 +93,12 @@ Mon Aug 10 16:46:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Aug 10 15:56:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
-          The memory pools are global from some time now, but they did not
-          have the right kind of lock; this lead to memory corruption
-          problems when sending events at a very high rate. Thanks to
-          Mark L. Boriack <mboriack@std.saic.com> for reporting this
-          problem.
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
+	  The memory pools are global from some time now, but they did not
+	  have the right kind of lock; this lead to memory corruption
+	  problems when sending events at a very high rate. Thanks to
+	  Mark L. Boriack <mboriack@std.saic.com> for reporting this
+	  problem.
 
 Mon Aug 10 13:59:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 

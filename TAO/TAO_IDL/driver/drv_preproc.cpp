@@ -179,7 +179,27 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
            << GTDEVEL(": cannot open input file\n");
       exit(99);
   }
+#if !defined (ACE_WIN32)
   fprintf (f, "#line 1 \"%s\"\n", orig_filename);
+#else
+  // Convert single \ into double \ otherwise MSVC++ pre-processor
+  // gets awfully confused.
+  char buf[2*MAXPATHLEN];
+  char *d = buf;
+  for (const char *s = orig_filename; *s != 0; ++s)
+    {
+      if (*s == '\\')
+	{
+	  *d = '\\';
+	  d++;
+	}
+      *d = *s;
+      d++;
+    }
+  *d = 0;
+  fprintf (f, "#line 1 \"%s\"\n", buf);
+#endif /* ! ACE_WIN32 */
+
   while (DRV_get_line(fin))
     fprintf(f, "%s\n", drv_line);
   fclose(f);
@@ -331,6 +351,7 @@ DRV_pre_proc(char *myfile)
     system(catbuf);
   }
 
+#if 0
   if (ACE_OS::unlink(tmp_ifile) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp input file ")
@@ -338,6 +359,7 @@ DRV_pre_proc(char *myfile)
          << "\n";
     exit(99);
   }
+#endif
 #if !defined (ACE_WIN32)
   // TODO: This unlink fails every time under NT, it seems that you
   // cannot remove an open file under that OS?
