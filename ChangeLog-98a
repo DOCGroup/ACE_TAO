@@ -28,7 +28,8 @@ Fri Dec 05 00:00:53 1997    <irfan@TWOSTEP>
  	  you the stream header files, you will not have to change your
  	  code, unless you have defined
  	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.  Thanks to Dr. Schmidt for
- 	  suggesting this.
+ 	  suggesting this and thanks to David Levine for suggesting it to
+ 	  Dr. Schmidt ;-).
 
 	* ace/config-vxworks5.x-g++.h: Restored
  	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
