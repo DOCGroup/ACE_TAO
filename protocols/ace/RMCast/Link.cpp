@@ -263,4 +263,10 @@ namespace ACE_RMCast
     reinterpret_cast<Link*> (obj)->recv ();
     return 0;
   }
+
+  void Link::
+  recv (Message_ptr)
+  {
+    abort ();
+  }
 }
