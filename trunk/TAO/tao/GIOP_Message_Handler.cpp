@@ -35,9 +35,10 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
 int
 TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 {
-  if (this->read_messages (transport) == -1)
-    return -1;
+  int retval = this->read_messages (transport);
 
+  if (retval < 1)
+    return retval;
 
   // Check what message are we waiting for and take suitable action
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_HEADER)
@@ -49,7 +50,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
         }
     }
 
-  return 0;
+  return retval;
 }
 
 int
@@ -309,7 +310,8 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
               "Recv msg",
               ACE_reinterpret_cast (u_char *,
                                     buf),
-              len + TAO_GIOP_MESSAGE_HEADER_LEN);
+              this->message_state_.message_size +
+              TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.data_block (
             this->current_buffer_.data_block ()->clone ());
@@ -472,6 +474,9 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
 
   if (n == -1)
     {
+      //if (errno == EAGAIN)
+      // return -1;
+
       if (errno == EWOULDBLOCK)
         return 0;
 
@@ -491,6 +496,6 @@ TAO_GIOP_Message_Handler::read_messages (TAO_Transport *transport)
       ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes \n", n));
     }
 
-  return 0;
-
+  // Success
+  return 1;
 }
