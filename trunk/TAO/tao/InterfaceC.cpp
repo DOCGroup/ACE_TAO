@@ -9322,6 +9322,7 @@ CORBA_ExceptionDefSeq * CORBA_OperationDef::exceptions (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""exceptions",
+      15,
       istub->orb_core ()
     );
 
