@@ -1,75 +1,80 @@
+Tue Oct 12 08:19:57 2004  Olli Savia  <ops@iki.fi>
+
+        * tests/Typedef_String_Array/server.cpp:
+          Added #include "ace/OS_NS_stdio.h" to pick ACE_OS::fopen() etc.
+        
 Mon Oct 11 18:31:10 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples/PluggableUDP/DIOP/README: 
+        * examples/PluggableUDP/DIOP/README:
 
-	  Forgot to change TAO_TAG_UDP_PROFILE to TAO_TAG_DIOP_PROFILE in
-	  this file.
+          Forgot to change TAO_TAG_UDP_PROFILE to TAO_TAG_DIOP_PROFILE in
+          this file.
 
 Mon Oct 11 17:46:48 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/ORB_Constants.h: 
-	* CIAO/performance-tests/Protocols/Controller/Controller.cpp:
-	* CIAO/performance-tests/Protocols/Sender/Sender_exec.cpp:
-	* performance-tests/Protocols/distributor.cpp:
-	* performance-tests/Protocols/sender.cpp:
-	* tao/RTCORBA/RT_Policy_i.cpp:
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-	* tao/Strategies/DIOP_Acceptor.cpp:
-	* tao/Strategies/DIOP_Connector.cpp:
-	* tao/Strategies/DIOP_Endpoint.cpp:
-	* tao/Strategies/DIOP_Factory.cpp:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/DIOP_Transport.cpp:
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* utils/catior/catior.cpp:
-	* utils/nslist/nslist.cpp:	
+        * tao/ORB_Constants.h:
+        * CIAO/performance-tests/Protocols/Controller/Controller.cpp:
+        * CIAO/performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * performance-tests/Protocols/distributor.cpp:
+        * performance-tests/Protocols/sender.cpp:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Factory.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * utils/catior/catior.cpp:
+        * utils/nslist/nslist.cpp:
 
-	  TAO_TAG_UDP_PROFILE was changed to TAO_TAG_DIOP_PROFILE to make
-	  it consistent with the other profile tags.
+          TAO_TAG_UDP_PROFILE was changed to TAO_TAG_DIOP_PROFILE to make
+          it consistent with the other profile tags.
 
 Mon Oct 11 17:11:19 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/RTCORBA/RT_Stub.cpp (effective_client_protocol): 
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (endpoint_from_profile): 
-	* tao/RTCORBA/RT_Endpoint_Utils.cpp (policy): 
-	* tao/Sync_Strategies.cpp (buffering_constraints_reached): 
+        * tao/RTCORBA/RT_Stub.cpp (effective_client_protocol):
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp (endpoint_from_profile):
+        * tao/RTCORBA/RT_Endpoint_Utils.cpp (policy):
+        * tao/Sync_Strategies.cpp (buffering_constraints_reached):
 
-	  Added expection handling code.
-	
-	* tao/ORB_Core.cpp (get_policy_including_current): 
+          Added expection handling code.
 
-	  Added missing env.
+        * tao/ORB_Core.cpp (get_policy_including_current):
 
-	* tao/Policy_Manager.h (PolicyManager):
-	* tao/RTCORBA/RT_Stub.h (TAO_RT_Stub): 
-	* tao/Stub.h (TAO_Stub):
+          Added missing env.
 
-	  Removed default values for environment variables in
-	  get_policy(), get_cached_policy(), set_policy_overrides(),
-	  get_policy_overrides(), effective_priority_banded_connection()
-	  and effective_client_protocol().
+        * tao/Policy_Manager.h (PolicyManager):
+        * tao/RTCORBA/RT_Stub.h (TAO_RT_Stub):
+        * tao/Stub.h (TAO_Stub):
 
-	* tao/ORB_Core.cpp (default_buffering_constraint): 
+          Removed default values for environment variables in
+          get_policy(), get_cached_policy(), set_policy_overrides(),
+          get_policy_overrides(), effective_priority_banded_connection()
+          and effective_client_protocol().
 
-	  Removed this method since it is no longer used or needed.
+        * tao/ORB_Core.cpp (default_buffering_constraint):
 
-	* tao/Strategies/DIOP_Connection_Handler.cpp (open):
-	* tao/Strategies/SCIOP_Connection_Handler.cpp (open):
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp (open):
-	* tao/Strategies/UIOP_Connection_Handler.cpp (open):
-	* tao/IIOP_Connection_Handler.cpp (open): 
+          Removed this method since it is no longer used or needed.
 
-	  Added return -1 in case of exceptions.  Also figure out the
-	  <client> variable using the correct information.
+        * tao/Strategies/DIOP_Connection_Handler.cpp (open):
+        * tao/Strategies/SCIOP_Connection_Handler.cpp (open):
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp (open):
+        * tao/Strategies/UIOP_Connection_Handler.cpp (open):
+        * tao/IIOP_Connection_Handler.cpp (open):
 
-	* tao/RTCORBA/RT_Policy_i.h (TAO_Protocol_Properties_Factory): 
-	* tests/Exposed_Policies/Policy_Tester.cpp (create_objects): 
+          Added return -1 in case of exceptions.  Also figure out the
+          <client> variable using the correct information.
 
-	  Reverted change Bala made on:
+        * tao/RTCORBA/RT_Policy_i.h (TAO_Protocol_Properties_Factory):
+        * tests/Exposed_Policies/Policy_Tester.cpp (create_objects):
 
-	  Fri Oct  1 17:25:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+          Reverted change Bala made on:
 
-	  The correct change is to fix the test code in Policy_Tester.cpp.
+          Fri Oct  1 17:25:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+          The correct change is to fix the test code in Policy_Tester.cpp.
 
 Mon Oct 11 14:42:46 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -93,15 +98,15 @@ Mon Oct 11 10:26:59 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.{cpp,h}:
 
           Added utilization bound checking to the Reconfig scheduler. If
-	  the total critical utilization exceeds the critical utilization
-	  threshold or the total non-critical utilization exceeds the
-	  non-critical utilization threshold, then the anomaly set is
-	  filled with an appropriate error message. Thanks to Honorato
-	  Saavedra <natodf@yahoo.com> for pointing this out.
+          the total critical utilization exceeds the critical utilization
+          threshold or the total non-critical utilization exceeds the
+          non-critical utilization threshold, then the anomaly set is
+          filled with an appropriate error message. Thanks to Honorato
+          Saavedra <natodf@yahoo.com> for pointing this out.
 
 Sat Oct  9 19:03:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tests/Typedef_String_Array/testImpl.cpp:
+        * tests/Typedef_String_Array/testImpl.cpp:
 
           Fixed a warning in our daily builds.
 
@@ -114,8 +119,8 @@ Sat Oct  9 12:38:38 2004  Huang-Ming Huang <hh1@cs.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
         * orbsvcs/orbsvcs/FTRTEvent/Utils/activate_with_id.h:
           Changed the second paramter of activate_object_with_id() from
- 	  POA_var to POA_ptr.  Thanks to Yuk Ming Kwok <mkwok@cisco.com>
- 	  for reporting this.
+          POA_var to POA_ptr.  Thanks to Yuk Ming Kwok <mkwok@cisco.com>
+          for reporting this.
 
 Thu Oct  7 16:07:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
