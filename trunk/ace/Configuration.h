@@ -9,9 +9,9 @@
  *  @author Chris Hafey <chafey@stentor.com>
  *
  *  The ACE configuration API provides a portable abstraction for
- *  program configuration similar to the Microsoft Windows registry.  
- *  The API supports a tree based hierarchy of configuration sections.  Each 
- *  section contains other sections or values.  Values may contain string, 
+ *  program configuration similar to the Microsoft Windows registry.
+ *  The API supports a tree based hierarchy of configuration sections.  Each
+ *  section contains other sections or values.  Values may contain string,
  *  unsigned integer and binary data.
  *
  *  Note: these classes are not thread safe, if multiple threads use these
@@ -241,8 +241,8 @@ public:
    * Expands <path_in> to <key_out> from <key>.  If create is true,
    * the subsections are created.  Returns 0 on success, non zero on
    * error The path consists of sections separated by the backslash
-   * '\' or forward slash '/'.  
-   * Returns 0 on success, -1 if <create) is 0 and the path refers 
+   * '\' or forward slash '/'.
+   * Returns 0 on success, -1 if <create) is 0 and the path refers
    * a nonexistant section
    */
   int expand_path (const ACE_Configuration_Section_Key& key,
@@ -251,30 +251,30 @@ public:
                    int create = 1);
 
   /**
-   * Exports the configuration database to filename.  If <filename> is
-   * already present, it is overwritten. This function is deprecated and
-   * will be removed in a future version of ACE. Please use either
-   * ACE_Registry_ImpExp or ACE_Ini_ImpExp instead.
+   * @deprecated Exports the configuration database to filename.
+   * If <filename> is already present, it is overwritten. This function is
+   * deprecated and will be removed in a future version of ACE. Please use
+   * either ACE_Registry_ImpExp or ACE_Ini_ImpExp instead.
    */
   int export_config (const ACE_TCHAR* filename);
 
   /**
-   * Imports the configuration database from filename.  Any existing
-   * data is not removed. This function is deprecated and will be
+   * @deprecated Imports the configuration database from filename.  Any
+   * existing data is not removed. This function is deprecated and will be
    * removed in a future version of ACE. Please use ACE_Registry_ImpExp
    * or ACE_Ini_ImpExp instead.
    */
   int import_config (const ACE_TCHAR* filename);
 
   /**
-   * Determine if the contents of this object is the same as the 
+   * Determine if the contents of this object is the same as the
    * contents of the object on the right hand side.
    * Returns 1 (True) if they are equal and 0 (False) if they are not equal
    */
   int operator==(const ACE_Configuration& rhs) const;
 
   /**
-   * Determine if the contents of this object are different from the 
+   * Determine if the contents of this object are different from the
    * contents of the object on the right hand side.
    * Returns 0 (False) if they are equal and 1 (True) if they are not equal
    */

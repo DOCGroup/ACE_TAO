@@ -236,9 +236,9 @@ public:
   static ACE_Time_Value gettimeofday_hr (void);
 
   /**
-   * THIS FUNCTION IS DEPRECATED.  PLEASE USE <ACE_OS::gettimeofday>
-   * INSTEAD!  Calls <ACE_High_Res_Timer::hrtime_to_tv> passing
-   * <ACE_OS::gethrtime>.  This function can be used to parameterize
+   * @deprecated THIS FUNCTION IS DEPRECATED.  PLEASE USE
+   * <ACE_OS::gettimeofday> INSTEAD!  Calls <ACE_High_Res_Timer::hrtime_to_tv>
+   * passing <ACE_OS::gethrtime>.  This function can be used to parameterize
    * objects such as <ACE_Timer_Queue::gettimeofday>.  If
    * <global_scale_factor_> is not set, and we're on a platform that
    * requires <global_scale_factor_> (e.g., Win32),

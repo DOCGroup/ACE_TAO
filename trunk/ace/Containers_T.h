@@ -494,9 +494,8 @@ public:
   int next (T *&) const;
 
   /**
-   * Return the address of next (current) unvisited item in the list.
-   * 0 if there is no more element available.
-   * DEPRECATED
+   * @deprecated Return the address of next (current) unvisited item in
+   * the list. 0 if there is no more element available.
    */
   T *next (void) const;
 
@@ -1024,10 +1023,9 @@ public:
   int next (T *&);
 
   /**
-   * Delegates to ACE_Double_Linked_List_Iterator, except that whereas
-   * the Double_Linked_List version of next returns the node, this next
+   * @deprecated Delegates to ACE_Double_Linked_List_Iterator, except that
+   * whereas the Double_Linked_List version of next returns the node, this next
    * returns the contents of the node
-   * DEPRECATED
    */
   T *next (void) const;
 
@@ -1085,8 +1083,7 @@ public:
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&);
 
-  /// Delegates to ACE_Double_Linked_List_Iterator.
-  /// DEPRECATED
+  /// @deprecated Delegates to ACE_Double_Linked_List_Iterator.
   T *next (void) const;
 
   /// Removes the current item (i.e., <next>) from the list.
