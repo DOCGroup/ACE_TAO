@@ -1,3 +1,8 @@
+Sun Sep 26 12:30:54 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Added valuetype to necessary projects for vc7.1
+
 Sun Sep 26 19:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
