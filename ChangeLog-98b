@@ -1,3 +1,9 @@
+Thu Nov 12 09:07:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: use ../diffs if building ace+tao kit, so
+          we no longer need a ../diffs symlink in TAO directory.  Thanks
+          to Hans Rohnert <rohnert@scr.siemens.com> for motivating this.
+
 Wed Nov 11 23:11:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * bin/ACEutils.pm: Updated to include $EXEPREFIX, which is used
@@ -5,8 +11,8 @@ Wed Nov 11 23:11:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Nov 11 01:08:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added a link to Ossama's ACE Configuration
-	  Project.
+        * ACE-INSTALL.html: Added a link to Ossama's ACE Configuration
+          Project.
 
 Tue Nov 10 22:29:00 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -14,8 +20,8 @@ Tue Nov 10 22:29:00 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Nov 10 22:24:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/tutorials: Integrated Umar's code examples from
-	  the ACE programmers manual.
+        * docs/tutorials: Integrated Umar's code examples from
+          the ACE programmers manual.
 
 Tue Nov 10 21:53:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
