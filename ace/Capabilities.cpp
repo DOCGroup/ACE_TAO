@@ -254,7 +254,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
     return -1;
 
   ACE_StringCapEntry *scap =
-    ACE_dynamic_cast (ACE_StringCapEntry *, cap);
+    dynamic_cast<ACE_StringCapEntry *> (cap);
   if (scap == 0)
     return -1;
 
@@ -270,7 +270,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
     return -1;
 
   ACE_IntCapEntry *icap =
-    ACE_dynamic_cast (ACE_IntCapEntry *, cap);
+    dynamic_cast<ACE_IntCapEntry *> (cap);
   if (icap != 0)
     {
       val = icap->getval ();
@@ -278,7 +278,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
     }
 
   ACE_BoolCapEntry *bcap =
-    ACE_dynamic_cast (ACE_BoolCapEntry *, cap);
+    dynamic_cast<ACE_BoolCapEntry *> (cap);
 
   if (bcap == 0)
     return -1;

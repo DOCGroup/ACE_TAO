@@ -95,8 +95,7 @@ ACE_Obstack_T<CHAR>::grow (CHAR c)
 
   if (this->request (1) == 0)
     {
-      CHAR *retv = ACE_reinterpret_cast (CHAR *,
-                                         this->curr_->cur_);
+      CHAR *retv = reinterpret_cast<CHAR *> (this->curr_->cur_);
       this->curr_->cur_ += sizeof (CHAR);
       *retv = c;
       return retv;
@@ -113,8 +112,7 @@ ACE_Obstack_T<CHAR>::new_chunk (void)
   ACE_Obchunk *temp;
 
   ACE_NEW_MALLOC_RETURN (temp,
-                         ACE_static_cast (ACE_Obchunk *,
-                           this->allocator_strategy_->malloc
+                         static_cast<ACE_Obchunk *> (this->allocator_strategy_->malloc
                              (sizeof (class ACE_Obchunk) + this->size_)),
                          ACE_Obchunk (this->size_),
                          0);
@@ -172,8 +170,7 @@ template <class CHAR> void
 ACE_Obstack_T<CHAR>::unwind (void* obj)
 {
   if (obj >= this->curr_->contents_ && obj < this->curr_->end_)
-    this->curr_->block_ = this->curr_->cur_ = ACE_reinterpret_cast (char*,
-                                                                    obj);
+    this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
   else
     this->unwind_i (obj);
 }
@@ -189,8 +186,7 @@ ACE_Obstack_T<CHAR>::unwind_i (void* obj)
   if (curr)
     {
       this->curr_ = curr;
-      this->curr_->block_ = this->curr_->cur_ = ACE_reinterpret_cast (char*,
-                                                                      obj);
+      this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
     }
   else if (obj != 0)
     ACE_ERROR ((LM_ERROR,

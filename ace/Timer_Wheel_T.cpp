@@ -273,7 +273,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> u_int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_spoke
   (const ACE_Time_Value& t) const
 {
-  return ACE_static_cast(u_int, (t.msec () >> this->res_bits_) & (this->spoke_count_ - 1));
+  return static_cast<u_int> ((t.msec () >> this->res_bits_) & (this->spoke_count_ - 1));
 }
 
 /// Generates a unique timer_id for the given spoke. It should be pretty
@@ -304,7 +304,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::generate_timer_id (u_int spoke)
 #  pragma warning(push)
 #  pragma warning(disable : 4311)
 #endif /* ACE_WIN64 */
-  long next_cnt = ACE_reinterpret_cast (long, root->get_act ());
+  long next_cnt = reinterpret_cast<long> (root->get_act ());
 #if defined (ACE_WIN64)
 #  pragma warning(pop)
 #endif /* ACE_WIN64 */
@@ -359,7 +359,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::generate_timer_id (u_int spoke)
 #  pragma warning(push)
 #  pragma warning(disable : 4312)
 #endif /* ACE_WIN64 */
-          root->set_act (ACE_reinterpret_cast (void*, next_cnt));
+          root->set_act (reinterpret_cast<void*> (next_cnt));
 #if defined (ACE_WIN64)
 #  pragma warning(pop)
 #endif /* ACE_WIN64 */

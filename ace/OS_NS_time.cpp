@@ -76,26 +76,24 @@ ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
                             (tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
     ACE_PSOS_Time_t::year_shift;
   date_ |= (ACE_PSOS_Time_t::month_mask &
-            ACE_static_cast (u_long,
-                             tm_struct->tm_mon + ACE_PSOS_Time_t::month_origin)) <<
+            static_cast<u_long> (tm_struct->tm_mon + ACE_PSOS_Time_t::month_origin)) <<
     ACE_PSOS_Time_t::month_shift;
   date_ |= ACE_PSOS_Time_t::day_mask &
-    ACE_static_cast (u_long, tm_struct->tm_mday);
+    static_cast<u_long> (tm_struct->tm_mday);
   // Encode time values from tm struct into pSOS time bit array.
   time_ = (ACE_PSOS_Time_t::hour_mask  &
-            ACE_static_cast (u_long, tm_struct->tm_hour)) <<
+            static_cast<u_long> (tm_struct->tm_hour)) <<
     ACE_PSOS_Time_t::hour_shift;
   time_ |= (ACE_PSOS_Time_t::minute_mask &
-            ACE_static_cast (u_long, tm_struct->tm_min)) <<
+            static_cast<u_long> (tm_struct->tm_min)) <<
     ACE_PSOS_Time_t::minute_shift;
   time_ |= ACE_PSOS_Time_t::second_mask &
-    ACE_static_cast (u_int, tm_struct->tm_sec);
+    static_cast<u_int> (tm_struct->tm_sec);
 
   // encode nanoseconds as system clock ticks
-  ticks_ = ACE_static_cast (u_long,
-                            ((ACE_static_cast (double, t.tv_nsec) *
-                              ACE_static_cast (double, KC_TICKS2SEC)) /
-                             ACE_static_cast (double, 1000000000)));
+  ticks_ = static_cast<u_long> (((static_cast<double> (t.tv_nsec) *
+                              static_cast<double> (KC_TICKS2SEC)) /
+                             static_cast<double> (1000000000)));
 
 }
 
@@ -108,23 +106,23 @@ ACE_PSOS_Time_t::operator timespec_t (void)
   // Decode date and time bit arrays and fill in fields of tm_struct.
 
   tm_struct.tm_year =
-    ACE_static_cast (int, (ACE_PSOS_Time_t::year_mask &
+    static_cast<int> ((ACE_PSOS_Time_t::year_mask &
                            (date_ >> ACE_PSOS_Time_t::year_shift))) -
     ACE_PSOS_Time_t::year_origin;
   tm_struct.tm_mon =
-    ACE_static_cast (int, (ACE_PSOS_Time_t::month_mask &
+    static_cast<int> ((ACE_PSOS_Time_t::month_mask &
                            (date_ >> ACE_PSOS_Time_t::month_shift))) -
     ACE_PSOS_Time_t::month_origin;
   tm_struct.tm_mday =
-    ACE_static_cast (int, (ACE_PSOS_Time_t::day_mask & date_));
+    static_cast<int> ((ACE_PSOS_Time_t::day_mask & date_));
   tm_struct.tm_hour =
-    ACE_static_cast (int, (ACE_PSOS_Time_t::hour_mask &
+    static_cast<int> ((ACE_PSOS_Time_t::hour_mask &
                            (time_ >> ACE_PSOS_Time_t::hour_shift)));
   tm_struct.tm_min =
-    ACE_static_cast (int, (ACE_PSOS_Time_t::minute_mask &
+    static_cast<int> ((ACE_PSOS_Time_t::minute_mask &
                            (time_ >> ACE_PSOS_Time_t::minute_shift)));
   tm_struct.tm_sec =
-    ACE_static_cast (int, (ACE_PSOS_Time_t::second_mask & time_));
+    static_cast<int> ((ACE_PSOS_Time_t::second_mask & time_));
 
   // Indicate values we don't know as negative numbers.
   tm_struct.tm_wday  = -1;
@@ -137,10 +135,9 @@ ACE_PSOS_Time_t::operator timespec_t (void)
   t.tv_sec = ACE_OS::mktime (&tm_struct);
 
   // Encode nanoseconds as system clock ticks.
-  t.tv_nsec = ACE_static_cast (long,
-                               ((ACE_static_cast (double, ticks_) *
-                                 ACE_static_cast (double, 1000000000)) /
-                                ACE_static_cast (double, KC_TICKS2SEC)));
+  t.tv_nsec = static_cast<long> (((static_cast<double> (ticks_) *
+                                 static_cast<double> (1000000000)) /
+                                static_cast<double> (KC_TICKS2SEC)));
   return t;
 }
 

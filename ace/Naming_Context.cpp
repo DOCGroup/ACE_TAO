@@ -54,7 +54,7 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_static_cast (int, ACE_OS::strlen (buf));
+  return static_cast<int> (ACE_OS::strlen (buf));
 }
 
 int
@@ -655,7 +655,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'b':
         this->base_address
-          (ACE_static_cast (char *, ACE_OS::atop (get_opt.opt_arg ())));
+          (static_cast<char *> (ACE_OS::atop (get_opt.opt_arg ())));
         break;
       case 'T':
 #if defined (ACE_HAS_TRACE)

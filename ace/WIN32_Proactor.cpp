@@ -44,7 +44,7 @@ ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         int used_with_reactor_event_loop)
   : completion_port_ (0),
     // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
-    number_of_threads_ (ACE_static_cast (DWORD, number_of_threads)),
+    number_of_threads_ (static_cast<DWORD> (number_of_threads)),
     used_with_reactor_event_loop_ (used_with_reactor_event_loop)
 {
   // Create the completion port.
@@ -121,9 +121,9 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                      const void *completion_key)
 {
 #if defined (ACE_WIN64)
-  ULONG_PTR comp_key (ACE_reinterpret_cast (ULONG_PTR, completion_key));
+  ULONG_PTR comp_key (reinterpret_cast<ULONG_PTR> (completion_key));
 #else
-  ULONG comp_key (ACE_reinterpret_cast (ULONG, completion_key));
+  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
 #endif /* ACE_WIN64 */
 
   // No locking is needed here as no state changes.
@@ -626,8 +626,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
         result_err = errno ;
 
       this->application_specific_code (asynch_result,
-                                       ACE_static_cast (size_t,
-                                                        bytes_transferred),
+                                       static_cast<size_t> (bytes_transferred),
                                        (void *) completion_key,
                                        result_err);
     }
@@ -674,14 +673,13 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
     {
       // This cast is ok since the original API calls restricted the transfer
       // counts to DWORD range.
-      bytes_transferred = ACE_static_cast (DWORD,
-                                           result->bytes_transferred ());
+      bytes_transferred = static_cast<DWORD> (result->bytes_transferred ());
       completion_key = result->completion_key();
     }
 #if defined (ACE_WIN64)
-  ULONG_PTR comp_key (ACE_reinterpret_cast (ULONG_PTR, completion_key));
+  ULONG_PTR comp_key (reinterpret_cast<ULONG_PTR> (completion_key));
 #else
-  ULONG comp_key (ACE_reinterpret_cast (ULONG, completion_key));
+  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
 #endif /* ACE_WIN64 */
 
   // Post a completion
@@ -743,13 +741,13 @@ ACE_WIN32_Proactor::close_dispatch_threads (int)
 size_t
 ACE_WIN32_Proactor::number_of_threads (void) const
 {
-  return ACE_static_cast (size_t, this->number_of_threads_);
+  return static_cast<size_t> (this->number_of_threads_);
 }
 
 void
 ACE_WIN32_Proactor::number_of_threads (size_t threads)
 {
-  this->number_of_threads_ = ACE_static_cast (DWORD, threads);
+  this->number_of_threads_ = static_cast<DWORD> (threads);
 }
 
 ACE_WIN32_Asynch_Timer::ACE_WIN32_Asynch_Timer (ACE_Handler &handler,

@@ -1071,8 +1071,7 @@ int
 ACE_Configuration_Win32Registry::load_key (const ACE_Configuration_Section_Key& key,
                                            HKEY& hKey)
 {
-  ACE_Section_Key_Win32* pKey = ACE_dynamic_cast (ACE_Section_Key_Win32*,
-                                                  get_internal_key (key));
+  ACE_Section_Key_Win32* pKey = dynamic_cast<ACE_Section_Key_Win32*> (get_internal_key (key));
   if (!pKey)
     return -1;
 
@@ -1463,8 +1462,7 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
 {
   ACE_ASSERT (this->allocator_);
   ACE_Configuration_Section_Key_Heap* pKey =
-    ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
-                      get_internal_key (key));
+    dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
 
   if (!pKey)
     {
@@ -1807,8 +1805,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
 {
   ACE_ASSERT (this->allocator_);
   ACE_Configuration_Section_Key_Heap* pKey =
-    ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
-                      get_internal_key (key));
+    dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
   if (!pKey)
     return -1;
 
@@ -1857,8 +1854,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
   ACE_ASSERT (this->allocator_);
   // cast to a heap section key
   ACE_Configuration_Section_Key_Heap* pKey =
-    ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
-                      get_internal_key (key));
+    dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
   if (!pKey)
     return -1;  // not a heap key!
 

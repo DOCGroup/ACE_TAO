@@ -437,7 +437,7 @@ ACE_Message_Queue_NT::deactivate (void)
       // Get the number of shutdown messages necessary to wake up all
       // waiting threads.
       DWORD cntr =
-        this->cur_thrs_ - ACE_static_cast (DWORD, this->cur_count_);
+        this->cur_thrs_ - static_cast<DWORD> (this->cur_count_);
       while (cntr-- > 0)
         ::PostQueuedCompletionStatus (this->completion_port_,
                                       0,
@@ -472,7 +472,7 @@ ACE_Message_Queue_NT::pulse (void)
       // waiting threads.
 
       DWORD cntr =
-        this->cur_thrs_ - ACE_static_cast (DWORD, this->cur_count_);
+        this->cur_thrs_ - static_cast<DWORD> (this->cur_count_);
       while (cntr-- > 0)
         ::PostQueuedCompletionStatus (this->completion_port_,
                                       0,

@@ -110,7 +110,7 @@ ACE_UPIPE_Stream::send (const char *buffer,
   return
     this->stream_.put (mb_p, timeout) == -1
     ? -1
-    : ACE_static_cast (ssize_t, n);
+    : static_cast<ssize_t> (n);
 }
 
 // Receive a buffer.

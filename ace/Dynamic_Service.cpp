@@ -21,7 +21,7 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name)
 {
   ACE_Service_Object *svc_obj =
     static_cast<ACE_Service_Object *> (ACE_Dynamic_Service_Base::instance (name));
-  return ACE_dynamic_cast (TYPE *, svc_obj);
+  return dynamic_cast<TYPE *> (svc_obj);
 }
 
 ACE_RCSID(ace, Dynamic_Service, "$Id$")

@@ -112,8 +112,7 @@ ACE_Service_Repository::open (int size)
                   ACE_Service_Type *[size],
                   -1);
 
-  this->service_vector_ = ACE_const_cast (const ACE_Service_Type **,
-                                          temp);
+  this->service_vector_ = const_cast<const ACE_Service_Type **> (temp);
   this->total_size_ = size;
   return 0;
 }
@@ -154,8 +153,7 @@ ACE_Service_Repository::fini (void)
                         ACE_LIB_TEXT ("finalizing %s\n"),
                         this->service_vector_[i]->name ()));
           ACE_Service_Type *s =
-            ACE_const_cast (ACE_Service_Type *,
-                            this->service_vector_[i]);
+            const_cast<ACE_Service_Type *> (this->service_vector_[i]);
           // Collect errors.
           retval += s->fini ();
         }
@@ -182,8 +180,7 @@ ACE_Service_Repository::close (void)
 
       for (int i = this->current_size_ - 1; i >= 0; i--)
         {
-          ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
-                                                this->service_vector_[i]);
+          ACE_Service_Type *s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
           --this->current_size_;
           delete s;
         }
@@ -284,8 +281,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
           }
         else
           {
-            s = ACE_const_cast (ACE_Service_Type *,
-                                this->service_vector_[i]);
+            s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
             this->service_vector_[i] = sr;
             return_value = 0;
           }
@@ -365,8 +361,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
     if (i == -1)
       return -1;
 
-    s = ACE_const_cast (ACE_Service_Type *,
-                        this->service_vector_[i]);
+    s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
     --this->current_size_;
 
     if (this->current_size_ >= 1)

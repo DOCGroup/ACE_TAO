@@ -1220,7 +1220,7 @@ ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result *asynch_res
 
   ssize_t op_return = aio_return (asynch_result);
   if (op_return > 0)
-    transfer_count = ACE_static_cast (size_t, op_return);
+    transfer_count = static_cast<size_t> (op_return);
   // else transfer_count is already 0, error_status reports the error.
   return 1; // completed
 }
@@ -1320,7 +1320,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   if (slot < 0)
     return -1;
 
-  size_t index = ACE_static_cast (size_t, slot);
+  size_t index = static_cast<size_t> (slot);
 
   result_list_[index] = result;   //Store result ptr anyway
   aiocb_list_cur_size_++;
@@ -1382,7 +1382,7 @@ ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   //setup OS notification methods for this aio
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
 
-  return ACE_static_cast (ssize_t, i);
+  return static_cast<ssize_t> (i);
 }
 
 // start_aio_i  has new return codes
@@ -1837,12 +1837,12 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
 #if defined (__FreeBSD__)
-  result->aio_sigevent.sigev_value.sigval_int = ACE_static_cast (int, i);
+  result->aio_sigevent.sigev_value.sigval_int = static_cast<int> (i);
 #else
-  result->aio_sigevent.sigev_value.sival_int = ACE_static_cast (int, i);
+  result->aio_sigevent.sigev_value.sival_int = static_cast<int> (i);
 #endif /* __FreeBSD__ */
 
-  return ACE_static_cast (ssize_t, i);
+  return static_cast<ssize_t> (i);
 }
 
 int
@@ -1887,9 +1887,9 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
       // define index to start
       // nothing will happen if it contains garbage
 #if defined (__FreeBSD__)
-      index = ACE_static_cast (size_t, sig_info.si_value.sigval_int);
+      index = static_cast<size_t> (sig_info.si_value.sigval_int);
 #else
-      index = ACE_static_cast (size_t, sig_info.si_value.sival_int);
+      index = static_cast<size_t> (sig_info.si_value.sival_int);
 #endif
       // Assume we have a correctly-functioning implementation, and that
       // there is one I/O to process, and it's correctly specified in the
