@@ -33,6 +33,18 @@
 
 #include /**/ "ace/pre.h"
 
+// ==== Handcrafted
+namespace CONV_FRAME
+{
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetId;
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponent;
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponentInfo;
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetContext;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_ch.cpp:52
 
@@ -60,4 +72,3 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CONV_FRAME::Cod
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-

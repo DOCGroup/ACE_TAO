@@ -30,7 +30,6 @@
 
 
 #include "CurrentC.h"
-#include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -91,7 +90,7 @@ TAO::Objref_Traits<CORBA::Current>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -102,7 +101,7 @@ CORBA::Current::Current (void)
 CORBA::Current::~Current (void)
 {}
 
-void 
+void
 CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -120,10 +119,10 @@ CORBA::Current::_narrow (
     {
       return Current::_nil ();
     }
-  
+
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-  
+
   return Current::_duplicate (proxy);
 }
 
@@ -137,10 +136,10 @@ CORBA::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-  
+
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
-  
+
   return Current::_duplicate (proxy);
 }
 
@@ -151,7 +150,7 @@ CORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -196,40 +195,6 @@ CORBA::Current::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_CORBA_Current[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4375), 
-  ACE_NTOHL (0x7272656e), 
-  ACE_NTOHL (0x743a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/Current:1.0
-    8,
-  ACE_NTOHL (0x43757272), 
-  ACE_NTOHL (0x656e7400),  // name = Current
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Current (
-    CORBA::tk_objref,
-    sizeof (_oc_CORBA_Current),
-    (char *) &_oc_CORBA_Current,
-    0,
-    sizeof (CORBA::Current)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_Current =
-    &_tc_TAO_tc_CORBA_Current;
-}
-
-// TAO_IDL - Generated from
 // be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -243,7 +208,7 @@ namespace CORBA
     TAO_Objref_Var_T<
         CORBA::Current
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::Current
@@ -260,11 +225,10 @@ namespace CORBA
     TAO_Objref_Var_T< \
         CORBA::Current
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::Current
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -30,6 +30,41 @@
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 
+
+// ======= Handcrafted
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_defn.cpp:284
+static const CORBA::Long _oc_CORBA_Current[] =
+{
+    TAO_ENCAP_BYTE_ORDER, // byte order
+  30,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f4375),
+  ACE_NTOHL (0x7272656e),
+  ACE_NTOHL (0x743a312e),
+  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/Current:1.0
+    8,
+  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x656e7400),  // name = Current
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_CORBA_Current (
+    CORBA::tk_objref,
+    sizeof (_oc_CORBA_Current),
+    (char *) &_oc_CORBA_Current,
+    0,
+    sizeof (CORBA::Current)
+  );
+
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_Current =
+    &_tc_TAO_tc_CORBA_Current;
+}
+
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
 
@@ -115,5 +150,4 @@ operator>>= (
         CORBA::Current \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

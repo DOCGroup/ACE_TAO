@@ -78,11 +78,6 @@ namespace CONV_FRAME
   typedef CORBA::ULong_out CodeSetId_out;
 
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetId;
-
-  // TAO_IDL - Generated from
   // be/be_type.cpp:258
 
   struct CodeSetComponent;
@@ -146,11 +141,6 @@ namespace CONV_FRAME
   };
 
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponent;
-
-  // TAO_IDL - Generated from
   // be/be_type.cpp:258
 
   struct CodeSetComponentInfo;
@@ -181,11 +171,6 @@ namespace CONV_FRAME
   };
 
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetComponentInfo;
-
-  // TAO_IDL - Generated from
   // be/be_type.cpp:258
 
   struct CodeSetContext;
@@ -212,10 +197,7 @@ namespace CONV_FRAME
     CONV_FRAME::CodeSetId wchar_data;
   };
 
-  // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
 
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodeSetContext;
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:66

@@ -7,12 +7,15 @@
  * following command:
  *
  *   tao_idl
- *        -o orig -Sa -Ge 1 -GT 
+ *        -o orig -Ge 1 -GT -GA
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=TAO_Export.h
  *        -Wb,pre_include="ace/pre.h"
  *        -Wb,post_include="ace/post.h"
  *        CONV_FRAME.pidl
+ *
+ * Remember to patch the generated files using the patch command. Look
+ * at diff/CONV_FRAME.diff for the patches.
  *
  */
 
@@ -41,4 +44,3 @@ module CONV_FRAME {
 };
 
 #endif /* TAO_CORBA_CONV_FRAME_PIDL */
-
