@@ -593,7 +593,7 @@ CORBA_ExceptionList::item (CORBA::ULong index,
   CORBA::TypeCode_ptr *tc;
   env.clear ();
   if (this->tc_list_.get (tc, index) == -1)
-    TAO_THROW_ENV (CORBA::TypeCode::Bounds (), env);
+    TAO_THROW_ENV_RETURN (CORBA::TypeCode::Bounds (), env, 0);
   else
     {
       return CORBA::TypeCode::_duplicate (*tc);

@@ -1831,7 +1831,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
           status = stream.decode (tc, buf, this, env);
           TAO_CHECK_ENV_SYS;
         }
-      TAO_CATCHANY
+      TAO_CATCHANY_SYS
         {
           delete [] buf;
           TAO_RETHROW_RETURN_SYS (0);
