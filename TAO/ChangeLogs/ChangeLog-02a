@@ -1,3 +1,10 @@
+Fri Nov 24 14:07:13 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	  Changed CosProperty_Hash_Key::pname_ to an _var type to fix a
+	  small memory leak. Thanks to Greg Hall greg.j.hall@boeing.com
+	  for providing the fix. 
+
 Thu Nov 23 18:21:13 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/Makefile:

@@ -66,7 +66,7 @@ public:
 
 // private:
 
-  CosPropertyService::PropertyName pname_;
+  CosPropertyService::PropertyName_var pname_;
   // Storage pointer.
 };
 
@@ -92,7 +92,7 @@ public:
   // Destructor.
 
 //private:
-  
+
   CORBA::Any pvalue_;
   // property value.
 
@@ -249,7 +249,7 @@ public:
                      CosPropertyService::UnsupportedTypeCode,
                      CosPropertyService::UnsupportedProperty,
                      CosPropertyService::ReadOnlyProperty));
-  
+
   // Store the property in the hash after checking for validity of the
   // property name, duplicate name, type code over writing etc.
 
