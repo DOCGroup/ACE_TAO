@@ -1,3 +1,15 @@
+Wed Apr 18 03:43:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* examples/PluggableUDP/tests/Basic/client.dsp:
+	* examples/PluggableUDP/tests/Basic/server.dsp:
+	* examples/PluggableUDP/tests/Performance/client.dsp:
+	* examples/PluggableUDP/tests/Performance/server.dsp:
+	* examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+	* examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+
+	  Fixed settings for Release versions. Thanks to Bala
+	  for pointing that out.
+
 Tue Apr 17 22:33:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/RTCORBA/Thread_Pool/server.cpp (main): Changed FALSE to 0.

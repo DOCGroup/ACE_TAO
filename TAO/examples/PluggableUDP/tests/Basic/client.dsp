@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao\PortableServer"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "UDP Client - Win32 Debug"
 
@@ -146,7 +146,7 @@ InputName=client
 SOURCE="$(InputPath)"
 
 "d" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\..\..\tao_idl\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
@@ -263,7 +263,7 @@ SOURCE=.\UDP.idl
 !IF  "$(CFG)" == "UDP Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__UDP_I="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__UDP_I="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\UDP.idl
 InputName=UDP
@@ -342,13 +342,13 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
-USERDEP__UDP_I="..\..\..\..\tao_idl\tao_idl.exe"	
+USERDEP__UDP_I="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\UDP.idl
 InputName=UDP
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -382,13 +382,13 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
-USERDEP__UDP_I="..\..\..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__UDP_I="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\UDP.idl
 InputName=UDP
 
 BuildCmds= \
-	..\..\..\..\tao_idl\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
