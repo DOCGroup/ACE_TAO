@@ -1,11 +1,17 @@
+Mon Jan  5 14:32:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html
+
+	  Updated build instructions.
+
 Mon Jan  5 01:44:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CompilerElements/CompilerElements.vcproj:
         * CCF/CCF/IDL2/IDL2.vcproj:
         * CCF/CCF/IDL3/IDL3.vcproj:
-        
+
           Added files recently checked in to projects.
-          
+
         * CIDLC/CIDLC.vcproj:
         * CIDLC/Collectors.hpp:
         * CIDLC/DescriptorGenerator.cpp:
@@ -21,7 +27,7 @@ Mon Jan  5 01:44:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
         * CIDLC/cidlc.cpp:
-        
+
           Overhauled the entire backend to integrate with the new
           frontend traversal framework, and with recently supported
           features.
