@@ -19,6 +19,8 @@
 
 #include "Log_Message_Receiver.h"
 #include "Server_Logging_Handler_T.h"
+#include "ace/OS.h"
+#include "ace/svc_export.h"
 
 // Typedefs for Logging Handlers & acceptors using a static type based
 // log message receivers.
@@ -60,7 +62,7 @@ typedef ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Static_Receiver,
 // log message receivers.
 
 // Synched message receivers
-typedef Log_Message_Receiver<ACE_LOGGER_SYNCH> 
+typedef Log_Message_Receiver<ACE_LOGGER_SYNCH>
         Synch_Receiver;
 
 // synched logging handlers
@@ -84,9 +86,9 @@ typedef ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver,
 // Define external acceptors
 
 // Acceptors that use static/type based log message receiver.
-typedef Null_Synch_Logging_Handler_Static_Receiver_Acceptor 
+typedef Null_Synch_Logging_Handler_Static_Receiver_Acceptor
         ACE_Server_Logging_Acceptor;
-typedef Synch_Thr_Logging_Handler_Static_Receiver_Acceptor 
+typedef Synch_Thr_Logging_Handler_Static_Receiver_Acceptor
         ACE_Thr_Server_Logging_Acceptor;
 
 ACE_SVC_FACTORY_DECLARE (ACE_Server_Logging_Acceptor)

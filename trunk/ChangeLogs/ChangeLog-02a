@@ -1,3 +1,13 @@
+Wed Apr 10 18:57:11 2002  Ossama Othman  <ossama@uci.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.h:
+	* netsvcs/lib/Name_Handler.h:
+	* netsvcs/lib/Server_Logging_Handler.h:
+	* netsvcs/lib/TS_Clerk_Handler.h:
+	* netsvcs/lib/TS_Server_Handler.h:
+
+	  Include "ace/svc_export.h" to pull in ACE_Svc_Export macro.
+
 Wed Apr 10 19:37:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-g++-common.h:
