@@ -1,3 +1,11 @@
+Mon Apr  9 18:20:22 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Makefile (DIRS)
+	* tests/Portable_Interceptors/Makefile.bor (DIRS):
+
+	  Added the Request_Interceptor_Flow test directory to the list of
+	  directories to recurse into.
+
 Mon Apr  9 18:17:14 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.h (parse_string):
