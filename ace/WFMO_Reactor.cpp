@@ -672,11 +672,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
   // have been schedule for deletion
   if (this->handles_to_be_deleted_ > 0 || this->handles_to_be_suspended_ > 0)
     {
-      // This will help us in keeping track of the last valid slot in the
-      // handle arrays
-      size_t last_valid_slot = this->max_handlep1_ - 1;
-
-      for (size_t i = 0; i <= last_valid_slot; i++)
+      for (size_t i = 0; i < this->max_handlep1_; i++)
         {
           // This stuff is necessary here, since we should not make
           // the upcall until all the internal data structures have
@@ -731,29 +727,25 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 
           // See if this entry is scheduled for deletion or suspension
           // If so we need to clean up
-          if (this->current_info_[i].delete_entry_ || this->current_info_[i].suspend_entry_)
+          if (this->current_info_[i].delete_entry_ ||
+              this->current_info_[i].suspend_entry_  )
             {
-              if (i == last_valid_slot)
-                // If this is the last handle in the set, no need to swap
-                // places. Simply remove it.
-                {
-                  // Reset the info in this slot
-                  this->current_info_[i].reset ();
-                  this->current_handles_[i] = ACE_INVALID_HANDLE;
-                }
-              else
+              size_t last_valid_slot = this->max_handlep1_ - 1;
+              // If this is the last handle in the set, no need to swap
+              // places. Simply remove it.
+              if (i < last_valid_slot)
                 // Swap this handle with the last valid handle
                 {
                   // Struct copy
-                  this->current_info_[i] = this->current_info_[last_valid_slot];
-                  this->current_handles_[i] = this->current_handles_[last_valid_slot];
-                  // Reset the info in the last slot
-                  this->current_info_[last_valid_slot].reset ();
-                  this->current_handles_[last_valid_slot] = ACE_INVALID_HANDLE;
+                  this->current_info_[i] =
+                    this->current_info_[last_valid_slot];
+                  this->current_handles_[i] =
+                    this->current_handles_[last_valid_slot];
                 }
-              // Reset the last valid slot and clean up the entry in the
-              // <to_be_deleted_set_>
-              last_valid_slot--;
+              // Reset the info in this slot
+              this->current_info_[last_valid_slot].reset ();
+              this->current_handles_[last_valid_slot] = ACE_INVALID_HANDLE;
+              this->max_handlep1_--;
             }
 
           // Now that all internal structures have been updated, make
@@ -761,8 +753,6 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
           if (event_handler != 0)
             event_handler->handle_close (handle, masks);
         }
-      // Reset <this->max_handlep1_>
-      this->max_handlep1_ = last_valid_slot + 1;
     }
 
   return 0;
@@ -771,13 +761,10 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_current_infos (void)
 int
 ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
 {
-  size_t i;
-
   // Go through the <suspended_handle> array
   if (this->handles_to_be_deleted_ > 0 || this->handles_to_be_resumed_ > 0)
     {
-      size_t last_valid_slot = this->suspended_handles_ - 1;
-      for (i = 0; i <= last_valid_slot; i++)
+      for (size_t i = 0; i < this->suspended_handles_; i++)
         {
           // This stuff is necessary here, since we should not make
           // the upcall until all the internal data structures have
@@ -830,21 +817,24 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
               this->handles_to_be_resumed_--;
             }
 
+          // If an entry needs to be removed, either because it
+          // was deleted or resumed, remove it now before doing
+          // the upcall.
           if (this->current_suspended_info_[i].resume_entry_ ||
               this->current_suspended_info_[i].delete_entry_)
             {
-              // Is this the last entry
-              if (i == last_valid_slot)
-                // Reset the <suspended> arrays entries
-                this->current_suspended_info_[i].reset ();
-              else
-                {
-                  // Struct copy
-                  this->current_suspended_info_[i] = this->current_suspended_info_[last_valid_slot];
-                  this->current_suspended_info_[last_valid_slot].reset ();
-                }
-              // Reduce the number of suspended handles
-              last_valid_slot--;
+              size_t last_valid_slot = this->suspended_handles_ - 1;
+              // Net effect is that we're removing an entry and
+              // compressing the list from the end.  So, if removing
+              // an entry from the middle, copy the last valid one to the
+              // removed slot.  Reset the end and decrement the number
+              // of suspended handles.
+              if (i < last_valid_slot)
+                // Struct copy
+                this->current_suspended_info_[i] =
+                  this->current_suspended_info_[last_valid_slot];
+              this->current_suspended_info_[last_valid_slot].reset ();
+              this->suspended_handles_--;
             }
 
           // Now that all internal structures have been updated, make
@@ -852,9 +842,6 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
           if (event_handler != 0)
             event_handler->handle_close (handle, masks);
         }
-
-      // Reset <this->suspended_handles_>
-      this->suspended_handles_ = last_valid_slot + 1;
     }
 
   return 0;
@@ -863,10 +850,8 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_suspension_infos (void)
 int
 ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
 {
-  int i;
-
   // Go through the <to_be_added_*> arrays
-  for (i = 0; i < (int) this->handles_to_be_added_; i++)
+  for (size_t i = 0; i < this->handles_to_be_added_; i++)
     {
       // This stuff is necessary here, since we should not make
       // the upcall until all the internal data structures have
