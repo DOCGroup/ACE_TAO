@@ -1,4 +1,7 @@
-Sun Apr 18 02:17:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Sun Apr 18 03:03:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Servant_Base (TAO_RefCountServantBase): Added reference
+	  counted mix-in class (as per CORBA spec).
 
 	* tao/Servant_Base.cpp (operator= and TAO_ServantBase):
 
