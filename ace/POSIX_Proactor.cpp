@@ -746,14 +746,9 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
   ACE_ASSERT (ai != this->aiocb_list_max_size_);
   
   // Retrive the result pointer.
-  ACE_POSIX_Asynch_Result *asynch_result = ACE_dynamic_cast (ACE_POSIX_Asynch_Result *,
-                                                             this->aiocb_list_[ai]);
-  if (asynch_result == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t)::%p\n",
-                       "ACE_POSIX_AIOCB_Proactor::handle_events:"
-                       "Dynamic cast to ACE_POSIX_Asynch_Result failed"),
-                      -1);
+  ACE_POSIX_Asynch_Result *asynch_result =
+    (ACE_POSIX_Asynch_Result *) this->aiocb_list_[ai];
+
 
   // Invalidate entry in the aiocb list.
   this->aiocb_list_[ai] = 0;
