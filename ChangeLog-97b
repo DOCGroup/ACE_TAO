@@ -5,15 +5,15 @@ Sun Nov 09 09:27:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Nov  9 02:07:02 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.h: Moved the TAO-specific #defines into TAO, where they
- 	  belong.  Thanks to David Levine and Chris Cleeland for insisting
- 	  on this...
+        * ace/OS.h: Moved the TAO-specific #defines into TAO, where they
+          belong.  Thanks to David Levine and Chris Cleeland for insisting
+          on this...
 
 Sun Nov  9 03:14:03 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (wait): Merged the two blocks within this
-	  function so that we can avoid relase/acquire lock
-	  unnecessarily.  Thanks to Doug for his careful scrutiny.
+        * ace/Thread_Manager.cpp (wait): Merged the two blocks within this
+          function so that we can avoid relase/acquire lock
+          unnecessarily.  Thanks to Doug for his careful scrutiny.
 
 Sat Nov 08 23:20:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -21,53 +21,53 @@ Sat Nov 08 23:20:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Nov  8 15:46:30 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/INET_Addr.cpp: Enhanced the get_host_name() functions so
- 	  that if the sin_addr.s_addr == INADDR_ANY we assume that we're a
- 	  server, and we return our "hostname".
+        * ace/INET_Addr.cpp: Enhanced the get_host_name() functions so
+          that if the sin_addr.s_addr == INADDR_ANY we assume that we're a
+          server, and we return our "hostname".
 
-	* Added a number of minor fixes for UNIXWARE with G++.  Thanks to
- 	  Michael Rueger <m_rueger@syscomp.de> for reporting these.
+        * Added a number of minor fixes for UNIXWARE with G++.  Thanks to
+          Michael Rueger <m_rueger@syscomp.de> for reporting these.
 
-	* ace/Thread_Manager.h: Both Irix5 and VxWorks have problems with
- 	  local typedefs with GCC.  Thanks to Laura Paterno
- 	  <lpaterno@d0chb.fnal.gov> for reporting this.
+        * ace/Thread_Manager.h: Both Irix5 and VxWorks have problems with
+          local typedefs with GCC.  Thanks to Laura Paterno
+          <lpaterno@d0chb.fnal.gov> for reporting this.
 
-	* ace/Timer_Queue_Adapters.cpp: Changed some errant uses of lock_
- 	  to mutex_.  Thanks to David Levine for reporting this.
+        * ace/Timer_Queue_Adapters.cpp: Changed some errant uses of lock_
+          to mutex_.  Thanks to David Levine for reporting this.
 
-	* ace/ACE.cpp: set_handle_limit() was buggy because it never
- 	  increased the handle limit.  With this change we do not need
- 	  special code in ACE_Select_Reactor with ACE_LACKS_RLIMIT because
- 	  this is managed in ACE::set_handle_limit.  Thanks to Arturo for
- 	  this fix.
+        * ace/ACE.cpp: set_handle_limit() was buggy because it never
+          increased the handle limit.  With this change we do not need
+          special code in ACE_Select_Reactor with ACE_LACKS_RLIMIT because
+          this is managed in ACE::set_handle_limit.  Thanks to Arturo for
+          this fix.
 
-	* ace/Select_Reactor.cpp (open): We no longer need to
- 	  conditionally compile for ACE::set_handle_limit().  Thanks to
- 	  Arturo for this fix.
+        * ace/Select_Reactor.cpp (open): We no longer need to
+          conditionally compile for ACE::set_handle_limit().  Thanks to
+          Arturo for this fix.
 
 Fri Nov  7 18:53:13 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
-	* ace/config-netbsd.h: Added file for NetBSD 1.2G.
+        * ace/config-netbsd.h: Added file for NetBSD 1.2G.
 
-	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
- 	  Added ECONNREFUSED as a "valid failure", alongwith EWOULDBLOCK.
+        * tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
+          Added ECONNREFUSED as a "valid failure", alongwith EWOULDBLOCK.
 
-	* ace/OS.i (msync): msync on NetBSD takes only two parameters as
- 	  opposed to the usual three. (It doesnt have the "flags"
- 	  parameter.)  The ACE_HAS_BROKEN_NETBSD_MSYNC flag works around
- 	  that.
+        * ace/OS.i (msync): msync on NetBSD takes only two parameters as
+          opposed to the usual three. (It doesnt have the "flags"
+          parameter.)  The ACE_HAS_BROKEN_NETBSD_MSYNC flag works around
+          that.
 
 Fri Nov  7 16:04:35 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp: Added a missing '>' for one of the
- 	  template specializations.  Thanks to Torbjorn Lindgren
- 	  <tl@funcom.no> for reporting this.
+        * ace/Thread_Manager.cpp: Added a missing '>' for one of the
+          template specializations.  Thanks to Torbjorn Lindgren
+          <tl@funcom.no> for reporting this.
 
-	* ace/OS.cpp: ACE_OS::ACE_OS is defined in OS.cpp, which causes
- 	  the compiler to complain about multiple definitions.  Other
- 	  ACE_CLASS_IS_NAMESPACE doesn't have constructors, which is why
- 	  they work.  Thanks to Torbjorn Lindgren <tl@funcom.no> for
- 	  reporting this.
+        * ace/OS.cpp: ACE_OS::ACE_OS is defined in OS.cpp, which causes
+          the compiler to complain about multiple definitions.  Other
+          ACE_CLASS_IS_NAMESPACE doesn't have constructors, which is why
+          they work.  Thanks to Torbjorn Lindgren <tl@funcom.no> for
+          reporting this.
 
 Fri Nov 07 15:14:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -89,13 +89,13 @@ Fri Nov 07 10:05:12 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Nov  7 09:58:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Connector.cpp (fini): Added a call to
- 	  ACE_Map_Manager::close() in fini() since the destructor may not
- 	  be called.  Thanks to Eric C. Newton <ecn@smart.net> for
- 	  reporting this.
+        * ace/Connector.cpp (fini): Added a call to
+          ACE_Map_Manager::close() in fini() since the destructor may not
+          be called.  Thanks to Eric C. Newton <ecn@smart.net> for
+          reporting this.
 
-	* ace/{FILE,SPIPE}_Addr.cpp (set): Added a return value.  Thanks
- 	  to Marios Zikos <zikos@csi.forth.gr> for reporting this.
+        * ace/{FILE,SPIPE}_Addr.cpp (set): Added a return value.  Thanks
+          to Marios Zikos <zikos@csi.forth.gr> for reporting this.
 
 Fri Nov 07 02:45:55 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -103,134 +103,134 @@ Fri Nov 07 02:45:55 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Nov  7 01:06:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Message_Queue: Added a new method called deactivated(),
- 	  which returns true if the queue has been deactivated.  Thanks to
- 	  Wei Chiang <chiang@tele.nokia.fi> for reporting this.
+        * ace/Message_Queue: Added a new method called deactivated(),
+          which returns true if the queue has been deactivated.  Thanks to
+          Wei Chiang <chiang@tele.nokia.fi> for reporting this.
 
-	* ace/{config-chorus.h,OS.cpp}: Added a new macro called
- 	  ACE_CHORUS_DEFAULT_MIN_STACK_SIZE.  Thanks to Wei Chiang
- 	  <chiang@tele.nokia.fi> for reporting this.
+        * ace/{config-chorus.h,OS.cpp}: Added a new macro called
+          ACE_CHORUS_DEFAULT_MIN_STACK_SIZE.  Thanks to Wei Chiang
+          <chiang@tele.nokia.fi> for reporting this.
 
-	* ace/DEV_Addr.cpp,
-	  ace/FILE_Addr.cpp,
-	  ace/SPIPE_Addr.cpp,
-	  ace/INET_Addr.cpp,
-	  ace/UNIX_Addr.cpp: Fixed the set(const Foo &) method so that
-	  it correctly detects cases where we're passed in a
-	  ACE_Addr::sap_any.  This is a total hack...
+        * ace/DEV_Addr.cpp,
+          ace/FILE_Addr.cpp,
+          ace/SPIPE_Addr.cpp,
+          ace/INET_Addr.cpp,
+          ace/UNIX_Addr.cpp: Fixed the set(const Foo &) method so that
+          it correctly detects cases where we're passed in a
+          ACE_Addr::sap_any.  This is a total hack...
 
-	* ace/{OS.h,Addr.cpp}: Added a new AF_ANY flag, which is set to -1.
+        * ace/{OS.h,Addr.cpp}: Added a new AF_ANY flag, which is set to -1.
 
 Thu Nov  6 23:05:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * Changed the obtusely named ACE_SYNCH_1 and ACE_SYNCH_2 macros to
- 	  ACE_SYNCH_DECL and ACE_SYNCH_USE, respectively.  Thanks to Mike
- 	  Kamrad <J.M.KAMRAD.II@cdev.com> for suggesting this.
+          ACE_SYNCH_DECL and ACE_SYNCH_USE, respectively.  Thanks to Mike
+          Kamrad <J.M.KAMRAD.II@cdev.com> for suggesting this.
 
-	* ace/Select_Reactor.cpp, ace/ACE.cpp: Broaded the comparison so
- 	  that we only try to use {set|get}rlimit() if ACE_LACKS_RLIMIT is
- 	  *false*.  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
- 	  reporting this.
+        * ace/Select_Reactor.cpp, ace/ACE.cpp: Broaded the comparison so
+          that we only try to use {set|get}rlimit() if ACE_LACKS_RLIMIT is
+          *false*.  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
+          reporting this.
 
-	* ace/Object_Manager: Added support for
- 	  get_singleton_lock(ACE_Mutex *).  Thanks to Arturo Montes
- 	  <mitosys@colomsat.net.co> for reporting this.
+        * ace/Object_Manager: Added support for
+          get_singleton_lock(ACE_Mutex *).  Thanks to Arturo Montes
+          <mitosys@colomsat.net.co> for reporting this.
 
-	* ace/Connector.cpp: If connect_n() fails make sure to return -1.
-  	  Thanks to Stephen Coy <stevec@magna.com.au> for pointing out the
- 	  problem.
+        * ace/Connector.cpp: If connect_n() fails make sure to return -1.
+          Thanks to Stephen Coy <stevec@magna.com.au> for pointing out the
+          problem.
 
-	* ace/config-sco-5.0.0.h: Removed the ACE_LACKS_RLIMIT flag.
-  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
- 	  this.
+        * ace/config-sco-5.0.0.h: Removed the ACE_LACKS_RLIMIT flag.
+          Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+          this.
 
-	* tests: Changed all uses of "localhost" to
- 	  ACE_DEFAULT_SERVER_HOST.  This solves some problems with MVS.
-  	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
- 	  this.
+        * tests: Changed all uses of "localhost" to
+          ACE_DEFAULT_SERVER_HOST.  This solves some problems with MVS.
+          Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+          this.
 
-	* examples/Timer_Queue: Changed COMMAND to CMD so it won't
- 	  conflict with the HP/YUX compiler.  Thanks to Sandro Doro
- 	  <doros@aureus.sublink.org> for reporting this.
+        * examples/Timer_Queue: Changed COMMAND to CMD so it won't
+          conflict with the HP/YUX compiler.  Thanks to Sandro Doro
+          <doros@aureus.sublink.org> for reporting this.
 
 Thu Nov 06 22:13:01 1997    <irfan@TWOSTEP>
 
-	* examples/Connection/blocking/SPIPE-connector.cpp (init): Fixed
- 	  odd looking typecast.
+        * examples/Connection/blocking/SPIPE-connector.cpp (init): Fixed
+          odd looking typecast.
 
-	* ace: Changed the comparison &local_sap == &ACE_Addr::sap_any to
- 	  local_sap == ACE_Addr::sap_any.  Thanks to Steve Coy
- 	  <stevec@magna.com.au> for pointing out that the default
- 	  parameter const ACE_Addr &local_sap = ACE_Addr::sap_any will
- 	  cause a copy of sap_any to be made and passed to the method,
- 	  invalidating the memory address comparison.
+        * ace: Changed the comparison &local_sap == &ACE_Addr::sap_any to
+          local_sap == ACE_Addr::sap_any.  Thanks to Steve Coy
+          <stevec@magna.com.au> for pointing out that the default
+          parameter const ACE_Addr &local_sap = ACE_Addr::sap_any will
+          cause a copy of sap_any to be made and passed to the method,
+          invalidating the memory address comparison.
 
-	  The following files were effected:
+          The following files were effected:
 
-	  Asynch_Acceptor.cpp
- 	  SOCK_Acceptor.cpp
-	  SOCK_CODgram.cpp
-	  SOCK_Dgram.cpp
- 	  TLI_Acceptor.cpp
-	  TLI_Connector.cpp
+          Asynch_Acceptor.cpp
+          SOCK_Acceptor.cpp
+          SOCK_CODgram.cpp
+          SOCK_Dgram.cpp
+          TLI_Acceptor.cpp
+          TLI_Connector.cpp
 
-	* ace/Addr.cpp: Made sure that the type and size of
- 	  ACE_Addr::sap_any does not match the type and size of any other
- 	  Addr type.  This is necessary for local_addr==ACE_Addr::sap_any
- 	  to return 0 when local_addr is anything other than
- 	  ACE_Addr::sap_any.
+        * ace/Addr.cpp: Made sure that the type and size of
+          ACE_Addr::sap_any does not match the type and size of any other
+          Addr type.  This is necessary for local_addr==ACE_Addr::sap_any
+          to return 0 when local_addr is anything other than
+          ACE_Addr::sap_any.
 
-	* ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
- 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing the
- 	  problems.
+        * ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
+          Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing the
+          problems.
 
 Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/Addr.(h i), DEV_Addr.(h i), FILE_Addr.(h i), INET_Addr.(h
- 	  cpp), SPIPE_Addr.(h i), UNIX_Addr.(h i): Changed the operators
- 	  == and != to be non-virtual, and to accept the 'sap' argument as
- 	  its own type (not ACE_Addr for all of them).  The
- 	  implementations of the operators compare type-specific data
- 	  without having to check the inherited type member.  Thanks to
- 	  Steve Coy <stevec@magna.com.au> and Irfan and Nanbor for a huge
- 	  amount of work on these changes.  *** NOTE - there is still some
- 	  SOCK_Connector problems related to these changes on HP-UX.  The
- 	  hunt continues.
+        * ace/Addr.(h i), DEV_Addr.(h i), FILE_Addr.(h i), INET_Addr.(h
+          cpp), SPIPE_Addr.(h i), UNIX_Addr.(h i): Changed the operators
+          == and != to be non-virtual, and to accept the 'sap' argument as
+          its own type (not ACE_Addr for all of them).  The
+          implementations of the operators compare type-specific data
+          without having to check the inherited type member.  Thanks to
+          Steve Coy <stevec@magna.com.au> and Irfan and Nanbor for a huge
+          amount of work on these changes.  *** NOTE - there is still some
+          SOCK_Connector problems related to these changes on HP-UX.  The
+          hunt continues.
 
-	* ace/Connector.cpp (connect_n): return -1 if any of the connect
-	  attempts fail.
+        * ace/Connector.cpp (connect_n): return -1 if any of the connect
+          attempts fail.
 
-	* tests/Reactor_Performance_Test.cpp: Don't crash if any of the
-	  client's connect attempts fail.
+        * tests/Reactor_Performance_Test.cpp: Don't crash if any of the
+          client's connect attempts fail.
 
-	* ace/Reactor.h: Added #include "ace/Handle_Set.h" - AIX needs the
-	  class definition when generating templates in programs.
+        * ace/Reactor.h: Added #include "ace/Handle_Set.h" - AIX needs the
+          class definition when generating templates in programs.
 
-	* tests/Map_Manager_Test.cpp: Don't even try if the compiler doesn't
-	  have template specialization working correctly.
+        * tests/Map_Manager_Test.cpp: Don't even try if the compiler doesn't
+          have template specialization working correctly.
 
-	* tests/Priority_Reactor_Test.h: Added #include "ace/SOCK_Stream.h"
-	  so AIX could generate template code correctly.
+        * tests/Priority_Reactor_Test.h: Added #include "ace/SOCK_Stream.h"
+          so AIX could generate template code correctly.
 
-	* tests/Reactor_Performance_Test.cpp: Moved class definitions out to
-	  Reactor_Performance_Test.h (new file) to allow AIX to generate
-	  templates.
+        * tests/Reactor_Performance_Test.cpp: Moved class definitions out to
+          Reactor_Performance_Test.h (new file) to allow AIX to generate
+          templates.
 
-	* tests/SOCK_Connector_Test.cpp: Added a couple more checks to make
-	  sure the local host is not the test target, and changed from using
-	  port 4242 to 42000 (there is actually a program on AIX which listens
-	  at port 4242).
+        * tests/SOCK_Connector_Test.cpp: Added a couple more checks to make
+          sure the local host is not the test target, and changed from using
+          port 4242 to 42000 (there is actually a program on AIX which listens
+          at port 4242).
 
-	* tests/Thread_Manager_Test.cpp: Moved a class definition out to
-	  Thread_Manager_Test.h (new file) to allow AIX to use it in template
-	  generation.
+        * tests/Thread_Manager_Test.cpp: Moved a class definition out to
+          Thread_Manager_Test.h (new file) to allow AIX to use it in template
+          generation.
 
-	* tests/Timer_Queue_Test.cpp: Limit the number of iterations to 2000.
+        * tests/Timer_Queue_Test.cpp: Limit the number of iterations to 2000.
 
 Thu Nov  6 16:51:36 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* tests/SOCK_Connector_Test.cpp (find_another_host): Added
-	  ACE_NETBSD to the #if define around gethostent.
+        * tests/SOCK_Connector_Test.cpp (find_another_host): Added
+          ACE_NETBSD to the #if define around gethostent.
 
 Thu Nov 06 00:08:01 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -238,38 +238,38 @@ Thu Nov 06 00:08:01 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Nov  5 21:32:36 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Service_Repository.cpp (close): Looking in the
- 	  Service_Repository while shutting it down does really bad
- 	  things.  Some careful changes to the loop in
- 	  Service_Repository::close() fixed this.  Thanks to Eric
- 	  C. Newton <ecn@smart.net> for reporting this.
+        * ace/Service_Repository.cpp (close): Looking in the
+          Service_Repository while shutting it down does really bad
+          things.  Some careful changes to the loop in
+          Service_Repository::close() fixed this.  Thanks to Eric
+          C. Newton <ecn@smart.net> for reporting this.
 
-	* Added new support for SCO UNIX with no threads.  Thanks to
- 	  Arturo Montes <mitosys@colomsat.net.co> for reporting this.
+        * Added new support for SCO UNIX with no threads.  Thanks to
+          Arturo Montes <mitosys@colomsat.net.co> for reporting this.
 
 Wed Nov 05 20:31:36 1997    <irfan@TWOSTEP>
 
-	* ace/Connector.cpp (close): Added an explicit close() method for
- 	  the Strategy_Connector.  This closes down all Strategy_Connector
- 	  specific things and then calls close() on the base class.  Also
- 	  modified the destructor to call this routine.
+        * ace/Connector.cpp (close): Added an explicit close() method for
+          the Strategy_Connector.  This closes down all Strategy_Connector
+          specific things and then calls close() on the base class.  Also
+          modified the destructor to call this routine.
 
 Wed Nov  5 17:09:05 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/OS.cpp (cleanup_tss): Rearranged how TSS'es get cleanup on
-	  Win32.  This was causing a tiny memory leak on NT.
+        * ace/OS.cpp (cleanup_tss): Rearranged how TSS'es get cleanup on
+          Win32.  This was causing a tiny memory leak on NT.
 
 Wed Nov  5 15:03:31 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,cpp}:  Changed the data type of
-	  terminated_thr_queue_ back to
-	  ACE_Unbounded_Queue<ACE_Thread_Descriptor>.
+        * ace/Thread_Manager.{h,cpp}:  Changed the data type of
+          terminated_thr_queue_ back to
+          ACE_Unbounded_Queue<ACE_Thread_Descriptor>.
 
 Wed Nov 05 14:16:27 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i (mutex_trylock): Fixed code for ACE_HAS_DCE_DRAFT4_THREADS
-	  (HP-UX) to process the returned status correctly.  Thanks to
-	  Robert Head <rhead@virtc.com> for reporting this.
+        * ace/OS.i (mutex_trylock): Fixed code for ACE_HAS_DCE_DRAFT4_THREADS
+          (HP-UX) to process the returned status correctly.  Thanks to
+          Robert Head <rhead@virtc.com> for reporting this.
 
 Wed Nov 05 13:01:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -282,48 +282,48 @@ Wed Nov 05 01:06:53 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Nov 04 23:11:41 1997    <nw1@COYOTE>
 
-	* ace/Thread_Manager.h: Added an ACE_Unbounded_Queue to
-	  collect threads that need to be removed.  We can no longer
- 	  remove thread descriptors directly from <thr_list_> because that
- 	  would clobber the integrity of the double-linked list.  Changed
- 	  the data type of <terminated_thr_queue_> from
- 	  ACE_Unbounded_Queue<ACE_Thread_Descriptor> to
- 	  ACE_Unbounded_Queue<ACE_Descriptor*> to reduce the codes
- 	  generated.
+        * ace/Thread_Manager.h: Added an ACE_Unbounded_Queue to
+          collect threads that need to be removed.  We can no longer
+          remove thread descriptors directly from <thr_list_> because that
+          would clobber the integrity of the double-linked list.  Changed
+          the data type of <terminated_thr_queue_> from
+          ACE_Unbounded_Queue<ACE_Thread_Descriptor> to
+          ACE_Unbounded_Queue<ACE_Descriptor*> to reduce the codes
+          generated.
 
-	* ace/Thread_Manager.cpp:  Reordered several thread operations so they
-	  won't remove thread descriptor directly while traversing the
-	  <thr_list_>.  Removed #ifdef <VXWORKS> from template
-	  instantiation section because now VxWorks needs it too.
+        * ace/Thread_Manager.cpp:  Reordered several thread operations so they
+          won't remove thread descriptor directly while traversing the
+          <thr_list_>.  Removed #ifdef <VXWORKS> from template
+          instantiation section because now VxWorks needs it too.
 
-	* ace/Container.{h,cpp}:  Added more check on validities of passed in
-	  node to ACE_Double_Linked_List::remove_element.  Also changed
-	  the function to reset a node's <prev_> and <next_> to prevent
-	  double removal of a node, which messes up the list structure.
+        * ace/Container.{h,cpp}:  Added more check on validities of passed in
+          node to ACE_Double_Linked_List::remove_element.  Also changed
+          the function to reset a node's <prev_> and <next_> to prevent
+          double removal of a node, which messes up the list structure.
 
-	* ace/ace_{dll,lib}.dsp: Excluded Acceptor.cpp from make
- 	  explicitly.  Moving this file to "template file folder" was not
- 	  enough.
+        * ace/ace_{dll,lib}.dsp: Excluded Acceptor.cpp from make
+          explicitly.  Moving this file to "template file folder" was not
+          enough.
 
 Tue Nov  4 18:03:51 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/config-sco*.h: Added #define ACE_DEFAULT_CLOSE_ALL_FILES 0
- 	  to the SCO Unix config files.
+        * ace/config-sco*.h: Added #define ACE_DEFAULT_CLOSE_ALL_FILES 0
+          to the SCO Unix config files.
 
-	* ace/ACE.cpp: Added a new macro called
- 	  ACE_DEFAULT_CLOSE_ALL_FILES to workaround a bug with SCO Unix.
-  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
- 	  this.
+        * ace/ACE.cpp: Added a new macro called
+          ACE_DEFAULT_CLOSE_ALL_FILES to workaround a bug with SCO Unix.
+          Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+          this.
 
-	* The ACE developer's drinking song:
+        * The ACE developer's drinking song:
 
           100 little bugs in the code,
-	  100 bugs in the code,
-	  fix one bug, compile it again,
-	  101 little bugs in the code.
-	  101 little bugs in the code.....
+          100 bugs in the code,
+          fix one bug, compile it again,
+          101 little bugs in the code.
+          101 little bugs in the code.....
 
-	  Thanks to Steve Huston for appreciating the humor in this ;-).
+          Thanks to Steve Huston for appreciating the humor in this ;-).
 
         * ace/Containers.cpp (insert_head): Added some minor stylistic
           fixes.
@@ -353,12 +353,12 @@ Tue Nov  4 18:03:51 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Tue Nov  4 18:13:52 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp (cancel):
-	Initialized act pointer variable to 0, which was causing
-	core dump in linux.  In general, all pointers should be
-	initialized.  This should have been warned by the compiler.
-	Thanks to Sandro Doro <doros@aureus.sublink.org> for
-	pointing this out.
+        * examples/Timer_Queue/Async_Timer_Queue_Test.cpp (cancel):
+        Initialized act pointer variable to 0, which was causing
+        core dump in linux.  In general, all pointers should be
+        initialized.  This should have been warned by the compiler.
+        Thanks to Sandro Doro <doros@aureus.sublink.org> for
+        pointing this out.
 
 Tue Nov  4 11:14:35 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
