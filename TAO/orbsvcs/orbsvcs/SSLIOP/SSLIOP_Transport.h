@@ -37,7 +37,7 @@
 #include "tao/operation_details.h"
 #include "tao/GIOP_Message_State.h"
 #include "tao/Pluggable_Messaging_Utils.h"
-
+#include "tao/IIOPC.h"
 
 // Forward decls.
 class TAO_SSLIOP_Handler_Base;
@@ -140,10 +140,25 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
 
+  /// Set the bidirectional flag
+  virtual void bidirectional_flag (int flag);
+
+  /// Open teh service context list and process it.
+  virtual int tear_listen_point_list (TAO_InputCDR &cdr);
+
 private:
 
   /// Process the message that we have read
   int process_message (void);
+
+  /// Set the Bidirectional context info in the service context list
+  void set_bidir_context_info (TAO_Operation_Details &opdetails);
+
+  /// Add the listen points in <acceptor> to the <listen_point_list>
+  /// if this connection is in the same interface as that of the
+  /// endpoints in the <acceptor>
+  int get_listen_point (IIOP::ListenPointList &listen_point_list,
+                        TAO_Acceptor *acceptor);
 
 private:
 
@@ -153,6 +168,20 @@ private:
 
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
+
+  /// Have we sent any info on bidirectional information or have we
+  /// received any info regarding making the connection
+  /// served by this transport bidirectional. This is essentially for
+  /// this -- we dont want to send the bidirectional context info more
+  /// than once on the connection. Why? Waste of marshalling and
+  /// demarshalling time on the client. On the server side, we need
+  /// this flag for this -- once a client that has established the
+  /// connection asks the server to use the connection both ways, we
+  /// *dont* want the server to go pack service info to the
+  /// client. That would be *bad*.. The value of this flag will be 0
+  /// if the client sends info and 1 if the server receives the info.
+  int bidirectional_flag_;
+
 };
 
 
