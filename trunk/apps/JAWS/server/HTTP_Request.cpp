@@ -11,7 +11,7 @@ HTTP_Request::init (const char *buffer, int buflen)
 {
   // Initialize these every time.
   content_length_ = 0;
-  filename_ = "no filename";
+  filename_ = "";
   status_ = OK;
   type_ = NO_TYPE;
 
@@ -77,7 +77,7 @@ HTTP_Request::parse_GET (char *lasts)
   type_ = GET;
 
   // next look for filename
-  filename_ = ACE_OS::strtok_r (NULL, " \t", &lasts);
+  filename_ = ACE_OS::strtok_r (NULL, " \t\r\n", &lasts);
   if (filename_ == NULL) 
     {
       status_ = NO_FILENAME;
@@ -96,7 +96,7 @@ HTTP_Request::parse_PUT (char *lasts)
   type_ = PUT;
 
   // next look for filename
-  filename_ = ACE_OS::strtok_r (NULL, " \t", &lasts);
+  filename_ = ACE_OS::strtok_r (NULL, " \t\r\n", &lasts);
   if (filename_ == NULL) 
     {
       status_ = NO_FILENAME;
