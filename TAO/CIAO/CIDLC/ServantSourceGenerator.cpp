@@ -2462,8 +2462,27 @@ namespace
          << "  : our_base (exe, c)" << endl
          << "{"
          << "this->context_ = "
-         << "new " << t.name () << "_Context (h, c, this);" << endl
-         << "ACE_TRY_NEW_ENV" << endl
+         << "new " << t.name () << "_Context (h, c, this);" << endl;
+         
+      // Generate the macro to register a value factory for each
+      // eventtype consumed.
+      {
+        Traversal::Component component_emitter;
+
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+
+        Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        RegisterValueFactoryEmitter factory_emitter (ctx);
+        defines.node_traverser (factory_emitter);
+
+        component_emitter.traverse (t);
+      }
+
+      os << "ACE_TRY_NEW_ENV" << endl
          << "{"
          << "::Components::SessionComponent_var scom =" << endl
          << "::Components::SessionComponent::_narrow (" << endl
@@ -3017,25 +3036,6 @@ namespace
          << "::CORBA::IRObject::_nil ());" << endl
          << "}";
 
-      os << "::Components::CCMHome_ptr" << endl
-         << t.name () << "_Servant::get_ccm_home (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "return this->context_->get_CCM_home "
-         << "(ACE_ENV_SINGLE_ARG_PARAMETER);" << endl
-         << "}";
-
-      os << "::Components::PrimaryKeyBase *" << endl
-         << t.name () << "_Servant::get_primary_key (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_START] << endl
-         << STRS[EXCP_SYS] << "," << endl
-         << STRS[EXCP_NKA] << "))" << endl
-         << "{"
-         << "ACE_THROW_RETURN (" << STRS[EXCP_NKA] << " (), 0);" << endl
-         << "}";
-
       os << "void" << endl
          << t.name ()
          << "_Servant::configuration_complete (" << endl
@@ -3055,153 +3055,6 @@ namespace
          << STRS[EXCP_RF] << "))" << endl
          << "{"
          << "// CIAO to-do" << endl
-         << "}";
-
-      os << "::Components::ComponentPortDescription *" << endl
-         << t.name () << "_Servant::get_all_ports (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "::Components::ComponentPortDescription_var retv =" << endl
-         << "new OBV_Components::ComponentPortDescription;" << endl
-         << "::Components::FacetDescriptions_var facets_desc =" << endl
-         << "this->get_all_facets (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (0);" << endl
-         << "::Components::ReceptacleDescriptions_var receptacle_desc ="
-         << endl
-         << "this->get_all_receptacles (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (0);" << endl
-         << "::Components::ConsumerDescriptions_var consumer_desc =" << endl
-         << "this->get_all_consumers (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (0);" << endl
-         << "::Components::EmitterDescriptions_var emitter_desc =" << endl
-         << "this->get_all_emitters (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (0);" << endl
-         << "::Components::PublisherDescriptions_var publisher_desc ="
-         << endl
-         << "this->get_all_publishers (" << STRS[ENV_SNGL_ARG] << ");"
-         << "ACE_CHECK_RETURN (0);" << endl
-         << "retv->facets (facets_desc.in ());"
-         << "retv->receptacles (receptacle_desc.in ());"
-         << "retv->consumers (consumer_desc.in ());"
-         << "retv->emitters (emitter_desc.in ());"
-         << "retv->publishers (publisher_desc.in ());" << endl
-         << "return retv._retn ();" << endl
-         << "}";
-
-      os << "CORBA::Object_ptr" << endl
-         << t.name () << "_Servant::_get_component (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << STRS[COMP_SC] << "_var sc =" << endl
-         << STRS[COMP_SC] << "::_narrow (" << endl
-         << "this->context_" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());" << endl
-         << "if (! ::CORBA::is_nil (sc.in ()))" << endl
-         << "{"
-         << "return sc->get_CCM_object (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
-         << "}"
-         << "::Components::EntityContext_var ec =" << endl
-         << "::Components::EntityContext::_narrow (" << endl
-         << "this->context_" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK_RETURN (::CORBA::Object::_nil ());" << endl
-         << "if (! ::CORBA::is_nil (ec.in ()))" << endl
-         << "{"
-         << "return ec->get_CCM_object (" << STRS[ENV_SNGL_ARG] << ");"
-         << endl
-         << "}"
-         << "ACE_THROW_RETURN (" << endl
-         << "::CORBA::INTERNAL ()," << endl
-         << "::CORBA::Object::_nil ());" << endl
-         << "}";
-
-      os << "// CIAO-specific operations." << endl << endl;
-
-      os << "void" << endl
-         << t.name () << "_Servant::ciao_preactivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "::Components::SessionComponent_var temp =" << endl
-         << "::Components::SessionComponent::_narrow (" << endl
-         << "this->executor_.in ()" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK;" << endl
-         << "if (! ::CORBA::is_nil (temp.in ()))" << endl
-         << "{"
-         << "temp->ciao_preactivate (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}"
-         << "}";
-
-      os << "void" << endl
-         << t.name () << "_Servant::ciao_activate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{";
-
-      // Generate the macro to register a value factory for each
-      // eventtype consumed.
-      {
-        Traversal::Component component_emitter;
-
-        Traversal::Inherits inherits;
-        inherits.node_traverser (component_emitter);
-
-        Traversal::Defines defines;
-        component_emitter.edge_traverser (defines);
-        component_emitter.edge_traverser (inherits);
-
-        RegisterValueFactoryEmitter factory_emitter (ctx);
-        defines.node_traverser (factory_emitter);
-
-        component_emitter.traverse (t);
-      }
-
-      os << "::Components::SessionComponent_var temp =" << endl
-         << "::Components::SessionComponent::_narrow (" << endl
-         << "this->executor_.in ()" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK;" << endl
-         << "if (! ::CORBA::is_nil (temp.in ()))" << endl
-         << "{"
-         << "temp->ccm_activate (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}"
-         << "}";
-
-      os << "void" << endl
-         << t.name () << "_Servant::ciao_postactivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "::Components::SessionComponent_var temp =" << endl
-         << "::Components::SessionComponent::_narrow (" << endl
-         << "this->executor_.in ()" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK;" << endl
-         << "if (! ::CORBA::is_nil (temp.in ()))" << endl
-         << "{"
-         << "temp->ciao_postactivate (" << STRS[ENV_SNGL_ARG] << ");"
-         << "}"
-         << "}";
-
-      os << "void" << endl
-         << t.name () << "_Servant::_ciao_passivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
-         << STRS[EXCP_SNGL] << endl
-         << "{"
-         << "::Components::SessionComponent_var temp =" << endl
-         << "::Components::SessionComponent::_narrow (" << endl
-         << "this->executor_.in ()" << endl
-         << STRS[ENV_ARG] << ");"
-         << "ACE_CHECK;" << endl
-         << "if (! ::CORBA::is_nil (temp.in ()))" << endl
-         << "{"
-         << "temp->ccm_passivate (" << STRS[ENV_SNGL_ARG] << ");" << endl
-         << "}"
          << "}";
 
       os << "// Supported operations." << endl << endl;
