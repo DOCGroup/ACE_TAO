@@ -11,5 +11,5 @@ $(TARGETS_NESTED):
 		 echo "" ; \
 		 echo " ========> Making $(@:.nested=) $(MAKEFLAGS): `pwd`"; \
 		 $(MAKE) $(@:.nested=) MAKEFLAGS=$(MAKEFLAGS) ; \
-		 echo "<========     End $(@:.nested=): `pwd`") \
+		 echo "<========     End $(@:.nested=): `pwd`") ; \
 	done
