@@ -202,5 +202,11 @@
 // bogus compiler syntax error.
 #define ACE_LACKS_CLEARERR
 
+#define ACE_HAS_MKSTEMP
+
+// OpenBSD supports IPv6 by default, but ACE IPv6 code
+// has compile errors.
+//#define ACE_HAS_IPV6
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

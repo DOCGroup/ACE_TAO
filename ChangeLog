@@ -1,3 +1,16 @@
+Tue Oct 29 22:27:24 2002  Frank Hunleth <frank@hunleth.com>
+
+	* apps/gperf/src/Key_List.cpp: Added cast to int on UCHAR_MAX and
+	  USHRT_MAX to remove warnings of comparing signed and unsigned
+	  values under OpenBSD.
+
+	* ace/config-openbsd.h:
+	* ace/config-openbsd-pthread.h: Added ACE_HAS_MKSTEMP since
+	  OpenBSD has the mkstemp() function, and it helps clear up
+	  linker warnings.  Also added ACE_HAS_ALT_CUSERID to clear
+          up errors due to _cuserid().  Thanks to Craig Rodrigues
+          for the latter patch.
+
 Tue Oct 29 15:45:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Exit.h:
