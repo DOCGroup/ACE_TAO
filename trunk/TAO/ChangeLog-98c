@@ -1,3 +1,10 @@
+Mon Feb 16 10:14:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_array.cpp: 
+	  The _free method was emitted in the .i file, but it was not
+	  declared inline. Thanks to Michael Kircher (mk1@cs.wustl.edu)
+	  for reporting this one.
+
 Sun Feb 15 20:12:00 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/poa.{h,cpp}: Heavily modified several routines to correct
