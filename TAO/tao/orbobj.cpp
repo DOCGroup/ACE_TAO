@@ -241,7 +241,7 @@ CORBA::ORB_init (int &argc,
   svc_config_argv[svc_config_argc++] = argv[0];
 
   CORBA::String_var host = CORBA::string_dup ("");
-  CORBA::UShort port = 5001;  // some default port -- needs to be a #defined value
+  CORBA::UShort port = TAO_DEFAULT_PORT;
   for (int i = 1; i < argc; )
     {
       if (ACE_OS::strcmp (argv[i], "-ORBsvcconf") == 0)
@@ -330,9 +330,7 @@ CORBA::ORB_init (int &argc,
 #endif	/* DEBUG */
 
   ACE_INET_Addr rendezvous;
-  // @@ Don't use magic #'s like 128.  Final an appropriate symbolic
-  // constant.  
-  char hbuf[128];
+  char hbuf[MAXHOSTNAMELEN];
 
   // Create a INET_Addr.
   if (ACE_OS::strlen (host) == 0)

@@ -28,6 +28,11 @@
       Recently Completed Work:
 
       <BLOCKQUOTE>
+	<li>Fixed TAO so that the default port of 5001 is defined in
+	<code>orb_core.h</code> config header somewhere rather than in
+	<code>orbobj.cpp</code>, and use <b>MAXHOSTNAMELEN</b> ACE
+	constant for the hostname buffer.</li>
+
 	<li>Eliminated need for <code>CORBA::Object</code> to keep a
 	pointer to its orb sitting around anywhere.</li>
 
@@ -44,12 +49,12 @@
 
 	<li>Created a brief section in <a
 	href="../../TAO-Install.html"><code>$TAO_ROOT/TAO-Install.html</code></a>
-	that <em>briefly</em> documents installation on Unix platforms.  There is
-	also a brief section which documents issues that apply across ALL
-	platforms, such as the fact that TAO and its application will
-	likely not work well if your ACE is linked through Orbix,
-	VisiBroker, or another ORB.
-	<a href="../../ChangeLog">ChangeLog</a> discovery attribution for
+	that <em>briefly</em> documents installation on Unix
+	platforms.  There is also a brief section which documents
+	issues that apply across ALL platforms, such as the fact that
+	TAO and its application will likely not work well if your ACE
+	is linked through Orbix, VisiBroker, or another ORB.  <a
+	href="../../ChangeLog">ChangeLog</a> discovery attribution for
 	this should go to <em>Steve Wohlever
 	&lt;wohlever@mitre.org&gt;</em>.</li>
 
@@ -169,9 +174,6 @@
 	TAO_ORB_Core instances.  Thus, it is the only place that needs
 	to know whether the items should be global or held in
 	TSS.</li>
-
-	<li>Fix TAO so that the default port of 5001 is defined in a
-	config header somewhere rather than in orbobj.cpp.</li>
 
       </BLOCKQUOTE>
 
