@@ -1,3 +1,9 @@
+Wed Sep 29 07:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Servant_Activator.h:
+        * DAnCE/ciao/Servant_Activator.h:
+          Added missing prama pop
+
 Wed Sep 29 07:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Utils.h:
