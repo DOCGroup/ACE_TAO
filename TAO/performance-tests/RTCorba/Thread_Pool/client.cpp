@@ -168,7 +168,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
                            "\t-c <number of continuous workers> (defaults to %d)\n"
-                           "\t-g <count missed end deadlines> (defaults to %d)\n"
+                           "\t-e <count missed end deadlines> (defaults to %d)\n"
                            "\t-g <show history> (defaults to %d)\n"
                            "\t-h <help: shows options menu>\n"
                            "\t-i <print stats of individual continuous workers> (defaults to %d)\n"
