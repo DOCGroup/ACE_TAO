@@ -113,10 +113,27 @@ extern "C" {
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  /* Returns -1 if invalid pointer to param is passed in! */
+  int pthread_getschedparam (pace_pthread_t thread,
+			     int * policy,
+			     pace_sched_param * param);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_setschedparam (pace_pthread_t thread,
+			     int policy,
+			     const pace_sched_param * param);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
   int pthread_create (pace_pthread_t * thread,
 		      const pace_pthread_attr_t * attr,
 		      void * (*start_routine) (void*),
 		      void * arg);
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  pace_pthread_t pthread_self ();
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if defined (PACE_HAS_CPLUSPLUS)

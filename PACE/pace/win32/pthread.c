@@ -162,3 +162,41 @@ pthread_create (pace_pthread_t * thread,
   return -1;
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+int
+pthread_getschedparam (pace_pthread_t thread,
+		       int * policy,
+		       pace_sched_param * param)
+{
+  if (param != (pace_sched_param*)0)
+    {
+      param->priority_ = GetThreadPriority (thread);
+      return 0;
+    }
+  /* Invalid pointer to pace_sched_param. */
+  return -1;
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+pace_pthread_t
+pthread_self ()
+{
+  return GetCurrentThread ();
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+  int pthread_setschedparam (pace_pthread_t thread,
+			     int policy,
+			     const pace_sched_param * param)
+{
+  if (SetThreadPriority (thread, param->priority_))
+    {
+      return 0;
+    }
+  /* ERROR: with return value of SetThreadPriority. */
+  return -1;
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */

@@ -30,11 +30,12 @@ extern "C" {
 #define PACE_PTHREAD_ATTR_T 1
   typedef struct pthread_attr_t
   {
-    int detach_;
+    int init_;
+    int detach_state_;
     int policy_;
-    pace_sched_param priority_;
+    pace_sched_param sparam_;
     int inherit_sched_;
-    int scope;
+    int contention_scope_;
     pace_size_t guard_size_;
     int stackaddr_set_ ;
     void * stack_addr_;
@@ -123,8 +124,8 @@ extern "C" {
 
 #ifndef PACE_PTHREAD_T
 #define PACE_PTHREAD_T
-  typedef DWORD pace_pthread_t;
-  typedef HANDLE pace_hpthread_t;
+  typedef HANDLE pace_pthread_t;
+  typedef DWORD pace_idpthread_t;
 #endif /* PACE_PTHREAD_T */
 
 #if defined (PACE_HAS_CPLUSPLUS)
