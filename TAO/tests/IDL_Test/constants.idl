@@ -48,6 +48,8 @@ const char fivebits = '\x32';
 const char maybe_minus = '\xAf';
 const char max_char_hex = '\xff';
 
+const long john = -2147483648;
+
 // unsigned longs greater than LONG_MAX
 
 const unsigned long in_range = 3222111000;
