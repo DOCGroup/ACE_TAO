@@ -1,3 +1,11 @@
+Tue Sep  7 07:08:26 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+
+          As part of the -expand_env option, I moved some functionality out
+          of the ProjectCreator.pm and into this module which was only used
+          by this project creator.
+
 Tue Sep  7 06:41:27 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
