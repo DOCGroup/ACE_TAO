@@ -27,14 +27,6 @@
 #  include /**/ "inetLib.h"
 #endif /* VXWORKS */
 
-// I don't know if this is a good place to put this, but it's
-// the most logical.
-#if defined (ACE_HAS_IPV6)
-#define ACE_ADDRESS_FAMILY AF_INET6
-#else
-#define ACE_ADDRESS_FAMILY AF_INET
-#endif
-
 /**
  * @class ACE_INET_Addr
  *

@@ -84,7 +84,7 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
 }
 
 ACE_INET_Addr::ACE_INET_Addr (void)
-  : ACE_Addr (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_)
+  : ACE_Addr (ACE_ADDRESS_FAMILY_INET, sizeof this->inet_addr_)
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->initialize();
@@ -164,7 +164,7 @@ ACE_INET_Addr::set (const char address[])
 }
 
 ACE_INET_Addr::ACE_INET_Addr (const char address[])
-  : ACE_Addr (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_)
+  : ACE_Addr (ACE_ADDRESS_FAMILY_INET, sizeof this->inet_addr_)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address);
@@ -172,7 +172,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char address[])
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[])
-  : ACE_Addr (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_)
+  : ACE_Addr (ACE_ADDRESS_FAMILY_INET, sizeof this->inet_addr_)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (address);
@@ -183,7 +183,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[])
 // Copy constructor.
 
 ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
-  : ACE_Addr (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_)
+  : ACE_Addr (ACE_ADDRESS_FAMILY_INET, sizeof this->inet_addr_)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (sa);
@@ -218,12 +218,14 @@ ACE_INET_Addr::set (u_short port_number,
                     int encode)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-  ACE_UINT32 addrv4;
-#if defined (ACE_HAS_IPV6)
-  in6_addr addrv6;
-#endif
 
-  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_);
+#if defined (ACE_HAS_IPV6)
+  return this->set_usinggetaddrinfo (port_number,host_name,PF_UNSPEC,encode);
+#else
+
+  ACE_UINT32 addrv4;
+
+  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY_INET, sizeof this->inet_addr_);
   this->initialize();
 
   // Yow, someone gave us a NULL host_name!
@@ -232,32 +234,11 @@ ACE_INET_Addr::set (u_short port_number,
       errno = EINVAL;
       return -1;
     }
-#if defined (ACE_HAS_IPV6)
-  else if (ACE_OS::inet_pton (AF_INET6,
-                              host_name,
-                              (void*)&addrv6) == 1) {
-    this->set_address((char*)&addrv6,
-                      sizeof addrv6,
-                      0);
-    this->set_port_number(port_number,
-                          encode);
-
-    return 0;
-  }
-  else if (ACE_OS::inet_pton (AF_INET,
-                              host_name,
-                              (void*)&addrv4) == 1)
-    {
-      return this->set (port_number,
-                        addrv4,0);
-    }
-#else
   else if (ACE_OS::inet_aton (host_name,
                               (struct in_addr *) &addrv4) == 1)
     return this->set (port_number,
                       encode ? ntohl (addrv4) : addrv4,
                       encode);
-#endif /* ACE_HAS_IPV6 */
   else
     {
 #if defined (VXWORKS) || defined (CHORUS)
@@ -286,8 +267,10 @@ ACE_INET_Addr::set (u_short port_number,
                             encode);
         }
     }
+#endif /* Top ACE_HAS_IPV6 */
 }
 
+#if defined (ACE_HAS_IPV6)
 // XXXXX this method should change name to something different.
 // Possibly use this as a replacement for the ugly set method
 // currently used for IPv4.
@@ -308,7 +291,6 @@ int ACE_INET_Addr::set_usinggetaddrinfo (u_short port_number,
   }
   int ret = -1;
   for(res = res0; res != 0; res = res->ai_next) {
-    printf("length of address is %d\n",res->ai_addrlen);
     if(res->ai_addrlen == sizeof(sockaddr_in)) {
       sockaddr_in *addr = (sockaddr_in*)res->ai_addr;
       this->set_address((const char*)&addr->sin_addr,sizeof(addr->sin_addr),0);
@@ -329,6 +311,7 @@ int ACE_INET_Addr::set_usinggetaddrinfo (u_short port_number,
   freeaddrinfo(res0);
   return ret;
 }
+#endif
 
 // Initializes a ACE_INET_Addr from a <port_name> and the remote
 // <host_name>.
@@ -443,7 +426,7 @@ int
 ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY, len);
+  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY_INET, len);
 
   this->set_address((char*)&addr->sin_addr,
                     sizeof addr->sin_addr,
@@ -460,7 +443,7 @@ ACE_INET_Addr::set_addr (void *addr, int len)
 {
   ACE_TRACE ("ACE_INET_Addr::set_addr");
 
-  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY, len);
+  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY_INET, len);
   ACE_OS::memcpy ((void *) &this->inet_addr_,
                   (void *) addr, len);
 }
@@ -682,11 +665,11 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_);
+  this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY_INET, sizeof this->inet_addr_);
 #if defined (ACE_HAS_IPV6)
-  this->inet_addr_.sin6_family = ACE_ADDRESS_FAMILY;
+  this->inet_addr_.sin6_family = ACE_ADDRESS_FAMILY_INET;
 #else
-  this->inet_addr_.sin_family = ACE_ADDRESS_FAMILY;
+  this->inet_addr_.sin_family = ACE_ADDRESS_FAMILY_INET;
 #endif
 
   if(len == 4)
@@ -822,8 +805,8 @@ void ACE_INET_Addr::initialize(void)
   (void) ACE_OS::memset ((void *) &this->inet_addr_,
                          0, sizeof this->inet_addr_);
 #if defined (ACE_HAS_IPV6)
-  this->inet_addr_.sin6_family = ACE_ADDRESS_FAMILY;
+  this->inet_addr_.sin6_family = ACE_ADDRESS_FAMILY_INET;
 #else
-  this->inet_addr_.sin_family = ACE_ADDRESS_FAMILY;
+  this->inet_addr_.sin_family = ACE_ADDRESS_FAMILY_INET;
 #endif
 }
