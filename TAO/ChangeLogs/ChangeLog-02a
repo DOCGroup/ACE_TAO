@@ -1,3 +1,7 @@
+Sun Sep 16 11:22:12 2001  Balachandran  <bala@cs.wustl.edu>
+
+        * TAO version 1.1.20 released.
+
 Fri Sep 14 11:35:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp (consolidate_message): Used the size () of the
