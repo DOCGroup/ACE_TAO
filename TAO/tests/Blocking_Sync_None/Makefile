@@ -257,8 +257,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Blocking_Sync_None.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -471,8 +470,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Blocking_Sync_None.o .obj/Blocking_Sync_None.so .shobj/Blocking_Sync_None.o .shobj/Blocking_Sync_None.so: Blocking_Sync_None.cpp Blocking_Sync_None.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -875,8 +873,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
- TestC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ TestC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \

@@ -66,8 +66,7 @@ realclean: clean
 
 
 .obj/admin.o .obj/admin.so .shobj/admin.o .shobj/admin.so: admin.cpp Oneway_Buffering_Admin.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -280,8 +279,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Oneway_Buffering.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -700,8 +698,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Oneway_Buffering.o .obj/Oneway_Buffering.so .shobj/Oneway_Buffering.o .shobj/Oneway_Buffering.so: Oneway_Buffering.cpp Oneway_Buffering.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -913,8 +910,7 @@ realclean: clean
 
 .obj/Oneway_Buffering_Admin.o .obj/Oneway_Buffering_Admin.so .shobj/Oneway_Buffering_Admin.o .shobj/Oneway_Buffering_Admin.so: Oneway_Buffering_Admin.cpp \
  Oneway_Buffering_Admin.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1317,8 +1313,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
- TestC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ TestC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \

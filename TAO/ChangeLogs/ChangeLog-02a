@@ -1,3 +1,9 @@
+Wed May 16 11:12:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/*/Makefile: Updated dependencies.
+	* performance-tests/*/Makefile:
+	* orbsvcs/orbsvcs/Makefile*:
+
 Wed May 16 11:10:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	The following checkins are for bug #884. Please see the detailed
