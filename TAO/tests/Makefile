@@ -59,7 +59,8 @@ DIRS  = CDR \
 	Crashed_Callback \
 	Client_Leaks \
 	Server_Leaks \
-	Muxing
+	Muxing \
+	Hello
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
