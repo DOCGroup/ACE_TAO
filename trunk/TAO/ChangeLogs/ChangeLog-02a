@@ -1,116 +1,121 @@
+Sat Oct 21 12:50:36 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Makefile*:
+          Updated dependencies.
+
 Sat Oct 21 02:02:05 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Declared/README:
+        * tests/RTCORBA/Server_Declared/README:
 
-	  Updated command-line options, description and expected output.
+          Updated command-line options, description and expected output.
 
 Fri Oct 20 21:54:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/default_client.cpp: Fixed a cut and paste error.
+        * tao/default_client.cpp: Fixed a cut and paste error.
 
 Fri Oct 20 12:01:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Exception.cpp: 
-	  Changed the return value of
- 	  tao_insert_in_extractor_system_exception from
-	  CORBA::SystemException * to CORBA::Boolean.
+        * tao/Exception.cpp:
+          Changed the return value of
+          tao_insert_in_extractor_system_exception from
+          CORBA::SystemException * to CORBA::Boolean.
 
 Fri Oct 20 12:01:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Makefile.am : 
-	* tao/Makefile.bor: 
+        * tao/Makefile.am :
+        * tao/Makefile.bor:
           Updated to add the new files.
-	
+
 Fri Oct 20 10:49:30 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Exception.cpp:
-	  Fixed use of allocator in Exception extraction functions.
+        * tao/Exception.cpp:
+          Fixed use of allocator in Exception extraction functions.
 
-	* tao/PortableInterceptorC.h:
-	* tao/Request_Info.h:
-	* tao/Request_Info.cpp:
-	* tao/PortableInterceptor.i:
-	  Fixed so it would compile in platforms with exceptions enabled.
+        * tao/PortableInterceptorC.h:
+        * tao/Request_Info.h:
+        * tao/Request_Info.cpp:
+        * tao/PortableInterceptor.i:
+          Fixed so it would compile in platforms with exceptions enabled.
 
-	* tao/Makefile:
-	* tao/DynamicAny/Makefile:
-	* tao/IORManipulation/Makefile:
-	* tao/IORTable/Makefile:
-	* tao/PortableServer/Makefile:
+        * tao/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
 
 Fri Oct 20 07:55:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
 
-	  Removed the output of the text 'will it compile now',
-	  inserted by someone for debugging purposes.
+          Removed the output of the text 'will it compile now',
+          inserted by someone for debugging purposes.
 
 Fri Oct 20 02:45:20 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/PortableServer/POA.h
-	* tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h
+        * tao/PortableServer/POA.cpp:
 
-	  Added proper #if RTCORBA protections.
+          Added proper #if RTCORBA protections.
 
-	* tao/PortableServer/Makefile:
+        * tao/PortableServer/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
 
-	  Fixed server arguments for unix.
+          Fixed server arguments for unix.
 
 Fri Oct 20 02:05:09 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/PortableServer/POA.h
-	* tao/PortableServer/POA.i
-	* tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h
+        * tao/PortableServer/POA.i
+        * tao/PortableServer/POA.cpp:
 
-	  - Changed <activate_object>, <activate_object_with_id>,
-	    <create_reference>, <create_reference_with_id> to use POA's
-	    server_priority rather than -1.  This ensures that
-	    servant/object's effective priority is stored right with it.
+          - Changed <activate_object>, <activate_object_with_id>,
+            <create_reference>, <create_reference_with_id> to use POA's
+            server_priority rather than -1.  This ensures that
+            servant/object's effective priority is stored right with it.
 
-	  - Added TAO_ORB_Core &orb_core_ member to TAO_POA_Policies.
+          - Added TAO_ORB_Core &orb_core_ member to TAO_POA_Policies.
 
-	  - Added RTCORBA::PriorityModelPolicy validation during POA
-	    creation (i.e., <validate_priority_model>)
+          - Added RTCORBA::PriorityModelPolicy validation during POA
+            creation (i.e., <validate_priority_model>)
 
-	  - Added RTCORBA::ServerProtocolPolicy validation during POA
-	    creation (i.e., <validate_server_protocol>)
+          - Added RTCORBA::ServerProtocolPolicy validation during POA
+            creation (i.e., <validate_server_protocol>)
 
-	  - Removed <validate_client_protocol> method because this policy
-  	    doesn't need to be validated.
+          - Removed <validate_client_protocol> method because this policy
+            doesn't need to be validated.
 
-	  - Added CORBA::Environment argument to <validity_check>, because
-	    different exception may need to be thrown based on which
-	    policies cause the problem.
+          - Added CORBA::Environment argument to <validity_check>, because
+            different exception may need to be thrown based on which
+            policies cause the problem.
 
-	  - Added validation logic to <valid_priority> method.
+          - Added validation logic to <valid_priority> method.
 
-	  - Invoke <valid_priority> only in <activate*> methods, in
-	    <create_reference*> methods this check happens when filter
-	    populates mprofile.
+          - Invoke <valid_priority> only in <activate*> methods, in
+            <create_reference*> methods this check happens when filter
+            populates mprofile.
 
-	* tao/ORB_Core.cpp (create_stub_object):
+        * tao/ORB_Core.cpp (create_stub_object):
 
-	  Throw CORBA::BAD_PARAM if mprofile ends up being empty.  This
-	  may happen when none of the acceptor endpoints have the right
-	  priority for the object we are creating.
+          Throw CORBA::BAD_PARAM if mprofile ends up being empty.  This
+          may happen when none of the acceptor endpoints have the right
+          priority for the object we are creating.
 
-	* tao/ORB_Core.h:
+        * tao/ORB_Core.h:
 
-	  Make <open> method public.  It needs to be invoked from POA
-	  during policy validation procedures.
+          Make <open> method public.  It needs to be invoked from POA
+          during policy validation procedures.
 
-	* tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
 
           Fixed typo.
 
-	* tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Declared/server.cpp:
 
-	  Set id_uniqueness policy on the child poa to <MULTIPLE_ID>,
-	  in order to use the same servant for several objects.
+          Set id_uniqueness policy on the child poa to <MULTIPLE_ID>,
+          in order to use the same servant for several objects.
 
 Thu Oct 19 17:33:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
