@@ -1,3 +1,8 @@
+Mon May 03 09:46:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile: removed
+          use of orbsvcs headers and lib.  They're no longer needed.
+
 Sun May 02 22:11:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: always build Trader with LifeCycle.
