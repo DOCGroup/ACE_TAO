@@ -1,0 +1,6 @@
+project : ftorbutils {
+  after     += FT_ServerORB 
+  libs      += TAO_FT_ServerORB 
+  comps     += FT_ServerORB 
+  tagchecks += FT_ServerORB 
+}
