@@ -20,8 +20,8 @@ class TAO_ORB_Manager;
 /**
  * A stub fault consumer for use in unit testing Fault Notifier.
  */
-class StubFaultConsumer 
-  : public virtual POA_CosNotifyComm::StructuredPushConsumer 
+class StubFaultConsumer
+  : public virtual POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
   /**
@@ -75,17 +75,17 @@ public:
       const CosNotification::StructuredEvent &notification
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
-      throw (CORBA::SystemException, CosEventComm::Disconnected);  
+      throw (CORBA::SystemException, CosEventComm::Disconnected);
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
-      throw (CORBA::SystemException, CosNotifyComm::InvalidEventType);     
+      throw (CORBA::SystemException, CosNotifyComm::InvalidEventType);
 
    virtual void disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      throw (CORBA::SystemException);           
+      throw (CORBA::SystemException);
 
   ////////////////////
   // Forbidden methods
@@ -121,7 +121,7 @@ private:
   int quit_;
 
   /**
-   * the notifier 
+   * the notifier
    */
   ::FT::FaultNotifier_var notifier_;
 

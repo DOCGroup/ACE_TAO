@@ -9,7 +9,7 @@ Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
           Fault Notifier passes unit test
 
-	  MOVE FROM....
+    MOVE FROM....
         * tests/FT_App/.cvsignore:
         * tests/FT_App/FTAPP_Notifier_Main.cpp:
         * tests/FT_App/FT_App.mpc:

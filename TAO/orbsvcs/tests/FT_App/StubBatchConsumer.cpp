@@ -50,7 +50,7 @@ int StubBatchConsumer::self_register (TAO_ORB_Manager & orbManager,
   consumerId_ = notifier->connect_sequence_fault_consumer(
     _this(),
     filter);
-                                                 
+
   return result;
 }
 
@@ -81,7 +81,7 @@ int StubBatchConsumer::idle(int & result)
 // CORBA methods
 
 
-//virtual 
+//virtual
 void StubBatchConsumer::push_structured_events (
     const CosNotification::EventBatch & notifications
     ACE_ENV_ARG_DECL
@@ -105,9 +105,9 @@ void StubBatchConsumer::offer_change (
     "StubBatchConsumer: offer_change call ignored.\n"
   ));
   int todo;
-}     
+}
 
-//virtual 
+//virtual
 void StubBatchConsumer::disconnect_sequence_push_consumer (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -119,7 +119,7 @@ void StubBatchConsumer::disconnect_sequence_push_consumer (
     "StubBatchConsumer:disconnect_sequence_push_consumer interpreted as quit request.\n"
   ));
   quit_ = 1;
-}           
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 //  template instantiate ACE_Vector < const char * >;

@@ -20,8 +20,8 @@ class TAO_ORB_Manager;
 /**
  * A stub fault consumer for use in unit testing Fault Notifier.
  */
-class StubBatchConsumer 
-  : public virtual POA_CosNotifyComm::SequencePushConsumer 
+class StubBatchConsumer
+  : public virtual POA_CosNotifyComm::SequencePushConsumer
 {
 public:
   /**
@@ -91,7 +91,7 @@ public:
         const CosNotification::EventTypeSeq & removed
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
-      throw (CORBA::SystemException, CosNotifyComm::InvalidEventType);     
+      throw (CORBA::SystemException, CosNotifyComm::InvalidEventType);
 
   ////////////////////
   // Forbidden methods
@@ -127,7 +127,7 @@ private:
   int quit_;
 
   /**
-   * the notifier 
+   * the notifier
    */
   ::FT::FaultNotifier_var notifier_;
 

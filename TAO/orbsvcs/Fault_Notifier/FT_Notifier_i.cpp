@@ -63,7 +63,7 @@ int FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL)
   int quit = 0;
   if (quitOnIdle_)
   {
-    if ( consumerConnects_ != 0 
+    if ( consumerConnects_ != 0
       && consumerConnects_ == consumerDisconnects_)
     {
       quit = 1;
