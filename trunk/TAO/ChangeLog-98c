@@ -1,3 +1,9 @@
+Sat Sep 19 13:13:46 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (consumer_push): added
+          another ACE_CAST_CONST.  Thanks to Hans for reporting that
+          it was needed to compile with Sun C++.
+
 Fri Sep 18 17:39:03 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/tests/DynAny_Test/DynUnion_i.{h,cpp}:
@@ -28,9 +34,9 @@ Fri Sep 18 11:27:00 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 Fri Sep 18 08:48:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:  Fixed some idl custom build
-	  settings for release version. Thanks to jmorey@tbi.com (John
-	  Morey) for reporting this.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:  Fixed some idl custom build
+          settings for release version. Thanks to jmorey@tbi.com (John
+          Morey) for reporting this.
 
 Fri Sep 18 08:39:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
