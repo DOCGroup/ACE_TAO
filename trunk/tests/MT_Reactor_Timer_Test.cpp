@@ -252,6 +252,8 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("MT_Reactor_Timer_Test"));
 
+  int status = 0;
+
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   Dispatch_Count_Handler callback;
@@ -276,7 +278,7 @@ main (int, ASYS_TCHAR *[])
 
   Time_Handler other_thread;
   ACE_Time_Value time_limit(30);
-  int status;
+
 
   // Set up initial set of timers.
   other_thread.setup ();
