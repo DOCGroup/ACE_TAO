@@ -48,15 +48,9 @@
 /* #define BSD41a */
 // #define SYSV /* required on SGI IRIX releases before 3.3 */
 
-#include "ace/OS.h"
-#include <ace/SOCK_Connector.h>
-ACE_SOCK_Connector connector_factory;
-
-#include <ace/SOCK_Acceptor.h>
-ACE_SOCK_Acceptor acceptor_factory;
-
-#include <ace/INET_Addr.h>
-ACE_INET_Addr address;
+#include "ace/Log_Msg.h"
+#include "ace/SOCK_Connector.h"
+#include "ace/SOCK_Acceptor.h"
 
 #include <stdio.h>
 #include <signal.h>
@@ -76,6 +70,10 @@ ACE_INET_Addr address;
 #include <limits.h>
 #include <sys/un.h>
 #include <unistd.h>
+
+ACE_SOCK_Connector connector_factory;
+ACE_SOCK_Acceptor acceptor_factory;
+ACE_INET_Addr address;
 
 #if defined(SYSV)
 #define bcopy(b1,b2,n)  memcpy(b2,b1,n)
@@ -182,7 +180,6 @@ void err (char *s);
 void mes (char *s);
 void pattern (register char *cp, register int cnt);
 char *outfmt (double b);
-static void gettimeofday (struct timeval *tp, struct timezone *zp);
 void prep_timer (void);
 double read_timer (char *str, int len);
 static void prusage (register struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
@@ -660,13 +657,6 @@ getrusage (int ignored, register struct rusage *ru)
   ru->ru_utime.tv_usec = ((buf.tms_utime % HZ) * 1000000) / HZ;
 }
 
-/*ARGSUSED */
-static void
-gettimeofday (struct timeval *tp, struct timezone *zp)
-{
-  tp->tv_sec = time (0);
-  tp->tv_usec = 0;
-}
 #endif /* SYSV */
 /*
  *                    P R E P _ T I M E R
