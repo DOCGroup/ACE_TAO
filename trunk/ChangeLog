@@ -1,3 +1,22 @@
+Fri Mar  7 07:19:46 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/apps/svcconf/svcconf.mpc:
+        * ACEXML/common/common.mpc:
+        * ACEXML/examples/SAXPrint/SAXPrint.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * ACEXML/tests/tests.mpc:
+
+          Added mpc files for ACEXML related projects.
+
+        * bin/MakeProjectCreator/config/acexml.mpb:
+
+          Added an acexml base project to provide easy addition of ACEXML
+          libraries to a project.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed the code to find the main() in a .cpp.
+
 Fri Mar  7 06:35:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Parser.pm:

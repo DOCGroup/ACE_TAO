@@ -736,7 +736,7 @@ sub generate_default_target_names {
             $_ =~ s/\/\/.*//;
 
             ## Check for main
-            if (/main\s*\(/) {
+            if (/(main|ACE_MAIN|ACE_WMAIN|ACE_TMAIN)\s*\(/) {
               ## If we found a main, set the exename to the basename
               ## of the cpp file with the extension removed
               $exename = basename($file);

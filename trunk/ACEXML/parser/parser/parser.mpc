@@ -1,0 +1,4 @@
+project(ACEXML_Parser): acelib {
+  sharedname = ACEXML_Parser
+  depends   += ACEXML
+}
