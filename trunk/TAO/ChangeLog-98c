@@ -1,7 +1,7 @@
 Thu Oct 30 02:12:27 1997 Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tests/{TAO, Cubit}: Changed the directory heirarchy to the
-	following: tests/TAO/Cubit now contains all the Cubit examples,
+	following: tests/Cubit/TAO/ now contains all the Cubit examples,
 	i.e. IDL_Cubit, MT_Cubit and DII_Cubit, instead of tests/. Updated
 	the README and Makefiles to reflect this. DII_Cubit is the
 	handcrafted "original" Cubit example.
