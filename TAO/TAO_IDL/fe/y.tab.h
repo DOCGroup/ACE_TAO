@@ -23,7 +23,7 @@ typedef union
   double		dval;		/* Double value		*/
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
-  
+
   String		*sval;		/* String value		*/
   char			*strval;	/* char * value		*/
   Identifier		*idval;		/* Identifier		*/
