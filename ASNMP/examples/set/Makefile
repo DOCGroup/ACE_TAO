@@ -14,7 +14,7 @@ BIN   = set
 CCFLAGS = -I$(ACE_ROOT)/ASNMP/
 LSRC   = $(addsuffix .cpp,$(BIN))
 
-VLDLIBS = -R$(ACE_ROOT)/ASNMP/asnmp -L$(WRAPPER_ROOT)/ASNMP/asnmp -lasnmp $(LDLIBS:%=%$(VAR))
+VLDLIBS = -R$(ACE_ROOT)/ASNMP/asnmp -L$(ACE_ROOT)/ASNMP/asnmp -lasnmp $(LDLIBS:%=%$(VAR))
 
 BUILD = $(VBIN)
 
