@@ -6,24 +6,20 @@
 module DynAnyTests
 {
   struct enclosed_struct {
-    long l;
-    string str;
+    float f;
+    short s;
   };
-
-typedef short foo;
 
   struct test_struct {
-    foo f;
-    double d;
-//    enclosed_struct es;
+    char c;
+    long long ll;
+    enclosed_struct es;
   };
 
-  typedef sequence<enclosed_struct> test_seq;
+  typedef sequence<string> test_seq;
 
-  const unsigned long DIM = 3;
+  const unsigned long DIM = 2;
   typedef long test_array [DIM];
-
-//  typedef long twin_array [DIM];
 
   enum test_enum {
     ZEROTH,
@@ -42,7 +38,5 @@ typedef short foo;
         string str;
       case ZEROTH:
         octet o;
-//      default:
-//        char c;
     };
 };
