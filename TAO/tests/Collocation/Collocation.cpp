@@ -1,9 +1,6 @@
 // $Id$
 
-#include "ace/streams.h"
-#include "ace/Get_Opt.h"
 #include "Collocation_Tester.h"
-#include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID(Collocation, main, "$Id$")
 
