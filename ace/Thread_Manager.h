@@ -76,7 +76,7 @@ class ACE_Thread_Manager;
 class ACE_Thread_Descriptor;
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-class ACE_At_Thread_Exit
+class ACE_Export ACE_At_Thread_Exit
 {
   // = TITLE
   // Contains a method to be applied when a thread is terminated.
@@ -121,7 +121,7 @@ protected:
   // The at has the ownership of this?
 };
 
-class ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
+class ACE_Export ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
 {
 public:
    // Constructor
