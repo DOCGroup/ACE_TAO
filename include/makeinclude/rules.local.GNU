@@ -139,7 +139,7 @@ endif
 depend.local: $(MAKEFILE)
 	@$(RM) -f $(MAKEFILE).old
 	@cp $(MAKEFILE) $(MAKEFILE).old
-	$(WRAPPER_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) $(LSRC) $(SRC)
+	$(WRAPPER_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC)
 	@cat $(MAKEFILE) | \
 		sed -e "s;$(WRAPPER_ROOT);\$$(WRAPPER_ROOT);g" \
 		    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
