@@ -1,3 +1,8 @@
+Fri Jul  2 14:03:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/ub_objref_seq.cpp:
+	  Fixed typo in this file.
+
 Fri Jul 02 13:26:36 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* version_test.dsw
