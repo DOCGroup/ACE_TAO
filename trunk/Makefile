@@ -131,7 +131,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                          "\"$${major}.$${minor}.$${beta}\\0\"\n";' > \
                 ace/Version.h; \
               chmod 644 VERSION $$CHANGELOG ace/Version.h; \
-              echo cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h) &&
+              cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG ace/Version.h) &&
 else
   TIMESTAMP =
 endif
