@@ -1,3 +1,10 @@
+Tue Jun 27 15:15:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Client_Priority_Policy.cpp:
+	* tao/Buffering_Constraint_Policy.cpp: Some version of g++
+	  complained that LocalObject should be initialized explicitly in
+	  copy ctor.  Just added them in copy ctor.
+
 Tue Jun 27 14:35:54 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Buffering_Constraint_Policy.h:

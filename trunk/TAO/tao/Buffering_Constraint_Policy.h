@@ -39,7 +39,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Buffering_Constraint_Policy : public TAO::BufferingConstraintPolicy
+class TAO_Export TAO_Buffering_Constraint_Policy
+  : public TAO::BufferingConstraintPolicy,
+    public CORBA::LocalObject
 {
   // = TITLE
   //     Implementation class for TAO-specific Buffering Constraint
