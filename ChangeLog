@@ -1,3 +1,11 @@
+Fri Jun 14 14:17:49 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* bin/auto_run_tests.pl:
+	  Fixed wrong application name in Usage message.
+
+	* bin/auto_run_tests.lst:
+	  Add the Nested_Upcall_Crash test.
+
 Fri Jun 14 09:34:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.i (ctime):
