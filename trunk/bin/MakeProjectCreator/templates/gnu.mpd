@@ -36,8 +36,11 @@ ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
 <%endfor%>
 <%if(exename)%>
 BIN = $(BIN_UNCHECKED)
-<%else%>
+<%endif%>
+<%if(staticname)%>
 LIB   = $(LIB_UNCHECKED)
+<%endif%>
+<%if(sharedname)%>
 SHLIB = $(SHLIB_UNCHECKED)
 <%endif%>
 <%foreach(comps)%>
@@ -48,8 +51,12 @@ endif
 <%if(tagname)%>
 ifeq (,$(<%tagname%>))
 <%endif%>
+<%if(staticname)%>
 LIB   = $(LIB_UNCHECKED)
+<%endif%>
+<%if(sharedname)%>
 SHLIB = $(SHLIB_UNCHECKED)
+<%endif%>
 <%if(tagname)%>
 else
 <%foreach(tagchecks)%>
