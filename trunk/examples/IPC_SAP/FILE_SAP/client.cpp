@@ -9,7 +9,7 @@
 int 
 main (int argc, char *argv[])
 {
-  if (argc < 2)
+  if (argc < 3 || argc > 3)
     ACE_ERROR_RETURN ((LM_ERROR, "usage: %s filename string\n", argv[0]), 1);
 
   char *readback = new char[::strlen (argv[1]) + 1];
@@ -31,16 +31,17 @@ main (int argc, char *argv[])
   if (cli_file.get_info (&fileinfo) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_info"), 1);
   else
-    cout << "fileinfo : mode = " << (fileinfo.mode_ & 777)
-	 << "\nno of links = " << fileinfo.nlink_
-	 << "\nsize = " << fileinfo.size_ << endl;
+    ACE_OS::printf ("fileinfo : mode = %o\nno of lines = %lu\nsize = %lu\n",
+                    fileinfo.mode_ & 0777,
+                    fileinfo.nlink_,
+                    fileinfo.size_);
 
   off_t fpos = cli_file.position ();
 
   if (fpos == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "position"), 1);
   else
-    cout << "current filepointer is at " << fpos << endl;
+    ACE_OS::printf ("current filepointer is at %ld\n", fpos);
     
   if (cli_file.position (0, SEEK_SET) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "position"), 1);
@@ -48,7 +49,7 @@ main (int argc, char *argv[])
   if (cli_file.recv (readback, len) != len)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 1);
 
-  cout << "read back :" << readback << endl;
+  ACE_OS::printf ("read back :%s\n", readback);
 
   if (cli_file.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 1);
