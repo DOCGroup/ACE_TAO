@@ -130,20 +130,13 @@ IDL_GlobalData::IDL_GlobalData()
     // the perfect hasher and at that time, we can switch over to some
     // other scheme. 
     {
-#if !defined (ACE_WIN32)
-      ACE_DEBUG ((LM_WARNING, "Warning:Env variable <ACE_ROOT> is not set\n"));
-      // This error message confuses MSDEV and take it as a real
-      // warning.  Since we don't use gperf with Win32 at all now and
-      // the ACE_ROOT, more likely than not, is not defined on Win32,
-      // we might as well disable the warning.
-#endif /* ACE_WIN32 */
       this->perfect_hasher_ = 0;
     }
   else
     {
       // Set it to the default value.
       ACE_NEW (this->perfect_hasher_, 
-               char [strlen (ace_root) + strlen ("/bin/gperf")]);
+               char [strlen (ace_root) + strlen ("/bin/gperf") + 1]);
       ACE_OS::sprintf (this->perfect_hasher_,
                        "%s/bin/gperf",
                        ace_root);
@@ -809,7 +802,7 @@ IDL_GlobalData::export_include (const char *s)
 void
 IDL_GlobalData::client_hdr_ending (const char* s)
 {
-  delete this->client_hdr_ending_;
+  delete [] this->client_hdr_ending_;
   this->client_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -823,7 +816,7 @@ IDL_GlobalData::client_hdr_ending (void) const
 void
 IDL_GlobalData::client_inline_ending  (const char* s)
 {
-  delete this->client_inline_ending_;
+  delete [] this->client_inline_ending_;
   this->client_inline_ending_ = ACE::strnew (s);
 }
 
@@ -837,7 +830,7 @@ IDL_GlobalData::client_inline_ending (void) const
 void 
 IDL_GlobalData::client_stub_ending (const char* s)
 {
-  delete this->client_stub_ending_;
+  delete [] this->client_stub_ending_;
   this->client_stub_ending_ = ACE::strnew (s);
 }  
   
@@ -850,7 +843,7 @@ IDL_GlobalData::client_stub_ending (void) const
 void 
 IDL_GlobalData::server_hdr_ending (const char* s)
 {
-  delete this->server_hdr_ending_;
+  delete [] this->server_hdr_ending_;
   this->server_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -863,7 +856,7 @@ IDL_GlobalData::server_hdr_ending (void) const
 void 
 IDL_GlobalData::server_template_hdr_ending (const char* s)
 {
-  delete this->server_template_hdr_ending_;
+  delete [] this->server_template_hdr_ending_;
   this->server_template_hdr_ending_ = ACE::strnew (s);
 }
   
@@ -876,7 +869,7 @@ IDL_GlobalData::server_template_hdr_ending (void) const
 void 
 IDL_GlobalData::server_skeleton_ending (const char* s) 
 {
-  delete this->server_skeleton_ending_;
+  delete [] this->server_skeleton_ending_;
   this->server_skeleton_ending_ = ACE::strnew (s);
 }
   
@@ -889,7 +882,7 @@ IDL_GlobalData::server_skeleton_ending (void) const
 void 
 IDL_GlobalData::server_template_skeleton_ending (const char* s)
 {
-  delete this->server_template_skeleton_ending_;
+  delete [] this->server_template_skeleton_ending_;
   this->server_template_skeleton_ending_ = ACE::strnew (s);
 }
 
@@ -902,7 +895,7 @@ IDL_GlobalData::server_template_skeleton_ending (void) const
 void 
 IDL_GlobalData::server_inline_ending (const char* s)
 {
-  delete this->server_inline_ending_;
+  delete [] this->server_inline_ending_;
   this->server_inline_ending_ = ACE::strnew (s);
 }
 
@@ -915,7 +908,7 @@ IDL_GlobalData::server_inline_ending (void) const
 void 
 IDL_GlobalData::server_template_inline_ending (const char* s)
 {
-  delete this->server_template_inline_ending_;
+  delete [] this->server_template_inline_ending_;
   this->server_template_inline_ending_ = ACE::strnew (s);
 }
 
@@ -928,7 +921,7 @@ IDL_GlobalData::server_template_inline_ending (void) const
 void
 IDL_GlobalData::output_dir (const char* s)
 {
-  delete this->output_dir_;
+  delete [] this->output_dir_;
   this->output_dir_ = ACE::strnew (s);
 }
 
@@ -941,7 +934,7 @@ IDL_GlobalData::output_dir (void) const
 void
 IDL_GlobalData::perfect_hasher (const char* s)
 {
-  delete this->perfect_hasher_;
+  delete [] this->perfect_hasher_;
   this->perfect_hasher_ = ACE::strnew (s);
 }
 

@@ -435,6 +435,8 @@ DRV_parse_args(long ac, char **av)
         DRV_push_file(av[i]);
     }
 
+  // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
+  // us check whether things are fine with GPERF.
 #if defined (ACE_HAS_GPERF)
   // If Perfect Hashing Strategy has been selected, let us make sure
   // that it exists and will work.
@@ -444,14 +446,14 @@ DRV_parse_args(long ac, char **av)
       int return_value = DRV_check_gperf ();
       if (return_value == -1)
         {
-#if 0
+          // If perfect_hasher is an absolute path, try to call this
+          // again with 
           ACE_DEBUG ((LM_DEBUG,
-                      "%p"
-                      "GPERF program couldn't be executed"
-                      "Perfect Hashed Operation Lookup strategy can not be used\n"
-                      "Using Dynamic_Hashed Operation Lookup strategy\n",
-                      "TAO_IDL:"));
-#endif /* 0 */
+                      "TAO_IDL:Note:GPERF could not be executed. Using Dynamich Hashed OpLookup instead of Perfect Hashing\n"
+                      "To make use of Perfect Hashing\n"
+                      "\t-Build the <gperf> program at $ACE_ROOT/apps/gperf\n"
+                      "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
+                      "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details")); 
           
           // Switching over to Dynamic Hashing.
           cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
@@ -470,12 +472,28 @@ DRV_parse_args(long ac, char **av)
 int 
 DRV_check_gperf (void)
 {
-  // Make sure the perfect hasher is valid.
+  // If absolute path is not specified yet, let us call just
+  // "gperf". Hopefully PATH is set up correctly to locate the gperf. 
   if (idl_global->perfect_hasher () == 0)
-    return -1;
-
+    idl_global->perfect_hasher ("gperf");
+  
+  // If we have absolute path for the <gperf> rather than just the
+  // executable name <gperf>, make sure the file exists
+  // firsts. Otherwise just call <gperf>. Probably PATH is set
+  // correctly to take care of this.
+  if (ACE_OS::strcmp (idl_global->perfect_hasher (), "gperf") != 0)
+    {
+      // It is absolute path. Check the existance, permissions and
+      // the modes. 
+      if (ACE_OS::access (idl_global->perfect_hasher (), 
+                          F_OK | X_OK) == -1)
+        // Problem with the file. No point in having the absolute
+        // path. Swith to "gperf".
+        idl_global->perfect_hasher ("gperf");
+    }
+  
   // Just call gperf in silent mode. It will come and immly exit.
-
+  
   // Using ACE_Process.
   ACE_Process process_manager;
   ACE_Process_Options process_options;
