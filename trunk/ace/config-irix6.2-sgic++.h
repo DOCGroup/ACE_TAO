@@ -13,6 +13,9 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// Platform supports template specialization
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
 #define ACE_HAS_EXCEPTIONS
 #define ACE_LACKS_SIGNED_CHAR
 #define ACE_HAS_P_READ_WRITE
