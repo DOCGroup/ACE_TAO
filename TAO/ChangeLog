@@ -1,3 +1,15 @@
+Wed Oct  9 13:25:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+	* orbsvcs/orbsvcs/RTEventLog.dsp:
+
+	  Fixed custom build step for the "DLL Release" configuration.
+	  Previously, the Microsoft IDL compiler "midl" was invoked by
+	  default, which is obviously incorrect.  TAO's IDL compiler is
+	  now invoked.
+
 Wed Oct  9 09:56:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
