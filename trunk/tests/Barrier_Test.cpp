@@ -50,11 +50,6 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-#if defined (VXWORKS)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %s: stack size is %u\n"),
-              ACE_OS::thr_self (), ACE_OS::thr_min_stack ()));
-#endif /* VXWORKS */
-
   for (int iterations = 1;
        iterations <= args->n_iterations_;
        iterations++)
@@ -84,29 +79,6 @@ main (int, ASYS_TCHAR *[])
 
   Tester_Args args (tester_barrier, n_iterations);
 
-#if defined (VXWORKS)
-  // Assign thread (VxWorks task) names to test that feature.
-  ACE_thread_t *thread_name;
-  ACE_NEW_RETURN (thread_name, ACE_thread_t[n_threads], -1);
-
-  // And test the ability to specify stack size.
-  size_t *stack_size;
-  ACE_NEW_RETURN (stack_size, size_t[n_threads], -1);
-
-  int i;
-
-  for (i = 0; i < n_threads; ++i)
-    {
-      if (i < n_threads - 1)
-        {
-          ACE_NEW_RETURN (thread_name[i], char[32], -1);
-          ACE_OS::sprintf (thread_name[i], ASYS_TEXT ("thread%u"), i);
-        }
-
-      stack_size[i] = 40000;
-    }
-#endif /* VXWORKS */
-
   for (size_t iteration_count = 0;
        iteration_count < ACE_MAX_ITERATIONS;
        iteration_count++)
@@ -114,45 +86,17 @@ main (int, ASYS_TCHAR *[])
       ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("starting iteration %d\n"),
                   iteration_count));
 
-      // Pass an ACE_thread_t pointer of 0 for the last thread name.
-      // We have to do this for each iteration, because the
-      // thread_name location gets set on each call to spawn_n () with
-      // the actual task name.
-      thread_name[n_threads - 1] = 0;
-
       if (ACE_Thread_Manager::instance ()->spawn_n
-          (
-#if defined (VXWORKS)
-           thread_name,
-#endif /* VXWORKS */
-           n_threads,
+          (n_threads,
            (ACE_THR_FUNC) tester,
            (void *) &args,
-           THR_NEW_LWP | THR_JOINABLE
-#if defined (VXWORKS)
-           , ACE_DEFAULT_THREAD_PRIORITY
-           , -1
-           , 0
-           , stack_size
-#endif /* VXWORKS */
-           ) == -1)
+           THR_NEW_LWP | THR_JOINABLE) == -1)
 
         ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("spawn_n")), 1);
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-
-#if defined (VXWORKS)
-  for (i = 0; i < n_threads - 1; ++i)
-    {
-      delete [] thread_name[i];
-      // Don't delete the last thread_name, because it points
-      // to the name in the TCB.  It was initially 0.
-    }
-  delete [] thread_name;
-  delete [] stack_size;
-#endif /* VXWORKS */
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("test done\n")));
 #else
