@@ -80,7 +80,7 @@ short_stream (void)
 
   // Basic types for output
   ACE_CDR::Char ch = 'A';
-  ACE_CDR::Char wchtmp[] = {"\xF3"};
+  ACE_CDR::Char wchtmp[] = {'\xF3'};
   ACE_CDR::WChar wch = *wchtmp;
   ACE_CDR::WChar wchar2[] = {'\x00'};    // empty wide string
   ACE_CDR::WChar *wstr = wchar2;
