@@ -1,3 +1,9 @@
+Sun Nov 16 18:04:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/operation_details.i:
+
+	  Removed 'return' from the last line of two methods returning void.
+
 Sun Nov 16 16:49:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:

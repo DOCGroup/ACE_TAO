@@ -129,7 +129,7 @@ namespace CORBA
     virtual ~Exception (void);
 
     // = To throw the exception (when using the standard mapping).
-    virtual void _raise (void) const = 0;
+    virtual void _raise (void) const {}
 
     // = The static narrow operation.
     static Exception *_downcast (Exception *x);
@@ -229,7 +229,7 @@ namespace CORBA
         /// The const version of narrow operation
     static const UserException *_downcast (const CORBA::Exception *exception);
 
-    virtual void _raise (void) const = 0;
+    virtual void _raise (void) const {}
 
     // = TAO specific extension.
 
