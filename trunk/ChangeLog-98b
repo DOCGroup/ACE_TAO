@@ -1,30 +1,35 @@
+Tue Oct 13 22:39:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/MM_Shared_Memory_Test.cpp (client): added an
+          ACE_ASSERT to check that shm is non-zero.
+
 Tue Oct 13 22:09:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Mem_Map.cpp (map_it): One more try to get this right ;)
- 	  Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for the bug
- 	  reports, suggested fixes, and test program.
+        * ace/Mem_Map.cpp (map_it): One more try to get this right ;)
+          Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for the bug
+          reports, suggested fixes, and test program.
 
 Tue Oct 13 21:17:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp: 
-	* ace/Proactor.cpp: Fixed the problem with POSIX4 implementation
-	of Asynch_Transmit_File. Thanks to James Hu and Irfan for
-	reporting this problem and helped me on the fixes. 
+        * ace/Asynch_IO.cpp:
+        * ace/Proactor.cpp: Fixed the problem with POSIX4 implementation
+        of Asynch_Transmit_File. Thanks to James Hu and Irfan for
+        reporting this problem and helped me on the fixes.
 
 Tue Oct 13 18:07:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-aix-4.2.x.h: Set up so it should work with gcc as well
-	  as xlC.  Rearranged defs and removed some duplicates.
-	  Enabled ACE_HAS_4_4BSD_SENDMSG_RECVMSG and removed the redefs
-	  of msgbuf fields.
+        * ace/config-aix-4.2.x.h: Set up so it should work with gcc as well
+          as xlC.  Rearranged defs and removed some duplicates.
+          Enabled ACE_HAS_4_4BSD_SENDMSG_RECVMSG and removed the redefs
+          of msgbuf fields.
 
-	* tests/Thread_Pool_Reactor_Test.cpp: Moved the definition of
-	  Acceptor_Handler to a new file, Thread_Pool_Reactor_Test.h to
-	  satisfy AIX xlC's template instantiation.
+        * tests/Thread_Pool_Reactor_Test.cpp: Moved the definition of
+          Acceptor_Handler to a new file, Thread_Pool_Reactor_Test.h to
+          satisfy AIX xlC's template instantiation.
 
 Tue Oct 13 15:56:09 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* ace/OS.i: Fixed a few errors on CHORUS.
+        * ace/OS.i: Fixed a few errors on CHORUS.
 
 Tue Oct 13 08:48:36 EDT 1998   James CE Johnson  <jcej@lads.com>
 
