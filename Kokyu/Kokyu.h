@@ -102,7 +102,7 @@ namespace Kokyu
        *
        * @return Auto pointer to the dispatcher.
        */
-      static Dispatcher_Auto_Ptr
+      static Dispatcher*
       create_dispatcher (const Dispatcher_Attributes& attr);
     };
 } //end of namespace
