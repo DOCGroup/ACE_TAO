@@ -3,7 +3,7 @@
 
 debug = 1
 optimize = 1
-threads = 0
+threads = 1
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
