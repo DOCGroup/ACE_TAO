@@ -60,12 +60,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       return -1;
     }
 
-  // Generate the normal skeleton as usual.
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-
   ACE_CString full_skel_name_holder =
     this->generate_full_skel_name (node);
 
@@ -96,6 +90,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                          "codegen for proxy classes\n"),
                         -1);
     }
+
+  TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;

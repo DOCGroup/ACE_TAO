@@ -98,6 +98,10 @@ SOURCE=.\AbstractBase.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AbstractBase_Invocation_Adapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Seq_Tmplinst.cpp
 # End Source File
 # Begin Source File
@@ -123,6 +127,10 @@ SOURCE=.\Valuetype_Adapter_Impl.cpp
 # Begin Source File
 
 SOURCE=.\AbstractBase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AbstractBase_Invocation_Adapter.h
 # End Source File
 # Begin Source File
 

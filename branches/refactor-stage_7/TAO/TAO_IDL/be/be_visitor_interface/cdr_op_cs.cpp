@@ -119,24 +119,14 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << be_nl << be_nl
       << "// Narrow to the right type." << be_nl;
 
-  if (node->is_abstract ())
-    {
-      *os << "_tao_objref =" << be_idt_nl
-          << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::"
-          << "unchecked_narrow (obj.in ());"
-          << be_uidt_nl << be_nl;
-    }
-  else
-    {
-      *os << "_tao_objref =" << be_idt_nl
-          << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow ("
-          << be_idt << be_idt_nl
-          << "obj.in ()," << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name () 
-          << "_Factory_function_pointer" << be_uidt_nl
-          << ");" << be_uidt_nl << be_uidt_nl;
-    }
+  *os << "_tao_objref =" << be_idt_nl
+      << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow ("
+      << be_idt << be_idt_nl
+      << "obj.in ()," << be_nl
+      << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name () 
+      << "_Factory_function_pointer" << be_uidt_nl
+      << ");" << be_uidt_nl << be_uidt_nl;
 
   *os << "return 1;" << be_uidt_nl
       << "}";

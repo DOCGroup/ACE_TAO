@@ -1,3 +1,54 @@
+Wed Sep 24 17:33:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+  	  - Further tweaks to the file inclusion logic.
+
+	  - Support for collocation of abstract interfaces.
+
+	  - Support in refactored invocation code for abstract interfaces.
+
+	  - Generation of MSVC guards around Objref_Traits<>
+	    specialization implementation.
+
+	  - Fixed generation of inheritance lists for thru-POA and
+	    direct proxy impl classes to exclude abstract parents.
+
+        * tao/Object_T.cpp:
+        * tao/Object_T.h:
+
+	  Changed signature of narrow() and unchecked_narrow for
+	  abstract interfaces to use the proxy broker factory
+	  function pointer, as concrete interfaces do.
+
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+
+	  Cosmetic changes.
+
+        * tao/Valuetype/TAO_Valuetype.dsp:
+
+	  Added AbstractBase_Invocation_Adapter.* to project.
+
+        * tests/Abstract_Interface/Abstract_Interface_Client.csp:
+        * tests/Abstract_Interface/Abstract_Interface_Server.csp:
+
+          Turned on RTTI.
+
 Tue Sep 23 23:10:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IOP_CodecC.h:

@@ -220,7 +220,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "\n#endif /* _MSC_VER */";
     }
 
-  if (! node->is_local () && ! node->is_abstract ())
+  if (! node->is_local ())
     {
       // Add the Proxy Broker member variable.
       *os << be_uidt_nl
@@ -233,13 +233,17 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl;
 
-  if (! node->is_local () && ! node->is_abstract ())
+  if (! node->is_local ())
     {
       // Generate the "protected" constructor so that users cannot
       // instantiate us.
 
-      *os << node->local_name () << " (int collocated = 0);"
-          << be_nl << be_nl;
+      if (! node->is_abstract ())
+        {
+          *os << "// Concrete interface only." << be_nl
+              << node->local_name () << " (int collocated = 0);"
+              << be_nl << be_nl;
+        }
 
       *os << "// These methods travese the inheritance tree and set the"
           << be_nl
@@ -252,31 +256,33 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (node->is_abstract () || node->is_local ())
     {
       // Protected default constructor for abstract interfaces.
-      *os << node->local_name () << " (void);" << be_nl;
+      *os << "// Abstract or local interface only." << be_nl
+          << node->local_name () << " (void);" << be_nl << be_nl;
     }
 
   if (node->is_abstract ())
     {
       // Protected copy constructor for abstract interfaces.
-      *os << node->local_name () << " (const "
-          << node->local_name () << " &);" << be_nl;
+      *os << "// Protected for abstract interfaces." << be_nl
+          << node->local_name () << " (const "
+          << node->local_name () << " &);" << be_nl << be_nl;
     }
 
 
   // Local interfaces don't support stub objects.
   if (! node->is_local ())
     {
-      *os << node->local_name ()
-          << " (IOP::IOR *ior," << be_idt_nl
-          << be_idt << "TAO_ORB_Core *orb_core = 0);" << be_uidt_nl
-          << be_uidt_nl;
+      if (! node->is_abstract ())
+        {
+          *os << "// Concrete non-local interface only." << be_nl
+              << node->local_name () << " (IOP::IOR *ior," << be_nl
+              << "     TAO_ORB_Core *orb_core = 0);" << be_nl << be_nl;
+        }
 
-      *os << node->local_name ()
-          << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
-          << "CORBA::Boolean _tao_collocated = 0," << be_nl
-          << "TAO_Abstract_ServantBase *servant = 0," <<  be_nl
-          << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
-          << ");" << be_uidt_nl;
+      *os << node->local_name () << " (TAO_Stub *objref, " << be_nl
+          << "     CORBA::Boolean _tao_collocated = 0," << be_nl
+          << "     TAO_Abstract_ServantBase *servant = 0," <<  be_nl
+          << "     TAO_ORB_Core *orb_core = 0);" << be_nl << be_nl;
     }
 
   // Protected destructor.
@@ -290,8 +296,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Abstract interfaces have a *protected* copy constructor.
   if (! node->is_abstract ())
     {
-      *os << node->local_name () << " (const "
-          << node->local_name () << " &);" << be_nl;
+      *os << "// Private and unimplemented for concrete interfaces." << be_nl
+          << node->local_name () << " (const "
+          << node->local_name () << " &);" << be_nl << be_nl;
     }
 
   *os << "void operator= (const " << node->local_name () << " &);";
@@ -306,9 +313,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "};";
 
   // Don't support smart proxies for local interfaces.
-  // @@@ (JP) This is TODO for abstract interfaces.
-  if (! node->is_local ()
-      && ! node->is_abstract ())
+  if (! node->is_local ())
     {
       // List that generates proxy broker factory function pointer.
       be_global->non_local_interfaces.enqueue_tail (node);

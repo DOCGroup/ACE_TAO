@@ -83,29 +83,11 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << node->name () << "::" << node->local_name ()
           << " (const " << node->local_name () << " &rhs)" << be_idt_nl
           << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (rhs)" << be_uidt_nl
-          << "{}" << be_nl << be_nl;
-
-      *os << "ACE_INLINE" << be_nl
-          << node->name () << "::" << node->local_name ()
-          << " (" << be_idt << be_idt_nl
-          << "TAO_Stub *objref," << be_nl
-          << "CORBA::Boolean _tao_collocated," << be_nl
-          << "TAO_Abstract_ServantBase *servant," << be_nl
-          << "TAO_ORB_Core *orb_core" << be_uidt_nl
-          << ")" << be_nl
-          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (" 
-          << be_idt << be_idt << be_idt_nl
-          << "objref," << be_nl
-          << "_tao_collocated," << be_nl
-          << "servant" << be_uidt_nl
-          << ")" << be_uidt << be_uidt << be_uidt_nl
           << "{}";
     }
-  else
-    {
-      // Generate the constructor from stub and servant.
-      node->gen_stub_ctor (os);
-    }
+
+  // Generate the constructor from stub and servant.
+  node->gen_stub_ctor (os);
 
   if (!node->is_local () && !node->is_abstract ())
     {
@@ -118,9 +100,8 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "TAO_ORB_Core *oc" << be_uidt_nl
           << ")" << be_nl;
       *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)," << be_idt_nl
-          << "the"<< node->base_proxy_broker_name () << "_ (0)" << be_uidt_nl;
-
-      *os << be_uidt_nl
+          << "the"<< node->base_proxy_broker_name () << "_ (0)" 
+          << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "}" ;
     }

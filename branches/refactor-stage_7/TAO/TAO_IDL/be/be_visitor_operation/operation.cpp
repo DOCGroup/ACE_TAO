@@ -490,7 +490,8 @@ be_visitor_operation::gen_stub_operation_body (
     ACE_OS::strlen (node->local_name ()->get_string ());
 
   *os << be_nl << be_nl
-      << "TAO::Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
+      << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
+      << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_tao_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
