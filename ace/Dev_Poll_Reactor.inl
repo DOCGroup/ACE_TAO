@@ -1,0 +1,152 @@
+// -*- C++ -*-
+//
+// $Id$
+
+ACE_INLINE
+ACE_Dev_Poll_Event_Tuple::ACE_Dev_Poll_Event_Tuple (void)
+  : event_handler (0),
+    mask (ACE_Event_Handler::NULL_MASK),
+    suspended (0),
+    refcount (1)
+{
+}
+
+// ---------------------------------------------------------------------
+
+
+ACE_INLINE
+ACE_Dev_Poll_Ready_Set::ACE_Dev_Poll_Ready_Set (void)
+  : pfds (0),
+    nfds (0)
+{
+}
+
+// ---------------------------------------------------------------------
+
+ACE_INLINE void
+ACE_Dev_Poll_Reactor_Handler_Repository::mask (ACE_HANDLE handle,
+                                               ACE_Reactor_Mask mask)
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::mask");
+
+  // Only bother to search for the handle if it's in range.
+  if (this->handle_in_range (handle))
+    this->handlers_[handle].mask = mask;
+}
+
+ACE_INLINE ACE_Reactor_Mask
+ACE_Dev_Poll_Reactor_Handler_Repository::mask (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::mask");
+
+  ACE_Reactor_Mask mask = ACE_Event_Handler::NULL_MASK;
+
+  // Only bother to search for the handle if it's in range.
+  if (this->handle_in_range (handle))
+    mask = this->handlers_[handle].mask;
+
+  if (mask == ACE_Event_Handler::NULL_MASK)
+    errno = ENOENT;
+
+  return mask;
+}
+
+ACE_INLINE void
+ACE_Dev_Poll_Reactor_Handler_Repository::suspend (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::suspend");
+
+  // Only bother to search for the handle if it's in range.
+  if (this->handle_in_range (handle))
+    this->handlers_[handle].suspended = 1;
+}
+
+ACE_INLINE void
+ACE_Dev_Poll_Reactor_Handler_Repository::resume (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::resume");
+
+  // Only bother to search for the handle if it's in range.
+  if (this->handle_in_range (handle))
+    this->handlers_[handle].suspended = 0;
+}
+
+ACE_INLINE int
+ACE_Dev_Poll_Reactor_Handler_Repository::suspended (ACE_HANDLE handle) const
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::suspended");
+
+  if (this->handle_in_range (handle))
+    return this->handlers_[handle].suspended;
+
+  return -1;
+}
+
+ACE_INLINE size_t
+ACE_Dev_Poll_Reactor_Handler_Repository::size (void) const
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::size");
+
+  return this->max_size_;
+}
+
+ACE_INLINE size_t
+ACE_Dev_Poll_Reactor_Handler_Repository::add_ref (ACE_HANDLE handle)
+{
+  // ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::add_ref");
+
+  // Caller provides synchronization
+
+  if (this->handle_in_range (handle))
+    return this->handlers_[handle].refcount++;
+
+  return 0;
+}
+
+ACE_INLINE size_t
+ACE_Dev_Poll_Reactor_Handler_Repository::remove_ref (ACE_HANDLE handle)
+{
+  // ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::remove_ref");
+
+  // Caller provides synchronization
+
+  if (this->handle_in_range (handle))
+    {
+      size_t & refcount = this->handlers_[handle].refcount;
+
+      ACE_ASSERT  (refcount > 0);
+
+      refcount--;
+
+      if (refcount != 0)
+        return refcount;
+
+      // Reference count dropped to zero.  Remove the event handler
+      // from the repository.
+      this->unbind (handle);
+    }
+
+  return 0;
+}
+
+// -----------------------------------------------------------------
+
+ACE_INLINE
+ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard (
+  ACE_Dev_Poll_Reactor_Handler_Repository &repository,
+  ACE_HANDLE handle)
+  : repository_ (repository),
+    handle_ (handle)
+{
+  // Caller must provide synchronization.
+
+  (void) repository.add_ref (handle);
+}
+
+ACE_INLINE
+ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard (void)
+{
+  // Caller must provide synchronization.
+
+  (void) this->repository_.remove_ref (this->handle_);
+}
