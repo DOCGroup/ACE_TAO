@@ -36,8 +36,7 @@ typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
         TAO_IIOP_LRU_CACHING_STRATEGY;
 
 # if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
-(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1) 
-
+(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
 typedef TAO_IIOP_LRU_CACHING_STRATEGY
         TAO_IIOP_CACHING_STRATEGY;
 #else
@@ -185,8 +184,10 @@ template class ACE_Hash_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY,
 
 template class ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
-(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
+// % levine 3 apr 2000 % Kirthika, please fix!
+// #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
+// (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
 template class ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 template class ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 template class ACE_FIFO_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
@@ -534,7 +535,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
         }
       return -1;
     }
-  
+
   return 0;
 }
 
@@ -703,7 +704,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
       pfile->_decr_refcnt ();
       pfile = 0;
     }
-  
+
   return pfile;
 }
 
