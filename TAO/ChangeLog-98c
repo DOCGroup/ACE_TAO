@@ -22,6 +22,9 @@ Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/Makefile: added default_vxworks target to prevent make
           warning.
 
+        * tests/TAO/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc): added .in ()
+          to objref and cb so that it will compile with g++.
+
 Tue Feb 10 17:39:13 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/SchedEntry.cpp
@@ -222,7 +225,7 @@ Mon Feb  2 13:47:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Mon Feb 02 08:59:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/tao_util.cpp (init): added .in () to poa_object in call to
-         _narrow, so that it will compile with g++.
+          _narrow, so that it will compile with g++.
 
         * orbsvcs/tests/Logger/Makefile,
           orbsvcs/orbsvcs/Makefile,
