@@ -62,8 +62,8 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Bounded_String::init_parameters (Param_Test_ptr /*objref*/,
-				      CORBA::Environment &/*env*/)
+Test_Bounded_String::init_parameters (Param_Test_ptr,
+				                              CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -201,9 +201,10 @@ Test_Bounded_String::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Bounded_String::check_validity (CORBA::Request_ptr /*req*/)
+Test_Bounded_String::check_validity (CORBA::Request_ptr)
 {
-  //ACE_UNUSED_ARG (req);
+  // No need to retrieve anything because, for all the args and
+  // the return, we provided the memory and we own it.
   return this->check_validity ();
 }
 
