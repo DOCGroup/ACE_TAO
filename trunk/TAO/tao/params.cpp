@@ -109,8 +109,3 @@ TAO_OA_Parameters::demux_strategy (const char* strategy)
     // Provide fallback!
     this->demux_ = TAO_DYNAMIC_HASH;
 }
-
-#if !defined (__ACE_INLINE__)
-#  include "params.i"
-#endif /* __ACE_INLINE__ */
-
