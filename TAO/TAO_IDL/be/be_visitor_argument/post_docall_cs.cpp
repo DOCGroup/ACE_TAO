@@ -90,7 +90,7 @@ be_visitor_args_post_docall_cs::visit_interface (be_interface *node)
         // assign the narrowed obj reference
         *os << arg->local_name () << " = " << node->name ()
             << "::_narrow (_tao_base_" << arg->local_name ()
-            << ", _tao_environment);" << be_nl;
+            << ", ACE_TRY_ENV);" << be_nl;
         *os << "CORBA::release (_tao_base_" << arg->local_name ()
             << ");\n";
       }
@@ -117,7 +117,7 @@ be_visitor_args_post_docall_cs::visit_interface_fwd (be_interface_fwd *node)
         // assign the narrowed obj reference
         *os << arg->local_name () << " = " << node->name ()
             << "::_narrow (_tao_base_" << arg->local_name ()
-            << ", _tao_environment);" << be_nl;
+            << ", ACE_TRY_ENV);" << be_nl;
         *os << "CORBA::release (_tao_base_" << arg->local_name ()
             << ");\n";
       }

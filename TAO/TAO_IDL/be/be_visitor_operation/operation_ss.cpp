@@ -111,7 +111,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "CORBA::ServerRequest &_tao_server_request, " << be_nl
       << "void *_tao_object_reference, " << be_nl
       << "void * /* context */, " << be_nl
-      << "CORBA::Environment &_tao_environment" << be_uidt << be_uidt_nl
+      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt << be_uidt_nl
       << ")" << be_nl;
 
   // generate the actual code for the skeleton. However, if any of the argument
@@ -220,7 +220,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     *os << ",\n";
   os->indent ();
   //  *os << "_tao_skel_environment";
-  *os << "_tao_environment";
+  *os << "ACE_TRY_ENV";
   // end the upcall
   *os << be_uidt_nl;
   *os << ");\n";
@@ -228,7 +228,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   if (node->flags () != AST_Operation::OP_oneway)
     {
       os->indent ();
-      *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);\n";
+      *os << "ACE_CHECK;\n";
     }
 
   // do any post processing for the arguments
@@ -344,9 +344,9 @@ be_visitor_operation_ss::gen_raise_exception (be_type *,
   TAO_OutStream *os = this->ctx_->stream ();
 
   os->indent ();
-  *os << "TAO_THROW_ENV ("
-      << excep << " (" << completion_status << "), "
-      << env << ");\n";
+  *os << "ACE_THROW ("
+      << excep << " (" << completion_status << ") "
+      << ");\n";
   return 0;
 }
 
@@ -357,8 +357,8 @@ be_visitor_operation_ss::gen_check_exception (be_type *, const char *env)
   
   os->indent ();
   // check if there is an exception
-  *os << "TAO_CHECK_ENV_RETURN_VOID ("
-      << env << ");\n";
+  *os << "ACE_CHECK;\n";
+  // << env << ");\n";
   
   return 0;
 }
@@ -492,7 +492,7 @@ be_interpretive_visitor_operation_ss::gen_demarshal_params (be_operation *node,
   // setup parameters for demarshaling and demarshal them
   os->indent ();
   *os << "_tao_server_request.demarshal (" << be_idt_nl
-      << "_tao_environment, " << be_nl
+      << "ACE_TRY_ENV, " << be_nl
       << "&";
   // check if we are an attribute node in disguise
   if (this->ctx_->attribute ())
@@ -540,7 +540,7 @@ be_interpretive_visitor_operation_ss::gen_demarshal_params (be_operation *node,
   *os << be_uidt_nl;
   *os << ");" << be_nl;
 
-  *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);\n";
+  *os << "ACE_CHECK;\n";
 
   return 0;
 }
@@ -557,7 +557,7 @@ be_interpretive_visitor_operation_ss::gen_marshal_params (be_operation *node,
   // outgoing stream
   os->indent ();
   *os << "_tao_server_request.marshal (" << be_idt_nl
-      << "_tao_environment, " << be_nl
+      << "ACE_TRY_ENV, " << be_nl
     //      << "_tao_skel_environment, " << be_nl
       << "&";
   // check if we are an attribute node in disguise
@@ -681,7 +681,7 @@ be_compiled_visitor_operation_ss::gen_demarshal_params (be_operation *node,
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
                                      "CORBA::COMPLETED_NO",
-                                     "_tao_environment") == -1)
+                                     "ACE_TRY_ENV") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_ss::"
@@ -698,7 +698,7 @@ be_compiled_visitor_operation_ss::gen_demarshal_params (be_operation *node,
 
 int
 be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
-                                                          be_type *bt)
+                                                      be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
@@ -711,7 +711,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
   // We will be here only if we are 2way
   // first initialize a reply message
   os->indent ();
-  *os << "_tao_server_request.init_reply (_tao_environment);\n";
+  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);\n";
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type
@@ -721,7 +721,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
     {
       // grab the incoming stream
       os->indent ();
-      *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);" << be_nl;
+      *os << "ACE_CHECK;" << be_nl;
       *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
       *os << "if (!(\n" << be_idt;
     }
@@ -777,7 +777,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
                                      "CORBA::COMPLETED_NO",
-                                     "_tao_environment") == -1)
+                                     "ACE_TRY_ENV") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_ss::"
