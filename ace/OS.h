@@ -1362,7 +1362,14 @@ struct ifafilt;
 #endif
 #include /**/ <sys/socket.h>
 extern "C" {
-#if !defined (VXWORKS)
+#if defined (VXWORKS)
+  struct  hostent {
+    char    *h_name;        /* official name of host */
+    int     h_addrtype;     /* host address type */
+    int     h_length;       /* address length */
+    char    **h_addr_list;  /* (first, only) address from name server */
+  };
+#else
 #include /**/ <netdb.h>
 #endif /* VXWORKS */
 #include /**/ <net/if.h>
@@ -1824,7 +1831,6 @@ typedef const wchar_t * ACE_WIDE_DL_TYPE;
 struct ACE_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
-  siginfo_t (ACE_HANDLE *handle);
 
   ACE_HANDLE si_handle_;
   // Win32 HANDLE that has become signaled.
