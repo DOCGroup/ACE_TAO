@@ -1,3 +1,10 @@
+Sat Feb  6 20:30:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR.h: 
+	* ace/CDR.i: 
+	* ace/CDR.cpp: 
+	  Fixed some indentation and style problems.
+
 Sat Feb 06 07:47:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/test_config.h (~ACE_Test_Output): wrapped use of
