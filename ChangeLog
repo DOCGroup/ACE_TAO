@@ -1,3 +1,28 @@
+Thu Jul 22 16:47:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Reactor/HAStatus.cpp:
+	* examples/APG/Reactor/HAStatus-AC.cpp: (from pg 151, 174) In
+	  ClientService::handle_input(), the data was not copied to the
+	  ACE_Message_Block, nor was the write pointer updated. Changed the
+	  allocation to only specify the needed size, and then call
+	  ACE_Message_Block::copy() to copy the needed data in. Thanks to
+	  Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl> for
+	  reporting this problem.
+
+Thu Jul 22 16:12:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.cpp: Removed the call
+	  to CWinAPp::Enable3dControls(). It's deprecated from MFC 5.0 on.
+
+	* examples/NT_Service/ntsvc.cpp: Moved the schedule_timer() call from
+	  the Service constructor to the svc() method. It's not needed for
+	  simply installing and removing the service. Also, when the service
+	  is to shut down, cancel the timer. Fixes a hanging handler crash
+	  on shutdown. Thanks to Johann Kandlbauer <hkandl@gamed.com> for
+	  reporting this problem.
+
+	* THANKS: Added Johann Kandlbauer to the Hall of Fame.
+
 Wed Jul 21 06:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
