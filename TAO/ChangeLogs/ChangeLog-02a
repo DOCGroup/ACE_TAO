@@ -1,3 +1,9 @@
+Mon Jan 29 10:58:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IFR_Client/InterfaceC.h:
+
+        Removed an unnecessary #inlude.
+
 Sun Jan 28 22:19:35 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
