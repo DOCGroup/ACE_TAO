@@ -30,6 +30,8 @@
 #include "ace/Stats.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Sched_Params.h"
+
+// FUZZ: disable check_for_math_include
 #include <math.h>
 
 ACE_RCSID(TCP, tcp_test, "$Id$")

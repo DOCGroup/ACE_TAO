@@ -10,6 +10,7 @@
  *									  *
  **************************************************************************/
 
+/* FUZZ: disable check_for_math_include */
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>

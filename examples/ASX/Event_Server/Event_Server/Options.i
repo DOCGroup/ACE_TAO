@@ -3,6 +3,10 @@
 
 /* Option manager for ustreams */
 
+// Since this is only included in Options.h these should stay
+// inline, not ACE_INLINE.
+// FUZZ: disable check_for_inline
+
 inline void   
 Options::supplier_port (u_short port)
 {

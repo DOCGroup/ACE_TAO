@@ -23,6 +23,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
+// FUZZ: disable check_for_math_include
 #include <math.h>
 
 ACE_RCSID(UDP, udp_test, "$Id$")

@@ -16,6 +16,10 @@ static char THIS_FILE[] = __FILE__;
 
 static CWnd *host_window_ = 0;
 
+// Since this is only for Windows CE, we can use the Win32 character macros
+// FUZZ: disable check_for_tchar
+
+
 UINT worker (void * arg)
 {
   ACE_ARGV cmd_line ((ACE_TCHAR *) arg);

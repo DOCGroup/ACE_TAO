@@ -9,6 +9,8 @@
  *  modifications and changes to the code and release it.		  *
  *									  *
  **************************************************************************/
+
+/* FUZZ: disable check_for_math_include */
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>
