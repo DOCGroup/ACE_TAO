@@ -1,3 +1,13 @@
+Wed Sep 24 09:36:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Managed_Object.{h,i},Object_Manager.{h,cpp}: removed
+	  ACE_Managed_Object get_object () interface.  It wasn't
+	  used anywhere; it was originally intended to support preallocated
+	  objects but turned out to not be necessary.  I think that it would
+	  be more useful to make it possible to instantiate
+	  ACE_Managed_Object instead, and have it implicitly register
+	  with the ACE_Object_Manager.
+
 Tue Sep 23 17:11:44 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/config-hpux-10.x-g++.h: 
