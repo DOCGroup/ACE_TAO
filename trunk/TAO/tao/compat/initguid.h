@@ -1,6 +1,7 @@
+/* This may look like C, but it's really -*- C++ -*- */
+
 // $Id$
 
-/* This may look like C, but it's really -*- C++ -*- */
 #ifndef TAO_COMPAT_INITGUID_H
 #  define TAO_COMPAT_INITGUID_H
 
