@@ -2,7 +2,7 @@
 # (OSF/1 4.0) and GCC in version 2.7.2.1 (or newer).
 
 CC		= gcc -g -D_REENTRANT
-CXX		= gcc -g -D_REENTRANT -fno-strict-prototypes -D__ACE_INLINE__ 
+CXX		= g++ -g -D_REENTRANT -fno-strict-prototypes -D__ACE_INLINE__ 
 LD		= $(CXX)
 DLD		= $(CXX)
 LIBS		+= -lpthread -lmach -lexc -ltli -lstdc++
