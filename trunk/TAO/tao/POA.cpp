@@ -1779,7 +1779,10 @@ TAO_POA::locate_servant_i (const char *operation,
             ACE_CHECK_RETURN (0);
 
             if (servant == 0)
-              return 0;
+              {
+                ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                                  0);
+              }
           }
 
           // If the incarnate operation returns a servant that is
