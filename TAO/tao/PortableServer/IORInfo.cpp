@@ -93,18 +93,15 @@ TAO_IORInfo::state (ACE_ENV_SINGLE_ARG_DECL)
 
 PortableInterceptor::ObjectReferenceTemplate *
 TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /* Returns Object Reference Template whenever an IOR Interceptor is
-     invoked. Its value is the template created for the adapter
-     policies and the IOR Interceptor calls to add_ior_component and
-     add_ior_component_to_profile. Its a const value and its value
-     never changes in its life.
-  */
+  // Return the Object Reference Template whenever an IOR Interceptor
+  // is invoked.  Its value is the template created for the adapter
+  // policies and the IOR Interceptor calls to add_ior_component and
+  // add_ior_component_to_profile.  It's a const value and its value
+  // never changes.
   PortableInterceptor::ObjectReferenceTemplate *adapter_template =
     this->poa_->get_adapter_template ();
-
-  CORBA::add_ref (adapter_template);
 
   if (adapter_template == 0)
     {
@@ -113,6 +110,8 @@ TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
+  CORBA::add_ref (adapter_template);
+
   return adapter_template;
 }
 
@@ -120,12 +119,11 @@ PortableInterceptor::ObjectReferenceFactory *
 TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /* Returns the current_factory that is used to create the object
-     references by the adapter. Though initially, its value is the
-     same as the adapter_template, unlike adapter_template, its value can
-     be changed. The value of the current_factory can be changed only
-     during the call to components_established method.
-  */
+  // Return the current_factory that is used to create the object
+  // references by the adapter.  Though initially, its value is the
+  // same as the adapter_template, unlike adapter_template, its value
+  // can be changed.  The value of the current_factory can be changed
+  // only during the call to components_established method.
   PortableInterceptor::ObjectReferenceFactory *adapter_factory =
     this->poa_->get_obj_ref_factory ();
 
@@ -135,6 +133,8 @@ TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
                                               CORBA::COMPLETED_NO),
                         0);
     }
+
+  CORBA::add_ref (adapter_factory);
 
   return adapter_factory;
 }
