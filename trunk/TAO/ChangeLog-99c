@@ -1,3 +1,28 @@
+Thu Aug 26 20:34:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pluggable.h:
+	* tao/Pluggable.i:
+	* tao/Pluggable.cpp:
+	  Added new <priority> field to the Acceptors, this is used to
+	  setup a TAO-specific tagged component that informs the client
+	  about the priority of the threads handling events on that
+	  endpoint.
+	  Also moved lightweight methods to the .i file, they were not
+	  virtual and used in a couple of places in the critical path.
+
+	* tao/corbafwd.h:
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.i:
+	* tao/Tagged_Components.cpp:
+	  Changed the TAO_TAG_PRIORITY component to have simply a
+	  priority, not a range.
+
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/UIOP_Acceptor.h:
+	* tao/UIOP_Acceptor.cpp:
+	  Implemented the priority stuff for the concrete protocols.
+
 Thu Aug 26 17:37:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/ast_interface.h:
