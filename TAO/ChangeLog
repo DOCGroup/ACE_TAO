@@ -1,7 +1,7 @@
 Tue Dec 30 00:09:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
-          Added #include OS_NS_stdio.h.
+          Added #include OS_NS_stdio.h needed due to Synch[_T].h removal.
 
 Mon Dec 29 14:43:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
