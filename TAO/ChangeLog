@@ -1,3 +1,79 @@
+Sat Aug 16 02:17:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Asynch_Reply_Dispatcher_Base.cpp:
+	* tao/Default_Thread_Lane_Resources_Manager.cpp:
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Utils.cpp:
+	* tao/IOPS.cpp:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Interceptor_List.cpp:
+	* tao/Managed_Types.cpp:
+	* tao/NVList.cpp:
+	* tao/Policy_Manager.cpp:
+	* tao/Policy_Validator.cpp:
+	* tao/Resource_Factory.cpp:
+	* tao/Sync_Strategies.cpp:
+	* tao/TAO_Server_Request.cpp:
+	* tao/Tagged_Components.cpp:
+	* tao/Typecode_Constants.cpp:
+	* tao/default_client.cpp:
+	* tao/default_resource.cpp:
+	* tao/default_server.cpp:
+
+	  No need to include "tao/ORB_Core.h".
+
+	* tao/IIOP_Profile.cpp:
+
+	  No need to include "tao/ORB.h".
+
+	* tao/Exception.cpp (_raise):
+	* tao/Exception.h (_raise):
+
+	  This virtual method is now "const", as required by the latest
+	  (v1.1) C++ mapping.
+
+	* tao/BoundsC.cpp:
+	* tao/BoundsC.h:
+	* tao/IOP_CodecC.cpp:
+	* tao/IOP_CodecC.h:
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PollableC.cpp:
+	* tao/PollableC.h:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.h:
+	* tao/Typecode.cpp:
+	* tao/Typecode.h:
+	* tao/WrongTransactionC.cpp:
+	* tao/WrongTransactionC.h:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/DynamicInterface/Unknown_User_Exception.h:
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.h:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.h:
+
+	  Made _raise() method "const" in accordance with the changes in
+	  Exception.{h,cpp}.
+
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/Environment.cpp:
+
+	  Nuked trailing whitespace.
+
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp (visit_exception):
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp (visit_exception):
+
+	  Made generated _raise() method "const" in accordance with the
+	  changes in Exception.{h,cpp}.
+
 Fri Aug 15 14:37:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:
