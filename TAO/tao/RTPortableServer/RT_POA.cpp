@@ -2,9 +2,10 @@
 
 #include "RT_POA.h"
 
+#include "tao/ORB_Core.h"
+
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Environment.h"
