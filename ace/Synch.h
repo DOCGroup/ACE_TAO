@@ -217,6 +217,13 @@ protected:
   ACE_OS::ace_flock_t lock_;
   // Locking structure for OS record locks.
 
+  int removed_;
+  // Keeps track of whether <remove> has been called yet to avoid
+  // multiple <remove> calls, e.g., explicitly and implicitly in the
+  // destructor.  This flag isn't protected by a lock, so make sure
+  // that you don't have multiple threads simultaneously calling
+  // <remove> on the same object, which is a bad idea anyway...
+
 private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_File_Lock &);
@@ -537,18 +544,17 @@ protected:
   // Remember the name of the mutex if we created it so we can unlink
   // it when we go away (only the actor that initialized the memory
   // can destroy it).
+#endif /* CHORUS */
 
-#else
+  ACE_mutex_t lock_;
+  // Mutex type supported by the OS.
+
   int removed_;
   // Keeps track of whether <remove> has been called yet to avoid
   // multiple <remove> calls, e.g., explicitly and implicitly in the
   // destructor.  This flag isn't protected by a lock, so make sure
   // that you don't have multiple threads simultaneously calling
   // <remove> on the same object, which is a bad idea anyway...
-#endif /* CHORUS */
-
-  ACE_mutex_t lock_;
-  // Mutex type supported by the OS.
 
 private:
   // = Prevent assignment and initialization.
