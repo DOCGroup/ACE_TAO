@@ -6,7 +6,6 @@ Globals::Globals (void)
   : ior_file (0),
     base_port (0),
     num_of_objs (2),
-    use_name_service (1),
     thread_per_rate (0),
     use_multiple_priority (0),
     ready_ (0),
@@ -39,9 +38,6 @@ Globals::parse_args (int argc, char *argv[])
       case 'r':
         thread_per_rate = 1;
         break;
-      case 's':
-        use_name_service = 0;
-        break;
       case 'f':
         ACE_NEW_RETURN (ior_file,
                         char[BUFSIZ],
@@ -63,7 +59,6 @@ Globals::parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " \t[-s Means NOT to use the name service] \n"
                            " \t[-p <port>]\n"
                            " \t[-h <my_hostname>]\n"
                            " \t[-t <num_objects>]\n"

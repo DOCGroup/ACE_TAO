@@ -268,7 +268,6 @@ Client::Client (ACE_Thread_Manager *thread_manager,
     timer_ (0),
     frequency_ (0),
     orb_ (0),
-    naming_success_ (0),
     latency_ (0),
     argc_ (argc),
     argv_ (argv)
@@ -368,7 +367,7 @@ Client::get_high_priority_jitter (void)
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
 
-      ACE_DEBUG ((LM_DEBUG, "high sample: %12.4f\n", *latency)); // ????
+      //      ACE_DEBUG ((LM_DEBUG, "high sample: %12.4f\n", *latency)); // ????
       if (stats.sample (ACE_round (*latency)) == -1)
         ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
 
@@ -429,7 +428,7 @@ Client::get_low_priority_jitter (void)
           ++number_of_samples;
           ACE_timer_t difference = *latency - average;
           jitter += difference * difference;
-          ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
+//          ACE_DEBUG ((LM_DEBUG, "low sample: %12.4f\n", *latency)); // ????
           stats.sample (ACE_round (*latency));
         }
     }
@@ -617,86 +616,6 @@ Client::init_orb (void)
 }
 
 int
-Client::get_cubit_from_naming (void)
-{
-  CORBA::Object_var objref (0);
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->ts_->lock_, -1));
-  TAO_TRY
-    {
-      // Initialize the naming services.
-      if (my_name_client_.init (this->orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                          -1);
-
-      // If the naming service was resolved successsfully ...
-      if (!CORBA::is_nil (this->my_name_client_.get_context ()))
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      " (%t) ----- Using the NameService resolve() method"
-                      " to get cubit objects -----\n"));
-
-          // Construct the key for the name service lookup.
-          CosNaming::Name mt_cubit_context_name (1);
-          mt_cubit_context_name.length (1);
-          mt_cubit_context_name[0].id =
-            CORBA::string_dup ("MT_Cubit");
-
-          objref =
-            this->my_name_client_->resolve (mt_cubit_context_name,
-                                            TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          this->mt_cubit_context_ =
-            CosNaming::NamingContext::_narrow (objref.in (),
-                                               TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          char *buffer;
-          int l = ACE_OS::strlen (this->ts_->key_) + 3;
-          ACE_NEW_RETURN (buffer,
-                          char[l],
-                          -1);
-          ACE_OS::sprintf (buffer,
-                           "%s%02d",
-                           (char *) this->ts_->key_,
-                           this->id_);
-          // Construct the key for the name service lookup.
-          CosNaming::Name cubit_name (1);
-          cubit_name.length (1);
-          cubit_name[0].id = CORBA::string_dup (buffer);
-
-          objref = this->mt_cubit_context_->resolve (cubit_name,
-                                                     TAO_TRY_ENV);
-          if (TAO_TRY_ENV.exception () != 0
-              || CORBA::is_nil (objref.in ()))
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          " (%t) resolve() returned nil\n"));
-              TAO_TRY_ENV.print_exception
-                ("Attempt to resolve() a cubit object"
-                 "using the name service Failed!\n");
-            }
-          else
-            {
-              this->naming_success_ = 1;
-              ACE_DEBUG ((LM_DEBUG,
-                          " (%t) Cubit object resolved to the name \"%s\".\n",
-                          buffer));
-            }
-        }
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Client::get_cubit_from_naming");
-      return 1;
-    }
-  TAO_ENDTRY;
-  return 0;
-}
-
-int
 Client::get_cubit (void)
 {
   int result;
@@ -704,85 +623,73 @@ Client::get_cubit (void)
 
   TAO_TRY
     {
-      if (this->ts_->use_name_service_ != 0)
-        {
-          result = this->get_cubit_from_naming ();
-          if (result != 0)
-            return result;
-        }
-      else
-        {
-          if (this->naming_success_ == 0)
-            {
-              char *my_ior =
-                this->ts_->use_utilization_test_ == 1
-                ? this->ts_->one_ior_
-                : this->ts_->iors_[this->id_];
+      char *my_ior =
+        this->ts_->use_utilization_test_ == 1
+        ? this->ts_->one_ior_
+        : this->ts_->iors_[this->id_];
 
               // If we are running the "1 to n" test make sure all low
               // priority clients use only 1 low priority servant.
-              if (this->id_ > 0
-                  && this->ts_->one_to_n_test_ == 1)
-                my_ior = this->ts_->iors_[1];
+      if (this->id_ > 0
+          && this->ts_->one_to_n_test_ == 1)
+        my_ior = this->ts_->iors_[1];
 
-              if (my_ior == 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Must specify valid factory ior key with -k option,"
-                                   " naming service, or ior filename\n"),
-                                  -1);
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) The ior I'm using is: \"%s\"\n",
-                          my_ior));
+      if (my_ior == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Must specify valid factory ior key with -k option,"
+                           " naming service, or ior filename\n"),
+                          -1);
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) The ior I'm using is: \"%s\"\n",
+                  my_ior));
 
-              // If we are running the "1 to n" test make sure all low
-              // priority clients use only 1 low priority servant.
-              if (this->id_ > 0
-                  && this->ts_->one_to_n_test_ == 1)
-                my_ior = this->ts_->iors_[1];
+      // If we are running the "1 to n" test make sure all low
+      // priority clients use only 1 low priority servant.
+      if (this->id_ > 0
+          && this->ts_->one_to_n_test_ == 1)
+        my_ior = this->ts_->iors_[1];
 
-              if (my_ior == 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Must specify valid factory ior key with -k option,"
-                                   " naming service, or ior filename\n"),
-                                  -1);
-              objref = this->orb_->string_to_object (my_ior,
-                                                     TAO_TRY_ENV);
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t)  String_to_object success\n"));
-              TAO_CHECK_ENV;
-            }
+      if (my_ior == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Must specify valid factory ior key with -k option,"
+                           " naming service, or ior filename\n"),
+                          -1);
+      objref = this->orb_->string_to_object (my_ior,
+                                             TAO_TRY_ENV);
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t)  String_to_object success\n"));
+      TAO_CHECK_ENV;
 
-          if (CORBA::is_nil (objref.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%t) string_to_object or NameService->resolve() Failed!\n"),
-                              -1);
+      if (CORBA::is_nil (objref.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%t) string_to_object or NameService->resolve() Failed!\n"),
+                          -1);
 
-          // Narrow the CORBA::Object reference to the stub object,
-          // checking the type along the way using _is_a.
-          this->cubit_ = Cubit::_narrow (objref.in (),
-                                         TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      // Narrow the CORBA::Object reference to the stub object,
+      // checking the type along the way using _is_a.
+      this->cubit_ = Cubit::_narrow (objref.in (),
+                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) _narrow done\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) _narrow done\n"));
 
-          if (CORBA::is_nil (this->cubit_))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Create cubit failed\n"),
-                              1);
+      if (CORBA::is_nil (this->cubit_))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Create cubit failed\n"),
+                          1);
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) Binding succeeded\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) Binding succeeded\n"));
 
-          CORBA::String_var str =
-            this->orb_->object_to_string (this->cubit_,
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+      CORBA::String_var str =
+        this->orb_->object_to_string (this->cubit_,
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) CUBIT OBJECT connected <%s>\n",
-                      str.in ()));
-        }
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) CUBIT OBJECT connected <%s>\n",
+                  str.in ()));
     }
   TAO_CATCHANY
     {

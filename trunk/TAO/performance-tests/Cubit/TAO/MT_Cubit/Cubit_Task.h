@@ -20,8 +20,6 @@
 #include "ace/Task.h"
 #include "ace/ARGV.h"
 #include "tao/TAO.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
 #include "cubit_i.h"
 #include "Globals.h"
 
@@ -75,21 +73,11 @@ private:
   CORBA::String *servants_iors_;
   // IOR strings of the servants.
 
-  //CosNaming::NamingContext_var naming_context_;
-  // Object reference to the naming service.
-
   u_int task_id_;
   // ID used for naming service object name.
 
-  CosNaming::NamingContext_var mt_cubit_context_;
-  // Context where all MT Cubit objects will be created.
-
   TAO_ORB_Manager orb_manager_;
   // The TAO ORB Manager.
-
-  TAO_Naming_Client my_name_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 };
 
 #endif /* MT_CUBIT_TASK_H */

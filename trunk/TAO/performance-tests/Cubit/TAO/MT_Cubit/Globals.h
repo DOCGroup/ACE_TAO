@@ -135,9 +135,6 @@ public:
   u_int num_of_objs;
   // number of objects per servant thread.
 
-  u_int use_name_service;
-  // flag for usage of naming service.
-
   u_int thread_per_rate;
   //  thread_per_rate test flag.
 

@@ -111,50 +111,6 @@ Cubit_Task::initialize_orb (void)
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();
         }
-
-      if (GLOBALS::instance ()->use_name_service == 0)
-        return 0;
-      // Initialize the TAO_Naming_Client.
-      if (my_name_client_.init (orb_.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                          -1);
-
-      // Register the servant with the Naming Context....
-      CosNaming::Name cubit_context_name (1);
-      cubit_context_name.length (1);
-      cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
-
-      TAO_TRY_ENV.clear ();
-
-      CORBA::Object_var objref =
-        this->my_name_client_->bind_new_context (cubit_context_name,
-                                                 TAO_TRY_ENV);
-
-      if (TAO_TRY_ENV.exception() != 0)
-        {
-          CosNaming::NamingContext::AlreadyBound_ptr ex =
-            CosNaming::NamingContext::AlreadyBound::_narrow
-            (TAO_TRY_ENV.exception());
-          if (ex != 0)
-            {
-              TAO_TRY_ENV.clear ();
-              objref = this->my_name_client_->resolve
-                (cubit_context_name, TAO_TRY_ENV);
-              ACE_DEBUG ((LM_DEBUG,
-                          "NamingContext::AlreadyBound\n"));
-            }
-          else
-            TAO_TRY_ENV.print_exception
-              ("bind() Cubit context object\n");
-        }
-      TAO_CHECK_ENV;
-
-      this->mt_cubit_context_ =
-        CosNaming::NamingContext::_narrow (objref.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
@@ -242,25 +198,6 @@ Cubit_Task::create_servants (void)
 
           this->servants_iors_[i] =
             ACE_OS::strdup (str.in ());
-
-          // Register the servant with the Naming Context....
-          CosNaming::Name cubit_name (1);
-          cubit_name.length (1);
-          cubit_name[0].id = CORBA::string_dup (buffer);
-
-          if (CORBA::is_nil (this->mt_cubit_context_.in ()) == 0)
-            {
-              this->mt_cubit_context_->bind (cubit_name,
-                                             cubit.in (),
-                                             TAO_TRY_ENV);
-              if (TAO_TRY_ENV.exception () != 0)
-                TAO_TRY_ENV.print_exception
-                  ("Attempt to bind() a cubit object to the name service Failed!\n");
-              else
-                ACE_DEBUG ((LM_DEBUG,
-                            " (%t) Cubit object bound to the name \"%s\".\n",
-                            buffer));
-            }
         }
 
       delete [] buffer;
