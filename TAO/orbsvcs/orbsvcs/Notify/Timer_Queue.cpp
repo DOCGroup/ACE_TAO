@@ -8,8 +8,10 @@
 
 ACE_RCSID(Notify, TAO_NS_Timer_Queue, "$id$")
 
+
 TAO_NS_Timer_Queue::TAO_NS_Timer_Queue (void)
 {
+  this->destroy_callback (this);
 }
 
 TAO_NS_Timer_Queue::~TAO_NS_Timer_Queue ()

@@ -33,7 +33,6 @@ my(@creators) = ('GNUProjectCreator',
                  'GHSProjectCreator',
                  'EM3ProjectCreator',
                  'VA4ProjectCreator',
-                 'MakeProjectCreator',
                 );
 
 # ************************************************************

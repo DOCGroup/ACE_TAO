@@ -1,5 +1,7 @@
-#ifndef ACE_STRATEGIES_T_CPP
-#define ACE_STRATEGIES_T_CPP
+// $Id$
+
+#ifndef ACE_STRATEGIES_T_C
+#define ACE_STRATEGIES_T_C
 
 #include "ace/Strategies_T.h"
 
@@ -17,11 +19,7 @@
 #include "ace/Strategies_T.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-
-ACE_RCSID (ace,
-           Strategies_T,
-           "$Id$")
-
+ACE_RCSID(ace, Strategies_T, "$Id$")
 
 template <class SVC_HANDLER> int
 ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
@@ -410,7 +408,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cached_Connect_Strategy
-(creation_strategy_type *cre_s,
+(ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  ACE_Recycling_Strategy<SVC_HANDLER> *rec_s,
  MUTEX *lock,
@@ -481,7 +479,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::open
-(creation_strategy_type *cre_s,
+(ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  ACE_Recycling_Strategy<SVC_HANDLER> *rec_s)
 {
@@ -558,7 +556,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
  int reuse_addr,
  int flags,
  int perms,
- CONNECTION_MAP_ENTRY *&entry,
+ ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
  int &found)
 {
   ACE_UNUSED_ARG (remote_addr);
@@ -633,7 +631,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
  int reuse_addr,
  int flags,
  int perms,
- CONNECTION_MAP_ENTRY *&entry,
+ ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
  int &found)
 {
   // Explicit type conversion
@@ -1104,9 +1102,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurren
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
-ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
-  REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
-  CONNECTION_MAP_ENTRY *&entry)
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
+                                                                             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry)
 {
   typedef ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
                                        SVC_HANDLER *,
@@ -1231,4 +1228,4 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Process_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Accept_Strategy)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Strategy)
 
-#endif /* ACE_STRATEGIES_T_CPP */
+#endif /* ACE_STRATEGIES_T_C */

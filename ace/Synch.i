@@ -882,14 +882,6 @@ ACE_Null_Condition::wait (const ACE_Time_Value *)
 }
 
 ACE_INLINE int
-ACE_Null_Condition::wait (ACE_Null_Mutex &,
-                          const ACE_Time_Value *)
-{
-  errno = ETIME;
-  return -1;
-}
-
-ACE_INLINE int
 ACE_Null_Condition::signal (void)
 {
   return 0;
@@ -1000,3 +992,4 @@ ACE_Thread_Barrier::~ACE_Thread_Barrier (void)
 {
 }
 #endif /* ACE_HAS_THREADS */
+

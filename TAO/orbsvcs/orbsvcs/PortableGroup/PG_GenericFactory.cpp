@@ -379,7 +379,7 @@ TAO_PG_GenericFactory::populate_object_group (
   PortableGroup::ObjectGroup_ptr object_group,
   const char * type_id,
   const PortableGroup::FactoryInfos & factory_infos,
-  PortableGroup::InitialNumberMembersValue initial_number_members,
+  const PortableGroup::InitialNumberMembersValue initial_number_members,
   TAO_PG_Factory_Set & factory_set
   ACE_ENV_ARG_DECL)
 {

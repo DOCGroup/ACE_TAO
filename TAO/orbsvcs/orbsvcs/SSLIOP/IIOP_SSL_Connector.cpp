@@ -14,10 +14,7 @@
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Connect_Strategy.h"
-#include "tao/Wait_Strategy.h"
-
 #include "ace/Strategies_T.h"
-
 
 ACE_RCSID (TAO_SSLIOP,
            IIOP_SSL_Connector,

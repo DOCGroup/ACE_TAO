@@ -69,24 +69,24 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual CORBA::EnumMemberSeq *members (
+  virtual CORBA_EnumMemberSeq *members (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::EnumMemberSeq *members_i (
+  CORBA_EnumMemberSeq *members_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
-      const CORBA::EnumMemberSeq &members
+      const CORBA_EnumMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
-      const CORBA::EnumMemberSeq &members
+      const CORBA_EnumMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -97,3 +97,4 @@ public:
 #endif /* _MSC_VER */
 
 #endif /* TAO_ENUMDEF_I_H */
+

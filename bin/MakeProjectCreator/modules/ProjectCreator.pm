@@ -26,10 +26,10 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my($BaseClassExtension)      = 'mpb';
-my($ProjectCreatorExtension) = 'mpc';
-my($TemplateExtension)       = 'mpd';
-my($TemplateInputExtension)  = 'mpt';
+my($BaseClassExtension)      = "mpb";
+my($ProjectCreatorExtension) = "mpc";
+my($TemplateExtension)       = "mpd";
+my($TemplateInputExtension)  = "mpt";
 
 ## Valid names for assignments within a project
 my(%validNames) = ('exename'         => 1,
@@ -708,7 +708,8 @@ sub add_idl_generated {
 
 
 sub generate_default_target_names {
-  my($self) = shift;
+  my($self)   = shift;
+  my($base)   = shift;
 
   if (!$self->exe_target()) {
     my($sharedname) = $self->get_assignment('sharedname');
@@ -722,36 +723,11 @@ sub generate_default_target_names {
       $self->process_assignment('sharedname', $staticname);
       $sharedname = $staticname;
     }
-
-    ## If it's neither an exe or library target, we will search
-    ## through the source files for a main()
-    if (!$self->lib_target()) {
-      my($fh)      = new FileHandle();
-      my($exename) = undef;
-      foreach my $file ($self->get_component_list('source_files')) {
-        if (open($fh, $file)) {
-          while(<$fh>) {
-            ## Remove c++ comments (ignore c style comments for now)
-            $_ =~ s/\/\/.*//;
-
-            ## Check for main
-            if (/main\s*\(/) {
-              ## If we found a main, set the exename to the basename
-              ## of the cpp file with the extension removed
-              $exename = basename($file);
-              $exename =~ s/\.[^\.]+$//;
-              last;
-            }
-          }
-          close($fh);
-        }
-
-        ## Set the exename assignment
-        if (defined $exename) {
-          $self->process_assignment('exename', $exename);
-          last;
-        }
-      }
+    if (!defined $sharedname) {
+      $self->process_assignment('sharedname', $base);
+    }
+    if (!defined $staticname) {
+      $self->process_assignment('staticname', $base);
     }
   }
 }
@@ -1153,12 +1129,15 @@ sub add_source_corresponding_component_files {
 
 
 sub generate_defaults {
-  my($self) = shift;
+  my($self)   = shift;
+  my($base)   = $self->base_directory();
 
   ## Generate default project name
   if (!defined $self->get_assignment('project_name')) {
-    $self->process_assignment('project_name', $self->base_directory());
+    $self->process_assignment('project_name', $base);
   }
+
+  $self->generate_default_target_names($base);
 
   my(@files) = $self->generate_default_file_list();
   $self->generate_default_pch_filenames(\@files);
@@ -1193,9 +1172,6 @@ sub generate_defaults {
       }
     }
   }
-
-  ## Generate default target names after all source files are added
-  $self->generate_default_target_names();
 }
 
 
@@ -1458,7 +1434,8 @@ sub update_project_info {
 sub get_verbatim {
   my($self)   = shift;
   my($marker) = shift;
-  my($type)   = Driver::extractType($self, "$self");
+  my($type)   = lc(substr("$self", 0, 3));  ## This number corresponds to
+                                            ## signif in Driver.pm
   my($str)    = undef;
   my($thash)  = $self->{'verbatim'}->{$type};
 
@@ -1508,15 +1485,6 @@ sub translate_value {
   my($self) = shift;
   my($key)  = shift;
   my($val)  = shift;
-
-  if ($key eq 'depends' && $val ne '') {
-    my($arr) = $self->create_array($val);
-    $val = '';
-    foreach my $entry (@$arr) {
-      $val .= '"' . $self->project_file_name($entry) . '" ';
-    }
-    $val =~ s/\s+$//;
-  }
   return $val;
 }
 

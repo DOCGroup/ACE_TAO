@@ -5,11 +5,12 @@
 // All Rights Reserved
 
 #include "tao/Any.h"
+#include "tao/Typecode.h"
 #include "tao/Marshal.h"
 #include "tao/ORB_Core.h"
+#include "tao/Object.h"
 #include "tao/AbstractBase.h"
 #include "tao/debug.h"
-#include "tao/Codeset_Translator_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"
@@ -21,7 +22,7 @@ ACE_RCSID (tao,
 
 
 CORBA::TypeCode_ptr
-CORBA::Any::type (void) const
+CORBA_Any::type (void) const
 {
   return CORBA::TypeCode::_duplicate (this->type_.in ());
 }
@@ -30,8 +31,8 @@ CORBA::Any::type (void) const
 // otherwise raises an exception.
 
 void
-CORBA::Any::type (CORBA::TypeCode_ptr tc
-                  ACE_ENV_ARG_DECL)
+CORBA_Any::type (CORBA::TypeCode_ptr tc
+                 ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean equiv = this->type_->equivalent (tc
                                                   ACE_ENV_ARG_PARAMETER);
@@ -53,7 +54,7 @@ CORBA::Any::type (CORBA::TypeCode_ptr tc
 // Any contains a value or not. Use of >>= is recommended for anything else.
 
 const void *
-CORBA::Any::value (void) const
+CORBA_Any::value (void) const
 {
   if (this->any_owns_data_)
     {
@@ -71,45 +72,39 @@ CORBA::Any::value (void) const
 // NOTE: null (zero) typecode pointers are also treated as the null
 // typecode ...
 
-CORBA::Any::Any (void)
+CORBA_Any::CORBA_Any (void)
   : type_ (CORBA::TypeCode::_duplicate (CORBA::_tc_null)),
     byte_order_ (TAO_ENCAP_BYTE_ORDER),
     cdr_ (0),
     any_owns_data_ (0),
     contains_local_ (0),
     value_ (0),
-    destructor_ (0),
-    char_translator_ (0),
-    wchar_translator_ (0)
+    destructor_ (0)
 {
 }
 
-CORBA::Any::Any (CORBA::TypeCode_ptr tc)
+CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc)
   : type_ (CORBA::TypeCode::_duplicate (tc)),
     byte_order_ (TAO_ENCAP_BYTE_ORDER),
     cdr_ (0),
     any_owns_data_ (0),
     contains_local_ (0),
     value_ (0),
-    destructor_ (0),
-    char_translator_ (0),
-    wchar_translator_ (0)
+    destructor_ (0)
 {
 }
 
 // Constructor using a message block.
-CORBA::Any::Any (CORBA::TypeCode_ptr type,
-                 CORBA::UShort,
-                 int byte_order,
-                 const ACE_Message_Block* mb)
+CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
+                      CORBA::UShort,
+                      int byte_order,
+                      const ACE_Message_Block* mb)
   : type_ (CORBA::TypeCode::_duplicate (type)),
     byte_order_ (byte_order),
     any_owns_data_ (0),
     contains_local_ (0),
     value_ (0),
-    destructor_ (0),
-    char_translator_ (0),
-    wchar_translator_ (0)
+    destructor_ (0)
 {
   ACE_NEW (this->cdr_,
            ACE_Message_Block);
@@ -118,15 +113,12 @@ CORBA::Any::Any (CORBA::TypeCode_ptr type,
 }
 
 // Copy constructor for "Any".
-CORBA::Any::Any (const CORBA::Any &src)
+CORBA_Any::CORBA_Any (const CORBA_Any &src)
   : cdr_ (0),
     any_owns_data_ (0),
     contains_local_ (src.contains_local_),
     value_ (0),
-    destructor_ (0),
-    char_translator_ (0),
-    wchar_translator_ (0)
-
+    destructor_ (0)
 {
   if (!CORBA::is_nil (src.type_.in ()))
     {
@@ -149,16 +141,13 @@ CORBA::Any::Any (const CORBA::Any &src)
                             src.cdr_);
     }
 
-  this->char_translator_ = src.char_translator_;
-  this->wchar_translator_ = src.wchar_translator_;
-
   // No need to copy src's value_.  We can always get that from cdr.
 }
 
 // assignment operator
 
-CORBA::Any &
-CORBA::Any::operator= (const CORBA::Any &src)
+CORBA_Any &
+CORBA_Any::operator= (const CORBA_Any &src)
 {
   // Check if it is a self assignment
   if (this == &src)
@@ -203,7 +192,7 @@ CORBA::Any::operator= (const CORBA::Any &src)
 }
 
 // Destructor for an "Any" deep-frees memory if needed.
-CORBA::Any::~Any (void)
+CORBA_Any::~CORBA_Any (void)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
@@ -219,11 +208,9 @@ CORBA::Any::~Any (void)
 // <<= operators.
 
 void
-CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
-                          int byte_order,
-                          const ACE_Message_Block *mb,
-                          TAO_Codeset_Translator_Factory *ctrans,
-                          TAO_Codeset_Translator_Factory *wtrans)
+CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
+                         int byte_order,
+                         const ACE_Message_Block *mb)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
@@ -244,19 +231,15 @@ CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
                         mb);
   // We can save the decode operation if there's no need to extract
   // the object.
-
-  // assign the char and wchar translator factories
-  this->char_translator_ = ctrans;
-  this->wchar_translator_ = wtrans;
 }
 
 void
-CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
-                          int byte_order,
-                          const ACE_Message_Block *mb,
-                          CORBA::Boolean any_owns_data,
-                          void* value,
-                          CORBA::Any::_tao_destructor destructor)
+CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
+                         int byte_order,
+                         const ACE_Message_Block *mb,
+                         CORBA::Boolean any_owns_data,
+                         void* value,
+                         CORBA::Any::_tao_destructor destructor)
 {
   // Decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
@@ -281,10 +264,10 @@ CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
 }
 
 void
-CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
-                          CORBA::Boolean any_owns_data,
-                          void* value,
-                          CORBA::Any::_tao_destructor destructor)
+CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
+                         CORBA::Boolean any_owns_data,
+                         void* value,
+                         CORBA::Any::_tao_destructor destructor)
 {
   this->free_value ();
 
@@ -298,7 +281,7 @@ CORBA::Any::_tao_replace (CORBA::TypeCode_ptr tc,
 
 // Free internal data.
 void
-CORBA::Any::free_value (void)
+CORBA_Any::free_value (void)
 {
   if (this->any_owns_data_
       && this->value_ != 0
@@ -312,9 +295,9 @@ CORBA::Any::free_value (void)
 }
 
 void
-CORBA::Any::_tao_encode (TAO_OutputCDR &cdr,
-                         TAO_ORB_Core *orb_core
-                         ACE_ENV_ARG_DECL)
+CORBA_Any::_tao_encode (TAO_OutputCDR &cdr,
+                        TAO_ORB_Core *orb_core
+                        ACE_ENV_ARG_DECL)
 {
   // Always append the CDR stream, even when the value_.
   if (this->cdr_ == 0)
@@ -332,8 +315,8 @@ CORBA::Any::_tao_encode (TAO_OutputCDR &cdr,
 }
 
 void
-CORBA::Any::_tao_decode (TAO_InputCDR &cdr
-                         ACE_ENV_ARG_DECL)
+CORBA_Any::_tao_decode (TAO_InputCDR &cdr
+                        ACE_ENV_ARG_DECL)
 {
   // Just read into the CDR stream...
 
@@ -376,31 +359,16 @@ CORBA::Any::_tao_decode (TAO_InputCDR &cdr
                   begin,
                   size);
 
-  // get character translator, if necessary.
-  TAO_Codeset_Translator_Factory *ctrans = 0;
-  if (cdr.char_translator() != 0)
-    ctrans = cdr.orb_core()->resource_factory()->
-      get_char_translator(cdr.char_translator()->ncs(),
-                          cdr.char_translator()->tcs());
-
-  TAO_Codeset_Translator_Factory *wtrans = 0;
-  if (cdr.wchar_translator() != 0)
-    wtrans = cdr.orb_core()->resource_factory()->
-      get_wchar_translator(cdr.wchar_translator()->ncs(),
-                           cdr.wchar_translator()->tcs());
-
   // Stick it into the Any. It gets duplicated there.
   this->_tao_replace (this->type_.in (),
                       cdr.byte_order (),
-                      &mb,
-                      ctrans,
-                      wtrans);
+                      &mb);
 }
 
 // Insertion operators.
 
 void
-CORBA::Any::operator<<= (CORBA::Short s)
+CORBA_Any::operator<<= (CORBA::Short s)
 {
   TAO_OutputCDR stream;
   stream << s;
@@ -410,7 +378,7 @@ CORBA::Any::operator<<= (CORBA::Short s)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::UShort s)
+CORBA_Any::operator<<= (CORBA::UShort s)
 {
   TAO_OutputCDR stream;
   stream << s;
@@ -420,7 +388,7 @@ CORBA::Any::operator<<= (CORBA::UShort s)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::Long l)
+CORBA_Any::operator<<= (CORBA::Long l)
 {
   TAO_OutputCDR stream;
   stream << l;
@@ -430,7 +398,7 @@ CORBA::Any::operator<<= (CORBA::Long l)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::ULong l)
+CORBA_Any::operator<<= (CORBA::ULong l)
 {
   TAO_OutputCDR stream;
   stream << l;
@@ -440,7 +408,7 @@ CORBA::Any::operator<<= (CORBA::ULong l)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::LongLong l)
+CORBA_Any::operator<<= (CORBA::LongLong l)
 {
   TAO_OutputCDR stream;
   stream << l;
@@ -450,7 +418,7 @@ CORBA::Any::operator<<= (CORBA::LongLong l)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::ULongLong l)
+CORBA_Any::operator<<= (CORBA::ULongLong l)
 {
   TAO_OutputCDR stream;
   stream << l;
@@ -460,7 +428,7 @@ CORBA::Any::operator<<= (CORBA::ULongLong l)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::Float f)
+CORBA_Any::operator<<= (CORBA::Float f)
 {
   TAO_OutputCDR stream;
   stream << f;
@@ -470,7 +438,7 @@ CORBA::Any::operator<<= (CORBA::Float f)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::Double d)
+CORBA_Any::operator<<= (CORBA::Double d)
 {
   TAO_OutputCDR stream;
   stream << d;
@@ -480,7 +448,7 @@ CORBA::Any::operator<<= (CORBA::Double d)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::LongDouble d)
+CORBA_Any::operator<<= (CORBA::LongDouble d)
 {
   TAO_OutputCDR stream;
   stream << d;
@@ -491,7 +459,7 @@ CORBA::Any::operator<<= (CORBA::LongDouble d)
 
 // Insertion of Any - copying.
 void
-CORBA::Any::operator<<= (const CORBA::Any &a)
+CORBA_Any::operator<<= (const CORBA_Any &a)
 {
   TAO_OutputCDR stream;
   stream << a;
@@ -524,7 +492,7 @@ CORBA::Any::operator<<= (CORBA::Any *a)
 // implementing the special types
 
 void
-CORBA::Any::operator<<= (from_boolean b)
+CORBA_Any::operator<<= (from_boolean b)
 {
   TAO_OutputCDR stream;
   stream << b;
@@ -534,7 +502,7 @@ CORBA::Any::operator<<= (from_boolean b)
 }
 
 void
-CORBA::Any::operator<<= (from_octet o)
+CORBA_Any::operator<<= (from_octet o)
 {
   TAO_OutputCDR stream;
   stream << o;
@@ -544,7 +512,7 @@ CORBA::Any::operator<<= (from_octet o)
 }
 
 void
-CORBA::Any::operator<<= (from_char c)
+CORBA_Any::operator<<= (from_char c)
 {
   TAO_OutputCDR stream;
   stream << c;
@@ -554,7 +522,7 @@ CORBA::Any::operator<<= (from_char c)
 }
 
 void
-CORBA::Any::operator<<= (from_wchar wc)
+CORBA_Any::operator<<= (from_wchar wc)
 {
   TAO_OutputCDR stream;
   stream << wc;
@@ -564,7 +532,7 @@ CORBA::Any::operator<<= (from_wchar wc)
 }
 
 void
-CORBA::Any::operator<<= (CORBA::TypeCode_ptr tc)
+CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
 {
   TAO_OutputCDR stream;
   stream << tc;
@@ -575,7 +543,7 @@ CORBA::Any::operator<<= (CORBA::TypeCode_ptr tc)
 
 // Insertion of CORBA::Exception - copying.
 void
-CORBA::Any::operator<<= (const CORBA::Exception &exception)
+CORBA_Any::operator<<= (const CORBA_Exception &exception)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -603,7 +571,7 @@ CORBA::Any::operator<<= (const CORBA::Exception &exception)
 
 // Insertion of CORBA::Exception - non-copying.
 void
-CORBA::Any::operator<<= (CORBA::Exception *exception)
+CORBA_Any::operator<<= (CORBA_Exception *exception)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -619,7 +587,7 @@ CORBA::Any::operator<<= (CORBA::Exception *exception)
                           stream.begin (),
                           1,
                           exception,
-                          CORBA::Exception::_tao_any_destructor);
+                          CORBA_Exception::_tao_any_destructor);
     }
   ACE_CATCHANY
     {
@@ -660,7 +628,7 @@ CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
 
 // Insertion of from_string.
 void
-CORBA::Any::operator<<= (from_string s)
+CORBA_Any::operator<<= (from_string s)
 {
   TAO_OutputCDR stream;
   stream << s;
@@ -716,7 +684,7 @@ CORBA::Any::operator<<= (from_string s)
 }
 
 void
-CORBA::Any::operator<<= (from_wstring ws)
+CORBA_Any::operator<<= (from_wstring ws)
 {
   TAO_OutputCDR stream;
   stream << ws;
@@ -774,7 +742,7 @@ CORBA::Any::operator<<= (from_wstring ws)
 // into.
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::Short &s) const
+CORBA_Any::operator>>= (CORBA::Short &s) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -805,7 +773,7 @@ CORBA::Any::operator>>= (CORBA::Short &s) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::UShort &s) const
+CORBA_Any::operator>>= (CORBA::UShort &s) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -839,7 +807,7 @@ CORBA::Any::operator>>= (CORBA::UShort &s) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::Long &l) const
+CORBA_Any::operator>>= (CORBA::Long &l) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -873,7 +841,7 @@ CORBA::Any::operator>>= (CORBA::Long &l) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::ULong &l) const
+CORBA_Any::operator>>= (CORBA::ULong &l) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -907,7 +875,7 @@ CORBA::Any::operator>>= (CORBA::ULong &l) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::LongLong &l) const
+CORBA_Any::operator>>= (CORBA::LongLong &l) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -941,7 +909,7 @@ CORBA::Any::operator>>= (CORBA::LongLong &l) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::ULongLong &l) const
+CORBA_Any::operator>>= (CORBA::ULongLong &l) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -984,7 +952,7 @@ CORBA::Any::operator>>= (CORBA::ULongLong &l) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::Float &f) const
+CORBA_Any::operator>>= (CORBA::Float &f) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1018,7 +986,7 @@ CORBA::Any::operator>>= (CORBA::Float &f) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::Double &d) const
+CORBA_Any::operator>>= (CORBA::Double &d) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1052,7 +1020,7 @@ CORBA::Any::operator>>= (CORBA::Double &d) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::LongDouble &ld) const
+CORBA_Any::operator>>= (CORBA::LongDouble &ld) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1086,7 +1054,7 @@ CORBA::Any::operator>>= (CORBA::LongDouble &ld) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::Any &a) const
+CORBA_Any::operator>>= (CORBA::Any &a) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1122,7 +1090,7 @@ CORBA::Any::operator>>= (CORBA::Any &a) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (const CORBA::Any *&a) const
+CORBA_Any::operator>>= (const CORBA::Any *&a) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1182,7 +1150,7 @@ CORBA::Any::operator>>= (const CORBA::Any *&a) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (const char *&s) const
+CORBA_Any::operator>>= (const char *&s) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1209,10 +1177,6 @@ CORBA::Any::operator>>= (const char *&s) const
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
-
-      if (this->char_translator_)
-        this->char_translator_->assign(&stream);
-
       CORBA::String_var tmp;
 
       if (!stream.read_string (tmp.out ()))
@@ -1239,7 +1203,7 @@ CORBA::Any::operator>>= (const char *&s) const
 }
 
 void
-CORBA::Any::_tao_any_string_destructor (void *x)
+CORBA_Any::_tao_any_string_destructor (void *x)
 {
   char *tmp = ACE_static_cast (char *, x);
   CORBA::string_free (tmp);
@@ -1253,7 +1217,7 @@ CORBA::Any::_tao_any_wstring_destructor (void *x)
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (const CORBA::WChar *&s) const
+CORBA_Any::operator>>= (const CORBA::WChar *&s) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1279,10 +1243,6 @@ CORBA::Any::operator>>= (const CORBA::WChar *&s) const
 
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_);
-
-      if (this->wchar_translator_)
-        this->wchar_translator_->assign(&stream);
-
       CORBA::WString_var tmp;
 
       if (!stream.read_wstring (tmp.out ()))
@@ -1319,7 +1279,7 @@ CORBA::Any::_tao_any_tc_destructor (void *x)
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (CORBA::TypeCode_ptr &tc) const
+CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1374,7 +1334,7 @@ CORBA::Any::operator>>= (CORBA::TypeCode_ptr &tc) const
 // = extraction into the special types
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_boolean b) const
+CORBA_Any::operator>>= (to_boolean b) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1408,7 +1368,7 @@ CORBA::Any::operator>>= (to_boolean b) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_octet o) const
+CORBA_Any::operator>>= (to_octet o) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1442,7 +1402,7 @@ CORBA::Any::operator>>= (to_octet o) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_char c) const
+CORBA_Any::operator>>= (to_char c) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1460,8 +1420,6 @@ CORBA::Any::operator>>= (to_char c) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
-      if (this->char_translator_)
-        this->char_translator_->assign (&stream);
 
       return stream.read_char (c.ref_);
     }
@@ -1478,7 +1436,7 @@ CORBA::Any::operator>>= (to_char c) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_wchar wc) const
+CORBA_Any::operator>>= (to_wchar wc) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1496,8 +1454,6 @@ CORBA::Any::operator>>= (to_wchar wc) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
-      if (this->wchar_translator_)
-        this->wchar_translator_->assign (&stream);
 
       return stream.read_wchar (wc.ref_);
     }
@@ -1514,7 +1470,7 @@ CORBA::Any::operator>>= (to_wchar wc) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_string s) const
+CORBA_Any::operator>>= (to_string s) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1557,9 +1513,6 @@ CORBA::Any::operator>>= (to_string s) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
-      if (this->char_translator_)
-        this->char_translator_->assign (&stream);
-
       CORBA::String_var tmp;
 
       if (!stream.read_string (tmp.out ()))
@@ -1590,7 +1543,7 @@ CORBA::Any::operator>>= (to_string s) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_wstring ws) const
+CORBA_Any::operator>>= (to_wstring ws) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1633,10 +1586,6 @@ CORBA::Any::operator>>= (to_wstring ws) const
 
       TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_,
                            this->byte_order_);
-
-      if (this->char_translator_)
-        this->char_translator_->assign (&stream);
-
       CORBA::WString_var tmp;
 
       if (!stream.read_wstring (tmp.out ()))
@@ -1667,7 +1616,7 @@ CORBA::Any::operator>>= (to_wstring ws) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_object obj) const
+CORBA_Any::operator>>= (to_object obj) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1741,7 +1690,7 @@ CORBA::Any::operator>>= (to_object obj) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_abstract_base obj) const
+CORBA_Any::operator>>= (to_abstract_base obj) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1769,8 +1718,8 @@ CORBA::Any::operator>>= (to_abstract_base obj) const
         }
 
       // @@ This uses ORB_Core instance because we need one to
-      //    demarshal objects (to create the right profiles for that
-      //    object), but the Any does not belong to any ORB.
+      // demarshal objects (to create the right profiles for that
+      // object), but the Any does not belong to any ORB.
       TAO_InputCDR stream (this->cdr_,
                            this->byte_order_,
                            TAO_DEF_GIOP_MAJOR,
@@ -1795,7 +1744,7 @@ CORBA::Any::operator>>= (to_abstract_base obj) const
 }
 
 CORBA::Boolean
-CORBA::Any::operator>>= (to_value obj) const
+CORBA_Any::operator>>= (to_value obj) const
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -1846,7 +1795,7 @@ CORBA::Any::operator>>= (to_value obj) const
 // avoid use in Any.i before definition in ORB.i.
 
 void
-CORBA::Any::operator<<= (const char* s)
+CORBA_Any::operator<<= (const char* s)
 {
   TAO_OutputCDR stream;
   stream << s;
@@ -1857,7 +1806,7 @@ CORBA::Any::operator<<= (const char* s)
 
 // And the version for unbounded wide string.
 void
-CORBA::Any::operator<<= (const CORBA::WChar* s)
+CORBA_Any::operator<<= (const CORBA::WChar* s)
 {
   TAO_OutputCDR stream;
   stream << s;
@@ -1901,7 +1850,7 @@ operator<< (TAO_OutputCDR& cdr,
           return 0;
         }
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCH (CORBA_Exception, ex)
     {
       return 0;
     }
@@ -1958,27 +1907,12 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &x)
       mb.wr_ptr (offset + size);
       ACE_OS::memcpy (mb.rd_ptr (), begin, size);
 
-      // get character translator, if necessary.
-      TAO_Codeset_Translator_Factory *ctrans = 0;
-      if (cdr.char_translator() != 0)
-        ctrans = cdr.orb_core()->resource_factory()->
-          get_char_translator(cdr.char_translator()->ncs(),
-                              cdr.char_translator()->tcs());
-
-      TAO_Codeset_Translator_Factory *wtrans = 0;
-      if (cdr.wchar_translator() != 0)
-        wtrans = cdr.orb_core()->resource_factory()->
-          get_wchar_translator(cdr.wchar_translator()->ncs(),
-                               cdr.wchar_translator()->tcs());
-
       // Stick it into the Any. It gets duplicated there.
       x._tao_replace (tc.in (),
                       cdr.byte_order (),
-                      &mb,
-                      ctrans,
-                      wtrans);
+                      &mb);
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCH (CORBA_Exception, ex)
     {
       return 0;
     }
@@ -1990,7 +1924,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &x)
 // ****************************************************************
 
 CORBA::Any_var &
-CORBA::Any_var::operator= (CORBA::Any *p)
+CORBA_Any_var::operator= (CORBA::Any *p)
 {
   if (this->ptr_ != p)
     {
@@ -2003,9 +1937,9 @@ CORBA::Any_var::operator= (CORBA::Any *p)
 }
 
 CORBA::Any_var &
-CORBA::Any_var::operator= (const CORBA::Any_var& r)
+CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
-  CORBA::Any_ptr tmp;
+  CORBA_Any_ptr tmp;
 
   ACE_NEW_RETURN (tmp,
                   CORBA::Any (*r.ptr_),

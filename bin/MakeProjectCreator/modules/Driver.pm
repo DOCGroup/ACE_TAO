@@ -13,15 +13,12 @@ package Driver;
 use strict;
 use File::Basename;
 
-use Parser;
-
 # ************************************************************
 # Data Section
 # ************************************************************
 
 my($index)    = 0;
 my(@progress) = ("|", "/", "-", "\\");
-my($cmdenv)   = 'MPC_COMMANDLINE';
 
 # ************************************************************
 # Subroutine Section
@@ -37,23 +34,11 @@ sub new {
                          'version'  => 1.2,
                          'types'    => {},
                          'creators' => \@creators,
+                         'signif'   => 3,
                          'default'  => $creators[0],
                         }, $class;
 
   return $self;
-}
-
-
-sub extractType {
-  my($self) = shift;
-  my($name) = shift;
-  my($type) = $name;
-
-  if ($name =~ /(.*)(Project|Workspace)Creator/) {
-    $type = $1;
-  }
-
-  return lc($type);
 }
 
 
@@ -82,14 +67,11 @@ sub usageAndExit {
     if ($i != $#keys) {
       print STDERR " | ";
     }
-    if ((($i + 1) % 6) == 0) {
-      print STDERR "\n$spaces        ";
-    }
   }
   print STDERR ">]\n" .
                $spaces . "[files]\n\n";
 
-  my($default) = $self->extractType($self->{'default'});
+  my($default) = lc(substr($self->{'default'}, 0, $self->{'signif'}));
   print STDERR
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
@@ -158,6 +140,7 @@ sub run {
   my(%ti)         = ();
   my($dynamic)    = 1;
   my($static)     = 1;
+  my($signif)     = $self->{'signif'};
   my(%relative)   = ();
   my($reldefs)    = 1;
   my(%addtemp)    = ();
@@ -167,18 +150,10 @@ sub run {
   ## the type tags and project creators
   my($creators) = $self->{'creators'};
   foreach my $creator (@$creators) {
-    my($tag) = $self->extractType($creator);
+    my($tag) = lc(substr($creator, 0, $signif));
     $self->{'types'}->{$tag} = $creator;
   }
 
-  ## Before we process the arguments, we will prepend the $cmdenv
-  ## environment variable.
-  if (defined $ENV{$cmdenv}) {
-    my($envargs) = Parser::create_array(undef, $ENV{$cmdenv});
-    unshift(@args, @$envargs);
-  }
-
-  ## Process the command line arguments
   for(my $i = 0; $i <= $#args; $i++) {
     my($arg) = $args[$i];
     if ($arg eq '-complete') {
@@ -191,19 +166,10 @@ sub run {
         $self->usageAndExit("-type requires an argument");
       }
 
-      my($type) = lc($args[$i]);
+      my($type) = lc(substr($args[$i], 0, $signif));
       if (defined $self->{'types'}->{$type}) {
-        my($call)  = $self->{'types'}->{$type};
-        my($found) = 0;
-        foreach my $generator (@generators) {
-          if ($generator eq $call) {
-            $found = 1;
-            last;
-          }
-        }
-        if (!$found) {
-          push(@generators, $call);
-        }
+        my($call) = $self->{'types'}->{$type};
+        push(@generators, $call);
       }
       else {
         $self->usageAndExit("Invalid type: $args[$i]");

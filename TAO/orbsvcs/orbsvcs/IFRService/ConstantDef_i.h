@@ -56,13 +56,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual CORBA::Contained::Description *describe (
+  virtual CORBA_Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA::Contained::Description *describe_i (
+  virtual CORBA_Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -78,24 +78,24 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::IDLType_ptr type_def_i (
+  CORBA_IDLType_ptr type_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void type_def (
-      CORBA::IDLType_ptr type_def
+      CORBA_IDLType_ptr type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void type_def_i (
-      CORBA::IDLType_ptr type_def
+      CORBA_IDLType_ptr type_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -128,3 +128,4 @@ public:
 #endif /* _MSC_VER */
 
 #endif /* TAO_CONSTANTDEF_I_H */
+

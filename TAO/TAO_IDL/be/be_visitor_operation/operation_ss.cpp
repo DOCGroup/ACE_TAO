@@ -612,15 +612,23 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                             -1);
         }
 
-      *os << be_nl << "))" << be_nl;
+      *os << be_uidt_nl << "))" << be_nl;
 
-      // If marshaling fails, raise exception (codesetting has minor codes)
-      *os << "{" << be_idt_nl << be_nl
-          << "TAO_InputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
-          << "ACE_CHECK;" << be_uidt_nl
-          << "}" << be_nl;
+      // If marshaling fails, raise exception.
+      int status = this->gen_raise_exception (0,
+                                              "CORBA::MARSHAL",
+                                              "");
 
-      *os << be_uidt << be_uidt;
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_ss::"
+                             "gen_marshal_and invoke - "
+                             "codegen for return var failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt;
     };
 
   return 0;
@@ -680,7 +688,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl << be_nl 
       << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
   *os << "if (!(" << be_idt << be_idt;
@@ -729,15 +737,23 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
     }
 
-  *os << be_nl << "))" << be_nl;
+  *os << be_uidt_nl << "))" << be_nl;
 
-  // If marshaling fails, raise exception (codesetting has minor codes)
-  *os << "{" << be_idt_nl << be_nl
-      << "TAO_InputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
-      << "ACE_CHECK;" << be_uidt_nl
-      << "}" << be_nl;
+  // If marshaling fails, raise exception.
+  int status = this->gen_raise_exception (0,
+                                          "CORBA::MARSHAL",
+                                          "");
 
-  *os << be_uidt << be_uidt;
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_ss::"
+                         "gen_marshal_params - "
+                         "codegen for raising exception failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt;
 
   return 0;
 }

@@ -29,7 +29,6 @@ class TAO_Operation_Details;
 class TAO_Pluggable_Reply_Params;
 class TAO_GIOP_Locate_Request_Header;
 class TAO_Queued_Data;
-class TAO_ServerRequest;
 
 /**
  * @class TAO_GIOP_Message_Lite

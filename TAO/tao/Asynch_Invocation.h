@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,8 +25,7 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-class TAO_Asynch_Reply_Dispatcher_Base;
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
 
 /**
  * @class TAO_GIOP_Asynch_Invocation

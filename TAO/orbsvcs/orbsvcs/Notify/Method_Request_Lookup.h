@@ -21,10 +21,7 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "Method_Request.h"
-#include "ProxySupplier.h"
-#include "Consumer_Map.h"
-
-class TAO_NS_ProxyConsumer;
+#include "Types.h"
 
 /**
  * @class TAO_NS_Method_Request_Lookup

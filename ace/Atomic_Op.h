@@ -50,10 +50,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * @class ACE_Atomic_Op<ACE_Thread_Mutex, long>
  *
  * @brief Specialization of ACE_Atomic_Op for platforms that
- *        support atomic integer operations.
- *
- * Specialization of ACE_Atomic_Op for platforms that support atomic
- * integer operations.
+ * support atomic integer operations.
  */
 class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long>
 {
@@ -137,19 +134,16 @@ private:
   // Single-cpu atomic op implementations.
   static long single_cpu_increment (volatile long *value);
   static long single_cpu_decrement (volatile long *value);
-  static long single_cpu_exchange (volatile long *value, long rhs);
   static long single_cpu_exchange_add (volatile long *value, long rhs);
 
   // Multi-cpu atomic op implementations.
   static long multi_cpu_increment (volatile long *value);
   static long multi_cpu_decrement (volatile long *value);
-  static long multi_cpu_exchange (volatile long *value, long rhs);
   static long multi_cpu_exchange_add (volatile long *value, long rhs);
 
   // Pointers to selected atomic op implementations.
   static long (*increment_fn_) (volatile long *);
   static long (*decrement_fn_) (volatile long *);
-  static long (*exchange_fn_) (volatile long *, long);
   static long (*exchange_add_fn_) (volatile long *, long);
 };
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */

@@ -97,7 +97,10 @@ sub write_comps {
       my($i)    = 0;
       foreach my $dep (@$darr) {
         my($val) = $gen->specific_lookup($dep);
-        if (defined $val && $pguid ne $val) {
+        if (!defined $val) {
+          $val = $dep;
+        }
+        if ($pguid ne $val) {
           print $fh "\t\t{$pguid}.$i = {$val}$crlf";
           $i++;
         }

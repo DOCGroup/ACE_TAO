@@ -25,14 +25,14 @@ void TAO_Base_Sequence::_shrink_buffer (CORBA::ULong, CORBA::ULong)
 
 void
 TAO_Base_Sequence::_downcast (void*,
-                              CORBA::Object*
+                              CORBA_Object*
                               ACE_ENV_ARG_DECL_NOT_USED)
 {
   // default is no op.
   // @@ TODO Maybe throw an exception?
 }
 
-CORBA::Object*
+CORBA_Object*
 TAO_Base_Sequence::_upcast (void*) const
 {
   return 0;

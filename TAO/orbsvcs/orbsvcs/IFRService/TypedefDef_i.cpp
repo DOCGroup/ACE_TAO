@@ -20,7 +20,7 @@ TAO_TypedefDef_i::~TAO_TypedefDef_i (void)
 {
 }
 
-CORBA::Contained::Description *
+CORBA_Contained::Description *
 TAO_TypedefDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -29,22 +29,22 @@ TAO_TypedefDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::Contained::Description *
+CORBA_Contained::Description *
 TAO_TypedefDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Contained::Description *desc_ptr = 0;
+  CORBA_Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
-                    CORBA::Contained::Description,
+                    CORBA_Contained::Description,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::Contained::Description_var retval = desc_ptr;
+  CORBA_Contained::Description_var retval = desc_ptr;
 
   retval->kind = this->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeDescription td;
+  CORBA_TypeDescription td;
 
   ACE_CHECK_RETURN (0);
   td.name = this->name_i (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -70,3 +70,4 @@ TAO_TypedefDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 
   return retval._retn ();
 }
+

@@ -41,7 +41,7 @@
 
 // Default constructor.
 TAO_IOP::EmptyProfileList::EmptyProfileList (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:TAO_IOP/EmptyProfileList:1.0",
         "EmptyProfileList"
       )
@@ -55,7 +55,7 @@ TAO_IOP::EmptyProfileList::~EmptyProfileList (void)
 
 // Copy constructor.
 TAO_IOP::EmptyProfileList::EmptyProfileList (const ::TAO_IOP::EmptyProfileList &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -66,7 +66,7 @@ TAO_IOP::EmptyProfileList::EmptyProfileList (const ::TAO_IOP::EmptyProfileList &
 TAO_IOP::EmptyProfileList&
 TAO_IOP::EmptyProfileList::operator= (const ::TAO_IOP::EmptyProfileList &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -183,7 +183,7 @@ CORBA::TypeCode_ptr TAO_IOP::EmptyProfileList::_type (void) const
 
 // Default constructor.
 TAO_IOP::NotFound::NotFound (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:TAO_IOP/NotFound:1.0",
         "NotFound"
       )
@@ -197,7 +197,7 @@ TAO_IOP::NotFound::~NotFound (void)
 
 // Copy constructor.
 TAO_IOP::NotFound::NotFound (const ::TAO_IOP::NotFound &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -208,7 +208,7 @@ TAO_IOP::NotFound::NotFound (const ::TAO_IOP::NotFound &_tao_excp)
 TAO_IOP::NotFound&
 TAO_IOP::NotFound::operator= (const ::TAO_IOP::NotFound &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -321,7 +321,7 @@ CORBA::TypeCode_ptr TAO_IOP::NotFound::_type (void) const
 
 // Default constructor.
 TAO_IOP::Duplicate::Duplicate (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:TAO_IOP/Duplicate:1.0",
         "Duplicate"
       )
@@ -335,7 +335,7 @@ TAO_IOP::Duplicate::~Duplicate (void)
 
 // Copy constructor.
 TAO_IOP::Duplicate::Duplicate (const ::TAO_IOP::Duplicate &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -346,7 +346,7 @@ TAO_IOP::Duplicate::Duplicate (const ::TAO_IOP::Duplicate &_tao_excp)
 TAO_IOP::Duplicate&
 TAO_IOP::Duplicate::operator= (const ::TAO_IOP::Duplicate &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -459,7 +459,7 @@ CORBA::TypeCode_ptr TAO_IOP::Duplicate::_type (void) const
 
 // Default constructor.
 TAO_IOP::Invalid_IOR::Invalid_IOR (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:TAO_IOP/Invalid_IOR:1.0",
         "Invalid_IOR"
       )
@@ -473,7 +473,7 @@ TAO_IOP::Invalid_IOR::~Invalid_IOR (void)
 
 // Copy constructor.
 TAO_IOP::Invalid_IOR::Invalid_IOR (const ::TAO_IOP::Invalid_IOR &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -484,7 +484,7 @@ TAO_IOP::Invalid_IOR::Invalid_IOR (const ::TAO_IOP::Invalid_IOR &_tao_excp)
 TAO_IOP::Invalid_IOR&
 TAO_IOP::Invalid_IOR::operator= (const ::TAO_IOP::Invalid_IOR &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -597,7 +597,7 @@ CORBA::TypeCode_ptr TAO_IOP::Invalid_IOR::_type (void) const
 
 // Default constructor.
 TAO_IOP::MultiProfileList::MultiProfileList (void)
-  : CORBA::UserException (
+  : CORBA_UserException (
         "IDL:TAO_IOP/MultiProfileList:1.0",
         "MultiProfileList"
       )
@@ -611,7 +611,7 @@ TAO_IOP::MultiProfileList::~MultiProfileList (void)
 
 // Copy constructor.
 TAO_IOP::MultiProfileList::MultiProfileList (const ::TAO_IOP::MultiProfileList &_tao_excp)
-  : CORBA::UserException (
+  : CORBA_UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -622,7 +622,7 @@ TAO_IOP::MultiProfileList::MultiProfileList (const ::TAO_IOP::MultiProfileList &
 TAO_IOP::MultiProfileList&
 TAO_IOP::MultiProfileList::operator= (const ::TAO_IOP::MultiProfileList &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1412,7 +1412,7 @@ TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Ma
 void
 TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_downcast (
     void* target,
-    CORBA::Object *src
+    CORBA_Object *src
     ACE_ENV_ARG_DECL
   )
 {
@@ -1421,7 +1421,7 @@ TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Ma
   ACE_CHECK;
 }
 
-CORBA::Object*
+CORBA_Object*
 TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_upcast (void *src) const
 {
   CORBA::Object **tmp = ACE_static_cast (CORBA::Object**, src);

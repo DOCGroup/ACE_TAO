@@ -40,9 +40,9 @@
 // CORBA::StringSeq
 // *************************************************************
 
-CORBA::StringSeq::StringSeq (void)
+CORBA_StringSeq::CORBA_StringSeq (void)
 {}
-CORBA::StringSeq::StringSeq (CORBA::ULong max) // uses max size
+CORBA_StringSeq::CORBA_StringSeq (CORBA::ULong max) // uses max size
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -51,7 +51,7 @@ CORBA::StringSeq::StringSeq (CORBA::ULong max) // uses max size
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
-CORBA::StringSeq::StringSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
+CORBA_StringSeq::CORBA_StringSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -60,7 +60,7 @@ CORBA::StringSeq::StringSeq (CORBA::ULong max, CORBA::ULong length, char * *buff
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
-CORBA::StringSeq::StringSeq (const CORBA::StringSeq &seq) // copy ctor
+CORBA_StringSeq::CORBA_StringSeq (const CORBA_StringSeq &seq) // copy ctor
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
@@ -69,11 +69,11 @@ CORBA::StringSeq::StringSeq (const CORBA::StringSeq &seq) // copy ctor
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
-CORBA::StringSeq::~StringSeq (void) // dtor
+CORBA_StringSeq::~CORBA_StringSeq (void) // dtor
 {}
-void CORBA::StringSeq::_tao_any_destructor (void *x)
+void CORBA_StringSeq::_tao_any_destructor (void *x)
 {
-  CORBA::StringSeq *tmp = ACE_static_cast (CORBA::StringSeq*,x);
+  CORBA_StringSeq *tmp = ACE_static_cast (CORBA_StringSeq*,x);
   delete tmp;
 }
 
@@ -93,7 +93,7 @@ static const CORBA::Long _oc_CORBA_StringSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_StringSeq), (char *) &_oc_CORBA_StringSeq, 0, sizeof (CORBA::StringSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_StringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_StringSeq), (char *) &_oc_CORBA_StringSeq, 0, sizeof (CORBA_StringSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StringSeq, &_tc_TAO_tc_CORBA_StringSeq)
@@ -106,9 +106,9 @@ TAO_NAMESPACE_END
 // CORBA::WStringSeq
 // *************************************************************
 
-CORBA::WStringSeq::WStringSeq (void)
+CORBA_WStringSeq::CORBA_WStringSeq (void)
 {}
-CORBA::WStringSeq::WStringSeq (CORBA::ULong max) // uses max size
+CORBA_WStringSeq::CORBA_WStringSeq (CORBA::ULong max) // uses max size
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_WString_Sequence
@@ -117,7 +117,7 @@ CORBA::WStringSeq::WStringSeq (CORBA::ULong max) // uses max size
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
-CORBA::WStringSeq::WStringSeq (CORBA::ULong max, CORBA::ULong length, CORBA::WChar * *buffer, CORBA::Boolean release)
+CORBA_WStringSeq::CORBA_WStringSeq (CORBA::ULong max, CORBA::ULong length, CORBA::WChar * *buffer, CORBA::Boolean release)
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_WString_Sequence
@@ -126,7 +126,7 @@ CORBA::WStringSeq::WStringSeq (CORBA::ULong max, CORBA::ULong length, CORBA::WCh
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
-CORBA::WStringSeq::WStringSeq (const CORBA::WStringSeq &seq) // copy ctor
+CORBA_WStringSeq::CORBA_WStringSeq (const CORBA_WStringSeq &seq) // copy ctor
   :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_WString_Sequence
@@ -135,11 +135,11 @@ CORBA::WStringSeq::WStringSeq (const CORBA::WStringSeq &seq) // copy ctor
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
-CORBA::WStringSeq::~WStringSeq (void) // dtor
+CORBA_WStringSeq::~CORBA_WStringSeq (void) // dtor
 {}
-void CORBA::WStringSeq::_tao_any_destructor (void *x)
+void CORBA_WStringSeq::_tao_any_destructor (void *x)
 {
-  CORBA::WStringSeq *tmp = ACE_static_cast (CORBA::WStringSeq*,x);
+  CORBA_WStringSeq *tmp = ACE_static_cast (CORBA_WStringSeq*,x);
   delete tmp;
 }
 
@@ -159,7 +159,7 @@ static const CORBA::Long _oc_CORBA_WStringSeq[] =
     0U,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_WStringSeq), (char *) &_oc_CORBA_WStringSeq, 0, sizeof (CORBA::WStringSeq));
+static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (CORBA::tk_alias, sizeof (_oc_CORBA_WStringSeq), (char *) &_oc_CORBA_WStringSeq, 0, sizeof (CORBA_WStringSeq));
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_WStringSeq, &_tc_TAO_tc_CORBA_WStringSeq)
@@ -167,7 +167,7 @@ TAO_NAMESPACE_END
 
 void operator<<= (
     CORBA::Any &_tao_any,
-    const CORBA::StringSeq &_tao_elem
+    const CORBA_StringSeq &_tao_elem
   ) // copying
 {
   TAO_OutputCDR stream;
@@ -181,7 +181,7 @@ void operator<<= (
   }
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::StringSeq *_tao_elem) // non copying
+void operator<<= (CORBA::Any &_tao_any, CORBA_StringSeq *_tao_elem) // non copying
 {
   TAO_OutputCDR stream;
   stream << *_tao_elem;
@@ -191,19 +191,19 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::StringSeq *_tao_elem) // non copy
       stream.begin (),
       1,
       _tao_elem,
-      CORBA::StringSeq::_tao_any_destructor
+      CORBA_StringSeq::_tao_any_destructor
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::StringSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_StringSeq *&_tao_elem)
 {
   return _tao_any >>= ACE_const_cast(
-      const CORBA::StringSeq*&,
+      const CORBA_StringSeq*&,
       _tao_elem
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::StringSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_StringSeq *&_tao_elem)
 {
   _tao_elem = 0;
   ACE_TRY_NEW_ENV
@@ -221,15 +221,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::StringSeq *
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
-          const CORBA::StringSeq*,
+          const CORBA_StringSeq*,
           _tao_any.value ()
         );
       return 1;
     }
     else
     {
-      CORBA::StringSeq *tmp;
-      ACE_NEW_RETURN (tmp, CORBA::StringSeq, 0);
+      CORBA_StringSeq *tmp;
+      ACE_NEW_RETURN (tmp, CORBA_StringSeq, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
@@ -240,7 +240,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::StringSeq *
             CORBA::_tc_StringSeq,
             1,
             ACE_static_cast (void *, tmp),
-            CORBA::StringSeq::_tao_any_destructor
+            CORBA_StringSeq::_tao_any_destructor
           );
         _tao_elem = tmp;
         return 1;
@@ -260,7 +260,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::StringSeq *
 
 void operator<<= (
     CORBA::Any &_tao_any,
-    const CORBA::WStringSeq &_tao_elem
+    const CORBA_WStringSeq &_tao_elem
   ) // copying
 {
   TAO_OutputCDR stream;
@@ -274,7 +274,7 @@ void operator<<= (
   }
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::WStringSeq *_tao_elem) // non copying
+void operator<<= (CORBA::Any &_tao_any, CORBA_WStringSeq *_tao_elem) // non copying
 {
   TAO_OutputCDR stream;
   stream << *_tao_elem;
@@ -284,19 +284,19 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::WStringSeq *_tao_elem) // non cop
       stream.begin (),
       1,
       _tao_elem,
-      CORBA::WStringSeq::_tao_any_destructor
+      CORBA_WStringSeq::_tao_any_destructor
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::WStringSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_WStringSeq *&_tao_elem)
 {
   return _tao_any >>= ACE_const_cast(
-      const CORBA::WStringSeq*&,
+      const CORBA_WStringSeq*&,
       _tao_elem
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::WStringSeq *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_WStringSeq *&_tao_elem)
 {
   _tao_elem = 0;
   ACE_TRY_NEW_ENV
@@ -314,15 +314,15 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::WStringSeq 
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
-          const CORBA::WStringSeq*,
+          const CORBA_WStringSeq*,
           _tao_any.value ()
         );
       return 1;
     }
     else
     {
-      CORBA::WStringSeq *tmp;
-      ACE_NEW_RETURN (tmp, CORBA::WStringSeq, 0);
+      CORBA_WStringSeq *tmp;
+      ACE_NEW_RETURN (tmp, CORBA_WStringSeq, 0);
       TAO_InputCDR stream (
           _tao_any._tao_get_cdr (),
           _tao_any._tao_byte_order ()
@@ -333,7 +333,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::WStringSeq 
             CORBA::_tc_WStringSeq,
             1,
             ACE_static_cast (void *, tmp),
-            CORBA::WStringSeq::_tao_any_destructor
+            CORBA_WStringSeq::_tao_any_destructor
           );
         _tao_elem = tmp;
         return 1;
@@ -353,7 +353,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::WStringSeq 
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::StringSeq &_tao_sequence
+    const CORBA_StringSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -371,7 +371,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::StringSeq &_tao_sequence
+    CORBA_StringSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;
@@ -395,7 +395,7 @@ CORBA::Boolean operator>> (
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::WStringSeq &_tao_sequence
+    const CORBA_WStringSeq &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -413,7 +413,7 @@ CORBA::Boolean operator<< (
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    CORBA::WStringSeq &_tao_sequence
+    CORBA_WStringSeq &_tao_sequence
   )
 {
   CORBA::ULong _tao_seq_len;

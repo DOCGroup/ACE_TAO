@@ -16,9 +16,9 @@
 #include <tao/GIOP.pidl>
 #include <orb.idl>
 
-module PortableGroup
-{
-  typeprefix PortableGroup "omg.org";
+#pragma prefix "omg.org"
+
+module PortableGroup {
 
   // Specification for Interoperable Object Group References
   typedef string GroupDomainId;

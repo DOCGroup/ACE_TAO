@@ -30,7 +30,6 @@ class TAO_Resource_Factory;
 class TAO_Service_Context;
 class TAO_Acceptor_Registry;
 class TAO_Connection_Handler;
-class TAO_Stub;
 
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {

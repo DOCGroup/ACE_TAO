@@ -26,7 +26,7 @@
 // Object Adapter
 #include "Object_Adapter.h"
 
-// POAManager
+// POA Manager
 #include "POAManager.h"
 
 // POA Policy Set
@@ -41,14 +41,11 @@
 // Local Object
 #include "tao/LocalObject.h"
 
-// Portable Interceptor
-#include "tao/PortableInterceptorC.h"
-
 // Map
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager.h"
 
-// ACE_Array_Base
-#include "ace/Array_Base.h"
+// Vector
+#include "ace/Containers.h"
 
 // Locking
 #include "ace/Synch.h"
@@ -896,7 +893,7 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_POA *, ACE_Null_Mutex>
   CHILDREN;
 
   CHILDREN children_;

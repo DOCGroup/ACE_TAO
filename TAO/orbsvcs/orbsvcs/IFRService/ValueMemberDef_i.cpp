@@ -42,7 +42,7 @@ TAO_ValueMemberDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SIN
   // TODO
 }
 
-CORBA::Contained::Description *
+CORBA_Contained::Description *
 TAO_ValueMemberDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -51,7 +51,7 @@ TAO_ValueMemberDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
   return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::Contained::Description *
+CORBA_Contained::Description *
 TAO_ValueMemberDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -76,16 +76,16 @@ TAO_ValueMemberDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE
   return 0;
 }
 
-CORBA::IDLType_ptr
+CORBA_IDLType_ptr
 TAO_ValueMemberDef_i::type_def (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA_IDLType::_nil ());
 
   return this->type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::IDLType_ptr
+CORBA_IDLType_ptr
 TAO_ValueMemberDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -94,7 +94,7 @@ TAO_ValueMemberDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SI
 }
 
 void
-TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def
+TAO_ValueMemberDef_i::type_def (CORBA_IDLType_ptr type_def
                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -105,7 +105,7 @@ TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def
 }
 
 void
-TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr /* type_def */
+TAO_ValueMemberDef_i::type_def_i (CORBA_IDLType_ptr /* type_def */
                                   ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -147,3 +147,4 @@ TAO_ValueMemberDef_i::access_i (CORBA::Visibility /* access */
 {
   // TODO
 }
+

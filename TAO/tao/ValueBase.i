@@ -1,5 +1,4 @@
 // This may not look like C++, but it's really -*- C++ -*-
-//
 // $Id$
 
 // static operations in namespace CORBA ========================
@@ -22,55 +21,55 @@ CORBA::remove_ref (CORBA::ValueBase *val)
 
 // constructor
 ACE_INLINE
-CORBA::ValueBase::ValueBase (void)
+CORBA_ValueBase::CORBA_ValueBase (void)
 {
 }
 
 // *************************************************************
-// Inline operations for class CORBA::ValueBase_var
+// Inline operations for class CORBA_ValueBase_var
 // *************************************************************
 
 ACE_INLINE
-CORBA::ValueBase_var::ValueBase_var (void)
+CORBA_ValueBase_var::CORBA_ValueBase_var (void)
   : ptr_ (0)
 {
 }
 
 ACE_INLINE
-CORBA::ValueBase_var::ValueBase_var (CORBA::ValueBase *p)
+CORBA_ValueBase_var::CORBA_ValueBase_var (CORBA::ValueBase *p)
   : ptr_ (p)
 {
 }
 
 ACE_INLINE
-CORBA::ValueBase_var::~ValueBase_var (void)
+CORBA_ValueBase_var::~CORBA_ValueBase_var (void)
 {
   CORBA::remove_ref (this->ptr_);
 }
 
 ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::ptr (void) const
+CORBA_ValueBase_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA::ValueBase_var::ValueBase_var (const CORBA::ValueBase_var &p)
+CORBA_ValueBase_var::CORBA_ValueBase_var (const CORBA_ValueBase_var &p)
   : ptr_ (p.ptr_)
 {
   p.ptr_->_add_ref ();
 }
 
-ACE_INLINE CORBA::ValueBase_var &
-CORBA::ValueBase_var::operator= (CORBA::ValueBase *p)
+ACE_INLINE CORBA_ValueBase_var &
+CORBA_ValueBase_var::operator= (CORBA::ValueBase *p)
 {
   CORBA::remove_ref (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA::ValueBase_var &
-CORBA::ValueBase_var::operator= (const CORBA::ValueBase_var &p)
+ACE_INLINE CORBA_ValueBase_var &
+CORBA_ValueBase_var::operator= (const CORBA_ValueBase_var &p)
 {
   if (this != &p)
     {
@@ -83,37 +82,37 @@ CORBA::ValueBase_var::operator= (const CORBA::ValueBase_var &p)
 }
 
 ACE_INLINE
-CORBA::ValueBase_var::operator const CORBA::ValueBase *() const // cast
+CORBA_ValueBase_var::operator const CORBA::ValueBase *() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA::ValueBase_var::operator CORBA::ValueBase *&() // cast
+CORBA_ValueBase_var::operator CORBA::ValueBase *&() // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::operator-> (void) const
+CORBA_ValueBase_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::in (void) const
+CORBA_ValueBase_var::in (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::ValueBase *&
-CORBA::ValueBase_var::inout (void)
+CORBA_ValueBase_var::inout (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::ValueBase *&
-CORBA::ValueBase_var::out (void)
+CORBA_ValueBase_var::out (void)
 {
   CORBA::remove_ref (this->ptr_);
   this->ptr_ = 0;
@@ -121,7 +120,7 @@ CORBA::ValueBase_var::out (void)
 }
 
 ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::_retn (void)
+CORBA_ValueBase_var::_retn (void)
 {
   // Yield ownership of valuebase.
   CORBA::ValueBase *val = this->ptr_;
@@ -130,18 +129,18 @@ CORBA::ValueBase_var::_retn (void)
 }
 
 // *************************************************************
-// Inline operations for class CORBA::ValueBase_out
+// Inline operations for class CORBA_ValueBase_out
 // *************************************************************
 
 ACE_INLINE
-CORBA::ValueBase_out::ValueBase_out (CORBA::ValueBase *&p)
+CORBA_ValueBase_out::CORBA_ValueBase_out (CORBA::ValueBase *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA::ValueBase_out::ValueBase_out (CORBA::ValueBase_var &p)
+CORBA_ValueBase_out::CORBA_ValueBase_out (CORBA_ValueBase_var &p)
   : ptr_ (p.out ())
 {
   this->ptr_->_remove_ref ();
@@ -149,47 +148,47 @@ CORBA::ValueBase_out::ValueBase_out (CORBA::ValueBase_var &p)
 }
 
 ACE_INLINE
-CORBA::ValueBase_out::ValueBase_out (const CORBA::ValueBase_out &p)
+CORBA_ValueBase_out::CORBA_ValueBase_out (const CORBA_ValueBase_out &p)
   : ptr_ (p.ptr_)
 {
 }
 
-ACE_INLINE CORBA::ValueBase_out &
-CORBA::ValueBase_out::operator= (const CORBA::ValueBase_out &p)
+ACE_INLINE CORBA_ValueBase_out &
+CORBA_ValueBase_out::operator= (const CORBA_ValueBase_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA::ValueBase_out &
-CORBA::ValueBase_out::operator= (const CORBA::ValueBase_var &p)
+ACE_INLINE CORBA_ValueBase_out &
+CORBA_ValueBase_out::operator= (const CORBA_ValueBase_var &p)
 {
   p.ptr ()->_add_ref ();
   this->ptr_ = p.ptr ();
   return *this;
 }
 
-ACE_INLINE CORBA::ValueBase_out &
-CORBA::ValueBase_out::operator= (CORBA::ValueBase *p)
+ACE_INLINE CORBA_ValueBase_out &
+CORBA_ValueBase_out::operator= (CORBA::ValueBase *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-CORBA::ValueBase_out::operator CORBA::ValueBase *&() // cast
+CORBA_ValueBase_out::operator CORBA::ValueBase *&() // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::ValueBase *&
-CORBA::ValueBase_out::ptr (void) // ptr
+CORBA_ValueBase_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_out::operator-> (void)
+CORBA_ValueBase_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -198,21 +197,21 @@ CORBA::ValueBase_out::operator-> (void)
 
 // constructor
 ACE_INLINE
-CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
-  : _tao_reference_count_ (1)
+CORBA_DefaultValueRefCountBase::CORBA_DefaultValueRefCountBase (void)
+    : _tao_reference_count_ (1)
 {
 }
 
 
 ACE_INLINE void
-CORBA::DefaultValueRefCountBase::_tao_add_ref (void)
+CORBA_DefaultValueRefCountBase::_tao_add_ref (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_);
   ++_tao_reference_count_;
 }
 
 ACE_INLINE void
-CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
+CORBA_DefaultValueRefCountBase::_tao_remove_ref (void)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_);
@@ -227,12 +226,9 @@ CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 }
 
 ACE_INLINE CORBA::ULong
-CORBA::DefaultValueRefCountBase::_tao_refcount_value (void)
+CORBA_DefaultValueRefCountBase::_tao_refcount_value (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    guard,
-                    this->_tao_reference_count_lock_,
-                    0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_,0);
   return _tao_reference_count_;
 }
 

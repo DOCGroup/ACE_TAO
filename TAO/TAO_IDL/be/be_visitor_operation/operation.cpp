@@ -778,10 +778,9 @@ be_visitor_operation::gen_marshal_and_invoke (
   *os  << be_nl
        << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
        << "{" << be_idt_nl
-       << "_tao_call.restart_flag (1);" << be_uidt_nl
-       << "}" << be_uidt_nl
-       << "else" << be_idt_nl
-       << "{" << be_idt_nl;
+       << "_tao_call.restart_flag (1);" << be_nl
+       << "continue;" << be_uidt_nl
+       << "}" << be_uidt_nl;
 
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
@@ -845,16 +844,14 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "))" << be_uidt_nl
           << "{" << be_idt_nl;
 
-      // If marshaling fails, raise exception (codesetting has various minors)
-      *os << "TAO_InputCDR::throw_stub_exception (errno "
-          << "ACE_ENV_ARG_PARAMETER); "
-          << be_nl;
-      if (this->gen_check_interceptor_exception (bt) == -1)
+      // If marshaling fails, raise exception.
+      if (this->gen_raise_interceptor_exception (bt, "CORBA::MARSHAL", "")
+            == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
-                             "gen_marshal_and_invoke - "
-                             "codegen for checking exception failed\n"),
+                             "gen_marshal_and invoke - "
+                             "codegen for return var failed\n"),
                             -1);
         }
 
@@ -926,10 +923,8 @@ be_visitor_operation::gen_marshal_and_invoke (
   // one way operation since the sync scope policy may actually allow
   // things such as LOCATION_FORWARD replies to be propagated back to
   // the client (e.g. SYNC_WITH_TARGET).
-
   *os << "else if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_call.restart_flag (1);" << be_nl
       << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
       << "_tao_ri.reply_status (_invoke_status);" << be_nl
       << "_tao_vfr.receive_other (" << be_idt << be_idt_nl
@@ -937,10 +932,10 @@ be_visitor_operation::gen_marshal_and_invoke (
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt;
+      << ")" << be_uidt_nl
+      << be_nl
+      << "continue;" << be_uidt_nl
+      << "}" << be_uidt;
 
   // If we reach here, we are ready to proceed.
   // the code below this is for twoway operations only.
@@ -997,14 +992,8 @@ be_visitor_operation::gen_marshal_and_invoke (
       // the response message.
       *os << be_nl << be_nl
           << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();"
-          << be_nl ;
-
-      //  Added so codeset translators may be used to decode reply
-      *os << "_tao_call.transport()->assign_translators (&_tao_in,0);"
-          << be_nl << be_nl;
-
-      // reply
-      *os << "if (!(" << be_idt << be_idt;
+          << be_nl << be_nl
+          << "if (!(" << be_idt << be_idt;
 
       if (!this->void_return_type (bt))
         {
@@ -1052,20 +1041,12 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "))" << be_uidt_nl
           << "{" << be_idt_nl;
 
-      // If marshaling fails, raise exception (codesetting has various minors)
-      *os << "TAO_InputCDR::throw_stub_exception (errno "
-          << "ACE_ENV_ARG_PARAMETER); "
-          << be_nl;
-      if (this->gen_check_interceptor_exception (bt) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "gen_marshal_and_invoke - "
-                             "codegen for checking exception failed\n"),
-                            -1);
-        }
-
-      *os << be_nl;
+      // If marshaling fails, raise exception.
+      int status = this->gen_raise_interceptor_exception (
+                             bt,
+                             "CORBA::MARSHAL",
+                             "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES"
+                           );
 
       if (status == -1)
         {
@@ -1158,11 +1139,8 @@ be_visitor_operation::gen_marshal_and_invoke (
     }
 
   *os << "ACE_TRY_CHECK;"
-      << be_uidt_nl;
-
-  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
-
-  *os << "}" << be_uidt << be_uidt_nl;  // End inner "else" block.
+      << be_uidt_nl
+      << "}" << be_uidt_nl;
 
   // Note that we do NOT catch the PortableInterceptor::ForwardRequest
   // exception here.  It is caught in the
@@ -1170,10 +1148,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   // prevent applications from being able to throw the exception in an
   // effort to get an easy (but illegal) way to forward a request.
 
-  *os << "\n#if TAO_HAS_INTERCEPTORS == 1"  << be_nl
-      << "}" << be_uidt << be_uidt_nl // End outer "else" block.
-      << "}" << be_uidt_nl
-      << "ACE_CATCHANY" << be_idt_nl
+  *os << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl;
 
   // Update the exception field of the ClientRequestInfo.
@@ -1190,7 +1165,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   // the connection retry loop must be restarted so do not rethrow the
   // caught exception.
   *os << be_nl
-      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
       << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
@@ -1233,7 +1208,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   // the connection retry loop must be restarted so do not throw the
   // CORBA::UNKNOWN exception to convert the unhandled C++ exception.
   *os << be_nl
-      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
       << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
@@ -1273,7 +1248,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   // support code, so we must explicitly check the status in the
   // ClientRequestInfo object.
   *os << be_nl
-      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
       << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
 
   if (this->gen_check_exception (bt) == -1)
@@ -1286,16 +1261,17 @@ be_visitor_operation::gen_marshal_and_invoke (
     }
 
   *os << be_nl
-      << "if (_tao_status != PortableInterceptor::LOCATION_FORWARD" << be_nl
-      << "    && _tao_status != PortableInterceptor::TRANSPORT_RETRY)"
-      << be_idt_nl;
-  // Continue to below break statement."
+      << "if (_tao_status == PortableInterceptor::LOCATION_FORWARD" << be_nl
+      << "    || _tao_status == PortableInterceptor::TRANSPORT_RETRY)"
+      << be_idt_nl
+      << "{" << be_idt_nl
+      << "continue;" << be_uidt_nl
+      << "}" << be_uidt_nl;
+
   *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
-  *os << be_nl
-      << "if (_invoke_status != TAO_INVOKE_RESTART)" << be_idt_nl
-      << "break;" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_uidt;
+  *os << be_nl << "break;" << be_uidt_nl
+      << "}" << be_uidt;
 
   return 0;
 }

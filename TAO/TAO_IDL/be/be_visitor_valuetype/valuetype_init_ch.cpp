@@ -73,7 +73,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
      << " " << node->local_name ()
-     << "_init : public virtual CORBA::ValueFactoryBase" << be_nl;
+     << "_init : public virtual CORBA_ValueFactoryBase" << be_nl;
 
   // Generate the body.
   os << "{" << be_nl
@@ -86,8 +86,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Virtual destructor.
-  os << "virtual ~" << node->local_name () << "_init (void);"
-     << be_nl << be_nl;
+  os << "virtual ~" << node->local_name () << "_init (void);";
 
 
   if (this->visit_valuetype_scope (node) == -1)
@@ -102,7 +101,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   // Generate _downcast method.
   os << be_nl << be_nl
      << "static " << node->local_name () << "_init* "
-     << "_downcast (CORBA::ValueFactoryBase* );";
+     << "_downcast (CORBA_ValueFactoryBase* );";
 
   if (factory_style == FS_CONCRETE_FACTORY)
     {
@@ -133,7 +132,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       // Protected constructor.
       os << be_uidt_nl << be_nl
          << "protected:" << be_idt_nl;
-      os << node->local_name () << "_init (void);";
+      os << node->local_name () << "_init ();";
     }
 
   os << be_uidt_nl << "};";

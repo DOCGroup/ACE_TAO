@@ -23,10 +23,12 @@
 #include "tao/orbconf.h"
 #include "tao/corbafwd.h"
 
+class TAO_NS_Destroy_Callback;
+
 /**
  * @class TAO_NS_Refcountable
  *
- * @brief Thread-safe refounting, calls the <release> method when refcount falls to 0.
+ * @brief Thread-safe refounting, calls a Destroy_Callback when refcount falls to 0.
  *
  */
 class TAO_Notify_Export TAO_NS_Refcountable
@@ -36,14 +38,14 @@ public:
   TAO_NS_Refcountable (void);
 
   /// Destructor
-  virtual ~TAO_NS_Refcountable ();
+  ~TAO_NS_Refcountable ();
+
+  /// Set the destroy callback.
+  void destroy_callback (TAO_NS_Destroy_Callback* destroy_callback);
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
-
-  /// The release method is called when the refcount reaches 0.
-  virtual void release (void) = 0;
 
 protected:
   /// The reference count.
@@ -51,6 +53,9 @@ protected:
 
   /// The mutex to serialize access to state variables.
   TAO_SYNCH_MUTEX lock_;
+
+  /// The callback when refcount falls to 0.
+  TAO_NS_Destroy_Callback* destroy_callback_;
 };
 
 /***********************************************************************/

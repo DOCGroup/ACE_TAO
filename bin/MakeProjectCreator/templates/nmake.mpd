@@ -1,26 +1,20 @@
 # Microsoft Developer Studio Generated NMAKE File
-<%foreach(platforms)%>
-!<%fornotfirst("ELSE")%>IF "$(CFG)" == ""
-CFG=<%platform%> <%default_configuration%>
-!MESSAGE No configuration specified. Defaulting to <%platform%> <%default_configuration%>.
-<%endfor%>
+!IF "$(CFG)" == ""
+CFG=<%default_platform("Win32")%> <%default_configuration("Debug")%>
+!MESSAGE No configuration specified. Defaulting to <%platform("Win32")%> <%default_configuration%>.
 !ENDIF 
 
-!IF <%foreach(platforms)%><%foreach(configurations)%>"$(CFG)" != "<%platform%> <%configuration%>"<%fornotlast(" && ")%><%endfor%><%endfor%>
+!IF <%foreach(configurations)%>"$(CFG)" != "<%platform%> <%configuration%>"<%fornotlast(" && ")%><%endfor%>
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-<%foreach(platforms)%>
 !MESSAGE NMAKE /f "<%project_file%>" CFG="<%platform%> <%default_configuration%>"
-<%endfor%>
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-<%foreach(platforms)%>
 <%foreach(configurations)%>
-!MESSAGE "<%platform%> <%configuration%>" (based on "<%platform%> (<%machine_description%>) <%type_description("Dynamic-Lynk Library")%>")
-<%endfor%>
+!MESSAGE "<%platform%> <%configuration%>" (based on "<%platform_long("Win32 (x86)")%> <%type_description("Dynamic-Lynk Library")%>")
 <%endfor%>
 !MESSAGE 
 !ERROR An invalid configuration is specified.
@@ -32,7 +26,6 @@ NULL=
 NULL=nul
 !ENDIF 
 
-<%foreach(platforms)%>
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
@@ -85,7 +78,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags("/MD /W3 /GX /O2 /Ob2")%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c 
+CPP_PROJ=/nologo <%compile_flags("/MD /W3 /GX /O2 /Ob2")%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -119,7 +112,7 @@ CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags("/M
 
 RSC=rc.exe
 <%foreach(resource_files)%>
-RSC_PROJ=/l 0x409 /fo"$(INTDIR)\<%basenoextension(resource_file)%>.res"<%foreach(defines cpu_defines)%> /d <%define%>=1<%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%>
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\<%basenoextension(resource_file)%>.res"<%foreach(defines)%> /d <%define%>=1<%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%>
 <%endfor%>
 BSC32=bscmake.exe
 <%if(sharedname)%>
@@ -153,35 +146,32 @@ LINK32_OBJS= \
 
 <%endfor%>
 !ENDIF
-<%endfor%>
 
 
 !IF "$(NO_EXTERNAL_DEPS)" != "1"
 !IF EXISTS("<%noextension(project_file)%>.dep")
 !INCLUDE "<%noextension(project_file)%>.dep"
 !ELSE 
-!MESSAGE Warning: cannot find "<%noextension(project_file)%>.dep"
+!MESSAGE Warning: cannot find "<%dependency_file%>"
 !ENDIF 
 !ENDIF 
 
 
-!IF <%foreach(platforms)%><%foreach(configurations)%>"$(CFG)" == "<%platform%> <%configuration%>" <%fornotlast("|| ")%><%endfor%><%endfor%>
+!IF <%foreach(configurations)%>"$(CFG)" == "<%platform%> <%configuration%>" <%fornotlast("|| ")%><%endfor%>
 <%if(pch_source)%>
 <%if(pch_header)%>
 SOURCE=.\<%pch_source%>
 
-<%foreach(platforms)%>
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
-CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c 
+CPP_SWITCHES=/nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c 
 
 "$(INTDIR)\<%basenoextension(pch_source)%>.obj"	"$(INTDIR)\<%noextension(pch_header)%>.pch" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
   $(CPP_SWITCHES) $(SOURCE)
 <<
 
-<%endfor%>
 <%endfor%>
 !ENDIF
 
@@ -202,7 +192,6 @@ SOURCE=.\<%template_file%>
 <%foreach(idl_files)%>
 SOURCE=.\<%idl_file%>
 
-<%foreach(platforms)%>
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
@@ -231,7 +220,6 @@ OutDir=.
 
 <%endfor%>
 !ENDIF
-<%endfor%>
 
 <%endfor%>
 <%foreach(resource_files)%>

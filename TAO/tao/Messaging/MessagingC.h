@@ -159,7 +159,7 @@ TAO_NAMESPACE  Messaging
 #define _MESSAGING_EXCEPTIONHOLDER_CH_
   
   class TAO_Messaging_Export ExceptionHolder
-    : public virtual CORBA::ValueBase
+    : public virtual CORBA_ValueBase
   
 {
 public:
@@ -274,13 +274,13 @@ protected:
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___INIT_CH_
 
-class TAO_Messaging_Export ExceptionHolder_init : public virtual CORBA::ValueFactoryBase
+class TAO_Messaging_Export ExceptionHolder_init : public virtual CORBA_ValueFactoryBase
 {
 public:
   ExceptionHolder_init (void);
   virtual ~ExceptionHolder_init (void);
   
-  static ExceptionHolder_init* _downcast (CORBA::ValueFactoryBase* );
+  static ExceptionHolder_init* _downcast (CORBA_ValueFactoryBase* );
   
   virtual CORBA::ValueBase *create_for_unmarshal (void);
   
@@ -615,7 +615,7 @@ TAO_NAMESPACE  OBV_Messaging
   // OBV_ class
   class TAO_Messaging_Export ExceptionHolder
     : public virtual Messaging::ExceptionHolder,
-      public virtual CORBA::DefaultValueRefCountBase
+      public virtual CORBA_DefaultValueRefCountBase
   {
   public:
     // TAO_IDL - Generated from

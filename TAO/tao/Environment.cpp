@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/Exception.h"
@@ -7,19 +9,17 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID (tao,
-           Environment,
-           "$Id$")
+ACE_RCSID(tao, Environment, "$Id$")
 
 
-CORBA::Environment::Environment (void)
+CORBA_Environment::CORBA_Environment (void)
   : exception_ (0)
   , previous_ (0)
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
 }
 
-CORBA::Environment::Environment (const CORBA::Environment& rhs)
+CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
   : exception_ (0)
   , previous_ (0)
 {
@@ -27,31 +27,31 @@ CORBA::Environment::Environment (const CORBA::Environment& rhs)
     this->exception_ = rhs.exception_->_tao_duplicate ();
 }
 
-CORBA::Environment::Environment (TAO_ORB_Core* orb_core)
+CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
   : exception_ (0)
   , previous_ (orb_core->default_environment ())
 {
   orb_core->default_environment (this);
 }
 
-CORBA::Environment&
-CORBA::Environment::operator= (const CORBA::Environment& rhs)
+CORBA_Environment&
+CORBA_Environment::operator= (const CORBA_Environment& rhs)
 {
-  CORBA::Environment tmp (rhs);
+  CORBA_Environment tmp (rhs);
   {
-    CORBA::Exception *tmp_ex = this->exception_;
+    CORBA_Exception *tmp_ex = this->exception_;
     this->exception_ = tmp.exception_;
     tmp.exception_ = tmp_ex;
   }
   {
-    CORBA::Environment *tmp_env = this->previous_;
+    CORBA_Environment *tmp_env = this->previous_;
     this->previous_ = rhs.previous_;
     tmp.previous_ = tmp_env;
   }
   return *this;
 }
 
-CORBA::Environment::~Environment (void)
+CORBA_Environment::~CORBA_Environment (void)
 {
   this->clear ();
 
@@ -63,7 +63,7 @@ CORBA::Environment::~Environment (void)
 }
 
 void
-CORBA::Environment::exception (CORBA::Exception *ex)
+CORBA_Environment::exception (CORBA_Exception *ex)
 {
   // @@ This does not look right, setting the exception to the
   //    contained exception is a bug,  the application is only
@@ -93,19 +93,19 @@ CORBA::Environment::exception (CORBA::Exception *ex)
 }
 
 void
-CORBA::Environment::clear (void)
+CORBA_Environment::clear (void)
 {
   delete this->exception_;
   this->exception_ = 0;
 }
 
-CORBA::Environment&
-CORBA::Environment::default_environment ()
+CORBA_Environment&
+CORBA_Environment::default_environment ()
 {
 #if defined (TAO_HAS_EXCEPTIONS)
   //
   // If we are using native C++ exceptions the user is *not* supposed
-  // to clear the environment every time she calls into TAO.  In fact
+  // to clear the environment every time she calls into TAO, in fact
   // the user is not supposed to use the environment at all!
   //
   // But TAO is using the default environment internally, thus
@@ -162,7 +162,7 @@ CORBA::Environment::exception_type (void) const
 }
 
 const char*
-CORBA::Environment::exception_id (void) const
+CORBA_Environment::exception_id (void) const
 {
   if (this->exception_ == 0)
     return 0;
@@ -186,7 +186,7 @@ CORBA::Environment::print_exception (const char *info,
                   info));
 
       CORBA::SystemException *x2 =
-        CORBA::SystemException::_downcast (this->exception_);
+        CORBA_SystemException::_downcast (this->exception_);
 
       if (x2 != 0)
         x2->_tao_print_system_exception ();
@@ -203,23 +203,23 @@ CORBA::Environment::print_exception (const char *info,
                 ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), info));
 }
 
-CORBA::Environment_var &
-CORBA::Environment_var::operator= (CORBA::Environment_ptr p)
+CORBA_Environment_var &
+CORBA_Environment_var::operator= (CORBA_Environment_ptr p)
 {
-  CORBA::Environment_var tmp (p);
+  CORBA_Environment_var tmp (p);
   // @@ We need as ACE_Swap<> template!!
-  CORBA::Environment *tmp_ptr = this->ptr_;
+  CORBA_Environment *tmp_ptr = this->ptr_;
   this->ptr_ = tmp.ptr_;
   tmp.ptr_ = tmp_ptr;
   return *this;
 }
 
-CORBA::Environment_var &
-CORBA::Environment_var::operator= (const CORBA::Environment_var &r)
+CORBA_Environment_var &
+CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
 {
-  CORBA::Environment_var tmp (r);
+  CORBA_Environment_var tmp (r);
   // @@ We need as ACE_Swap<> template!!
-  CORBA::Environment *tmp_ptr = this->ptr_;
+  CORBA_Environment *tmp_ptr = this->ptr_;
   this->ptr_ = tmp.ptr_;
   tmp.ptr_ = tmp_ptr;
   return *this;

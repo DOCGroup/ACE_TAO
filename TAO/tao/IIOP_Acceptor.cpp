@@ -1,3 +1,4 @@
+
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
@@ -8,7 +9,6 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
-#include "tao/Codeset_Manager.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -147,8 +147,12 @@ TAO_IIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
 
       pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
-      this->orb_core_->codeset_manager()->
-        set_codeset(pfile->tagged_components());
+      CONV_FRAME::CodeSetComponentInfo code_set_info;
+      code_set_info.ForCharData.native_code_set  =
+        TAO_DEFAULT_CHAR_CODESET_ID;
+      code_set_info.ForWcharData.native_code_set =
+        TAO_DEFAULT_WCHAR_CODESET_ID;
+      pfile->tagged_components ().set_code_sets (code_set_info);
     }
 
   return 0;
@@ -203,8 +207,13 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
           && (this->version_.major >= 1 && this->version_.minor >= 1))
         {
           iiop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-          this->orb_core_->codeset_manager()->
-            set_codeset(iiop_profile->tagged_components());
+
+          CONV_FRAME::CodeSetComponentInfo code_set_info;
+          code_set_info.ForCharData.native_code_set  =
+            TAO_DEFAULT_CHAR_CODESET_ID;
+          code_set_info.ForWcharData.native_code_set =
+            TAO_DEFAULT_WCHAR_CODESET_ID;
+          iiop_profile->tagged_components ().set_code_sets (code_set_info);
         }
 
       index = 1;
@@ -484,13 +493,9 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       ACE_INET_Addr a(addr);
 
       int found_a_port = 0;
-      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-      if (last_port > ACE_MAX_DEFAULT_PORT)
-        {
-          last_port = ACE_MAX_DEFAULT_PORT;
-        }
+      u_short last_port = requested_port + this->port_span_;
 
-      for (ACE_UINT32 p = requested_port; p <= last_port; p++)
+      for (u_short p = requested_port; p < last_port; p++)
         {
           if (TAO_debug_level > 5)
             ACE_DEBUG ((LM_DEBUG,
@@ -498,7 +503,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
           // Now try to actually open on that port
-          a.set_port_number ((u_short)p);
+          a.set_port_number (p);
           if (this->base_acceptor_.open (a,
                                          reactor,
                                          this->creation_strategy_,
@@ -962,7 +967,7 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
         tph->call_server_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
-                                         enable_network_priority,
+					 enable_network_priority,
                                          protocol_type);
 
       if (hook_return == -1)

@@ -51,6 +51,9 @@ public:
   /// Constructor
   TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
+  /// Destructor
+  virtual ~TAO_Connection_Handler (void);
+
   /// Return the underlying transport object
   TAO_Transport *transport (void);
 
@@ -94,13 +97,6 @@ public:
   virtual int handle_input (ACE_HANDLE fd) = 0;
 
 protected:
-
-  /// Destructor
-  /**
-   * Protected destructor to enforce proper memory management through
-   * the reference counting mechanism.
-   */
-  virtual ~TAO_Connection_Handler (void);
 
   /// Return our TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);

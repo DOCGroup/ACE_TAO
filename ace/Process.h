@@ -92,10 +92,10 @@ public:
                    ACE_HANDLE std_out = ACE_INVALID_HANDLE,
                    ACE_HANDLE std_err = ACE_INVALID_HANDLE);
 
-  /// Release the standard handles previously set with set_handles;
+  /// Felease the standard handles previously set with set_handles;
   void release_handles (void);
 
-  /// @param format must be of the form "VARIABLE=VALUE".  There can not be
+  /// <format> must be of the form "VARIABLE=VALUE".  There can not be
   /// any spaces between VARIABLE and the equal sign.
   int setenv (const ACE_TCHAR *format,
               ...);

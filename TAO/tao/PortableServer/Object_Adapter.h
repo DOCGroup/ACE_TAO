@@ -1,4 +1,5 @@
-// -*- C++ -*-
+
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -10,19 +11,22 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_OBJECT_ADAPTER_H
 #define TAO_OBJECT_ADAPTER_H
-
 #include "ace/pre.h"
 
 #include "portableserver_export.h"
+#include "Key_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Key_Adapters.h"
 #include "poa_macros.h"
+
+// Servant
+#include "Servant_Base.h"
 
 // Active Object Table
 #include "Active_Object_Map.h"
@@ -50,16 +54,6 @@
 
 // ****************************************************************
 
-enum TAO_SERVANT_LOCATION
-{
-  TAO_SERVANT_FOUND,
-  TAO_DEFAULT_SERVANT,
-  TAO_SERVANT_MANAGER,
-  TAO_SERVANT_NOT_FOUND
-};
-
-// ****************************************************************
-
 // Forward declaration
 class TAO_POA;
 class TAO_POA_Manager;
@@ -69,9 +63,9 @@ class TAO_TSS_Resources;
 class TAO_Transport;
 class TAO_Servant_Dispatcher;
 
-class TAO_PortableServer_Export TAO_POA_Current
-  : public PortableServer::Current,
-    public TAO_Local_RefCounted_Object
+class TAO_PortableServer_Export TAO_POA_Current :
+  public PortableServer::Current,
+  public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor
@@ -878,5 +872,4 @@ ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-
 #endif /* TAO_OBJECT_ADAPTER_H */

@@ -22,6 +22,8 @@
 #include "ace/Message_Block.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "Event.h"
+#include "Types.h"
+#include "Refcountable.h"
 
 /**
  * @class TAO_NS_Method_Request

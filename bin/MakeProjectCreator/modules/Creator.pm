@@ -53,28 +53,6 @@ sub new {
 }
 
 
-sub collect_line {
-  my($self)        = shift;
-  my($fh)          = shift;
-  my($lref)        = shift;
-  my($line)        = shift;
-  my($status)      = 1;
-  my($errorString) = '';   
-      
-  $$lref .= $self->strip_line($line);
-
-  if ($$lref =~ /\\$/) {
-    $$lref =~ s/\\$/ /;
-  }
-  else {
-    ($status, $errorString) = $self->parse_line($fh, $$lref);
-    $$lref = "";
-  }
-
-  return $status, $errorString;
-}
-
-
 sub generate_default_input {
   my($self) = shift;
   $self->parse_line(undef, "$self->{'grammar_type'} {");

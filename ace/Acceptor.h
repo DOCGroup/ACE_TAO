@@ -15,15 +15,15 @@
 
 #include "ace/pre.h"
 
-#include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Object.h"
+#include "ace/Svc_Handler.h"
 #include "ace/Strategies_T.h"
-#include "ace/Synch_Options.h"
-
 
 /**
  * @class ACE_Acceptor
@@ -251,7 +251,7 @@ public:
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
           creation_strategy_type;
-  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+  typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> 
           accept_strategy_type;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
           concurrency_strategy_type;

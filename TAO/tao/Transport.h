@@ -24,19 +24,16 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Exception.h"
+#include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
 #include "Synch_Refcountable.h"
 
-#include "CONV_FRAMEC.h"
-#include "Codeset_Translator_Factory.h"
-
 class TAO_ORB_Core;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
-class TAO_Transport_Descriptor_Interface;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
@@ -44,6 +41,7 @@ class TAO_Pluggable_Messaging;
 class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
+
 
 
 /**
@@ -219,6 +217,9 @@ public:
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
 
+  /// destructor
+  virtual ~TAO_Transport (void);
+
   // Maintain reference counting with these
   static TAO_Transport* _duplicate (TAO_Transport* transport);
   static void release (TAO_Transport* transport);
@@ -374,6 +375,8 @@ public:
                 size_t len,
                 const ACE_Time_Value *timeout = 0);
 
+
+
   /**
    * @name Control connection lifecycle
    *
@@ -418,14 +421,6 @@ public:
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
 protected:
-
-  /// Destructor
-  /**
-   * Protected destructor to enforce proper memory management through
-   * the reference counting mechanism.
-   */
-  virtual ~TAO_Transport (void);
-
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -768,38 +763,6 @@ public:
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void* act);
 
-  /// CodeSet Negotiation - Get the char codeset translator factory
-  ///
-  TAO_Codeset_Translator_Factory *char_translator (void) const;
-
-  /// CodeSet Negotiation - Get the wchar codeset translator factory
-  ///
-  TAO_Codeset_Translator_Factory *wchar_translator (void) const;
-
-  /// CodeSet negotiation - Set the char codeset translator factory
-  ///
-  void char_translator (TAO_Codeset_Translator_Factory *);
-
-  /// CodeSet negotiation - Set the wchar codeset translator factory
-  ///
-  void wchar_translator (TAO_Codeset_Translator_Factory *);
-
-  /// Inform the transport that wchar marshalling is allowed even if there is
-  /// no tranlator. It could be true that no translator is used because the
-  /// NCS-W for both sides match. But it is also true that no translator is
-  /// available because the other side did not define a codeset for wchars.
-  void wchar_allowed (CORBA::Boolean );
-
-  /// Use the Transport's codeset factories to set the translator for input
-  /// and output CDRs.
-  void assign_translators (TAO_InputCDR *, TAO_OutputCDR *);
-
-  /// Return true if the tcs has been set
-  ///
-  CORBA::Boolean is_tcs_set() const;
-
-  /// Set the state of the first_request_ flag to 0
-  void first_request_sent();
 private:
 
   /// Helper method that returns the Transport Cache Manager.
@@ -993,7 +956,7 @@ protected:
   /// resources (such as a connection handler) get serialized.
   /**
    * This is an <code>ACE_Lock</code> that gets initialized from
-   * @c TAO_ORB_Core::resource_factory()->create_cached_connection_lock().
+   * <code>TAO_ORB_Core::resource_factory()->create_cached_connection_lock ()</code>.
    * This way, one can use a lock appropriate for the type of system, i.e.,
    * a null lock for single-threaded systems, and a real lock for
    * multi-threaded systems.
@@ -1002,7 +965,8 @@ protected:
 
   /// A unique identifier for the transport.
   /**
-   * This never *never* changes over the lifespan, so we don't have to worry
+   * This never *never*
+   * changes over the lifespan, so we don't have to worry
    * about locking it.
    *
    * HINT: Protocol-specific transports that use connection handler
@@ -1012,26 +976,6 @@ protected:
 
   /// Used by the LRU, LFU and FIFO Connection Purging Strategies.
   unsigned long purging_order_;
-
-private:
-  /// Additional member values required to support codeset translation
-  TAO_Codeset_Translator_Factory *char_translator_;
-  TAO_Codeset_Translator_Factory *wchar_translator_;
-
-  /// The tcs_set_ flag indicates that negotiation has occured and so the
-  /// translators are correct, since a null translator is valid if both ends
-  /// are using the same codeset, whatever that codeset might be.
-  CORBA::Boolean tcs_set_;
-  /// First_request_ is true until the first request is sent or received. This
-  /// is necessary since codeset context information is necessary only on the
-  /// first request. After that, the translators are fixed for the life of the
-  /// connection.
-  CORBA::Boolean first_request_;
-  /// Wchar data is only permitted when both sides explicitly declare a wchar
-  /// codeset and a translator exists on one side or the other to convert
-  /// between them. Again, this is necessary since a null wchar_translator is
-  /// perfectly valid.
-  CORBA::Boolean wchar_allowed_;
 };
 
 /**

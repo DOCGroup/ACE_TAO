@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Token_Collection.h"
 
 #if !defined (__ACE_INLINE__)
@@ -6,11 +8,7 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-
-ACE_RCSID (ace,
-           Token_Collection,
-           "$Id$")
-
+ACE_RCSID(ace, Token_Collection, "$Id$")
 
 ACE_Token_Collection::ACE_Token_Collection (int debug,
 					    const ACE_TCHAR *name)
@@ -80,9 +78,9 @@ ACE_Token_Collection::acquire (int notify,
 {
   ACE_TRACE ("ACE_Token_Collection::acquire");
 
-  COLLECTION::ITERATOR iterator (collection_);
+  COLLECTION_ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -145,9 +143,9 @@ ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
 {
   ACE_TRACE ("ACE_Token_Collection::tryacquire");
 
-  COLLECTION::ITERATOR iterator (collection_);
+  COLLECTION_ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -168,9 +166,9 @@ ACE_Token_Collection::renew (int requeue_position,
 {
   ACE_TRACE ("ACE_Token_Collection::renew");
 
-  COLLECTION::ITERATOR iterator (collection_);
+  COLLECTION_ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -210,9 +208,9 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
 
 {
   ACE_TRACE ("ACE_Token_Collection::release");
-  COLLECTION::ITERATOR iterator (collection_);
+  COLLECTION_ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
@@ -244,15 +242,15 @@ ACE_Token_Collection::release (const ACE_TCHAR *token_name,
 ACE_Token_Collection::~ACE_Token_Collection (void)
 {
   ACE_TRACE ("ACE_Token_Collection::~ACE_Token_Collection");
-  COLLECTION::ITERATOR iterator (collection_);
+  COLLECTION_ITERATOR iterator (collection_);
 
-  for (COLLECTION::ENTRY *temp = 0;
+  for (COLLECTION_ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     {
       delete temp->int_id_;
       // The ext_id_'s delete themselves when the array of
-      // COLLECTION::ENTRYs goes away.
+      // COLLECTION_ENTRYs goes away.
     }
 }
 

@@ -57,7 +57,6 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/Svc_Handler.h"
 #include "ace/Connector.h"
 #include "Options.h"
 

@@ -215,22 +215,9 @@ be_visitor_array::visit_typedef (be_typedef *node)
 {
   int result = this->visit_node (node);
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_Type *pbt = node->primitive_base_type ();
-  AST_Decl::NodeType nt = pbt->node_type ();
-  AST_PredefinedType::PredefinedType pt = AST_PredefinedType:: PT_void;
+  AST_Decl::NodeType nt = node->primitive_base_type ()->node_type ();
 
-  if (nt == AST_Decl::NT_pre_defined)
-    {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (pbt);
-      pt = pdt->pt ();
-    }
-
-  // We must append a "_var" for typedefs of interfaces, CORBA::Objects or
-  // typecodes.
-  if (nt == AST_Decl::NT_interface 
-      || nt == AST_Decl::NT_interface_fwd
-      || pt == AST_PredefinedType::PT_pseudo
-      || pt == AST_PredefinedType::PT_object)
+  if (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_interface_fwd)
     {
       *os << "_var";
     }

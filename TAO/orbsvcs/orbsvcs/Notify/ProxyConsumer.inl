@@ -11,9 +11,3 @@ TAO_NS_ProxyConsumer::supplier (void)
 {
   return this->supplier_;
 }
-
-ACE_INLINE TAO_NS_SupplierAdmin*
-TAO_NS_ProxyConsumer::supplier_admin (void)
-{
-  return this->supplier_admin_;
-}

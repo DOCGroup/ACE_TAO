@@ -18,7 +18,6 @@
 //
 // ============================================================================
 
-#include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "tao/corba.h"
@@ -81,7 +80,7 @@ catiiop (char* string
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
+      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
     }
 
   hostname = CORBA::string_alloc (1 + cp - string);
@@ -99,7 +98,7 @@ catiiop (char* string
   if (cp == 0)
     {
       CORBA::string_free (hostname);
-      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
+      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
     }
 
   port_number = (short) ACE_OS::atoi ((char *) string);
@@ -241,7 +240,7 @@ catior (char* str
 
   // No profiles means a NIL objref.
   if (profiles == 0)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return CORBA_TypeCode::TRAVERSE_CONTINUE;
   else
     while (profiles-- != 0)
       {
@@ -829,98 +828,6 @@ cat_object_key (TAO_InputCDR& stream)
   return cat_octet_seq ("Object Key", stream);
 }
 
-ACE_CString
- _find_info (CORBA::ULong id)
-{
-    ACE_CString locale="";
-    ACE_Codeset_Registry::registry_to_locale(id, locale, NULL, NULL);
-    return locale;
-}
-
-void displayHex( TAO_InputCDR &str )
-{
-  if (str.good_bit () == 0 )
-    return;
-
-  TAO_InputCDR clone_str( str );
-  CORBA::ULong theSetId ;
-  str.read_ulong(theSetId);
-  ACE_DEBUG ((LM_DEBUG," Hex - %x", theSetId));
-  ACE_DEBUG ((LM_DEBUG," Description - "));
-  ACE_CString theDescr = _find_info ( theSetId );
-
-  if( theDescr.length() == 0 )
-  {
-     ACE_DEBUG ((LM_DEBUG," Unknown CodeSet \n "));
-     return;
-  }
-
-  ACE_DEBUG (( LM_DEBUG," %s \n", theDescr.c_str()));
-}
-
-static CORBA::Boolean
-cat_codeset_info(TAO_InputCDR& stream)
-{
-     // Component Length
-     CORBA::ULong compLen=0L;
-     stream >> compLen;
-     ACE_DEBUG ((LM_DEBUG, "\tComponent Length %u \n", compLen));
-
-     // Byte Order
-     CORBA::ULong byteOrder;
-     stream >> byteOrder;
-
-     if( byteOrder )
-     {
-        ACE_DEBUG ((LM_DEBUG,
-            "\tThe Component Byte Order:\tLittle Endian\n"));
-     }
-     else
-        ACE_DEBUG ((LM_DEBUG,
-                "\tThe Component Byte Order:\tBig Endian\n"));
-
-     // CodesetId for char
-     // CORBA::ULong c_ncsId;
-     ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for char: "));
-     displayHex( stream );
-
-     // number of Conversion Codesets for char
-     CORBA::ULong c_ccslen=0;
-     stream >> c_ccslen;
-     ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for char %u \n", c_ccslen));
-
-     if( c_ccslen )
-        ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for char are: \n"));
-
-     //  Loop through and display them
-     for(  CORBA::ULong index=0; index < c_ccslen; ++index)
-     {
-        // CodesetId for char
-        ACE_DEBUG ((LM_DEBUG, "\t%u) ", index + 1L));
-        displayHex( stream );
-     }
-
-     // CodesetId for wchar
-     ACE_DEBUG ((LM_DEBUG, "\tNative CodeSet for wchar: "));
-     displayHex( stream );
-
-     // number of Conversion Codesets for char
-     CORBA::ULong w_ccslen=0;
-     stream >> w_ccslen;
-     ACE_DEBUG ((LM_DEBUG, "\tNumber of CCS for wchar %u \n", w_ccslen));
-
-     if( w_ccslen )
-       ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for wchar are: \n"));
-
-     //  Loop through and display them
-     for(  CORBA::ULong index=0; index < w_ccslen; ++index)
-     {
-       ACE_DEBUG ((LM_DEBUG, "\t %u) ", index + 1L));
-       displayHex( stream );
-     }
-     return 1;
-}
-
 static CORBA::Boolean
 cat_tagged_components (TAO_InputCDR& stream)
 {
@@ -947,7 +854,7 @@ cat_tagged_components (TAO_InputCDR& stream)
       } else if (tag == IOP::TAG_CODE_SETS) {
         ACE_DEBUG ((LM_DEBUG,"%d (TAG_CODE_SETS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
-        cat_codeset_info(stream);
+        cat_octet_seq ("Component Value" ,stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
 
       } else if (tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS) {

@@ -19,11 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from 
-// be/be_codegen.cpp:784
-
-#ifndef _TAO_IDL_ORIG_IFR_EXTENDEDS_T_CPP_
-#define _TAO_IDL_ORIG_IFR_EXTENDEDS_T_CPP_
+#ifndef _TAO_IDL_IFR_EXTENDEDS_T_CPP_
+#define _TAO_IDL_IFR_EXTENDEDS_T_CPP_
 
 #include "IFR_ExtendedS_T.h"
 

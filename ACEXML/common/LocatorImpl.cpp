@@ -31,9 +31,7 @@ void
 ACEXML_LocatorImpl::reset (void)
 {
   delete[] this->publicId_;
-  this->publicId_ = 0;
   delete[] this->systemId_;
-  this->systemId_ = 0;
   this->columnNumber_ = 0;
   this->lineNumber_ = 1;
 }

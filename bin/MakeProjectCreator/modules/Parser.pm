@@ -83,17 +83,6 @@ sub process_special {
 }
 
 
-sub collect_line {
-  my($self) = shift;
-  my($fh)   = shift;
-  my($lref) = shift;
-  my($line) = shift;
-
-  $$lref = $self->strip_line($line);
-  return $self->parse_line($fh, $$lref);
-}
-
-
 sub read_file {
   my($self)        = shift;
   my($input)       = shift;
@@ -103,9 +92,10 @@ sub read_file {
 
   $self->{'line_number'} = 0;
   if (open($ih, $input)) {
-    my($line) = "";
     while(<$ih>) {
-      ($status, $errorString) = $self->collect_line($ih, \$line, $_);
+      my($line) = $self->strip_line($_);
+
+      ($status, $errorString) = $self->parse_line($ih, $line);
 
       if (!$status) {
         last;

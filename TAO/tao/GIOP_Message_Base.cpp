@@ -11,7 +11,6 @@
 #include "Transport.h"
 #include "LF_Strategy.h"
 #include "Request_Dispatcher.h"
-#include "Codeset_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
@@ -611,7 +610,9 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         qd->major_version_,
-                        qd->minor_version_);
+                        qd->minor_version_,
+                        this->orb_core_->to_iso8859 (),
+                        this->orb_core_->to_unicode ());
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
@@ -664,7 +665,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->minor_version_,
                           this->orb_core_);
 
-  transport->assign_translators(&input_cdr,&output);
 
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
@@ -774,11 +774,10 @@ TAO_GIOP_Message_Base::generate_exception_reply (
       // Make the GIOP & reply header.
       this->generate_reply_header (cdr,
                                    params);
-      x._tao_encode (cdr
-                     ACE_ENV_ARG_PARAMETER);
+      x._tao_encode (cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCH (CORBA_Exception, ex)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.
@@ -857,9 +856,6 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
     {
       parse_error =
         parser->parse_request_header (request);
-
-      request.orb_core()->codeset_manager()->process_service_context(request);
-      transport->assign_translators(&cdr,&output);
 
       // Throw an exception if the
       if (parse_error != 0)

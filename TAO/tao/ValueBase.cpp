@@ -1,3 +1,19 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//     TAO
+//
+// = FILENAME
+//     ValueBase.cpp
+//
+// = AUTHOR
+//     Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
+
+
 #include "tao/CDR.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
@@ -13,13 +29,13 @@ ACE_RCSID (tao,
            ValueBase,
            "$Id$")
 
-
-CORBA::ValueBase::~ValueBase (void)
+// destructor
+CORBA_ValueBase::~CORBA_ValueBase (void)
 {
 }
 
-CORBA::ValueBase*
-CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
+CORBA_ValueBase*
+CORBA_ValueBase::_downcast (CORBA_ValueBase *vt)
 {
   return vt;  // every vt is a CORBA::ValueBase :-)
 }
@@ -41,9 +57,9 @@ CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
 // (see CORBA 2.3 GIOP 15.3.4)
 
 CORBA::Boolean
-CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
-                                CORBA::ValueBase *this_,
-                                ptr_arith_t /* formal_type_id */)
+CORBA_ValueBase::_tao_marshal (TAO_OutputCDR &strm,
+                               CORBA_ValueBase *this_,
+                               ptr_arith_t /* formal_type_id */)
 {
   CORBA::Boolean retval = 1;
   // %! yet much to do ... look for +++ !
@@ -110,8 +126,8 @@ CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
 
 
 CORBA::Boolean
-CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
-                                  CORBA::ValueBase *&new_object)
+CORBA_ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
+                                 CORBA_ValueBase *&new_object)
 {
   // This is for the special case only that one unmarshals in order
   // to assign the newly created object directly to a ValueBase pointer.
@@ -158,16 +174,16 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
 
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
-//  new_object = CORBA::ValueBase::_downcast (base);
+//  new_object = CORBA_ValueBase::_downcast (base);
   return retval;
 }
 
 
 CORBA::Boolean
-CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
-                                      CORBA::ValueFactory &factory,
-                                      CORBA::ValueBase *&valuetype,
-                                      const char * const /* repo_id */)
+CORBA_ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
+                                     CORBA_ValueFactory &factory,
+                                     CORBA_ValueBase *&valuetype,
+                                     const char * const /* repo_id */)
 { // %! dont leak on error case !
   // %! postconditions
   CORBA::Boolean retval = 1;
@@ -250,7 +266,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 }
 
 CORBA::Boolean
-CORBA::ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
+CORBA_ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
 {
   CORBA::Boolean retval = 1;
 
@@ -271,32 +287,30 @@ CORBA::ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
 }
 
 
-// member functions for CORBA::DefaultValueRefCountBase ============
+// member functions for CORBA_DefaultValueRefCountBase ============
 
 // destructor
-CORBA::DefaultValueRefCountBase::~DefaultValueRefCountBase (void)
+CORBA_DefaultValueRefCountBase::~CORBA_DefaultValueRefCountBase (void)
 {
 }
 
 void
-CORBA::DefaultValueRefCountBase::_add_ref (void)
+CORBA_DefaultValueRefCountBase::_add_ref (void)
 {
   this->_tao_add_ref ();
 }
 
 void
-CORBA::DefaultValueRefCountBase::_remove_ref (void)
+CORBA_DefaultValueRefCountBase::_remove_ref (void)
 {
   this->_tao_remove_ref ();
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_refcount_value (void)
+CORBA_DefaultValueRefCountBase::_refcount_value (void)
 {
   return this->_tao_refcount_value ();
 }
-
-// ===========================================================
 
 // some constants
 
@@ -312,21 +326,21 @@ const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_list    = 6;
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR &strm,
-            const CORBA::ValueBase *_tao_valuetype)
+            const CORBA_ValueBase *_tao_valuetype)
 {
-  return CORBA::ValueBase::_tao_marshal (
+  return CORBA_ValueBase::_tao_marshal (
              strm,
-             ACE_const_cast (CORBA::ValueBase *,
+             ACE_const_cast (CORBA_ValueBase *,
                              _tao_valuetype),
-             (ptr_arith_t) &CORBA::ValueBase::_downcast
+             (ptr_arith_t) &CORBA_ValueBase::_downcast
            );
 }
 
 CORBA::Boolean
 operator>> (TAO_InputCDR &strm,
-            CORBA::ValueBase *&_tao_valuetype)
+            CORBA_ValueBase *&_tao_valuetype)
 {
-  return CORBA::ValueBase::_tao_unmarshal (strm,
-                                           _tao_valuetype);
+  return CORBA_ValueBase::_tao_unmarshal (strm,
+                                          _tao_valuetype);
 }
 

@@ -20,8 +20,8 @@
 
 #include "be_visitor_typecode/typecode_defn.h"
 
-ACE_RCSID (be_visitor_exception,
-           exception_cs,
+ACE_RCSID (be_visitor_exception, 
+           exception_cs, 
            "$Id$")
 
 // ***************************************************************************
@@ -65,7 +65,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Default constructor.
   *os << node->name () << "::" << node->local_name ()
       << " (void)" << be_idt_nl;
-  *os << ": CORBA::UserException (" << be_idt << be_idt << be_idt_nl
+  *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
       << "\"" << node->repoID () << "\"," << be_nl
       << "\"" << node->local_name () << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl;
@@ -81,7 +81,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Copy constructor.
   *os << node->name () << "::" << node->local_name () << " (const ::"
       << node->name () << " &_tao_excp)" << be_idt_nl;
-  *os << ": CORBA::UserException (" << be_idt << be_idt << be_idt_nl
+  *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
       << "_tao_excp._rep_id ()," << be_nl
       << "_tao_excp._name ()" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl;
@@ -115,7 +115,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &_tao_excp)" << be_nl
       << "{" << be_idt_nl
-      << "this->ACE_NESTED_CLASS (CORBA, UserException)::operator= "
+      << "this->CORBA_UserException::operator= "
       << "(_tao_excp);";
 
   // Assign each individual member.
@@ -132,7 +132,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-  *os << be_nl
+  *os << be_nl 
       << "return *this;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -184,7 +184,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << ");" << be_uidt_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl << be_nl;
-
+  
   *os << "void " << node->name () << "::_raise (void)" << be_nl
       << "{" << be_idt_nl
       << "TAO_RAISE (*this);" << be_uidt_nl
@@ -296,7 +296,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << "  : CORBA::UserException ("
+      *os << "  : CORBA_UserException (" 
           << be_idt << be_idt << be_idt << be_idt_nl
           << "\"" << node->repoID () << "\"," << be_nl
           << "\"" << node->local_name () << "\"" << be_uidt_nl

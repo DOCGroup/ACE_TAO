@@ -1,20 +1,18 @@
+// $Id$
+
 #ifndef ACE_LOCAL_NAME_SPACE_T_C
 #define ACE_LOCAL_NAME_SPACE_T_C
 
 #include "ace/ACE.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Local_Name_Space.h"
-#include "ace/Auto_Ptr.h"
 
-
-ACE_RCSID (ace,
-           Local_Name_Space_T,
-           "$Id$")
-
+ACE_RCSID(ace, Local_Name_Space_T, "$Id$")
 
 template <class ALLOCATOR>
 ACE_Name_Space_Map<ALLOCATOR>::ACE_Name_Space_Map (ALLOCATOR *alloc)
@@ -107,11 +105,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::remap (EXCEPTION_POINTERS *ep)
 #endif /* ACE_WIN32 */
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type,
-  int rebind)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (const ACE_NS_WString &name,
+                                                             const ACE_NS_WString &value,
+                                                             const char *type,
+                                                             int rebind)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -128,11 +125,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type,
-  int rebind)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (const ACE_NS_WString &name,
+                                                               const ACE_NS_WString &value,
+                                                               const char *type,
+                                                               int rebind)
 {
 
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
@@ -165,23 +161,19 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
         {
           // Do a normal bind.  This will fail if there's already an
           // <new_internal> with the same name.
-          result = this->name_space_map_->bind (new_name,
-                                                new_internal,
-                                                this->allocator_);
+          result = this->name_space_map_->bind (new_name, new_internal, this->allocator_);
 
           if (result == 1)
             {
-              // Entry already existed so bind failed. Free our
-              // dynamically allocated memory.
+              // Entry already existed so bind failed. Free our dynamically allocated memory.
               this->allocator_->free ((void *) ptr);
               return result;
             }
         }
       else
         {
-          // Do a rebind.  If there's already any entry, this will
-          // return the existing <new_name> and <new_internal> and
-          // overwrite the existing name binding.
+          // Do a rebind.  If there's already any entry, this will return the existing
+          // <new_name> and <new_internal> and overwrite the existing name binding.
           ACE_NS_String old_name;
           ACE_NS_Internal old_internal;
 
@@ -190,10 +182,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
                                                   this->allocator_);
           if (result == 1)
             {
-              // Free up the memory we allocated in shared_bind().
-              // Note that this assumes that the "value" pointer comes
-              // first and that the value, name, and type are
-              // contiguously allocated (see above for details)
+              // Free up the memory we allocated in shared_bind().  Note that this
+              // assumes that the "value" pointer comes first and that the value,
+              // name, and type are contiguously allocated (see above for details)
               this->allocator_->free ((void *) (old_internal.value ()).fast_rep ());
             }
         }
@@ -212,8 +203,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
-  const ACE_NS_WString &name)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (const ACE_NS_WString &name)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -231,8 +221,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (
-  const ACE_NS_WString &name)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (const ACE_NS_WString &name)
 {
   ACE_TRACE ("ACE_Local_Name_Space::unbind_i");
 
@@ -253,10 +242,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (const ACE_NS_WString &name,
+                                                      const ACE_NS_WString &value,
+                                                      const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::bind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -265,10 +253,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (const ACE_NS_WString &name,
+                                                        const ACE_NS_WString &value,
+                                                        const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::rebind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -277,10 +264,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
-  const ACE_NS_WString &name,
-  ACE_NS_WString &value,
-  char *&type)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (const ACE_NS_WString &name,
+                                                         ACE_NS_WString &value,
+                                                         char *&type)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -298,10 +284,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
 
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
-  const ACE_NS_WString &name,
-  ACE_NS_WString &value,
-  char *&type)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_NS_WString &name,
+                                                           ACE_NS_WString &value,
+                                                           char *&type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::resolve_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -339,8 +324,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::open (
-  ACE_Naming_Context::Context_Scope_Type scope_in)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::open (ACE_Naming_Context::Context_Scope_Type scope_in)
 {
   ACE_TRACE ("ACE_Local_Name_Space::open");
   this->ns_scope_ = scope_in;
@@ -358,9 +342,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (void)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
-  ACE_Naming_Context::Context_Scope_Type scope_in,
-  ACE_Name_Options *name_options)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in,
+                                                                      ACE_Name_Options *name_options)
   : name_options_ (name_options)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
@@ -494,8 +477,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
     {
       this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
       if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                     this->name_space_map_, ns_map));
     }
 
@@ -511,8 +493,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
         {
           this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
           if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+            ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                         this->name_space_map_, ns_map));
         }
       else
@@ -530,8 +511,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
         }
 
       if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
                     this->name_space_map_, ns_map));
     }
 
@@ -539,15 +519,14 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (
-  ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (ACE_WSTRING_SET &set,
+                                                              const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
-  MAP_MANAGER::ENTRY *map_entry;
+  MAP_ITERATOR map_iterator (*this->name_space_map_);
+  MAP_ENTRY *map_entry;
 
   int result = 1;
 
@@ -573,15 +552,14 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (
-  ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (ACE_WSTRING_SET &set,
+                                                           const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_values_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
-  MAP_MANAGER::ENTRY *map_entry;
+  MAP_ITERATOR map_iterator (*this->name_space_map_);
+  MAP_ENTRY *map_entry;
 
   int result = 1;
 
@@ -607,15 +585,14 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
-  ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_WSTRING_SET &set,
+                                                          const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_types_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
-  MAP_MANAGER::ENTRY *map_entry;
+  MAP_ITERATOR map_iterator (*this->name_space_map_);
+  MAP_ENTRY *map_entry;
 
   char *compiled_regexp = 0;
 
@@ -678,15 +655,14 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (
-  ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (ACE_BINDING_SET &set,
+                                                                      const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_name_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
-  MAP_MANAGER::ENTRY *map_entry;
+  MAP_ITERATOR map_iterator (*this->name_space_map_);
+  MAP_ENTRY *map_entry;
 
   for (map_entry = 0;
        map_iterator.next (map_entry) != 0;
@@ -707,15 +683,14 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (
-  ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (ACE_BINDING_SET &set,
+                                                                  const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_value_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
-  MAP_MANAGER::ENTRY *map_entry;
+  MAP_ITERATOR map_iterator (*this->name_space_map_);
+  MAP_ENTRY *map_entry;
 
   for (map_entry = 0;
        map_iterator.next (map_entry) != 0;
@@ -735,15 +710,14 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
-  ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (ACE_BINDING_SET &set,
+                                                                 const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_type_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
-  MAP_MANAGER::ENTRY *map_entry;
+  MAP_ITERATOR map_iterator (*this->name_space_map_);
+  MAP_ENTRY *map_entry;
 
   char *compiled_regexp = 0;
   // Note that char_rep() allocates memory so we need to delete it
@@ -753,12 +727,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   if (ACE_OS::strcmp ("", pattern_rep) == 0)
     compiled_regexp = ACE_OS::strdup ("");
   else
-    // Compile the regular expression (the 0's cause ACE_OS::compile
-    // to allocate space).
+    // Compile the regular expression (the 0's cause ACE_OS::compile to allocate space).
 #if defined (ACE_HAS_REGEX)
     compiled_regexp = ACE_OS::compile (pattern_rep, 0, 0);
-#else /* If we don't have regular expressions just the pattern
-         directly. */
+#else /* If we don't have regular expressions just the pattern directly. */
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
 
@@ -769,12 +741,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
       // Get the type.
       const char *type = map_entry->int_id_.type ();
 
-      if (ACE_OS::strcmp ("", pattern_rep) == 0 // Everything matches
-                                                // the wildcard.
+      if (ACE_OS::strcmp ("", pattern_rep) == 0 // Everything matches the wildcard.
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
-#else /* If we don't have regular expressions just use strstr() for
-         substring matching. */
+#else /* If we don't have regular expressions just use strstr() for substring matching. */
         || ACE_OS::strstr (type, compiled_regexp) != 0)
 #endif /* ACE_HAS_REGEX */
         {
@@ -801,8 +771,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
-  MAP_MANAGER::ENTRY *map_entry;
+  MAP_ITERATOR map_iterator (*this->name_space_map_);
+  MAP_ENTRY *map_entry;
 
   for (map_entry = 0;
        map_iterator.next (map_entry) != 0;
@@ -816,8 +786,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
 
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
                   key, value, type));
-      // We need to delete key and value since char_rep allocates
-      // memory for them
+      // We need to delete key and value since char_rep allocates memory for them
       delete [] key;
       delete [] value;
     }
@@ -826,9 +795,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (
-  ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (ACE_WSTRING_SET &set,
+                                                        const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -845,9 +813,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (
-  ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (ACE_WSTRING_SET &set,
+                                                             const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -864,9 +831,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (
-  ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (ACE_WSTRING_SET &set,
+                                                            const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -883,9 +849,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries (
-  ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries (ACE_BINDING_SET &set,
+                                                                    const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -902,9 +867,8 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries (
-  ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries (ACE_BINDING_SET &set,
+                                                                    const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -921,9 +885,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (
-  ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (ACE_BINDING_SET &set,
+                                                                   const ACE_NS_WString &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)

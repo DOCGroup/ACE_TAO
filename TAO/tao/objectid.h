@@ -8,6 +8,7 @@
  *
  *  ObjectIds redefined for TAO and recognized by CORBA
  *
+ *  @author  Copyright 1995 by Sun Microsystems, Inc.
  *  @author  Chris Cleeland
  *  @author  Douglas C. Schmidt
  */
@@ -35,7 +36,7 @@
  * configuration.
  */
 
-// ObjectIds recognized by CORBA::ORB::resolve_initial_references()...
+// ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
 // of course, no guarantees are made that the call will return
 // something useful.
 #define TAO_OBJID_NAMESERVICE         "NameService"
@@ -66,7 +67,7 @@
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
-// The CORBA::ORB::list_initial_services () method iterates through
+// The CORBA_ORB::list_initial_services () method iterates through
 // this list to determine which initial services are available.
 #define TAO_LIST_OF_INITIAL_SERVICES \
         TAO_OBJID_NAMESERVICE, \

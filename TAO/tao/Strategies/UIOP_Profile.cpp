@@ -103,7 +103,7 @@ TAO_UIOP_Profile::parse_string (const char *string
   if (!string || !*string)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
+                   CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -130,7 +130,7 @@ TAO_UIOP_Profile::parse_string (const char *string
       this->version_.minor  > TAO_DEF_GIOP_MINOR)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
+                   CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -146,7 +146,7 @@ TAO_UIOP_Profile::parse_string (const char *string
   if (cp == 0)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
+                   CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -163,7 +163,7 @@ TAO_UIOP_Profile::parse_string (const char *string
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)
     {
       ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
+                   CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
                      EINVAL),
                    CORBA::COMPLETED_NO));
@@ -386,7 +386,9 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
                        this->orb_core ()->output_cdr_msgblock_allocator (),
                        this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
                        TAO_DEF_GIOP_MAJOR,
-                       TAO_DEF_GIOP_MINOR);
+                       TAO_DEF_GIOP_MINOR,
+                       this->orb_core ()->to_iso8859 (),
+                       this->orb_core ()->to_unicode ());
 
   // Create the profile body
   this->create_profile_body (encap);
@@ -415,7 +417,9 @@ TAO_UIOP_Profile::create_tagged_profile (void)
                            this->orb_core ()->output_cdr_msgblock_allocator (),
                            this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
                            TAO_DEF_GIOP_MAJOR,
-                           TAO_DEF_GIOP_MINOR);
+                           TAO_DEF_GIOP_MINOR,
+                           this->orb_core ()->to_iso8859 (),
+                           this->orb_core ()->to_unicode ());
 
       // Create the profile body
       this->create_profile_body (encap);

@@ -318,22 +318,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     {
       int temp = this->use_imr_;
       this->use_imr_ = 0;
-      ACE_TRY
-        {
-          this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          this->poa_manager_.remove_poa (this);
-          this->object_adapter ().unbind_poa (this,
-                                              this->folded_name_,
-                                              this->system_name_.in ());
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
+      this->imr_notify_startup (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-
       this->use_imr_ = temp;
     }
 
@@ -916,7 +902,7 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (names,
                     PortableInterceptor::AdapterName (len),
                     CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
+                      CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
@@ -1729,7 +1715,7 @@ TAO_POA::check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL)
       // exception.)
       ACE_THROW (
         CORBA::TRANSIENT (
-          CORBA::SystemException::_tao_minor_code (
+          CORBA_SystemException::_tao_minor_code (
             TAO_POA_DISCARDING,
             1),
           CORBA::COMPLETED_NO));
@@ -1749,7 +1735,7 @@ TAO_POA::check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL)
       // Since there is no queuing in TAO, we immediately raise a
       // TRANSIENT exception.
       ACE_THROW (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_HOLDING,
           1),
         CORBA::COMPLETED_NO));
@@ -1770,7 +1756,7 @@ TAO_POA::check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL)
       // OBJ_ADAPTER system exception, with standard minor code 1, to
       // indicate that the object implementation is unavailable.
       ACE_THROW (CORBA::OBJ_ADAPTER (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_INACTIVE,
           1),
         CORBA::COMPLETED_NO));
@@ -3538,8 +3524,8 @@ orbkey:
   else
     {
       ACE_NEW_THROW_EX (tmp,
-                        CORBA::Object (data,
-                                       collocated),
+                        CORBA_Object (data,
+                                      collocated),
                         CORBA::INTERNAL ());
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
@@ -3599,7 +3585,7 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (tao_info,
                     TAO_IORInfo (this),
                     CORBA::NO_MEMORY (
-                       CORBA::SystemException::_tao_minor_code (
+                       CORBA_SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           ENOMEM),
                        CORBA::COMPLETED_NO));
@@ -3960,7 +3946,7 @@ TAO_POA::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_TRY_THROW (CORBA::TRANSIENT (
-          CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
+          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
           CORBA::COMPLETED_NO));
     }
   ACE_ENDTRY;
@@ -4013,7 +3999,7 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
   if (!this->guard_.locked ())
     ACE_THROW (
       CORBA::INTERNAL (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_GUARD_FAILURE,
           0),
         CORBA::COMPLETED_NO));
@@ -4028,7 +4014,7 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
       poa.cleanup_in_progress ())
     ACE_THROW (
       CORBA::BAD_INV_ORDER (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_POA_BEING_DESTROYED,
           0),
         CORBA::COMPLETED_NO));

@@ -145,7 +145,7 @@ TAO_NAMESPACE  DynamicAny
 #define _DYNAMICANY_DYNANY_CH_
   
   class TAO_DynamicAny_Export DynAny
-    : public virtual CORBA::Object
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2134,10 +2134,10 @@ TAO_NAMESPACE  DynamicAny
     
     virtual void _downcast (
         void* target,
-        CORBA::Object *src
+        CORBA_Object *src
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    virtual CORBA::Object* _upcast (void *src) const;
+    virtual CORBA_Object* _upcast (void *src) const;
   };
   
 #endif /* end #if !defined */
@@ -2868,7 +2868,7 @@ TAO_NAMESPACE  DynamicAny
 #define _DYNAMICANY_DYNANYFACTORY_CH_
   
   class TAO_DynamicAny_Export DynAnyFactory
-    : public virtual CORBA::Object
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

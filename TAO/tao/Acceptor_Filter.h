@@ -32,7 +32,6 @@ class TAO_MProfile;
 #endif /* _MSC_VER */
 
 class TAO_Acceptor;
-class TAO_ObjectKey;
 
 /**
  * @class TAO_Acceptor_Filter

@@ -50,7 +50,7 @@ TAO_EnumDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "name",
                                             name);
 
-  CORBA::EnumMemberSeq_var members = this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA_EnumMemberSeq_var members = this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_enum_tc (id.c_str (),
@@ -59,7 +59,7 @@ TAO_EnumDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                                      ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::EnumMemberSeq *
+CORBA_EnumMemberSeq *
 TAO_EnumDef_i::members (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -68,7 +68,7 @@ TAO_EnumDef_i::members (ACE_ENV_SINGLE_ARG_DECL)
   return this->members_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::EnumMemberSeq *
+CORBA_EnumMemberSeq *
 TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -77,9 +77,9 @@ TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
                                              "count",
                                              count);
 
-  CORBA::EnumMemberSeq *retval = 0;
+  CORBA_EnumMemberSeq *retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::EnumMemberSeq (count),
+                    CORBA_EnumMemberSeq (count),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -106,7 +106,7 @@ TAO_EnumDef_i::members_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members
+TAO_EnumDef_i::members (const CORBA_EnumMemberSeq &members
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -117,7 +117,7 @@ TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members
 }
 
 void
-TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
+TAO_EnumDef_i::members_i (const CORBA_EnumMemberSeq &members
                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -145,3 +145,4 @@ TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
                                                 member_name);
     }
 }
+

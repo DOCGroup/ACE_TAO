@@ -267,14 +267,6 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Codeset_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Translator_Factory.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Collocation_Resolver.cpp
 # End Source File
 # Begin Source File
@@ -672,10 +664,6 @@ SOURCE=.\ORB.cpp
 # Begin Source File
 
 SOURCE=.\ORB_Core.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ORB_Core_Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
@@ -1080,14 +1068,6 @@ SOURCE=.\CodecFactory.h
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Codeset_Translator_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1516,10 +1496,6 @@ SOURCE=.\orb.h
 # Begin Source File
 
 SOURCE=.\orb_core.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ORB_Core_Auto_Ptr.h
 # End Source File
 # Begin Source File
 
@@ -2208,10 +2184,6 @@ SOURCE=.\ORB.i
 # Begin Source File
 
 SOURCE=.\orb_core.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\ORB_Core_Auto_Ptr.inl
 # End Source File
 # Begin Source File
 

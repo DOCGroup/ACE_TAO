@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
 
 class TAO_Transport_Descriptor_Interface;
 class TAO_InputCDR;

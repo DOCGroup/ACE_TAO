@@ -59,6 +59,19 @@ typedef long long longlong_t;
 typedef long      id_t;
 # endif /* ACE_PSOS_TM */
 
+// Deal with MSVC++ insanity for CORBA...
+# if defined (ACE_HAS_BROKEN_NAMESPACES)
+#   define ACE_CORBA_1(NAME) CORBA_##NAME
+#   define ACE_CORBA_2(TYPE, NAME) CORBA_##TYPE##_##NAME
+#   define ACE_CORBA_3(TYPE, NAME) CORBA_##TYPE::NAME
+#   define ACE_NESTED_CLASS(TYPE, NAME) NAME
+# else  /* ! ACE_HAS_BROKEN_NAMESPACES */
+#   define ACE_CORBA_1(NAME) CORBA::NAME
+#   define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
+#   define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
+#   define ACE_NESTED_CLASS(TYPE, NAME) TYPE::NAME
+# endif /* ! ACE_HAS_BROKEN_NAMESPACES */
+
 // Here are all ACE-specific default constants, needed throughout ACE
 // and its applications.  The values can be over written by user
 // specific values in config.h files.
@@ -7050,6 +7063,51 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #if !defined (WCOREDUMP)
 #   define WCOREDUMP(stat) 0
 #endif /* WCOREDUMP */
+
+// Stuff used by the ACE CDR classes.
+#if defined ACE_LITTLE_ENDIAN
+#  define ACE_CDR_BYTE_ORDER 1
+// little endian encapsulation byte order has value = 1
+#else  /* ! ACE_LITTLE_ENDIAN */
+#  define ACE_CDR_BYTE_ORDER 0
+// big endian encapsulation byte order has value = 0
+#endif /* ! ACE_LITTLE_ENDIAN */
+
+/**
+ * @name Default values to control CDR classes memory allocation strategies
+ */
+//@{
+
+/// Control the initial size of all CDR buffers, application
+/// developers may want to optimize this value to fit their request
+/// size
+#if !defined (ACE_DEFAULT_CDR_BUFSIZE)
+#  define ACE_DEFAULT_CDR_BUFSIZE 512
+#endif /* ACE_DEFAULT_CDR_BUFSIZE */
+
+/// Stop exponential growth of CDR buffers to avoid overallocation
+#if !defined (ACE_DEFAULT_CDR_EXP_GROWTH_MAX)
+#  define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 65536
+#endif /* ACE_DEFAULT_CDR_EXP_GROWTH_MAX */
+
+/// Control CDR buffer growth after maximum exponential growth is
+/// reached
+#if !defined (ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK)
+#  define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 65536
+#endif /* ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK */
+//@}
+
+/// Control the zero-copy optimizations for octet sequences
+/**
+ * Large octet sequences can be sent without any copies by chaining
+ * them in the list of message blocks that represent a single CDR
+ * stream.  However, if the octet sequence is too small the zero copy
+ * optimizations actually hurt performance.  Octet sequences smaller
+ * than this value will be copied.
+ */
+#if !defined (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
+#define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+#endif /* ACE_DEFAULT_CDR_MEMCPY_TRADEOFF */
 
 /**
  * In some environments it is useful to swap the bytes on write, for

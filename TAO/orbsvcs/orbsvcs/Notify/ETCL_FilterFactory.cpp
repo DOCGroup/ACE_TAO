@@ -19,10 +19,8 @@ TAO_NS_ETCL_FilterFactory::~TAO_NS_ETCL_FilterFactory ()
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_NS_ETCL_FilterFactory::create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL)
+TAO_NS_ETCL_FilterFactory::create (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->filter_poa_ = filter_poa; // save the filter poa.
-
   PortableServer::ServantBase_var servant_var (this);
 
   return _this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -49,16 +47,18 @@ TAO_NS_ETCL_FilterFactory::create_filter (const char *constraint_grammar ACE_ENV
                     TAO_NS_ETCL_Filter (),
                     CORBA::NO_MEMORY ());
 
+  PortableServer::POA_var my_POA = _default_POA ();
+
   PortableServer::ServantBase_var filter_var (filter);
 
   PortableServer::ObjectId_var oid =
-    this->filter_poa_->activate_object (filter
-                                        ACE_ENV_ARG_PARAMETER);
+    my_POA->activate_object (filter
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
   CORBA::Object_var obj =
-    this->filter_poa_->id_to_reference (oid.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+    my_POA->id_to_reference (oid.in ()
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
   return CosNotifyFilter::Filter::_narrow (obj.in ()

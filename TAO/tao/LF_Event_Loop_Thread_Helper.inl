@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 ACE_INLINE
@@ -27,3 +25,4 @@ TAO_LF_Event_Loop_Thread_Helper::event_loop_return (void) const
 {
   return this->event_loop_return_;
 }
+

@@ -1375,7 +1375,7 @@ TAO_NAMESPACE  IOP
 #define _IOP_CODEC_CH_
   
   class TAO_Export Codec
-    : public virtual CORBA::Object
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1738,7 +1738,7 @@ static ::CORBA::TypeCode_ptr _tc_TypeMismatch;
 #define _IOP_CODECFACTORY_CH_
   
   class TAO_Export CodecFactory
-    : public virtual CORBA::Object
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

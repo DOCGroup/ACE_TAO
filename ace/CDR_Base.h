@@ -37,10 +37,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE	*/
 
 #include "ace/Basic_Types.h"
-#include "ace/OS.h"
-
-
-class ACE_Message_Block;
+#include "ace/Message_Block.h"
 
 /**
  * @class ACE_CDR
@@ -166,10 +163,10 @@ public:
     // Green Hills C++68000 1.8.8 forces us into it.
     typedef unsigned long Boolean;
 #  else	 /* ! (CHORUS && ghs 1.8.8) */
-    typedef unsigned char Boolean;
+    typedef u_char Boolean;
 #  endif /* ! (CHORUS && ghs 1.8.8) */
 
-  typedef unsigned char Octet;
+  typedef u_char Octet;
   typedef char Char;
   typedef ACE_OS::WChar	WChar;
   typedef ACE_INT16 Short;
@@ -195,26 +192,23 @@ public:
 #     endif /* sun */
 #   else  /* no	native 64 bit integer type */
 #     define NONNATIVE_LONGLONG
-      struct ACE_Export LongLong 
-        {
 #     if defined (ACE_BIG_ENDIAN)
+	      struct ACE_Export LongLong 
+        { 
           ACE_CDR::Long	h;
-          ACE_CDR::Long l;
-#     else
-          ACE_CDR::Long	l;
-          ACE_CDR::Long h;
-#     endif /* ! ACE_BIG_ENDIAN	*/
-
-          /**
-           * @name Overloaded Relation Operators.
-           *
-           * The canonical comparison operators.
-           */
-          //@{
+          ACE_CDR::Long l; 
           int operator== (const LongLong &rhs) const;
           int operator!= (const LongLong &rhs) const;
-          //@}
         };
+#     else
+	      struct ACE_Export LongLong 
+        { 
+          ACE_CDR::Long	l;
+          ACE_CDR::Long h; 
+          int operator== (const LongLong &rhs) const;
+          int operator!= (const LongLong &rhs) const;
+        };
+#     endif /* ! ACE_BIG_ENDIAN	*/
 #   endif /* no	native 64 bit integer type */
 
 #   if defined (NONNATIVE_LONGLONG)
@@ -229,8 +223,8 @@ public:
       struct Float
       {
 #  	if ACE_SIZEOF_INT == 4
-	  // Use unsigned int to get word alignment.
-	  unsigned int f;
+	  // Use u_int to get word alignment.
+	  u_int	f;
 #  	else  /* ACE_SIZEOF_INT	!= 4 */
 	  // Applications will probably	have trouble with this.
 	  char f[4];
@@ -250,8 +244,8 @@ public:
       struct Double
       {
 #  	if ACE_SIZEOF_LONG == 8
-	  // Use u long to get word alignment.
-	  unsigned long f;
+	  // Use u_long	to get word alignment.
+	  u_long f;
 #  	else  /* ACE_SIZEOF_INT	!= 8 */
 	  // Applications will probably	have trouble with this.
 	  char f[8];

@@ -21,6 +21,7 @@
 
 #include "Worker_Task.h"
 #include "AdminProperties.h"
+#include "Destroy_Callback.h"
 
 class TAO_NS_Timer_Reactor;
 
@@ -30,7 +31,7 @@ class TAO_NS_Timer_Reactor;
  * @brief A reactive worker task. Simply executes the command in the caller's context.
  *
  */
-class TAO_Notify_Export TAO_NS_Reactive_Task : public TAO_NS_Worker_Task
+class TAO_Notify_Export TAO_NS_Reactive_Task : public TAO_NS_Worker_Task, public TAO_NS_Destroy_Callback
 {
 public:
   /// Constuctor
@@ -39,7 +40,7 @@ public:
   /// Destructor
   ~TAO_NS_Reactive_Task ();
 
-  /// Release
+  /// TAO_NS_Destroy_Callback methods
   virtual void release (void);
 
   /// Init the reactive task.

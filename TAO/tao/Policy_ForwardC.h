@@ -32,7 +32,6 @@
 #include "tao/TAO_Export.h"
 #include "Sequence.h"
 #include "CDR.h"
-#include "varbase.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -188,10 +187,10 @@ TAO_NAMESPACE  CORBA
     
     virtual void _downcast (
         void* target,
-        CORBA::Object *src
+        CORBA_Object *src
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    virtual CORBA::Object* _upcast (void *src) const;
+    virtual CORBA_Object* _upcast (void *src) const;
   };
   
 #endif /* end #if !defined */

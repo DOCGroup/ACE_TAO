@@ -46,12 +46,13 @@ OBJFILES = \
         $(OBJDIR)\Builder.obj \
         $(OBJDIR)\Consumer.obj \
         $(OBJDIR)\ConsumerAdmin.obj \
+        $(OBJDIR)\Container.obj \
         $(OBJDIR)\Event.obj \
         $(OBJDIR)\EventChannel.obj \
         $(OBJDIR)\EventChannelFactory.obj \
         $(OBJDIR)\EventType.obj \
         $(OBJDIR)\EventTypeSeq.obj \
-        $(OBJDIR)\Default_Factory.obj \
+        $(OBJDIR)\Factory.obj \
         $(OBJDIR)\FilterAdmin.obj \
         $(OBJDIR)\ID_Factory.obj \
         $(OBJDIR)\Method_Request.obj \
@@ -60,7 +61,7 @@ OBJFILES = \
         $(OBJDIR)\Object.obj \
         $(OBJDIR)\Method_Request_Lookup.obj \
         $(OBJDIR)\Method_Request_Shutdown.obj \
-        $(OBJDIR)\CosNotify_Service.obj \
+        $(OBJDIR)\Notify_Service.obj \
         $(OBJDIR)\Peer.obj \
         $(OBJDIR)\POA_Helper.obj \
         $(OBJDIR)\Properties.obj \
@@ -85,6 +86,7 @@ OBJFILES = \
         $(OBJDIR)\Subscription_Change_Worker.obj \
         $(OBJDIR)\SupplierAdmin.obj \
         $(OBJDIR)\ThreadPool_Task.obj \
+        $(OBJDIR)\Types.obj \
         $(OBJDIR)\Worker_Task.obj \
         $(OBJDIR)\ETCL_Filter.obj \
         $(OBJDIR)\ETCL_FilterFactory.obj \

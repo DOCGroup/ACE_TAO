@@ -1,6 +1,0 @@
-#
-# $Id$
-#
-
-$(TARGETS_MAKEFILES):
-

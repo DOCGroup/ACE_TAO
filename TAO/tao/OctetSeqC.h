@@ -54,19 +54,17 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-namespace CORBA
-{
 #if !defined (_CORBA_OCTETSEQ_CH_)
 #define _CORBA_OCTETSEQ_CH_
 
-  class OctetSeq;
-  class OctetSeq_var;
+  class CORBA_OctetSeq;
+  class CORBA_OctetSeq_var;
   
   // *************************************************************
   // CORBA::OctetSeq
   // *************************************************************
   
-  class TAO_Export OctetSeq : public 
+  class TAO_Export CORBA_OctetSeq : public 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -74,25 +72,25 @@ namespace CORBA
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
   {
   public:
-    OctetSeq (void); // default ctor
-    OctetSeq (CORBA::ULong max); // uses max size
-    OctetSeq (
+    CORBA_OctetSeq (void); // default ctor
+    CORBA_OctetSeq (CORBA::ULong max); // uses max size
+    CORBA_OctetSeq (
       CORBA::ULong max, 
       CORBA::ULong length, 
       CORBA::Octet *buffer, 
       CORBA::Boolean release = 0
     );
-    OctetSeq (const OctetSeq &); // copy ctor
-    ~OctetSeq (void);
+    CORBA_OctetSeq (const CORBA_OctetSeq &); // copy ctor
+    ~CORBA_OctetSeq (void);
     static void _tao_any_destructor (void*);
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef OctetSeq_var _var_type;
+    typedef CORBA_OctetSeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-    OctetSeq (
+    CORBA_OctetSeq (
         CORBA::ULong length,
         const ACE_Message_Block* mb
       )
@@ -111,37 +109,37 @@ namespace CORBA
   // class CORBA::OctetSeq_var
   // *************************************************************
 
-  class TAO_Export OctetSeq_var
+  class TAO_Export CORBA_OctetSeq_var
   {
   public:
-    OctetSeq_var (void); // default constructor
-    OctetSeq_var (OctetSeq *);
-    OctetSeq_var (const OctetSeq_var &); // copy constructor
-    OctetSeq_var (const OctetSeq &); // fixed-size base types only
-    ~OctetSeq_var (void); // destructor
+    CORBA_OctetSeq_var (void); // default constructor
+    CORBA_OctetSeq_var (CORBA_OctetSeq *);
+    CORBA_OctetSeq_var (const CORBA_OctetSeq_var &); // copy constructor
+    CORBA_OctetSeq_var (const CORBA_OctetSeq &); // fixed-size base types only
+    ~CORBA_OctetSeq_var (void); // destructor
     
-    OctetSeq_var &operator= (OctetSeq *);
-    OctetSeq_var &operator= (const OctetSeq_var &);
-    OctetSeq_var &operator= (const OctetSeq &); // fixed-size base types only
-    OctetSeq *operator-> (void);
-    const OctetSeq *operator-> (void) const;
+    CORBA_OctetSeq_var &operator= (CORBA_OctetSeq *);
+    CORBA_OctetSeq_var &operator= (const CORBA_OctetSeq_var &);
+    CORBA_OctetSeq_var &operator= (const CORBA_OctetSeq &); // fixed-size base types only
+    CORBA_OctetSeq *operator-> (void);
+    const CORBA_OctetSeq *operator-> (void) const;
     
-    operator const OctetSeq &() const;
-    operator OctetSeq &();
-    operator OctetSeq &() const;
+    operator const CORBA_OctetSeq &() const;
+    operator CORBA_OctetSeq &();
+    operator CORBA_OctetSeq &() const;
     
     CORBA::Octet & operator[] (CORBA::ULong index);
     const CORBA::Octet & operator[] (CORBA::ULong index) const;
     
     // in, inout, out, _retn 
-    const OctetSeq &in (void) const;
-    OctetSeq &inout (void);
-    OctetSeq *&out (void);
-    OctetSeq *_retn (void);
-    OctetSeq *ptr (void) const;
+    const CORBA_OctetSeq &in (void) const;
+    CORBA_OctetSeq &inout (void);
+    CORBA_OctetSeq *&out (void);
+    CORBA_OctetSeq *_retn (void);
+    CORBA_OctetSeq *ptr (void) const;
 
   private:
-    OctetSeq *ptr_;
+    CORBA_OctetSeq *ptr_;
   };
 
 
@@ -151,36 +149,34 @@ namespace CORBA
 #if !defined (_CORBA_OCTETSEQ___OUT_CH_)
 #define _CORBA_OCTETSEQ___OUT_CH_
 
-  class TAO_Export OctetSeq_out
+  class TAO_Export CORBA_OctetSeq_out
   {
   public:
-    OctetSeq_out (OctetSeq *&);
-    OctetSeq_out (OctetSeq_var &);
-    OctetSeq_out (const OctetSeq_out &);
-    OctetSeq_out &operator= (const OctetSeq_out &);
-    OctetSeq_out &operator= (OctetSeq *);
-    operator OctetSeq *&();
-    OctetSeq *&ptr (void);
-    OctetSeq *operator-> (void);
+    CORBA_OctetSeq_out (CORBA_OctetSeq *&);
+    CORBA_OctetSeq_out (CORBA_OctetSeq_var &);
+    CORBA_OctetSeq_out (const CORBA_OctetSeq_out &);
+    CORBA_OctetSeq_out &operator= (const CORBA_OctetSeq_out &);
+    CORBA_OctetSeq_out &operator= (CORBA_OctetSeq *);
+    operator CORBA_OctetSeq *&();
+    CORBA_OctetSeq *&ptr (void);
+    CORBA_OctetSeq *operator-> (void);
     CORBA::Octet & operator[] (CORBA::ULong index);
     
   private:
-    OctetSeq *&ptr_;
+    CORBA_OctetSeq *&ptr_;
     // assignment from T_var not allowed
-    void operator= (const OctetSeq_var &);
+    void operator= (const CORBA_OctetSeq_var &);
   };
 
 
 #endif /* end #if !defined */
 
-}  // End namespace CORBA
-
 // Proxy Broker Factory function pointer declarations.
 
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
+TAO_Export void operator<<= (CORBA::Any &, const CORBA_OctetSeq &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA_OctetSeq*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_OctetSeq *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_OctetSeq *&);
 
 #ifndef __ACE_INLINE__
 
@@ -190,11 +186,11 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::OctetSeq &
+    const CORBA_OctetSeq &
   );
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::OctetSeq &
+    CORBA_OctetSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_H_ */

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "DII_Invocation.h"
 #include "Unknown_User_Exception.h"
 #include "tao/Stub.h"
@@ -10,9 +12,7 @@
 # include "DII_Invocation.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (DynamicInterface,
-           DII_Invocation,
-           "$Id$")
+ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 
 
 int
@@ -65,12 +65,12 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions
 
           const ACE_Message_Block* cdr = this->inp_stream ().start ();
 
-          CORBA::Any any (tcp,
-                          0,
-                          this->inp_stream ().byte_order (),
-                          cdr);
+          CORBA_Any any (tcp,
+                         0,
+                         this->inp_stream ().byte_order (),
+                         cdr);
 
-          ACE_THROW_RETURN (CORBA::UnknownUserException (any),
+          ACE_THROW_RETURN (CORBA_UnknownUserException (any),
                             TAO_INVOKE_EXCEPTION);
         }
 

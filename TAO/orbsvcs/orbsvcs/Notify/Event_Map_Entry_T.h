@@ -21,10 +21,9 @@
 
 #include "ace/Copy_Disabled.h"
 #include "ace/Atomic_Op.h"
-#include "tao/corba.h"
+#include "Types.h"
 
 template <class PROXY, class ACE_LOCK> class TAO_NS_Event_Map_T;
-template <class PROXY> class TAO_ESF_Proxy_Collection;
 
 /**
  * @class TAO_NS_Event_Map_Entry_T

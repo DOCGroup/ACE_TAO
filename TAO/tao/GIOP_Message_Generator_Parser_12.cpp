@@ -258,6 +258,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
     TAO_ServerRequest &request
   )
 {
+
   // Get the input CDR in the request class
   TAO_InputCDR& input = request.incoming ();
 
@@ -285,22 +286,39 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   hdr_status =
     hdr_status && request.profile ().unmarshall_target_address(input);
 
-  CORBA::ULong length = 0;
-  hdr_status = hdr_status && input.read_ulong (length);
-
-  if (hdr_status)
+  if (input.char_translator () == 0)
     {
-      // Do not include NULL character at the end.
-      // @@ This is not getting demarshaled using the codeset
-      //    translators!
+      CORBA::ULong length = 0;
+      hdr_status = hdr_status && input.read_ulong (length);
 
-      // Notice that there are no memory allocations involved
-      // here!
+      if (hdr_status)
+        {
+          // Do not include NULL character at the end.
+          // @@ This is not getting demarshaled using the codeset
+          //    translators!
 
-      request.operation (input.rd_ptr (),
-                         length - 1,
-                         0 /* TAO_ServerRequest does NOT own string */);
-      hdr_status = input.skip_bytes (length);
+          // Notice that there are no memory allocations involved
+          // here!
+
+          request.operation (input.rd_ptr (),
+                             length - 1,
+                             0 /* TAO_ServerRequest does NOT own string */);
+          hdr_status = input.skip_bytes (length);
+        }
+    }
+  else
+    {
+      // @@ We could optimize for this case too, i.e. do in-place
+      //    demarshaling of the string... But there is an issue
+      //    pending on the OMG as to whether the operation should be
+      //    sent in the connection negotiated codeset or always in
+      //    ISO8859-1.
+      CORBA::String_var tmp;
+      hdr_status = hdr_status && input.read_string (tmp.inout ());
+
+      request.operation (tmp._retn (),
+                         0,
+                         1 /* TAO_ServerRequest owns string */);
     }
 
   // Tear out the service context ... we currently ignore it, but it

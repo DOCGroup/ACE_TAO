@@ -1,5 +1,4 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
 #if defined (ACE_LACKS_LONGLONG_T)
@@ -136,37 +135,6 @@ ACE_U_LongLong::operator= (const ACE_U_LongLong &n)
   return *this;
 }
 
-ACE_INLINE ACE_U_LongLong &
-ACE_U_LongLong::operator= (const ACE_INT32 &rhs)
-{
-  if (rhs >= 0)
-    {
-      l_ () = ACE_static_cast (ACE_UINT32, rhs);
-      h_ () = 0;
-    }
-  else
-    {
-      // We do not handle the case where a negative 32 bit integer is
-      // assigned to this representation of a 64 bit unsigned integer.
-      // The "undefined behavior" behavior performed by this
-      // implementation is to simply set all bits to zero.
-      l_ () = 0;
-      h_ () = 0;
-    }
-
-  return *this;
-}
-
-ACE_INLINE ACE_U_LongLong &
-ACE_U_LongLong::operator= (const ACE_UINT32 &rhs)
-{
-  l_ () = rhs;
-  h_ () = 0;
-
-  return *this;
-}
-
-
 ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::operator+ (const ACE_U_LongLong &n) const
 {
@@ -276,7 +244,7 @@ ACE_U_LongLong::ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out) cons
 }
 
 ACE_INLINE ACE_U_LongLong
-ACE_U_LongLong::ull_shift (ACE_U_LongLong a,
+ACE_U_LongLong::ull_shift (ACE_U_LongLong a, 
                            ACE_UINT32 c_in,
                            ACE_UINT32 *c_out) const
 {
@@ -388,26 +356,6 @@ ACE_U_LongLong::operator-- ()
   --l_ ();
 
   return *this;
-}
-
-ACE_INLINE const ACE_U_LongLong
-ACE_U_LongLong::operator++ (int)
-{
-  // Post-increment operator should always be implemented in terms of
-  // the pre-increment operator to enforce consistent semantics.
-  ACE_U_LongLong temp (*this);
-  ++*this;
-  return temp;
-}
-
-ACE_INLINE const ACE_U_LongLong
-ACE_U_LongLong::operator-- (int)
-{
-  // Post-decrement operator should always be implemented in terms of
-  // the pre-decrement operator to enforce consistent semantics.
-  ACE_U_LongLong temp (*this);
-  --*this;
-  return temp;
 }
 
 ACE_INLINE ACE_U_LongLong &

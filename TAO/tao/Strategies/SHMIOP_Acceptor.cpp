@@ -10,7 +10,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
-#include "tao/Codeset_Manager.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SHMIOP_Acceptor.i"
@@ -129,8 +128,13 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
     return 0;
 
   pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-  this->orb_core_->codeset_manager()->
-    set_codeset(pfile->tagged_components());
+
+  CONV_FRAME::CodeSetComponentInfo code_set_info;
+  code_set_info.ForCharData.native_code_set  =
+    TAO_DEFAULT_CHAR_CODESET_ID;
+  code_set_info.ForWcharData.native_code_set =
+    TAO_DEFAULT_WCHAR_CODESET_ID;
+  pfile->tagged_components ().set_code_sets (code_set_info);
 
   return 0;
 }

@@ -1,13 +1,12 @@
+/* -*- C++ -*- */
+
 #include "BiDirGIOP.h"
 #include "BiDir_ORBInitializer.h"
 #include "BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
 
 
-ACE_RCSID (BiDir_GIOP,
-           BiDirGIOP,
-           "$Id$")
-
+ACE_RCSID(BiDir_GIOP, BiDirGIOP, "$Id$")
 
 // Set the flag to zero to start with
 int TAO_BiDirGIOP_Loader::validator_loaded_ = 0;
@@ -41,7 +40,7 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
       ACE_NEW_THROW_EX (tmp_orb_initializer,
                         TAO_BiDir_ORBInitializer,
                         CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
+                            CORBA_SystemException::_tao_minor_code (
                                 TAO_DEFAULT_MINOR_CODE,
                                 ENOMEM),
                             CORBA::COMPLETED_NO));
@@ -49,9 +48,8 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
 
       bidir_orb_initializer = tmp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (
-        bidir_orb_initializer.in ()
-        ACE_ENV_ARG_PARAMETER);
+      PortableInterceptor::register_orb_initializer (bidir_orb_initializer.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       TAO_ORB_Core *orb_core =
@@ -60,7 +58,7 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr orb,
       ACE_NEW_THROW_EX (this->validator_,
                         TAO_BiDirPolicy_Validator (*orb_core),
                         CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
+                            CORBA_SystemException::_tao_minor_code (
                                 TAO_DEFAULT_MINOR_CODE,
                                 ENOMEM),
                             CORBA::COMPLETED_NO));

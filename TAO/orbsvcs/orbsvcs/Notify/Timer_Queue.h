@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Timer.h"
+#include "Destroy_Callback.h"
 
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Heap.h"
@@ -31,6 +32,7 @@
  *
  */
 class TAO_Notify_Export TAO_NS_Timer_Queue : public TAO_NS_Timer
+                                           , public TAO_NS_Destroy_Callback
 {
 public:
   /// Constuctor
@@ -39,7 +41,7 @@ public:
   /// Destructor
   virtual ~TAO_NS_Timer_Queue ();
 
-  /// Release
+  /// TAO_NS_Destroy_Callback methods
   virtual void release (void);
 
   /// Schedule a timer

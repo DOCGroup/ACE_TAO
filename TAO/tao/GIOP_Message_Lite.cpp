@@ -14,7 +14,6 @@
 #include "tao/Leader_Follower.h"
 #include "tao/LF_Strategy.h"
 #include "tao/Transport.h"
-#include "tao/Codeset_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Lite.i"
@@ -242,17 +241,7 @@ int
 TAO_GIOP_Message_Lite::parse_incoming_messages (ACE_Message_Block &block)
 {
     // Get the read pointer
-  char *rd_ptr = block.rd_ptr ();
-
-  // We dont need to do this sort of copy. But some compilers (read it
-  // as solaris ones) have a problem in deferencing from the
-  // reinterpret_cast pointer of the <rd_ptr>, as the <rd_ptr> can be
-  // on stack. So let us go ahead with this copying...
-  char buf [4];
-  buf[0] = *rd_ptr;
-  buf[1] = *(rd_ptr + 1);
-  buf[2] = *(rd_ptr + 2);
-  buf[3] = *(rd_ptr + 3);
+  char *buf = block.rd_ptr ();
 
   CORBA::ULong x = 0;
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
@@ -271,7 +260,7 @@ TAO_GIOP_Message_Lite::parse_incoming_messages (ACE_Message_Block &block)
   this->message_size_ = x;
 
   // Get the message type.
-  this->message_type_ = rd_ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET];
+  this->message_type_ = buf[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET];
 
   return 0;
 }
@@ -523,9 +512,9 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
                         this->orb_core_->output_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         qd->major_version_,
-                        qd->minor_version_);
-
-  transport->assign_translators(0,&output);
+                        qd->minor_version_,
+                        this->orb_core_->to_iso8859 (),
+                        this->orb_core_->to_unicode ());
 
   // Get the read and write positions before we steal data.
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
@@ -653,7 +642,7 @@ TAO_GIOP_Message_Lite::generate_exception_reply (
       x._tao_encode (cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCH (CORBA_Exception, ex)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.
@@ -722,9 +711,6 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
     {
       parse_error =
         this->parse_request_header (request);
-
-      request.orb_core()->codeset_manager()->process_service_context(request);
-      transport->assign_translators(&cdr,&output);
 
       // Throw an exception if the
       if (parse_error != 0)
@@ -1411,9 +1397,9 @@ TAO_GIOP_Message_Lite::send_reply_exception (
                         orb_core->output_cdr_msgblock_allocator (),
                         orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                         TAO_DEF_GIOP_MAJOR,
-                        TAO_DEF_GIOP_MINOR);
-
-  transport->assign_translators(0,&output);
+                        TAO_DEF_GIOP_MINOR,
+                        orb_core->to_iso8859 (),
+                        orb_core->to_unicode ());
 
   // Make the GIOP & reply header. They are version specific.
   TAO_Pluggable_Reply_Params reply_params (orb_core);
@@ -1446,7 +1432,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
       x->_tao_encode (output ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCH (CORBA_Exception, ex)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.

@@ -1,12 +1,13 @@
+/* -*- C++ -*- */
+// $Id$
+
 #include "DynArray_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 
+ACE_RCSID(DynamicAny, DynArray_i, "$Id$")
 
-ACE_RCSID (DynamicAny,
-           DynArray_i,
-           "$Id$")
-
+// Constructor and destructor,
 
 TAO_DynArray_i::TAO_DynArray_i (void)
 {
@@ -28,7 +29,7 @@ TAO_DynArray_i::init_common (void)
 }
 
 void
-TAO_DynArray_i::init (const CORBA::Any & any
+TAO_DynArray_i::init (const CORBA_Any & any
                       ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();
@@ -65,10 +66,10 @@ TAO_DynArray_i::init (const CORBA::Any & any
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
       // This Any constructor is a TAO extension.
-      CORBA::Any field_any (field_tc.in (),
-                            0,
-                            cdr.byte_order (),
-                            cdr.start ());
+      CORBA_Any field_any (field_tc.in (),
+                           0,
+                           cdr.byte_order (),
+                           cdr.start ());
 
       // This recursive step will call the correct constructor
       // based on the type of field_any.
@@ -86,7 +87,7 @@ TAO_DynArray_i::init (const CORBA::Any & any
 }
 
 void
-TAO_DynArray_i::init (CORBA::TypeCode_ptr tc
+TAO_DynArray_i::init (CORBA_TypeCode_ptr tc
                       ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
@@ -125,24 +126,24 @@ CORBA::TypeCode_ptr
 TAO_DynArray_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::TypeCode_var element_type =
-    CORBA::TypeCode::_duplicate (this->type_.in ());
+    CORBA_TypeCode::_duplicate (this->type_.in ());
 
   // Strip away aliases (if any) on top of the outer type
   CORBA::TCKind kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
   while (kind != CORBA::tk_array)
     {
       element_type = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
       kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
     }
 
   // Return the content type.
-  CORBA::TypeCode_ptr retval = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  CORBA_TypeCode_ptr retval = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
   return retval;
 }
@@ -389,7 +390,7 @@ TAO_DynArray_i::set_elements_as_dyn_any (
 // ****************************************************************
 
 void
-TAO_DynArray_i::from_any (const CORBA::Any& any
+TAO_DynArray_i::from_any (const CORBA_Any& any
                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -430,7 +431,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
       for (CORBA::ULong i = 0; i < arg_length; ++i)
         {
           // This Any constructor is a TAO extension.
-          CORBA::Any field_any (field_tc.in (),
+          CORBA_Any field_any (field_tc.in (),
                                0,
                                cdr.byte_order (),
                                cdr.start ());
@@ -470,7 +471,7 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA::TypeCode_var field_tc = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA_TypeCode_var field_tc = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_OutputCDR out_cdr;
@@ -497,12 +498,12 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = 0;
+  CORBA_Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA::Any (this->type_.in (),
-                                0,
-                                in_cdr.byte_order (),
-                                in_cdr.start ()),
+                    CORBA_Any (this->type_.in (),
+                               0,
+                               in_cdr.byte_order (),
+                               in_cdr.start ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

@@ -51,8 +51,6 @@ OBJFILES = \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
-        $(OBJDIR)\Codeset_Manager.obj \
-        $(OBJDIR)\Codeset_Translator_Factory.obj \
 	$(OBJDIR)\Collocation_Resolver.obj \
 	$(OBJDIR)\Connect_Strategy.obj \
 	$(OBJDIR)\Default_Collocation_Resolver.obj \
@@ -136,7 +134,6 @@ OBJFILES = \
 	$(OBJDIR)\ORBInitInfo.obj \
 	$(OBJDIR)\ORBInitializer_Registry.obj \
 	$(OBJDIR)\ORB_Core.obj \
-	$(OBJDIR)\ORB_Core_Auto_Ptr.obj \
 	$(OBJDIR)\ORB_Table.obj \
 	$(OBJDIR)\Object.obj \
 	$(OBJDIR)\ObjectIDList.obj \

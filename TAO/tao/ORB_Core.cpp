@@ -52,7 +52,9 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 
-#include "Codeset_Manager.h"
+#if defined(ACE_MVS)
+#include "ace/Codeset_IBM1047.h"
+#endif /* ACE_MVS */
 
 #if !defined (__ACE_INLINE__)
 # include "ORB_Core.i"
@@ -167,6 +169,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     adapter_registry_ (this),
     poa_adapter_ (0),
     tm_ (),
+    from_iso8859_ (0),
+    to_iso8859_ (0),
+    from_unicode_ (0),
+    to_unicode_ (0),
     tss_cleanup_funcs_ (),
     tss_resources_ (),
     orb_resources_ (),
@@ -193,9 +199,13 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     parser_registry_ (),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
-    flushing_strategy_ (0),
-    codeset_manager_ (0)
+    flushing_strategy_ (0)
 {
+#if defined(ACE_MVS)
+  ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
+  ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
+#endif /* ACE_MVS */
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   ACE_NEW (this->eager_buffering_sync_strategy_,
@@ -234,6 +244,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->flushing_strategy_;
 
   ACE_OS::free (this->orbid_);
+
+  delete this->from_iso8859_;
+  delete this->to_iso8859_;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -865,21 +878,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                         -1);
     }
 
-
-  this->codeset_manager_ = trf->get_codeset_manager();
-  if (this->codeset_manager_ == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("ORB Core unable to initialize codeset_manager")));
-      ACE_THROW_RETURN (CORBA::INITIALIZE (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
-
   // @@ ????
   // Make sure the reactor is initialized...
   ACE_Reactor *reactor = this->reactor ();
@@ -943,7 +941,18 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
     }
 
   // Initialize the "ORB" pseudo-object now.
-  this->orb_ = CORBA::ORB::_tao_make_ORB (this);
+  CORBA::ORB_ptr temp_orb = CORBA::ORB::_nil ();
+
+  ACE_NEW_THROW_EX (temp_orb,
+                    CORBA::ORB (this),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_ORB_CORE_INIT_LOCATION_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (-1);
+
+  this->orb_ = temp_orb;
 
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
@@ -1369,7 +1378,7 @@ TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
   invoke->close_connection ();
 
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
-      CORBA::SystemException::_tao_minor_code (
+      CORBA_SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
@@ -1390,7 +1399,7 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
     }
 
   ACE_THROW_RETURN (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
+        CORBA_SystemException::_tao_minor_code (
           TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
           errno),
         CORBA::COMPLETED_MAYBE),
@@ -1628,7 +1637,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
   // The constructor sets the proxy broker as the
   // Remote one.
   ACE_NEW_RETURN (x,
-                  CORBA::Object (stub, 0),
+                  CORBA_Object (stub, 0),
                   0);
   return x;
 }
@@ -2172,7 +2181,7 @@ TAO_ORB_Core::list_initial_references (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ORB::ObjectIdList_ptr tmp = 0;
 
   ACE_NEW_THROW_EX (tmp,
-                    CORBA::ORB::ObjectIdList (total_size),
+                    CORBA_ORB_ObjectIdList (total_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

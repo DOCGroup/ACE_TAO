@@ -24,9 +24,6 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/Object_KeyC.h"
 
-
-class TAO_ServerRequest;
-
 /**
  * @class TAO_GroupId_Hash
  *

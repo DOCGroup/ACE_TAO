@@ -157,8 +157,6 @@ public:
   // Structure to describe value of constant expression and its type.
   struct AST_ExprValue
     {
-      AST_ExprValue (void);
-
       union
         {
           short               sval;     // Contains short expression value.
@@ -181,7 +179,6 @@ public:
         } u;
 
       ExprType et;
-      AST_Decl *tdef;                   // Propagates aliased constant type.
     };
 
  // Operations.
@@ -292,6 +289,8 @@ protected:
   idl_bool type_mismatch (ExprType et);
 
 private:
+  // Data.
+
   UTL_Scope *pd_defined_in;
   // Scope.
 
@@ -316,7 +315,8 @@ private:
   UTL_ScopedName *pd_n;
   // Symbolic name (if any).
 
-private:
+  // Operations
+
   // Fill out the lineno, filename and definition scope details.
   void fill_definition_details (void);
 

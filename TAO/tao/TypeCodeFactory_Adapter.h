@@ -40,7 +40,7 @@ public:
   virtual CORBA::TypeCode_ptr create_struct_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members
+      const CORBA_StructMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
@@ -49,7 +49,7 @@ public:
       const char *id,
       const char *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members
+      const CORBA_UnionMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
@@ -57,7 +57,7 @@ public:
   virtual CORBA::TypeCode_ptr create_enum_tc (
       const char *id,
       const char *name,
-      const CORBA::EnumMemberSeq &members
+      const CORBA_EnumMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
@@ -73,7 +73,7 @@ public:
   virtual CORBA::TypeCode_ptr create_exception_tc (
       const char *id,
       const char *name,
-      const CORBA::StructMemberSeq &members
+      const CORBA_StructMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
@@ -123,7 +123,7 @@ public:
       const char *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members
+      const CORBA_ValueMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;

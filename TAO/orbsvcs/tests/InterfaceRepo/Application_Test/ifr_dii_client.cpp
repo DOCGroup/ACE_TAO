@@ -52,15 +52,12 @@ IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->lookup_by_name_)
     {
-       if (this->lookup_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
-         {
-            return -1;
-         }
-       ACE_CHECK_RETURN (-1);
+      this->lookup_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
     }
   else
     {
-       this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -109,7 +106,7 @@ IFR_DII_Client::find_interface_def (ACE_ENV_SINGLE_ARG_DECL)
     this->target_->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-int
+void
 IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var obj =
@@ -136,12 +133,6 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ContainedSeq_var interfaces;
   CORBA::ULong n_interfaces = 0;
   CORBA::String_var name;
-
-  // No point continuing; theres nothing to look at.
-  if (length == 0)
-  {
-     return -1;
-  }
 
   // The length is 1 in this case, but in general, it could
   // be any length.
@@ -177,7 +168,7 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 
   // The length is 1 in this case, but in general, it could
   // be any length.
-  for (CORBA::ULong j = 0; j < n_interfaces  ; ++j)
+  for (CORBA::ULong j = 0; j < n_interfaces; ++j)
     {
       name = interfaces[j]->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
@@ -190,7 +181,6 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
           ACE_CHECK;
         }
     }
-  return 0;
 }
 
 void
@@ -341,3 +331,5 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 }
+
+

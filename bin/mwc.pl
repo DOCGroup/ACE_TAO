@@ -33,7 +33,6 @@ my(@creators) = ('GNUWorkspaceCreator',
                  'GHSWorkspaceCreator',
                  'EM3WorkspaceCreator',
                  'VA4WorkspaceCreator',
-                 'MakeWorkspaceCreator',
                 );
 
 # ************************************************************

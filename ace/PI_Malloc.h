@@ -72,10 +72,16 @@ public:
     /// Size of this header control block.
     size_t size_;
 
+#if defined (ACE_PI_MALLOC_PADDING_SIZE) && (ACE_PI_MALLOC_PADDING_SIZE == 0)
+    // No padding required for PI_Malloc_Header.
+#else
 # if !defined (ACE_PI_MALLOC_PADDING_SIZE)
-#   define ACE_PI_MALLOC_PADDING_SIZE ACE_MALLOC_ROUNDUP (ACE_MALLOC_HEADER_SIZE + sizeof (MALLOC_HEADER_PTR) + sizeof (size_t), ACE_MALLOC_ALIGN) - (sizeof (MALLOC_HEADER_PTR) + sizeof (size_t))
+#   define ACE_PI_MALLOC_PADDING_SIZE ((int) (ACE_MALLOC_HEADER_SIZE - \
+                                       (sizeof (MALLOC_HEADER_PTR) + sizeof (size_t)))\
+                                       / (int) sizeof (long))
 # endif /* !ACE_PI_MALLOC_PADDING_SIZE */
-    char padding_[(ACE_PI_MALLOC_PADDING_SIZE) ? ACE_PI_MALLOC_PADDING_SIZE : ACE_MALLOC_ALIGN];
+    long padding_[ACE_PI_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_PI_MALLOC_PADDING_SIZE];
+#endif /* ACE_PI_MALLOC_PADDING_SIZE && ACE_PI_MALLOC_PADDING_SIZE == 0 */
 
     /// Dump the state of the object.
     void dump (void) const;
@@ -173,12 +179,20 @@ public:
                                          + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
-# if !defined (ACE_PI_CONTROL_BLOCK_ALIGN_BYTES)
-#   define ACE_PI_CONTROL_BLOCK_ALIGN_BYTES \
-        ACE_MALLOC_ROUNDUP (ACE_PI_CONTROL_BLOCK_SIZE, ACE_MALLOC_ALIGN) - ACE_PI_CONTROL_BLOCK_SIZE
+#if defined (ACE_PI_CONTROL_BLOCK_ALIGN_LONGS) && (ACE_PI_CONTROL_BLOCK_ALIGN_LONGS == 0)
+  // No padding required for PI_Control_Block.
+#else
+# if !defined (ACE_PI_CONTROL_BLOCK_ALIGN_LONGS)
+// Notice the casting to int for <sizeof> otherwise unsigned int
+// arithmetic is used and some awful things may happen.
+#   define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS \
+            ((ACE_PI_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
+              ? ACE_MALLOC_ALIGN - (ACE_PI_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN) \
+              : ACE_MALLOC_ALIGN) / int (sizeof (long)))
 # endif /* !ACE_PI_CONTROL_BLOCK_ALIGN_LONGS */
   /// Force alignment.
-  char align_[(ACE_PI_CONTROL_BLOCK_ALIGN_BYTES) ? ACE_PI_CONTROL_BLOCK_ALIGN_BYTES : ACE_MALLOC_ALIGN];
+  long align_[ACE_PI_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_PI_CONTROL_BLOCK_ALIGN_LONGS];
+#endif /* ACE_PI_CONTROL_BLOCK_ALIGN_LONGS && ACE_PI_CONTROL_BLOCK_ALIGN_LONGS == 0 */
 
   /// Dummy node used to anchor the freelist.  This needs to come last...
   ACE_Malloc_Header base_;

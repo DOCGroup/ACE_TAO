@@ -25,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Endpoint.h"
-#include "ace/CORBA_macros.h"
 
 // Forward declarations.
 class ACE_Addr;

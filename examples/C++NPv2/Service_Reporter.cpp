@@ -10,7 +10,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
 #include "ace/SOCK_Stream.h"
 #include "Service_Reporter.h"
 
