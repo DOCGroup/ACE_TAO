@@ -95,10 +95,9 @@ endif
 cleanrelease:
 	@$(TIMESTAMP) (make realclean; cd ..; \
 	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
-	 chmod a+r TAO.tar.gz; mv TAO.tar.gz ../ACE_wrappers/)
+	 chmod a+r TAO.tar.gz; )
 
 release:
 	@$(TIMESTAMP) (cd ..; \
 	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
-	 chmod a+r TAO.tar.gz; \
-	 mv TAO.tar.gz ../ACE_wrappers/)
+	 chmod a+r TAO.tar.gz; )
