@@ -8,6 +8,8 @@ Tue Jun 15 15:27:08 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
         *  Dnc/NodeManager/NodeDaemon_Impl.cpp
         *  Dnc/NodeManager/NodeDaemon_Impl.h
         *  Dnc/NodeManager/Node_Daemon.cpp
+        *  DnC/ciao/NodeApp_CB_Impl.cpp
+        *  DnC/ciao/NodeApp_CB_Impl.h
 
            Fixed memory leak problems. Now "NodeDaemon" process and
            "NodeApplication" process should have no memomry leak problem.
