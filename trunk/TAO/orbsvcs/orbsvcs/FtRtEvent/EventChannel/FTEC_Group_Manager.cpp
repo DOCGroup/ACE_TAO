@@ -107,7 +107,7 @@ void TAO_FTEC_Group_Manager::create_group (
     Fault_Detector::instance()->my_location());
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
-  GroupInfoPublisherBase::Info_ptr info ( 
+  GroupInfoPublisherBase::Info_ptr info (
     publisher->setup_info(impl_->info_list, impl_->my_position
                     ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
@@ -166,7 +166,7 @@ void TAO_FTEC_Group_Manager::add_member (
   new_impl->info_list[pos] = info;
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
-  GroupInfoPublisherBase::Info_ptr group_info ( 
+  GroupInfoPublisherBase::Info_ptr group_info (
     publisher->setup_info(new_impl->info_list, new_impl->my_position
                     ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;
@@ -192,7 +192,7 @@ void TAO_FTEC_Group_Manager::add_member (
       /// group_info = publisher->set_info(..) should be enough.
       /// However, GCC 2.96 is not happy with that.
 
-      GroupInfoPublisherBase::Info_ptr group_info1 ( 
+      GroupInfoPublisherBase::Info_ptr group_info1 (
         publisher->setup_info(new_impl->info_list,
                               new_impl->my_position
                               ACE_ENV_ARG_PARAMETER));
@@ -220,11 +220,41 @@ void TAO_FTEC_Group_Manager::add_member (
     ACE_Message_Block* blk;
     ACE_NEW_THROW_EX(blk, ACE_Message_Block, CORBA::NO_MEMORY());
     ACE_CDR::consolidate(blk, cdr.begin());
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     s.replace(blk->length(), blk);
+#else
+    // If the replace method is not available, we will need
+    // to do the copy manually.  First, set the octet sequence length.
+    CORBA::ULong length = blk->length ();
+    s.length (length);
+
+    // Now copy over each byte.
+    char* base = blk->data_block ()->base ();
+    for(CORBA::ULong i = 0; i < length; i++)
+      {
+        s[i] = base[i];
+      }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+
     blk->release();
   }
-  else
+  else {
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     s.replace(cdr.begin()->length(), cdr.begin());
+#else
+    // If the replace method is not available, we will need
+    // to do the copy manually.  First, set the octet sequence length.
+    CORBA::ULong length = cdr.begin ()->length ();
+    s.length (length);
+
+    // Now copy over each byte.
+    char* base = cdr.begin()->data_block ()->base ();
+    for(CORBA::ULong i = 0; i < length; i++)
+      {
+        s[i] = base[i];
+      }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+  }
 
     TAO_FTRTEC::Log(2, "Setting state\n");
   info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
@@ -283,7 +313,7 @@ void TAO_FTEC_Group_Manager::remove_member (
 
   GroupInfoPublisherBase* publisher = GroupInfoPublisher::instance();
 
-  GroupInfoPublisherBase::Info_ptr info ( 
+  GroupInfoPublisherBase::Info_ptr info (
     publisher->setup_info(impl_->info_list, impl_->my_position
                           ACE_ENV_ARG_PARAMETER));
   ACE_CHECK;

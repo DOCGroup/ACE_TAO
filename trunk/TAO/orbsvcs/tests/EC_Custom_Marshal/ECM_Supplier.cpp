@@ -258,9 +258,22 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
           else
             event[0].header.type = this->event_b_;
 
-         // We use replace to minimize the copies, this should result
+          // We use replace to minimize the copies, this should result
           // in just one memory allocation;
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
           event[0].data.payload.replace (mblen, mb);
+#else
+          // If the replace method is not available, we will need
+          // to do the copy manually.  First, set the octet sequence length.
+          event[0].data.payload.length (mblen);
+
+          // Now copy over each byte.
+          char* base = mb->data_block ()->base ();
+          for(CORBA::ULong i = 0; i < mblen; i++)
+            {
+              event[0].data.payload[i] = base[i];
+            }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
           supplier->consumer_proxy ()->push(event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

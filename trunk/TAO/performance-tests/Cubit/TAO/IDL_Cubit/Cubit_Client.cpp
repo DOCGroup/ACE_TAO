@@ -806,7 +806,23 @@ Cubit_Client::cube_octet_sequence (int,
 
       ACE_Message_Block mb (l);
       mb.wr_ptr (l);
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       Cubit::octet_seq input (l, &mb);
+#else
+      // If the form of the constructor is not available, we will need
+      // to do the copy manually.  First, set the octet sequence length.
+      Cubit::octet_seq input;
+      CORBA::ULong length = mb.length ();
+      input.length (length);
+
+      // Now copy over each byte.
+      char* base = mb.data_block ()->base ();
+      for(CORBA::ULong i = 0; i < length; i++)
+        {
+          input[i] = base[i];
+        }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+
 
       // Just set the first item, otherwise it is hard to compare the
       // results for longer sequences, i.e. more than just marshalling
