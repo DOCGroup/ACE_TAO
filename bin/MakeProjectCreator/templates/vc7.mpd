@@ -57,7 +57,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:<%machine("I386")%>"
 <%if(type_is_binary)%>
-				AdditionalDependencies="<%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>" 
+				AdditionalDependencies="<%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%><%if(ssl)%><%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%><%endif%>"
 <%endif%>
 				OutputFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%>\<%endif%><%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
 				Version="<%version("1.0")%>"
