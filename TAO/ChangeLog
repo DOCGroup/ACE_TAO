@@ -1,3 +1,8 @@
+Thu Mar 31 09:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+          Added include of Unbounded_Queue.h
+
 Thu Mar 31 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
