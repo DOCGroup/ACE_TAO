@@ -157,11 +157,11 @@ Cubit_Client::parse_args (void)
     switch (c)
       {
       case 'v':
-	this->only_void_ = 1;
-	break;
+        this->only_void_ = 1;
+        break;
       case 'o':
-	this->only_oneway_ = 1;
-	break;
+        this->only_oneway_ = 1;
+        break;
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
@@ -176,13 +176,13 @@ Cubit_Client::parse_args (void)
                              "Unable to read ior from %s : %p\n",
                              get_opts.optarg),
                             -1);
-	break;
+        break;
       case 'k': // read the cubit IOR from the command-line.
         this->cubit_factory_key_ =
           ACE_OS::strdup (get_opts.optarg);
         break;
       case 'x':
-	ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
+        ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
         this->shutdown_ = 1;
         break;
       case '?':
@@ -800,11 +800,11 @@ Cubit_Client::print_stats (const char *call_name,
                   "system_time\t= %0.06f ms\n"
                   "\t%0.00f calls/second\n",
                   elapsed_time.real_time < 0.0 ? 0.0
-		  : elapsed_time.real_time * ACE_ONE_SECOND_IN_MSECS,
+                  : elapsed_time.real_time * ACE_ONE_SECOND_IN_MSECS,
                   elapsed_time.user_time < 0.0 ? 0.0
-		  : elapsed_time.user_time * ACE_ONE_SECOND_IN_MSECS,
+                  : elapsed_time.user_time * ACE_ONE_SECOND_IN_MSECS,
                   elapsed_time.system_time < 0.0 ? 0.0
-		  : elapsed_time.system_time * ACE_ONE_SECOND_IN_MSECS,
+                  : elapsed_time.system_time * ACE_ONE_SECOND_IN_MSECS,
                   calls_per_sec < 0.0 ? 0.0 : calls_per_sec));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
     }
@@ -1043,7 +1043,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
           this->cubit_->shutdown (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-	  ACE_DEBUG ((LM_DEBUG, "shutdown on shutdown object\n"));
+          ACE_DEBUG ((LM_DEBUG, "shutdown on shutdown object\n"));
 
           dexc (this->env_,
                 "server, please ACE_OS::exit");
