@@ -3,6 +3,7 @@
 
 project(*client) : orbsvcsexe, portableserver, naming  {
   requires += exceptions
+  includes += ../idl
   source_files {
     client.cpp
   }
@@ -10,6 +11,7 @@ project(*client) : orbsvcsexe, portableserver, naming  {
 
 project(*server) : orbsvcsexe, portableserver, naming {
   requires += exceptions
+  includes += ../idl
   source_files {
     server.cpp
     Stock_Factory_i.cpp
