@@ -1,3 +1,10 @@
+Mon Apr 14 14:16:35 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/RT_Factory.cpp:
+	  Defined virtual base class methods to stop Suncc/HPUX ACC339
+	  compiler warnings.Thanks to David Smith <dts@prismtechnologies.com>
+	  for bringing this to attention.
+  
 Mon Apr 14 11:24:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Profile.cpp:
