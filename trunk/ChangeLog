@@ -1,3 +1,18 @@
+Tue Dec  2 14:43:17 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_Thread.{h inl} (ACE_OS_Thread_Mutex_Guard,
+	  ACE_OS_Recursive_Thread_Mutex_Guard): Changed the constructors to
+	  check ACE_Object_Manager::starting_up () before grabbing the
+	  monitor lock. If done before ACE_Object_Manager has been
+	  initialized, the lock reference is invalid and often results
+	  in a crash in the guard object.
+	  The motivating case for this fix is a static ACE_Date_Time
+	  object which resulted in an ACE_OS_GUARD crashing in
+	  ACE_OS::localtime_r(). Thanks to Craig L. Ching
+	  <cching@mqsoftware.com> for this report.
+
+	* tests/Date_Time_Test.cpp: Test a static ACE_Date_Time object.
+
 Tue Dec  2 16:19:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bound_Ptr_Test.h:

@@ -1801,6 +1801,15 @@ protected:
  * function.  It performs automatic aquisition and release of
  * an ACE_thread_mutex_t.
  *
+ * If an object of this class is instantiated before ACE_Object_Manager is
+ * initialized, it will not do anything. This is because this class is
+ * used only with the ACE_OS_GUARD macro which is passing a reference to
+ * one of the preallocated Object Manager locks. If the object manager
+ * hasn't been initialized yet, the lock reference is bogus. This is an
+ * acceptable tradeoff since in cases where the lock reference is bogus,
+ * there isn't multithreaded access. Please see detailed comments in
+ * Object_Manager.h for further information.
+ *
  * For internal use only by ACE_OS.
  */
 class ACE_OS_Thread_Mutex_Guard
@@ -1838,6 +1847,15 @@ protected:
  * This data structure is meant to be used within an ACE_OS
  * function.  It performs automatic aquisition and release of
  * an ACE_recursive_thread_mutex_t.
+ *
+ * If an object of this class is instantiated before ACE_Object_Manager is
+ * initialized, it will not do anything. This is because this class is
+ * used only with the ACE_TSS_GUARD macro which is passing a reference to
+ * one of the preallocated Object Manager locks. If the object manager
+ * hasn't been initialized yet, the lock reference is bogus. This is an
+ * acceptable tradeoff since in cases where the lock reference is bogus,
+ * there isn't multithreaded access. Please see detailed comments in
+ * Object_Manager.h for further information.
  */
 class ACE_OS_Recursive_Thread_Mutex_Guard
 {
