@@ -1,3 +1,12 @@
+Fri May 22 16:39:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext): Use
+	  the lock returned by server_factory ()-> create_servant_lock ()
+	  instead of hacking its own.
+
+	* tao/default_server.cpp (create_servant_lock): Changed to use
+	  ACE_Recursive_Thread_Mutex to avoid further trouble.
+
 Fri May 22 12:29:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Connect.cpp (handle_message): Simplified code in this file.
