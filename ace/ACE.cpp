@@ -475,14 +475,14 @@ ACE::timestamp (char date_and_time[], int date_and_timelen)
   SYSTEMTIME local;
   ::GetLocalTime (&local);
 
-  ACE_OS::sprintf (date_and_time, "%02d/%02d/%04d%02d.%02d.%02d.%06d",
-                   (int) local.wMonth, // new, also the %02d in sprintf
-                   (int) local.wDay,   // new, also the %02d in sprintf
-                   (int) local.wYear,  // new, also the %02d in sprintf
-		   (int) local.wHour,
-		   (int) local.wMinute,
-		   (int) local.wSecond,
-		   (int) local.wMilliseconds * 1000);
+  ::sprintf (date_and_time, "%02d/%02d/%04d %02d.%02d.%02d.%06d"
+	     (int) local.wMonth, // new, also the %02d in sprintf
+	     (int) local.wDay,   // new, also the %02d in sprintf
+	     (int) local.wYear,  // new, also the %02d in sprintf
+	     (int) local.wHour,
+	     (int) local.wMinute,
+	     (int) local.wSecond,
+	     (int) local.wMilliseconds * 1000);
 #else  // UNIX
   char timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time = ACE_OS::gettimeofday ();

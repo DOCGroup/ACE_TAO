@@ -1,4 +1,59 @@
+Sat Dec  7 16:55:37 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp: Because thread_descriptor_i() only returns 
+	  0 or -1 on failure the code for
+	  ACE_Thread_Manager::thr_self(ACE_hthread_t &) should read:
+
+	  if (-1 == this->thread_descriptor_i (id, td))	
+ 	    return -1;					
+  	  handle = &td.thr_handle_;				
+ 
+ 	  Thanks to Matthias for reporting this.
+
+	* ace/OS: Added a new static instance of ACE_thread_key_t to work
+ 	  around the pthreads implementation on MVS (which doesn't store
+ 	  TSS keys as ints!).  Thanks to Chuck Gehr for reporting this.
+
+	* ace/config-mvs.h: Added #define ACE_TEMPLATES_REQUIRE_SOURCE for
+ 	  MVS C++.  Thanks to Chuck Gehr for reporting this.
+
+	* ace/Signal.cpp: ace_dispatcher was being set to
+ 	  ace_signal_handlers_dispatch() which calls
+ 	  ACE_Sig_Handlers::dispatch (when ACE_HAS_SIC_C_FUNC is defined),
+ 	  whereas it was set to ACE_SigHanlder::dispatch (no s) if not
+ 	  defined.  I intended to set this to ace_signal_handler_dispatch
+	  (no s).  Thanks to Chuck Gehr for reporting this.
+
+	* ace/Makefile: Fixed a small typo where I wasn't matching char
+ 	  *getenv in the sed regular expression.
+
+	* ace/{OS,Synch}: Moved various classes around so that things will
+ 	  compile correctly when ACE_WIN32 is defined but ACE_HAS_THREADS
+ 	  is *not* defined.  Thanks to Robert Lyng
+ 	  <RLyng@msmail.hsii.ccare.com> for reporting this.
+
+Sat Dec  7 16:55:37 1996  Matthias Kerkhoff <make@cs.tu-berlin.de>
+
+	* ace/Module: Added some values to the enum so Module clients
+	  can decide whether the reader, the writer or both should be
+	  automatically deleted.
+
+	* ace/{Stream,Module,Task}: Changed some function arguments
+	  from u_long to int (because enums are represented as ints).
+
+	* ace/Task: Added a new virtual function to ACE_Task_Base
+	  (module_closed), which by default calls
+	  ACE_Task_Base::close(1). Please note the changed flags
+	  argument. This allows clients to differ between calls
+	  originated from a Module and/or Stream from those which
+	  result from ~ACE_Task_Exit().  ~ACE_Task_Exit() calls
+	  ACE_Task_Base::close(0).  This may be or not be a problem to
+	  existing applications. It may (hopefully not)
+	  be neccessary to change ACE_Task_Base::module_close back to
+	  calling ACE_Task_Base::close(0). 
+
 Fri Dec 06 14:44:20 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* ace/OS.cpp: added ::spa () function to allow command line args
  	  to be passed to programs in VxWorks
 

@@ -232,4 +232,11 @@ ACE_Task_Base::svc_run (void *args)
   /* NOTREACHED */
 }
 
+// Forward the call to close() so that existing 
+// applications don't break.
+int 
+ACE_Task_Base::module_closed (void)
+{
+	return this->close (1);
+}
 
