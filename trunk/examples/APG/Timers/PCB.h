@@ -12,7 +12,7 @@ public:
 
   // Set/get the timer id that is being handled by this instance.
   void setID (long timerID);
-  long getID (void);
+  long getID (void) const;
 
   // Handle a timeout event, cancel, and close.
   virtual int handleEvent (const void *arg);

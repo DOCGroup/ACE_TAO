@@ -167,7 +167,10 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
     file = Util::audio_to_text (addr, temp);
   else if (type->is_video ())
     file = Util::video_to_text (addr, temp);
-
+  else
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
+                       type->get_codec ()),
+                      -1);
   int rval = this->play_message (temp);
   file->remove ();
   return rval;

@@ -5,7 +5,7 @@
 #include "ace/Log_Msg.h"
 
 // Listing 1 code/ch17
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   ACE_HANDLE srcHandle = ACE_OS::open (argv[1], O_RDONLY);
   ACE_ASSERT(srcHandle != ACE_INVALID_HANDLE);

@@ -1,3 +1,14 @@
+Sat Jan  3 17:26:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Naming/Temperature_Monitor2.cpp:
+	* examples/APG/Shared_Memory/Mem_Map.cpp:
+	* examples/APG/Streams/RecordingDevice_Text.cpp:
+	* examples/APG/Timers/Task.cpp:
+	* examples/APG/Timers/Timers.cpp: Fixed unused/uninitialized warnings.
+
+	* examples/APG/Timers/Upcall.{h cpp}: Changed to match new
+	  timer queue upcall handler API for ACE 5.4.
+
 Sat Jan  3 14:08:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_other_tests.lst:
