@@ -1,3 +1,10 @@
+Mon Feb 22 14:27:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* rules.tao.GNU: Added rules to compile IDL files using Flick.
+	  You need to invoke a Makefile with "use_flick=1" command line
+	  flag.  Thanks to Tim Stack <stack@aros.net> for sending the
+	  detailed instruction.
+
 Mon Feb 22 12:34:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp (start_client_header,start_client_stubs,
