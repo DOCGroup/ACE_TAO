@@ -13,7 +13,7 @@ ACE_RCSID(ace, ATM_Addr, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Addr)
 
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
 #define BHLI_MAGIC "FORE_ATM"
 // This is line rate in cells/s for an OC-3 MM interface.
 const long ACE_ATM_Addr::LINE_RATE = 353207;
@@ -25,16 +25,16 @@ const long ACE_ATM_Addr::LINE_RATE = 0L;
 const int ACE_ATM_Addr::OPT_FLAGS_CPID = 0;
 const int ACE_ATM_Addr::OPT_FLAGS_PMP = 0;
 const int ACE_ATM_Addr::DEFAULT_SELECTOR = 0x0;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 
 // Default constructor
 
 ACE_ATM_Addr::ACE_ATM_Addr (unsigned char selector)
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
 #else
   : ACE_Addr (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
               sizeof this->atm_addr_)
 {
   // ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
@@ -48,11 +48,11 @@ ACE_ATM_Addr::ACE_ATM_Addr (unsigned char selector)
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
                             unsigned char selector)
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
 #else
   : ACE_Addr (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
               sizeof this->atm_addr_)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
@@ -61,11 +61,11 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap,
                             unsigned char selector)
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
 #else
   : ACE_Addr (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
               sizeof this->atm_addr_)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
@@ -74,11 +74,11 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap,
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[],
                             unsigned char selector)
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
 #else
   : ACE_Addr (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
               sizeof this->atm_addr_)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
@@ -113,9 +113,24 @@ ACE_ATM_Addr::init (unsigned char selector)
   ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
                   BHLI_MAGIC,
                   sizeof atm_addr_.sap.t_atm_sap_appl.ID);
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+  atm_addr_.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] = ( char )selector;
+  atm_addr_.satm_family = AF_ATM;
+  atm_addr_.satm_number.AddressType = ATM_NSAP;
+  atm_addr_.satm_number.NumofDigits = ATM_ADDR_SIZE;
+  atm_addr_.satm_blli.Layer2Protocol = SAP_FIELD_ABSENT;
+  atm_addr_.satm_blli.Layer3Protocol = SAP_FIELD_ABSENT;
+  atm_addr_.satm_bhli.HighLayerInfoType = SAP_FIELD_ABSENT;
+
+  // N2K the correspondence (Ruibiao)
+  //atm_addr_.sap.t_atm_sap_appl.SVE_tag = (int8_t) T_ATM_PRESENT;
+  //atm_addr_.sap.t_atm_sap_appl.ID_type = (u_int8_t) T_ATM_USER_APP_ID;
+  //ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
+  //                BHLI_MAGIC,
+  //                sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #else
   ACE_UNUSED_ARG (selector);
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
 
 int
@@ -129,9 +144,9 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
   this->ACE_Addr::base_set (sap.get_type (),
                             sap.get_size ());
 
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   ACE_ASSERT (sap.get_type () == AF_ATM);
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 
   (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
                          (void *) &sap.atm_addr_,
@@ -147,11 +162,11 @@ ACE_ATM_Addr::set (const ATMSAPAddress *sap,
 
   this->init (selector);
 
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   this->ACE_Addr::base_set (AF_ATM,
 #else
   this->ACE_Addr::base_set (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
                             sizeof (*sap));
 
   (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
@@ -182,11 +197,11 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::string_to_addr");
 
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   this->ACE_Addr::base_set (AF_ATM,
 #else
   this->ACE_Addr::base_set (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
                             sizeof this->atm_addr_);
 #if defined (ACE_HAS_FORE_ATM_XTI)
   struct hostent *entry;
@@ -211,17 +226,61 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
                       ATMNSAP_ADDR_LEN);
     }
   else
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+  // WinSock2 part (Ruibiao)
+   DWORD dwValue;
+   HANDLE hLookup;
+   WSAQUERYSETW qsRestrictions;
+   CSADDR_INFO  csaBuffer;
+   WCHAR  tmpWStr[100];
+
+   MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, sap, -1, tmpWStr, 100);  
+   
+   csaBuffer.LocalAddr.iSockaddrLength = sizeof (struct sockaddr_atm);
+   csaBuffer.LocalAddr.lpSockaddr = (struct sockaddr *)atm_addr_;
+   csaBuffer.RemoteAddr.iSockaddrLength = sizeof (struct sockaddr_atm);
+   csaBuffer.RemoteAddr.lpSockaddr = (struct sockaddr *) atm_addr;
+
+   qsRestrictions.dwSize                  = sizeof (WSAQUERYSETW);
+   qsRestrictions.lpszServiceInstanceName = NULL;
+   qsRestrictions.lpServiceClassId        = &FORE_NAME_CLASS;
+   qsRestrictions.lpVersion               = NULL;
+   qsRestrictions.lpszComment             = NULL;
+   qsRestrictions.dwNameSpace             = FORE_NAME_SPACE;
+   qsRestrictions.lpNSProviderId          = NULL;
+   qsRestrictions.lpszContext             = L"";
+   qsRestrictions.dwNumberOfProtocols     = 0;
+   qsRestrictions.lpafpProtocols          = NULL;
+   qsRestrictions.lpszQueryString         = tmpWStr;
+   qsRestrictions.dwNumberOfCsAddrs       = 1;
+   qsRestrictions.lpcsaBuffer             = &csaBuffer;
+   qsRestrictions.lpBlob                  = NULL; //&blob;
+
+   if (WSALookupServiceBeginW(&qsRestrictions, LUP_RETURN_ALL, &hLookup) == SOCKET_ERROR) {
+       ACE_OS::printf("Error: WSALookupServiceBeginW failed! %d\n",WSAGetLastError());
+	   return -1;
+   }                
+
+   dwValue = sizeof (WSAQUERYSETW);
+
+   if (WSALookupServiceNextW ( hLookup, 0, &dwValue, &qsRestrictions) == SOCKET_ERROR) {
+	   ACE_OS::printf ("Error: WSALookupServiceNextW failed! %d\n", WSAGetLastError());
+	   return -1;
+   }
+
+   if (WSALookupServiceEnd (hLookup) == SOCKET_ERROR) {
+	  ACE_OS::printf("Error : WSALookupServiceEnd failed! %d \n", WSAGetLastError());
 #else
   ACE_UNUSED_ARG (sap);
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
     {
       errno = EINVAL;
       return -1;
     }
 
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   return 0;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 }
 
 // Transform the current address into string format.
@@ -251,11 +310,25 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
     ACE_OS::strcpy(addr, buffer);
 
   return 0;
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+  //WinSock2 part
+  ASYS_TCHAR buffer[MAXNAMELEN + 1];
+  int i;
+
+  if ( addrlen < ATM_ADDR_SIZE + 1 ) 
+	return -1;
+
+  for ( i = 0; i < ATM_ADDR_SIZE; i++ )
+	ACE_OS::sprintf( buffer, ASYS_TEXT( "%02x." ), atm_addr_.satm_number.Addr[ i ]);
+  buffer[ ATM_ADDR_SIZE ] = '\0';
+  ACE_OS::strcpy( addr, buffer );
+
+  return 0;
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (addrlen);
   return -1;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
 
 const ASYS_TCHAR *
@@ -275,11 +348,11 @@ ACE_ATM_Addr::set_addr (void *addr, int len)
 {
   ACE_TRACE ("ACE_ATM_Addr::set_addr");
 
-#if defined (ACE_HAS_FORE_ATM_XTI)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   this->ACE_Addr::base_set (AF_ATM,
 #else
   this->ACE_Addr::base_set (AF_UNSPEC,
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_WS2 */
                             len);
   ACE_OS::memcpy ((void *) &this->atm_addr_,
                   (void *) addr, len);
@@ -305,9 +378,11 @@ ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
                          &sap.atm_addr_,
 #if defined (ACE_HAS_FORE_ATM_XTI)
                          sizeof (struct ATMSAPAddress)) == 0;
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+                         sizeof( struct sockaddr_atm )) == 0;
 #else
                          sizeof (ATMSAPAddress)) == 0;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
 
 void
@@ -356,11 +431,22 @@ ACE_ATM_Addr::get_local_address (ACE_HANDLE fd,
                   local_addr.sap.t_atm_sap_addr.address,
                   ATMNSAP_ADDR_LEN);
   return 0;
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+  // WinSock2 part
+  // No need to make inctl call, just return the address stored
+  ACE_UNUSED_ARG( fd );
+
+  ASYS_TCHAR local_addr[ ATM_ADDR_SIZE + 1 ];
+
+  this -> addr_to_string( &local_addr, ATM_ADDR_SIZE + 1 );
+  ACE_OS::memcpy(addr, &local_addr, ATM_ADDR_SIZE);
+
+  return 0;
 #else
   ACE_UNUSED_ARG (fd);
   ACE_UNUSED_ARG (addr);
   return -1;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
 
 char *
@@ -517,11 +603,15 @@ ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
   *optsize = (char *) popt - buf;
 
   return buf;
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+  // WinSock Part 
+  // Unlike XTI, WinSock does QoS with a QoS class passed into 
+  // connect call, so it may be better to do this in XXX_Connector 
 #else
   ACE_UNUSED_ARG (fd);
   ACE_UNUSED_ARG (qos_kb);
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (optsize);
   return 0;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
