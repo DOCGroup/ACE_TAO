@@ -2,9 +2,9 @@
 
 #define ACE_BUILD_DLL
 
-#if defined (ACE_WIN32)
-
 #include "ace/Msg_WFMO_Reactor.h"
+
+#if defined (ACE_WIN32)
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Msg_WFMO_Reactor.i"

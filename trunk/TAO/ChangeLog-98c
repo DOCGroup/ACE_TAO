@@ -1,3 +1,8 @@
+Tue Mar 17 23:28:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poa.h (POA): Changed the LOCATION_RESULT enum from protected
+ 	  to private.
+
 Tue Mar 17 13:20:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit (print_stats): with

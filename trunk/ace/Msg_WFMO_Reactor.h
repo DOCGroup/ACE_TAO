@@ -9,8 +9,8 @@
 //    Msg_WFMO_Reactor.h
 //
 // = AUTHOR
-//    Beskrovny Evgeny, Comverse Network Systems
-//    Irfan Pyarali
+//    Beskrovny Evgeny, Comverse Network Systems (evgeny_beskrovny@icomverse.com)
+//    Irfan Pyarali, Washington University (irfan@cs.wustl.edu)
 //
 // ============================================================================
 

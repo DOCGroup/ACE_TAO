@@ -7,6 +7,7 @@
 #if !defined (ACE_HAS_WINCE)
 #  include "ace/Service_Config.h"
 #  include "ace/WFMO_Reactor.h"
+#  include "ace/Msg_WFMO_Reactor.h"
 #endif /* !ACE_HAS_WINCE */
 #include "ace/Select_Reactor.h"
 #include "ace/Object_Manager.h"
@@ -28,7 +29,11 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl)
 #if !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
       ACE_NEW (impl, ACE_Select_Reactor);
 #else /* We are on Win32 and we have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
+  #if defined (ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL)
+      ACE_NEW (impl, ACE_Msg_WFMO_Reactor);
+  #else
       ACE_NEW (impl, ACE_WFMO_Reactor);
+  #endif /* ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL */
 #endif /* !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
       this->implementation (impl);
       this->delete_implementation_ = 1;
