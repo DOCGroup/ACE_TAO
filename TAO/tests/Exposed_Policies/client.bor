@@ -1,5 +1,5 @@
 #
-# Makefile for building the Explicit_Event_Loop client
+# Makefile for building the Exposed_Policies client
 #
 
 NAME = client
@@ -15,7 +15,13 @@ OBJFILES = \
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_PORTABLESERVER_LIB)
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Counter.idl
 
 CPPDIR = .
 
