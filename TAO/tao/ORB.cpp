@@ -690,7 +690,7 @@ CORBA_ORB::multicast_query (char *buf,
                      : *timeout);
   ssize_t result = 0;
 
-  // Now try two "attempts" to get the reply.  We do this twice since
+  // Now try several "attempts" to get the reply.  We do this since
   // UDP is unreliable...
 
   for (int i = 0;
