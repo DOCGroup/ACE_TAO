@@ -357,9 +357,9 @@ Client::get_high_priority_jitter (void)
     {
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-      // since latency is in usecs, lets convert it to seconds before
+      // since latency is in usecs, lets convert it to milliseconds before
       // giving it to stats.
-      stats.sample ((ACE_UINT32) (*latency *1000 *1000 + 0.5));
+      stats.sample ((ACE_UINT32) (*latency));
     }
 
   // Return the square root of the sum of the differences computed
@@ -367,7 +367,7 @@ Client::get_high_priority_jitter (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "high priority jitter:\n"));
-
+  ACE_DEBUG ((LM_DEBUG,"Latency stats (time in usec)\n"));
   stats.print_summary (3, 1000, stderr);
 
   return sqrt (jitter / (number_of_samples - 1));
@@ -416,13 +416,14 @@ Client::get_low_priority_jitter (void)
           ACE_timer_t difference
             = *latency - average;
           jitter += difference * difference;
-          stats.sample ((ACE_UINT32) (*latency * 1000 *1000));
+	  // convert latency to milliseconds.
+	  stats.sample ((ACE_UINT32) (*latency));
         }
     }
 
   ACE_DEBUG ((LM_DEBUG,
               "low priority jitter:\n"));
-
+  ACE_DEBUG ((LM_DEBUG,"Latency stats (time in usec)\n"));
   stats.print_summary (3, 1000, stderr);
 
   // Return the square root of the sum of the differences computed
@@ -462,12 +463,14 @@ Client::get_jitter (u_int id)
     {
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-      stats.sample ((ACE_UINT32) (*latency *1000 *1000 + 0.5));
+      // convert latency to milliseconds.
+      stats.sample ((ACE_UINT32) (*latency));
     }
 
   ACE_DEBUG ((LM_DEBUG,
              "jitter for thread id %d:\n", id));
 
+  ACE_DEBUG ((LM_DEBUG,"Latency stats (time in usec)\n"));
   stats.print_summary (3, 1000, stderr);
 
   // Return the square root of the sum of the differences computed
@@ -1142,7 +1145,7 @@ Client::do_test (void)
   ACE_timer_t delta = 0;
   u_int low_priority_client_count = this->ts_->thread_count_ - 1;
   ACE_timer_t sleep_time = // usec
-    (1 / this->frequency_) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_;
+    (ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_)/this->frequency_;
   for (u_int i = 0;
        // keep running for loop count, OR
        i < this->ts_->loop_count_
