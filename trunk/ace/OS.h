@@ -776,12 +776,17 @@ struct ACE_cond_t
 
 #if defined (VXWORKS)
   ACE_sema_t waiters_done_;
-#else
-  ACE_event_t waiters_done_;
-#endif /* VXWORKS */
+  // A semaphore used by the broadcast/signal thread to wait
+  // for the waiting thread(s) to wake up and get a chance at the
+  // semaphore.
+#elif defined (ACE_WIN32)
+  HANDLE waiters_done_;
   // An auto reset event used by the broadcast/signal thread to wait
   // for the waiting thread(s) to wake up and get a chance at the
   // semaphore.
+#else
+#error "SOMEONE FIX ME!"
+#endif /* VXWORKS */
 
   size_t was_broadcast_;
   // Keeps track of whether we were broadcasting or just signaling.
