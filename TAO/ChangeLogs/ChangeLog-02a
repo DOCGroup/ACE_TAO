@@ -6,6 +6,7 @@ Sat Jul 08 14:39:38 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.h: added forward declaration of class
           TAO_Object_Adapter, because it's need for minimum_corba builds.
+          Thanks to Marina for helping to track this down.
 
 Sat Jul 08 14:35:27 2000  David L. Levine  <levine@cs.wustl.edu>
 
