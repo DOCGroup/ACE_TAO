@@ -60,12 +60,12 @@ typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 static int connections = 0;
 
 // Use this to show down the process gracefully.
-static void 
+static void
 connection_completed ()
 {
   // Increment connection counter
   connections++;
- 
+
   // If all connections have been serviced
   if (connections == ACE_MAX_ITERATIONS + 1)
     // Make sure that the event loop is interrupted
@@ -90,16 +90,16 @@ Process_Strategy::Process_Strategy (size_t n_processes,
 
 // Overwrite the process creation method to include connection
 // counting
-int 
+int
 Process_Strategy::activate_svc_handler (Counting_Service *svc_handler,
                                         void *arg)
 {
   // Call down to the base class
   int result = ACE_Process_Strategy<Counting_Service>::activate_svc_handler (svc_handler, arg);
-  
+
   // Connection is now complete
   connection_completed ();
-  
+
   return result;
 }
 
@@ -151,43 +151,47 @@ Options::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'c':
-	if (ACE_OS::strcmp (get_opt.optarg, "REACTIVE") == 0)
-	  OPTIONS::instance ()->concurrency_type (Options::REACTIVE);
+        if (ACE_OS::strcmp (get_opt.optarg, "REACTIVE") == 0)
+          OPTIONS::instance ()->concurrency_type (Options::REACTIVE);
 #if !defined (ACE_LACKS_FORK)
-	else if (ACE_OS::strcmp (get_opt.optarg, "PROCESS") == 0)
-	  OPTIONS::instance ()->concurrency_type (Options::PROCESS);
+        else if (ACE_OS::strcmp (get_opt.optarg, "PROCESS") == 0)
+          OPTIONS::instance ()->concurrency_type (Options::PROCESS);
 #endif /* !ACE_LACKS_FORK */
 #if defined (ACE_HAS_THREADS)
-	else if (ACE_OS::strcmp (get_opt.optarg, "THREAD") == 0)
-	  OPTIONS::instance ()->concurrency_type (Options::THREAD);
+        else if (ACE_OS::strcmp (get_opt.optarg, "THREAD") == 0)
+          OPTIONS::instance ()->concurrency_type (Options::THREAD);
 #endif /* ACE_HAS_THREADS */
-	break;
+        else
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING: concurrency strategy \"%s\" is not supported\n",
+                      get_opt.optarg));
+        break;
       case 'f':
-	this->filename_ = get_opt.optarg;
-	break;
+        this->filename_ = get_opt.optarg;
+        break;
       default:
-	ACE_DEBUG ((LM_DEBUG,
-		    "usage: %n [-f (filename)] [-c (concurrency strategy)]\n%a", 1));
-	/* NOTREACHED */
+        ACE_DEBUG ((LM_DEBUG,
+                    "usage: %n [-f (filename)] [-c (concurrency strategy)]\n%a", 1));
+        /* NOTREACHED */
       }
 
   // Initialize the file lock.  Note that this object lives beyond the
   // lifetime of the Acceptor.
   if (this->file_lock_.open (ACE_WIDE_STRING (this->filename_),
-			     O_RDWR | O_CREAT,
-			     ACE_DEFAULT_FILE_PERMS) == -1)
+                             O_RDWR | O_CREAT,
+                             ACE_DEFAULT_FILE_PERMS) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) opening %s on handle %d.\n",
-	      this->filename_, this->file_lock_.get_handle ()));
+              "(%P|%t) opening %s on handle %d.\n",
+              this->filename_, this->file_lock_.get_handle ()));
 
   int count = 0;
 
   // Store the initial value of the count in the file.
   if (ACE_OS::write (this->file_lock_.get_handle (),
-		     (const void *) &count,
-		     sizeof count) != sizeof count)
+                     (const void *) &count,
+                     sizeof count) != sizeof count)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "write"));
 
   // Initialize the Concurrency strategy.
@@ -196,8 +200,8 @@ Options::parse_args (int argc, char *argv[])
     case Options::PROCESS:
 #if !defined (ACE_LACKS_FORK)
       ACE_NEW_RETURN (this->concurrency_strategy_,
-		      Process_Strategy (1, this, ACE_Reactor::instance()),
-		      -1);
+                      Process_Strategy (1, this, ACE_Reactor::instance()),
+                      -1);
       break;
 #else
       ACE_ASSERT (!"PROCESS invalid on this platform");
@@ -205,10 +209,10 @@ Options::parse_args (int argc, char *argv[])
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
       ACE_NEW_RETURN (this->concurrency_strategy_,
-		      ACE_Thread_Strategy<Counting_Service>
+                      ACE_Thread_Strategy<Counting_Service>
                       (ACE_Thread_Manager::instance (),
-		       THR_NEW_LWP, 1),
-		      -1);
+                       THR_NEW_LWP, 1),
+                      -1);
       break;
 #else
       ACE_ASSERT (!"THREAD invalid on this platform");
@@ -216,9 +220,9 @@ Options::parse_args (int argc, char *argv[])
     case Options::REACTIVE:
       // Settle for the purely Reactive strategy.
       ACE_NEW_RETURN (this->concurrency_strategy_,
-		      ACE_Reactive_Strategy<Counting_Service>
-		      (ACE_Reactor::instance()),
-		      -1);
+                      ACE_Reactive_Strategy<Counting_Service>
+                      (ACE_Reactor::instance()),
+                      -1);
       break;
     }
 
@@ -251,13 +255,13 @@ Counting_Service::read (void)
   ACE_READ_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) reading on handle %d.\n",
-	      OPTIONS::instance ()->file_lock ().get_handle ()));
+              OPTIONS::instance ()->file_lock ().get_handle ()));
 
   int count;
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
-		     (void *) &count,
-		     sizeof count,
-		     0) != sizeof count)
+                     (void *) &count,
+                     sizeof count,
+                     0) != sizeof count)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "read"), -1);
 
   char buf[BUFSIZ];
@@ -265,8 +269,8 @@ Counting_Service::read (void)
   int n = ACE_OS::sprintf (buf, "count = %d\n", count);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) count = %d\n",
-	      count));
+              "(%P|%t) count = %d\n",
+              count));
 
   if (this->peer ().send_n (buf, n) != n)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "send_n"), -1);
@@ -282,25 +286,25 @@ Counting_Service::inc (void)
   ACE_WRITE_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) incrementing on handle %d.\n",
-	      OPTIONS::instance ()->file_lock ().get_handle ()));
+              "(%P|%t) incrementing on handle %d.\n",
+              OPTIONS::instance ()->file_lock ().get_handle ()));
 
   int count;
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
-		     (void *) &count,
-		     sizeof count,
-		     0) != sizeof count)
+                     (void *) &count,
+                     sizeof count,
+                     0) != sizeof count)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "read"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) incrementing count from %d to %d\n",
-	      count, count + 1));
+              "(%P|%t) incrementing count from %d to %d\n",
+              count, count + 1));
   count++;
 
   if (ACE_OS::pwrite (OPTIONS::instance ()->file_lock ().get_handle (),
-		      (const void *) &count,
-		      sizeof count,
-		      0) != sizeof count)
+                      (const void *) &count,
+                      sizeof count,
+                      0) != sizeof count)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "write"), -1);
   return 0;
 }
@@ -314,8 +318,8 @@ Counting_Service::handle_input (ACE_HANDLE)
   char buf[BUFSIZ];
 
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) reading from peer on %d\n",
-	      this->peer ().get_handle ()));
+              "(%P|%t) reading from peer on %d\n",
+              this->peer ().get_handle ()));
 
   size_t len;
   // Read the PDU length first.
@@ -331,17 +335,17 @@ Counting_Service::handle_input (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) %d bytes of input on %d is %*s\n",
-		  bytes, this->peer ().get_handle (), bytes, buf));
+                  "(%P|%t) %d bytes of input on %d is %*s\n",
+                  bytes, this->peer ().get_handle (), bytes, buf));
 
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf, "read", 4) == 0)
-	return this->read ();
+        return this->read ();
       // Increment the current value in the file.
       else if (ACE_OS::strncmp (buf, "inc", 3) == 0)
-	return this->inc ();
+        return this->inc ();
       else
-	ACE_DEBUG ((LM_DEBUG, "(%P|%t) no match...\n"));
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) no match...\n"));
 
       return 0;
     }
@@ -375,7 +379,7 @@ int
 Counting_Service::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "(%P|%t) opening service\n"));
+              "(%P|%t) opening service\n"));
 
   if (OPTIONS::instance ()->concurrency_type () == Options::PROCESS)
     {
@@ -383,10 +387,10 @@ Counting_Service::open (void *)
       // due to being fork'd and we can't just return to our context
       // since it's in the wrong location in the process.
       while (this->handle_input () >= 0)
-	continue;
+        continue;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%P|%t) About to exit from the child\n"));
+                  "(%P|%t) About to exit from the child\n"));
 
       // Exit the child.
       ACE_OS::exit (0);
@@ -419,32 +423,32 @@ client (void *arg)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client iteration %d\n", i));
 
       if (connector.connect (stream, server_addr) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
 
       command = "inc";
       command_len = ACE_OS::strlen (command);
 
       if (stream.send (4,
-		       &command_len, sizeof command_len,
-		       command, command_len) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
+                       &command_len, sizeof command_len,
+                       command, command_len) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
 
       command = "read";
       command_len = ACE_OS::strlen (command);
 
       if (stream.send (4,
-		       &command_len, sizeof command_len,
-		       command, command_len) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
+                       &command_len, sizeof command_len,
+                       command, command_len) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
       else if (stream.recv (buf, sizeof buf) <= 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
 
       //      ACE_DEBUG ((LM_DEBUG,
-      //		  "(%P|%t) client iteration %d, buf = %s\n",
-      //		  i, buf));
+      //                  "(%P|%t) client iteration %d, buf = %s\n",
+      //                  i, buf));
 
       if (stream.close () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), 0);
     }
 
   command = "read";
@@ -454,8 +458,8 @@ client (void *arg)
   if (connector.connect (stream, server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
   else if (stream.send (4,
-			&command_len, sizeof command_len,
-			command, command_len) == -1)
+                        &command_len, sizeof command_len,
+                        command, command_len) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
   else if ((bytes_read = stream.recv (buf, sizeof buf)) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
@@ -512,49 +516,49 @@ main (int argc, char *argv[])
   // Bind acceptor to any port and then find out what the port was.
   // Note that this implicitly creates the Reactor singleton.
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any,
-		     ACE_Reactor::instance(),
-		     0,
-		     0,
-		     OPTIONS::instance ()->concurrency_strategy ()) == -1
+                     ACE_Reactor::instance(),
+                     0,
+                     0,
+                     OPTIONS::instance ()->concurrency_strategy ()) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
-		  server_addr.get_port_number ()));
+                  server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
       // We're running the client and serve as separate processes.
       pid_t pid = ACE_OS::fork ("child");
 
       switch (pid)
-	{
-	case -1:
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-	  exit (-1);
-	  /* NOTREACHED */
-	case 0:
-	  ACE_OS::signal (SIGCHLD, SIG_IGN);
-	  server (0);
-	  break;
-	  /* NOTREACHED */
-	default:
-	  client (&server_addr);
-	  break;
-	  /* NOTREACHED */
-	}
+        {
+        case -1:
+          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+          exit (-1);
+          /* NOTREACHED */
+        case 0:
+          ACE_OS::signal (SIGCHLD, SIG_IGN);
+          server (0);
+          break;
+          /* NOTREACHED */
+        default:
+          client (&server_addr);
+          break;
+          /* NOTREACHED */
+        }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-	  (ACE_THR_FUNC (server),
-	   (void *) 0,
-	   THR_NEW_LWP | THR_DETACHED) == -1)
-	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+          (ACE_THR_FUNC (server),
+           (void *) 0,
+           THR_NEW_LWP | THR_DETACHED) == -1)
+        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       if (ACE_Thread_Manager::instance ()->spawn
-	  (ACE_THR_FUNC (client),
-	   (void *) &server_addr,
-	   THR_NEW_LWP | THR_DETACHED) == -1)
-	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
+          (ACE_THR_FUNC (client),
+           (void *) &server_addr,
+           THR_NEW_LWP | THR_DETACHED) == -1)
+        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
