@@ -5,8 +5,8 @@
 debug = 1
 optimize = 1
 
-CC              = gcc -pipe
-CXX             = c++ -pipe
+CC              = gcc
+CXX             = c++
 CFLAGS          += -Wall -Wpointer-arith -pipe #### -Winline
 CCFLAGS         += $(CFLAGS)
 DCFLAGS         += -g

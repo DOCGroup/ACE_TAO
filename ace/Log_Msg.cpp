@@ -873,6 +873,7 @@ ACE_Log_Msg::log (const char *format_str,
 
   ACE_OS::free (ACE_MALLOC_T (save_p));
 
+  // Write the <log_record> to the appropriate location.
   ssize_t result = this->log (log_record, abort_prog == 0);
  
   if (abort_prog)
@@ -911,12 +912,15 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       // Make sure that the lock is held during all this.
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR)
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                           ACE_Log_Msg::STDERR)
           && !suppress_stderr) // This is taken care of by our caller.
         log_record.print (ACE_Log_Msg::local_host_,
                           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
                           stderr);
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
+
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                           ACE_Log_Msg::LOGGER))
         {
 #if defined (ACE_HAS_STREAM_PIPES)
           ACE_Str_Buf log_msg ((void *) &log_record,
@@ -940,7 +944,8 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       // This must come last, after the other two print operations
       // (see the ACE_Log_Record::print method for details).
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::OSTREAM)
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                           ACE_Log_Msg::OSTREAM)
           && this->msg_ostream () != 0)
         log_record.print (ACE_Log_Msg::local_host_,
                           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE),
