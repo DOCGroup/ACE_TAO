@@ -1,8 +1,16 @@
+Tue May  6 12:47:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+
+	  Changed all uses of ptr_arith_t to ptrdiff_t.  Addresses 64 bit
+	  platform issues.  Thanks to Steve Huston <shuston@riverace.com>
+	  for suggesting this change.
+
 Wed Apr 30 13:29:46 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-        * tests\temp\assembly\assembly.dsw:
-        * tests\temp\assembly\client.dsp:
-        * tests\temp\assembly\server.dsp:
+        * tests/temp/assembly/assembly.dsw:
+        * tests/temp/assembly/client.dsp:
+        * tests/temp/assembly/server.dsp:
 
           Files removed to prevent errors in the msvc 6 builds.
 
