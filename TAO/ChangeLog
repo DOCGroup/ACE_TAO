@@ -1,3 +1,9 @@
+Sun Aug 24 21:38:48 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: 
+	  Fixed a bug where the preemption priority was wrongly set before
+	  dispatching a event to the Kokyu dispatcher.
+
 Sun Aug 24 20:14:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp: Fixed compile
 	  warnings regarding usage of ace_max in Debian_Core build. 
