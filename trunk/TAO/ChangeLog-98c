@@ -1,3 +1,12 @@
+Mon Jan  5 16:37:14 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* Makefile: Merged client and server rules
+
+	* server.dsp, svc.conf, svr.cpp, client.dsp, cubit.idl,
+	cubit_i.cpp, cubit_i.h, Task_Client.cpp, Task_Client.h,
+	Util_Thread.cpp, Util_Thread.h, client.cpp, Makefile:
+	Merged client/server code into one directory.
+
 Mon Jan  5 11:50:00 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_attribute.cpp: Code generated for setting the
