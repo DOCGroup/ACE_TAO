@@ -7,7 +7,7 @@ Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
           <Kirill.Rybaltchenko@cern.ch> for reporting this problem and
           verifying the fix on LynxOS, the only affected platform.
 
-        * ace/config-linux-kcc.h,include/makeinclude/platform-linux-kcc.GNU:
+        * ace/config-linux-kcc.h,include/makeinclude/platform_linux_kcc.GNU:
           added linuxthreads support with the linux KAI C++ config.
           Thanks to Ben Eng <ben@jetpen.com> for the patches.
 
