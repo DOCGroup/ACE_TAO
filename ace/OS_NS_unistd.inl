@@ -23,17 +23,12 @@ ACE_OS::access (const char *path, int amode)
 {
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
-#  if defined (ACE_HAS_WINCE)
+#  if defined (ACE_HAS_WINCE) || defined (VXWORKS)
   // @@ WINCE: There should be a Win32 API that can do this.
   // Hard coded read access here.
-    FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path), ACE_LIB_TEXT ("r"));
   ACE_UNUSED_ARG (amode);
-
-  ACE_OS::fclose (handle);
-  return (handle == ACE_INVALID_HANDLE ? -1 : 0);
-#  elif defined (VXWORKS)
-  FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path), ACE_LIB_TEXT ("r"));
-  ACE_UNUSED_ARG (amode);
+  FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path),
+                                ACE_LIB_TEXT ("r"));
   if (handle != 0)
     {
       ACE_OS::fclose (handle);
