@@ -346,10 +346,13 @@ Options::twoway_client_test (void *)
 
   timer.elapsed_time_incr (tv);
   double real_time = tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
-  double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
+  double messages_per_sec =
+    iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
+              ASYS_TEXT ("(%t) messages = %d\n")
+              ASYS_TEXT ("(%t) usec-per-message = %f\n")
+              ASYS_TEXT ("(%t) messages-per-second = %0.00f\n"),
               iteration,
               real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));
@@ -377,8 +380,9 @@ run_client (void)
   ACE::set_handle_limit ();
 
 #if defined (ACE_HAS_THREADS)
-  if (ACE_Thread_Manager::instance ()->spawn_n (OPTIONS::instance ()->threads (),
-                                                OPTIONS::instance ()->thr_func ()) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn_n (
+           OPTIONS::instance ()->threads (),
+           OPTIONS::instance ()->thr_func ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "spawn_n"),
@@ -394,6 +398,11 @@ run_client (void)
 int
 main (int argc, char *argv[])
 {
+  ACE_SSL_Context *context = ACE_SSL_Context::instance ();
+
+  context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);
+  context->private_key ("./key.pem", SSL_FILETYPE_PEM);
+
   // Initialize the logger.
   ACE_LOG_MSG->open (argv[0]);
 

@@ -61,8 +61,10 @@ endif
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -154,8 +156,10 @@ endif
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -223,8 +227,10 @@ endif
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -318,8 +324,10 @@ endif
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -479,8 +487,10 @@ endif
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -573,8 +583,10 @@ endif
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -599,26 +611,26 @@ endif
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
- ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
- ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ ../../SSLIOP/SSL_SOCK.h ../../SSLIOP/SSL_Export.h \
+ ../../SSLIOP/SSL_SOCK.i ../../SSLIOP/SSL_Context.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \

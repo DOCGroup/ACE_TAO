@@ -18,13 +18,13 @@ static int verbose = 0;
 
 static void
 run_server (ACE_THR_FUNC server,
-            ACE_HANDLE handle)
+            ACE_SSL_SOCK_Stream *new_stream)
 {
 #if defined (ACE_HAS_THREADS)
   // Spawn a new thread and run the new connection in that thread of
   // control using the <server> function as the entry point.
   if (ACE_Thread_Manager::instance ()->spawn (server,
-                                              (void *) handle,
+                                              (void *) new_stream,
                                               THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",
@@ -40,18 +40,15 @@ static void *
 twoway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;
-  ACE_SSL_SOCK_Stream new_stream;
-  ACE_HANDLE handle = (ACE_HANDLE) (long) arg;
-
-  new_stream.set_handle (handle);
+  ACE_SSL_SOCK_Stream * new_stream = (ACE_SSL_SOCK_Stream *) arg;
 
   // Make sure we're not in non-blocking mode.
-  if (new_stream.disable (ACE_NONBLOCK) == -1)
+  if (new_stream->disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "disable"),
                        0);
-  else if (new_stream.get_remote_addr (cli_addr) == -1)
+  else if (new_stream->get_remote_addr (cli_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "get_remote_addr"),
@@ -73,7 +70,7 @@ twoway_server (void *arg)
     {
       ACE_INT32 len;
 
-      ssize_t r_bytes = new_stream.recv_n ((void *) &len,
+      ssize_t r_bytes = new_stream->recv_n ((void *) &len,
                                            sizeof (ACE_INT32));
       if (r_bytes == -1)
         {
@@ -104,7 +101,7 @@ twoway_server (void *arg)
         }
 
       // Subtract off the sizeof the length prefix.
-      r_bytes = new_stream.recv_n (request,
+      r_bytes = new_stream->recv_n (request,
                                    len - sizeof (ACE_UINT32));
       if (r_bytes == -1)
         {
@@ -116,7 +113,8 @@ twoway_server (void *arg)
       else if (r_bytes == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) reached end of input, connection closed by client\n"));
+                      "(%P|%t) reached end of input, "
+                      "connection closed by client\n"));
           break;
         }
       else if (verbose
@@ -126,7 +124,7 @@ twoway_server (void *arg)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE::write_n"));
-      else if (new_stream.send_n (request,
+      else if (new_stream->send_n (request,
                                   r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
@@ -140,7 +138,7 @@ twoway_server (void *arg)
     }
 
   // Close new endpoint (listening endpoint stays open).
-  new_stream.close ();
+  new_stream->close ();
 
   delete [] request;
   return 0;
@@ -152,18 +150,15 @@ static void *
 oneway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;
-  ACE_SSL_SOCK_Stream new_stream;
-  ACE_HANDLE handle = (ACE_HANDLE) (long) arg;
-
-  new_stream.set_handle (handle);
+  ACE_SSL_SOCK_Stream * new_stream = (ACE_SSL_SOCK_Stream *) arg;
 
   // Make sure we're not in non-blocking mode.
-  if (new_stream.disable (ACE_NONBLOCK) == -1)
+  if (new_stream->disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "disable"),
                        0);
-  else if (new_stream.get_remote_addr (cli_addr) == -1)
+  else if (new_stream->get_remote_addr (cli_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "get_remote_addr"),
@@ -189,7 +184,7 @@ oneway_server (void *arg)
     {
       ACE_INT32 len;
 
-      ssize_t r_bytes = new_stream.recv_n ((void *) &len,
+      ssize_t r_bytes = new_stream->recv_n ((void *) &len,
                                            sizeof (ACE_INT32));
       if (r_bytes == -1)
         {
@@ -220,7 +215,7 @@ oneway_server (void *arg)
         }
 
       // Subtract off the sizeof the length prefix.
-      r_bytes = new_stream.recv_n (request,
+      r_bytes = new_stream->recv_n (request,
                                    len - sizeof (ACE_UINT32));
 
       if (r_bytes == -1)
@@ -255,7 +250,9 @@ oneway_server (void *arg)
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
+              ASYS_TEXT ("\t\treal time = %f secs \n")
+              ASYS_TEXT ("\t\tuser time = %f secs \n")
+              ASYS_TEXT ("\t\tsystem time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
@@ -263,7 +260,11 @@ oneway_server (void *arg)
   double messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
+              ASYS_TEXT ("\t\tmessages = %d\n")
+              ASYS_TEXT ("\t\ttotal bytes = %d\n")
+              ASYS_TEXT ("\t\tmbits/sec = %f\n")
+              ASYS_TEXT ("\t\tusec-per-message = %f\n")
+              ASYS_TEXT ("\t\tmessages-per-second = %0.00f\n"),
               message_count,
               total_bytes,
               (((double) total_bytes * 8) / et.real_time) / (double) (1024 * 1024),
@@ -271,7 +272,7 @@ oneway_server (void *arg)
               messages_per_sec < 0 ? 0 : messages_per_sec));
 
   // Close new endpoint (listening endpoint stays open).
-  new_stream.close ();
+  new_stream->close ();
 
   delete [] request;
   return 0;
@@ -351,10 +352,10 @@ run_event_loop (u_short port)
               else
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) spawning twoway server\n"));
-
+                          
               // Run the twoway server.
               run_server (twoway_server,
-                          new_stream.get_handle ());
+                          &new_stream);
             }
           if (temp.is_set (oneway_acceptor.get_handle ()))
             {
@@ -369,7 +370,7 @@ run_event_loop (u_short port)
 
               // Run the oneway server.
               run_server (oneway_server,
-                          new_stream.get_handle ());
+                          &new_stream);
             }
         }
     }
@@ -380,6 +381,11 @@ run_event_loop (u_short port)
 int
 main (int argc, char *argv[])
 {
+  ACE_SSL_Context *context = ACE_SSL_Context::instance ();
+
+  context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);
+  context->private_key ("./key.pem", SSL_FILETYPE_PEM);
+
   u_short port = ACE_DEFAULT_SERVER_PORT;
 
   if (argc > 1)
