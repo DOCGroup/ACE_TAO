@@ -2,10 +2,10 @@
 
 #include "interceptors.h"
 
+ACE_RCSID (Dynamic,
+           interceptors,
+           "$Id$")
 
-ACE_RCSID(Interceptors, interceptors, "$Id$")
-
-#if (TAO_HAS_INTERCEPTORS == 1)
   //const CORBA::ULong request_ctx_id = 0xdead;
   //const CORBA::ULong reply_ctx_id = 0xbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
@@ -54,20 +54,30 @@ Echo_Client_Request_Interceptor::send_poll (
 void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL_NOT_USED)
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from "
               "\"%s\"\n",
-              ri->operation ()));
+              op.in ()));
 
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
+  if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
-      Dynamic::ParameterList paramlist = *(ri->arguments ());
+      Dynamic::ParameterList_var paramlist =
+        ri->arguments (ACE_TRY_ENV);
+      ACE_CHECK;
+
       CORBA::Long param;
-      (paramlist)[0].argument >>= param;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i].argument >>= param;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
@@ -77,13 +87,20 @@ Echo_Client_Request_Interceptor::send_request (
 
 void
 Echo_Client_Request_Interceptor::receive_other (
-               PortableInterceptor::ClientRequestInfo_ptr
-               TAO_ENV_ARG_DECL_NOT_USED
-               )
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest))
+  PortableInterceptor::ClientRequestInfo_ptr ri
+  TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
-  // Do nothing
+  TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Echo_Client_Request_Interceptor::receive_other "
+              "from \"%s\"\n",
+              op.in ()));
 }
 
 void
@@ -92,28 +109,47 @@ Echo_Client_Request_Interceptor::receive_reply (
     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply "
               "from \"%s\"\n",
-              ri->operation (TAO_ENV_SINGLE_ARG_PARAMETER)));
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
+              op.in ()));
+
+  if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
-      Dynamic::ParameterList paramlist = *(ri->arguments ());
+      Dynamic::ParameterList_var paramlist =
+        ri->arguments (ACE_TRY_ENV);
+      ACE_CHECK;
+
       CORBA::Long param;
-      (paramlist)[0].argument >>= param;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i].argument >>= param;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
                   param));
     }
-  if (ACE_OS::strcmp (ri->operation (), "calculate") == 0)
+  if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
-      Dynamic::ParameterList paramlist = *(ri->arguments ());
+      Dynamic::ParameterList_var paramlist =
+        ri->arguments (ACE_TRY_ENV);
+      ACE_CHECK;
+
       CORBA::Long param1, param2, result;
-      (paramlist)[0].argument >>= param1;
-      (paramlist)[1].argument >>= param2;
-      CORBA::Any result_any = *(ri->result ());
-      result_any >>= result;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i++].argument >>= param1;
+      paramlist[i].argument >>= param2;
+
+      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      (result_any.in ()) >>= result;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The result of calculate is %d + %d = %d\n",
@@ -125,23 +161,24 @@ Echo_Client_Request_Interceptor::receive_reply (
 
 void
 Echo_Client_Request_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr rinfo
+    PortableInterceptor::ClientRequestInfo_ptr ri
     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  CORBA::String_var operation =
-    rinfo->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "
               "from \"%s\"\n",
-              operation.in ()));
+              op.in ()));
 
 
   CORBA::String_var exception_id =
-    rinfo->received_exception_id (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ri->received_exception_id (ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -180,21 +217,40 @@ Echo_Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
+Echo_Server_Request_Interceptor::receive_request_service_contexts (
+    PortableInterceptor::ServerRequestInfo_ptr
+    TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
+{
+}
+
+void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri
   TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"\n",
-              ri->operation ()));
+              op.in ()));
 
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
+  if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
-      Dynamic::ParameterList paramlist = *(ri->arguments ());
+      Dynamic::ParameterList_var paramlist =
+        ri->arguments (ACE_TRY_ENV);
+      ACE_CHECK;
+
       CORBA::Long param;
-      (paramlist)[0].argument >>= param;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i].argument >>= param;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
@@ -202,38 +258,61 @@ Echo_Server_Request_Interceptor::receive_request (
 
      }
 
+  CORBA::String_var tmdi =
+    ri->target_most_derived_interface (ACE_TRY_ENV);
+  ACE_CHECK;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "Target most derived interface: %s\n",
+              tmdi.in ()));
 }
 
 void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL_NOT_USED)
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"\n",
-              ri->operation ()));
+              op.in ()));
 
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
+  if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
-     Dynamic::ParameterList paramlist = *(ri->arguments ());
+      Dynamic::ParameterList_var paramlist =
+        ri->arguments (ACE_TRY_ENV);
+      ACE_CHECK;
+
       CORBA::Long param;
-      (paramlist)[0].argument >>= param;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i].argument >>= param;
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
                   param));
     }
 
-  if (ACE_OS::strcmp (ri->operation (), "calculate") == 0)
+  if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
-      Dynamic::ParameterList paramlist = *(ri->arguments ());
-      CORBA::Long param1, param2, result = 0;
-      (paramlist)[0].argument >>= param1;
-      (paramlist)[1].argument >>= param2;
+      Dynamic::ParameterList_var paramlist =
+        ri->arguments (ACE_TRY_ENV);
+      ACE_CHECK;
 
-      CORBA::Any result_any = *(ri->result ());
-      result_any >>= result;
+      CORBA::Long param1, param2, result = 0;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i++].argument >>= param1;
+      paramlist[i].argument >>= param2;
+
+      CORBA::Any_var result_any = ri->result (ACE_TRY_ENV);
+      ACE_CHECK;
+
+      (result_any.in ()) >>= result;
 
       ACE_DEBUG ((LM_DEBUG,
                   "The result of calculate  is %d + %d = %d\n",
@@ -245,25 +324,24 @@ Echo_Server_Request_Interceptor::send_reply (
 
 void
 Echo_Server_Request_Interceptor::send_exception (
-    PortableInterceptor::ServerRequestInfo_ptr rinfo
+    PortableInterceptor::ServerRequestInfo_ptr ri
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var operation =
-    rinfo->operation (ACE_TRY_ENV);
+  CORBA::String_var op = ri->operation (ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_exception "
               "from \"%s\"\n",
-              operation.in ()));
+              op.in ()));
 
 
   CORBA::Any_var any =
-    rinfo->sending_exception (ACE_TRY_ENV);
+    ri->sending_exception (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TypeCode_var type = any->type ();
@@ -277,29 +355,11 @@ Echo_Server_Request_Interceptor::send_exception (
 }
 
 void
-Echo_Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED
-    )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest
-                   ))
-{
-  // Do nothing
-}
-
-void
 Echo_Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED
-    )
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   PortableInterceptor::ForwardRequest
-                   ))
+    TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do Nothing
 }
-
-#endif /* (TAO_HAS_INTERCEPTORS == 1) */

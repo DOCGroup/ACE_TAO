@@ -56,9 +56,6 @@ main (int argc, char *argv[])
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Transfer ownership to the ORB.
-      (void) initializer._retn ();
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -67,7 +64,8 @@ main (int argc, char *argv[])
         return 1;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -89,23 +87,25 @@ main (int argc, char *argv[])
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&server_impl,
                                    ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var test_obj =
         root_poa->id_to_reference (id.in (),
                                    ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_TRY_CHECK;
 
       Test_Interceptors::Secure_Vault_var server =
         Test_Interceptors::Secure_Vault::_narrow (test_obj.in (),
-                                            ACE_TRY_ENV);
+                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (server.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Secure_Vault: <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Test_Interceptors::Secure_Vault: <%s>\n",
+                  ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -120,8 +120,9 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      if (orb->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+      orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1, 1, ACE_TRY_ENV);
@@ -130,7 +131,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

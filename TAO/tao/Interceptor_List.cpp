@@ -128,7 +128,6 @@ TAO_ClientRequestInterceptor_List::add_interceptor (
                                           ACE_TRY_ENV);
   ACE_CHECK;
 
-  // @@ Should we duplicate the reference here?
   this->interceptors_[index] =
     PortableInterceptor::ClientRequestInterceptor::_duplicate (interceptor);
 }
@@ -175,7 +174,6 @@ TAO_ServerRequestInterceptor_List::add_interceptor (
                                           ACE_TRY_ENV);
   ACE_CHECK;
 
-  // @@ Should we duplicate the reference here?
   this->interceptors_[index] =
     PortableInterceptor::ServerRequestInterceptor::_duplicate (interceptor);
 }
@@ -224,7 +222,6 @@ TAO_IORInterceptor_List::add_interceptor (
                                           ACE_TRY_ENV);
   ACE_CHECK;
 
-  // @@ Should we duplicate the reference here?
   this->interceptors_[index] =
     PortableInterceptor::IORInterceptor::_duplicate (interceptor);
 }

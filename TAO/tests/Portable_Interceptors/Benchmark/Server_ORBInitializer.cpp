@@ -7,7 +7,9 @@
 #include "Interceptor_Type.h"
 #include "interceptors.h"
 
-ACE_RCSID (Benchmark, Server_ORBInitializer, "$Id$")
+ACE_RCSID (Benchmark,
+           Server_ORBInitializer,
+           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (int interceptor_type)
   :  interceptor_type_ (interceptor_type)
@@ -68,10 +70,7 @@ Server_ORBInitializer::post_init (
 
   PortableInterceptor::ServerRequestInterceptor_var interceptor = tmp;
 
-  info->add_server_request_interceptor (interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+  info->add_server_request_interceptor (interceptor.in (),
+                                        ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Transfer ownership to the ORB.
-  (void) interceptor._retn ();
 }

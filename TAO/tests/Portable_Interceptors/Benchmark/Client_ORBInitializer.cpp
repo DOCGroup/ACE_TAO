@@ -68,10 +68,7 @@ Client_ORBInitializer::post_init (
 
   PortableInterceptor::ClientRequestInterceptor_var interceptor = tmp;
 
-  info->add_client_request_interceptor (interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+  info->add_client_request_interceptor (interceptor.in (),
+                                        ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Transfer ownership to the ORB.
-  (void) interceptor._retn ();
 }
