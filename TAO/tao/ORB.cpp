@@ -2067,6 +2067,9 @@ CORBA::ORB::register_value_factory (const char *repository_id,
     this->valuetype_adapter_->vf_map_rebind (repository_id,
                                              factory);
 
+  if (result == 0)              // No previous factory found
+    return 0;
+
   if (result == -1)
     {
       // Error on bind.
