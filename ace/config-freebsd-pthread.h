@@ -154,6 +154,7 @@ char * cuserid (char *s);
 #endif /* ! ACE_MT_SAFE */
 #define ACE_HAS_PTHREADS
 #define ACE_LACKS_SETSCHED
+#define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 // If ACE doesn't compile due to the lack of these methods, please
