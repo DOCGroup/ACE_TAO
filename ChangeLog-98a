@@ -3,6 +3,9 @@ Tue Feb 17 09:23:05 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.h: there were two SIGCHLD #defines, if it was not
           already #defined.  I changed the second one to be SIGCLD instead.
 
+        * ace/config-linux-common.h: removed ACE_LACKS_TCP_H on alpha because
+          it's not necessary with glibc-2.0.6.
+
 Tue Feb 17 08:41:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/OS.h (ACE_PROPER_SINGLETON_INSTANTIATION): Changed spelling
