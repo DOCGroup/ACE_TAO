@@ -1,3 +1,9 @@
+Wed Jan  5 19:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+          Removed include of EC_ConsumerAdmin.i, this file is zapped and
+          it was completely wrong to include that file here.
+
 Wed Jan  5 09:33:54 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/extra_core.mpb:
