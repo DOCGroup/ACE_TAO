@@ -1,5 +1,9 @@
 Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Array_Base.h: Added #include "ace/OS.h" to get the 
+	  definition of size_t on MacOS.  Thanks to John Zorko
+ 	  <j.zorko@att.net> for this fix.
+
 	* ace/Synch.cpp: Fixed the ACE_recursive_mutex_state::reset() method
 	  so that it sets m.LockCount to 0.  Thanks to Davide Pasetto
  	  <dipo@sis.it> for reporting this.
