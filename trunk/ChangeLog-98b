@@ -1,3 +1,12 @@
+Tue Aug 25 20:04:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* etc: Began to add the ACE tutorials.  Thanks to James CE Johnson
+ 	  <ace-users@lads.com> for contributing this stuff.
+
+	* tests/Reactor*.cpp: Fixed all the Reactor tests so that they'd
+ 	  abide by the appropriate design rules.  Thanks to Hans Rohnert
+ 	  <rohnert@scr.siemens.com> for reporting this.
+
 Tue Aug 25 19:31:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Memory_Pool.i (~ACE_Lite_MMAP_Memory_Pool,~ACE_MMAP_Memory_Pool):
