@@ -1,3 +1,17 @@
+Thu Nov 14 13:47:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp
+	  (gen_marshal_and_invoke):
+
+	  Fixed "empty controlled statment" warning that occurred due to
+	  an ACE_ASSERT disappearing when NDEBUG is defined.  That
+	  ACE_ASSERT is to be executed when a oneway operation check
+	  evaluates to true.  When NDEBUG is defined, there is nothing to
+	  execute if that condition is true.  Moved the condition check
+	  inside the ACE_ASSERT.  This is safe since no other code is
+	  meant to be run if the oneway operation check/condition is
+	  true, i.e. there are no side-effects.
+
 Thu Nov 14 14:33:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport.h: 
@@ -5585,7 +5599,7 @@ Sun Sep 15 13:04:49 2002  Ossama Othman  <ossama@uci.edu>
 	  Removed these members.  The memory they pointed to was not
 	  managed correctly.  This change is part of a number changes that
 	  address many memory management issues.  They were introduced
-	  when the TAO's ORT support was added.
+	  when TAO's ORT support was added.
 
 	* tao/PortableServer/POA.cpp (client_exposed_policies):
 
@@ -6249,7 +6263,7 @@ Wed Sep  4 10:44:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Cache a pointer to the default TAO ObjectReferenceTemplate
 	  implementation.  The POA now needs to call a TAO-specific method
-	  in that implementation during upon destruction.
+	  in that implementation upon destruction.
 
 	* tao/PortableServer/POA.cpp (destroy_i):
 

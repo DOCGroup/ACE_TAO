@@ -273,8 +273,8 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
 
   // Check the flags just once, and assert, getting in this state
   // indicates a severe bug in the IDL compiler.
-  if(node->flags () == AST_Operation::OP_oneway)
-    ACE_ASSERT(!"Cannot generate AMI calls for oneways");
+  ACE_ASSERT (node->flags () != AST_Operation::OP_oneway
+              || !"Cannot generate AMI calls for oneways");
 
   *os << "TAO_GIOP_Twoway_Asynch_Invocation _tao_call("
       << be_idt << be_idt_nl
@@ -525,8 +525,8 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
       << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_ri.exception(&ACE_ANY_EXCEPTION);" << be_nl
-      << "_tao_vfr.receive_exception(" << be_idt << be_idt_nl
+      << "_tao_ri.exception (&ACE_ANY_EXCEPTION);" << be_nl
+      << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
       << "&_tao_ri" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
