@@ -1,3 +1,12 @@
+Fri Sep 10 13:53:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* ace/Time_Value.h:
+	* ace/Time_Value.inl:
+
+      Moved '#include "ace/Basic_Types.h"' from Time_Value.cpp to
+      Time_Value.h because it's needed there since ACE_UINT64 is
+      introduced (see below).
+
 Thu Sep 09 18:29:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Time_Value.h (msec):
