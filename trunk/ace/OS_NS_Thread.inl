@@ -4039,15 +4039,9 @@ ACE_OS::thr_min_stack (void)
 # if defined (ACE_HAS_STHREADS)
 #   if defined (ACE_HAS_THR_MINSTACK)
   // Tandem did some weirdo mangling of STHREAD names...
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_minstack (),
-                                       result),
-                     int, -1);
+  return ::thr_minstack ();
 #   else
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_min_stack (),
-                                       result),
-                     int, -1);
+  return ::thr_min_stack ();
 #   endif /* !ACE_HAS_THR_MINSTACK */
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (_SC_THREAD_STACK_MIN)
