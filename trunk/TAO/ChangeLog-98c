@@ -1,3 +1,11 @@
+Thu Dec 10 09:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
+
+         * examples/Callback_Quoter/Consumer_Input_Handler.h:
+           replaced #include of OS.h with ACE.h.
+
+         * examples/Callback_Quoter/Consumer_Signal_Handler.h:
+           inserted #include of ace/ACE.h.
+
 Wed Dec 09 23:07:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.43 released.
