@@ -661,20 +661,24 @@ Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
   Cubit::RtiPacket_out vout (output);
 
   // Cube the sequence
-  ACE_DEBUG ((LM_DEBUG, "Input: \n"));
-  print_RtiPacket (input);
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Input: \n"));
+      print_RtiPacket (input);
+    }
 
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_RTI_DATA_START);
 
     this->cubit_->cube_rti_data (input, vout, this->env_);
   }
+  if (TAO_debug_level > 0)
 
-  ACE_DEBUG ((LM_DEBUG, "Output: \n"));
-  print_RtiPacket (*vout.ptr ());
-
-  ACE_DEBUG ((LM_DEBUG,
-	      "need to check whether cubing happened\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Output: \n"));
+      print_RtiPacket (*vout.ptr ());
+      ACE_DEBUG ((LM_DEBUG,"need to check whether cubing happened\n"));
+    }
 }
 
 void
