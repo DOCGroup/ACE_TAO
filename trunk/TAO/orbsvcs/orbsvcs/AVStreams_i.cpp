@@ -109,7 +109,8 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
 // TAO_StreamCtrl
 // ----------------------------------------------------------------------
 
-TAO_StreamCtrl::TAO_StreamCtrl (void)
+TAO_StreamCtrl::TAO_StreamCtrl (CORBA::ORB_var orb)
+  : orb_ (orb)
 {
 }
 
@@ -138,18 +139,19 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   
   // Request a_party to create the endpoint and vdev
   CORBA::Boolean met_qos;
-  CORBA::String named_vdev;
-  flowSpec the_spec;
+  CORBA::String_var named_vdev (CORBA::string_alloc (1024));
 
   this->stream_endpoint_a_ =
     a_party-> create_A (this->_this (env),
                         this->vdev_a_.out (),
                         the_qos,
                         met_qos,
-                        named_vdev,
-                        the_spec,
+                        named_vdev.inout (),
+                        the_flows,
                         env);
   TAO_CHECK_ENV_RETURN (env, 0);
+  
+              
   
   ACE_DEBUG ((LM_DEBUG,
               "\n(%P|%t) TAO_StreamCtrl::create_A: succeeded"));
@@ -161,14 +163,25 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                         this->vdev_b_.out (),
                         the_qos,
                         met_qos,
-                        named_vdev,
-                        the_spec,
+                        named_vdev.inout (),
+                        the_flows,
                         env);
   TAO_CHECK_ENV_RETURN (env, 0);
   
   ACE_DEBUG ((LM_DEBUG,
               "\n(%P|%t) TAO_StreamCtrl::create_B: succeeded"));
   
+  ACE_DEBUG ((LM_DEBUG, 
+              "\nstream_endpoint_b_ = %s", 
+              this->orb_->object_to_string (this->stream_endpoint_b_,
+                                            env)));
+  TAO_CHECK_ENV_RETURN (env, 0);
+  // Now connect the streams together
+  this->stream_endpoint_a_->connect (this->stream_endpoint_b_,
+                                     the_qos,
+                                     the_flows,
+                                     env);
+  TAO_CHECK_ENV_RETURN (env, 0);
   return 1;
 }
   
@@ -179,7 +192,15 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party,
                       const AVStreams::flowSpec &the_flows,  
                       CORBA::Environment &env)
 {
-  return 0;
+  this->stream_endpoint_a_ = a_party;
+  this->stream_endpoint_b_ = b_party;
+  // Now connect the streams together
+  this->stream_endpoint_a_->connect (this->stream_endpoint_b_,
+                                     the_qos,
+                                     the_flows,
+                                     env);
+  TAO_CHECK_ENV_RETURN (env, 0);
+  return 1;
 }
 
 void 
@@ -244,6 +265,15 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
                                         AVStreams::flowSpec &the_spec,  
                                         CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) TAO_StreamEndPoint::request_connection called"));
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) TAO_StreamEndPoint::request_connection: "
+              "flowspec has length = %d"
+              "and the strings are:",
+              the_spec.length ()));
+  for (int i = 0; i < the_spec.length (); i++)
+    ACE_DEBUG ((LM_DEBUG,
+                the_spec [i]));
   return 0;
 }
   
@@ -363,6 +393,8 @@ TAO_StreamEndPoint_A::~TAO_StreamEndPoint_A (void)
 
 TAO_StreamEndPoint_B::TAO_StreamEndPoint_B (void)
 {
+  ACE_DEBUG ((LM_DEBUG, 
+              "\n(%P|%t) TAO_StreamEndPoint_B::TAO_StreamEndPoint_B: created"));
 }
 
 CORBA::Boolean 
@@ -387,6 +419,8 @@ TAO_VDev::TAO_VDev (void)
               "\n(%P|%t) TAO_VDev::TAO_VDev: created"));
 }
 
+// StreamCtrl will call this to give us a reference to itself, and to
+// our peer vdev..
 CORBA::Boolean 
 TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl, 
                     AVStreams::VDev_ptr the_peer_dev, 
@@ -394,6 +428,8 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                     const AVStreams::flowSpec &the_spec,  
                     CORBA::Environment &env)
 {
+  this->streamctrl_var_ = the_ctrl;
+  this->peer_ = the_peer_dev;
   return 0;
 }
 
@@ -470,6 +506,7 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester,
     (stream_endpoint_a->_this (env));
 }
 
+// We have been asked to create a new stream_endpoint and a vdev.
 AVStreams::StreamEndPoint_B_ptr  
 TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester, 
                         AVStreams::VDev_out the_vdev, 
@@ -487,7 +524,8 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
 
   TAO_StreamEndPoint_B *stream_endpoint_b = 
     new TAO_StreamEndPoint_B;
-  return AVStreams::StreamEndPoint_B::_duplicate (stream_endpoint_b->_this (env));
+  return AVStreams::StreamEndPoint_B::_duplicate 
+    (stream_endpoint_b->_this (env));
 }
 
 // create a streamctrl which is colocated with me, use that streamctrl
@@ -546,6 +584,7 @@ TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr the_ep,
 {
 }
 
+// need to throw notsupported exception
 char * 
 TAO_MMDevice::add_fdev (CORBA::Object_ptr the_fdev,
                         CORBA::Environment &env)
@@ -553,6 +592,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr the_fdev,
   return 0;
 }
 
+// need to throw notsupported exception
 CORBA::Object_ptr 
 TAO_MMDevice::get_fdev (const char *flow_name,  
                         CORBA::Environment &env)
@@ -560,6 +600,7 @@ TAO_MMDevice::get_fdev (const char *flow_name,
   return 0;
 }
 
+// need to throw notsupported exception
 void 
 TAO_MMDevice::remove_fdev (const char *flow_name,  
                            CORBA::Environment &env)
