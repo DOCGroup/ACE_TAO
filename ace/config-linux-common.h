@@ -126,6 +126,9 @@
 # define ACE_HAS_ALT_CUSERID
 #endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
 
+#if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
+# define ACE_HAS_ISASTREAM_PROTO
+#endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
 // Then the compiler specific parts
 
