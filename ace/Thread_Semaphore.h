@@ -68,7 +68,7 @@ template <class T> class ACE_Malloc_Lock_Adapter_T;
  * This is needed since the ctor for ACE_Thread_Semaphore doesn't match
  * the standard form used by other lock strategy classes.
  */
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
 {
 public:

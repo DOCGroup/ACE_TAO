@@ -30,7 +30,6 @@
 template <class ACE_LOCK>
 class ACE_Condition;
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Condition<ACE_Recursive_Thread_Mutex>
  *
@@ -38,6 +37,7 @@ ACE_TEMPLATE_SPECIALIZATION
  *  @a ACE_Recursive_Thread_Mutex.  This allows threads to block until
  *  shared data changes state using recursive mutexes.
  */
+template<>
 class ACE_Export ACE_Condition<ACE_Recursive_Thread_Mutex>
 {
 public:

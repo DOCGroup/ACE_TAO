@@ -25,7 +25,6 @@ typedef ACE_Select_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE == 0)
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
  *
@@ -35,6 +34,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * This specialization is useful since it helps to speedup
  * performance of the "Null_Mutex" considerably.
  */
+template<>
 class ACE_Export ACE_Guard< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 {
 public:
