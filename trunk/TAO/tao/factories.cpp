@@ -63,13 +63,13 @@ TAO_Server_Factory::concurrency_strategy ()
   if (p->using_threads ())
     {
       // Set the strategy parameters
-      threaded_strategy_.open (ACE_Service_Config::thr_mgr (),
+      threaded_strategy_.open (ACE_Thread_Manager::instance (),
 			       ROA_DEFAULT_THREADFLAGS);
       concurrency_strategy_ = &threaded_strategy_;
     }
   else
     {
-      reactive_strategy_.open (ACE_Service_Config::reactor ());
+      reactive_strategy_.open (ACE_Reactor::instance ());
       concurrency_strategy_ = &reactive_strategy_;
     }
 
@@ -115,7 +115,7 @@ TAO_Client_Factory::TAO_Client_Factory (void)
   // When should I do this open ()?  It seems like this is way too
   // early, but doing it in the accessor for connector () seems like
   // it would be too late as well.
-  connector_.open (ACE_Service_Config::reactor (),
+  connector_.open (ACE_Reactor::instance (),
 		   &null_creation_strategy_,
 		   &caching_connect_strategy_,
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)
