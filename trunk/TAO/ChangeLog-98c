@@ -1,3 +1,17 @@
+Thu Aug 13 15:03:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll: 	
+	* TAO_IDL/fe/lex.yy.cpp: 
+	* TAO_IDL/fe/lex.yy.cpp.diff: 
+	  The scanner was looking for wchar_t and wstring_t but the IDL
+	  types are called wchar and wstring.
+	  The patch is not needed when using a modern flex, like 2.5.4
+	  (available in /pkg/gnu/bin/flex for the DOC group).
+
+	* TAO_IDL/Makefile: 
+	  Added a rule to generate (upon the user *explicit* request) the
+	  lex.yy.cpp file.
+
 Thu Aug 13 09:14:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/Makefile: 
