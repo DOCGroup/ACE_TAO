@@ -444,7 +444,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("-n <num> ")
                         ACE_TEXT ("-l <loops> ")
                         ACE_TEXT ("\n"),
-                        argv[0]));
+                        ACE_TEXT ("CDR_Test")));
             return -1;
         }
     }
