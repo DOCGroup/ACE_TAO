@@ -1918,7 +1918,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_typedef (be_typedef *node)
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_rettype_vardecl_ss::"
+                         "be_visitor_operation_rettype_vardecl_cs::"
                          "visit_typedef - "
                          "accept on primitive type failed\n"),
                         -1);
@@ -2491,7 +2491,7 @@ visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_any:
       os->indent ();
       *os << bt->name () << "_var _tao_retval;" << be_nl;
-      *os << bt->name () << "_ptr _tao_ptr_retval = _tao_retval.out ();\n";
+      *os << bt->name () << "_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
       break;
     case AST_PredefinedType::PT_void:
       break;
