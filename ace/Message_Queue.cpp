@@ -14,9 +14,9 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 
 template <ACE_SYNCH_DECL>
-ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &queue)
-  : queue_ (queue),
-    curr_ (queue_.head_)
+ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &q)
+  : queue_ (q),
+    curr_ (q.head_)
 {
 }
 
