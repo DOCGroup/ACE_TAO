@@ -54,11 +54,11 @@ namespace TAO
   *   members and set group properties.
   *
   *  TAO::PG_Properties_Support properties_support_;
-  *   This object maintains sets of properties(TAO::PG_Property_Set).  
-  *   In particular it has one default property set, and a collection of 
-  *   property sets indexed by type_id.  
-  *   The default property set acts as a parent to the type_id property 
-  *   sets and the type_id property sets act as parents to the property 
+  *   This object maintains sets of properties(TAO::PG_Property_Set).
+  *   In particular it has one default property set, and a collection of
+  *   property sets indexed by type_id.
+  *   The default property set acts as a parent to the type_id property
+  *   sets and the type_id property sets act as parents to the property
   *   sets contained in PG_Object_Group.
   *
   *  FT::FaultNotifier_var fault_notifier_;

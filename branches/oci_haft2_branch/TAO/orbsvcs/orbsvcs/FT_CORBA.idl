@@ -62,10 +62,40 @@ module FT
   exception PrimaryNotSet {};
 
 #ifdef FT_USES_PORTABLE_GROUP
+  /////////////////////////////////////////
+  // The following typedefs "import"
+  // definitions from the PortableGroup module
+  // definitions into the FT module.
+  // This is an interim step during the process
+  // of having FT depend on the commmon
+  // of PortableGroup module rather than defining
+  // everything itself.
 
-  /**
-   * FTObjectGroupManager Interface adds primary support to PortableGroup::ObjectGroupManager
-   */
+  // this typedef trick doesn't work for exceptions, so they must
+  // use the PortableGroup:: prefix
+  typedef PortableGroup::_TypeId _TypeId;
+  typedef PortableGroup::ObjectGroup ObjectGroup;
+  typedef PortableGroup::Name Name;
+  typedef PortableGroup::Value Value;
+  typedef PortableGroup::Property Property;
+  typedef PortableGroup::Properties Properties;
+  typedef PortableGroup::Location Location;
+  typedef PortableGroup::Locations Locations;
+  typedef PortableGroup::Criteria Criteria;
+
+  typedef PortableGroup::FactoryInfo FactoryInfo;
+  typedef PortableGroup::FactoryInfos FactoryInfos;
+  typedef PortableGroup::MembershipStyleValue MembershipStyleValue;
+
+  typedef PortableGroup::FactoriesValue FactoriesValue;
+  typedef PortableGroup::InitialNumberMembersValue InitialNumberMembersValue;
+  typedef PortableGroup::MinimumNumberMembersValue MinimumNumberMembersValue;
+  typedef PortableGroup::PropertyManager PropertyManager;
+  typedef PortableGroup::ObjectGroupManager ObjectGroupManager;
+  typedef PortableGroup::GenericFactory GenericFactory;
+
+  // Specification of FTObjectGroupManager Interface
+  // which ReplicationManager Inherits
   interface FTObjectGroupManager : PortableGroup::ObjectGroupManager {
 
     ::PortableGroup::ObjectGroup set_primary_member(in ::PortableGroup::ObjectGroup object_group,
