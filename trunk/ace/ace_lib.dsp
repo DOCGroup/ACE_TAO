@@ -1298,6 +1298,25 @@ SOURCE=.\Log_Record.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Logging_Strategy.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\LSOCK.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -4049,6 +4068,10 @@ SOURCE=.\Log_Priority.h
 # Begin Source File
 
 SOURCE=.\Log_Record.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Logging_Strategy.h
 # End Source File
 # Begin Source File
 

@@ -27,7 +27,7 @@
 #define ACE_DEFAULT_MAX_LOGFILE_SIZE 16384 /* KB */
 #endif /* ACE_DEFAULT_MAX_LOGFILE_SIZE */
 
-class ACE_Logging_Strategy : public ACE_Service_Object
+class ACE_Export ACE_Logging_Strategy : public ACE_Service_Object
 {
   // = TITLE
   //     This class provides the hooks to control the output produced
@@ -38,7 +38,7 @@ class ACE_Logging_Strategy : public ACE_Service_Object
   //     flags, the output of other network services can be
   //     controlled. The output can be streamed to stderr, to a file,
   //     to a logging daemon, or it can be set to be "silent".
-  //     
+  //
   //     If logging records are output to a file, the file can be set
   //     to a maximum size and repeatedly split into new files.  The
   //     log file size can be limited at any logging point (i.e.,
@@ -85,6 +85,6 @@ private:
   // Maximum logfile size (in KB).
 };
 
-ACE_SVC_FACTORY_DECLARE (ACE_Logging_Strategy)
+ACE_FACTORY_DECLARE (ACE, ACE_Logging_Strategy)
 
 #endif /* ACE_LOGGING_STRATEGY_H */

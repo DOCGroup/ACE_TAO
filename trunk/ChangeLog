@@ -1,3 +1,21 @@
+Thu Jun 22 14:03:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* netsvcs/servers/svc.conf: Changed the library name where the
+	  Logging_Strategy could be found.
+
+	* netsvcs/lib/netsvcs.dsp: Removed Logging_Strategy.* from the
+	  project file.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added Logging_Strategy.*.
+
+	* ace/Logging_Strategy.h: Removed ACE_SVC_BUILD_DLL.  It's now
+	  under ACE.  Changed ACE_SVC_FACTORY_DECLARE to
+	  ACE_FACTORY_DECLARE.
+
+	* ace/Logging_Strategy.cpp: Changed ACE_SVC_FACTORY_DEFINE to
+	  ACE_FACTORY_DEFINE.
+
 Thu Jun 22 13:59:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.cpp: Removed an extra 'g' from the very beginning of the

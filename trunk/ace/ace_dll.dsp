@@ -1342,6 +1342,25 @@ SOURCE=.\Log_Record.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Logging_Strategy.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\LSOCK.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -4093,6 +4112,10 @@ SOURCE=.\Log_Priority.h
 # Begin Source File
 
 SOURCE=.\Log_Record.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Logging_Strategy.h
 # End Source File
 # Begin Source File
 
