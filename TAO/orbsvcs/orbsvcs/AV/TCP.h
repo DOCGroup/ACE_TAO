@@ -43,7 +43,7 @@ class TAO_AV_TCP_Flow_Handler;
  *        Uses the ACE_SOCK_Stream to send the data.
  */
 class TAO_AV_TCP_Transport
-  :public TAO_AV_Transport
+  : public TAO_AV_Transport
 {
 
 public:
@@ -100,7 +100,7 @@ protected:
  */
 class TAO_AV_TCP_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
-   public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+   public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
   TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = 0);
@@ -120,7 +120,7 @@ class TAO_AV_TCP_Acceptor;
  * @class TAO_AV_TCP_Base_Acceptor
  * @brief
  */
-class TAO_AV_TCP_Base_Acceptor  :public ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>
+class TAO_AV_TCP_Base_Acceptor : public ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>
 {
 public:
   virtual int acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
@@ -138,7 +138,7 @@ protected:
  * @class TAO_AV_TCP_Acceptor
  * @brief
  */
-class TAO_AV_TCP_Acceptor  :public TAO_AV_Acceptor
+class TAO_AV_TCP_Acceptor : public TAO_AV_Acceptor
 {
 public:
   TAO_AV_TCP_Acceptor (void);
@@ -173,7 +173,7 @@ class TAO_AV_TCP_Connector;
  * @class TAO_AV_Base_Connector
  * @brief
  */
-class TAO_AV_TCP_Base_Connector  : public ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>
+class TAO_AV_TCP_Base_Connector : public ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>
 {
 public:
   // To avoid warnings of open and connect hiding the base class functions these have to renamed.
@@ -191,7 +191,7 @@ protected:
  * @class TAO_AV_TCP_Connector
  * @brief
  */
-class TAO_AV_TCP_Connector  : public TAO_AV_Connector
+class TAO_AV_TCP_Connector : public TAO_AV_Connector
 {
 public:
   TAO_AV_TCP_Connector (void);
@@ -240,7 +240,7 @@ public:
 
   virtual int send_frame (const char*buf,
                           size_t len);
-  
+
   /// end the stream.
   virtual int destroy (void);
 
@@ -251,7 +251,7 @@ private:
 
 /**
  * @class TAO_AV_TCP_Flow_Factory
- * @brief 
+ * @brief
  */
 class TAO_AV_TCP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
 {
