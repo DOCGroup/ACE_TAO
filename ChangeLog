@@ -7,6 +7,10 @@ Wed Aug 25 11:15:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  workspace/project files.  Thanks to Johnny for pointing out that
 	  the documentation was out of date.
 
+	  Wrap the "Last modified" line within an Emacs "hhtms" block to
+	  allow Emacs to automatically update the date and time this file
+	  was last modified.
+
 Wed Aug 25 11:46:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/os_include/sys/os_pstat.h: If ACE_HAS_SYS_PSTAT_H, include
