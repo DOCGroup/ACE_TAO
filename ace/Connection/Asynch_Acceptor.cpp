@@ -4,7 +4,7 @@
 #ifndef ACE_ASYNCH_ACCEPTOR_C
 #define ACE_ASYNCH_ACCEPTOR_C
 
-#include "ace/Asynch_Acceptor.h"
+#include "ace/Connection/Asynch_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -15,8 +15,8 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
-#include "ace/Message_Block.h"
-#include "ace/INET_Addr.h"
+#include "ace/Utils/Message_Block.h"
+#include "ace/IPC/INET_Addr.h"
 
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)

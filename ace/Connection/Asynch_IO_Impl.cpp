@@ -1,13 +1,13 @@
 // $Id$
-#include "ace/OS.h"
-#include "ace/Asynch_IO_Impl.h"
+#include "ace/OS/OS.h"
+#include "ace/Connection/Asynch_IO_Impl.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 // This only works on Win32 platforms and on Unix platforms supporting
 // aio calls. 
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Asynch_IO_Impl.i"
+#include "ace/Connection/Asynch_IO_Impl.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_Asynch_Result_Impl::~ACE_Asynch_Result_Impl (void)

@@ -14,16 +14,16 @@
 #define ACE_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/Service_Config.h"
+#include "ace/Svcconf/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
-#include "ace/Map_Manager.h"
-#include "ace/Svc_Handler.h"
-#include "ace/Strategies_T.h"
+#include "ace/Svcconf/Service_Object.h"
+#include "ace/Utils/Templates/Map_Manager.h"
+#include "ace/Svcconf/Svc_Handler.h"
+#include "ace/Connection/Strategies_T.h"
 
 /**
  * @class ACE_Svc_Tuple
@@ -520,7 +520,7 @@ protected:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Connector.cpp"
+#include "ace/Connection/Connector.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -5,7 +5,7 @@
 #include "ace/Utils/Message_Block.h"
 #include "ace/OS/OS_Errno.h"
 #include "ace/Demux/Reactor.h"
-#include "ace/Demux/Thread_Manager.h"
+#include "ace/Threads/Thread_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Demux/Event_Handler.i"

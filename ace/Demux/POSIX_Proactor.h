@@ -17,16 +17,16 @@
 #ifndef ACE_POSIX_PROACTOR_H
 #define ACE_POSIX_PROACTOR_H
 
-#include "ace/Proactor_Impl.h"
+#include "ace/Demux/Proactor_Impl.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
 // POSIX implementation of Proactor depends on the <aio_> family of
 // system calls.
 
-#include "ace/Free_List.h"
-#include "ace/Pipe.h"
-#include "ace/POSIX_Asynch_IO.h"
-#include "ace/Unbounded_Queue.h"
+#include "ace/Utils/Templates/Free_List.h"
+#include "ace/IPC/Pipe.h"
+#include "ace/Connection/POSIX_Asynch_IO.h"
+#include "ace/Utils/Unbounded_Queue.h"
 
 #define ACE_AIO_MAX_SIZE     2048
 #define ACE_AIO_DEFAULT_SIZE 1024
@@ -582,7 +582,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/POSIX_Proactor.i"
+#include "ace/Demux/POSIX_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS */

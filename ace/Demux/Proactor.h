@@ -17,7 +17,7 @@
 #define ACE_PROACTOR_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -27,13 +27,13 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
-#include "ace/Asynch_IO.h"
-#include "ace/Asynch_IO_Impl.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Timer_List.h"
-#include "ace/Timer_Heap.h"
-#include "ace/Timer_Wheel.h"
+#include "ace/Connection/Asynch_IO.h"
+#include "ace/Connection/Asynch_IO_Impl.h"
+#include "ace/Threads/Thread_Manager.h"
+#include "ace/Timer/Timer_Queue.h"
+#include "ace/Timer/Timer_List.h"
+#include "ace/Timer/Timer_Heap.h"
+#include "ace/Timer/Timer_Wheel.h"
 
 // Forward declarations.
 class ACE_Proactor_Impl;
@@ -560,7 +560,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Proactor.i"
+#include "ace/Demux/Proactor.i"
 #endif /* __ACE_INLINE__ */
 
 #else /* NOT WIN32 or POSIX with AIO features. */

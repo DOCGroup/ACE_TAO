@@ -14,7 +14,7 @@
 #define ACE_LOCK_SOCK_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Acceptor.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,7 +51,7 @@ protected:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/LOCK_SOCK_Acceptor.cpp"
+#include "ace/Connection/LOCK_SOCK_Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

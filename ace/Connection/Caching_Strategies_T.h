@@ -14,8 +14,8 @@
 #define CACHING_STRATEGIES_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Caching_Utility_T.h"
+#include "ace/OS/OS.h"
+#include "ace/Utils/Templates/Caching_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -522,11 +522,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Caching_Strategies_T.i"
+#include "ace/Connection/Caching_Strategies_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Caching_Strategies_T.cpp"
+#include "ace/Connection/Caching_Strategies_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

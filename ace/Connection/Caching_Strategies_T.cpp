@@ -3,11 +3,14 @@
 #ifndef CACHING_STRATEGIES_T_C
 #define CACHING_STRATEGIES_T_C
 
-#include "ace/Caching_Strategies_T.h"
-#include "ace/Log_Msg.h"
+#include "ace/Connection/Caching_Strategies_T.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Caching_Strategies_T.i"
+#include "ace/Connection/Caching_Strategies_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

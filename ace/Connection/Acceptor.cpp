@@ -9,9 +9,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
-#include "ace/Handle_Set.h"
-#include "ace/WFMO_Reactor.h"
+#include "ace/Connection/Acceptor.h"
+#include "ace/OS/Handle_Set.h"
+#include "ace/Demux/WFMO_Reactor.h"
 
 ACE_RCSID(ace, Acceptor, "$Id$")
 

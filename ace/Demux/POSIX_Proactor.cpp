@@ -1,16 +1,20 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/POSIX_Proactor.h"
+#include "ace/Demux/POSIX_Proactor.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/Task_T.h"
-#include "ace/Log_Msg.h"
-#include "ace/Object_Manager.h"
+#include "ace/Streams/Task_T.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/Utils/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/POSIX_Proactor.i"
+#include "ace/Demux/POSIX_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
 # if defined (ACE_HAS_SYSINFO)

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ace/FlReactor.h"
-#include "ace/Synch_T.h"
+#include "ace/Demux/FlReactor.h"
+#include "ace/Threads/Synch_T.h"
 
 ACE_RCSID(ace, FlReactor, "$Id$")
 

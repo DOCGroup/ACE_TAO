@@ -4,7 +4,7 @@
 #ifndef ACE_CONNECTOR_C
 #define ACE_CONNECTOR_C
 
-#include "ace/Connector.h"
+#include "ace/Connection/Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

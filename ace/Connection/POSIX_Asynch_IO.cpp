@@ -1,18 +1,18 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/POSIX_Asynch_IO.h"
+#include "ace/Connection/POSIX_Asynch_IO.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/Proactor.h"
-#include "ace/Message_Block.h"
-#include "ace/INET_Addr.h"
-#include "ace/Task_T.h"
-#include "ace/POSIX_Proactor.h"
+#include "ace/Demux/Proactor.h"
+#include "ace/Utils/Message_Block.h"
+#include "ace/IPC/INET_Addr.h"
+#include "ace/Streams/Task_T.h"
+#include "ace/Demux/POSIX_Proactor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/POSIX_Asynch_IO.i"
+#include "ace/Connection/POSIX_Asynch_IO.i"
 #endif /* __ACE_INLINE__ */
 
 u_long
