@@ -1,3 +1,15 @@
+Wed Jun 30 17:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs.dsp:
+	* orbsvcs_static.dsp:
+	  Removed the Concurrency Service from the project.
+
+	* Concurrency/CC_LockSet.cpp:
+	* Concurrency/CC_LockSetFactory.cpp:
+	* Concurrency/Concurrency_Utils.cpp:
+	* Concurrency/Concurrency_Utils.h: Fixed exception handling
+	  stuff.
+
 Wed Jun 30 16:44:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/RtecScheduler.idl,
@@ -22,7 +34,7 @@ Wed Jun 30 15:46:32 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Updated UIOP release notes with list of restrictions/guidelines
 	  the user should follow or be aware of when using the UIOP
 	  pluggable protocol.
-	
+
 	* tao/UIOP_Profile.{h,cpp}:
 
 	  Comment/documentation updates based on the release notes
