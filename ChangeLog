@@ -1,3 +1,11 @@
+Thu Jul  1 16:24:47 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+
+          Updated the mpb files to point to the
+          new DAnCE directory.
+
 Thu Jul  1 14:42:36 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* etc/ciao_assembly_deployer.doxygen:
