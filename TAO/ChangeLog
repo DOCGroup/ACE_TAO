@@ -1,5 +1,9 @@
 Sun Jan 30 19:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
 	* orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/RecursDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/RecursDef_i.h:

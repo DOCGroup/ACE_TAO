@@ -20,6 +20,7 @@
 
 #include "ace/Process_Manager.h"
 #include "ace/Vector_T.h"
+#include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Bound_Ptr.h"
 
