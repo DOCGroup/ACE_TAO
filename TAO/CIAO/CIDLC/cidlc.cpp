@@ -28,6 +28,8 @@
 #include "DescriptorGenerator.hpp"
 #include "SizeTypeCalculator.hpp"
 
+#include "ciao/Version.h" // for --version
+
 using std::cerr;
 using std::endl;
 
@@ -51,6 +53,13 @@ main (int argc, char* argv[])
       cerr << "try " << argv[0] << " --help for usage information" << endl;
       return -1;
     }
+
+    if (cl.get_value ("version", false))
+    {
+      cerr << "CIAO CIDL Compiler " << CIAO_VERSION << endl;
+      return 0;
+    }
+
 
     ExecutorMappingGenerator lem_gen;
     ServantGenerator svnt_gen (cl);
@@ -245,7 +254,7 @@ main (int argc, char* argv[])
     {
       desc_gen.generate (cl, tu);
     }
-    
+
     return 0;
   }
   catch (std::bad_cast const&)
@@ -260,6 +269,6 @@ main (int argc, char* argv[])
   {
     cerr << "caught unknown exception" << endl;
   }
-  
+
   return 1;
 }
