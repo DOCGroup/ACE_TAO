@@ -360,6 +360,11 @@
 // Max size of an ACE Token client ID.
 # define ACE_MAXCLIENTIDLEN MAXHOSTNAMELEN + 20
 
+/// Max udp packet size
+#if !defined (ACE_MAX_UDP_PACKET_SIZE)
+#define ACE_MAX_UDP_PACKET_SIZE 65536
+#endif
+
 /**
  * @name Default values to control CDR classes memory allocation strategies
  */
