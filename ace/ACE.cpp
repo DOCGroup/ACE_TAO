@@ -2341,6 +2341,8 @@ ACE::handle_ready (ACE_HANDLE handle,
                    int exception_ready)
 {
 #if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+  ACE_UNUSED_ARG (write_ready);
+  ACE_UNUSED_ARG (exception_ready);
 
   struct pollfd fds;
 
