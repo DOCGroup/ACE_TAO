@@ -1,3 +1,8 @@
+Fri Jan 28 13:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/README:
+          Removed description of CORBA directory, it doesn't exists anymore
+
 Fri Jan 28 13:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Multicast_Test_IPV6.cpp:
