@@ -1,3 +1,8 @@
+Fri Jul 20 09:47:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Fixed WinCE errors.  CE does not support
+	  UNIX_Syslog.
+
 Thu Jul 19 22:39:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp:
